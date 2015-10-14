@@ -9,7 +9,7 @@
 #ifndef UserDefaultsDataManager_h
 #define UserDefaultsDataManager_h
 
-#include <iostream>
+#include "cocos2d.h"
 
 using namespace std;
 
@@ -31,8 +31,7 @@ public:
 protected:
     UserDefaultsDataManager();
     virtual ~UserDefaultsDataManager();
-    UserDefaultsDataManager(UserDefaultsDataManager const&) = delete;
-    void operator=(UserDefaultsDataManager const&) = delete;
+    CC_DISALLOW_COPY_AND_ASSIGN(UserDefaultsDataManager);
     
 public:
     void flush() const;

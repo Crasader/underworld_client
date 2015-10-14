@@ -1,0 +1,9 @@
+//
+//  Localizable.strings
+//  Underworld_Client
+//
+//  Created by Andy on 15/10/13.
+//  Copyright (c) 2015 Mofish Studio. All rights reserved.
+//
+"STRENGTH_FULL_NOTIFICATION" = "你的體力已經恢復";
+"AWAY_TOO_LONG_NOTIFICATION" = "Vampires & Werewolves都很想你，快去看看他們吧！";

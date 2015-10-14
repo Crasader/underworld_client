@@ -9,6 +9,7 @@
 #ifndef LocalHelper_h
 #define LocalHelper_h
 
+#include <string>
 #include "Global.h"
 
 typedef enum

@@ -1,0 +1,9 @@
+//
+//  Localizable.strings
+//  Underworld_Client
+//
+//  Created by Andy on 15/10/13.
+//  Copyright (c) 2015 Mofish Studio. All rights reserved.
+//
+"STRENGTH_FULL_NOTIFICATION" = "Your strength is fully recovered!";
+"AWAY_TOO_LONG_NOTIFICATION" = "The Vampires & Werewolves have been missing you so much! Come to see them!";

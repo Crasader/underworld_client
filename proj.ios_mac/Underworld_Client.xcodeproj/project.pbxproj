@@ -77,6 +77,22 @@
 		A1720E901BCCE19300217E98 /* MD5Verifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720E891BCCE19300217E98 /* MD5Verifier.cpp */; settings = {ASSET_TAGS = (); }; };
 		A1720E931BCCE1D900217E98 /* LocalHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720E911BCCE1D900217E98 /* LocalHelper.cpp */; settings = {ASSET_TAGS = (); }; };
 		A1720E971BCCE41A00217E98 /* ScrollBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720E951BCCE41A00217E98 /* ScrollBar.cpp */; settings = {ASSET_TAGS = (); }; };
+		A1720EA41BCD29FF00217E98 /* GameData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720EA21BCD29FF00217E98 /* GameData.cpp */; settings = {ASSET_TAGS = (); }; };
+		A1720EA91BCD2A2F00217E98 /* User.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720EA71BCD2A2F00217E98 /* User.cpp */; settings = {ASSET_TAGS = (); }; };
+		A1720EAD1BCD2A8400217E98 /* NetworkApi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720EAB1BCD2A8400217E98 /* NetworkApi.cpp */; settings = {ASSET_TAGS = (); }; };
+		A1720EB81BCD2D2E00217E98 /* Api.mm in Sources */ = {isa = PBXBuildFile; fileRef = A1720EAF1BCD2D2E00217E98 /* Api.mm */; settings = {ASSET_TAGS = (); COMPILER_FLAGS = "-fobjc-arc"; }; };
+		A1720EB91BCD2D2E00217E98 /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = A1720EB41BCD2D2E00217E98 /* KeychainItemWrapper.m */; settings = {ASSET_TAGS = (); COMPILER_FLAGS = "-fobjc-arc"; }; };
+		A1720EBA1BCD2D2E00217E98 /* RMStore.m in Sources */ = {isa = PBXBuildFile; fileRef = A1720EB71BCD2D2E00217E98 /* RMStore.m */; settings = {ASSET_TAGS = (); COMPILER_FLAGS = "-fobjc-arc"; }; };
+		A1720EBD1BCD309A00217E98 /* NetworkController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720EBB1BCD309A00217E98 /* NetworkController.cpp */; settings = {ASSET_TAGS = (); }; };
+		A1720EC21BCD316000217E98 /* ProgressLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720EC01BCD316000217E98 /* ProgressLayer.cpp */; settings = {ASSET_TAGS = (); }; };
+		A1720ECB1BCD37FC00217E98 /* MessageBoxLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720EC91BCD37FC00217E98 /* MessageBoxLayer.cpp */; settings = {ASSET_TAGS = (); }; };
+		A1720ECE1BCD382700217E98 /* MessageBoxBaseLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720ECC1BCD382700217E98 /* MessageBoxBaseLayer.cpp */; settings = {ASSET_TAGS = (); }; };
+		A1720ED11BCD38FB00217E98 /* SoundManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720ECF1BCD38FB00217E98 /* SoundManager.cpp */; settings = {ASSET_TAGS = (); }; };
+		A1A4BA381BCDF81500175E8A /* IapObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A4BA361BCDF81500175E8A /* IapObject.cpp */; settings = {ASSET_TAGS = (); }; };
+		A1A4BA3B1BCE043100175E8A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A1A4BA391BCE043100175E8A /* InfoPlist.strings */; settings = {ASSET_TAGS = (); }; };
+		A1A4BA3E1BCE043800175E8A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A1A4BA3C1BCE043800175E8A /* Localizable.strings */; settings = {ASSET_TAGS = (); }; };
+		A1A4BA461BCE08AF00175E8A /* OnlineUpdater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A4BA441BCE08AF00175E8A /* OnlineUpdater.cpp */; settings = {ASSET_TAGS = (); }; };
+		A1A4BA491BCE096300175E8A /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A4BA471BCE096300175E8A /* Utils.cpp */; settings = {ASSET_TAGS = (); }; };
 		A1AAE5451BCCC3B80090D917 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1AAE5431BCCC3B80090D917 /* Unit.cpp */; settings = {ASSET_TAGS = (); }; };
 		A1AAE5481BCCC3D20090D917 /* Hero.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1AAE5461BCCC3D20090D917 /* Hero.cpp */; settings = {ASSET_TAGS = (); }; };
 		A1AAE54E1BCCC5D10090D917 /* UnitData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1AAE54C1BCCC5D10090D917 /* UnitData.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -211,6 +227,41 @@
 		A1720E921BCCE1D900217E98 /* LocalHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalHelper.h; sourceTree = "<group>"; };
 		A1720E951BCCE41A00217E98 /* ScrollBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScrollBar.cpp; sourceTree = "<group>"; };
 		A1720E961BCCE41A00217E98 /* ScrollBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollBar.h; sourceTree = "<group>"; };
+		A1720EA21BCD29FF00217E98 /* GameData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameData.cpp; sourceTree = "<group>"; };
+		A1720EA31BCD29FF00217E98 /* GameData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameData.h; sourceTree = "<group>"; };
+		A1720EA71BCD2A2F00217E98 /* User.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = User.cpp; sourceTree = "<group>"; };
+		A1720EA81BCD2A2F00217E98 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		A1720EAB1BCD2A8400217E98 /* NetworkApi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NetworkApi.cpp; sourceTree = "<group>"; };
+		A1720EAC1BCD2A8400217E98 /* NetworkApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkApi.h; sourceTree = "<group>"; };
+		A1720EAF1BCD2D2E00217E98 /* Api.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Api.mm; sourceTree = "<group>"; };
+		A1720EB01BCD2D2E00217E98 /* ApiBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiBridge.h; sourceTree = "<group>"; };
+		A1720EB31BCD2D2E00217E98 /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
+		A1720EB41BCD2D2E00217E98 /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
+		A1720EB61BCD2D2E00217E98 /* RMStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMStore.h; sourceTree = "<group>"; };
+		A1720EB71BCD2D2E00217E98 /* RMStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMStore.m; sourceTree = "<group>"; };
+		A1720EBB1BCD309A00217E98 /* NetworkController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NetworkController.cpp; sourceTree = "<group>"; };
+		A1720EBC1BCD309A00217E98 /* NetworkController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkController.h; sourceTree = "<group>"; };
+		A1720EC01BCD316000217E98 /* ProgressLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProgressLayer.cpp; sourceTree = "<group>"; };
+		A1720EC11BCD316000217E98 /* ProgressLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressLayer.h; sourceTree = "<group>"; };
+		A1720EC71BCD321600217E98 /* CocosGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosGlobal.h; sourceTree = "<group>"; };
+		A1720EC91BCD37FC00217E98 /* MessageBoxLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageBoxLayer.cpp; sourceTree = "<group>"; };
+		A1720ECA1BCD37FC00217E98 /* MessageBoxLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageBoxLayer.h; sourceTree = "<group>"; };
+		A1720ECC1BCD382700217E98 /* MessageBoxBaseLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageBoxBaseLayer.cpp; sourceTree = "<group>"; };
+		A1720ECD1BCD382700217E98 /* MessageBoxBaseLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageBoxBaseLayer.h; sourceTree = "<group>"; };
+		A1720ECF1BCD38FB00217E98 /* SoundManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundManager.cpp; sourceTree = "<group>"; };
+		A1720ED01BCD38FB00217E98 /* SoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundManager.h; sourceTree = "<group>"; };
+		A1A4BA361BCDF81500175E8A /* IapObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IapObject.cpp; sourceTree = "<group>"; };
+		A1A4BA371BCDF81500175E8A /* IapObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IapObject.h; sourceTree = "<group>"; };
+		A1A4BA3A1BCE043100175E8A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = ios/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		A1A4BA3D1BCE043800175E8A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = ios/en.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		A1A4BA3F1BCE044600175E8A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "ios/zh-Hans.lproj/InfoPlist.strings"; sourceTree = SOURCE_ROOT; };
+		A1A4BA401BCE044600175E8A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "ios/zh-Hans.lproj/Localizable.strings"; sourceTree = SOURCE_ROOT; };
+		A1A4BA411BCE044E00175E8A /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "ios/zh-Hant.lproj/InfoPlist.strings"; sourceTree = SOURCE_ROOT; };
+		A1A4BA421BCE044E00175E8A /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "ios/zh-Hant.lproj/Localizable.strings"; sourceTree = SOURCE_ROOT; };
+		A1A4BA441BCE08AF00175E8A /* OnlineUpdater.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OnlineUpdater.cpp; sourceTree = "<group>"; };
+		A1A4BA451BCE08AF00175E8A /* OnlineUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnlineUpdater.h; sourceTree = "<group>"; };
+		A1A4BA471BCE096300175E8A /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
+		A1A4BA481BCE096300175E8A /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		A1AAE5431BCCC3B80090D917 /* Unit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Unit.cpp; sourceTree = "<group>"; };
 		A1AAE5441BCCC3B80090D917 /* Unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Unit.h; sourceTree = "<group>"; };
 		A1AAE5461BCCC3D20090D917 /* Hero.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Hero.cpp; sourceTree = "<group>"; };
@@ -281,13 +332,17 @@
 		080E96DDFE201D6D7F000001 /* ios */ = {
 			isa = PBXGroup;
 			children = (
-				5087E77117EB970100C73F5D /* Icons */,
+				A1720EAE1BCD2D2E00217E98 /* API */,
 				503AE0FA17EB989F00D1A890 /* AppController.h */,
 				503AE0FB17EB989F00D1A890 /* AppController.mm */,
+				5087E77117EB970100C73F5D /* Icons */,
+				A1A4BA391BCE043100175E8A /* InfoPlist.strings */,
+				A1A4BA3C1BCE043800175E8A /* Localizable.strings */,
 				503AE0FC17EB989F00D1A890 /* main.m */,
 				503AE0FD17EB989F00D1A890 /* Prefix.pch */,
 				503AE0FE17EB989F00D1A890 /* RootViewController.h */,
 				503AE0FF17EB989F00D1A890 /* RootViewController.mm */,
+				A1720EB11BCD2D2E00217E98 /* ThirdParty */,
 			);
 			name = ios;
 			path = Classes;
@@ -374,9 +429,12 @@
 				46880B8719C43A87006E1F66 /* HelloWorldScene.h */,
 				A1720E661BCCDECA00217E98 /* Manager */,
 				A1AAE5411BCCBE2F0090D917 /* Map */,
+				A1720EAA1BCD2A6A00217E98 /* Network */,
 				A1AAE5491BCCC4C20090D917 /* Public */,
+				A1A4BA351BCDF7F600175E8A /* Shop */,
 				A1720E701BCCE08E00217E98 /* UI */,
 				A1AAE5421BCCBE2F0090D917 /* Unit */,
+				A1720EA61BCD2A2300217E98 /* User */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -434,6 +492,12 @@
 			children = (
 				A1720E671BCCDEFF00217E98 /* DataManager.cpp */,
 				A1720E681BCCDEFF00217E98 /* DataManager.h */,
+				A1720EA21BCD29FF00217E98 /* GameData.cpp */,
+				A1720EA31BCD29FF00217E98 /* GameData.h */,
+				A1A4BA441BCE08AF00175E8A /* OnlineUpdater.cpp */,
+				A1A4BA451BCE08AF00175E8A /* OnlineUpdater.h */,
+				A1720ECF1BCD38FB00217E98 /* SoundManager.cpp */,
+				A1720ED01BCD38FB00217E98 /* SoundManager.h */,
 				A1720E6A1BCCDF1900217E98 /* UserDefaultsDataManager.cpp */,
 				A1720E6B1BCCDF1900217E98 /* UserDefaultsDataManager.h */,
 			);
@@ -444,6 +508,7 @@
 			isa = PBXGroup;
 			children = (
 				A1720E751BCCE0F000217E98 /* Action */,
+				A1720EBF1BCD310100217E98 /* Layer */,
 				A1720E711BCCE0A200217E98 /* Node */,
 			);
 			path = UI;
@@ -506,6 +571,86 @@
 			path = md5;
 			sourceTree = "<group>";
 		};
+		A1720EA61BCD2A2300217E98 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				A1720EA71BCD2A2F00217E98 /* User.cpp */,
+				A1720EA81BCD2A2F00217E98 /* User.h */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		A1720EAA1BCD2A6A00217E98 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				A1720EAB1BCD2A8400217E98 /* NetworkApi.cpp */,
+				A1720EAC1BCD2A8400217E98 /* NetworkApi.h */,
+				A1720EBB1BCD309A00217E98 /* NetworkController.cpp */,
+				A1720EBC1BCD309A00217E98 /* NetworkController.h */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		A1720EAE1BCD2D2E00217E98 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				A1720EAF1BCD2D2E00217E98 /* Api.mm */,
+				A1720EB01BCD2D2E00217E98 /* ApiBridge.h */,
+			);
+			name = API;
+			path = ios/API;
+			sourceTree = SOURCE_ROOT;
+		};
+		A1720EB11BCD2D2E00217E98 /* ThirdParty */ = {
+			isa = PBXGroup;
+			children = (
+				A1720EB21BCD2D2E00217E98 /* KeyChain */,
+				A1720EB51BCD2D2E00217E98 /* RMStore */,
+			);
+			name = ThirdParty;
+			path = ios/ThirdParty;
+			sourceTree = SOURCE_ROOT;
+		};
+		A1720EB21BCD2D2E00217E98 /* KeyChain */ = {
+			isa = PBXGroup;
+			children = (
+				A1720EB31BCD2D2E00217E98 /* KeychainItemWrapper.h */,
+				A1720EB41BCD2D2E00217E98 /* KeychainItemWrapper.m */,
+			);
+			path = KeyChain;
+			sourceTree = "<group>";
+		};
+		A1720EB51BCD2D2E00217E98 /* RMStore */ = {
+			isa = PBXGroup;
+			children = (
+				A1720EB61BCD2D2E00217E98 /* RMStore.h */,
+				A1720EB71BCD2D2E00217E98 /* RMStore.m */,
+			);
+			path = RMStore;
+			sourceTree = "<group>";
+		};
+		A1720EBF1BCD310100217E98 /* Layer */ = {
+			isa = PBXGroup;
+			children = (
+				A1720ECC1BCD382700217E98 /* MessageBoxBaseLayer.cpp */,
+				A1720ECD1BCD382700217E98 /* MessageBoxBaseLayer.h */,
+				A1720EC91BCD37FC00217E98 /* MessageBoxLayer.cpp */,
+				A1720ECA1BCD37FC00217E98 /* MessageBoxLayer.h */,
+				A1720EC01BCD316000217E98 /* ProgressLayer.cpp */,
+				A1720EC11BCD316000217E98 /* ProgressLayer.h */,
+			);
+			path = Layer;
+			sourceTree = "<group>";
+		};
+		A1A4BA351BCDF7F600175E8A /* Shop */ = {
+			isa = PBXGroup;
+			children = (
+				A1A4BA361BCDF81500175E8A /* IapObject.cpp */,
+				A1A4BA371BCDF81500175E8A /* IapObject.h */,
+			);
+			path = Shop;
+			sourceTree = "<group>";
+		};
 		A1AAE5411BCCBE2F0090D917 /* Map */ = {
 			isa = PBXGroup;
 			children = (
@@ -536,12 +681,15 @@
 		A1AAE5491BCCC4C20090D917 /* Public */ = {
 			isa = PBXGroup;
 			children = (
+				A1720EC71BCD321600217E98 /* CocosGlobal.h */,
 				A1720E6D1BCCDF9100217E98 /* CocosUtils.cpp */,
 				A1720E6E1BCCDF9100217E98 /* CocosUtils.h */,
 				A1AAE54A1BCCC4D10090D917 /* Global.h */,
 				A1720E911BCCE1D900217E98 /* LocalHelper.cpp */,
 				A1720E921BCCE1D900217E98 /* LocalHelper.h */,
 				A1720E7C1BCCE19300217E98 /* Security */,
+				A1A4BA471BCE096300175E8A /* Utils.cpp */,
+				A1A4BA481BCE096300175E8A /* Utils.h */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -626,6 +774,9 @@
 				Japanese,
 				French,
 				German,
+				en,
+				"zh-Hans",
+				"zh-Hant",
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
@@ -666,6 +817,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5087E78117EB970100C73F5D /* Icon-120.png in Resources */,
+				A1A4BA3B1BCE043100175E8A /* InfoPlist.strings in Resources */,
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
@@ -674,6 +826,7 @@
 				46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
+				A1A4BA3E1BCE043800175E8A /* Localizable.strings in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
@@ -711,32 +864,46 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1A4BA491BCE096300175E8A /* Utils.cpp in Sources */,
 				A1720E621BCCDABC00217E98 /* BattleMap.cpp in Sources */,
 				A1720E741BCCE0A200217E98 /* FixedLabelAtlas.cpp in Sources */,
 				A1720E8C1BCCE19300217E98 /* aes_ctr.c in Sources */,
 				A1720E8E1BCCE19300217E98 /* AESEncryptor.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
+				A1720EB81BCD2D2E00217E98 /* Api.mm in Sources */,
 				A1720E8F1BCCE19300217E98 /* md5.cpp in Sources */,
 				A1720E7A1BCCE0F000217E98 /* CCShake.cpp in Sources */,
 				A1720E971BCCE41A00217E98 /* ScrollBar.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				A1AAE5481BCCC3D20090D917 /* Hero.cpp in Sources */,
+				A1720EB91BCD2D2E00217E98 /* KeychainItemWrapper.m in Sources */,
 				A1720E651BCCDE2300217E98 /* Tile.cpp in Sources */,
 				A1720E8B1BCCE19300217E98 /* aes_core.c in Sources */,
 				A1AAE5451BCCC3B80090D917 /* Unit.cpp in Sources */,
 				A1720E6F1BCCDF9100217E98 /* CocosUtils.cpp in Sources */,
+				A1720ED11BCD38FB00217E98 /* SoundManager.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				A1AAE5511BCCD0430090D917 /* Tower.cpp in Sources */,
 				A1720E691BCCDEFF00217E98 /* DataManager.cpp in Sources */,
 				A1AAE5541BCCD17B0090D917 /* Coordinate.cpp in Sources */,
 				A1720E8D1BCCE19300217E98 /* AESCTREncryptor.cpp in Sources */,
 				A1720E901BCCE19300217E98 /* MD5Verifier.cpp in Sources */,
+				A1720EBA1BCD2D2E00217E98 /* RMStore.m in Sources */,
+				A1A4BA381BCDF81500175E8A /* IapObject.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
+				A1720EC21BCD316000217E98 /* ProgressLayer.cpp in Sources */,
 				A1720E7B1BCCE0F000217E98 /* NumberJump.cpp in Sources */,
+				A1720ECB1BCD37FC00217E98 /* MessageBoxLayer.cpp in Sources */,
+				A1720EBD1BCD309A00217E98 /* NetworkController.cpp in Sources */,
 				A1AAE54E1BCCC5D10090D917 /* UnitData.cpp in Sources */,
 				A1720E6C1BCCDF1900217E98 /* UserDefaultsDataManager.cpp in Sources */,
+				A1720EA41BCD29FF00217E98 /* GameData.cpp in Sources */,
+				A1720EA91BCD2A2F00217E98 /* User.cpp in Sources */,
+				A1720EAD1BCD2A8400217E98 /* NetworkApi.cpp in Sources */,
+				A1A4BA461BCE08AF00175E8A /* OnlineUpdater.cpp in Sources */,
 				A1720E5E1BCCD85F00217E98 /* TowerData.cpp in Sources */,
+				A1720ECE1BCD382700217E98 /* MessageBoxBaseLayer.cpp in Sources */,
 				A1720E931BCCE1D900217E98 /* LocalHelper.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -765,6 +932,29 @@
 			targetProxy = 1AC6FB24180E99E1004C840B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A1A4BA391BCE043100175E8A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A1A4BA3A1BCE043100175E8A /* en */,
+				A1A4BA3F1BCE044600175E8A /* zh-Hans */,
+				A1A4BA411BCE044E00175E8A /* zh-Hant */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A1A4BA3C1BCE043800175E8A /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A1A4BA3D1BCE043800175E8A /* en */,
+				A1A4BA401BCE044600175E8A /* zh-Hans */,
+				A1A4BA421BCE044E00175E8A /* zh-Hant */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {

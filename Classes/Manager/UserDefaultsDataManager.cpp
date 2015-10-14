@@ -10,7 +10,6 @@
 #include "CocosUtils.h"
 #include "AESCTREncryptor.h"
 #include "MD5Verifier.h"
-#include "cocos2d.h"
 
 USING_NS_CC;
 

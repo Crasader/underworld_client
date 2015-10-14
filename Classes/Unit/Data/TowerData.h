@@ -9,6 +9,7 @@
 #ifndef TowerData_h
 #define TowerData_h
 
+#include <string>
 #include "Global.h"
 
 namespace tinyxml2 { class XMLElement; }

@@ -9,7 +9,6 @@
 #ifndef NumberJump__
 #define NumberJump__
 
-#include <stdio.h>
 #include "cocos2d.h"
 
 USING_NS_CC;
