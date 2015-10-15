@@ -7,6 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		045116E21BCFBA39002AA721 /* Clock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116DC1BCFBA39002AA721 /* Clock.cpp */; settings = {ASSET_TAGS = (); }; };
+		045116E31BCFBA39002AA721 /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116DE1BCFBA39002AA721 /* Map.cpp */; settings = {ASSET_TAGS = (); }; };
+		045116E41BCFBA39002AA721 /* World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116E01BCFBA39002AA721 /* World.cpp */; settings = {ASSET_TAGS = (); }; };
+		045116F31BCFBA44002AA721 /* BuffType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116E51BCFBA44002AA721 /* BuffType.cpp */; settings = {ASSET_TAGS = (); }; };
+		045116F41BCFBA44002AA721 /* BulletType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116E71BCFBA44002AA721 /* BulletType.cpp */; settings = {ASSET_TAGS = (); }; };
+		045116F51BCFBA44002AA721 /* CommandType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116E91BCFBA44002AA721 /* CommandType.cpp */; settings = {ASSET_TAGS = (); }; };
+		045116F61BCFBA44002AA721 /* FactionType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116EB1BCFBA44002AA721 /* FactionType.cpp */; settings = {ASSET_TAGS = (); }; };
+		045116F71BCFBA44002AA721 /* SkllType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116ED1BCFBA44002AA721 /* SkllType.cpp */; settings = {ASSET_TAGS = (); }; };
+		045116F81BCFBA44002AA721 /* TechTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116EF1BCFBA44002AA721 /* TechTree.cpp */; settings = {ASSET_TAGS = (); }; };
+		045116F91BCFBA44002AA721 /* UnitType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116F11BCFBA44002AA721 /* UnitType.cpp */; settings = {ASSET_TAGS = (); }; };
+		045117061BCFBA53002AA721 /* Buff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116FA1BCFBA53002AA721 /* Buff.cpp */; settings = {ASSET_TAGS = (); }; };
+		045117071BCFBA53002AA721 /* Bullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116FC1BCFBA53002AA721 /* Bullet.cpp */; settings = {ASSET_TAGS = (); }; };
+		045117081BCFBA53002AA721 /* Command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116FE1BCFBA53002AA721 /* Command.cpp */; settings = {ASSET_TAGS = (); }; };
+		045117091BCFBA53002AA721 /* Faction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045117001BCFBA53002AA721 /* Faction.cpp */; settings = {ASSET_TAGS = (); }; };
+		0451170A1BCFBA53002AA721 /* Skill.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045117021BCFBA53002AA721 /* Skill.cpp */; settings = {ASSET_TAGS = (); }; };
+		0451170B1BCFBA53002AA721 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045117041BCFBA53002AA721 /* Unit.cpp */; settings = {ASSET_TAGS = (); }; };
+		045117101BCFBA5F002AA721 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0451170C1BCFBA5F002AA721 /* Game.cpp */; settings = {ASSET_TAGS = (); }; };
 		1AC6FB21180E996B004C840B /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FAF9180E9839004C840B /* libcocos2d Mac.a */; };
 		1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FB07180E9839004C840B /* libcocos2d iOS.a */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -142,6 +159,42 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		045116DC1BCFBA39002AA721 /* Clock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Clock.cpp; path = Core/World/Clock.cpp; sourceTree = "<group>"; };
+		045116DD1BCFBA39002AA721 /* Clock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Clock.h; path = Core/World/Clock.h; sourceTree = "<group>"; };
+		045116DE1BCFBA39002AA721 /* Map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Map.cpp; path = Core/World/Map.cpp; sourceTree = "<group>"; };
+		045116DF1BCFBA39002AA721 /* Map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Map.h; path = Core/World/Map.h; sourceTree = "<group>"; };
+		045116E01BCFBA39002AA721 /* World.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = World.cpp; path = Core/World/World.cpp; sourceTree = "<group>"; };
+		045116E11BCFBA39002AA721 /* World.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = World.h; path = Core/World/World.h; sourceTree = "<group>"; };
+		045116E51BCFBA44002AA721 /* BuffType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BuffType.cpp; path = Core/Unit/Type/BuffType.cpp; sourceTree = "<group>"; };
+		045116E61BCFBA44002AA721 /* BuffType.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = BuffType.hpp; path = Core/Unit/Type/BuffType.hpp; sourceTree = "<group>"; };
+		045116E71BCFBA44002AA721 /* BulletType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BulletType.cpp; path = Core/Unit/Type/BulletType.cpp; sourceTree = "<group>"; };
+		045116E81BCFBA44002AA721 /* BulletType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BulletType.h; path = Core/Unit/Type/BulletType.h; sourceTree = "<group>"; };
+		045116E91BCFBA44002AA721 /* CommandType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CommandType.cpp; path = Core/Unit/Type/CommandType.cpp; sourceTree = "<group>"; };
+		045116EA1BCFBA44002AA721 /* CommandType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommandType.h; path = Core/Unit/Type/CommandType.h; sourceTree = "<group>"; };
+		045116EB1BCFBA44002AA721 /* FactionType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FactionType.cpp; path = Core/Unit/Type/FactionType.cpp; sourceTree = "<group>"; };
+		045116EC1BCFBA44002AA721 /* FactionType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FactionType.h; path = Core/Unit/Type/FactionType.h; sourceTree = "<group>"; };
+		045116ED1BCFBA44002AA721 /* SkllType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SkllType.cpp; path = Core/Unit/Type/SkllType.cpp; sourceTree = "<group>"; };
+		045116EE1BCFBA44002AA721 /* SkllType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkllType.h; path = Core/Unit/Type/SkllType.h; sourceTree = "<group>"; };
+		045116EF1BCFBA44002AA721 /* TechTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TechTree.cpp; path = Core/Unit/Type/TechTree.cpp; sourceTree = "<group>"; };
+		045116F01BCFBA44002AA721 /* TechTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TechTree.h; path = Core/Unit/Type/TechTree.h; sourceTree = "<group>"; };
+		045116F11BCFBA44002AA721 /* UnitType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UnitType.cpp; path = Core/Unit/Type/UnitType.cpp; sourceTree = "<group>"; };
+		045116F21BCFBA44002AA721 /* UnitType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnitType.h; path = Core/Unit/Type/UnitType.h; sourceTree = "<group>"; };
+		045116FA1BCFBA53002AA721 /* Buff.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Buff.cpp; path = Core/Unit/Instance/Buff.cpp; sourceTree = "<group>"; };
+		045116FB1BCFBA53002AA721 /* Buff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Buff.h; path = Core/Unit/Instance/Buff.h; sourceTree = "<group>"; };
+		045116FC1BCFBA53002AA721 /* Bullet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Bullet.cpp; path = Core/Unit/Instance/Bullet.cpp; sourceTree = "<group>"; };
+		045116FD1BCFBA53002AA721 /* Bullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bullet.h; path = Core/Unit/Instance/Bullet.h; sourceTree = "<group>"; };
+		045116FE1BCFBA53002AA721 /* Command.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Command.cpp; path = Core/Unit/Instance/Command.cpp; sourceTree = "<group>"; };
+		045116FF1BCFBA53002AA721 /* Command.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Command.h; path = Core/Unit/Instance/Command.h; sourceTree = "<group>"; };
+		045117001BCFBA53002AA721 /* Faction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Faction.cpp; path = Core/Unit/Instance/Faction.cpp; sourceTree = "<group>"; };
+		045117011BCFBA53002AA721 /* Faction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Faction.h; path = Core/Unit/Instance/Faction.h; sourceTree = "<group>"; };
+		045117021BCFBA53002AA721 /* Skill.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Skill.cpp; path = Core/Unit/Instance/Skill.cpp; sourceTree = "<group>"; };
+		045117031BCFBA53002AA721 /* Skill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Skill.h; path = Core/Unit/Instance/Skill.h; sourceTree = "<group>"; };
+		045117041BCFBA53002AA721 /* Unit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Unit.cpp; path = Core/Unit/Instance/Unit.cpp; sourceTree = "<group>"; };
+		045117051BCFBA53002AA721 /* Unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Unit.h; path = Core/Unit/Instance/Unit.h; sourceTree = "<group>"; };
+		0451170C1BCFBA5F002AA721 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = Core/Game/Game.cpp; sourceTree = "<group>"; };
+		0451170D1BCFBA5F002AA721 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = Core/Game/Game.h; sourceTree = "<group>"; };
+		0451170E1BCFBA5F002AA721 /* GameConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameConstants.h; path = Core/Game/GameConstants.h; sourceTree = "<group>"; };
+		0451170F1BCFBA5F002AA721 /* GameSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameSettings.h; path = Core/Game/GameSettings.h; sourceTree = "<group>"; };
 		1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -329,6 +382,97 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		045116D51BCFB9E7002AA721 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				045116D91BCFBA09002AA721 /* World */,
+				045116D81BCFB9FF002AA721 /* Unit */,
+				045116D71BCFB9F9002AA721 /* Game */,
+				045116D61BCFB9EF002AA721 /* AI */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		045116D61BCFB9EF002AA721 /* AI */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = AI;
+			sourceTree = "<group>";
+		};
+		045116D71BCFB9F9002AA721 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				0451170C1BCFBA5F002AA721 /* Game.cpp */,
+				0451170D1BCFBA5F002AA721 /* Game.h */,
+				0451170E1BCFBA5F002AA721 /* GameConstants.h */,
+				0451170F1BCFBA5F002AA721 /* GameSettings.h */,
+			);
+			name = Game;
+			sourceTree = "<group>";
+		};
+		045116D81BCFB9FF002AA721 /* Unit */ = {
+			isa = PBXGroup;
+			children = (
+				045116DB1BCFBA23002AA721 /* Type */,
+				045116DA1BCFBA15002AA721 /* Instance */,
+			);
+			name = Unit;
+			sourceTree = "<group>";
+		};
+		045116D91BCFBA09002AA721 /* World */ = {
+			isa = PBXGroup;
+			children = (
+				045116DC1BCFBA39002AA721 /* Clock.cpp */,
+				045116DD1BCFBA39002AA721 /* Clock.h */,
+				045116DE1BCFBA39002AA721 /* Map.cpp */,
+				045116DF1BCFBA39002AA721 /* Map.h */,
+				045116E01BCFBA39002AA721 /* World.cpp */,
+				045116E11BCFBA39002AA721 /* World.h */,
+			);
+			name = World;
+			sourceTree = "<group>";
+		};
+		045116DA1BCFBA15002AA721 /* Instance */ = {
+			isa = PBXGroup;
+			children = (
+				045116FA1BCFBA53002AA721 /* Buff.cpp */,
+				045116FB1BCFBA53002AA721 /* Buff.h */,
+				045116FC1BCFBA53002AA721 /* Bullet.cpp */,
+				045116FD1BCFBA53002AA721 /* Bullet.h */,
+				045116FE1BCFBA53002AA721 /* Command.cpp */,
+				045116FF1BCFBA53002AA721 /* Command.h */,
+				045117001BCFBA53002AA721 /* Faction.cpp */,
+				045117011BCFBA53002AA721 /* Faction.h */,
+				045117021BCFBA53002AA721 /* Skill.cpp */,
+				045117031BCFBA53002AA721 /* Skill.h */,
+				045117041BCFBA53002AA721 /* Unit.cpp */,
+				045117051BCFBA53002AA721 /* Unit.h */,
+			);
+			name = Instance;
+			sourceTree = "<group>";
+		};
+		045116DB1BCFBA23002AA721 /* Type */ = {
+			isa = PBXGroup;
+			children = (
+				045116E51BCFBA44002AA721 /* BuffType.cpp */,
+				045116E61BCFBA44002AA721 /* BuffType.hpp */,
+				045116E71BCFBA44002AA721 /* BulletType.cpp */,
+				045116E81BCFBA44002AA721 /* BulletType.h */,
+				045116E91BCFBA44002AA721 /* CommandType.cpp */,
+				045116EA1BCFBA44002AA721 /* CommandType.h */,
+				045116EB1BCFBA44002AA721 /* FactionType.cpp */,
+				045116EC1BCFBA44002AA721 /* FactionType.h */,
+				045116ED1BCFBA44002AA721 /* SkllType.cpp */,
+				045116EE1BCFBA44002AA721 /* SkllType.h */,
+				045116EF1BCFBA44002AA721 /* TechTree.cpp */,
+				045116F01BCFBA44002AA721 /* TechTree.h */,
+				045116F11BCFBA44002AA721 /* UnitType.cpp */,
+				045116F21BCFBA44002AA721 /* UnitType.h */,
+			);
+			name = Type;
+			sourceTree = "<group>";
+		};
 		080E96DDFE201D6D7F000001 /* ios */ = {
 			isa = PBXGroup;
 			children = (
@@ -423,6 +567,7 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				045116D51BCFB9E7002AA721 /* Core */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
@@ -864,11 +1009,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				045116E31BCFBA39002AA721 /* Map.cpp in Sources */,
 				A1A4BA491BCE096300175E8A /* Utils.cpp in Sources */,
 				A1720E621BCCDABC00217E98 /* BattleMap.cpp in Sources */,
 				A1720E741BCCE0A200217E98 /* FixedLabelAtlas.cpp in Sources */,
 				A1720E8C1BCCE19300217E98 /* aes_ctr.c in Sources */,
 				A1720E8E1BCCE19300217E98 /* AESEncryptor.cpp in Sources */,
+				045116E41BCFBA39002AA721 /* World.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				A1720EB81BCD2D2E00217E98 /* Api.mm in Sources */,
@@ -881,30 +1028,45 @@
 				A1720E651BCCDE2300217E98 /* Tile.cpp in Sources */,
 				A1720E8B1BCCE19300217E98 /* aes_core.c in Sources */,
 				A1AAE5451BCCC3B80090D917 /* Unit.cpp in Sources */,
+				045117101BCFBA5F002AA721 /* Game.cpp in Sources */,
+				045117081BCFBA53002AA721 /* Command.cpp in Sources */,
+				045117071BCFBA53002AA721 /* Bullet.cpp in Sources */,
+				045116F71BCFBA44002AA721 /* SkllType.cpp in Sources */,
 				A1720E6F1BCCDF9100217E98 /* CocosUtils.cpp in Sources */,
 				A1720ED11BCD38FB00217E98 /* SoundManager.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				A1AAE5511BCCD0430090D917 /* Tower.cpp in Sources */,
 				A1720E691BCCDEFF00217E98 /* DataManager.cpp in Sources */,
+				045116F91BCFBA44002AA721 /* UnitType.cpp in Sources */,
 				A1AAE5541BCCD17B0090D917 /* Coordinate.cpp in Sources */,
 				A1720E8D1BCCE19300217E98 /* AESCTREncryptor.cpp in Sources */,
+				0451170B1BCFBA53002AA721 /* Unit.cpp in Sources */,
+				045117061BCFBA53002AA721 /* Buff.cpp in Sources */,
 				A1720E901BCCE19300217E98 /* MD5Verifier.cpp in Sources */,
 				A1720EBA1BCD2D2E00217E98 /* RMStore.m in Sources */,
 				A1A4BA381BCDF81500175E8A /* IapObject.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				A1720EC21BCD316000217E98 /* ProgressLayer.cpp in Sources */,
 				A1720E7B1BCCE0F000217E98 /* NumberJump.cpp in Sources */,
+				045116F51BCFBA44002AA721 /* CommandType.cpp in Sources */,
 				A1720ECB1BCD37FC00217E98 /* MessageBoxLayer.cpp in Sources */,
 				A1720EBD1BCD309A00217E98 /* NetworkController.cpp in Sources */,
 				A1AAE54E1BCCC5D10090D917 /* UnitData.cpp in Sources */,
 				A1720E6C1BCCDF1900217E98 /* UserDefaultsDataManager.cpp in Sources */,
 				A1720EA41BCD29FF00217E98 /* GameData.cpp in Sources */,
+				045116F61BCFBA44002AA721 /* FactionType.cpp in Sources */,
 				A1720EA91BCD2A2F00217E98 /* User.cpp in Sources */,
 				A1720EAD1BCD2A8400217E98 /* NetworkApi.cpp in Sources */,
 				A1A4BA461BCE08AF00175E8A /* OnlineUpdater.cpp in Sources */,
 				A1720E5E1BCCD85F00217E98 /* TowerData.cpp in Sources */,
+				045116F41BCFBA44002AA721 /* BulletType.cpp in Sources */,
+				0451170A1BCFBA53002AA721 /* Skill.cpp in Sources */,
+				045116F81BCFBA44002AA721 /* TechTree.cpp in Sources */,
 				A1720ECE1BCD382700217E98 /* MessageBoxBaseLayer.cpp in Sources */,
+				045116E21BCFBA39002AA721 /* Clock.cpp in Sources */,
 				A1720E931BCCE1D900217E98 /* LocalHelper.cpp in Sources */,
+				045117091BCFBA53002AA721 /* Faction.cpp in Sources */,
+				045116F31BCFBA44002AA721 /* BuffType.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
