@@ -1,1 +1,49 @@
-cocos2d
+# Android Generated files
+proj.android/assets
+proj.android/libs/armeabi
+proj.android/obj
+proj.android/bin
+proj.android/gen
+bin
+gen
+
+# Mac files
+.DS_Store
+
+# IDE files
+.settings
+.classpath
+.project
+.cproject
+local.properties
+*.iml
+
+#android studio files
+.idea/
+out/
+
+#cocos project
+cocos2d/
+
+proj.android/.settings
+bingu.xccheckout
+UserInterfaceState.xcuserstate
+WorkspaceSettings.xcsettings
+Breakpoints_v2.xcbkptlist
+bingu.xcscheme
+xcschememanagement.plist
+*~
+*.swp
+checkin_sample.json
+Expressions.xcexplist
+Encrypt.xcscheme
+proj.ios/bingu.xcodeproj/xcuserdata/
+png.zip
+updatePng.log
+TERM_PROGRAM=iTerm.app
+proj.ios_mac/Underworld_Client.xcodeproj/project.xcworkspace/
+proj.ios_mac/Underworld_Client.xcodeproj/xcuserdata
+proj.ios_mac/build
+
+#backup
+Classes/UI/Layer/Island/Backup

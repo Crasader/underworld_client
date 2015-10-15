@@ -1,0 +1,3 @@
+[submodule "Classes/Core"]
+	path = Classes/Core
+	url = git@code.csdn.net:MofishStudio/underworld_core.git
