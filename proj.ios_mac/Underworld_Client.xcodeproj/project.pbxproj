@@ -29,6 +29,9 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		300098CD1BD0A94B00B6E284 /* Coordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098CB1BD0A94B00B6E284 /* Coordinate.cpp */; settings = {ASSET_TAGS = (); }; };
+		300098D01BD0CD5900B6E284 /* Resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098CE1BD0CD5900B6E284 /* Resource.cpp */; settings = {ASSET_TAGS = (); }; };
+		300098D31BD0CDB000B6E284 /* ResourceType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098D11BD0CDB000B6E284 /* ResourceType.cpp */; settings = {ASSET_TAGS = (); }; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7619C43A67006E1F66 /* CloseNormal.png */; };
@@ -201,6 +204,12 @@
 		1D6058910D05DD3D006BFB54 /* Underworld_Client-mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Underworld_Client-mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		300098CB1BD0A94B00B6E284 /* Coordinate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Coordinate.cpp; path = Core/Utils/Coordinate.cpp; sourceTree = "<group>"; };
+		300098CC1BD0A94B00B6E284 /* Coordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Coordinate.h; path = Core/Utils/Coordinate.h; sourceTree = "<group>"; };
+		300098CE1BD0CD5900B6E284 /* Resource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Resource.cpp; path = Core/Unit/Instance/Resource.cpp; sourceTree = "<group>"; };
+		300098CF1BD0CD5900B6E284 /* Resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Resource.h; path = Core/Unit/Instance/Resource.h; sourceTree = "<group>"; };
+		300098D11BD0CDB000B6E284 /* ResourceType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ResourceType.cpp; path = Core/Unit/Type/ResourceType.cpp; sourceTree = "<group>"; };
+		300098D21BD0CDB000B6E284 /* ResourceType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResourceType.h; path = Core/Unit/Type/ResourceType.h; sourceTree = "<group>"; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		46880B7619C43A67006E1F66 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
 		46880B7719C43A67006E1F66 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
@@ -385,6 +394,7 @@
 		045116D51BCFB9E7002AA721 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				300098CA1BD0A90F00B6E284 /* Utils */,
 				045116D91BCFBA09002AA721 /* World */,
 				045116D81BCFB9FF002AA721 /* Unit */,
 				045116D71BCFB9F9002AA721 /* Game */,
@@ -448,6 +458,8 @@
 				045117031BCFBA53002AA721 /* Skill.h */,
 				045117041BCFBA53002AA721 /* Unit.cpp */,
 				045117051BCFBA53002AA721 /* Unit.h */,
+				300098CE1BD0CD5900B6E284 /* Resource.cpp */,
+				300098CF1BD0CD5900B6E284 /* Resource.h */,
 			);
 			name = Instance;
 			sourceTree = "<group>";
@@ -469,6 +481,8 @@
 				045116F01BCFBA44002AA721 /* TechTree.h */,
 				045116F11BCFBA44002AA721 /* UnitType.cpp */,
 				045116F21BCFBA44002AA721 /* UnitType.h */,
+				300098D11BD0CDB000B6E284 /* ResourceType.cpp */,
+				300098D21BD0CDB000B6E284 /* ResourceType.h */,
 			);
 			name = Type;
 			sourceTree = "<group>";
@@ -549,6 +563,15 @@
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		300098CA1BD0A90F00B6E284 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				300098CB1BD0A94B00B6E284 /* Coordinate.cpp */,
+				300098CC1BD0A94B00B6E284 /* Coordinate.h */,
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 		46880B7519C43A67006E1F66 /* Resources */ = {
@@ -1050,6 +1073,7 @@
 				A1720E7B1BCCE0F000217E98 /* NumberJump.cpp in Sources */,
 				045116F51BCFBA44002AA721 /* CommandType.cpp in Sources */,
 				A1720ECB1BCD37FC00217E98 /* MessageBoxLayer.cpp in Sources */,
+				300098D01BD0CD5900B6E284 /* Resource.cpp in Sources */,
 				A1720EBD1BCD309A00217E98 /* NetworkController.cpp in Sources */,
 				A1AAE54E1BCCC5D10090D917 /* UnitData.cpp in Sources */,
 				A1720E6C1BCCDF1900217E98 /* UserDefaultsDataManager.cpp in Sources */,
@@ -1058,7 +1082,9 @@
 				A1720EA91BCD2A2F00217E98 /* User.cpp in Sources */,
 				A1720EAD1BCD2A8400217E98 /* NetworkApi.cpp in Sources */,
 				A1A4BA461BCE08AF00175E8A /* OnlineUpdater.cpp in Sources */,
+				300098D31BD0CDB000B6E284 /* ResourceType.cpp in Sources */,
 				A1720E5E1BCCD85F00217E98 /* TowerData.cpp in Sources */,
+				300098CD1BD0A94B00B6E284 /* Coordinate.cpp in Sources */,
 				045116F41BCFBA44002AA721 /* BulletType.cpp in Sources */,
 				0451170A1BCFBA53002AA721 /* Skill.cpp in Sources */,
 				045116F81BCFBA44002AA721 /* TechTree.cpp in Sources */,
