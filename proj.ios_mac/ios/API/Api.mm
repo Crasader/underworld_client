@@ -78,7 +78,7 @@ long const IapVerificationFailedCode = RMStoreErrorCodeUnableToCompleteVerificat
 @end
 
 #pragma mark - Private Class that handle objc callbacks
-@interface Api : NSObject <UIAlertViewDelegate, RMStoreReceiptVerificator, SKPaymentTransactionObserver>
+@interface Api : NSObject <UIAlertViewDelegate, RMStoreReceiptVerifier, SKPaymentTransactionObserver>
 
 @end
 
@@ -239,7 +239,7 @@ void iOSApi::initIAPEnviroment()
     // only init iap after user is login
     RMStore *store = [RMStore defaultStore];
     [store addTransactionObserver];
-    store.receiptVerificator = _api;
+    store.receiptVerifier = _api;
     [[SKPaymentQueue defaultQueue] addTransactionObserver:_api];
 }
 

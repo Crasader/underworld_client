@@ -58,12 +58,6 @@ enum
     kVampireTower_0,
 };
 
-typedef enum
-{
-    kAttackType_Normal,
-    
-}AttackType;
-
 /** public macro */
 #ifndef M_MIN
 #define M_MIN(x,y) (((x) > (y)) ? (y) : (x))

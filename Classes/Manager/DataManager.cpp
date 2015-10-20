@@ -9,8 +9,6 @@
 #include "DataManager.h"
 #include "tinyxml2/tinyxml2.h"
 #include "LocalHelper.h"
-#include "TowerData.h"
-#include "UnitData.h"
 
 using namespace std;
 
@@ -67,8 +65,7 @@ void DataManager::parseTowersData()
                  item;
                  item = item->NextSiblingElement())
             {
-                TowerData *data = new TowerData(item);
-                _towers.insert(make_pair(data->id(), data));
+                
             }
             
             CC_SAFE_DELETE(xmlDoc);
@@ -91,8 +88,7 @@ void DataManager::parseUnitsData()
                  item;
                  item = item->NextSiblingElement())
             {
-                UnitData *data = new UnitData(item);
-                _units.insert(make_pair(data->id(), data));
+                
             }
             
             CC_SAFE_DELETE(xmlDoc);
@@ -115,8 +111,7 @@ void DataManager::parseHeroesData()
                  item;
                  item = item->NextSiblingElement())
             {
-                UnitData *data = new UnitData(item);
-                _heroes.insert(make_pair(data->id(), data));
+                
             }
             
             CC_SAFE_DELETE(xmlDoc);

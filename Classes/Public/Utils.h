@@ -21,8 +21,8 @@ namespace Utils
     string format(const char *format, ...);
     void split(vector<string> &v, const string& src, const string& delimit, const string& null_subst = "");
     void split2int(vector<int> &v, const string& src, const string& delimit, int d = 0);
-    std::string convertCoordinateToString(const Coordinate& coordinate);
-    Coordinate convertStringToCoordinate(const string& text);
+    std::string convertCoordinateToString(const UnderWorld::Core::Coordinate& coordinate);
+    UnderWorld::Core::Coordinate convertStringToCoordinate(const string& text);
     
     /** for rapidjson */
     int   getIntValue_json(const rapidjson::Value& root, const char* key, int def = 0);
