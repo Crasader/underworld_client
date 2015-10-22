@@ -27,6 +27,7 @@
 #import "cocos2d.h"
 #import "AppDelegate.h"
 #import "RootViewController.h"
+#import "CrashHelper.h"
 
 @implementation AppController
 
@@ -87,6 +88,9 @@ static AppDelegate s_sharedApplication;
     cocos2d::Director::getInstance()->setOpenGLView(glview);
 
     app->run();
+    
+    [[CrashHelper sharedHelper] activateCrashReporter];
+    [[CrashHelper sharedHelper] sendCrashReportWithEmail:_viewController];
 
     return YES;
 }

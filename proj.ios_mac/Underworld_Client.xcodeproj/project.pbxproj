@@ -111,8 +111,9 @@
 		A1A4BA461BCE08AF00175E8A /* OnlineUpdater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A4BA441BCE08AF00175E8A /* OnlineUpdater.cpp */; settings = {ASSET_TAGS = (); }; };
 		A1A4BA491BCE096300175E8A /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A4BA471BCE096300175E8A /* Utils.cpp */; settings = {ASSET_TAGS = (); }; };
 		A1B5588F1BCB65A100D30D6A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B5588E1BCB65A100D30D6A /* StoreKit.framework */; };
-		A1DE80321BD60C15004DEED1 /* SkillAttack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1DE80301BD60C15004DEED1 /* SkillAttack.cpp */; settings = {ASSET_TAGS = (); }; };
-		A1DE80351BD61F5C004DEED1 /* SkillMove.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1DE80331BD61F5C004DEED1 /* SkillMove.cpp */; settings = {ASSET_TAGS = (); }; };
+		A1DE80391BD669BB004DEED1 /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1DE80381BD669BA004DEED1 /* CrashReporter.framework */; settings = {ASSET_TAGS = (); }; };
+		A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A1FC49B31BD8C249005C1B2E /* CrashHelper.m */; settings = {ASSET_TAGS = (); COMPILER_FLAGS = "-fobjc-arc"; }; };
+		A1FC49B61BD8DBCF005C1B2E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1FC49B51BD8DBCF005C1B2E /* MessageUI.framework */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -314,10 +315,10 @@
 		A1A4BA481BCE096300175E8A /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		A1AAE54A1BCCC4D10090D917 /* Global.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Global.h; sourceTree = "<group>"; };
 		A1B5588E1BCB65A100D30D6A /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
-		A1DE80301BD60C15004DEED1 /* SkillAttack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SkillAttack.cpp; sourceTree = "<group>"; };
-		A1DE80311BD60C15004DEED1 /* SkillAttack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkillAttack.h; sourceTree = "<group>"; };
-		A1DE80331BD61F5C004DEED1 /* SkillMove.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SkillMove.cpp; sourceTree = "<group>"; };
-		A1DE80341BD61F5C004DEED1 /* SkillMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkillMove.h; sourceTree = "<group>"; };
+		A1DE80381BD669BA004DEED1 /* CrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CrashReporter.framework; sourceTree = "<group>"; };
+		A1FC49B21BD8C249005C1B2E /* CrashHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashHelper.h; sourceTree = "<group>"; };
+		A1FC49B31BD8C249005C1B2E /* CrashHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrashHelper.m; sourceTree = "<group>"; };
+		A1FC49B51BD8DBCF005C1B2E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = DEVELOPER_DIR; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -334,6 +335,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1FC49B61BD8DBCF005C1B2E /* MessageUI.framework in Frameworks */,
 				ED545A7C1B68A1F400C3958E /* libiconv.dylib in Frameworks */,
 				A1B5588F1BCB65A100D30D6A /* StoreKit.framework in Frameworks */,
 				52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */,
@@ -344,6 +346,7 @@
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
 				BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */,
 				BF1712471292920000B8313A /* libz.dylib in Frameworks */,
+				A1DE80391BD669BB004DEED1 /* CrashReporter.framework in Frameworks */,
 				BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */,
 				D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */,
 				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
@@ -440,10 +443,6 @@
 				300098CF1BD0CD5900B6E284 /* Resource.h */,
 				045117021BCFBA53002AA721 /* Skill.cpp */,
 				045117031BCFBA53002AA721 /* Skill.h */,
-				A1DE80301BD60C15004DEED1 /* SkillAttack.cpp */,
-				A1DE80311BD60C15004DEED1 /* SkillAttack.h */,
-				A1DE80331BD61F5C004DEED1 /* SkillMove.cpp */,
-				A1DE80341BD61F5C004DEED1 /* SkillMove.h */,
 				045117041BCFBA53002AA721 /* Unit.cpp */,
 				045117051BCFBA53002AA721 /* Unit.h */,
 			);
@@ -527,6 +526,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A1FC49B51BD8DBCF005C1B2E /* MessageUI.framework */,
 				A1B5588E1BCB65A100D30D6A /* StoreKit.framework */,
 				ED545A7D1B68A1FA00C3958E /* libiconv.dylib */,
 				ED545A7B1B68A1F400C3958E /* libiconv.dylib */,
@@ -756,6 +756,7 @@
 		A1720EB11BCD2D2E00217E98 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				A1DE80371BD669BA004DEED1 /* CrashReporter */,
 				A1720EB21BCD2D2E00217E98 /* KeyChain */,
 				A1720EB51BCD2D2E00217E98 /* RMStore */,
 			);
@@ -817,6 +818,16 @@
 				A1A4BA481BCE096300175E8A /* Utils.h */,
 			);
 			path = Public;
+			sourceTree = "<group>";
+		};
+		A1DE80371BD669BA004DEED1 /* CrashReporter */ = {
+			isa = PBXGroup;
+			children = (
+				A1DE80381BD669BA004DEED1 /* CrashReporter.framework */,
+				A1FC49B21BD8C249005C1B2E /* CrashHelper.h */,
+				A1FC49B31BD8C249005C1B2E /* CrashHelper.m */,
+			);
+			path = CrashReporter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -981,6 +992,7 @@
 				045116E31BCFBA39002AA721 /* Map.cpp in Sources */,
 				A1A4BA491BCE096300175E8A /* Utils.cpp in Sources */,
 				A1720E741BCCE0A200217E98 /* FixedLabelAtlas.cpp in Sources */,
+				A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */,
 				A1720E8C1BCCE19300217E98 /* aes_ctr.c in Sources */,
 				A1720E8E1BCCE19300217E98 /* AESEncryptor.cpp in Sources */,
 				045116E41BCFBA39002AA721 /* World.cpp in Sources */,
@@ -1001,7 +1013,6 @@
 				A1720ED11BCD38FB00217E98 /* SoundManager.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				A1720E691BCCDEFF00217E98 /* DataManager.cpp in Sources */,
-				A1DE80321BD60C15004DEED1 /* SkillAttack.cpp in Sources */,
 				045116F91BCFBA44002AA721 /* UnitType.cpp in Sources */,
 				A1720E8D1BCCE19300217E98 /* AESCTREncryptor.cpp in Sources */,
 				0451170B1BCFBA53002AA721 /* Unit.cpp in Sources */,
@@ -1022,7 +1033,6 @@
 				A1720EA91BCD2A2F00217E98 /* User.cpp in Sources */,
 				A1720EAD1BCD2A8400217E98 /* NetworkApi.cpp in Sources */,
 				A1A4BA461BCE08AF00175E8A /* OnlineUpdater.cpp in Sources */,
-				A1DE80351BD61F5C004DEED1 /* SkillMove.cpp in Sources */,
 				300098D31BD0CDB000B6E284 /* ResourceType.cpp in Sources */,
 				300098CD1BD0A94B00B6E284 /* Coordinate.cpp in Sources */,
 				045116F41BCFBA44002AA721 /* BulletType.cpp in Sources */,
@@ -1093,6 +1103,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ios/ThirdParty/CrashReporter",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1133,6 +1147,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COMPRESS_PNG_FILES = NO;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ios/ThirdParty/CrashReporter",
+				);
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ios/Prefix.pch;
