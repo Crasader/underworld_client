@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="isometric_grass_and_water" tilewidth="32" tileheight="32" tilecount="96">
+  <image source="isometric_grass_and_water.png" width="256" height="384"/>
+ </tileset>
+ <layer name="块层 1" width="100" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3VsQ3AIAxFQdh/6RTpEAo08XdxJ3kBP8ke4zU3Q8auhSY5Xz00qXfqoUmWHr3okbXu3M3KuvkfetS57aFJHT360aMfHXrSAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPjLA/JfdKRAnAAA
+  </data>
+ </layer>
+ <imagelayer name="图像图层 1">
+  <image source="stone.png"/>
+ </imagelayer>
+</map>

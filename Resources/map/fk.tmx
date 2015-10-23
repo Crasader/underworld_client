@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" source="desert.tsx"/>
+ <layer name="块层 1" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzVWFuSwzAI47uHyP2PuT/bGapIPGyc7jLjSZpiLAlCnFxmdv3zYX8Aww5Ob9/AxMz7vH5HJ4byfVke7yrE+ebIsH8zhywfT3N4Up9KHal5alx2r1FL/L0Pam/gwzBV7omuf4aX+fjryKNaW5m+1R4Q4TtVfxmv7lyleaSlN6xJXEedTwzUHbFijSgObx7q/wuOkxyq9XCqZzFt/JpVvt3ecILLqTxk+rB6YvNYfDYP683fXwpLV1+FjeFAfBUeOMfzUJhxjQrX3Tp8m+p5jIfCzDSJetAUl06+ET/W8a6mimOnx5nF+WAa47UsPsbyv/E6zlH3SlcvhXOyxndira4T9Su2X5jSisWLevpp/VbG29SebEIrs/taT71vVXoOu1651uXArMsj09zsc62qXmb8/sk4RD64hnqXVM/3Tt09tcerYO9wiHL+BJfo3OM3dzT4j3Fe4aFslUeWkyx+5XsCwz2dD4V9ikcnHxM8KpiZf6U/sf0v81emYr3svj7Oq3Kq7BHU8yoy5ef7e/Yu1akL/z3Ea7Ba/926wj6FPPA84uF9lUaddyu1Hqsj1W9XebBaimoqqq1IB3Y/snmMR1ZXOC+rCzYyH7+egW/Ey8j/EY8sbx5D5hdZ9z2Q8UDMnbhTo/t9wQr+1bg7Q+nIcEe5ZZjNHbHnZtpg3+rmguFTsdQ6BkcVn/lgLVY4GJlTmXe6bndqi70DKk67fFUfZfU1qZGPqayqF6uD3W8P7NmHmKJ9SZdHJ0+Mm1q3ogNijHiwvVl3+PWsMS/ChhwyXRBDxTrxT41VHqcwZDaRj5N6TupwwRGxo9+OTefqB6u70pc=
+  </data>
+ </layer>
+ <imagelayer name="图像图层 1" x="576" y="576">
+  <image source="stone.png"/>
+ </imagelayer>
+</map>
