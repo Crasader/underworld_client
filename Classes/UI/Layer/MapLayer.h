@@ -18,10 +18,23 @@ using namespace std;
 USING_NS_CC;
 //using namespace ui;
 
-class MapLayer : public LayerColor {
+class MapLayer : public LayerColor, public cocos2d::extension::ScrollViewDelegate {
 public:
     virtual bool init(int mapId);
     static MapLayer* create(int mapId);
+    //-------- scrollviewdelegate --------//
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void scrollViewDidScroll(cocos2d::extension::ScrollView* view);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void scrollViewDidZoom(cocos2d::extension::ScrollView* view);
+    
+    virtual void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
 protected:
     virtual ~MapLayer();
     MapLayer();

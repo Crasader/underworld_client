@@ -15,6 +15,7 @@ static const int TILEDMAP_TAG = 2;
 static const int TILEDMAP_ZORDER = 2;
 static const string TILEDMAP_LAYER_LOGIC = "logic";
 static const string TILEDMAP_LAYER_FOREGROUND = "fg";
+static const unsigned int TILEDMAP_MAX_SCALE = 1.0f;
 
 MapLayer::MapLayer()
 :mMapId(INVALID_VALUE)
@@ -54,6 +55,7 @@ bool MapLayer::init(int mapId)
         mScrollView->setBounceable(false);
         mScrollView->setViewSize(winSize);
         mScrollView->setPosition(Point::ZERO);
+        mScrollView->setDelegate(this);
         addChild(mScrollView);
 //        mRoot = Node::create();
 //        mScrollView->addChild(mRoot);
@@ -77,16 +79,48 @@ bool MapLayer::init(int mapId)
         mTiledMap = cocos2d::experimental::TMXTiledMap::create(StringUtils::format("map/%d.tmx", mMapId));
         mScrollView->addChild(mTiledMap, TILEDMAP_ZORDER, TILEDMAP_TAG);
         cocos2d::experimental::TMXLayer *foreground = mTiledMap->getLayer(TILEDMAP_LAYER_FOREGROUND);
-        const Size &mapSize = mTiledMap->getMapSize();
+//        const Size &mapSize = mTiledMap->getMapSize();
+        const Size &ls = foreground->getLayerSize();
+        for (unsigned int y = 0; y < ls.height; y++)
+        {
+            int zOrder = 2 * (y + 1);
+            for (unsigned int x = 0; x < ls.width; x++)
+            {
+                Sprite *tile = foreground->getTileAt(Vec2(x, y));
+                if (tile) {
+//                    tile->setLocalZOrder(zOrder);
+                    foreground->reorderChild(tile, zOrder);
+                }
+            }
+        }
+        
         const Size &mapPSize = mTiledMap->getContentSize();
         float scale = RESOLUTION_HEIGHT / mapPSize.height;
-        mScrollView->setContentSize(Size(mapPSize.width * scale, RESOLUTION_HEIGHT));
-        mScrollView->setMaxScale(1.0f);
+        mScrollView->setContentSize(mapPSize);
+        mScrollView->setMaxScale(TILEDMAP_MAX_SCALE);
         mScrollView->setMinScale(scale);
-//        mScrollView->setZoomScale(scale);
+        mScrollView->setZoomScale(scale);
         //--------- logic ---------//
         
+        //--------- event ---------//
+        auto listener = EventListenerTouchAllAtOnce::create();
+        listener->onTouchesMoved = CC_CALLBACK_2(MapLayer::onTouchesMoved, this);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
         return true;
     }
     return false;
+}
+
+void MapLayer::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event)
+{
+    
+}
+
+void MapLayer::scrollViewDidScroll(cocos2d::extension::ScrollView* view)
+{
+    
+}
+
+void MapLayer::scrollViewDidZoom(cocos2d::extension::ScrollView* view)
+{
 }
