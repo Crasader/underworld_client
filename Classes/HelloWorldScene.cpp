@@ -1,6 +1,7 @@
 #include "HelloWorldScene.h"
 #include "2d/CCFastTMXLayer.h"
 #include "2d/CCFastTMXTiledMap.h"
+#include "MapLayer.h"
 
 USING_NS_CC;
 
@@ -66,25 +67,29 @@ bool HelloWorld::init()
 //    this->addChild(label, 1);
 //
     // add "HelloWorld" splash screen"
-    auto sprite = Sprite::create("map/bg.png");
+//    auto sprite = Sprite::create("map/bg.png");
+//
+//    // position the sprite on the center of the screen
+//    sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+//
+//    // add the sprite as a child to this layer
+//    this->addChild(sprite, 0);
+    
+    
+//    FileUtils::getInstance()->addSearchPath("map");
+//    
+//    auto *map = cocos2d::experimental::TMXTiledMap::create("test4.tmx");
+//    //        map->setPosition(Point(480.0f, 320.0f));
+//    addChild(map, 2, 1);
 
-    // position the sprite on the center of the screen
-    sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-
-    // add the sprite as a child to this layer
-    this->addChild(sprite, 0);
+    MapLayer *map = MapLayer::create(1);
+    addChild(map, 3);
     
+//    auto listener = EventListenerTouchAllAtOnce::create();
+//    listener->onTouchesMoved = CC_CALLBACK_2(HelloWorld::onTouchesMoved, this);
+//    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+//    
     
-    FileUtils::getInstance()->addSearchPath("map");
-    
-    auto *map = cocos2d::experimental::TMXTiledMap::create("test4.tmx");
-    //        map->setPosition(Point(480.0f, 320.0f));
-    addChild(map, 2, 1);
-    
-    
-    auto listener = EventListenerTouchAllAtOnce::create();
-    listener->onTouchesMoved = CC_CALLBACK_2(HelloWorld::onTouchesMoved, this);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     return true;
 }
 

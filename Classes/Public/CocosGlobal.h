@@ -15,8 +15,8 @@
 
 #define USER_TOKEN_LENGTH   (64)
 
-#define RESOLUTION_WIDTH    (640)
-#define RESOLUTION_HEIGHT   (1136)
+#define RESOLUTION_WIDTH    (1136)
+#define RESOLUTION_HEIGHT   (640)
 
 #define DEFAULT_FONT_SIZE   (20.0f)
 #define BIG_FONT_SIZE       (30.0f)

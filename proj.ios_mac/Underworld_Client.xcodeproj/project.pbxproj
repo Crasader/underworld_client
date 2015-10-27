@@ -117,6 +117,7 @@
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
+		CB075C041BDDD8AC00C7FD68 /* MapLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB075C021BDDD8AC00C7FD68 /* MapLayer.cpp */; settings = {ASSET_TAGS = (); }; };
 		CBDBD2131BD7B3B9004706A8 /* map in Resources */ = {isa = PBXBuildFile; fileRef = CBDBD2121BD7B3B9004706A8 /* map */; settings = {ASSET_TAGS = (); }; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
@@ -323,6 +324,8 @@
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		CB075C021BDDD8AC00C7FD68 /* MapLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapLayer.cpp; sourceTree = "<group>"; };
+		CB075C031BDDD8AC00C7FD68 /* MapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapLayer.h; sourceTree = "<group>"; };
 		CBDBD2121BD7B3B9004706A8 /* map */ = {isa = PBXFileReference; lastKnownFileType = folder; path = map; sourceTree = "<group>"; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -794,6 +797,8 @@
 				A1720ECA1BCD37FC00217E98 /* MessageBoxLayer.h */,
 				A1720EC01BCD316000217E98 /* ProgressLayer.cpp */,
 				A1720EC11BCD316000217E98 /* ProgressLayer.h */,
+				CB075C021BDDD8AC00C7FD68 /* MapLayer.cpp */,
+				CB075C031BDDD8AC00C7FD68 /* MapLayer.h */,
 			);
 			path = Layer;
 			sourceTree = "<group>";
@@ -996,6 +1001,7 @@
 				045116E31BCFBA39002AA721 /* Map.cpp in Sources */,
 				A1A4BA491BCE096300175E8A /* Utils.cpp in Sources */,
 				A1720E741BCCE0A200217E98 /* FixedLabelAtlas.cpp in Sources */,
+				CB075C041BDDD8AC00C7FD68 /* MapLayer.cpp in Sources */,
 				A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */,
 				A1720E8C1BCCE19300217E98 /* aes_ctr.c in Sources */,
 				A1720E8E1BCCE19300217E98 /* AESEncryptor.cpp in Sources */,
