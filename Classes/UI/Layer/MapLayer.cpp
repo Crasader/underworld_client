@@ -10,6 +10,9 @@
 #include "CocosGlobal.h"
 #include "2d/CCFastTMXLayer.h"
 #include "2d/CCFastTMXTiledMap.h"
+#include "Coordinate.h"
+#include "MapSetting.h"
+#include "Map.h"
 
 static const int TILEDMAP_TAG = 2;
 static const int TILEDMAP_ZORDER = 2;
@@ -19,9 +22,7 @@ static const unsigned int TILEDMAP_MAX_SCALE = 1.0f;
 
 MapLayer::MapLayer()
 :mMapId(INVALID_VALUE)
-,mBackground(nullptr)
 ,mTiledMap(nullptr)
-,mRoot(nullptr)
 ,mScrollView(nullptr)
 {
     
@@ -93,14 +94,40 @@ bool MapLayer::init(int mapId)
                 }
             }
         }
+        CCLOG("%zd foreground", foreground->getChildren().size());
+//
+//        //--------- logic ---------//
+        cocos2d::experimental::TMXLayer *logicLayer = mTiledMap->getLayer(TILEDMAP_LAYER_LOGIC);
+        logicLayer->setVisible(false);
+        const Size &logicSize = logicLayer->getLayerSize();
+        UnderWorld::Core::MapSetting mapSetting(logicSize.width, logicSize.height);
+        for (unsigned int x = 0; x < logicSize.width; x++)
+        {
+            for (unsigned int y = 0; y < logicSize.height; y++)
+            {
+                int gid = logicLayer->getTileGIDAt(Vec2(x, y));
+//                printf("[%d, %d]%d\n", x, y, gid);
+                if (gid == 0) {
+                    //can walk
+                    mapSetting.add(UnderWorld::Core::Coordinate(x, y));
+                } else {
+                    //can not walk
+                }
+            }
+        }
+        //todo, call gamecore to set Map
+        UnderWorld::Core::Map coreMap;
+        coreMap.init(mapSetting);
         
+        CCLOG("%zd logicLayer", logicLayer->getChildren().size());
+        
+        //--------- scale ---------//
         const Size &mapPSize = mTiledMap->getContentSize();
         float scale = RESOLUTION_HEIGHT / mapPSize.height;
         mScrollView->setContentSize(mapPSize);
         mScrollView->setMaxScale(TILEDMAP_MAX_SCALE);
         mScrollView->setMinScale(scale);
         mScrollView->setZoomScale(scale);
-        //--------- logic ---------//
         
         //--------- event ---------//
         auto listener = EventListenerTouchAllAtOnce::create();

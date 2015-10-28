@@ -40,8 +40,6 @@ protected:
     MapLayer();
 private:
     int mMapId;
-    Node *mRoot;
-    Sprite* mBackground;
     cocos2d::experimental::TMXTiledMap* mTiledMap;
     cocos2d::extension::ScrollView *mScrollView;
 };
