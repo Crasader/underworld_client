@@ -37,13 +37,19 @@ public:
     
     virtual void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
     
-    void addUnit(Node* unit, const UnderWorld::Core::Coordinate& pos);
-    void repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& pos);
+    void addUnit(Node* unit, const UnderWorld::Core::Coordinate& coreCoordinate);
+    void repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& coreCoordinate);
+    
+    inline UnderWorld::Core::Coordinate mapCoordinate2coreCoordinate(int x, int y);
+    inline Point coreCoordinate2mapCoordinate(int x, int y);
+    inline int calcZOrder(int mapCoordinateY);
 protected:
     virtual ~MapLayer();
     MapLayer();
 private:
     int _mapId;
+    int _width;
+    int _height;
     cocos2d::experimental::TMXTiledMap* _tiledMap;
     cocos2d::extension::ScrollView *_scrollView;
     cocos2d::experimental::TMXLayer* _mainLayer;

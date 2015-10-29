@@ -80,11 +80,13 @@ bool MapLayer::init(int mapId)
         _tiledMap = cocos2d::experimental::TMXTiledMap::create(StringUtils::format("map/%d.tmx", _mapId));
         _scrollView->addChild(_tiledMap, TILEDMAP_ZORDER, TILEDMAP_TAG);
         _mainLayer = _tiledMap->getLayer(TILEDMAP_LAYER_FOREGROUND);
-//        const Size &mapSize = mTiledMap->getMapSize();
+        const Size &mapSize = _tiledMap->getMapSize();
+        _width = mapSize.width;
+        _height = mapSize.height;
         const Size &ls = _mainLayer->getLayerSize();
         for (unsigned int y = 0; y < ls.height; y++)
         {
-            int zOrder = 2 * (y + 1);
+            int zOrder = calcZOrder(y);
             for (unsigned int x = 0; x < ls.width; x++)
             {
                 Sprite *tile = _mainLayer->getTileAt(Vec2(x, y));
@@ -109,7 +111,7 @@ bool MapLayer::init(int mapId)
 //                printf("[%d, %d]%d\n", x, y, gid);
                 if (gid == 0) {
                     //can walk
-                    mapSetting.add(UnderWorld::Core::Coordinate(x, y));
+                    mapSetting.add(mapCoordinate2coreCoordinate(x, y));
                 } else {
                     //can not walk
                 }
@@ -138,19 +140,40 @@ bool MapLayer::init(int mapId)
     return false;
 }
 
-void MapLayer::addUnit(Node* unit, const UnderWorld::Core::Coordinate& pos)
+int MapLayer::calcZOrder(int mapCoordinateY)
 {
-    
+    return 2 * (mapCoordinateY + 1);
 }
 
-void MapLayer::repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& pos)
+
+UnderWorld::Core::Coordinate MapLayer::mapCoordinate2coreCoordinate(int x, int y)
 {
-    
+    return UnderWorld::Core::Coordinate(x, _height - y);
+}
+
+Point MapLayer::coreCoordinate2mapCoordinate(int x, int y)
+{
+    return Point(x, _height - y);
+}
+
+void MapLayer::addUnit(Node* unit, const UnderWorld::Core::Coordinate& coreCoordinate)
+{
+    const Point& mapCoordinate = coreCoordinate2mapCoordinate(coreCoordinate.x, coreCoordinate.y);
+    unit->setPosition(_mainLayer->getPositionAt(mapCoordinate));
+    _mainLayer->addChild(unit, calcZOrder(mapCoordinate.y));
+}
+
+void MapLayer::repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& coreCoordinate)
+{
+    const Point& mapCoordinate = coreCoordinate2mapCoordinate(coreCoordinate.x, coreCoordinate.y);
+    unit->setPosition(_mainLayer->getPositionAt(mapCoordinate));
+    reorderChild(unit, calcZOrder(mapCoordinate.y));
 }
 
 void MapLayer::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event)
 {
-    
+//    Sprite* x = Sprite::create("map/images/tree1.png");
+//    addUnit(x, UnderWorld::Core::Coordinate(200,30));
 }
 
 void MapLayer::scrollViewDidScroll(cocos2d::extension::ScrollView* view)
