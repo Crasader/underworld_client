@@ -116,7 +116,7 @@ static void postCrashCallback(siginfo_t *info, ucontext_t *uap, void *context) {
 }
 
 - (void)sendCrashReportWithEmail:(UIViewController *)parentViewController {
-    if (true) {
+    if (_hasCrashReport) {
         _parentViewController = parentViewController;
         
         if ([MFMailComposeViewController canSendMail] && [[NSFileManager defaultManager] fileExistsAtPath:_crashReporterPath]) {
@@ -126,7 +126,7 @@ static void postCrashCallback(siginfo_t *info, ucontext_t *uap, void *context) {
             [controller setToRecipients:receipients];
             [controller setSubject:@"Crash Report"];
             NSData *crashData = [NSData dataWithContentsOfFile:_crashReporterPath];
-            [controller addAttachmentData:crashData mimeType:@"text/plain" fileName:@"Crash Report"];
+            [controller addAttachmentData:crashData mimeType:@"text/plain" fileName:@"CrashReport.plcrash"];
             [controller setMessageBody:@"" isHTML:YES];
             [_parentViewController presentViewController:controller animated:YES completion:nil];
         } else {
