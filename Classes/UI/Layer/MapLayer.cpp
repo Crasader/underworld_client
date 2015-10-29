@@ -21,9 +21,9 @@ static const string TILEDMAP_LAYER_FOREGROUND = "fg";
 static const unsigned int TILEDMAP_MAX_SCALE = 1.0f;
 
 MapLayer::MapLayer()
-:mMapId(INVALID_VALUE)
-,mTiledMap(nullptr)
-,mScrollView(nullptr)
+:_mapId(INVALID_VALUE)
+,_tiledMap(nullptr)
+,_scrollView(nullptr)
 {
     
 }
@@ -47,29 +47,29 @@ MapLayer* MapLayer::create(int mapId)
 bool MapLayer::init(int mapId)
 {
     if (LayerColor::init()) {
-        mMapId = mapId;
+        _mapId = mapId;
         const Size& winSize = Director::getInstance()->getWinSize();
         //--------- container ----------//
-        mScrollView = cocos2d::extension::ScrollView::create();
-        mScrollView->setDirection(cocos2d::extension::ScrollView::Direction::BOTH);
-        mScrollView->setTouchEnabled(true);
-        mScrollView->setBounceable(false);
-        mScrollView->setViewSize(winSize);
-        mScrollView->setPosition(Point::ZERO);
-        mScrollView->setDelegate(this);
-        addChild(mScrollView);
+        _scrollView = cocos2d::extension::ScrollView::create();
+        _scrollView->setDirection(cocos2d::extension::ScrollView::Direction::BOTH);
+        _scrollView->setTouchEnabled(true);
+        _scrollView->setBounceable(false);
+        _scrollView->setViewSize(winSize);
+        _scrollView->setPosition(Point::ZERO);
+        _scrollView->setDelegate(this);
+        addChild(_scrollView);
 //        mRoot = Node::create();
 //        mScrollView->addChild(mRoot);
         //--------- background ---------//
         int i = 1;
         float offsetX = .0f;
         while (true) {
-            string fileName = StringUtils::format("map/bg%d_%d.png", mMapId, i);
+            string fileName = StringUtils::format("map/bg%d_%d.png", _mapId, i);
             if(FileUtils::getInstance()->isFileExist(fileName)){
                 Sprite* bg = Sprite::create(fileName);
                 bg->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
                 bg->setPosition(Point(offsetX, .0f));
-                mScrollView->addChild(bg);
+                _scrollView->addChild(bg);
                 offsetX += bg->getContentSize().width;
             } else {
                 break;
@@ -77,27 +77,27 @@ bool MapLayer::init(int mapId)
             i++;
         }
         //--------- foreground ---------- //
-        mTiledMap = cocos2d::experimental::TMXTiledMap::create(StringUtils::format("map/%d.tmx", mMapId));
-        mScrollView->addChild(mTiledMap, TILEDMAP_ZORDER, TILEDMAP_TAG);
-        cocos2d::experimental::TMXLayer *foreground = mTiledMap->getLayer(TILEDMAP_LAYER_FOREGROUND);
+        _tiledMap = cocos2d::experimental::TMXTiledMap::create(StringUtils::format("map/%d.tmx", _mapId));
+        _scrollView->addChild(_tiledMap, TILEDMAP_ZORDER, TILEDMAP_TAG);
+        _mainLayer = _tiledMap->getLayer(TILEDMAP_LAYER_FOREGROUND);
 //        const Size &mapSize = mTiledMap->getMapSize();
-        const Size &ls = foreground->getLayerSize();
+        const Size &ls = _mainLayer->getLayerSize();
         for (unsigned int y = 0; y < ls.height; y++)
         {
             int zOrder = 2 * (y + 1);
             for (unsigned int x = 0; x < ls.width; x++)
             {
-                Sprite *tile = foreground->getTileAt(Vec2(x, y));
+                Sprite *tile = _mainLayer->getTileAt(Vec2(x, y));
                 if (tile) {
 //                    tile->setLocalZOrder(zOrder);
-                    foreground->reorderChild(tile, zOrder);
+                    _mainLayer->reorderChild(tile, zOrder);
                 }
             }
         }
-        CCLOG("%zd foreground", foreground->getChildren().size());
+        CCLOG("%zd foreground", _mainLayer->getChildren().size());
 //
 //        //--------- logic ---------//
-        cocos2d::experimental::TMXLayer *logicLayer = mTiledMap->getLayer(TILEDMAP_LAYER_LOGIC);
+        cocos2d::experimental::TMXLayer *logicLayer = _tiledMap->getLayer(TILEDMAP_LAYER_LOGIC);
         logicLayer->setVisible(false);
         const Size &logicSize = logicLayer->getLayerSize();
         UnderWorld::Core::MapSetting mapSetting(logicSize.width, logicSize.height);
@@ -118,16 +118,16 @@ bool MapLayer::init(int mapId)
         //todo, call gamecore to set Map
         UnderWorld::Core::Map coreMap;
         coreMap.init(mapSetting);
-        
         CCLOG("%zd logicLayer", logicLayer->getChildren().size());
+        logicLayer->removeFromParent();
         
         //--------- scale ---------//
-        const Size &mapPSize = mTiledMap->getContentSize();
+        const Size &mapPSize = _tiledMap->getContentSize();
         float scale = RESOLUTION_HEIGHT / mapPSize.height;
-        mScrollView->setContentSize(mapPSize);
-        mScrollView->setMaxScale(TILEDMAP_MAX_SCALE);
-        mScrollView->setMinScale(scale);
-        mScrollView->setZoomScale(scale);
+        _scrollView->setContentSize(mapPSize);
+        _scrollView->setMaxScale(TILEDMAP_MAX_SCALE);
+        _scrollView->setMinScale(scale);
+        _scrollView->setZoomScale(scale);
         
         //--------- event ---------//
         auto listener = EventListenerTouchAllAtOnce::create();
@@ -136,6 +136,16 @@ bool MapLayer::init(int mapId)
         return true;
     }
     return false;
+}
+
+void MapLayer::addUnit(Node* unit, const UnderWorld::Core::Coordinate& pos)
+{
+    
+}
+
+void MapLayer::repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& pos)
+{
+    
 }
 
 void MapLayer::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event)

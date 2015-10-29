@@ -13,6 +13,7 @@
 #include "cocos2d.h"
 #include "cocos-ext.h"
 #include "ui/CocosGUI.h"
+#include "Coordinate.h"
 
 using namespace std;
 USING_NS_CC;
@@ -35,13 +36,17 @@ public:
     virtual void scrollViewDidZoom(cocos2d::extension::ScrollView* view);
     
     virtual void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
+    
+    void addUnit(Node* unit, const UnderWorld::Core::Coordinate& pos);
+    void repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& pos);
 protected:
     virtual ~MapLayer();
     MapLayer();
 private:
-    int mMapId;
-    cocos2d::experimental::TMXTiledMap* mTiledMap;
-    cocos2d::extension::ScrollView *mScrollView;
+    int _mapId;
+    cocos2d::experimental::TMXTiledMap* _tiledMap;
+    cocos2d::extension::ScrollView *_scrollView;
+    cocos2d::experimental::TMXLayer* _mainLayer;
 };
 
 #endif /* MapLayer_h */

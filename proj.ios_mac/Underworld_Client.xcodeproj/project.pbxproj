@@ -118,6 +118,7 @@
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		CB075C041BDDD8AC00C7FD68 /* MapLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB075C021BDDD8AC00C7FD68 /* MapLayer.cpp */; settings = {ASSET_TAGS = (); }; };
+		CB5A5B4A1BE0EB6A00E9E803 /* PathFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB5A5B481BE0EB6A00E9E803 /* PathFinder.cpp */; settings = {ASSET_TAGS = (); }; };
 		CB98B2931BDF9B33002AEB14 /* MapSetting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB98B2911BDF9B33002AEB14 /* MapSetting.cpp */; settings = {ASSET_TAGS = (); }; };
 		CBDBD2131BD7B3B9004706A8 /* map in Resources */ = {isa = PBXBuildFile; fileRef = CBDBD2121BD7B3B9004706A8 /* map */; settings = {ASSET_TAGS = (); }; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
@@ -167,7 +168,7 @@
 		045116E01BCFBA39002AA721 /* World.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = World.cpp; path = Core/World/World.cpp; sourceTree = "<group>"; };
 		045116E11BCFBA39002AA721 /* World.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = World.h; path = Core/World/World.h; sourceTree = "<group>"; };
 		045116E51BCFBA44002AA721 /* BuffType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BuffType.cpp; path = Core/Unit/Type/BuffType.cpp; sourceTree = "<group>"; };
-		045116E61BCFBA44002AA721 /* BuffType.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = BuffType.hpp; path = Core/Unit/Type/BuffType.hpp; sourceTree = "<group>"; };
+		045116E61BCFBA44002AA721 /* BuffType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BuffType.h; path = Core/Unit/Type/BuffType.h; sourceTree = "<group>"; };
 		045116E71BCFBA44002AA721 /* BulletType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BulletType.cpp; path = Core/Unit/Type/BulletType.cpp; sourceTree = "<group>"; };
 		045116E81BCFBA44002AA721 /* BulletType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BulletType.h; path = Core/Unit/Type/BulletType.h; sourceTree = "<group>"; };
 		045116E91BCFBA44002AA721 /* CommandType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CommandType.cpp; path = Core/Unit/Type/CommandType.cpp; sourceTree = "<group>"; };
@@ -316,7 +317,7 @@
 		A1A4BA451BCE08AF00175E8A /* OnlineUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnlineUpdater.h; sourceTree = "<group>"; };
 		A1A4BA471BCE096300175E8A /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
 		A1A4BA481BCE096300175E8A /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
-		A1AAE54A1BCCC4D10090D917 /* Global.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Global.h; sourceTree = "<group>"; };
+		A1AAE54A1BCCC4D10090D917 /* Global.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Global.h; path = Public/Global.h; sourceTree = "<group>"; };
 		A1B5588E1BCB65A100D30D6A /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		A1DE80381BD669BA004DEED1 /* CrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CrashReporter.framework; sourceTree = "<group>"; };
 		A1FC49B21BD8C249005C1B2E /* CrashHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashHelper.h; sourceTree = "<group>"; };
@@ -327,6 +328,8 @@
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CB075C021BDDD8AC00C7FD68 /* MapLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapLayer.cpp; sourceTree = "<group>"; };
 		CB075C031BDDD8AC00C7FD68 /* MapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapLayer.h; sourceTree = "<group>"; };
+		CB5A5B481BE0EB6A00E9E803 /* PathFinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PathFinder.cpp; path = Core/AI/PathFinder.cpp; sourceTree = "<group>"; };
+		CB5A5B491BE0EB6A00E9E803 /* PathFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PathFinder.h; path = Core/AI/PathFinder.h; sourceTree = "<group>"; };
 		CB98B2911BDF9B33002AEB14 /* MapSetting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MapSetting.cpp; path = Core/World/MapSetting.cpp; sourceTree = "<group>"; };
 		CB98B2921BDF9B33002AEB14 /* MapSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapSetting.h; path = Core/World/MapSetting.h; sourceTree = "<group>"; };
 		CBDBD2121BD7B3B9004706A8 /* map */ = {isa = PBXFileReference; lastKnownFileType = folder; path = map; sourceTree = "<group>"; };
@@ -399,6 +402,8 @@
 		045116D61BCFB9EF002AA721 /* AI */ = {
 			isa = PBXGroup;
 			children = (
+				CB5A5B481BE0EB6A00E9E803 /* PathFinder.cpp */,
+				CB5A5B491BE0EB6A00E9E803 /* PathFinder.h */,
 			);
 			name = AI;
 			sourceTree = "<group>";
@@ -463,7 +468,7 @@
 			isa = PBXGroup;
 			children = (
 				045116E51BCFBA44002AA721 /* BuffType.cpp */,
-				045116E61BCFBA44002AA721 /* BuffType.hpp */,
+				045116E61BCFBA44002AA721 /* BuffType.h */,
 				045116E71BCFBA44002AA721 /* BulletType.cpp */,
 				045116E81BCFBA44002AA721 /* BulletType.h */,
 				045116E91BCFBA44002AA721 /* CommandType.cpp */,
@@ -564,6 +569,7 @@
 		300098CA1BD0A90F00B6E284 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				A1AAE54A1BCCC4D10090D917 /* Global.h */,
 				300098CB1BD0A94B00B6E284 /* Coordinate.cpp */,
 				300098CC1BD0A94B00B6E284 /* Coordinate.h */,
 			);
@@ -823,7 +829,6 @@
 				A1720EC71BCD321600217E98 /* CocosGlobal.h */,
 				A1720E6D1BCCDF9100217E98 /* CocosUtils.cpp */,
 				A1720E6E1BCCDF9100217E98 /* CocosUtils.h */,
-				A1AAE54A1BCCC4D10090D917 /* Global.h */,
 				A1720E911BCCE1D900217E98 /* LocalHelper.cpp */,
 				A1720E921BCCE1D900217E98 /* LocalHelper.h */,
 				A1720E7C1BCCE19300217E98 /* Security */,
@@ -1022,6 +1027,7 @@
 				A1720E8B1BCCE19300217E98 /* aes_core.c in Sources */,
 				045117101BCFBA5F002AA721 /* Game.cpp in Sources */,
 				045117081BCFBA53002AA721 /* Command.cpp in Sources */,
+				CB5A5B4A1BE0EB6A00E9E803 /* PathFinder.cpp in Sources */,
 				045117071BCFBA53002AA721 /* Bullet.cpp in Sources */,
 				045116F71BCFBA44002AA721 /* SkllType.cpp in Sources */,
 				A1720E6F1BCCDF9100217E98 /* CocosUtils.cpp in Sources */,
