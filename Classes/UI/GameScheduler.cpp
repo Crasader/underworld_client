@@ -16,6 +16,11 @@ GameScheduler::GameScheduler(Scheduler* cocosScheduler)
     
 }
 
+GameScheduler::~GameScheduler()
+{
+    
+}
+
 void GameScheduler::schedule(int fps,
                             const std::function<void ()>& call,
                             const std::string& key)

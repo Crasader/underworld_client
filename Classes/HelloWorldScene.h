@@ -3,20 +3,26 @@
 
 #include "cocos2d.h"
 
+class GameRender;
+
 class HelloWorld : public cocos2d::Layer
 {
 public:
     static cocos2d::Scene* createScene();
+    virtual ~HelloWorld();
 
-    virtual bool init();
+private:
+    HelloWorld();
     
-    // a selector callback
-    void menuCloseCallback(cocos2d::Ref* pSender);
+    virtual bool init() override;
     
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
     
-    virtual void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
+    virtual void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event) override;
+    
+private:
+    GameRender* _render;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

@@ -56,11 +56,6 @@ void UnitNode::update()
         _lastSkill = currentSkill;
         // TODO: switch Skill animation
     }
-    
-    SkillClass sc = currentSkill->getSkillType()->getSkillClass();
-    if (kSkillClass_Move == sc) {
-        // TODO: move
-    }
 }
 
 bool UnitNode::init(const Unit* unit)
@@ -71,7 +66,7 @@ bool UnitNode::init(const Unit* unit)
         
         const UnitType* type = unit->getUnitType();
         
-        string csbFile = "";
+        string csbFile = (type->getUnitClass() == kUnitClass_Warrior) ? "battle_heroRed_1.csb" : "battle_herogreen_1.csb";
         Node *mainNode = CSLoader::createNode(csbFile);
         addChild(mainNode);
         cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(csbFile);

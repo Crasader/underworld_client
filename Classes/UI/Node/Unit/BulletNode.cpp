@@ -59,7 +59,7 @@ bool BulletNode::init(const Bullet* bullet)
         
         const BulletType* type = bullet->getBulletType();
         
-        string csbFile = "";
+        string csbFile = "hongzidan.csb";
         Node *mainNode = CSLoader::createNode(csbFile);
         addChild(mainNode);
         cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(csbFile);
