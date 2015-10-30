@@ -14,10 +14,10 @@
 #include "cocos-ext.h"
 #include "ui/CocosGUI.h"
 #include "Coordinate.h"
+#include "MapSetting.h"
 
 using namespace std;
 USING_NS_CC;
-//using namespace ui;
 
 class MapLayer : public LayerColor, public cocos2d::extension::ScrollViewDelegate {
 public:
@@ -43,6 +43,8 @@ public:
     inline UnderWorld::Core::Coordinate mapCoordinate2coreCoordinate(int x, int y);
     inline Point coreCoordinate2mapCoordinate(int x, int y);
     inline int calcZOrder(int mapCoordinateY);
+    
+    UnderWorld::Core::MapSetting mapSetting;
 protected:
     virtual ~MapLayer();
     MapLayer();

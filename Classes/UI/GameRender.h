@@ -27,6 +27,8 @@ public:
     virtual void init(const UnderWorld::Core::Game* game) override;
     virtual void render(const UnderWorld::Core::Game* game) override;
     
+    MapLayer* getMapLayer();
+    
 private:
     void updateUnits(const UnderWorld::Core::Game* game, int index);
     void updateBullets(const UnderWorld::Core::Game* game);

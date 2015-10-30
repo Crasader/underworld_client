@@ -102,7 +102,8 @@ bool MapLayer::init(int mapId)
         cocos2d::experimental::TMXLayer *logicLayer = _tiledMap->getLayer(TILEDMAP_LAYER_LOGIC);
         logicLayer->setVisible(false);
         const Size &logicSize = logicLayer->getLayerSize();
-        UnderWorld::Core::MapSetting mapSetting(logicSize.width, logicSize.height);
+        mapSetting.width = logicSize.width;
+        mapSetting.height = logicSize.height;
         for (unsigned int x = 0; x < logicSize.width; x++)
         {
             for (unsigned int y = 0; y < logicSize.height; y++)
@@ -116,9 +117,6 @@ bool MapLayer::init(int mapId)
                 }
             }
         }
-        //todo, call gamecore to set Map
-        UnderWorld::Core::Map coreMap;
-        coreMap.init(mapSetting);
         CCLOG("%zd logicLayer", mapSetting.walkableArea.size());
         logicLayer->removeFromParent();
         

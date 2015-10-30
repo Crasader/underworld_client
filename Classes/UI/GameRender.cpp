@@ -94,3 +94,8 @@ void GameRender::updateBullets(const Game* game)
         }
     }
 }
+
+MapLayer* GameRender::getMapLayer()
+{
+    return _mapLayer;
+}
