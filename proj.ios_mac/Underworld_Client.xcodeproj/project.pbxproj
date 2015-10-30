@@ -344,6 +344,7 @@
 		CB075C031BDDD8AC00C7FD68 /* MapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapLayer.h; sourceTree = "<group>"; };
 		CB98B2911BDF9B33002AEB14 /* MapSetting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MapSetting.cpp; path = Core/World/MapSetting.cpp; sourceTree = "<group>"; };
 		CB98B2921BDF9B33002AEB14 /* MapSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapSetting.h; path = Core/World/MapSetting.h; sourceTree = "<group>"; };
+		CBA295751BE3458B006BE7A0 /* Global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Global.h; path = Core/Utils/Global.h; sourceTree = "<group>"; };
 		CBDBD2121BD7B3B9004706A8 /* map */ = {isa = PBXFileReference; lastKnownFileType = folder; path = map; sourceTree = "<group>"; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -590,7 +591,7 @@
 		300098CA1BD0A90F00B6E284 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				301F63F91BE3653500DA6D70 /* Global.h */,
+				CBA295751BE3458B006BE7A0 /* Global.h */,
 				300098CB1BD0A94B00B6E284 /* Coordinate.cpp */,
 				300098CC1BD0A94B00B6E284 /* Coordinate.h */,
 			);

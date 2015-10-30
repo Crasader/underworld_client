@@ -108,7 +108,6 @@ bool MapLayer::init(int mapId)
             for (unsigned int y = 0; y < logicSize.height; y++)
             {
                 int gid = logicLayer->getTileGIDAt(Vec2(x, y));
-//                printf("[%d, %d]%d\n", x, y, gid);
                 if (gid == 0) {
                     //can walk
                     mapSetting.add(mapCoordinate2coreCoordinate(x, y));
@@ -120,7 +119,7 @@ bool MapLayer::init(int mapId)
         //todo, call gamecore to set Map
         UnderWorld::Core::Map coreMap;
         coreMap.init(mapSetting);
-        CCLOG("%zd logicLayer", logicLayer->getChildren().size());
+        CCLOG("%zd logicLayer", mapSetting.walkableArea.size());
         logicLayer->removeFromParent();
         
         //--------- scale ---------//
