@@ -1,5 +1,6 @@
 #include "HelloWorldScene.h"
 #include "GameRender.h"
+#include "GameSettings.h"
 
 USING_NS_CC;
 
@@ -40,6 +41,30 @@ bool HelloWorld::init()
     }
 
     _render = new GameRender(this, 1);
+    _sch = new GameScheduler(nullptr);
+    UnderWorld::Core::GameSettings setting;
+    setting.setTechTree("<root>  <faction name=\"狼人族\">               <unit name=\"狼人步兵\" class=\"warrior\" hp=\"30\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"100\" size=\"4\">                    <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>                   <skill class=\"die\" preperform=\"10.0\" perform=\"0.0\" cd=\"0.0\"/>                   <skill class=\"attack\" preperform=\"0.3\" perform=\"0.0\" cd=\"1.0\" mindamage=\"5\" maxdamage=\"8\" range=\"2\" fields=\"2\"/>                        <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"10\"/>              </unit>         <unit name=\"狼人射手\" class=\"warrior\" hp=\"20\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"150\" size=\"2\">                    <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>                   <skill class=\"die\" preperform=\"10.0\" perform=\"0.0\" cd=\"0.0\"/>                   <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"8\" maxdamage=\"10\" range=\"20\" fields=\"3\">                               <bullet speed=\"50\" size=\"0\"/>                      </skill>                        <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"15\"/>              </unit> </faction>      <faction name=\"吸血鬼族\">             <unit name=\"吸血鬼战士\" class=\"warrior\" hp=\"30\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"100\" size=\"4\">                  <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>                   <skill class=\"die\" preperform=\"10.0\" perform=\"0.0\" cd=\"0.0\"/>                   <skill class=\"attack\" preperform=\"0.3\" perform=\"0.0\" cd=\"1.0\" mindamage=\"5\" maxdamage=\"8\" range=\"2\" fields=\"2\"/>                        <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"10\"/>              </unit>         <unit name=\"吸血鬼弓兵\" class=\"warrior\" hp=\"20\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"150\" size=\"2\">                  <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>                   <skill class=\"die\" preperform=\"10.0\" perform=\"0.0\" cd=\"0.0\"/>                   <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"8\" maxdamage=\"10\" range=\"20\" fields=\"3\">                               <bullet speed=\"50\" size=\"0\"/>                      </skill>                        <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"15\"/>              </unit> </faction></root>");
+    setting.setFactionCount(2);
+    setting.setThisFactionIndex(0);
+    setting.setTeam(0, 0);
+    setting.setTeam(1, 1);
+    setting.setFactionControlType(0, UnderWorld::Core::kFactionControlType_Cpu);
+    setting.setFactionControlType(1, UnderWorld::Core::kFactionControlType_Cpu);
+    setting.setFactionTypeKey(0, "狼人族");
+    setting.setFactionTypeKey(1, "吸血鬼族");
+    std::map<std::string, UnderWorld::Core::Coordinate> units1;
+    units1.insert(std::make_pair("狼人步兵", UnderWorld::Core::Coordinate(140, 140)));
+    units1.insert(std::make_pair("狼人步兵", UnderWorld::Core::Coordinate(140, 160)));
+    setting.setFactionStartUnits(0, units1);
+    
+    std::map<std::string, UnderWorld::Core::Coordinate> units2;
+    units1.insert(std::make_pair("吸血鬼战士", UnderWorld::Core::Coordinate(900, 140)));
+    units1.insert(std::make_pair("吸血鬼战士", UnderWorld::Core::Coordinate(900, 160)));
+    setting.setFactionStartUnits(1, units2);
+    _looper = new UnderWorld::Core::GameLooper(setting, _render, _sch);
+    _looper->init();
+    _looper->start();
+    
     
 //    auto listener = EventListenerTouchAllAtOnce::create();
 //    listener->onTouchesMoved = CC_CALLBACK_2(HelloWorld::onTouchesMoved, this);

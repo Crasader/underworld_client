@@ -36,7 +36,7 @@ private:
 private:
     MapLayer* _mapLayer;
     std::map<int, UnitNode*> _allUnits;
-    std::map<int, BulletNode*> _allBullets;
+    std::map<int64_t, BulletNode*> _allBullets;
 };
 
 #endif /* GameRender_h */

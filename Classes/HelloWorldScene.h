@@ -2,6 +2,8 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
+#include "GameLooper.h"
+#include "GameScheduler.h"
 
 class GameRender;
 
@@ -23,6 +25,9 @@ private:
     
 private:
     GameRender* _render;
+    UnderWorld::Core::GameLooper* _looper;
+    GameScheduler* _sch;
+    
 };
 
 #endif // __HELLOWORLD_SCENE_H__

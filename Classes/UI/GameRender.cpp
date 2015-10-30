@@ -81,7 +81,7 @@ void GameRender::updateBullets(const Game* game)
     for (int i = 0; i < bullets.size(); ++i) {
         const Bullet* bullet = bullets.at(i);
         const Coordinate& pos = bullet->getPos();
-        const int key = reinterpret_cast<int>(bullet);
+        const int64_t key = reinterpret_cast<int64_t>(bullet);
         if (_allBullets.find(key) != _allBullets.end()) {
             // already exist, update it
             BulletNode* node = _allBullets.at(key);
