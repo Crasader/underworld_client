@@ -124,8 +124,9 @@
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
-		CB075C041BDDD8AC00C7FD68 /* MapLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB075C021BDDD8AC00C7FD68 /* MapLayer.cpp */; };
-		CBDBD2131BD7B3B9004706A8 /* map in Resources */ = {isa = PBXBuildFile; fileRef = CBDBD2121BD7B3B9004706A8 /* map */; };
+		CB075C041BDDD8AC00C7FD68 /* MapLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB075C021BDDD8AC00C7FD68 /* MapLayer.cpp */; settings = {ASSET_TAGS = (); }; };
+		CBA296431BE37FB1006BE7A0 /* GameScheduler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBA296411BE37FB1006BE7A0 /* GameScheduler.cpp */; settings = {ASSET_TAGS = (); }; };
+		CBDBD2131BD7B3B9004706A8 /* map in Resources */ = {isa = PBXBuildFile; fileRef = CBDBD2121BD7B3B9004706A8 /* map */; settings = {ASSET_TAGS = (); }; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
@@ -350,6 +351,8 @@
 		CB98B2911BDF9B33002AEB14 /* MapSetting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MapSetting.cpp; path = Core/World/MapSetting.cpp; sourceTree = "<group>"; };
 		CB98B2921BDF9B33002AEB14 /* MapSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapSetting.h; path = Core/World/MapSetting.h; sourceTree = "<group>"; };
 		CBA295751BE3458B006BE7A0 /* Global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Global.h; path = Core/Utils/Global.h; sourceTree = "<group>"; };
+		CBA296411BE37FB1006BE7A0 /* GameScheduler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScheduler.cpp; sourceTree = "<group>"; };
+		CBA296421BE37FB1006BE7A0 /* GameScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScheduler.h; sourceTree = "<group>"; };
 		CBDBD2121BD7B3B9004706A8 /* map */ = {isa = PBXFileReference; lastKnownFileType = folder; path = map; sourceTree = "<group>"; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -717,6 +720,8 @@
 				A1720E751BCCE0F000217E98 /* Action */,
 				A1720EBF1BCD310100217E98 /* Layer */,
 				A1720E711BCCE0A200217E98 /* Node */,
+				CBA296411BE37FB1006BE7A0 /* GameScheduler.cpp */,
+				CBA296421BE37FB1006BE7A0 /* GameScheduler.h */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1048,6 +1053,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				045116E31BCFBA39002AA721 /* Map.cpp in Sources */,
+				CBA296431BE37FB1006BE7A0 /* GameScheduler.cpp in Sources */,
 				A1A4BA491BCE096300175E8A /* Utils.cpp in Sources */,
 				A1720E741BCCE0A200217E98 /* FixedLabelAtlas.cpp in Sources */,
 				CB075C041BDDD8AC00C7FD68 /* MapLayer.cpp in Sources */,
