@@ -10,6 +10,8 @@
 #include "cocostudio/CocoStudio.h"
 #include "Unit.h"
 #include "UnitType.h"
+#include "Skill.h"
+#include "SkllType.h"
 
 using namespace std;
 using namespace UnderWorld::Core;
@@ -32,6 +34,7 @@ UnitNode* UnitNode::create(const Unit* unit)
 UnitNode::UnitNode()
 :_observer(nullptr)
 ,_unit(nullptr)
+,_lastSkill(nullptr)
 {
     
 }
@@ -44,6 +47,20 @@ UnitNode::~UnitNode()
 void UnitNode::registerObserver(UnitNodeObserver *observer)
 {
     _observer = observer;
+}
+
+void UnitNode::update()
+{
+    const Skill* currentSkill = _unit->getCurrentSkill();
+    if (currentSkill != _lastSkill) {
+        _lastSkill = currentSkill;
+        // TODO: switch Skill animation
+    }
+    
+    SkillClass sc = currentSkill->getSkillType()->getSkillClass();
+    if (kSkillClass_Move == sc) {
+        // TODO: move
+    }
 }
 
 bool UnitNode::init(const Unit* unit)

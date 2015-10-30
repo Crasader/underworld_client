@@ -29,6 +29,7 @@ public:
     static BulletNode* create(const UnderWorld::Core::Bullet* bullet);
     virtual ~BulletNode();
     void registerObserver(BulletNodeObserver *observer);
+    void update();
     
 protected:
     BulletNode();

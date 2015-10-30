@@ -15,7 +15,10 @@
 USING_NS_CC;
 using namespace ui;
 
-namespace UnderWorld { namespace Core { class Unit; } }
+namespace UnderWorld { namespace Core {
+    class Unit;
+    class Skill;
+} }
 
 class UnitNodeObserver
 {
@@ -29,6 +32,7 @@ public:
     static UnitNode* create(const UnderWorld::Core::Unit* unit);
     virtual ~UnitNode();
     void registerObserver(UnitNodeObserver *observer);
+    void update();
     
 protected:
     UnitNode();
@@ -37,6 +41,7 @@ protected:
 private:
     UnitNodeObserver *_observer;
     const UnderWorld::Core::Unit* _unit;
+    const UnderWorld::Core::Skill* _lastSkill;
 };
 
 #endif /* UnitNode_h */

@@ -46,6 +46,11 @@ void BulletNode::registerObserver(BulletNodeObserver *observer)
     _observer = observer;
 }
 
+void BulletNode::update()
+{
+    
+}
+
 bool BulletNode::init(const Bullet* bullet)
 {
     if (Node::init())
