@@ -15,6 +15,7 @@
 #include "json/document.h"
 
 using namespace std;
+using namespace UnderWorld::Core;
 
 namespace Utils
 {
