@@ -1,6 +1,7 @@
 #include "HelloWorldScene.h"
 #include "GameRender.h"
 #include "GameSettings.h"
+#include "MapLayer.h"
 
 USING_NS_CC;
 
@@ -41,9 +42,10 @@ bool HelloWorld::init()
     }
 
     _render = new GameRender(this, 1);
-    _sch = new GameScheduler(nullptr);
+    _sch = new GameScheduler();
     UnderWorld::Core::GameSettings setting;
     setting.setTechTree("<root>  <faction name=\"狼人族\">               <unit name=\"狼人步兵\" class=\"warrior\" hp=\"30\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"100\" size=\"4\">                    <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>                   <skill class=\"die\" preperform=\"10.0\" perform=\"0.0\" cd=\"0.0\"/>                   <skill class=\"attack\" preperform=\"0.3\" perform=\"0.0\" cd=\"1.0\" mindamage=\"5\" maxdamage=\"8\" range=\"2\" fields=\"2\"/>                        <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"10\"/>              </unit>         <unit name=\"狼人射手\" class=\"warrior\" hp=\"20\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"150\" size=\"2\">                    <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>                   <skill class=\"die\" preperform=\"10.0\" perform=\"0.0\" cd=\"0.0\"/>                   <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"8\" maxdamage=\"10\" range=\"20\" fields=\"3\">                               <bullet speed=\"50\" size=\"0\"/>                      </skill>                        <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"15\"/>              </unit> </faction>      <faction name=\"吸血鬼族\">             <unit name=\"吸血鬼战士\" class=\"warrior\" hp=\"30\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"100\" size=\"4\">                  <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>                   <skill class=\"die\" preperform=\"10.0\" perform=\"0.0\" cd=\"0.0\"/>                   <skill class=\"attack\" preperform=\"0.3\" perform=\"0.0\" cd=\"1.0\" mindamage=\"5\" maxdamage=\"8\" range=\"2\" fields=\"2\"/>                        <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"10\"/>              </unit>         <unit name=\"吸血鬼弓兵\" class=\"warrior\" hp=\"20\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"150\" size=\"2\">                  <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>                   <skill class=\"die\" preperform=\"10.0\" perform=\"0.0\" cd=\"0.0\"/>                   <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"8\" maxdamage=\"10\" range=\"20\" fields=\"3\">                               <bullet speed=\"50\" size=\"0\"/>                      </skill>                        <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"15\"/>              </unit> </faction></root>");
+    setting.setMap(_render->getMapLayer()->mapSetting);
     setting.setFactionCount(2);
     setting.setThisFactionIndex(0);
     setting.setTeam(0, 0);
