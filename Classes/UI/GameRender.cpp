@@ -39,7 +39,12 @@ void GameRender::init(const Game* game)
 
 void GameRender::render(const Game* game)
 {
+    // create units
+    updateUnits(game, 0);
+    updateUnits(game, 1);
     
+    // create bullets
+    updateBullets(game);
 }
 
 void GameRender::updateUnits(const Game* game, int index)
@@ -58,7 +63,8 @@ void GameRender::updateUnits(const Game* game, int index)
                 UnitNode* node = _allUnits.at(key);
                 node->update();
                 const Skill* skill = unit->getCurrentSkill();
-                if (skill->getSkillState() == Skill::kSkillState_performing) {
+                // TODO: remove test code
+                if (true || skill->getSkillState() == Skill::kSkillState_performing) {
                     SkillClass sc = skill->getSkillType()->getSkillClass();
                     if (kSkillClass_Move == sc) {
                         _mapLayer->repositionUnit(node, pos);
