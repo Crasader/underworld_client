@@ -41,8 +41,9 @@ public:
     void repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& coreCoordinate);
     
     inline UnderWorld::Core::Coordinate mapCoordinate2coreCoordinate(int x, int y);
-    inline Point coreCoordinate2mapCoordinate(int x, int y);
-    inline int calcZOrder(int mapCoordinateY);
+    inline void coordinateConvert(const UnderWorld::Core::Coordinate& coreCoordinate, Point& mapPosition, int& zOrder);
+    
+    inline int calcZOrder(int coreCoordinateY);
     
     UnderWorld::Core::MapSetting mapSetting;
 protected:
@@ -52,6 +53,8 @@ private:
     int _mapId;
     int _width;
     int _height;
+    int _tileWidth;
+    int _tileHeight;
     cocos2d::experimental::TMXTiledMap* _tiledMap;
     cocos2d::extension::ScrollView *_scrollView;
     cocos2d::experimental::TMXLayer* _mainLayer;

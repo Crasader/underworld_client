@@ -11,6 +11,7 @@
 #include "MapLayer.h"
 #include "UnitNode.h"
 #include "BulletNode.h"
+#include "Map.h"
 
 using namespace UnderWorld::Core;
 

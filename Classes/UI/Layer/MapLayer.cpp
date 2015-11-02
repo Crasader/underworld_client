@@ -83,6 +83,9 @@ bool MapLayer::init(int mapId)
         const Size &mapSize = _tiledMap->getMapSize();
         _width = mapSize.width;
         _height = mapSize.height;
+        const Size &tileSize = _tiledMap->getTileSize();
+        _tileWidth = tileSize.width;
+        _tileHeight = tileSize.height;
         const Size &ls = _mainLayer->getLayerSize();
         for (unsigned int y = 0; y < ls.height; y++)
         {
@@ -137,9 +140,9 @@ bool MapLayer::init(int mapId)
     return false;
 }
 
-int MapLayer::calcZOrder(int mapCoordinateY)
+int MapLayer::calcZOrder(int coreCoordinateY)
 {
-    return 2 * (mapCoordinateY + 1);
+    return 2 * (_height - coreCoordinateY + 1);
 }
 
 
@@ -148,23 +151,29 @@ UnderWorld::Core::Coordinate MapLayer::mapCoordinate2coreCoordinate(int x, int y
     return UnderWorld::Core::Coordinate(x, _height - y);
 }
 
-Point MapLayer::coreCoordinate2mapCoordinate(int x, int y)
+void MapLayer::coordinateConvert(const UnderWorld::Core::Coordinate& coreCoordinate, Point& mapPosition, int& zOrder)
 {
-    return Point(x, _height - y);
+    mapPosition.x = _tileWidth / UnderWorld::Core::Map::TILE_2_CELL_SCALE * coreCoordinate.x;
+    mapPosition.y = _tileHeight / UnderWorld::Core::Map::TILE_2_CELL_SCALE * coreCoordinate.y;
+    zOrder = 2 * (_height - coreCoordinate.y + 1);
 }
 
 void MapLayer::addUnit(Node* unit, const UnderWorld::Core::Coordinate& coreCoordinate)
 {
-    const Point& mapCoordinate = coreCoordinate2mapCoordinate(coreCoordinate.x, coreCoordinate.y);
-    unit->setPosition(_mainLayer->getPositionAt(mapCoordinate));
-    _mainLayer->addChild(unit, calcZOrder(mapCoordinate.y));
+    Point pos;
+    int zOrder;
+    coordinateConvert(coreCoordinate, pos, zOrder);
+    unit->setPosition(pos);
+    _mainLayer->addChild(unit, zOrder);
 }
 
 void MapLayer::repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& coreCoordinate)
 {
-    const Point& mapCoordinate = coreCoordinate2mapCoordinate(coreCoordinate.x, coreCoordinate.y);
-    unit->setPosition(_mainLayer->getPositionAt(mapCoordinate));
-    reorderChild(unit, calcZOrder(mapCoordinate.y));
+    Point pos;
+    int zOrder;
+    coordinateConvert(coreCoordinate, pos, zOrder);
+    unit->setPosition(pos);
+    reorderChild(unit, zOrder);
 }
 
 void MapLayer::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event)
