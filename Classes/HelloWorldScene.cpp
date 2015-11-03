@@ -55,14 +55,17 @@ bool HelloWorld::init()
     setting.setFactionTypeKey(0, "狼人族");
     setting.setFactionTypeKey(1, "吸血鬼族");
     std::vector<std::pair<std::string, UnderWorld::Core::Coordinate> > units1;
-    units1.push_back(std::make_pair("狼人步兵", UnderWorld::Core::Coordinate(140, 140)));
-    units1.push_back(std::make_pair("狼人步兵", UnderWorld::Core::Coordinate(140, 140)));
+    for (int i = 0; i < 10; ++i) {
+        units1.push_back(std::make_pair("狼人步兵", UnderWorld::Core::Coordinate(140, 140)));
+    }
+    
     units1.push_back(std::make_pair("狼人基地", UnderWorld::Core::Coordinate(140, 140)));
     setting.setFactionStartUnits(0, units1);
     
     std::vector<std::pair<std::string, UnderWorld::Core::Coordinate> > units2;
-    units2.push_back(std::make_pair("吸血鬼战士", UnderWorld::Core::Coordinate(900, 140)));
-    units2.push_back(std::make_pair("吸血鬼战士", UnderWorld::Core::Coordinate(900, 140)));
+    for (int i = 0; i < 10; ++i) {
+        units2.push_back(std::make_pair("吸血鬼战士", UnderWorld::Core::Coordinate(900, 140)));
+    }
     units2.push_back(std::make_pair("吸血鬼核心", UnderWorld::Core::Coordinate(900, 140)));
     setting.setFactionStartUnits(1, units2);
     _looper = new UnderWorld::Core::GameLooper(setting, _render, _sch);
