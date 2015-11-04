@@ -7,6 +7,8 @@
 //
 
 #include "CocosUtils.h"
+#include "ui/CocosGUI.h"
+#include "Global.h"
 #include <iomanip>
 #include "FixedLabelAtlas.h"
 #include "NumberJump.h"

@@ -29,17 +29,17 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
-		300098CD1BD0A94B00B6E284 /* Coordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098CB1BD0A94B00B6E284 /* Coordinate.cpp */; settings = {ASSET_TAGS = (); }; };
-		300098D01BD0CD5900B6E284 /* Resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098CE1BD0CD5900B6E284 /* Resource.cpp */; settings = {ASSET_TAGS = (); }; };
-		300098D31BD0CDB000B6E284 /* ResourceType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098D11BD0CDB000B6E284 /* ResourceType.cpp */; settings = {ASSET_TAGS = (); }; };
-		300098D61BD5E81700B6E284 /* InstanceFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098D41BD5E81700B6E284 /* InstanceFactory.cpp */; settings = {ASSET_TAGS = (); }; };
-		301F63F21BE0C56D00DA6D70 /* Damage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 301F63F01BE0C56D00DA6D70 /* Damage.cpp */; settings = {ASSET_TAGS = (); }; };
-		301F63F81BE3644700DA6D70 /* MapSetting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 301F63F61BE3644700DA6D70 /* MapSetting.cpp */; settings = {ASSET_TAGS = (); }; };
-		301F63FC1BE3680600DA6D70 /* GameLooper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 301F63FA1BE3680600DA6D70 /* GameLooper.cpp */; settings = {ASSET_TAGS = (); }; };
-		308B84631BE3752000377802 /* PathFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84611BE3752000377802 /* PathFinder.cpp */; settings = {ASSET_TAGS = (); }; };
-		308B84661BE3853C00377802 /* AIBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84641BE3853C00377802 /* AIBody.cpp */; settings = {ASSET_TAGS = (); }; };
-		308B84691BE3856F00377802 /* AIBrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84671BE3856F00377802 /* AIBrain.cpp */; settings = {ASSET_TAGS = (); }; };
-		309F76951BE8851000B2791F /* Rect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F76931BE8851000B2791F /* Rect.cpp */; settings = {ASSET_TAGS = (); }; };
+		300098CD1BD0A94B00B6E284 /* Coordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098CB1BD0A94B00B6E284 /* Coordinate.cpp */; };
+		300098D01BD0CD5900B6E284 /* Resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098CE1BD0CD5900B6E284 /* Resource.cpp */; };
+		300098D31BD0CDB000B6E284 /* ResourceType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098D11BD0CDB000B6E284 /* ResourceType.cpp */; };
+		300098D61BD5E81700B6E284 /* InstanceFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098D41BD5E81700B6E284 /* InstanceFactory.cpp */; };
+		301F63F21BE0C56D00DA6D70 /* Damage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 301F63F01BE0C56D00DA6D70 /* Damage.cpp */; };
+		301F63F81BE3644700DA6D70 /* MapSetting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 301F63F61BE3644700DA6D70 /* MapSetting.cpp */; };
+		301F63FC1BE3680600DA6D70 /* GameLooper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 301F63FA1BE3680600DA6D70 /* GameLooper.cpp */; };
+		308B84631BE3752000377802 /* PathFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84611BE3752000377802 /* PathFinder.cpp */; };
+		308B84661BE3853C00377802 /* AIBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84641BE3853C00377802 /* AIBody.cpp */; };
+		308B84691BE3856F00377802 /* AIBrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84671BE3856F00377802 /* AIBrain.cpp */; };
+		309F76951BE8851000B2791F /* Rect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F76931BE8851000B2791F /* Rect.cpp */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7619C43A67006E1F66 /* CloseNormal.png */; };
@@ -121,6 +121,7 @@
 		A1A4BA3E1BCE043800175E8A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A1A4BA3C1BCE043800175E8A /* Localizable.strings */; };
 		A1A4BA461BCE08AF00175E8A /* OnlineUpdater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A4BA441BCE08AF00175E8A /* OnlineUpdater.cpp */; };
 		A1A4BA491BCE096300175E8A /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A4BA471BCE096300175E8A /* Utils.cpp */; };
+		A1AF64511BE8DB0B003B3FA8 /* MapUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1AF644F1BE8DB0B003B3FA8 /* MapUILayer.cpp */; };
 		A1B5588F1BCB65A100D30D6A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B5588E1BCB65A100D30D6A /* StoreKit.framework */; };
 		A1DE80391BD669BB004DEED1 /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1DE80381BD669BA004DEED1 /* CrashReporter.framework */; };
 		A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A1FC49B31BD8C249005C1B2E /* CrashHelper.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -128,9 +129,9 @@
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
-		CB075C041BDDD8AC00C7FD68 /* MapLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB075C021BDDD8AC00C7FD68 /* MapLayer.cpp */; settings = {ASSET_TAGS = (); }; };
-		CBA296431BE37FB1006BE7A0 /* GameScheduler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBA296411BE37FB1006BE7A0 /* GameScheduler.cpp */; settings = {ASSET_TAGS = (); }; };
-		CBDBD2131BD7B3B9004706A8 /* map in Resources */ = {isa = PBXBuildFile; fileRef = CBDBD2121BD7B3B9004706A8 /* map */; settings = {ASSET_TAGS = (); }; };
+		CB075C041BDDD8AC00C7FD68 /* MapLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB075C021BDDD8AC00C7FD68 /* MapLayer.cpp */; };
+		CBA296431BE37FB1006BE7A0 /* GameScheduler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBA296411BE37FB1006BE7A0 /* GameScheduler.cpp */; };
+		CBDBD2131BD7B3B9004706A8 /* map in Resources */ = {isa = PBXBuildFile; fileRef = CBDBD2121BD7B3B9004706A8 /* map */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
@@ -350,6 +351,8 @@
 		A1A4BA451BCE08AF00175E8A /* OnlineUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnlineUpdater.h; sourceTree = "<group>"; };
 		A1A4BA471BCE096300175E8A /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
 		A1A4BA481BCE096300175E8A /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		A1AF644F1BE8DB0B003B3FA8 /* MapUILayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapUILayer.cpp; sourceTree = "<group>"; };
+		A1AF64501BE8DB0B003B3FA8 /* MapUILayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapUILayer.h; sourceTree = "<group>"; };
 		A1B5588E1BCB65A100D30D6A /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		A1DE80381BD669BA004DEED1 /* CrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CrashReporter.framework; sourceTree = "<group>"; };
 		A1FC49B21BD8C249005C1B2E /* CrashHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashHelper.h; sourceTree = "<group>"; };
@@ -862,14 +865,16 @@
 		A1720EBF1BCD310100217E98 /* Layer */ = {
 			isa = PBXGroup;
 			children = (
+				CB075C021BDDD8AC00C7FD68 /* MapLayer.cpp */,
+				CB075C031BDDD8AC00C7FD68 /* MapLayer.h */,
+				A1AF644F1BE8DB0B003B3FA8 /* MapUILayer.cpp */,
+				A1AF64501BE8DB0B003B3FA8 /* MapUILayer.h */,
 				A1720ECC1BCD382700217E98 /* MessageBoxBaseLayer.cpp */,
 				A1720ECD1BCD382700217E98 /* MessageBoxBaseLayer.h */,
 				A1720EC91BCD37FC00217E98 /* MessageBoxLayer.cpp */,
 				A1720ECA1BCD37FC00217E98 /* MessageBoxLayer.h */,
 				A1720EC01BCD316000217E98 /* ProgressLayer.cpp */,
 				A1720EC11BCD316000217E98 /* ProgressLayer.h */,
-				CB075C021BDDD8AC00C7FD68 /* MapLayer.cpp */,
-				CB075C031BDDD8AC00C7FD68 /* MapLayer.h */,
 			);
 			path = Layer;
 			sourceTree = "<group>";
@@ -1068,6 +1073,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1AF64511BE8DB0B003B3FA8 /* MapUILayer.cpp in Sources */,
 				309F76951BE8851000B2791F /* Rect.cpp in Sources */,
 				045116E31BCFBA39002AA721 /* Map.cpp in Sources */,
 				CBA296431BE37FB1006BE7A0 /* GameScheduler.cpp in Sources */,

@@ -10,9 +10,6 @@
 #define CocosUtils_h
 
 #include "cocos2d.h"
-#include "Global.h"
-#include "Coordinate.h"
-#include "ui/CocosGUI.h"
 
 namespace CocosUtils
 {
