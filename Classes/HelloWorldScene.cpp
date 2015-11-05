@@ -2,6 +2,7 @@
 #include "GameRender.h"
 #include "GameSettings.h"
 #include "MapLayer.h"
+#include "MapUILayer.h"
 
 USING_NS_CC;
 
@@ -72,6 +73,9 @@ bool HelloWorld::init()
     _looper->init();
     _looper->start();
     
+    //--------- UI Layer ---------//
+    MapUILayer* uiLayer = MapUILayer::create("我的名字", "对手的名字");
+    addChild(uiLayer);
     
 //    auto listener = EventListenerTouchAllAtOnce::create();
 //    listener->onTouchesMoved = CC_CALLBACK_2(HelloWorld::onTouchesMoved, this);

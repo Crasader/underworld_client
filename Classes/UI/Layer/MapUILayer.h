@@ -17,6 +17,10 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace ui;
 
+namespace UnderWorld { namespace Core {
+        class UnitType;
+}}
+
 // =====================================================
 // Unit	Node
 // =====================================================
@@ -27,24 +31,25 @@ class MapUIUnitNodeObserver
 {
 public:
     virtual ~MapUIUnitNodeObserver() {}
-    virtual void onMapUIUnitNodeSelected(MapUIUnitNode* node) = 0;
+    virtual void onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node) = 0;
+    virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node) = 0;
 };
 
 class MapUIUnitNode: public Node
 {
 public:
-    static MapUIUnitNode* create();
+    static MapUIUnitNode* create(const UnderWorld::Core::UnitType* type);
     virtual ~MapUIUnitNode();
     void registerObserver(MapUIUnitNodeObserver *observer);
+    const UnderWorld::Core::UnitType* getUnitType() const;
     
 protected:
     MapUIUnitNode();
-    
-    // LayerColor
-    bool init() override;
+    bool init(const UnderWorld::Core::UnitType* type);
     
 private:
     MapUIUnitNodeObserver *_observer;
+    const UnderWorld::Core::UnitType* _unitType;
 };
 
 // =====================================================
@@ -57,7 +62,7 @@ public:
     virtual ~MapUILayerObserver() {}
 };
 
-class MapUILayer: public LayerColor, public TableViewDelegate, public TableViewDataSource
+class MapUILayer: public LayerColor, public TableViewDelegate, public TableViewDataSource, public MapUIUnitNodeObserver
 {
 public:
     static MapUILayer* create(const std::string& myAccount, const std::string& opponentsAccount);
@@ -71,17 +76,23 @@ protected:
     bool init(const std::string& myAccount, const std::string& opponentsAccount);
     virtual void onEnter() override;
     
-    // TableViewDataSource
+    // TableViewDelegate
     virtual void tableCellTouched(TableView* table, TableViewCell* cell) override;
     
-    // TableViewDelegate
+    // TableViewDataSource
     virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx) override;
     virtual TableViewCell* tableCellAtIndex(TableView *table, ssize_t idx) override;
     virtual ssize_t numberOfCellsInTableView(TableView *table) override;
     
+    // MapUIUnitNodeObserver
+    virtual void onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node) override;
+    virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node) override;
+    
 private:
     MapUILayerObserver *_observer;
     TableView *_tableView;
+    Size _unitNodeSize;
+    Size _cellSize;
     Label *_timeLabel;
     Label *_nextWaveTimeLabel;
     Label *_energyLabel;

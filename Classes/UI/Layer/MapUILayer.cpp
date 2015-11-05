@@ -10,18 +10,52 @@
 #include "cocostudio/CocoStudio.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
+#include "UnitType.h"
+#include "ResourceButton.h"
 
 using namespace std;
 using namespace cocostudio;
+using namespace UnderWorld::Core;
+
+static const Size unitIconSize(50, 50);
+
+static Sprite* createPureColorSprite(const Size& size, const Color4B& color)
+{
+    // 1. create texture
+    static const uint len = 4;
+    GLubyte data[len] = {color.r, color.g, color.b, 180};
+    
+    Texture2D* texture = new (nothrow) Texture2D();
+    if (texture) {
+        bool ret = texture->initWithData(data, len, Texture2D::PixelFormat::RGBA8888, 1, 1, Size(1, 1));
+        if (ret) {
+            texture->autorelease();
+        } else {
+            CC_SAFE_DELETE(texture);
+        }
+    }
+    
+    // 2. create sprite
+    Sprite* sprite = Sprite::createWithTexture(texture);
+    sprite->setScale(size.width, size.height);
+    
+    // 3.you need to create a new sprite, you cannot change the contentSize of the old sprite directly
+    Sprite* newSprite = Sprite::create();
+    newSprite->setContentSize(size);
+    sprite->setPosition(Point(size.width / 2, size.height / 2));
+    newSprite->addChild(sprite);
+    
+    return newSprite;
+}
 
 #pragma mark =====================================================
 #pragma mark Unit Node
 #pragma mark =====================================================
 
-MapUIUnitNode* MapUIUnitNode::create()
+MapUIUnitNode* MapUIUnitNode::create(const UnitType* type)
 {
     MapUIUnitNode *ret = new (nothrow) MapUIUnitNode();
-    if (ret && ret->init())
+    if (ret && ret->init(type))
     {
         ret->autorelease();
         return ret;
@@ -35,6 +69,7 @@ MapUIUnitNode* MapUIUnitNode::create()
 
 MapUIUnitNode::MapUIUnitNode()
 :_observer(nullptr)
+,_unitType(nullptr)
 {
     
 }
@@ -44,11 +79,13 @@ MapUIUnitNode::~MapUIUnitNode()
     removeAllChildren();
 }
 
-bool MapUIUnitNode::init()
+bool MapUIUnitNode::init(const UnitType* type)
 {
     if (Node::init())
     {
-        const Size& winSize = Director::getInstance()->getWinSize();
+        _unitType = type;
+        
+#if false
         const string CsbFile = "facebook_UI.csb";
         Node *mainNode = CSLoader::createNode(CsbFile);
         addChild(mainNode);
@@ -70,6 +107,22 @@ bool MapUIUnitNode::init()
                 }
             }
         }
+#else
+        Button* icon = Button::create("GameImages/touxiang.png", "GameImages/touxiang.png");
+        icon->setPressedActionEnabled(false);
+        icon->setSwallowTouches(false);
+        addChild(icon);
+        
+        ResourceButton *button = ResourceButton::create(false, kResourceType_Gold, 100, nullptr);
+        addChild(button);
+        
+        const float rootHeight = icon->getContentSize().height;
+        const float buttonHeight = button->getContentSize().height;
+        const Size size(icon->getContentSize().width + 5.0f, rootHeight + buttonHeight + 5.0f);
+        setContentSize(size);
+        icon->setPosition(Point(size.width / 2, size.height / 2 + (rootHeight + buttonHeight) / 4));
+        button->setPosition(Point(size.width / 2, size.height / 2 - (rootHeight + buttonHeight) / 4));
+#endif
         
         return true;
     }
@@ -82,38 +135,18 @@ void MapUIUnitNode::registerObserver(MapUIUnitNodeObserver *observer)
     _observer = observer;
 }
 
+const UnderWorld::Core::UnitType* MapUIUnitNode::getUnitType() const
+{
+    return _unitType;
+}
+
 #pragma mark =====================================================
 #pragma mark MapUILayer
 #pragma mark =====================================================
 
-static Sprite* createDemoBg(uint width, uint height, const Color4B& color)
-{
-    // 1. create texture
-    static const uint a = 4;
-    char data[width][height][a];
-    for(int i = 0; i < width; i++) {
-        for(int j = 0; j < height; j++) {
-            data[i][j][0] = color.r;
-            data[i][j][0] = color.g;
-            data[i][j][0] = color.b;
-            data[i][j][0] = color.a;
-        }
-    }
-    
-    Texture2D* texture = new (nothrow) Texture2D();
-    if (texture) {
-        bool ret = texture->initWithData(data, width * height * a, Texture2D::PixelFormat::RGBA4444, width, height, Size(width, height));
-        if (ret) {
-            texture->autorelease();
-        } else {
-            CC_SAFE_DELETE(texture);
-        }
-    }
-    
-    // 2. create sprite
-    Sprite* sprite = Sprite::createWithTexture(texture);
-    return sprite;
-}
+static const int battleTotalTime = 180;
+static const uint columnCount = 2;
+static const float offsetY = 12;
 
 MapUILayer* MapUILayer::create(const std::string& myAccount, const std::string& opponentsAccount)
 {
@@ -144,7 +177,9 @@ MapUILayer::MapUILayer()
 ,_sendTroopMenuItem(nullptr)
 ,_pauseMenuItem(nullptr)
 {
-    
+    _unitNodeSize = MapUIUnitNode::create(nullptr)->getContentSize();
+    _cellSize.width = (_unitNodeSize.width + 10.0f) * columnCount;
+    _cellSize.height = _unitNodeSize.height + offsetY * 2;
 }
 
 MapUILayer::~MapUILayer()
@@ -157,16 +192,16 @@ void MapUILayer::registerObserver(MapUILayerObserver *observer)
     _observer = observer;
 }
 
-#pragma mark - TableViewDataSource
+#pragma mark - TableViewDelegate
 void MapUILayer::tableCellTouched(TableView* table, TableViewCell* cell)
 {
     
 }
 
-#pragma mark - TableViewDelegate
+#pragma mark - TableViewDataSource
 Size MapUILayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
 {
-    return Size(618, 60);
+    return _cellSize;
 }
 
 TableViewCell* MapUILayer::tableCellAtIndex(TableView *table, ssize_t idx)
@@ -183,10 +218,18 @@ TableViewCell* MapUILayer::tableCellAtIndex(TableView *table, ssize_t idx)
         cell->removeChildByTag(NodeTag);
     }
     
-    Node* node = nullptr;
+    Node* node = Node::create();
     
-    const Size cellSize(tableCellSizeForIndex(_tableView, 0));
-    node->setPosition(Point(_tableView->getContentSize().width / 2, cellSize.height / 2));
+    for (int i = 0; i < columnCount; ++i)
+    {
+        ssize_t index = idx * columnCount + i;
+        MapUIUnitNode* unitNode = MapUIUnitNode::create(nullptr);
+        unitNode->setPosition(Point(_unitNodeSize.width * i, offsetY));
+        unitNode->registerObserver(this);
+        node->addChild(unitNode);
+    }
+
+    node->setPosition(Point::ZERO);
     node->setTag(NodeTag);
     cell->addChild(node);
     
@@ -198,10 +241,21 @@ ssize_t MapUILayer::numberOfCellsInTableView(TableView *table)
     return 10;
 }
 
+#pragma mark MapUIUnitNodeObserver
+void MapUILayer::onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node)
+{
+    
+}
+
+void MapUILayer::onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node)
+{
+    
+}
+
 #pragma mark -
 bool MapUILayer::init(const std::string& myAccount, const std::string& opponentsAccount)
 {
-    if (LayerColor::initWithColor(Color4B(0, 0, 0, 128)))
+    if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR))
     {
         const Size& winSize = Director::getInstance()->getWinSize();
 #if false
@@ -228,31 +282,40 @@ bool MapUILayer::init(const std::string& myAccount, const std::string& opponents
         }
 #else
         Node* root = this;
+        static const float leftOffset = 20.0f;
+        static const float ceilOffset = 10.0f;
+        static const Size progressSize(170.0f, 20.0f);
         //
         {
-            Sprite* sprite = createDemoBg(200, 100, Color4B::BLACK);
-            sprite->setPosition(Point(100, 600));
+            static const Size size(180, 60);
+            Sprite* sprite = createPureColorSprite(size, Color4B::BLACK);
+            sprite->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
+            sprite->setPosition(Point(leftOffset, winSize.height - ceilOffset));
             root->addChild(sprite);
-            const Size& size = sprite->getContentSize();
-            Label* label = CocosUtils::createLabel("下一波进攻时间", BIG_FONT_SIZE);
+            
+            Label* label = CocosUtils::createLabel("下一波进攻时间", DEFAULT_FONT_SIZE);
             label->setPosition(Point(size.width / 2, size.height * 0.75));
             sprite->addChild(label);
-            _nextWaveTimeLabel = CocosUtils::createLabel(StringUtils::format("%d", 20), DEFAULT_FONT_SIZE);
+            
+            _nextWaveTimeLabel = CocosUtils::createLabel(StringUtils::format("%ds", 20), DEFAULT_FONT_SIZE);
             _nextWaveTimeLabel->setPosition(Point(size.width / 2, size.height * 0.25f));
             sprite->addChild(_nextWaveTimeLabel);
         }
         //
         {
-            Sprite* sprite = createDemoBg(200, 100, Color4B::BLACK);
-            sprite->setPosition(Point(100, 600));
+            static const Size size(180, 60);
+            Sprite* sprite = createPureColorSprite(size, Color4B::BLACK);
+            sprite->setAnchorPoint(Point::ANCHOR_MIDDLE_TOP);
+            sprite->setPosition(Point(winSize.width / 2 - 150.0f, winSize.height - ceilOffset));
             root->addChild(sprite);
-            const Size& size = sprite->getContentSize();
-            Label* label = CocosUtils::createLabel("我的名字", BIG_FONT_SIZE);
+            
+            Label* label = CocosUtils::createLabel(myAccount, DEFAULT_FONT_SIZE);
             label->setPosition(Point(size.width / 2, size.height * 0.75));
             sprite->addChild(label);
             
-            Sprite* s = createDemoBg(200, 40, Color4B::GREEN);
+            Sprite* s = createPureColorSprite(Size(200, 40), Color4B::GREEN);
             _myHpProgress = ProgressTimer::create(s);
+            _myHpProgress->setPercentage(100);
             _myHpProgress->setPosition(Point(size.width / 2, size.height * 0.25f));
             sprite->addChild(_myHpProgress);
             
@@ -262,29 +325,35 @@ bool MapUILayer::init(const std::string& myAccount, const std::string& opponents
         }
         //
         {
-            Sprite* sprite = createDemoBg(200, 100, Color4B::BLACK);
-            sprite->setPosition(Point(100, 600));
+            static const Size size(100, 60);
+            Sprite* sprite = createPureColorSprite(size, Color4B::BLACK);
+            sprite->setAnchorPoint(Point::ANCHOR_MIDDLE_TOP);
+            sprite->setPosition(Point(winSize.width / 2, winSize.height - ceilOffset));
             root->addChild(sprite);
-            const Size& size = sprite->getContentSize();
-            Label* label = CocosUtils::createLabel("战斗时间", BIG_FONT_SIZE);
+            
+            Label* label = CocosUtils::createLabel("战斗时间", DEFAULT_FONT_SIZE);
             label->setPosition(Point(size.width / 2, size.height * 0.75));
             sprite->addChild(label);
-            _timeLabel = CocosUtils::createLabel(StringUtils::format("%d", 20), DEFAULT_FONT_SIZE);
+            
+            _timeLabel = CocosUtils::createLabel(CocosUtils::getFormattedTime(battleTotalTime), DEFAULT_FONT_SIZE);
             _timeLabel->setPosition(Point(size.width / 2, size.height * 0.25f));
             sprite->addChild(_timeLabel);
         }
         //
         {
-            Sprite* sprite = createDemoBg(200, 100, Color4B::BLACK);
-            sprite->setPosition(Point(100, 600));
+            static const Size size(180, 60);
+            Sprite* sprite = createPureColorSprite(size, Color4B::BLACK);
+            sprite->setAnchorPoint(Point::ANCHOR_MIDDLE_TOP);
+            sprite->setPosition(Point(winSize.width / 2 + 150.0f, winSize.height - ceilOffset));
             root->addChild(sprite);
-            const Size& size = sprite->getContentSize();
-            Label* label = CocosUtils::createLabel("对手的名字", BIG_FONT_SIZE);
+            
+            Label* label = CocosUtils::createLabel(opponentsAccount, DEFAULT_FONT_SIZE);
             label->setPosition(Point(size.width / 2, size.height * 0.75));
             sprite->addChild(label);
             
-            Sprite* s = createDemoBg(200, 40, Color4B::GREEN);
+            Sprite* s = createPureColorSprite(progressSize, Color4B::GREEN);
             _opponentsHpProgress = ProgressTimer::create(s);
+            _opponentsHpProgress->setPercentage(100);
             _opponentsHpProgress->setPosition(Point(size.width / 2, size.height * 0.25f));
             sprite->addChild(_opponentsHpProgress);
             
@@ -294,47 +363,61 @@ bool MapUILayer::init(const std::string& myAccount, const std::string& opponents
         }
         // units table
         {
-            Sprite* sprite = createDemoBg(200, 100, Color4B::BLACK);
-            sprite->setPosition(Point(100, 600));
+            static const Size size(180, winSize.height - 180);
+            Sprite* sprite = createPureColorSprite(size, Color4B::BLACK);
+            sprite->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
+            sprite->setPosition(Point(leftOffset, winSize.height - (90.0f + ceilOffset)));
             root->addChild(sprite);
-            const Size& size = sprite->getContentSize();
-            Label* label = CocosUtils::createLabel("能量", BIG_FONT_SIZE);
-            label->setPosition(Point(size.width / 2, size.height * 0.95));
-            sprite->addChild(label);
-            _energyLabel = CocosUtils::createLabel(StringUtils::format("%d", 2000), BIG_FONT_SIZE);
-            _energyLabel->setPosition(Point(size.width / 2, size.height * 0.85));
-            sprite->addChild(_energyLabel);
-            label = CocosUtils::createLabel("出战单位", BIG_FONT_SIZE);
-            label->setPosition(Point(size.width / 2, size.height * 0.75));
+            
+            Label* label = CocosUtils::createLabel("能量", DEFAULT_FONT_SIZE);
+            label->setPosition(Point(size.width / 2, size.height - 12));
             sprite->addChild(label);
             
-            _tableView = TableView::create(this, Size(200, 388));
+            _energyLabel = CocosUtils::createLabel(StringUtils::format("%d", 2000), DEFAULT_FONT_SIZE);
+            _energyLabel->setPosition(Point(size.width / 2, size.height - 36));
+            sprite->addChild(_energyLabel);
+            
+            label = CocosUtils::createLabel("出战单位", DEFAULT_FONT_SIZE);
+            label->setPosition(Point(size.width / 2, size.height - 60));
+            sprite->addChild(label);
+            
+            _tableView = TableView::create(this, Size(_cellSize.width, size.height - 80));
             _tableView->setDirection(extension::ScrollView::Direction::VERTICAL);
-            _tableView->setPosition(Point(0, 95));
+            _tableView->setPosition(Point(leftOffset + (size.width - _cellSize.width) / 2, 85));
             _tableView->setBounceable(false);
             _tableView->setDelegate(this);
             root->addChild(_tableView);
         }
         // buttons
         {
-            Sprite* sprite = createDemoBg(200, 100, Color4B::ORANGE);
-            sprite->setPosition(Point(100, 600));
-            const Size& size = sprite->getContentSize();
+            static const Size size(180, 60);
+            Sprite* sprite = createPureColorSprite(size, Color4B::ORANGE);
             _unitCostLabel = CocosUtils::createLabel(StringUtils::format("%d", 100), DEFAULT_FONT_SIZE);
             _unitCostLabel->setPosition(Point(size.width / 2, size.height / 2));
             sprite->addChild(_unitCostLabel);
-            _sendTroopMenuItem = MenuItemSprite::create(sprite, sprite);
-            _sendTroopMenuItem->setPosition(Point(200, 100));
-            _pauseMenuItem = MenuItemImage::create("CloseNormal.png", "CloseSelected.png");
-            _pauseMenuItem->setPosition(Point(1000, 600));
+            _sendTroopMenuItem = MenuItemSprite::create(sprite, sprite, [](Ref*) {
+                CCLOG("Sending troop...");
+            });
+            _sendTroopMenuItem->setAnchorPoint(Point::ZERO);
+            _sendTroopMenuItem->setPosition(Point(leftOffset, 5.0f));
+            _pauseMenuItem = MenuItemImage::create("CloseNormal.png", "CloseSelected.png", [](Ref*) {
+                
+            });
+            _pauseMenuItem->setAnchorPoint(Point(1.0f, 1.0f));
+            _pauseMenuItem->setPosition(Point(winSize.width - 5.0f, winSize.height - 5.0f));
             Menu *menu = Menu::create(_sendTroopMenuItem, _pauseMenuItem, nullptr);
+            menu->setPosition(Point::ZERO);
             root->addChild(menu);
         }
 #endif
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
-        eventListener->onTouchBegan = [](Touch *touch, Event *unused_event) {
+        eventListener->onTouchBegan = [=](Touch *touch, Event *unused_event) {
+            const Point& p = touch->getLocation();
+            if (_tableView->getBoundingBox().containsPoint(p)) {
+                return true;
+            }
             return false;
         };
         _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);

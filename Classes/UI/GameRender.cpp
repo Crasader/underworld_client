@@ -25,7 +25,13 @@ GameRender::GameRender(Node* scene, int mapId)
 
 GameRender::~GameRender()
 {
+    for (int i = 0; i < _allUnits.size(); ++i) {
+        _allUnits.at(i)->removeFromParent();
+    }
     
+    for (int i = 0; i < _allBullets.size(); ++i) {
+        _allBullets.at(i)->removeFromParent();
+    }
 }
 
 void GameRender::init(const Game* game)
@@ -59,23 +65,41 @@ void GameRender::updateUnits(const Game* game, int index)
             const Unit* unit = units.at(i);
             const Coordinate& pos = unit->getPos();
             const int key = unit->getUnitId();
-            if (_allUnits.find(key) != _allUnits.end()) {
-                // already exist, update it
-                UnitNode* node = _allUnits.at(key);
-                node->update();
-                const Skill* skill = unit->getCurrentSkill();
-                // TODO: remove test code
-                if (true || skill->getSkillState() == Skill::kSkillState_performing) {
-                    SkillClass sc = skill->getSkillType()->getSkillClass();
-                    if (kSkillClass_Move == sc) {
-                        _mapLayer->repositionUnit(node, pos);
+            const Skill* skill = unit->getCurrentSkill();
+            // TODO: remove test code
+            if (true || skill->getSkillState() == Skill::kSkillState_performing) {
+                SkillClass sc = skill->getSkillType()->getSkillClass();
+                bool isNewCreated = (_allUnits.find(key) == _allUnits.end()) ? true : false;
+                if (isNewCreated && kSkillClass_Die != sc) {
+                    UnitNode* node = UnitNode::create(unit);
+                    _mapLayer->addUnit(node, pos);
+                    _allUnits.insert(make_pair(key, node));
+                } else if (!isNewCreated) {
+                    // already exist, update it
+                    UnitNode* node = _allUnits.at(key);
+                    switch (sc) {
+                        case kSkillClass_Stop:
+                            break;
+                        case kSkillClass_Move:
+                        {
+                            _mapLayer->repositionUnit(node, pos);
+                        }
+                            break;
+                        case kSkillClass_Attack:
+                            break;
+                        case kSkillClass_Cast:
+                            break;
+                        case kSkillClass_Die:
+                        {
+                            node->removeFromParent();
+                            _allUnits.erase(key);
+                        }
+                            break;
+                            
+                        default:
+                            break;
                     }
                 }
-                
-            } else {
-                UnitNode* node = UnitNode::create(unit);
-                _mapLayer->addUnit(node, pos);
-                _allUnits.insert(make_pair(key, node));
             }
         }
     }

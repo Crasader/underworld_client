@@ -89,9 +89,11 @@ static AppDelegate s_sharedApplication;
 
     app->run();
     
+#if false
     [[CrashHelper sharedHelper] activateCrashReporter];
     [[CrashHelper sharedHelper] sendCrashReportWithEmail:_viewController];
-
+#endif
+    
     return YES;
 }
 
