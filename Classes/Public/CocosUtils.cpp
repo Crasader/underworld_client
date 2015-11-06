@@ -200,6 +200,35 @@ float CocosUtils::getFitScreenScale(Node *root)
     return ((scaleX < 1.0f || scaleY < 1.0f) ? MIN(scaleX, scaleY) : 1.0f);
 }
 
+Sprite* CocosUtils::createPureColorSprite(const Size& size, const Color4B& color)
+{
+    // 1. create texture
+    static const uint len = 4;
+    GLubyte data[len] = {color.r, color.g, color.b, 180};
+    
+    Texture2D* texture = new (nothrow) Texture2D();
+    if (texture) {
+        bool ret = texture->initWithData(data, len, Texture2D::PixelFormat::RGBA8888, 1, 1, Size(1, 1));
+        if (ret) {
+            texture->autorelease();
+        } else {
+            CC_SAFE_DELETE(texture);
+        }
+    }
+    
+    // 2. create sprite
+    Sprite* sprite = Sprite::createWithTexture(texture);
+    sprite->setScale(size.width, size.height);
+    
+    // 3.you need to create a new sprite, you cannot change the contentSize of the old sprite directly
+    Sprite* newSprite = Sprite::create();
+    newSprite->setContentSize(size);
+    sprite->setPosition(Point(size.width / 2, size.height / 2));
+    newSprite->addChild(sprite);
+    
+    return newSprite;
+}
+
 #pragma mark - notifications
 void CocosUtils::postNotification(const string& notification)
 {

@@ -21,6 +21,8 @@ namespace UnderWorld { namespace Core {
         class UnitType;
 }}
 
+class ResourceButton;
+
 // =====================================================
 // Unit	Node
 // =====================================================
@@ -38,18 +40,24 @@ public:
 class MapUIUnitNode: public Node
 {
 public:
-    static MapUIUnitNode* create(const UnderWorld::Core::UnitType* type);
+    static MapUIUnitNode* create(const UnderWorld::Core::UnitType* type, ssize_t idx);
     virtual ~MapUIUnitNode();
     void registerObserver(MapUIUnitNodeObserver *observer);
     const UnderWorld::Core::UnitType* getUnitType() const;
+    ssize_t getIdx() const;
+    void addSelectedFlag();
+    void removeSelectedFlag();
     
 protected:
     MapUIUnitNode();
-    bool init(const UnderWorld::Core::UnitType* type);
+    bool init(const UnderWorld::Core::UnitType* type, ssize_t idx);
     
 private:
     MapUIUnitNodeObserver *_observer;
+    Button *_iconButton;
     const UnderWorld::Core::UnitType* _unitType;
+    ssize_t _idx;
+    bool _touchInvalid;
 };
 
 // =====================================================
@@ -75,6 +83,7 @@ protected:
     // LayerColor
     bool init(const std::string& myAccount, const std::string& opponentsAccount);
     virtual void onEnter() override;
+    virtual void onExit() override;
     
     // TableViewDelegate
     virtual void tableCellTouched(TableView* table, TableViewCell* cell) override;
@@ -88,6 +97,11 @@ protected:
     virtual void onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node) override;
     virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node) override;
     
+    // test
+    void fakeTick(float dt);
+    void updateWaveTime(int time);
+    void updateRemainingTime(int time);
+    
 private:
     MapUILayerObserver *_observer;
     TableView *_tableView;
@@ -95,7 +109,7 @@ private:
     Size _cellSize;
     Label *_timeLabel;
     Label *_nextWaveTimeLabel;
-    Label *_energyLabel;
+    ResourceButton *_energyResourceButton;
     Label *_unitCostLabel;
     ProgressTimer *_myHpProgress;
     Label *_myHpPercentageLabel;
@@ -103,6 +117,9 @@ private:
     Label *_opponentsHpPercentageLabel;
     MenuItem *_sendTroopMenuItem;
     MenuItem *_pauseMenuItem;
+    int _waveTime;
+    int _remainingTime;
+    int _selectedUnitIdx;
 };
 
 #endif /* MapUILayer_h */

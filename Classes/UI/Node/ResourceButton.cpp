@@ -93,9 +93,22 @@ bool ResourceButton::init(bool isBigSize, ResourceType type, int count, const Bu
         setType(type);
         setContentSize(_button->getContentSize());
 #else
+        Sprite* icon = Sprite::create("GameImages/test/icon_glod.png");
+        const Size& iconSize = icon->getContentSize();
+        
         Label* label = CocosUtils::createLabel(StringUtils::format("%d", count), DEFAULT_FONT_SIZE);
+        const Size& labelSize = label->getContentSize();
+        
+        static const float offsetX = 5.0f;
+        const Size size(iconSize.width + labelSize.width + offsetX, MAX(iconSize.height, labelSize.height));
+        
+        setContentSize(size);
+        
+        icon->setPosition(Point(iconSize.width / 2, size.height / 2));
+        label->setPosition(Point(size.width - labelSize.width / 2, size.height / 2));
+        
+        addChild(icon);
         addChild(label);
-        setContentSize(label->getContentSize());
 #endif
         
         return true;

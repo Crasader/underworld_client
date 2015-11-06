@@ -25,6 +25,8 @@
 #define LAYER_DEFAULT_COLOR (Color4B(0, 0, 0, 0))
 #define LAYER_MASK_COLOR    (Color4B(0, 0, 0, 128))
 
+#define TOUCH_CANCEL_BY_MOVING_DISTANCE     (10.0f)
+
 typedef std::function<void()> httpRequestCallback;
 
 typedef enum
