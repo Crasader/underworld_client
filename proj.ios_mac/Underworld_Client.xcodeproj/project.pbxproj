@@ -29,17 +29,18 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
-		300098CD1BD0A94B00B6E284 /* Coordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098CB1BD0A94B00B6E284 /* Coordinate.cpp */; };
-		300098D01BD0CD5900B6E284 /* Resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098CE1BD0CD5900B6E284 /* Resource.cpp */; };
-		300098D31BD0CDB000B6E284 /* ResourceType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098D11BD0CDB000B6E284 /* ResourceType.cpp */; };
-		300098D61BD5E81700B6E284 /* InstanceFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098D41BD5E81700B6E284 /* InstanceFactory.cpp */; };
-		301F63F21BE0C56D00DA6D70 /* Damage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 301F63F01BE0C56D00DA6D70 /* Damage.cpp */; };
-		301F63F81BE3644700DA6D70 /* MapSetting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 301F63F61BE3644700DA6D70 /* MapSetting.cpp */; };
-		301F63FC1BE3680600DA6D70 /* GameLooper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 301F63FA1BE3680600DA6D70 /* GameLooper.cpp */; };
-		308B84631BE3752000377802 /* PathFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84611BE3752000377802 /* PathFinder.cpp */; };
-		308B84661BE3853C00377802 /* AIBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84641BE3853C00377802 /* AIBody.cpp */; };
-		308B84691BE3856F00377802 /* AIBrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84671BE3856F00377802 /* AIBrain.cpp */; };
-		309F76951BE8851000B2791F /* Rect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F76931BE8851000B2791F /* Rect.cpp */; };
+		300098CD1BD0A94B00B6E284 /* Coordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098CB1BD0A94B00B6E284 /* Coordinate.cpp */; settings = {ASSET_TAGS = (); }; };
+		300098D01BD0CD5900B6E284 /* Resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098CE1BD0CD5900B6E284 /* Resource.cpp */; settings = {ASSET_TAGS = (); }; };
+		300098D31BD0CDB000B6E284 /* ResourceType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098D11BD0CDB000B6E284 /* ResourceType.cpp */; settings = {ASSET_TAGS = (); }; };
+		300098D61BD5E81700B6E284 /* InstanceFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098D41BD5E81700B6E284 /* InstanceFactory.cpp */; settings = {ASSET_TAGS = (); }; };
+		301F63F21BE0C56D00DA6D70 /* Damage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 301F63F01BE0C56D00DA6D70 /* Damage.cpp */; settings = {ASSET_TAGS = (); }; };
+		301F63FC1BE3680600DA6D70 /* GameLooper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 301F63FA1BE3680600DA6D70 /* GameLooper.cpp */; settings = {ASSET_TAGS = (); }; };
+		308B84631BE3752000377802 /* PathFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84611BE3752000377802 /* PathFinder.cpp */; settings = {ASSET_TAGS = (); }; };
+		308B84661BE3853C00377802 /* AIBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84641BE3853C00377802 /* AIBody.cpp */; settings = {ASSET_TAGS = (); }; };
+		308B84691BE3856F00377802 /* AIBrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84671BE3856F00377802 /* AIBrain.cpp */; settings = {ASSET_TAGS = (); }; };
+		309F76951BE8851000B2791F /* Rect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F76931BE8851000B2791F /* Rect.cpp */; settings = {ASSET_TAGS = (); }; };
+		309F769A1BE9D7BD00B2791F /* Camp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F76981BE9D7BD00B2791F /* Camp.cpp */; settings = {ASSET_TAGS = (); }; };
+		309F76A01BEA3ABA00B2791F /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F769E1BEA3AB900B2791F /* Utils.cpp */; settings = {ASSET_TAGS = (); }; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7619C43A67006E1F66 /* CloseNormal.png */; };
@@ -226,8 +227,6 @@
 		300098D51BD5E81700B6E284 /* InstanceFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstanceFactory.h; path = Core/Unit/InstanceFactory.h; sourceTree = "<group>"; };
 		301F63F01BE0C56D00DA6D70 /* Damage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Damage.cpp; path = Core/Unit/Type/Damage.cpp; sourceTree = "<group>"; };
 		301F63F11BE0C56D00DA6D70 /* Damage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Damage.h; path = Core/Unit/Type/Damage.h; sourceTree = "<group>"; };
-		301F63F61BE3644700DA6D70 /* MapSetting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MapSetting.cpp; path = Core/World/MapSetting.cpp; sourceTree = "<group>"; };
-		301F63F71BE3644700DA6D70 /* MapSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapSetting.h; path = Core/World/MapSetting.h; sourceTree = "<group>"; };
 		301F63FA1BE3680600DA6D70 /* GameLooper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameLooper.cpp; path = Core/Game/GameLooper.cpp; sourceTree = "<group>"; };
 		301F63FB1BE3680600DA6D70 /* GameLooper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameLooper.h; path = Core/Game/GameLooper.h; sourceTree = "<group>"; };
 		301F63FE1BE3694C00DA6D70 /* GameInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameInterface.h; path = Core/Game/GameInterface.h; sourceTree = "<group>"; };
@@ -239,6 +238,11 @@
 		308B84681BE3856F00377802 /* AIBrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AIBrain.h; path = Core/AI/AIBrain.h; sourceTree = "<group>"; };
 		309F76931BE8851000B2791F /* Rect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Rect.cpp; path = Core/Utils/Rect.cpp; sourceTree = "<group>"; };
 		309F76941BE8851000B2791F /* Rect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Rect.h; path = Core/Utils/Rect.h; sourceTree = "<group>"; };
+		309F76981BE9D7BD00B2791F /* Camp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Camp.cpp; path = Core/Unit/Instance/Camp.cpp; sourceTree = "<group>"; };
+		309F76991BE9D7BD00B2791F /* Camp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Camp.h; path = Core/Unit/Instance/Camp.h; sourceTree = "<group>"; };
+		309F769D1BEA37D200B2791F /* Global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Global.h; path = Core/Utils/Global.h; sourceTree = "<group>"; };
+		309F769E1BEA3AB900B2791F /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Utils.cpp; path = Core/Utils/Utils.cpp; sourceTree = "<group>"; };
+		309F769F1BEA3AB900B2791F /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = Core/Utils/Utils.h; sourceTree = "<group>"; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		46880B7619C43A67006E1F66 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
 		46880B7719C43A67006E1F66 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
@@ -368,7 +372,6 @@
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CB075C021BDDD8AC00C7FD68 /* MapLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapLayer.cpp; sourceTree = "<group>"; };
 		CB075C031BDDD8AC00C7FD68 /* MapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapLayer.h; sourceTree = "<group>"; };
-		CBA295751BE3458B006BE7A0 /* Global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Global.h; path = Core/Utils/Global.h; sourceTree = "<group>"; };
 		CBA296411BE37FB1006BE7A0 /* GameScheduler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScheduler.cpp; sourceTree = "<group>"; };
 		CBA296421BE37FB1006BE7A0 /* GameScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScheduler.h; sourceTree = "<group>"; };
 		CBDBD2121BD7B3B9004706A8 /* map */ = {isa = PBXFileReference; lastKnownFileType = folder; path = map; sourceTree = "<group>"; };
@@ -479,8 +482,6 @@
 		045116D91BCFBA09002AA721 /* World */ = {
 			isa = PBXGroup;
 			children = (
-				301F63F61BE3644700DA6D70 /* MapSetting.cpp */,
-				301F63F71BE3644700DA6D70 /* MapSetting.h */,
 				045116DC1BCFBA39002AA721 /* Clock.cpp */,
 				045116DD1BCFBA39002AA721 /* Clock.h */,
 				045116DE1BCFBA39002AA721 /* Map.cpp */,
@@ -505,11 +506,13 @@
 				045117021BCFBA53002AA721 /* Skill.cpp */,
 				045117031BCFBA53002AA721 /* Skill.h */,
 				300098CE1BD0CD5900B6E284 /* Resource.cpp */,
+				300098CF1BD0CD5900B6E284 /* Resource.h */,
 				045117041BCFBA53002AA721 /* Unit.cpp */,
 				045117051BCFBA53002AA721 /* Unit.h */,
-				300098CF1BD0CD5900B6E284 /* Resource.h */,
 				301F63F01BE0C56D00DA6D70 /* Damage.cpp */,
 				301F63F11BE0C56D00DA6D70 /* Damage.h */,
+				309F76981BE9D7BD00B2791F /* Camp.cpp */,
+				309F76991BE9D7BD00B2791F /* Camp.h */,
 			);
 			name = Instance;
 			sourceTree = "<group>";
@@ -619,7 +622,9 @@
 		300098CA1BD0A90F00B6E284 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				CBA295751BE3458B006BE7A0 /* Global.h */,
+				309F769E1BEA3AB900B2791F /* Utils.cpp */,
+				309F769F1BEA3AB900B2791F /* Utils.h */,
+				309F769D1BEA37D200B2791F /* Global.h */,
 				300098CB1BD0A94B00B6E284 /* Coordinate.cpp */,
 				300098CC1BD0A94B00B6E284 /* Coordinate.h */,
 				309F76931BE8851000B2791F /* Rect.cpp */,
@@ -1086,6 +1091,7 @@
 				309F76951BE8851000B2791F /* Rect.cpp in Sources */,
 				045116E31BCFBA39002AA721 /* Map.cpp in Sources */,
 				CBA296431BE37FB1006BE7A0 /* GameScheduler.cpp in Sources */,
+				309F76A01BEA3ABA00B2791F /* Utils.cpp in Sources */,
 				A1A4BA491BCE096300175E8A /* Utils.cpp in Sources */,
 				A1720E741BCCE0A200217E98 /* FixedLabelAtlas.cpp in Sources */,
 				CB075C041BDDD8AC00C7FD68 /* MapLayer.cpp in Sources */,
@@ -1102,6 +1108,7 @@
 				A1D45C4A1BEB3B1400D1E921 /* ResourceButton.cpp in Sources */,
 				A1720E7A1BCCE0F000217E98 /* CCShake.cpp in Sources */,
 				A1720E971BCCE41A00217E98 /* ScrollBar.cpp in Sources */,
+				309F769A1BE9D7BD00B2791F /* Camp.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				A1720EB91BCD2D2E00217E98 /* KeychainItemWrapper.m in Sources */,
 				A1720E8B1BCCE19300217E98 /* aes_core.c in Sources */,
@@ -1146,7 +1153,6 @@
 				0451170A1BCFBA53002AA721 /* Skill.cpp in Sources */,
 				045116F81BCFBA44002AA721 /* TechTree.cpp in Sources */,
 				A1720ECE1BCD382700217E98 /* MessageBoxBaseLayer.cpp in Sources */,
-				301F63F81BE3644700DA6D70 /* MapSetting.cpp in Sources */,
 				045116E21BCFBA39002AA721 /* Clock.cpp in Sources */,
 				A1720E931BCCE1D900217E98 /* LocalHelper.cpp in Sources */,
 				045117091BCFBA53002AA721 /* Faction.cpp in Sources */,

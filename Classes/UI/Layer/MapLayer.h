@@ -14,7 +14,7 @@
 #include "cocos-ext.h"
 #include "ui/CocosGUI.h"
 #include "Coordinate.h"
-#include "MapSetting.h"
+#include "GameSettings.h"
 
 using namespace std;
 USING_NS_CC;

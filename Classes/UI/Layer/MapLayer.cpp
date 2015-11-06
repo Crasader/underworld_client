@@ -11,7 +11,6 @@
 #include "2d/CCFastTMXLayer.h"
 #include "2d/CCFastTMXTiledMap.h"
 #include "Coordinate.h"
-#include "MapSetting.h"
 #include "Map.h"
 
 static const int TILEDMAP_TAG = 2;
@@ -105,8 +104,8 @@ bool MapLayer::init(int mapId)
         cocos2d::experimental::TMXLayer *logicLayer = _tiledMap->getLayer(TILEDMAP_LAYER_LOGIC);
         logicLayer->setVisible(false);
         const Size &logicSize = logicLayer->getLayerSize();
-        mapSetting.width = logicSize.width;
-        mapSetting.height = logicSize.height;
+        mapSetting.setWidth(logicSize.width);
+        mapSetting.setHeight(logicSize.height);
         for (unsigned int x = 0; x < logicSize.width; x++)
         {
             for (unsigned int y = 0; y < logicSize.height; y++)
@@ -114,13 +113,13 @@ bool MapLayer::init(int mapId)
                 int gid = logicLayer->getTileGIDAt(Vec2(x, y));
                 if (gid == 0) {
                     //can walk
-                    mapSetting.add(mapCoordinate2coreCoordinate(x, y));
+                    mapSetting.addWalkableArea(mapCoordinate2coreCoordinate(x, y));
                 } else {
                     //can not walk
                 }
             }
         }
-        CCLOG("%zd logicLayer", mapSetting.walkableArea.size());
+        CCLOG("%zd logicLayer", mapSetting.getWalkableArea().size());
         logicLayer->removeFromParent();
         
         //--------- scale ---------//
