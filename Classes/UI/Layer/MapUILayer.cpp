@@ -18,8 +18,21 @@ using namespace std;
 using namespace cocostudio;
 using namespace UnderWorld::Core;
 
-static const Size unitIconSize(50, 50);
-static const int selectedTag = 100;
+static const int waveTime = 20;
+static const int battleTotalTime = 180;
+static const uint columnCount = 2;
+static const float unitNodeOffsetY = 12.0f;
+
+static ProgressTimer* createProgressTimer()
+{
+    Sprite* s = Sprite::create("GameImages/test/ui_xt_1.png");
+    ProgressTimer* pt = ProgressTimer::create(s);
+    pt->setType(ProgressTimer::Type::BAR);
+    pt->setBarChangeRate(Vec2(1.0f, 0.0f));
+    pt->setMidpoint(Point::ANCHOR_BOTTOM_LEFT);
+    
+    return pt;
+}
 
 #pragma mark =====================================================
 #pragma mark Unit Node
@@ -43,7 +56,9 @@ MapUIUnitNode* MapUIUnitNode::create(const UnderWorld::Core::UnitType* type, ssi
 MapUIUnitNode::MapUIUnitNode()
 :_observer(nullptr)
 ,_iconButton(nullptr)
+,_resourceButton(nullptr)
 ,_unitType(nullptr)
+,_idx(CC_INVALID_INDEX)
 ,_touchInvalid(false)
 {
     
@@ -58,9 +73,6 @@ bool MapUIUnitNode::init(const UnderWorld::Core::UnitType* type, ssize_t idx)
 {
     if (Node::init())
     {
-        _unitType = type;
-        _idx = idx;
-        
 #if false
         const string CsbFile = "facebook_UI.csb";
         Node *mainNode = CSLoader::createNode(CsbFile);
@@ -84,8 +96,8 @@ bool MapUIUnitNode::init(const UnderWorld::Core::UnitType* type, ssize_t idx)
             }
         }
 #else
-        const string iconFile = (type == nullptr) ? "GameImages/test/icon_jz.png" : "GameImages/test/icon_gjs.png";
-        _iconButton = Button::create(iconFile, iconFile);
+        static const string defaultIconFile("GameImages/test/icon_jz.png");
+        _iconButton = Button::create(defaultIconFile, defaultIconFile);
         _iconButton->setPressedActionEnabled(false);
         _iconButton->setSwallowTouches(false);
         addChild(_iconButton);
@@ -93,35 +105,34 @@ bool MapUIUnitNode::init(const UnderWorld::Core::UnitType* type, ssize_t idx)
             Widget* button = dynamic_cast<Widget*>(pSender);
             if (type == Widget::TouchEventType::BEGAN) {
                 _touchInvalid = false;
-                if(_observer) {
-                    _observer->onMapUIUnitNodeTouchedBegan(this);
-                }
             } else if (type == Widget::TouchEventType::MOVED) {
-                if (_touchInvalid) return;
-                if (button->getTouchMovePosition().distance(button->getTouchBeganPosition()) > TOUCH_CANCEL_BY_MOVING_DISTANCE) {
+                if (!_touchInvalid && button->getTouchMovePosition().distance(button->getTouchBeganPosition()) > TOUCH_CANCEL_BY_MOVING_DISTANCE) {
                     _touchInvalid = true;
                 }
             } else if (type == Widget::TouchEventType::ENDED) {
-                if (_touchInvalid) return;
-                SoundManager::getInstance()->playButtonSound();
-                if(_observer) {
-                    _observer->onMapUIUnitNodeTouchedEnded(this);
+                if (!_touchInvalid) {
+                    SoundManager::getInstance()->playButtonSound();
+                    if(_observer) {
+                        _observer->onMapUIUnitNodeTouchedEnded(this);
+                    }
                 }
             }
         });
         
-        ResourceButton *button = ResourceButton::create(false, kResourceType_Gold, 100, nullptr);
-        addChild(button);
+        _resourceButton = ResourceButton::create(false, kResourceType_Gold, 100, nullptr);
+        addChild(_resourceButton);
         
         const float rootHeight = _iconButton->getContentSize().height;
-        const float buttonHeight = button->getContentSize().height;
+        const float buttonHeight = _resourceButton->getContentSize().height;
         const Size size(_iconButton->getContentSize().width + 2.0f, rootHeight + buttonHeight + 5.0f);
         setContentSize(size);
         
         _iconButton->setAnchorPoint(Point::ANCHOR_MIDDLE);
         _iconButton->setPosition(Point(size.width / 2, size.height - rootHeight / 2));
-        button->setAnchorPoint(Point::ANCHOR_MIDDLE);
-        button->setPosition(Point(size.width / 2, buttonHeight / 2));
+        _resourceButton->setAnchorPoint(Point::ANCHOR_MIDDLE);
+        _resourceButton->setPosition(Point(size.width / 2, buttonHeight / 2));
+        
+        update(type, idx);
 #endif
         
         return true;
@@ -135,6 +146,38 @@ void MapUIUnitNode::registerObserver(MapUIUnitNodeObserver *observer)
     _observer = observer;
 }
 
+void MapUIUnitNode::update(const UnderWorld::Core::UnitType* type, ssize_t idx)
+{
+    _unitType = type;
+    _idx = idx;
+    
+    const string iconFile = (type == nullptr) ? "GameImages/test/icon_jz.png" : "GameImages/test/icon_gjs.png";
+    _iconButton->loadTextures(iconFile, iconFile);
+}
+
+void MapUIUnitNode::setSelected(bool selected)
+{
+    if (_iconButton) {
+        Node *parent = _iconButton->getParent();
+        if (parent) {
+            static const int selectedTag = 100;
+            Node *selectedSprite = parent->getChildByTag(selectedTag);
+            if (selected) {
+                if (!selectedSprite) {
+                    Sprite *s = Sprite::create("GameImages/test/ui_xz.png");
+                    s->setTag(selectedTag);
+                    s->setPosition(_iconButton->getPosition());
+                    parent->addChild(s, 1);
+                }
+            } else {
+                if (selectedSprite) {
+                    parent->removeChild(selectedSprite);
+                }
+            }
+        }
+    }
+}
+
 const UnderWorld::Core::UnitType* MapUIUnitNode::getUnitType() const
 {
     return _unitType;
@@ -145,40 +188,31 @@ ssize_t MapUIUnitNode::getIdx() const
     return _idx;
 }
 
-void MapUIUnitNode::addSelectedFlag()
+#pragma mark =====================================================
+#pragma mark MapUIUnitCell
+#pragma mark =====================================================
+
+const vector<MapUIUnitNode*>& MapUIUnitCell::getUnitNodes() const
 {
-    if (_iconButton) {
-        Node *parent = _iconButton->getParent();
-        Node *selectedSprite = parent->getChildByTag(selectedTag);
-        if (!selectedSprite) {
-            Sprite *s = Sprite::create("GameImages/formation/Selected.png");
-            s->setTag(selectedTag);
-            s->setPosition(_iconButton->getPosition());
-            parent->addChild(s);
-        }
-    }
+    return _unitNodes;
 }
 
-void MapUIUnitNode::removeSelectedFlag()
+void MapUIUnitCell::addUnitNode(MapUIUnitNode* node)
 {
-    if (_iconButton) {
-        Node *parent = _iconButton->getParent();
-        if (parent) {
-            parent->removeChildByTag(selectedTag);
-        }
-    }
+    assert(_unitNodes.size() < columnCount);
+    _unitNodes.push_back(node);
+}
+
+void MapUIUnitCell::resetUnitNodes()
+{
+    _unitNodes.clear();
 }
 
 #pragma mark =====================================================
 #pragma mark MapUILayer
 #pragma mark =====================================================
 
-static const int waveTime = 20;
-static const int battleTotalTime = 180;
-static const uint columnCount = 2;
-static const float offsetY = 12;
-
-MapUILayer* MapUILayer::create(const std::string& myAccount, const std::string& opponentsAccount)
+MapUILayer* MapUILayer::create(const string& myAccount, const string& opponentsAccount)
 {
     MapUILayer *ret = new (nothrow) MapUILayer();
     if (ret && ret->init(myAccount, opponentsAccount))
@@ -206,13 +240,14 @@ MapUILayer::MapUILayer()
 ,_opponentsHpPercentageLabel(nullptr)
 ,_sendTroopMenuItem(nullptr)
 ,_pauseMenuItem(nullptr)
+,_paused(false)
+,_selectedUnitIdx(CC_INVALID_INDEX)
 ,_waveTime(waveTime)
 ,_remainingTime(battleTotalTime)
-,_selectedUnitIdx(-1)
 {
     _unitNodeSize = MapUIUnitNode::create(nullptr, 0)->getContentSize();
     _cellSize.width = _unitNodeSize.width * columnCount;
-    _cellSize.height = _unitNodeSize.height + offsetY * 2;
+    _cellSize.height = _unitNodeSize.height + unitNodeOffsetY * 2;
 }
 
 MapUILayer::~MapUILayer()
@@ -223,6 +258,28 @@ MapUILayer::~MapUILayer()
 void MapUILayer::registerObserver(MapUILayerObserver *observer)
 {
     _observer = observer;
+}
+
+void MapUILayer::updateMyHpProgress(int progress)
+{
+    _myHpProgress->setPercentage(progress);
+    _myHpPercentageLabel->setString(StringUtils::format("%d%%", progress));
+}
+
+void MapUILayer::updateOpponentsHpProgress(int progress)
+{
+    _opponentsHpProgress->setPercentage(progress);
+    _opponentsHpPercentageLabel->setString(StringUtils::format("%d%%", progress));
+}
+
+void MapUILayer::updateWaveTime(int time)
+{
+    _nextWaveTimeLabel->setString(StringUtils::format("%ds", time));
+}
+
+void MapUILayer::updateRemainingTime(int time)
+{
+    _timeLabel->setString(CocosUtils::getFormattedTime(time));
 }
 
 #pragma mark - TableViewDelegate
@@ -239,33 +296,37 @@ Size MapUILayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
 
 TableViewCell* MapUILayer::tableCellAtIndex(TableView *table, ssize_t idx)
 {
-    static const int NodeTag = 100;
-    TableViewCell *cell = table->dequeueCell();
+    MapUIUnitCell *cell = static_cast<MapUIUnitCell*>(table->dequeueCell());
     if (!cell)
     {
-        cell = new (nothrow) TableViewCell();
-        cell->autorelease();
+        cell = MapUIUnitCell::create();
+        
+        for (int i = 0; i < columnCount; ++i)
+        {
+            ssize_t index = idx * columnCount + i;
+            // TODO: remove test code
+            UnitType* type = (i == 0) ? nullptr : reinterpret_cast<UnitType*>(1);
+            MapUIUnitNode* unitNode = MapUIUnitNode::create(type, index);
+            unitNode->setPosition(Point(_unitNodeSize.width * i, unitNodeOffsetY));
+            unitNode->registerObserver(this);
+            cell->addChild(unitNode);
+            cell->addUnitNode(unitNode);
+        }
     }
     else
     {
-        cell->removeChildByTag(NodeTag);
+        const vector<MapUIUnitNode*>& unitNodes = cell->getUnitNodes();
+        
+        for (int i = 0; i < columnCount; ++i)
+        {
+            ssize_t index = idx * columnCount + i;
+            // TODO: remove test code
+            UnitType* type = (i == 0) ? nullptr : reinterpret_cast<UnitType*>(1);
+            MapUIUnitNode* unitNode = unitNodes.at(i);
+            unitNode->update(type, index);
+            unitNode->setSelected(index == _selectedUnitIdx);
+        }
     }
-    
-    Node* node = Node::create();
-    
-    for (int i = 0; i < columnCount; ++i)
-    {
-//        ssize_t index = idx * columnCount + i;
-        UnitType* type = (i == 0) ? nullptr : reinterpret_cast<UnitType*>(1);
-        MapUIUnitNode* unitNode = MapUIUnitNode::create(type, idx);
-        unitNode->setPosition(Point(_unitNodeSize.width * i, offsetY ));
-        unitNode->registerObserver(this);
-        node->addChild(unitNode);
-    }
-
-    node->setPosition(Point::ZERO);
-    node->setTag(NodeTag);
-    cell->addChild(node);
     
     return cell;
 }
@@ -276,18 +337,32 @@ ssize_t MapUILayer::numberOfCellsInTableView(TableView *table)
 }
 
 #pragma mark - MapUIUnitNodeObserver
-void MapUILayer::onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node)
-{
-    
-}
-
 void MapUILayer::onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node)
 {
+    const ssize_t oldIdx = _selectedUnitIdx;
+    const ssize_t newIdx = node->getIdx();
+    if (newIdx != oldIdx) {
+        _selectedUnitIdx = newIdx;
+        
+        const ssize_t oldCellIdx = oldIdx / columnCount;
+        const ssize_t newCellIdx = newIdx / columnCount;
+        
+        if (oldIdx != CC_INVALID_INDEX) {
+            _tableView->updateCellAtIndex(oldCellIdx);
+        }
+        
+        if (oldCellIdx != newCellIdx) {
+            _tableView->updateCellAtIndex(newCellIdx);
+        }
+    }
     
+    if (_observer) {
+        _observer->onMapUILayerUnitSelected();
+    }
 }
 
 #pragma mark -
-bool MapUILayer::init(const std::string& myAccount, const std::string& opponentsAccount)
+bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
 {
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR))
     {
@@ -349,13 +424,11 @@ bool MapUILayer::init(const std::string& myAccount, const std::string& opponents
             label->setPosition(Point(size.width / 2, size.height * 0.75));
             sprite->addChild(label);
             
-            Sprite* s = Sprite::create("GameImages/test/ui_xt_1.png");
-            _myHpProgress = ProgressTimer::create(s);
-            _myHpProgress->setPercentage(100);
-            _myHpProgress->setPosition(Point(size.width / 2, size.height * 0.25f));
+            _myHpProgress = createProgressTimer();
+            _myHpProgress->setPosition(Point(size.width / 2, 8.0f));
             sprite->addChild(_myHpProgress);
             
-            _myHpPercentageLabel = CocosUtils::createLabel(StringUtils::format("%d%%", 20), DEFAULT_FONT_SIZE);
+            _myHpPercentageLabel = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
             _myHpPercentageLabel->setPosition(_myHpProgress->getPosition());
             sprite->addChild(_myHpPercentageLabel);
         }
@@ -403,13 +476,11 @@ bool MapUILayer::init(const std::string& myAccount, const std::string& opponents
             label->setPosition(Point(size.width / 2, size.height * 0.75));
             sprite->addChild(label);
             
-            Sprite* s = Sprite::create("GameImages/test/ui_xt_1.png");
-            _opponentsHpProgress = ProgressTimer::create(s);
-            _opponentsHpProgress->setPercentage(100);
-            _opponentsHpProgress->setPosition(Point(size.width / 2, size.height * 0.25f));
+            _opponentsHpProgress = createProgressTimer();
+            _opponentsHpProgress->setPosition(Point(size.width / 2, 10.0f));
             sprite->addChild(_opponentsHpProgress);
             
-            _opponentsHpPercentageLabel = CocosUtils::createLabel(StringUtils::format("%d%%", 20), DEFAULT_FONT_SIZE);
+            _opponentsHpPercentageLabel = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
             _opponentsHpPercentageLabel->setPosition(_opponentsHpProgress->getPosition());
             sprite->addChild(_opponentsHpPercentageLabel);
         }
@@ -436,6 +507,7 @@ bool MapUILayer::init(const std::string& myAccount, const std::string& opponents
             sprite->addChild(label);
             
             _tableView = TableView::create(this, Size(_cellSize.width, size.height - 80));
+            _tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
             _tableView->setDirection(extension::ScrollView::Direction::VERTICAL);
             _tableView->setPosition(Point(leftOffset + (size.width - _cellSize.width) / 2, 120));
             _tableView->setBounceable(false);
@@ -454,8 +526,11 @@ bool MapUILayer::init(const std::string& myAccount, const std::string& opponents
 //            });
 //            _sendTroopMenuItem->setAnchorPoint(Point::ZERO);
 //            _sendTroopMenuItem->setPosition(Point(leftOffset, 5.0f));
-            _pauseMenuItem = MenuItemImage::create("GameImages/test/ui_zt.png", "GameImages/test/ui_zt.png", [](Ref*) {
-                
+            _pauseMenuItem = MenuItemImage::create("GameImages/test/ui_zt.png", "GameImages/test/ui_zt.png", [this](Ref*) {
+                _paused = !_paused;
+                if (_observer) {
+                    _observer->onMapUILayerClickedPauseButton(_paused);
+                }
             });
             _pauseMenuItem->setAnchorPoint(Point(1.0f, 1.0f));
             _pauseMenuItem->setPosition(Point(winSize.width - 5.0f, winSize.height - 5.0f));
@@ -467,6 +542,8 @@ bool MapUILayer::init(const std::string& myAccount, const std::string& opponents
         
         updateWaveTime(_waveTime);
         updateRemainingTime(_remainingTime);
+        updateMyHpProgress(60);
+        updateOpponentsHpProgress(20);
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -513,14 +590,4 @@ void MapUILayer::fakeTick(float dt)
     
     updateWaveTime(_waveTime);
     updateRemainingTime(_remainingTime);
-}
-
-void MapUILayer::updateWaveTime(int time)
-{
-    _nextWaveTimeLabel->setString(StringUtils::format("%ds", time));
-}
-
-void MapUILayer::updateRemainingTime(int time)
-{
-    _timeLabel->setString(CocosUtils::getFormattedTime(time));
 }

@@ -33,7 +33,6 @@ class MapUIUnitNodeObserver
 {
 public:
     virtual ~MapUIUnitNodeObserver() {}
-    virtual void onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node) = 0;
     virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node) = 0;
 };
 
@@ -43,10 +42,12 @@ public:
     static MapUIUnitNode* create(const UnderWorld::Core::UnitType* type, ssize_t idx);
     virtual ~MapUIUnitNode();
     void registerObserver(MapUIUnitNodeObserver *observer);
+    void update(const UnderWorld::Core::UnitType* type, ssize_t idx);
+    void setSelected(bool selected);
+    
+    // getters
     const UnderWorld::Core::UnitType* getUnitType() const;
     ssize_t getIdx() const;
-    void addSelectedFlag();
-    void removeSelectedFlag();
     
 protected:
     MapUIUnitNode();
@@ -55,9 +56,26 @@ protected:
 private:
     MapUIUnitNodeObserver *_observer;
     Button *_iconButton;
+    ResourceButton *_resourceButton;
     const UnderWorld::Core::UnitType* _unitType;
     ssize_t _idx;
     bool _touchInvalid;
+};
+
+// =====================================================
+// TableViewCell
+// =====================================================
+
+class MapUIUnitCell: public TableViewCell
+{
+public:
+    CREATE_FUNC(MapUIUnitCell);
+    const std::vector<MapUIUnitNode*>& getUnitNodes() const;
+    void addUnitNode(MapUIUnitNode* node);
+    void resetUnitNodes();
+    
+private:
+    std::vector<MapUIUnitNode*> _unitNodes;
 };
 
 // =====================================================
@@ -68,6 +86,8 @@ class MapUILayerObserver
 {
 public:
     virtual ~MapUILayerObserver() {}
+    virtual void onMapUILayerUnitSelected() = 0;
+    virtual void onMapUILayerClickedPauseButton(bool pause) = 0;
 };
 
 class MapUILayer: public LayerColor, public TableViewDelegate, public TableViewDataSource, public MapUIUnitNodeObserver
@@ -76,6 +96,10 @@ public:
     static MapUILayer* create(const std::string& myAccount, const std::string& opponentsAccount);
     virtual ~MapUILayer();
     void registerObserver(MapUILayerObserver *observer);
+    void updateMyHpProgress(int progress);
+    void updateOpponentsHpProgress(int progress);
+    void updateWaveTime(int time);
+    void updateRemainingTime(int time);
     
 protected:
     MapUILayer();
@@ -94,13 +118,10 @@ protected:
     virtual ssize_t numberOfCellsInTableView(TableView *table) override;
     
     // MapUIUnitNodeObserver
-    virtual void onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node) override;
     virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node) override;
     
-    // test
+    // ======================== test =============================
     void fakeTick(float dt);
-    void updateWaveTime(int time);
-    void updateRemainingTime(int time);
     
 private:
     MapUILayerObserver *_observer;
@@ -117,9 +138,11 @@ private:
     Label *_opponentsHpPercentageLabel;
     MenuItem *_sendTroopMenuItem;
     MenuItem *_pauseMenuItem;
+    bool _paused;
+    int _selectedUnitIdx;
+    // ======================== test =============================
     int _waveTime;
     int _remainingTime;
-    int _selectedUnitIdx;
 };
 
 #endif /* MapUILayer_h */
