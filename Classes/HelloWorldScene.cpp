@@ -69,8 +69,8 @@ bool HelloWorld::init()
     }
     units2.push_back(std::make_pair("吸血鬼核心", UnderWorld::Core::Coordinate(900, 140)));
     //setting.setFactionStartUnits(1, units2);
-    _looper = new UnderWorld::Core::GameLooper(setting, _render, _sch);
-    _looper->init();
+    _looper = new UnderWorld::Core::GameLooper(_render, _sch);
+    _looper->init(setting);
     _looper->start();
     
     //--------- UI Layer ---------//

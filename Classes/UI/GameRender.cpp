@@ -57,9 +57,9 @@ void GameRender::render(const Game* game)
 void GameRender::updateUnits(const Game* game, int index)
 {
     const World* world = game->getWorld();
-    const std::vector<Faction*>& factions = world->getFactions();
+    const std::vector<Faction>& factions = world->getFactions();
     if (factions.size() > index) {
-        const Faction* f = factions.at(index);
+        const Faction* f = &factions.at(index);
         const std::vector<Unit*>& units = f->getAllUnits();
         for (int i = 0; i < units.size(); ++i) {
             const Unit* unit = units.at(i);
