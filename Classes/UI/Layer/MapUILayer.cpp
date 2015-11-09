@@ -20,8 +20,9 @@ using namespace UnderWorld::Core;
 
 static const int waveTime = 20;
 static const int battleTotalTime = 180;
-static const uint columnCount = 2;
-static const float unitNodeOffsetY = 12.0f;
+static const float unitNodeOffsetX = 6.0f;
+static const float unitNodeOffsetY = 8.0f;
+static const int tableViewCellsMinCount = 4;
 
 static ProgressTimer* createProgressTimer()
 {
@@ -57,6 +58,7 @@ MapUIUnitNode::MapUIUnitNode()
 :_observer(nullptr)
 ,_iconButton(nullptr)
 ,_resourceButton(nullptr)
+,_countLabel(nullptr)
 ,_unitType(nullptr)
 ,_idx(CC_INVALID_INDEX)
 ,_touchInvalid(false)
@@ -120,17 +122,19 @@ bool MapUIUnitNode::init(const UnderWorld::Core::UnitType* type, ssize_t idx)
         });
         
         _resourceButton = ResourceButton::create(false, kResourceType_Gold, 100, nullptr);
-        addChild(_resourceButton);
+        _iconButton->addChild(_resourceButton);
         
-        const float rootHeight = _iconButton->getContentSize().height;
-        const float buttonHeight = _resourceButton->getContentSize().height;
-        const Size size(_iconButton->getContentSize().width + 2.0f, rootHeight + buttonHeight + 5.0f);
+        const Size size(_iconButton->getContentSize());
         setContentSize(size);
         
         _iconButton->setAnchorPoint(Point::ANCHOR_MIDDLE);
-        _iconButton->setPosition(Point(size.width / 2, size.height - rootHeight / 2));
+        _iconButton->setPosition(Point(size.width / 2, size.height / 2));
         _resourceButton->setAnchorPoint(Point::ANCHOR_MIDDLE);
-        _resourceButton->setPosition(Point(size.width / 2, buttonHeight / 2));
+        _resourceButton->setPosition(Point(size.width / 2, 30));
+        
+        _countLabel = CocosUtils::createLabel(StringUtils::format("X %d", 100), DEFAULT_FONT_SIZE);
+        _countLabel->setPosition(Point(size.width / 2, 210));
+        _iconButton->addChild(_countLabel);
         
         update(type, idx);
 #endif
@@ -192,20 +196,20 @@ ssize_t MapUIUnitNode::getIdx() const
 #pragma mark MapUIUnitCell
 #pragma mark =====================================================
 
-const vector<MapUIUnitNode*>& MapUIUnitCell::getUnitNodes() const
+MapUIUnitNode* MapUIUnitCell::getUnitNode() const
 {
-    return _unitNodes;
+    return _unitNode;
 }
 
-void MapUIUnitCell::addUnitNode(MapUIUnitNode* node)
+void MapUIUnitCell::setUnitNode(MapUIUnitNode* node)
 {
-    assert(_unitNodes.size() < columnCount);
-    _unitNodes.push_back(node);
+    assert(!_unitNode);
+    _unitNode = node;
 }
 
-void MapUIUnitCell::resetUnitNodes()
+void MapUIUnitCell::resetUnitNode()
 {
-    _unitNodes.clear();
+    _unitNode = nullptr;
 }
 
 #pragma mark =====================================================
@@ -245,9 +249,9 @@ MapUILayer::MapUILayer()
 ,_waveTime(waveTime)
 ,_remainingTime(battleTotalTime)
 {
-    _unitNodeSize = MapUIUnitNode::create(nullptr, 0)->getContentSize();
-    _cellSize.width = _unitNodeSize.width * columnCount;
-    _cellSize.height = _unitNodeSize.height + unitNodeOffsetY * 2;
+    Size unitNodeSize = MapUIUnitNode::create(nullptr, 0)->getContentSize();
+    _cellSize.height = unitNodeSize.height + unitNodeOffsetY * 2;
+    _cellSize.width = unitNodeSize.width + unitNodeOffsetX * 2;
 }
 
 MapUILayer::~MapUILayer()
@@ -301,31 +305,21 @@ TableViewCell* MapUILayer::tableCellAtIndex(TableView *table, ssize_t idx)
     {
         cell = MapUIUnitCell::create();
         
-        for (int i = 0; i < columnCount; ++i)
-        {
-            ssize_t index = idx * columnCount + i;
-            // TODO: remove test code
-            UnitType* type = (i == 0) ? nullptr : reinterpret_cast<UnitType*>(1);
-            MapUIUnitNode* unitNode = MapUIUnitNode::create(type, index);
-            unitNode->setPosition(Point(_unitNodeSize.width * i, unitNodeOffsetY));
-            unitNode->registerObserver(this);
-            cell->addChild(unitNode);
-            cell->addUnitNode(unitNode);
-        }
+        // TODO: remove test code
+        UnitType* type = (idx % 2 == 0) ? nullptr : reinterpret_cast<UnitType*>(1);
+        MapUIUnitNode* unitNode = MapUIUnitNode::create(type, idx);
+        unitNode->setPosition(Point(unitNodeOffsetX, unitNodeOffsetY));
+        unitNode->registerObserver(this);
+        cell->addChild(unitNode);
+        cell->setUnitNode(unitNode);
     }
     else
     {
-        const vector<MapUIUnitNode*>& unitNodes = cell->getUnitNodes();
-        
-        for (int i = 0; i < columnCount; ++i)
-        {
-            ssize_t index = idx * columnCount + i;
-            // TODO: remove test code
-            UnitType* type = (i == 0) ? nullptr : reinterpret_cast<UnitType*>(1);
-            MapUIUnitNode* unitNode = unitNodes.at(i);
-            unitNode->update(type, index);
-            unitNode->setSelected(index == _selectedUnitIdx);
-        }
+        // TODO: remove test code
+        UnitType* type = (idx % 2 == 0) ? nullptr : reinterpret_cast<UnitType*>(1);
+        MapUIUnitNode* unitNode = cell->getUnitNode();
+        unitNode->update(type, idx);
+        unitNode->setSelected(idx == _selectedUnitIdx);
     }
     
     return cell;
@@ -344,16 +338,11 @@ void MapUILayer::onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node)
     if (newIdx != oldIdx) {
         _selectedUnitIdx = newIdx;
         
-        const ssize_t oldCellIdx = oldIdx / columnCount;
-        const ssize_t newCellIdx = newIdx / columnCount;
-        
         if (oldIdx != CC_INVALID_INDEX) {
-            _tableView->updateCellAtIndex(oldCellIdx);
+            _tableView->updateCellAtIndex(oldIdx);
         }
         
-        if (oldCellIdx != newCellIdx) {
-            _tableView->updateCellAtIndex(newCellIdx);
-        }
+        _tableView->updateCellAtIndex(newIdx);
     }
     
     if (_observer) {
@@ -408,6 +397,7 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             sprite->addChild(label);
             
             _nextWaveTimeLabel = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
+            _nextWaveTimeLabel->setTextColor(Color4B::RED);
             _nextWaveTimeLabel->setPosition(Point(size.width / 2, size.height * 0.25f));
             sprite->addChild(_nextWaveTimeLabel);
         }
@@ -453,6 +443,7 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             sprite->addChild(label);
             
             _timeLabel = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
+            _timeLabel->setTextColor(Color4B::RED);
             _timeLabel->setPosition(Point(size.width / 2, size.height * 0.25f));
             sprite->addChild(_timeLabel);
         }
@@ -484,32 +475,45 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             _opponentsHpPercentageLabel->setPosition(_opponentsHpProgress->getPosition());
             sprite->addChild(_opponentsHpPercentageLabel);
         }
-        // units table
+        //
         {
-            Sprite* sprite = Sprite::create("GameImages/test/ui_cd.png");
-            sprite->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
-            sprite->setPosition(Point(leftOffset, winSize.height - (90.0f + ceilOffset)));
+            Sprite* sprite = Sprite::create("GameImages/test/icon_bg.png");
+            sprite->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+            sprite->setPosition(Point(leftOffset, ceilOffset));
             root->addChild(sprite);
             
             const Size& size = sprite->getContentSize();
             
-            Label* label = CocosUtils::createLabel("能量", DEFAULT_FONT_SIZE);
-            label->setPosition(Point(size.width / 2, size.height - 12));
+            Label* label = CocosUtils::createLabel("训练后的总兵力", DEFAULT_FONT_SIZE);
+            label->setPosition(Point(size.width / 2, size.height * 0.875));
+            sprite->addChild(label);
+            
+            label = CocosUtils::createLabel("0/100", DEFAULT_FONT_SIZE);
+            label->setPosition(Point(size.width / 2, size.height * 0.625));
+            sprite->addChild(label);
+            
+            label = CocosUtils::createLabel("能量", DEFAULT_FONT_SIZE);
+            label->setPosition(Point(size.width / 2, size.height * 0.375));
             sprite->addChild(label);
             
             _energyResourceButton = ResourceButton::create(false, kResourceType_Gold, 2000, nullptr);
             _energyResourceButton->setAnchorPoint(Point::ANCHOR_MIDDLE);
-            _energyResourceButton->setPosition(Point(size.width / 2, size.height - 36));
+            _energyResourceButton->setPosition(Point(size.width / 2, size.height * 0.125));
             sprite->addChild(_energyResourceButton);
+        }
+        // units table
+        {
+            Sprite* sprite = CocosUtils::createPureColorSprite(Size(_cellSize.width * tableViewCellsMinCount, _cellSize.height), Color4B::BLACK);
+            sprite->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
+            sprite->setPosition(Point(winSize.width / 2, ceilOffset));
+            root->addChild(sprite);
             
-            label = CocosUtils::createLabel("出战单位", DEFAULT_FONT_SIZE);
-            label->setPosition(Point(size.width / 2, size.height - 60));
-            sprite->addChild(label);
+            const Size& size = sprite->getContentSize();
             
-            _tableView = TableView::create(this, Size(_cellSize.width, size.height - 80));
+            _tableView = TableView::create(this, size);
+            _tableView->setDirection(extension::ScrollView::Direction::HORIZONTAL);
             _tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
-            _tableView->setDirection(extension::ScrollView::Direction::VERTICAL);
-            _tableView->setPosition(Point(leftOffset + (size.width - _cellSize.width) / 2, 120));
+            _tableView->setPosition(Point(sprite->getPosition().x - sprite->getContentSize().width / 2, sprite->getPosition().y));
             _tableView->setBounceable(false);
             _tableView->setDelegate(this);
             root->addChild(_tableView);
@@ -521,11 +525,6 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             _unitCostLabel = CocosUtils::createLabel(StringUtils::format("%d", 100), DEFAULT_FONT_SIZE);
             _unitCostLabel->setPosition(Point(size.width / 2, size.height / 2));
             sprite->addChild(_unitCostLabel);
-//            _sendTroopMenuItem = MenuItemSprite::create(sprite, sprite, [](Ref*) {
-//                CCLOG("Sending troop...");
-//            });
-//            _sendTroopMenuItem->setAnchorPoint(Point::ZERO);
-//            _sendTroopMenuItem->setPosition(Point(leftOffset, 5.0f));
             _pauseMenuItem = MenuItemImage::create("GameImages/test/ui_zt.png", "GameImages/test/ui_zt.png", [this](Ref*) {
                 _paused = !_paused;
                 if (_observer) {

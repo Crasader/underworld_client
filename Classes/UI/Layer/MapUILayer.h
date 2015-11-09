@@ -57,6 +57,7 @@ private:
     MapUIUnitNodeObserver *_observer;
     Button *_iconButton;
     ResourceButton *_resourceButton;
+    Label *_countLabel;
     const UnderWorld::Core::UnitType* _unitType;
     ssize_t _idx;
     bool _touchInvalid;
@@ -70,12 +71,12 @@ class MapUIUnitCell: public TableViewCell
 {
 public:
     CREATE_FUNC(MapUIUnitCell);
-    const std::vector<MapUIUnitNode*>& getUnitNodes() const;
-    void addUnitNode(MapUIUnitNode* node);
-    void resetUnitNodes();
+    MapUIUnitNode* getUnitNode() const;
+    void setUnitNode(MapUIUnitNode* node);
+    void resetUnitNode();
     
 private:
-    std::vector<MapUIUnitNode*> _unitNodes;
+    MapUIUnitNode* _unitNode;
 };
 
 // =====================================================
@@ -126,7 +127,6 @@ protected:
 private:
     MapUILayerObserver *_observer;
     TableView *_tableView;
-    Size _unitNodeSize;
     Size _cellSize;
     Label *_timeLabel;
     Label *_nextWaveTimeLabel;
