@@ -20,9 +20,9 @@ using namespace UnderWorld::Core;
 
 static const int waveTime = 20;
 static const int battleTotalTime = 180;
-static const float unitNodeOffsetX = 6.0f;
-static const float unitNodeOffsetY = 8.0f;
-static const int tableViewCellsMinCount = 4;
+static const float unitNodeOffsetX = 5.0f;
+static const float unitNodeOffsetY = 2.0f;
+static const int tableViewCellsMinCount = 8;
 
 static ProgressTimer* createProgressTimer()
 {
@@ -122,19 +122,24 @@ bool MapUIUnitNode::init(const UnderWorld::Core::UnitType* type, ssize_t idx)
         });
         
         _resourceButton = ResourceButton::create(false, kResourceType_Gold, 100, nullptr);
-        _iconButton->addChild(_resourceButton);
-        
-        const Size size(_iconButton->getContentSize());
-        setContentSize(size);
-        
-        _iconButton->setAnchorPoint(Point::ANCHOR_MIDDLE);
-        _iconButton->setPosition(Point(size.width / 2, size.height / 2));
-        _resourceButton->setAnchorPoint(Point::ANCHOR_MIDDLE);
-        _resourceButton->setPosition(Point(size.width / 2, 30));
+        addChild(_resourceButton);
         
         _countLabel = CocosUtils::createLabel(StringUtils::format("X %d", 100), DEFAULT_FONT_SIZE);
-        _countLabel->setPosition(Point(size.width / 2, 210));
-        _iconButton->addChild(_countLabel);
+        addChild(_countLabel);
+        
+        const float iconHeight = _iconButton->getContentSize().height;
+        const float resourceHeight = _resourceButton->getContentSize().height;
+        const float countHeight = _countLabel->getContentSize().height;
+        static const float offsetY = 2.0f;
+        const Size size(_iconButton->getContentSize().width, iconHeight + resourceHeight + countHeight + offsetY * 4);
+        setContentSize(size);
+        
+        const float x = size.width / 2;
+        const float y = size.height / 2;
+        _iconButton->setPosition(Point(x, y));
+        _resourceButton->setAnchorPoint(Point::ANCHOR_MIDDLE);
+        _resourceButton->setPosition(Point(x, y - (iconHeight + resourceHeight) / 2 - offsetY));
+        _countLabel->setPosition(Point(x, y + (iconHeight + countHeight) / 2 + offsetY));
         
         update(type, idx);
 #endif
@@ -289,7 +294,7 @@ void MapUILayer::updateRemainingTime(int time)
 #pragma mark - TableViewDelegate
 void MapUILayer::tableCellTouched(TableView* table, TableViewCell* cell)
 {
-    
+    onUnitTouched(cell->getIdx());
 }
 
 #pragma mark - TableViewDataSource
@@ -333,21 +338,7 @@ ssize_t MapUILayer::numberOfCellsInTableView(TableView *table)
 #pragma mark - MapUIUnitNodeObserver
 void MapUILayer::onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node)
 {
-    const ssize_t oldIdx = _selectedUnitIdx;
-    const ssize_t newIdx = node->getIdx();
-    if (newIdx != oldIdx) {
-        _selectedUnitIdx = newIdx;
-        
-        if (oldIdx != CC_INVALID_INDEX) {
-            _tableView->updateCellAtIndex(oldIdx);
-        }
-        
-        _tableView->updateCellAtIndex(newIdx);
-    }
     
-    if (_observer) {
-        _observer->onMapUILayerUnitSelected();
-    }
 }
 
 #pragma mark -
@@ -503,17 +494,16 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
         }
         // units table
         {
-            Sprite* sprite = CocosUtils::createPureColorSprite(Size(_cellSize.width * tableViewCellsMinCount, _cellSize.height), Color4B::BLACK);
-            sprite->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
-            sprite->setPosition(Point(winSize.width / 2, ceilOffset));
+            const Size size(_cellSize.width * tableViewCellsMinCount, _cellSize.height);
+            Sprite* sprite = CocosUtils::createPureColorSprite(size - Size(4, 4), Color4B::BLACK);
+            const Size& spriteSize(sprite->getContentSize());
+            sprite->setPosition(Point(winSize.width / 2, ceilOffset + spriteSize.height / 2));
             root->addChild(sprite);
-            
-            const Size& size = sprite->getContentSize();
             
             _tableView = TableView::create(this, size);
             _tableView->setDirection(extension::ScrollView::Direction::HORIZONTAL);
             _tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
-            _tableView->setPosition(Point(sprite->getPosition().x - sprite->getContentSize().width / 2, sprite->getPosition().y));
+            _tableView->setPosition(Point(sprite->getPosition().x - size.width / 2, sprite->getPosition().y - size.height / 2));
             _tableView->setBounceable(false);
             _tableView->setDelegate(this);
             root->addChild(_tableView);
@@ -574,6 +564,25 @@ void MapUILayer::onExit()
 }
 
 #pragma mark private
+void MapUILayer::onUnitTouched(ssize_t idx)
+{
+    const ssize_t oldIdx = _selectedUnitIdx;
+    const ssize_t newIdx = idx;
+    if (newIdx != oldIdx) {
+        _selectedUnitIdx = newIdx;
+        
+        if (oldIdx != CC_INVALID_INDEX) {
+            _tableView->updateCellAtIndex(oldIdx);
+        }
+        
+        _tableView->updateCellAtIndex(newIdx);
+    }
+    
+    if (_observer) {
+        _observer->onMapUILayerUnitSelected();
+    }
+}
+
 void MapUILayer::fakeTick(float dt)
 {
     -- _waveTime;

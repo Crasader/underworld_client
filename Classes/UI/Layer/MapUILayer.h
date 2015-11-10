@@ -121,6 +121,8 @@ protected:
     // MapUIUnitNodeObserver
     virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node) override;
     
+    void onUnitTouched(ssize_t idx);
+    
     // ======================== test =============================
     void fakeTick(float dt);
     
@@ -139,7 +141,7 @@ private:
     MenuItem *_sendTroopMenuItem;
     MenuItem *_pauseMenuItem;
     bool _paused;
-    int _selectedUnitIdx;
+    ssize_t _selectedUnitIdx;
     // ======================== test =============================
     int _waveTime;
     int _remainingTime;
