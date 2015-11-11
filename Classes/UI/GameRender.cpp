@@ -34,11 +34,13 @@ GameRender::~GameRender()
     }
 }
 
-void GameRender::init(const Game* game)
+void GameRender::init(const Game* game, Commander* commander)
 {
     // create units
-    updateUnits(game, 0);
-    updateUnits(game, 1);
+    for (int i = 0; game->getWorld()->getFactionCount(); ++i) {
+        updateUnits(game, i);
+
+    }
     
     // create bullets
     updateBullets(game);
@@ -47,8 +49,10 @@ void GameRender::init(const Game* game)
 void GameRender::render(const Game* game)
 {
     // create units
-    updateUnits(game, 0);
-    updateUnits(game, 1);
+    for (int i = 0; game->getWorld()->getFactionCount(); ++i) {
+        updateUnits(game, i);
+        
+    }
     
     // create bullets
     updateBullets(game);
@@ -57,48 +61,46 @@ void GameRender::render(const Game* game)
 void GameRender::updateUnits(const Game* game, int index)
 {
     const World* world = game->getWorld();
-    const std::vector<Faction>& factions = world->getFactions();
-    if (factions.size() > index) {
-        const Faction* f = &factions.at(index);
-        const std::vector<Unit*>& units = f->getAllUnits();
-        for (int i = 0; i < units.size(); ++i) {
-            const Unit* unit = units.at(i);
-            const Coordinate& pos = unit->getPos();
-            const int key = unit->getUnitId();
-            const Skill* skill = unit->getCurrentSkill();
-            // TODO: remove test code
-            if (true || skill->getSkillState() == Skill::kSkillState_performing) {
-                SkillClass sc = skill->getSkillType()->getSkillClass();
-                bool isNewCreated = (_allUnits.find(key) == _allUnits.end()) ? true : false;
-                if (isNewCreated && kSkillClass_Die != sc) {
-                    UnitNode* node = UnitNode::create(unit);
-                    _mapLayer->addUnit(node, pos);
-                    _allUnits.insert(make_pair(key, node));
-                } else if (!isNewCreated) {
-                    // already exist, update it
-                    UnitNode* node = _allUnits.at(key);
-                    switch (sc) {
-                        case kSkillClass_Stop:
-                            break;
-                        case kSkillClass_Move:
-                        {
-                            _mapLayer->repositionUnit(node, pos);
-                        }
-                            break;
-                        case kSkillClass_Attack:
-                            break;
-                        case kSkillClass_Cast:
-                            break;
-                        case kSkillClass_Die:
-                        {
-                            node->removeFromParent();
-                            _allUnits.erase(key);
-                        }
-                            break;
-                            
-                        default:
-                            break;
+
+    const Faction* f = world->getFaction(index);
+    const std::vector<Unit*>& units = f->getAllUnits();
+    for (int i = 0; i < units.size(); ++i) {
+        const Unit* unit = units.at(i);
+        const Coordinate& pos = unit->getPos();
+        const int key = unit->getUnitId();
+        const Skill* skill = unit->getCurrentSkill();
+        // TODO: remove test code
+        if (true || skill->getSkillState() == Skill::kSkillState_performing) {
+            SkillClass sc = skill->getSkillType()->getSkillClass();
+            bool isNewCreated = (_allUnits.find(key) == _allUnits.end()) ? true : false;
+            if (isNewCreated && kSkillClass_Die != sc) {
+                UnitNode* node = UnitNode::create(unit);
+                _mapLayer->addUnit(node, pos);
+                _allUnits.insert(make_pair(key, node));
+            } else if (!isNewCreated) {
+                // already exist, update it
+                UnitNode* node = _allUnits.at(key);
+                switch (sc) {
+                    case kSkillClass_Stop:
+                        break;
+                    case kSkillClass_Move:
+                    {
+                        _mapLayer->repositionUnit(node, pos);
                     }
+                        break;
+                    case kSkillClass_Attack:
+                        break;
+                    case kSkillClass_Cast:
+                        break;
+                    case kSkillClass_Die:
+                    {
+                        node->removeFromParent();
+                        _allUnits.erase(key);
+                    }
+                        break;
+                        
+                    default:
+                        break;
                 }
             }
         }
@@ -108,9 +110,8 @@ void GameRender::updateUnits(const Game* game, int index)
 void GameRender::updateBullets(const Game* game)
 {
     const World* world = game->getWorld();
-    const std::vector<Bullet*>& bullets = world->getBullets();
-    for (int i = 0; i < bullets.size(); ++i) {
-        const Bullet* bullet = bullets.at(i);
+    for (int i = 0; i < world->getBulletCount(); ++i) {
+        const Bullet* bullet = world->getBullet(i);
         const Coordinate& pos = bullet->getPos();
         const int64_t key = reinterpret_cast<int64_t>(bullet);
         if (_allBullets.find(key) != _allBullets.end()) {

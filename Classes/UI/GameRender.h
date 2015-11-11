@@ -24,7 +24,7 @@ public:
     GameRender(Node* scene, int mapId);
     virtual ~GameRender();
     
-    virtual void init(const UnderWorld::Core::Game* game) override;
+    virtual void init(const UnderWorld::Core::Game* game, UnderWorld::Core::Commander* commander) override;
     virtual void render(const UnderWorld::Core::Game* game) override;
     
     MapLayer* getMapLayer();
