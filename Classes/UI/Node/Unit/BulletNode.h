@@ -17,10 +17,13 @@ using namespace ui;
 
 namespace UnderWorld { namespace Core { class Bullet; } }
 
+class BulletNode;
+
 class BulletNodeObserver
 {
 public:
     virtual ~BulletNodeObserver() {}
+    virtual void onBulletNodeReachedTarget(BulletNode* node) = 0;
 };
 
 class BulletNode : public Node
@@ -34,9 +37,11 @@ public:
 protected:
     BulletNode();
     bool init(const UnderWorld::Core::Bullet* bullet);
+    void update(bool newCreated);
     
 private:
     BulletNodeObserver *_observer;
+    Node *_actionNode;
     const UnderWorld::Core::Bullet* _bullet;
 };
 

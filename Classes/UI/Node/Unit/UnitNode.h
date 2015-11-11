@@ -37,9 +37,11 @@ public:
 protected:
     UnitNode();
     bool init(const UnderWorld::Core::Unit* unit);
+    void updateActionNode(const UnderWorld::Core::Unit* unit);
     
 private:
     UnitNodeObserver *_observer;
+    Node *_actionNode;
     const UnderWorld::Core::Unit* _unit;
     const UnderWorld::Core::Skill* _lastSkill;
 };

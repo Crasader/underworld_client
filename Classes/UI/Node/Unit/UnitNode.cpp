@@ -33,6 +33,7 @@ UnitNode* UnitNode::create(const Unit* unit)
 
 UnitNode::UnitNode()
 :_observer(nullptr)
+,_actionNode(nullptr)
 ,_unit(nullptr)
 ,_lastSkill(nullptr)
 {
@@ -51,10 +52,12 @@ void UnitNode::registerObserver(UnitNodeObserver *observer)
 
 void UnitNode::update()
 {
-    const Skill* currentSkill = _unit->getCurrentSkill();
-    if (currentSkill != _lastSkill) {
-        _lastSkill = currentSkill;
-        // TODO: switch Skill animation
+    if (_unit) {
+        const Skill* currentSkill = _unit->getCurrentSkill();
+        if (currentSkill != _lastSkill) {
+            _lastSkill = currentSkill;
+            updateActionNode(_unit);
+        }
     }
 }
 
@@ -64,17 +67,42 @@ bool UnitNode::init(const Unit* unit)
     {
         _unit = unit;
         
-        const UnitType* type = unit->getUnitType();
-        
-        string csbFile = (type->getUnitClass() == kUnitClass_Warrior) ? "battle_heroRed_1.csb" : "battle_herogreen_1.csb";
-        Node *mainNode = CSLoader::createNode(csbFile);
-        addChild(mainNode);
-        cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(csbFile);
-        mainNode->runAction(action);
-        action->gotoFrameAndPlay(0, false);
+        updateActionNode(unit);
         
         return true;
     }
     
     return false;
+}
+
+void UnitNode::updateActionNode(const Unit* unit)
+{
+    if (unit) {
+        if (_actionNode) {
+            _actionNode->stopAllActions();
+            _actionNode->removeFromParent();
+        }
+        
+#if true
+        static string csbFile("unit_0_1.csb");
+#else
+        UnitClass unitClass = unit->getUnitType()->getUnitClass();
+        SkillClass skillClass = unit->getCurrentSkill()->getSkillType()->getSkillClass();
+        string csbFile(StringUtils::format("unit_%d_%d.csb", unitClass, skillClass));
+#endif
+        
+        _actionNode = CSLoader::createNode(csbFile);
+        addChild(_actionNode);
+        cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(csbFile);
+        _actionNode->runAction(action);
+        action->gotoFrameAndPlay(0, true);
+    } else {
+        // test
+        string csbFile(StringUtils::format("unit_%d_%d.csb", 0, 1));
+        _actionNode = CSLoader::createNode(csbFile);
+        addChild(_actionNode);
+        cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(csbFile);
+        _actionNode->runAction(action);
+        action->gotoFrameAndPlay(0, true);
+    }
 }

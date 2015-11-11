@@ -4,8 +4,7 @@
 #include "cocos2d.h"
 #include "GameLooper.h"
 #include "GameScheduler.h"
-
-class GameRender;
+#include "GameRender.h"
 
 class HelloWorld : public cocos2d::Layer
 {

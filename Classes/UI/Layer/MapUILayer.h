@@ -18,7 +18,8 @@ USING_NS_CC_EXT;
 using namespace ui;
 
 namespace UnderWorld { namespace Core {
-        class UnitType;
+    class UnitType;
+    class Game;
 }}
 
 class ResourceButton;
@@ -87,7 +88,7 @@ class MapUILayerObserver
 {
 public:
     virtual ~MapUILayerObserver() {}
-    virtual void onMapUILayerUnitSelected() = 0;
+    virtual void onMapUILayerUnitSelected(ssize_t idx) = 0;
     virtual void onMapUILayerClickedPauseButton(bool pause) = 0;
 };
 
@@ -97,6 +98,7 @@ public:
     static MapUILayer* create(const std::string& myAccount, const std::string& opponentsAccount);
     virtual ~MapUILayer();
     void registerObserver(MapUILayerObserver *observer);
+    void updateWithGame(const UnderWorld::Core::Game* game);
     void updateMyHpProgress(int progress);
     void updateOpponentsHpProgress(int progress);
     void updateWaveTime(int time);

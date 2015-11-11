@@ -11,6 +11,7 @@
 
 #include "cocos2d.h"
 #include "GameInterface.h"
+#include "MapUILayer.h"
 
 USING_NS_CC;
 
@@ -18,23 +19,45 @@ class MapLayer;
 class UnitNode;
 class BulletNode;
 
-class GameRender : public UnderWorld::Core::AbstractRender
+namespace UnderWorld { namespace Core {
+    class Game;
+    class Commander;
+}}
+
+class GameRenderObserver
 {
 public:
-    GameRender(Node* scene, int mapId);
+    virtual ~GameRenderObserver() {}
+};
+
+class GameRender : public UnderWorld::Core::AbstractRender, public MapUILayerObserver
+{
+public:
+    GameRender(Node* scene, int mapId, const std::string& opponentsAccount);
     virtual ~GameRender();
+    void registerObserver(GameRenderObserver *observer);
     
     virtual void init(const UnderWorld::Core::Game* game, UnderWorld::Core::Commander* commander) override;
     virtual void render(const UnderWorld::Core::Game* game) override;
     
-    MapLayer* getMapLayer();
+    MapLayer* getMapLayer() const;
+    MapUILayer* getMapUILayer() const;
+    
+protected:
+    // MapUILayerObserver
+    virtual void onMapUILayerUnitSelected(ssize_t idx) override;
+    virtual void onMapUILayerClickedPauseButton(bool pause) override;
     
 private:
     void updateUnits(const UnderWorld::Core::Game* game, int index);
     void updateBullets(const UnderWorld::Core::Game* game);
     
 private:
+    GameRenderObserver *_observer;
     MapLayer* _mapLayer;
+    MapUILayer* _mapUILayer;
+    const UnderWorld::Core::Game* _game;
+    UnderWorld::Core::Commander* _commander;
     std::map<int, UnitNode*> _allUnits;
     std::map<int64_t, BulletNode*> _allBullets;
 };

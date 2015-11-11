@@ -31,6 +31,7 @@ BulletNode* BulletNode::create(const Bullet* Bullet)
 
 BulletNode::BulletNode()
 :_observer(nullptr)
+,_actionNode(nullptr)
 ,_bullet(nullptr)
 {
     
@@ -48,7 +49,7 @@ void BulletNode::registerObserver(BulletNodeObserver *observer)
 
 void BulletNode::update()
 {
-    
+    update(false);
 }
 
 bool BulletNode::init(const Bullet* bullet)
@@ -57,17 +58,54 @@ bool BulletNode::init(const Bullet* bullet)
     {
         _bullet = bullet;
         
+#if true
+        _actionNode = Sprite::create("GameImages/test/jian.png");
+        addChild(_actionNode);
+#else
         const BulletType* type = bullet->getBulletType();
-        
         string csbFile = "hongzidan.csb";
-        Node *mainNode = CSLoader::createNode(csbFile);
-        addChild(mainNode);
+        _actionNode = CSLoader::createNode(csbFile);
+        addChild(_actionNode);
         cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(csbFile);
-        mainNode->runAction(action);
+        _actionNode->runAction(action);
         action->gotoFrameAndPlay(0, false);
+#endif
+        
+        update(true);
         
         return true;
     }
     
     return false;
+}
+
+void BulletNode::update(bool newCreated)
+{
+    if (_bullet) {
+        const Coordinate& currentPos = _bullet->getPos();
+        const Coordinate& targetPos = _bullet->targetPos();
+        
+        if (currentPos.x > targetPos.x) {
+            setScaleX(-1 * getScaleX());
+        }
+        
+        int deltaX = abs(currentPos.x - targetPos.x);
+        int deltaY = abs(currentPos.y - targetPos.y);
+        
+        if (deltaX > 0) {
+            float angel = 180.0f * atanf(deltaY / deltaX) / M_PI * getScaleX();
+            setRotation(angel);
+        } else {
+            // so close to the target
+            if (newCreated) {
+                if (_observer) {
+                    _observer->onBulletNodeReachedTarget(this);
+                }
+            }
+        }
+    } else {
+        setScaleX(-1);
+        float angel = 180.0f * atanf(1) / M_PI;
+        setRotation(angel * getScaleX());
+    }
 }

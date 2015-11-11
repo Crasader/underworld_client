@@ -39,7 +39,7 @@ static ProgressTimer* createProgressTimer()
 #pragma mark Unit Node
 #pragma mark =====================================================
 
-MapUIUnitNode* MapUIUnitNode::create(const UnderWorld::Core::UnitType* type, ssize_t idx)
+MapUIUnitNode* MapUIUnitNode::create(const UnitType* type, ssize_t idx)
 {
     MapUIUnitNode *ret = new (nothrow) MapUIUnitNode();
     if (ret && ret->init(type, idx))
@@ -71,7 +71,7 @@ MapUIUnitNode::~MapUIUnitNode()
     removeAllChildren();
 }
 
-bool MapUIUnitNode::init(const UnderWorld::Core::UnitType* type, ssize_t idx)
+bool MapUIUnitNode::init(const UnitType* type, ssize_t idx)
 {
     if (Node::init())
     {
@@ -155,7 +155,7 @@ void MapUIUnitNode::registerObserver(MapUIUnitNodeObserver *observer)
     _observer = observer;
 }
 
-void MapUIUnitNode::update(const UnderWorld::Core::UnitType* type, ssize_t idx)
+void MapUIUnitNode::update(const UnitType* type, ssize_t idx)
 {
     _unitType = type;
     _idx = idx;
@@ -187,7 +187,7 @@ void MapUIUnitNode::setSelected(bool selected)
     }
 }
 
-const UnderWorld::Core::UnitType* MapUIUnitNode::getUnitType() const
+const UnitType* MapUIUnitNode::getUnitType() const
 {
     return _unitType;
 }
@@ -267,6 +267,11 @@ MapUILayer::~MapUILayer()
 void MapUILayer::registerObserver(MapUILayerObserver *observer)
 {
     _observer = observer;
+}
+
+void MapUILayer::updateWithGame(const Game* game)
+{
+    
 }
 
 void MapUILayer::updateMyHpProgress(int progress)
@@ -579,7 +584,7 @@ void MapUILayer::onUnitTouched(ssize_t idx)
     }
     
     if (_observer) {
-        _observer->onMapUILayerUnitSelected();
+        _observer->onMapUILayerUnitSelected(idx % 2);
     }
 }
 

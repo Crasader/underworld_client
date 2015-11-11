@@ -12,15 +12,24 @@
 #include "UnitNode.h"
 #include "BulletNode.h"
 #include "Map.h"
+#include "Camp.h"
 
 using namespace UnderWorld::Core;
 
-GameRender::GameRender(Node* scene, int mapId)
-:_mapLayer(nullptr)
+GameRender::GameRender(Node* scene, int mapId, const std::string& opponentsAccount)
+:_observer(nullptr)
+,_mapLayer(nullptr)
+,_mapUILayer(nullptr)
+,_game(nullptr)
+,_commander(nullptr)
 {
     assert(scene);
     _mapLayer = MapLayer::create(mapId);
     scene->addChild(_mapLayer);
+    
+    _mapUILayer = MapUILayer::create("我的名字", opponentsAccount);
+    _mapUILayer->registerObserver(this);
+    scene->addChild(_mapUILayer);
 }
 
 GameRender::~GameRender()
@@ -36,6 +45,9 @@ GameRender::~GameRender()
 
 void GameRender::init(const Game* game, Commander* commander)
 {
+    _game = game;
+    _commander = commander;
+    
     // create units
     for (int i = 0; game->getWorld()->getFactionCount(); ++i) {
         updateUnits(game, i);
@@ -44,10 +56,16 @@ void GameRender::init(const Game* game, Commander* commander)
     
     // create bullets
     updateBullets(game);
+    
+    if (_mapUILayer) {
+        _mapUILayer->updateWithGame(game);
+    }
 }
 
 void GameRender::render(const Game* game)
 {
+    assert(game = _game);
+    
     // create units
     for (int i = 0; game->getWorld()->getFactionCount(); ++i) {
         updateUnits(game, i);
@@ -127,7 +145,29 @@ void GameRender::updateBullets(const Game* game)
     }
 }
 
-MapLayer* GameRender::getMapLayer()
+MapLayer* GameRender::getMapLayer() const
 {
     return _mapLayer;
+}
+
+MapUILayer* GameRender::getMapUILayer() const
+{
+    return _mapUILayer;
+}
+
+#pragma mark - MapUILayerObserver
+void GameRender::onMapUILayerUnitSelected(ssize_t idx)
+{
+    if (_commander) {
+        int index = (int)idx;
+        const Camp* camp = _game->getWorld()->getCamp(0, index);
+        if (camp) {
+            _commander->tryGiveCampCommand(camp, 1);
+        }
+    }
+}
+
+void GameRender::onMapUILayerClickedPauseButton(bool pause)
+{
+    
 }
