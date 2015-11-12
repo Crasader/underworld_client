@@ -132,15 +132,23 @@ void GameRender::updateBullets(const Game* game)
         const Bullet* bullet = world->getBullet(i);
         const Coordinate& pos = bullet->getPos();
         const int64_t key = reinterpret_cast<int64_t>(bullet);
+        const bool isExploded(bullet->isExploded());
         if (_allBullets.find(key) != _allBullets.end()) {
             // already exist, update it
             BulletNode* node = _allBullets.at(key);
             node->update();
-            _mapLayer->repositionUnit(node, pos);
+            if (isExploded) {
+                node->removeFromParent();
+                _allBullets.erase(key);
+            } else {
+                _mapLayer->repositionUnit(node, pos);
+            }
         } else {
-            BulletNode* node = BulletNode::create(bullet);
-            _mapLayer->addUnit(node, pos);
-            _allBullets.insert(make_pair(key, node));
+            if (!isExploded) {
+                BulletNode* node = BulletNode::create(bullet);
+                _mapLayer->addUnit(node, pos);
+                _allBullets.insert(make_pair(key, node));
+            }
         }
     }
 }
