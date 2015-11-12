@@ -88,7 +88,7 @@ bool MapLayer::init(int mapId)
         const Size &ls = _mainLayer->getLayerSize();
         for (unsigned int y = 0; y < ls.height; y++)
         {
-            int zOrder = calcZOrder(y);
+            int zOrder = calcZOrder(ls.height - y);
             for (unsigned int x = 0; x < ls.width; x++)
             {
                 Sprite *tile = _mainLayer->getTileAt(Vec2(x, y));
@@ -171,6 +171,9 @@ void MapLayer::repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& co
     Point pos;
     int zOrder;
     coordinateConvert(coreCoordinate, pos, zOrder);
+    if (pos == unit->getPosition()) {
+        return;
+    }
     unit->setPosition(pos);
     reorderChild(unit, zOrder);
 }
