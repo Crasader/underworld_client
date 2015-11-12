@@ -50,15 +50,15 @@ bool HelloWorld::init()
     
     //1a. set locations
     UnderWorld::Core::LocationSetting locationSetting0;
-    locationSetting0.setCoreLocation(UnderWorld::Core::Coordinate(100, 140));
-    locationSetting0.addAssembleLocation(0, UnderWorld::Core::Coordinate(120, 140));
-    locationSetting0.addAssembleLocation(1, UnderWorld::Core::Coordinate(110, 140));
+    locationSetting0.setCoreLocation(UnderWorld::Core::Coordinate(100, 40));
+    locationSetting0.addAssembleLocation(0, UnderWorld::Core::Coordinate(120, 40));
+    locationSetting0.addAssembleLocation(1, UnderWorld::Core::Coordinate(110, 40));
     mapSettting.setLocationSetting(0, locationSetting0);
     
     UnderWorld::Core::LocationSetting locationSetting1;
-    locationSetting1.setCoreLocation(UnderWorld::Core::Coordinate(900, 140));
-    locationSetting1.addAssembleLocation(0, UnderWorld::Core::Coordinate(880, 140));
-    locationSetting1.addAssembleLocation(1, UnderWorld::Core::Coordinate(100, 150));
+    locationSetting1.setCoreLocation(UnderWorld::Core::Coordinate(900, 40));
+    locationSetting1.addAssembleLocation(0, UnderWorld::Core::Coordinate(880, 40));
+    locationSetting1.addAssembleLocation(1, UnderWorld::Core::Coordinate(890, 40));
     mapSettting.setLocationSetting(1, locationSetting1);
     
     //1b. set resource
@@ -91,7 +91,7 @@ bool HelloWorld::init()
     fu0.resize(10);
     for (int i = 0; i < 10; ++i) {
         fu0[i].first.setUnitTypeName("狼人步兵");
-        fu0[i].second = UnderWorld::Core::Coordinate(120, 140);
+        fu0[i].second = UnderWorld::Core::Coordinate(120, 40);
     }
     mapSettting.setFixedUnits(0, fu0);
     
@@ -99,7 +99,7 @@ bool HelloWorld::init()
     fu1.resize(10);
     for (int i = 0; i < 10; ++i) {
         fu1[i].first.setUnitTypeName("吸血鬼战士");
-        fu1[i].second = UnderWorld::Core::Coordinate(880, 140);
+        fu1[i].second = UnderWorld::Core::Coordinate(880, 40);
     }
     mapSettting.setFixedUnits(1, fu1);
     setting.setMap(mapSettting);
