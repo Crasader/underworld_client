@@ -94,8 +94,8 @@ void UnitNode::updateActionNode(const Unit* unit)
         
         _actionNode = CSLoader::createNode(csbFile);
         if (unit->getBelongFaction()->getFactionIndex() != 0) {
-            const float scaleX = getScaleX();
-            _actionNode->setScaleX(-1 * scaleX);
+//            const float scaleX = getScaleX();
+//            _actionNode->setScaleX(-1 * scaleX);
         }
         addChild(_actionNode);
         cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(csbFile);
