@@ -135,6 +135,7 @@ private:
     Label *_timeLabel;
     Label *_nextWaveTimeLabel;
     ResourceButton *_energyResourceButton;
+    Label *_populationLabel;
     Label *_unitCostLabel;
     ProgressTimer *_myHpProgress;
     Label *_myHpPercentageLabel;

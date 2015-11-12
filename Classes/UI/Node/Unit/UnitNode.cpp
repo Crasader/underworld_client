@@ -8,6 +8,7 @@
 
 #include "UnitNode.h"
 #include "cocostudio/CocoStudio.h"
+#include "Faction.h"
 #include "Unit.h"
 #include "UnitType.h"
 #include "Skill.h"
@@ -92,6 +93,10 @@ void UnitNode::updateActionNode(const Unit* unit)
 #endif
         
         _actionNode = CSLoader::createNode(csbFile);
+        if (unit->getBelongFaction()->getFactionIndex() != 0) {
+            const float scaleX = getScaleX();
+            _actionNode->setScaleX(-1 * scaleX);
+        }
         addChild(_actionNode);
         cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(csbFile);
         _actionNode->runAction(action);

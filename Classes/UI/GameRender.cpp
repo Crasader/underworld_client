@@ -158,6 +158,7 @@ MapUILayer* GameRender::getMapUILayer() const
 #pragma mark - MapUILayerObserver
 void GameRender::onMapUILayerUnitSelected(ssize_t idx)
 {
+#if false
     if (_commander) {
         int index = (int)idx;
         const Camp* camp = _game->getWorld()->getCamp(0, index);
@@ -165,6 +166,7 @@ void GameRender::onMapUILayerUnitSelected(ssize_t idx)
             _commander->tryGiveCampCommand(camp, 1);
         }
     }
+#endif
 }
 
 void GameRender::onMapUILayerClickedPauseButton(bool pause)

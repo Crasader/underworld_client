@@ -10,7 +10,9 @@
 #include "cocostudio/CocoStudio.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
+#include "Game.h"
 #include "UnitType.h"
+#include "TechTree.h"
 #include "ResourceButton.h"
 #include "SoundManager.h"
 
@@ -242,6 +244,7 @@ MapUILayer::MapUILayer()
 ,_timeLabel(nullptr)
 ,_nextWaveTimeLabel(nullptr)
 ,_energyResourceButton(nullptr)
+,_populationLabel(nullptr)
 ,_unitCostLabel(nullptr)
 ,_myHpProgress(nullptr)
 ,_myHpPercentageLabel(nullptr)
@@ -271,7 +274,28 @@ void MapUILayer::registerObserver(MapUILayerObserver *observer)
 
 void MapUILayer::updateWithGame(const Game* game)
 {
-    
+    if (game) {
+        const World* world = game->getWorld();
+        if (world) {
+            const TechTree* techTree = world->getTechTree();
+            const Faction* faction = world->getFaction(0);
+            int count = techTree->getResourceTypeCount();
+            if (count > 0)
+            {
+                const UnderWorld::Core::ResourceType* resourceType = techTree->getResourceTypeByIndex(0);
+                if (resourceType->_class == kResourceClass_holdable) {
+                    const Resource* resource = faction->getResource(resourceType);
+                    _populationLabel->setString(StringUtils::format("%d/%d", resource->getOccpied(), resource->getBalance()));
+                } else {
+                    
+                }
+            }
+            else if (count > 1)
+            {
+                
+            }
+        }
+    }
 }
 
 void MapUILayer::updateMyHpProgress(int progress)
@@ -484,9 +508,9 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             label->setPosition(Point(size.width / 2, size.height * 0.875));
             sprite->addChild(label);
             
-            label = CocosUtils::createLabel("0/100", DEFAULT_FONT_SIZE);
-            label->setPosition(Point(size.width / 2, size.height * 0.625));
-            sprite->addChild(label);
+            _populationLabel = CocosUtils::createLabel("0/100", DEFAULT_FONT_SIZE);
+            _populationLabel->setPosition(Point(size.width / 2, size.height * 0.625));
+            sprite->addChild(_populationLabel);
             
             label = CocosUtils::createLabel("能量", DEFAULT_FONT_SIZE);
             label->setPosition(Point(size.width / 2, size.height * 0.375));
