@@ -49,7 +49,7 @@ void GameRender::init(const Game* game, Commander* commander)
     _commander = commander;
     
     // create units
-    for (int i = 0; game->getWorld()->getFactionCount(); ++i) {
+    for (int i = 0; i < game->getWorld()->getFactionCount(); ++i) {
         updateUnits(game, i);
 
     }
@@ -67,7 +67,7 @@ void GameRender::render(const Game* game)
     assert(game = _game);
     
     // create units
-    for (int i = 0; game->getWorld()->getFactionCount(); ++i) {
+    for (int i = 0; i < game->getWorld()->getFactionCount(); ++i) {
         updateUnits(game, i);
         
     }

@@ -36,12 +36,14 @@
 		301F63F21BE0C56D00DA6D70 /* Damage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 301F63F01BE0C56D00DA6D70 /* Damage.cpp */; };
 		301F63FC1BE3680600DA6D70 /* GameLooper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 301F63FA1BE3680600DA6D70 /* GameLooper.cpp */; };
 		307534691BF1B2F20057DCED /* Commander.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 307534671BF1B2F20057DCED /* Commander.cpp */; settings = {ASSET_TAGS = (); }; };
+		3075346D1BF324340057DCED /* EventTrigger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3075346B1BF324340057DCED /* EventTrigger.cpp */; settings = {ASSET_TAGS = (); }; };
+		307534711BF33ECF0057DCED /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3075346F1BF33ECF0057DCED /* Logger.cpp */; settings = {ASSET_TAGS = (); }; };
 		308B84631BE3752000377802 /* PathFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84611BE3752000377802 /* PathFinder.cpp */; };
 		308B84661BE3853C00377802 /* AIBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84641BE3853C00377802 /* AIBody.cpp */; };
 		308B84691BE3856F00377802 /* AIBrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84671BE3856F00377802 /* AIBrain.cpp */; };
 		309F76951BE8851000B2791F /* Rect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F76931BE8851000B2791F /* Rect.cpp */; };
 		309F769A1BE9D7BD00B2791F /* Camp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F76981BE9D7BD00B2791F /* Camp.cpp */; };
-		309F76A01BEA3ABA00B2791F /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F769E1BEA3AB900B2791F /* Utils.cpp */; };
+		309F76A01BEA3ABA00B2791F /* CoreUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F769E1BEA3AB900B2791F /* CoreUtils.cpp */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7619C43A67006E1F66 /* CloseNormal.png */; };
@@ -234,6 +236,10 @@
 		301F63FE1BE3694C00DA6D70 /* GameInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameInterface.h; path = Core/Game/GameInterface.h; sourceTree = "<group>"; };
 		307534671BF1B2F20057DCED /* Commander.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Commander.cpp; path = Core/Game/Commander.cpp; sourceTree = "<group>"; };
 		307534681BF1B2F20057DCED /* Commander.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Commander.h; path = Core/Game/Commander.h; sourceTree = "<group>"; };
+		3075346B1BF324340057DCED /* EventTrigger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EventTrigger.cpp; path = Core/Game/EventTrigger.cpp; sourceTree = "<group>"; };
+		3075346C1BF324340057DCED /* EventTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventTrigger.h; path = Core/Game/EventTrigger.h; sourceTree = "<group>"; };
+		3075346F1BF33ECF0057DCED /* Logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Logger.cpp; path = Core/Test/Logger.cpp; sourceTree = "<group>"; };
+		307534701BF33ECF0057DCED /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Logger.h; path = Core/Test/Logger.h; sourceTree = "<group>"; };
 		308B84611BE3752000377802 /* PathFinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PathFinder.cpp; path = Core/AI/PathFinder.cpp; sourceTree = "<group>"; };
 		308B84621BE3752000377802 /* PathFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PathFinder.h; path = Core/AI/PathFinder.h; sourceTree = "<group>"; };
 		308B84641BE3853C00377802 /* AIBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AIBody.cpp; path = Core/AI/AIBody.cpp; sourceTree = "<group>"; };
@@ -245,8 +251,8 @@
 		309F76981BE9D7BD00B2791F /* Camp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Camp.cpp; path = Core/Unit/Instance/Camp.cpp; sourceTree = "<group>"; };
 		309F76991BE9D7BD00B2791F /* Camp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Camp.h; path = Core/Unit/Instance/Camp.h; sourceTree = "<group>"; };
 		309F769D1BEA37D200B2791F /* Global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Global.h; path = Core/Utils/Global.h; sourceTree = "<group>"; };
-		309F769E1BEA3AB900B2791F /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Utils.cpp; path = Core/Utils/Utils.cpp; sourceTree = "<group>"; };
-		309F769F1BEA3AB900B2791F /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = Core/Utils/Utils.h; sourceTree = "<group>"; };
+		309F769E1BEA3AB900B2791F /* CoreUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CoreUtils.cpp; path = Core/Utils/CoreUtils.cpp; sourceTree = "<group>"; };
+		309F769F1BEA3AB900B2791F /* CoreUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CoreUtils.h; path = Core/Utils/CoreUtils.h; sourceTree = "<group>"; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		46880B7619C43A67006E1F66 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
 		46880B7719C43A67006E1F66 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
@@ -438,6 +444,7 @@
 		045116D51BCFB9E7002AA721 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				3075346E1BF33DEE0057DCED /* Test */,
 				300098CA1BD0A90F00B6E284 /* Utils */,
 				045116D91BCFBA09002AA721 /* World */,
 				045116D81BCFB9FF002AA721 /* Unit */,
@@ -472,6 +479,8 @@
 				301F63FE1BE3694C00DA6D70 /* GameInterface.h */,
 				307534671BF1B2F20057DCED /* Commander.cpp */,
 				307534681BF1B2F20057DCED /* Commander.h */,
+				3075346B1BF324340057DCED /* EventTrigger.cpp */,
+				3075346C1BF324340057DCED /* EventTrigger.h */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -630,8 +639,8 @@
 		300098CA1BD0A90F00B6E284 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				309F769E1BEA3AB900B2791F /* Utils.cpp */,
-				309F769F1BEA3AB900B2791F /* Utils.h */,
+				309F769E1BEA3AB900B2791F /* CoreUtils.cpp */,
+				309F769F1BEA3AB900B2791F /* CoreUtils.h */,
 				309F769D1BEA37D200B2791F /* Global.h */,
 				300098CB1BD0A94B00B6E284 /* Coordinate.cpp */,
 				300098CC1BD0A94B00B6E284 /* Coordinate.h */,
@@ -639,6 +648,15 @@
 				309F76941BE8851000B2791F /* Rect.h */,
 			);
 			name = Utils;
+			sourceTree = "<group>";
+		};
+		3075346E1BF33DEE0057DCED /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				3075346F1BF33ECF0057DCED /* Logger.cpp */,
+				307534701BF33ECF0057DCED /* Logger.h */,
+			);
+			name = Test;
 			sourceTree = "<group>";
 		};
 		46880B7519C43A67006E1F66 /* Resources */ = {
@@ -1101,7 +1119,7 @@
 				309F76951BE8851000B2791F /* Rect.cpp in Sources */,
 				045116E31BCFBA39002AA721 /* Map.cpp in Sources */,
 				CBA296431BE37FB1006BE7A0 /* GameScheduler.cpp in Sources */,
-				309F76A01BEA3ABA00B2791F /* Utils.cpp in Sources */,
+				309F76A01BEA3ABA00B2791F /* CoreUtils.cpp in Sources */,
 				A1A4BA491BCE096300175E8A /* Utils.cpp in Sources */,
 				A1720E741BCCE0A200217E98 /* FixedLabelAtlas.cpp in Sources */,
 				CB075C041BDDD8AC00C7FD68 /* MapLayer.cpp in Sources */,
@@ -1118,6 +1136,7 @@
 				A1720E8F1BCCE19300217E98 /* md5.cpp in Sources */,
 				A1D45C4A1BEB3B1400D1E921 /* ResourceButton.cpp in Sources */,
 				A1720E7A1BCCE0F000217E98 /* CCShake.cpp in Sources */,
+				307534711BF33ECF0057DCED /* Logger.cpp in Sources */,
 				A1720E971BCCE41A00217E98 /* ScrollBar.cpp in Sources */,
 				309F769A1BE9D7BD00B2791F /* Camp.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
@@ -1141,6 +1160,7 @@
 				045117061BCFBA53002AA721 /* Buff.cpp in Sources */,
 				A1720E901BCCE19300217E98 /* MD5Verifier.cpp in Sources */,
 				A1720EBA1BCD2D2E00217E98 /* RMStore.m in Sources */,
+				3075346D1BF324340057DCED /* EventTrigger.cpp in Sources */,
 				307534691BF1B2F20057DCED /* Commander.cpp in Sources */,
 				A1A4BA381BCDF81500175E8A /* IapObject.cpp in Sources */,
 				A103F45B1BE37E2A007F9A83 /* BulletNode.cpp in Sources */,
