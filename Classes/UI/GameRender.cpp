@@ -58,7 +58,7 @@ void GameRender::init(const Game* game, Commander* commander)
     updateBullets(game);
     
     if (_mapUILayer) {
-        _mapUILayer->updateWithGame(game);
+        _mapUILayer->initWithGame(game);
     }
 }
 
@@ -166,15 +166,17 @@ MapUILayer* GameRender::getMapUILayer() const
 #pragma mark - MapUILayerObserver
 void GameRender::onMapUILayerUnitSelected(ssize_t idx)
 {
-#if false
     if (_commander) {
         int index = (int)idx;
-        const Camp* camp = _game->getWorld()->getCamp(0, index);
-        if (camp) {
-            _commander->tryGiveCampCommand(camp, 1);
+        const World* world = _game->getWorld();
+        const int factionIndex = world->getThisFactionIndex();
+        if (index < world->getCampCount(factionIndex)) {
+            const Camp* camp = world->getCamp(factionIndex, index);
+            if (camp) {
+                _commander->tryGiveCampCommand(camp, 1);
+            }
         }
     }
-#endif
 }
 
 void GameRender::onMapUILayerClickedPauseButton(bool pause)

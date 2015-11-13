@@ -24,7 +24,7 @@ static const int waveTime = 20;
 static const int battleTotalTime = 180;
 static const float unitNodeOffsetX = 5.0f;
 static const float unitNodeOffsetY = 2.0f;
-static const int tableViewCellsMinCount = 8;
+static const int visibleCellsCount = 8;
 
 static ProgressTimer* createProgressTimer()
 {
@@ -240,6 +240,9 @@ MapUILayer* MapUILayer::create(const string& myAccount, const string& opponentsA
 
 MapUILayer::MapUILayer()
 :_observer(nullptr)
+,_paused(false)
+,_cellsCount(16)
+,_selectedUnitIdx(CC_INVALID_INDEX)
 ,_tableView(nullptr)
 ,_timeLabel(nullptr)
 ,_nextWaveTimeLabel(nullptr)
@@ -252,14 +255,15 @@ MapUILayer::MapUILayer()
 ,_opponentsHpPercentageLabel(nullptr)
 ,_sendTroopMenuItem(nullptr)
 ,_pauseMenuItem(nullptr)
-,_paused(false)
-,_selectedUnitIdx(CC_INVALID_INDEX)
 ,_waveTime(waveTime)
 ,_remainingTime(battleTotalTime)
 {
-    Size unitNodeSize = MapUIUnitNode::create(nullptr, 0)->getContentSize();
+    static const Size& unitNodeSize = MapUIUnitNode::create(nullptr, 0)->getContentSize();
     _cellSize.height = unitNodeSize.height + unitNodeOffsetY * 2;
     _cellSize.width = unitNodeSize.width + unitNodeOffsetX * 2;
+    
+    _tableViewMaxSize.width = _cellSize.width * visibleCellsCount;
+    _tableViewMaxSize.height = _cellSize.height;
 }
 
 MapUILayer::~MapUILayer()
@@ -272,7 +276,7 @@ void MapUILayer::registerObserver(MapUILayerObserver *observer)
     _observer = observer;
 }
 
-void MapUILayer::updateWithGame(const Game* game)
+void MapUILayer::initWithGame(const Game* game)
 {
     if (game) {
         const World* world = game->getWorld();
@@ -294,6 +298,9 @@ void MapUILayer::updateWithGame(const Game* game)
             {
                 
             }
+            
+            // reload table view
+            reloadTableView(world->getCampCount(world->getThisFactionIndex()));
         }
     }
 }
@@ -361,7 +368,7 @@ TableViewCell* MapUILayer::tableCellAtIndex(TableView *table, ssize_t idx)
 
 ssize_t MapUILayer::numberOfCellsInTableView(TableView *table)
 {
-    return 10;
+    return _cellsCount;
 }
 
 #pragma mark - MapUIUnitNodeObserver
@@ -523,16 +530,15 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
         }
         // units table
         {
-            const Size size(_cellSize.width * tableViewCellsMinCount, _cellSize.height);
-            Sprite* sprite = CocosUtils::createPureColorSprite(size - Size(4, 4), Color4B::BLACK);
+            Sprite* sprite = CocosUtils::createPureColorSprite(_tableViewMaxSize - Size(4, 4), Color4B::BLACK);
             const Size& spriteSize(sprite->getContentSize());
             sprite->setPosition(Point(winSize.width / 2, ceilOffset + spriteSize.height / 2));
             root->addChild(sprite);
             
-            _tableView = TableView::create(this, size);
+            _tableView = TableView::create(this, _tableViewMaxSize);
             _tableView->setDirection(extension::ScrollView::Direction::HORIZONTAL);
             _tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
-            _tableView->setPosition(Point(sprite->getPosition().x - size.width / 2, sprite->getPosition().y - size.height / 2));
+            _tableView->setPosition(Point(sprite->getPosition().x - _tableViewMaxSize.width / 2, sprite->getPosition().y - _tableViewMaxSize.height / 2));
             _tableView->setBounceable(false);
             _tableView->setDelegate(this);
             root->addChild(_tableView);
@@ -609,6 +615,27 @@ void MapUILayer::onUnitTouched(ssize_t idx)
     
     if (_observer) {
         _observer->onMapUILayerUnitSelected(idx % 2);
+    }
+}
+
+void MapUILayer::reloadTableView(ssize_t cellsCount)
+{
+    _cellsCount = cellsCount;
+    if (_tableView) {
+        // if setTouchEnabled to false, tableCellTouched() will never be called
+//        _tableView->setTouchEnabled(_cellsCount > visibleCellsCount);
+        _tableView->reloadData();
+        
+        // fit
+        if (false == _tableView->isBounceable() && extension::ScrollView::Direction::HORIZONTAL == _tableView->getDirection()) {
+            _tableView->getContainer()->setPosition(Point::ZERO);
+            const int contentWidth = _cellSize.width * _cellsCount;
+            if (contentWidth >= _tableViewMaxSize.width) {
+                _tableView->setViewSize(_tableViewMaxSize);
+            } else {
+                _tableView->setViewSize(Size(contentWidth, _tableViewMaxSize.height));
+            }
+        }
     }
 }
 

@@ -98,7 +98,7 @@ public:
     static MapUILayer* create(const std::string& myAccount, const std::string& opponentsAccount);
     virtual ~MapUILayer();
     void registerObserver(MapUILayerObserver *observer);
-    void updateWithGame(const UnderWorld::Core::Game* game);
+    void initWithGame(const UnderWorld::Core::Game* game);
     void updateMyHpProgress(int progress);
     void updateOpponentsHpProgress(int progress);
     void updateWaveTime(int time);
@@ -124,14 +124,20 @@ protected:
     virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node) override;
     
     void onUnitTouched(ssize_t idx);
+    void reloadTableView(ssize_t cellsCount);
     
     // ======================== test =============================
     void fakeTick(float dt);
     
 private:
     MapUILayerObserver *_observer;
-    TableView *_tableView;
+    bool _paused;
+    Size _tableViewMaxSize;
     Size _cellSize;
+    ssize_t _cellsCount;
+    ssize_t _selectedUnitIdx;
+    // ======================== UI =============================
+    TableView *_tableView;
     Label *_timeLabel;
     Label *_nextWaveTimeLabel;
     ResourceButton *_energyResourceButton;
@@ -143,8 +149,6 @@ private:
     Label *_opponentsHpPercentageLabel;
     MenuItem *_sendTroopMenuItem;
     MenuItem *_pauseMenuItem;
-    bool _paused;
-    ssize_t _selectedUnitIdx;
     // ======================== test =============================
     int _waveTime;
     int _remainingTime;

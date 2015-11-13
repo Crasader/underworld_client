@@ -8,6 +8,7 @@
 
 #include "UnitNode.h"
 #include "cocostudio/CocoStudio.h"
+#include "World.h"
 #include "Faction.h"
 #include "Unit.h"
 #include "UnitType.h"
@@ -93,7 +94,8 @@ void UnitNode::updateActionNode(const Unit* unit)
 #endif
         
         _actionNode = CSLoader::createNode(csbFile);
-        if (unit->getBelongFaction()->getFactionIndex() != 0) {
+        const int factionIndex = unit->getWorld()->getThisFactionIndex();
+        if (unit->getBelongFaction()->getFactionIndex() != factionIndex) {
 //            const float scaleX = getScaleX();
 //            _actionNode->setScaleX(-1 * scaleX);
         }
