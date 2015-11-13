@@ -93,22 +93,12 @@ bool ResourceButton::init(bool isBigSize, ResourceType type, int count, const Bu
         setType(type);
         setContentSize(_button->getContentSize());
 #else
-        Sprite* icon = Sprite::create("GameImages/test/icon_glod.png");
-        const Size& iconSize = icon->getContentSize();
+        _icon = Sprite::create("GameImages/test/icon_glod.png");
+        _countLabel = CocosUtils::create12x30Number(StringUtils::format("%d", count));
+        addChild(_icon);
+        addChild(_countLabel);
         
-        Label* label = CocosUtils::createLabel(StringUtils::format("%d", count), DEFAULT_FONT_SIZE);
-        const Size& labelSize = label->getContentSize();
-        
-        static const float offsetX = 5.0f;
-        const Size size(iconSize.width + labelSize.width + offsetX, MAX(iconSize.height, labelSize.height));
-        
-        setContentSize(size);
-        
-        icon->setPosition(Point(iconSize.width / 2, size.height / 2));
-        label->setPosition(Point(size.width - labelSize.width / 2, size.height / 2));
-        
-        addChild(icon);
-        addChild(label);
+        resize();
 #endif
         
         return true;
@@ -177,10 +167,23 @@ void ResourceButton::setClickEventListener(const Button::ccWidgetClickCallback& 
 
 void ResourceButton::resize()
 {
-    const float buttonWidth = _button->getContentSize().width;
-    const float iconWidth = _icon->getContentSize().width;
-    const float labelWidth = _countLabel->getContentSize().width;
-    const float x = buttonWidth / 2 - labelWidth / 2;
-    _icon->setPositionX(x);
-    _countLabel->setPositionX(x + 5.0f + iconWidth / 2 + labelWidth * _countLabel->getAnchorPoint().x);
+    if (_button) {
+        const float buttonWidth = _button->getContentSize().width;
+        const float iconWidth = _icon->getContentSize().width;
+        const float labelWidth = _countLabel->getContentSize().width;
+        const float x = buttonWidth / 2 - labelWidth / 2;
+        _icon->setPositionX(x);
+        _countLabel->setPositionX(x + 5.0f + iconWidth / 2 + labelWidth * _countLabel->getAnchorPoint().x);
+    } else {
+        const Size& iconSize = _icon->getContentSize();
+        const Size& labelSize = _countLabel->getContentSize();
+        
+        static const float offsetX = 5.0f;
+        const Size size(iconSize.width + labelSize.width + offsetX, MAX(iconSize.height, labelSize.height));
+        
+        setContentSize(size);
+        
+        _icon->setPosition(Point(iconSize.width / 2, size.height / 2));
+        _countLabel->setPosition(Point(size.width - labelSize.width / 2, size.height / 2));
+    }
 }

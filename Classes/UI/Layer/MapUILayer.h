@@ -18,8 +18,9 @@ USING_NS_CC_EXT;
 using namespace ui;
 
 namespace UnderWorld { namespace Core {
-    class UnitType;
     class Game;
+    class World;
+    class Camp;
 }}
 
 class ResourceButton;
@@ -40,26 +41,27 @@ public:
 class MapUIUnitNode: public Node
 {
 public:
-    static MapUIUnitNode* create(const UnderWorld::Core::UnitType* type, ssize_t idx);
+    static MapUIUnitNode* create(const UnderWorld::Core::Camp* camp, ssize_t idx);
     virtual ~MapUIUnitNode();
     void registerObserver(MapUIUnitNodeObserver *observer);
-    void update(const UnderWorld::Core::UnitType* type, ssize_t idx);
+    void reuse(const UnderWorld::Core::Camp* camp, ssize_t idx);
+    void update();
     void setSelected(bool selected);
     
     // getters
-    const UnderWorld::Core::UnitType* getUnitType() const;
+    const UnderWorld::Core::Camp* getCamp() const;
     ssize_t getIdx() const;
     
 protected:
     MapUIUnitNode();
-    bool init(const UnderWorld::Core::UnitType* type, ssize_t idx);
+    bool init(const UnderWorld::Core::Camp* camp, ssize_t idx);
     
 private:
     MapUIUnitNodeObserver *_observer;
     Button *_iconButton;
     ResourceButton *_resourceButton;
     Label *_countLabel;
-    const UnderWorld::Core::UnitType* _unitType;
+    const UnderWorld::Core::Camp* _camp;
     ssize_t _idx;
     bool _touchInvalid;
 };
@@ -88,7 +90,7 @@ class MapUILayerObserver
 {
 public:
     virtual ~MapUILayerObserver() {}
-    virtual void onMapUILayerUnitSelected(ssize_t idx) = 0;
+    virtual void onMapUILayerUnitSelected(MapUIUnitNode* node) = 0;
     virtual void onMapUILayerClickedPauseButton(bool pause) = 0;
 };
 
@@ -123,7 +125,7 @@ protected:
     // MapUIUnitNodeObserver
     virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node) override;
     
-    void onUnitTouched(ssize_t idx);
+    void onUnitTouched(MapUIUnitNode* node);
     void reloadTableView(ssize_t cellsCount);
     
     // ======================== test =============================
@@ -131,6 +133,7 @@ protected:
     
 private:
     MapUILayerObserver *_observer;
+    const UnderWorld::Core::World* _world;
     bool _paused;
     Size _tableViewMaxSize;
     Size _cellSize;

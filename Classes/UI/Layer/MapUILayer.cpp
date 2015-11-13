@@ -11,7 +11,7 @@
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "Game.h"
-#include "UnitType.h"
+#include "Camp.h"
 #include "TechTree.h"
 #include "ResourceButton.h"
 #include "SoundManager.h"
@@ -41,10 +41,10 @@ static ProgressTimer* createProgressTimer()
 #pragma mark Unit Node
 #pragma mark =====================================================
 
-MapUIUnitNode* MapUIUnitNode::create(const UnitType* type, ssize_t idx)
+MapUIUnitNode* MapUIUnitNode::create(const Camp* camp, ssize_t idx)
 {
     MapUIUnitNode *ret = new (nothrow) MapUIUnitNode();
-    if (ret && ret->init(type, idx))
+    if (ret && ret->init(camp, idx))
     {
         ret->autorelease();
         return ret;
@@ -61,7 +61,7 @@ MapUIUnitNode::MapUIUnitNode()
 ,_iconButton(nullptr)
 ,_resourceButton(nullptr)
 ,_countLabel(nullptr)
-,_unitType(nullptr)
+,_camp(nullptr)
 ,_idx(CC_INVALID_INDEX)
 ,_touchInvalid(false)
 {
@@ -73,7 +73,7 @@ MapUIUnitNode::~MapUIUnitNode()
     removeAllChildren();
 }
 
-bool MapUIUnitNode::init(const UnitType* type, ssize_t idx)
+bool MapUIUnitNode::init(const Camp* camp, ssize_t idx)
 {
     if (Node::init())
     {
@@ -143,7 +143,7 @@ bool MapUIUnitNode::init(const UnitType* type, ssize_t idx)
         _resourceButton->setPosition(Point(x, y - (iconHeight + resourceHeight) / 2 - offsetY));
         _countLabel->setPosition(Point(x, y + (iconHeight + countHeight) / 2 + offsetY));
         
-        update(type, idx);
+        reuse(camp, idx);
 #endif
         
         return true;
@@ -157,13 +157,28 @@ void MapUIUnitNode::registerObserver(MapUIUnitNodeObserver *observer)
     _observer = observer;
 }
 
-void MapUIUnitNode::update(const UnitType* type, ssize_t idx)
+void MapUIUnitNode::reuse(const Camp* camp, ssize_t idx)
 {
-    _unitType = type;
+    _camp = camp;
     _idx = idx;
     
-    const string iconFile = (type == nullptr) ? "GameImages/test/icon_jz.png" : "GameImages/test/icon_gjs.png";
+    const string& unitName = camp ? camp->getUnitSetting().getUnitTypeName() : "";
+    const string& iconFile = (unitName.find("步兵") != string::npos) ? "GameImages/test/icon_jz.png" : "GameImages/test/icon_gjs.png";
     _iconButton->loadTextures(iconFile, iconFile);
+    
+    // TODO: load resource count from camp
+    const int count = 100;
+    _resourceButton->setCount(count);
+    
+    // update mutable data
+    update();
+}
+
+void MapUIUnitNode::update()
+{
+    if (_camp) {
+        _countLabel->setString(StringUtils::format("%d/%d", _camp->getProduction(), _camp->getMaxProduction()));
+    }
 }
 
 void MapUIUnitNode::setSelected(bool selected)
@@ -189,9 +204,9 @@ void MapUIUnitNode::setSelected(bool selected)
     }
 }
 
-const UnitType* MapUIUnitNode::getUnitType() const
+const Camp* MapUIUnitNode::getCamp() const
 {
-    return _unitType;
+    return _camp;
 }
 
 ssize_t MapUIUnitNode::getIdx() const
@@ -240,8 +255,9 @@ MapUILayer* MapUILayer::create(const string& myAccount, const string& opponentsA
 
 MapUILayer::MapUILayer()
 :_observer(nullptr)
+,_world(nullptr)
 ,_paused(false)
-,_cellsCount(16)
+,_cellsCount(1)
 ,_selectedUnitIdx(CC_INVALID_INDEX)
 ,_tableView(nullptr)
 ,_timeLabel(nullptr)
@@ -279,10 +295,10 @@ void MapUILayer::registerObserver(MapUILayerObserver *observer)
 void MapUILayer::initWithGame(const Game* game)
 {
     if (game) {
-        const World* world = game->getWorld();
-        if (world) {
-            const TechTree* techTree = world->getTechTree();
-            const Faction* faction = world->getFaction(0);
+        _world = game->getWorld();
+        if (_world) {
+            const TechTree* techTree = _world->getTechTree();
+            const Faction* faction = _world->getFaction(0);
             int count = techTree->getResourceTypeCount();
             if (count > 0)
             {
@@ -300,7 +316,7 @@ void MapUILayer::initWithGame(const Game* game)
             }
             
             // reload table view
-            reloadTableView(world->getCampCount(world->getThisFactionIndex()));
+            reloadTableView(_world->getCampCount(_world->getThisFactionIndex()));
         }
     }
 }
@@ -330,7 +346,13 @@ void MapUILayer::updateRemainingTime(int time)
 #pragma mark - TableViewDelegate
 void MapUILayer::tableCellTouched(TableView* table, TableViewCell* cell)
 {
-    onUnitTouched(cell->getIdx());
+    MapUIUnitCell *unitCell = static_cast<MapUIUnitCell*>(cell);
+    if (unitCell) {
+        MapUIUnitNode* unitNode = unitCell->getUnitNode();
+        if (unitNode) {
+            onUnitTouched(unitNode);
+        }
+    }
 }
 
 #pragma mark - TableViewDataSource
@@ -342,25 +364,27 @@ Size MapUILayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
 TableViewCell* MapUILayer::tableCellAtIndex(TableView *table, ssize_t idx)
 {
     MapUIUnitCell *cell = static_cast<MapUIUnitCell*>(table->dequeueCell());
-    if (!cell)
-    {
+    
+    if (!cell) {
         cell = MapUIUnitCell::create();
-        
-        // TODO: remove test code
-        UnitType* type = (idx % 2 == 0) ? nullptr : reinterpret_cast<UnitType*>(1);
-        MapUIUnitNode* unitNode = MapUIUnitNode::create(type, idx);
-        unitNode->setPosition(Point(unitNodeOffsetX, unitNodeOffsetY));
-        unitNode->registerObserver(this);
-        cell->addChild(unitNode);
-        cell->setUnitNode(unitNode);
     }
-    else
-    {
-        // TODO: remove test code
-        UnitType* type = (idx % 2 == 0) ? nullptr : reinterpret_cast<UnitType*>(1);
-        MapUIUnitNode* unitNode = cell->getUnitNode();
-        unitNode->update(type, idx);
-        unitNode->setSelected(idx == _selectedUnitIdx);
+    
+    if (_world) {
+        const int factionIndex = _world->getThisFactionIndex();
+        const Camp* camp = _world->getCamp(factionIndex, (int)idx);
+        if (camp) {
+            MapUIUnitNode* unitNode = cell->getUnitNode();
+            if (unitNode) {
+                unitNode->reuse(camp, idx);
+                unitNode->setSelected(idx == _selectedUnitIdx);
+            } else {
+                unitNode = MapUIUnitNode::create(camp, idx);
+                unitNode->setPosition(Point(unitNodeOffsetX, unitNodeOffsetY));
+                unitNode->registerObserver(this);
+                cell->addChild(unitNode);
+                cell->setUnitNode(unitNode);
+            }
+        }
     }
     
     return cell;
@@ -599,10 +623,10 @@ void MapUILayer::onExit()
 }
 
 #pragma mark private
-void MapUILayer::onUnitTouched(ssize_t idx)
+void MapUILayer::onUnitTouched(MapUIUnitNode* node)
 {
     const ssize_t oldIdx = _selectedUnitIdx;
-    const ssize_t newIdx = idx;
+    const ssize_t newIdx = node->getIdx();
     if (newIdx != oldIdx) {
         _selectedUnitIdx = newIdx;
         
@@ -614,7 +638,7 @@ void MapUILayer::onUnitTouched(ssize_t idx)
     }
     
     if (_observer) {
-        _observer->onMapUILayerUnitSelected(idx % 2);
+        _observer->onMapUILayerUnitSelected(node);
     }
 }
 

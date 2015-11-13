@@ -45,7 +45,7 @@ public:
     
 protected:
     // MapUILayerObserver
-    virtual void onMapUILayerUnitSelected(ssize_t idx) override;
+    virtual void onMapUILayerUnitSelected(MapUIUnitNode* node) override;
     virtual void onMapUILayerClickedPauseButton(bool pause) override;
     
 private:

@@ -164,16 +164,17 @@ MapUILayer* GameRender::getMapUILayer() const
 }
 
 #pragma mark - MapUILayerObserver
-void GameRender::onMapUILayerUnitSelected(ssize_t idx)
+void GameRender::onMapUILayerUnitSelected(MapUIUnitNode* node)
 {
     if (_commander) {
-        int index = (int)idx;
+        int index = (int)node->getIdx();
         const World* world = _game->getWorld();
         const int factionIndex = world->getThisFactionIndex();
         if (index < world->getCampCount(factionIndex)) {
             const Camp* camp = world->getCamp(factionIndex, index);
             if (camp) {
                 _commander->tryGiveCampCommand(camp, 1);
+                node->update();
             }
         }
     }
