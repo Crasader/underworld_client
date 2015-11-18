@@ -11,13 +11,13 @@
 
 #include "cocos2d.h"
 #include "GameInterface.h"
+#include "UnitNode.h"
+#include "BulletNode.h"
 #include "MapUILayer.h"
 
 USING_NS_CC;
 
 class MapLayer;
-class UnitNode;
-class BulletNode;
 
 namespace UnderWorld { namespace Core {
     class Game;
@@ -30,7 +30,7 @@ public:
     virtual ~GameRenderObserver() {}
 };
 
-class GameRender : public UnderWorld::Core::AbstractRender, public MapUILayerObserver
+class GameRender : public UnderWorld::Core::AbstractRender, public UnitNodeObserver, public BulletNodeObserver, public MapUILayerObserver
 {
 public:
     GameRender(Node* scene, int mapId, const std::string& opponentsAccount);
@@ -44,6 +44,12 @@ public:
     MapUILayer* getMapUILayer() const;
     
 protected:
+    // UnitNodeObserver
+    virtual void onUnitNodePlayDeadAnimationFinished(UnitNode* node) override;
+    
+    // BulletNodeObserver
+    virtual void onBulletNodeReachedTarget(BulletNode* node) override;
+    
     // MapUILayerObserver
     virtual void onMapUILayerUnitSelected(MapUIUnitNode* node) override;
     virtual void onMapUILayerClickedPauseButton(bool pause) override;

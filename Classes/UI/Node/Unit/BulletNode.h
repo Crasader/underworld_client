@@ -31,6 +31,7 @@ class BulletNode : public Node
 public:
     static BulletNode* create(const UnderWorld::Core::Bullet* bullet);
     virtual ~BulletNode();
+    const UnderWorld::Core::Bullet* getBullet() const;
     void registerObserver(BulletNodeObserver *observer);
     void update();
     

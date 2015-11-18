@@ -20,10 +20,13 @@ namespace UnderWorld { namespace Core {
     class Skill;
 } }
 
+class UnitNode;
+
 class UnitNodeObserver
 {
 public:
     virtual ~UnitNodeObserver() {}
+    virtual void onUnitNodePlayDeadAnimationFinished(UnitNode* node) = 0;
 };
 
 class UnitNode : public Node
@@ -31,6 +34,7 @@ class UnitNode : public Node
 public:
     static UnitNode* create(const UnderWorld::Core::Unit* unit);
     virtual ~UnitNode();
+    const UnderWorld::Core::Unit* getUnit() const;
     void registerObserver(UnitNodeObserver *observer);
     void update();
     
@@ -42,6 +46,7 @@ protected:
 private:
     UnitNodeObserver *_observer;
     Node *_actionNode;
+    Node *_shadow;
     const UnderWorld::Core::Unit* _unit;
     const UnderWorld::Core::Skill* _lastSkill;
 };

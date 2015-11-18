@@ -42,6 +42,11 @@ BulletNode::~BulletNode()
     removeAllChildren();
 }
 
+const Bullet* BulletNode::getBullet() const
+{
+    return _bullet;
+}
+
 void BulletNode::registerObserver(BulletNodeObserver *observer)
 {
     _observer = observer;

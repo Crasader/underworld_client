@@ -91,13 +91,17 @@ void GameRender::updateUnits(const Game* game, int index)
         if (true || skill->getSkillState() == Skill::kSkillState_performing) {
             SkillClass sc = skill->getSkillType()->getSkillClass();
             bool isNewCreated = (_allUnits.find(key) == _allUnits.end()) ? true : false;
-            if (isNewCreated && kSkillClass_Die != sc) {
-                UnitNode* node = UnitNode::create(unit);
-                _mapLayer->addUnit(node, pos);
-                _allUnits.insert(make_pair(key, node));
-            } else if (!isNewCreated) {
+            if (isNewCreated) {
+                if (kSkillClass_Die != sc) {
+                    UnitNode* node = UnitNode::create(unit);
+                    node->registerObserver(this);
+                    _mapLayer->addUnit(node, pos);
+                    _allUnits.insert(make_pair(key, node));
+                }
+            } else {
                 // already exist, update it
                 UnitNode* node = _allUnits.at(key);
+                node->update();
                 switch (sc) {
                     case kSkillClass_Stop:
                         break;
@@ -111,10 +115,6 @@ void GameRender::updateUnits(const Game* game, int index)
                     case kSkillClass_Cast:
                         break;
                     case kSkillClass_Die:
-                    {
-                        node->removeFromParent();
-                        _allUnits.erase(key);
-                    }
                         break;
                         
                     default:
@@ -146,6 +146,7 @@ void GameRender::updateBullets(const Game* game)
         } else {
             if (!isExploded) {
                 BulletNode* node = BulletNode::create(bullet);
+                node->registerObserver(this);
                 _mapLayer->addUnit(node, pos);
                 _allBullets.insert(make_pair(key, node));
             }
@@ -161,6 +162,19 @@ MapLayer* GameRender::getMapLayer() const
 MapUILayer* GameRender::getMapUILayer() const
 {
     return _mapUILayer;
+}
+
+#pragma mark - UnitNodeObserver
+void GameRender::onUnitNodePlayDeadAnimationFinished(UnitNode* node)
+{
+    node->removeFromParent();
+    _allUnits.erase(node->getUnit()->getUnitId());
+}
+
+#pragma mark - BulletNodeObserver
+void GameRender::onBulletNodeReachedTarget(BulletNode* node)
+{
+    
 }
 
 #pragma mark - MapUILayerObserver
