@@ -11,8 +11,7 @@
 
 #include "cocos2d.h"
 
-class TowerData;
-class UnitData;
+class QuestData;
 
 class DataManager
 {
@@ -21,6 +20,7 @@ public:
     static void purge();
     
     void init();
+    const QuestData* getQuestData(int questId) const;
     
 protected:
     DataManager();
@@ -28,14 +28,10 @@ protected:
     CC_DISALLOW_COPY_AND_ASSIGN(DataManager);
     
 protected:
-    void parseTowersData();
-    void parseUnitsData();
-    void parseHeroesData();
+    void parseQuestData();
     
 private:
-    std::map<int, TowerData*> _towers;
-    std::map<int, UnitData*> _units;
-    std::map<int, UnitData*> _heroes;
+    std::map<int, QuestData*> _quests;
 };
 
 #endif /* DataManager_h */

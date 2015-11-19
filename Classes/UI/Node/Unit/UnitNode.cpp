@@ -62,9 +62,16 @@ void UnitNode::update()
 {
     if (_unit) {
         const Skill* currentSkill = _unit->getCurrentSkill();
-        if (currentSkill != _lastSkill) {
-            _lastSkill = currentSkill;
-            updateActionNode(_unit);
+        if (currentSkill) {
+            if (nullptr == _lastSkill) {
+                setCurrentSkill(currentSkill);
+            } else {
+                const SkillClass currentSkillClass = currentSkill->getSkillType()->getSkillClass();
+                const SkillClass lastSkillClass = _lastSkill->getSkillType()->getSkillClass();
+                if (currentSkillClass != lastSkillClass) {
+                    setCurrentSkill(currentSkill);
+                }
+            }
         }
     }
 }
@@ -81,6 +88,12 @@ bool UnitNode::init(const Unit* unit)
     }
     
     return false;
+}
+
+void UnitNode::setCurrentSkill(const Skill* skill)
+{
+    _lastSkill = skill;
+    updateActionNode(_unit);
 }
 
 void UnitNode::updateActionNode(const Unit* unit)

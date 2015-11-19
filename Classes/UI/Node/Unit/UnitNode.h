@@ -41,6 +41,7 @@ public:
 protected:
     UnitNode();
     bool init(const UnderWorld::Core::Unit* unit);
+    void setCurrentSkill(const UnderWorld::Core::Skill* skill);
     void updateActionNode(const UnderWorld::Core::Unit* unit);
     
 private:

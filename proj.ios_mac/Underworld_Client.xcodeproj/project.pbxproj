@@ -35,10 +35,10 @@
 		300098D61BD5E81700B6E284 /* InstanceFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098D41BD5E81700B6E284 /* InstanceFactory.cpp */; };
 		301F63F21BE0C56D00DA6D70 /* Damage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 301F63F01BE0C56D00DA6D70 /* Damage.cpp */; };
 		301F63FC1BE3680600DA6D70 /* GameLooper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 301F63FA1BE3680600DA6D70 /* GameLooper.cpp */; };
-		30409E571BF8C8F500955261 /* AttackFeatures.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30409E551BF8C8F500955261 /* AttackFeatures.cpp */; settings = {ASSET_TAGS = (); }; };
-		307534691BF1B2F20057DCED /* Commander.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 307534671BF1B2F20057DCED /* Commander.cpp */; settings = {ASSET_TAGS = (); }; };
-		3075346D1BF324340057DCED /* EventTrigger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3075346B1BF324340057DCED /* EventTrigger.cpp */; settings = {ASSET_TAGS = (); }; };
-		307534711BF33ECF0057DCED /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3075346F1BF33ECF0057DCED /* Logger.cpp */; settings = {ASSET_TAGS = (); }; };
+		30409E571BF8C8F500955261 /* AttackFeatures.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30409E551BF8C8F500955261 /* AttackFeatures.cpp */; };
+		307534691BF1B2F20057DCED /* Commander.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 307534671BF1B2F20057DCED /* Commander.cpp */; };
+		3075346D1BF324340057DCED /* EventTrigger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3075346B1BF324340057DCED /* EventTrigger.cpp */; };
+		307534711BF33ECF0057DCED /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3075346F1BF33ECF0057DCED /* Logger.cpp */; };
 		308B84631BE3752000377802 /* PathFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84611BE3752000377802 /* PathFinder.cpp */; };
 		308B84661BE3853C00377802 /* AIBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84641BE3853C00377802 /* AIBody.cpp */; };
 		308B84691BE3856F00377802 /* AIBrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84671BE3856F00377802 /* AIBrain.cpp */; };
@@ -90,6 +90,8 @@
 		A103F45B1BE37E2A007F9A83 /* BulletNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F4571BE37E2A007F9A83 /* BulletNode.cpp */; };
 		A103F45C1BE37E2A007F9A83 /* UnitNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F4591BE37E2A007F9A83 /* UnitNode.cpp */; };
 		A103F45F1BE38112007F9A83 /* GameRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F45D1BE38112007F9A83 /* GameRender.cpp */; };
+		A12D2F561BFDE7D100389DAC /* QuestManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12D2F541BFDE7D100389DAC /* QuestManager.cpp */; };
+		A12D2F5A1BFDE92400389DAC /* QuestData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12D2F581BFDE92400389DAC /* QuestData.cpp */; };
 		A1720E691BCCDEFF00217E98 /* DataManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720E671BCCDEFF00217E98 /* DataManager.cpp */; };
 		A1720E6C1BCCDF1900217E98 /* UserDefaultsDataManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720E6A1BCCDF1900217E98 /* UserDefaultsDataManager.cpp */; };
 		A1720E6F1BCCDF9100217E98 /* CocosUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720E6D1BCCDF9100217E98 /* CocosUtils.cpp */; };
@@ -299,6 +301,10 @@
 		A103F45A1BE37E2A007F9A83 /* UnitNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitNode.h; sourceTree = "<group>"; };
 		A103F45D1BE38112007F9A83 /* GameRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameRender.cpp; sourceTree = "<group>"; };
 		A103F45E1BE38112007F9A83 /* GameRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRender.h; sourceTree = "<group>"; };
+		A12D2F541BFDE7D100389DAC /* QuestManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuestManager.cpp; sourceTree = "<group>"; };
+		A12D2F551BFDE7D100389DAC /* QuestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestManager.h; sourceTree = "<group>"; };
+		A12D2F581BFDE92400389DAC /* QuestData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuestData.cpp; sourceTree = "<group>"; };
+		A12D2F591BFDE92400389DAC /* QuestData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestData.h; sourceTree = "<group>"; };
 		A1720E671BCCDEFF00217E98 /* DataManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataManager.cpp; sourceTree = "<group>"; };
 		A1720E681BCCDEFF00217E98 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		A1720E6A1BCCDF1900217E98 /* UserDefaultsDataManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserDefaultsDataManager.cpp; sourceTree = "<group>"; };
@@ -674,6 +680,7 @@
 			isa = PBXGroup;
 			children = (
 				045116D51BCFB9E7002AA721 /* Core */,
+				A12D2F571BFDE88A00389DAC /* Data */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
@@ -747,6 +754,15 @@
 			path = Unit;
 			sourceTree = "<group>";
 		};
+		A12D2F571BFDE88A00389DAC /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				A12D2F581BFDE92400389DAC /* QuestData.cpp */,
+				A12D2F591BFDE92400389DAC /* QuestData.h */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		A1720E661BCCDECA00217E98 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -756,6 +772,8 @@
 				A1720EA31BCD29FF00217E98 /* GameData.h */,
 				A1A4BA441BCE08AF00175E8A /* OnlineUpdater.cpp */,
 				A1A4BA451BCE08AF00175E8A /* OnlineUpdater.h */,
+				A12D2F541BFDE7D100389DAC /* QuestManager.cpp */,
+				A12D2F551BFDE7D100389DAC /* QuestManager.h */,
 				A1720ECF1BCD38FB00217E98 /* SoundManager.cpp */,
 				A1720ED01BCD38FB00217E98 /* SoundManager.h */,
 				A1720E6A1BCCDF1900217E98 /* UserDefaultsDataManager.cpp */,
@@ -1133,6 +1151,7 @@
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				A1720EB91BCD2D2E00217E98 /* KeychainItemWrapper.m in Sources */,
 				A1720E8B1BCCE19300217E98 /* aes_core.c in Sources */,
+				A12D2F5A1BFDE92400389DAC /* QuestData.cpp in Sources */,
 				045117101BCFBA5F002AA721 /* Game.cpp in Sources */,
 				045117081BCFBA53002AA721 /* Command.cpp in Sources */,
 				045117071BCFBA53002AA721 /* Bullet.cpp in Sources */,
@@ -1176,6 +1195,7 @@
 				30409E571BF8C8F500955261 /* AttackFeatures.cpp in Sources */,
 				0451170A1BCFBA53002AA721 /* Skill.cpp in Sources */,
 				045116F81BCFBA44002AA721 /* TechTree.cpp in Sources */,
+				A12D2F561BFDE7D100389DAC /* QuestManager.cpp in Sources */,
 				A1720ECE1BCD382700217E98 /* MessageBoxBaseLayer.cpp in Sources */,
 				045116E21BCFBA39002AA721 /* Clock.cpp in Sources */,
 				A1720E931BCCE1D900217E98 /* LocalHelper.cpp in Sources */,

@@ -9,6 +9,9 @@
 #include "Utils.h"
 #include "Global.h"
 
+using namespace std;
+using namespace UnderWorld::Core;
+
 string Utils::format(const char *format, ...)
 {
     static const unsigned int MAX_TEXT_LENGTH = 1024 * 100;

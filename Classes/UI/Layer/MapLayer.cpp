@@ -94,6 +94,7 @@ bool MapLayer::init(int mapId)
                 Sprite *tile = _mainLayer->getTileAt(Vec2(x, y));
                 if (tile) {
 //                    tile->setLocalZOrder(zOrder);
+                    tile->setVisible(false);
                     _mainLayer->reorderChild(tile, zOrder);
                 }
             }
