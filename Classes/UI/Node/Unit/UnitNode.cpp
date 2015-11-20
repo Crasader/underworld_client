@@ -78,8 +78,13 @@ void UnitNode::update()
                 } else {
                     const SkillClass currentSkillClass = currentSkill->getSkillType()->getSkillClass();
                     const SkillClass lastSkillClass = _lastSkill->getSkillType()->getSkillClass();
-                    if (currentSkillClass != lastSkillClass || _lastDirection != direction) {
+                    if (currentSkillClass != lastSkillClass) {
                         setCurrentSkill(currentSkill, direction);
+                    } else if (_lastDirection != direction) {
+                        if (kSkillClass_Move == currentSkillClass ||
+                            kSkillClass_Attack == currentSkillClass) {
+                            setCurrentSkill(currentSkill, direction);
+                        }
                     }
                 }
             }
@@ -112,8 +117,8 @@ UnitNode::UnitDirection UnitNode::calculateDirection(const Unit* unit)
     if (unit) {
         const Coordinate& currentPos = unit->getPos();
         const Coordinate& targetPos = unit->getTargetPos();
-        const float deltaX = abs(currentPos.x - targetPos.x);
-        const float deltaY = abs(currentPos.y - targetPos.y);
+        const float deltaX = abs(targetPos.x - currentPos.x);
+        const float deltaY = targetPos.y - currentPos.y;
         
         float angel = 0.0f;
         if (deltaX == 0) {
@@ -199,13 +204,16 @@ void UnitNode::updateActionNode(const Unit* unit, UnitDirection direction)
             }
             
             // add shadow
-            Sprite *sprite = dynamic_cast<Sprite*>(*(_actionNode->getChildren().begin()));
-            if (sprite) {
-                static const string shadowFile("GameImages/test/backcircle.png");
-                const Size& size = sprite->getContentSize();
-                _shadow = Sprite::create(shadowFile);
-                _shadow->setPosition(sprite->getPosition() - Point(0, size.height * 0.25f));
-                _actionNode->addChild(_shadow, -1);
+            if (kSkillClass_Move == skillClass ||
+                kSkillClass_Attack == skillClass) {
+                Sprite *sprite = dynamic_cast<Sprite*>(*(_actionNode->getChildren().begin()));
+                if (sprite) {
+                    static const string shadowFile("GameImages/test/backcircle.png");
+                    const Size& size = sprite->getContentSize();
+                    _shadow = Sprite::create(shadowFile);
+                    _shadow->setPosition(sprite->getPosition() - Point(0, size.height * 0.25f));
+                    _actionNode->addChild(_shadow, -1);
+                }
             }
         } else {
             assert(false);
