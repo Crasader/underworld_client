@@ -9,20 +9,17 @@
 #ifndef QuestManager_h
 #define QuestManager_h
 
-#include "NetworkApi.h"
-
-typedef enum {
-    kQuestType_Daily = 0,
-    kQuestType_Life = 0,
-}QuestType;
+#include "cocos2d.h"
+#include "json/document.h"
+#include "CocosGlobal.h"
 
 class QuestData;
 
 class QuestManager
 {
 public:
-    static QuestManager * getInstance();
-    static void purge();
+    QuestManager();
+    virtual ~QuestManager();
     
     void initQuest(QuestType type, const rapidjson::Document& jsonDict);
     void updateQuestProgress(QuestType type, int questId, int progress);
@@ -32,8 +29,6 @@ public:
     int getQuestProgress(QuestType type, int questId) const;
     
 protected:
-    QuestManager();
-    virtual ~QuestManager();
     CC_DISALLOW_COPY_AND_ASSIGN(QuestManager);
     
 private:

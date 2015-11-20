@@ -17,11 +17,6 @@
 
 #import <CommonCrypto/CommonCrypto.h>
 
-// facebook
-static std::string const kFbLogin = "ZombiePop_Server/fblogin.json";
-static std::string const kFbBind = "ZombiePop_Server/fbbind.json";
-static std::string const kiOSIAP = "ZombiePop_Server/iosiap.json";
-
 // alert view
 static AlertViewClickedButtonCallback alertViewClickedButtonCallback = nullptr;
 long const IapVerificationFailedCode = RMStoreErrorCodeUnableToCompleteVerification;
@@ -133,10 +128,8 @@ long const IapVerificationFailedCode = RMStoreErrorCodeUnableToCompleteVerificat
     NSData *rawData = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:nil error:&error];
     NSData *receipt = [rawData base64EncodedDataWithOptions:0];
 #endif
-    std::map<string, string> params;
-    params.insert(make_pair("receiptData", [[NSString alloc] initWithData:receipt encoding:NSUTF8StringEncoding].stdString));
-    params.insert(make_pair("sandbox", sandbox ? "1" : "0"));
-    NetworkApi::request(kiOSIAP, cocos2d::network::HttpRequest::Type::POST, &params, [=](cocos2d::network::HttpClient* client, cocos2d::network::HttpResponse* response) {
+    string receiptData = [[NSString alloc] initWithData:receipt encoding:NSUTF8StringEncoding].stdString;
+    NetworkApi::iap(sandbox, receiptData, [=](cocos2d::network::HttpClient* client, cocos2d::network::HttpResponse* response) {
         if (NetworkApi::isSuccessfulResponse(response))
         {
             rapidjson::Document jsonDict;
@@ -154,7 +147,7 @@ long const IapVerificationFailedCode = RMStoreErrorCodeUnableToCompleteVerificat
             NSError *error = [NSError errorWithDomain:domain code:RMStoreErrorCodeUnableToCompleteVerification userInfo:nil];
             failureBlock(error);
         }
-    }, false, false, true, 900);
+    });
 }
 
 #pragma mark SKPaymentTransactionObserver

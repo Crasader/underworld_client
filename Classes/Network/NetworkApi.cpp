@@ -19,6 +19,8 @@
 #include "TargetConditionals.h"
 #endif
 
+using namespace std;
+USING_NS_CC;
 using namespace cocos2d::network;
 
 #if COCOS2D_DEBUG
@@ -34,9 +36,13 @@ static const string kSignParam = "sign";
 
 static const string kServerPrefix = "Underworld_Server/";
 
-static const string kGuestLogin = kServerPrefix + "guest.json";
-static const string kUserInfo = kServerPrefix + "user/info.json";
-static const string kHeartBeat = kServerPrefix + "user/online.json";
+static const string kGuestLogin         = kServerPrefix + "guest.json";
+static const string kUserInfo           = kServerPrefix + "user/info.json";
+static const string kHeartBeat          = kServerPrefix + "user/online.json";
+static const string kDailyQuestProgress = kServerPrefix + "quest/dailyList.json";
+static const string kLifeQuestProgress  = kServerPrefix + "quest/lifeList.json";
+static const string kFinishQuest        = kServerPrefix + "quest/finish.json";
+static const string kiOSIAP             = kServerPrefix + "iosiap.json";
 
 static string headerString(const string& key, const string& value)
 {
@@ -74,14 +80,14 @@ static string responseDataToString(const vector<char>* data)
     return dataString;
 }
 
-void NetworkApi::request(const string& path,
-                         cocos2d::network::HttpRequest::Type type,
-                         const map<string, string> * params,
-                         const cocos2d::network::ccHttpRequestCallback& callback,
-                         bool isLocalTest,
-                         bool showLoadingView,
-                         bool isImmediate,
-                         int timeout)
+static void request(const string& path,
+                    const ccHttpRequestCallback& callback,
+                    const map<string, string> * params = nullptr,
+                    HttpRequest::Type type = HttpRequest::Type::POST,
+                    bool isLocalTest = false,
+                    bool showLoadingView = true,
+                    bool isImmediate = true,
+                    int timeout = TimeoutDuration)
 {
     if (isLocalTest)
     {
@@ -178,7 +184,7 @@ void NetworkApi::request(const string& path,
                 }
             }
             
-            const ssize_t code = response->getResponseCode();
+            const long code = response->getResponseCode();
             GameData *gameData = GameData::getInstance();
             
             if (code == OfflineCode)
@@ -249,17 +255,47 @@ void NetworkApi::parseResponseData(const vector<char>* responseData, rapidjson::
 
 void NetworkApi::login(const ccHttpRequestCallback& callback)
 {
-    request(kGuestLogin, HttpRequest::Type::POST, nullptr,callback);
+    request(kGuestLogin, callback);
 }
 
-void NetworkApi::loadUserInfo(const string& deviceToken, const cocos2d::network::ccHttpRequestCallback& callback)
+void NetworkApi::loadUserInfo(const string& deviceToken, const ccHttpRequestCallback& callback)
 {
     map<string, string> params;
     params.insert(make_pair("iostoken", deviceToken));
-    request(kUserInfo, HttpRequest::Type::POST, &params, callback);
+    request(kUserInfo, callback, &params);
 }
 
-void NetworkApi::heartBeat(const cocos2d::network::ccHttpRequestCallback& callback, bool showLoadingView)
+void NetworkApi::heartBeat(const ccHttpRequestCallback& callback, bool showLoadingView)
 {
-    request(kHeartBeat, HttpRequest::Type::POST, nullptr, callback, false, showLoadingView);
+    request(kHeartBeat, callback, nullptr, HttpRequest::Type::POST, false, showLoadingView);
+}
+
+#pragma mark - Quest
+void NetworkApi::getDailyQuestProgress(const ccHttpRequestCallback& callback)
+{
+    request(kDailyQuestProgress, callback);
+}
+
+void NetworkApi::getLifeQuestProgress(const ccHttpRequestCallback& callback)
+{
+    request(kLifeQuestProgress, callback);
+}
+
+void NetworkApi::finishQuest(QuestType type, int questId, const ccHttpRequestCallback& callback)
+{
+    map<string, string> params;
+    params.insert(make_pair("type", StringUtils::format("%d", type)));
+    params.insert(make_pair("qid", StringUtils::format("%d", questId)));
+    request(kFinishQuest, callback, &params);
+}
+
+#pragma mark - Guild
+
+#pragma mark - IAP
+void NetworkApi::iap(bool isSandBox, const string& receiptData, const ccHttpRequestCallback& callback)
+{
+    map<string, string> params;
+    params.insert(make_pair("receiptData", receiptData));
+    params.insert(make_pair("sandbox", isSandBox ? "1" : "0"));
+    request(kiOSIAP, callback, &params, HttpRequest::Type::POST, false, false, true, 900);
 }

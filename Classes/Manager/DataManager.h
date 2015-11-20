@@ -10,6 +10,7 @@
 #define DataManager_h
 
 #include "cocos2d.h"
+#include "CocosGlobal.h"
 
 class QuestData;
 
@@ -20,7 +21,7 @@ public:
     static void purge();
     
     void init();
-    const QuestData* getQuestData(int questId) const;
+    const QuestData* getQuestData(QuestType type, int questId) const;
     
 protected:
     DataManager();
@@ -28,10 +29,10 @@ protected:
     CC_DISALLOW_COPY_AND_ASSIGN(DataManager);
     
 protected:
-    void parseQuestData();
+    void parseQuestData(QuestType type);
     
 private:
-    std::map<int, QuestData*> _quests;
+    std::map<QuestType, std::map<int, QuestData*>> _quests;
 };
 
 #endif /* DataManager_h */

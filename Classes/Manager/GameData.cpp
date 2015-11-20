@@ -336,7 +336,7 @@ void GameData::onUpdateVersionID(const string& version)
     _versionId.assign(version);
 }
 
-void GameData::onNetworkResponseFailed(int code, const string& jsonPath) const
+void GameData::onNetworkResponseFailed(long code, const string& jsonPath) const
 {
 #if COCOS2D_DEBUG
 #if TARGET_IPHONE_SIMULATOR

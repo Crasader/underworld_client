@@ -13,30 +13,9 @@
 using namespace std;
 using namespace cocostudio;
 
-static QuestManager *s_pSharedInstance = nullptr;
-
-QuestManager* QuestManager::getInstance()
-{
-    if (!s_pSharedInstance)
-    {
-        s_pSharedInstance = new (nothrow) QuestManager();
-        CCASSERT(s_pSharedInstance, "FATAL: Not enough memory");
-    }
-    
-    return s_pSharedInstance;
-}
-
-void QuestManager::purge()
-{
-    if (s_pSharedInstance)
-    {
-        delete s_pSharedInstance;
-        s_pSharedInstance = nullptr;
-    }
-}
-
 QuestManager::QuestManager()
 {
+    
 }
 
 QuestManager::~QuestManager()
@@ -69,9 +48,13 @@ void QuestManager::initQuest(QuestType type, const rapidjson::Document& jsonDict
             const rapidjson::Value& info = DICTOOL->getSubDictionary_json(quests, i);
             int questId = DICTOOL->getIntValue_json(info, "qid");
             int progress = DICTOOL->getIntValue_json(info, "progress");
-            const QuestData* data = DataManager::getInstance()->getQuestData(questId);
-            questDataVector.push_back(data);
-            progressMap.insert(make_pair(questId, make_pair(data, progress)));
+            const QuestData* data = DataManager::getInstance()->getQuestData(type, questId);
+            if (data) {
+                questDataVector.push_back(data);
+                progressMap.insert(make_pair(questId, make_pair(data, progress)));
+            } else {
+                assert(false);
+            }
         }
     }
 }

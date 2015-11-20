@@ -61,26 +61,50 @@ DataManager::DataManager()
 
 DataManager::~DataManager()
 {
-    clearMap(_quests);
+    if (_quests.find(kQuestType_Daily) != _quests.end()) {
+        clearMap(_quests.at(kQuestType_Daily));
+    }
+    
+    if (_quests.find(kQuestType_Life) != _quests.end()) {
+        clearMap(_quests.at(kQuestType_Life));
+    }
 }
 
 void DataManager::init()
 {
-    parseQuestData();
+    parseQuestData(kQuestType_Daily);
+    parseQuestData(kQuestType_Life);
 }
 
-const QuestData* DataManager::getQuestData(int questId) const
+const QuestData* DataManager::getQuestData(QuestType type, int questId) const
 {
-    if (_quests.find(questId) != _quests.end()) {
-        return _quests.at(questId);
+    if (_quests.find(type) != _quests.end()) {
+        const map<int, QuestData*>& quests = _quests.at(type);
+        if (quests.find(questId) != quests.end()) {
+            return quests.at(questId);
+        }
     }
     
     return nullptr;
 }
 
-void DataManager::parseQuestData()
+void DataManager::parseQuestData(QuestType type)
 {
-    static string fileName("");
+    string fileName;
+    
+    if (kQuestType_Daily == type) {
+        fileName.assign("");
+    } else if (kQuestType_Life == type) {
+        fileName.assign("");
+    }
+    
+    // clear first
+    if (_quests.find(type) != _quests.end()) {
+        clearMap(_quests.at(type));
+    } else {
+        _quests.insert(make_pair(type, map<int, QuestData*>()));
+    }
+    
     if (LocalHelper::isFileExists(fileName))
     {
         tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
@@ -89,12 +113,19 @@ void DataManager::parseQuestData()
             string content = LocalHelper::loadFileContentString(fileName);
             xmlDoc->Parse(content.c_str());
             
+            map<int, QuestData*>& quests = _quests.at(type);
+            
             for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
                  item;
                  item = item->NextSiblingElement())
             {
                 QuestData* data = new (nothrow) QuestData(item);
-                _quests.insert(make_pair(data->getId(), data));
+                const int questId = data->getId();
+                if (quests.find(questId) != quests.end()) {
+                    assert(false);
+                } else {
+                    quests.insert(make_pair(questId, data));
+                }
             }
             
             CC_SAFE_DELETE(xmlDoc);

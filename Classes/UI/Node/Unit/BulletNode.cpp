@@ -94,11 +94,12 @@ void BulletNode::update(bool newCreated)
             setScaleX(-1 * getScaleX());
         }
         
-        int deltaX = abs(currentPos.x - targetPos.x);
-        int deltaY = abs(currentPos.y - targetPos.y);
+        const int deltaX = abs(currentPos.x - targetPos.x);
+        const int deltaY = abs(currentPos.y - targetPos.y);
         
         if (deltaX > 0) {
-            float angel = 180.0f * atanf(deltaY / deltaX) / M_PI * getScaleX();
+            const int rate = (getScaleX() < 0) ? -1 : 1;
+            float angel = 180.0f * atanf(deltaY / deltaX) / M_PI * rate;
             setRotation(angel);
         } else {
             // so close to the target

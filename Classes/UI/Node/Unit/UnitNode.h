@@ -39,10 +39,20 @@ public:
     void update();
     
 protected:
+    typedef enum {
+        kUnitDirection_Down = 1,
+        kUnitDirection_LeftDown,
+        kUnitDirection_Left,
+        kUnitDirection_LeftUp,
+        kUnitDirection_Up
+    }UnitDirection;
+    
+protected:
     UnitNode();
     bool init(const UnderWorld::Core::Unit* unit);
-    void setCurrentSkill(const UnderWorld::Core::Skill* skill);
-    void updateActionNode(const UnderWorld::Core::Unit* unit);
+    UnitDirection calculateDirection(const UnderWorld::Core::Unit* unit);
+    void setCurrentSkill(const UnderWorld::Core::Skill* skill, UnitDirection direction);
+    void updateActionNode(const UnderWorld::Core::Unit* unit, UnitDirection direction);
     
 private:
     UnitNodeObserver *_observer;
@@ -50,6 +60,7 @@ private:
     Node *_shadow;
     const UnderWorld::Core::Unit* _unit;
     const UnderWorld::Core::Skill* _lastSkill;
+    UnitDirection _lastDirection;
 };
 
 #endif /* UnitNode_h */

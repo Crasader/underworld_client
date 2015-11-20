@@ -9,6 +9,7 @@
 #include "User.h"
 #include "cocostudio/CocoStudio.h"
 
+using namespace std;
 using namespace cocostudio;
 
 User::User(const rapidjson::Document& jsonDict)

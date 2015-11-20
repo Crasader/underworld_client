@@ -27,15 +27,15 @@ public:
     unsigned int uid() const;
     bool isNewUser() const;
     bool isGuest() const;
-    const string& token() const;
-    const string& name() const;
+    const std::string& token() const;
+    const std::string& name() const;
     
     //------------------------------ NETWORKING BEGIN ------------------------------//
     void parseGemInfo(const rapidjson::Value& root);
     void parseResources(const rapidjson::Value& root, const char* key, bool silent = false);
     
     // user info
-    void loadUserInfo(const string& deviceToken, const httpRequestCallback& success, const httpRequestCallback& invalidTokenCallback, const httpRequestCallback& otherErrorCallback);
+    void loadUserInfo(const std::string& deviceToken, const httpRequestCallback& success, const httpRequestCallback& invalidTokenCallback, const httpRequestCallback& otherErrorCallback);
     //------------------------------ NETWORKING END ------------------------------//
     
 private:
@@ -54,8 +54,8 @@ private:
     bool _isNewUser;
     bool _isGuest;
     unsigned int _uid;
-    string _token;
-    string _name;
+    std::string _token;
+    std::string _name;
 };
 
 #endif /* User_h */

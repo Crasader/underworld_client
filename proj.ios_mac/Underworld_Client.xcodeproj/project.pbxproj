@@ -90,6 +90,7 @@
 		A103F45B1BE37E2A007F9A83 /* BulletNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F4571BE37E2A007F9A83 /* BulletNode.cpp */; };
 		A103F45C1BE37E2A007F9A83 /* UnitNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F4591BE37E2A007F9A83 /* UnitNode.cpp */; };
 		A103F45F1BE38112007F9A83 /* GameRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F45D1BE38112007F9A83 /* GameRender.cpp */; };
+		A113A03E1BFEF8F2001FEB2A /* GuildManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A113A03C1BFEF8F2001FEB2A /* GuildManager.cpp */; };
 		A12D2F561BFDE7D100389DAC /* QuestManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12D2F541BFDE7D100389DAC /* QuestManager.cpp */; };
 		A12D2F5A1BFDE92400389DAC /* QuestData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12D2F581BFDE92400389DAC /* QuestData.cpp */; };
 		A1720E691BCCDEFF00217E98 /* DataManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720E671BCCDEFF00217E98 /* DataManager.cpp */; };
@@ -301,6 +302,8 @@
 		A103F45A1BE37E2A007F9A83 /* UnitNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitNode.h; sourceTree = "<group>"; };
 		A103F45D1BE38112007F9A83 /* GameRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameRender.cpp; sourceTree = "<group>"; };
 		A103F45E1BE38112007F9A83 /* GameRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRender.h; sourceTree = "<group>"; };
+		A113A03C1BFEF8F2001FEB2A /* GuildManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuildManager.cpp; sourceTree = "<group>"; };
+		A113A03D1BFEF8F2001FEB2A /* GuildManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuildManager.h; sourceTree = "<group>"; };
 		A12D2F541BFDE7D100389DAC /* QuestManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuestManager.cpp; sourceTree = "<group>"; };
 		A12D2F551BFDE7D100389DAC /* QuestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestManager.h; sourceTree = "<group>"; };
 		A12D2F581BFDE92400389DAC /* QuestData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuestData.cpp; sourceTree = "<group>"; };
@@ -770,6 +773,8 @@
 				A1720E681BCCDEFF00217E98 /* DataManager.h */,
 				A1720EA21BCD29FF00217E98 /* GameData.cpp */,
 				A1720EA31BCD29FF00217E98 /* GameData.h */,
+				A113A03C1BFEF8F2001FEB2A /* GuildManager.cpp */,
+				A113A03D1BFEF8F2001FEB2A /* GuildManager.h */,
 				A1A4BA441BCE08AF00175E8A /* OnlineUpdater.cpp */,
 				A1A4BA451BCE08AF00175E8A /* OnlineUpdater.h */,
 				A12D2F541BFDE7D100389DAC /* QuestManager.cpp */,
@@ -1125,6 +1130,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1AF64511BE8DB0B003B3FA8 /* MapUILayer.cpp in Sources */,
+				A113A03E1BFEF8F2001FEB2A /* GuildManager.cpp in Sources */,
 				309F76951BE8851000B2791F /* Rect.cpp in Sources */,
 				045116E31BCFBA39002AA721 /* Map.cpp in Sources */,
 				CBA296431BE37FB1006BE7A0 /* GameScheduler.cpp in Sources */,

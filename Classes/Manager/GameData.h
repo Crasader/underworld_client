@@ -26,8 +26,8 @@ public:
     
     User* currentUser() const;
     
-    void setDeviceToken(const string& token);
-    const string& getVersionId() const;
+    void setDeviceToken(const std::string& token);
+    const std::string& getVersionId() const;
     
     // auto login (if a token is exist in local)
     void autoLogin(const httpRequestCallback& success, const httpRequestCallback& failed);
@@ -41,7 +41,7 @@ public:
     void beginTransaction();
     void finishTransaction();
     void fetchIAPInfo(const FetchIAPInfoCallback& success, const FetchIAPInfoCallback& failed, bool showLoadingLayer);
-    const vector<IapObject *>& getIapObjects() const;
+    const std::vector<IapObject *>& getIapObjects() const;
     
     // heartbeat
     void startHeartBeatSynchronously();
@@ -52,8 +52,8 @@ public:
     
     // callbacks
     void onLogout();
-    void onUpdateVersionID(const string& version);
-    void onNetworkResponseFailed(int code, const string& jsonPath) const;
+    void onUpdateVersionID(const std::string& version);
+    void onNetworkResponseFailed(long code, const std::string& jsonPath) const;
     void onVersionError();
     void onUserIsOnline();
     void onUserIsOffline();
@@ -69,10 +69,10 @@ private:
     
 private:
     User *_user;
-    string _versionId;
-    string _deviceToken;
+    std::string _versionId;
+    std::string _deviceToken;
     bool _isTransacting;
-    vector<IapObject *> _iapObjects;
+    std::vector<IapObject *> _iapObjects;
 };
 
 #endif /* GameData_h */

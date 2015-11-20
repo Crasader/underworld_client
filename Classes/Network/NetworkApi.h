@@ -12,9 +12,7 @@
 #include "cocos2d.h"
 #include "network/HttpClient.h"
 #include "json/document.h"
-
-USING_NS_CC;
-using namespace std;
+#include "CocosGlobal.h"
 
 #define TimeoutDuration     (10)
 
@@ -25,26 +23,28 @@ using namespace std;
 
 namespace NetworkApi
 {
-    // basic
-    void request(const string& path,
-                 cocos2d::network::HttpRequest::Type type,
-                 const map<string, string> * params,
-                 const cocos2d::network::ccHttpRequestCallback& callback,
-                 bool isLocalTest = false,
-                 bool showLoadingView = true,
-                 bool isImmediate = true,
-                 int timeout = TimeoutDuration);
-    
+    // basic    
     inline bool isSuccessfulResponse(cocos2d::network::HttpResponse* response) { return (response->isSucceed() && response->getResponseCode() == HttpSuccessCode); }
     
-    void parseResponseData(const vector<char>* responseData, rapidjson::Document& jsonDict);
+    void parseResponseData(const std::vector<char>* responseData, rapidjson::Document& jsonDict);
     
-    // http requests
+    // ======================= Game =======================
     void login(const cocos2d::network::ccHttpRequestCallback& callback);
     
-    void loadUserInfo(const string& deviceToken, const cocos2d::network::ccHttpRequestCallback& callback);
+    void loadUserInfo(const std::string& deviceToken, const cocos2d::network::ccHttpRequestCallback& callback);
     
     void heartBeat(const cocos2d::network::ccHttpRequestCallback& callback, bool showLoadingView);
+    
+    // ======================= Quest =======================
+    void getDailyQuestProgress(const cocos2d::network::ccHttpRequestCallback& callback);
+    void getLifeQuestProgress(const cocos2d::network::ccHttpRequestCallback& callback);
+    void finishQuest(QuestType type, int questId, const cocos2d::network::ccHttpRequestCallback& callback);
+    
+    // ======================= Guild =======================
+    
+    
+    // ======================= IAP =======================
+    void iap(bool isSandBox, const std::string& receiptData, const cocos2d::network::ccHttpRequestCallback& callback);
 }
 
 #endif /* NetworkApi_h */

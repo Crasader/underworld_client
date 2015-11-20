@@ -24,7 +24,7 @@ typedef std::function<void(long alertViewTag, long buttonIndex)> AlertViewClicke
 typedef std::function<void(const std::vector<IapObject *>& objects)> IAPProductsRequestSuccessCallback;
 typedef std::function<void()> IAPProductsRequestFailedCallback;
 typedef std::function<void()> IAPPaymentSuccessCallback;
-typedef std::function<void(const string& description, long code)> IAPPaymentFailedCallback;
+typedef std::function<void(const std::string& description, long code)> IAPPaymentFailedCallback;
 
 namespace iOSApi {
     
@@ -38,12 +38,12 @@ namespace iOSApi {
     // iap
     void initIAPEnviroment();
     void getAppleIAPInfo(const IAPProductsRequestSuccessCallback& success, const IAPProductsRequestFailedCallback& failed);
-    void buyGemApple(const string& account, int gemNumber, const IAPPaymentSuccessCallback& success, const IAPPaymentFailedCallback& failed);
+    void buyGemApple(const std::string& account, int gemNumber, const IAPPaymentSuccessCallback& success, const IAPPaymentFailedCallback& failed);
     
     // utils
-    string getVersionId();
-    string getBuildId();
-    void showAlertView(const string& title, const string& message, bool showTwoButtons, int tag, const AlertViewClickedButtonCallback& callback);
+    std::string getVersionId();
+    std::string getBuildId();
+    void showAlertView(const std::string& title, const std::string& message, bool showTwoButtons, int tag, const AlertViewClickedButtonCallback& callback);
 }
 
 #endif  // #ifndef ZombiePop_ApiBridge_h

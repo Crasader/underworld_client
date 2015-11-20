@@ -37,4 +37,9 @@ typedef enum
     kResourceType_MAX,          // Used to network parsing
 }ResourceType;
 
+typedef enum {
+    kQuestType_Daily = 0,
+    kQuestType_Life,
+}QuestType;
+
 #endif /* CocosGlobal_h */
