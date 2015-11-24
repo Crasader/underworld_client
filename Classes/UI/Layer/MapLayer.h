@@ -49,6 +49,8 @@ public:
 protected:
     virtual ~MapLayer();
     MapLayer();
+    
+    void addButterfly();
 private:
     int _mapId;
     int _width;
@@ -58,6 +60,7 @@ private:
     cocos2d::experimental::TMXTiledMap* _tiledMap;
     cocos2d::extension::ScrollView *_scrollView;
     cocos2d::experimental::TMXLayer* _mainLayer;
+    Node *_butterfly;
 };
 
 #endif /* MapLayer_h */

@@ -12,6 +12,9 @@
 #include "2d/CCFastTMXTiledMap.h"
 #include "Coordinate.h"
 #include "Map.h"
+#include "cocostudio/CocoStudio.h"
+
+using namespace cocostudio;
 
 static const int TILEDMAP_TAG = 2;
 static const int TILEDMAP_ZORDER = 2;
@@ -123,6 +126,38 @@ bool MapLayer::init(int mapId)
         CCLOG("%zd logicLayer", mapSetting.getWalkableArea().size());
         logicLayer->removeFromParent();
         
+        //--------- effect ---------//
+        // 1. butterfly
+        addButterfly();
+        
+        // 2. campfire
+        {
+            static const string file("effect-place-1.csb");
+            Node *effect = CSLoader::createNode(file);
+            effect->setPosition(Point(875, 80));
+            _tiledMap->addChild(effect);
+            timeline::ActionTimeline *action = CSLoader::createTimeline(file);
+            effect->runAction(action);
+            action->gotoFrameAndPlay(0, true);
+        }
+        
+        // 3. smoke
+        {
+            static const string file("particle/guohuo.plist");
+            ParticleSystemQuad *effect = ParticleSystemQuad::create(file);
+            effect->setPosition(Point(1455, 1020));
+            effect->setScale(2.5f);
+            _tiledMap->addChild(effect);
+        }
+        
+        // 4. spark
+        {
+            static const string file("particle/huoxing.plist");
+            ParticleSystemQuad *effect = ParticleSystemQuad::create(file);
+            effect->setPosition(Point(278, 232));
+            _tiledMap->addChild(effect);
+        }
+        
         //--------- scale ---------//
         const Size &mapPSize = _tiledMap->getContentSize();
         float scale = RESOLUTION_HEIGHT / mapPSize.height;
@@ -192,4 +227,36 @@ void MapLayer::scrollViewDidScroll(cocos2d::extension::ScrollView* view)
 
 void MapLayer::scrollViewDidZoom(cocos2d::extension::ScrollView* view)
 {
+}
+
+void MapLayer::addButterfly()
+{
+    static const string file("effect-place-2.csb");
+    Node *effect = CSLoader::createNode(file);
+    _tiledMap->addChild(effect);
+    timeline::ActionTimeline *action = CSLoader::createTimeline(file);
+    effect->runAction(action);
+    action->gotoFrameAndPlay(0, false);
+    action->setLastFrameCallFunc([this]() {
+        addButterfly();
+    });
+    
+    // generate a random position
+    static const float max_x = 2400.0f;
+    static const float valid_y[2] = {140.0f, 1070.0f};
+    static const float invalid_x[2][2] = {{625, 1155}, {1220, 1665}};
+    
+    const int random_y_2 = cocos2d::random() % 2;
+    const float y = valid_y[random_y_2];
+    
+    const int random_x_2 = cocos2d::random() % 2;
+    const float random_0_1 = CCRANDOM_0_1();
+    float x = invalid_x[random_x_2][random_y_2];
+    if (random_x_2 == 0) {
+        x = random_0_1 * x;
+    } else {
+        x = x + (max_x - x) * random_0_1;
+    }
+    
+    effect->setPosition(Point(x, y));
 }
