@@ -14,6 +14,7 @@
 #include "UnitType.h"
 #include "Skill.h"
 #include "SkllType.h"
+#include "DisplayBar.h"
 
 using namespace std;
 using namespace UnderWorld::Core;
@@ -45,6 +46,7 @@ UnitNode::UnitNode()
 ,_unit(nullptr)
 ,_lastSkill(nullptr)
 ,_lastDirection(kUnitDirection_Left)
+,_hpBar(nullptr)
 {
     
 }
@@ -97,6 +99,8 @@ void UnitNode::update()
                 setCurrentSkill(currentSkill, kUnitDirection_Left);
             }
         }
+        
+        updateHPBar();
     }
 }
 
@@ -130,8 +134,6 @@ UnitNode::UnitDirection UnitNode::calculateDirection(const Unit* unit)
         } else {
             angel = 180.0f * atanf(deltaY / deltaX) / M_PI;
         }
-        
-        CCLOG("angel: %.1f", angel);
         
         UnitNode::UnitDirection direction = kUnitDirection_Left;
         for (int i = 0; i < directionCount; ++i) {
@@ -175,9 +177,16 @@ void UnitNode::updateActionNode(const Unit* unit, UnitDirection direction)
             if (movable) {
                 csbFile = StringUtils::format("wolf-dead-%d.csb", direction);
             }
+            
+            if (_hpBar) {
+                _hpBar->removeFromParent();
+                _hpBar = nullptr;
+            }
         } else {
             if (movable) {
                 csbFile = StringUtils::format("wolf-run-%d.csb", direction);
+            } else if (kUnitClass_Core == unitClass) {
+                csbFile = "effect-wolf-Base.csb";
             } else {
                 // TODO: remove test code
                 csbFile = "wolf-run-3.csb";
@@ -196,6 +205,8 @@ void UnitNode::updateActionNode(const Unit* unit, UnitDirection direction)
             _actionNode->runAction(action);
             action->gotoFrameAndPlay(0, !isDead);
             if (isDead) {
+                // TODO: remove irregular code
+                setLocalZOrder(-1);
                 action->setLastFrameCallFunc([this]() {
                     if (_observer) {
                         _observer->onUnitNodePlayDeadAnimationFinished(this);
@@ -203,16 +214,25 @@ void UnitNode::updateActionNode(const Unit* unit, UnitDirection direction)
                 });
             }
             
-            // add shadow
-            if (kSkillClass_Move == skillClass ||
-                kSkillClass_Attack == skillClass) {
-                Sprite *sprite = dynamic_cast<Sprite*>(*(_actionNode->getChildren().begin()));
-                if (sprite) {
+            Sprite *sprite = dynamic_cast<Sprite*>(*(_actionNode->getChildren().begin()));
+            if (sprite) {
+                const Size& size = sprite->getContentSize();
+                // add shadow
+                if (kSkillClass_Move == skillClass ||
+                    kSkillClass_Attack == skillClass) {
                     static const string shadowFile("GameImages/test/backcircle.png");
-                    const Size& size = sprite->getContentSize();
                     _shadow = Sprite::create(shadowFile);
                     _shadow->setPosition(sprite->getPosition() - Point(0, size.height * 0.25f));
                     _actionNode->addChild(_shadow, -1);
+                }
+                
+                // add HP bar
+                if (!isDead && !_hpBar) {
+                    _hpBar = DisplayBar::create(kHP, unitClass);
+                    const Point pos(sprite->getPosition() + Point(0, size.height / 2 + 10.0f));
+                    _hpBar->setPosition(convertToNodeSpace(_actionNode->convertToWorldSpace(pos)));
+                    addChild(_hpBar);
+                    updateHPBar();
                 }
             }
         } else {
@@ -221,5 +241,14 @@ void UnitNode::updateActionNode(const Unit* unit, UnitDirection direction)
     } else {
         // test
         
+    }
+}
+
+void UnitNode::updateHPBar()
+{
+    if (_hpBar && _unit) {
+        const int maxHp = _unit->getUnitType()->getMaxHp();
+        const int hp = _unit->getHp();
+        _hpBar->setPercentage(100 * (float)hp / (float)maxHp);
     }
 }

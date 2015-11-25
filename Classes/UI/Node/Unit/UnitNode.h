@@ -21,6 +21,7 @@ namespace UnderWorld { namespace Core {
 } }
 
 class UnitNode;
+class DisplayBar;
 
 class UnitNodeObserver
 {
@@ -53,6 +54,7 @@ protected:
     UnitDirection calculateDirection(const UnderWorld::Core::Unit* unit);
     void setCurrentSkill(const UnderWorld::Core::Skill* skill, UnitDirection direction);
     void updateActionNode(const UnderWorld::Core::Unit* unit, UnitDirection direction);
+    void updateHPBar();
     
 private:
     UnitNodeObserver *_observer;
@@ -61,6 +63,7 @@ private:
     const UnderWorld::Core::Unit* _unit;
     const UnderWorld::Core::Skill* _lastSkill;
     UnitDirection _lastDirection;
+    DisplayBar* _hpBar;
 };
 
 #endif /* UnitNode_h */
