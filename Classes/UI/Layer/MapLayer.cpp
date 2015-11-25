@@ -88,21 +88,29 @@ bool MapLayer::init(int mapId)
         const Size &tileSize = _tiledMap->getTileSize();
         _tileWidth = tileSize.width;
         _tileHeight = tileSize.height;
-        const Size &ls = _mainLayer->getLayerSize();
-        for (unsigned int y = 0; y < ls.height; y++)
-        {
-            int zOrder = calcZOrder(ls.height - y);
-            for (unsigned int x = 0; x < ls.width; x++)
+        if (_mainLayer) {
+            
+            cocos2d::experimental::TMXLayer* tmxLayer = dynamic_cast<cocos2d::experimental::TMXLayer*>(_mainLayer);
+            
+            const Size &ls = tmxLayer->getLayerSize();
+            for (unsigned int y = 0; y < ls.height; y++)
             {
-                Sprite *tile = _mainLayer->getTileAt(Vec2(x, y));
-                if (tile) {
-//                    tile->setLocalZOrder(zOrder);
-                    tile->setVisible(false);
-                    _mainLayer->reorderChild(tile, zOrder);
+                int zOrder = calcZOrder(ls.height - y);
+                for (unsigned int x = 0; x < ls.width; x++)
+                {
+                    Sprite *tile = tmxLayer->getTileAt(Vec2(x, y));
+                    if (tile) {
+                        //                    tile->setLocalZOrder(zOrder);
+                        tile->setVisible(false);
+                        _mainLayer->reorderChild(tile, zOrder);
+                    }
                 }
             }
+            CCLOG("%zd foreground", _mainLayer->getChildren().size());
+        } else {
+            _mainLayer = Node::create();
+            _tiledMap->addChild(_mainLayer);
         }
-        CCLOG("%zd foreground", _mainLayer->getChildren().size());
 //
 //        //--------- logic ---------//
         cocos2d::experimental::TMXLayer *logicLayer = _tiledMap->getLayer(TILEDMAP_LAYER_LOGIC);

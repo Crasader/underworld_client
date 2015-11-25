@@ -59,7 +59,7 @@ private:
     int _tileHeight;
     cocos2d::experimental::TMXTiledMap* _tiledMap;
     cocos2d::extension::ScrollView *_scrollView;
-    cocos2d::experimental::TMXLayer* _mainLayer;
+    Node* _mainLayer;
     Node *_butterfly;
 };
 
