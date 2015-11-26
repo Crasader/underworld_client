@@ -28,6 +28,7 @@ class UnitNodeObserver
 public:
     virtual ~UnitNodeObserver() {}
     virtual void onUnitNodePlayDeadAnimationFinished(UnitNode* node) = 0;
+    virtual void onUnitNodeFootmanAttackedTheTarget(UnitNode* node) = 0;
 };
 
 class UnitNode : public Node
@@ -38,6 +39,9 @@ public:
     const UnderWorld::Core::Unit* getUnit() const;
     void registerObserver(UnitNodeObserver *observer);
     void update();
+    void addStrikePoint();
+    void addBuf();
+    void removeBuf();
     
 protected:
     typedef enum {
@@ -52,7 +56,6 @@ protected:
     UnitNode();
     bool init(const UnderWorld::Core::Unit* unit);
     UnitDirection calculateDirection(const UnderWorld::Core::Unit* unit);
-    void setCurrentSkill(const UnderWorld::Core::Skill* skill, UnitDirection direction);
     void updateActionNode(const UnderWorld::Core::Unit* unit, UnitDirection direction);
     void updateHPBar();
     
@@ -60,10 +63,13 @@ private:
     UnitNodeObserver *_observer;
     Node *_actionNode;
     Node *_shadow;
+    Node *_buf;
+    DisplayBar* _hpBar;
+    Sprite *_sprite;
     const UnderWorld::Core::Unit* _unit;
     const UnderWorld::Core::Skill* _lastSkill;
     UnitDirection _lastDirection;
-    DisplayBar* _hpBar;
+    float _lastHpPercentage;
 };
 
 #endif /* UnitNode_h */

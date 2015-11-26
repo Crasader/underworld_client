@@ -88,7 +88,7 @@ void GameRender::updateUnits(const Game* game, int index)
         const int key = unit->getUnitId();
         const Skill* skill = unit->getCurrentSkill();
         // TODO: remove test code
-        if (true || skill->getSkillState() == Skill::kSkillState_performing) {
+        if (skill || (skill && skill->getSkillState() == Skill::kSkillState_performing)) {
             SkillClass sc = skill->getSkillType()->getSkillClass();
             bool isNewCreated = (_allUnits.find(key) == _allUnits.end()) ? true : false;
             if (isNewCreated) {
@@ -169,6 +169,17 @@ void GameRender::onUnitNodePlayDeadAnimationFinished(UnitNode* node)
 {
     node->removeFromParent();
     _allUnits.erase(node->getUnit()->getUnitId());
+}
+
+void GameRender::onUnitNodeFootmanAttackedTheTarget(UnitNode* node)
+{
+    const int key = node->getUnit()->getTarget()->getUnitId();
+    if (_allUnits.find(key) != _allUnits.end()) {
+        UnitNode* targetNode = _allUnits.at(key);
+        if (targetNode) {
+            targetNode->addStrikePoint();
+        }
+    }
 }
 
 #pragma mark - BulletNodeObserver

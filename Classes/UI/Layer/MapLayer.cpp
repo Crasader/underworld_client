@@ -166,6 +166,19 @@ bool MapLayer::init(int mapId)
             _tiledMap->addChild(effect);
         }
         
+        // 5. fire
+        {
+            static const string file("effect-fire-1.csb");
+            Node *effect = CSLoader::createNode(file);
+            effect->setPosition(Point(285, 245));
+            _tiledMap->addChild(effect);
+            timeline::ActionTimeline *action = CSLoader::createTimeline(file);
+            effect->setScaleX(0.6f);
+            effect->setScaleY(1.3f);
+            effect->runAction(action);
+            action->gotoFrameAndPlay(0, true);
+        }
+        
         //--------- scale ---------//
         const Size &mapPSize = _tiledMap->getContentSize();
         float scale = RESOLUTION_HEIGHT / mapPSize.height;

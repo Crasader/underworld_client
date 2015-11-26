@@ -46,6 +46,7 @@ public:
 protected:
     // UnitNodeObserver
     virtual void onUnitNodePlayDeadAnimationFinished(UnitNode* node) override;
+    virtual void onUnitNodeFootmanAttackedTheTarget(UnitNode* node) override;
     
     // BulletNodeObserver
     virtual void onBulletNodeReachedTarget(BulletNode* node) override;
