@@ -26,6 +26,8 @@ MapLayer::MapLayer()
 :_mapId(INVALID_VALUE)
 ,_tiledMap(nullptr)
 ,_scrollView(nullptr)
+,_mainLayer(nullptr)
+,_butterfly(nullptr)
 {
     
 }
@@ -252,11 +254,17 @@ void MapLayer::scrollViewDidZoom(cocos2d::extension::ScrollView* view)
 
 void MapLayer::addButterfly()
 {
+    if (_butterfly) {
+        _butterfly->stopAllActions();
+        _butterfly->removeFromParent();
+        _butterfly = nullptr;
+    }
+    
     static const string file("effect-place-2.csb");
-    Node *effect = CSLoader::createNode(file);
-    _tiledMap->addChild(effect);
+    _butterfly = CSLoader::createNode(file);
+    _tiledMap->addChild(_butterfly);
     timeline::ActionTimeline *action = CSLoader::createTimeline(file);
-    effect->runAction(action);
+    _butterfly->runAction(action);
     action->gotoFrameAndPlay(0, false);
     action->setLastFrameCallFunc([this]() {
         addButterfly();
@@ -279,5 +287,5 @@ void MapLayer::addButterfly()
         x = x + (max_x - x) * random_0_1;
     }
     
-    effect->setPosition(Point(x, y));
+    _butterfly->setPosition(Point(x, y));
 }

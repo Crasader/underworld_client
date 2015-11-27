@@ -19,9 +19,9 @@
 using namespace std;
 using namespace UnderWorld::Core;
 
-static const int directionCount = 5;
+static const int directionCount = 3;
 static const float directionAngelEdge[directionCount] = {
-    -67.5f, -22.5f, 22.5f, 67.5f, 90.0f
+    -30.f, 30.f, 90.f
 };
 static const float hpPercentageThreshold(50.0f);
 
@@ -122,7 +122,7 @@ void UnitNode::update()
                 _lastSkill = currentSkill;
                 _lastDirection = direction;
                 _lastHpPercentage = percentage;
-                updateActionNode(_unit, direction);
+                updateActionNode(_unit, direction, percentage);
             }
         }
         
@@ -132,35 +132,24 @@ void UnitNode::update()
 
 void UnitNode::addCritEffect()
 {
-    static const string file("Strike point-3.csb");
-    Node *effect = CSLoader::createNode(file);
-    effect->setPosition(_sprite->getPosition());
-    addChild(effect);
-    cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
-    effect->runAction(action);
-    action->gotoFrameAndPlay(0, false);
-    action->setLastFrameCallFunc([effect]() {
-        effect->removeFromParent();
-    });
+    addEffect("Strike point-3.csb");
 }
 
 void UnitNode::addBlockEffect()
 {
-    static const string file("effect-Block.csb");
-    Node *effect = CSLoader::createNode(file);
-    effect->setPosition(_sprite->getPosition());
-    addChild(effect);
-    cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
-    effect->runAction(action);
-    action->gotoFrameAndPlay(0, false);
-    action->setLastFrameCallFunc([effect]() {
-        effect->removeFromParent();
-    });
+    Node* effect = addEffect("effect-Block.csb");
+    effect->setScale(1.5f);
+}
+
+void UnitNode::addRecoveryEffect()
+{
+    Node* effect = addEffect("effect-recovery.csb");
+    effect->setLocalZOrder(-1);
 }
 
 void UnitNode::addBuf()
 {
-    if (!_buf && _sprite) {
+    if (!_buf) {
         static const string file("effect-buff-2.csb");
         const Size& size = _sprite->getContentSize();
         const Point& pos = _sprite->getPosition();
@@ -196,8 +185,16 @@ bool UnitNode::init(const Unit* unit)
 UnitNode::UnitDirection UnitNode::calculateDirection(const Unit* unit)
 {
     if (unit) {
+#if true
         const Coordinate& currentPos = unit->getCenterPos();
         const Coordinate& targetPos = unit->getTargetPos();
+#else
+        const bool isAttacking = (kSkillClass_Attack == unit->getCurrentSkill()->getSkillType()->getSkillClass()) ? true : false;
+        const UnitType* unitType = unit->getUnitType();
+        const Coordinate& centerPos = unit->getCenterPos();
+        const Coordinate& currentPos = isAttacking ? centerPos : (unit->getLastPos() + Coordinate(unitType->getSize() / 2, unitType->getSize() / 2));
+        const Coordinate& targetPos = isAttacking ? unit->getTargetPos() : centerPos;
+#endif
         const float deltaX = abs(targetPos.x - currentPos.x);
         const float deltaY = targetPos.y - currentPos.y;
         
@@ -217,18 +214,19 @@ UnitNode::UnitDirection UnitNode::calculateDirection(const Unit* unit)
         UnitNode::UnitDirection direction = kUnitDirection_Left;
         for (int i = 0; i < directionCount; ++i) {
             if (angel < directionAngelEdge[i]) {
-                direction = static_cast<UnitNode::UnitDirection>(i + 1);
+                direction = static_cast<UnitNode::UnitDirection>(i + 2);
                 break;
             }
         }
         
+        CCLOG("---- direction : %d ----", direction);
         return direction;
     }
     
     return kUnitDirection_Left;
 }
 
-void UnitNode::updateActionNode(const Unit* unit, UnitDirection direction)
+void UnitNode::updateActionNode(const Unit* unit, UnitDirection direction, float hpPercentage)
 {
     if (unit) {
         if (_actionNode) {
@@ -238,31 +236,31 @@ void UnitNode::updateActionNode(const Unit* unit, UnitDirection direction)
         }
         
         const UnitClass unitClass = unit->getUnitType()->getUnitClass();
-        const bool movable = (kUnitClass_Warrior == unitClass || kUnitClass_Hero == unitClass);
+        const bool isMovableUnit = (kUnitClass_Warrior == unitClass || kUnitClass_Hero == unitClass);
+        
         SkillClass skillClass = unit->getCurrentSkill()->getSkillType()->getSkillClass();
         const bool isDead = (kSkillClass_Die == skillClass);
         
         // remove
         if (isDead) {
-            if (_shadow) {
-                _shadow->removeFromParent();
-                _shadow = nullptr;
-            }
-            
+            removeShadow();
             removeBuf();
         }
         
-        const int factionIndex = unit->getWorld()->getThisFactionIndex();
-        const bool isOpponent(unit->getBelongFaction()->getFactionIndex() != factionIndex);
+        const bool isOpponent(unit->getBelongFaction()->getFactionIndex() != unit->getWorld()->getThisFactionIndex());
         string csbFile;
+        
+        // attack
         if (kSkillClass_Attack == skillClass) {
-            if (movable) {
+            if (isMovableUnit) {
                 csbFile = StringUtils::format("wolf-attack-%d.csb", direction);
-                
-                CCLOG("attacking....., %d", direction);
+            } else if (kUnitClass_Building == unitClass) {
+                csbFile = "wolf-tower defense.csb";
             }
-        } else if (isDead) {
-            if (movable) {
+        }
+        // die
+        else if (isDead) {
+            if (isMovableUnit) {
                 csbFile = StringUtils::format("wolf-dead-%d.csb", direction);
             }
             
@@ -270,41 +268,71 @@ void UnitNode::updateActionNode(const Unit* unit, UnitDirection direction)
                 _hpBar->removeFromParent();
                 _hpBar = nullptr;
             }
-        } else {
-            if (movable) {
+        }
+        // move
+        else if (kSkillClass_Move == skillClass) {
+            if (isMovableUnit) {
                 csbFile = StringUtils::format("wolf-run-%d.csb", direction);
+            }
+        }
+        // stop
+        else if (kSkillClass_Stop == skillClass) {
+            if (isMovableUnit) {
+                csbFile = "wolf-play-Standby.csb";
             } else if (kUnitClass_Core == unitClass) {
-                if (_lastHpPercentage > hpPercentageThreshold) {
+                if (hpPercentage > hpPercentageThreshold) {
                     csbFile = isOpponent ? "effect-Vampire-base.csb" : "effect-wolf-Base_1.csb";
                 } else {
-                    if (_lastHpPercentage <= 0.0f) {
+                    if (hpPercentage <= 0.0f) {
                         csbFile = isOpponent ? "effect-Vampire-base-Severe damage.csb" : "effect-wolf-base-Severe damage.csb";
                     } else {
                         csbFile = isOpponent ? "effect-Vampire-base-damage.csb" : "effect-wolf-base-damage.csb";
                     }
                 }
-            } else {
-                // TODO: remove test code
-                csbFile = "wolf-run-3.csb";
+            } else if (kUnitClass_Building == unitClass) {
+                csbFile = "wolf-tower defense.csb";
             }
+        } else {
+            // TODO: remove test code
+            csbFile = "wolf-run-3.csb";
         }
         
         if (csbFile.length() > 0) {
             _actionNode = CSLoader::createNode(csbFile);
             // flip if needed
-            if (!isOpponent && kUnitClass_Core != unitClass) {
+            if (!isOpponent) {
+                if (kUnitClass_Core == unitClass) {
+                    _actionNode->setScale(0.6f);
+                } else if (kUnitClass_Building == unitClass) {
+                    
+                } else {
+                    const float scaleX = _actionNode->getScaleX();
+                    _actionNode->setScaleX(-1 * scaleX);
+                }
+            } else if (kUnitClass_Building == unitClass) {
                 const float scaleX = _actionNode->getScaleX();
                 _actionNode->setScaleX(-1 * scaleX);
             }
+            
+            // TODO: remove test code
+            if (kUnitClass_Core == unitClass) {
+                _actionNode->setScale(0.6f);
+            }
+            
             addChild(_actionNode);
+            
             cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(csbFile);
-            _actionNode->runAction(action);
-            action->gotoFrameAndPlay(0, !isDead);
+            // TODO: remove temp code
+            if (kUnitClass_Building != unitClass || kSkillClass_Attack == skillClass) {
+                _actionNode->runAction(action);
+                action->gotoFrameAndPlay(0, !isDead);
+            }
+            
             if (isDead) {
                 // TODO: remove irregular code
                 setLocalZOrder(-1);
                 // if it is a warrior or a hero
-                if (movable) {
+                if (isMovableUnit) {
                     action->setLastFrameCallFunc([this]() {
                         if (_observer) {
                             _observer->onUnitNodePlayDeadAnimationFinished(this);
@@ -337,13 +365,7 @@ void UnitNode::updateActionNode(const Unit* unit, UnitDirection direction)
                 // add shadow
                 if (kSkillClass_Move == skillClass ||
                     kSkillClass_Attack == skillClass) {
-                    if (!_shadow) {
-                        static const string shadowFile("GameImages/test/backcircle.png");
-                        _shadow = Sprite::create(shadowFile);
-                        _shadow->setPosition(pos - Point(0, size.height * 0.25f));
-                        addChild(_shadow, -1);
-                    }
-                    
+                    addShadow();
                     addBuf();
                 }
                 
@@ -360,8 +382,7 @@ void UnitNode::updateActionNode(const Unit* unit, UnitDirection direction)
             assert(false);
         }
     } else {
-        // test
-        
+        assert(false);
     }
 }
 
@@ -372,4 +393,43 @@ void UnitNode::updateHPBar()
         const int hp = _unit->getHp();
         _hpBar->setPercentage(100 * (float)hp / (float)maxHp);
     }
+}
+
+void UnitNode::addShadow()
+{
+    if (!_shadow) {
+        static const string file("GameImages/test/backcircle.png");
+        const Size& size = _sprite->getContentSize();
+        const Point& pos = _sprite->getPosition();
+        _shadow = Sprite::create(file);
+        _shadow->setPosition(pos - Point(0, size.height * 0.25f));
+        addChild(_shadow, -1);
+    }
+}
+
+void UnitNode::removeShadow()
+{
+    if (_shadow) {
+        _shadow->removeFromParent();
+        _shadow = nullptr;
+    }
+}
+
+Node* UnitNode::addEffect(const string& file)
+{
+    if (_sprite) {
+        Node *effect = CSLoader::createNode(file);
+        effect->setPosition(_sprite->getPosition());
+        addChild(effect);
+        cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
+        effect->runAction(action);
+        action->gotoFrameAndPlay(0, false);
+        action->setLastFrameCallFunc([effect]() {
+            effect->removeFromParent();
+        });
+        
+        return effect;
+    }
+    
+    return nullptr;
 }

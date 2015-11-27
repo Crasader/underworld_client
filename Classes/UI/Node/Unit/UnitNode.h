@@ -41,24 +41,26 @@ public:
     void update();
     void addCritEffect();
     void addBlockEffect();
+    void addRecoveryEffect();
     void addBuf();
     void removeBuf();
     
 protected:
     typedef enum {
-        kUnitDirection_Down = 1,
-        kUnitDirection_LeftDown,
+        kUnitDirection_LeftDown = 2,
         kUnitDirection_Left,
         kUnitDirection_LeftUp,
-        kUnitDirection_Up
     }UnitDirection;
     
 protected:
     UnitNode();
     bool init(const UnderWorld::Core::Unit* unit);
     UnitDirection calculateDirection(const UnderWorld::Core::Unit* unit);
-    void updateActionNode(const UnderWorld::Core::Unit* unit, UnitDirection direction);
+    void updateActionNode(const UnderWorld::Core::Unit* unit, UnitDirection direction, float hpPercentage);
     void updateHPBar();
+    void addShadow();
+    void removeShadow();
+    Node* addEffect(const std::string& file);
     
 private:
     UnitNodeObserver *_observer;
