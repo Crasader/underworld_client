@@ -102,16 +102,20 @@ void BulletNode::update(bool newCreated)
             float angel = 180.0f * atanf(deltaY / deltaX) / M_PI * rate;
             setRotation(angel);
         } else {
-            // so close to the target
+            // so close to the target when created
             if (newCreated) {
                 if (_observer) {
                     _observer->onBulletNodeReachedTarget(this);
                 }
             }
         }
+        
+        if (_bullet->isExploded()) {
+            if (_observer) {
+                _observer->onBulletNodeExploded(this);
+            }
+        }
     } else {
-        setScaleX(-1);
-        float angel = 180.0f * atanf(1) / M_PI;
-        setRotation(angel * getScaleX());
+        assert(false);
     }
 }

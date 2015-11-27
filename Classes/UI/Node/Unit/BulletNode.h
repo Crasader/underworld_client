@@ -24,6 +24,7 @@ class BulletNodeObserver
 public:
     virtual ~BulletNodeObserver() {}
     virtual void onBulletNodeReachedTarget(BulletNode* node) = 0;
+    virtual void onBulletNodeExploded(BulletNode* node) = 0;
 };
 
 class BulletNode : public Node

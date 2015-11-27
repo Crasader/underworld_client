@@ -130,9 +130,23 @@ void UnitNode::update()
     }
 }
 
-void UnitNode::addStrikePoint()
+void UnitNode::addCritEffect()
 {
     static const string file("Strike point-3.csb");
+    Node *effect = CSLoader::createNode(file);
+    effect->setPosition(_sprite->getPosition());
+    addChild(effect);
+    cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
+    effect->runAction(action);
+    action->gotoFrameAndPlay(0, false);
+    action->setLastFrameCallFunc([effect]() {
+        effect->removeFromParent();
+    });
+}
+
+void UnitNode::addBlockEffect()
+{
+    static const string file("effect-Block.csb");
     Node *effect = CSLoader::createNode(file);
     effect->setPosition(_sprite->getPosition());
     addChild(effect);

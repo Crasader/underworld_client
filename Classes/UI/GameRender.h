@@ -22,6 +22,7 @@ class MapLayer;
 namespace UnderWorld { namespace Core {
     class Game;
     class Commander;
+    class Unit;
 }}
 
 class GameRenderObserver
@@ -50,6 +51,7 @@ protected:
     
     // BulletNodeObserver
     virtual void onBulletNodeReachedTarget(BulletNode* node) override;
+    virtual void onBulletNodeExploded(BulletNode* node) override;
     
     // MapUILayerObserver
     virtual void onMapUILayerUnitSelected(MapUIUnitNode* node) override;
@@ -58,6 +60,7 @@ protected:
 private:
     void updateUnits(const UnderWorld::Core::Game* game, int index);
     void updateBullets(const UnderWorld::Core::Game* game);
+    void addCritEffect(const UnderWorld::Core::Unit* unit);
     
 private:
     GameRenderObserver *_observer;

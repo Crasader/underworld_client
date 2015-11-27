@@ -154,6 +154,24 @@ void GameRender::updateBullets(const Game* game)
     }
 }
 
+void GameRender::addCritEffect(const Unit* unit)
+{
+    if (unit && kSkillClass_Die != unit->getCurrentSkill()->getSkillType()->getSkillClass()) {
+        const int key = unit->getUnitId();
+        if (_allUnits.find(key) != _allUnits.end()) {
+            UnitNode* node = _allUnits.at(key);
+            if (node) {
+                // TODO: remove test code
+                if (unit->getBelongFaction()->getFactionIndex() == unit->getWorld()->getThisFactionIndex()) {
+                    node->addCritEffect();
+                } else {
+                    node->addBlockEffect();
+                }
+            }
+        }
+    }
+}
+
 MapLayer* GameRender::getMapLayer() const
 {
     return _mapLayer;
@@ -173,19 +191,20 @@ void GameRender::onUnitNodePlayDeadAnimationFinished(UnitNode* node)
 
 void GameRender::onUnitNodeFootmanAttackedTheTarget(UnitNode* node)
 {
-    const int key = node->getUnit()->getTarget()->getUnitId();
-    if (_allUnits.find(key) != _allUnits.end()) {
-        UnitNode* targetNode = _allUnits.at(key);
-        if (targetNode) {
-            targetNode->addStrikePoint();
-        }
-    }
+    Unit* target = node->getUnit()->getTarget();
+    addCritEffect(target);
 }
 
 #pragma mark - BulletNodeObserver
 void GameRender::onBulletNodeReachedTarget(BulletNode* node)
 {
     
+}
+
+void GameRender::onBulletNodeExploded(BulletNode* node)
+{
+    Unit* target = node->getBullet()->getTarget();
+    addCritEffect(target);
 }
 
 #pragma mark - MapUILayerObserver

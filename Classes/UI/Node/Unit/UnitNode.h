@@ -39,7 +39,8 @@ public:
     const UnderWorld::Core::Unit* getUnit() const;
     void registerObserver(UnitNodeObserver *observer);
     void update();
-    void addStrikePoint();
+    void addCritEffect();
+    void addBlockEffect();
     void addBuf();
     void removeBuf();
     
