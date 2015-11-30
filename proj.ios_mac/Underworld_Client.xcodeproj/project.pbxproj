@@ -93,6 +93,9 @@
 		A103F45C1BE37E2A007F9A83 /* UnitNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F4591BE37E2A007F9A83 /* UnitNode.cpp */; };
 		A103F45F1BE38112007F9A83 /* GameRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F45D1BE38112007F9A83 /* GameRender.cpp */; };
 		A113A03E1BFEF8F2001FEB2A /* GuildManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A113A03C1BFEF8F2001FEB2A /* GuildManager.cpp */; };
+		A1211B231C0BF55200C27CCC /* LiteralValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B211C0BF55200C27CCC /* LiteralValue.cpp */; };
+		A1211B271C0BF5CC00C27CCC /* RandomCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B251C0BF5CC00C27CCC /* RandomCreator.cpp */; };
+		A1211B291C0BF68E00C27CCC /* GameConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B281C0BF68E00C27CCC /* GameConstants.cpp */; };
 		A12D2F561BFDE7D100389DAC /* QuestManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12D2F541BFDE7D100389DAC /* QuestManager.cpp */; };
 		A12D2F5A1BFDE92400389DAC /* QuestData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12D2F581BFDE92400389DAC /* QuestData.cpp */; };
 		A13108A51C046BF900EAAD90 /* particle in Resources */ = {isa = PBXBuildFile; fileRef = A13108A41C046BF900EAAD90 /* particle */; };
@@ -312,6 +315,12 @@
 		A103F45E1BE38112007F9A83 /* GameRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRender.h; sourceTree = "<group>"; };
 		A113A03C1BFEF8F2001FEB2A /* GuildManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuildManager.cpp; sourceTree = "<group>"; };
 		A113A03D1BFEF8F2001FEB2A /* GuildManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuildManager.h; sourceTree = "<group>"; };
+		A1211B211C0BF55200C27CCC /* LiteralValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LiteralValue.cpp; path = Core/Unit/Element/LiteralValue.cpp; sourceTree = "<group>"; };
+		A1211B221C0BF55200C27CCC /* LiteralValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LiteralValue.h; path = Core/Unit/Element/LiteralValue.h; sourceTree = "<group>"; };
+		A1211B241C0BF5CC00C27CCC /* EnumParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EnumParser.h; path = Core/Utils/EnumParser.h; sourceTree = "<group>"; };
+		A1211B251C0BF5CC00C27CCC /* RandomCreator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RandomCreator.cpp; path = Core/Utils/RandomCreator.cpp; sourceTree = "<group>"; };
+		A1211B261C0BF5CC00C27CCC /* RandomCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RandomCreator.h; path = Core/Utils/RandomCreator.h; sourceTree = "<group>"; };
+		A1211B281C0BF68E00C27CCC /* GameConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameConstants.cpp; path = Core/Game/GameConstants.cpp; sourceTree = "<group>"; };
 		A12D2F541BFDE7D100389DAC /* QuestManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuestManager.cpp; sourceTree = "<group>"; };
 		A12D2F551BFDE7D100389DAC /* QuestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestManager.h; sourceTree = "<group>"; };
 		A12D2F581BFDE92400389DAC /* QuestData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuestData.cpp; sourceTree = "<group>"; };
@@ -486,17 +495,18 @@
 		045116D71BCFB9F9002AA721 /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				0451170C1BCFBA5F002AA721 /* Game.cpp */,
-				0451170D1BCFBA5F002AA721 /* Game.h */,
-				0451170E1BCFBA5F002AA721 /* GameConstants.h */,
-				0451170F1BCFBA5F002AA721 /* GameSettings.h */,
-				301F63FA1BE3680600DA6D70 /* GameLooper.cpp */,
-				301F63FB1BE3680600DA6D70 /* GameLooper.h */,
-				301F63FE1BE3694C00DA6D70 /* GameInterface.h */,
 				307534671BF1B2F20057DCED /* Commander.cpp */,
 				307534681BF1B2F20057DCED /* Commander.h */,
 				3075346B1BF324340057DCED /* EventTrigger.cpp */,
 				3075346C1BF324340057DCED /* EventTrigger.h */,
+				0451170C1BCFBA5F002AA721 /* Game.cpp */,
+				0451170D1BCFBA5F002AA721 /* Game.h */,
+				A1211B281C0BF68E00C27CCC /* GameConstants.cpp */,
+				0451170E1BCFBA5F002AA721 /* GameConstants.h */,
+				301F63FE1BE3694C00DA6D70 /* GameInterface.h */,
+				301F63FA1BE3680600DA6D70 /* GameLooper.cpp */,
+				301F63FB1BE3680600DA6D70 /* GameLooper.h */,
+				0451170F1BCFBA5F002AA721 /* GameSettings.h */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -658,11 +668,14 @@
 		300098CA1BD0A90F00B6E284 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				309F769E1BEA3AB900B2791F /* CoreUtils.cpp */,
-				309F769F1BEA3AB900B2791F /* CoreUtils.h */,
-				309F769D1BEA37D200B2791F /* Global.h */,
 				300098CB1BD0A94B00B6E284 /* Coordinate.cpp */,
 				300098CC1BD0A94B00B6E284 /* Coordinate.h */,
+				309F769E1BEA3AB900B2791F /* CoreUtils.cpp */,
+				309F769F1BEA3AB900B2791F /* CoreUtils.h */,
+				A1211B241C0BF5CC00C27CCC /* EnumParser.h */,
+				309F769D1BEA37D200B2791F /* Global.h */,
+				A1211B251C0BF5CC00C27CCC /* RandomCreator.cpp */,
+				A1211B261C0BF5CC00C27CCC /* RandomCreator.h */,
 				309F76931BE8851000B2791F /* Rect.cpp */,
 				309F76941BE8851000B2791F /* Rect.h */,
 			);
@@ -672,10 +685,12 @@
 		3028EBBD1BFF0B7700511C51 /* Element */ = {
 			isa = PBXGroup;
 			children = (
-				3028EBC11BFF0CBD00511C51 /* DynamicValue.cpp */,
-				3028EBC21BFF0CBD00511C51 /* DynamicValue.h */,
 				3028EBC41BFF0D4700511C51 /* Condition.cpp */,
 				3028EBC51BFF0D4700511C51 /* Condition.h */,
+				3028EBC11BFF0CBD00511C51 /* DynamicValue.cpp */,
+				3028EBC21BFF0CBD00511C51 /* DynamicValue.h */,
+				A1211B211C0BF55200C27CCC /* LiteralValue.cpp */,
+				A1211B221C0BF55200C27CCC /* LiteralValue.h */,
 			);
 			name = Element;
 			sourceTree = "<group>";
@@ -1197,6 +1212,8 @@
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				A103F45C1BE37E2A007F9A83 /* UnitNode.cpp in Sources */,
 				A1720E691BCCDEFF00217E98 /* DataManager.cpp in Sources */,
+				A1211B291C0BF68E00C27CCC /* GameConstants.cpp in Sources */,
+				A1211B231C0BF55200C27CCC /* LiteralValue.cpp in Sources */,
 				045116F91BCFBA44002AA721 /* UnitType.cpp in Sources */,
 				301F63FC1BE3680600DA6D70 /* GameLooper.cpp in Sources */,
 				A1720E8D1BCCE19300217E98 /* AESCTREncryptor.cpp in Sources */,
@@ -1210,6 +1227,7 @@
 				A103F45B1BE37E2A007F9A83 /* BulletNode.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				A1720EC21BCD316000217E98 /* ProgressLayer.cpp in Sources */,
+				A1211B271C0BF5CC00C27CCC /* RandomCreator.cpp in Sources */,
 				308B84691BE3856F00377802 /* AIBrain.cpp in Sources */,
 				A1720E7B1BCCE0F000217E98 /* NumberJump.cpp in Sources */,
 				300F25331BFC67550080765C /* FeatureType.cpp in Sources */,
