@@ -56,19 +56,22 @@ protected:
 protected:
     UnitNode();
     bool init(const UnderWorld::Core::Unit* unit);
-    const std::string getCsbFile(const UnderWorld::Core::Unit* unit, UnitDirection direction, float hpPercentage, bool& flip);
-    UnitDirection calculateDirection(const UnderWorld::Core::Unit* unit);
-    void updateActionNode(const UnderWorld::Core::Unit* unit, UnitDirection direction, float hpPercentage, int currentFrame);
+    const std::string getCsbFile(UnitDirection direction, float hpPercentage, bool& flip);
+    UnitDirection calculateDirection();
+    void updateActionNode(UnitDirection direction, float hpPercentage, int currentFrame);
     void updateHPBar();
     void removeHPBar();
     void addShadow();
     void removeShadow();
     Node* addEffect(const std::string& file);
+    void getActionParameters(float& actionNodeScale, float& animationSpeed) const;
     
 private:
     UnitNodeObserver *_observer;
     Node *_actionNode;
     cocostudio::timeline::ActionTimeline *_currentAction;
+    Scheduler *_speedScheduler;
+    ActionManager *_actionManager;
     Node *_shadow;
     Node *_buf;
     DisplayBar* _hpBar;

@@ -50,17 +50,17 @@ bool HelloWorld::init()
     
     //1a. set locations
     UnderWorld::Core::LocationSetting locationSetting0;
-    locationSetting0.setCoreLocation(UnderWorld::Core::Coordinate(100, 140));
-    locationSetting0.addBuildingLocation(UnderWorld::Core::Coordinate(200, 140));
-    locationSetting0.addAssembleLocation(0, UnderWorld::Core::Coordinate(120, 140));
-    locationSetting0.addAssembleLocation(1, UnderWorld::Core::Coordinate(110, 140));
+    locationSetting0.setCoreLocation(UnderWorld::Core::Coordinate(50, 70));
+    locationSetting0.addBuildingLocation(UnderWorld::Core::Coordinate(100, 70));
+    locationSetting0.addAssembleLocation(0, UnderWorld::Core::Coordinate(60, 70));
+    locationSetting0.addAssembleLocation(1, UnderWorld::Core::Coordinate(55, 70));
     mapSettting.setLocationSetting(0, locationSetting0);
     
     UnderWorld::Core::LocationSetting locationSetting1;
-    locationSetting1.setCoreLocation(UnderWorld::Core::Coordinate(900, 140));
-    locationSetting1.addBuildingLocation(UnderWorld::Core::Coordinate(800, 140));
-    locationSetting1.addAssembleLocation(0, UnderWorld::Core::Coordinate(880, 140));
-    locationSetting1.addAssembleLocation(1, UnderWorld::Core::Coordinate(890, 140));
+    locationSetting1.setCoreLocation(UnderWorld::Core::Coordinate(250, 70));
+    locationSetting1.addBuildingLocation(UnderWorld::Core::Coordinate(200, 70));
+    locationSetting1.addAssembleLocation(0, UnderWorld::Core::Coordinate(240, 70));
+    locationSetting1.addAssembleLocation(1, UnderWorld::Core::Coordinate(245, 70));
     mapSettting.setLocationSetting(1, locationSetting1);
     
     //1b. set resource
@@ -90,33 +90,33 @@ bool HelloWorld::init()
     
     //1c. set fixed units
     std::vector<std::pair<UnderWorld::Core::UnitSetting, UnderWorld::Core::Coordinate> > fu0;
-    fu0.resize(20);
-    for (int i = 0; i < 10; ++i) {
+    fu0.resize(2);
+    for (int i = 0; i < 1; ++i) {
         fu0[i].first.setUnitTypeName("狼人步兵");
-        fu0[i].second = UnderWorld::Core::Coordinate(120, 140);
+        fu0[i].second = UnderWorld::Core::Coordinate(120, 70);
     }
-    for (int i = 10; i < 20; ++i) {
+    for (int i = 1; i < 2; ++i) {
         fu0[i].first.setUnitTypeName("狼人射手");
-        fu0[i].second = UnderWorld::Core::Coordinate(110, 140);
+        fu0[i].second = UnderWorld::Core::Coordinate(110, 70);
     }
     mapSettting.setFixedUnits(0, fu0);
     
     std::vector<std::pair<UnderWorld::Core::UnitSetting, UnderWorld::Core::Coordinate> > fu1;
-    fu1.resize(20);
-    for (int i = 0; i < 10; ++i) {
+    fu1.resize(2);
+    for (int i = 0; i < 1; ++i) {
         fu1[i].first.setUnitTypeName("吸血鬼战士");
-        fu1[i].second = UnderWorld::Core::Coordinate(880, 140);
+        fu1[i].second = UnderWorld::Core::Coordinate(240, 70);
     }
-    for (int i = 10; i < 20; ++i) {
+    for (int i = 1; i < 2; ++i) {
         fu1[i].first.setUnitTypeName("吸血鬼弓兵");
-        fu1[i].second = UnderWorld::Core::Coordinate(890, 140);
+        fu1[i].second = UnderWorld::Core::Coordinate(245, 70);
     }
 
     mapSettting.setFixedUnits(1, fu1);
     setting.setMap(mapSettting);
     
     //2. set techTree;
-    std::string techTree = "<root> <faction name=\"狼人族\"> <unit name=\"狼人基地\" class=\"core\" hp=\"1000\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"20\" size=\"16\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"10.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"8\" maxdamage=\"10\" range=\"20\" fields=\"3\"> <bullet speed=\"50\" size=\"0\"/> </skill> </unit> <unit name=\"狼人箭塔\" class=\"core\" hp=\"100\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"20\" size=\"45\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"10.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"8\" maxdamage=\"10\" range=\"50\" fields=\"3\"> <bullet speed=\"50\" size=\"0\"/> </skill> </unit> <unit name=\"狼人步兵\" class=\"warrior\" hp=\"30\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"20\" size=\"20\" cost=\"金子:50;人口:1\" priority=\"0\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"10.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.3\" perform=\"0.0\" cd=\"1.0\" mindamage=\"5\" maxdamage=\"8\" range=\"2\" fields=\"2\"/> <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"10\"/> </unit> <unit name=\"狼人射手\" class=\"warrior\" hp=\"20\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"25\" size=\"20\" cost=\"金子:100;人口:1\" priority=\"1\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"10.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"8\" maxdamage=\"10\" range=\"50\" fields=\"3\"> <bullet speed=\"50\" size=\"0\"/> </skill> <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"10\"/> </unit> </faction> <faction name=\"吸血鬼族\"> <unit name=\"吸血鬼核心\" class=\"core\" hp=\"1000\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"20\" size=\"16\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"10.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"8\" maxdamage=\"10\" range=\"20\" fields=\"3\"> <bullet speed=\"50\" size=\"0\"/> </skill> </unit> <unit name=\"吸血鬼箭塔\" class=\"core\" hp=\"100\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"20\" size=\"45\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"10.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"8\" maxdamage=\"10\" range=\"50\" fields=\"3\"> <bullet speed=\"50\" size=\"0\"/> </skill> </unit> <unit name=\"吸血鬼战士\" class=\"warrior\" hp=\"30\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"20\" size=\"20\" cost=\"金子:50;人口:1\" priority=\"0\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"10.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.3\" perform=\"0.0\" cd=\"1.0\" mindamage=\"5\" maxdamage=\"8\" range=\"2\" fields=\"2\"/> <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"10\"/> </unit> <unit name=\"吸血鬼弓兵\" class=\"warrior\" hp=\"20\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"25\" size=\"20\" cost=\"金子:100;人口:1\" priority=\"1\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"10.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"8\" maxdamage=\"10\" range=\"50\" fields=\"3\"> <bullet speed=\"50\" size=\"0\"/> </skill> <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"10\"/> </unit> </faction> <resource name=\"金子\" class=\"consumable\"/> <resource name=\"人口\" class=\"holdable\"/> </root>";
+    std::string techTree = "<root> <faction name=\"狼人族\"> <unit name=\"狼人基地\" class=\"core\" hp=\"1000\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"20\" size=\"16\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"10.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"8\" maxdamage=\"10\" range=\"20\" fields=\"3\"> <bullet speed=\"50\" size=\"0\"/> </skill> </unit> <unit name=\"狼人箭塔\" class=\"building\" hp=\"100\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"20\" size=\"45\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"10.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"8\" maxdamage=\"10\" range=\"50\" fields=\"3\"> <bullet speed=\"50\" size=\"0\"/> </skill> </unit> <unit name=\"狼人步兵\" class=\"warrior\" hp=\"30\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"20\" size=\"20\" cost=\"金子:50;人口:1\" priority=\"0\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"10.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.3\" perform=\"0.0\" cd=\"1.0\" mindamage=\"5\" maxdamage=\"8\" range=\"2\" fields=\"2\"/> <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"10\"/> </unit> <unit name=\"狼人射手\" class=\"warrior\" hp=\"20\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"25\" size=\"20\" cost=\"金子:100;人口:1\" priority=\"1\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"10.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"8\" maxdamage=\"10\" range=\"50\" fields=\"3\"> <bullet speed=\"50\" size=\"0\"/> </skill> <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"10\"/> </unit> </faction> <faction name=\"吸血鬼族\"> <unit name=\"吸血鬼核心\" class=\"core\" hp=\"1000\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"20\" size=\"16\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"10.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"8\" maxdamage=\"10\" range=\"20\" fields=\"3\"> <bullet speed=\"50\" size=\"0\"/> </skill> </unit> <unit name=\"吸血鬼箭塔\" class=\"building\" hp=\"100\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"20\" size=\"45\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"10.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"8\" maxdamage=\"10\" range=\"50\" fields=\"3\"> <bullet speed=\"50\" size=\"0\"/> </skill> </unit> <unit name=\"吸血鬼战士\" class=\"warrior\" hp=\"30\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"20\" size=\"20\" cost=\"金子:50;人口:1\" priority=\"0\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"10.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.3\" perform=\"0.0\" cd=\"1.0\" mindamage=\"5\" maxdamage=\"8\" range=\"2\" fields=\"2\"/> <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"10\"/> </unit> <unit name=\"吸血鬼弓兵\" class=\"warrior\" hp=\"20\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"25\" size=\"20\" cost=\"金子:100;人口:1\" priority=\"1\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"10.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"8\" maxdamage=\"10\" range=\"50\" fields=\"3\"> <bullet speed=\"50\" size=\"0\"/> </skill> <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"10\"/> </unit> </faction> <resource name=\"金子\" class=\"consumable\"/> <resource name=\"人口\" class=\"holdable\"/> </root>";
     setting.setTechTree(techTree);
     
     //3. set faction data

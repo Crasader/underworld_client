@@ -49,7 +49,7 @@ void DisplayBar::setPercentage(float percentage)
         if (_visible) {
             // need to change the sprite
             static const float threshold = 50;
-            if ((threshold - lastPercentage) * (threshold - percentage) < 0) {
+            if ((threshold - lastPercentage) * (threshold - percentage) <= 0) {
                 std::string unused;
                 std::string ptFile;
                 getFiles((percentage < threshold) ? true : false, unused, ptFile);
