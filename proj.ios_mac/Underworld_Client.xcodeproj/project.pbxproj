@@ -47,6 +47,7 @@
 		309F76951BE8851000B2791F /* Rect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F76931BE8851000B2791F /* Rect.cpp */; };
 		309F769A1BE9D7BD00B2791F /* Camp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F76981BE9D7BD00B2791F /* Camp.cpp */; };
 		309F76A01BEA3ABA00B2791F /* CoreUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F769E1BEA3AB900B2791F /* CoreUtils.cpp */; };
+		30DF03C41C0D898E00A1C6EB /* EffectType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DF03C21C0D898E00A1C6EB /* EffectType.cpp */; settings = {ASSET_TAGS = (); }; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
@@ -268,6 +269,11 @@
 		309F769D1BEA37D200B2791F /* Global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Global.h; path = Core/Utils/Global.h; sourceTree = "<group>"; };
 		309F769E1BEA3AB900B2791F /* CoreUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CoreUtils.cpp; path = Core/Utils/CoreUtils.cpp; sourceTree = "<group>"; };
 		309F769F1BEA3AB900B2791F /* CoreUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CoreUtils.h; path = Core/Utils/CoreUtils.h; sourceTree = "<group>"; };
+		30DF03B21C06C14600A1C6EB /* EnumParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EnumParser.h; path = Core/Utils/EnumParser.h; sourceTree = "<group>"; };
+		30DF03BA1C085C2400A1C6EB /* RandomCreator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RandomCreator.cpp; path = Core/Utils/RandomCreator.cpp; sourceTree = "<group>"; };
+		30DF03BB1C085C2400A1C6EB /* RandomCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RandomCreator.h; path = Core/Utils/RandomCreator.h; sourceTree = "<group>"; };
+		30DF03C21C0D898E00A1C6EB /* EffectType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EffectType.cpp; path = Core/Unit/Type/EffectType.cpp; sourceTree = "<group>"; };
+		30DF03C31C0D898E00A1C6EB /* EffectType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectType.h; path = Core/Unit/Type/EffectType.h; sourceTree = "<group>"; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		46880B8519C43A87006E1F66 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -591,6 +597,8 @@
 				300098D21BD0CDB000B6E284 /* ResourceType.h */,
 				300F25311BFC67550080765C /* FeatureType.cpp */,
 				300F25321BFC67550080765C /* FeatureType.h */,
+				30DF03C21C0D898E00A1C6EB /* EffectType.cpp */,
+				30DF03C31C0D898E00A1C6EB /* EffectType.h */,
 			);
 			name = Type;
 			sourceTree = "<group>";
@@ -687,6 +695,9 @@
 				A1211B261C0BF5CC00C27CCC /* RandomCreator.h */,
 				309F76931BE8851000B2791F /* Rect.cpp */,
 				309F76941BE8851000B2791F /* Rect.h */,
+				30DF03B21C06C14600A1C6EB /* EnumParser.h */,
+				30DF03BA1C085C2400A1C6EB /* RandomCreator.cpp */,
+				30DF03BB1C085C2400A1C6EB /* RandomCreator.h */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -1209,6 +1220,7 @@
 				A1D45C4A1BEB3B1400D1E921 /* ResourceButton.cpp in Sources */,
 				A1E929791C0D7F9A0026D85D /* ChatData.cpp in Sources */,
 				A1720E7A1BCCE0F000217E98 /* CCShake.cpp in Sources */,
+				30DF03C41C0D898E00A1C6EB /* EffectType.cpp in Sources */,
 				307534711BF33ECF0057DCED /* Logger.cpp in Sources */,
 				A1720E971BCCE41A00217E98 /* ScrollBar.cpp in Sources */,
 				309F769A1BE9D7BD00B2791F /* Camp.cpp in Sources */,
