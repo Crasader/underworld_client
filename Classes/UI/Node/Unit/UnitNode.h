@@ -56,7 +56,7 @@ protected:
 protected:
     UnitNode();
     bool init(const UnderWorld::Core::Unit* unit);
-    const std::string getCsbFile(const UnderWorld::Core::Unit* unit, UnitDirection direction, float hpPercentage);
+    const std::string getCsbFile(const UnderWorld::Core::Unit* unit, UnitDirection direction, float hpPercentage, bool& flip);
     UnitDirection calculateDirection(const UnderWorld::Core::Unit* unit);
     void updateActionNode(const UnderWorld::Core::Unit* unit, UnitDirection direction, float hpPercentage, int currentFrame);
     void updateHPBar();

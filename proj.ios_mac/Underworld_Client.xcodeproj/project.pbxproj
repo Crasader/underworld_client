@@ -137,6 +137,9 @@
 		A1D45C4C1BEB594800D1E921 /* GameImages in Resources */ = {isa = PBXBuildFile; fileRef = A1D45C4B1BEB594800D1E921 /* GameImages */; };
 		A1DE80391BD669BB004DEED1 /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1DE80381BD669BA004DEED1 /* CrashReporter.framework */; };
 		A1DF4BEC1C05902C000F2FDA /* DisplayBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1DF4BEA1C05902C000F2FDA /* DisplayBar.cpp */; };
+		A1E929731C0D7E890026D85D /* ChatManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E929711C0D7E890026D85D /* ChatManager.cpp */; };
+		A1E929761C0D7EAD0026D85D /* GearManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E929741C0D7EAD0026D85D /* GearManager.cpp */; };
+		A1E929791C0D7F9A0026D85D /* ChatData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E929771C0D7F9A0026D85D /* ChatData.cpp */; };
 		A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A1FC49B31BD8C249005C1B2E /* CrashHelper.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		A1FC49B61BD8DBCF005C1B2E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1FC49B51BD8DBCF005C1B2E /* MessageUI.framework */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
@@ -401,6 +404,12 @@
 		A1DE80381BD669BA004DEED1 /* CrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CrashReporter.framework; sourceTree = "<group>"; };
 		A1DF4BEA1C05902C000F2FDA /* DisplayBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DisplayBar.cpp; sourceTree = "<group>"; };
 		A1DF4BEB1C05902C000F2FDA /* DisplayBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayBar.h; sourceTree = "<group>"; };
+		A1E929711C0D7E890026D85D /* ChatManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChatManager.cpp; sourceTree = "<group>"; };
+		A1E929721C0D7E890026D85D /* ChatManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatManager.h; sourceTree = "<group>"; };
+		A1E929741C0D7EAD0026D85D /* GearManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GearManager.cpp; sourceTree = "<group>"; };
+		A1E929751C0D7EAD0026D85D /* GearManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GearManager.h; sourceTree = "<group>"; };
+		A1E929771C0D7F9A0026D85D /* ChatData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChatData.cpp; sourceTree = "<group>"; };
+		A1E929781C0D7F9A0026D85D /* ChatData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatData.h; sourceTree = "<group>"; };
 		A1FC49B21BD8C249005C1B2E /* CrashHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashHelper.h; sourceTree = "<group>"; };
 		A1FC49B31BD8C249005C1B2E /* CrashHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrashHelper.m; sourceTree = "<group>"; };
 		A1FC49B51BD8DBCF005C1B2E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = DEVELOPER_DIR; };
@@ -799,6 +808,8 @@
 		A12D2F571BFDE88A00389DAC /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				A1E929771C0D7F9A0026D85D /* ChatData.cpp */,
+				A1E929781C0D7F9A0026D85D /* ChatData.h */,
 				A12D2F581BFDE92400389DAC /* QuestData.cpp */,
 				A12D2F591BFDE92400389DAC /* QuestData.h */,
 			);
@@ -808,10 +819,14 @@
 		A1720E661BCCDECA00217E98 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				A1E929711C0D7E890026D85D /* ChatManager.cpp */,
+				A1E929721C0D7E890026D85D /* ChatManager.h */,
 				A1720E671BCCDEFF00217E98 /* DataManager.cpp */,
 				A1720E681BCCDEFF00217E98 /* DataManager.h */,
 				A1720EA21BCD29FF00217E98 /* GameData.cpp */,
 				A1720EA31BCD29FF00217E98 /* GameData.h */,
+				A1E929741C0D7EAD0026D85D /* GearManager.cpp */,
+				A1E929751C0D7EAD0026D85D /* GearManager.h */,
 				A113A03C1BFEF8F2001FEB2A /* GuildManager.cpp */,
 				A113A03D1BFEF8F2001FEB2A /* GuildManager.h */,
 				A1A4BA441BCE08AF00175E8A /* OnlineUpdater.cpp */,
@@ -1192,6 +1207,7 @@
 				A1720EB81BCD2D2E00217E98 /* Api.mm in Sources */,
 				A1720E8F1BCCE19300217E98 /* md5.cpp in Sources */,
 				A1D45C4A1BEB3B1400D1E921 /* ResourceButton.cpp in Sources */,
+				A1E929791C0D7F9A0026D85D /* ChatData.cpp in Sources */,
 				A1720E7A1BCCE0F000217E98 /* CCShake.cpp in Sources */,
 				307534711BF33ECF0057DCED /* Logger.cpp in Sources */,
 				A1720E971BCCE41A00217E98 /* ScrollBar.cpp in Sources */,
@@ -1213,6 +1229,7 @@
 				A103F45C1BE37E2A007F9A83 /* UnitNode.cpp in Sources */,
 				A1720E691BCCDEFF00217E98 /* DataManager.cpp in Sources */,
 				A1211B291C0BF68E00C27CCC /* GameConstants.cpp in Sources */,
+				A1E929731C0D7E890026D85D /* ChatManager.cpp in Sources */,
 				A1211B231C0BF55200C27CCC /* LiteralValue.cpp in Sources */,
 				045116F91BCFBA44002AA721 /* UnitType.cpp in Sources */,
 				301F63FC1BE3680600DA6D70 /* GameLooper.cpp in Sources */,
@@ -1254,6 +1271,7 @@
 				045116E21BCFBA39002AA721 /* Clock.cpp in Sources */,
 				A1720E931BCCE1D900217E98 /* LocalHelper.cpp in Sources */,
 				045117091BCFBA53002AA721 /* Faction.cpp in Sources */,
+				A1E929761C0D7EAD0026D85D /* GearManager.cpp in Sources */,
 				045116F31BCFBA44002AA721 /* BuffType.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

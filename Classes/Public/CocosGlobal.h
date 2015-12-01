@@ -42,4 +42,11 @@ typedef enum {
     kQuestType_Life,
 }QuestType;
 
+typedef enum {
+    kChatType_World = 0,
+    kChatType_Guild,
+    kChatType_Group,
+    kChatType_Private,
+}ChatType;
+
 #endif /* CocosGlobal_h */

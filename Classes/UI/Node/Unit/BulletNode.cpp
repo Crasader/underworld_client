@@ -8,6 +8,7 @@
 
 #include "BulletNode.h"
 #include "cocostudio/CocoStudio.h"
+#include "Unit.h"
 #include "Bullet.h"
 #include "BulletType.h"
 
@@ -87,7 +88,7 @@ bool BulletNode::init(const Bullet* bullet)
 void BulletNode::update(bool newCreated)
 {
     if (_bullet) {
-        const Coordinate& currentPos = _bullet->getPos();
+        const Coordinate& currentPos = newCreated ? _bullet->getTrigger()->getCenterPos() : _bullet->getPos();
         const Coordinate& targetPos = _bullet->targetPos();
         
         if (currentPos.x > targetPos.x) {

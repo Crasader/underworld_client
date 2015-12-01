@@ -30,6 +30,7 @@ public:
     
 protected:
     CC_DISALLOW_COPY_AND_ASSIGN(QuestManager);
+    void finishQuest(QuestType type, int questId);
     
 private:
     typedef std::pair<const QuestData*, int> QuestProgress;

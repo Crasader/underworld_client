@@ -89,3 +89,8 @@ int QuestManager::getQuestProgress(QuestType type, int questId) const
     
     return 0;
 }
+
+void QuestManager::finishQuest(QuestType type, int questId)
+{
+    
+}

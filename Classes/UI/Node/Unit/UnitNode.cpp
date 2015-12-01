@@ -19,12 +19,36 @@ using namespace std;
 using namespace UnderWorld::Core;
 
 static const int directionCount(3);
-static const int animationCheckerFrames(30);
 static const float directionAngelEdge[directionCount] = {
     -30.f, 30.f, 90.f
 };
+static const int animationCheckerFrames(30);
 static const float hpPercentageThreshold(50.0f);
 
+#pragma mark ======================= inline unit getters =======================
+static inline bool unit_isOpponent(const Unit* unit)
+{
+    return unit->getBelongFaction()->getFactionIndex() != unit->getWorld()->getThisFactionIndex();
+}
+
+static inline bool unit_isShortRange(const Unit* unit)
+{
+    const AttackSkillType* asType = dynamic_cast<const AttackSkillType*>(unit->getUnitType()->getDefaultAttackSkillType(kFieldType_Land));
+    return (asType && asType->getRange() < 5) ? true : false;
+}
+
+static inline bool unit_isMovable(const Unit* unit)
+{
+    const UnitClass unitClass = unit->getUnitType()->getUnitClass();
+    return (kUnitClass_Warrior == unitClass || kUnitClass_Hero == unitClass) ? true : false;
+}
+
+static inline SkillClass unit_getSkillClass(const Unit* unit)
+{
+    return unit->getCurrentSkill()->getSkillType()->getSkillClass();
+}
+
+#pragma mark ======================= Class UnitNode =======================
 UnitNode* UnitNode::create(const Unit* unit)
 {
     UnitNode *ret = new (nothrow) UnitNode();
@@ -85,46 +109,56 @@ void UnitNode::update()
             const float percentage(100 * (float)hp / (float)maxHp);
             
             const UnitClass unitClass = _unit->getUnitType()->getUnitClass();
-            // warriors or heroes
-            if (kUnitClass_Warrior == unitClass ||
-                kUnitClass_Hero == unitClass) {
-                direction = calculateDirection(_unit);
-                if (_lastSkill) {
-                    const SkillClass currentSkillClass = currentSkill->getSkillType()->getSkillClass();
-                    const SkillClass lastSkillClass = _lastSkill->getSkillType()->getSkillClass();
-                    if (currentSkillClass != lastSkillClass) {
-                        needToUpdateUI = true;
-                    } else if (_lastDirection != direction) {
-                        if (kSkillClass_Move == currentSkillClass ||
-                            kSkillClass_Attack == currentSkillClass) {
-                            ++ _switchAnimationCounter;
-                            if (_switchAnimationCounter >= animationCheckerFrames) {
-                                needToUpdateUI = true;
-                                if (_currentAction) {
-                                    currentFrame = _currentAction->getCurrentFrame();
+            switch (unitClass) {
+                case kUnitClass_Warrior:
+                case kUnitClass_Hero:
+                {
+                    direction = calculateDirection(_unit);
+                    if (_lastSkill) {
+                        const SkillClass currentSkillClass = currentSkill->getSkillType()->getSkillClass();
+                        const SkillClass lastSkillClass = _lastSkill->getSkillType()->getSkillClass();
+                        if (currentSkillClass != lastSkillClass) {
+                            needToUpdateUI = true;
+                        } else if (_lastDirection != direction) {
+                            if (kSkillClass_Move == currentSkillClass ||
+                                kSkillClass_Attack == currentSkillClass) {
+                                ++ _switchAnimationCounter;
+                                if (_switchAnimationCounter >= animationCheckerFrames) {
+                                    needToUpdateUI = true;
+                                    if (_currentAction) {
+                                        currentFrame = _currentAction->getCurrentFrame();
+                                    }
                                 }
                             }
                         }
-                    }
-                } else {
-                    needToUpdateUI = true;
-                }
-            }
-            // buildings or cores
-            else if (kUnitClass_Building == unitClass) {
-                if (_lastSkill) {
-//                    setCurrentSkill(currentSkill, direction);
-                } else {
-                    needToUpdateUI = true;
-                }
-            } else if (kUnitClass_Core == unitClass) {
-                if (_lastSkill) {
-                    if ((hpPercentageThreshold - _lastHpPercentage) * (hpPercentageThreshold - percentage) < 0) {
+                    } else {
                         needToUpdateUI = true;
                     }
-                } else {
-                    needToUpdateUI = true;
                 }
+                    break;
+                case kUnitClass_Building:
+                {
+                    if (_lastSkill) {
+//                        setCurrentSkill(currentSkill, direction);
+                    } else {
+                        needToUpdateUI = true;
+                    }
+                }
+                    break;
+                case kUnitClass_Core:
+                {
+                    if (_lastSkill) {
+                        if ((hpPercentageThreshold - _lastHpPercentage) * (hpPercentageThreshold - percentage) < 0) {
+                            needToUpdateUI = true;
+                        }
+                    } else {
+                        needToUpdateUI = true;
+                    }
+                }
+                    break;
+                    
+                default:
+                    break;
             }
             
             if (needToUpdateUI) {
@@ -192,31 +226,44 @@ bool UnitNode::init(const Unit* unit)
     return false;
 }
 
-const string UnitNode::getCsbFile(const Unit* unit, UnitDirection direction, float hpPercentage)
+const string UnitNode::getCsbFile(const Unit* unit, UnitDirection direction, float hpPercentage, bool& flip)
 {
-    const bool isOpponent(unit->getBelongFaction()->getFactionIndex() != unit->getWorld()->getThisFactionIndex());
-    const AttackSkillType* asType = dynamic_cast<const AttackSkillType*>(unit->getUnitType()->getDefaultAttackSkillType(kFieldType_Land));
-    const bool isShortRange(asType && asType->getRange() < 5);
+    const bool isOpponent(unit_isOpponent(unit));
+    const bool isShortRange(unit_isShortRange(unit));
+    const bool isMovableUnit = (unit_isMovable(unit));
+    const bool isWizard(false);
     
     string prefix;
-    if (isOpponent) {
-        if (isShortRange) {
-            prefix = "Dead witch";
+    if (isMovableUnit) {
+        if (isOpponent) {
+            if (isShortRange) {
+                prefix = "Vampire-tank";
+            } else {
+                if (isWizard) {
+                    prefix = "Dead witch";
+                } else {
+                    prefix = "Dead-Archer";
+                }
+            }
         } else {
-            prefix = "Dead-Archer";
+            if (isShortRange) {
+                prefix = "wolf";
+            } else {
+                if (isWizard) {
+                    prefix = "wolf-wizard";
+                } else {
+                    prefix = "wolf-Archer";
+                    flip = true;
+                }
+            }
         }
-    } else {
-        if (isShortRange) {
-            prefix = "wolf";
-        } else {
-            prefix = "wolf";
-        }
+        
+        direction = kUnitDirection_Left;
     }
     
     string csbFile;
     const UnitClass unitClass = unit->getUnitType()->getUnitClass();
-    const bool isMovableUnit = (kUnitClass_Warrior == unitClass || kUnitClass_Hero == unitClass);
-    const SkillClass skillClass = unit->getCurrentSkill()->getSkillType()->getSkillClass();
+    const SkillClass skillClass(unit_getSkillClass(unit));
     switch (skillClass) {
         case kSkillClass_Stop:
         {
@@ -238,22 +285,30 @@ const string UnitNode::getCsbFile(const Unit* unit, UnitDirection direction, flo
                 }
             } else if (kUnitClass_Building == unitClass) {
                 csbFile = "wolf-tower defense.csb";
+                if (isOpponent) {
+                    flip = true;
+                }
             }
         }
             break;
         case kSkillClass_Move:
         {
             if (isMovableUnit) {
-                csbFile = prefix + StringUtils::format("-run-%d.csb", isOpponent ? 3 : direction);
+                csbFile = prefix + StringUtils::format("-run-%d.csb", direction);
+            } else {
+                assert(false);
             }
         }
             break;
         case kSkillClass_Attack:
         {
             if (isMovableUnit) {
-                csbFile = prefix + StringUtils::format("-attack-%d.csb", isOpponent ? 3 : direction);
+                csbFile = prefix + StringUtils::format("-attack-%d.csb", direction);
             } else if (kUnitClass_Building == unitClass) {
                 csbFile = "wolf-tower defense.csb";
+                if (isOpponent) {
+                    flip = true;
+                }
             }
         }
             break;
@@ -265,7 +320,9 @@ const string UnitNode::getCsbFile(const Unit* unit, UnitDirection direction, flo
         case kSkillClass_Die:
         {
             if (isMovableUnit) {
-                csbFile = prefix + StringUtils::format("-dead-%d.csb", isOpponent ? 3 : direction);
+                csbFile = prefix + StringUtils::format("-dead-%d.csb", direction);
+            } else {
+                assert(false);
             }
         }
             break;
@@ -287,7 +344,7 @@ UnitNode::UnitDirection UnitNode::calculateDirection(const Unit* unit)
         const Coordinate& currentPos = unit->getCenterPos();
         const Coordinate& targetPos = unit->getTargetPos();
 #else
-        const bool isAttacking = (kSkillClass_Attack == unit->getCurrentSkill()->getSkillType()->getSkillClass()) ? true : false;
+        const bool isAttacking = (kSkillClass_Attack == unit_getSkillClass(unit)) ? true : false;
         const UnitType* unitType = unit->getUnitType();
         const Coordinate& centerPos = unit->getCenterPos();
         const Coordinate& currentPos = isAttacking ? centerPos : (unit->getLastPos() + Coordinate(unitType->getSize() / 2, unitType->getSize() / 2));
@@ -335,8 +392,8 @@ void UnitNode::updateActionNode(const Unit* unit, UnitDirection direction, float
         }
         
         const UnitClass unitClass = unit->getUnitType()->getUnitClass();
-        const bool isMovableUnit = (kUnitClass_Warrior == unitClass || kUnitClass_Hero == unitClass);
-        const SkillClass skillClass = unit->getCurrentSkill()->getSkillType()->getSkillClass();
+        const bool isMovableUnit(unit_isMovable(unit));
+        const SkillClass skillClass(unit_getSkillClass(unit));
         const bool isDead = (kSkillClass_Die == skillClass);
         
         // remove
@@ -346,27 +403,23 @@ void UnitNode::updateActionNode(const Unit* unit, UnitDirection direction, float
             removeHPBar();
         }
         
-        const string& csbFile = getCsbFile(unit, direction, hpPercentage);
+        bool flip(false);
+        const string& csbFile = getCsbFile(unit, direction, hpPercentage, flip);
         
         if (csbFile.length() > 0) {
             // add node
             _actionNode = CSLoader::createNode(csbFile);
             addChild(_actionNode);
             
-            // flip if needed
-            const bool isOpponent(unit->getBelongFaction()->getFactionIndex() != unit->getWorld()->getThisFactionIndex());
-            if (isOpponent) {
-                if (kUnitClass_Core == unitClass) {
-                    _actionNode->setScale(0.6f);
-                }  else if (kUnitClass_Building == unitClass) {
-                    const float scaleX = _actionNode->getScaleX();
-                    _actionNode->setScaleX(-1 * scaleX);
-                }
-            }
-            
             // TODO: remove temp code
             if (kUnitClass_Core == unitClass) {
                 _actionNode->setScale(0.6f);
+            }
+            
+            // flip if needed
+            if (flip) {
+                const float scaleX = _actionNode->getScaleX();
+                _actionNode->setScaleX(-1 * scaleX);
             }
             
             // TODO: remove temp code
@@ -391,13 +444,12 @@ void UnitNode::updateActionNode(const Unit* unit, UnitDirection direction, float
                 }
             } else {
                 if (kSkillClass_Attack == skillClass) {
-                    const AttackSkillType* asType = dynamic_cast<const AttackSkillType*>(_unit->getUnitType()->getDefaultAttackSkillType(kFieldType_Land));
-                    if (asType && _currentAction) {
+                    if (_currentAction) {
                         // if it is footman
-                        if (asType->getRange() < 5) {
+                        if (unit_isShortRange(unit)) {
                             _currentAction->setFrameEventCallFunc([this](cocostudio::timeline::Frame* frame) {
                                 const unsigned int frameIndex = frame->getFrameIndex();
-                                if (10 == frameIndex) {
+                                if (45 == frameIndex) {
                                     if (_observer) {
                                         _observer->onUnitNodeFootmanAttackedTheTarget(this);
                                     }
