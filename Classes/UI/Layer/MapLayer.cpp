@@ -13,6 +13,8 @@
 #include "Coordinate.h"
 #include "Map.h"
 #include "cocostudio/CocoStudio.h"
+#include "tinyxml2/tinyxml2.h"
+#include "CoreUtils.h"
 
 using namespace cocostudio;
 
@@ -21,6 +23,89 @@ static const int TILEDMAP_ZORDER = 2;
 static const string TILEDMAP_LAYER_LOGIC = "logic";
 static const string TILEDMAP_LAYER_FOREGROUND = "fg";
 static const unsigned int TILEDMAP_MAX_SCALE = 1.0f;
+
+static const std::string CONFIG_KEY_LOCATION_SETTING_TAG("location_setting");
+static const std::string CONFIG_KEY_RESOURCE_SETTINGS_TAG("resource_settings");
+static const std::string CONFIG_KEY_RESOURCE_SETTING_TAG("resource_setting");
+static const std::string CONFIG_KEY_FIXED_UNIT_SETTING_TAG("fixed_unit_setting");
+static const std::string CONFIG_KEY_UNIT_SETTING_TAG("unit_setting");
+static const std::string CONFIG_KEY_ATTR_INDEX("index");
+static const std::string CONFIG_KEY_ATTR_CORE_LOCATION("core_location");
+static const std::string CONFIG_KEY_ATTR_BUILDING_LOCAITON("building_location");
+static const std::string CONFIG_KEY_ATTR_ASSEMBLE_LOCATION("assemble_location");
+static const std::string CONFIG_KEY_ATTR_RESOURCE_NAME("resource_name");
+static const std::string CONFIG_KEY_ATTR_INIT_BALANCE("init_balance");
+static const std::string CONFIG_KEY_ATTR_INIT_SALARY("init_salary");
+static const std::string CONFIG_KEY_ATTR_SALARY_ACCELERATE("salary_accelerate");
+static const std::string CONFIG_KEY_ATTR_UNIT_TYPE_NAME("unit_type_name");
+static const std::string CONFIG_KEY_ATTR_POS("pos");
+
+static UnderWorld::Core::Coordinate parseCoordinate(const std::string& s) {
+    int x = atoi(s.substr(0, s.find_first_of(",")).c_str());
+    int y = atoi(s.substr(s.find_first_of(",") + 1).c_str());
+    return UnderWorld::Core::Coordinate(x, y);
+}
+
+static void loadMapSetting(const std::string& xml,
+    UnderWorld::Core:: MapSetting& setting) {
+    tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+    xmlDoc->Parse(xml.c_str());
+    for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+         item;
+         item = item->NextSiblingElement()) {
+        if (item->Name() == CONFIG_KEY_LOCATION_SETTING_TAG) {
+            UnderWorld::Core::LocationSetting locationSetting;
+            int index = atoi(item->Attribute(CONFIG_KEY_ATTR_INDEX.c_str()));
+            std::string coreLoaction = item->Attribute(CONFIG_KEY_ATTR_CORE_LOCATION.c_str());
+            locationSetting.setCoreLocation(parseCoordinate(coreLoaction));
+            std::string buildingLocations = item->Attribute(CONFIG_KEY_ATTR_BUILDING_LOCAITON.c_str());
+            std::vector<std::string> buildingLocationsVec;
+            UnderWorld::Core::Utils::split(buildingLocationsVec, buildingLocations, ";");
+            for (int i = 0; i < buildingLocationsVec.size(); ++i) {
+                locationSetting.addBuildingLocation(parseCoordinate(buildingLocationsVec[i]));
+            }
+            std::string assembleLocations = item->Attribute(CONFIG_KEY_ATTR_ASSEMBLE_LOCATION.c_str());
+            std::vector<std::string> assembleLocationsVec;
+            UnderWorld::Core::Utils::split(assembleLocationsVec, assembleLocations, ";");
+            for (int i = 0; i < assembleLocationsVec.size(); ++i) {
+                int p = atoi(assembleLocationsVec[i].substr(0, assembleLocationsVec[i].find_first_of(":")).c_str());
+                UnderWorld::Core::Coordinate c = parseCoordinate(assembleLocationsVec[i].substr(assembleLocationsVec[i].find_first_of(":") + 1));
+                locationSetting.addAssembleLocation(p, c);
+            }
+            setting.setLocationSetting(index, locationSetting);
+        } else if (item->Name() == CONFIG_KEY_RESOURCE_SETTING_TAG) {
+            int index = atoi(item->Attribute(CONFIG_KEY_ATTR_INDEX.c_str()));
+            std::vector<UnderWorld::Core::ResourceSetting> vec;
+            for (const tinyxml2::XMLElement* node = item->FirstChildElement();
+                 node;
+                 node = node->NextSiblingElement()) {
+                if (node->Name() == CONFIG_KEY_RESOURCE_SETTING_TAG) {
+                    UnderWorld::Core::ResourceSetting rs;
+                    rs.setInitBalance(atoi(item->Attribute(CONFIG_KEY_ATTR_INIT_BALANCE.c_str())));
+                    rs.setResourceTypeName(item->Attribute(CONFIG_KEY_ATTR_RESOURCE_NAME.c_str()));
+                    rs.setInitSalary(atoi(item->Attribute(CONFIG_KEY_ATTR_INIT_SALARY.c_str())));
+                    rs.setSalaryAccelerate(atoi(item->Attribute(CONFIG_KEY_ATTR_SALARY_ACCELERATE.c_str())));
+                    vec.push_back(rs);
+                }
+            }
+            setting.setStartResource(index, vec);
+        } else if (item->Name() == CONFIG_KEY_FIXED_UNIT_SETTING_TAG) {
+            int index = atoi(item->Attribute(CONFIG_KEY_ATTR_INDEX.c_str()));
+            std::vector<std::pair<UnderWorld::Core::UnitSetting, UnderWorld::Core::Coordinate> > vec;
+            for (const tinyxml2::XMLElement* node = item->FirstChildElement();
+                 node;
+                 node = node->NextSiblingElement()) {
+                if (node->Name() == CONFIG_KEY_UNIT_SETTING_TAG) {
+                    UnderWorld::Core::UnitSetting us;
+                    us.setUnitTypeName(node->Attribute(CONFIG_KEY_ATTR_UNIT_TYPE_NAME.c_str()));
+                    UnderWorld::Core::Coordinate pos = parseCoordinate(node->Attribute(CONFIG_KEY_ATTR_POS.c_str()));
+                    vec.push_back(std::make_pair(us, pos));
+                }
+            }
+            setting.setFixedUnits(index, vec);
+        }
+    }
+}
 
 MapLayer::MapLayer()
 :_mapId(INVALID_VALUE)
@@ -133,6 +218,8 @@ bool MapLayer::init(int mapId)
                 }
             }
         }
+        std::string mapSettingXml = "<root> <location_setting index=\"0\" core_location=\"0,0\" building_location=\"0,0;0,0;0,0\" assemble_location=\"0:0,0;1:0,0\"/> <resource_settings index=\"0\"> <resource_setting resource_name=\"金子\" init_balance=\"0\" init_salary=\"0\" salary_accelerate=\"0\"/> </resource_settings> <fixed_unit_setting index=\"0\"> <unit_setting unit_type_name=\"狼人战士\" pos=\"0,0\"/> </fixed_unit_setting> </root>";
+        loadMapSetting(mapSettingXml, mapSetting);
         CCLOG("%zd logicLayer", mapSetting.getWalkableArea().size());
         logicLayer->removeFromParent();
         
