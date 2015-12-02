@@ -407,7 +407,15 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR))
     {
         const Size& winSize = Director::getInstance()->getWinSize();
-#if false
+#if true
+        static const string file("GameImages/test/test_ui_bg.png");
+        Sprite *bg = Sprite::create(file);
+        addChild(bg);
+        
+        const Size& size = bg->getContentSize();
+        bg->setPosition(Point(size.width / 2, size.height / 2));
+        bg->setScale(size.width / winSize.width, size.height / winSize.height);
+#elif false
         static const string CsbFile("rankInfo_UI.csb");
         Node *mainNode = CSLoader::createNode(CsbFile);
         mainNode->setPosition(Point(winSize.width / 2, winSize.height / 2));
@@ -586,18 +594,18 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             menu->setPosition(Point::ZERO);
             root->addChild(menu);
         }
-#endif
         
         updateWaveTime(_waveTime);
         updateRemainingTime(_remainingTime);
         updateMyHpProgress(60);
         updateOpponentsHpProgress(20);
+#endif
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
         eventListener->onTouchBegan = [=](Touch *touch, Event *unused_event) {
             const Point& p = touch->getLocation();
-            if (_tableView->getBoundingBox().containsPoint(p)) {
+            if (_tableView && _tableView->getBoundingBox().containsPoint(p)) {
                 return true;
             }
             return false;
@@ -613,12 +621,16 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
 void MapUILayer::onEnter()
 {
     LayerColor::onEnter();
-    _scheduler->schedule(schedule_selector(MapUILayer::fakeTick), this, 1.0f, false);
+    if (_nextWaveTimeLabel) {
+        _scheduler->schedule(schedule_selector(MapUILayer::fakeTick), this, 1.0f, false);
+    }
 }
 
 void MapUILayer::onExit()
 {
-    _scheduler->unschedule(schedule_selector(MapUILayer::fakeTick), this);
+    if (_nextWaveTimeLabel) {
+        _scheduler->unschedule(schedule_selector(MapUILayer::fakeTick), this);
+    }
     LayerColor::onExit();
 }
 

@@ -193,6 +193,7 @@ void GameRender::onUnitNodeFootmanAttackedTheTarget(UnitNode* node)
 {
     Unit* target = node->getUnit()->getTarget();
     addCritEffect(target);
+    node->addSwordEffect();
 }
 
 #pragma mark - BulletNodeObserver

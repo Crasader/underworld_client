@@ -43,6 +43,7 @@ public:
     void addCritEffect();
     void addBlockEffect();
     void addRecoveryEffect();
+    void addSwordEffect();
     void addBuf();
     void removeBuf();
     
@@ -58,7 +59,7 @@ protected:
     bool init(const UnderWorld::Core::Unit* unit);
     const std::string getCsbFile(UnitDirection direction, float hpPercentage, bool& flip);
     UnitDirection calculateDirection();
-    void updateActionNode(UnitDirection direction, float hpPercentage, int currentFrame);
+    void updateActionNode(const UnderWorld::Core::Skill* skill, UnitDirection direction, float hpPercentage, int currentFrame);
     void updateHPBar();
     void removeHPBar();
     void addShadow();
