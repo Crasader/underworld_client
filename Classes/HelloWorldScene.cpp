@@ -48,79 +48,79 @@ bool HelloWorld::init()
     //1. set map setting
     UnderWorld::Core::MapSetting mapSettting = _render->getMapLayer()->mapSetting;
     
-    //1a. set locations
-    UnderWorld::Core::LocationSetting locationSetting0;
-    locationSetting0.setCoreLocation(UnderWorld::Core::Coordinate(25, 70));
-    locationSetting0.addBuildingLocation(UnderWorld::Core::Coordinate(100, 70));
-    locationSetting0.addAssembleLocation(0, UnderWorld::Core::Coordinate(65, 70));
-    locationSetting0.addAssembleLocation(1, UnderWorld::Core::Coordinate(60, 70));
-    mapSettting.setLocationSetting(0, locationSetting0);
-    
-    UnderWorld::Core::LocationSetting locationSetting1;
-    locationSetting1.setCoreLocation(UnderWorld::Core::Coordinate(275, 70));
-    locationSetting1.addBuildingLocation(UnderWorld::Core::Coordinate(200, 70));
-    locationSetting1.addAssembleLocation(0, UnderWorld::Core::Coordinate(235, 70));
-    locationSetting1.addAssembleLocation(1, UnderWorld::Core::Coordinate(240, 70));
-    mapSettting.setLocationSetting(1, locationSetting1);
-    
-    //1b. set resource
-    std::vector<UnderWorld::Core::ResourceSetting> rs0;
-    rs0.resize(2);
-    rs0[0].setResourceTypeName("金子");
-    rs0[0].setInitBalance(100);
-    rs0[0].setInitSalary(10);
-    rs0[0].setSalaryAccelerate(1);
-    rs0[1].setResourceTypeName("人口");
-    rs0[1].setInitBalance(200);
-    rs0[1].setInitSalary(0);
-    rs0[1].setSalaryAccelerate(0);
-    mapSettting.setStartResource(0, rs0);
-    
-    std::vector<UnderWorld::Core::ResourceSetting> rs1;
-    rs1.resize(2);
-    rs1[0].setResourceTypeName("金子");
-    rs1[0].setInitBalance(100);
-    rs1[0].setInitSalary(10);
-    rs1[0].setSalaryAccelerate(1);
-    rs1[1].setResourceTypeName("人口");
-    rs1[1].setInitBalance(200);
-    rs1[1].setInitSalary(0);
-    rs1[1].setSalaryAccelerate(0);
-    mapSettting.setStartResource(1, rs1);
-    
-    //1c. set fixed units
-    std::vector<std::pair<UnderWorld::Core::UnitSetting, UnderWorld::Core::Coordinate> > fu0;
-    fu0.resize(3);
-    for (int i = 0; i < 1; ++i) {
-        fu0[i].first.setUnitTypeName("狼人步兵");
-        fu0[i].second = UnderWorld::Core::Coordinate(120, 70);
-    }
-    for (int i = 1; i < 2; ++i) {
-        fu0[i].first.setUnitTypeName("狼人射手");
-        fu0[i].second = UnderWorld::Core::Coordinate(110, 70);
-    }
-    for (int i = 2; i < 3; ++i) {
-        fu0[i].first.setUnitTypeName("狼人巫师");
-        fu0[i].second = UnderWorld::Core::Coordinate(100, 70);
-    }
-    mapSettting.setFixedUnits(0, fu0);
-    
-    std::vector<std::pair<UnderWorld::Core::UnitSetting, UnderWorld::Core::Coordinate> > fu1;
-    fu1.resize(3);
-    for (int i = 0; i < 1; ++i) {
-        fu1[i].first.setUnitTypeName("吸血鬼战士");
-        fu1[i].second = UnderWorld::Core::Coordinate(240, 70);
-    }
-    for (int i = 1; i < 2; ++i) {
-        fu1[i].first.setUnitTypeName("吸血鬼弓兵");
-        fu1[i].second = UnderWorld::Core::Coordinate(245, 70);
-    }
-    for (int i = 2; i < 3; ++i) {
-        fu1[i].first.setUnitTypeName("吸血鬼巫师");
-        fu1[i].second = UnderWorld::Core::Coordinate(250, 70);
-    }
+//    //1a. set locations
+//    UnderWorld::Core::LocationSetting locationSetting0;
+//    locationSetting0.setCoreLocation(UnderWorld::Core::Coordinate(25, 70));
+//    locationSetting0.addBuildingLocation(UnderWorld::Core::Coordinate(100, 70));
+//    locationSetting0.addAssembleLocation(0, UnderWorld::Core::Coordinate(65, 70));
+//    locationSetting0.addAssembleLocation(1, UnderWorld::Core::Coordinate(60, 70));
+//    mapSettting.setLocationSetting(0, locationSetting0);
+//    
+//    UnderWorld::Core::LocationSetting locationSetting1;
+//    locationSetting1.setCoreLocation(UnderWorld::Core::Coordinate(275, 70));
+//    locationSetting1.addBuildingLocation(UnderWorld::Core::Coordinate(200, 70));
+//    locationSetting1.addAssembleLocation(0, UnderWorld::Core::Coordinate(235, 70));
+//    locationSetting1.addAssembleLocation(1, UnderWorld::Core::Coordinate(240, 70));
+//    mapSettting.setLocationSetting(1, locationSetting1);
+//    
+//    //1b. set resource
+//    std::vector<UnderWorld::Core::ResourceSetting> rs0;
+//    rs0.resize(2);
+//    rs0[0].setResourceTypeName("金子");
+//    rs0[0].setInitBalance(100);
+//    rs0[0].setInitSalary(10);
+//    rs0[0].setSalaryAccelerate(1);
+//    rs0[1].setResourceTypeName("人口");
+//    rs0[1].setInitBalance(200);
+//    rs0[1].setInitSalary(0);
+//    rs0[1].setSalaryAccelerate(0);
+//    mapSettting.setStartResource(0, rs0);
+//    
+//    std::vector<UnderWorld::Core::ResourceSetting> rs1;
+//    rs1.resize(2);
+//    rs1[0].setResourceTypeName("金子");
+//    rs1[0].setInitBalance(100);
+//    rs1[0].setInitSalary(10);
+//    rs1[0].setSalaryAccelerate(1);
+//    rs1[1].setResourceTypeName("人口");
+//    rs1[1].setInitBalance(200);
+//    rs1[1].setInitSalary(0);
+//    rs1[1].setSalaryAccelerate(0);
+//    mapSettting.setStartResource(1, rs1);
+//    
+//    //1c. set fixed units
+//    std::vector<std::pair<UnderWorld::Core::UnitSetting, UnderWorld::Core::Coordinate> > fu0;
+//    fu0.resize(3);
+//    for (int i = 0; i < 1; ++i) {
+//        fu0[i].first.setUnitTypeName("狼人步兵");
+//        fu0[i].second = UnderWorld::Core::Coordinate(120, 70);
+//    }
+//    for (int i = 1; i < 2; ++i) {
+//        fu0[i].first.setUnitTypeName("狼人射手");
+//        fu0[i].second = UnderWorld::Core::Coordinate(110, 70);
+//    }
+//    for (int i = 2; i < 3; ++i) {
+//        fu0[i].first.setUnitTypeName("狼人巫师");
+//        fu0[i].second = UnderWorld::Core::Coordinate(100, 70);
+//    }
+//    mapSettting.setFixedUnits(0, fu0);
+//    
+//    std::vector<std::pair<UnderWorld::Core::UnitSetting, UnderWorld::Core::Coordinate> > fu1;
+//    fu1.resize(3);
+//    for (int i = 0; i < 1; ++i) {
+//        fu1[i].first.setUnitTypeName("吸血鬼战士");
+//        fu1[i].second = UnderWorld::Core::Coordinate(240, 70);
+//    }
+//    for (int i = 1; i < 2; ++i) {
+//        fu1[i].first.setUnitTypeName("吸血鬼弓兵");
+//        fu1[i].second = UnderWorld::Core::Coordinate(245, 70);
+//    }
+//    for (int i = 2; i < 3; ++i) {
+//        fu1[i].first.setUnitTypeName("吸血鬼巫师");
+//        fu1[i].second = UnderWorld::Core::Coordinate(250, 70);
+//    }
 
-    mapSettting.setFixedUnits(1, fu1);
+//    mapSettting.setFixedUnits(1, fu1);
     setting.setMap(mapSettting);
     
     //2. set techTree;
