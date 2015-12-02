@@ -45,6 +45,7 @@ private:
     BulletNodeObserver *_observer;
     Node *_actionNode;
     const UnderWorld::Core::Bullet* _bullet;
+    float _angel;
 };
 
 #endif /* BulletNode_h */

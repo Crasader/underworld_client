@@ -60,7 +60,7 @@ protected:
 private:
     void updateUnits(const UnderWorld::Core::Game* game, int index);
     void updateBullets(const UnderWorld::Core::Game* game);
-    void addCritEffect(const UnderWorld::Core::Unit* unit);
+    void addCritEffect(const UnderWorld::Core::Unit* target, const std::string& trigger);
     
 private:
     GameRenderObserver *_observer;

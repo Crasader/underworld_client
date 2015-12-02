@@ -9,6 +9,7 @@
 #include "BulletNode.h"
 #include "cocostudio/CocoStudio.h"
 #include "Unit.h"
+#include "UnitType.h"
 #include "Bullet.h"
 #include "BulletType.h"
 
@@ -34,6 +35,7 @@ BulletNode::BulletNode()
 :_observer(nullptr)
 ,_actionNode(nullptr)
 ,_bullet(nullptr)
+,_angel(-1.0f)
 {
     
 }
@@ -65,8 +67,29 @@ bool BulletNode::init(const Bullet* bullet)
         _bullet = bullet;
         
 #if true
-        _actionNode = Sprite::create("GameImages/test/jian.png");
-        addChild(_actionNode);
+        const Unit* trigger = bullet->getTrigger();
+        if (trigger) {
+            const string& name = trigger->getUnitType()->getName();
+            string file;
+            if (name == "狼人巫师") {
+                file = "effect-fireball.csb";
+            } else if (name == "吸血鬼巫师") {
+                file = "effect-fireball-1.csb";
+            }
+            
+            if (file.length() > 0) {
+                _actionNode = CSLoader::createNode(file);
+                addChild(_actionNode);
+                cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
+                _actionNode->runAction(action);
+                action->gotoFrameAndPlay(0, false);
+            } else {
+                _actionNode = Sprite::create("GameImages/test/jian.png");
+                addChild(_actionNode);
+            }
+        } else {
+            assert(false);
+        }
 #else
         const BulletType* type = bullet->getBulletType();
         string csbFile = "hongzidan.csb";
@@ -88,20 +111,19 @@ bool BulletNode::init(const Bullet* bullet)
 void BulletNode::update(bool newCreated)
 {
     if (_bullet) {
-        const Coordinate& currentPos = newCreated ? _bullet->getTrigger()->getCenterPos() : _bullet->getPos();
+        const Coordinate& currentPos = _bullet->getPos();
         const Coordinate& targetPos = _bullet->targetPos();
         
-        if (currentPos.x > targetPos.x) {
+        if (newCreated && currentPos.x > targetPos.x) {
             setScaleX(-1 * getScaleX());
         }
         
-        const int deltaX = abs(currentPos.x - targetPos.x);
-        const int deltaY = abs(currentPos.y - targetPos.y);
+        const float deltaX(currentPos.x - targetPos.x);
+        const float deltaY(currentPos.y - targetPos.y);
         
-        if (deltaX > 0) {
-            const int rate = (getScaleX() < 0) ? -1 : 1;
-            float angel = 180.0f * atanf(deltaY / deltaX) / M_PI * rate;
-            setRotation(angel);
+        if (abs(deltaX) > 0) {
+            _angel = (-180.0f) * atanf(deltaY / deltaX) / M_PI;
+            setRotation(_angel);
         } else {
             // so close to the target when created
             if (newCreated) {

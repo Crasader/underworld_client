@@ -410,11 +410,37 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
 #if true
         static const string file("GameImages/test/test_ui_bg.png");
         Sprite *bg = Sprite::create(file);
-        addChild(bg);
+        addChild(bg, 1);
         
         const Size& size = bg->getContentSize();
         bg->setPosition(Point(size.width / 2, size.height / 2));
         bg->setScale(size.width / winSize.width, size.height / winSize.height);
+        
+        // yezi
+        {
+            static const string file("particle/yezi/yezi.plist");
+            ParticleSystemQuad *effect = ParticleSystemQuad::create(file);
+            effect->setPosition(Point(-50, winSize.height / 2));
+            addChild(effect);
+        }
+        {
+            static const string file("particle/yezi/yezi_0.plist");
+            ParticleSystemQuad *effect = ParticleSystemQuad::create(file);
+            effect->setPosition(Point(-50, winSize.height / 2 - 10));
+            addChild(effect);
+        }
+        {
+            static const string file("particle/yezi/yezi_0_0.plist");
+            ParticleSystemQuad *effect = ParticleSystemQuad::create(file);
+            effect->setPosition(Point(-50, winSize.height / 2 + 10));
+            addChild(effect);
+        }
+        {
+            static const string file("particle/yezi/yezi_0_0_0.plist");
+            ParticleSystemQuad *effect = ParticleSystemQuad::create(file);
+            effect->setPosition(Point(-50, winSize.height / 2 + 20));
+            addChild(effect);
+        }
 #elif false
         static const string CsbFile("rankInfo_UI.csb");
         Node *mainNode = CSLoader::createNode(CsbFile);

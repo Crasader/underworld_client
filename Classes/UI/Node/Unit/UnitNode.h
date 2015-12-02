@@ -40,7 +40,7 @@ public:
     const UnderWorld::Core::Unit* getUnit() const;
     void registerObserver(UnitNodeObserver *observer);
     void update();
-    void addCritEffect();
+    void addCritEffect(const std::string& triggerName);
     void addBlockEffect();
     void addRecoveryEffect();
     void addSwordEffect();
@@ -60,6 +60,7 @@ protected:
     const std::string getCsbFile(UnitDirection direction, float hpPercentage, bool& flip);
     UnitDirection calculateDirection();
     void updateActionNode(const UnderWorld::Core::Skill* skill, UnitDirection direction, float hpPercentage, int currentFrame);
+    void addHPBar();
     void updateHPBar();
     void removeHPBar();
     void addShadow();

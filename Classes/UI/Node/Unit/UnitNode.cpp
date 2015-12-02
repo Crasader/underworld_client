@@ -204,9 +204,15 @@ void UnitNode::update()
     }
 }
 
-void UnitNode::addCritEffect()
+void UnitNode::addCritEffect(const string& triggerName)
 {
-    addEffect("Strike point-3.csb");
+    if (triggerName == "狼人巫师") {
+        addEffect("Strike point-4.csb");
+    } else if (triggerName == "吸血鬼巫师") {
+        addEffect("Strike point-5.csb");
+    } else {
+        addEffect("Strike point-6.csb");
+    }
 }
 
 void UnitNode::addBlockEffect()
@@ -223,7 +229,14 @@ void UnitNode::addRecoveryEffect()
 
 void UnitNode::addSwordEffect()
 {
-    addEffect("wolf-crit-daoguang.csb");
+    const bool isThisFaction(unit_isThisFaction(_unit));
+    Node* effect = addEffect(isThisFaction ? "wolf-attack-daoguang_0.csb" : "Vampire-tank-attack-daoguang.csb");
+    
+    // TODO: update temp code
+    if (false) {
+        const float scaleX(effect->getScaleX());
+        effect->setScaleX(-1 * scaleX);
+    }
 }
 
 void UnitNode::addBuf()
@@ -539,21 +552,15 @@ void UnitNode::updateActionNode(const Skill* skill, UnitDirection direction, flo
             
             _sprite = dynamic_cast<Sprite*>(*(_actionNode->getChildren().begin()));
             if (_sprite) {
-                const Size& size = _sprite->getContentSize();
-                const Point& pos = _sprite->getPosition();
                 // add shadow
                 if (kSkillClass_Move == skillClass ||
                     kSkillClass_Attack == skillClass) {
                     addShadow();
-                    addBuf();
                 }
                 
                 // add HP bar
                 if (!isDead && !_hpBar) {
-                    _hpBar = DisplayBar::create(kHP, unitClass);
-                    const Point position(pos + Point(0, size.height / 2 + 10.0f));
-                    _hpBar->setPosition(convertToNodeSpace(_actionNode->convertToWorldSpace(position)));
-                    addChild(_hpBar);
+                    addHPBar();
                     updateHPBar();
                 }
             }
@@ -562,6 +569,19 @@ void UnitNode::updateActionNode(const Skill* skill, UnitDirection direction, flo
         }
     } else {
         assert(false);
+    }
+}
+
+void UnitNode::addHPBar()
+{
+    if (!_hpBar && _unit) {
+        const UnitClass unitClass = _unit->getUnitType()->getUnitClass();
+        _hpBar = DisplayBar::create(kHP, unitClass);
+        const Size& size = _sprite->getContentSize();
+        const Point& pos = _sprite->getPosition();
+        const Point position(pos + Point(0, size.height / 2 + 10.0f));
+        _hpBar->setPosition(convertToNodeSpace(_actionNode->convertToWorldSpace(position)));
+        addChild(_hpBar);
     }
 }
 
