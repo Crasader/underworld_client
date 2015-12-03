@@ -23,6 +23,7 @@ public:
     
     void initQuest(QuestType type, const rapidjson::Document& jsonDict);
     void updateQuestProgress(QuestType type, int questId, int progress);
+    void getReward(QuestType type, int questId);
     
     // getters
     const std::vector<const QuestData*>& getQuestData(QuestType type);

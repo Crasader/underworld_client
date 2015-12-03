@@ -416,6 +416,7 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
         bg->setPosition(Point(size.width / 2, size.height / 2));
         bg->setScale(size.width / winSize.width, size.height / winSize.height);
         
+#if false
         // yezi
         {
             static const string file("particle/yezi/yezi.plist");
@@ -441,6 +442,8 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             effect->setPosition(Point(-50, winSize.height / 2 + 20));
             addChild(effect);
         }
+#endif
+        
 #elif false
         static const string CsbFile("rankInfo_UI.csb");
         Node *mainNode = CSLoader::createNode(CsbFile);

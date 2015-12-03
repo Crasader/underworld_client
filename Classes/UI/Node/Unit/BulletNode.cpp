@@ -133,6 +133,8 @@ void BulletNode::update(bool newCreated)
             }
         }
         
+//        CCLOG("========= %d - %d - %d - %d - %.1f", currentPos.x, currentPos.y, targetPos.x, targetPos.y, _angel);
+        
         if (_bullet->isExploded()) {
             if (_observer) {
                 _observer->onBulletNodeExploded(this);

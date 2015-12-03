@@ -18,6 +18,19 @@
 using namespace std;
 using namespace UnderWorld::Core;
 
+// TODO: remove temp code
+static const string WOLF_CORE("狼人基地");
+static const string WOLF_TOWER("狼人箭塔");
+static const string WOLF_SOLDIER("狼人步兵");
+static const string WOLF_ARCHER("狼人射手");
+static const string WOLF_WIZARD("狼人巫师");
+
+static const string VAMPIRE_CORE("吸血鬼核心");
+static const string VAMPIRE_TOWER("吸血鬼箭塔");
+static const string VAMPIRE_SOLDIER("吸血鬼战士");
+static const string VAMPIRE_ARCHER("吸血鬼弓兵");
+static const string VAMPIRE_WIZARD("吸血鬼巫师");
+
 static const int directionCount(3);
 static const float directionAngelEdge[directionCount] = {
     -30.f, 30.f, 90.f
@@ -26,6 +39,18 @@ static const int animationCheckerFrames(30);
 static const float hpPercentageThreshold(50.0f);
 
 #pragma mark ======================= inline unit getters =======================
+static inline const string unit_getName(const Unit* unit)
+{
+    if (unit) {
+        const UnitType* type = unit->getUnitType();
+        if (type) {
+            return type->getName();
+        }
+    }
+    
+    return "";
+}
+
 static inline bool unit_isThisFaction(const Unit* unit)
 {
     return unit->getBelongFaction()->getFactionIndex() == unit->getWorld()->getThisFactionIndex();
@@ -86,6 +111,7 @@ UnitNode::UnitNode()
 ,_lastDirection(static_cast<UnitDirection>(-1))
 ,_lastHpPercentage(0.0f)
 ,_switchAnimationCounter(0)
+,_isStandby(false)
 {
     
 }
@@ -140,6 +166,12 @@ void UnitNode::update()
                     if (_lastSkill) {
                         const SkillClass lastSkillClass(_lastSkill->getSkillType()->getSkillClass());
                         if (currentSkillClass != lastSkillClass) {
+                            // TODO: remove temp code
+                            if (kSkillClass_Attack == currentSkillClass && WOLF_SOLDIER == unit_getName(_unit) && _isStandby != checkIsStandby(currentSkill)) {
+                                _isStandby = !_isStandby;
+                            } else if (_isStandby) {
+                                _isStandby = false;
+                            }
                             needToUpdateUI = true;
                         } else if (_lastDirection != direction) {
                             switch (currentSkillClass) {
@@ -148,6 +180,11 @@ void UnitNode::update()
                                 {
                                     ++ _switchAnimationCounter;
                                     if (_switchAnimationCounter >= animationCheckerFrames) {
+                                        // TODO: remove temp code
+                                        if (kSkillClass_Attack == currentSkillClass && WOLF_SOLDIER == unit_getName(_unit) && _isStandby != checkIsStandby(currentSkill)) {
+                                            _isStandby = !_isStandby;
+                                        }
+                                        
                                         needToUpdateUI = true;
                                         if (_currentAction) {
                                             currentFrame = _currentAction->getCurrentFrame();
@@ -159,6 +196,13 @@ void UnitNode::update()
                                 default:
                                     break;
                             }
+                        } else {
+                            // TODO: remove temp code
+                            // check if the unit is standby
+                            if (kSkillClass_Attack == currentSkillClass && WOLF_SOLDIER == unit_getName(_unit) && _isStandby != checkIsStandby(currentSkill)) {
+                                _isStandby = !_isStandby;
+                                needToUpdateUI = true;
+                            }
                         }
                     } else {
                         needToUpdateUI = true;
@@ -166,25 +210,39 @@ void UnitNode::update()
                 }
                     break;
                 case kUnitClass_Building:
+                {
+                    if (_lastSkill) {
+                        const SkillClass lastSkillClass(_lastSkill->getSkillType()->getSkillClass());
+                        if (currentSkillClass != lastSkillClass) {
+                            if (kSkillClass_Attack == currentSkillClass || kSkillClass_Attack == lastSkillClass) {
+                                // attack
+                                needToUpdateUI = true;
+                            } else if (kSkillClass_Die == currentSkillClass) {
+                                // destroyed
+                                needToUpdateUI = true;
+                            }
+                        }
+                    } else {
+                        needToUpdateUI = true;
+                    }
+                }
+                    break;
                 case kUnitClass_Core:
                 {
                     if (_lastSkill) {
                         const SkillClass lastSkillClass(_lastSkill->getSkillType()->getSkillClass());
-                        if (currentSkillClass != lastSkillClass && (kSkillClass_Attack == currentSkillClass || kSkillClass_Attack == lastSkillClass)) {
-                            // attack
-                            if (kUnitClass_Core != unitClass) {
-                                needToUpdateUI = true;
-                            }
-                        } else if (percentage <= 0.0f) {
-                            // destroyed
-                            needToUpdateUI = true;
-                        } else if ((hpPercentageThreshold - _lastHpPercentage) * (hpPercentageThreshold - percentage) <= 0) {
-                            // hurt
-                            // TODO: remove test code
-                            if (kUnitClass_Building != unitClass) {
+                        if (currentSkillClass != lastSkillClass) {
+                            if (kSkillClass_Die == currentSkillClass) {
+                                // destroyed
                                 needToUpdateUI = true;
                             }
                         }
+                        
+                        if (!needToUpdateUI && (hpPercentageThreshold - _lastHpPercentage) * (hpPercentageThreshold - percentage) <= 0) {
+                            // hurt
+                            needToUpdateUI = true;
+                        }
+                        
                     } else {
                         needToUpdateUI = true;
                     }
@@ -196,7 +254,27 @@ void UnitNode::update()
             }
             
             if (needToUpdateUI) {
-                updateActionNode(currentSkill, direction, percentage, currentFrame);
+                // reset
+                _switchAnimationCounter = 0;
+                _lastSkill = currentSkill;
+                _lastDirection = direction;
+                _lastHpPercentage = percentage;
+                
+                // TODO: remove temp code
+                const string& unitName(unit_getName(_unit));
+                if (unitName != WOLF_SOLDIER) {
+                    direction = kUnitDirection_Left;
+                }
+                
+                bool flip = false;
+                if (unitName == WOLF_ARCHER ||
+                    unitName == WOLF_WIZARD ||
+                    unitName == VAMPIRE_TOWER) {
+                    flip = true;
+                }
+                
+                const string& file = getCsbFile(direction, percentage);
+                updateActionNode(currentSkill, file, currentFrame, flip);
             }
         }
         
@@ -206,9 +284,9 @@ void UnitNode::update()
 
 void UnitNode::addCritEffect(const string& triggerName)
 {
-    if (triggerName == "狼人巫师") {
+    if (triggerName == WOLF_WIZARD) {
         addEffect("Strike point-4.csb");
-    } else if (triggerName == "吸血鬼巫师") {
+    } else if (triggerName == VAMPIRE_WIZARD) {
         addEffect("Strike point-5.csb");
     } else {
         addEffect("Strike point-6.csb");
@@ -274,43 +352,25 @@ bool UnitNode::init(const Unit* unit)
     return false;
 }
 
-const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage, bool& flip)
+const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
 {
-    flip = false;
-    
-    const bool isWerewolf(unit_isThisFaction(_unit));
-    const bool isShortRange(unit_isShortRange(_unit));
+    const string& unitName(unit_getName(_unit));
     const bool isMovableUnit = (unit_isMovable(_unit));
-    const bool isWizard(unit_isWizard(_unit));
     
     string prefix;
     if (isMovableUnit) {
-        if (isWerewolf) {
-            if (isShortRange) {
-                prefix = "wolf";
-            } else {
-                if (isWizard) {
-                    prefix = "wolf-wizard";
-                    flip = !flip;
-                } else {
-                    prefix = "wolf-Archer";
-                    flip = !flip;
-                }
-                
-                direction = kUnitDirection_Left;
-            }
-        } else {
-            if (isShortRange) {
-                prefix = "Vampire-tank";
-            } else {
-                if (isWizard) {
-                    prefix = "Dead witch";
-                } else {
-                    prefix = "Dead-Archer";
-                }
-            }
-            
-            direction = kUnitDirection_Left;
+        if (unitName == WOLF_SOLDIER) {
+            prefix = "wolf";
+        } else if (unitName == WOLF_ARCHER) {
+            prefix = "wolf-Archer";
+        } else if (unitName == WOLF_WIZARD) {
+            prefix = "wolf-wizard";
+        } else if (unitName == VAMPIRE_SOLDIER) {
+            prefix = "Vampire-tank";
+        } else if (unitName == VAMPIRE_ARCHER) {
+            prefix = "Dead-Archer";
+        } else if (unitName == VAMPIRE_WIZARD) {
+            prefix = "Dead witch";
         }
     }
     
@@ -320,44 +380,75 @@ const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage, b
     switch (skillClass) {
         case kSkillClass_Stop:
         {
-            if (isMovableUnit) {
-                if (isWerewolf) {
+            switch (unitClass) {
+                case kUnitClass_Core:
+                {
+                    const bool healthy(hpPercentage > hpPercentageThreshold);
+                    if (unitName == WOLF_CORE) {
+                        csbFile = healthy ? "effect-wolf-Base_1.csb" : "effect-wolf-base-damage.csb";
+                    } else if (unitName == VAMPIRE_CORE) {
+                        csbFile = healthy ? "effect-Vampire-base.csb" : "effect-Vampire-base-damage.csb";
+                    }
+                }
+                    break;
+                case kUnitClass_Building:
+                {
+                    csbFile = "wolf-tower defense.csb";
+                }
+                    break;
+                case kUnitClass_Warrior:
+                case kUnitClass_Hero:
+                {
                     csbFile = "wolf-play-Standby.csb";
-                } else {
-                    csbFile = "wolf-play-Standby.csb";
                 }
-            } else if (kUnitClass_Core == unitClass) {
-                if (hpPercentage > hpPercentageThreshold) {
-                    csbFile = isWerewolf ? "effect-wolf-Base_1.csb" : "effect-Vampire-base.csb";
-                } else {
-                    csbFile = isWerewolf ? "effect-wolf-base-damage.csb" : "effect-Vampire-base-damage.csb";
-                }
-            } else if (kUnitClass_Building == unitClass) {
-                csbFile = "wolf-tower defense.csb";
-                if (!isWerewolf) {
-                    flip = !flip;
-                }
+                    break;
+                default:
+                    break;
             }
         }
             break;
         case kSkillClass_Move:
         {
-            if (isMovableUnit) {
-                csbFile = prefix + StringUtils::format("-run-%d.csb", direction);
-            } else {
-                assert(false);
+            switch (unitClass) {
+                case kUnitClass_Warrior:
+                case kUnitClass_Hero:
+                {
+                    csbFile = prefix + StringUtils::format("-run-%d.csb", direction);
+                }
+                    break;
+                    
+                default:
+                    assert(false);
+                    break;
             }
         }
             break;
         case kSkillClass_Attack:
         {
-            if (isMovableUnit) {
-                csbFile = prefix + StringUtils::format("-attack-%d.csb", direction);
-            } else if (kUnitClass_Building == unitClass) {
-                csbFile = "wolf-tower defense.csb";
-                if (!isWerewolf) {
-                    flip = !flip;
+            switch (unitClass) {
+                case kUnitClass_Core:
+                {
+                    // TODO
                 }
+                    break;
+                case kUnitClass_Building:
+                {
+                    // TODO
+                    csbFile = "wolf-tower defense.csb";
+                }
+                    break;
+                case kUnitClass_Warrior:
+                case kUnitClass_Hero:
+                {
+                    if (_isStandby) {
+                        csbFile = "wolf-play-Standby.csb";
+                    } else {
+                        csbFile = prefix + StringUtils::format("-attack-%d.csb", direction);
+                    }
+                }
+                    break;
+                default:
+                    break;
             }
         }
             break;
@@ -368,27 +459,58 @@ const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage, b
             break;
         case kSkillClass_Die:
         {
-            if (isMovableUnit) {
-                csbFile = prefix + StringUtils::format("-dead-%d.csb", direction);
-            } else if (kUnitClass_Core == unitClass) {
-                csbFile = isWerewolf ? "effect-wolf-base-Severe damage.csb" : "effect-Vampire-base-Severe damage.csb";
-            } else if (kUnitClass_Building == unitClass) {
-                csbFile = "wolf-tower defense.csb";
-                if (!isWerewolf) {
-                    flip = !flip;
+            switch (unitClass) {
+                case kUnitClass_Core:
+                {
+                    if (unitName == WOLF_CORE) {
+                        csbFile = "effect-wolf-base-Severe damage.csb";
+                    } else if (unitName == VAMPIRE_CORE) {
+                        csbFile = "effect-Vampire-base-Severe damage.csb";
+                    }
                 }
+                    break;
+                case kUnitClass_Building:
+                {
+                    csbFile = "wolf-tower-Destroy.csb";
+                }
+                    break;
+                case kUnitClass_Warrior:
+                case kUnitClass_Hero:
+                {
+                    csbFile = prefix + StringUtils::format("-dead-%d.csb", direction);
+                }
+                    break;
+                default:
+                    break;
             }
         }
             break;
-            
         default:
         {
+            // TODO
             csbFile = "wolf-run-3.csb";
         }
             break;
     }
     
     return csbFile;
+}
+
+bool UnitNode::checkIsStandby(const Skill* skill)
+{
+    const SkillClass skillClass(skill->getSkillType()->getSkillClass());
+    if (kSkillClass_Attack == skillClass) {
+        if (unit_isMovable(_unit)) {
+            const Skill::SkillState state(skill->getSkillState());
+            if (Skill::SkillState::kSkillState_idle == state) {
+                return true;
+            }
+        }
+    } else if (kSkillClass_Stop == skillClass) {
+        return true;
+    }
+    
+    return false;
 }
 
 UnitNode::UnitDirection UnitNode::calculateDirection()
@@ -418,7 +540,7 @@ UnitNode::UnitDirection UnitNode::calculateDirection()
             angel = 180.0f * atanf(deltaY / deltaX) / M_PI;
         }
         
-        CCLOG("==== angel : %.1f ====\n currentPos: %d-%d, targetPos: %d-%d", angel, currentPos.x, currentPos.y, targetPos.x, targetPos.y);
+//        CCLOG("==== angel : %.1f ====\n currentPos: %d-%d, targetPos: %d-%d", angel, currentPos.x, currentPos.y, targetPos.x, targetPos.y);
         
         UnitNode::UnitDirection direction = kUnitDirection_Left;
         for (int i = 0; i < directionCount; ++i) {
@@ -428,21 +550,15 @@ UnitNode::UnitDirection UnitNode::calculateDirection()
             }
         }
         
-        CCLOG("---- direction : %d ----", direction);
+//        CCLOG("---- direction : %d ----", direction);
         return direction;
     }
     
     return kUnitDirection_Left;
 }
 
-void UnitNode::updateActionNode(const Skill* skill, UnitDirection direction, float hpPercentage, int currentFrame)
+void UnitNode::updateActionNode(const Skill* skill, const string& file, int currentFrame, bool flip)
 {
-    // set
-    _switchAnimationCounter = 0;
-    _lastSkill = skill;
-    _lastDirection = direction;
-    _lastHpPercentage = hpPercentage;
-    
     if (_unit) {
         if (_actionNode) {
             _actionNode->stopAllActions();
@@ -452,7 +568,6 @@ void UnitNode::updateActionNode(const Skill* skill, UnitDirection direction, flo
         }
         
         const UnitClass unitClass = _unit->getUnitType()->getUnitClass();
-        const bool isMovableUnit(unit_isMovable(_unit));
         const SkillClass skillClass(unit_getSkillClass(_unit));
         const bool isDead = (kSkillClass_Die == skillClass);
         
@@ -463,12 +578,9 @@ void UnitNode::updateActionNode(const Skill* skill, UnitDirection direction, flo
             removeHPBar();
         }
         
-        bool flip(false);
-        const string& csbFile = getCsbFile( direction, hpPercentage, flip);
-        
-        if (csbFile.length() > 0) {
+        if (file.length() > 0) {
             // add node
-            _actionNode = CSLoader::createNode(csbFile);
+            _actionNode = CSLoader::createNode(file);
             addChild(_actionNode);
             if (_actionManager) {
                 _actionNode->setActionManager(_actionManager);
@@ -495,15 +607,16 @@ void UnitNode::updateActionNode(const Skill* skill, UnitDirection direction, flo
             }
             
             // TODO: remove temp code
-            if (kUnitClass_Building != unitClass || kSkillClass_Attack == skillClass) {
+            if (kUnitClass_Building != unitClass || (kSkillClass_Attack == skillClass || kSkillClass_Die == skillClass)) {
                 // play animation if needed
-                _currentAction = CSLoader::createTimeline(csbFile);
+                _currentAction = CSLoader::createTimeline(file);
                 _actionNode->runAction(_currentAction);
                 _currentAction->gotoFrameAndPlay(0, !isDead);
                 _currentAction->setCurrentFrame(currentFrame);
                 
                 // the attack animation should be fit for preperforming time
-                if (false && kSkillClass_Attack == skillClass) {
+                // TODO: remove temp code
+                if (WOLF_SOLDIER == unit_getName(_unit) && kSkillClass_Attack == skillClass) {
                     const float preperformingTime((float)skill->getTotalPrePerformFrames() / (float)GameConstants::FRAME_PER_SEC);
                     const float animationDuration((float)_currentAction->getDuration() / 60.0f);
                     animationSpeed = animationDuration / preperformingTime;
@@ -521,14 +634,18 @@ void UnitNode::updateActionNode(const Skill* skill, UnitDirection direction, flo
                     }
                     
                     _speedScheduler->setTimeScale(animationSpeed);
+                } else {
+                    if (_speedScheduler && _speedScheduler->getTimeScale() != 1.0f) {
+                        _speedScheduler->setTimeScale(1.0f);
+                    }
                 }
             }
             
             if (isDead) {
                 // TODO: remove irregular code
-                setLocalZOrder(-1);
+                setLocalZOrder(-1000);
                 // if it is a warrior or a hero
-                if (isMovableUnit && _currentAction) {
+                if (_currentAction) {
                     _currentAction->setLastFrameCallFunc([this]() {
                         if (_observer) {
                             _observer->onUnitNodePlayDeadAnimationFinished(this);
@@ -538,8 +655,8 @@ void UnitNode::updateActionNode(const Skill* skill, UnitDirection direction, flo
             } else {
                 if (kSkillClass_Attack == skillClass) {
                     if (_currentAction) {
-                        // if it is footman
                         if (unit_isShortRange(_unit)) {
+                            // if it is footman
                             _currentAction->setFrameEventCallFunc([this](cocostudio::timeline::Frame* frame) {
                                 if (_observer) {
                                     _observer->onUnitNodeFootmanAttackedTheTarget(this);

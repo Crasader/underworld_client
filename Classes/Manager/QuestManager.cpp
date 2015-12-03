@@ -8,6 +8,7 @@
 
 #include "QuestManager.h"
 #include "DataManager.h"
+#include "QuestData.h"
 #include "cocostudio/CocoStudio.h"
 
 using namespace std;
@@ -63,10 +64,29 @@ void QuestManager::updateQuestProgress(QuestType type, int questId, int progress
 {
     if (_questProgress.find(type) != _questProgress.end()) {
         map<int, QuestProgress>& map = _questProgress.at(type);
-        if (map.find(questId) != map.end()) {
-            map.at(questId).second = progress;
+        const QuestData* data = DataManager::getInstance()->getQuestData(type, questId);
+        if (data) {
+            // set progress
+            if (map.find(questId) != map.end()) {
+                assert(data == map.at(questId).first);
+                map.at(questId).second = progress;
+            } else {
+                map.insert(make_pair(questId, make_pair(data, progress)));
+            }
+            
+            // check if the quest if finished
+            if (progress >= data->getRequiredCount()) {
+                finishQuest(type, questId);
+            }
+        } else {
+            assert(false);
         }
     }
+}
+
+void QuestManager::getReward(QuestType type, int questId)
+{
+    
 }
 
 const vector<const QuestData*>& QuestManager::getQuestData(QuestType type)
