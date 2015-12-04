@@ -58,8 +58,13 @@ static inline bool unit_isThisFaction(const Unit* unit)
 
 static inline bool unit_isShortRange(const Unit* unit)
 {
-    const AttackSkillType* asType = dynamic_cast<const AttackSkillType*>(unit->getUnitType()->getDefaultAttackSkillType(kFieldType_Land));
-    return (asType && asType->getRange() < 5) ? true : false;
+    const string& name = unit_getName(unit);
+    if (WOLF_SOLDIER == name ||
+        VAMPIRE_SOLDIER == name) {
+        return true;
+    }
+    
+    return false;
 }
 
 static inline bool unit_isMovable(const Unit* unit)
@@ -80,6 +85,19 @@ static bool hasStandbyAnimation(const Unit* unit)
         const string& name = unit_getName(unit);
         if (WOLF_SOLDIER == name ||
             VAMPIRE_SOLDIER == name) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+// TODO: remove this test code
+static bool hasMultistepAnimation(const Unit* unit)
+{
+    if (kSkillClass_Attack == unit_getSkillClass(unit)) {
+        const string& name = unit_getName(unit);
+        if (WOLF_TOWER == name) {
             return true;
         }
     }
@@ -313,13 +331,22 @@ void UnitNode::addRecoveryEffect()
 
 void UnitNode::addSwordEffect()
 {
-    const bool isThisFaction(unit_isThisFaction(_unit));
-    Node* effect = addEffect(isThisFaction ? "wolf-attack-daoguang_0.csb" : "Vampire-tank-attack-daoguang.csb");
+    string file;
+    const string& name = unit_getName(_unit);
+    if (WOLF_SOLDIER == name) {
+        file = "wolf-attack-daoguang_0.csb";
+    } else if (VAMPIRE_SOLDIER == name) {
+        file = "Vampire-tank-attack-daoguang.csb";
+    }
     
-    // TODO: update temp code
-    if (false) {
-        const float scaleX(effect->getScaleX());
-        effect->setScaleX(-1 * scaleX);
+    if (file.length() > 0) {
+        Node* effect = addEffect(file);
+        
+        // TODO: update temp code
+        if (false) {
+            const float scaleX(effect->getScaleX());
+            effect->setScaleX(-1 * scaleX);
+        }
     }
 }
 
@@ -585,12 +612,7 @@ UnitNode::UnitDirection UnitNode::calculateDirection()
 void UnitNode::updateActionNode(const Skill* skill, const string& file, int currentFrame, bool flip)
 {
     if (_unit) {
-        if (_actionNode) {
-            _actionNode->stopAllActions();
-            _actionNode->removeFromParent();
-            _actionNode = nullptr;
-            _currentAction = nullptr;
-        }
+        removeActionNode();
         
         const UnitClass unitClass = _unit->getUnitType()->getUnitClass();
         const SkillClass skillClass(unit_getSkillClass(_unit));
@@ -710,6 +732,16 @@ void UnitNode::updateActionNode(const Skill* skill, const string& file, int curr
         }
     } else {
         assert(false);
+    }
+}
+
+void UnitNode::removeActionNode()
+{
+    if (_actionNode) {
+        _actionNode->stopAllActions();
+        _actionNode->removeFromParent();
+        _actionNode = nullptr;
+        _currentAction = nullptr;
     }
 }
 

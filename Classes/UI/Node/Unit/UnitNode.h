@@ -61,6 +61,7 @@ protected:
     bool checkIsStandby(const UnderWorld::Core::Skill* skill);
     UnitDirection calculateDirection();
     void updateActionNode(const UnderWorld::Core::Skill* skill, const std::string& file, int currentFrame, bool flip);
+    void removeActionNode();
     void addHPBar();
     void updateHPBar();
     void removeHPBar();
