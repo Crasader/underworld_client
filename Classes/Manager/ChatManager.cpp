@@ -22,7 +22,7 @@ ChatManager::~ChatManager()
     
 }
 
-void ChatManager::init(const rapidjson::Document& jsonDict)
+void ChatManager::init(const rapidjson::Value& jsonDict)
 {
     
 }
@@ -34,4 +34,9 @@ const vector<const ChatData*>& ChatManager::getChatData(ChatType type)
     }
     
     return _chatData.at(type);
+}
+
+void ChatManager::sendMessage(ChatType type, int contacter, const string& message)
+{
+    
 }

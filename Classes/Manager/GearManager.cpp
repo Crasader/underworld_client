@@ -21,7 +21,7 @@ GearManager::~GearManager()
     
 }
 
-void GearManager::initGear(const rapidjson::Document& jsonDict)
+void GearManager::initGear(const rapidjson::Value& jsonDict)
 {
     
 }

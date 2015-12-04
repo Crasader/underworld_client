@@ -21,7 +21,7 @@ GuildManager::~GuildManager()
     
 }
 
-void GuildManager::initGuild(const rapidjson::Document& jsonDict)
+void GuildManager::initGuild(const rapidjson::Value& jsonDict)
 {
     
 }

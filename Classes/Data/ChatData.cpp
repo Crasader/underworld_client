@@ -13,18 +13,16 @@
 using namespace std;
 
 #pragma mark =====================================================
-#pragma mark Quest Data
+#pragma mark Chat Data
 #pragma mark =====================================================
 
-ChatData::ChatData(ChatType type, tinyxml2::XMLElement *xmlElement)
+ChatData::ChatData(ChatType type, const rapidjson::Value& jsonDict)
 :_id(0)
 ,_type(kChatType_World)
 ,_userId(0)
 ,_timeStamp(0)
 {
-    if (xmlElement) {
-        
-    }
+    
 }
 
 ChatData::~ChatData()

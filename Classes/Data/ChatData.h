@@ -10,10 +10,8 @@
 #define ChatData_h
 
 #include <iostream>
-#include <vector>
 #include "CocosGlobal.h"
-
-namespace tinyxml2 { class XMLElement; }
+#include "json/document.h"
 
 // =====================================================
 // Chat Data
@@ -22,7 +20,7 @@ namespace tinyxml2 { class XMLElement; }
 class ChatData
 {
 public:
-    ChatData(ChatType type, tinyxml2::XMLElement *xmlElement);
+    ChatData(ChatType type, const rapidjson::Value& jsonDict);
     virtual ~ChatData();
     
     int getId() const;

@@ -47,7 +47,7 @@
 		309F76951BE8851000B2791F /* Rect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F76931BE8851000B2791F /* Rect.cpp */; };
 		309F769A1BE9D7BD00B2791F /* Camp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F76981BE9D7BD00B2791F /* Camp.cpp */; };
 		309F76A01BEA3ABA00B2791F /* CoreUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F769E1BEA3AB900B2791F /* CoreUtils.cpp */; };
-		30DF03C41C0D898E00A1C6EB /* EffectType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DF03C21C0D898E00A1C6EB /* EffectType.cpp */; settings = {ASSET_TAGS = (); }; };
+		30DF03C41C0D898E00A1C6EB /* EffectType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DF03C21C0D898E00A1C6EB /* EffectType.cpp */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
@@ -141,6 +141,10 @@
 		A1E929731C0D7E890026D85D /* ChatManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E929711C0D7E890026D85D /* ChatManager.cpp */; };
 		A1E929761C0D7EAD0026D85D /* GearManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E929741C0D7EAD0026D85D /* GearManager.cpp */; };
 		A1E929791C0D7F9A0026D85D /* ChatData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E929771C0D7F9A0026D85D /* ChatData.cpp */; };
+		A1F885471C10409A0035B4C5 /* UserManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F885451C10409A0035B4C5 /* UserManager.cpp */; };
+		A1F8854A1C1041A10035B4C5 /* GearData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F885481C1041A10035B4C5 /* GearData.cpp */; };
+		A1F8854D1C1044500035B4C5 /* UserData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F8854B1C1044500035B4C5 /* UserData.cpp */; };
+		A1F885501C1044640035B4C5 /* UserSimpleData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F8854E1C1044640035B4C5 /* UserSimpleData.cpp */; };
 		A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A1FC49B31BD8C249005C1B2E /* CrashHelper.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		A1FC49B61BD8DBCF005C1B2E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1FC49B51BD8DBCF005C1B2E /* MessageUI.framework */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
@@ -416,6 +420,14 @@
 		A1E929751C0D7EAD0026D85D /* GearManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GearManager.h; sourceTree = "<group>"; };
 		A1E929771C0D7F9A0026D85D /* ChatData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChatData.cpp; sourceTree = "<group>"; };
 		A1E929781C0D7F9A0026D85D /* ChatData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatData.h; sourceTree = "<group>"; };
+		A1F885451C10409A0035B4C5 /* UserManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserManager.cpp; sourceTree = "<group>"; };
+		A1F885461C10409A0035B4C5 /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserManager.h; sourceTree = "<group>"; };
+		A1F885481C1041A10035B4C5 /* GearData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GearData.cpp; sourceTree = "<group>"; };
+		A1F885491C1041A10035B4C5 /* GearData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GearData.h; sourceTree = "<group>"; };
+		A1F8854B1C1044500035B4C5 /* UserData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserData.cpp; sourceTree = "<group>"; };
+		A1F8854C1C1044500035B4C5 /* UserData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserData.h; sourceTree = "<group>"; };
+		A1F8854E1C1044640035B4C5 /* UserSimpleData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserSimpleData.cpp; sourceTree = "<group>"; };
+		A1F8854F1C1044640035B4C5 /* UserSimpleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserSimpleData.h; sourceTree = "<group>"; };
 		A1FC49B21BD8C249005C1B2E /* CrashHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashHelper.h; sourceTree = "<group>"; };
 		A1FC49B31BD8C249005C1B2E /* CrashHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrashHelper.m; sourceTree = "<group>"; };
 		A1FC49B51BD8DBCF005C1B2E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = DEVELOPER_DIR; };
@@ -821,8 +833,14 @@
 			children = (
 				A1E929771C0D7F9A0026D85D /* ChatData.cpp */,
 				A1E929781C0D7F9A0026D85D /* ChatData.h */,
+				A1F885481C1041A10035B4C5 /* GearData.cpp */,
+				A1F885491C1041A10035B4C5 /* GearData.h */,
 				A12D2F581BFDE92400389DAC /* QuestData.cpp */,
 				A12D2F591BFDE92400389DAC /* QuestData.h */,
+				A1F8854B1C1044500035B4C5 /* UserData.cpp */,
+				A1F8854C1C1044500035B4C5 /* UserData.h */,
+				A1F8854E1C1044640035B4C5 /* UserSimpleData.cpp */,
+				A1F8854F1C1044640035B4C5 /* UserSimpleData.h */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -848,6 +866,8 @@
 				A1720ED01BCD38FB00217E98 /* SoundManager.h */,
 				A1720E6A1BCCDF1900217E98 /* UserDefaultsDataManager.cpp */,
 				A1720E6B1BCCDF1900217E98 /* UserDefaultsDataManager.h */,
+				A1F885451C10409A0035B4C5 /* UserManager.cpp */,
+				A1F885461C10409A0035B4C5 /* UserManager.h */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -1203,6 +1223,7 @@
 				045116E31BCFBA39002AA721 /* Map.cpp in Sources */,
 				CBA296431BE37FB1006BE7A0 /* GameScheduler.cpp in Sources */,
 				309F76A01BEA3ABA00B2791F /* CoreUtils.cpp in Sources */,
+				A1F885471C10409A0035B4C5 /* UserManager.cpp in Sources */,
 				A1A4BA491BCE096300175E8A /* Utils.cpp in Sources */,
 				A1720E741BCCE0A200217E98 /* FixedLabelAtlas.cpp in Sources */,
 				CB075C041BDDD8AC00C7FD68 /* MapLayer.cpp in Sources */,
@@ -1238,6 +1259,7 @@
 				A1720ED11BCD38FB00217E98 /* SoundManager.cpp in Sources */,
 				300098D61BD5E81700B6E284 /* InstanceFactory.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
+				A1F8854D1C1044500035B4C5 /* UserData.cpp in Sources */,
 				A103F45C1BE37E2A007F9A83 /* UnitNode.cpp in Sources */,
 				A1720E691BCCDEFF00217E98 /* DataManager.cpp in Sources */,
 				A1211B291C0BF68E00C27CCC /* GameConstants.cpp in Sources */,
@@ -1248,6 +1270,8 @@
 				A1720E8D1BCCE19300217E98 /* AESCTREncryptor.cpp in Sources */,
 				0451170B1BCFBA53002AA721 /* Unit.cpp in Sources */,
 				045117061BCFBA53002AA721 /* Buff.cpp in Sources */,
+				A1F8854A1C1041A10035B4C5 /* GearData.cpp in Sources */,
+				A1F885501C1044640035B4C5 /* UserSimpleData.cpp in Sources */,
 				A1720E901BCCE19300217E98 /* MD5Verifier.cpp in Sources */,
 				A1720EBA1BCD2D2E00217E98 /* RMStore.m in Sources */,
 				3075346D1BF324340057DCED /* EventTrigger.cpp in Sources */,

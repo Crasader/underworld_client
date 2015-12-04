@@ -49,4 +49,17 @@ typedef enum {
     kChatType_Private,
 }ChatType;
 
+typedef enum {
+    kGearType_Weapon = 0,
+    kGearType_Armor,
+    kGearType_Accessory,
+}GearType;
+
+typedef enum {
+    kGearQuality_White = 0,
+    kGearQuality_Blue,
+    kGearQuality_Purple,
+    kGearQuality_Orange,
+}GearQuality;
+
 #endif /* CocosGlobal_h */

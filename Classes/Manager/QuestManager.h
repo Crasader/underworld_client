@@ -21,7 +21,7 @@ public:
     QuestManager();
     virtual ~QuestManager();
     
-    void initQuest(QuestType type, const rapidjson::Document& jsonDict);
+    void initQuest(QuestType type, const rapidjson::Value& jsonDict);
     void updateQuestProgress(QuestType type, int questId, int progress);
     void getReward(QuestType type, int questId);
     

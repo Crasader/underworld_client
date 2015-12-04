@@ -18,7 +18,7 @@ public:
     GuildManager();
     virtual ~GuildManager();
     
-    void initGuild(const rapidjson::Document& jsonDict);
+    void initGuild(const rapidjson::Value& jsonDict);
     
 protected:
     CC_DISALLOW_COPY_AND_ASSIGN(GuildManager);

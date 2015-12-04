@@ -18,7 +18,7 @@ public:
     GearManager();
     virtual ~GearManager();
     
-    void initGear(const rapidjson::Document& jsonDict);
+    void initGear(const rapidjson::Value& jsonDict);
     
 protected:
     CC_DISALLOW_COPY_AND_ASSIGN(GearManager);

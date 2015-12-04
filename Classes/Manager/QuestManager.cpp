@@ -24,7 +24,7 @@ QuestManager::~QuestManager()
     
 }
 
-void QuestManager::initQuest(QuestType type, const rapidjson::Document& jsonDict)
+void QuestManager::initQuest(QuestType type, const rapidjson::Value& jsonDict)
 {
     if (_questData.find(type) != _questData.end()) {
         _questData.at(type).clear();

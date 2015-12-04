@@ -21,8 +21,10 @@ public:
     ChatManager();
     virtual ~ChatManager();
     
-    void init(const rapidjson::Document& jsonDict);
+    void init(const rapidjson::Value& jsonDict);
     const std::vector<const ChatData*>& getChatData(ChatType type);
+    
+    void sendMessage(ChatType type, int contacter, const std::string& message);
     
 protected:
     CC_DISALLOW_COPY_AND_ASSIGN(ChatManager);
