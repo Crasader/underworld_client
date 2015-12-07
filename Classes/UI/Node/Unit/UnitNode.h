@@ -58,8 +58,11 @@ protected:
     UnitNode();
     bool init(const UnderWorld::Core::Unit* unit);
     const std::string getCsbFile(UnitDirection direction, float hpPercentage);
+    void getMultipleAnimationFiles(std::vector<std::string>& output);
     bool checkIsStandby(const UnderWorld::Core::Skill* skill);
     UnitDirection calculateDirection();
+    void addActionNode(const std::string& file, bool play, bool loop, float playTime, int frameIndex, const std::function<void()>& lastFrameCallFunc);
+    void addMultipleAnimationNode(int frameIndex, const std::function<void()>& lastFrameCallFunc);
     void updateActionNode(const UnderWorld::Core::Skill* skill, const std::string& file, int currentFrame, bool flip);
     void removeActionNode();
     void addHPBar();
@@ -86,6 +89,7 @@ private:
     float _lastHpPercentage;
     int _switchAnimationCounter;
     bool _isStandby;
+    std::vector<std::string> _multipleAnimationFiles;
 };
 
 #endif /* UnitNode_h */

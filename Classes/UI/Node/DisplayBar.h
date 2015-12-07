@@ -23,19 +23,20 @@ typedef enum
 class DisplayBar : public Node
 {
 public:
-    static DisplayBar* create(DisplayBarType type, UnderWorld::Core::UnitClass unitClass);
+    static DisplayBar* create(DisplayBarType type, int factionIndex, UnderWorld::Core::UnitClass unitClass);
     virtual ~DisplayBar();
     void setPercentage(float percentage);
     float getPercentage() const;
     
 protected:
     DisplayBar();
-    bool init(DisplayBarType type, UnderWorld::Core::UnitClass unitClass);
-    void getFiles(bool lowPercentage, std::string& bgFile, std::string& ptFile) const;
+    bool init(DisplayBarType type, int factionIndex, UnderWorld::Core::UnitClass unitClass);
+    void getFiles(bool green, std::string& bgFile, std::string& ptFile) const;
     
 private:
     ProgressTimer* _pt;
     DisplayBarType _type;
+    int _factionIndex;
     UnderWorld::Core::UnitClass _unitClass;
 };
 

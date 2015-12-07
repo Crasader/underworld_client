@@ -92,19 +92,6 @@ static bool hasStandbyAnimation(const Unit* unit)
     return false;
 }
 
-// TODO: remove this test code
-static bool hasMultistepAnimation(const Unit* unit)
-{
-    if (kSkillClass_Attack == unit_getSkillClass(unit)) {
-        const string& name = unit_getName(unit);
-        if (WOLF_TOWER == name) {
-            return true;
-        }
-    }
-    
-    return false;
-}
-
 #pragma mark ======================= Class UnitNode =======================
 UnitNode* UnitNode::create(const Unit* unit)
 {
@@ -548,6 +535,19 @@ const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
     return csbFile;
 }
 
+void UnitNode::getMultipleAnimationFiles(vector<string>& output)
+{
+    output.clear();
+    if (kSkillClass_Attack == unit_getSkillClass(_unit)) {
+        const string& name = unit_getName(_unit);
+        if (WOLF_TOWER == name) {
+            for (int i = 0; i < 3; ++i) {
+                output.push_back(StringUtils::format("wolf-tower-defense-%d.csb", i + 1));
+            }
+        }
+    }
+}
+
 bool UnitNode::checkIsStandby(const Skill* skill)
 {
     const SkillClass skillClass(skill->getSkillType()->getSkillClass());
@@ -609,6 +609,83 @@ UnitNode::UnitDirection UnitNode::calculateDirection()
     return kUnitDirection_Left;
 }
 
+void UnitNode::addActionNode(const string& file, bool play, bool loop, float playTime, int frameIndex, const function<void()>& lastFrameCallFunc)
+{
+    removeActionNode();
+    
+    if (file.length() > 0) {
+        // add node
+        _actionNode = CSLoader::createNode(file);
+        _sprite = dynamic_cast<Sprite*>(*(_actionNode->getChildren().begin()));
+        addChild(_actionNode);
+        
+        if (play) {
+            // 1. add scheduler
+            if (!_speedScheduler) {
+                _speedScheduler = new Scheduler();
+                Director::getInstance()->getScheduler()->scheduleUpdate(_speedScheduler, 0, false);
+                if (!_actionManager) {
+                    _actionManager = new ActionManager();
+                    _speedScheduler->scheduleUpdate(_actionManager, 0, false);
+                }
+            }
+            
+            // 2. set actionManager every time before play animation
+            if (_actionManager) {
+                _actionNode->setActionManager(_actionManager);
+            }
+            
+            // play animation if needed
+            _currentAction = CSLoader::createTimeline(file);
+            _actionNode->runAction(_currentAction);
+            _currentAction->gotoFrameAndPlay(0, loop);
+            _currentAction->setCurrentFrame(frameIndex);
+            _currentAction->setLastFrameCallFunc(lastFrameCallFunc);
+            
+            float scale(1.0f);
+            float speed(1.0f);
+            getActionParameters(scale, speed);
+            
+            // set scale
+            _actionNode->setScale(scale);
+            
+            // the attack animation should be fit for preperforming time
+            if (speed == 1.0f && playTime > 0.0f) {
+                const float animationDuration((float)_currentAction->getDuration() / 60.0f);
+                speed = animationDuration / playTime;
+            }
+            
+            if (speed != 1.0f) {
+                _speedScheduler->setTimeScale(speed);
+            } else if (_speedScheduler->getTimeScale() != 1.0f) {
+                _speedScheduler->setTimeScale(1.0f);
+            }
+        }
+    }
+}
+
+void UnitNode::addMultipleAnimationNode(int frameIndex, const function<void()>& lastFrameCallFunc)
+{
+    static function<void()> callback = nullptr;
+    callback = lastFrameCallFunc;
+    
+    const SkillClass skillClass = unit_getSkillClass(_unit);
+    const string& name = unit_getName(_unit);
+    if (kSkillClass_Attack == skillClass) {
+        if (_multipleAnimationFiles.size() > 0) {
+            if (WOLF_TOWER == name) {
+                const string& file = _multipleAnimationFiles.front();
+                addActionNode(file, true, false, 0.0f, 0, [this]() {
+                    _multipleAnimationFiles.erase(_multipleAnimationFiles.begin());
+                    addMultipleAnimationNode(0, callback);
+                });
+            }
+        } else if (callback) {
+            callback();
+        }
+    }
+}
+
 void UnitNode::updateActionNode(const Skill* skill, const string& file, int currentFrame, bool flip)
 {
     if (_unit) {
@@ -625,111 +702,66 @@ void UnitNode::updateActionNode(const Skill* skill, const string& file, int curr
             removeHPBar();
         }
         
-        if (file.length() > 0) {
+        getMultipleAnimationFiles(_multipleAnimationFiles);
+        if (_multipleAnimationFiles.size() > 0) {
+            addMultipleAnimationNode(0, nullptr);
+        } else if (file.length() > 0) {
+            const bool playAnimation(kUnitClass_Building != unitClass || (kSkillClass_Attack == skillClass || kSkillClass_Die == skillClass));
+            const float playTime(hasStandbyAnimation(_unit) ? skill->getTotalPrePerformFrames() / (float)GameConstants::FRAME_PER_SEC : 0.0f);
             // add node
-            _actionNode = CSLoader::createNode(file);
-            addChild(_actionNode);
-            if (_actionManager) {
-                _actionNode->setActionManager(_actionManager);
-            }
-            
-            // TODO: remove temp code
-            if (kUnitClass_Core == unitClass) {
-                _actionNode->setScale(0.6f);
-            }
-            
-            // get parameters
-            float nodeScale;
-            float animationSpeed;
-            getActionParameters(nodeScale, animationSpeed);
-            if (nodeScale != 1.0f) {
-                const float scale = _actionNode->getScale();
-                _actionNode->setScale(scale * nodeScale);
-            }
-            
-            // flip if needed
-            if (flip) {
-                const float scaleX = _actionNode->getScaleX();
-                _actionNode->setScaleX(-1 * scaleX);
-            }
-            
-            // TODO: remove temp code
-            if (kUnitClass_Building != unitClass || (kSkillClass_Attack == skillClass || kSkillClass_Die == skillClass)) {
-                // play animation if needed
-                _currentAction = CSLoader::createTimeline(file);
-                _actionNode->runAction(_currentAction);
-                _currentAction->gotoFrameAndPlay(0, !isDead);
-                _currentAction->setCurrentFrame(currentFrame);
-                
-                // the attack animation should be fit for preperforming time
-                if (hasStandbyAnimation(_unit)) {
-                    const float preperformingTime((float)skill->getTotalPrePerformFrames() / (float)GameConstants::FRAME_PER_SEC);
-                    const float animationDuration((float)_currentAction->getDuration() / 60.0f);
-                    animationSpeed = animationDuration / preperformingTime;
+            addActionNode(file, playAnimation, !isDead, playTime, currentFrame, [=]() {
+                if (isDead && _observer) {
+                    _observer->onUnitNodePlayDeadAnimationFinished(this);
                 }
-                
-                if (animationSpeed != 1.0f) {
-                    // add scheduler
-                    if (!_speedScheduler) {
-                        _speedScheduler = new Scheduler();
-                        Director::getInstance()->getScheduler()->scheduleUpdate(_speedScheduler, 0, false);
-                        if (!_actionManager) {
-                            _actionManager = new ActionManager();
-                            _speedScheduler->scheduleUpdate(_actionManager, 0, false);
-                        }
-                    }
-                    
-                    _speedScheduler->setTimeScale(animationSpeed);
-                } else {
-                    if (_speedScheduler && _speedScheduler->getTimeScale() != 1.0f) {
-                        _speedScheduler->setTimeScale(1.0f);
-                    }
-                }
-            }
-            
-            if (isDead) {
-                // TODO: remove irregular code
-                setLocalZOrder(-1000);
-                // if it is a warrior or a hero
-                if (_currentAction) {
-                    _currentAction->setLastFrameCallFunc([this]() {
-                        if (_observer) {
-                            _observer->onUnitNodePlayDeadAnimationFinished(this);
-                        }
-                    });
-                }
-            } else {
-                if (kSkillClass_Attack == skillClass) {
-                    if (_currentAction) {
-                        if (unit_isShortRange(_unit)) {
-                            // if it is footman
-                            _currentAction->setFrameEventCallFunc([this](cocostudio::timeline::Frame* frame) {
-                                if (_observer) {
-                                    _observer->onUnitNodeFootmanAttackedTheTarget(this);
-                                }
-                            });
-                        }
-                    }
-                }
-            }
-            
-            _sprite = dynamic_cast<Sprite*>(*(_actionNode->getChildren().begin()));
-            if (_sprite) {
-                // add shadow
-                if (kSkillClass_Move == skillClass ||
-                    kSkillClass_Attack == skillClass) {
-                    addShadow();
-                }
-                
-                // add HP bar
-                if (!isDead && !_hpBar) {
-                    addHPBar();
-                    updateHPBar();
-                }
-            }
+            });
         } else {
             assert(false);
         }
+        
+        // TODO: remove temp code
+        if (kUnitClass_Core == unitClass) {
+            const float scale = _actionNode->getScale();
+            _actionNode->setScale(0.6f * scale);
+        }
+        
+        // flip if needed
+        if (flip) {
+            const float scaleX = _actionNode->getScaleX();
+            _actionNode->setScaleX(-1 * scaleX);
+        }
+        
+        if (isDead) {
+            // TODO: remove irregular code
+            setLocalZOrder(-1000);
+        } else {
+            if (kSkillClass_Attack == skillClass) {
+                if (_currentAction) {
+                    if (unit_isShortRange(_unit)) {
+                        // if it is footman
+                        _currentAction->setFrameEventCallFunc([this](cocostudio::timeline::Frame* frame) {
+                            if (_observer) {
+                                _observer->onUnitNodeFootmanAttackedTheTarget(this);
+                            }
+                        });
+                    }
+                }
+            }
+        }
+        
+        if (_sprite) {
+            // add shadow
+            if (kSkillClass_Move == skillClass ||
+                kSkillClass_Attack == skillClass) {
+                addShadow();
+            }
+            
+            // add HP bar
+            if (!isDead && !_hpBar) {
+                addHPBar();
+                updateHPBar();
+            }
+        }
+        
     } else {
         assert(false);
     }
@@ -748,8 +780,7 @@ void UnitNode::removeActionNode()
 void UnitNode::addHPBar()
 {
     if (!_hpBar && _unit) {
-        const UnitClass unitClass = _unit->getUnitType()->getUnitClass();
-        _hpBar = DisplayBar::create(kHP, unitClass);
+        _hpBar = DisplayBar::create(kHP, _unit->getBelongFaction()->getFactionIndex(), _unit->getUnitType()->getUnitClass());
         const Size& size = _sprite->getContentSize();
         const Point& pos = _sprite->getPosition();
         const Point position(pos + Point(0, size.height / 2 + 10.0f));

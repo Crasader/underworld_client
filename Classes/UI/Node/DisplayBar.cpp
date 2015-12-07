@@ -8,10 +8,10 @@
 
 #include "DisplayBar.h"
 
-DisplayBar* DisplayBar::create(DisplayBarType type, UnderWorld::Core::UnitClass unitClass)
+DisplayBar* DisplayBar::create(DisplayBarType type, int factionIndex, UnderWorld::Core::UnitClass unitClass)
 {
     DisplayBar *ret = new (std::nothrow) DisplayBar();
-    if (ret && ret->init(type, unitClass))
+    if (ret && ret->init(type, factionIndex, unitClass))
     {
         ret->autorelease();
         return ret;
@@ -26,7 +26,8 @@ DisplayBar* DisplayBar::create(DisplayBarType type, UnderWorld::Core::UnitClass 
 DisplayBar::DisplayBar()
 :_pt(nullptr)
 ,_type(kHP)
-,_unitClass(UnderWorld::Core::kUnitClass_Warrior)
+,_factionIndex(-1)
+,_unitClass(static_cast<UnderWorld::Core::UnitClass>(-1))
 {
     
 }
@@ -47,6 +48,7 @@ void DisplayBar::setPercentage(float percentage)
         }
         
         if (_visible) {
+#if false
             // need to change the sprite
             static const float threshold = 50;
             if ((threshold - lastPercentage) * (threshold - percentage) <= 0) {
@@ -55,6 +57,7 @@ void DisplayBar::setPercentage(float percentage)
                 getFiles((percentage < threshold) ? true : false, unused, ptFile);
                 _pt->setSprite(Sprite::create(ptFile));
             }
+#endif
             
             _pt->setPercentage(percentage);
         }
@@ -70,15 +73,16 @@ float DisplayBar::getPercentage() const
     return 0.0f;
 }
 
-bool DisplayBar::init(DisplayBarType type, UnderWorld::Core::UnitClass unitClass)
+bool DisplayBar::init(DisplayBarType type, int factionIndex, UnderWorld::Core::UnitClass unitClass)
 {
     if (Node::init()) {
         _type = type;
+        _factionIndex = factionIndex;
         _unitClass = unitClass;
         
         std::string bgFile;
         std::string ptFile;
-        getFiles(false, bgFile, ptFile);
+        getFiles((factionIndex != 0), bgFile, ptFile);
         
         Sprite* bg = Sprite::create(bgFile);
         addChild(bg);
@@ -103,16 +107,16 @@ bool DisplayBar::init(DisplayBarType type, UnderWorld::Core::UnitClass unitClass
     return false;
 }
 
-void DisplayBar::getFiles(bool lowPercentage, std::string& bgFile, std::string& ptFile) const
+void DisplayBar::getFiles(bool green, std::string& bgFile, std::string& ptFile) const
 {
     const bool isBig = (UnderWorld::Core::kUnitClass_Building == _unitClass || UnderWorld::Core::kUnitClass_Core == _unitClass) ? true : false;
     if (true) {
         if (isBig) {
             bgFile.assign("GameImages/test/ui_blood_3.png");
-            ptFile.assign(lowPercentage ? "GameImages/test/ui_blood_5.png" : "GameImages/test/ui_blood_4.png");
+            ptFile.assign(green ? "GameImages/test/ui_blood_5.png" : "GameImages/test/ui_blood_4.png");
         } else {
             bgFile.assign("GameImages/test/ui_blood.png");
-            ptFile.assign(lowPercentage ? "GameImages/test/ui_blood_2.png" : "GameImages/test/ui_blood_1.png");
+            ptFile.assign(green ? "GameImages/test/ui_blood_2.png" : "GameImages/test/ui_blood_1.png");
         }
     }
 }
