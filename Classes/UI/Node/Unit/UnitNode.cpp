@@ -553,7 +553,7 @@ bool UnitNode::checkIsStandby(const Skill* skill)
     return false;
 }
 
-UnitNode::UnitDirection UnitNode::calculateDirection()
+UnitDirection UnitNode::calculateDirection()
 {
     if (_unit) {
 #if false
@@ -582,10 +582,10 @@ UnitNode::UnitDirection UnitNode::calculateDirection()
         
 //        CCLOG("==== angel : %.1f ====\n currentPos: %d-%d, targetPos: %d-%d", angel, currentPos.x, currentPos.y, targetPos.x, targetPos.y);
         
-        UnitNode::UnitDirection direction = kUnitDirection_Left;
+        UnitDirection direction = kUnitDirection_Left;
         for (int i = 0; i < directionCount; ++i) {
             if (angel < directionAngelEdge[i]) {
-                direction = static_cast<UnitNode::UnitDirection>(i + 2);
+                direction = static_cast<UnitDirection>(i + 2);
                 break;
             }
         }

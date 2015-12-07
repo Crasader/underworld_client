@@ -11,6 +11,7 @@
 #include "LocalHelper.h"
 #include "QuestData.h"
 
+USING_NS_CC;
 using namespace std;
 
 template<typename _type>
@@ -68,6 +69,8 @@ DataManager::~DataManager()
     if (_quests.find(kQuestType_Life) != _quests.end()) {
         clearMap(_quests.at(kQuestType_Life));
     }
+    
+    clearMap(_animationParameters);
 }
 
 void DataManager::init()
@@ -88,6 +91,19 @@ const QuestData* DataManager::getQuestData(QuestType type, int questId) const
     return nullptr;
 }
 
+AnimationParameters DataManager::getAnimationParameters(const string& name, UnderWorld::Core::SkillClass skillClass, UnitDirection direction)
+{
+    string key = name + StringUtils::format("_%d", skillClass);
+    if (_animationParameters.find(key) != _animationParameters.end()) {
+        AnimationConfigData* data = _animationParameters.at(key);
+        if (data) {
+            return data->getAnimationParameters(direction);
+        }
+    }
+    
+    return {1.0f, 1.0f};
+}
+
 void DataManager::parseQuestData(QuestType type)
 {
     string fileName;
@@ -105,7 +121,7 @@ void DataManager::parseQuestData(QuestType type)
         _quests.insert(make_pair(type, map<int, QuestData*>()));
     }
     
-    if (LocalHelper::isFileExists(fileName))
+    if (FileUtils::getInstance()->isFileExist(fileName))
     {
         tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
         if (xmlDoc)
@@ -125,6 +141,35 @@ void DataManager::parseQuestData(QuestType type)
                     assert(false);
                 } else {
                     quests.insert(make_pair(questId, data));
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
+void DataManager::parseAnimationConfigData()
+{
+    static string fileName("");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                const char* name = item->Attribute("name");
+                const char* skill = item->Attribute("skill");
+                if (name && skill) {
+                    AnimationConfigData* data = new (nothrow) AnimationConfigData(item);
+                    string key = StringUtils::format("%s_%s", name, skill);
+                    _animationParameters.insert(make_pair(key, data));
                 }
             }
             

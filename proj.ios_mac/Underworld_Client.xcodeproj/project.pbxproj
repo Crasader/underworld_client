@@ -146,6 +146,7 @@
 		A1F8854A1C1041A10035B4C5 /* GearData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F885481C1041A10035B4C5 /* GearData.cpp */; };
 		A1F8854D1C1044500035B4C5 /* UserData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F8854B1C1044500035B4C5 /* UserData.cpp */; };
 		A1F885501C1044640035B4C5 /* UserSimpleData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F8854E1C1044640035B4C5 /* UserSimpleData.cpp */; };
+		A1FBE23B1C15891300FC4936 /* AnimationConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1FBE2391C15891300FC4936 /* AnimationConfigData.cpp */; };
 		A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A1FC49B31BD8C249005C1B2E /* CrashHelper.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		A1FC49B61BD8DBCF005C1B2E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1FC49B51BD8DBCF005C1B2E /* MessageUI.framework */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
@@ -431,6 +432,8 @@
 		A1F8854C1C1044500035B4C5 /* UserData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserData.h; sourceTree = "<group>"; };
 		A1F8854E1C1044640035B4C5 /* UserSimpleData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserSimpleData.cpp; sourceTree = "<group>"; };
 		A1F8854F1C1044640035B4C5 /* UserSimpleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserSimpleData.h; sourceTree = "<group>"; };
+		A1FBE2391C15891300FC4936 /* AnimationConfigData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimationConfigData.cpp; sourceTree = "<group>"; };
+		A1FBE23A1C15891300FC4936 /* AnimationConfigData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationConfigData.h; sourceTree = "<group>"; };
 		A1FC49B21BD8C249005C1B2E /* CrashHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashHelper.h; sourceTree = "<group>"; };
 		A1FC49B31BD8C249005C1B2E /* CrashHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrashHelper.m; sourceTree = "<group>"; };
 		A1FC49B51BD8DBCF005C1B2E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = DEVELOPER_DIR; };
@@ -836,6 +839,8 @@
 		A12D2F571BFDE88A00389DAC /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				A1FBE2391C15891300FC4936 /* AnimationConfigData.cpp */,
+				A1FBE23A1C15891300FC4936 /* AnimationConfigData.h */,
 				A1E929771C0D7F9A0026D85D /* ChatData.cpp */,
 				A1E929781C0D7F9A0026D85D /* ChatData.h */,
 				A1F885481C1041A10035B4C5 /* GearData.cpp */,
@@ -1267,6 +1272,7 @@
 				A1F8854D1C1044500035B4C5 /* UserData.cpp in Sources */,
 				A103F45C1BE37E2A007F9A83 /* UnitNode.cpp in Sources */,
 				A1720E691BCCDEFF00217E98 /* DataManager.cpp in Sources */,
+				A1FBE23B1C15891300FC4936 /* AnimationConfigData.cpp in Sources */,
 				A1211B291C0BF68E00C27CCC /* GameConstants.cpp in Sources */,
 				A1E929731C0D7E890026D85D /* ChatManager.cpp in Sources */,
 				301C1B7A1C0EA67200B378A6 /* Effect.cpp in Sources */,

@@ -60,6 +60,12 @@ void GameRender::init(const Game* game, Commander* commander)
     if (_mapUILayer) {
         _mapUILayer->initWithGame(game);
     }
+    
+    // TODO: remove test code
+    for (int i = 0; i < 3; ++i) {
+        const Camp* c = game->getWorld()->getCamp(1, i);
+        _commander->tryGiveCampCommand(c, 1);
+    }
 }
 
 void GameRender::render(const Game* game)

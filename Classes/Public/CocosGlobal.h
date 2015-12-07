@@ -45,6 +45,12 @@ typedef std::function<void()> httpRequestCallback;
 #define RES_NAME_GOLD       ("金子")
 #define RES_NAME_POPULATION ("人口")
 
+typedef enum {
+    kUnitDirection_LeftDown = 2,
+    kUnitDirection_Left,
+    kUnitDirection_LeftUp,
+}UnitDirection;
+
 typedef enum
 {
     kResourceType_Gem = 100,

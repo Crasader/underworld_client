@@ -11,6 +11,8 @@
 
 #include "cocos2d.h"
 #include "CocosGlobal.h"
+#include "AnimationConfigData.h"
+#include "SkllType.h"
 
 class QuestData;
 
@@ -22,6 +24,7 @@ public:
     
     void init();
     const QuestData* getQuestData(QuestType type, int questId) const;
+    AnimationParameters getAnimationParameters(const std::string& name, UnderWorld::Core::SkillClass skillClass, UnitDirection direction);
     
 protected:
     DataManager();
@@ -30,9 +33,11 @@ protected:
     
 protected:
     void parseQuestData(QuestType type);
+    void parseAnimationConfigData();
     
 private:
     std::map<QuestType, std::map<int, QuestData*>> _quests;
+    std::map<std::string, AnimationConfigData*> _animationParameters;
 };
 
 #endif /* DataManager_h */

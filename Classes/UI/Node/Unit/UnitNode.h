@@ -12,6 +12,7 @@
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 #include "cocostudio/CocoStudio.h"
+#include "CocosGlobal.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -46,13 +47,6 @@ public:
     void addSwordEffect();
     void addBuf();
     void removeBuf();
-    
-protected:
-    typedef enum {
-        kUnitDirection_LeftDown = 2,
-        kUnitDirection_Left,
-        kUnitDirection_LeftUp,
-    }UnitDirection;
     
 protected:
     UnitNode();

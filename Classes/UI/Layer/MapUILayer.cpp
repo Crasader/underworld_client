@@ -322,7 +322,7 @@ MapUILayer::MapUILayer()
 ,_opponentsHpPercentageLabel(nullptr)
 ,_sendTroopMenuItem(nullptr)
 ,_pauseMenuItem(nullptr)
-,_waveTime(waveTime)
+,_waveTime(11)
 ,_remainingTime(battleTotalTime)
 {
     static const Size& unitNodeSize = MapUIUnitNode::create(nullptr, 0)->getContentSize();
@@ -769,11 +769,11 @@ void MapUILayer::fakeTick(float dt)
     -- _waveTime;
     -- _remainingTime;
     
-    if (_waveTime < 0) {
+    if (_waveTime <= 0) {
         _waveTime = waveTime;
     }
     
-    if (_remainingTime < 0) {
+    if (_remainingTime <= 0) {
         _remainingTime = battleTotalTime;
     }
     
