@@ -29,6 +29,22 @@
 
 typedef std::function<void()> httpRequestCallback;
 
+// TODO: remove temp code
+#define WOLF_CORE       ("狼人基地")
+#define WOLF_TOWER      ("狼人箭塔")
+#define WOLF_SOLDIER    ("狼人步兵")
+#define WOLF_ARCHER     ("狼人射手")
+#define WOLF_WIZARD     ("狼人巫师")
+
+#define VAMPIRE_CORE    ("吸血鬼核心")
+#define VAMPIRE_TOWER   ("吸血鬼箭塔")
+#define VAMPIRE_SOLDIER ("吸血鬼战士")
+#define VAMPIRE_ARCHER  ("吸血鬼弓兵")
+#define VAMPIRE_WIZARD  ("吸血鬼巫师")
+
+#define RES_NAME_GOLD       ("金子")
+#define RES_NAME_POPULATION ("人口")
+
 typedef enum
 {
     kResourceType_Gem = 100,

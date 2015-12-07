@@ -36,6 +36,7 @@ class MapUIUnitNodeObserver
 public:
     virtual ~MapUIUnitNodeObserver() {}
     virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node) = 0;
+    virtual void onMapUIUnitNodeUpdated(MapUIUnitNode* node) = 0;
 };
 
 class MapUIUnitNode: public Node
@@ -45,7 +46,7 @@ public:
     virtual ~MapUIUnitNode();
     void registerObserver(MapUIUnitNodeObserver *observer);
     void reuse(const UnderWorld::Core::Camp* camp, ssize_t idx);
-    void update();
+    void update(bool reuse);
     void setSelected(bool selected);
     
     // getters
@@ -124,9 +125,11 @@ protected:
     
     // MapUIUnitNodeObserver
     virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node) override;
+    virtual void onMapUIUnitNodeUpdated(MapUIUnitNode* node) override;
     
     void onUnitTouched(MapUIUnitNode* node);
     void reloadTableView(ssize_t cellsCount);
+    void updateResources();
     
     // ======================== test =============================
     void fakeTick(float dt);

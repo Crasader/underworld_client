@@ -37,6 +37,33 @@ static ProgressTimer* createProgressTimer()
     return pt;
 }
 
+static string getIconFile(const string& unitName)
+{
+    static const string prefix("GameImages/test/");
+    static const string suffix(".png");
+    string file;
+    
+    if (WOLF_SOLDIER == unitName) {
+        file = "icon_w_langdun";
+    } else if (WOLF_ARCHER == unitName) {
+        file = "icon_w_langgongjian";
+    } else if (WOLF_WIZARD == unitName) {
+        file = "icon_w_langfashi";
+    } else if (VAMPIRE_SOLDIER == unitName) {
+        file = "icon_v_roudun";
+    } else if (VAMPIRE_ARCHER == unitName) {
+        file = "icon_v_nvgongjianshou";
+    } else if (VAMPIRE_WIZARD == unitName) {
+        file = "icon_v_nvwushi";
+    }
+    
+    if (file.length() > 0) {
+        return prefix + file + suffix;
+    }
+    
+    return "";
+}
+
 #pragma mark =====================================================
 #pragma mark Unit Node
 #pragma mark =====================================================
@@ -100,8 +127,9 @@ bool MapUIUnitNode::init(const Camp* camp, ssize_t idx)
             }
         }
 #else
-        static const string defaultIconFile("GameImages/test/icon_jz.png");
-        _iconButton = Button::create(defaultIconFile, defaultIconFile);
+        const string& unitName = camp ? camp->getUnitSetting().getUnitTypeName() : WOLF_SOLDIER;
+        const string& iconFile = getIconFile(unitName);
+        _iconButton = Button::create(iconFile, iconFile);
         _iconButton->setPressedActionEnabled(false);
         _iconButton->setSwallowTouches(false);
         addChild(_iconButton);
@@ -123,10 +151,20 @@ bool MapUIUnitNode::init(const Camp* camp, ssize_t idx)
             }
         });
         
-        _resourceButton = ResourceButton::create(false, kResourceType_Gold, 100, nullptr);
-        addChild(_resourceButton);
+        if (camp) {
+            const std::map<std::string, int>* costs = camp->getCosts();
+            if (costs) {
+                if (costs->find(RES_NAME_GOLD) != costs->end()) {
+                    _resourceButton = ResourceButton::create(false, kResourceType_Gold, costs->at(RES_NAME_GOLD), nullptr);
+                    addChild(_resourceButton);
+                }
+            }
+        } else {
+            _resourceButton = ResourceButton::create(false, kResourceType_Gold, 100, nullptr);
+            addChild(_resourceButton);
+        }
         
-        _countLabel = CocosUtils::createLabel(StringUtils::format("X %d", 100), DEFAULT_FONT_SIZE);
+        _countLabel = CocosUtils::createLabel("0", DEFAULT_FONT_SIZE);
         addChild(_countLabel);
         
         const float iconHeight = _iconButton->getContentSize().height;
@@ -143,7 +181,9 @@ bool MapUIUnitNode::init(const Camp* camp, ssize_t idx)
         _resourceButton->setPosition(Point(x, y - (iconHeight + resourceHeight) / 2 - offsetY));
         _countLabel->setPosition(Point(x, y + (iconHeight + countHeight) / 2 + offsetY));
         
-        reuse(camp, idx);
+        if (camp) {
+            reuse(camp, idx);
+        }
 #endif
         
         return true;
@@ -163,21 +203,32 @@ void MapUIUnitNode::reuse(const Camp* camp, ssize_t idx)
     _idx = idx;
     
     const string& unitName = camp ? camp->getUnitSetting().getUnitTypeName() : "";
-    const string& iconFile = (unitName.find("步兵") != string::npos) ? "GameImages/test/icon_jz.png" : "GameImages/test/icon_gjs.png";
-    _iconButton->loadTextures(iconFile, iconFile);
-    
-    // TODO: load resource count from camp
-    const int count = 100;
-    _resourceButton->setCount(count);
+    const string& iconFile = getIconFile(unitName);
+    if (iconFile.length() > 0) {
+        _iconButton->loadTextures(iconFile, iconFile);
+    }
     
     // update mutable data
-    update();
+    update(true);
 }
 
-void MapUIUnitNode::update()
+void MapUIUnitNode::update(bool reuse)
 {
     if (_camp) {
         _countLabel->setString(StringUtils::format("%d/%d", _camp->getProduction(), _camp->getMaxProduction()));
+        
+        const std::map<std::string, int>* costs = _camp->getCosts();
+        if (costs) {
+            if (costs->find(RES_NAME_GOLD) != costs->end()) {
+                _resourceButton->setCount(costs->at(RES_NAME_GOLD));
+            }
+        }
+    }
+    
+    if (!reuse) {
+        if (_observer) {
+            _observer->onMapUIUnitNodeUpdated(this);
+        }
     }
 }
 
@@ -190,7 +241,7 @@ void MapUIUnitNode::setSelected(bool selected)
             Node *selectedSprite = parent->getChildByTag(selectedTag);
             if (selected) {
                 if (!selectedSprite) {
-                    Sprite *s = Sprite::create("GameImages/test/ui_xz.png");
+                    Sprite *s = Sprite::create("GameImages/test/ui_xuanzhong.png");
                     s->setTag(selectedTag);
                     s->setPosition(_iconButton->getPosition());
                     parent->addChild(s, 1);
@@ -297,23 +348,7 @@ void MapUILayer::initWithGame(const Game* game)
     if (game) {
         _world = game->getWorld();
         if (_world) {
-            const TechTree* techTree = _world->getTechTree();
-            const Faction* faction = _world->getFaction(0);
-            int count = techTree->getResourceTypeCount();
-            if (count > 0)
-            {
-                const UnderWorld::Core::ResourceType* resourceType = techTree->getResourceTypeByIndex(0);
-                if (resourceType->_class == kResourceClass_holdable) {
-                    const Resource* resource = faction->getResource(resourceType);
-                    _populationLabel->setString(StringUtils::format("%d/%d", resource->getOccpied(), resource->getBalance()));
-                } else {
-                    
-                }
-            }
-            else if (count > 1)
-            {
-                
-            }
+            updateResources();
             
             // reload table view
             reloadTableView(_world->getCampCount(_world->getThisFactionIndex()));
@@ -401,13 +436,18 @@ void MapUILayer::onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node)
     
 }
 
+void MapUILayer::onMapUIUnitNodeUpdated(MapUIUnitNode* node)
+{
+    updateResources();
+}
+
 #pragma mark -
 bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
 {
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR))
     {
         const Size& winSize = Director::getInstance()->getWinSize();
-#if true
+#if false
         static const string file("GameImages/test/test_ui_bg.png");
         Sprite *bg = Sprite::create(file);
         addChild(bg, 1);
@@ -576,7 +616,7 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             label->setPosition(Point(size.width / 2, size.height * 0.875));
             sprite->addChild(label);
             
-            _populationLabel = CocosUtils::createLabel("0/100", DEFAULT_FONT_SIZE);
+            _populationLabel = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
             _populationLabel->setPosition(Point(size.width / 2, size.height * 0.625));
             sprite->addChild(_populationLabel);
             
@@ -628,6 +668,7 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
         updateRemainingTime(_remainingTime);
         updateMyHpProgress(60);
         updateOpponentsHpProgress(20);
+        updateResources();
 #endif
         
         auto eventListener = EventListenerTouchOneByOne::create();
@@ -702,6 +743,25 @@ void MapUILayer::reloadTableView(ssize_t cellsCount)
             }
         }
     }
+}
+
+void MapUILayer::updateResources()
+{
+    if (_world) {
+        const TechTree* techTree = _world->getTechTree();
+        const Faction* faction = _world->getThisFaction();
+        int count = techTree->getResourceTypeCount();
+        for (int i = 0; i < count; ++i) {
+            const UnderWorld::Core::ResourceType* resourceType = techTree->getResourceTypeByIndex(i);
+            const Resource* resource = faction->getResource(resourceType);
+            if (kResourceClass_holdable == resourceType->_class) {
+                _populationLabel->setString(StringUtils::format("%d/%d", resource->getOccpied(), resource->getBalance()));
+            } else {
+                _energyResourceButton->setCount(resource->getBalance());
+            }
+        }
+    }
+    
 }
 
 void MapUILayer::fakeTick(float dt)

@@ -14,22 +14,10 @@
 #include "Skill.h"
 #include "SkllType.h"
 #include "DisplayBar.h"
+#include "CocosGlobal.h"
 
 using namespace std;
 using namespace UnderWorld::Core;
-
-// TODO: remove temp code
-static const string WOLF_CORE("狼人基地");
-static const string WOLF_TOWER("狼人箭塔");
-static const string WOLF_SOLDIER("狼人步兵");
-static const string WOLF_ARCHER("狼人射手");
-static const string WOLF_WIZARD("狼人巫师");
-
-static const string VAMPIRE_CORE("吸血鬼核心");
-static const string VAMPIRE_TOWER("吸血鬼箭塔");
-static const string VAMPIRE_SOLDIER("吸血鬼战士");
-static const string VAMPIRE_ARCHER("吸血鬼弓兵");
-static const string VAMPIRE_WIZARD("吸血鬼巫师");
 
 static const int directionCount(3);
 static const float directionAngelEdge[directionCount] = {

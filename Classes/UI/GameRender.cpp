@@ -215,8 +215,21 @@ void GameRender::onMapUILayerUnitSelected(MapUIUnitNode* node)
         if (index < world->getCampCount(factionIndex)) {
             const Camp* camp = world->getCamp(factionIndex, index);
             if (camp) {
-                _commander->tryGiveCampCommand(camp, 1);
-                node->update();
+                CommandResult result = _commander->tryGiveCampCommand(camp, 1);
+                if (kCommandResult_suc == result) {
+                    CCLOG("========== Add command ==========");
+                    
+                    // TODO: replace the temp code with callback from camp
+                    Scheduler *s = Director::getInstance()->getScheduler();
+                    if (s) {
+                        static string key("temp_test_update_MapUIUnitNode");
+                        s->schedule([=](float dt) {
+                            s->unschedule(key, this);
+                            CCLOG("========== Update UI ==========");
+                            node->update(false);
+                        }, this, 0.1f, false, key);
+                    }
+                }
             }
         }
     }
