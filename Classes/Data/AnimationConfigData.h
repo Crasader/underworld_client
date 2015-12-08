@@ -36,6 +36,9 @@ public:
     
     AnimationParameters getAnimationParameters(UnitDirection direction);
     
+protected:
+    AnimationParameters parse(const std::vector<std::string>& directions, const std::vector<std::string>& scales, const std::vector<std::string>& speeds, int index);
+    
 private:
     std::map<UnitDirection, AnimationParameters> _data;
 };

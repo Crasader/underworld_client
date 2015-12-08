@@ -20,11 +20,11 @@ using namespace std;
 using namespace cocostudio;
 using namespace UnderWorld::Core;
 
-static const int waveTime = 20;
-static const int battleTotalTime = 180;
-static const float unitNodeOffsetX = 5.0f;
-static const float unitNodeOffsetY = 2.0f;
-static const int visibleCellsCount = 8;
+static const int waveTime(20);
+static const int battleTotalTime(180);
+static const float unitNodeOffsetX(17.0f);
+static const float unitNodeOffsetY(17.0f);
+static const int visibleCellsCount(6);
 
 static ProgressTimer* createProgressTimer()
 {
@@ -170,7 +170,18 @@ bool MapUIUnitNode::init(const Camp* camp, ssize_t idx)
         const float iconHeight = _iconButton->getContentSize().height;
         const float resourceHeight = _resourceButton->getContentSize().height;
         const float countHeight = _countLabel->getContentSize().height;
-        static const float offsetY = 2.0f;
+        static const float offsetY(2.0f);
+#if true
+        const Size size(_iconButton->getContentSize().width, iconHeight);
+        setContentSize(size);
+        
+        const float x = size.width / 2;
+        const float y = size.height / 2;
+        _iconButton->setPosition(Point(x, y));
+        _resourceButton->setAnchorPoint(Point::ANCHOR_MIDDLE);
+        _resourceButton->setPosition(Point(x, resourceHeight / 2 + offsetY));
+        _countLabel->setPosition(Point(x, size.height - countHeight / 2 - offsetY));
+#else
         const Size size(_iconButton->getContentSize().width, iconHeight + resourceHeight + countHeight + offsetY * 4);
         setContentSize(size);
         
@@ -180,6 +191,7 @@ bool MapUIUnitNode::init(const Camp* camp, ssize_t idx)
         _resourceButton->setAnchorPoint(Point::ANCHOR_MIDDLE);
         _resourceButton->setPosition(Point(x, y - (iconHeight + resourceHeight) / 2 - offsetY));
         _countLabel->setPosition(Point(x, y + (iconHeight + countHeight) / 2 + offsetY));
+#endif
         
         if (camp) {
             reuse(camp, idx);
@@ -237,7 +249,7 @@ void MapUIUnitNode::setSelected(bool selected)
     if (_iconButton) {
         Node *parent = _iconButton->getParent();
         if (parent) {
-            static const int selectedTag = 100;
+            static const int selectedTag(100);
             Node *selectedSprite = parent->getChildByTag(selectedTag);
             if (selected) {
                 if (!selectedSprite) {
@@ -322,14 +334,14 @@ MapUILayer::MapUILayer()
 ,_opponentsHpPercentageLabel(nullptr)
 ,_sendTroopMenuItem(nullptr)
 ,_pauseMenuItem(nullptr)
-,_waveTime(11)
+,_waveTime(11)  // TODO: reset wave time
 ,_remainingTime(battleTotalTime)
 {
     static const Size& unitNodeSize = MapUIUnitNode::create(nullptr, 0)->getContentSize();
     _cellSize.height = unitNodeSize.height + unitNodeOffsetY * 2;
-    _cellSize.width = unitNodeSize.width + unitNodeOffsetX * 2;
+    _cellSize.width = unitNodeSize.width + unitNodeOffsetX;
     
-    _tableViewMaxSize.width = _cellSize.width * visibleCellsCount;
+    _tableViewMaxSize.width = _cellSize.width * visibleCellsCount + unitNodeOffsetX;
     _tableViewMaxSize.height = _cellSize.height;
 }
 
@@ -508,8 +520,8 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
         }
 #else
         Node* root = this;
-        static const float leftOffset = 20.0f;
-        static const float ceilOffset = 10.0f;
+        static const float leftOffset(20.0f);
+        static const float ceilOffset(10.0f);
         static const Size progressSize(170.0f, 20.0f);
         //
         {
@@ -631,15 +643,17 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
         }
         // units table
         {
-            Sprite* sprite = CocosUtils::createPureColorSprite(_tableViewMaxSize - Size(4, 4), Color4B::BLACK);
-            const Size& spriteSize(sprite->getContentSize());
-            sprite->setPosition(Point(winSize.width / 2, ceilOffset + spriteSize.height / 2));
+            const Point& pos = Point(winSize.width / 2, ceilOffset);
+#if false
+            Sprite* sprite = CocosUtils::createPureColorSprite(_tableViewMaxSize, Color4B::BLACK);
+            sprite->setPosition(pos + Point(0, _tableViewMaxSize.height / 2));
             root->addChild(sprite);
+#endif
             
             _tableView = TableView::create(this, _tableViewMaxSize);
             _tableView->setDirection(extension::ScrollView::Direction::HORIZONTAL);
             _tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
-            _tableView->setPosition(Point(sprite->getPosition().x - _tableViewMaxSize.width / 2, sprite->getPosition().y - _tableViewMaxSize.height / 2));
+            _tableView->setPosition(pos - Point(_tableViewMaxSize.width / 2, unitNodeOffsetY));
             _tableView->setBounceable(false);
             _tableView->setDelegate(this);
             root->addChild(_tableView);
@@ -735,7 +749,7 @@ void MapUILayer::reloadTableView(ssize_t cellsCount)
         // fit
         if (false == _tableView->isBounceable() && extension::ScrollView::Direction::HORIZONTAL == _tableView->getDirection()) {
             _tableView->getContainer()->setPosition(Point::ZERO);
-            const int contentWidth = _cellSize.width * _cellsCount;
+            const int contentWidth = _cellSize.width * _cellsCount + unitNodeOffsetX;
             if (contentWidth >= _tableViewMaxSize.width) {
                 _tableView->setViewSize(_tableViewMaxSize);
             } else {

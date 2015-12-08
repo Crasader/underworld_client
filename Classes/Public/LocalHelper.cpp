@@ -95,6 +95,28 @@ string LocalHelper::getLocalizedFilePath(const std::string &filePath) {
     }
 }
 
+std::string LocalHelper::getLocalizedConfigFilePath(const std::string& fileName) {
+    static const string defaultPrefix = "configs/";
+#if VERSION_HK
+    static const string localizedFolder = "configs_tw/";
+#elif VERSION_TAI
+    static const string localizedFolder = "configs_tai/";
+#else
+    static const string localizedFolder = "";
+#endif
+    
+    string path = localizedFolder + fileName;
+    FileUtils *fileUtils = FileUtils::getInstance();
+    if (localizedFolder.length() == 0 || !fileUtils->isFileExist(path)) {
+        path = defaultPrefix + fileName;
+        if (!fileUtils->isFileExist(path)) {
+            return "";
+        }
+    }
+    
+    return path;
+}
+
 LocalType LocalHelper::getLocal() {
     return local;
 }

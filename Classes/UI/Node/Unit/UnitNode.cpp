@@ -15,12 +15,13 @@
 #include "SkllType.h"
 #include "DisplayBar.h"
 #include "CocosGlobal.h"
+#include "DataManager.h"
+#include "AnimationConfigData.h"
 
 using namespace std;
 using namespace UnderWorld::Core;
 
-static const int directionCount(3);
-static const float directionAngelEdge[directionCount] = {
+static const float directionAngelEdge[UNIT_DIRECTIONS_COUNT] = {
     -30.f, 30.f, 90.f
 };
 static const int animationCheckerFrames(30);
@@ -583,7 +584,7 @@ UnitDirection UnitNode::calculateDirection()
 //        CCLOG("==== angel : %.1f ====\n currentPos: %d-%d, targetPos: %d-%d", angel, currentPos.x, currentPos.y, targetPos.x, targetPos.y);
         
         UnitDirection direction = kUnitDirection_Left;
-        for (int i = 0; i < directionCount; ++i) {
+        for (int i = 0; i < UNIT_DIRECTIONS_COUNT; ++i) {
             if (angel < directionAngelEdge[i]) {
                 direction = static_cast<UnitDirection>(i + 2);
                 break;
@@ -630,9 +631,12 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
             _currentAction->setCurrentFrame(frameIndex);
             _currentAction->setLastFrameCallFunc(lastFrameCallFunc);
             
-            float scale(1.0f);
-            float speed(1.0f);
-            getActionParameters(scale, speed);
+            const string& name = unit_getName(_unit);
+            const SkillClass skillClass(unit_getSkillClass(_unit));
+
+            AnimationParameters params = DataManager::getInstance()->getAnimationParameters(name, skillClass, _lastDirection);
+            float scale = params.scale;
+            float speed = params.speed;
             
             // set scale
             _actionNode->setScale(scale);
@@ -831,201 +835,4 @@ Node* UnitNode::addEffect(const string& file)
     }
     
     return nullptr;
-}
-
-void UnitNode::getActionParameters(float& actionNodeScale, float& animationSpeed) const
-{
-    actionNodeScale = 1.0f;
-    animationSpeed = 1.0f;
-    
-    if (_unit) {
-        if (!(unit_isMovable(_unit))) {
-            return;
-        }
-#if true
-        const SkillClass skillClass(unit_getSkillClass(_unit));
-        
-        const string& name = unit_getName(_unit);
-        
-        switch (skillClass) {
-            case kSkillClass_Stop:
-            {
-                if (WOLF_SOLDIER == name) {
-                    // footman
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.0f;
-                    
-                } else if (WOLF_ARCHER == name) {
-                    // archer
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.0f;
-                    
-                } else if (WOLF_WIZARD == name) {
-                    // wizard
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.0f;
-                    
-                } else if (VAMPIRE_SOLDIER == name) {
-                    // footman
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.5f;
-                    
-                } else if (VAMPIRE_ARCHER == name) {
-                    // archer
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.5f;
-                    
-                } else if (VAMPIRE_WIZARD == name) {
-                    // wizard
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.5f;
-                    
-                }
-            }
-                break;
-            case kSkillClass_Move:
-            {
-                if (WOLF_SOLDIER == name) {
-                    // footman
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.5f;
-                    
-                } else if (WOLF_ARCHER == name) {
-                    // archer
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.5f;
-                    
-                } else if (WOLF_WIZARD == name) {
-                    // wizard
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.5f;
-                    
-                } else if (VAMPIRE_SOLDIER == name) {
-                    // footman
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.0f;
-                    
-                } else if (VAMPIRE_ARCHER == name) {
-                    // archer
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.5f;
-                    
-                } else if (VAMPIRE_WIZARD == name) {
-                    // wizard
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.0f;
-                    
-                }
-            }
-                break;
-            case kSkillClass_Attack:
-            {
-                if (WOLF_SOLDIER == name) {
-                    // footman
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.0f;
-                    
-                } else if (WOLF_ARCHER == name) {
-                    // archer
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.0f;
-                    
-                } else if (WOLF_WIZARD == name) {
-                    // wizard
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.0f;
-                    
-                } else if (VAMPIRE_SOLDIER == name) {
-                    // footman
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.0f;
-                    
-                } else if (VAMPIRE_ARCHER == name) {
-                    // archer
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.0f;
-                    
-                } else if (VAMPIRE_WIZARD == name) {
-                    // wizard
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.0f;
-                    
-                }
-            }
-                break;
-            case kSkillClass_Cast:
-            {
-                if (WOLF_SOLDIER == name) {
-                    // footman
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.5f;
-                    
-                } else if (WOLF_ARCHER == name) {
-                    // archer
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.5f;
-                    
-                } else if (WOLF_WIZARD == name) {
-                    // wizard
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.5f;
-                    
-                } else if (VAMPIRE_SOLDIER == name) {
-                    // footman
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.5f;
-                    
-                } else if (VAMPIRE_ARCHER == name) {
-                    // archer
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.5f;
-                    
-                } else if (VAMPIRE_WIZARD == name) {
-                    // wizard
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.5f;
-                    
-                }
-            }
-                break;
-            case kSkillClass_Die:
-            {
-                if (WOLF_SOLDIER == name) {
-                    // footman
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.5f;
-                    
-                } else if (WOLF_ARCHER == name) {
-                    // archer
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.5f;
-                    
-                } else if (WOLF_WIZARD == name) {
-                    // wizard
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.5f;
-                    
-                } else if (VAMPIRE_SOLDIER == name) {
-                    // footman
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.5f;
-                    
-                } else if (VAMPIRE_ARCHER == name) {
-                    // archer
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.5f;
-                    
-                } else if (VAMPIRE_WIZARD == name) {
-                    // wizard
-                    actionNodeScale = 0.6f;
-                    animationSpeed = 1.5f;
-                    
-                }
-            }
-                break;
-            default:
-                break;
-        }
-#endif
-    }
 }

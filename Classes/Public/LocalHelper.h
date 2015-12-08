@@ -24,6 +24,7 @@ namespace LocalHelper
     
     void init();
     std::string getLocalizedFilePath(const std::string& filePath);
+    std::string getLocalizedConfigFilePath(const std::string& fileName);
     LocalType getLocal();
     std::string getString(const std::string& key);
     

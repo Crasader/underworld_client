@@ -77,6 +77,7 @@ void DataManager::init()
 {
     parseQuestData(kQuestType_Daily);
     parseQuestData(kQuestType_Life);
+    parseAnimationConfigData();
 }
 
 const QuestData* DataManager::getQuestData(QuestType type, int questId) const
@@ -109,9 +110,9 @@ void DataManager::parseQuestData(QuestType type)
     string fileName;
     
     if (kQuestType_Daily == type) {
-        fileName.assign("");
+        fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
     } else if (kQuestType_Life == type) {
-        fileName.assign("");
+        fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
     }
     
     // clear first
@@ -151,7 +152,7 @@ void DataManager::parseQuestData(QuestType type)
 
 void DataManager::parseAnimationConfigData()
 {
-    static string fileName("");
+    string fileName = LocalHelper::getLocalizedConfigFilePath("AnimationConfig.xml");
     if (FileUtils::getInstance()->isFileExist(fileName))
     {
         tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
@@ -169,7 +170,11 @@ void DataManager::parseAnimationConfigData()
                 if (name && skill) {
                     AnimationConfigData* data = new (nothrow) AnimationConfigData(item);
                     string key = StringUtils::format("%s_%s", name, skill);
-                    _animationParameters.insert(make_pair(key, data));
+                    if (_animationParameters.find(key) != _animationParameters.end()) {
+                        assert(false);
+                    } else {
+                        _animationParameters.insert(make_pair(key, data));
+                    }
                 }
             }
             

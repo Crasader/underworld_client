@@ -65,7 +65,6 @@ protected:
     void addShadow();
     void removeShadow();
     Node* addEffect(const std::string& file);
-    void getActionParameters(float& actionNodeScale, float& animationSpeed) const;
     
 private:
     UnitNodeObserver *_observer;
