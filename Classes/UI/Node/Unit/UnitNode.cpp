@@ -71,11 +71,7 @@ static inline SkillClass unit_getSkillClass(const Unit* unit)
 static bool hasStandbyAnimation(const Unit* unit)
 {
     if (kSkillClass_Attack == unit_getSkillClass(unit)) {
-        const string& name = unit_getName(unit);
-        if (WOLF_SOLDIER == name ||
-            VAMPIRE_SOLDIER == name) {
-            return true;
-        }
+        return true;
     }
     
     return false;
@@ -263,10 +259,6 @@ void UnitNode::update()
                 
                 // TODO: remove temp code
                 const string& unitName(unit_getName(_unit));
-                if (unitName != WOLF_SOLDIER) {
-                    direction = kUnitDirection_Left;
-                }
-                
                 bool flip = false;
                 if (unitName == WOLF_ARCHER ||
                     unitName == WOLF_WIZARD) {
@@ -369,7 +361,7 @@ const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
     string prefix;
     if (isMovableUnit) {
         if (unitName == WOLF_SOLDIER) {
-            prefix = "wolf";
+            prefix = "wolf-Warrior";
         } else if (unitName == WOLF_ARCHER) {
             prefix = "wolf-Archer";
         } else if (unitName == WOLF_WIZARD) {
@@ -379,7 +371,7 @@ const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
         } else if (unitName == VAMPIRE_ARCHER) {
             prefix = "Dead-Archer";
         } else if (unitName == VAMPIRE_WIZARD) {
-            prefix = "Dead witch";
+            prefix = "Dead-witch";
         }
     }
     
@@ -413,12 +405,7 @@ const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
                 case kUnitClass_Warrior:
                 case kUnitClass_Hero:
                 {
-                    // TODO: remove test code
-                    if (VAMPIRE_SOLDIER == unitName) {
-                        csbFile = prefix + StringUtils::format("-standby-%d.csb", direction);
-                    } else {
-                        csbFile = "wolf-play-Standby-3.csb";
-                    }
+                    csbFile = prefix + StringUtils::format("-standby-%d.csb", direction);
                 }
                     break;
                 default:
@@ -464,12 +451,7 @@ const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
                 case kUnitClass_Hero:
                 {
                     if (_isStandby) {
-                        // TODO: remove test code
-                        if (VAMPIRE_SOLDIER == unitName) {
-                            csbFile = prefix + StringUtils::format("-standby-%d.csb", direction);
-                        } else {
-                            csbFile = "wolf-play-Standby-3.csb";
-                        }
+                        csbFile = prefix + StringUtils::format("-standby-%d.csb", direction);
                     } else {
                         csbFile = prefix + StringUtils::format("-attack-%d.csb", direction);
                     }
@@ -482,7 +464,7 @@ const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
             break;
         case kSkillClass_Cast:
         {
-            
+            // TODO
         }
             break;
         case kSkillClass_Die:
