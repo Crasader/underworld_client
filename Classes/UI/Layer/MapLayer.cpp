@@ -73,7 +73,7 @@ static void loadMapSetting(const std::string& xml,
                 locationSetting.addAssembleLocation(p, c);
             }
             setting.setLocationSetting(index, locationSetting);
-        } else if (item->Name() == CONFIG_KEY_RESOURCE_SETTING_TAG) {
+        } else if (item->Name() == CONFIG_KEY_RESOURCE_SETTINGS_TAG) {
             int index = atoi(item->Attribute(CONFIG_KEY_ATTR_INDEX.c_str()));
             std::vector<UnderWorld::Core::ResourceSetting> vec;
             for (const tinyxml2::XMLElement* node = item->FirstChildElement();
@@ -81,10 +81,10 @@ static void loadMapSetting(const std::string& xml,
                  node = node->NextSiblingElement()) {
                 if (node->Name() == CONFIG_KEY_RESOURCE_SETTING_TAG) {
                     UnderWorld::Core::ResourceSetting rs;
-                    rs.setInitBalance(atoi(item->Attribute(CONFIG_KEY_ATTR_INIT_BALANCE.c_str())));
-                    rs.setResourceTypeName(item->Attribute(CONFIG_KEY_ATTR_RESOURCE_NAME.c_str()));
-                    rs.setInitSalary(atoi(item->Attribute(CONFIG_KEY_ATTR_INIT_SALARY.c_str())));
-                    rs.setSalaryAccelerate(atoi(item->Attribute(CONFIG_KEY_ATTR_SALARY_ACCELERATE.c_str())));
+                    rs.setInitBalance(atoi(node->Attribute(CONFIG_KEY_ATTR_INIT_BALANCE.c_str())));
+                    rs.setResourceTypeName(node->Attribute(CONFIG_KEY_ATTR_RESOURCE_NAME.c_str()));
+                    rs.setInitSalary(atoi(node->Attribute(CONFIG_KEY_ATTR_INIT_SALARY.c_str())));
+                    rs.setSalaryAccelerate(atoi(node->Attribute(CONFIG_KEY_ATTR_SALARY_ACCELERATE.c_str())));
                     vec.push_back(rs);
                 }
             }
@@ -218,7 +218,7 @@ bool MapLayer::init(int mapId)
                 }
             }
         }
-        std::string mapSettingXml = "<root> <location_setting index=\"0\" core_location=\"200,300\" building_location=\"\" assemble_location=\"1:300,300;2:400,300\"/> <resource_settings index=\"0\"> <resource_setting resource_name=\"金子\" init_balance=\"0\" init_salary=\"0\" salary_accelerate=\"0\"/> </resource_settings> <fixed_unit_setting index=\"0\"> <unit_setting unit_type_name=\"狼人步兵\" pos=\"300,260\"/><unit_setting unit_type_name=\"狼人步兵\" pos=\"300,280\"/><unit_setting unit_type_name=\"狼人步兵\" pos=\"300,300\"/><unit_setting unit_type_name=\"狼人步兵\" pos=\"300,320\"/></fixed_unit_setting><location_setting index=\"1\" core_location=\"1000,300\" building_location=\"\" assemble_location=\"1:800,300;2:600,300\"/> <resource_settings index=\"1\"> <resource_setting resource_name=\"金子\" init_balance=\"0\" init_salary=\"0\" salary_accelerate=\"0\"/> </resource_settings> <fixed_unit_setting index=\"1\"> <unit_setting unit_type_name=\"吸血鬼弓兵\" pos=\"760,260\"/><unit_setting unit_type_name=\"吸血鬼弓兵\" pos=\"760,280\"/><unit_setting unit_type_name=\"吸血鬼弓兵\" pos=\"760,300\"/><unit_setting unit_type_name=\"吸血鬼弓兵\" pos=\"760,320\"/></fixed_unit_setting>  </root>";
+        std::string mapSettingXml = "<root> <location_setting index=\"0\" core_location=\"400,600\" building_location=\"\" assemble_location=\"0:600,600;2:800,600\"/> <resource_settings index=\"0\"> <resource_setting resource_name=\"金子\" init_balance=\"300\" init_salary=\"10\" salary_accelerate=\"1\"/> </resource_settings> <fixed_unit_setting index=\"0\"> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> </fixed_unit_setting> <location_setting index=\"1\" core_location=\"2000,600\" building_location=\"\" assemble_location=\"0:1600,600;2:1200,600\"/> <resource_settings index=\"1\"> <resource_setting resource_name=\"金子\" init_balance=\"300\" init_salary=\"10\" salary_accelerate=\"1\"/> </resource_settings> <fixed_unit_setting index=\"1\"> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> </fixed_unit_setting> </root>";
         loadMapSetting(mapSettingXml, mapSetting);
         CCLOG("%zd logicLayer", mapSetting.getWalkableArea().size());
         logicLayer->removeFromParent();
@@ -298,8 +298,10 @@ UnderWorld::Core::Coordinate MapLayer::mapCoordinate2coreCoordinate(int x, int y
 
 void MapLayer::coordinateConvert(const UnderWorld::Core::Coordinate& coreCoordinate, Point& mapPosition, int& zOrder)
 {
-    mapPosition.x = _tileWidth / UnderWorld::Core::Map::TILE_2_CELL_SCALE * coreCoordinate.x;
-    mapPosition.y = _tileHeight / UnderWorld::Core::Map::TILE_2_CELL_SCALE * coreCoordinate.y;
+    UnderWorld::Core::Coordinate tileCoordinate =
+        UnderWorld::Core::Map::cell2TilePos(UnderWorld::Core::Map::element2CellPos(coreCoordinate));
+    mapPosition.x = _tileWidth * tileCoordinate.x;
+    mapPosition.y = _tileHeight * tileCoordinate.y;
     zOrder = 2 * (_height - coreCoordinate.y + 1);
 }
 
