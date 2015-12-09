@@ -298,10 +298,9 @@ UnderWorld::Core::Coordinate MapLayer::mapCoordinate2coreCoordinate(int x, int y
 
 void MapLayer::coordinateConvert(const UnderWorld::Core::Coordinate& coreCoordinate, Point& mapPosition, int& zOrder)
 {
-    UnderWorld::Core::Coordinate tileCoordinate =
-        UnderWorld::Core::Map::cell2TilePos(UnderWorld::Core::Map::element2CellPos(coreCoordinate));
-    mapPosition.x = _tileWidth * tileCoordinate.x;
-    mapPosition.y = _tileHeight * tileCoordinate.y;
+    
+    mapPosition.x = _tileWidth / UnderWorld::Core::Map::TILE_2_CELL_SCALE / UnderWorld::Core::Map::CELL_2_ELEMENT_SCALE * coreCoordinate.x;
+    mapPosition.y = _tileHeight / UnderWorld::Core::Map::TILE_2_CELL_SCALE / UnderWorld::Core::Map::CELL_2_ELEMENT_SCALE * coreCoordinate.y;
     zOrder = 2 * (_height - coreCoordinate.y + 1);
 }
 
