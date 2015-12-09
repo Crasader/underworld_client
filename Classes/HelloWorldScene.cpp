@@ -134,7 +134,7 @@ bool HelloWorld::init()
     setting.setTeam(0, 0);
     setting.setMapIndex(0, 0);
     setting.setFactionTypeKey(1, "吸血鬼族");
-    setting.setFactionControlType(1, UnderWorld::Core::kFactionControlType_Human);
+    setting.setFactionControlType(1, UnderWorld::Core::kFactionControlType_Cpu);
     setting.setTeam(1, 1);
     setting.setMapIndex(1, 1);
     
