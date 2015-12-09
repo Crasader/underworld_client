@@ -360,6 +360,12 @@ void MapUILayer::initWithGame(const Game* game)
     if (game) {
         _world = game->getWorld();
         if (_world) {
+            const int cnt = _world->getFactionCount();
+            for (int i = 0; i < cnt; ++i) {
+                const Faction* faction = _world->getFaction(i);
+                _cores.insert(make_pair(faction->getFactionIndex(), faction->findFirstUnitByClass(kUnitClass_Core)));
+            }
+            
             updateResources();
             
             // reload table view
@@ -450,7 +456,7 @@ void MapUILayer::onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node)
 
 void MapUILayer::onMapUIUnitNodeUpdated(MapUIUnitNode* node)
 {
-    updateResources();
+    
 }
 
 #pragma mark -
@@ -793,4 +799,21 @@ void MapUILayer::fakeTick(float dt)
     
     updateWaveTime(_waveTime);
     updateRemainingTime(_remainingTime);
+    updateResources();    
+    
+    if (_world) {
+        for (map<int, Unit*>::iterator iter = _cores.begin(); iter != _cores.end(); ++iter) {
+            const Unit* core(iter->second);
+            if (core) {
+                const int maxHp = core->getUnitType()->getMaxHp();
+                const int hp = core->getHp();
+                const float percentage = 100 * (float)hp / (float)maxHp;
+                if (iter->first == _world->getThisFactionIndex()) {
+                    updateMyHpProgress(percentage);
+                } else {
+                    updateOpponentsHpProgress(percentage);
+                }
+            }
+        }
+    }
 }

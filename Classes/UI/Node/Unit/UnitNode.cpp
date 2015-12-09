@@ -206,17 +206,33 @@ void UnitNode::update()
                     }
                 }
                     break;
+                case kUnitClass_Core:
                 case kUnitClass_Building:
                 {
                     if (_lastSkill) {
                         const SkillClass lastSkillClass(_lastSkill->getSkillType()->getSkillClass());
                         if (currentSkillClass != lastSkillClass) {
-                            if (kSkillClass_Attack == currentSkillClass || kSkillClass_Attack == lastSkillClass) {
-                                // attack
-                                needToUpdateUI = true;
-                            } else if (kSkillClass_Die == currentSkillClass) {
-                                // destroyed
-                                needToUpdateUI = true;
+                            const string& unitName(unit_getName(_unit));
+                            if (WOLF_TOWER == unitName || VAMPIRE_TOWER == unitName) {
+                                if (kSkillClass_Attack == currentSkillClass || kSkillClass_Attack == lastSkillClass) {
+                                    // attack
+                                    needToUpdateUI = true;
+                                } else if (kSkillClass_Die == currentSkillClass) {
+                                    // destroyed
+                                    needToUpdateUI = true;
+                                }
+                            } else if (WOLF_CORE == unitName || VAMPIRE_CORE == unitName) {
+                                if (kSkillClass_Die == currentSkillClass) {
+                                    // destroyed
+                                    needToUpdateUI = true;
+                                }
+                            }
+                            
+                            if (WOLF_CORE == unitName || VAMPIRE_CORE == unitName) {
+                                if (!needToUpdateUI && (hpPercentageThreshold - _lastHpPercentage) * (hpPercentageThreshold - percentage) <= 0) {
+                                    // hurt
+                                    needToUpdateUI = true;
+                                }
                             }
                         }
                     } else {
@@ -224,28 +240,6 @@ void UnitNode::update()
                     }
                 }
                     break;
-                case kUnitClass_Core:
-                {
-                    if (_lastSkill) {
-                        const SkillClass lastSkillClass(_lastSkill->getSkillType()->getSkillClass());
-                        if (currentSkillClass != lastSkillClass) {
-                            if (kSkillClass_Die == currentSkillClass) {
-                                // destroyed
-                                needToUpdateUI = true;
-                            }
-                        }
-                        
-                        if (!needToUpdateUI && (hpPercentageThreshold - _lastHpPercentage) * (hpPercentageThreshold - percentage) <= 0) {
-                            // hurt
-                            needToUpdateUI = true;
-                        }
-                        
-                    } else {
-                        needToUpdateUI = true;
-                    }
-                }
-                    break;
-                    
                 default:
                     break;
             }
@@ -383,19 +377,14 @@ const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
         {
             switch (unitClass) {
                 case kUnitClass_Core:
+                case kUnitClass_Building:
                 {
                     const bool healthy(hpPercentage > hpPercentageThreshold);
                     if (WOLF_CORE == unitName) {
                         csbFile = healthy ? "effect-wolf-Base_1.csb" : "effect-wolf-base-damage.csb";
                     } else if (VAMPIRE_CORE == unitName) {
                         csbFile = healthy ? "effect-Vampire-base.csb" : "effect-Vampire-base-damage.csb";
-                    }
-                }
-                    break;
-                case kUnitClass_Building:
-                {
-                    // TODO
-                    if (WOLF_TOWER == unitName) {
+                    } else if (WOLF_TOWER == unitName) {
                         csbFile = "wolf-tower-defense-1.csb";
                     } else if (VAMPIRE_TOWER == unitName) {
                         csbFile = "Vampire-tower-defense.csb";
@@ -433,6 +422,7 @@ const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
         {
             switch (unitClass) {
                 case kUnitClass_Core:
+                case kUnitClass_Building:
                 {
                     // TODO
                     const bool healthy(hpPercentage > hpPercentageThreshold);
@@ -440,13 +430,7 @@ const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
                         csbFile = healthy ? "effect-wolf-Base_1.csb" : "effect-wolf-base-damage.csb";
                     } else if (VAMPIRE_CORE == unitName) {
                         csbFile = healthy ? "effect-Vampire-base.csb" : "effect-Vampire-base-damage.csb";
-                    }
-                }
-                    break;
-                case kUnitClass_Building:
-                {
-                    // TODO
-                    if (WOLF_TOWER == unitName) {
+                    } else if (WOLF_TOWER == unitName) {
                         csbFile = "wolf-tower-defense-2.csb";
                     } else if (VAMPIRE_TOWER == unitName) {
                         csbFile = "Vampire-tower-defense.csb";
@@ -477,17 +461,15 @@ const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
         {
             switch (unitClass) {
                 case kUnitClass_Core:
+                case kUnitClass_Building:
                 {
                     if (WOLF_CORE == unitName) {
                         csbFile = "effect-wolf-base-Severe damage.csb";
                     } else if (VAMPIRE_CORE == unitName) {
                         csbFile = "effect-Vampire-base-Severe damage.csb";
+                    } else {
+                        csbFile = "wolf-tower-Destroy.csb";
                     }
-                }
-                    break;
-                case kUnitClass_Building:
-                {
-                    csbFile = "wolf-tower-Destroy.csb";
                 }
                     break;
                 case kUnitClass_Warrior:

@@ -21,6 +21,7 @@ namespace UnderWorld { namespace Core {
     class Game;
     class World;
     class Camp;
+    class Unit;
 }}
 
 class ResourceButton;
@@ -142,6 +143,7 @@ private:
     Size _cellSize;
     ssize_t _cellsCount;
     ssize_t _selectedUnitIdx;
+    std::map<int, UnderWorld::Core::Unit*> _cores;
     // ======================== UI =============================
     TableView *_tableView;
     Label *_timeLabel;

@@ -8,6 +8,7 @@
 
 #include "BulletNode.h"
 #include "cocostudio/CocoStudio.h"
+#include "CocosGlobal.h"
 #include "Unit.h"
 #include "UnitType.h"
 #include "Bullet.h"
@@ -71,10 +72,12 @@ bool BulletNode::init(const Bullet* bullet)
         if (trigger) {
             const string& name = trigger->getUnitType()->getName();
             string file;
-            if (name == "狼人巫师") {
+            if (name == WOLF_WIZARD) {
                 file = "effect-fireball.csb";
-            } else if (name == "吸血鬼巫师") {
+            } else if (name == VAMPIRE_WIZARD) {
                 file = "effect-fireball-1.csb";
+            } else if (name == VAMPIRE_TOWER) {
+                file = "Vampire-tower-attack.csb";
             }
             
             if (file.length() > 0) {

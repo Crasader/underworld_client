@@ -85,7 +85,7 @@ void GameRender::updateUnits(const Game* game, int index)
     const std::vector<Unit*>& units = f->getAllUnits();
     for (int i = 0; i < units.size(); ++i) {
         const Unit* unit = units.at(i);
-        const Coordinate& pos = unit->getPos();
+        const Coordinate& pos = unit->getCenterPos();
         const int key = unit->getUnitId();
         const Skill* skill = unit->getCurrentSkill();
         // TODO: remove test code
