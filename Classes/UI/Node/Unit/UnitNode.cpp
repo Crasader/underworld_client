@@ -435,6 +435,12 @@ const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
                 case kUnitClass_Core:
                 {
                     // TODO
+                    const bool healthy(hpPercentage > hpPercentageThreshold);
+                    if (WOLF_CORE == unitName) {
+                        csbFile = healthy ? "effect-wolf-Base_1.csb" : "effect-wolf-base-damage.csb";
+                    } else if (VAMPIRE_CORE == unitName) {
+                        csbFile = healthy ? "effect-Vampire-base.csb" : "effect-Vampire-base-damage.csb";
+                    }
                 }
                     break;
                 case kUnitClass_Building:
@@ -568,7 +574,7 @@ UnitDirection UnitNode::calculateDirection()
         UnitDirection direction = kUnitDirection_Left;
         for (int i = 0; i < UNIT_DIRECTIONS_COUNT; ++i) {
             if (angel < directionAngelEdge[i]) {
-                direction = static_cast<UnitDirection>(i + 2);
+                direction = static_cast<UnitDirection>(4 - i);
                 break;
             }
         }
@@ -621,7 +627,9 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
             float speed = params.speed;
             
             // set scale
-            _actionNode->setScale(scale);
+            if (scale != 1.0f && scale > 0) {
+                _actionNode->setScale(scale);
+            }
             
             // the attack animation should be fit for preperforming time
             if (speed == 1.0f && playTime > 0.0f) {
@@ -723,12 +731,6 @@ void UnitNode::updateActionNode(const Skill* skill, const string& file, int curr
         }
         
         if (_sprite) {
-            // add shadow
-            if (kSkillClass_Move == skillClass ||
-                kSkillClass_Attack == skillClass) {
-                addShadow();
-            }
-            
             // add HP bar
             if (!isDead && !_hpBar) {
                 addHPBar();

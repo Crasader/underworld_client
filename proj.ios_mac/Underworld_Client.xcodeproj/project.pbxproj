@@ -131,6 +131,8 @@
 		A1A4BA3E1BCE043800175E8A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A1A4BA3C1BCE043800175E8A /* Localizable.strings */; };
 		A1A4BA461BCE08AF00175E8A /* OnlineUpdater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A4BA441BCE08AF00175E8A /* OnlineUpdater.cpp */; };
 		A1A4BA491BCE096300175E8A /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A4BA471BCE096300175E8A /* Utils.cpp */; };
+		A1A74CA81C17DFE800648671 /* MainLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A74CA61C17DFE800648671 /* MainLayer.cpp */; };
+		A1A74CAB1C17DFFA00648671 /* MainUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A74CA91C17DFFA00648671 /* MainUILayer.cpp */; };
 		A1AF64511BE8DB0B003B3FA8 /* MapUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1AF644F1BE8DB0B003B3FA8 /* MapUILayer.cpp */; };
 		A1B5588F1BCB65A100D30D6A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B5588E1BCB65A100D30D6A /* StoreKit.framework */; };
 		A1C124DC1BF58AF700F3FDD2 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = A1C124DB1BF58AF700F3FDD2 /* sounds */; };
@@ -407,6 +409,10 @@
 		A1A4BA451BCE08AF00175E8A /* OnlineUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnlineUpdater.h; sourceTree = "<group>"; };
 		A1A4BA471BCE096300175E8A /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
 		A1A4BA481BCE096300175E8A /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		A1A74CA61C17DFE800648671 /* MainLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainLayer.cpp; sourceTree = "<group>"; };
+		A1A74CA71C17DFE800648671 /* MainLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainLayer.h; sourceTree = "<group>"; };
+		A1A74CA91C17DFFA00648671 /* MainUILayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainUILayer.cpp; sourceTree = "<group>"; };
+		A1A74CAA1C17DFFA00648671 /* MainUILayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainUILayer.h; sourceTree = "<group>"; };
 		A1AF644F1BE8DB0B003B3FA8 /* MapUILayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapUILayer.cpp; sourceTree = "<group>"; };
 		A1AF64501BE8DB0B003B3FA8 /* MapUILayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapUILayer.h; sourceTree = "<group>"; };
 		A1B5588E1BCB65A100D30D6A /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -1025,6 +1031,10 @@
 			children = (
 				A1CF96D41BECCD7900E7BAE4 /* BattlePreparationLayer.cpp */,
 				A1CF96D51BECCD7900E7BAE4 /* BattlePreparationLayer.h */,
+				A1A74CA61C17DFE800648671 /* MainLayer.cpp */,
+				A1A74CA71C17DFE800648671 /* MainLayer.h */,
+				A1A74CA91C17DFFA00648671 /* MainUILayer.cpp */,
+				A1A74CAA1C17DFFA00648671 /* MainUILayer.h */,
 				CB075C021BDDD8AC00C7FD68 /* MapLayer.cpp */,
 				CB075C031BDDD8AC00C7FD68 /* MapLayer.h */,
 				A1AF644F1BE8DB0B003B3FA8 /* MapUILayer.cpp */,
@@ -1300,6 +1310,7 @@
 				308B84691BE3856F00377802 /* AIBrain.cpp in Sources */,
 				A1720E7B1BCCE0F000217E98 /* NumberJump.cpp in Sources */,
 				300F25331BFC67550080765C /* FeatureType.cpp in Sources */,
+				A1A74CA81C17DFE800648671 /* MainLayer.cpp in Sources */,
 				3028EBC61BFF0D4800511C51 /* Condition.cpp in Sources */,
 				045116F51BCFBA44002AA721 /* CommandType.cpp in Sources */,
 				A1720ECB1BCD37FC00217E98 /* MessageBoxLayer.cpp in Sources */,
@@ -1307,6 +1318,7 @@
 				300098D01BD0CD5900B6E284 /* Resource.cpp in Sources */,
 				A1720EBD1BCD309A00217E98 /* NetworkController.cpp in Sources */,
 				A1720E6C1BCCDF1900217E98 /* UserDefaultsDataManager.cpp in Sources */,
+				A1A74CAB1C17DFFA00648671 /* MainUILayer.cpp in Sources */,
 				A1720EA41BCD29FF00217E98 /* GameData.cpp in Sources */,
 				045116F61BCFBA44002AA721 /* FactionType.cpp in Sources */,
 				A1720EA91BCD2A2F00217E98 /* User.cpp in Sources */,

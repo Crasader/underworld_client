@@ -18,14 +18,14 @@ direction字段：
 -->
 
     <item name="狼人步兵" skill="0" direction="0" scale="1.2" speed="1.2"/>
-    <item name="狼人步兵" skill="1" direction="1_0_1" scale="1.2_1_0.8" speed="1.2_1_0.9"/>
+    <item name="狼人步兵" skill="1" direction="0" scale="1.2_1_0.8" speed="1.2_1_0.9"/>
     <item name="狼人步兵" skill="2" direction="0" scale="1.2" speed="1.2"/>
-    <item name="狼人步兵" skill="3" direction="1" scale="2.8" speed="2.9"/>
+    <item name="狼人步兵" skill="3" direction="0" scale="2.8" speed="2.9"/>
     <item name="狼人步兵" skill="4" direction="0" scale="1.2" speed="1.2"/>
     
     <item name="狼人射手" skill="0" direction="0" scale="1.2" speed="1.2"/>
-    <item name="狼人射手" skill="1" direction="1_1_0" scale="1.2_1.3_1.4" speed="1.5_1.6_1.7"/>
-    <item name="狼人射手" skill="2" direction="1" scale="1.2" speed="1.2"/>
+    <item name="狼人射手" skill="1" direction="0" scale="1.2_1.3_1.4" speed="1.5_1.6_1.7"/>
+    <item name="狼人射手" skill="2" direction="0" scale="1.2" speed="1.2"/>
     <item name="狼人射手" skill="3" direction="0" scale="1.2" speed="1.2"/>
     <item name="狼人射手" skill="4" direction="0" scale="1.2" speed="1.2"/>
     

@@ -5,9 +5,7 @@
 USING_NS_CC;
 
 Scene* HelloWorld::createScene()
-{
-    FileUtils::getInstance()->addSearchPath("res");
-    
+{    
     // 'scene' is an autorelease object
     auto scene = Scene::create();
     

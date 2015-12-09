@@ -1,6 +1,13 @@
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
 #include "CocosGlobal.h"
+#include "DataManager.h"
+#include "LocalHelper.h"
+#include "SoundManager.h"
+#include "UserDefaultsDataManager.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#include "ApiBridge.h"
+#endif
 
 USING_NS_CC;
 
@@ -49,12 +56,14 @@ bool AppDelegate::applicationDidFinishLaunching() {
 #endif
         director->setOpenGLView(glview);
     }
-
+    
+#if COCOS2D_DEBUG
     // turn on display FPS
     director->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
+#endif
 
     // Set the design resolution
     glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::FIXED_HEIGHT);
@@ -76,6 +85,30 @@ bool AppDelegate::applicationDidFinishLaunching() {
 //    }
 
     register_all_packages();
+    
+    // set search paths
+    std::vector<std::string> searchPaths = FileUtils::getInstance()->getSearchPaths();
+    
+    std::vector<std::string>::iterator iter = searchPaths.begin();
+    searchPaths.insert(iter, ONLINE_UPDATE_SEARCH_PATH);
+    
+    iter = searchPaths.begin();
+    searchPaths.insert(iter, DEFAULT_RESOURCE_FOLDER);
+    
+    FileUtils::getInstance()->setSearchPaths(searchPaths);
+    
+    // set default music and sound, must set here instead of "Utils" (android may crash)
+    SoundManager* sm = SoundManager::getInstance();
+    UserDefaultsDataManager* um = UserDefaultsDataManager::getInstance();
+    sm->setMusicOn(um->getMusicOn());
+    sm->setSoundOn(um->getSoundOn());
+    
+    // game initialization
+    DataManager::getInstance()->init();
+    LocalHelper::init();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    iOSApi::init();
+#endif
 
     // create a scene. it's an autorelease object
     auto scene = HelloWorld::createScene();
@@ -91,7 +124,11 @@ void AppDelegate::applicationDidEnterBackground() {
     Director::getInstance()->stopAnimation();
 
     // if you use SimpleAudioEngine, it must be pause
-    // SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+    SoundManager* sm = SoundManager::getInstance();
+    if (sm->isMusicOn())
+    {
+        sm->pauseBackgroundMusic();
+    }
 }
 
 // this function will be called when the app is active again
@@ -99,5 +136,9 @@ void AppDelegate::applicationWillEnterForeground() {
     Director::getInstance()->startAnimation();
 
     // if you use SimpleAudioEngine, it must resume here
-    // SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+    SoundManager* sm = SoundManager::getInstance();
+    if (sm->isMusicOn())
+    {
+        sm->resumeBackgroundMusic();
+    }
 }
