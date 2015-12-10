@@ -24,6 +24,7 @@
 		0451170A1BCFBA53002AA721 /* Skill.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045117021BCFBA53002AA721 /* Skill.cpp */; };
 		0451170B1BCFBA53002AA721 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045117041BCFBA53002AA721 /* Unit.cpp */; };
 		045117101BCFBA5F002AA721 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0451170C1BCFBA5F002AA721 /* Game.cpp */; };
+		047228B01C193A4D00E7F71B /* Geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047228AE1C193A4D00E7F71B /* Geometry.cpp */; };
 		1AC6FB21180E996B004C840B /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FAF9180E9839004C840B /* libcocos2d Mac.a */; };
 		1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FB07180E9839004C840B /* libcocos2d iOS.a */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -45,7 +46,6 @@
 		308B84631BE3752000377802 /* PathFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84611BE3752000377802 /* PathFinder.cpp */; };
 		308B84661BE3853C00377802 /* AIBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84641BE3853C00377802 /* AIBody.cpp */; };
 		308B84691BE3856F00377802 /* AIBrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84671BE3856F00377802 /* AIBrain.cpp */; };
-		309F76951BE8851000B2791F /* Rect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F76931BE8851000B2791F /* Rect.cpp */; };
 		309F769A1BE9D7BD00B2791F /* Camp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F76981BE9D7BD00B2791F /* Camp.cpp */; };
 		309F76A01BEA3ABA00B2791F /* CoreUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F769E1BEA3AB900B2791F /* CoreUtils.cpp */; };
 		30DF03C41C0D898E00A1C6EB /* EffectType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DF03C21C0D898E00A1C6EB /* EffectType.cpp */; };
@@ -234,6 +234,8 @@
 		0451170D1BCFBA5F002AA721 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = Core/Game/Game.h; sourceTree = "<group>"; };
 		0451170E1BCFBA5F002AA721 /* GameConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameConstants.h; path = Core/Game/GameConstants.h; sourceTree = "<group>"; };
 		0451170F1BCFBA5F002AA721 /* GameSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameSettings.h; path = Core/Game/GameSettings.h; sourceTree = "<group>"; };
+		047228AE1C193A4D00E7F71B /* Geometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Geometry.cpp; path = Core/Utils/Geometry.cpp; sourceTree = "<group>"; };
+		047228AF1C193A4D00E7F71B /* Geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Geometry.h; path = Core/Utils/Geometry.h; sourceTree = "<group>"; };
 		1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -273,8 +275,6 @@
 		308B84651BE3853C00377802 /* AIBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AIBody.h; path = Core/AI/AIBody.h; sourceTree = "<group>"; };
 		308B84671BE3856F00377802 /* AIBrain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AIBrain.cpp; path = Core/AI/AIBrain.cpp; sourceTree = "<group>"; };
 		308B84681BE3856F00377802 /* AIBrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AIBrain.h; path = Core/AI/AIBrain.h; sourceTree = "<group>"; };
-		309F76931BE8851000B2791F /* Rect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Rect.cpp; path = Core/Utils/Rect.cpp; sourceTree = "<group>"; };
-		309F76941BE8851000B2791F /* Rect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Rect.h; path = Core/Utils/Rect.h; sourceTree = "<group>"; };
 		309F76981BE9D7BD00B2791F /* Camp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Camp.cpp; path = Core/Unit/Instance/Camp.cpp; sourceTree = "<group>"; };
 		309F76991BE9D7BD00B2791F /* Camp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Camp.h; path = Core/Unit/Instance/Camp.h; sourceTree = "<group>"; };
 		309F769D1BEA37D200B2791F /* Global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Global.h; path = Core/Utils/Global.h; sourceTree = "<group>"; };
@@ -721,11 +721,11 @@
 				309F769D1BEA37D200B2791F /* Global.h */,
 				A1211B251C0BF5CC00C27CCC /* RandomCreator.cpp */,
 				A1211B261C0BF5CC00C27CCC /* RandomCreator.h */,
-				309F76931BE8851000B2791F /* Rect.cpp */,
-				309F76941BE8851000B2791F /* Rect.h */,
 				30DF03B21C06C14600A1C6EB /* EnumParser.h */,
 				30DF03BA1C085C2400A1C6EB /* RandomCreator.cpp */,
 				30DF03BB1C085C2400A1C6EB /* RandomCreator.h */,
+				047228AE1C193A4D00E7F71B /* Geometry.cpp */,
+				047228AF1C193A4D00E7F71B /* Geometry.h */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -1243,7 +1243,6 @@
 			files = (
 				A1AF64511BE8DB0B003B3FA8 /* MapUILayer.cpp in Sources */,
 				A113A03E1BFEF8F2001FEB2A /* GuildManager.cpp in Sources */,
-				309F76951BE8851000B2791F /* Rect.cpp in Sources */,
 				045116E31BCFBA39002AA721 /* Map.cpp in Sources */,
 				CBA296431BE37FB1006BE7A0 /* GameScheduler.cpp in Sources */,
 				309F76A01BEA3ABA00B2791F /* CoreUtils.cpp in Sources */,
@@ -1300,6 +1299,7 @@
 				A1F885501C1044640035B4C5 /* UserSimpleData.cpp in Sources */,
 				A1720E901BCCE19300217E98 /* MD5Verifier.cpp in Sources */,
 				A1720EBA1BCD2D2E00217E98 /* RMStore.m in Sources */,
+				047228B01C193A4D00E7F71B /* Geometry.cpp in Sources */,
 				3075346D1BF324340057DCED /* EventTrigger.cpp in Sources */,
 				307534691BF1B2F20057DCED /* Commander.cpp in Sources */,
 				A1A4BA381BCDF81500175E8A /* IapObject.cpp in Sources */,
