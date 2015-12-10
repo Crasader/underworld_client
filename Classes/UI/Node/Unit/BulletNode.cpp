@@ -78,6 +78,12 @@ bool BulletNode::init(const Bullet* bullet)
                 file = "effect-fireball-1.csb";
             } else if (name == VAMPIRE_TOWER) {
                 file = "Vampire-tower-attack.csb";
+            } else if (name == WOLF_CORE) {
+                file = "wolf-base-attack-1.csb";
+            } else if (name == VAMPIRE_CORE) {
+                file = "Vampire-base-attack-1.csb";
+            } else {
+                file = "effect-jian.csb";
             }
             
             if (file.length() > 0) {

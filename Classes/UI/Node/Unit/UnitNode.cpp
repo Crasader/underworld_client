@@ -148,9 +148,7 @@ void UnitNode::update()
             bool needToUpdateUI(false);
             int currentFrame(0);
             UnitDirection direction(kUnitDirection_Left);
-            const int hp(_unit->getHp());
-            const int maxHp(_unit->getUnitType()->getMaxHp());
-            const float percentage(100 * (float)hp / (float)maxHp);
+            const float percentage(calculateHpPercentage());
             
             const SkillClass currentSkillClass(unit_getSkillClass(_unit));
             const UnitClass unitClass(_unit->getUnitType()->getUnitClass());
@@ -335,6 +333,18 @@ void UnitNode::removeBuf()
     }
 }
 
+void UnitNode::onWin()
+{
+    return;
+    const string& file = getStandbyCsbFile(calculateDirection(), calculateHpPercentage() > hpPercentageThreshold);
+    addActionNode(file, true, true, 0.0f, 0, nullptr);
+}
+
+void UnitNode::onLose()
+{
+    onWin();
+}
+
 bool UnitNode::init(const Unit* unit)
 {
     if (Node::init())
@@ -347,7 +357,7 @@ bool UnitNode::init(const Unit* unit)
     return false;
 }
 
-const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
+const string UnitNode::getCsbFilePrefix()
 {
     const string& unitName(unit_getName(_unit));
     const bool isMovableUnit = (unit_isMovable(_unit));
@@ -369,37 +379,21 @@ const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
         }
     }
     
+    return prefix;
+}
+
+const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
+{
+    const string& unitName(unit_getName(_unit));
+    string prefix = getCsbFilePrefix();
+    
     string csbFile;
     const UnitClass unitClass = _unit->getUnitType()->getUnitClass();
     const SkillClass skillClass(unit_getSkillClass(_unit));
     switch (skillClass) {
         case kSkillClass_Stop:
         {
-            switch (unitClass) {
-                case kUnitClass_Core:
-                case kUnitClass_Building:
-                {
-                    const bool healthy(hpPercentage > hpPercentageThreshold);
-                    if (WOLF_CORE == unitName) {
-                        csbFile = healthy ? "effect-wolf-Base_1.csb" : "effect-wolf-base-damage.csb";
-                    } else if (VAMPIRE_CORE == unitName) {
-                        csbFile = healthy ? "effect-Vampire-base.csb" : "effect-Vampire-base-damage.csb";
-                    } else if (WOLF_TOWER == unitName) {
-                        csbFile = "wolf-tower-defense-1.csb";
-                    } else if (VAMPIRE_TOWER == unitName) {
-                        csbFile = "Vampire-tower-defense.csb";
-                    }
-                }
-                    break;
-                case kUnitClass_Warrior:
-                case kUnitClass_Hero:
-                {
-                    csbFile = prefix + StringUtils::format("-standby-%d.csb", direction);
-                }
-                    break;
-                default:
-                    break;
-            }
+            csbFile = getStandbyCsbFile(direction, hpPercentage > hpPercentageThreshold);
         }
             break;
         case kSkillClass_Move:
@@ -441,7 +435,7 @@ const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
                 case kUnitClass_Hero:
                 {
                     if (_isStandby) {
-                        csbFile = prefix + StringUtils::format("-standby-%d.csb", direction);
+                        csbFile = getStandbyCsbFile(direction, hpPercentage > hpPercentageThreshold);
                     } else {
                         csbFile = prefix + StringUtils::format("-attack-%d.csb", direction);
                     }
@@ -488,6 +482,41 @@ const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
             // TODO
             csbFile = "wolf-run-3.csb";
         }
+            break;
+    }
+    
+    return csbFile;
+}
+
+const string UnitNode::getStandbyCsbFile(UnitDirection direction, bool isHealthy)
+{
+    string prefix = getCsbFilePrefix();
+    string csbFile;
+    const string& unitName(unit_getName(_unit));
+    const UnitClass unitClass = _unit->getUnitType()->getUnitClass();
+    
+    switch (unitClass) {
+        case kUnitClass_Core:
+        case kUnitClass_Building:
+        {
+            if (WOLF_CORE == unitName) {
+                csbFile = isHealthy ? "effect-wolf-Base_1.csb" : "effect-wolf-base-damage.csb";
+            } else if (VAMPIRE_CORE == unitName) {
+                csbFile = isHealthy ? "effect-Vampire-base.csb" : "effect-Vampire-base-damage.csb";
+            } else if (WOLF_TOWER == unitName) {
+                csbFile = "wolf-tower-defense-1.csb";
+            } else if (VAMPIRE_TOWER == unitName) {
+                csbFile = "Vampire-tower-defense.csb";
+            }
+        }
+            break;
+        case kUnitClass_Warrior:
+        case kUnitClass_Hero:
+        {
+            csbFile = prefix + StringUtils::format("-standby-%d.csb", direction);
+        }
+            break;
+        default:
             break;
     }
     
@@ -561,11 +590,17 @@ UnitDirection UnitNode::calculateDirection()
             }
         }
         
-//        CCLOG("---- direction : %d ----", direction);
         return direction;
     }
     
     return kUnitDirection_Left;
+}
+
+float UnitNode::calculateHpPercentage()
+{
+    const int maxHp = _unit->getUnitType()->getMaxHp();
+    const int hp = _unit->getHp();
+    return 100 * (float)hp / (float)maxHp;
 }
 
 void UnitNode::addActionNode(const string& file, bool play, bool loop, float playTime, int frameIndex, const function<void()>& lastFrameCallFunc)
@@ -682,12 +717,6 @@ void UnitNode::updateActionNode(const Skill* skill, const string& file, int curr
             assert(false);
         }
         
-        // TODO: remove temp code
-        if (kUnitClass_Core == unitClass) {
-            const float scale = _actionNode->getScale();
-            _actionNode->setScale(0.6f * scale);
-        }
-        
         // flip if needed
         if (flip) {
             const float scaleX = _actionNode->getScaleX();
@@ -750,9 +779,7 @@ void UnitNode::addHPBar()
 void UnitNode::updateHPBar()
 {
     if (_hpBar && _unit) {
-        const int maxHp = _unit->getUnitType()->getMaxHp();
-        const int hp = _unit->getHp();
-        _hpBar->setPercentage(100 * (float)hp / (float)maxHp);
+        _hpBar->setPercentage(calculateHpPercentage());
     }
 }
 

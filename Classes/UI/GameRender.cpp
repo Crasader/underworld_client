@@ -16,12 +16,20 @@
 
 using namespace UnderWorld::Core;
 
+static const string tickSelectorKey("tickSelectorKey");
+static const int waveTime(20);
+static const int battleTotalTime(600);
+
 GameRender::GameRender(Node* scene, int mapId, const std::string& opponentsAccount)
 :_observer(nullptr)
 ,_mapLayer(nullptr)
 ,_mapUILayer(nullptr)
 ,_game(nullptr)
 ,_commander(nullptr)
+,_paused(false)
+,_isGameOver(false)
+,_waveTime(11)  // TODO: reset wave time
+,_remainingTime(battleTotalTime)
 {
     assert(scene);
     _mapLayer = MapLayer::create(mapId);
@@ -34,13 +42,9 @@ GameRender::GameRender(Node* scene, int mapId, const std::string& opponentsAccou
 
 GameRender::~GameRender()
 {
-    for (int i = 0; i < _allUnits.size(); ++i) {
-        _allUnits.at(i)->removeFromParent();
-    }
-    
-    for (int i = 0; i < _allBullets.size(); ++i) {
-        _allBullets.at(i)->removeFromParent();
-    }
+    stopAllTimers();
+    removeAllUnits();
+    removeAllBullets();
 }
 
 void GameRender::init(const Game* game, Commander* commander)
@@ -51,30 +55,52 @@ void GameRender::init(const Game* game, Commander* commander)
     // create units
     for (int i = 0; i < game->getWorld()->getFactionCount(); ++i) {
         updateUnits(game, i);
-
     }
     
     // create bullets
     updateBullets(game);
     
-    if (_mapUILayer) {
-        _mapUILayer->initWithGame(game);
+    // get cores
+    const World* world = game->getWorld();
+    world = game->getWorld();
+    if (world) {
+        const int cnt = world->getFactionCount();
+        for (int i = 0; i < cnt; ++i) {
+            const Faction* faction = world->getFaction(i);
+            _cores.insert(make_pair(faction->getFactionIndex(), faction->findFirstUnitByClass(kUnitClass_Core)));
+        }
     }
     
+    if (_mapUILayer) {
+        _mapUILayer->reload();
+        initUILayer();
+    }
+    
+    // tick
+    Scheduler* scheduler = Director::getInstance()->getScheduler();
+    scheduler->schedule(CC_CALLBACK_1(GameRender::tick, this), this, 1.0f, false, tickSelectorKey);
 }
 
 void GameRender::render(const Game* game)
 {
     assert(game = _game);
     
-    // create units
-    for (int i = 0; i < game->getWorld()->getFactionCount(); ++i) {
-        updateUnits(game, i);
-        
-    }
+    _isGameOver = _game->isGameOver();
     
-    // create bullets
-    updateBullets(game);
+    if (_isGameOver) {
+        onGameOver();
+    } else {
+        // update units
+        for (int i = 0; i < game->getWorld()->getFactionCount(); ++i) {
+            updateUnits(game, i);
+        }
+        
+        // update bullets
+        updateBullets(game);
+        
+        // update ui layer
+        updateUILayer();
+    }
 }
 
 void GameRender::updateUnits(const Game* game, int index)
@@ -155,6 +181,28 @@ void GameRender::updateBullets(const Game* game)
     }
 }
 
+void GameRender::updateUILayer()
+{
+    updateResources();
+    
+    const World* world = _game->getWorld();
+    if (world) {
+        for (map<int, Unit*>::iterator iter = _cores.begin(); iter != _cores.end(); ++iter) {
+            const Unit* core(iter->second);
+            if (core) {
+                const int maxHp = core->getUnitType()->getMaxHp();
+                const int hp = core->getHp();
+                const float percentage = 100 * (float)hp / (float)maxHp;
+                if (iter->first == world->getThisFactionIndex()) {
+                    _mapUILayer->updateMyHpProgress(percentage);
+                } else {
+                    _mapUILayer->updateOpponentsHpProgress(percentage);
+                }
+            }
+        }
+    }
+}
+
 void GameRender::addCritEffect(const Unit* target, const string& trigger)
 {
     if (target && kSkillClass_Die != target->getCurrentSkill()->getSkillType()->getSkillClass()) {
@@ -218,15 +266,12 @@ void GameRender::onMapUILayerUnitSelected(MapUIUnitNode* node)
             if (camp) {
                 CommandResult result = _commander->tryGiveCampCommand(camp, 1);
                 if (kCommandResult_suc == result) {
-                    CCLOG("========== Add command ==========");
-                    
                     // TODO: replace the temp code with callback from camp
                     Scheduler *s = Director::getInstance()->getScheduler();
                     if (s) {
                         static string key("temp_test_update_MapUIUnitNode");
                         s->schedule([=](float dt) {
                             s->unschedule(key, this);
-                            CCLOG("========== Update UI ==========");
                             node->update(false);
                         }, this, 0.1f, false, key);
                     }
@@ -236,7 +281,144 @@ void GameRender::onMapUILayerUnitSelected(MapUIUnitNode* node)
     }
 }
 
-void GameRender::onMapUILayerClickedPauseButton(bool pause)
+void GameRender::onMapUILayerClickedPauseButton()
+{
+    _paused = !_paused;
+}
+
+ssize_t GameRender::onMapUILayerCampsCount()
+{
+    const World* world = _game->getWorld();
+    const int factionIndex = world->getThisFactionIndex();
+    return world->getCampCount(factionIndex);
+}
+
+const UnderWorld::Core::Camp* GameRender::onMapUILayerCampAtIndex(ssize_t idx)
+{
+    const World* world = _game->getWorld();
+    const int factionIndex = world->getThisFactionIndex();
+    const Camp* camp = world->getCamp(factionIndex, (int)idx);
+    return camp;
+}
+
+void GameRender::removeAllBullets()
+{
+    for (map<int64_t, BulletNode*>::iterator iter = _allBullets.begin(); iter != _allBullets.end(); ++iter) {
+        iter->second->removeFromParent();
+    }
+    
+    _allBullets.clear();
+}
+
+void GameRender::removeAllUnits()
+{
+    for (map<int, UnitNode*>::iterator iter = _allUnits.begin(); iter != _allUnits.end(); ++iter) {
+        iter->second->removeFromParent();
+    }
+    
+    _allUnits.clear();
+}
+
+void GameRender::pauseGame()
 {
     
+}
+
+void GameRender::resumeGame()
+{
+    
+}
+
+void GameRender::restartGame()
+{
+    
+}
+
+void GameRender::tick(float dt)
+{
+    if (_isGameOver) {
+        return;
+    }
+    
+    -- _waveTime;
+    -- _remainingTime;
+    
+    if (_waveTime <= 0) {
+        _waveTime = waveTime;
+    }
+    
+    if (_remainingTime <= 0) {
+        _remainingTime = 0;
+    }
+    
+    if (_mapUILayer) {
+        _mapUILayer->updateWaveTime(_waveTime);
+        _mapUILayer->updateRemainingTime(_remainingTime);
+    }
+}
+
+void GameRender::updateResources()
+{
+    const World* world = _game->getWorld();
+    if (world && _mapUILayer) {
+        const TechTree* techTree = world->getTechTree();
+        const Faction* faction = world->getThisFaction();
+        int count = techTree->getResourceTypeCount();
+        for (int i = 0; i < count; ++i) {
+            const UnderWorld::Core::ResourceType* resourceType = techTree->getResourceTypeByIndex(i);
+            const Resource* resource = faction->getResource(resourceType);
+            if (kResourceClass_holdable == resourceType->_class) {
+                _mapUILayer->updatePopulation(resource->getOccpied(), resource->getBalance());
+            } else {
+                _mapUILayer->updateGold(resource->getBalance());
+            }
+        }
+    }
+}
+
+void GameRender::initUILayer()
+{
+    if (_mapUILayer) {
+        _mapUILayer->updateWaveTime(_waveTime);
+        _mapUILayer->updateRemainingTime(_remainingTime);
+        _mapUILayer->updateMyHpProgress(100);
+        _mapUILayer->updateOpponentsHpProgress(100);
+        updateResources();
+    }
+}
+
+void GameRender::stopAllTimers()
+{
+    Scheduler* scheduler = Director::getInstance()->getScheduler();
+    scheduler->unschedule(tickSelectorKey, this);
+}
+
+void GameRender::onGameOver()
+{
+    stopAllTimers();
+    removeAllBullets();
+    
+    bool win(false);
+    const Unit* myCore = _cores.at(_game->getWorld()->getThisFactionIndex());
+    if (myCore && myCore->isAlive()) {
+        win = true;
+    }
+    
+    for (map<int, UnitNode*>::iterator iter = _allUnits.begin(); iter != _allUnits.end(); ++iter) {
+        UnitNode* node = iter->second;
+        const int factionIndex = node->getUnit()->getBelongFaction()->getFactionIndex();
+        if (factionIndex == _game->getWorld()->getThisFactionIndex()) {
+            if (win) {
+                node->onWin();
+            } else {
+                node->onLose();
+            }
+        } else {
+            if (win) {
+                node->onLose();
+            } else {
+                node->onWin();
+            }
+        }
+    }
 }

@@ -55,12 +55,25 @@ protected:
     
     // MapUILayerObserver
     virtual void onMapUILayerUnitSelected(MapUIUnitNode* node) override;
-    virtual void onMapUILayerClickedPauseButton(bool pause) override;
+    virtual void onMapUILayerClickedPauseButton() override;
+    virtual ssize_t onMapUILayerCampsCount() override;
+    virtual const UnderWorld::Core::Camp* onMapUILayerCampAtIndex(ssize_t idx) override;
     
 private:
     void updateUnits(const UnderWorld::Core::Game* game, int index);
     void updateBullets(const UnderWorld::Core::Game* game);
+    void updateUILayer();
     void addCritEffect(const UnderWorld::Core::Unit* target, const std::string& trigger);
+    void removeAllBullets();
+    void removeAllUnits();
+    void pauseGame();
+    void resumeGame();
+    void restartGame();
+    void tick(float dt);
+    void updateResources();
+    void initUILayer();
+    void stopAllTimers();
+    void onGameOver();
     
 private:
     GameRenderObserver *_observer;
@@ -70,6 +83,11 @@ private:
     UnderWorld::Core::Commander* _commander;
     std::map<int, UnitNode*> _allUnits;
     std::map<int64_t, BulletNode*> _allBullets;
+    std::map<int, UnderWorld::Core::Unit*> _cores;
+    bool _paused;
+    bool _isGameOver;
+    int _waveTime;
+    int _remainingTime;
 };
 
 #endif /* GameRender_h */

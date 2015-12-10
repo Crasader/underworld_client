@@ -18,10 +18,7 @@ USING_NS_CC_EXT;
 using namespace ui;
 
 namespace UnderWorld { namespace Core {
-    class Game;
-    class World;
     class Camp;
-    class Unit;
 }}
 
 class ResourceButton;
@@ -93,7 +90,9 @@ class MapUILayerObserver
 public:
     virtual ~MapUILayerObserver() {}
     virtual void onMapUILayerUnitSelected(MapUIUnitNode* node) = 0;
-    virtual void onMapUILayerClickedPauseButton(bool pause) = 0;
+    virtual void onMapUILayerClickedPauseButton() = 0;
+    virtual ssize_t onMapUILayerCampsCount() = 0;
+    virtual const UnderWorld::Core::Camp* onMapUILayerCampAtIndex(ssize_t idx) = 0;
 };
 
 class MapUILayer: public LayerColor, public TableViewDataSource, public MapUIUnitNodeObserver
@@ -102,19 +101,21 @@ public:
     static MapUILayer* create(const std::string& myAccount, const std::string& opponentsAccount);
     virtual ~MapUILayer();
     void registerObserver(MapUILayerObserver *observer);
-    void initWithGame(const UnderWorld::Core::Game* game);
+    void reload();
     void updateMyHpProgress(int progress);
     void updateOpponentsHpProgress(int progress);
     void updateWaveTime(int time);
     void updateRemainingTime(int time);
+    void updatePopulation(int count, int maxCount);
+    void updateGold(int count);
+    void pauseGame();
+    void resumeGame();
     
 protected:
     MapUILayer();
     
     // LayerColor
     bool init(const std::string& myAccount, const std::string& opponentsAccount);
-    virtual void onEnter() override;
-    virtual void onExit() override;
     
     // TableViewDataSource
     virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx) override;
@@ -126,21 +127,13 @@ protected:
     virtual void onMapUIUnitNodeUpdated(MapUIUnitNode* node) override;
     
     void onUnitTouched(MapUIUnitNode* node);
-    void reloadTableView(ssize_t cellsCount);
-    void updateResources();
-    
-    // ======================== test =============================
-    void fakeTick(float dt);
     
 private:
     MapUILayerObserver *_observer;
-    const UnderWorld::Core::World* _world;
-    bool _paused;
     Size _tableViewMaxSize;
     Size _cellSize;
     ssize_t _cellsCount;
     ssize_t _selectedUnitIdx;
-    std::map<int, UnderWorld::Core::Unit*> _cores;
     // ======================== UI =============================
     TableView *_tableView;
     Label *_timeLabel;
@@ -155,8 +148,6 @@ private:
     MenuItem *_sendTroopMenuItem;
     MenuItem *_pauseMenuItem;
     // ======================== test =============================
-    int _waveTime;
-    int _remainingTime;
 };
 
 #endif /* MapUILayer_h */

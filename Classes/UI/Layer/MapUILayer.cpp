@@ -10,9 +10,7 @@
 #include "cocostudio/CocoStudio.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
-#include "Game.h"
 #include "Camp.h"
-#include "TechTree.h"
 #include "ResourceButton.h"
 #include "SoundManager.h"
 
@@ -20,8 +18,6 @@ using namespace std;
 using namespace cocostudio;
 using namespace UnderWorld::Core;
 
-static const int waveTime(20);
-static const int battleTotalTime(600);
 static const float unitNodeOffsetX(17.0f);
 static const float unitNodeOffsetY(17.0f);
 static const int visibleCellsCount(6);
@@ -318,8 +314,6 @@ MapUILayer* MapUILayer::create(const string& myAccount, const string& opponentsA
 
 MapUILayer::MapUILayer()
 :_observer(nullptr)
-,_world(nullptr)
-,_paused(false)
 ,_cellsCount(3)
 ,_selectedUnitIdx(CC_INVALID_INDEX)
 ,_tableView(nullptr)
@@ -334,8 +328,6 @@ MapUILayer::MapUILayer()
 ,_opponentsHpPercentageLabel(nullptr)
 ,_sendTroopMenuItem(nullptr)
 ,_pauseMenuItem(nullptr)
-,_waveTime(11)  // TODO: reset wave time
-,_remainingTime(battleTotalTime)
 {
     static const Size& unitNodeSize = MapUIUnitNode::create(nullptr, 0)->getContentSize();
     _cellSize.height = unitNodeSize.height + unitNodeOffsetY * 2;
@@ -355,21 +347,26 @@ void MapUILayer::registerObserver(MapUILayerObserver *observer)
     _observer = observer;
 }
 
-void MapUILayer::initWithGame(const Game* game)
+void MapUILayer::reload()
 {
-    if (game) {
-        _world = game->getWorld();
-        if (_world) {
-            const int cnt = _world->getFactionCount();
-            for (int i = 0; i < cnt; ++i) {
-                const Faction* faction = _world->getFaction(i);
-                _cores.insert(make_pair(faction->getFactionIndex(), faction->findFirstUnitByClass(kUnitClass_Core)));
+    if (_tableView) {
+        if (_observer) {
+            _cellsCount = _observer->onMapUILayerCampsCount();
+        }
+        
+        // if setTouchEnabled to false, tableCellTouched() will never be called
+        _tableView->setTouchEnabled(_cellsCount > visibleCellsCount);
+        _tableView->reloadData();
+        
+        // fit
+        if (false == _tableView->isBounceable() && extension::ScrollView::Direction::HORIZONTAL == _tableView->getDirection()) {
+            _tableView->getContainer()->setPosition(Point::ZERO);
+            const int contentWidth = _cellSize.width * _cellsCount + unitNodeOffsetX;
+            if (contentWidth >= _tableViewMaxSize.width) {
+                _tableView->setViewSize(_tableViewMaxSize);
+            } else {
+                _tableView->setViewSize(Size(contentWidth, _tableViewMaxSize.height));
             }
-            
-            updateResources();
-            
-            // reload table view
-            reloadTableView(_world->getCampCount(_world->getThisFactionIndex()));
         }
     }
 }
@@ -396,6 +393,26 @@ void MapUILayer::updateRemainingTime(int time)
     _timeLabel->setString(CocosUtils::getFormattedTime(time));
 }
 
+void MapUILayer::updatePopulation(int count, int maxCount)
+{
+    _populationLabel->setString(StringUtils::format("%d/%d", count, maxCount));
+}
+
+void MapUILayer::updateGold(int count)
+{
+    _energyResourceButton->setCount(count);
+}
+
+void MapUILayer::pauseGame()
+{
+    
+}
+
+void MapUILayer::resumeGame()
+{
+    
+}
+
 #pragma mark - TableViewDataSource
 Size MapUILayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
 {
@@ -410,9 +427,8 @@ TableViewCell* MapUILayer::tableCellAtIndex(TableView *table, ssize_t idx)
         cell = MapUIUnitCell::create();
     }
     
-    if (_world) {
-        const int factionIndex = _world->getThisFactionIndex();
-        const Camp* camp = _world->getCamp(factionIndex, (int)idx);
+    if (_observer) {
+        const Camp* camp = _observer->onMapUILayerCampAtIndex(idx);
         if (camp) {
             MapUIUnitNode* unitNode = cell->getUnitNode();
             if (unitNode) {
@@ -659,9 +675,8 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             _unitCostLabel->setPosition(Point(size.width / 2, size.height / 2));
             sprite->addChild(_unitCostLabel);
             _pauseMenuItem = MenuItemImage::create("GameImages/test/ui_zt.png", "GameImages/test/ui_zt.png", [this](Ref*) {
-                _paused = !_paused;
                 if (_observer) {
-                    _observer->onMapUILayerClickedPauseButton(_paused);
+                    _observer->onMapUILayerClickedPauseButton();
                 }
             });
             _pauseMenuItem->setAnchorPoint(Point(1.0f, 1.0f));
@@ -670,12 +685,6 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             menu->setPosition(Point::ZERO);
             root->addChild(menu);
         }
-        
-        updateWaveTime(_waveTime);
-        updateRemainingTime(_remainingTime);
-        updateMyHpProgress(60);
-        updateOpponentsHpProgress(20);
-        updateResources();
 #endif
         
         auto eventListener = EventListenerTouchOneByOne::create();
@@ -695,22 +704,6 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
     return false;
 }
 
-void MapUILayer::onEnter()
-{
-    LayerColor::onEnter();
-    if (_nextWaveTimeLabel) {
-        _scheduler->schedule(schedule_selector(MapUILayer::fakeTick), this, 1.0f, false);
-    }
-}
-
-void MapUILayer::onExit()
-{
-    if (_nextWaveTimeLabel) {
-        _scheduler->unschedule(schedule_selector(MapUILayer::fakeTick), this);
-    }
-    LayerColor::onExit();
-}
-
 #pragma mark private
 void MapUILayer::onUnitTouched(MapUIUnitNode* node)
 {
@@ -728,79 +721,5 @@ void MapUILayer::onUnitTouched(MapUIUnitNode* node)
     
     if (_observer) {
         _observer->onMapUILayerUnitSelected(node);
-    }
-}
-
-void MapUILayer::reloadTableView(ssize_t cellsCount)
-{
-    _cellsCount = cellsCount;
-    if (_tableView) {
-        // if setTouchEnabled to false, tableCellTouched() will never be called
-        _tableView->setTouchEnabled(_cellsCount > visibleCellsCount);
-        _tableView->reloadData();
-        
-        // fit
-        if (false == _tableView->isBounceable() && extension::ScrollView::Direction::HORIZONTAL == _tableView->getDirection()) {
-            _tableView->getContainer()->setPosition(Point::ZERO);
-            const int contentWidth = _cellSize.width * _cellsCount + unitNodeOffsetX;
-            if (contentWidth >= _tableViewMaxSize.width) {
-                _tableView->setViewSize(_tableViewMaxSize);
-            } else {
-                _tableView->setViewSize(Size(contentWidth, _tableViewMaxSize.height));
-            }
-        }
-    }
-}
-
-void MapUILayer::updateResources()
-{
-    if (_world) {
-        const TechTree* techTree = _world->getTechTree();
-        const Faction* faction = _world->getThisFaction();
-        int count = techTree->getResourceTypeCount();
-        for (int i = 0; i < count; ++i) {
-            const UnderWorld::Core::ResourceType* resourceType = techTree->getResourceTypeByIndex(i);
-            const Resource* resource = faction->getResource(resourceType);
-            if (kResourceClass_holdable == resourceType->_class) {
-                _populationLabel->setString(StringUtils::format("%d/%d", resource->getOccpied(), resource->getBalance()));
-            } else {
-                _energyResourceButton->setCount(resource->getBalance());
-            }
-        }
-    }
-    
-}
-
-void MapUILayer::fakeTick(float dt)
-{
-    -- _waveTime;
-    -- _remainingTime;
-    
-    if (_waveTime <= 0) {
-        _waveTime = waveTime;
-    }
-    
-    if (_remainingTime <= 0) {
-        _remainingTime = battleTotalTime;
-    }
-    
-    updateWaveTime(_waveTime);
-    updateRemainingTime(_remainingTime);
-    updateResources();    
-    
-    if (_world) {
-        for (map<int, Unit*>::iterator iter = _cores.begin(); iter != _cores.end(); ++iter) {
-            const Unit* core(iter->second);
-            if (core) {
-                const int maxHp = core->getUnitType()->getMaxHp();
-                const int hp = core->getHp();
-                const float percentage = 100 * (float)hp / (float)maxHp;
-                if (iter->first == _world->getThisFactionIndex()) {
-                    updateMyHpProgress(percentage);
-                } else {
-                    updateOpponentsHpProgress(percentage);
-                }
-            }
-        }
     }
 }

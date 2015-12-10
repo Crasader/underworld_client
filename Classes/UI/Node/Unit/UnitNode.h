@@ -47,14 +47,19 @@ public:
     void addSwordEffect();
     void addBuf();
     void removeBuf();
+    void onWin();
+    void onLose();
     
 protected:
     UnitNode();
     bool init(const UnderWorld::Core::Unit* unit);
+    const std::string getCsbFilePrefix();
     const std::string getCsbFile(UnitDirection direction, float hpPercentage);
+    const std::string getStandbyCsbFile(UnitDirection direction, bool isHealthy);
     void getMultipleAnimationFiles(std::vector<std::string>& output);
     bool checkIsStandby(const UnderWorld::Core::Skill* skill);
     UnitDirection calculateDirection();
+    float calculateHpPercentage();
     void addActionNode(const std::string& file, bool play, bool loop, float playTime, int frameIndex, const std::function<void()>& lastFrameCallFunc);
     void addMultipleAnimationNode(int frameIndex, const std::function<void()>& lastFrameCallFunc);
     void updateActionNode(const UnderWorld::Core::Skill* skill, const std::string& file, int currentFrame, bool flip);
