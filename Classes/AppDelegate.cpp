@@ -89,19 +89,21 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // set search paths
     std::vector<std::string> searchPaths = FileUtils::getInstance()->getSearchPaths();
     
-    std::vector<std::string>::iterator iter = searchPaths.begin();
-    searchPaths.insert(iter, ONLINE_UPDATE_SEARCH_PATH);
+    std::vector<std::string>::iterator iter;
     
     iter = searchPaths.begin();
     searchPaths.insert(iter, DEFAULT_RESOURCE_FOLDER);
+    
+    iter = searchPaths.begin();
+    searchPaths.insert(iter, ONLINE_UPDATE_SEARCH_PATH);
     
     FileUtils::getInstance()->setSearchPaths(searchPaths);
     
     // set default music and sound, must set here instead of "Utils" (android may crash)
     SoundManager* sm = SoundManager::getInstance();
     UserDefaultsDataManager* um = UserDefaultsDataManager::getInstance();
-    sm->setMusicOn(um->getMusicOn());
-    sm->setSoundOn(um->getSoundOn());
+    sm->setMusicOn(false /*um->getMusicOn()*/);
+    sm->setSoundOn(false /*um->getSoundOn()*/);
     
     // game initialization
     DataManager::getInstance()->init();

@@ -158,15 +158,15 @@ bool HelloWorld::init()
     UnderWorld::Core::UnitSetting us00;
     us00.setUnitTypeName("狼人步兵");
     cs0[0].setUnitSetting(us00);
-    cs0[0].setMaxProduction(100);
+    cs0[0].setMaxProduction(5);
     UnderWorld::Core::UnitSetting us01;
     us01.setUnitTypeName("狼人射手");
     cs0[1].setUnitSetting(us01);
-    cs0[1].setMaxProduction(100);
+    cs0[1].setMaxProduction(5);
     UnderWorld::Core::UnitSetting us02;
     us02.setUnitTypeName("狼人巫师");
     cs0[2].setUnitSetting(us02);
-    cs0[2].setMaxProduction(100);
+    cs0[2].setMaxProduction(5);
     setting.setCamps(0, cs0);
     
     vector<UnderWorld::Core::CampSetting> cs1;

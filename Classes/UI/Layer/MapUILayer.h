@@ -96,7 +96,7 @@ public:
     virtual void onMapUILayerClickedPauseButton(bool pause) = 0;
 };
 
-class MapUILayer: public LayerColor, public TableViewDelegate, public TableViewDataSource, public MapUIUnitNodeObserver
+class MapUILayer: public LayerColor, public TableViewDataSource, public MapUIUnitNodeObserver
 {
 public:
     static MapUILayer* create(const std::string& myAccount, const std::string& opponentsAccount);
@@ -115,9 +115,6 @@ protected:
     bool init(const std::string& myAccount, const std::string& opponentsAccount);
     virtual void onEnter() override;
     virtual void onExit() override;
-    
-    // TableViewDelegate
-    virtual void tableCellTouched(TableView* table, TableViewCell* cell) override;
     
     // TableViewDataSource
     virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx) override;

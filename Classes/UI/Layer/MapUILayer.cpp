@@ -21,7 +21,7 @@ using namespace cocostudio;
 using namespace UnderWorld::Core;
 
 static const int waveTime(20);
-static const int battleTotalTime(180);
+static const int battleTotalTime(600);
 static const float unitNodeOffsetX(17.0f);
 static const float unitNodeOffsetY(17.0f);
 static const int visibleCellsCount(6);
@@ -396,18 +396,6 @@ void MapUILayer::updateRemainingTime(int time)
     _timeLabel->setString(CocosUtils::getFormattedTime(time));
 }
 
-#pragma mark - TableViewDelegate
-void MapUILayer::tableCellTouched(TableView* table, TableViewCell* cell)
-{
-    MapUIUnitCell *unitCell = static_cast<MapUIUnitCell*>(cell);
-    if (unitCell) {
-        MapUIUnitNode* unitNode = unitCell->getUnitNode();
-        if (unitNode) {
-            onUnitTouched(unitNode);
-        }
-    }
-}
-
 #pragma mark - TableViewDataSource
 Size MapUILayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
 {
@@ -451,7 +439,7 @@ ssize_t MapUILayer::numberOfCellsInTableView(TableView *table)
 #pragma mark - MapUIUnitNodeObserver
 void MapUILayer::onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node)
 {
-    
+    onUnitTouched(node);
 }
 
 void MapUILayer::onMapUIUnitNodeUpdated(MapUIUnitNode* node)
@@ -661,7 +649,6 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             _tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
             _tableView->setPosition(pos - Point(_tableViewMaxSize.width / 2, unitNodeOffsetY));
             _tableView->setBounceable(false);
-            _tableView->setDelegate(this);
             root->addChild(_tableView);
         }
         // buttons
@@ -749,7 +736,7 @@ void MapUILayer::reloadTableView(ssize_t cellsCount)
     _cellsCount = cellsCount;
     if (_tableView) {
         // if setTouchEnabled to false, tableCellTouched() will never be called
-//        _tableView->setTouchEnabled(_cellsCount > visibleCellsCount);
+        _tableView->setTouchEnabled(_cellsCount > visibleCellsCount);
         _tableView->reloadData();
         
         // fit
