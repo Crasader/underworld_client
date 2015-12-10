@@ -174,15 +174,15 @@ bool HelloWorld::init()
     UnderWorld::Core::UnitSetting us10;
     us10.setUnitTypeName("吸血鬼战士");
     cs1[0].setUnitSetting(us10);
-    cs1[0].setMaxProduction(100);
+    cs1[0].setMaxProduction(5);
     UnderWorld::Core::UnitSetting us11;
     us11.setUnitTypeName("吸血鬼弓兵");
     cs1[1].setUnitSetting(us11);
-    cs1[1].setMaxProduction(100);
+    cs1[1].setMaxProduction(5);
     UnderWorld::Core::UnitSetting us12;
     us12.setUnitTypeName("吸血鬼巫师");
     cs1[2].setUnitSetting(us12);
-    cs1[2].setMaxProduction(100);
+    cs1[2].setMaxProduction(5);
     setting.setCamps(1, cs1);
 
     _looper = new UnderWorld::Core::GameLooper(_render, _sch);
