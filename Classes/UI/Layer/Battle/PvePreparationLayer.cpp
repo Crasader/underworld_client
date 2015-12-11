@@ -1,12 +1,12 @@
 //
-//  VictoryLayer.cpp
+//  PvePreparationLayer.cpp
 //  Underworld_Client
 //
-//  Created by Andy on 15/12/11.
+//  Created by Andy on 15/11/6.
 //  Copyright (c) 2015 Mofish Studio. All rights reserved.
 //
 
-#include "VictoryLayer.h"
+#include "PvePreparationLayer.h"
 #include "ui/CocosGUI.h"
 #include "cocostudio/CocoStudio.h"
 #include "CocosGlobal.h"
@@ -18,9 +18,9 @@ using namespace std;
 using namespace ui;
 using namespace cocostudio;
 
-VictoryLayer* VictoryLayer::create(int levelId)
+PvePreparationLayer* PvePreparationLayer::create(int levelId)
 {
-    VictoryLayer *ret = new (nothrow) VictoryLayer();
+    PvePreparationLayer *ret = new (nothrow) PvePreparationLayer();
     if (ret && ret->init(levelId))
     {
         ret->autorelease();
@@ -31,23 +31,23 @@ VictoryLayer* VictoryLayer::create(int levelId)
     return nullptr;
 }
 
-VictoryLayer::VictoryLayer()
+PvePreparationLayer::PvePreparationLayer()
 :_observer(nullptr)
 {
     
 }
 
-VictoryLayer::~VictoryLayer()
+PvePreparationLayer::~PvePreparationLayer()
 {
     removeAllChildren();
 }
 
-void VictoryLayer::registerObserver(VictoryLayerObserver *observer)
+void PvePreparationLayer::registerObserver(PvePreparationLayerObserver *observer)
 {
     _observer = observer;
 }
 
-bool VictoryLayer::init(int levelId)
+bool PvePreparationLayer::init(int levelId)
 {
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR))
     {
@@ -139,8 +139,8 @@ bool VictoryLayer::init(int levelId)
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
-        eventListener->onTouchBegan = CC_CALLBACK_2(VictoryLayer::onTouchBegan, this);
-        eventListener->onTouchEnded = CC_CALLBACK_2(VictoryLayer::onTouchEnded, this);
+        eventListener->onTouchBegan = CC_CALLBACK_2(PvePreparationLayer::onTouchBegan, this);
+        eventListener->onTouchEnded = CC_CALLBACK_2(PvePreparationLayer::onTouchEnded, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
         
         return true;
@@ -149,12 +149,12 @@ bool VictoryLayer::init(int levelId)
     return false;
 }
 
-bool VictoryLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
+bool PvePreparationLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
     return true;
 }
 
-void VictoryLayer::onTouchEnded(Touch *touch, Event *unused_event)
+void PvePreparationLayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
     
 }

@@ -11,80 +11,16 @@
 
 #include "cocos2d.h"
 #include "cocos-ext.h"
-#include "ui/CocosGUI.h"
+#include "MapUIUnitNode.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
-using namespace ui;
 
 namespace UnderWorld { namespace Core {
     class Camp;
 }}
 
 class ResourceButton;
-
-// =====================================================
-// Unit	Node
-// =====================================================
-
-class MapUIUnitNode;
-
-class MapUIUnitNodeObserver
-{
-public:
-    virtual ~MapUIUnitNodeObserver() {}
-    virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node) = 0;
-    virtual void onMapUIUnitNodeUpdated(MapUIUnitNode* node) = 0;
-};
-
-class MapUIUnitNode: public Node
-{
-public:
-    static MapUIUnitNode* create(const UnderWorld::Core::Camp* camp, ssize_t idx);
-    virtual ~MapUIUnitNode();
-    void registerObserver(MapUIUnitNodeObserver *observer);
-    void reuse(const UnderWorld::Core::Camp* camp, ssize_t idx);
-    void update(bool reuse);
-    void setSelected(bool selected);
-    
-    // getters
-    const UnderWorld::Core::Camp* getCamp() const;
-    ssize_t getIdx() const;
-    
-protected:
-    MapUIUnitNode();
-    bool init(const UnderWorld::Core::Camp* camp, ssize_t idx);
-    std::string getIconFile(const UnderWorld::Core::Camp* camp) const;
-    
-private:
-    MapUIUnitNodeObserver *_observer;
-    Button *_iconButton;
-    ResourceButton *_resourceButton;
-    Label *_countLabel;
-    const UnderWorld::Core::Camp* _camp;
-    ssize_t _idx;
-    bool _touchInvalid;
-};
-
-// =====================================================
-// TableViewCell
-// =====================================================
-
-class MapUIUnitCell: public TableViewCell
-{
-public:
-    CREATE_FUNC(MapUIUnitCell);
-    MapUIUnitNode* getUnitNode() const;
-    void setUnitNode(MapUIUnitNode* node);
-    void resetUnitNode();
-    
-private:
-    MapUIUnitNode* _unitNode;
-};
-
-// =====================================================
-// Layer
-// =====================================================
 
 class MapUILayerObserver
 {

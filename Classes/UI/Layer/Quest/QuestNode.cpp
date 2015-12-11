@@ -1,12 +1,12 @@
 //
-//  VictoryLayer.cpp
+//  QuestNode.cpp
 //  Underworld_Client
 //
 //  Created by Andy on 15/12/11.
 //  Copyright (c) 2015 Mofish Studio. All rights reserved.
 //
 
-#include "VictoryLayer.h"
+#include "QuestNode.h"
 #include "ui/CocosGUI.h"
 #include "cocostudio/CocoStudio.h"
 #include "CocosGlobal.h"
@@ -18,10 +18,10 @@ using namespace std;
 using namespace ui;
 using namespace cocostudio;
 
-VictoryLayer* VictoryLayer::create(int levelId)
+QuestNode* QuestNode::create()
 {
-    VictoryLayer *ret = new (nothrow) VictoryLayer();
-    if (ret && ret->init(levelId))
+    QuestNode *ret = new (nothrow) QuestNode();
+    if (ret && ret->init())
     {
         ret->autorelease();
         return ret;
@@ -31,25 +31,25 @@ VictoryLayer* VictoryLayer::create(int levelId)
     return nullptr;
 }
 
-VictoryLayer::VictoryLayer()
+QuestNode::QuestNode()
 :_observer(nullptr)
 {
     
 }
 
-VictoryLayer::~VictoryLayer()
+QuestNode::~QuestNode()
 {
     removeAllChildren();
 }
 
-void VictoryLayer::registerObserver(VictoryLayerObserver *observer)
+void QuestNode::registerObserver(QuestNodeObserver *observer)
 {
     _observer = observer;
 }
 
-bool VictoryLayer::init(int levelId)
+bool QuestNode::init()
 {
-    if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR))
+    if (Node::init())
     {
         const Size& winSize = Director::getInstance()->getWinSize();
         
@@ -137,24 +137,8 @@ bool VictoryLayer::init(int levelId)
             }
         }
         
-        auto eventListener = EventListenerTouchOneByOne::create();
-        eventListener->setSwallowTouches(true);
-        eventListener->onTouchBegan = CC_CALLBACK_2(VictoryLayer::onTouchBegan, this);
-        eventListener->onTouchEnded = CC_CALLBACK_2(VictoryLayer::onTouchEnded, this);
-        _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
-        
         return true;
     }
     
     return false;
-}
-
-bool VictoryLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
-{
-    return true;
-}
-
-void VictoryLayer::onTouchEnded(Touch *touch, Event *unused_event)
-{
-    
 }

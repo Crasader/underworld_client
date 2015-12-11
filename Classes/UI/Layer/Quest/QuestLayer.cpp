@@ -1,26 +1,32 @@
 //
-//  VictoryLayer.cpp
+//  QuestLayer.cpp
 //  Underworld_Client
 //
 //  Created by Andy on 15/12/11.
 //  Copyright (c) 2015 Mofish Studio. All rights reserved.
 //
 
-#include "VictoryLayer.h"
+#include "QuestLayer.h"
 #include "ui/CocosGUI.h"
 #include "cocostudio/CocoStudio.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "SoundManager.h"
+#include "QuestCell.h"
+#include "QuestNode.h"
 
 using namespace std;
 using namespace ui;
 using namespace cocostudio;
 
-VictoryLayer* VictoryLayer::create(int levelId)
+static const float nodeOffsetX(17.0f);
+static const float nodeOffsetY(17.0f);
+static const int visibleCellsCount(6);
+
+QuestLayer* QuestLayer::create(int levelId)
 {
-    VictoryLayer *ret = new (nothrow) VictoryLayer();
+    QuestLayer *ret = new (nothrow) QuestLayer();
     if (ret && ret->init(levelId))
     {
         ret->autorelease();
@@ -31,23 +37,28 @@ VictoryLayer* VictoryLayer::create(int levelId)
     return nullptr;
 }
 
-VictoryLayer::VictoryLayer()
+QuestLayer::QuestLayer()
 :_observer(nullptr)
 {
+    static const Size& unitNodeSize = QuestNode::create()->getContentSize();
+    _cellSize.height = unitNodeSize.height + nodeOffsetY * 2;
+    _cellSize.width = unitNodeSize.width + nodeOffsetX;
     
+    _tableViewMaxSize.width = _cellSize.width * visibleCellsCount + nodeOffsetX;
+    _tableViewMaxSize.height = _cellSize.height;
 }
 
-VictoryLayer::~VictoryLayer()
+QuestLayer::~QuestLayer()
 {
     removeAllChildren();
 }
 
-void VictoryLayer::registerObserver(VictoryLayerObserver *observer)
+void QuestLayer::registerObserver(QuestLayerObserver *observer)
 {
     _observer = observer;
 }
 
-bool VictoryLayer::init(int levelId)
+bool QuestLayer::init(int levelId)
 {
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR))
     {
@@ -139,8 +150,8 @@ bool VictoryLayer::init(int levelId)
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
-        eventListener->onTouchBegan = CC_CALLBACK_2(VictoryLayer::onTouchBegan, this);
-        eventListener->onTouchEnded = CC_CALLBACK_2(VictoryLayer::onTouchEnded, this);
+        eventListener->onTouchBegan = CC_CALLBACK_2(QuestLayer::onTouchBegan, this);
+        eventListener->onTouchEnded = CC_CALLBACK_2(QuestLayer::onTouchEnded, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
         
         return true;
@@ -149,12 +160,41 @@ bool VictoryLayer::init(int levelId)
     return false;
 }
 
-bool VictoryLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
+bool QuestLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
     return true;
 }
 
-void VictoryLayer::onTouchEnded(Touch *touch, Event *unused_event)
+void QuestLayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
     
+}
+
+#pragma mark - TableViewDelegate
+Size QuestLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
+{
+    return Size(618, 60);
+}
+
+TableViewCell* QuestLayer::tableCellAtIndex(TableView *table, ssize_t idx)
+{
+    QuestCell *cell = static_cast<QuestCell*>(table->dequeueCell());
+    
+    if (!cell) {
+        cell = QuestCell::create();
+    }
+    
+    QuestNode* node = cell->getNode();
+    if (node) {
+        
+    } else {
+        
+    }
+    
+    return cell;
+}
+
+ssize_t QuestLayer::numberOfCellsInTableView(TableView *table)
+{
+    return 1;
 }
