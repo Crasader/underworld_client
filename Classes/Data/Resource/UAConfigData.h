@@ -1,5 +1,5 @@
 //
-//  AnimationConfigData.h
+//  UAConfigData.h
 //  Underworld_Client
 //
 //  Created by Andy on 15/12/7.
@@ -25,14 +25,14 @@ struct AnimationParameters
 };
 
 // =====================================================
-// Animation Config Data
+// Unit Animation Config Data
 // =====================================================
 
-class AnimationConfigData
+class UAConfigData
 {
 public:
-    AnimationConfigData(tinyxml2::XMLElement *xmlElement);
-    virtual ~AnimationConfigData();
+    UAConfigData(tinyxml2::XMLElement *xmlElement);
+    virtual ~UAConfigData();
     
     AnimationParameters getAnimationParameters(UnitDirection direction);
     

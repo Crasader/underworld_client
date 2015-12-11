@@ -10,6 +10,7 @@
 #include "tinyxml2/tinyxml2.h"
 #include "LocalHelper.h"
 #include "QuestData.h"
+#include "URConfigData.h"
 
 USING_NS_CC;
 using namespace std;
@@ -71,6 +72,7 @@ DataManager::~DataManager()
     }
     
     clearMap(_animationParameters);
+    clearMap(_unitResourceConfigData);
 }
 
 void DataManager::init()
@@ -78,6 +80,7 @@ void DataManager::init()
     parseQuestData(kQuestType_Daily);
     parseQuestData(kQuestType_Life);
     parseAnimationConfigData();
+    parseURConfigData();
 }
 
 const QuestData* DataManager::getQuestData(QuestType type, int questId) const
@@ -92,17 +95,26 @@ const QuestData* DataManager::getQuestData(QuestType type, int questId) const
     return nullptr;
 }
 
-AnimationParameters DataManager::getAnimationParameters(const string& name, UnderWorld::Core::SkillClass skillClass, UnitDirection direction)
+AnimationParameters DataManager::getAnimationParameters(const string& name, UnderWorld::Core::SkillClass skillClass, UnitDirection direction) const
 {
     string key = name + StringUtils::format("_%d", skillClass);
     if (_animationParameters.find(key) != _animationParameters.end()) {
-        AnimationConfigData* data = _animationParameters.at(key);
+        UAConfigData* data = _animationParameters.at(key);
         if (data) {
             return data->getAnimationParameters(direction);
         }
     }
     
     return {1.0f, 1.0f};
+}
+
+const URConfigData* DataManager::getURConfigData(const std::string& name) const
+{
+    if (_unitResourceConfigData.find(name) != _unitResourceConfigData.end()) {
+        return _unitResourceConfigData.at(name);
+    }
+    
+    return nullptr;
 }
 
 void DataManager::parseQuestData(QuestType type)
@@ -168,13 +180,42 @@ void DataManager::parseAnimationConfigData()
                 const char* name = item->Attribute("name");
                 const char* skill = item->Attribute("skill");
                 if (name && skill) {
-                    AnimationConfigData* data = new (nothrow) AnimationConfigData(item);
+                    UAConfigData* data = new (nothrow) UAConfigData(item);
                     string key = StringUtils::format("%s_%s", name, skill);
                     if (_animationParameters.find(key) != _animationParameters.end()) {
                         assert(false);
                     } else {
                         _animationParameters.insert(make_pair(key, data));
                     }
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
+void DataManager::parseURConfigData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath("UnitResourceConfig.xml");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                URConfigData* data = new (nothrow) URConfigData(item);
+                const string& key = data->getName();
+                if (_unitResourceConfigData.find(key) != _unitResourceConfigData.end()) {
+                    assert(false);
+                } else {
+                    _unitResourceConfigData.insert(make_pair(key, data));
                 }
             }
             

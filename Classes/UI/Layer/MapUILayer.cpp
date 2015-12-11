@@ -12,6 +12,8 @@
 #include "CocosUtils.h"
 #include "Camp.h"
 #include "ResourceButton.h"
+#include "DataManager.h"
+#include "URConfigData.h"
 #include "SoundManager.h"
 
 using namespace std;
@@ -31,33 +33,6 @@ static ProgressTimer* createProgressTimer()
     pt->setMidpoint(Point::ANCHOR_BOTTOM_LEFT);
     
     return pt;
-}
-
-static string getIconFile(const string& unitName)
-{
-    static const string prefix("GameImages/test/");
-    static const string suffix(".png");
-    string file;
-    
-    if (WOLF_SOLDIER == unitName) {
-        file = "icon_w_langdun";
-    } else if (WOLF_ARCHER == unitName) {
-        file = "icon_w_langgongjian";
-    } else if (WOLF_WIZARD == unitName) {
-        file = "icon_w_langfashi";
-    } else if (VAMPIRE_SOLDIER == unitName) {
-        file = "icon_v_roudun";
-    } else if (VAMPIRE_ARCHER == unitName) {
-        file = "icon_v_nvgongjianshou";
-    } else if (VAMPIRE_WIZARD == unitName) {
-        file = "icon_v_nvwushi";
-    }
-    
-    if (file.length() > 0) {
-        return prefix + file + suffix;
-    }
-    
-    return "";
 }
 
 #pragma mark =====================================================
@@ -123,8 +98,7 @@ bool MapUIUnitNode::init(const Camp* camp, ssize_t idx)
             }
         }
 #else
-        const string& unitName = camp ? camp->getUnitSetting().getUnitTypeName() : WOLF_SOLDIER;
-        const string& iconFile = getIconFile(unitName);
+        const string& iconFile = getIconFile(camp);
         _iconButton = Button::create(iconFile, iconFile);
         _iconButton->setPressedActionEnabled(false);
         _iconButton->setSwallowTouches(false);
@@ -148,7 +122,7 @@ bool MapUIUnitNode::init(const Camp* camp, ssize_t idx)
         });
         
         if (camp) {
-            const std::map<std::string, int>* costs = camp->getCosts();
+            const map<string, int>* costs = camp->getCosts();
             if (costs) {
                 if (costs->find(RES_NAME_GOLD) != costs->end()) {
                     _resourceButton = ResourceButton::create(false, kResourceType_Gold, costs->at(RES_NAME_GOLD), nullptr);
@@ -210,8 +184,7 @@ void MapUIUnitNode::reuse(const Camp* camp, ssize_t idx)
     _camp = camp;
     _idx = idx;
     
-    const string& unitName = camp ? camp->getUnitSetting().getUnitTypeName() : "";
-    const string& iconFile = getIconFile(unitName);
+    const string& iconFile = getIconFile(camp);
     if (iconFile.length() > 0) {
         _iconButton->loadTextures(iconFile, iconFile);
     }
@@ -225,7 +198,7 @@ void MapUIUnitNode::update(bool reuse)
     if (_camp) {
         _countLabel->setString(StringUtils::format("%d/%d", _camp->getProduction(), _camp->getMaxProduction()));
         
-        const std::map<std::string, int>* costs = _camp->getCosts();
+        const map<string, int>* costs = _camp->getCosts();
         if (costs) {
             if (costs->find(RES_NAME_GOLD) != costs->end()) {
                 _resourceButton->setCount(costs->at(RES_NAME_GOLD));
@@ -271,6 +244,14 @@ const Camp* MapUIUnitNode::getCamp() const
 ssize_t MapUIUnitNode::getIdx() const
 {
     return _idx;
+}
+
+string MapUIUnitNode::getIconFile(const Camp* camp) const
+{
+    const string& unitName = camp ? camp->getUnitSetting().getUnitTypeName() : "";
+    const URConfigData* configData = DataManager::getInstance()->getURConfigData(unitName);
+    const string& iconFile = configData ? configData->getIcon() : "GameImages/test/icon_w_langdun.png";
+    return iconFile;
 }
 
 #pragma mark =====================================================

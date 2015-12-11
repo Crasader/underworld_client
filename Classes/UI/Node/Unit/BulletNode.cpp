@@ -12,7 +12,8 @@
 #include "Unit.h"
 #include "UnitType.h"
 #include "Bullet.h"
-#include "BulletType.h"
+#include "DataManager.h"
+#include "URConfigData.h"
 
 using namespace std;
 using namespace UnderWorld::Core;
@@ -67,25 +68,10 @@ bool BulletNode::init(const Bullet* bullet)
     {
         _bullet = bullet;
         
-#if true
         const Unit* trigger = bullet->getTrigger();
         if (trigger) {
             const string& name = trigger->getUnitType()->getName();
-            string file;
-            if (name == WOLF_WIZARD) {
-                file = "effect-fireball.csb";
-            } else if (name == VAMPIRE_WIZARD) {
-                file = "effect-fireball-1.csb";
-            } else if (name == VAMPIRE_TOWER) {
-                file = "Vampire-tower-attack.csb";
-            } else if (name == WOLF_CORE) {
-                file = "wolf-base-attack-1.csb";
-            } else if (name == VAMPIRE_CORE) {
-                file = "Vampire-base-attack-1.csb";
-            } else {
-                file = "effect-jian.csb";
-            }
-            
+            const string& file = DataManager::getInstance()->getURConfigData(name)->getBullet();
             if (file.length() > 0) {
                 _actionNode = CSLoader::createNode(file);
                 addChild(_actionNode);
@@ -99,15 +85,6 @@ bool BulletNode::init(const Bullet* bullet)
         } else {
             assert(false);
         }
-#else
-        const BulletType* type = bullet->getBulletType();
-        string csbFile = "hongzidan.csb";
-        _actionNode = CSLoader::createNode(csbFile);
-        addChild(_actionNode);
-        cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(csbFile);
-        _actionNode->runAction(action);
-        action->gotoFrameAndPlay(0, false);
-#endif
         
         update(true);
         

@@ -24,6 +24,7 @@ namespace UnderWorld { namespace Core {
 
 class UnitNode;
 class DisplayBar;
+class URConfigData;
 
 class UnitNodeObserver
 {
@@ -53,7 +54,6 @@ public:
 protected:
     UnitNode();
     bool init(const UnderWorld::Core::Unit* unit);
-    const std::string getCsbFilePrefix();
     const std::string getCsbFile(UnitDirection direction, float hpPercentage);
     const std::string getStandbyCsbFile(UnitDirection direction, bool isHealthy);
     void getMultipleAnimationFiles(std::vector<std::string>& output);
@@ -73,6 +73,7 @@ protected:
     
 private:
     UnitNodeObserver *_observer;
+    const URConfigData* _configData;
     Node *_actionNode;
     cocostudio::timeline::ActionTimeline *_currentAction;
     Scheduler *_speedScheduler;

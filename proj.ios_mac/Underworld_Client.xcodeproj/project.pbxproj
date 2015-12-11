@@ -94,6 +94,8 @@
 		A103F45B1BE37E2A007F9A83 /* BulletNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F4571BE37E2A007F9A83 /* BulletNode.cpp */; };
 		A103F45C1BE37E2A007F9A83 /* UnitNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F4591BE37E2A007F9A83 /* UnitNode.cpp */; };
 		A103F45F1BE38112007F9A83 /* GameRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F45D1BE38112007F9A83 /* GameRender.cpp */; };
+		A10A66E71C1A7CE100A2DD13 /* UAConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10A66E31C1A7CE100A2DD13 /* UAConfigData.cpp */; };
+		A10A66E81C1A7CE100A2DD13 /* URConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10A66E51C1A7CE100A2DD13 /* URConfigData.cpp */; };
 		A113A03E1BFEF8F2001FEB2A /* GuildManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A113A03C1BFEF8F2001FEB2A /* GuildManager.cpp */; };
 		A1211B231C0BF55200C27CCC /* LiteralValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B211C0BF55200C27CCC /* LiteralValue.cpp */; };
 		A1211B271C0BF5CC00C27CCC /* RandomCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B251C0BF5CC00C27CCC /* RandomCreator.cpp */; };
@@ -148,7 +150,6 @@
 		A1F8854A1C1041A10035B4C5 /* GearData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F885481C1041A10035B4C5 /* GearData.cpp */; };
 		A1F8854D1C1044500035B4C5 /* UserData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F8854B1C1044500035B4C5 /* UserData.cpp */; };
 		A1F885501C1044640035B4C5 /* UserSimpleData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F8854E1C1044640035B4C5 /* UserSimpleData.cpp */; };
-		A1FBE23B1C15891300FC4936 /* AnimationConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1FBE2391C15891300FC4936 /* AnimationConfigData.cpp */; };
 		A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A1FC49B31BD8C249005C1B2E /* CrashHelper.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		A1FC49B61BD8DBCF005C1B2E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1FC49B51BD8DBCF005C1B2E /* MessageUI.framework */; };
 		A1FF6E881C16B9890017CAD2 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = A1FF6E871C16B9890017CAD2 /* configs */; };
@@ -333,6 +334,10 @@
 		A103F45A1BE37E2A007F9A83 /* UnitNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitNode.h; sourceTree = "<group>"; };
 		A103F45D1BE38112007F9A83 /* GameRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameRender.cpp; sourceTree = "<group>"; };
 		A103F45E1BE38112007F9A83 /* GameRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRender.h; sourceTree = "<group>"; };
+		A10A66E31C1A7CE100A2DD13 /* UAConfigData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UAConfigData.cpp; sourceTree = "<group>"; };
+		A10A66E41C1A7CE100A2DD13 /* UAConfigData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAConfigData.h; sourceTree = "<group>"; };
+		A10A66E51C1A7CE100A2DD13 /* URConfigData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = URConfigData.cpp; sourceTree = "<group>"; };
+		A10A66E61C1A7CE100A2DD13 /* URConfigData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URConfigData.h; sourceTree = "<group>"; };
 		A113A03C1BFEF8F2001FEB2A /* GuildManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuildManager.cpp; sourceTree = "<group>"; };
 		A113A03D1BFEF8F2001FEB2A /* GuildManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuildManager.h; sourceTree = "<group>"; };
 		A1211B211C0BF55200C27CCC /* LiteralValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LiteralValue.cpp; path = Core/Unit/Element/LiteralValue.cpp; sourceTree = "<group>"; };
@@ -439,8 +444,6 @@
 		A1F8854C1C1044500035B4C5 /* UserData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserData.h; sourceTree = "<group>"; };
 		A1F8854E1C1044640035B4C5 /* UserSimpleData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserSimpleData.cpp; sourceTree = "<group>"; };
 		A1F8854F1C1044640035B4C5 /* UserSimpleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserSimpleData.h; sourceTree = "<group>"; };
-		A1FBE2391C15891300FC4936 /* AnimationConfigData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimationConfigData.cpp; sourceTree = "<group>"; };
-		A1FBE23A1C15891300FC4936 /* AnimationConfigData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationConfigData.h; sourceTree = "<group>"; };
 		A1FC49B21BD8C249005C1B2E /* CrashHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashHelper.h; sourceTree = "<group>"; };
 		A1FC49B31BD8C249005C1B2E /* CrashHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrashHelper.m; sourceTree = "<group>"; };
 		A1FC49B51BD8DBCF005C1B2E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = DEVELOPER_DIR; };
@@ -845,11 +848,21 @@
 			path = Unit;
 			sourceTree = "<group>";
 		};
+		A10A66E21C1A7CE100A2DD13 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				A10A66E31C1A7CE100A2DD13 /* UAConfigData.cpp */,
+				A10A66E41C1A7CE100A2DD13 /* UAConfigData.h */,
+				A10A66E51C1A7CE100A2DD13 /* URConfigData.cpp */,
+				A10A66E61C1A7CE100A2DD13 /* URConfigData.h */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
 		A12D2F571BFDE88A00389DAC /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				A1FBE2391C15891300FC4936 /* AnimationConfigData.cpp */,
-				A1FBE23A1C15891300FC4936 /* AnimationConfigData.h */,
+				A10A66E21C1A7CE100A2DD13 /* Resource */,
 				A1E929771C0D7F9A0026D85D /* ChatData.cpp */,
 				A1E929781C0D7F9A0026D85D /* ChatData.h */,
 				A1F885481C1041A10035B4C5 /* GearData.cpp */,
@@ -1283,9 +1296,9 @@
 				300098D61BD5E81700B6E284 /* InstanceFactory.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				A1F8854D1C1044500035B4C5 /* UserData.cpp in Sources */,
+				A10A66E71C1A7CE100A2DD13 /* UAConfigData.cpp in Sources */,
 				A103F45C1BE37E2A007F9A83 /* UnitNode.cpp in Sources */,
 				A1720E691BCCDEFF00217E98 /* DataManager.cpp in Sources */,
-				A1FBE23B1C15891300FC4936 /* AnimationConfigData.cpp in Sources */,
 				A1211B291C0BF68E00C27CCC /* GameConstants.cpp in Sources */,
 				A1E929731C0D7E890026D85D /* ChatManager.cpp in Sources */,
 				301C1B7A1C0EA67200B378A6 /* Effect.cpp in Sources */,
@@ -1304,6 +1317,7 @@
 				307534691BF1B2F20057DCED /* Commander.cpp in Sources */,
 				A1A4BA381BCDF81500175E8A /* IapObject.cpp in Sources */,
 				A103F45B1BE37E2A007F9A83 /* BulletNode.cpp in Sources */,
+				A10A66E81C1A7CE100A2DD13 /* URConfigData.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				A1720EC21BCD316000217E98 /* ProgressLayer.cpp in Sources */,
 				A1211B271C0BF5CC00C27CCC /* RandomCreator.cpp in Sources */,

@@ -16,7 +16,8 @@
 #include "DisplayBar.h"
 #include "CocosGlobal.h"
 #include "DataManager.h"
-#include "AnimationConfigData.h"
+#include "UAConfigData.h"
+#include "URConfigData.h"
 
 using namespace std;
 using namespace UnderWorld::Core;
@@ -38,22 +39,6 @@ static inline const string unit_getName(const Unit* unit)
     }
     
     return "";
-}
-
-static inline bool unit_isThisFaction(const Unit* unit)
-{
-    return unit->getBelongFaction()->getFactionIndex() == unit->getWorld()->getThisFactionIndex();
-}
-
-static inline bool unit_isShortRange(const Unit* unit)
-{
-    const string& name = unit_getName(unit);
-    if (WOLF_SOLDIER == name ||
-        VAMPIRE_SOLDIER == name) {
-        return true;
-    }
-    
-    return false;
 }
 
 static inline bool unit_isMovable(const Unit* unit)
@@ -95,6 +80,7 @@ UnitNode* UnitNode::create(const Unit* unit)
 
 UnitNode::UnitNode()
 :_observer(nullptr)
+,_configData(nullptr)
 ,_actionNode(nullptr)
 ,_currentAction(nullptr)
 ,_speedScheduler(nullptr)
@@ -268,13 +254,8 @@ void UnitNode::update()
 
 void UnitNode::addCritEffect(const string& triggerName)
 {
-    if (triggerName == WOLF_WIZARD) {
-        addEffect("Strike point-4.csb");
-    } else if (triggerName == VAMPIRE_WIZARD) {
-        addEffect("Strike point-5.csb");
-    } else {
-        addEffect("Strike point-6.csb");
-    }
+    const string& file = DataManager::getInstance()->getURConfigData(triggerName)->getHurtEffect();
+    addEffect(file);
 }
 
 void UnitNode::addBlockEffect()
@@ -291,14 +272,7 @@ void UnitNode::addRecoveryEffect()
 
 void UnitNode::addSwordEffect()
 {
-    string file;
-    const string& name = unit_getName(_unit);
-    if (WOLF_SOLDIER == name) {
-        file = "wolf-attack-daoguang_0.csb";
-    } else if (VAMPIRE_SOLDIER == name) {
-        file = "Vampire-tank-attack-daoguang.csb";
-    }
-    
+    const string& file = _configData->getSwordEffect();
     if (file.length() > 0) {
         Node* effect = addEffect(file);
         
@@ -335,9 +309,10 @@ void UnitNode::removeBuf()
 
 void UnitNode::onWin()
 {
-    return;
+#if false
     const string& file = getStandbyCsbFile(calculateDirection(), calculateHpPercentage() > hpPercentageThreshold);
     addActionNode(file, true, true, 0.0f, 0, nullptr);
+#endif
 }
 
 void UnitNode::onLose()
@@ -350,6 +325,9 @@ bool UnitNode::init(const Unit* unit)
     if (Node::init())
     {
         _unit = unit;
+        const string& unitName(unit_getName(unit));
+        _configData = DataManager::getInstance()->getURConfigData(unitName);
+        assert(_configData);
         
         return true;
     }
@@ -357,35 +335,9 @@ bool UnitNode::init(const Unit* unit)
     return false;
 }
 
-const string UnitNode::getCsbFilePrefix()
-{
-    const string& unitName(unit_getName(_unit));
-    const bool isMovableUnit = (unit_isMovable(_unit));
-    
-    string prefix;
-    if (isMovableUnit) {
-        if (unitName == WOLF_SOLDIER) {
-            prefix = "wolf-Warrior";
-        } else if (unitName == WOLF_ARCHER) {
-            prefix = "wolf-Archer";
-        } else if (unitName == WOLF_WIZARD) {
-            prefix = "wolf-wizard";
-        } else if (unitName == VAMPIRE_SOLDIER) {
-            prefix = "Vampire-tank";
-        } else if (unitName == VAMPIRE_ARCHER) {
-            prefix = "Dead-Archer";
-        } else if (unitName == VAMPIRE_WIZARD) {
-            prefix = "Dead-witch";
-        }
-    }
-    
-    return prefix;
-}
-
 const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
 {
-    const string& unitName(unit_getName(_unit));
-    string prefix = getCsbFilePrefix();
+    const string& prefix = _configData->getPrefix();
     
     string csbFile;
     const UnitClass unitClass = _unit->getUnitType()->getUnitClass();
@@ -418,16 +370,12 @@ const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
                 case kUnitClass_Core:
                 case kUnitClass_Building:
                 {
-                    // TODO
                     const bool healthy(hpPercentage > hpPercentageThreshold);
-                    if (WOLF_CORE == unitName) {
-                        csbFile = healthy ? "effect-wolf-Base_1.csb" : "effect-wolf-base-damage.csb";
-                    } else if (VAMPIRE_CORE == unitName) {
-                        csbFile = healthy ? "effect-Vampire-base.csb" : "effect-Vampire-base-damage.csb";
-                    } else if (WOLF_TOWER == unitName) {
-                        csbFile = "wolf-tower-defense-2.csb";
-                    } else if (VAMPIRE_TOWER == unitName) {
-                        csbFile = "Vampire-tower-defense.csb";
+                    const string& attack = _configData->getBAttack();
+                    if (attack.length() > 0) {
+                        csbFile = attack;
+                    } else {
+                        csbFile = getStandbyCsbFile(direction, healthy);
                     }
                 }
                     break;
@@ -457,13 +405,7 @@ const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
                 case kUnitClass_Core:
                 case kUnitClass_Building:
                 {
-                    if (WOLF_CORE == unitName) {
-                        csbFile = "effect-wolf-base-Severe damage.csb";
-                    } else if (VAMPIRE_CORE == unitName) {
-                        csbFile = "effect-Vampire-base-Severe damage.csb";
-                    } else {
-                        csbFile = "wolf-tower-Destroy.csb";
-                    }
+                    csbFile = _configData->getBDestroyed();
                 }
                     break;
                 case kUnitClass_Warrior:
@@ -478,10 +420,7 @@ const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
         }
             break;
         default:
-        {
-            // TODO
-            csbFile = "wolf-run-3.csb";
-        }
+            assert(false);
             break;
     }
     
@@ -490,29 +429,22 @@ const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
 
 const string UnitNode::getStandbyCsbFile(UnitDirection direction, bool isHealthy)
 {
-    string prefix = getCsbFilePrefix();
     string csbFile;
-    const string& unitName(unit_getName(_unit));
     const UnitClass unitClass = _unit->getUnitType()->getUnitClass();
     
     switch (unitClass) {
         case kUnitClass_Core:
         case kUnitClass_Building:
         {
-            if (WOLF_CORE == unitName) {
-                csbFile = isHealthy ? "effect-wolf-Base_1.csb" : "effect-wolf-base-damage.csb";
-            } else if (VAMPIRE_CORE == unitName) {
-                csbFile = isHealthy ? "effect-Vampire-base.csb" : "effect-Vampire-base-damage.csb";
-            } else if (WOLF_TOWER == unitName) {
-                csbFile = "wolf-tower-defense-1.csb";
-            } else if (VAMPIRE_TOWER == unitName) {
-                csbFile = "Vampire-tower-defense.csb";
-            }
+            const string& normal = _configData->getBNormal();
+            const string& damaged = _configData->getBDamaged();
+            csbFile = isHealthy ? normal : (damaged.length() > 0 ? damaged : normal);
         }
             break;
         case kUnitClass_Warrior:
         case kUnitClass_Hero:
         {
+            const string& prefix = _configData->getPrefix();
             csbFile = prefix + StringUtils::format("-standby-%d.csb", direction);
         }
             break;
@@ -527,10 +459,18 @@ void UnitNode::getMultipleAnimationFiles(vector<string>& output)
 {
     output.clear();
     if (kSkillClass_Attack == unit_getSkillClass(_unit)) {
-        const string& name = unit_getName(_unit);
-        if (WOLF_TOWER == name) {
-            for (int i = 0; i < 3; ++i) {
-                output.push_back(StringUtils::format("wolf-tower-defense-%d.csb", i + 1));
+        const string& attackBegin = _configData->getBAttackBegin();
+        const string& attackEnd = _configData->getBAttackEnd();
+        if (attackBegin.length() > 0 || attackEnd.length() > 0) {
+            // 1. attack begin
+            if (attackBegin.length() > 0) {
+                output.push_back(attackBegin);
+            }
+            // 2. attack
+            output.push_back(_configData->getBAttack());
+            // 3. attack end
+            if (attackEnd.length() > 0) {
+                output.push_back(attackEnd);
             }
         }
     }
@@ -669,16 +609,13 @@ void UnitNode::addMultipleAnimationNode(int frameIndex, const function<void()>& 
     callback = lastFrameCallFunc;
     
     const SkillClass skillClass = unit_getSkillClass(_unit);
-    const string& name = unit_getName(_unit);
     if (kSkillClass_Attack == skillClass) {
         if (_multipleAnimationFiles.size() > 0) {
-            if (WOLF_TOWER == name) {
-                const string& file = _multipleAnimationFiles.front();
-                addActionNode(file, true, false, 0.0f, 0, [this]() {
-                    _multipleAnimationFiles.erase(_multipleAnimationFiles.begin());
-                    addMultipleAnimationNode(0, callback);
-                });
-            }
+            const string& file = _multipleAnimationFiles.front();
+            addActionNode(file, true, false, 0.0f, 0, [this]() {
+                _multipleAnimationFiles.erase(_multipleAnimationFiles.begin());
+                addMultipleAnimationNode(0, callback);
+            });
         } else if (callback) {
             callback();
         }
@@ -729,8 +666,8 @@ void UnitNode::updateActionNode(const Skill* skill, const string& file, int curr
         } else {
             if (kSkillClass_Attack == skillClass) {
                 if (_currentAction) {
-                    if (unit_isShortRange(_unit)) {
-                        // if it is footman
+                    // if it is footman
+                    if (_configData->isShortRange()) {
                         _currentAction->setFrameEventCallFunc([this](cocostudio::timeline::Frame* frame) {
                             if (_observer) {
                                 _observer->onUnitNodeFootmanAttackedTheTarget(this);

@@ -1,12 +1,12 @@
 //
-//  AnimationConfigData.cpp
+//  UAConfigData.cpp
 //  Underworld_Client
 //
 //  Created by Andy on 15/12/7.
 //  Copyright (c) 2015 Mofish Studio. All rights reserved.
 //
 
-#include "AnimationConfigData.h"
+#include "UAConfigData.h"
 #include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
 
@@ -16,7 +16,7 @@ using namespace std;
 #pragma mark Animation Config Data
 #pragma mark =====================================================
 
-AnimationConfigData::AnimationConfigData(tinyxml2::XMLElement *xmlElement)
+UAConfigData::UAConfigData(tinyxml2::XMLElement *xmlElement)
 {
     if (xmlElement) {
         const char* direction = xmlElement->Attribute("direction");
@@ -59,12 +59,12 @@ AnimationConfigData::AnimationConfigData(tinyxml2::XMLElement *xmlElement)
     }
 }
 
-AnimationConfigData::~AnimationConfigData()
+UAConfigData::~UAConfigData()
 {
     
 }
 
-AnimationParameters AnimationConfigData::getAnimationParameters(UnitDirection direction)
+AnimationParameters UAConfigData::getAnimationParameters(UnitDirection direction)
 {
     if (_data.find(direction) != _data.end()) {
         return _data.at(direction);
@@ -73,7 +73,7 @@ AnimationParameters AnimationConfigData::getAnimationParameters(UnitDirection di
     return {1.0f, 1.0f};
 }
 
-AnimationParameters AnimationConfigData::parse(const vector<string>& directions, const vector<string>& scales, const vector<string>& speeds, int index)
+AnimationParameters UAConfigData::parse(const vector<string>& directions, const vector<string>& scales, const vector<string>& speeds, int index)
 {
     AnimationParameters params {1.0f, 1.0f};
     

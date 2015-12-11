@@ -11,10 +11,11 @@
 
 #include "cocos2d.h"
 #include "CocosGlobal.h"
-#include "AnimationConfigData.h"
+#include "UAConfigData.h"
 #include "SkllType.h"
 
 class QuestData;
+class URConfigData;
 
 class DataManager
 {
@@ -24,7 +25,8 @@ public:
     
     void init();
     const QuestData* getQuestData(QuestType type, int questId) const;
-    AnimationParameters getAnimationParameters(const std::string& name, UnderWorld::Core::SkillClass skillClass, UnitDirection direction);
+    AnimationParameters getAnimationParameters(const std::string& name, UnderWorld::Core::SkillClass skillClass, UnitDirection direction) const;
+    const URConfigData* getURConfigData(const std::string& name) const;
     
 protected:
     DataManager();
@@ -34,10 +36,12 @@ protected:
 protected:
     void parseQuestData(QuestType type);
     void parseAnimationConfigData();
+    void parseURConfigData();
     
 private:
     std::map<QuestType, std::map<int, QuestData*>> _quests;
-    std::map<std::string, AnimationConfigData*> _animationParameters;
+    std::map<std::string, UAConfigData*> _animationParameters;
+    std::map<std::string, URConfigData*> _unitResourceConfigData;
 };
 
 #endif /* DataManager_h */
