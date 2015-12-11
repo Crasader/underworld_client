@@ -1,5 +1,5 @@
 #include "AppDelegate.h"
-#include "HelloWorldScene.h"
+#include "BattleScene.h"
 #include "CocosGlobal.h"
 #include "DataManager.h"
 #include "LocalHelper.h"
@@ -113,7 +113,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 #endif
 
     // create a scene. it's an autorelease object
-    auto scene = HelloWorld::createScene();
+    auto scene = BattleScene::create(1);
 
     // run
     director->runWithScene(scene);

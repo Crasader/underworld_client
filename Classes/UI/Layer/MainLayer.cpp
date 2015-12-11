@@ -12,9 +12,19 @@
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "SoundManager.h"
+#include "MainUILayer.h"
 
 using namespace std;
 using namespace ui;
+using namespace cocostudio;
+
+Scene* MainLayer::createScene()
+{
+    Scene* scene = Scene::create();
+    MainLayer* layer = MainLayer::create();
+    scene->addChild(layer);
+    return scene;
+}
 
 MainLayer* MainLayer::create()
 {
@@ -31,6 +41,9 @@ MainLayer* MainLayer::create()
 
 MainLayer::MainLayer()
 :_observer(nullptr)
+,_uiLayer(nullptr)
+,_mainNode(nullptr)
+,_scrollView(nullptr)
 {
     
 }
@@ -50,62 +63,32 @@ bool MainLayer::init()
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR))
     {
         const Size& winSize = Director::getInstance()->getWinSize();
-        
-        static const string CsbFile("guanggaomianban.csb");
-        Node *mainNode = CSLoader::createNode(CsbFile);
-        mainNode->setPosition(Point(winSize.width / 2, winSize.height / 2));
-        addChild(mainNode);
-        cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(CsbFile);
-        mainNode->runAction(action);
+#if true
+        _mainNode = Sprite::create("");
+#else
+        static const string CsbFile("zhuchangjing.csb");
+        _mainNode = CSLoader::createNode(CsbFile);
+        timeline::ActionTimeline *action = CSLoader::createTimeline(CsbFile);
+        _mainNode->runAction(action);
         action->gotoFrameAndPlay(0, false);
-        Node* root = mainNode->getChildByTag(7);
-        const Vector<Node*>& children = root->getChildren();
-        for (int i = 0; i < children.size(); ++i)
-        {
-            Node* child = children.at(i);
-            if (child) {
-                const int tag = child->getTag();
-                if (tag > 0) {
-                    switch (tag) {
-                        case 101:
-                        {
-                            Button* button = dynamic_cast<Button*>(child);
-                            if (button) {
-                                button->setPressedActionEnabled(true);
-                                button->addClickEventListener([this](Ref *pSender){
-                                    SoundManager::getInstance()->playButtonCancelSound();
-                                    removeFromParent();
-                                });
-                            }
-                        }
-                            break;
-                        case 100:
-                        {
-                            
-                        }
-                            break;
-                        case 97:
-                        {
-                            
-                        }
-                            break;
-                        case 103:
-                        {
-                            Button* button = dynamic_cast<Button*>(child);
-                            if (button) {
-                                button->setPressedActionEnabled(true);
-                                button->addClickEventListener([this](Ref *pSender){
-                                    SoundManager::getInstance()->playButtonSound();
-                                });
-                            }
-                        }
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-        }
+#endif
+        
+        const Size& nodeSize = _mainNode->getContentSize();
+        _touchEnabled = (nodeSize.height > winSize.height) ? true : false;
+        _scrollView = ui::ScrollView::create();
+        _scrollView->setDirection(cocos2d::ui::ScrollView::Direction::VERTICAL);
+        _scrollView->setTouchEnabled(_touchEnabled);
+        _scrollView->setBounceEnabled(false);
+        _scrollView->setContentSize(winSize);
+        _scrollView->setPosition(Point::ZERO);
+        _scrollView->setInnerContainerSize(Size(winSize.width, _touchEnabled ? nodeSize.height : winSize.height));
+        _scrollView->setSwallowTouches(!_touchEnabled);
+        _scrollView->addChild(_mainNode);
+        addChild(_scrollView);
+        
+        // UI layer
+        _uiLayer = MainUILayer::create();
+        addChild(_uiLayer);
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);

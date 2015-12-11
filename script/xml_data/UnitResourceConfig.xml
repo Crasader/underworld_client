@@ -10,4 +10,5 @@
 	<Item unit_name="吸血鬼战士" is_short_range="1" icon_name="icon_v_roudun" prefix="Vampire-tank" sword_effect="Vampire-tank-attack-daoguang" strike_point="Strike point-6"/>
 	<Item unit_name="吸血鬼弓兵" icon_name="icon_v_nvgongjianshou" prefix="Dead-Archer" bullet="effect-jian" strike_point="Strike point-6"/>
 	<Item unit_name="吸血鬼巫师" icon_name="icon_v_nvwushi" prefix="Dead-witch" bullet="effect-fireball-1" strike_point="Strike point-5"/>
+	<Item unit_name="吸血鬼蜘蛛" icon_name="icon_v_zhizhu" prefix="spider" bullet="spider-attack-1" strike_point="Strike point-5"/>
 </root>

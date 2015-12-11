@@ -10,8 +10,10 @@
 #define MainLayer_h
 
 #include "cocos2d.h"
+#include "ui/CocosGUI.h"
 
 USING_NS_CC;
+class MainUILayer;
 
 class MainLayerObserver
 {
@@ -22,11 +24,12 @@ public:
 class MainLayer : public LayerColor
 {
 public:
-    static MainLayer* create();
+    static Scene* createScene();
     virtual ~MainLayer();
     void registerObserver(MainLayerObserver *observer);
     
 protected:
+    static MainLayer* create();
     MainLayer();
     
     // LayerColor
@@ -36,6 +39,9 @@ protected:
     
 private:
     MainLayerObserver *_observer;
+    MainUILayer *_uiLayer;
+    Node *_mainNode;
+    ui::ScrollView *_scrollView;
 };
 
 #endif /* MainLayer_h */

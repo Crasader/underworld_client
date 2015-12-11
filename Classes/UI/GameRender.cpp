@@ -20,9 +20,9 @@ static const string tickSelectorKey("tickSelectorKey");
 static const int waveTime(20);
 static const int battleTotalTime(600);
 
-GameRender::GameRender(Node* scene, int mapId, const std::string& opponentsAccount)
+GameRender::GameRender(Scene* scene, MapLayer* mapLayer, const std::string& opponentsAccount)
 :_observer(nullptr)
-,_mapLayer(nullptr)
+,_mapLayer(mapLayer)
 ,_mapUILayer(nullptr)
 ,_game(nullptr)
 ,_commander(nullptr)
@@ -30,11 +30,7 @@ GameRender::GameRender(Node* scene, int mapId, const std::string& opponentsAccou
 ,_isGameOver(false)
 ,_waveTime(11)  // TODO: reset wave time
 ,_remainingTime(battleTotalTime)
-{
-    assert(scene);
-    _mapLayer = MapLayer::create(mapId);
-    scene->addChild(_mapLayer);
-    
+{    
     _mapUILayer = MapUILayer::create("我的名字", opponentsAccount);
     _mapUILayer->registerObserver(this);
     scene->addChild(_mapUILayer);
@@ -214,16 +210,6 @@ void GameRender::addCritEffect(const Unit* target, const string& trigger)
             }
         }
     }
-}
-
-MapLayer* GameRender::getMapLayer() const
-{
-    return _mapLayer;
-}
-
-MapUILayer* GameRender::getMapUILayer() const
-{
-    return _mapUILayer;
 }
 
 #pragma mark - UnitNodeObserver

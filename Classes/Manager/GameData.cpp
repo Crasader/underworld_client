@@ -16,7 +16,7 @@
 #include "IapObject.h"
 #include "ProgressLayer.h"
 #include "MessageBoxLayer.h"
-#include "HelloWorldScene.h"
+#include "MainLayer.h"
 
 using namespace cocostudio;
 
@@ -276,7 +276,7 @@ void GameData::reloadGame()
     
     // 3. update UI
     auto director = Director::getInstance();
-    auto scene = HelloWorld::createScene();
+    auto scene = MainLayer::createScene();
     director->purgeCachedData();
     director->popToRootScene();
     director->replaceScene(scene);

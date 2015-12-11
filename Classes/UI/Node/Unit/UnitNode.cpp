@@ -52,7 +52,6 @@ static inline SkillClass unit_getSkillClass(const Unit* unit)
     return unit->getCurrentSkill()->getSkillType()->getSkillClass();
 }
 
-// TODO: remove this test code
 static bool hasStandbyAnimation(const Unit* unit)
 {
     if (kSkillClass_Attack == unit_getSkillClass(unit)) {
@@ -239,7 +238,8 @@ void UnitNode::update()
                 const string& unitName(unit_getName(_unit));
                 bool flip = false;
                 if (unitName == WOLF_ARCHER ||
-                    unitName == WOLF_WIZARD) {
+                    unitName == WOLF_WIZARD ||
+                    unitName == "吸血鬼蜘蛛") {
                     flip = true;
                 }
                 

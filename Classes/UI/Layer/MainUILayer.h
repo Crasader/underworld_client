@@ -10,6 +10,7 @@
 #define MainUILayer_h
 
 #include "cocos2d.h"
+#include "ui/CocosGUI.h"
 
 USING_NS_CC;
 
@@ -36,6 +37,13 @@ protected:
     
 private:
     MainUILayerObserver *_observer;
+    ui::Button* _iconButton;
+    Label* _nameLabel;
+    LabelAtlas* _levelLabel;
+    ui::LoadingBar *_expProgressBar;
+    LabelAtlas* _boltLabel;
+    LabelAtlas* _coinLabel;
+    LabelAtlas* _gemLabel;
 };
 
 #endif /* MainUILayer_h */

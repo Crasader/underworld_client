@@ -34,15 +34,12 @@ public:
 class GameRender : public UnderWorld::Core::AbstractRender, public UnitNodeObserver, public BulletNodeObserver, public MapUILayerObserver
 {
 public:
-    GameRender(Node* scene, int mapId, const std::string& opponentsAccount);
+    GameRender(Scene* scene, MapLayer* mapLayer, const std::string& opponentsAccount);
     virtual ~GameRender();
     void registerObserver(GameRenderObserver *observer);
     
     virtual void init(const UnderWorld::Core::Game* game, UnderWorld::Core::Commander* commander) override;
     virtual void render(const UnderWorld::Core::Game* game) override;
-    
-    MapLayer* getMapLayer() const;
-    MapUILayer* getMapUILayer() const;
     
 protected:
     // UnitNodeObserver
