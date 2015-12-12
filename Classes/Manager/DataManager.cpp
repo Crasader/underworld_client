@@ -9,7 +9,8 @@
 #include "DataManager.h"
 #include "tinyxml2/tinyxml2.h"
 #include "LocalHelper.h"
-#include "QuestData.h"
+#include "LevelLocalData.h"
+#include "QuestLocalData.h"
 #include "URConfigData.h"
 
 USING_NS_CC;
@@ -63,6 +64,8 @@ DataManager::DataManager()
 
 DataManager::~DataManager()
 {
+    clearMap(_levels);
+    
     if (_quests.find(kQuestType_Daily) != _quests.end()) {
         clearMap(_quests.at(kQuestType_Daily));
     }
@@ -77,16 +80,26 @@ DataManager::~DataManager()
 
 void DataManager::init()
 {
+    parseLevelData();
     parseQuestData(kQuestType_Daily);
     parseQuestData(kQuestType_Life);
     parseAnimationConfigData();
     parseURConfigData();
 }
 
-const QuestData* DataManager::getQuestData(QuestType type, int questId) const
+const LevelLocalData* DataManager::getLevelData(int levelId) const
+{
+    if (_levels.find(levelId) != _levels.end()) {
+        return _levels.at(levelId);
+    }
+    
+    return nullptr;
+}
+
+const QuestLocalData* DataManager::getQuestData(QuestType type, int questId) const
 {
     if (_quests.find(type) != _quests.end()) {
-        const map<int, QuestData*>& quests = _quests.at(type);
+        const map<int, QuestLocalData*>& quests = _quests.at(type);
         if (quests.find(questId) != quests.end()) {
             return quests.at(questId);
         }
@@ -117,6 +130,35 @@ const URConfigData* DataManager::getURConfigData(const std::string& name) const
     return nullptr;
 }
 
+void DataManager::parseLevelData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath("LevelData.xml");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                LevelLocalData* data = new (nothrow) LevelLocalData(item);
+                const int levelId = data->getLevelId();
+                if (_levels.find(levelId) != _levels.end()) {
+                    assert(false);
+                } else {
+                    _levels.insert(make_pair(levelId, data));
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
 void DataManager::parseQuestData(QuestType type)
 {
     string fileName;
@@ -131,7 +173,7 @@ void DataManager::parseQuestData(QuestType type)
     if (_quests.find(type) != _quests.end()) {
         clearMap(_quests.at(type));
     } else {
-        _quests.insert(make_pair(type, map<int, QuestData*>()));
+        _quests.insert(make_pair(type, map<int, QuestLocalData*>()));
     }
     
     if (FileUtils::getInstance()->isFileExist(fileName))
@@ -142,13 +184,13 @@ void DataManager::parseQuestData(QuestType type)
             string content = LocalHelper::loadFileContentString(fileName);
             xmlDoc->Parse(content.c_str());
             
-            map<int, QuestData*>& quests = _quests.at(type);
+            map<int, QuestLocalData*>& quests = _quests.at(type);
             
             for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
                  item;
                  item = item->NextSiblingElement())
             {
-                QuestData* data = new (nothrow) QuestData(item);
+                QuestLocalData* data = new (nothrow) QuestLocalData(item);
                 const int questId = data->getId();
                 if (quests.find(questId) != quests.end()) {
                     assert(false);

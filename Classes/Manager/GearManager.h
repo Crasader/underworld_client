@@ -11,6 +11,9 @@
 
 #include "cocos2d.h"
 #include "json/document.h"
+#include "CocosGlobal.h"
+
+class GearData;
 
 class GearManager
 {
@@ -19,9 +22,15 @@ public:
     virtual ~GearManager();
     
     void initGear(const rapidjson::Value& jsonDict);
+    void upgradeGear();
+    void recastGear();
+    void sellGear();
     
 protected:
     CC_DISALLOW_COPY_AND_ASSIGN(GearManager);
+    
+private:
+    std::vector<GearData*> _gears;
 };
 
 #endif /* GearManager_h */

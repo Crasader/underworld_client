@@ -25,3 +25,18 @@ void GearManager::initGear(const rapidjson::Value& jsonDict)
 {
     
 }
+
+void GearManager::upgradeGear()
+{
+    
+}
+
+void GearManager::recastGear()
+{
+    
+}
+
+void GearManager::sellGear()
+{
+    
+}

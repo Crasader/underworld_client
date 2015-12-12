@@ -1,55 +1,19 @@
 //
-//  QuestData.cpp
+//  QuestLocalData.cpp
 //  Underworld_Client
 //
 //  Created by Andy on 15/11/19.
 //  Copyright (c) 2015 Mofish Studio. All rights reserved.
 //
 
-#include "QuestData.h"
+#include "QuestLocalData.h"
 #include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
+#include "RewardData.h"
 
 using namespace std;
 
-#pragma mark =====================================================
-#pragma mark Quest Reward
-#pragma mark =====================================================
-
-QuestReward::QuestReward(const string& content)
-:_id(0)
-,_count(0)
-{
-    vector<string> result;
-    Utils::split(result, content, "_", "");
-    if (result.size() > 1) {
-        _id = atoi(result.at(0).c_str());
-        _count = atoi(result.at(1).c_str());
-    } else {
-        assert(false);
-    }
-}
-
-QuestReward::~QuestReward()
-{
-    
-}
-
-int QuestReward::getId() const
-{
-    return _id;
-}
-
-int QuestReward::getCount() const
-{
-    return _count;
-}
-
-#pragma mark =====================================================
-#pragma mark Quest Data
-#pragma mark =====================================================
-
-QuestData::QuestData(tinyxml2::XMLElement *xmlElement)
+QuestLocalData::QuestLocalData(tinyxml2::XMLElement *xmlElement)
 :_id(0)
 ,_requiredCount(0)
 {
@@ -70,7 +34,7 @@ QuestData::QuestData(tinyxml2::XMLElement *xmlElement)
             vector<string> result;
             Utils::split(result, content, ";", "");
             for (int i = 0; i < result.size(); ++i) {
-                QuestReward* qr = new (nothrow) QuestReward(result.at(i));
+                RewardData* qr = new (nothrow) RewardData(result.at(i));
                 _rewards.push_back(qr);
             }
         }
@@ -79,29 +43,29 @@ QuestData::QuestData(tinyxml2::XMLElement *xmlElement)
     }
 }
 
-QuestData::~QuestData()
+QuestLocalData::~QuestLocalData()
 {
     for (int i = 0; i < _rewards.size(); ++i) {
         CC_SAFE_DELETE(_rewards.at(i));
     }
 }
 
-int QuestData::getId() const
+int QuestLocalData::getId() const
 {
     return _id;
 }
 
-int QuestData::getRequiredCount() const
+int QuestLocalData::getRequiredCount() const
 {
     return _requiredCount;
 }
 
-const vector<QuestReward *>& QuestData::getRewards() const
+const vector<RewardData *>& QuestLocalData::getRewards() const
 {
     return _rewards;
 }
 
-const string& QuestData::getDescription() const
+const string& QuestLocalData::getDescription() const
 {
     return _description;
 }

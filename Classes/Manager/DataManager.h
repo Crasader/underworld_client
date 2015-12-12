@@ -14,7 +14,8 @@
 #include "UAConfigData.h"
 #include "SkllType.h"
 
-class QuestData;
+class LevelLocalData;
+class QuestLocalData;
 class URConfigData;
 
 class DataManager
@@ -24,7 +25,8 @@ public:
     static void purge();
     
     void init();
-    const QuestData* getQuestData(QuestType type, int questId) const;
+    const LevelLocalData* getLevelData(int levelId) const;
+    const QuestLocalData* getQuestData(QuestType type, int questId) const;
     AnimationParameters getAnimationParameters(const std::string& name, UnderWorld::Core::SkillClass skillClass, UnitDirection direction) const;
     const URConfigData* getURConfigData(const std::string& name) const;
     
@@ -34,12 +36,14 @@ protected:
     CC_DISALLOW_COPY_AND_ASSIGN(DataManager);
     
 protected:
+    void parseLevelData();
     void parseQuestData(QuestType type);
     void parseAnimationConfigData();
     void parseURConfigData();
     
 private:
-    std::map<QuestType, std::map<int, QuestData*>> _quests;
+    std::map<int, LevelLocalData*> _levels;
+    std::map<QuestType, std::map<int, QuestLocalData*>> _quests;
     std::map<std::string, UAConfigData*> _animationParameters;
     std::map<std::string, URConfigData*> _unitResourceConfigData;
 };

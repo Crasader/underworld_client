@@ -8,7 +8,7 @@
 
 #include "QuestManager.h"
 #include "DataManager.h"
-#include "QuestData.h"
+#include "QuestLocalData.h"
 #include "cocostudio/CocoStudio.h"
 
 using namespace std;
@@ -29,7 +29,7 @@ void QuestManager::initQuest(QuestType type, const rapidjson::Value& jsonDict)
     if (_questData.find(type) != _questData.end()) {
         _questData.at(type).clear();
     } else {
-        _questData.insert(make_pair(type, vector<const QuestData*>()));
+        _questData.insert(make_pair(type, vector<const QuestLocalData*>()));
     }
     
     if (_questProgress.find(type) != _questProgress.end()) {
@@ -38,7 +38,7 @@ void QuestManager::initQuest(QuestType type, const rapidjson::Value& jsonDict)
         _questProgress.insert(make_pair(type, map<int, QuestProgress>()));
     }
     
-    vector<const QuestData*>& questDataVector = _questData.at(type);
+    vector<const QuestLocalData*>& questDataVector = _questData.at(type);
     map<int, QuestProgress>& progressMap = _questProgress.at(type);
     if (DICTOOL->checkObjectExist_json(jsonDict, "data"))
     {
@@ -49,7 +49,7 @@ void QuestManager::initQuest(QuestType type, const rapidjson::Value& jsonDict)
             const rapidjson::Value& info = DICTOOL->getSubDictionary_json(quests, i);
             int questId = DICTOOL->getIntValue_json(info, "qid");
             int progress = DICTOOL->getIntValue_json(info, "progress");
-            const QuestData* data = DataManager::getInstance()->getQuestData(type, questId);
+            const QuestLocalData* data = DataManager::getInstance()->getQuestData(type, questId);
             if (data) {
                 questDataVector.push_back(data);
                 progressMap.insert(make_pair(questId, make_pair(data, progress)));
@@ -64,7 +64,7 @@ void QuestManager::updateQuestProgress(QuestType type, int questId, int progress
 {
     if (_questProgress.find(type) != _questProgress.end()) {
         map<int, QuestProgress>& map = _questProgress.at(type);
-        const QuestData* data = DataManager::getInstance()->getQuestData(type, questId);
+        const QuestLocalData* data = DataManager::getInstance()->getQuestData(type, questId);
         if (data) {
             // set progress
             if (map.find(questId) != map.end()) {
@@ -89,10 +89,10 @@ void QuestManager::getReward(QuestType type, int questId)
     
 }
 
-const vector<const QuestData*>& QuestManager::getQuestData(QuestType type)
+const vector<const QuestLocalData*>& QuestManager::getQuestData(QuestType type)
 {
     if (_questData.find(type) == _questData.end()) {
-        _questData.insert(make_pair(type, vector<const QuestData*>()));
+        _questData.insert(make_pair(type, vector<const QuestLocalData*>()));
     }
     
     return _questData.at(type);
