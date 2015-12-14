@@ -71,7 +71,7 @@ typedef enum {
 }ChatType;
 
 typedef enum {
-    kGearType_Weapon = 0,
+    kGearType_Weapon = 1,
     kGearType_Armor,
     kGearType_Accessory,
 }GearType;

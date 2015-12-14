@@ -13,7 +13,7 @@
 #include "json/document.h"
 #include "CocosGlobal.h"
 
-class GearData;
+class GearLocalData;
 
 class GearManager
 {
@@ -30,7 +30,7 @@ protected:
     CC_DISALLOW_COPY_AND_ASSIGN(GearManager);
     
 private:
-    std::vector<GearData*> _gears;
+    std::vector<GearLocalData*> _gears;
 };
 
 #endif /* GearManager_h */

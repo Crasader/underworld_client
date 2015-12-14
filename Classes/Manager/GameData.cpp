@@ -18,6 +18,7 @@
 #include "MessageBoxLayer.h"
 #include "MainLayer.h"
 
+using namespace std;
 using namespace cocostudio;
 
 static const string heartbeatScheduleKey("heartbeatScheduleKey");

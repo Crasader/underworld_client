@@ -8,6 +8,8 @@
 
 #include "MD5Verifier.h"
 
+using namespace std;
+
 static const char* KEY = "U#O(*&RRI:P$%Z|{";//maybe use imei or uuid
 static const int CHECK_BITS = 4;
 

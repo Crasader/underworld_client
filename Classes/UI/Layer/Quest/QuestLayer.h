@@ -55,7 +55,7 @@ private:
     ssize_t _cellsCount;
     std::map<int, TableView*> _tableViews;
     ScrollBar *_scrollBar;
-    int _index;
+    int _tabIndex;
 };
 
 #endif /* QuestLayer_h */

@@ -14,8 +14,6 @@
 
 namespace tinyxml2 { class XMLElement; }
 
-class RewardData;
-
 class ObjectLocalData
 {
 public:
@@ -23,13 +21,11 @@ public:
     virtual ~ObjectLocalData();
     
     int getObjectId() const;
-    const std::vector<RewardData *>& getRewards() const;
     const std::string& getName() const;
     const std::string& getDescription() const;
     
 private:
     int _objectId;
-    std::vector<RewardData *> _rewards;
     std::string _name;
     std::string _description;
 };

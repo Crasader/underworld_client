@@ -16,6 +16,7 @@
 
 class LevelLocalData;
 class QuestLocalData;
+class GearLocalData;
 class URConfigData;
 
 class DataManager
@@ -38,12 +39,14 @@ protected:
 protected:
     void parseLevelData();
     void parseQuestData(QuestType type);
+    void parseGearData();
     void parseAnimationConfigData();
     void parseURConfigData();
     
 private:
     std::map<int, LevelLocalData*> _levels;
     std::map<QuestType, std::map<int, QuestLocalData*>> _quests;
+    std::map<int, GearLocalData*> _gears;
     std::map<std::string, UAConfigData*> _animationParameters;
     std::map<std::string, URConfigData*> _unitResourceConfigData;
 };

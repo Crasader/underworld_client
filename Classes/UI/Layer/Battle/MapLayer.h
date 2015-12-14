@@ -9,14 +9,12 @@
 #ifndef MapLayer_h
 #define MapLayer_h
 
-#include <stdio.h>
 #include "cocos2d.h"
 #include "cocos-ext.h"
 #include "ui/CocosGUI.h"
 #include "Coordinate.h"
 #include "GameSettings.h"
 
-using namespace std;
 USING_NS_CC;
 
 class MapLayer : public LayerColor, public cocos2d::extension::ScrollViewDelegate {
@@ -24,15 +22,7 @@ public:
     virtual bool init(int mapId);
     static MapLayer* create(int mapId);
     //-------- scrollviewdelegate --------//
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual void scrollViewDidScroll(cocos2d::extension::ScrollView* view);
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual void scrollViewDidZoom(cocos2d::extension::ScrollView* view);
     
     virtual void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);

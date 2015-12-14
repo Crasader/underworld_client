@@ -11,6 +11,7 @@
 #include "LocalHelper.h"
 #include "LevelLocalData.h"
 #include "QuestLocalData.h"
+#include "GearLocalData.h"
 #include "URConfigData.h"
 
 USING_NS_CC;
@@ -74,6 +75,7 @@ DataManager::~DataManager()
         clearMap(_quests.at(kQuestType_Life));
     }
     
+    clearMap(_gears);
     clearMap(_animationParameters);
     clearMap(_unitResourceConfigData);
 }
@@ -83,6 +85,7 @@ void DataManager::init()
     parseLevelData();
     parseQuestData(kQuestType_Daily);
     parseQuestData(kQuestType_Life);
+    parseGearData();
     parseAnimationConfigData();
     parseURConfigData();
 }
@@ -164,7 +167,7 @@ void DataManager::parseQuestData(QuestType type)
     string fileName;
     
     if (kQuestType_Daily == type) {
-        fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
+        fileName = LocalHelper::getLocalizedConfigFilePath("DailyQuestProperty.xml");
     } else if (kQuestType_Life == type) {
         fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
     }
@@ -196,6 +199,35 @@ void DataManager::parseQuestData(QuestType type)
                     assert(false);
                 } else {
                     quests.insert(make_pair(questId, data));
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
+void DataManager::parseGearData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath("EquipProperty.xml");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                GearLocalData* data = new (nothrow) GearLocalData(item);
+                const int gearId = data->getId();
+                if (_gears.find(gearId) != _gears.end()) {
+                    assert(false);
+                } else {
+                    _gears.insert(make_pair(gearId, data));
                 }
             }
             

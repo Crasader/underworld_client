@@ -88,6 +88,12 @@ URConfigData::URConfigData(tinyxml2::XMLElement *xmlElement)
             }
         }
         {
+            const char *data = xmlElement->Attribute("crit_bullet");
+            if (data && strlen(data) > 0) {
+                _critBullet = data + suffix;
+            }
+        }
+        {
             const char *data = xmlElement->Attribute("sword_effect");
             if (data && strlen(data) > 0) {
                 _swordEffect = data + suffix;
@@ -97,6 +103,12 @@ URConfigData::URConfigData(tinyxml2::XMLElement *xmlElement)
             const char *data = xmlElement->Attribute("strike_point");
             if (data && strlen(data) > 0) {
                 _hurtEffect = data + suffix;
+            }
+        }
+        {
+            const char *data = xmlElement->Attribute("crit_strike_point");
+            if (data && strlen(data) > 0) {
+                _critHurtEffect = data + suffix;
             }
         }
     }
@@ -162,6 +174,11 @@ const std::string& URConfigData::getBullet() const
     return _bullet;
 }
 
+const std::string& URConfigData::getCritBullet() const
+{
+    return _critBullet;
+}
+
 const std::string& URConfigData::getSwordEffect() const
 {
     return _swordEffect;
@@ -170,4 +187,9 @@ const std::string& URConfigData::getSwordEffect() const
 const std::string& URConfigData::getHurtEffect() const
 {
     return _hurtEffect;
+}
+
+const std::string& URConfigData::getCritHurtEffect() const
+{
+    return _critHurtEffect;
 }

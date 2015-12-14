@@ -17,6 +17,7 @@
 #include "CoreUtils.h"
 
 using namespace cocostudio;
+using namespace std;
 
 static const int TILEDMAP_TAG = 2;
 static const int TILEDMAP_ZORDER = 2;

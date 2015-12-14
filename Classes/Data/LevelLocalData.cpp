@@ -9,6 +9,8 @@
 #include "LevelLocalData.h"
 #include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
+#include "ConditionData.h"
+#include "RewardData.h"
 
 using namespace std;
 
@@ -16,13 +18,40 @@ LevelLocalData::LevelLocalData(tinyxml2::XMLElement *xmlElement)
 :_levelId(0)
 {
     if (xmlElement) {
-        
+        _levelId = atoi(xmlElement->Attribute("id"));
+        {
+            const char *data = xmlElement->Attribute("cond");
+            if (data) {
+                vector<string> result;
+                Utils::split(result, data, ";", "");
+                for (int i = 0; i < result.size(); ++i) {
+                    ConditionData* cd = new (nothrow) ConditionData(result.at(i));
+                    _conditions.push_back(cd);
+                }
+            }
+        }
+        {
+            const char *data = xmlElement->Attribute("reward");
+            if (data) {
+                vector<string> result;
+                Utils::split(result, data, ";", "");
+                for (int i = 0; i < result.size(); ++i) {
+                    RewardData* rd = new (nothrow) RewardData(result.at(i));
+                    _rewards.push_back(rd);
+                }
+            }
+        }
     }
 }
 
 LevelLocalData::~LevelLocalData()
 {
-    
+    for (int i = 0; i < _conditions.size(); ++i) {
+        CC_SAFE_DELETE(_conditions.at(i));
+    }
+    for (int i = 0; i < _rewards.size(); ++i) {
+        CC_SAFE_DELETE(_rewards.at(i));
+    }
 }
 
 int LevelLocalData::getLevelId() const
@@ -30,17 +59,12 @@ int LevelLocalData::getLevelId() const
     return _levelId;
 }
 
-const map<ResourceType, int>& LevelLocalData::rewards() const
+const vector<ConditionData*>& LevelLocalData::getConditions() const
 {
-    return _rewards;
+    return _conditions;
 }
 
-int LevelLocalData::getRewardCount(ResourceType type) const
+const vector<RewardData *>& LevelLocalData::getRewards() const
 {
-    if (_rewards.find(type) != _rewards.end())
-    {
-        return _rewards.at(type);
-    }
-    
-    return 0;
+    return _rewards;
 }

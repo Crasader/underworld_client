@@ -9,22 +9,19 @@
 #ifndef MD5Verifier__
 #define MD5Verifier__
 
-#include <stdio.h>
-#include <string.h>
+#include <iostream>
 #include "md5.h"
-
-using namespace std;
 
 class MD5Verifier
 {
 private:
     MD5Verifier();
     ~MD5Verifier();
-    string mKey;
+    std::string mKey;
 public:
     static MD5Verifier * getInstance();
-    bool verify(const string &input, string &output);
-    string digest(const string &input, const string &key);
-    string encrypt(const string &input);
+    bool verify(const std::string &input, std::string &output);
+    std::string digest(const std::string &input, const std::string &key);
+    std::string encrypt(const std::string &input);
 };
 #endif /* defined(MD5Verifier__) */

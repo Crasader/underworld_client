@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<root>
+	<Item name="升到2级" id="10000" cond="1_10" content="a_60_10" reward="10000_10" desc="简单的任务"/>
+	<Item name="升到3级" id="10001" cond="1_11" content="a_60_11" reward="10000_11" desc="简单的任务"/>
+	<Item name="升到4级" id="10002" cond="1_12" content="a_60_12" reward="10000_12" desc="简单的任务"/>
+	<Item name="升到5级" id="10003" cond="1_13" content="a_60_13" reward="10000_13" desc="简单的任务"/>
+	<Item name="升到6级" id="10004" cond="1_14" content="a_60_14" reward="10000_14" desc="简单的任务"/>
+	<Item name="升到7级" id="10005" cond="1_15" content="a_60_15" reward="10000_15" desc="简单的任务"/>
+	<Item name="升到8级" id="10006" cond="1_16" content="a_60_16" reward="10000_16" desc="简单的任务"/>
+	<Item name="升到9级" id="10007" cond="1_17" content="a_60_17" reward="10000_17" desc="简单的任务"/>
+	<Item name="升到10级" id="10008" cond="1_18" content="a_60_18" reward="10000_18" desc="简单的任务"/>
+	<Item name="升到11级" id="10009" cond="1_19" content="a_60_19" reward="10000_19" desc="简单的任务"/>
+	<Item name="升到12级" id="10010" cond="1_20" content="a_60_20" reward="10000_20" desc="简单的任务"/>
+	<Item name="升到13级" id="10011" cond="1_21" content="a_60_21" reward="10000_21" desc="简单的任务"/>
+	<Item name="升到14级" id="10012" cond="1_22" content="a_60_22" reward="10000_22" desc="简单的任务"/>
+	<Item name="升到15级" id="10013" cond="1_23" content="a_60_23" reward="10000_23" desc="简单的任务"/>
+	<Item name="升到16级" id="10014" cond="1_24" content="a_60_24" reward="10000_24" desc="简单的任务"/>
+	<Item name="升到17级" id="10015" cond="1_25" content="a_60_25" reward="10000_25" desc="简单的任务"/>
+	<Item name="升到18级" id="10016" cond="1_26" content="a_60_26" reward="10000_26" desc="简单的任务"/>
+	<Item name="升到19级" id="10017" cond="1_27" content="a_60_27" reward="10000_27" desc="简单的任务"/>
+	<Item name="升到20级" id="10018" cond="1_28" content="a_60_28" reward="10000_28" desc="简单的任务"/>
+	<Item name="升到21级" id="10019" cond="1_29" content="a_60_29" reward="10000_29" desc="简单的任务"/>
+	<Item name="升到22级" id="10020" cond="1_30" content="a_60_30" reward="10000_30" desc="简单的任务"/>
+	<Item name="升到23级" id="10021" cond="1_31" content="a_60_31" reward="10000_31" desc="简单的任务"/>
+	<Item name="升到24级" id="10022" cond="1_32" content="a_60_32" reward="10000_32" desc="简单的任务"/>
+	<Item name="升到25级" id="10023" cond="1_33" content="a_60_33" reward="10000_33" desc="简单的任务"/>
+	<Item name="升到26级" id="10024" cond="1_34" content="a_60_34" reward="10000_34" desc="简单的任务"/>
+	<Item name="升到27级" id="10025" cond="1_35" content="a_60_35" reward="10000_35" desc="简单的任务"/>
+	<Item name="升到28级" id="10026" cond="1_36" content="a_60_36" reward="10000_36" desc="简单的任务"/>
+</root>

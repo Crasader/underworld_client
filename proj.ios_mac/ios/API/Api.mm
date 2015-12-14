@@ -17,6 +17,8 @@
 
 #import <CommonCrypto/CommonCrypto.h>
 
+using namespace std;
+
 // alert view
 static AlertViewClickedButtonCallback alertViewClickedButtonCallback = nullptr;
 long const IapVerificationFailedCode = RMStoreErrorCodeUnableToCompleteVerification;
@@ -24,7 +26,7 @@ long const IapVerificationFailedCode = RMStoreErrorCodeUnableToCompleteVerificat
 #pragma mark - Extended NSString
 @interface NSString (Extended)
 
-- (std::string)stdString;
+- (string)stdString;
 - (NSString *)toAppleProductId;
 - (NSString *)hashedValueForAccount;
 
@@ -32,9 +34,9 @@ long const IapVerificationFailedCode = RMStoreErrorCodeUnableToCompleteVerificat
 
 @implementation NSString (Extended)
 
-- (std::string)stdString
+- (string)stdString
 {
-    return self.UTF8String ? std::string(self.UTF8String) : "";
+    return self.UTF8String ? string(self.UTF8String) : "";
 }
 
 - (NSString *)toAppleProductId

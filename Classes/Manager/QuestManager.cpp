@@ -75,9 +75,7 @@ void QuestManager::updateQuestProgress(QuestType type, int questId, int progress
             }
             
             // check if the quest if finished
-            if (progress >= data->getRequiredCount()) {
-                finishQuest(type, questId);
-            }
+            
         } else {
             assert(false);
         }

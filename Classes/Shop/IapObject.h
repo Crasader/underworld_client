@@ -11,13 +11,11 @@
 
 #include "cocos2d.h"
 
-using namespace std;
-
 class IapObject
 {
 public:
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    IapObject(const string& key, void *value);
+    IapObject(const std::string& key, void *value);
 #endif
     virtual ~IapObject();
     
@@ -26,18 +24,18 @@ public:
     int objectId() const;
     int count() const;
     float price() const;
-    const string& title() const;
-    const string& description() const;
-    const string& priceString() const;
+    const std::string& title() const;
+    const std::string& description() const;
+    const std::string& priceString() const;
     
 private:
     int _index;
     int _objectId;
     int _count;
     float _price;
-    string _title;
-    string _description;
-    string _priceString;
+    std::string _title;
+    std::string _description;
+    std::string _priceString;
 };
 
 #endif /* IapObject_h */

@@ -39,6 +39,8 @@ QuestLayer* QuestLayer::create(int levelId)
 
 QuestLayer::QuestLayer()
 :_observer(nullptr)
+,_scrollBar(nullptr)
+,_tabIndex(-1)
 {
     static const Size& unitNodeSize = QuestNode::create()->getContentSize();
     _cellSize.height = unitNodeSize.height + nodeOffsetY * 2;
@@ -197,4 +199,19 @@ TableViewCell* QuestLayer::tableCellAtIndex(TableView *table, ssize_t idx)
 ssize_t QuestLayer::numberOfCellsInTableView(TableView *table)
 {
     return 1;
+}
+
+void QuestLayer::switchTable(int index)
+{
+    
+}
+
+void QuestLayer::setButtonSelected(int index)
+{
+    
+}
+
+void QuestLayer::refreshTable()
+{
+    
 }

@@ -30,11 +30,6 @@ int ObjectLocalData::getObjectId() const
     return _objectId;
 }
 
-const vector<RewardData *>& ObjectLocalData::getRewards() const
-{
-    return _rewards;
-}
-
 const string& ObjectLocalData::getName() const
 {
     return _name;

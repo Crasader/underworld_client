@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <root>
-	<Item unit_name="狼人基地" b_normal="effect-wolf-Base_1" b_damaged="effect-wolf-base-damage" b_destroyed="effect-wolf-base-Severe damage" bullet="wolf-base-attack-1" strike_point="Strike point-6"/>
-	<Item unit_name="吸血鬼核心" b_normal="effect-Vampire-base" b_damaged="effect-Vampire-base-damage" b_destroyed="effect-Vampire-base-Severe damage" bullet="Vampire-base-attack-1" strike_point="Strike point-6"/>
-	<Item unit_name="狼人箭塔" b_normal="wolf-tower-defense-1" b_destroyed="wolf-tower-Destroy" b_attack_begin="wolf-tower-defense-1" b_attack="wolf-tower-defense-2" b_attack_end="wolf-tower-defense-3" bullet="effect-jian" strike_point="Strike point-6"/>
-	<Item unit_name="吸血鬼箭塔" b_normal="Vampire-tower-defense" b_destroyed="wolf-tower-Destroy" b_attack="Vampire-tower-defense" bullet="Vampire-tower-attack" strike_point="Strike point-6"/>
-	<Item unit_name="狼人步兵" is_short_range="1" icon_name="icon_w_langdun" prefix="wolf-Warrior" sword_effect="wolf-attack-daoguang_0" strike_point="Strike point-6"/>
-	<Item unit_name="狼人射手" icon_name="icon_w_langgongjian" prefix="wolf-Archer" bullet="effect-jian" strike_point="Strike point-6"/>
-	<Item unit_name="狼人巫师" icon_name="icon_w_langfashi" prefix="wolf-wizard" bullet="effect-fireball" strike_point="Strike point-4"/>
-	<Item unit_name="吸血鬼战士" is_short_range="1" icon_name="icon_v_roudun" prefix="Vampire-tank" sword_effect="Vampire-tank-attack-daoguang" strike_point="Strike point-6"/>
-	<Item unit_name="吸血鬼弓兵" icon_name="icon_v_nvgongjianshou" prefix="Dead-Archer" bullet="effect-jian" strike_point="Strike point-6"/>
-	<Item unit_name="吸血鬼巫师" icon_name="icon_v_nvwushi" prefix="Dead-witch" bullet="effect-fireball-1" strike_point="Strike point-5"/>
-	<Item unit_name="吸血鬼蜘蛛" icon_name="icon_v_zhizhu" prefix="spider" bullet="spider-attack-1" strike_point="Strike point-5"/>
+	<Item unit_name="狼人基地" b_normal="effect-wolf-Base_1" b_damaged="effect-wolf-base-damage" b_destroyed="effect-wolf-base-Severe damage" bullet="wolf-base-attack-1" crit_bullet="wolf-base-attack-1" strike_point="Strike point-6" crit_strike_point="Strike point-6"/>
+	<Item unit_name="吸血鬼核心" b_normal="effect-Vampire-base" b_damaged="effect-Vampire-base-damage" b_destroyed="effect-Vampire-base-Severe damage" bullet="Vampire-base-attack-1" crit_bullet="Vampire-base-attack-1" strike_point="Strike point-6" crit_strike_point="Strike point-6"/>
+	<Item unit_name="狼人箭塔" b_normal="wolf-tower-defense-1" b_destroyed="wolf-tower-Destroy" b_attack_begin="wolf-tower-defense-1" b_attack="wolf-tower-defense-2" b_attack_end="wolf-tower-defense-3" bullet="effect-jian" crit_bullet="effect-jian" strike_point="Strike point-6" crit_strike_point="Strike point-6"/>
+	<Item unit_name="吸血鬼箭塔" b_normal="Vampire-tower-defense" b_destroyed="wolf-tower-Destroy" b_attack="Vampire-tower-defense" bullet="Vampire-tower-attack" crit_bullet="Vampire-tower-attack" strike_point="Strike point-6" crit_strike_point="Strike point-6"/>
+	<Item unit_name="狼人步兵" is_short_range="1" icon_name="icon_w_langdun" prefix="wolf-Warrior" sword_effect="wolf-attack-daoguang_0" strike_point="Strike point-6" crit_strike_point="Strike point-6"/>
+	<Item unit_name="狼人射手" icon_name="icon_w_langgongjian" prefix="wolf-Archer" bullet="effect-jian" crit_bullet="effect-jian" strike_point="Strike point-6" crit_strike_point="Strike point-6"/>
+	<Item unit_name="狼人巫师" icon_name="icon_w_langfashi" prefix="wolf-wizard" bullet="effect-fireball" crit_bullet="effect-fireball" strike_point="Strike point-4" crit_strike_point="Strike point-4"/>
+	<Item unit_name="吸血鬼战士" is_short_range="1" icon_name="icon_v_roudun" prefix="Vampire-tank" sword_effect="Vampire-tank-attack-daoguang" strike_point="Strike point-6" crit_strike_point="Strike point-6"/>
+	<Item unit_name="吸血鬼弓兵" icon_name="icon_v_nvgongjianshou" prefix="Dead-Archer" bullet="effect-jian" crit_bullet="effect-jian" strike_point="Strike point-6" crit_strike_point="Strike point-6"/>
+	<Item unit_name="吸血鬼巫师" icon_name="icon_v_nvwushi" prefix="Dead-witch" bullet="effect-fireball-1" crit_bullet="effect-fireball-1" strike_point="Strike point-5" crit_strike_point="Strike point-5"/>
+	<Item unit_name="吸血鬼蜘蛛" icon_name="icon_v_zhizhu" prefix="spider" bullet="spider-attack-1" crit_bullet="spider-attack-1" strike_point="Strike-point-8" crit_strike_point="Strike-point-spider-7"/>
 </root>

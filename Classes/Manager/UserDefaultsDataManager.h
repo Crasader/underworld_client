@@ -11,8 +11,6 @@
 
 #include "cocos2d.h"
 
-using namespace std;
-
 class UserDefaultsDataManager
 {
 public:
@@ -21,9 +19,9 @@ public:
     
     int getIntegerForKey(const char* pKey, int defaultValue) const;
     void setIntegerForKey(const char* pKey, int value) const;
-    string getStringForKey(const char* pKey, const std::string & defaultValue) const;
+    std::string getStringForKey(const char* pKey, const std::string & defaultValue) const;
     void setStringForKey(const char* pKey, const std::string & value) const;
-    string getStringForKeyWithAES(const char* pKey, const std::string & defaultValue) const;
+    std::string getStringForKeyWithAES(const char* pKey, const std::string & defaultValue) const;
     void setStringForKeyWithAES(const char* pKey, const std::string & value) const;
     bool getBoolForKey(const char* pKey, bool defaultValue) const;
     void setBoolForKey(const char* pKey, bool value) const;

@@ -8,6 +8,8 @@
 
 #include "IapObject.h"
 
+using namespace std;
+
 IapObject::~IapObject()
 {
     

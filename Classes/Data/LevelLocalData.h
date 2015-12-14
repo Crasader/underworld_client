@@ -14,6 +14,9 @@
 
 namespace tinyxml2 { class XMLElement; }
 
+class ConditionData;
+class RewardData;
+
 class LevelLocalData
 {
 public:
@@ -21,12 +24,13 @@ public:
     virtual ~LevelLocalData();
     
     int getLevelId() const;
-    const std::map<ResourceType, int>& rewards() const;
-    int getRewardCount(ResourceType type) const;
+    const std::vector<ConditionData*>& getConditions() const;
+    const std::vector<RewardData*>& getRewards() const;
     
 private:
     int _levelId;
-    std::map<ResourceType, int> _rewards;
+    std::vector<ConditionData*> _conditions;
+    std::vector<RewardData*> _rewards;
 };
 
 #endif /* LevelLocalData_h */

@@ -10,9 +10,11 @@
 #include "audio/include/SimpleAudioEngine.h"
 #include "UserDefaultsDataManager.h"
 
-#define BUTTON_SOUND_OK     ("sounds/button_ok.mp3")
-#define BUTTON_SOUND_CANCEL ("sounds/button_cancel.mp3")
-#define BUTTON_SOUND_INVALID ("sounds/button_invalid.mp3")
+using namespace std;
+
+static const string BUTTON_SOUND_OK("sounds/button_ok.mp3");
+static const string BUTTON_SOUND_CANCEL("sounds/button_cancel.mp3");
+static const string BUTTON_SOUND_INVALID("sounds/button_invalid.mp3");
 
 static SoundManager *s_pSharedInstance = nullptr;
 

@@ -34,8 +34,10 @@ public:
     const std::string& getBAttack() const;
     const std::string& getBAttackEnd() const;
     const std::string& getBullet() const;
+    const std::string& getCritBullet() const;
     const std::string& getSwordEffect() const;
     const std::string& getHurtEffect() const;
+    const std::string& getCritHurtEffect() const;
     
 private:
     std::string _name;
@@ -49,8 +51,10 @@ private:
     std::string _bAttack;
     std::string _bAttackEnd;
     std::string _bullet;
+    std::string _critBullet;
     std::string _swordEffect;
     std::string _hurtEffect;
+    std::string _critHurtEffect;
 };
 
 

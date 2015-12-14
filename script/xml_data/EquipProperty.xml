@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<root>
+	<Item id="10001" desc="1号武器" max="0" quality="1" extra="1" worth="100_1" info="1号战士的武器"/>
+	<Item id="10002" desc="2号武器" max="0" quality="1" extra="1" worth="100_2" info="2号战士的武器"/>
+	<Item id="10003" desc="3号武器" max="0" quality="1" extra="1" worth="100_3" info="3号战士的武器"/>
+	<Item id="10004" desc="4号武器" max="0" quality="1" extra="1" worth="100_4" info="4号战士的武器"/>
+	<Item id="10005" desc="5号武器" max="0" quality="1" extra="1" worth="100_5" info="5号战士的武器"/>
+	<Item id="10006" desc="6号武器" max="0" quality="1" extra="1" worth="100_6" info="6号战士的武器"/>
+</root>

@@ -12,6 +12,7 @@
 #include "MD5Verifier.h"
 
 USING_NS_CC;
+using namespace std;
 
 static const char *SOUND_ON_TAG = "SOUND_ON_TAG";
 static const char *MUSIC_ON_TAG = "MUSIC_ON_TAG";
