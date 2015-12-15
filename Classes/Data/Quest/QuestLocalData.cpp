@@ -17,9 +17,16 @@ using namespace std;
 
 QuestLocalData::QuestLocalData(tinyxml2::XMLElement *xmlElement)
 :_id(0)
+,_race(0)
 {
     if (xmlElement) {
         _id = atoi(xmlElement->Attribute("id"));
+        {
+            const char *data = xmlElement->Attribute("race");
+            if (data) {
+                _race = atoi(data);
+            }
+        }
         {
             const char *data = xmlElement->Attribute("cond");
             if (data) {
@@ -70,20 +77,19 @@ QuestLocalData::QuestLocalData(tinyxml2::XMLElement *xmlElement)
 
 QuestLocalData::~QuestLocalData()
 {
-    for (int i = 0; i < _conditions.size(); ++i) {
-        CC_SAFE_DELETE(_conditions.at(i));
-    }
-    for (int i = 0; i < _contents.size(); ++i) {
-        CC_SAFE_DELETE(_contents.at(i));
-    }
-    for (int i = 0; i < _rewards.size(); ++i) {
-        CC_SAFE_DELETE(_rewards.at(i));
-    }
+    Utils::clearVector(_conditions);
+    Utils::clearVector(_contents);
+    Utils::clearVector(_rewards);
 }
 
 int QuestLocalData::getId() const
 {
     return _id;
+}
+
+int QuestLocalData::getRace() const
+{
+    return _race;
 }
 
 const vector<ConditionData*>& QuestLocalData::getConditions() const

@@ -13,17 +13,6 @@ const int maxFailCount = 5;
 const char * manifestPath = "project.manifest";
 const char * storagePath = "Resource/";
 
-OnlineUpdater * OnlineUpdater::create()
-{
-    OnlineUpdater *ret = new (std::nothrow) OnlineUpdater();
-    return ret;
-}
-
-void OnlineUpdater::destroy(OnlineUpdater *instance)
-{
-    CC_SAFE_DELETE(instance);
-}
-
 OnlineUpdater::OnlineUpdater()
 :_listener(nullptr)
 ,_am(nullptr)

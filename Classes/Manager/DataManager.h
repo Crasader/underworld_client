@@ -16,6 +16,7 @@
 
 class LevelLocalData;
 class QuestLocalData;
+class AchievementLocalData;
 class GearLocalData;
 class URConfigData;
 
@@ -28,6 +29,8 @@ public:
     void init();
     const LevelLocalData* getLevelData(int levelId) const;
     const QuestLocalData* getQuestData(QuestType type, int questId) const;
+    const AchievementLocalData* getAchievementData(int achievementId) const;
+    const GearLocalData* getGearData(int gearId) const;
     AnimationParameters getAnimationParameters(const std::string& name, UnderWorld::Core::SkillClass skillClass, UnitDirection direction) const;
     const URConfigData* getURConfigData(const std::string& name) const;
     
@@ -39,6 +42,7 @@ protected:
 protected:
     void parseLevelData();
     void parseQuestData(QuestType type);
+    void parseAchievementData();
     void parseGearData();
     void parseAnimationConfigData();
     void parseURConfigData();
@@ -46,6 +50,7 @@ protected:
 private:
     std::map<int, LevelLocalData*> _levels;
     std::map<QuestType, std::map<int, QuestLocalData*>> _quests;
+    std::map<int, AchievementLocalData*> _achievements;
     std::map<int, GearLocalData*> _gears;
     std::map<std::string, UAConfigData*> _animationParameters;
     std::map<std::string, URConfigData*> _unitResourceConfigData;

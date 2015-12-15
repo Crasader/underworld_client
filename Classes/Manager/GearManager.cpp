@@ -8,6 +8,7 @@
 
 #include "GearManager.h"
 #include "cocostudio/CocoStudio.h"
+#include "Utils.h"
 
 using namespace std;
 using namespace cocostudio;
@@ -18,7 +19,7 @@ GearManager::GearManager()
 
 GearManager::~GearManager()
 {
-    
+    Utils::clearVector(_gears);
 }
 
 void GearManager::initGear(const rapidjson::Value& jsonDict)

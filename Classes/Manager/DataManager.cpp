@@ -8,34 +8,16 @@
 
 #include "DataManager.h"
 #include "tinyxml2/tinyxml2.h"
+#include "Utils.h"
 #include "LocalHelper.h"
 #include "LevelLocalData.h"
 #include "QuestLocalData.h"
+#include "AchievementLocalData.h"
 #include "GearLocalData.h"
 #include "URConfigData.h"
 
 USING_NS_CC;
 using namespace std;
-
-template<typename _type>
-void clearVector(vector<_type> &vec)
-{
-    for(typename vector<_type>::iterator iter = vec.begin(); iter != vec.end(); ++iter)
-    {
-        CC_SAFE_DELETE(*iter);
-    }
-    vec.clear();
-}
-
-template<typename _Key, typename _Value>
-void clearMap(map<_Key, _Value> &m)
-{
-    for(typename map<_Key, _Value>::iterator iter = m.begin(); iter != m.end(); ++iter)
-    {
-        CC_SAFE_DELETE(iter->second);
-    }
-    m.clear();
-}
 
 static DataManager *s_pSharedInstance = nullptr;
 
@@ -65,19 +47,20 @@ DataManager::DataManager()
 
 DataManager::~DataManager()
 {
-    clearMap(_levels);
+    Utils::clearMap(_levels);
     
     if (_quests.find(kQuestType_Daily) != _quests.end()) {
-        clearMap(_quests.at(kQuestType_Daily));
+        Utils::clearMap(_quests.at(kQuestType_Daily));
     }
     
     if (_quests.find(kQuestType_Life) != _quests.end()) {
-        clearMap(_quests.at(kQuestType_Life));
+        Utils::clearMap(_quests.at(kQuestType_Life));
     }
     
-    clearMap(_gears);
-    clearMap(_animationParameters);
-    clearMap(_unitResourceConfigData);
+    Utils::clearMap(_achievements);
+    Utils::clearMap(_gears);
+    Utils::clearMap(_animationParameters);
+    Utils::clearMap(_unitResourceConfigData);
 }
 
 void DataManager::init()
@@ -85,11 +68,13 @@ void DataManager::init()
     parseLevelData();
     parseQuestData(kQuestType_Daily);
     parseQuestData(kQuestType_Life);
+    parseAchievementData();
     parseGearData();
     parseAnimationConfigData();
     parseURConfigData();
 }
 
+#pragma mark - getters
 const LevelLocalData* DataManager::getLevelData(int levelId) const
 {
     if (_levels.find(levelId) != _levels.end()) {
@@ -106,6 +91,24 @@ const QuestLocalData* DataManager::getQuestData(QuestType type, int questId) con
         if (quests.find(questId) != quests.end()) {
             return quests.at(questId);
         }
+    }
+    
+    return nullptr;
+}
+
+const AchievementLocalData* DataManager::getAchievementData(int achievementId) const
+{
+    if (_achievements.find(achievementId) != _achievements.end()) {
+        return _achievements.at(achievementId);
+    }
+    
+    return nullptr;
+}
+
+const GearLocalData* DataManager::getGearData(int gearId) const
+{
+    if (_gears.find(gearId) != _gears.end()) {
+        return _gears.at(gearId);
     }
     
     return nullptr;
@@ -133,6 +136,7 @@ const URConfigData* DataManager::getURConfigData(const std::string& name) const
     return nullptr;
 }
 
+#pragma mark - parsers
 void DataManager::parseLevelData()
 {
     string fileName = LocalHelper::getLocalizedConfigFilePath("LevelData.xml");
@@ -174,7 +178,7 @@ void DataManager::parseQuestData(QuestType type)
     
     // clear first
     if (_quests.find(type) != _quests.end()) {
-        clearMap(_quests.at(type));
+        Utils::clearMap(_quests.at(type));
     } else {
         _quests.insert(make_pair(type, map<int, QuestLocalData*>()));
     }
@@ -199,6 +203,35 @@ void DataManager::parseQuestData(QuestType type)
                     assert(false);
                 } else {
                     quests.insert(make_pair(questId, data));
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
+void DataManager::parseAchievementData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath("EquipProperty.xml");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                AchievementLocalData* data = new (nothrow) AchievementLocalData(item);
+                const int id = data->getId();
+                if (_achievements.find(id) != _achievements.end()) {
+                    assert(false);
+                } else {
+                    _achievements.insert(make_pair(id, data));
                 }
             }
             

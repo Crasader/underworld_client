@@ -74,6 +74,7 @@ UnderWorld::Core::Coordinate Utils::convertStringToCoordinate(const string& text
     return UnderWorld::Core::Coordinate(atoi(result.at(0).c_str()), atoi(result.at(1).c_str()));
 }
 
+#pragma mark - rapidjson
 int Utils::getIntValue_json(const rapidjson::Value& root, const char* key, int def)
 {
     int nRet = def;

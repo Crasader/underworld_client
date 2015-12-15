@@ -13,7 +13,7 @@
 #include "json/document.h"
 #include "CocosGlobal.h"
 
-class QuestLocalData;
+class QuestData;
 
 class QuestManager
 {
@@ -26,7 +26,7 @@ public:
     void getReward(QuestType type, int questId);
     
     // getters
-    const std::vector<const QuestLocalData*>& getQuestData(QuestType type);
+    const std::vector<QuestData*>& getQuestData(QuestType type);
     int getQuestProgress(QuestType type, int questId) const;
     
 protected:
@@ -34,11 +34,7 @@ protected:
     void finishQuest(QuestType type, int questId);
     
 private:
-    typedef std::pair<const QuestLocalData*, int> QuestProgress;
-    
-private:
-    std::map<QuestType, std::vector<const QuestLocalData*>> _questData;
-    std::map<QuestType, std::map<int, QuestProgress>> _questProgress;
+    std::map<QuestType, std::vector<QuestData*>> _quests;
 };
 
 #endif /* QuestManager_h */

@@ -203,15 +203,38 @@ ssize_t QuestLayer::numberOfCellsInTableView(TableView *table)
 
 void QuestLayer::switchTable(int index)
 {
-    
+    if (_tabIndex != index) {
+        _tabIndex = index;
+        // TODO: refreshTable
+        
+        setButtonSelected(_tabIndex);
+    }
 }
 
 void QuestLayer::setButtonSelected(int index)
 {
+    static string normalFile = "GameImages/world/ui_fenye_4.png";
+    static string selectedFile = "GameImages/world/ui_fenye_3.png";
     
-}
-
-void QuestLayer::refreshTable()
-{
-    
+    Button *selectedButton = _tabButtons.at(index);
+    set<Button *> otherButtons;
+    for (int i = 0; i < _tabButtons.size(); ++i) {
+        otherButtons.insert(_tabButtons.at(i));
+    }
+    otherButtons.erase(selectedButton);
+    // 1. set all buttons' ZOrder to 1
+    const Vector<Node*>& children = selectedButton->getParent()->getChildren();
+    for (auto child : children)
+    {
+        child->setLocalZOrder(1);
+    }
+    // 2. make sure the selected button is on the top
+    selectedButton->loadTextures(selectedFile, selectedFile);
+    selectedButton->setLocalZOrder(2);
+    // 3. make sure the other buttons are on the bottom
+    for (set<Button *>::iterator iter = otherButtons.begin(); iter != otherButtons.end(); ++iter)
+    {
+        (*iter)->loadTextures(normalFile, normalFile);
+        (*iter)->setLocalZOrder(0);
+    }
 }

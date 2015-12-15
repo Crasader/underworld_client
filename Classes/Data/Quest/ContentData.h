@@ -10,6 +10,7 @@
 #define ContentData_h
 
 #include <iostream>
+#include <vector>
 
 class ContentData
 {
@@ -19,12 +20,12 @@ public:
     
     int getType() const;
     int getId() const;
-    int getCount() const;
+    int getCount(int index) const;
     
 private:
     int _type;
     int _id;
-    int _count;
+    std::vector<int> _counts;
 };
 
 #endif /* ContentData_h */

@@ -46,7 +46,6 @@ protected:
     
     void switchTable(int index);
     void setButtonSelected(int index);
-    void refreshTable();
     
 private:
     QuestLayerObserver *_observer;
@@ -54,6 +53,7 @@ private:
     Size _cellSize;
     ssize_t _cellsCount;
     std::map<int, TableView*> _tableViews;
+    std::vector<ui::Button*> _tabButtons;
     ScrollBar *_scrollBar;
     int _tabIndex;
 };

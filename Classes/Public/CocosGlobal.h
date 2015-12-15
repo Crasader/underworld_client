@@ -10,6 +10,7 @@
 #define CocosGlobal_h
 
 #include "Global.h"
+#include <iostream>
 
 #define USER_TOKEN_LENGTH   (64)
 

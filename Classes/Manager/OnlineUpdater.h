@@ -28,14 +28,12 @@ public:
 class OnlineUpdater
 {
 public:
-    static OnlineUpdater * create();
-    static void destroy(OnlineUpdater *instance);
+    OnlineUpdater();
+    virtual ~OnlineUpdater();
     
     void startUpdate(OnlineUpdaterListener * listener);
     
-private:
-    OnlineUpdater();
-    virtual ~OnlineUpdater();
+protected:
     CC_DISALLOW_COPY_AND_ASSIGN(OnlineUpdater);
     
 private:

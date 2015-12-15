@@ -100,6 +100,7 @@
 		A1211B291C0BF68E00C27CCC /* GameConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B281C0BF68E00C27CCC /* GameConstants.cpp */; };
 		A12D2F561BFDE7D100389DAC /* QuestManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12D2F541BFDE7D100389DAC /* QuestManager.cpp */; };
 		A13108A51C046BF900EAAD90 /* particle in Resources */ = {isa = PBXBuildFile; fileRef = A13108A41C046BF900EAAD90 /* particle */; };
+		A162015B1C1EC6EA00789CBE /* AchievementManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16201591C1EC6EA00789CBE /* AchievementManager.cpp */; };
 		A1720E691BCCDEFF00217E98 /* DataManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720E671BCCDEFF00217E98 /* DataManager.cpp */; };
 		A1720E6C1BCCDF1900217E98 /* UserDefaultsDataManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720E6A1BCCDF1900217E98 /* UserDefaultsDataManager.cpp */; };
 		A1720E6F1BCCDF9100217E98 /* CocosUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720E6D1BCCDF9100217E98 /* CocosUtils.cpp */; };
@@ -164,8 +165,13 @@
 		A1E929731C0D7E890026D85D /* ChatManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E929711C0D7E890026D85D /* ChatManager.cpp */; };
 		A1E929761C0D7EAD0026D85D /* GearManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E929741C0D7EAD0026D85D /* GearManager.cpp */; };
 		A1E929791C0D7F9A0026D85D /* ChatData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E929771C0D7F9A0026D85D /* ChatData.cpp */; };
+		A1F5BF921C1FC36C007C08CB /* GearLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BF901C1FC36C007C08CB /* GearLocalData.cpp */; };
+		A1F5BF951C1FC381007C08CB /* GearData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BF931C1FC381007C08CB /* GearData.cpp */; };
+		A1F5BF981C1FC3D3007C08CB /* GearAttribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BF961C1FC3D3007C08CB /* GearAttribute.cpp */; };
+		A1F5BF9B1C1FC724007C08CB /* QuestData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BF991C1FC724007C08CB /* QuestData.cpp */; };
+		A1F5BF9F1C1FD508007C08CB /* AchievementLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BF9D1C1FD508007C08CB /* AchievementLocalData.cpp */; };
+		A1F5BFA21C1FD519007C08CB /* AchievementData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BFA01C1FD519007C08CB /* AchievementData.cpp */; };
 		A1F885471C10409A0035B4C5 /* UserManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F885451C10409A0035B4C5 /* UserManager.cpp */; };
-		A1F8854A1C1041A10035B4C5 /* GearLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F885481C1041A10035B4C5 /* GearLocalData.cpp */; };
 		A1F8854D1C1044500035B4C5 /* UserData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F8854B1C1044500035B4C5 /* UserData.cpp */; };
 		A1F885501C1044640035B4C5 /* UserSimpleData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F8854E1C1044640035B4C5 /* UserSimpleData.cpp */; };
 		A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A1FC49B31BD8C249005C1B2E /* CrashHelper.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -364,6 +370,8 @@
 		A12D2F541BFDE7D100389DAC /* QuestManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuestManager.cpp; sourceTree = "<group>"; };
 		A12D2F551BFDE7D100389DAC /* QuestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestManager.h; sourceTree = "<group>"; };
 		A13108A41C046BF900EAAD90 /* particle */ = {isa = PBXFileReference; lastKnownFileType = folder; path = particle; sourceTree = "<group>"; };
+		A16201591C1EC6EA00789CBE /* AchievementManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AchievementManager.cpp; sourceTree = "<group>"; };
+		A162015A1C1EC6EA00789CBE /* AchievementManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementManager.h; sourceTree = "<group>"; };
 		A1720E671BCCDEFF00217E98 /* DataManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataManager.cpp; sourceTree = "<group>"; };
 		A1720E681BCCDEFF00217E98 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		A1720E6A1BCCDF1900217E98 /* UserDefaultsDataManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserDefaultsDataManager.cpp; sourceTree = "<group>"; };
@@ -491,10 +499,20 @@
 		A1E929751C0D7EAD0026D85D /* GearManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GearManager.h; sourceTree = "<group>"; };
 		A1E929771C0D7F9A0026D85D /* ChatData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChatData.cpp; sourceTree = "<group>"; };
 		A1E929781C0D7F9A0026D85D /* ChatData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatData.h; sourceTree = "<group>"; };
+		A1F5BF901C1FC36C007C08CB /* GearLocalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GearLocalData.cpp; sourceTree = "<group>"; };
+		A1F5BF911C1FC36C007C08CB /* GearLocalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GearLocalData.h; sourceTree = "<group>"; };
+		A1F5BF931C1FC381007C08CB /* GearData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GearData.cpp; sourceTree = "<group>"; };
+		A1F5BF941C1FC381007C08CB /* GearData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GearData.h; sourceTree = "<group>"; };
+		A1F5BF961C1FC3D3007C08CB /* GearAttribute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GearAttribute.cpp; sourceTree = "<group>"; };
+		A1F5BF971C1FC3D3007C08CB /* GearAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GearAttribute.h; sourceTree = "<group>"; };
+		A1F5BF991C1FC724007C08CB /* QuestData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuestData.cpp; sourceTree = "<group>"; };
+		A1F5BF9A1C1FC724007C08CB /* QuestData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestData.h; sourceTree = "<group>"; };
+		A1F5BF9D1C1FD508007C08CB /* AchievementLocalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AchievementLocalData.cpp; sourceTree = "<group>"; };
+		A1F5BF9E1C1FD508007C08CB /* AchievementLocalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementLocalData.h; sourceTree = "<group>"; };
+		A1F5BFA01C1FD519007C08CB /* AchievementData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AchievementData.cpp; sourceTree = "<group>"; };
+		A1F5BFA11C1FD519007C08CB /* AchievementData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementData.h; sourceTree = "<group>"; };
 		A1F885451C10409A0035B4C5 /* UserManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserManager.cpp; sourceTree = "<group>"; };
 		A1F885461C10409A0035B4C5 /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserManager.h; sourceTree = "<group>"; };
-		A1F885481C1041A10035B4C5 /* GearLocalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GearLocalData.cpp; sourceTree = "<group>"; };
-		A1F885491C1041A10035B4C5 /* GearLocalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GearLocalData.h; sourceTree = "<group>"; };
 		A1F8854B1C1044500035B4C5 /* UserData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserData.cpp; sourceTree = "<group>"; };
 		A1F8854C1C1044500035B4C5 /* UserData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserData.h; sourceTree = "<group>"; };
 		A1F8854E1C1044640035B4C5 /* UserSimpleData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserSimpleData.cpp; sourceTree = "<group>"; };
@@ -913,12 +931,12 @@
 		A12D2F571BFDE88A00389DAC /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				A1F5BF9C1C1FD508007C08CB /* Achievement */,
+				A1F5BF8F1C1FC36C007C08CB /* Gear */,
 				A1E830611C1EA50200FE01B8 /* Quest */,
 				A10A66E21C1A7CE100A2DD13 /* Resource */,
 				A1E929771C0D7F9A0026D85D /* ChatData.cpp */,
 				A1E929781C0D7F9A0026D85D /* ChatData.h */,
-				A1F885481C1041A10035B4C5 /* GearLocalData.cpp */,
-				A1F885491C1041A10035B4C5 /* GearLocalData.h */,
 				A19EE96B1C1C0F1300E46D77 /* LevelLocalData.cpp */,
 				A19EE96C1C1C0F1300E46D77 /* LevelLocalData.h */,
 				A19EE9671C1C055600E46D77 /* ObjectLocalData.cpp */,
@@ -934,6 +952,8 @@
 		A1720E661BCCDECA00217E98 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				A16201591C1EC6EA00789CBE /* AchievementManager.cpp */,
+				A162015A1C1EC6EA00789CBE /* AchievementManager.h */,
 				A1E929711C0D7E890026D85D /* ChatManager.cpp */,
 				A1E929721C0D7E890026D85D /* ChatManager.h */,
 				A1720E671BCCDEFF00217E98 /* DataManager.cpp */,
@@ -1225,12 +1245,38 @@
 				A1E830631C1EA50200FE01B8 /* ConditionData.h */,
 				A1E8306B1C1EA55D00FE01B8 /* ContentData.cpp */,
 				A1E8306C1C1EA55D00FE01B8 /* ContentData.h */,
+				A1F5BF991C1FC724007C08CB /* QuestData.cpp */,
+				A1F5BF9A1C1FC724007C08CB /* QuestData.h */,
 				A1E830641C1EA50200FE01B8 /* QuestLocalData.cpp */,
 				A1E830651C1EA50200FE01B8 /* QuestLocalData.h */,
 				A1E830661C1EA50200FE01B8 /* RewardData.cpp */,
 				A1E830671C1EA50200FE01B8 /* RewardData.h */,
 			);
 			path = Quest;
+			sourceTree = "<group>";
+		};
+		A1F5BF8F1C1FC36C007C08CB /* Gear */ = {
+			isa = PBXGroup;
+			children = (
+				A1F5BF961C1FC3D3007C08CB /* GearAttribute.cpp */,
+				A1F5BF971C1FC3D3007C08CB /* GearAttribute.h */,
+				A1F5BF931C1FC381007C08CB /* GearData.cpp */,
+				A1F5BF941C1FC381007C08CB /* GearData.h */,
+				A1F5BF901C1FC36C007C08CB /* GearLocalData.cpp */,
+				A1F5BF911C1FC36C007C08CB /* GearLocalData.h */,
+			);
+			path = Gear;
+			sourceTree = "<group>";
+		};
+		A1F5BF9C1C1FD508007C08CB /* Achievement */ = {
+			isa = PBXGroup;
+			children = (
+				A1F5BFA01C1FD519007C08CB /* AchievementData.cpp */,
+				A1F5BFA11C1FD519007C08CB /* AchievementData.h */,
+				A1F5BF9D1C1FD508007C08CB /* AchievementLocalData.cpp */,
+				A1F5BF9E1C1FD508007C08CB /* AchievementLocalData.h */,
+			);
+			path = Achievement;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1431,12 +1477,15 @@
 				A1D745BF1C1AB7C40020BC1C /* PvePreparationLayer.cpp in Sources */,
 				A1E830561C1E75A700FE01B8 /* ChatNode.cpp in Sources */,
 				301F63F21BE0C56D00DA6D70 /* Damage.cpp in Sources */,
+				A1F5BFA21C1FD519007C08CB /* AchievementData.cpp in Sources */,
 				A1720E6F1BCCDF9100217E98 /* CocosUtils.cpp in Sources */,
+				A1F5BF981C1FC3D3007C08CB /* GearAttribute.cpp in Sources */,
 				A1720ED11BCD38FB00217E98 /* SoundManager.cpp in Sources */,
 				A18524D31C1AE46400BE261D /* QuestNode.cpp in Sources */,
 				300098D61BD5E81700B6E284 /* InstanceFactory.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				A18524DC1C1AF49800BE261D /* BagCell.cpp in Sources */,
+				A1F5BF9F1C1FD508007C08CB /* AchievementLocalData.cpp in Sources */,
 				A1F8854D1C1044500035B4C5 /* UserData.cpp in Sources */,
 				A1E8305C1C1E75BB00FE01B8 /* ChatLayer.cpp in Sources */,
 				A10A66E71C1A7CE100A2DD13 /* UAConfigData.cpp in Sources */,
@@ -1448,11 +1497,13 @@
 				A1211B231C0BF55200C27CCC /* LiteralValue.cpp in Sources */,
 				045116F91BCFBA44002AA721 /* UnitType.cpp in Sources */,
 				A1E830691C1EA50200FE01B8 /* QuestLocalData.cpp in Sources */,
+				A1F5BF9B1C1FC724007C08CB /* QuestData.cpp in Sources */,
 				301F63FC1BE3680600DA6D70 /* GameLooper.cpp in Sources */,
+				A1F5BF951C1FC381007C08CB /* GearData.cpp in Sources */,
+				A1F5BF921C1FC36C007C08CB /* GearLocalData.cpp in Sources */,
 				A1720E8D1BCCE19300217E98 /* AESCTREncryptor.cpp in Sources */,
 				0451170B1BCFBA53002AA721 /* Unit.cpp in Sources */,
 				045117061BCFBA53002AA721 /* Buff.cpp in Sources */,
-				A1F8854A1C1041A10035B4C5 /* GearLocalData.cpp in Sources */,
 				A18524CC1C1AE3E800BE261D /* QuestLayer.cpp in Sources */,
 				A1F885501C1044640035B4C5 /* UserSimpleData.cpp in Sources */,
 				A1720E901BCCE19300217E98 /* MD5Verifier.cpp in Sources */,
@@ -1474,6 +1525,7 @@
 				300F25331BFC67550080765C /* FeatureType.cpp in Sources */,
 				A1A74CA81C17DFE800648671 /* MainLayer.cpp in Sources */,
 				3028EBC61BFF0D4800511C51 /* Condition.cpp in Sources */,
+				A162015B1C1EC6EA00789CBE /* AchievementManager.cpp in Sources */,
 				A1D745C01C1AB7C40020BC1C /* DefeatLayer.cpp in Sources */,
 				A1D745C11C1AB7C40020BC1C /* MapLayer.cpp in Sources */,
 				045116F51BCFBA44002AA721 /* CommandType.cpp in Sources */,

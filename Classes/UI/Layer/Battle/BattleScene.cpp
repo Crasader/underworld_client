@@ -33,6 +33,8 @@ BattleScene::BattleScene()
 
 BattleScene::~BattleScene()
 {
+    CC_SAFE_DELETE(_looper);
+    CC_SAFE_DELETE(_sch);
     CC_SAFE_DELETE(_render);
 }
 

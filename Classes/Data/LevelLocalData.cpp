@@ -46,12 +46,8 @@ LevelLocalData::LevelLocalData(tinyxml2::XMLElement *xmlElement)
 
 LevelLocalData::~LevelLocalData()
 {
-    for (int i = 0; i < _conditions.size(); ++i) {
-        CC_SAFE_DELETE(_conditions.at(i));
-    }
-    for (int i = 0; i < _rewards.size(); ++i) {
-        CC_SAFE_DELETE(_rewards.at(i));
-    }
+    Utils::clearVector(_conditions);
+    Utils::clearVector(_rewards);
 }
 
 int LevelLocalData::getLevelId() const

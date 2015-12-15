@@ -25,6 +25,7 @@ public:
     virtual ~QuestLocalData();
     
     int getId() const;
+    int getRace() const;
     const std::vector<ConditionData*>& getConditions() const;
     const std::vector<ContentData*>& getContents() const;
     const std::vector<RewardData *>& getRewards() const;
@@ -33,6 +34,7 @@ public:
     
 private:
     int _id;
+    int _race;
     std::vector<ConditionData*> _conditions;
     std::vector<ContentData*> _contents;
     std::vector<RewardData*> _rewards;

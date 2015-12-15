@@ -75,9 +75,7 @@ GearLocalData::GearLocalData(tinyxml2::XMLElement *xmlElement)
 
 GearLocalData::~GearLocalData()
 {
-    for (int i = 0; i < _soldRewards.size(); ++i) {
-        CC_SAFE_DELETE(_soldRewards.at(i));
-    }
+    Utils::clearVector(_soldRewards);
 }
 
 int GearLocalData::getId() const

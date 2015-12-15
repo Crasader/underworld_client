@@ -14,7 +14,6 @@ using namespace std;
 ContentData::ContentData(const string& content)
 :_type(0)
 ,_id(0)
-,_count(0)
 {
     vector<string> result;
     Utils::split(result, content, "_", "");
@@ -22,7 +21,13 @@ ContentData::ContentData(const string& content)
     if (size == 3) {
         _type = atoi(result.at(0).c_str());
         _id = atoi(result.at(2).c_str());
-        _count = atoi(result.at(1).c_str());
+        // parse count
+        string& counts = result.at(1);
+        vector<string> temp;
+        Utils::split(temp, counts, ",");
+        for (int i = 0; i < temp.size(); ++i) {
+            _counts.push_back(atoi(temp.at(i).c_str()));
+        }
     } else {
         assert(false);
     }
@@ -43,7 +48,11 @@ int ContentData::getId() const
     return _id;
 }
 
-int ContentData::getCount() const
+int ContentData::getCount(int index) const
 {
-    return _count;
+    if (index < _counts.size()) {
+        return _counts.at(index);
+    }
+    
+    return 0;
 }
