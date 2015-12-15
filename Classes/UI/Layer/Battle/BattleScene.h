@@ -16,7 +16,9 @@
 
 USING_NS_CC;
 
-class BattleScene : public Scene
+class MapLayer;
+
+class BattleScene : public Scene, public GameRenderObserver
 {
 public:
     static BattleScene *create(int mapId);
@@ -25,12 +27,20 @@ public:
 private:
     BattleScene();
     bool init(int mapId);
+    virtual void onEnter() override;
+    
+    // GameRenderObserver
+    virtual void onGameRenderRestart() override;
+    
+    void start(int mapId);
+    void clear();
     
 private:
+    int _mapId;
+    MapLayer* _mapLayer;
     GameRender* _render;
     UnderWorld::Core::GameLooper* _looper;
     GameScheduler* _sch;
-    
 };
 
 #endif /* BattleScene_h */

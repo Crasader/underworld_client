@@ -8,6 +8,7 @@
 
 #include "GearData.h"
 #include "Utils.h"
+#include "GearAttribute.h"
 
 using namespace std;
 

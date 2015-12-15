@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <root>
 	 <!-- 战斗 -->
-	<item key="hof_trophy" value="奖杯："/>
+	<item key="battle_victory_title" value="胜利"/>
+	<item key="battle_victory_hint" value="You Win!"/>
+	<item key="battle_victory_reward_label" value="奖励"/>
+	<item key="battle_victory_button_label" value="继续"/>
 	 
 </root>

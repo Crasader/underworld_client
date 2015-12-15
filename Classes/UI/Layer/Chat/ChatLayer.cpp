@@ -44,7 +44,7 @@ ChatLayer::ChatLayer()
 ,_editBoxBg(nullptr)
 ,_editBox(nullptr)
 {
-    static const Size& unitNodeSize = ChatNode::create()->getContentSize();
+    static const Size unitNodeSize = ChatNode::create()->getContentSize();
     _cellSize.height = unitNodeSize.height + nodeOffsetY * 2;
     _cellSize.width = unitNodeSize.width + nodeOffsetX;
     

@@ -42,7 +42,7 @@ QuestLayer::QuestLayer()
 ,_scrollBar(nullptr)
 ,_tabIndex(-1)
 {
-    static const Size& unitNodeSize = QuestNode::create()->getContentSize();
+    static const Size unitNodeSize = QuestNode::create()->getContentSize();
     _cellSize.height = unitNodeSize.height + nodeOffsetY * 2;
     _cellSize.width = unitNodeSize.width + nodeOffsetX;
     

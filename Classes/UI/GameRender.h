@@ -14,6 +14,7 @@
 #include "UnitNode.h"
 #include "BulletNode.h"
 #include "MapUILayer.h"
+#include "VictoryLayer.h"
 
 USING_NS_CC;
 
@@ -29,12 +30,13 @@ class GameRenderObserver
 {
 public:
     virtual ~GameRenderObserver() {}
+    virtual void onGameRenderRestart() = 0;
 };
 
-class GameRender : public UnderWorld::Core::AbstractRender, public UnitNodeObserver, public BulletNodeObserver, public MapUILayerObserver
+class GameRender : public UnderWorld::Core::AbstractRender, public UnitNodeObserver, public BulletNodeObserver, public MapUILayerObserver, public VictoryLayerObserver
 {
 public:
-    GameRender(Scene* scene, MapLayer* mapLayer, const std::string& opponentsAccount);
+    GameRender(Scene* scene, int mapId, MapLayer* mapLayer, const std::string& opponentsAccount);
     virtual ~GameRender();
     void registerObserver(GameRenderObserver *observer);
     
@@ -56,6 +58,10 @@ protected:
     virtual ssize_t onMapUILayerCampsCount() override;
     virtual const UnderWorld::Core::Camp* onMapUILayerCampAtIndex(ssize_t idx) override;
     
+    // VictoryLayerObserver
+    virtual void onVictoryLayerClosed(Layer* pSender) override;
+    virtual void onVictoryLayerContinued(Layer* pSender) override;
+    
 private:
     void updateUnits(const UnderWorld::Core::Game* game, int index);
     void updateBullets(const UnderWorld::Core::Game* game);
@@ -74,6 +80,8 @@ private:
     
 private:
     GameRenderObserver *_observer;
+    Scene* _scene;
+    int _mapId;
     MapLayer* _mapLayer;
     MapUILayer* _mapUILayer;
     const UnderWorld::Core::Game* _game;

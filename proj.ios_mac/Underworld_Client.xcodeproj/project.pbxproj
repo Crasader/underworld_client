@@ -171,6 +171,7 @@
 		A1F5BF9B1C1FC724007C08CB /* QuestData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BF991C1FC724007C08CB /* QuestData.cpp */; };
 		A1F5BF9F1C1FD508007C08CB /* AchievementLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BF9D1C1FD508007C08CB /* AchievementLocalData.cpp */; };
 		A1F5BFA21C1FD519007C08CB /* AchievementData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BFA01C1FD519007C08CB /* AchievementData.cpp */; };
+		A1F5BFA81C1FDFBE007C08CB /* ResourceNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BFA61C1FDFBE007C08CB /* ResourceNode.cpp */; };
 		A1F885471C10409A0035B4C5 /* UserManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F885451C10409A0035B4C5 /* UserManager.cpp */; };
 		A1F8854D1C1044500035B4C5 /* UserData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F8854B1C1044500035B4C5 /* UserData.cpp */; };
 		A1F885501C1044640035B4C5 /* UserSimpleData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F8854E1C1044640035B4C5 /* UserSimpleData.cpp */; };
@@ -511,6 +512,8 @@
 		A1F5BF9E1C1FD508007C08CB /* AchievementLocalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementLocalData.h; sourceTree = "<group>"; };
 		A1F5BFA01C1FD519007C08CB /* AchievementData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AchievementData.cpp; sourceTree = "<group>"; };
 		A1F5BFA11C1FD519007C08CB /* AchievementData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementData.h; sourceTree = "<group>"; };
+		A1F5BFA61C1FDFBE007C08CB /* ResourceNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResourceNode.cpp; sourceTree = "<group>"; };
+		A1F5BFA71C1FDFBE007C08CB /* ResourceNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceNode.h; sourceTree = "<group>"; };
 		A1F885451C10409A0035B4C5 /* UserManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserManager.cpp; sourceTree = "<group>"; };
 		A1F885461C10409A0035B4C5 /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserManager.h; sourceTree = "<group>"; };
 		A1F8854B1C1044500035B4C5 /* UserData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserData.cpp; sourceTree = "<group>"; };
@@ -981,11 +984,11 @@
 		A1720E701BCCE08E00217E98 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				A103F45D1BE38112007F9A83 /* GameRender.cpp */,
-				A103F45E1BE38112007F9A83 /* GameRender.h */,
 				A1720E751BCCE0F000217E98 /* Action */,
 				A1720EBF1BCD310100217E98 /* Layer */,
 				A1720E711BCCE0A200217E98 /* Node */,
+				A103F45D1BE38112007F9A83 /* GameRender.cpp */,
+				A103F45E1BE38112007F9A83 /* GameRender.h */,
 				CBA296411BE37FB1006BE7A0 /* GameScheduler.cpp */,
 				CBA296421BE37FB1006BE7A0 /* GameScheduler.h */,
 			);
@@ -1001,6 +1004,8 @@
 				A1720E731BCCE0A200217E98 /* FixedLabelAtlas.h */,
 				A1D45C481BEB3B1400D1E921 /* ResourceButton.cpp */,
 				A1D45C491BEB3B1400D1E921 /* ResourceButton.h */,
+				A1F5BFA61C1FDFBE007C08CB /* ResourceNode.cpp */,
+				A1F5BFA71C1FDFBE007C08CB /* ResourceNode.h */,
 				A1720E951BCCE41A00217E98 /* ScrollBar.cpp */,
 				A1720E961BCCE41A00217E98 /* ScrollBar.h */,
 				A103F4561BE37E2A007F9A83 /* Unit */,
@@ -1520,6 +1525,7 @@
 				A18524E61C1AF68400BE261D /* MapUIUnitCell.cpp in Sources */,
 				308B84691BE3856F00377802 /* AIBrain.cpp in Sources */,
 				A1720E7B1BCCE0F000217E98 /* NumberJump.cpp in Sources */,
+				A1F5BFA81C1FDFBE007C08CB /* ResourceNode.cpp in Sources */,
 				A1E830591C1E75B200FE01B8 /* ChatCell.cpp in Sources */,
 				A1D745C31C1AB7C40020BC1C /* VictoryLayer.cpp in Sources */,
 				300F25331BFC67550080765C /* FeatureType.cpp in Sources */,
@@ -1628,6 +1634,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_FILE32API,
 					CC_TARGET_OS_IPHONE,
+					"COCOS2D_DEBUG=1",
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;

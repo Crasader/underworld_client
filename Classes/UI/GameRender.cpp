@@ -13,15 +13,20 @@
 #include "BulletNode.h"
 #include "Map.h"
 #include "Camp.h"
+#include "VictoryLayer.h"
+#include "DefeatLayer.h"
 
+using namespace std;
 using namespace UnderWorld::Core;
 
 static const string tickSelectorKey("tickSelectorKey");
 static const int waveTime(20);
 static const int battleTotalTime(600);
 
-GameRender::GameRender(Scene* scene, MapLayer* mapLayer, const std::string& opponentsAccount)
+GameRender::GameRender(Scene* scene, int mapId, MapLayer* mapLayer, const string& opponentsAccount)
 :_observer(nullptr)
+,_scene(scene)
+,_mapId(mapId)
 ,_mapLayer(mapLayer)
 ,_mapUILayer(nullptr)
 ,_game(nullptr)
@@ -41,6 +46,11 @@ GameRender::~GameRender()
     stopAllTimers();
     removeAllUnits();
     removeAllBullets();
+}
+
+void GameRender::registerObserver(GameRenderObserver *observer)
+{
+    _observer = observer;
 }
 
 void GameRender::init(const Game* game, Commander* commander)
@@ -81,21 +91,24 @@ void GameRender::render(const Game* game)
 {
     assert(game = _game);
     
-    _isGameOver = _game->isGameOver();
-    
-    if (_isGameOver) {
-        onGameOver();
-    } else {
-        // update units
-        for (int i = 0; i < game->getWorld()->getFactionCount(); ++i) {
-            updateUnits(game, i);
+    // make sure "onGameOver()" is callded only once
+    if (!_isGameOver) {
+        _isGameOver = _game->isGameOver();
+        
+        if (_isGameOver) {
+            onGameOver();
+        } else {
+            // update units
+            for (int i = 0; i < game->getWorld()->getFactionCount(); ++i) {
+                updateUnits(game, i);
+            }
+            
+            // update bullets
+            updateBullets(game);
+            
+            // update ui layer
+            updateUILayer();
         }
-        
-        // update bullets
-        updateBullets(game);
-        
-        // update ui layer
-        updateUILayer();
     }
 }
 
@@ -104,7 +117,7 @@ void GameRender::updateUnits(const Game* game, int index)
     const World* world = game->getWorld();
 
     const Faction* f = world->getFaction(index);
-    const std::vector<Unit*>& units = f->getAllUnits();
+    const vector<Unit*>& units = f->getAllUnits();
     for (int i = 0; i < units.size(); ++i) {
         const Unit* unit = units.at(i);
         const Coordinate& pos = unit->getCenterPos();
@@ -270,6 +283,11 @@ void GameRender::onMapUILayerUnitSelected(MapUIUnitNode* node)
 void GameRender::onMapUILayerClickedPauseButton()
 {
     _paused = !_paused;
+    if (_paused) {
+        pauseGame();
+    } else {
+        resumeGame();
+    }
 }
 
 ssize_t GameRender::onMapUILayerCampsCount()
@@ -285,6 +303,21 @@ const UnderWorld::Core::Camp* GameRender::onMapUILayerCampAtIndex(ssize_t idx)
     const int factionIndex = world->getThisFactionIndex();
     const Camp* camp = world->getCamp(factionIndex, (int)idx);
     return camp;
+}
+
+#pragma mark - VictoryLayerObserver
+void GameRender::onVictoryLayerClosed(Layer* pSender)
+{
+    
+}
+
+void GameRender::onVictoryLayerContinued(Layer* pSender)
+{
+    // remove layer first
+    pSender->removeFromParent();
+    if (_observer) {
+        _observer->onGameRenderRestart();
+    }
 }
 
 void GameRender::removeAllBullets()
@@ -405,6 +438,19 @@ void GameRender::onGameOver()
             } else {
                 node->onWin();
             }
+        }
+    }
+    
+    // pop layer
+    if (_scene) {
+        if (win) {
+            VictoryLayer* layer = VictoryLayer::create(_mapId);
+            layer->registerObserver(this);
+            _scene->addChild(layer);
+        } else {
+            VictoryLayer* layer = VictoryLayer::create(_mapId);
+            layer->registerObserver(this);
+            _scene->addChild(layer);
         }
     }
 }

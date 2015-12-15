@@ -69,7 +69,7 @@ MapUILayer::MapUILayer()
 ,_sendTroopMenuItem(nullptr)
 ,_pauseMenuItem(nullptr)
 {
-    static const Size& unitNodeSize = MapUIUnitNode::create(nullptr, 0)->getContentSize();
+    static const Size unitNodeSize = MapUIUnitNode::create(nullptr, 0)->getContentSize();
     _cellSize.height = unitNodeSize.height + unitNodeOffsetY * 2;
     _cellSize.width = unitNodeSize.width + unitNodeOffsetX;
     

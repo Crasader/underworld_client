@@ -18,6 +18,8 @@ class VictoryLayerObserver
 {
 public:
     virtual ~VictoryLayerObserver() {}
+    virtual void onVictoryLayerClosed(Layer* pSender) = 0;
+    virtual void onVictoryLayerContinued(Layer* pSender) = 0;
 };
 
 class VictoryLayer : public LayerColor

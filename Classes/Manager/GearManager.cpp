@@ -9,6 +9,7 @@
 #include "GearManager.h"
 #include "cocostudio/CocoStudio.h"
 #include "Utils.h"
+#include "GearData.h"
 
 using namespace std;
 using namespace cocostudio;

@@ -55,6 +55,7 @@ typedef enum
 {
     kResourceType_Gem = 100,
     kResourceType_Gold = 101,
+    kResourceType_Jade = 102,
     
     kResourceType_MAX,          // Used to network parsing
 }ResourceType;
