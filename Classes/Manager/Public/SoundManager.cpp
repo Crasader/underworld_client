@@ -206,3 +206,13 @@ void SoundManager::playMessageHintSound()
 {
     playSound("sounds/effect/map_star_01.mp3");
 }
+
+void SoundManager::playButtonSelectUnitSound()
+{
+    playSound("sounds/button_army.mp3");
+}
+
+void SoundManager::playButtonGoOnSound()
+{
+    playSound("sounds/button_goon.mp3");
+}

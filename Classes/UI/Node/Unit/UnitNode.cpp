@@ -18,6 +18,7 @@
 #include "DataManager.h"
 #include "UAConfigData.h"
 #include "URConfigData.h"
+#include "SoundManager.h"
 
 using namespace std;
 using namespace UnderWorld::Core;
@@ -304,6 +305,14 @@ void UnitNode::removeBuf()
     if (_buf) {
         _buf->removeFromParent();
         _buf = nullptr;
+    }
+}
+
+void UnitNode::onHurt()
+{
+    const string file = _configData->getHurtSound();
+    if (file.length() > 0) {
+        SoundManager::getInstance()->playSound(file);
     }
 }
 
@@ -661,10 +670,18 @@ void UnitNode::updateActionNode(const Skill* skill, const string& file, int curr
         }
         
         if (isDead) {
+            const string file = _configData->getDieSound();
+            if (file.length() > 0) {
+                SoundManager::getInstance()->playSound(file);
+            }
             // TODO: remove irregular code
             setLocalZOrder(-1000);
         } else {
             if (kSkillClass_Attack == skillClass) {
+                const string file = _configData->getAttackSound();
+                if (file.length() > 0) {
+                    SoundManager::getInstance()->playSound(file);
+                }
                 if (_currentAction) {
                     // if it is footman
                     if (_configData->isShortRange()) {

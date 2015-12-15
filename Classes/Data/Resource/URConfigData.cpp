@@ -111,6 +111,24 @@ URConfigData::URConfigData(tinyxml2::XMLElement *xmlElement)
                 _critHurtEffect = data + suffix;
             }
         }
+        {
+            const char *data = xmlElement->Attribute("attck_sound");
+            if (data && strlen(data) > 0) {
+                _attckSound = string("sounds/effect/") + data + ".mp3";
+            }
+        }
+        {
+            const char *data = xmlElement->Attribute("hurt_sound");
+            if (data && strlen(data) > 0) {
+                _hurtSound = string("sounds/effect/") + data + ".mp3";
+            }
+        }
+        {
+            const char *data = xmlElement->Attribute("die_sound");
+            if (data && strlen(data) > 0) {
+                _dieSound = string("sounds/effect/") + data + ".mp3";
+            }
+        }
     }
 }
 
@@ -192,4 +210,19 @@ const std::string& URConfigData::getHurtEffect() const
 const std::string& URConfigData::getCritHurtEffect() const
 {
     return _critHurtEffect;
+}
+
+const std::string& URConfigData::getAttackSound() const
+{
+    return _attckSound;
+}
+
+const std::string& URConfigData::getHurtSound() const
+{
+    return _hurtSound;
+}
+
+const std::string& URConfigData::getDieSound() const
+{
+    return _dieSound;
 }

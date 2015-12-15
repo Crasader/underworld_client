@@ -38,6 +38,9 @@ public:
     const std::string& getSwordEffect() const;
     const std::string& getHurtEffect() const;
     const std::string& getCritHurtEffect() const;
+    const std::string& getAttackSound() const;
+    const std::string& getHurtSound() const;
+    const std::string& getDieSound() const;
     
 private:
     std::string _name;
@@ -55,6 +58,9 @@ private:
     std::string _swordEffect;
     std::string _hurtEffect;
     std::string _critHurtEffect;
+    std::string _attckSound;
+    std::string _hurtSound;
+    std::string _dieSound;
 };
 
 

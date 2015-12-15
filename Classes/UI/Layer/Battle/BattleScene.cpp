@@ -9,6 +9,7 @@
 #include "BattleScene.h"
 #include "GameSettings.h"
 #include "MapLayer.h"
+#include "SoundManager.h"
 
 USING_NS_CC;
 
@@ -56,6 +57,12 @@ void BattleScene::onEnter()
 {
     Scene::onEnter();
     start(_mapId);
+}
+
+void BattleScene::onExit()
+{
+    SoundManager::getInstance()->stopBackgroundMusic();
+    Scene::onExit();
 }
 
 #pragma mark - GameRenderObserver

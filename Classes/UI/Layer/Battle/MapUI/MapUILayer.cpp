@@ -459,6 +459,8 @@ void MapUILayer::onUnitTouched(MapUIUnitNode* node)
         _tableView->updateCellAtIndex(newIdx);
     }
     
+    SoundManager::getInstance()->playButtonSelectUnitSound();
+    
     if (_observer) {
         _observer->onMapUILayerUnitSelected(node);
     }

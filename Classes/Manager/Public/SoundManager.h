@@ -24,8 +24,10 @@ public:
     void setSoundOn(bool on);
     bool isSoundOn();
     void playBackgroundMusic(const std::string& url, bool loop = true);
+    void stopBackgroundMusic();
     void resumeBackgroundMusic();
     void pauseBackgroundMusic();
+    unsigned int playSound(const std::string& url, const bool loop = false);
     void stopSound(const unsigned int);
     
     // special
@@ -33,6 +35,8 @@ public:
     void playButtonCancelSound();
     void playButtonInvalidSound();
     void playMessageHintSound();
+    void playButtonSelectUnitSound();
+    void playButtonGoOnSound();
     
 protected:
     SoundManager();
@@ -41,10 +45,8 @@ protected:
     
 private:
     void preloadBackgroundMusic(const std::string& url);
-    void stopBackgroundMusic();
     
     void preloadSound(const std::string& url);
-    unsigned int playSound(const std::string& url, const bool loop = false);
     void stopAllSounds();
     
 private:

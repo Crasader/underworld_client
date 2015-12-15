@@ -186,7 +186,7 @@ bool VictoryLayer::init(int levelId)
                             if (button) {
                                 button->setPressedActionEnabled(true);
                                 button->addClickEventListener([this](Ref *pSender){
-                                    SoundManager::getInstance()->playButtonCancelSound();
+                                    SoundManager::getInstance()->playButtonGoOnSound();
                                     if (_observer) {
                                         _observer->onVictoryLayerContinued(this);
                                     }

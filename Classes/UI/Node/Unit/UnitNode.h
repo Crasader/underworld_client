@@ -48,6 +48,7 @@ public:
     void addSwordEffect();
     void addBuf();
     void removeBuf();
+    void onHurt();
     void onWin();
     void onLose();
     

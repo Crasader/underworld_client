@@ -8,6 +8,7 @@
 
 #include "GameRender.h"
 #include "Game.h"
+#include "SoundManager.h"
 #include "MapLayer.h"
 #include "UnitNode.h"
 #include "BulletNode.h"
@@ -85,6 +86,8 @@ void GameRender::init(const Game* game, Commander* commander)
     // tick
     Scheduler* scheduler = Director::getInstance()->getScheduler();
     scheduler->schedule(CC_CALLBACK_1(GameRender::tick, this), this, 1.0f, false, tickSelectorKey);
+    SoundManager::getInstance()->playBackgroundMusic(StringUtils::format("sounds/music/music_battle.mp3"));
+    SoundManager::getInstance()->playSound("sounds/effect/sound_10sec.mp3");
 }
 
 void GameRender::render(const Game* game)
@@ -219,6 +222,7 @@ void GameRender::addCritEffect(const Unit* target, const string& trigger)
         if (_allUnits.find(key) != _allUnits.end()) {
             UnitNode* node = _allUnits.at(key);
             if (node) {
+                node->onHurt();
                 node->addCritEffect(trigger);
             }
         }
@@ -453,4 +457,13 @@ void GameRender::onGameOver()
             _scene->addChild(layer);
         }
     }
+    
+    // audio effect
+    string audioFile;
+    if (win) {
+        audioFile = "sound_victory";
+    } else {
+        audioFile = "sound_failed";
+    }
+    SoundManager::getInstance()->playSound("sounds/effect/" + audioFile + ".mp3");
 }

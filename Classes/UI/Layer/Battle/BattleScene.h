@@ -28,6 +28,7 @@ private:
     BattleScene();
     bool init(int mapId);
     virtual void onEnter() override;
+    virtual void onExit() override;
     
     // GameRenderObserver
     virtual void onGameRenderRestart() override;
