@@ -253,12 +253,6 @@ void UnitNode::update()
     }
 }
 
-void UnitNode::addCritEffect(const string& triggerName)
-{
-    const string& file = DataManager::getInstance()->getURConfigData(triggerName)->getHurtEffect();
-    addEffect(file);
-}
-
 void UnitNode::addBlockEffect()
 {
     Node* effect = addEffect("effect-Block.csb");
@@ -308,11 +302,16 @@ void UnitNode::removeBuf()
     }
 }
 
-void UnitNode::onHurt()
+void UnitNode::onHurt(const string& trigger)
 {
-    const string file = _configData->getHurtSound();
-    if (file.length() > 0) {
-        SoundManager::getInstance()->playSound(file);
+    const URConfigData* data = DataManager::getInstance()->getURConfigData(trigger);
+    if (data) {
+        const string file = data->getHurtSound();
+        if (file.length() > 0) {
+            SoundManager::getInstance()->playSound(file);
+        }
+        
+        addEffect(data->getHurtEffect());
     }
 }
 
@@ -689,18 +688,17 @@ void UnitNode::updateActionNode(const Skill* skill, const string& file, int curr
             setLocalZOrder(-1000);
         } else {
             if (kSkillClass_Attack == skillClass) {
-                const string file = _configData->getAttackSound();
-                if (file.length() > 0) {
-                    SoundManager::getInstance()->playSound(file);
-                }
                 if (_currentAction) {
                     // if it is footman
                     if (_configData->isShortRange()) {
                         _currentAction->setFrameEventCallFunc([this](cocostudio::timeline::Frame* frame) {
+                            playAttackSound();
                             if (_observer) {
                                 _observer->onUnitNodeHurtTheTarget(this);
                             }
                         });
+                    } else {
+                        playAttackSound();
                     }
                 }
             }
@@ -793,4 +791,12 @@ Node* UnitNode::addEffect(const string& file)
     }
     
     return nullptr;
+}
+
+void UnitNode::playAttackSound()
+{
+    const string file = _configData->getAttackSound();
+    if (file.length() > 0) {
+        SoundManager::getInstance()->playSound(file);
+    }
 }

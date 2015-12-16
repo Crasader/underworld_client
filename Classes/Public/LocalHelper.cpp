@@ -82,7 +82,7 @@ void LocalHelper::init() {
     local = kLocalType_Chinese;
     
     parseStrings(LOCAL_KEY_BASE);
-    parseStrings(getLocalKey(local));
+//    parseStrings(getLocalKey(local));
 }
 
 string LocalHelper::getLocalizedFilePath(const std::string &filePath) {

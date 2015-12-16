@@ -45,11 +45,6 @@ private:
     //------------------------------ NETWORKING BEGIN ------------------------------//
     void parseUserInfo(const rapidjson::Document& jsonDict);
     //------------------------------ NETWORKING END ------------------------------//
-    
-    //------------------------------ DEBUG BEGIN ------------------------------//
-    void parseDebugUserInfo(const rapidjson::Document& jsonDict);
-    //------------------------------ DEBUG END ------------------------------//
-    
 private:
     bool _isNewUser;
     bool _isGuest;

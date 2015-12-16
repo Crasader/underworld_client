@@ -64,7 +64,8 @@ bool MainLayer::init()
     {
         const Size& winSize = Director::getInstance()->getWinSize();
 #if true
-        _mainNode = Sprite::create("");
+        _mainNode = Sprite::create("GameImages/world_bg/world_1.png");
+        _mainNode->setAnchorPoint(Point::ZERO);
 #else
         static const string CsbFile("zhuchangjing.csb");
         _mainNode = CSLoader::createNode(CsbFile);
@@ -76,13 +77,14 @@ bool MainLayer::init()
         const Size& nodeSize = _mainNode->getContentSize();
         _touchEnabled = (nodeSize.height > winSize.height) ? true : false;
         _scrollView = ui::ScrollView::create();
-        _scrollView->setDirection(cocos2d::ui::ScrollView::Direction::VERTICAL);
+        _scrollView->setDirection(cocos2d::ui::ScrollView::Direction::BOTH);
         _scrollView->setTouchEnabled(_touchEnabled);
         _scrollView->setBounceEnabled(false);
         _scrollView->setContentSize(winSize);
         _scrollView->setPosition(Point::ZERO);
-        _scrollView->setInnerContainerSize(Size(winSize.width, _touchEnabled ? nodeSize.height : winSize.height));
+        _scrollView->setInnerContainerSize(_touchEnabled ? nodeSize : winSize);
         _scrollView->setSwallowTouches(!_touchEnabled);
+        _scrollView->setScrollBarEnabled(false);
         _scrollView->addChild(_mainNode);
         addChild(_scrollView);
         
@@ -100,6 +102,16 @@ bool MainLayer::init()
     }
     
     return false;
+}
+
+void MainLayer::onEnter()
+{
+    LayerColor::onEnter();
+    
+    if (_scrollView)
+    {
+        _scrollView->jumpToBottom();
+    }
 }
 
 bool MainLayer::onTouchBegan(Touch *pTouch, Event *pEvent)

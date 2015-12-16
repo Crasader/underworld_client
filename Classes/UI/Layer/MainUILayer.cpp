@@ -12,6 +12,8 @@
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "SoundManager.h"
+#include "ResourceNode.h"
+#include "BattleScene.h"
 
 using namespace std;
 using namespace ui;
@@ -38,6 +40,15 @@ MainUILayer::MainUILayer()
 ,_boltLabel(nullptr)
 ,_coinLabel(nullptr)
 ,_gemLabel(nullptr)
+,_pvpButton(nullptr)
+,_bagButton(nullptr)
+,_questButton(nullptr)
+,_optionButton(nullptr)
+,_guildButton(nullptr)
+,_armyButton(nullptr)
+,_jadeResourceNode(nullptr)
+,_goldResourceNode(nullptr)
+,_gemResourceNode(nullptr)
 {
     
 }
@@ -61,13 +72,11 @@ bool MainUILayer::init()
         
         // 1. left top
         {
-            static const string csbFile("guanggaomianban.csb");
+            static const string csbFile("UI_CharInfo.csb");
             Node *mainNode = CSLoader::createNode(csbFile);
             mainNode->setPosition(Point(margin, winSize.height - margin));
             addChild(mainNode);
-            cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(csbFile);
-            mainNode->runAction(action);
-            action->gotoFrameAndPlay(0, false);
+            
             Node* root = mainNode->getChildByTag(7);
             const Vector<Node*>& children = root->getChildren();
             for (int i = 0; i < children.size(); ++i)
@@ -77,38 +86,37 @@ bool MainUILayer::init()
                     const int tag = child->getTag();
                     if (tag > 0) {
                         switch (tag) {
-                            case 101:
+                            case 15:
                             {
                                 Button* button = dynamic_cast<Button*>(child);
                                 if (button) {
-                                    button->setPressedActionEnabled(true);
                                     button->addClickEventListener([this](Ref *pSender){
-                                        SoundManager::getInstance()->playButtonCancelSound();
+                                        SoundManager::getInstance()->playButtonSound();
                                         // TODO:
                                     });
                                 }
                                 _iconButton = button;
                             }
                                 break;
-                            case 100:
+                            case 8:
                             {
-                                Label* label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
+                                Label* label = CocosUtils::createLabel("123", DEFAULT_FONT_SIZE);
                                 child->addChild(label);
                                 _nameLabel = label;
                             }
                                 break;
-                            case 97:
+                            case 11:
                             {
-                                LabelAtlas* label = CocosUtils::create10x25Number("");
+                                LabelAtlas* label = CocosUtils::create10x25Number("&'.56");
                                 child->addChild(label);
                                 _levelLabel = label;
                             }
                                 break;
-                            case 103:
+                            case 10:
                             {
                                 LoadingBar* bar = dynamic_cast<LoadingBar*>(child);
                                 bar->setScale9Enabled(true);
-                                bar->setCapInsets(Rect(3, 3, 341, 30));
+                                bar->setCapInsets(Rect(1, 1, 176, 2));
                                 _expProgressBar = bar;
                             }
                                 break;
@@ -122,14 +130,12 @@ bool MainUILayer::init()
         
         // 2. left
         {
-            static const string csbFile("guanggaomianban.csb");
+            static const string csbFile("UI_ChatIcon.csb");
             Node *mainNode = CSLoader::createNode(csbFile);
-            mainNode->setPosition(Point(margin, winSize.height / 2));
+            mainNode->setPosition(Point(0, winSize.height / 2));
             addChild(mainNode);
-            cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(csbFile);
-            mainNode->runAction(action);
-            action->gotoFrameAndPlay(0, false);
-            Node* root = mainNode->getChildByTag(7);
+            
+            Node* root = mainNode;
             const Vector<Node*>& children = root->getChildren();
             for (int i = 0; i < children.size(); ++i)
             {
@@ -138,13 +144,13 @@ bool MainUILayer::init()
                     const int tag = child->getTag();
                     if (tag > 0) {
                         switch (tag) {
-                            case 101:
+                            case 20:
                             {
                                 Button* button = dynamic_cast<Button*>(child);
                                 if (button) {
                                     button->setPressedActionEnabled(true);
                                     button->addClickEventListener([this](Ref *pSender){
-                                        SoundManager::getInstance()->playButtonCancelSound();
+                                        SoundManager::getInstance()->playButtonSound();
                                         // TODO:
                                     });
                                 }
@@ -160,14 +166,12 @@ bool MainUILayer::init()
         
         // 3. left bottom
         {
-            static const string csbFile("guanggaomianban.csb");
+            static const string csbFile("UI_PVPICON.csb");
             Node *mainNode = CSLoader::createNode(csbFile);
             mainNode->setPosition(Point(margin, margin));
             addChild(mainNode);
-            cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(csbFile);
-            mainNode->runAction(action);
-            action->gotoFrameAndPlay(0, false);
-            Node* root = mainNode->getChildByTag(7);
+            
+            Node* root = mainNode->getChildByTag(23);
             const Vector<Node*>& children = root->getChildren();
             for (int i = 0; i < children.size(); ++i)
             {
@@ -176,16 +180,18 @@ bool MainUILayer::init()
                     const int tag = child->getTag();
                     if (tag > 0) {
                         switch (tag) {
-                            case 101:
+                            case 24:
                             {
                                 Button* button = dynamic_cast<Button*>(child);
                                 if (button) {
-                                    button->setPressedActionEnabled(true);
+                                    updateButtonTextures(button, 25, "icon_pvp_1", "icon_pvp_2");
                                     button->addClickEventListener([this](Ref *pSender){
-                                        SoundManager::getInstance()->playButtonCancelSound();
-                                        // TODO:
+                                        SoundManager::getInstance()->playButtonSound();
+                                        CocosUtils::replaceScene(BattleScene::create(1));
                                     });
                                 }
+                                
+                                _pvpButton = button;
                             }
                                 break;
                             default:
@@ -198,14 +204,36 @@ bool MainUILayer::init()
         
         // 4. right top
         {
-            static const string csbFile("guanggaomianban.csb");
+            ResourceNode* node = ResourceNode::create(kResourceType_Gem, 100);
+            const Size& size = node->getContentSize();
+            static float offsetX(20);
+            static float offsetY(20);
+            const float x = winSize.width - offsetX - size.width / 2;
+            const float y = winSize.height - offsetY - size.height / 2;
+            
+            node->setPosition(Point(x, y));
+            addChild(node);
+            _gemResourceNode = node;
+            
+            node = ResourceNode::create(kResourceType_Gold, 100);
+            node->setPosition(Point(x - (offsetX + size.width), y));
+            addChild(node);
+            _goldResourceNode = node;
+            
+            node = ResourceNode::create(kResourceType_Jade, 100);
+            node->setPosition(Point(x - (offsetX + size.width) * 2, y));
+            addChild(node);
+            _jadeResourceNode = node;
+        }
+        
+        // 5. right bottom
+        {
+            static const string csbFile("UI_FunctionIcon.csb");
             Node *mainNode = CSLoader::createNode(csbFile);
-            mainNode->setPosition(Point(winSize.width - margin, winSize.height - margin));
+            mainNode->setPosition(Point(winSize.width - margin, margin));
             addChild(mainNode);
-            cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(csbFile);
-            mainNode->runAction(action);
-            action->gotoFrameAndPlay(0, false);
-            Node* root = mainNode->getChildByTag(7);
+            
+            Node* root = mainNode->getChildByTag(21);
             const Vector<Node*>& children = root->getChildren();
             for (int i = 0; i < children.size(); ++i)
             {
@@ -214,28 +242,73 @@ bool MainUILayer::init()
                     const int tag = child->getTag();
                     if (tag > 0) {
                         switch (tag) {
-                            case 101:
+                            case 22:
                             {
-                                LabelAtlas* label = CocosUtils::create12x30Number(StringUtils::format("%d", 1));
-                                label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
-                                child->addChild(label);
-                                _boltLabel = label;
+                                Button* button = dynamic_cast<Button*>(child);
+                                if (button) {
+                                    updateButtonTextures(button, 23, "icon_renwu_1", "icon_renwu_2");
+                                    button->addClickEventListener([this](Ref *pSender){
+                                        SoundManager::getInstance()->playButtonSound();
+                                        // TODO:
+                                    });
+                                }
+                                
+                                _questButton = button;
                             }
                                 break;
                             case 100:
                             {
-                                LabelAtlas* label = CocosUtils::create12x30Number(StringUtils::format("%d", 1));
-                                label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
-                                child->addChild(label);
-                                _coinLabel = label;
+                                Button* button = dynamic_cast<Button*>(child);
+                                if (button) {
+                                    button->addClickEventListener([this](Ref *pSender){
+                                        SoundManager::getInstance()->playButtonSound();
+                                        // TODO:
+                                    });
+                                }
                             }
                                 break;
                             case 97:
                             {
-                                LabelAtlas* label = CocosUtils::create12x30Number(StringUtils::format("%d", 1));
-                                label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
-                                child->addChild(label);
-                                _gemLabel = label;
+                                Button* button = dynamic_cast<Button*>(child);
+                                if (button) {
+                                    button->addClickEventListener([this](Ref *pSender){
+                                        SoundManager::getInstance()->playButtonSound();
+                                        // TODO:
+                                    });
+                                }
+                            }
+                                break;
+                            case 103:
+                            {
+                                Button* button = dynamic_cast<Button*>(child);
+                                if (button) {
+                                    button->addClickEventListener([this](Ref *pSender){
+                                        SoundManager::getInstance()->playButtonSound();
+                                        // TODO:
+                                    });
+                                }
+                            }
+                                break;
+                            case 104:
+                            {
+                                Button* button = dynamic_cast<Button*>(child);
+                                if (button) {
+                                    button->addClickEventListener([this](Ref *pSender){
+                                        SoundManager::getInstance()->playButtonSound();
+                                        // TODO:
+                                    });
+                                }
+                            }
+                                break;
+                            case 105:
+                            {
+                                Button* button = dynamic_cast<Button*>(child);
+                                if (button) {
+                                    button->addClickEventListener([this](Ref *pSender){
+                                        SoundManager::getInstance()->playButtonSound();
+                                        // TODO:
+                                    });
+                                }
                             }
                                 break;
                             default:
@@ -246,103 +319,8 @@ bool MainUILayer::init()
             }
         }
         
-        // 5. right bottom
-        {
-            static const string csbFile("guanggaomianban.csb");
-            Node *mainNode = CSLoader::createNode(csbFile);
-            mainNode->setPosition(Point(winSize.width - margin, margin));
-            addChild(mainNode);
-            cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(csbFile);
-            mainNode->runAction(action);
-            action->gotoFrameAndPlay(0, false);
-            Node* root = mainNode->getChildByTag(7);
-            const Vector<Node*>& children = root->getChildren();
-            for (int i = 0; i < children.size(); ++i)
-            {
-                Node* child = children.at(i);
-                if (child) {
-                    const int tag = child->getTag();
-                    if (tag > 0) {
-                        switch (tag) {
-                            case 101:
-                            {
-                                Button* button = dynamic_cast<Button*>(child);
-                                if (button) {
-                                    button->setPressedActionEnabled(true);
-                                    button->addClickEventListener([this](Ref *pSender){
-                                        SoundManager::getInstance()->playButtonCancelSound();
-                                        // TODO:
-                                    });
-                                }
-                            }
-                                break;
-                            case 100:
-                            {
-                                Button* button = dynamic_cast<Button*>(child);
-                                if (button) {
-                                    button->setPressedActionEnabled(true);
-                                    button->addClickEventListener([this](Ref *pSender){
-                                        SoundManager::getInstance()->playButtonCancelSound();
-                                        // TODO:
-                                    });
-                                }
-                            }
-                                break;
-                            case 97:
-                            {
-                                Button* button = dynamic_cast<Button*>(child);
-                                if (button) {
-                                    button->setPressedActionEnabled(true);
-                                    button->addClickEventListener([this](Ref *pSender){
-                                        SoundManager::getInstance()->playButtonCancelSound();
-                                        // TODO:
-                                    });
-                                }
-                            }
-                                break;
-                            case 103:
-                            {
-                                Button* button = dynamic_cast<Button*>(child);
-                                if (button) {
-                                    button->setPressedActionEnabled(true);
-                                    button->addClickEventListener([this](Ref *pSender){
-                                        SoundManager::getInstance()->playButtonCancelSound();
-                                        // TODO:
-                                    });
-                                }
-                            }
-                                break;
-                            case 104:
-                            {
-                                Button* button = dynamic_cast<Button*>(child);
-                                if (button) {
-                                    button->setPressedActionEnabled(true);
-                                    button->addClickEventListener([this](Ref *pSender){
-                                        SoundManager::getInstance()->playButtonCancelSound();
-                                        // TODO:
-                                    });
-                                }
-                            }
-                                break;
-                            case 105:
-                            {
-                                Button* button = dynamic_cast<Button*>(child);
-                                if (button) {
-                                    button->setPressedActionEnabled(true);
-                                    button->addClickEventListener([this](Ref *pSender){
-                                        SoundManager::getInstance()->playButtonCancelSound();
-                                        // TODO:
-                                    });
-                                }
-                            }
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-            }
-        }
+//        updateIcon();
+        updateResources();
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -362,6 +340,53 @@ bool MainUILayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 }
 
 void MainUILayer::onTouchEnded(Touch *touch, Event *unused_event)
+{
+    
+}
+
+void MainUILayer::updateButtonTextures(Button* button, int childTag, const string& normal, const string& touched)
+{
+    Node* node = button->getChildByTag(childTag);
+    if (node) {
+        static const string prefix("GameImages/icons/");
+        static const string suffix(".png");
+        static const int textureTag(1000);
+        
+        const string normalFile = prefix + normal + suffix;
+        const string touchedFile = prefix + touched + suffix;
+        
+        Sprite* s = Sprite::create(normalFile);
+        s->setTag(textureTag);
+        node->addChild(s);
+        
+        button->addTouchEventListener([=](Ref *pSender, Widget::TouchEventType type) {
+            if (type == Widget::TouchEventType::BEGAN) {
+                node->removeChildByTag(textureTag);
+                Sprite* s = Sprite::create(touchedFile);
+                s->setTag(textureTag);
+                node->addChild(s);
+            } else if (type == Widget::TouchEventType::CANCELED || type == Widget::TouchEventType::ENDED) {
+                node->removeChildByTag(textureTag);
+                Sprite* s = Sprite::create(normalFile);
+                s->setTag(textureTag);
+                node->addChild(s);
+            }
+        });
+    }
+}
+
+void MainUILayer::setButtonSelected(Button* button)
+{
+    
+}
+
+void MainUILayer::updateIcon()
+{
+    const string file("GameImages/avatars/icon_user.png");
+    _iconButton->loadTextures(file, file);
+}
+
+void MainUILayer::updateResources()
 {
     
 }

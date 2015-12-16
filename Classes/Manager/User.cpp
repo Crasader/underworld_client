@@ -97,8 +97,3 @@ void User::parseUserInfo(const rapidjson::Document& jsonDict)
 {
     
 }
-
-void User::parseDebugUserInfo(const rapidjson::Document& jsonDict)
-{
-    
-}

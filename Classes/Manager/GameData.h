@@ -15,8 +15,6 @@
 
 class IapObject;
 
-typedef std::function<void()> FetchIAPInfoCallback;
-
 class GameData
 {
 public:
@@ -41,7 +39,7 @@ public:
     bool isTransacting() const;
     void beginTransaction();
     void finishTransaction();
-    void fetchIAPInfo(const FetchIAPInfoCallback& success, const FetchIAPInfoCallback& failed, bool showLoadingLayer);
+    void fetchIAPInfo(const httpRequestCallback& success, const httpRequestCallback& failed, bool showLoadingLayer);
     const std::vector<IapObject *>& getIapObjects() const;
     
     // heartbeat

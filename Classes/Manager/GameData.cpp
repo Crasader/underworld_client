@@ -161,7 +161,7 @@ void GameData::finishTransaction()
     _isTransacting = false;
 }
 
-void GameData::fetchIAPInfo(const FetchIAPInfoCallback& success, const FetchIAPInfoCallback& failed, bool showLoadingLayer)
+void GameData::fetchIAPInfo(const httpRequestCallback& success, const httpRequestCallback& failed, bool showLoadingLayer)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     if (showLoadingLayer) {

@@ -222,8 +222,7 @@ void GameRender::hurtUnit(const Unit* target, const string& trigger)
         if (_allUnits.find(key) != _allUnits.end()) {
             UnitNode* node = _allUnits.at(key);
             if (node) {
-                node->onHurt();
-                node->addCritEffect(trigger);
+                node->onHurt(trigger);
             }
         }
     }

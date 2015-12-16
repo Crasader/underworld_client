@@ -45,7 +45,6 @@ public:
     void update();
     
     // effects
-    void addCritEffect(const std::string& triggerName);
     void addBlockEffect();
     void addRecoveryEffect();
     void addSwordEffect();
@@ -53,7 +52,7 @@ public:
     void removeBuf();
     
     // callbacks
-    void onHurt();
+    void onHurt(const std::string& trigger);
     void onWin();
     void onLose();
     
@@ -76,6 +75,7 @@ protected:
     void addShadow();
     void removeShadow();
     Node* addEffect(const std::string& file);
+    void playAttackSound();
     
 private:
     UnitNodeObserver *_observer;

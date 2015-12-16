@@ -158,6 +158,7 @@
 		A1D745C61C1AB9F60020BC1C /* BattleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D745C41C1AB9F60020BC1C /* BattleScene.cpp */; };
 		A1DE80391BD669BB004DEED1 /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1DE80381BD669BA004DEED1 /* CrashReporter.framework */; };
 		A1DF4BEC1C05902C000F2FDA /* DisplayBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1DF4BEA1C05902C000F2FDA /* DisplayBar.cpp */; };
+		A1E7BAE21C2149E800CE2A85 /* Constants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E7BAE01C2149E800CE2A85 /* Constants.cpp */; };
 		A1E830561C1E75A700FE01B8 /* ChatNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E830541C1E75A700FE01B8 /* ChatNode.cpp */; };
 		A1E830591C1E75B200FE01B8 /* ChatCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E830571C1E75B200FE01B8 /* ChatCell.cpp */; };
 		A1E8305C1C1E75BB00FE01B8 /* ChatLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E8305A1C1E75BB00FE01B8 /* ChatLayer.cpp */; };
@@ -486,6 +487,8 @@
 		A1DE80381BD669BA004DEED1 /* CrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CrashReporter.framework; sourceTree = "<group>"; };
 		A1DF4BEA1C05902C000F2FDA /* DisplayBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DisplayBar.cpp; sourceTree = "<group>"; };
 		A1DF4BEB1C05902C000F2FDA /* DisplayBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayBar.h; sourceTree = "<group>"; };
+		A1E7BAE01C2149E800CE2A85 /* Constants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Constants.cpp; sourceTree = "<group>"; };
+		A1E7BAE11C2149E800CE2A85 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		A1E830541C1E75A700FE01B8 /* ChatNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChatNode.cpp; sourceTree = "<group>"; };
 		A1E830551C1E75A700FE01B8 /* ChatNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatNode.h; sourceTree = "<group>"; };
 		A1E830571C1E75B200FE01B8 /* ChatCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChatCell.cpp; sourceTree = "<group>"; };
@@ -1168,6 +1171,8 @@
 				A1720EC71BCD321600217E98 /* CocosGlobal.h */,
 				A1720E6D1BCCDF9100217E98 /* CocosUtils.cpp */,
 				A1720E6E1BCCDF9100217E98 /* CocosUtils.h */,
+				A1E7BAE01C2149E800CE2A85 /* Constants.cpp */,
+				A1E7BAE11C2149E800CE2A85 /* Constants.h */,
 				A1720E911BCCE1D900217E98 /* LocalHelper.cpp */,
 				A1720E921BCCE1D900217E98 /* LocalHelper.h */,
 				A1A4BA471BCE096300175E8A /* Utils.cpp */,
@@ -1478,6 +1483,7 @@
 				307534711BF33ECF0057DCED /* Logger.cpp in Sources */,
 				A1720E971BCCE41A00217E98 /* ScrollBar.cpp in Sources */,
 				A18524D01C1AE42000BE261D /* BagLayer.cpp in Sources */,
+				A1E7BAE21C2149E800CE2A85 /* Constants.cpp in Sources */,
 				309F769A1BE9D7BD00B2791F /* Camp.cpp in Sources */,
 				A1B4AE301C200521005906A6 /* QuestManager.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,

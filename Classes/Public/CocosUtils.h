@@ -37,6 +37,7 @@ namespace CocosUtils
     void jumpNumber(cocos2d::LabelAtlas *label, int toNumer, float duration);
     
     float getFitScreenScale(cocos2d::Node *root);
+    void replaceScene(cocos2d::Scene* scene);
     
     // test
     cocos2d::Sprite* createPureColorSprite(const cocos2d::Size& size, const cocos2d::Color4B& color);

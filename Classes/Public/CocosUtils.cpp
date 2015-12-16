@@ -200,6 +200,27 @@ float CocosUtils::getFitScreenScale(Node *root)
     return ((scaleX < 1.0f || scaleY < 1.0f) ? MIN(scaleX, scaleY) : 1.0f);
 }
 
+void CocosUtils::replaceScene(Scene* scene)
+{
+    if (scene)
+    {
+        Director *director = Director::getInstance();
+        
+        if (director->getRunningScene())
+        {
+            Scene* pScene = TransitionFade::create(1.2f, scene);
+            if (pScene)
+            {
+                director->replaceScene(pScene);
+            }
+        }
+        else
+        {
+            director->runWithScene(scene);
+        }
+    }
+}
+
 Sprite* CocosUtils::createPureColorSprite(const Size& size, const Color4B& color)
 {
     // 1. create texture

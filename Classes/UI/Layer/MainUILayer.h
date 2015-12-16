@@ -14,6 +14,8 @@
 
 USING_NS_CC;
 
+class ResourceNode;
+
 class MainUILayerObserver
 {
 public:
@@ -35,6 +37,11 @@ protected:
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
+    void updateButtonTextures(ui::Button* button, int childTag, const std::string& normal, const std::string& touched);
+    void setButtonSelected(ui::Button* button);
+    void updateIcon();
+    void updateResources();
+    
 private:
     MainUILayerObserver *_observer;
     ui::Button* _iconButton;
@@ -44,6 +51,15 @@ private:
     LabelAtlas* _boltLabel;
     LabelAtlas* _coinLabel;
     LabelAtlas* _gemLabel;
+    ui::Button* _pvpButton;
+    ui::Button* _bagButton;
+    ui::Button* _questButton;
+    ui::Button* _optionButton;
+    ui::Button* _guildButton;
+    ui::Button* _armyButton;
+    ResourceNode* _jadeResourceNode;
+    ResourceNode* _goldResourceNode;
+    ResourceNode* _gemResourceNode;
 };
 
 #endif /* MainUILayer_h */
