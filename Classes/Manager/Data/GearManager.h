@@ -9,8 +9,8 @@
 #ifndef GearManager_h
 #define GearManager_h
 
-#include "cocos2d.h"
 #include "json/document.h"
+#include <vector>
 #include "CocosGlobal.h"
 
 class GearData;
@@ -27,7 +27,7 @@ public:
     void sellGear();
     
 protected:
-    CC_DISALLOW_COPY_AND_ASSIGN(GearManager);
+    M_DISALLOW_COPY_AND_ASSIGN(GearManager);
     
 private:
     std::vector<GearData*> _gears;

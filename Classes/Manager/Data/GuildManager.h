@@ -9,8 +9,8 @@
 #ifndef GuildManager_h
 #define GuildManager_h
 
-#include "cocos2d.h"
 #include "json/document.h"
+#include "CocosGlobal.h"
 
 class GuildManager
 {
@@ -21,7 +21,7 @@ public:
     void initGuild(const rapidjson::Value& jsonDict);
     
 protected:
-    CC_DISALLOW_COPY_AND_ASSIGN(GuildManager);
+    M_DISALLOW_COPY_AND_ASSIGN(GuildManager);
 };
 
 #endif /* GuildManager_h */

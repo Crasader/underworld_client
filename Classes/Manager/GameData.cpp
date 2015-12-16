@@ -84,7 +84,7 @@ const string& GameData::getVersionId() const
 }
 
 #pragma mark - login & logout
-void GameData::autoLogin(const httpRequestCallback& success, const httpRequestCallback& failed)
+void GameData::autoLogin(const httpRequestCallback& success, const httpErrorCallback& failed)
 {
     // 1. load user's info from local
     rapidjson::Document document;
@@ -98,18 +98,17 @@ void GameData::autoLogin(const httpRequestCallback& success, const httpRequestCa
     if (token.length() == USER_TOKEN_LENGTH)
     {
         _user = new (std::nothrow) User(document);
-        _user->loadUserInfo(_deviceToken, success, failed, failed);
+        _user->loadUserInfo(_deviceToken, success, failed);
     }
     else
     {
-        if (failed)
-        {
-            failed();
+        if (failed) {
+            failed(InvalidTokenErrorCode);
         }
     }
 }
 
-void GameData::login(const httpRequestCallback& success, const httpRequestCallback& failed)
+void GameData::login(const httpRequestCallback& success, const httpErrorCallback& failed)
 {
     // 1. load user's info from local
     rapidjson::Document document;
@@ -123,18 +122,20 @@ void GameData::login(const httpRequestCallback& success, const httpRequestCallba
     if (token.length() == USER_TOKEN_LENGTH)
     {
         _user = new (std::nothrow) User(document);
-        _user->loadUserInfo(_deviceToken, success, [=]() {
-            CC_SAFE_DELETE(_user);
-            _user = nullptr;
-            requestLogin(success, failed);
-        }, []() {
-            MessageBoxLayer::getInstance()->show(LocalHelper::getString("networkResponse_loadUserInfoFailed"));
+        _user->loadUserInfo(_deviceToken, success, [=](int code) {
+            if (InvalidTokenErrorCode == code) {
+                CC_SAFE_DELETE(_user);
+                _user = nullptr;
+                requestLogin(success, failed);
+            } else {
+                MessageBoxLayer::getInstance()->show(LocalHelper::getString("networkResponse_loadUserInfoFailed"));
+            }
         });
     }
     // 3. if not
     else
     {
-        //        CCASSERT(token.empty(), "The token is interrupted.");
+//        CCASSERT(token.empty(), "The token is interrupted.");
         requestLogin(success, failed);
     }
 }
@@ -186,8 +187,7 @@ void GameData::fetchIAPInfo(const FetchIAPInfoCallback& success, const FetchIAPI
                 _iapObjects.at(i)->setIndex(i);
             }
             
-            if (success)
-            {
+            if (success) {
                 success();
             }
         }
@@ -234,7 +234,7 @@ void GameData::saveAnonymousUser(const User* user)
 
 #endif  // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
-void GameData::requestLogin(const httpRequestCallback& success, const httpRequestCallback& failed)
+void GameData::requestLogin(const httpRequestCallback& success, const httpErrorCallback& failed)
 {
     if (false == isLoggedIn())
     {
@@ -244,7 +244,7 @@ void GameData::requestLogin(const httpRequestCallback& success, const httpReques
     }
 }
 
-void GameData::handleLoginResponse(cocos2d::network::HttpResponse* response, const httpRequestCallback& success, const httpRequestCallback& failed)
+void GameData::handleLoginResponse(cocos2d::network::HttpResponse* response, const httpRequestCallback& success, const httpErrorCallback& failed)
 {
     if (NetworkApi::isSuccessfulResponse(response))
     {
@@ -256,13 +256,12 @@ void GameData::handleLoginResponse(cocos2d::network::HttpResponse* response, con
 #else
         saveAnonymousUser(_user);
 #endif
-        _user->loadUserInfo(_deviceToken, success, failed, failed);
+        _user->loadUserInfo(_deviceToken, success, failed);
     }
     else
     {
-        if (failed)
-        {
-            failed();
+        if (failed) {
+            failed(InvalidTokenErrorCode);
         }
     }
 }

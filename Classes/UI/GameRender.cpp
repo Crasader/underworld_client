@@ -215,7 +215,7 @@ void GameRender::updateUILayer()
     }
 }
 
-void GameRender::addCritEffect(const Unit* target, const string& trigger)
+void GameRender::hurtUnit(const Unit* target, const string& trigger)
 {
     if (target && kSkillClass_Die != target->getCurrentSkill()->getSkillType()->getSkillClass()) {
         const int key = target->getUnitId();
@@ -230,17 +230,25 @@ void GameRender::addCritEffect(const Unit* target, const string& trigger)
 }
 
 #pragma mark - UnitNodeObserver
+bool GameRender::isUnitNodeBornOnTheRight(UnitNode* node)
+{
+    const Faction* faction = node->getUnit()->getBelongFaction();
+    if (faction->getFactionIndex() != 0) {
+        return true;
+    }
+    return false;
+}
+
 void GameRender::onUnitNodePlayDeadAnimationFinished(UnitNode* node)
 {
     node->removeFromParent();
     _allUnits.erase(node->getUnit()->getUnitId());
 }
 
-void GameRender::onUnitNodeFootmanAttackedTheTarget(UnitNode* node)
+void GameRender::onUnitNodeHurtTheTarget(UnitNode* node)
 {
     const Unit* unit = node->getUnit();
-    Unit* target = unit->getTarget();
-    addCritEffect(target, unit->getUnitType()->getName());
+    hurtUnit(unit->getTarget(), unit->getUnitType()->getName());
     node->addSwordEffect();
 }
 
@@ -252,9 +260,8 @@ void GameRender::onBulletNodeReachedTarget(BulletNode* node)
 
 void GameRender::onBulletNodeExploded(BulletNode* node)
 {
-    Unit* target = node->getBullet()->getTarget();
-    const Unit* trigger = node->getBullet()->getTrigger();
-    addCritEffect(target, trigger->getUnitType()->getName());
+    const Bullet* bullet = node->getBullet();
+    hurtUnit(bullet->getTarget(), bullet->getTrigger()->getUnitType()->getName());
 }
 
 #pragma mark - MapUILayerObserver

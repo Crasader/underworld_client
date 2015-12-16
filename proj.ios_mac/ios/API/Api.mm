@@ -212,16 +212,18 @@ void iOSApi::loadAnonymousUser(rapidjson::Document& document)
 
 void iOSApi::saveAnonymousUser(const User* user)
 {
-    if (user->token().size() > 0) {
+    const string& token = user->getToken();
+    if (token.size() > 0) {
+        const unsigned int userId = user->getUserId();
         // serialize
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setValue:[NSString stringWithFormat:@"%d", user->uid()] forKey:[NSString stringWithUTF8String:kUID]];
-        [dict setValue:[NSString stringWithUTF8String:user->token().c_str()] forKey:[NSString stringWithUTF8String:kAuth]];
+        [dict setValue:[NSString stringWithFormat:@"%d", userId] forKey:[NSString stringWithUTF8String:kUID]];
+        [dict setValue:[NSString stringWithUTF8String:token.c_str()] forKey:[NSString stringWithUTF8String:kAuth]];
         [dict setValue:[NSString stringWithFormat:@"%d", false] forKey:[NSString stringWithUTF8String:kNew]];
         NSData *data = [NSJSONSerialization dataWithJSONObject:dict options:0 error:0];
         
         [_keychain setObject:data forKey:(__bridge id)(kSecValueData)];
-        [_keychain setObject:@(user->uid()) forKey:(__bridge id)(kSecAttrAccount)];
+        [_keychain setObject:@(userId) forKey:(__bridge id)(kSecAttrAccount)];
         [_keychain setObject:(__bridge id)kSecAttrAccessibleWhenUnlocked forKey:(__bridge id)kSecAttrAccessible];
     }
     else {

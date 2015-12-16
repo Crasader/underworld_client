@@ -9,8 +9,8 @@
 #ifndef AchievementManager_h
 #define AchievementManager_h
 
-#include "cocos2d.h"
 #include "json/document.h"
+#include "CocosGlobal.h"
 
 class AchievementData;
 
@@ -29,7 +29,7 @@ public:
     int getProgress(int achievementId) const;
     
 protected:
-    CC_DISALLOW_COPY_AND_ASSIGN(AchievementManager);
+    M_DISALLOW_COPY_AND_ASSIGN(AchievementManager);
     void finishAchievement(int achievementId);
     
 private:

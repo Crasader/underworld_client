@@ -9,8 +9,8 @@
 #ifndef ChatManager_h
 #define ChatManager_h
 
-#include "cocos2d.h"
 #include "json/document.h"
+#include <map>
 #include "CocosGlobal.h"
 
 class ChatData;
@@ -27,7 +27,7 @@ public:
     void sendMessage(ChatType type, int contacter, const std::string& message);
     
 protected:
-    CC_DISALLOW_COPY_AND_ASSIGN(ChatManager);
+    M_DISALLOW_COPY_AND_ASSIGN(ChatManager);
     
 private:
     std::map<ChatType, std::vector<const ChatData*>> _chatData;

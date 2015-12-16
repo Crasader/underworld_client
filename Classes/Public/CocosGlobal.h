@@ -29,13 +29,18 @@
 #define ONLINE_UPDATE_SEARCH_PATH       (FileUtils::getInstance()->getWritablePath() + "Resource/")
 #define DEFAULT_RESOURCE_FOLDER         ("res")
 
+#ifndef M_DISALLOW_COPY_AND_ASSIGN
+#define M_DISALLOW_COPY_AND_ASSIGN(TypeName) \
+TypeName(const TypeName &) = delete; \
+TypeName &operator =(const TypeName &) = delete;
+#endif // DISALLOW_COPY_AND_ASSIGN
+
 typedef std::function<void()> httpRequestCallback;
+typedef std::function<void(long errorCode)> httpErrorCallback;
 
 // TODO: remove temp code
 #define WOLF_CORE       ("狼人基地")
 #define WOLF_TOWER      ("狼人箭塔")
-#define WOLF_ARCHER     ("狼人射手")
-#define WOLF_WIZARD     ("狼人巫师")
 
 #define VAMPIRE_CORE    ("吸血鬼核心")
 #define VAMPIRE_TOWER   ("吸血鬼箭塔")

@@ -13,6 +13,8 @@
 using namespace std;
 
 static const string suffix(".csb");
+static const string audioPrefix("sounds/effect/");
+static const string audioSuffix(".mp3");
 
 #pragma mark =====================================================
 #pragma mark Unit Resource Config Data
@@ -20,6 +22,7 @@ static const string suffix(".csb");
 
 URConfigData::URConfigData(tinyxml2::XMLElement *xmlElement)
 :_isShortRange(false)
+,_isFaceRight(false)
 {
     if (xmlElement) {
         _name = xmlElement->Attribute("unit_name");
@@ -29,6 +32,14 @@ URConfigData::URConfigData(tinyxml2::XMLElement *xmlElement)
                 _isShortRange = (atoi(data) != 0);
             } else {
                 _isShortRange = false;
+            }
+        }
+        {
+            const char *data = xmlElement->Attribute("direction");
+            if (data && strlen(data) > 0) {
+                _isFaceRight = (atoi(data) != 0);
+            } else {
+                _isFaceRight = false;
             }
         }
         {
@@ -114,19 +125,19 @@ URConfigData::URConfigData(tinyxml2::XMLElement *xmlElement)
         {
             const char *data = xmlElement->Attribute("attck_sound");
             if (data && strlen(data) > 0) {
-                _attckSound = string("sounds/effect/") + data + ".mp3";
+                _attckSound = audioPrefix + data + audioSuffix;
             }
         }
         {
             const char *data = xmlElement->Attribute("hurt_sound");
             if (data && strlen(data) > 0) {
-                _hurtSound = string("sounds/effect/") + data + ".mp3";
+                _hurtSound = audioPrefix + data + audioSuffix;
             }
         }
         {
             const char *data = xmlElement->Attribute("die_sound");
             if (data && strlen(data) > 0) {
-                _dieSound = string("sounds/effect/") + data + ".mp3";
+                _dieSound = audioPrefix + data + audioSuffix;
             }
         }
     }
@@ -145,6 +156,11 @@ const std::string& URConfigData::getName() const
 bool URConfigData::isShortRange() const
 {
     return _isShortRange;
+}
+
+bool URConfigData::isFaceRight() const
+{
+    return _isFaceRight;
 }
 
 const std::string& URConfigData::getIcon() const

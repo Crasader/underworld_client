@@ -9,7 +9,8 @@
 #ifndef SoundManager_h
 #define SoundManager_h
 
-#include "cocos2d.h"
+#include <iostream>
+#include "CocosGlobal.h"
 
 class SoundManager
 {
@@ -41,7 +42,7 @@ public:
 protected:
     SoundManager();
     virtual ~SoundManager();
-    CC_DISALLOW_COPY_AND_ASSIGN(SoundManager);
+    M_DISALLOW_COPY_AND_ASSIGN(SoundManager);
     
 private:
     void preloadBackgroundMusic(const std::string& url);

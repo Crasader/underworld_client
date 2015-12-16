@@ -25,6 +25,7 @@ public:
     
     const std::string& getName() const;
     bool isShortRange() const;
+    bool isFaceRight() const;
     const std::string& getIcon() const;
     const std::string& getPrefix() const;
     const std::string& getBNormal() const;
@@ -45,6 +46,7 @@ public:
 private:
     std::string _name;
     bool _isShortRange;
+    bool _isFaceRight;
     std::string _icon;
     std::string _prefix;
     std::string _bNormal;

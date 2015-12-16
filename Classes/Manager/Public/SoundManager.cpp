@@ -23,7 +23,6 @@ SoundManager* SoundManager::getInstance()
     if (!s_pSharedInstance)
     {
         s_pSharedInstance = new (std::nothrow) SoundManager();
-        CCASSERT(s_pSharedInstance, "FATAL: Not enough memory");
     }
     
     return s_pSharedInstance;

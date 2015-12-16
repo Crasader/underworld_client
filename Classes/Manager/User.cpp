@@ -8,6 +8,7 @@
 
 #include "User.h"
 #include "cocostudio/CocoStudio.h"
+#include "NetworkApi.h"
 
 using namespace std;
 using namespace cocostudio;
@@ -28,7 +29,7 @@ User::~User()
 }
 
 #pragma mark - public
-unsigned int User::uid() const
+unsigned int User::getUserId() const
 {
     return _uid;
 }
@@ -43,12 +44,12 @@ bool User::isGuest() const
     return _isGuest;
 }
 
-const string& User::token() const
+const string& User::getToken() const
 {
     return _token;
 }
 
-const string& User::name() const
+const string& User::getName() const
 {
     return _name;
 }
@@ -63,7 +64,7 @@ void User::parseResources(const rapidjson::Value& root, const char* key, bool si
     
 }
 
-void User::loadUserInfo(const string& deviceToken, const httpRequestCallback& success, const httpRequestCallback& invalidTokenCallback, const httpRequestCallback& otherErrorCallback)
+void User::loadUserInfo(const string& deviceToken, const httpRequestCallback& success, const httpErrorCallback& onError)
 {
     NetworkApi::loadUserInfo(deviceToken, [=](cocos2d::network::HttpClient* client, cocos2d::network::HttpResponse* response) {
         if (NetworkApi::isSuccessfulResponse(response))
@@ -80,19 +81,8 @@ void User::loadUserInfo(const string& deviceToken, const httpRequestCallback& su
         else
         {
             const long code = response->getResponseCode();
-            if (code == InvalidTokenErrorCode)
-            {
-                if (invalidTokenCallback)
-                {
-                    invalidTokenCallback();
-                }
-            }
-            else
-            {
-                if (otherErrorCallback)
-                {
-                    otherErrorCallback();
-                }
+            if (onError) {
+                onError(code);
             }
         }
     });

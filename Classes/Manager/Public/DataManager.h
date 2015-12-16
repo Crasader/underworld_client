@@ -9,7 +9,6 @@
 #ifndef DataManager_h
 #define DataManager_h
 
-#include "cocos2d.h"
 #include "CocosGlobal.h"
 #include "UAConfigData.h"
 #include "SkllType.h"
@@ -37,7 +36,7 @@ public:
 protected:
     DataManager();
     virtual ~DataManager();
-    CC_DISALLOW_COPY_AND_ASSIGN(DataManager);
+    M_DISALLOW_COPY_AND_ASSIGN(DataManager);
     
 protected:
     void parseLevelData();

@@ -30,8 +30,9 @@ class UnitNodeObserver
 {
 public:
     virtual ~UnitNodeObserver() {}
+    virtual bool isUnitNodeBornOnTheRight(UnitNode* node) = 0;
     virtual void onUnitNodePlayDeadAnimationFinished(UnitNode* node) = 0;
-    virtual void onUnitNodeFootmanAttackedTheTarget(UnitNode* node) = 0;
+    virtual void onUnitNodeHurtTheTarget(UnitNode* node) = 0;
 };
 
 class UnitNode : public Node
@@ -42,12 +43,16 @@ public:
     const UnderWorld::Core::Unit* getUnit() const;
     void registerObserver(UnitNodeObserver *observer);
     void update();
+    
+    // effects
     void addCritEffect(const std::string& triggerName);
     void addBlockEffect();
     void addRecoveryEffect();
     void addSwordEffect();
     void addBuf();
     void removeBuf();
+    
+    // callbacks
     void onHurt();
     void onWin();
     void onLose();
@@ -58,8 +63,8 @@ protected:
     const std::string getCsbFile(UnitDirection direction, float hpPercentage);
     const std::string getStandbyCsbFile(UnitDirection direction, bool isHealthy);
     void getMultipleAnimationFiles(std::vector<std::string>& output);
-    bool checkIsStandby(const UnderWorld::Core::Skill* skill);
-    UnitDirection calculateDirection();
+    bool checkIsStandby();
+    void calculateDirection(UnitDirection& direction, bool& flip);
     float calculateHpPercentage();
     void addActionNode(const std::string& file, bool play, bool loop, float playTime, int frameIndex, const std::function<void()>& lastFrameCallFunc);
     void addMultipleAnimationNode(int frameIndex, const std::function<void()>& lastFrameCallFunc);
@@ -74,7 +79,10 @@ protected:
     
 private:
     UnitNodeObserver *_observer;
+    const UnderWorld::Core::Unit* _unit;
     const URConfigData* _configData;
+    bool _isBornOnTheRight;
+    bool _needToFlip;
     Node *_actionNode;
     cocostudio::timeline::ActionTimeline *_currentAction;
     Scheduler *_speedScheduler;
@@ -83,7 +91,6 @@ private:
     Node *_buf;
     DisplayBar* _hpBar;
     Sprite *_sprite;
-    const UnderWorld::Core::Unit* _unit;
     const UnderWorld::Core::Skill* _lastSkill;
     UnitDirection _lastDirection;
     float _lastHpPercentage;

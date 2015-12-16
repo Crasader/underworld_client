@@ -9,8 +9,9 @@
 #ifndef QuestManager_h
 #define QuestManager_h
 
-#include "cocos2d.h"
 #include "json/document.h"
+#include <vector>
+#include <map>
 #include "CocosGlobal.h"
 
 class QuestData;
@@ -30,7 +31,7 @@ public:
     int getQuestProgress(QuestType type, int questId) const;
     
 protected:
-    CC_DISALLOW_COPY_AND_ASSIGN(QuestManager);
+    M_DISALLOW_COPY_AND_ASSIGN(QuestManager);
     void finishQuest(QuestType type, int questId);
     
 private:

@@ -45,8 +45,9 @@ public:
     
 protected:
     // UnitNodeObserver
+    virtual bool isUnitNodeBornOnTheRight(UnitNode* node) override;
     virtual void onUnitNodePlayDeadAnimationFinished(UnitNode* node) override;
-    virtual void onUnitNodeFootmanAttackedTheTarget(UnitNode* node) override;
+    virtual void onUnitNodeHurtTheTarget(UnitNode* node) override;
     
     // BulletNodeObserver
     virtual void onBulletNodeReachedTarget(BulletNode* node) override;
@@ -66,7 +67,7 @@ private:
     void updateUnits(const UnderWorld::Core::Game* game, int index);
     void updateBullets(const UnderWorld::Core::Game* game);
     void updateUILayer();
-    void addCritEffect(const UnderWorld::Core::Unit* target, const std::string& trigger);
+    void hurtUnit(const UnderWorld::Core::Unit* target, const std::string& trigger);
     void removeAllBullets();
     void removeAllUnits();
     void pauseGame();

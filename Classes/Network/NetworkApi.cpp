@@ -134,9 +134,9 @@ static void request(const string& path,
         {
             // Token
 #if TARGET_IPHONE_SIMULATOR
-            token = GameData::getInstance()->currentUser()->token();
+            token = GameData::getInstance()->currentUser()->getToken();
 #else
-            token = GameData::getInstance()->currentUser()->token();
+            token = GameData::getInstance()->currentUser()->getToken();
 #endif
             headers.push_back(headerString(kAuthHeader, token));
         }

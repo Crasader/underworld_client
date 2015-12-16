@@ -9,8 +9,9 @@
 #ifndef UserManager_h
 #define UserManager_h
 
-#include "cocos2d.h"
 #include "json/document.h"
+#include <vector>
+#include "CocosGlobal.h"
 
 class UserData;
 class UserSimpleData;
@@ -32,7 +33,7 @@ public:
     void removeFromBlackList(int userId);
     
 protected:
-    CC_DISALLOW_COPY_AND_ASSIGN(UserManager);
+    M_DISALLOW_COPY_AND_ASSIGN(UserManager);
     
 private:
     std::vector<UserSimpleData*> _friends;

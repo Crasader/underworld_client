@@ -9,6 +9,7 @@
 #ifndef GameData_h
 #define GameData_h
 
+#include "network/HttpClient.h"
 #include "User.h"
 #include "CocosGlobal.h"
 
@@ -30,10 +31,10 @@ public:
     const std::string& getVersionId() const;
     
     // auto login (if a token is exist in local)
-    void autoLogin(const httpRequestCallback& success, const httpRequestCallback& failed);
+    void autoLogin(const httpRequestCallback& success, const httpErrorCallback& failed);
     
     // guest account
-    void login(const httpRequestCallback& success, const httpRequestCallback& failed);
+    void login(const httpRequestCallback& success, const httpErrorCallback& failed);
     bool isLoggedIn() const;
     
     // iap
@@ -63,8 +64,8 @@ private:
     virtual ~GameData();
     
     // login
-    void requestLogin(const httpRequestCallback& success, const httpRequestCallback& failed);
-    void handleLoginResponse(cocos2d::network::HttpResponse* response, const httpRequestCallback& success, const httpRequestCallback& failed);
+    void requestLogin(const httpRequestCallback& success, const httpErrorCallback& failed);
+    void handleLoginResponse(cocos2d::network::HttpResponse* response, const httpRequestCallback& success, const httpErrorCallback& failed);
     void reloadGame();
     
 private:

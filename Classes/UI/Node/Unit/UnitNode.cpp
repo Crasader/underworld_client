@@ -80,7 +80,10 @@ UnitNode* UnitNode::create(const Unit* unit)
 
 UnitNode::UnitNode()
 :_observer(nullptr)
+,_unit(nullptr)
 ,_configData(nullptr)
+,_isBornOnTheRight(false)
+,_needToFlip(false)
 ,_actionNode(nullptr)
 ,_currentAction(nullptr)
 ,_speedScheduler(nullptr)
@@ -89,7 +92,6 @@ UnitNode::UnitNode()
 ,_buf(nullptr)
 ,_hpBar(nullptr)
 ,_sprite(nullptr)
-,_unit(nullptr)
 ,_lastSkill(nullptr)
 ,_lastDirection(static_cast<UnitDirection>(-1))
 ,_lastHpPercentage(0.0f)
@@ -124,6 +126,10 @@ const Unit* UnitNode::getUnit() const
 void UnitNode::registerObserver(UnitNodeObserver *observer)
 {
     _observer = observer;
+    if (_observer) {
+        _isBornOnTheRight = _observer->isUnitNodeBornOnTheRight(this);
+        _needToFlip = (_isBornOnTheRight == _configData->isFaceRight());
+    }
 }
 
 void UnitNode::update()
@@ -134,6 +140,7 @@ void UnitNode::update()
             bool needToUpdateUI(false);
             int currentFrame(0);
             UnitDirection direction(kUnitDirection_Left);
+            bool flip(false);
             const float percentage(calculateHpPercentage());
             
             const SkillClass currentSkillClass(unit_getSkillClass(_unit));
@@ -143,12 +150,12 @@ void UnitNode::update()
                 case kUnitClass_Warrior:
                 case kUnitClass_Hero:
                 {
-                    direction = calculateDirection();
+                    calculateDirection(direction, flip);
                     if (_lastSkill) {
                         const SkillClass lastSkillClass(_lastSkill->getSkillType()->getSkillClass());
                         if (currentSkillClass != lastSkillClass) {
                             // TODO: remove temp code
-                            if (hasStandbyAnimation(_unit) && _isStandby != checkIsStandby(currentSkill)) {
+                            if (hasStandbyAnimation(_unit) && _isStandby != checkIsStandby()) {
                                 _isStandby = !_isStandby;
                             } else if (_isStandby) {
                                 _isStandby = false;
@@ -162,7 +169,7 @@ void UnitNode::update()
                                     ++ _switchAnimationCounter;
                                     if (_switchAnimationCounter >= animationCheckerFrames) {
                                         // TODO: remove temp code
-                                        if (hasStandbyAnimation(_unit) && _isStandby != checkIsStandby(currentSkill)) {
+                                        if (hasStandbyAnimation(_unit) && _isStandby != checkIsStandby()) {
                                             _isStandby = !_isStandby;
                                         }
                                         
@@ -180,7 +187,7 @@ void UnitNode::update()
                         } else {
                             // TODO: remove temp code
                             // check if the unit is standby
-                            if (hasStandbyAnimation(_unit) && _isStandby != checkIsStandby(currentSkill)) {
+                            if (hasStandbyAnimation(_unit) && _isStandby != checkIsStandby()) {
                                 _isStandby = !_isStandby;
                                 needToUpdateUI = true;
                             }
@@ -235,17 +242,10 @@ void UnitNode::update()
                 _lastDirection = direction;
                 _lastHpPercentage = percentage;
                 
-                // TODO: remove temp code
-                const string& unitName(unit_getName(_unit));
-                bool flip = false;
-                if (unitName == WOLF_ARCHER ||
-                    unitName == WOLF_WIZARD ||
-                    unitName == "吸血鬼蜘蛛") {
-                    flip = true;
-                }
+//                CCLOG("--------------------- direction: %d ---------------------", direction);
                 
                 const string& file = getCsbFile(direction, percentage);
-                updateActionNode(currentSkill, file, currentFrame, flip);
+                updateActionNode(currentSkill, file, currentFrame, flip ? !_needToFlip : _needToFlip);
             }
         }
         
@@ -485,12 +485,12 @@ void UnitNode::getMultipleAnimationFiles(vector<string>& output)
     }
 }
 
-bool UnitNode::checkIsStandby(const Skill* skill)
+bool UnitNode::checkIsStandby()
 {
-    const SkillClass skillClass(skill->getSkillType()->getSkillClass());
+    const SkillClass skillClass(unit_getSkillClass(_unit));
     if (kSkillClass_Attack == skillClass) {
         if (unit_isMovable(_unit)) {
-            const Skill::SkillState state(skill->getSkillState());
+            const Skill::SkillState state(_unit->getCurrentSkill()->getSkillState());
             if (Skill::SkillState::kSkillState_idle == state) {
                 return true;
             }
@@ -502,47 +502,58 @@ bool UnitNode::checkIsStandby(const Skill* skill)
     return false;
 }
 
-UnitDirection UnitNode::calculateDirection()
+void UnitNode::calculateDirection(UnitDirection& direction, bool& flip)
 {
     if (_unit) {
-#if false
-        const Coordinate& currentPos = unit->getCenterPos();
-        const Coordinate& targetPos = unit->getTargetPos();
-#else
-        const bool isAttacking = (kSkillClass_Attack == unit_getSkillClass(_unit)) ? true : false;
-        const UnitType* unitType = _unit->getUnitType();
-        const Coordinate& centerPos = _unit->getCenterPos();
-        const Coordinate& currentPos = isAttacking ? centerPos : (_unit->getLastPos() + Coordinate(unitType->getSize() / 2, unitType->getSize() / 2));
-        const Coordinate& targetPos = isAttacking ? _unit->getTargetPos() : centerPos;
-#endif
-        const float deltaX = abs(targetPos.x - currentPos.x);
-        const float deltaY = targetPos.y - currentPos.y;
-        
-        float angel = 0.0f;
-        if (deltaX == 0) {
-            if (deltaY > 0) {
-                angel = 90.0f;
-            } else if (deltaY < 0) {
-                angel = -90.0f;
-            }
+        const Coordinate& lastPos = _unit->getLastPos();
+        if (lastPos.x == INVALID_VALUE && lastPos.y == INVALID_VALUE) {
+            // new created
+            direction = kUnitDirection_Left;
+            flip = false;
         } else {
-            angel = 180.0f * atanf(deltaY / deltaX) / M_PI;
-        }
-        
-//        CCLOG("==== angel : %.1f ====\n currentPos: %d-%d, targetPos: %d-%d", angel, currentPos.x, currentPos.y, targetPos.x, targetPos.y);
-        
-        UnitDirection direction = kUnitDirection_Left;
-        for (int i = 0; i < UNIT_DIRECTIONS_COUNT; ++i) {
-            if (angel < directionAngelEdge[i]) {
-                direction = static_cast<UnitDirection>(4 - i);
-                break;
+            const Coordinate& centerPos = _unit->getCenterPos();
+            Coordinate currentPos(0, 0);
+            Coordinate targetPos(0, 0);
+            if (kSkillClass_Attack == unit_getSkillClass(_unit)) {
+                currentPos = centerPos;
+                targetPos = _unit->getTargetPos();
+            } else {
+                const UnitType* unitType = _unit->getUnitType();
+                currentPos = lastPos + Coordinate(unitType->getSize() / 2, unitType->getSize() / 2);
+                targetPos = centerPos;
+            }
+            
+            const float deltaX = abs(targetPos.x - currentPos.x);
+            const float deltaY = targetPos.y - currentPos.y;
+            
+            float angel = 0.0f;
+            if (deltaX == 0) {
+                if (deltaY > 0) {
+                    angel = 90.0f;
+                } else if (deltaY < 0) {
+                    angel = -90.0f;
+                }
+            } else {
+                angel = 180.0f * atanf(deltaY / deltaX) / M_PI;
+            }
+            
+//            CCLOG("==== angel : %.1f ====\n currentPos: %d-%d, targetPos: %d-%d", angel, currentPos.x, currentPos.y, targetPos.x, targetPos.y);
+            direction = kUnitDirection_Left;
+            for (int i = 0; i < UNIT_DIRECTIONS_COUNT; ++i) {
+                if (angel < directionAngelEdge[i]) {
+                    direction = static_cast<UnitDirection>(4 - i);
+                    break;
+                }
+            }
+            
+            // flip if the unit walks rear
+            flip = false;
+            if (deltaX > 5 && _observer) {
+                const bool dx = (targetPos.x - currentPos.x) >= 0;
+                flip = (dx == _isBornOnTheRight);
             }
         }
-        
-        return direction;
     }
-    
-    return kUnitDirection_Left;
 }
 
 float UnitNode::calculateHpPercentage()
@@ -687,7 +698,7 @@ void UnitNode::updateActionNode(const Skill* skill, const string& file, int curr
                     if (_configData->isShortRange()) {
                         _currentAction->setFrameEventCallFunc([this](cocostudio::timeline::Frame* frame) {
                             if (_observer) {
-                                _observer->onUnitNodeFootmanAttackedTheTarget(this);
+                                _observer->onUnitNodeHurtTheTarget(this);
                             }
                         });
                     }

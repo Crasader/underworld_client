@@ -9,7 +9,8 @@
 #ifndef UserDefaultsDataManager_h
 #define UserDefaultsDataManager_h
 
-#include "cocos2d.h"
+#include <iostream>
+#include "CocosGlobal.h"
 
 class UserDefaultsDataManager
 {
@@ -29,7 +30,7 @@ public:
 protected:
     UserDefaultsDataManager();
     virtual ~UserDefaultsDataManager();
-    CC_DISALLOW_COPY_AND_ASSIGN(UserDefaultsDataManager);
+    M_DISALLOW_COPY_AND_ASSIGN(UserDefaultsDataManager);
     
 public:
     void flush() const;
