@@ -18,6 +18,8 @@
 using namespace std;
 using namespace ui;
 
+static const int buttonIconTag(1000);
+
 MainUILayer* MainUILayer::create()
 {
     MainUILayer *ret = new (nothrow) MainUILayer();
@@ -37,9 +39,6 @@ MainUILayer::MainUILayer()
 ,_nameLabel(nullptr)
 ,_levelLabel(nullptr)
 ,_expProgressBar(nullptr)
-,_boltLabel(nullptr)
-,_coinLabel(nullptr)
-,_gemLabel(nullptr)
 ,_pvpButton(nullptr)
 ,_bagButton(nullptr)
 ,_questButton(nullptr)
@@ -68,10 +67,10 @@ bool MainUILayer::init()
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR))
     {
         const Size& winSize = Director::getInstance()->getWinSize();
-        static const float margin(5.0f);
         
         // 1. left top
         {
+            static const float margin(10.0f);
             static const string csbFile("UI_CharInfo.csb");
             Node *mainNode = CSLoader::createNode(csbFile);
             mainNode->setPosition(Point(margin, winSize.height - margin));
@@ -101,6 +100,7 @@ bool MainUILayer::init()
                             case 8:
                             {
                                 Label* label = CocosUtils::createLabel("123", DEFAULT_FONT_SIZE);
+                                label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
                                 child->addChild(label);
                                 _nameLabel = label;
                             }
@@ -108,6 +108,7 @@ bool MainUILayer::init()
                             case 11:
                             {
                                 LabelAtlas* label = CocosUtils::create10x25Number("&'.56");
+                                label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
                                 child->addChild(label);
                                 _levelLabel = label;
                             }
@@ -166,6 +167,7 @@ bool MainUILayer::init()
         
         // 3. left bottom
         {
+            static const float margin(5.0f);
             static const string csbFile("UI_PVPICON.csb");
             Node *mainNode = CSLoader::createNode(csbFile);
             mainNode->setPosition(Point(margin, margin));
@@ -184,7 +186,8 @@ bool MainUILayer::init()
                             {
                                 Button* button = dynamic_cast<Button*>(child);
                                 if (button) {
-                                    updateButtonTextures(button, 25, "icon_pvp_1", "icon_pvp_2");
+                                    button->loadTextureDisabled("GameImages/public/button_4.png");
+                                    setButtonIcons(button, 25, "icon_pvp_1", "icon_pvp_2");
                                     button->addClickEventListener([this](Ref *pSender){
                                         SoundManager::getInstance()->playButtonSound();
                                         CocosUtils::replaceScene(BattleScene::create(1));
@@ -228,95 +231,40 @@ bool MainUILayer::init()
         
         // 5. right bottom
         {
-            static const string csbFile("UI_FunctionIcon.csb");
-            Node *mainNode = CSLoader::createNode(csbFile);
-            mainNode->setPosition(Point(winSize.width - margin, margin));
-            addChild(mainNode);
+            static const float margin(-5.0f);
+            static const Point basePosition(winSize.width - margin, margin);
+            _bagButton = addFunctionButton("icon_beibao_1", "icon_beibao_2", "button_2", basePosition);
+            _bagButton->addClickEventListener([this](Ref *pSender){
+                SoundManager::getInstance()->playButtonSound();
+                // TODO:
+            });
             
-            Node* root = mainNode->getChildByTag(21);
-            const Vector<Node*>& children = root->getChildren();
-            for (int i = 0; i < children.size(); ++i)
-            {
-                Node* child = children.at(i);
-                if (child) {
-                    const int tag = child->getTag();
-                    if (tag > 0) {
-                        switch (tag) {
-                            case 22:
-                            {
-                                Button* button = dynamic_cast<Button*>(child);
-                                if (button) {
-                                    updateButtonTextures(button, 23, "icon_renwu_1", "icon_renwu_2");
-                                    button->addClickEventListener([this](Ref *pSender){
-                                        SoundManager::getInstance()->playButtonSound();
-                                        // TODO:
-                                    });
-                                }
-                                
-                                _questButton = button;
-                            }
-                                break;
-                            case 100:
-                            {
-                                Button* button = dynamic_cast<Button*>(child);
-                                if (button) {
-                                    button->addClickEventListener([this](Ref *pSender){
-                                        SoundManager::getInstance()->playButtonSound();
-                                        // TODO:
-                                    });
-                                }
-                            }
-                                break;
-                            case 97:
-                            {
-                                Button* button = dynamic_cast<Button*>(child);
-                                if (button) {
-                                    button->addClickEventListener([this](Ref *pSender){
-                                        SoundManager::getInstance()->playButtonSound();
-                                        // TODO:
-                                    });
-                                }
-                            }
-                                break;
-                            case 103:
-                            {
-                                Button* button = dynamic_cast<Button*>(child);
-                                if (button) {
-                                    button->addClickEventListener([this](Ref *pSender){
-                                        SoundManager::getInstance()->playButtonSound();
-                                        // TODO:
-                                    });
-                                }
-                            }
-                                break;
-                            case 104:
-                            {
-                                Button* button = dynamic_cast<Button*>(child);
-                                if (button) {
-                                    button->addClickEventListener([this](Ref *pSender){
-                                        SoundManager::getInstance()->playButtonSound();
-                                        // TODO:
-                                    });
-                                }
-                            }
-                                break;
-                            case 105:
-                            {
-                                Button* button = dynamic_cast<Button*>(child);
-                                if (button) {
-                                    button->addClickEventListener([this](Ref *pSender){
-                                        SoundManager::getInstance()->playButtonSound();
-                                        // TODO:
-                                    });
-                                }
-                            }
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-            }
+            const Size& size = _bagButton->getContentSize();
+            static const float offset(-20.0f);
+            
+            _questButton = addFunctionButton("icon_renwu_1", "icon_renwu_2", "button_2", basePosition + Point(0, size.height + offset));
+            _questButton->addClickEventListener([this](Ref *pSender){
+                SoundManager::getInstance()->playButtonSound();
+                // TODO:
+            });
+            
+            _optionButton = addFunctionButton("icon_shezhi_1", "icon_shezhi_2", "button_2", basePosition + Point(0, (size.height + offset) * 2));
+            _optionButton->addClickEventListener([this](Ref *pSender){
+                SoundManager::getInstance()->playButtonSound();
+                // TODO:
+            });
+            
+            _guildButton = addFunctionButton("icon_gonghui_1", "icon_gonghui_2", "button_2", basePosition - Point(size.width + offset, 0));
+            _guildButton->addClickEventListener([this](Ref *pSender){
+                SoundManager::getInstance()->playButtonSound();
+                // TODO:
+            });
+            
+            _armyButton = addFunctionButton("icon_jundui_1", "icon_jundui_2", "button_2", basePosition - Point((size.width + offset) * 2, 0));
+            _armyButton->addClickEventListener([this](Ref *pSender){
+                SoundManager::getInstance()->playButtonSound();
+                // TODO:
+            });
         }
         
 //        updateIcon();
@@ -344,46 +292,92 @@ void MainUILayer::onTouchEnded(Touch *touch, Event *unused_event)
     
 }
 
-void MainUILayer::updateButtonTextures(Button* button, int childTag, const string& normal, const string& touched)
+Button* MainUILayer::addFunctionButton(const string& normal, const string& touched, const string& disabled, const Point& position)
+{
+    static const string csbFile("UI_FunctionIcon.csb");
+    Node *mainNode = CSLoader::createNode(csbFile);
+    mainNode->setPosition(position);
+    addChild(mainNode);
+    
+    Node* root = mainNode->getChildByTag(21);
+    Button* button = dynamic_cast<Button*>(root->getChildByTag(22));
+    if (button) {
+        button->loadTextureDisabled("GameImages/public/" + disabled + ".png");
+        setButtonIcons(button, 23, normal, touched);
+        return button;
+    }
+    
+    return nullptr;
+}
+
+void MainUILayer::setButtonIcons(Button* button, int childTag, const string& normal, const string& touched)
 {
     Node* node = button->getChildByTag(childTag);
     if (node) {
         static const string prefix("GameImages/icons/");
         static const string suffix(".png");
-        static const int textureTag(1000);
         
         const string normalFile = prefix + normal + suffix;
         const string touchedFile = prefix + touched + suffix;
         
-        Sprite* s = Sprite::create(normalFile);
-        s->setTag(textureTag);
-        node->addChild(s);
+        addButtonIcon(node, normalFile);
         
         button->addTouchEventListener([=](Ref *pSender, Widget::TouchEventType type) {
             if (type == Widget::TouchEventType::BEGAN) {
-                node->removeChildByTag(textureTag);
-                Sprite* s = Sprite::create(touchedFile);
-                s->setTag(textureTag);
-                node->addChild(s);
+                addButtonIcon(node, touchedFile);
             } else if (type == Widget::TouchEventType::CANCELED || type == Widget::TouchEventType::ENDED) {
-                node->removeChildByTag(textureTag);
-                Sprite* s = Sprite::create(normalFile);
-                s->setTag(textureTag);
-                node->addChild(s);
+                addButtonIcon(node, normalFile);
             }
         });
+        
+        if (_buttonIconInfos.find(button) == _buttonIconInfos.end()) {
+            ButtonIconInfo info;
+            info.iconParentTag = childTag;
+            info.iconNormal = normalFile;
+            info.iconTouched = touchedFile;
+            _buttonIconInfos.insert(make_pair(button, info));
+        }
     }
 }
 
-void MainUILayer::setButtonSelected(Button* button)
+void MainUILayer::setButtonEnabled(Button* button, bool enabled)
 {
-    
+    if (button && button->isEnabled() != enabled) {
+        button->setEnabled(enabled);
+        
+        if (_buttonIconInfos.find(button) != _buttonIconInfos.end()) {
+            const ButtonIconInfo& info = _buttonIconInfos.at(button);
+            Node* node = button->getChildByTag(info.iconParentTag);
+            if (node) {
+                node->removeChildByTag(buttonIconTag);
+                string file = enabled ? info.iconNormal : info.iconTouched;
+                Sprite* s = Sprite::create(file);
+                s->setTag(buttonIconTag);
+                node->addChild(s);
+            }
+        }
+    }
+}
+
+void MainUILayer::addButtonIcon(Node* node, const string& file)
+{
+    if (node) {
+        node->removeChildByTag(buttonIconTag);
+        Sprite* s = Sprite::create(file);
+        s->setTag(buttonIconTag);
+        node->addChild(s);
+    }
 }
 
 void MainUILayer::updateIcon()
 {
     const string file("GameImages/avatars/icon_user.png");
     _iconButton->loadTextures(file, file);
+}
+
+void MainUILayer::updateExp()
+{
+    
 }
 
 void MainUILayer::updateResources()

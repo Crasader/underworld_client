@@ -12,22 +12,25 @@
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
 #include "ui/CocosGUI.h"
+#include "QuestNode.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
 
+class TabButton;
 class ScrollBar;
 
 class QuestLayerObserver
 {
 public:
     virtual ~QuestLayerObserver() {}
+    virtual void onQuestLayerClosed() = 0;
 };
 
-class QuestLayer : public LayerColor, public TableViewDataSource
+class QuestLayer : public LayerColor, public TableViewDataSource, public QuestNodeObserver
 {
 public:
-    static QuestLayer* create(int levelId);
+    static QuestLayer* create(int tabIndex);
     virtual ~QuestLayer();
     void registerObserver(QuestLayerObserver *observer);
     
@@ -44,16 +47,22 @@ protected:
     virtual TableViewCell* tableCellAtIndex(TableView *table, ssize_t idx) override;
     virtual ssize_t numberOfCellsInTableView(TableView *table) override;
     
+    void addTabButton(Node* parent, const std::string& title, int tabIndex, const ui::Button::ccWidgetClickCallback& callback);
+    void addTableView(int index);
     void switchTable(int index);
-    void setButtonSelected(int index);
+    
+private:
+    struct TabInfo {
+        TableView* tableView;
+        TabButton* tabButton;
+    };
     
 private:
     QuestLayerObserver *_observer;
     Size _tableViewMaxSize;
     Size _cellSize;
     ssize_t _cellsCount;
-    std::map<int, TableView*> _tableViews;
-    std::vector<ui::Button*> _tabButtons;
+    std::map<int, TabInfo> _tabInfos;
     ScrollBar *_scrollBar;
     int _tabIndex;
 };

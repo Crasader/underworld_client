@@ -22,7 +22,7 @@ public:
     ResourceType getType() const;
     int getCount() const;
     void setType(ResourceType type);
-    void setCount(int count);
+    void setCount(int count, bool animated);
     
 protected:
     ResourceNode();

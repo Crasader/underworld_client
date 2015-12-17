@@ -77,7 +77,7 @@ bool BagNode::init()
                             if (button) {
                                 button->setPressedActionEnabled(true);
                                 button->addClickEventListener([this](Ref *pSender){
-                                    SoundManager::getInstance()->playButtonCancelSound();
+                                    SoundManager::getInstance()->playButtonSound();
                                     // TODO:
                                 });
                             }
@@ -110,7 +110,7 @@ bool BagNode::init()
                             if (button) {
                                 button->setPressedActionEnabled(true);
                                 button->addClickEventListener([this](Ref *pSender){
-                                    SoundManager::getInstance()->playButtonCancelSound();
+                                    SoundManager::getInstance()->playButtonSound();
                                     // TODO:
                                 });
                             }

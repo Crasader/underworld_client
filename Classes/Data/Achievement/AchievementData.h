@@ -9,7 +9,7 @@
 #ifndef AchievementData_h
 #define AchievementData_h
 
-#include "QuestData.h"
+#include "json/document.h"
 
 class AchievementLocalData;
 

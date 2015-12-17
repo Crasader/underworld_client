@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Mofish Studio. All rights reserved.
 //
 
-#ifndef QuestData_h
-#define QuestData_h
+#ifndef QuestLocalData_h
+#define QuestLocalData_h
 
 #include <iostream>
 #include <vector>
@@ -42,4 +42,4 @@ private:
     std::string _description;
 };
 
-#endif /* QuestData_h */
+#endif /* QuestLocalData_h */

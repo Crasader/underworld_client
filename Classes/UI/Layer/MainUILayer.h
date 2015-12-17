@@ -37,20 +37,28 @@ protected:
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
-    void updateButtonTextures(ui::Button* button, int childTag, const std::string& normal, const std::string& touched);
-    void setButtonSelected(ui::Button* button);
+    ui::Button* addFunctionButton(const std::string& normal, const std::string& touched, const std::string& disabled, const Point& position);
+    void setButtonIcons(ui::Button* button, int childTag, const std::string& normal, const std::string& touched);
+    void setButtonEnabled(ui::Button* button, bool enabled);
+    void addButtonIcon(Node* node, const std::string& file);
     void updateIcon();
+    void updateExp();
     void updateResources();
     
 private:
+    struct ButtonIconInfo {
+        int iconParentTag;
+        std::string iconNormal;
+        std::string iconTouched;
+    };
+    
+private:
     MainUILayerObserver *_observer;
+    std::map<ui::Button*, ButtonIconInfo> _buttonIconInfos;
     ui::Button* _iconButton;
     Label* _nameLabel;
     LabelAtlas* _levelLabel;
     ui::LoadingBar *_expProgressBar;
-    LabelAtlas* _boltLabel;
-    LabelAtlas* _coinLabel;
-    LabelAtlas* _gemLabel;
     ui::Button* _pvpButton;
     ui::Button* _bagButton;
     ui::Button* _questButton;

@@ -14,8 +14,11 @@
 #include "BulletNode.h"
 #include "Map.h"
 #include "Camp.h"
+#include "CocosUtils.h"
 #include "VictoryLayer.h"
 #include "DefeatLayer.h"
+#include "MainLayer.h"
+#include "MessageBoxLayer.h"
 
 using namespace std;
 using namespace UnderWorld::Core;
@@ -350,12 +353,14 @@ void GameRender::removeAllUnits()
 
 void GameRender::pauseGame()
 {
-    
+    MessageBoxLayer::getInstance()->show(LocalHelper::getString("hint_exitPve"), kMessageBoxYesNo, [](Ref*) {
+        CocosUtils::replaceScene(MainLayer::createScene());
+    });
 }
 
 void GameRender::resumeGame()
 {
-    
+    pauseGame();
 }
 
 void GameRender::restartGame()

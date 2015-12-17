@@ -9,6 +9,7 @@
 #include "QuestData.h"
 #include "DataManager.h"
 #include "cocostudio/CocoStudio.h"
+#include "QuestLocalData.h"
 
 using namespace cocostudio;
 

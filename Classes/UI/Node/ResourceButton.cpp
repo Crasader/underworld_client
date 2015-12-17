@@ -26,7 +26,7 @@ ResourceButton::ResourceButton()
 
 ResourceButton::~ResourceButton()
 {
-    removeFromParent();
+    removeAllChildren();
 }
 
 ResourceButton* ResourceButton::create(bool isBigSize, ResourceType type, int count, const Button::ccWidgetClickCallback& callback)

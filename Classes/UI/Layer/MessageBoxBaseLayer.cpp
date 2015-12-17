@@ -38,10 +38,10 @@ bool MessageBoxBaseLayer::init()
         _background->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(_background);
         
-        _confirmButton = Button::create("GameImages/world/ui_button_green.png");
+        _confirmButton = Button::create("GameImages/public/ui_button_green.png");
         _background->addChild(_confirmButton);
         
-        _cancelButton = Button::create("GameImages/world/ui_button.png");
+        _cancelButton = Button::create("GameImages/public/ui_button.png");
         _background->addChild(_cancelButton);
         
         const Size& size = _background->getContentSize();

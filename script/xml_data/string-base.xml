@@ -5,5 +5,30 @@
 	<item key="battle_victory_hint" value="You Win!"/>
 	<item key="battle_victory_reward_label" value="奖励"/>
 	<item key="battle_victory_button_label" value="继续"/>
+	
+	<item key="battle_defeat_title" value="失败"/>
+	<item key="battle_defeat_hint" value="You Lose!"/>
+	<item key="battle_defeat_reward_label" value="奖励"/>
+	<item key="battle_defeat_button_label" value="重来"/>
+	
+	<item key="battle_pveInfo_title" value="PVE"/>
+	<item key="battle_pveInfo_reward_label" value="过关奖励"/>
+	<item key="battle_pveInfo_rewardObject_label" value="过关奖励"/>
+	<item key="battle_pveInfo_button_label" value="开始"/>
+	
+	
+	 <!-- 任务 -->
+	<item key="ui_quest_title" value="任务"/>
+	<item key="ui_quest_tab_daily" value="每日任务"/>
+	<item key="ui_quest_tab_life" value="主线任务"/>
+	<item key="ui_quest_tab_timeLimited" value="限时任务"/>
+	<item key="ui_questNode_reward_label" value="奖励："/>
+	<item key="ui_questNode_buttonHint_unfinished" value="前往"/>
+	<item key="ui_questNode_buttonHint_finished" value="领取"/>
+	
+	 <!-- 提示 -->
+	<item key="hint_exitPve" value="您确定结束战斗并退出该关卡吗？"/>
+	<item key="hint_confirm" value="确定"/>
+	<item key="hint_cancel" value="取消"/>
 	 
 </root>

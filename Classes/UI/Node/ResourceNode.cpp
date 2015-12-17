@@ -115,12 +115,17 @@ void ResourceNode::setType(ResourceType type)
     }
 }
 
-void ResourceNode::setCount(int count)
+void ResourceNode::setCount(int count, bool animated)
 {
     _count = count;
     
     if (_countLabel)
     {
-        _countLabel->setString(StringUtils::format("%d", count));
+        if (animated) {
+            static const float duration(0.5f);
+            CocosUtils::jumpNumber(_countLabel, count, duration);
+        } else {
+            _countLabel->setString(StringUtils::format("%d", count));
+        }
     }
 }

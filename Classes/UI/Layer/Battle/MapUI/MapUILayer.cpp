@@ -66,7 +66,6 @@ MapUILayer::MapUILayer()
 ,_myHpPercentageLabel(nullptr)
 ,_opponentsHpProgress(nullptr)
 ,_opponentsHpPercentageLabel(nullptr)
-,_sendTroopMenuItem(nullptr)
 ,_pauseMenuItem(nullptr)
 {
     static const Size unitNodeSize = MapUIUnitNode::create(nullptr, 0)->getContentSize();
@@ -421,7 +420,7 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             });
             _pauseMenuItem->setAnchorPoint(Point(1.0f, 1.0f));
             _pauseMenuItem->setPosition(Point(winSize.width - 5.0f, winSize.height - 5.0f));
-            Menu *menu = Menu::create(/*_sendTroopMenuItem, */_pauseMenuItem, nullptr);
+            Menu *menu = Menu::create(_pauseMenuItem, nullptr);
             menu->setPosition(Point::ZERO);
             root->addChild(menu);
         }

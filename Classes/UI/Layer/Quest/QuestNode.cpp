@@ -13,15 +13,18 @@
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "SoundManager.h"
+#include "QuestLocalData.h"
+#include "QuestData.h"
+#include "ContentData.h"
 
 using namespace std;
 using namespace ui;
 using namespace cocostudio;
 
-QuestNode* QuestNode::create()
+QuestNode* QuestNode::create(const QuestData* data, ssize_t idx)
 {
     QuestNode *ret = new (nothrow) QuestNode();
-    if (ret && ret->init())
+    if (ret && ret->init(data, idx))
     {
         ret->autorelease();
         return ret;
@@ -33,6 +36,12 @@ QuestNode* QuestNode::create()
 
 QuestNode::QuestNode()
 :_observer(nullptr)
+,_data(nullptr)
+,_idx(CC_INVALID_INDEX)
+,_descriptionLabel(nullptr)
+,_progressLabel(nullptr)
+,_button(nullptr)
+,_buttonHintLabel(nullptr)
 {
     
 }
@@ -47,7 +56,7 @@ void QuestNode::registerObserver(QuestNodeObserver *observer)
     _observer = observer;
 }
 
-bool QuestNode::init()
+bool QuestNode::init(const QuestData* data, ssize_t idx)
 {
     if (Node::init())
     {
@@ -73,34 +82,27 @@ bool QuestNode::init()
                     switch (tag) {
                         case 100:
                         {
-                            Button* button = dynamic_cast<Button*>(child);
-                            if (button) {
-                                button->setPressedActionEnabled(true);
-                                button->addClickEventListener([this](Ref *pSender){
-                                    SoundManager::getInstance()->playButtonCancelSound();
-                                    // TODO:
-                                });
-                            }
+                            Label* label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
+                            label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+                            child->addChild(label);
+                            
+                            _nameLabel = label;
                         }
                             break;
                         case 101:
                         {
-                            LabelAtlas* label = CocosUtils::create12x30Number(StringUtils::format("%d", 1));
-                            label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
+                            Label* label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
+                            label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+                            label->setTextColor(Color4B::ORANGE);
                             child->addChild(label);
+                            
+                            _descriptionLabel = label;
                         }
                             break;
                         case 102:
                         {
-                            LabelAtlas* label = CocosUtils::create12x30Number(StringUtils::format("%d", 1));
-                            label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
-                            child->addChild(label);
-                        }
-                            break;
-                        case 103:
-                        {
-                            LabelAtlas* label = CocosUtils::create12x30Number(StringUtils::format("%d", 1));
-                            label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
+                            Label* label = CocosUtils::createLabel(LocalHelper::getString("ui_questNode_reward_label"), DEFAULT_FONT_SIZE);
+                            label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
                             child->addChild(label);
                         }
                             break;
@@ -109,25 +111,16 @@ bool QuestNode::init()
                             Button* button = dynamic_cast<Button*>(child);
                             if (button) {
                                 button->setPressedActionEnabled(true);
-                                button->addClickEventListener([this](Ref *pSender){
-                                    SoundManager::getInstance()->playButtonCancelSound();
-                                    // TODO:
-                                });
+                                Node* n = button->getChildByTag(100);
+                                if (n) {
+                                    Label* label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
+                                    child->addChild(label);
+                                    
+                                    _buttonHintLabel = label;
+                                }
                             }
-                        }
-                            break;
-                        case 105:
-                        {
-                            Label* label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
-                            label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
-                            child->addChild(label);
-                        }
-                            break;
-                        case 106:
-                        {
-                            Label* label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
-                            label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
-                            child->addChild(label);
+                            
+                            _button = button;
                         }
                             break;
                         default:
@@ -137,8 +130,87 @@ bool QuestNode::init()
             }
         }
         
+        update(data, idx);
+        
         return true;
     }
     
     return false;
+}
+
+ssize_t QuestNode::getIdx() const
+{
+    return _idx;
+}
+
+void QuestNode::update(const QuestData* data, ssize_t idx)
+{
+    if (data) {
+        _data = data;
+        _idx = idx;
+        
+        const QuestLocalData* localData = _data->getLocalData();
+        if (_nameLabel) {
+            _nameLabel->setString(localData ? localData->getName() : "");
+        }
+        
+        if (_descriptionLabel) {
+            _descriptionLabel->setString(localData ? localData->getDescription() : "");
+        }
+        
+        updateProgress();
+    }
+}
+
+void QuestNode::updateProgress()
+{
+    if (_data) {
+        const QuestLocalData* localData = _data->getLocalData();
+        const vector<ContentData*>& contents = localData->getContents();
+        if (contents.size() > 0) {
+            const int progress = _data->getProgress();
+            const int total = contents.at(0)->getCount(0);
+            const string s = StringUtils::format("[%d/%d]", progress, total);
+            const Point& ap = _descriptionLabel->getAnchorPoint();
+            if (nullptr == _progressLabel) {
+                _progressLabel = CocosUtils::createLabel(s, DEFAULT_FONT_SIZE);
+                _progressLabel->setTextColor(_descriptionLabel->getTextColor());
+                _progressLabel->setAnchorPoint(ap);
+                _descriptionLabel->getParent()->addChild(_progressLabel);
+            } else {
+                _progressLabel->setString(s);
+            }
+            
+            // reset position if needed
+            _progressLabel->setPosition(_descriptionLabel->getPosition() + Point((1.0f - ap.x) * _descriptionLabel->getContentSize().width + ap.x * _progressLabel->getContentSize().width, 0));
+            
+            // update button
+            if (_button) {
+                string hint;
+                string file;
+                function<void()> callback;
+                if (progress < total) {
+                    hint = LocalHelper::getString("ui_questNode_buttonHint_unfinished");
+                    file = "";
+                    callback = nullptr;
+                } else {
+                    hint = LocalHelper::getString("ui_questNode_buttonHint_finished");
+                    file = "";
+                    callback = nullptr;
+                }
+                
+                _buttonHintLabel->setString(hint);
+                _button->loadTextures(file, file);
+                _button->addClickEventListener([=](Ref *pSender){
+                    SoundManager::getInstance()->playButtonSound();
+                    if (callback) {
+                        callback();
+                    }
+                });
+            }
+            
+        } else if (_progressLabel) {
+            _progressLabel->setString("");
+        }
+    }
 }

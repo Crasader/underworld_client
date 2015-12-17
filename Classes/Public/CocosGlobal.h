@@ -68,6 +68,7 @@ typedef enum
 typedef enum {
     kQuestType_Daily = 0,
     kQuestType_Life,
+    kQuestType_TimeLimited,
 }QuestType;
 
 typedef enum {

@@ -82,7 +82,6 @@ private:
     Label *_myHpPercentageLabel;
     ProgressTimer *_opponentsHpProgress;
     Label *_opponentsHpPercentageLabel;
-    MenuItem *_sendTroopMenuItem;
     MenuItem *_pauseMenuItem;
     // ======================== test =============================
 };

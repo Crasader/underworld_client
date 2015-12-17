@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Mofish Studio. All rights reserved.
 //
 
-#ifndef AnimationConfigData_h
-#define AnimationConfigData_h
+#ifndef UAConfigData_h
+#define UAConfigData_h
 
 #include <map>
 #include "CocosGlobal.h"
@@ -43,4 +43,4 @@ private:
     std::map<UnitDirection, AnimationParameters> _data;
 };
 
-#endif /* AnimationConfigData_h */
+#endif /* UAConfigData_h */

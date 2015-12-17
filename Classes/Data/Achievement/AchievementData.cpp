@@ -9,6 +9,7 @@
 #include "AchievementData.h"
 #include "DataManager.h"
 #include "cocostudio/CocoStudio.h"
+#include "AchievementLocalData.h"
 
 using namespace cocostudio;
 
