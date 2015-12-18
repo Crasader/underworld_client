@@ -38,6 +38,7 @@ QuestNode::QuestNode()
 :_observer(nullptr)
 ,_data(nullptr)
 ,_idx(CC_INVALID_INDEX)
+,_nameLabel(nullptr)
 ,_descriptionLabel(nullptr)
 ,_progressLabel(nullptr)
 ,_button(nullptr)
@@ -111,8 +112,8 @@ bool QuestNode::init(const QuestData* data, ssize_t idx)
                             Button* button = dynamic_cast<Button*>(child);
                             if (button) {
                                 button->setPressedActionEnabled(true);
-                                Node* n = button->getChildByTag(100);
-                                if (n) {
+                                Node* child = button->getChildByTag(100);
+                                if (child) {
                                     Label* label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
                                     child->addChild(label);
                                     

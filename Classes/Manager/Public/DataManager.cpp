@@ -14,8 +14,10 @@
 #include "LevelLocalData.h"
 #include "QuestLocalData.h"
 #include "AchievementLocalData.h"
+#include "ObjectLocalData.h"
 #include "GearLocalData.h"
 #include "URConfigData.h"
+#include "MapParticleConfigData.h"
 
 USING_NS_CC;
 using namespace std;
@@ -50,18 +52,20 @@ DataManager::~DataManager()
 {
     Utils::clearMap(_levels);
     
-    if (_quests.find(kQuestType_Daily) != _quests.end()) {
-        Utils::clearMap(_quests.at(kQuestType_Daily));
+    for (map<QuestType, map<int, QuestLocalData*>>::iterator iter = _quests.begin(); iter != _quests.end(); ++iter) {
+        Utils::clearMap(iter->second);
     }
-    
-    if (_quests.find(kQuestType_Life) != _quests.end()) {
-        Utils::clearMap(_quests.at(kQuestType_Life));
-    }
+    _quests.clear();
     
     Utils::clearMap(_achievements);
     Utils::clearMap(_gears);
     Utils::clearMap(_animationParameters);
     Utils::clearMap(_unitResourceConfigData);
+    
+    for (map<int, vector<MapParticleConfigData*>>::iterator iter = _mapParticleConfigData.begin(); iter != _mapParticleConfigData.end(); ++iter) {
+        Utils::clearVector(iter->second);
+    }
+    _mapParticleConfigData.clear();
 }
 
 void DataManager::init()
@@ -70,9 +74,11 @@ void DataManager::init()
     parseQuestData(kQuestType_Daily);
     parseQuestData(kQuestType_Life);
     parseAchievementData();
+    parseObjectData();
     parseGearData();
     parseAnimationConfigData();
     parseURConfigData();
+    parseMapParticleConfigData();
 }
 
 #pragma mark - getters
@@ -106,6 +112,15 @@ const AchievementLocalData* DataManager::getAchievementData(int achievementId) c
     return nullptr;
 }
 
+const ObjectLocalData* DataManager::getObjectData(int objectId) const
+{
+    if (_objects.find(objectId) != _objects.end()) {
+        return _objects.at(objectId);
+    }
+    
+    return nullptr;
+}
+
 const GearLocalData* DataManager::getGearData(int gearId) const
 {
     if (_gears.find(gearId) != _gears.end()) {
@@ -128,13 +143,23 @@ AnimationParameters DataManager::getAnimationParameters(const string& name, Unde
     return {1.0f, 1.0f};
 }
 
-const URConfigData* DataManager::getURConfigData(const std::string& name) const
+const URConfigData* DataManager::getURConfigData(const string& name) const
 {
     if (_unitResourceConfigData.find(name) != _unitResourceConfigData.end()) {
         return _unitResourceConfigData.at(name);
     }
     
     return nullptr;
+}
+
+const vector<MapParticleConfigData*>& DataManager::getMapParticleConfigData(int mapId) const
+{
+    if (_mapParticleConfigData.find(mapId) != _mapParticleConfigData.end()) {
+        return _mapParticleConfigData.at(mapId);
+    }
+    
+    static vector<MapParticleConfigData*> empty;
+    return empty;
 }
 
 #pragma mark - parsers
@@ -241,6 +266,35 @@ void DataManager::parseAchievementData()
     }
 }
 
+void DataManager::parseObjectData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath("ObjectProperty.xml");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                ObjectLocalData* data = new (nothrow) ObjectLocalData(item);
+                const int id = data->getObjectId();
+                if (_objects.find(id) != _objects.end()) {
+                    assert(false);
+                } else {
+                    _objects.insert(make_pair(id, data));
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
 void DataManager::parseGearData()
 {
     string fileName = LocalHelper::getLocalizedConfigFilePath("EquipProperty.xml");
@@ -328,6 +382,40 @@ void DataManager::parseURConfigData()
             }
             
             CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
+void DataManager::parseMapParticleConfigData()
+{
+    for (int i = 0; i < 2; ++i) {
+        string fileName = LocalHelper::getLocalizedConfigFilePath(StringUtils::format("MapParticleConfig_%d.xml", i));
+        if (FileUtils::getInstance()->isFileExist(fileName)) {
+            // clear first
+            if (_mapParticleConfigData.find(i) != _mapParticleConfigData.end()) {
+                Utils::clearVector(_mapParticleConfigData.at(i));
+            } else {
+                _mapParticleConfigData.insert(make_pair(i, vector<MapParticleConfigData*>()));
+            }
+            
+            tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+            if (xmlDoc)
+            {
+                string content = LocalHelper::loadFileContentString(fileName);
+                xmlDoc->Parse(content.c_str());
+                
+                vector<MapParticleConfigData*>& configs = _mapParticleConfigData.at(i);
+                
+                for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                     item;
+                     item = item->NextSiblingElement())
+                {
+                    MapParticleConfigData* data = new (nothrow) MapParticleConfigData(item);
+                    configs.push_back(data);
+                }
+                
+                CC_SAFE_DELETE(xmlDoc);
+            }
         }
     }
 }

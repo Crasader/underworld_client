@@ -8,18 +8,29 @@
 
 #include "BagCell.h"
 
-BagNode* BagCell::getNode() const
+BagNode* BagCell::getNode(int idx) const
 {
-    return _node;
+    if (_nodes.find(idx) != _nodes.end()) {
+        return _nodes.at(idx);
+    }
+    
+    return nullptr;
 }
 
-void BagCell::setNode(BagNode* node)
+void BagCell::setNode(BagNode* node, int idx)
 {
-    assert(!_node);
-    _node = node;
+    if (node) {
+        if (_nodes.find(idx) != _nodes.end()) {
+            _nodes.at(idx) = node;
+        } else {
+            _nodes.insert(std::make_pair(idx, node));
+        }
+    }
 }
 
-void BagCell::resetNode()
+void BagCell::resetNode(int idx)
 {
-    _node = nullptr;
+    if (_nodes.find(idx) != _nodes.end()) {
+        _nodes.erase(idx);
+    }
 }

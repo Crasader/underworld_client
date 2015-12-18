@@ -15,6 +15,8 @@
 #include "cocostudio/CocoStudio.h"
 #include "tinyxml2/tinyxml2.h"
 #include "CoreUtils.h"
+#include "DataManager.h"
+#include "MapParticleConfigData.h"
 
 using namespace cocostudio;
 using namespace std;
@@ -110,10 +112,15 @@ static void loadMapSetting(const std::string& xml,
 
 MapLayer::MapLayer()
 :_mapId(INVALID_VALUE)
+,_width(0)
+,_height(0)
+,_tileWidth(0)
+,_tileHeight(0)
 ,_tiledMap(nullptr)
 ,_scrollView(nullptr)
 ,_mainLayer(nullptr)
 ,_butterfly(nullptr)
+,_isScrolling(false)
 {
     
 }
@@ -225,48 +232,55 @@ bool MapLayer::init(int mapId)
         logicLayer->removeFromParent();
         
         //--------- effect ---------//
-        // 1. butterfly
-        addButterfly();
-        
-        // 2. campfire
-        {
-            static const string file("effect-place-1.csb");
-            Node *effect = CSLoader::createNode(file);
-            effect->setPosition(Point(875, 80));
-            _tiledMap->addChild(effect);
-            timeline::ActionTimeline *action = CSLoader::createTimeline(file);
-            effect->runAction(action);
-            action->gotoFrameAndPlay(0, true);
-        }
-        
-        // 3. smoke
-        {
-            static const string file("particle/guohuo.plist");
-            ParticleSystemQuad *effect = ParticleSystemQuad::create(file);
-            effect->setPosition(Point(1455, 1020));
-            effect->setScale(2.5f);
-            _tiledMap->addChild(effect);
-        }
-        
-        // 4. spark
-        {
-            static const string file("particle/huoxing.plist");
-            ParticleSystemQuad *effect = ParticleSystemQuad::create(file);
-            effect->setPosition(Point(278, 232));
-            _tiledMap->addChild(effect);
-        }
-        
-        // 5. fire
-        {
-            static const string file("effect-fire-1.csb");
-            Node *effect = CSLoader::createNode(file);
-            effect->setPosition(Point(285, 245));
-            _tiledMap->addChild(effect);
-            timeline::ActionTimeline *action = CSLoader::createTimeline(file);
-            effect->setScaleX(0.6f);
-            effect->setScaleY(1.3f);
-            effect->runAction(action);
-            action->gotoFrameAndPlay(0, true);
+        if (0) {
+            // 1. butterfly
+            addButterfly();
+            
+            // 2. campfire
+            {
+                static const string file("effect-place-1.csb");
+                Node *effect = CSLoader::createNode(file);
+                effect->setPosition(Point(875, 80));
+                _tiledMap->addChild(effect);
+                timeline::ActionTimeline *action = CSLoader::createTimeline(file);
+                effect->runAction(action);
+                action->gotoFrameAndPlay(0, true);
+            }
+            
+            // 3. smoke
+            {
+                static const string file("particle/guohuo.plist");
+                ParticleSystemQuad *effect = ParticleSystemQuad::create(file);
+                effect->setPosition(Point(1455, 1020));
+                effect->setScale(2.5f);
+                _tiledMap->addChild(effect);
+            }
+            
+            // 4. spark
+            {
+                static const string file("particle/huoxing.plist");
+                ParticleSystemQuad *effect = ParticleSystemQuad::create(file);
+                effect->setPosition(Point(278, 232));
+                _tiledMap->addChild(effect);
+            }
+            
+            // 5. fire
+            {
+                static const string file("effect-fire-1.csb");
+                Node *effect = CSLoader::createNode(file);
+                effect->setPosition(Point(285, 245));
+                _tiledMap->addChild(effect);
+                timeline::ActionTimeline *action = CSLoader::createTimeline(file);
+                effect->setScaleX(0.6f);
+                effect->setScaleY(1.3f);
+                effect->runAction(action);
+                action->gotoFrameAndPlay(0, true);
+            }
+        } else {
+            const vector<MapParticleConfigData*>& particles = DataManager::getInstance()->getMapParticleConfigData(mapId);
+            for (int i = 0; i < particles.size(); ++i) {
+                addParticle(particles.at(i));
+            }
         }
         
         //--------- scale ---------//
@@ -276,6 +290,7 @@ bool MapLayer::init(int mapId)
         _scrollView->setMaxScale(TILEDMAP_MAX_SCALE);
         _scrollView->setMinScale(scale);
         _scrollView->setZoomScale(scale);
+        _scrollViewOffset = _scrollView->getContentOffset();
         
         //--------- event ---------//
         auto listener = EventListenerTouchAllAtOnce::create();
@@ -334,11 +349,33 @@ void MapLayer::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos
 
 void MapLayer::scrollViewDidScroll(cocos2d::extension::ScrollView* view)
 {
-    
+    if (!_isScrolling) {
+        _isScrolling = true;
+        scrollChecking(0);
+    }
 }
 
 void MapLayer::scrollViewDidZoom(cocos2d::extension::ScrollView* view)
 {
+}
+
+void MapLayer::addParticle(const MapParticleConfigData* data)
+{
+    ParticleSystemQuad *effect = ParticleSystemQuad::create(data->getName());
+    Point pos = Point(_width * _tileWidth / 2, _height * _tileHeight / 2) + Point(data->getPosX(), data->getPosY());
+    effect->setPosition(pos);
+    effect->setScaleX(data->getScaleX());
+    effect->setScaleY(data->getScaleY());
+    _tiledMap->addChild(effect);
+    _particles.insert(effect);
+}
+
+void MapLayer::removeParticle(ParticleSystemQuad* effect)
+{
+    effect->removeFromParent();
+    if (_particles.find(effect) != _particles.end()) {
+        _particles.erase(effect);
+    }
 }
 
 void MapLayer::addButterfly()
@@ -360,7 +397,7 @@ void MapLayer::addButterfly()
     });
     
     // generate a random position
-    static const float max_x = 2400.0f;
+    static const float max_x = _width * _tileWidth;
     static const float valid_y[2] = {140.0f, 1070.0f};
     static const float invalid_x[2][2] = {{625, 1155}, {1220, 1665}};
     
@@ -377,4 +414,24 @@ void MapLayer::addButterfly()
     }
     
     _butterfly->setPosition(Point(x, y));
+}
+
+void MapLayer::scrollChecking(float dt)
+{
+    const Vec2& offset = _scrollView->getContentOffset();
+    const bool show(offset == _scrollViewOffset);
+    for (set<ParticleSystemQuad*>::iterator iter = _particles.begin(); iter != _particles.end(); ++iter) {
+        (*iter)->setVisible(show);
+    }
+    
+    SEL_SCHEDULE selector = CC_SCHEDULE_SELECTOR(MapLayer::scrollChecking);
+    if (show) {
+        _isScrolling = false;
+        _scheduler->unschedule(selector, this);
+    } else {
+        _scrollViewOffset = offset;
+        if (false == _scheduler->isScheduled(selector, this)) {
+            _scheduler->schedule(selector, this, 0.1f, false);
+        }
+    }
 }

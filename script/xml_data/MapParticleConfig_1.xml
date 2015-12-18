@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<root>
+	<Item name="123" pos_x="50" pos_y="-453.79" scale_x="0.3386" scale_y="0.6871"/>
+	<Item name="565" pos_x="-718.93" pos_y="471.67" scale_x="2.3733" scale_y="2.5178"/>
+	<Item name="565" pos_x="-1309.02" pos_y="83.08" scale_x="1" scale_y="1.0886"/>
+	<Item name="565" pos_x="-1848.47" pos_y="200.43" scale_x="1" scale_y="1"/>
+	<Item name="565" pos_x="292.58" pos_y="372.34" scale_x="10.3759" scale_y="8.4299"/>
+	<Item name="565" pos_x="-1565.23" pos_y="-421" scale_x="2.0306" scale_y="1.8373"/>
+	<Item name="565" pos_x="1395.04" pos_y="333.73" scale_x="4.0679" scale_y="1.9514"/>
+	<Item name="565" pos_x="729.31" pos_y="510.73" scale_x="2.095" scale_y="1.8373"/>
+	<Item name="565" pos_x="1864.59" pos_y="255.43" scale_x="3.279" scale_y="2.1159"/>
+	<Item name="123" pos_x="1855.55" pos_y="278.81" scale_x="0.0648" scale_y="0.2726"/>
+	<Item name="565" pos_x="2173.4" pos_y="408.43" scale_x="5.1443" scale_y="3.5154"/>
+	<Item name="123" pos_x="2124.16" pos_y="179.84" scale_x="0.0797" scale_y="0.5974"/>
+	<Item name="123" pos_x="2163.37" pos_y="475.17" scale_x="0.1218" scale_y="0.5609"/>
+	<Item name="565" pos_x="-1185.97" pos_y="306.31" scale_x="3.5307" scale_y="2.1503"/>
+	<Item name="565" pos_x="1662.74" pos_y="-525.58" scale_x="4.7892" scale_y="1.5564"/>
+	<Item name="565" pos_x="1790.35" pos_y="-426.77" scale_x="2.3762" scale_y="1.3936"/>
+	<Item name="444" pos_x="-1561.49" pos_y="-510.88" scale_x="0.7526" scale_y="0.7525"/>
+	<Item name="444" pos_x="1451.09" pos_y="-438.65" scale_x="1.0871" scale_y="1.1306"/>
+	<Item name="444" pos_x="741.82" pos_y="399.49" scale_x="0.6135" scale_y="0.5491"/>
+	<Item name="444" pos_x="227.55" pos_y="438.24" scale_x="0.5977" scale_y="0.7989"/>
+	<Item name="444" pos_x="-604.7" pos_y="554.57" scale_x="0.6549" scale_y="0.6549"/>
+	<Item name="123_0" pos_x="-204.74" pos_y="65.35" scale_x="1.9644" scale_y="1.9644"/>
+	<Item name="123_0" pos_x="-1462.49" pos_y="93.48" scale_x="0.8393" scale_y="0.6785"/>
+	<Item name="123_0" pos_x="1732.2" pos_y="23.86" scale_x="0.5764" scale_y="0.5764"/>
+</root>

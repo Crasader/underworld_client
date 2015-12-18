@@ -17,6 +17,8 @@
 
 USING_NS_CC;
 
+class MapParticleConfigData;
+
 class MapLayer : public LayerColor, public cocos2d::extension::ScrollViewDelegate {
 public:
     virtual bool init(int mapId);
@@ -40,7 +42,10 @@ protected:
     virtual ~MapLayer();
     MapLayer();
     
+    void addParticle(const MapParticleConfigData* data);
+    void removeParticle(ParticleSystemQuad* effect);
     void addButterfly();
+    void scrollChecking(float dt);
 private:
     int _mapId;
     int _width;
@@ -51,6 +56,9 @@ private:
     cocos2d::extension::ScrollView *_scrollView;
     Node* _mainLayer;
     Node *_butterfly;
+    Vec2 _scrollViewOffset;
+    bool _isScrolling;
+    std::set<ParticleSystemQuad*> _particles;
 };
 
 #endif /* MapLayer_h */

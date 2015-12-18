@@ -20,7 +20,6 @@ using namespace UnderWorld::Core;
 
 static const float unitNodeOffsetX(17.0f);
 static const float unitNodeOffsetY(17.0f);
-static const int visibleCellsCount(6);
 
 static ProgressTimer* createProgressTimer()
 {
@@ -71,9 +70,6 @@ MapUILayer::MapUILayer()
     static const Size unitNodeSize = MapUIUnitNode::create(nullptr, 0)->getContentSize();
     _cellSize.height = unitNodeSize.height + unitNodeOffsetY * 2;
     _cellSize.width = unitNodeSize.width + unitNodeOffsetX;
-    
-    _tableViewMaxSize.width = _cellSize.width * visibleCellsCount + unitNodeOffsetX;
-    _tableViewMaxSize.height = _cellSize.height;
 }
 
 MapUILayer::~MapUILayer()
@@ -94,6 +90,7 @@ void MapUILayer::reload()
         }
         
         // if setTouchEnabled to false, tableCellTouched() will never be called
+        const int visibleCellsCount = (_tableViewMaxSize.width - unitNodeOffsetX) / _cellSize.width;
         _tableView->setTouchEnabled(_cellsCount > visibleCellsCount);
         _tableView->reloadData();
         
@@ -209,15 +206,6 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
     {
         const Size& winSize = Director::getInstance()->getWinSize();
 #if false
-        static const string file("GameImages/test/test_ui_bg.png");
-        Sprite *bg = Sprite::create(file);
-        addChild(bg, 1);
-        
-        const Size& size = bg->getContentSize();
-        bg->setPosition(Point(size.width / 2, size.height / 2));
-        bg->setScale(size.width / winSize.width, size.height / winSize.height);
-        
-#if false
         // yezi
         {
             static const string file("particle/yezi/yezi.plist");
@@ -245,7 +233,7 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
         }
 #endif
         
-#elif false
+#if false
         static const string CsbFile("rankInfo_UI.csb");
         Node *mainNode = CSLoader::createNode(CsbFile);
         mainNode->setPosition(Point(winSize.width / 2, winSize.height / 2));
@@ -389,20 +377,17 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             _energyResourceButton->setAnchorPoint(Point::ANCHOR_MIDDLE);
             _energyResourceButton->setPosition(Point(size.width / 2, size.height * 0.125));
             sprite->addChild(_energyResourceButton);
-        }
-        // units table
-        {
-            const Point& pos = Point(winSize.width / 2, ceilOffset);
-#if false
-            Sprite* sprite = CocosUtils::createPureColorSprite(_tableViewMaxSize, Color4B::BLACK);
-            sprite->setPosition(pos + Point(0, _tableViewMaxSize.height / 2));
-            root->addChild(sprite);
-#endif
+            
+            // units table
+            const Point& pos = sprite->getPosition() + Point(sprite->getContentSize().width + leftOffset, - unitNodeOffsetY);
+            
+            _tableViewMaxSize.width = winSize.width - (pos.x + leftOffset);
+            _tableViewMaxSize.height = _cellSize.height;
             
             _tableView = TableView::create(this, _tableViewMaxSize);
             _tableView->setDirection(extension::ScrollView::Direction::HORIZONTAL);
             _tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
-            _tableView->setPosition(pos - Point(_tableViewMaxSize.width / 2, unitNodeOffsetY));
+            _tableView->setPosition(pos);
             _tableView->setBounceable(false);
             root->addChild(_tableView);
         }

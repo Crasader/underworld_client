@@ -267,7 +267,7 @@ bool MainUILayer::init()
             });
         }
         
-//        updateIcon();
+        updateIcon();
         updateResources();
         
         auto eventListener = EventListenerTouchOneByOne::create();

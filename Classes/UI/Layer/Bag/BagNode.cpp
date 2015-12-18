@@ -13,15 +13,17 @@
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "SoundManager.h"
+#include "ObjectLocalData.h"
+#include "ObjectData.h"
 
 using namespace std;
 using namespace ui;
 using namespace cocostudio;
 
-BagNode* BagNode::create()
+BagNode* BagNode::create(const ObjectData* data, ssize_t idx, int column)
 {
     BagNode *ret = new (nothrow) BagNode();
-    if (ret && ret->init())
+    if (ret && ret->init(data, idx, column))
     {
         ret->autorelease();
         return ret;
@@ -33,6 +35,12 @@ BagNode* BagNode::create()
 
 BagNode::BagNode()
 :_observer(nullptr)
+,_data(nullptr)
+,_idx(CC_INVALID_INDEX)
+,_column(INVALID_VALUE)
+,_icon(nullptr)
+,_nameLabel(nullptr)
+,_descriptionLabel(nullptr)
 {
     
 }
@@ -47,7 +55,34 @@ void BagNode::registerObserver(BagNodeObserver *observer)
     _observer = observer;
 }
 
-bool BagNode::init()
+ssize_t BagNode::getIdx() const
+{
+    return _idx;
+}
+
+int BagNode::getColumn() const
+{
+    return _column;
+}
+
+void BagNode::update(const ObjectData* data, ssize_t idx, int column)
+{
+    if (data) {
+        _data = data;
+        _idx = idx;
+        
+        const ObjectLocalData* localData = _data->getLocalData();
+        if (_nameLabel) {
+            _nameLabel->setString(localData->getName());
+        }
+        
+        if (_descriptionLabel) {
+            _descriptionLabel->setString(localData->getDescription());
+        }
+    }
+}
+
+bool BagNode::init(const ObjectData* data, ssize_t idx, int column)
 {
     if (Node::init())
     {
@@ -73,61 +108,29 @@ bool BagNode::init()
                     switch (tag) {
                         case 100:
                         {
-                            Button* button = dynamic_cast<Button*>(child);
-                            if (button) {
-                                button->setPressedActionEnabled(true);
-                                button->addClickEventListener([this](Ref *pSender){
-                                    SoundManager::getInstance()->playButtonSound();
-                                    // TODO:
-                                });
-                            }
+                            Label* label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
+                            label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+                            child->addChild(label);
+                            
+                            _nameLabel = label;
                         }
                             break;
                         case 101:
                         {
-                            LabelAtlas* label = CocosUtils::create12x30Number(StringUtils::format("%d", 1));
-                            label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
+                            Label* label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
+                            label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+                            label->setTextColor(Color4B::ORANGE);
                             child->addChild(label);
+                            
+                            _descriptionLabel = label;
                         }
                             break;
                         case 102:
                         {
-                            LabelAtlas* label = CocosUtils::create12x30Number(StringUtils::format("%d", 1));
-                            label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
-                            child->addChild(label);
-                        }
-                            break;
-                        case 103:
-                        {
-                            LabelAtlas* label = CocosUtils::create12x30Number(StringUtils::format("%d", 1));
-                            label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
-                            child->addChild(label);
-                        }
-                            break;
-                        case 104:
-                        {
-                            Button* button = dynamic_cast<Button*>(child);
-                            if (button) {
-                                button->setPressedActionEnabled(true);
-                                button->addClickEventListener([this](Ref *pSender){
-                                    SoundManager::getInstance()->playButtonSound();
-                                    // TODO:
-                                });
-                            }
-                        }
-                            break;
-                        case 105:
-                        {
-                            Label* label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
-                            label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
-                            child->addChild(label);
-                        }
-                            break;
-                        case 106:
-                        {
-                            Label* label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
-                            label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
-                            child->addChild(label);
+                            Sprite* sprite = Sprite::create();
+                            child->addChild(sprite);
+                            
+                            _icon = sprite;
                         }
                             break;
                         default:
@@ -136,6 +139,8 @@ bool BagNode::init()
                 }
             }
         }
+        
+        update(data, idx, column);
         
         return true;
     }

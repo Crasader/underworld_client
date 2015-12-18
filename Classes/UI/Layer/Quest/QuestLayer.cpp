@@ -46,8 +46,8 @@ QuestLayer::QuestLayer()
     _cellSize.height = unitNodeSize.height + nodeOffsetY * 2;
     _cellSize.width = unitNodeSize.width + nodeOffsetX;
     
-    _tableViewMaxSize.width = _cellSize.width * visibleCellsCount + nodeOffsetX;
-    _tableViewMaxSize.height = _cellSize.height;
+    _tableViewMaxSize.width = _cellSize.width;
+    _tableViewMaxSize.height = _cellSize.height * visibleCellsCount + nodeOffsetY;
 }
 
 QuestLayer::~QuestLayer()

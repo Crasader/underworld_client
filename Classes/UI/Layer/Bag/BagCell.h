@@ -21,12 +21,12 @@ class BagCell: public TableViewCell
 {
 public:
     CREATE_FUNC(BagCell);
-    BagNode* getNode() const;
-    void setNode(BagNode* node);
-    void resetNode();
+    BagNode* getNode(int idx) const;
+    void setNode(BagNode* node, int idx);
+    void resetNode(int idx);
     
 private:
-    BagNode* _node;
+    std::map<int, BagNode*> _nodes;
 };
 
 #endif /* BagCell_h */

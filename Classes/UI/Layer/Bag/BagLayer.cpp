@@ -23,6 +23,7 @@ using namespace cocostudio;
 static const float nodeOffsetX(17.0f);
 static const float nodeOffsetY(17.0f);
 static const int visibleCellsCount(6);
+static const unsigned int columnCount(4);
 
 BagLayer* BagLayer::create(int tabIndex)
 {
@@ -42,12 +43,12 @@ BagLayer::BagLayer()
 ,_scrollBar(nullptr)
 ,_tabIndex(-1)
 {
-    static const Size unitNodeSize = Size::ZERO;
+    static const Size unitNodeSize = BagNode::create(nullptr, 0, 0)->getContentSize();
     _cellSize.height = unitNodeSize.height + nodeOffsetY * 2;
-    _cellSize.width = unitNodeSize.width + nodeOffsetX;
+    _cellSize.width = (unitNodeSize.width + nodeOffsetX) * columnCount + nodeOffsetX;
     
-    _tableViewMaxSize.width = _cellSize.width * visibleCellsCount + nodeOffsetX;
-    _tableViewMaxSize.height = _cellSize.height;
+    _tableViewMaxSize.width = _cellSize.width;
+    _tableViewMaxSize.height = _cellSize.height * visibleCellsCount + nodeOffsetY;
 }
 
 BagLayer::~BagLayer()
@@ -174,11 +175,27 @@ TableViewCell* BagLayer::tableCellAtIndex(TableView *table, ssize_t idx)
         cell = BagCell::create();
     }
     
-    BagNode* node = cell->getNode();
-    if (node) {
-        
-    } else {
-        
+    for (int i = 0; i < columnCount; ++i) {
+        ssize_t index = idx * columnCount + i;
+        BagNode* node = cell->getNode(i);
+        if (index < 100 /* objects.count */) {
+            const ObjectData* data = nullptr;
+            if (node) {
+                node->update(data, idx, i);
+            } else {
+                node = BagNode::create(data, idx, i);
+                const Size& size = node->getContentSize();
+                node->setPosition(Point(size.width * (i + 0.5f), size.height * 0.5f + nodeOffsetY));
+                node->registerObserver(this);
+                cell->addChild(node);
+                cell->setNode(node, i);
+            }
+        } else {
+            if (node) {
+                node->removeFromParent();
+                cell->resetNode(i);
+            }
+        }
     }
     
     return cell;

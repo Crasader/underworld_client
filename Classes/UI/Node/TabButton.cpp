@@ -68,8 +68,8 @@ bool TabButton::init(const string& title, const Button::ccWidgetClickCallback& c
                             if (button) {
                                 button->addClickEventListener(callback);
                                 
-                                Node* n = button->getChildByTag(100);
-                                if (n) {
+                                Node* child = button->getChildByTag(100);
+                                if (child) {
                                     Label* label = CocosUtils::createLabel(title, DEFAULT_FONT_SIZE);
                                     label->setTextColor(normalTextColor);
                                     child->addChild(label);
