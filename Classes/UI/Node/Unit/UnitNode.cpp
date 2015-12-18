@@ -33,10 +33,7 @@ static const float hpPercentageThreshold(50.0f);
 static inline const string unit_getName(const Unit* unit)
 {
     if (unit) {
-        const UnitType* type = unit->getUnitType();
-        if (type) {
-            return type->getName();
-        }
+            return unit->getUnitBase().getUnitName();
     }
     
     return "";
@@ -44,8 +41,7 @@ static inline const string unit_getName(const Unit* unit)
 
 static inline bool unit_isMovable(const Unit* unit)
 {
-    const UnitClass unitClass = unit->getUnitType()->getUnitClass();
-    return (kUnitClass_Warrior == unitClass || kUnitClass_Hero == unitClass) ? true : false;
+    return unit->getDefaultSkill(kSkillClass_Move) != nullptr;
 }
 
 static inline SkillClass unit_getSkillClass(const Unit* unit)
@@ -144,7 +140,7 @@ void UnitNode::update()
             const float percentage(calculateHpPercentage());
             
             const SkillClass currentSkillClass(unit_getSkillClass(_unit));
-            const UnitClass unitClass(_unit->getUnitType()->getUnitClass());
+            const UnitClass unitClass(_unit->getUnitBase().getUnitClass());
             
             switch (unitClass) {
                 case kUnitClass_Warrior:
@@ -348,7 +344,7 @@ const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
     const string& prefix = _configData->getPrefix();
     
     string csbFile;
-    const UnitClass unitClass = _unit->getUnitType()->getUnitClass();
+    const UnitClass unitClass = _unit->getUnitBase().getUnitClass();
     const SkillClass skillClass(unit_getSkillClass(_unit));
     switch (skillClass) {
         case kSkillClass_Stop:
@@ -438,7 +434,7 @@ const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
 const string UnitNode::getStandbyCsbFile(UnitDirection direction, bool isHealthy)
 {
     string csbFile;
-    const UnitClass unitClass = _unit->getUnitType()->getUnitClass();
+    const UnitClass unitClass = _unit->getUnitBase().getUnitClass();
     
     switch (unitClass) {
         case kUnitClass_Core:
@@ -517,8 +513,8 @@ void UnitNode::calculateDirection(UnitDirection& direction, bool& flip)
                 currentPos = centerPos;
                 targetPos = _unit->getTargetPos();
             } else {
-                const UnitType* unitType = _unit->getUnitType();
-                currentPos = lastPos + Coordinate(unitType->getSize() / 2, unitType->getSize() / 2);
+                const UnitBase& unitBase = _unit->getUnitBase();
+                currentPos = lastPos + Coordinate(unitBase.getSize() / 2, unitBase.getSize() / 2);
                 targetPos = centerPos;
             }
             
@@ -557,7 +553,7 @@ void UnitNode::calculateDirection(UnitDirection& direction, bool& flip)
 
 float UnitNode::calculateHpPercentage()
 {
-    const int maxHp = _unit->getUnitType()->getMaxHp();
+    const int maxHp = _unit->getUnitBase().getMaxHp();
     const int hp = _unit->getHp();
     return 100 * (float)hp / (float)maxHp;
 }
@@ -646,7 +642,7 @@ void UnitNode::updateActionNode(const Skill* skill, const string& file, int curr
     if (_unit) {
         removeActionNode();
         
-        const UnitClass unitClass = _unit->getUnitType()->getUnitClass();
+        const UnitClass unitClass = _unit->getUnitBase().getUnitClass();
         const SkillClass skillClass(unit_getSkillClass(_unit));
         const bool isDead = (kSkillClass_Die == skillClass);
         
@@ -730,7 +726,7 @@ void UnitNode::removeActionNode()
 void UnitNode::addHPBar()
 {
     if (!_hpBar && _unit) {
-        _hpBar = DisplayBar::create(kHP, _unit->getBelongFaction()->getFactionIndex(), _unit->getUnitType()->getUnitClass());
+        _hpBar = DisplayBar::create(kHP, _unit->getBelongFaction()->getFactionIndex(), _unit->getUnitBase().getUnitClass());
         const Size& size = _sprite->getContentSize();
         const Point& pos = _sprite->getPosition();
         const Point position(pos + Point(0, size.height / 2 + 10.0f));

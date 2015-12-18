@@ -205,7 +205,7 @@ void GameRender::updateUILayer()
         for (map<int, Unit*>::iterator iter = _cores.begin(); iter != _cores.end(); ++iter) {
             const Unit* core(iter->second);
             if (core) {
-                const int maxHp = core->getUnitType()->getMaxHp();
+                const int maxHp = core->getUnitBase().getMaxHp();
                 const int hp = core->getHp();
                 const float percentage = 100 * (float)hp / (float)maxHp;
                 if (iter->first == world->getThisFactionIndex()) {
@@ -250,7 +250,7 @@ void GameRender::onUnitNodePlayDeadAnimationFinished(UnitNode* node)
 void GameRender::onUnitNodeHurtTheTarget(UnitNode* node)
 {
     const Unit* unit = node->getUnit();
-    hurtUnit(unit->getTarget(), unit->getUnitType()->getName());
+    hurtUnit(unit->getTarget(), unit->getUnitBase().getUnitName());
     node->addSwordEffect();
 }
 
@@ -263,7 +263,7 @@ void GameRender::onBulletNodeReachedTarget(BulletNode* node)
 void GameRender::onBulletNodeExploded(BulletNode* node)
 {
     const Bullet* bullet = node->getBullet();
-    hurtUnit(bullet->getTarget(), bullet->getTrigger()->getUnitType()->getName());
+    hurtUnit(bullet->getTarget(), bullet->getTrigger()->getUnitBase().getUnitName());
 }
 
 #pragma mark - MapUILayerObserver
