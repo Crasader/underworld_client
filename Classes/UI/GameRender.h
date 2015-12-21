@@ -45,7 +45,6 @@ public:
     
 protected:
     // UnitNodeObserver
-    virtual bool isUnitNodeBornOnTheRight(UnitNode* node) override;
     virtual void onUnitNodePlayDeadAnimationFinished(UnitNode* node) override;
     virtual void onUnitNodeHurtTheTarget(UnitNode* node) override;
     

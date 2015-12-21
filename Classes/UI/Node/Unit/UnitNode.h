@@ -30,7 +30,6 @@ class UnitNodeObserver
 {
 public:
     virtual ~UnitNodeObserver() {}
-    virtual bool isUnitNodeBornOnTheRight(UnitNode* node) = 0;
     virtual void onUnitNodePlayDeadAnimationFinished(UnitNode* node) = 0;
     virtual void onUnitNodeHurtTheTarget(UnitNode* node) = 0;
 };
@@ -38,36 +37,37 @@ public:
 class UnitNode : public Node
 {
 public:
-    static UnitNode* create(const UnderWorld::Core::Unit* unit);
+    static UnitNode* create(const UnderWorld::Core::Unit* unit, bool rightSide);
     virtual ~UnitNode();
     const UnderWorld::Core::Unit* getUnit() const;
     void registerObserver(UnitNodeObserver *observer);
     void update();
     
-    // effects
+    // --------------- effects ---------------
     void addBlockEffect();
     void addRecoveryEffect();
     void addSwordEffect();
     void addBuf();
     void removeBuf();
     
-    // callbacks
+    // --------------- callbacks ---------------
     void onHurt(const std::string& trigger);
     void onWin();
     void onLose();
     
 protected:
-    UnitNode();
-    bool init(const UnderWorld::Core::Unit* unit);
-    const std::string getCsbFile(UnitDirection direction, float hpPercentage);
+    UnitNode(const UnderWorld::Core::Unit* unit, bool rightSide);
+    bool init();
+    void getCsbFiles(std::vector<std::string>& output, UnitDirection direction, bool isHealthy);
     const std::string getStandbyCsbFile(UnitDirection direction, bool isHealthy);
-    void getMultipleAnimationFiles(std::vector<std::string>& output);
+    void getAttackCsbFiles(std::vector<std::string>& output, UnitDirection direction, bool isHealthy);
     bool checkIsStandby();
+    bool needToChangeStandbyStatus();
     void calculateDirection(UnitDirection& direction, bool& flip);
     float calculateHpPercentage();
     void addActionNode(const std::string& file, bool play, bool loop, float playTime, int frameIndex, const std::function<void()>& lastFrameCallFunc);
-    void addMultipleAnimationNode(int frameIndex, const std::function<void()>& lastFrameCallFunc);
-    void updateActionNode(const UnderWorld::Core::Skill* skill, const std::string& file, int currentFrame, bool flip);
+    void addAttackActionNode(float playTime, int frameIndex, const std::function<void()>& lastFrameCallFunc);
+    void updateActionNode(const UnderWorld::Core::Skill* skill, const std::vector<std::string>& files, int currentFrame, bool flip);
     void removeActionNode();
     void addHPBar();
     void updateHPBar();
@@ -78,11 +78,15 @@ protected:
     void playAttackSound();
     
 private:
+    // --------------- base ---------------
     UnitNodeObserver *_observer;
     const UnderWorld::Core::Unit* _unit;
+    const bool _isBornOnTheRight;
+    std::string _unitName;
+    bool _isBuilding;
     const URConfigData* _configData;
-    bool _isBornOnTheRight;
     bool _needToFlip;
+    // --------------- animation ---------------
     Node *_actionNode;
     cocostudio::timeline::ActionTimeline *_currentAction;
     Scheduler *_speedScheduler;
@@ -96,7 +100,8 @@ private:
     float _lastHpPercentage;
     int _switchAnimationCounter;
     bool _isStandby;
-    std::vector<std::string> _multipleAnimationFiles;
+    bool _isPlayingAttackAnimation;
+    std::vector<std::string> _animationFiles;
 };
 
 #endif /* UnitNode_h */

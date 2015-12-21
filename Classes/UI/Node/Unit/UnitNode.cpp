@@ -30,39 +30,16 @@ static const int animationCheckerFrames(30);
 static const float hpPercentageThreshold(50.0f);
 
 #pragma mark ======================= inline unit getters =======================
-static inline const string unit_getName(const Unit* unit)
-{
-    if (unit) {
-            return unit->getUnitBase().getUnitName();
-    }
-    
-    return "";
-}
-
-static inline bool unit_isMovable(const Unit* unit)
-{
-    return unit->getDefaultSkill(kSkillClass_Move) != nullptr;
-}
-
 static inline SkillClass unit_getSkillClass(const Unit* unit)
 {
     return unit->getCurrentSkill()->getSkillType()->getSkillClass();
 }
 
-static bool hasStandbyAnimation(const Unit* unit)
-{
-    if (kSkillClass_Attack == unit_getSkillClass(unit)) {
-        return true;
-    }
-    
-    return false;
-}
-
 #pragma mark ======================= Class UnitNode =======================
-UnitNode* UnitNode::create(const Unit* unit)
+UnitNode* UnitNode::create(const Unit* unit, bool rightSide)
 {
-    UnitNode *ret = new (nothrow) UnitNode();
-    if (ret && ret->init(unit))
+    UnitNode *ret = new (nothrow) UnitNode(unit, rightSide);
+    if (ret && ret->init())
     {
         ret->autorelease();
         return ret;
@@ -74,12 +51,15 @@ UnitNode* UnitNode::create(const Unit* unit)
     }
 }
 
-UnitNode::UnitNode()
+UnitNode::UnitNode(const Unit* unit, bool rightSide)
+// base
 :_observer(nullptr)
-,_unit(nullptr)
+,_unit(unit)
+,_isBornOnTheRight(rightSide)
+,_isBuilding(false)
 ,_configData(nullptr)
-,_isBornOnTheRight(false)
 ,_needToFlip(false)
+// animations used
 ,_actionNode(nullptr)
 ,_currentAction(nullptr)
 ,_speedScheduler(nullptr)
@@ -93,8 +73,14 @@ UnitNode::UnitNode()
 ,_lastHpPercentage(0.0f)
 ,_switchAnimationCounter(0)
 ,_isStandby(false)
+,_isPlayingAttackAnimation(false)
 {
+    _unitName = unit->getUnitBase().getUnitName();
     
+    UnitClass uc = unit->getUnitBase().getUnitClass();
+    _isBuilding = (kUnitClass_Core == uc || kUnitClass_Building == uc);
+    _configData = DataManager::getInstance()->getURConfigData(_unitName);
+    _needToFlip = (_isBornOnTheRight == _configData->isFaceRight());
 }
 
 UnitNode::~UnitNode()
@@ -122,10 +108,6 @@ const Unit* UnitNode::getUnit() const
 void UnitNode::registerObserver(UnitNodeObserver *observer)
 {
     _observer = observer;
-    if (_observer) {
-        _isBornOnTheRight = _observer->isUnitNodeBornOnTheRight(this);
-        _needToFlip = (_isBornOnTheRight == _configData->isFaceRight());
-    }
 }
 
 void UnitNode::update()
@@ -139,96 +121,78 @@ void UnitNode::update()
             bool flip(false);
             const float percentage(calculateHpPercentage());
             
-            const SkillClass currentSkillClass(unit_getSkillClass(_unit));
-            const UnitClass unitClass(_unit->getUnitBase().getUnitClass());
-            
-            switch (unitClass) {
-                case kUnitClass_Warrior:
-                case kUnitClass_Hero:
-                {
-                    calculateDirection(direction, flip);
-                    if (_lastSkill) {
-                        const SkillClass lastSkillClass(_lastSkill->getSkillType()->getSkillClass());
-                        if (currentSkillClass != lastSkillClass) {
-                            // TODO: remove temp code
-                            if (hasStandbyAnimation(_unit) && _isStandby != checkIsStandby()) {
-                                _isStandby = !_isStandby;
-                            } else if (_isStandby) {
-                                _isStandby = false;
+            if (_lastSkill) {
+                const SkillClass currentSkillClass(unit_getSkillClass(_unit));
+                if (_isBuilding) {
+                    const SkillClass lastSkillClass(_lastSkill->getSkillType()->getSkillClass());
+                    if (currentSkillClass != lastSkillClass) {
+                        if (WOLF_TOWER == _unitName || VAMPIRE_TOWER == _unitName) {
+                            if (kSkillClass_Attack == currentSkillClass || kSkillClass_Attack == lastSkillClass) {
+                                // attack
+                                needToUpdateUI = true;
+                            } else if (kSkillClass_Die == currentSkillClass) {
+                                // destroyed
+                                needToUpdateUI = true;
                             }
-                            needToUpdateUI = true;
-                        } else if (_lastDirection != direction) {
-                            switch (currentSkillClass) {
-                                case kSkillClass_Move:
-                                case kSkillClass_Attack:
-                                {
-                                    ++ _switchAnimationCounter;
-                                    if (_switchAnimationCounter >= animationCheckerFrames) {
-                                        // TODO: remove temp code
-                                        if (hasStandbyAnimation(_unit) && _isStandby != checkIsStandby()) {
-                                            _isStandby = !_isStandby;
-                                        }
-                                        
-                                        needToUpdateUI = true;
-                                        if (_currentAction) {
-                                            currentFrame = _currentAction->getCurrentFrame();
-                                        }
-                                    }
-                                }
-                                    break;
-                                    
-                                default:
-                                    break;
-                            }
-                        } else {
-                            // TODO: remove temp code
-                            // check if the unit is standby
-                            if (hasStandbyAnimation(_unit) && _isStandby != checkIsStandby()) {
-                                _isStandby = !_isStandby;
+                        } else if (WOLF_CORE == _unitName || VAMPIRE_CORE == _unitName) {
+                            if (kSkillClass_Die == currentSkillClass) {
+                                // destroyed
                                 needToUpdateUI = true;
                             }
                         }
-                    } else {
-                        needToUpdateUI = true;
-                    }
-                }
-                    break;
-                case kUnitClass_Core:
-                case kUnitClass_Building:
-                {
-                    if (_lastSkill) {
-                        const SkillClass lastSkillClass(_lastSkill->getSkillType()->getSkillClass());
-                        if (currentSkillClass != lastSkillClass) {
-                            const string& unitName(unit_getName(_unit));
-                            if (WOLF_TOWER == unitName || VAMPIRE_TOWER == unitName) {
-                                if (kSkillClass_Attack == currentSkillClass || kSkillClass_Attack == lastSkillClass) {
-                                    // attack
-                                    needToUpdateUI = true;
-                                } else if (kSkillClass_Die == currentSkillClass) {
-                                    // destroyed
-                                    needToUpdateUI = true;
-                                }
-                            } else if (WOLF_CORE == unitName || VAMPIRE_CORE == unitName) {
-                                if (kSkillClass_Die == currentSkillClass) {
-                                    // destroyed
-                                    needToUpdateUI = true;
-                                }
-                            }
-                            
-                            if (WOLF_CORE == unitName || VAMPIRE_CORE == unitName) {
-                                if (!needToUpdateUI && (hpPercentageThreshold - _lastHpPercentage) * (hpPercentageThreshold - percentage) <= 0) {
-                                    // hurt
-                                    needToUpdateUI = true;
-                                }
+                        
+                        if (WOLF_CORE == _unitName || VAMPIRE_CORE == _unitName) {
+                            if (!needToUpdateUI && (hpPercentageThreshold - _lastHpPercentage) * (hpPercentageThreshold - percentage) <= 0) {
+                                // hurt
+                                needToUpdateUI = true;
                             }
                         }
-                    } else {
+                    }
+                } else {
+                    calculateDirection(direction, flip);
+                    const SkillClass lastSkillClass(_lastSkill->getSkillType()->getSkillClass());
+                    if (currentSkillClass != lastSkillClass) {
+                        // TODO: remove temp code
+                        if (needToChangeStandbyStatus()) {
+                            _isStandby = !_isStandby;
+                        } else if (_isStandby) {
+                            _isStandby = false;
+                        }
                         needToUpdateUI = true;
+                    } else if (_lastDirection != direction) {
+                        switch (currentSkillClass) {
+                            case kSkillClass_Move:
+                            case kSkillClass_Attack:
+                            {
+                                ++ _switchAnimationCounter;
+                                if (_switchAnimationCounter >= animationCheckerFrames) {
+                                    // TODO: remove temp code
+                                    if (needToChangeStandbyStatus()) {
+                                        _isStandby = !_isStandby;
+                                    }
+                                    
+                                    needToUpdateUI = true;
+                                    if (_currentAction) {
+                                        currentFrame = _currentAction->getCurrentFrame();
+                                    }
+                                }
+                            }
+                                break;
+                                
+                            default:
+                                break;
+                        }
+                    } else {
+                        // TODO: remove temp code
+                        // check if the unit is standby
+                        if (needToChangeStandbyStatus()) {
+                            _isStandby = !_isStandby;
+                            needToUpdateUI = true;
+                        }
                     }
                 }
-                    break;
-                default:
-                    break;
+            } else {
+                needToUpdateUI = true;
             }
             
             if (needToUpdateUI) {
@@ -240,8 +204,8 @@ void UnitNode::update()
                 
 //                CCLOG("--------------------- direction: %d ---------------------", direction);
                 
-                const string& file = getCsbFile(direction, percentage);
-                updateActionNode(currentSkill, file, currentFrame, flip ? !_needToFlip : _needToFlip);
+                getCsbFiles(_animationFiles, direction, percentage > hpPercentageThreshold);
+                updateActionNode(currentSkill, _animationFiles, currentFrame, flip ? !_needToFlip : _needToFlip);
             }
         }
         
@@ -324,77 +288,44 @@ void UnitNode::onLose()
     onWin();
 }
 
-bool UnitNode::init(const Unit* unit)
+bool UnitNode::init()
 {
     if (Node::init())
     {
-        _unit = unit;
-        const string& unitName(unit_getName(unit));
-        _configData = DataManager::getInstance()->getURConfigData(unitName);
-        assert(_configData);
-        
         return true;
     }
     
     return false;
 }
 
-const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
+void UnitNode::getCsbFiles(vector<string>& output, UnitDirection direction, bool isHealthy)
 {
-    const string& prefix = _configData->getPrefix();
+    output.clear();
     
+    const string& prefix = _configData->getPrefix();
     string csbFile;
-    const UnitClass unitClass = _unit->getUnitBase().getUnitClass();
     const SkillClass skillClass(unit_getSkillClass(_unit));
     switch (skillClass) {
         case kSkillClass_Stop:
         {
-            csbFile = getStandbyCsbFile(direction, hpPercentage > hpPercentageThreshold);
+            csbFile = getStandbyCsbFile(direction, isHealthy);
         }
             break;
         case kSkillClass_Move:
         {
-            switch (unitClass) {
-                case kUnitClass_Warrior:
-                case kUnitClass_Hero:
-                {
-                    csbFile = prefix + StringUtils::format("-run-%d.csb", direction);
-                }
-                    break;
-                    
-                default:
-                    assert(false);
-                    break;
+            if (_isBuilding) {
+                assert(false);
+            } else {
+                csbFile = prefix + StringUtils::format("-run-%d.csb", direction);
             }
         }
             break;
         case kSkillClass_Attack:
         {
-            switch (unitClass) {
-                case kUnitClass_Core:
-                case kUnitClass_Building:
-                {
-                    const bool healthy(hpPercentage > hpPercentageThreshold);
-                    const string& attack = _configData->getBAttack();
-                    if (attack.length() > 0) {
-                        csbFile = attack;
-                    } else {
-                        csbFile = getStandbyCsbFile(direction, healthy);
-                    }
-                }
-                    break;
-                case kUnitClass_Warrior:
-                case kUnitClass_Hero:
-                {
-                    if (_isStandby) {
-                        csbFile = getStandbyCsbFile(direction, hpPercentage > hpPercentageThreshold);
-                    } else {
-                        csbFile = prefix + StringUtils::format("-attack-%d.csb", direction);
-                    }
-                }
-                    break;
-                default:
-                    break;
+            if (_isStandby) {
+                csbFile = getStandbyCsbFile(direction, isHealthy);
+            } else {
+                getAttackCsbFiles(output, direction, isHealthy);
             }
         }
             break;
@@ -405,21 +336,10 @@ const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
             break;
         case kSkillClass_Die:
         {
-            switch (unitClass) {
-                case kUnitClass_Core:
-                case kUnitClass_Building:
-                {
-                    csbFile = _configData->getBDestroyed();
-                }
-                    break;
-                case kUnitClass_Warrior:
-                case kUnitClass_Hero:
-                {
-                    csbFile = prefix + StringUtils::format("-dead-%d.csb", direction);
-                }
-                    break;
-                default:
-                    break;
+            if (_isBuilding) {
+                csbFile = _configData->getBDestroyed();
+            } else {
+                csbFile = prefix + StringUtils::format("-dead-%d.csb", direction);
             }
         }
             break;
@@ -428,55 +348,51 @@ const string UnitNode::getCsbFile(UnitDirection direction, float hpPercentage)
             break;
     }
     
-    return csbFile;
+    if (output.size() == 0 && csbFile.length() > 0) {
+        output.push_back(csbFile);
+    }
 }
 
 const string UnitNode::getStandbyCsbFile(UnitDirection direction, bool isHealthy)
 {
     string csbFile;
-    const UnitClass unitClass = _unit->getUnitBase().getUnitClass();
-    
-    switch (unitClass) {
-        case kUnitClass_Core:
-        case kUnitClass_Building:
-        {
-            const string& normal = _configData->getBNormal();
-            const string& damaged = _configData->getBDamaged();
-            csbFile = isHealthy ? normal : (damaged.length() > 0 ? damaged : normal);
-        }
-            break;
-        case kUnitClass_Warrior:
-        case kUnitClass_Hero:
-        {
-            const string& prefix = _configData->getPrefix();
-            csbFile = prefix + StringUtils::format("-standby-%d.csb", direction);
-        }
-            break;
-        default:
-            break;
+    if (_isBuilding) {
+        const string& normal = _configData->getBNormal();
+        const string& damaged = _configData->getBDamaged();
+        csbFile = isHealthy ? normal : (damaged.length() > 0 ? damaged : normal);
+    } else {
+        const string& prefix = _configData->getPrefix();
+        csbFile = prefix + StringUtils::format("-standby-%d.csb", direction);
     }
     
     return csbFile;
 }
 
-void UnitNode::getMultipleAnimationFiles(vector<string>& output)
+void UnitNode::getAttackCsbFiles(vector<string>& output, UnitDirection direction, bool isHealthy)
 {
     output.clear();
-    if (kSkillClass_Attack == unit_getSkillClass(_unit)) {
+    if (_isBuilding) {
+        // 1. attack begin
         const string& attackBegin = _configData->getBAttackBegin();
-        const string& attackEnd = _configData->getBAttackEnd();
-        if (attackBegin.length() > 0 || attackEnd.length() > 0) {
-            // 1. attack begin
-            if (attackBegin.length() > 0) {
-                output.push_back(attackBegin);
-            }
-            // 2. attack
-            output.push_back(_configData->getBAttack());
-            // 3. attack end
-            if (attackEnd.length() > 0) {
-                output.push_back(attackEnd);
-            }
+        if (attackBegin.length() > 0) {
+            output.push_back(attackBegin);
         }
+        // 2. attack
+        const string& attack = _configData->getBAttack();
+        if (attack.length() > 0) {
+            output.push_back(attack);
+        } else {
+            output.push_back(getStandbyCsbFile(direction, isHealthy));
+        }
+        // 3. attack end
+        const string& attackEnd = _configData->getBAttackEnd();
+        if (attackEnd.length() > 0) {
+            output.push_back(attackEnd);
+        }
+    } else {
+        const string& prefix = _configData->getPrefix();
+        const string& file1 = prefix + StringUtils::format("-attack-%d.csb", direction);
+        output.push_back(file1);
     }
 }
 
@@ -484,13 +400,22 @@ bool UnitNode::checkIsStandby()
 {
     const SkillClass skillClass(unit_getSkillClass(_unit));
     if (kSkillClass_Attack == skillClass) {
-        if (unit_isMovable(_unit)) {
+        if (!_isBuilding) {
             const Skill::SkillState state(_unit->getCurrentSkill()->getSkillState());
-            if (Skill::SkillState::kSkillState_idle == state) {
+            if (!_isPlayingAttackAnimation && Skill::SkillState::kSkillState_idle == state) {
                 return true;
             }
         }
     } else if (kSkillClass_Stop == skillClass) {
+        return true;
+    }
+    
+    return false;
+}
+
+bool UnitNode::needToChangeStandbyStatus()
+{
+    if (kSkillClass_Attack == unit_getSkillClass(_unit) && _isStandby != checkIsStandby()) {
         return true;
     }
     
@@ -591,10 +516,9 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
             _currentAction->setCurrentFrame(frameIndex);
             _currentAction->setLastFrameCallFunc(lastFrameCallFunc);
             
-            const string& name = unit_getName(_unit);
             const SkillClass skillClass(unit_getSkillClass(_unit));
 
-            AnimationParameters params = DataManager::getInstance()->getAnimationParameters(name, skillClass, _lastDirection);
+            AnimationParameters params = DataManager::getInstance()->getAnimationParameters(_unitName, skillClass, _lastDirection);
             float scale = params.scale;
             float speed = params.speed;
             
@@ -618,28 +542,34 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
     }
 }
 
-void UnitNode::addMultipleAnimationNode(int frameIndex, const function<void()>& lastFrameCallFunc)
+void UnitNode::addAttackActionNode(float playTime, int frameIndex, const function<void()>& lastFrameCallFunc)
 {
-    static function<void()> callback = nullptr;
-    callback = lastFrameCallFunc;
-    
     const SkillClass skillClass = unit_getSkillClass(_unit);
     if (kSkillClass_Attack == skillClass) {
-        if (_multipleAnimationFiles.size() > 0) {
-            const string& file = _multipleAnimationFiles.front();
-            addActionNode(file, true, false, 0.0f, 0, [this]() {
-                _multipleAnimationFiles.erase(_multipleAnimationFiles.begin());
-                addMultipleAnimationNode(0, callback);
+        static function<void()> callback = nullptr;
+        callback = lastFrameCallFunc;
+        if (_animationFiles.size() > 0) {
+            _isPlayingAttackAnimation = true;
+            const string& file = _animationFiles.front();
+            addActionNode(file, true, false, playTime, frameIndex, [this]() {
+                _animationFiles.erase(_animationFiles.begin());
+                addAttackActionNode(0.0f, 0, callback);
             });
-        } else if (callback) {
-            callback();
+        } else {
+            _isPlayingAttackAnimation = false;
+            if (callback) {
+                callback();
+            }
         }
+    } else {
+        assert(false);
     }
 }
 
-void UnitNode::updateActionNode(const Skill* skill, const string& file, int currentFrame, bool flip)
+void UnitNode::updateActionNode(const Skill* skill, const vector<string>& files, int currentFrame, bool flip)
 {
-    if (_unit) {
+    const ssize_t cnt = files.size();
+    if (_unit && cnt > 0) {
         removeActionNode();
         
         const UnitClass unitClass = _unit->getUnitBase().getUnitClass();
@@ -653,14 +583,14 @@ void UnitNode::updateActionNode(const Skill* skill, const string& file, int curr
             removeHPBar();
         }
         
-        getMultipleAnimationFiles(_multipleAnimationFiles);
-        if (_multipleAnimationFiles.size() > 0) {
-            addMultipleAnimationNode(0, nullptr);
-        } else if (file.length() > 0) {
-            const bool playAnimation(kUnitClass_Building != unitClass || (kSkillClass_Attack == skillClass || kSkillClass_Die == skillClass));
-            const float playTime(hasStandbyAnimation(_unit) ? skill->getTotalPrePerformFrames() / (float)GameConstants::FRAME_PER_SEC : 0.0f);
+        if (kSkillClass_Attack == skillClass && !_isStandby) {
+            const float playTime(skill->getTotalPrePerformFrames() / (float)GameConstants::FRAME_PER_SEC);
+            addAttackActionNode(playTime, currentFrame, nullptr);
+        } else if (cnt == 1) {
+            const bool playAnimation(kUnitClass_Building != unitClass || kSkillClass_Die == skillClass);
             // add node
-            addActionNode(file, playAnimation, !isDead, playTime, currentFrame, [=]() {
+            const string file = files.at(0);
+            addActionNode(file, playAnimation, !isDead, 0.0f, currentFrame, [=]() {
                 if (isDead && _observer) {
                     _observer->onUnitNodePlayDeadAnimationFinished(this);
                 }

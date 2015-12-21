@@ -130,37 +130,23 @@ void GameRender::updateUnits(const Game* game, int index)
         const int key = unit->getUnitId();
         const Skill* skill = unit->getCurrentSkill();
         // TODO: remove test code
-        if (skill || (skill && skill->getSkillState() == Skill::kSkillState_performing)) {
+        if (skill) {
             SkillClass sc = skill->getSkillType()->getSkillClass();
-            bool isNewCreated = (_allUnits.find(key) == _allUnits.end()) ? true : false;
-            if (isNewCreated) {
-                if (kSkillClass_Die != sc) {
-                    UnitNode* node = UnitNode::create(unit);
-                    node->registerObserver(this);
-                    _mapLayer->addUnit(node, pos);
-                    _allUnits.insert(make_pair(key, node));
-                }
-            } else {
+            if (_allUnits.find(key) != _allUnits.end()) {
                 // already exist, update it
                 UnitNode* node = _allUnits.at(key);
                 node->update();
-                switch (sc) {
-                    case kSkillClass_Stop:
-                        break;
-                    case kSkillClass_Move:
-                    {
-                        _mapLayer->repositionUnit(node, pos);
-                    }
-                        break;
-                    case kSkillClass_Attack:
-                        break;
-                    case kSkillClass_Cast:
-                        break;
-                    case kSkillClass_Die:
-                        break;
-                        
-                    default:
-                        break;
+                if (kSkillClass_Move == sc) {
+                    _mapLayer->repositionUnit(node, pos);
+                }
+            } else {
+                if (kSkillClass_Die != sc) {
+                    const int factionIndex = unit->getBelongFaction()->getFactionIndex();
+                    // TODO: check if the unit is on the right
+                    UnitNode* node = UnitNode::create(unit, factionIndex != 0);
+                    node->registerObserver(this);
+                    _mapLayer->addUnit(node, pos);
+                    _allUnits.insert(make_pair(key, node));
                 }
             }
         }
@@ -232,15 +218,6 @@ void GameRender::hurtUnit(const Unit* target, const string& trigger)
 }
 
 #pragma mark - UnitNodeObserver
-bool GameRender::isUnitNodeBornOnTheRight(UnitNode* node)
-{
-    const Faction* faction = node->getUnit()->getBelongFaction();
-    if (faction->getFactionIndex() != 0) {
-        return true;
-    }
-    return false;
-}
-
 void GameRender::onUnitNodePlayDeadAnimationFinished(UnitNode* node)
 {
     node->removeFromParent();
