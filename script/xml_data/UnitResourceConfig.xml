@@ -11,6 +11,7 @@
 	<Item unit_name="吸血鬼弓兵" icon_name="icon_v_nvgongjianshou" prefix="Dead-Archer" bullet="effect-jian" crit_bullet="effect-jian" strike_point="Strike point-6" crit_strike_point="Strike point-6" attck_sound="sound_arrowlaunch" hurt_sound="sound_arrowhit" die_sound="sound_vad"/>
 	<Item unit_name="吸血鬼巫师" icon_name="icon_v_nvwushi" prefix="Dead-witch" bullet="effect-fireball-1" crit_bullet="effect-fireball-1" strike_point="Strike point-5" crit_strike_point="Strike point-5" attck_sound="sound_vml" hurt_sound="sound_vmh" die_sound="sound_vmd"/>
 	<Item unit_name="吸血鬼蜘蛛" icon_name="icon_v_zhizhu" prefix="spider" bullet="spider-attack-1" crit_bullet="spider-attack-1" strike_point="Strike-point-8" crit_strike_point="Strike-point-spider-7" attck_sound="sound_vsl" die_sound="sound_vsd"/>
-	<Item unit_name="独角兽" is_short_range="1" prefix="Unicorn" sword_effect="wolf-attack-daoguang_0" strike_point="Strike point-6" crit_strike_point="Strike point-6"/>
-	<Item unit_name="机械狼" is_short_range="1" sword_effect="Vampire-tank-attack-daoguang" strike_point="Strike point-6" crit_strike_point="Strike point-6"/>
+	<Item unit_name="狼人独角兽" is_short_range="1" icon_name="icon_v_zhizhu" prefix="Unicorn" sword_effect="wolf-attack-daoguang_0" strike_point="Strike point-6" crit_strike_point="Strike point-6" attck_sound="sound_vsl" die_sound="sound_vsd"/>
+	<Item unit_name="狼人机械狼" is_short_range="1" sword_effect="Vampire-tank-attack-daoguang" strike_point="Strike point-6" crit_strike_point="Strike point-6" attck_sound="sound_vsl" die_sound="sound_vsd"/>
+	<Item unit_name="狼人森林之魂" icon_name="icon_v_zhizhu" prefix="Soul-of-forest" bullet="spider-attack-1" crit_bullet="spider-attack-1" strike_point="Strike point-6" crit_strike_point="Strike point-4" attck_sound="sound_vsl" die_sound="sound_vsd"/>
 </root>
