@@ -29,7 +29,7 @@ string Utils::format(const char *format, ...)
     return ret;
 }
 
-void Utils::split(vector<string> &v, const string& src, const string& delimit, const string& null_subst)
+void Utils::split(vector<string> &v, const string& src, const string& delimit, const string& null_subst, int max)
 {
     if (src.empty() || delimit.empty())
     {
@@ -41,6 +41,7 @@ void Utils::split(vector<string> &v, const string& src, const string& delimit, c
     v.clear();
     while((cutAt = strTmp.find_first_of(delimit)) != strTmp.npos )
     {
+        if (max > 0 && v.size() == max - 1) break;
         v.push_back((cutAt > 0) ? strTmp.substr(0, cutAt) : null_subst);
         strTmp = strTmp.substr(cutAt + 1);
     }

@@ -18,7 +18,7 @@
 namespace Utils
 {
     std::string format(const char *format, ...);
-    void split(std::vector<std::string> &v, const std::string& src, const std::string& delimit, const std::string& null_subst = "");
+    void split(std::vector<std::string> &v, const std::string& src, const std::string& delimit, const std::string& null_subst = "", int max = 0);
     void split2int(std::vector<int> &v, const std::string& src, const std::string& delimit, int d = 0);
     std::string convertCoordinateToString(const UnderWorld::Core::Coordinate& coordinate);
     UnderWorld::Core::Coordinate convertStringToCoordinate(const std::string& text);
