@@ -65,9 +65,10 @@ protected:
     bool needToChangeStandbyStatus();
     void calculateDirection(UnitDirection& direction, bool& flip);
     float calculateHpPercentage();
-    void addActionNode(const std::string& file, bool play, bool loop, float playTime, int frameIndex, const std::function<void()>& lastFrameCallFunc);
-    void addAttackActionNode(float playTime, int frameIndex, const std::function<void()>& lastFrameCallFunc);
-    void updateActionNode(const UnderWorld::Core::Skill* skill, const std::vector<std::string>& files, int currentFrame, bool flip);
+    void addActionNode(const std::string& file, bool play, bool loop, float playTime, int frameIndex, bool flip, const std::function<void()>& lastFrameCallFunc);
+    void addAttackActionNode(float playTime, int frameIndex, bool flip, const std::function<void(int animationIndex)>& lastFrameCallFunc);
+    void reset();
+    void updateActionNode(const UnderWorld::Core::Skill* skill, const std::vector<std::string>& files, int frameIndex, bool flip);
     void removeActionNode();
     void addHPBar();
     void updateHPBar();
@@ -101,7 +102,10 @@ private:
     int _switchAnimationCounter;
     bool _isStandby;
     bool _isPlayingAttackAnimation;
+    bool _isAnimationFlipped;
+    int _animationCounter;
     std::vector<std::string> _animationFiles;
+    std::function<void(int)> _animationCallback;
 };
 
 #endif /* UnitNode_h */

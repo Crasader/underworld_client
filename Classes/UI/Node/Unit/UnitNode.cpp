@@ -26,7 +26,7 @@ using namespace UnderWorld::Core;
 static const float directionAngelEdge[UNIT_DIRECTIONS_COUNT] = {
     -30.f, 30.f, 90.f
 };
-static const int animationCheckerFrames(30);
+static const int animationCheckerFrames(10);
 static const float hpPercentageThreshold(50.0f);
 
 #pragma mark ======================= inline unit getters =======================
@@ -74,6 +74,9 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
 ,_switchAnimationCounter(0)
 ,_isStandby(false)
 ,_isPlayingAttackAnimation(false)
+,_isAnimationFlipped(false)
+,_animationCounter(0)
+,_animationCallback(nullptr)
 {
     _unitName = unit->getUnitBase().getUnitName();
     
@@ -197,10 +200,11 @@ void UnitNode::update()
             
             if (needToUpdateUI) {
                 // reset
-                _switchAnimationCounter = 0;
                 _lastSkill = currentSkill;
                 _lastDirection = direction;
                 _lastHpPercentage = percentage;
+                
+                reset();
                 
 //                CCLOG("--------------------- direction: %d ---------------------", direction);
                 
@@ -391,8 +395,14 @@ void UnitNode::getAttackCsbFiles(vector<string>& output, UnitDirection direction
         }
     } else {
         const string& prefix = _configData->getPrefix();
-        const string& file1 = prefix + StringUtils::format("-attack-%d.csb", direction);
-        output.push_back(file1);
+        {
+            const string& attack = prefix + StringUtils::format("-attack-%d.csb", direction);
+            output.push_back(attack);
+        }
+        {
+            const string& backSing = prefix + StringUtils::format("-attack-%d-1.csb", direction);
+            output.push_back(backSing);
+        }
     }
 }
 
@@ -483,7 +493,7 @@ float UnitNode::calculateHpPercentage()
     return 100 * (float)hp / (float)maxHp;
 }
 
-void UnitNode::addActionNode(const string& file, bool play, bool loop, float playTime, int frameIndex, const function<void()>& lastFrameCallFunc)
+void UnitNode::addActionNode(const string& file, bool play, bool loop, float playTime, int frameIndex, bool flip, const function<void()>& lastFrameCallFunc)
 {
     removeActionNode();
     
@@ -492,6 +502,12 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
         _actionNode = CSLoader::createNode(file);
         _sprite = dynamic_cast<Sprite*>(*(_actionNode->getChildren().begin()));
         addChild(_actionNode);
+        
+        // flip if needed
+        if (flip) {
+            const float scaleX = _actionNode->getScaleX();
+            _actionNode->setScaleX(-1 * scaleX);
+        }
         
         if (play) {
             // 1. add scheduler
@@ -524,7 +540,8 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
             
             // set scale
             if (scale != 1.0f && scale > 0) {
-                _actionNode->setScale(scale);
+                _actionNode->setScaleX(scale * _actionNode->getScaleX());
+                _actionNode->setScaleY(scale * _actionNode->getScaleY());
             }
             
             // the attack animation should be fit for preperforming time
@@ -542,31 +559,47 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
     }
 }
 
-void UnitNode::addAttackActionNode(float playTime, int frameIndex, const function<void()>& lastFrameCallFunc)
+void UnitNode::addAttackActionNode(float playTime, int frameIndex, bool flip, const function<void(int animationIndex)>& lastFrameCallFunc)
 {
     const SkillClass skillClass = unit_getSkillClass(_unit);
     if (kSkillClass_Attack == skillClass) {
-        static function<void()> callback = nullptr;
-        callback = lastFrameCallFunc;
+        _isAnimationFlipped = flip;
+        _animationCallback = lastFrameCallFunc;
+        
         if (_animationFiles.size() > 0) {
             _isPlayingAttackAnimation = true;
             const string& file = _animationFiles.front();
-            addActionNode(file, true, false, playTime, frameIndex, [this]() {
+            addActionNode(file, true, false, playTime, frameIndex, _isAnimationFlipped, [this]() {                
+                // 1. execute callback
+                if (_animationCallback) {
+                    _animationCallback(_animationCounter);
+                }
+                // 2. play the next animation
                 _animationFiles.erase(_animationFiles.begin());
-                addAttackActionNode(0.0f, 0, callback);
+                ++ _animationCounter;
+                if (_animationFiles.empty()) {
+                    _isPlayingAttackAnimation = false;
+                } else {
+                    addAttackActionNode(0.0f, 0, _isAnimationFlipped, _animationCallback);
+                }
             });
-        } else {
-            _isPlayingAttackAnimation = false;
-            if (callback) {
-                callback();
-            }
         }
     } else {
         assert(false);
     }
 }
 
-void UnitNode::updateActionNode(const Skill* skill, const vector<string>& files, int currentFrame, bool flip)
+void UnitNode::reset()
+{
+    _switchAnimationCounter = 0;
+    _isPlayingAttackAnimation = false;
+    _isAnimationFlipped = false;
+    _animationCallback = nullptr;
+    _animationCounter = 0;
+    _animationFiles.clear();
+}
+
+void UnitNode::updateActionNode(const Skill* skill, const vector<string>& files, int frameIndex, bool flip)
 {
     const ssize_t cnt = files.size();
     if (_unit && cnt > 0) {
@@ -585,24 +618,32 @@ void UnitNode::updateActionNode(const Skill* skill, const vector<string>& files,
         
         if (kSkillClass_Attack == skillClass && !_isStandby) {
             const float playTime(skill->getTotalPrePerformFrames() / (float)GameConstants::FRAME_PER_SEC);
-            addAttackActionNode(playTime, currentFrame, nullptr);
+            addAttackActionNode(playTime, frameIndex, flip, [this](int animationIndex) {
+                if (_isBuilding) {
+                    
+                } else {
+                    if (animationIndex == 0) {
+                        playAttackSound();
+                        // if it is footman
+                        if (_configData->isShortRange()) {
+                            if (_observer) {
+                                _observer->onUnitNodeHurtTheTarget(this);
+                            }
+                        }
+                    }
+                }
+            });
         } else if (cnt == 1) {
             const bool playAnimation(kUnitClass_Building != unitClass || kSkillClass_Die == skillClass);
             // add node
             const string file = files.at(0);
-            addActionNode(file, playAnimation, !isDead, 0.0f, currentFrame, [=]() {
+            addActionNode(file, playAnimation, !isDead, 0.0f, frameIndex, flip, [=]() {
                 if (isDead && _observer) {
                     _observer->onUnitNodePlayDeadAnimationFinished(this);
                 }
             });
         } else {
             assert(false);
-        }
-        
-        // flip if needed
-        if (flip) {
-            const float scaleX = _actionNode->getScaleX();
-            _actionNode->setScaleX(-1 * scaleX);
         }
         
         if (isDead) {
@@ -612,22 +653,6 @@ void UnitNode::updateActionNode(const Skill* skill, const vector<string>& files,
             }
             // TODO: remove irregular code
             setLocalZOrder(-1000);
-        } else {
-            if (kSkillClass_Attack == skillClass) {
-                if (_currentAction) {
-                    // if it is footman
-                    if (_configData->isShortRange()) {
-                        _currentAction->setFrameEventCallFunc([this](cocostudio::timeline::Frame* frame) {
-                            playAttackSound();
-                            if (_observer) {
-                                _observer->onUnitNodeHurtTheTarget(this);
-                            }
-                        });
-                    } else {
-                        playAttackSound();
-                    }
-                }
-            }
         }
         
         if (_sprite) {

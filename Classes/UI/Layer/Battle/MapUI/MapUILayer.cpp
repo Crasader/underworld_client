@@ -10,6 +10,7 @@
 #include "cocostudio/CocoStudio.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
+#include "LocalHelper.h"
 #include "MapUIUnitCell.h"
 #include "ResourceButton.h"
 #include "SoundManager.h"
@@ -269,7 +270,7 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             
             const Size& size = sprite->getContentSize();
             
-            Label* label = CocosUtils::createLabel("下一波进攻时间", DEFAULT_FONT_SIZE);
+            Label* label = CocosUtils::createLabel(LocalHelper::getString("battle_mapUI_nextWaveTime"), DEFAULT_FONT_SIZE);
             label->setPosition(Point(size.width / 2, size.height * 0.75));
             sprite->addChild(label);
             
@@ -315,7 +316,7 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             
             const Size& size = sprite->getContentSize();
             
-            Label* label = CocosUtils::createLabel("战斗时间", DEFAULT_FONT_SIZE);
+            Label* label = CocosUtils::createLabel(LocalHelper::getString("battle_mapUI_battleTime"), DEFAULT_FONT_SIZE);
             label->setPosition(Point(size.width / 2, size.height * 0.75));
             sprite->addChild(label);
             
@@ -361,7 +362,7 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             
             const Size& size = sprite->getContentSize();
             
-            Label* label = CocosUtils::createLabel("训练后的总兵力", DEFAULT_FONT_SIZE);
+            Label* label = CocosUtils::createLabel(LocalHelper::getString("battle_mapUI_totalPopulation"), DEFAULT_FONT_SIZE);
             label->setPosition(Point(size.width / 2, size.height * 0.875));
             sprite->addChild(label);
             
@@ -369,7 +370,7 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             _populationLabel->setPosition(Point(size.width / 2, size.height * 0.625));
             sprite->addChild(_populationLabel);
             
-            label = CocosUtils::createLabel("能量", DEFAULT_FONT_SIZE);
+            label = CocosUtils::createLabel(LocalHelper::getString("battle_mapUI_totalResource"), DEFAULT_FONT_SIZE);
             label->setPosition(Point(size.width / 2, size.height * 0.375));
             sprite->addChild(label);
             
