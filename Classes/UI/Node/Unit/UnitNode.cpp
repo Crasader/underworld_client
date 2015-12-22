@@ -76,7 +76,6 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
 ,_isPlayingAttackAnimation(false)
 ,_isAnimationFlipped(false)
 ,_animationCounter(0)
-,_animationCallback(nullptr)
 {
     _unitName = unit->getUnitBase().getUnitName();
     
@@ -281,10 +280,7 @@ void UnitNode::onHurt(const string& trigger)
 
 void UnitNode::onWin()
 {
-#if false
-    const string& file = getStandbyCsbFile(calculateDirection(), calculateHpPercentage() > hpPercentageThreshold);
-    addActionNode(file, true, true, 0.0f, 0, nullptr);
-#endif
+    
 }
 
 void UnitNode::onLose()
@@ -559,33 +555,45 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
     }
 }
 
-void UnitNode::addAttackActionNode(float playTime, int frameIndex, bool flip, const function<void(int animationIndex)>& lastFrameCallFunc)
+void UnitNode::addAttackActionNode(float playTime, int frameIndex)
 {
     const SkillClass skillClass = unit_getSkillClass(_unit);
     if (kSkillClass_Attack == skillClass) {
-        _isAnimationFlipped = flip;
-        _animationCallback = lastFrameCallFunc;
-        
         if (_animationFiles.size() > 0) {
             _isPlayingAttackAnimation = true;
             const string& file = _animationFiles.front();
-            addActionNode(file, true, false, playTime, frameIndex, _isAnimationFlipped, [this]() {                
-                // 1. execute callback
-                if (_animationCallback) {
-                    _animationCallback(_animationCounter);
-                }
-                // 2. play the next animation
-                _animationFiles.erase(_animationFiles.begin());
-                ++ _animationCounter;
-                if (_animationFiles.empty()) {
-                    _isPlayingAttackAnimation = false;
-                } else {
-                    addAttackActionNode(0.0f, 0, _isAnimationFlipped, _animationCallback);
-                }
-            });
+            addActionNode(file, true, false, playTime, frameIndex, _isAnimationFlipped, CC_CALLBACK_0(UnitNode::onAttackAnimationFinished, this));
         }
     } else {
         assert(false);
+    }
+}
+
+void UnitNode::onAttackAnimationFinished()
+{
+    // 1. execute callback
+    if (_isBuilding) {
+        
+    } else {
+        if (_animationCounter == 0) {
+            playAttackSound();
+            // if it is footman
+            if (_configData->isShortRange()) {
+                if (_observer) {
+                    _observer->onUnitNodeHurtTheTarget(this);
+                }
+            }
+        }
+    }
+    
+    // 2. play the next animation
+    _animationFiles.erase(_animationFiles.begin());
+    ++ _animationCounter;
+    if (_animationFiles.size() == 0) {
+        _isPlayingAttackAnimation = false;
+        update();
+    } else {
+        addAttackActionNode(0.0f, 0);
     }
 }
 
@@ -594,7 +602,6 @@ void UnitNode::reset()
     _switchAnimationCounter = 0;
     _isPlayingAttackAnimation = false;
     _isAnimationFlipped = false;
-    _animationCallback = nullptr;
     _animationCounter = 0;
     _animationFiles.clear();
 }
@@ -618,21 +625,8 @@ void UnitNode::updateActionNode(const Skill* skill, const vector<string>& files,
         
         if (kSkillClass_Attack == skillClass && !_isStandby) {
             const float playTime(skill->getTotalPrePerformFrames() / (float)GameConstants::FRAME_PER_SEC);
-            addAttackActionNode(playTime, frameIndex, flip, [this](int animationIndex) {
-                if (_isBuilding) {
-                    
-                } else {
-                    if (animationIndex == 0) {
-                        playAttackSound();
-                        // if it is footman
-                        if (_configData->isShortRange()) {
-                            if (_observer) {
-                                _observer->onUnitNodeHurtTheTarget(this);
-                            }
-                        }
-                    }
-                }
-            });
+            _isAnimationFlipped = flip;
+            addAttackActionNode(playTime, frameIndex);
         } else if (cnt == 1) {
             const bool playAnimation(kUnitClass_Building != unitClass || kSkillClass_Die == skillClass);
             // add node

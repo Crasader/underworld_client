@@ -361,13 +361,25 @@ void MapLayer::scrollViewDidZoom(cocos2d::extension::ScrollView* view)
 
 void MapLayer::addParticle(const MapParticleConfigData* data)
 {
-    ParticleSystemQuad *effect = ParticleSystemQuad::create(data->getName());
+    const string& name = data->getName();
+    Node* effect = nullptr;
+    if (name.find(".csb") != string::npos) {
+        effect = CSLoader::createNode(name);
+        timeline::ActionTimeline *action = CSLoader::createTimeline(name);
+        effect->runAction(action);
+        action->gotoFrameAndPlay(0, true);
+    } else {
+        ParticleSystemQuad *particle = ParticleSystemQuad::create(data->getName());
+        _particles.insert(particle);
+        
+        effect = particle;
+    }
+    
     Point pos = Point(_width * _tileWidth / 2, _height * _tileHeight / 2) + Point(data->getPosX(), data->getPosY());
     effect->setPosition(pos);
     effect->setScaleX(data->getScaleX());
     effect->setScaleY(data->getScaleY());
     _tiledMap->addChild(effect);
-    _particles.insert(effect);
 }
 
 void MapLayer::removeParticle(ParticleSystemQuad* effect)

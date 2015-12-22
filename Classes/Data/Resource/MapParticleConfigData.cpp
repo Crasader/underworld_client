@@ -20,11 +20,15 @@ MapParticleConfigData::MapParticleConfigData(tinyxml2::XMLElement *xmlElement)
 {
     if (xmlElement) {
         {
-            static const string prefix("particle/");
-            static const string suffix(".plist");
-            const char *data = xmlElement->Attribute("name");
-            if (data && strlen(data) > 0) {
-                _name = prefix + data + suffix;
+            string data = xmlElement->Attribute("name");
+            if (data.find(".csb") != string::npos) {
+                _name = data;
+            } else {
+                static const string prefix("particle/");
+                static const string suffix(".plist");
+                if (data.length() > 0) {
+                    _name = prefix + data + suffix;
+                }
             }
         }
         {
