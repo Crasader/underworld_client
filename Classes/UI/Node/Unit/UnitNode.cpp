@@ -555,6 +555,15 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
     }
 }
 
+void UnitNode::addStandbyActionNode()
+{
+    UnitDirection direction;
+    bool flip;
+    calculateDirection(direction, flip);
+    const string& file = getStandbyCsbFile(direction, calculateHpPercentage() > hpPercentageThreshold);
+    addActionNode(file, true, true, 0.0f, 0, flip, nullptr);
+}
+
 void UnitNode::addAttackActionNode(float playTime, int frameIndex)
 {
     const SkillClass skillClass = unit_getSkillClass(_unit);
@@ -591,7 +600,7 @@ void UnitNode::onAttackAnimationFinished()
     ++ _animationCounter;
     if (_animationFiles.size() == 0) {
         _isPlayingAttackAnimation = false;
-        update();
+        addStandbyActionNode();
     } else {
         addAttackActionNode(0.0f, 0);
     }
