@@ -39,12 +39,6 @@ typedef std::function<void()> httpRequestCallback;
 typedef std::function<void(long errorCode)> httpErrorCallback;
 
 // TODO: remove temp code
-#define WOLF_CORE       ("狼人基地")
-#define WOLF_TOWER      ("狼人箭塔")
-
-#define VAMPIRE_CORE    ("吸血鬼核心")
-#define VAMPIRE_TOWER   ("吸血鬼箭塔")
-
 #define RES_NAME_GOLD       ("金子")
 #define RES_NAME_POPULATION ("人口")
 

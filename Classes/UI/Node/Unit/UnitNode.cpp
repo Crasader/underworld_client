@@ -26,7 +26,7 @@ using namespace UnderWorld::Core;
 static const float directionAngelEdge[UNIT_DIRECTIONS_COUNT] = {
     -30.f, 30.f, 90.f
 };
-static const int animationCheckerFrames(10);
+static const int animationCheckerFrames = GameConstants::FRAME_PER_SEC;
 static const float hpPercentageThreshold(50.0f);
 
 #pragma mark ======================= inline unit getters =======================
@@ -129,33 +129,39 @@ void UnitNode::update()
             
             if (_lastSkill) {
                 const SkillClass currentSkillClass(unit_getSkillClass(_unit));
+                const SkillClass lastSkillClass(_lastSkill->getSkillType()->getSkillClass());
+                
                 if (_isBuilding) {
-                    const SkillClass lastSkillClass(_lastSkill->getSkillType()->getSkillClass());
+                    const UnitClass uc = _unit->getUnitBase().getUnitClass();
                     if (currentSkillClass != lastSkillClass) {
-                        if (WOLF_TOWER == _unitName || VAMPIRE_TOWER == _unitName) {
-                            if (kSkillClass_Attack == currentSkillClass || kSkillClass_Attack == lastSkillClass) {
-                                // attack
-                                needToUpdateUI = true;
-                            } else if (kSkillClass_Die == currentSkillClass) {
-                                // destroyed
-                                needToUpdateUI = true;
-                            }
-                        } else if (WOLF_CORE == _unitName || VAMPIRE_CORE == _unitName) {
-                            if (kSkillClass_Die == currentSkillClass) {
-                                // destroyed
-                                needToUpdateUI = true;
+                        if (kSkillClass_Die == currentSkillClass) {
+                            // destroyed
+                            needToUpdateUI = true;
+                        } else {
+                            if (kUnitClass_Building == uc) {
+                                if (kSkillClass_Attack == currentSkillClass || kSkillClass_Attack == lastSkillClass) {
+                                    // attack
+                                    needToUpdateUI = true;
+                                }
                             }
                         }
-                        
-                        if (WOLF_CORE == _unitName || VAMPIRE_CORE == _unitName) {
-                            if (!needToUpdateUI && (hpPercentageThreshold - _lastHpPercentage) * (hpPercentageThreshold - percentage) <= 0) {
-                                // hurt
-                                needToUpdateUI = true;
+                    } else if (_lastDirection != direction) {
+                        // check the direction every (_switchAnimationCounter) frames,
+                        // in order to avoid changing the direction frequently.
+                        ++ _switchAnimationCounter;
+                        if (_switchAnimationCounter >= animationCheckerFrames) {
+                            needToUpdateUI = true;
+                            if (_currentAction) {
+                                currentFrame = _currentAction->getCurrentFrame();
                             }
                         }
                     }
+                    
+                    if (kUnitClass_Core == uc && !needToUpdateUI && (hpPercentageThreshold - _lastHpPercentage) * (hpPercentageThreshold - percentage) <= 0) {
+                        // hurt
+                        needToUpdateUI = true;
+                    }
                 } else {
-                    const SkillClass lastSkillClass(_lastSkill->getSkillType()->getSkillClass());
                     if (currentSkillClass != lastSkillClass) {
                         // TODO: remove temp code
                         if (needToChangeStandbyStatus()) {
@@ -165,27 +171,19 @@ void UnitNode::update()
                         }
                         needToUpdateUI = true;
                     } else if (_lastDirection != direction) {
-                        switch (currentSkillClass) {
-                            case kSkillClass_Move:
-                            case kSkillClass_Attack:
-                            {
-                                ++ _switchAnimationCounter;
-                                if (_switchAnimationCounter >= animationCheckerFrames) {
-                                    // TODO: remove temp code
-                                    if (needToChangeStandbyStatus()) {
-                                        _isStandby = !_isStandby;
-                                    }
-                                    
-                                    needToUpdateUI = true;
-                                    if (_currentAction) {
-                                        currentFrame = _currentAction->getCurrentFrame();
-                                    }
-                                }
+                        // check the direction every (_switchAnimationCounter) frames,
+                        // in order to avoid changing the direction frequently.
+                        ++ _switchAnimationCounter;
+                        if (_switchAnimationCounter >= animationCheckerFrames) {
+                            // TODO: remove temp code
+                            if (needToChangeStandbyStatus()) {
+                                _isStandby = !_isStandby;
                             }
-                                break;
-                                
-                            default:
-                                break;
+                            
+                            needToUpdateUI = true;
+                            if (_currentAction) {
+                                currentFrame = _currentAction->getCurrentFrame();
+                            }
                         }
                     } else {
                         // TODO: remove temp code
@@ -211,7 +209,7 @@ void UnitNode::update()
 //                CCLOG("--------------------- direction: %d ---------------------", direction);
                 
                 getCsbFiles(_animationFiles, direction, percentage > hpPercentageThreshold);
-                updateActionNode(currentSkill, _animationFiles, currentFrame, flip);
+                updateActionNode(currentSkill, currentFrame, flip);
             }
         }
         
@@ -281,6 +279,21 @@ void UnitNode::onHurt(const string& trigger)
     }
 }
 
+void UnitNode::onDead()
+{
+    removeShadow();
+    removeBuf();
+    removeHPBar();
+    
+    const string file = _configData->getDieSound();
+    if (file.length() > 0) {
+        SoundManager::getInstance()->playSound(file);
+    }
+    
+    // TODO: remove irregular code
+    setLocalZOrder(-1000);
+}
+
 void UnitNode::onWin()
 {
     
@@ -301,6 +314,7 @@ bool UnitNode::init()
     return false;
 }
 
+#pragma mark - getters
 void UnitNode::getCsbFiles(vector<string>& output, UnitDirection direction, bool isHealthy)
 {
     output.clear();
@@ -405,27 +419,21 @@ void UnitNode::getAttackCsbFiles(vector<string>& output, UnitDirection direction
     }
 }
 
-bool UnitNode::checkIsStandby()
+bool UnitNode::needToChangeStandbyStatus()
 {
-    const SkillClass skillClass(unit_getSkillClass(_unit));
-    if (kSkillClass_Attack == skillClass) {
+    bool isStandby(false);
+    if (kSkillClass_Attack == unit_getSkillClass(_unit)) {
+        // check if the unit is standby
         if (!_isBuilding) {
             const Skill::SkillState state(_unit->getCurrentSkill()->getSkillState());
             if (!_isPlayingAttackAnimation && Skill::SkillState::kSkillState_idle == state) {
-                return true;
+                isStandby = true;
             }
         }
-    } else if (kSkillClass_Stop == skillClass) {
-        return true;
-    }
-    
-    return false;
-}
-
-bool UnitNode::needToChangeStandbyStatus()
-{
-    if (kSkillClass_Attack == unit_getSkillClass(_unit) && _isStandby != checkIsStandby()) {
-        return true;
+        
+        if (_isStandby != isStandby) {
+            return true;
+        }
     }
     
     return false;
@@ -495,6 +503,7 @@ float UnitNode::calculateHpPercentage()
     return 100 * (float)hp / (float)maxHp;
 }
 
+#pragma mark - add animation
 void UnitNode::addActionNode(const string& file, bool play, bool loop, float playTime, int frameIndex, bool flip, const function<void()>& lastFrameCallFunc)
 {
     removeActionNode();
@@ -542,8 +551,9 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
             
             // set scale
             if (scale != 1.0f && scale > 0) {
-                _actionNode->setScaleX(scale * _actionNode->getScaleX());
-                _actionNode->setScaleY(scale * _actionNode->getScaleY());
+                const float scaleX = _actionNode->getScaleX();
+                const float scaleY = _actionNode->getScaleY();
+                _actionNode->setScale(scale * scaleX, scale * scaleY);
             }
             
             // the attack animation should be fit for preperforming time
@@ -563,24 +573,21 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
 
 void UnitNode::addStandbyActionNode()
 {
-    UnitDirection direction;
-    bool flip;
+    UnitDirection direction(kUnitDirection_Left);
+    bool flip(false);
     calculateDirectionAndFlip(direction, flip);
     const string& file = getStandbyCsbFile(direction, calculateHpPercentage() > hpPercentageThreshold);
     addActionNode(file, true, true, 0.0f, 0, flip, nullptr);
 }
 
-void UnitNode::addAttackActionNode(float playTime, int frameIndex)
+void UnitNode::addNextAttackActionNode(float playTime, int frameIndex)
 {
-    const SkillClass skillClass = unit_getSkillClass(_unit);
-    if (kSkillClass_Attack == skillClass) {
-        if (_animationFiles.size() > 0) {
-            _isPlayingAttackAnimation = true;
-            const string& file = _animationFiles.front();
-            addActionNode(file, true, false, playTime, frameIndex, _isAnimationFlipped, CC_CALLBACK_0(UnitNode::onAttackAnimationFinished, this));
-        }
+    if (_animationFiles.empty()) {
+        _isPlayingAttackAnimation = false;
+        addStandbyActionNode();
     } else {
-        assert(false);
+        const string& file = _animationFiles.front();
+        addActionNode(file, true, false, playTime, frameIndex, _isAnimationFlipped, CC_CALLBACK_0(UnitNode::onAttackAnimationFinished, this));
     }
 }
 
@@ -591,7 +598,12 @@ void UnitNode::onAttackAnimationFinished()
         
     } else {
         if (_animationCounter == 0) {
-            playAttackSound();
+            // play sound
+            const string file = _configData->getAttackSound();
+            if (file.length() > 0) {
+                SoundManager::getInstance()->playSound(file);
+            }
+            
             // if it is footman
             if (_configData->isShortRange()) {
                 if (_observer) {
@@ -604,12 +616,7 @@ void UnitNode::onAttackAnimationFinished()
     // 2. play the next animation
     _animationFiles.erase(_animationFiles.begin());
     ++ _animationCounter;
-    if (_animationFiles.size() == 0) {
-        _isPlayingAttackAnimation = false;
-        addStandbyActionNode();
-    } else {
-        addAttackActionNode(0.0f, 0);
-    }
+    addNextAttackActionNode(0.0f, 0);
 }
 
 void UnitNode::reset()
@@ -621,49 +628,47 @@ void UnitNode::reset()
     _animationFiles.clear();
 }
 
-void UnitNode::updateActionNode(const Skill* skill, const vector<string>& files, int frameIndex, bool flip)
+void UnitNode::updateActionNode(const Skill* skill, int frameIndex, bool flip)
 {
-    const ssize_t cnt = files.size();
+    const ssize_t cnt = _animationFiles.size();
     if (_unit && cnt > 0) {
+        // 1. remove the old action node
         removeActionNode();
         
-        const UnitClass unitClass = _unit->getUnitBase().getUnitClass();
         const SkillClass skillClass(unit_getSkillClass(_unit));
         const bool isDead = (kSkillClass_Die == skillClass);
         
-        // clear
+        // 2. remove effects
         if (isDead) {
-            removeShadow();
-            removeBuf();
-            removeHPBar();
+            onDead();
         }
         
-        if (kSkillClass_Attack == skillClass && !_isStandby) {
-            const float playTime(skill->getTotalPrePerformFrames() / (float)GameConstants::FRAME_PER_SEC);
+        // 3. add the new action node
+        {
             _isAnimationFlipped = flip;
-            addAttackActionNode(playTime, frameIndex);
-        } else if (cnt == 1) {
-            const bool playAnimation(kUnitClass_Building != unitClass || kSkillClass_Die == skillClass);
-            // add node
-            const string file = files.at(0);
-            addActionNode(file, playAnimation, !isDead, 0.0f, frameIndex, flip, [=]() {
-                if (isDead && _observer) {
-                    _observer->onUnitNodePlayDeadAnimationFinished(this);
+            // attack
+            if (kSkillClass_Attack == skillClass && !_isStandby) {
+                _isPlayingAttackAnimation = true;
+                const float playTime = skill->getTotalPrePerformFrames() / (float)GameConstants::FRAME_PER_SEC;
+                addNextAttackActionNode(playTime, frameIndex);
+            } else {
+                const string& file = _animationFiles.front();
+                // die
+                if (isDead) {
+                    addActionNode(file, true, false, 0.0f, frameIndex, flip, [=]() {
+                        if (_observer) {
+                            _observer->onUnitNodePlayDeadAnimationFinished(this);
+                        }
+                    });
+                } else {
+                    // run / standby
+                    const bool playAnimation(kUnitClass_Building != _unit->getUnitBase().getUnitClass());
+                    addActionNode(file, playAnimation, true, 0.0f, frameIndex, flip, nullptr);
                 }
-            });
-        } else {
-            assert(false);
-        }
-        
-        if (isDead) {
-            const string file = _configData->getDieSound();
-            if (file.length() > 0) {
-                SoundManager::getInstance()->playSound(file);
             }
-            // TODO: remove irregular code
-            setLocalZOrder(-1000);
         }
         
+        // 4. add new effects
         if (_sprite) {
             // add HP bar
             if (!isDead && !_hpBar) {
@@ -687,6 +692,7 @@ void UnitNode::removeActionNode()
     }
 }
 
+#pragma mark - effects
 void UnitNode::addHPBar()
 {
     if (!_hpBar && _unit) {
@@ -751,12 +757,4 @@ Node* UnitNode::addEffect(const string& file)
     }
     
     return nullptr;
-}
-
-void UnitNode::playAttackSound()
-{
-    const string file = _configData->getAttackSound();
-    if (file.length() > 0) {
-        SoundManager::getInstance()->playSound(file);
-    }
 }

@@ -153,6 +153,10 @@ void MapUILayer::resumeGame()
 #pragma mark - TableViewDataSource
 Size MapUILayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
 {
+    if (idx == _cellsCount - 1) {
+        return Size(_cellSize.width + unitNodeOffsetX, _cellSize.height);
+    }
+    
     return _cellSize;
 }
 

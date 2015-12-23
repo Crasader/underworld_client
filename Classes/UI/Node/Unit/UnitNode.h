@@ -52,6 +52,7 @@ public:
     
     // --------------- callbacks ---------------
     void onHurt(const std::string& trigger);
+    void onDead();
     void onWin();
     void onLose();
     
@@ -61,24 +62,26 @@ protected:
     void getCsbFiles(std::vector<std::string>& output, UnitDirection direction, bool isHealthy);
     const std::string getStandbyCsbFile(UnitDirection direction, bool isHealthy);
     void getAttackCsbFiles(std::vector<std::string>& output, UnitDirection direction, bool isHealthy);
-    bool checkIsStandby();
     bool needToChangeStandbyStatus();
     void calculateDirectionAndFlip(UnitDirection& direction, bool& flip);
     float calculateHpPercentage();
     void addActionNode(const std::string& file, bool play, bool loop, float playTime, int frameIndex, bool flip, const std::function<void()>& lastFrameCallFunc);
+    // standby
     void addStandbyActionNode();
-    void addAttackActionNode(float playTime, int frameIndex);
+    // attack
+    void addNextAttackActionNode(float playTime, int frameIndex);
     void onAttackAnimationFinished();
     void reset();
-    void updateActionNode(const UnderWorld::Core::Skill* skill, const std::vector<std::string>& files, int frameIndex, bool flip);
+    // public
+    void updateActionNode(const UnderWorld::Core::Skill* skill, int frameIndex, bool flip);
     void removeActionNode();
+    // --------------- effects ---------------
     void addHPBar();
     void updateHPBar();
     void removeHPBar();
     void addShadow();
     void removeShadow();
     Node* addEffect(const std::string& file);
-    void playAttackSound();
     
 private:
     // --------------- base ---------------
@@ -103,10 +106,11 @@ private:
     float _lastHpPercentage;
     int _switchAnimationCounter;
     bool _isStandby;
+    std::vector<std::string> _animationFiles;
+    // only used for attack animations
     bool _isPlayingAttackAnimation;
     bool _isAnimationFlipped;
     int _animationCounter;
-    std::vector<std::string> _animationFiles;
 };
 
 #endif /* UnitNode_h */
