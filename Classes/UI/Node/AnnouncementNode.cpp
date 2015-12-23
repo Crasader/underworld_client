@@ -105,6 +105,9 @@ bool AnnouncementNode::init(const std::string &content, float width)
     
     vector<string> blocks;
     Utils::split(blocks, content, "\n");
+    if (blocks.size() == 0) {
+        return false;
+    }
     stack<BlockConfig> suspense;
     for(vector<string>::const_reverse_iterator iter = blocks.rbegin(); iter != blocks.rend(); ++iter){
         const string& block = *iter;
@@ -124,70 +127,77 @@ bool AnnouncementNode::init(const std::string &content, float width)
         suspense.push(blockConfig);
     }
     
-    
-    float x = .0f;
-    float y = .0f;
-    float lineHeight = .0f;
-    Node* root = Node::create();
-    addChild(root);
-    while(!suspense.empty()) {
-        
-        BlockConfig config = suspense.top();
-        suspense.pop();
-        
-        if (config._newLine)
-        {
-            x = .0f;
-        }
-        
-        Label* label;
-        if (width > .0f) {
-            BlockConfig nextBlockConfig(1, config._fontSize, config._color, "");
-            label = createAndSplitLabel(nextBlockConfig, width - x, config._fontSize, config._content);
-            if (!nextBlockConfig._content.empty()) {
-                suspense.push(nextBlockConfig);
+    if (suspense.size() == 1) {
+        const BlockConfig& config = suspense.top();
+        Label *label = CocosUtils::createLabel(config._content, config._fontSize, Size(width, .0f));
+        label->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
+        addChild(label);
+        _contentSize = label->getContentSize();
+        return true;
+    } else {
+        float x = .0f;
+        float y = .0f;
+        float lineHeight = .0f;
+        Node* root = Node::create();
+        addChild(root);
+        while(!suspense.empty()) {
+            
+            BlockConfig config = suspense.top();
+            suspense.pop();
+            
+            if (config._newLine)
+            {
+                x = .0f;
             }
-        } else {
-            label = CocosUtils::createLabel(config._content, config._fontSize);
-        }
-        label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
-        int height = label->getContentSize().height;
-        Point position;
-        if (config._newLine) {
-            y -= lineHeight;
             
-            lineHeight = height;
-            
-            root = Node::create();
-            addChild(root);
-            
-            root->setPositionY(y - lineHeight * .5f);
-        } else {
-            float tmpHeight = height;
-            if (tmpHeight > lineHeight) {
-                lineHeight = tmpHeight;
+            Label* label;
+            if (width > .0f) {
+                BlockConfig nextBlockConfig(1, config._fontSize, config._color, "");
+                label = createAndSplitLabel(nextBlockConfig, width - x, config._fontSize, config._content);
+                if (!nextBlockConfig._content.empty()) {
+                    suspense.push(nextBlockConfig);
+                }
+            } else {
+                label = CocosUtils::createLabel(config._content, config._fontSize);
+            }
+            label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+            int height = label->getContentSize().height;
+            Point position;
+            if (config._newLine) {
+                y -= lineHeight;
+                
+                lineHeight = height;
+                
+                root = Node::create();
+                addChild(root);
+                
                 root->setPositionY(y - lineHeight * .5f);
+            } else {
+                float tmpHeight = height;
+                if (tmpHeight > lineHeight) {
+                    lineHeight = tmpHeight;
+                    root->setPositionY(y - lineHeight * .5f);
+                }
             }
+            int color = config._color;
+            if(color >= 0 && color < colorNum)
+            {
+                const Color3B& color3b = colors[color];
+                label->setColor(color3b);
+            }
+            label->setPositionX(x);
+            x += label->getContentSize().width;
+            if (width == .0f && x > _contentSize.width) {
+                _contentSize.width = x;
+            }
+            _contentSize.height = -y + lineHeight;
+            root->addChild(label);
         }
-        int color = config._color;
-        if(color >= 0 && color < colorNum)
-        {
-            const Color3B& color3b = colors[color];
-            label->setColor(color3b);
+        
+        if (width > .0f) {
+            _contentSize.width = width;
         }
-        label->setPositionX(x);
-        x += label->getContentSize().width;
-        if (width == .0f && x > _contentSize.width) {
-            _contentSize.width = x;
-        }
-        _contentSize.height = -y + lineHeight;
-        root->addChild(label);
     }
-    
-    if (width > .0f) {
-        _contentSize.width = width;
-    }
-    
     return true;
 }
 
