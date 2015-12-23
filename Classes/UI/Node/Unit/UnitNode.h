@@ -63,7 +63,7 @@ protected:
     void getAttackCsbFiles(std::vector<std::string>& output, UnitDirection direction, bool isHealthy);
     bool checkIsStandby();
     bool needToChangeStandbyStatus();
-    void calculateDirection(UnitDirection& direction, bool& flip);
+    void calculateDirectionAndFlip(UnitDirection& direction, bool& flip);
     float calculateHpPercentage();
     void addActionNode(const std::string& file, bool play, bool loop, float playTime, int frameIndex, bool flip, const std::function<void()>& lastFrameCallFunc);
     void addStandbyActionNode();

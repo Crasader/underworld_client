@@ -117,10 +117,14 @@ void UnitNode::update()
     if (_unit) {
         const Skill* currentSkill = _unit->getCurrentSkill();
         if (currentSkill) {
-            bool needToUpdateUI(false);
-            int currentFrame(0);
+            // direction and flip
             UnitDirection direction(kUnitDirection_Left);
             bool flip(false);
+            calculateDirectionAndFlip(direction, flip);
+            
+            //
+            bool needToUpdateUI(false);
+            int currentFrame(0);
             const float percentage(calculateHpPercentage());
             
             if (_lastSkill) {
@@ -151,7 +155,6 @@ void UnitNode::update()
                         }
                     }
                 } else {
-                    calculateDirection(direction, flip);
                     const SkillClass lastSkillClass(_lastSkill->getSkillType()->getSkillClass());
                     if (currentSkillClass != lastSkillClass) {
                         // TODO: remove temp code
@@ -208,7 +211,7 @@ void UnitNode::update()
 //                CCLOG("--------------------- direction: %d ---------------------", direction);
                 
                 getCsbFiles(_animationFiles, direction, percentage > hpPercentageThreshold);
-                updateActionNode(currentSkill, _animationFiles, currentFrame, flip ? !_needToFlip : _needToFlip);
+                updateActionNode(currentSkill, _animationFiles, currentFrame, flip);
             }
         }
         
@@ -357,7 +360,7 @@ const string UnitNode::getStandbyCsbFile(UnitDirection direction, bool isHealthy
 {
     string csbFile;
     if (_isBuilding) {
-        const string& normal = _configData->getBNormal();
+        const string& normal = StringUtils::format(_configData->getBNormal().c_str(), direction);
         const string& damaged = _configData->getBDamaged();
         csbFile = isHealthy ? normal : (damaged.length() > 0 ? damaged : normal);
     } else {
@@ -378,7 +381,7 @@ void UnitNode::getAttackCsbFiles(vector<string>& output, UnitDirection direction
             output.push_back(attackBegin);
         }
         // 2. attack
-        const string& attack = _configData->getBAttack();
+        const string& attack = StringUtils::format(_configData->getBAttack().c_str(), direction);
         if (attack.length() > 0) {
             output.push_back(attack);
         } else {
@@ -428,7 +431,7 @@ bool UnitNode::needToChangeStandbyStatus()
     return false;
 }
 
-void UnitNode::calculateDirection(UnitDirection& direction, bool& flip)
+void UnitNode::calculateDirectionAndFlip(UnitDirection& direction, bool& flip)
 {
     if (_unit) {
         const Coordinate& lastPos = _unit->getLastPos();
@@ -444,8 +447,8 @@ void UnitNode::calculateDirection(UnitDirection& direction, bool& flip)
                 currentPos = centerPos;
                 targetPos = _unit->getTargetPos();
             } else {
-                const UnitBase& unitBase = _unit->getUnitBase();
-                currentPos = lastPos + Coordinate(unitBase.getSize() / 2, unitBase.getSize() / 2);
+                const int size = _unit->getUnitBase().getSize();
+                currentPos = lastPos + Coordinate(size / 2, size / 2);
                 targetPos = centerPos;
             }
             
@@ -479,6 +482,9 @@ void UnitNode::calculateDirection(UnitDirection& direction, bool& flip)
                 flip = (dx == _isBornOnTheRight);
             }
         }
+        
+        // get the real flip
+        flip = flip ? !_needToFlip : _needToFlip;
     }
 }
 
@@ -559,7 +565,7 @@ void UnitNode::addStandbyActionNode()
 {
     UnitDirection direction;
     bool flip;
-    calculateDirection(direction, flip);
+    calculateDirectionAndFlip(direction, flip);
     const string& file = getStandbyCsbFile(direction, calculateHpPercentage() > hpPercentageThreshold);
     addActionNode(file, true, true, 0.0f, 0, flip, nullptr);
 }
