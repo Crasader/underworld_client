@@ -1,7 +1,7 @@
 #include "AppDelegate.h"
 #include "MainLayer.h"
 #include "CocosGlobal.h"
-#include "DataManager.h"
+#include "GameData.h"
 #include "LocalHelper.h"
 #include "SoundManager.h"
 #include "UserDefaultsDataManager.h"
@@ -106,7 +106,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     sm->setSoundOn(um->getSoundOn());
     
     // game initialization
-    DataManager::getInstance()->init();
+    GameData::getInstance()->init();
     LocalHelper::init();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     iOSApi::init();

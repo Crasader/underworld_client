@@ -17,6 +17,8 @@
 #include "ProgressLayer.h"
 #include "MessageBoxLayer.h"
 #include "MainLayer.h"
+#include "Constants.h"
+#include "DataManager.h"
 
 using namespace std;
 using namespace cocostudio;
@@ -64,8 +66,13 @@ void GameData::purge()
 #pragma mark - public
 void GameData::init() const
 {
-    
-    
+    parseFiles();
+}
+
+void GameData::parseFiles() const
+{
+    Constants::init();
+    DataManager::getInstance()->init();
 }
 
 User* GameData::currentUser() const

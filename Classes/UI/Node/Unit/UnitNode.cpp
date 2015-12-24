@@ -35,6 +35,19 @@ static inline SkillClass unit_getSkillClass(const Unit* unit)
     return unit->getCurrentSkill()->getSkillType()->getSkillClass();
 }
 
+static void node_setScaleX(Node* node, float scale)
+{
+    const float scaleX = node->getScaleX();
+    node->setScaleX(scale * scaleX);
+}
+
+static void node_setScale(Node* node, float scale)
+{
+    const float scaleX = node->getScaleX();
+    const float scaleY = node->getScaleY();
+    node->setScale(scale * scaleX, scale * scaleY);
+}
+
 #pragma mark ======================= Class UnitNode =======================
 UnitNode* UnitNode::create(const Unit* unit, bool rightSide)
 {
@@ -70,11 +83,11 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
 ,_sprite(nullptr)
 ,_lastSkill(nullptr)
 ,_lastDirection(static_cast<UnitDirection>(-1))
-,_lastHpPercentage(0.0f)
+,_isLastHealthy(true)
+,_isLastFlipped(false)
 ,_switchAnimationCounter(0)
 ,_isStandby(false)
 ,_isPlayingAttackAnimation(false)
-,_isAnimationFlipped(false)
 ,_animationCounter(0)
 {
     _unitName = unit->getUnitBase().getUnitName();
@@ -126,56 +139,38 @@ void UnitNode::update()
             bool needToUpdateUI(false);
             int currentFrame(0);
             const float percentage(calculateHpPercentage());
+            const bool isHealthy = (percentage > hpPercentageThreshold);
             
             if (_lastSkill) {
                 const SkillClass currentSkillClass(unit_getSkillClass(_unit));
                 const SkillClass lastSkillClass(_lastSkill->getSkillType()->getSkillClass());
+                const UnitClass uc = _unit->getUnitBase().getUnitClass();
                 
-                if (_isBuilding) {
-                    const UnitClass uc = _unit->getUnitBase().getUnitClass();
-                    if (currentSkillClass != lastSkillClass) {
-                        if (kSkillClass_Die == currentSkillClass) {
-                            // destroyed
-                            needToUpdateUI = true;
-                        } else {
-                            if (kUnitClass_Building == uc) {
-                                if (kSkillClass_Attack == currentSkillClass || kSkillClass_Attack == lastSkillClass) {
-                                    // attack
-                                    needToUpdateUI = true;
-                                }
-                            }
-                        }
-                    } else if (_lastDirection != direction) {
-                        // check the direction every (_switchAnimationCounter) frames,
-                        // in order to avoid changing the direction frequently.
-                        ++ _switchAnimationCounter;
-                        if (_switchAnimationCounter >= animationCheckerFrames) {
-                            needToUpdateUI = true;
-                            if (_currentAction) {
-                                currentFrame = _currentAction->getCurrentFrame();
-                            }
-                        }
-                    }
-                    
-                    if (kUnitClass_Core == uc && !needToUpdateUI && (hpPercentageThreshold - _lastHpPercentage) * (hpPercentageThreshold - percentage) <= 0) {
+                if (kUnitClass_Core == uc) {
+                    if (currentSkillClass != lastSkillClass && kSkillClass_Die == currentSkillClass) {
+                        // destroyed
+                        needToUpdateUI = true;
+                    } else if (isHealthy != _isLastHealthy) {
                         // hurt
                         needToUpdateUI = true;
                     }
                 } else {
                     if (currentSkillClass != lastSkillClass) {
-                        // TODO: remove temp code
+                        // check if the unit is standby
                         if (needToChangeStandbyStatus()) {
                             _isStandby = !_isStandby;
                         } else if (_isStandby) {
                             _isStandby = false;
                         }
+                        
                         needToUpdateUI = true;
-                    } else if (_lastDirection != direction) {
+                    }
+                    else if (_lastDirection != direction || _isLastFlipped != flip) {
                         // check the direction every (_switchAnimationCounter) frames,
                         // in order to avoid changing the direction frequently.
                         ++ _switchAnimationCounter;
                         if (_switchAnimationCounter >= animationCheckerFrames) {
-                            // TODO: remove temp code
+                            // check if the unit is standby
                             if (needToChangeStandbyStatus()) {
                                 _isStandby = !_isStandby;
                             }
@@ -186,7 +181,6 @@ void UnitNode::update()
                             }
                         }
                     } else {
-                        // TODO: remove temp code
                         // check if the unit is standby
                         if (needToChangeStandbyStatus()) {
                             _isStandby = !_isStandby;
@@ -199,16 +193,17 @@ void UnitNode::update()
             }
             
             if (needToUpdateUI) {
+//                CCLOG("--------------------- direction: %d ---------------------", direction);
+                
                 // reset
                 _lastSkill = currentSkill;
                 _lastDirection = direction;
-                _lastHpPercentage = percentage;
+                _isLastHealthy = isHealthy;
+                _isLastFlipped = flip;
                 
                 reset();
                 
-//                CCLOG("--------------------- direction: %d ---------------------", direction);
-                
-                getCsbFiles(_animationFiles, direction, percentage > hpPercentageThreshold);
+                getCsbFiles(_animationFiles, direction, isHealthy);
                 updateActionNode(currentSkill, currentFrame, flip);
             }
         }
@@ -220,7 +215,7 @@ void UnitNode::update()
 void UnitNode::addBlockEffect()
 {
     Node* effect = addEffect("effect-Block.csb");
-    effect->setScale(1.5f);
+    node_setScale(effect, 1.5f);
 }
 
 void UnitNode::addRecoveryEffect()
@@ -233,13 +228,7 @@ void UnitNode::addSwordEffect()
 {
     const string& file = _configData->getSwordEffect();
     if (file.length() > 0) {
-        Node* effect = addEffect(file);
-        
-        // TODO: update temp code
-        if (false) {
-            const float scaleX(effect->getScaleX());
-            effect->setScaleX(-1 * scaleX);
-        }
+        addEffect(file);
     }
 }
 
@@ -375,7 +364,7 @@ const string UnitNode::getStandbyCsbFile(UnitDirection direction, bool isHealthy
     string csbFile;
     if (_isBuilding) {
         const string& normal = StringUtils::format(_configData->getBNormal().c_str(), direction);
-        const string& damaged = _configData->getBDamaged();
+        const string& damaged = StringUtils::format(_configData->getBDamaged().c_str(), direction);
         csbFile = isHealthy ? normal : (damaged.length() > 0 ? damaged : normal);
     } else {
         const string& prefix = _configData->getPrefix();
@@ -516,8 +505,7 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
         
         // flip if needed
         if (flip) {
-            const float scaleX = _actionNode->getScaleX();
-            _actionNode->setScaleX(-1 * scaleX);
+            node_setScaleX(_actionNode, -1);
         }
         
         if (play) {
@@ -551,9 +539,7 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
             
             // set scale
             if (scale != 1.0f && scale > 0) {
-                const float scaleX = _actionNode->getScaleX();
-                const float scaleY = _actionNode->getScaleY();
-                _actionNode->setScale(scale * scaleX, scale * scaleY);
+                node_setScale(_actionNode, scale);
             }
             
             // the attack animation should be fit for preperforming time
@@ -587,7 +573,7 @@ void UnitNode::addNextAttackActionNode(float playTime, int frameIndex)
         addStandbyActionNode();
     } else {
         const string& file = _animationFiles.front();
-        addActionNode(file, true, false, playTime, frameIndex, _isAnimationFlipped, CC_CALLBACK_0(UnitNode::onAttackAnimationFinished, this));
+        addActionNode(file, true, false, playTime, frameIndex, _isLastFlipped, CC_CALLBACK_0(UnitNode::onAttackAnimationFinished, this));
     }
 }
 
@@ -623,7 +609,6 @@ void UnitNode::reset()
 {
     _switchAnimationCounter = 0;
     _isPlayingAttackAnimation = false;
-    _isAnimationFlipped = false;
     _animationCounter = 0;
     _animationFiles.clear();
 }
@@ -645,7 +630,6 @@ void UnitNode::updateActionNode(const Skill* skill, int frameIndex, bool flip)
         
         // 3. add the new action node
         {
-            _isAnimationFlipped = flip;
             // attack
             if (kSkillClass_Attack == skillClass && !_isStandby) {
                 _isPlayingAttackAnimation = true;
@@ -745,6 +729,9 @@ Node* UnitNode::addEffect(const string& file)
     if (_sprite) {
         Node *effect = CSLoader::createNode(file);
         effect->setPosition(_sprite->getPosition());
+        if (_needToFlip != _isLastFlipped) {
+            node_setScaleX(effect, -1);
+        }
         addChild(effect);
         cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
         effect->runAction(action);

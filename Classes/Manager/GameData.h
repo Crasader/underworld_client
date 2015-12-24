@@ -22,6 +22,7 @@ public:
     static void purge();
     
     void init() const;
+    void parseFiles() const;
     
     User* currentUser() const;
     

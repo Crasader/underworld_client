@@ -16,6 +16,7 @@ public:
     
     static int ISLAND_TOTAL_COUNT;
     static int STAGE_COUNT_PER_ISLAND;
+    static float TILEDMAP_MAX_SCALE;
 };
 
 

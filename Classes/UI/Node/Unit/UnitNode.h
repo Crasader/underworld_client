@@ -101,15 +101,16 @@ private:
     Node *_buf;
     DisplayBar* _hpBar;
     Sprite *_sprite;
+    // save last status
     const UnderWorld::Core::Skill* _lastSkill;
     UnitDirection _lastDirection;
-    float _lastHpPercentage;
+    bool _isLastHealthy;
+    bool _isLastFlipped;
     int _switchAnimationCounter;
     bool _isStandby;
     std::vector<std::string> _animationFiles;
     // only used for attack animations
     bool _isPlayingAttackAnimation;
-    bool _isAnimationFlipped;
     int _animationCounter;
 };
 

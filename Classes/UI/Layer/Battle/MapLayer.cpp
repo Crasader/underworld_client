@@ -15,6 +15,7 @@
 #include "cocostudio/CocoStudio.h"
 #include "tinyxml2/tinyxml2.h"
 #include "CoreUtils.h"
+#include "Constants.h"
 #include "DataManager.h"
 #include "MapParticleConfigData.h"
 
@@ -25,7 +26,6 @@ static const int TILEDMAP_TAG = 2;
 static const int TILEDMAP_ZORDER = 2;
 static const string TILEDMAP_LAYER_LOGIC = "logic";
 static const string TILEDMAP_LAYER_FOREGROUND = "fg";
-static const unsigned int TILEDMAP_MAX_SCALE = 1.0f;
 
 static const std::string CONFIG_KEY_LOCATION_SETTING_TAG("location_setting");
 static const std::string CONFIG_KEY_RESOURCE_SETTINGS_TAG("resource_settings");
@@ -287,7 +287,7 @@ bool MapLayer::init(int mapId)
         const Size &mapPSize = _tiledMap->getContentSize();
         float scale = RESOLUTION_HEIGHT / mapPSize.height;
         _scrollView->setContentSize(mapPSize);
-        _scrollView->setMaxScale(TILEDMAP_MAX_SCALE);
+        _scrollView->setMaxScale(Constants::TILEDMAP_MAX_SCALE);
         _scrollView->setMinScale(scale);
         _scrollView->setZoomScale(scale);
         _scrollViewOffset = _scrollView->getContentOffset();

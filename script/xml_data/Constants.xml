@@ -3,5 +3,6 @@
 	<item
     ISLAND_TOTAL_COUNT="5"
     STAGE_COUNT_PER_ISLAND="30"
+    TILEDMAP_MAX_SCALE="1.5"
     />
 </root>

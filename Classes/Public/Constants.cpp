@@ -13,6 +13,7 @@
 
 int Constants::ISLAND_TOTAL_COUNT = 0;
 int Constants::STAGE_COUNT_PER_ISLAND = 0;
+float Constants::TILEDMAP_MAX_SCALE = 0;
 
 void Constants::init()
 {
@@ -26,11 +27,13 @@ void Constants::init()
             
             // define
 #define ATOI(name) { const char* data = item->Attribute(#name); if (data) {name = atoi(data);} }
+#define ATOF(name) { const char* data = item->Attribute(#name); if (data) {name = atof(data);} }
             
             for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement(); item; item = item->NextSiblingElement()) {
                 if (item) {
                     ATOI(ISLAND_TOTAL_COUNT)
                     ATOI(STAGE_COUNT_PER_ISLAND)
+                    ATOF(TILEDMAP_MAX_SCALE)
                 }
             }
 #if false
