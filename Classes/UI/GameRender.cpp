@@ -20,6 +20,7 @@
 #include "DefeatLayer.h"
 #include "MainLayer.h"
 #include "MessageBoxLayer.h"
+#include "Unit.h"
 
 using namespace std;
 using namespace UnderWorld::Core;
