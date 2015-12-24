@@ -23,22 +23,20 @@
 using namespace std;
 using namespace UnderWorld::Core;
 
-static const float directionAngelEdge[UNIT_DIRECTIONS_COUNT] = {
-    -30.f, 30.f, 90.f
-};
+#pragma mark ======================= static =======================
+static const float directionAngelEdge[UNIT_DIRECTIONS_COUNT] = { -30.f, 30.f, 90.f };
 static const int animationCheckerFrames = GameConstants::FRAME_PER_SEC;
 static const float hpPercentageThreshold(50.0f);
 
-#pragma mark ======================= inline unit getters =======================
 static inline SkillClass unit_getSkillClass(const Unit* unit)
 {
     return unit->getCurrentSkill()->getSkillType()->getSkillClass();
 }
 
-static void node_setScaleX(Node* node, float scale)
+static void node_flipX(Node* node)
 {
     const float scaleX = node->getScaleX();
-    node->setScaleX(scale * scaleX);
+    node->setScaleX(-1 * scaleX);
 }
 
 static void node_setScale(Node* node, float scale)
@@ -413,11 +411,9 @@ bool UnitNode::needToChangeStandbyStatus()
     bool isStandby(false);
     if (kSkillClass_Attack == unit_getSkillClass(_unit)) {
         // check if the unit is standby
-        if (!_isBuilding) {
-            const Skill::SkillState state(_unit->getCurrentSkill()->getSkillState());
-            if (!_isPlayingAttackAnimation && Skill::SkillState::kSkillState_idle == state) {
-                isStandby = true;
-            }
+        const Skill::SkillState state(_unit->getCurrentSkill()->getSkillState());
+        if (!_isPlayingAttackAnimation && Skill::SkillState::kSkillState_idle == state) {
+            isStandby = true;
         }
         
         if (_isStandby != isStandby) {
@@ -505,7 +501,7 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
         
         // flip if needed
         if (flip) {
-            node_setScaleX(_actionNode, -1);
+            node_flipX(_actionNode);
         }
         
         if (play) {
@@ -579,22 +575,22 @@ void UnitNode::addNextAttackActionNode(float playTime, int frameIndex)
 
 void UnitNode::onAttackAnimationFinished()
 {
+    // it means the "functionalIndex" of the animation sequence has a callback,
+    // the others are only the animations without any function.
+    static const int functionalIndex = 0;
+    
     // 1. execute callback
-    if (_isBuilding) {
+    if (_animationCounter == functionalIndex) {
+        // play sound
+        const string file = _configData->getAttackSound();
+        if (file.length() > 0) {
+            SoundManager::getInstance()->playSound(file);
+        }
         
-    } else {
-        if (_animationCounter == 0) {
-            // play sound
-            const string file = _configData->getAttackSound();
-            if (file.length() > 0) {
-                SoundManager::getInstance()->playSound(file);
-            }
-            
-            // if it is footman
-            if (_configData->isShortRange()) {
-                if (_observer) {
-                    _observer->onUnitNodeHurtTheTarget(this);
-                }
+        // if it is footman
+        if (_configData->isShortRange()) {
+            if (_observer) {
+                _observer->onUnitNodeHurtTheTarget(this);
             }
         }
     }
@@ -603,6 +599,11 @@ void UnitNode::onAttackAnimationFinished()
     _animationFiles.erase(_animationFiles.begin());
     ++ _animationCounter;
     addNextAttackActionNode(0.0f, 0);
+    // because only the "functionalIndex" of the animation sequence has some function,
+    // in order to avoid getting the incorrect "frameIndex", set "_currentAction" to null.
+    if (_animationCounter != functionalIndex) {
+        _currentAction = nullptr;
+    }
 }
 
 void UnitNode::reset()
@@ -730,7 +731,7 @@ Node* UnitNode::addEffect(const string& file)
         Node *effect = CSLoader::createNode(file);
         effect->setPosition(_sprite->getPosition());
         if (_needToFlip != _isLastFlipped) {
-            node_setScaleX(effect, -1);
+            node_flipX(effect);
         }
         addChild(effect);
         cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
