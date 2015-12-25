@@ -49,6 +49,8 @@
 		309F769A1BE9D7BD00B2791F /* Camp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F76981BE9D7BD00B2791F /* Camp.cpp */; };
 		309F76A01BEA3ABA00B2791F /* CoreUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F769E1BEA3AB900B2791F /* CoreUtils.cpp */; };
 		30DF03C41C0D898E00A1C6EB /* EffectType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DF03C21C0D898E00A1C6EB /* EffectType.cpp */; };
+		30FD55611C2BF57F0078EC3C /* PassiveType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD555F1C2BF57F0078EC3C /* PassiveType.cpp */; };
+		30FD55641C2CFDE80078EC3C /* Passive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD55621C2CFDE80078EC3C /* Passive.cpp */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
@@ -187,7 +189,7 @@
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		CBA296431BE37FB1006BE7A0 /* GameScheduler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBA296411BE37FB1006BE7A0 /* GameScheduler.cpp */; };
-		CBD778C71C29390B0070D293 /* AnnouncementNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBD778C51C29390B0070D293 /* AnnouncementNode.cpp */; settings = {ASSET_TAGS = (); }; };
+		CBD778C71C29390B0070D293 /* AnnouncementNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBD778C51C29390B0070D293 /* AnnouncementNode.cpp */; };
 		CBDBD2131BD7B3B9004706A8 /* map in Resources */ = {isa = PBXBuildFile; fileRef = CBDBD2121BD7B3B9004706A8 /* map */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
@@ -316,6 +318,10 @@
 		30DF03BB1C085C2400A1C6EB /* RandomCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RandomCreator.h; path = Core/Utils/RandomCreator.h; sourceTree = "<group>"; };
 		30DF03C21C0D898E00A1C6EB /* EffectType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EffectType.cpp; path = Core/Unit/Type/EffectType.cpp; sourceTree = "<group>"; };
 		30DF03C31C0D898E00A1C6EB /* EffectType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectType.h; path = Core/Unit/Type/EffectType.h; sourceTree = "<group>"; };
+		30FD555F1C2BF57F0078EC3C /* PassiveType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PassiveType.cpp; path = Core/Unit/Type/PassiveType.cpp; sourceTree = "<group>"; };
+		30FD55601C2BF57F0078EC3C /* PassiveType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PassiveType.h; path = Core/Unit/Type/PassiveType.h; sourceTree = "<group>"; };
+		30FD55621C2CFDE80078EC3C /* Passive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Passive.cpp; path = Core/Unit/Instance/Passive.cpp; sourceTree = "<group>"; };
+		30FD55631C2CFDE80078EC3C /* Passive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Passive.h; path = Core/Unit/Instance/Passive.h; sourceTree = "<group>"; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		46880B8519C43A87006E1F66 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -695,6 +701,8 @@
 				301F63F11BE0C56D00DA6D70 /* Damage.h */,
 				309F76981BE9D7BD00B2791F /* Camp.cpp */,
 				309F76991BE9D7BD00B2791F /* Camp.h */,
+				30FD55621C2CFDE80078EC3C /* Passive.cpp */,
+				30FD55631C2CFDE80078EC3C /* Passive.h */,
 			);
 			name = Instance;
 			sourceTree = "<group>";
@@ -722,6 +730,8 @@
 				300F25321BFC67550080765C /* FeatureType.h */,
 				30DF03C21C0D898E00A1C6EB /* EffectType.cpp */,
 				30DF03C31C0D898E00A1C6EB /* EffectType.h */,
+				30FD555F1C2BF57F0078EC3C /* PassiveType.cpp */,
+				30FD55601C2BF57F0078EC3C /* PassiveType.h */,
 			);
 			name = Type;
 			sourceTree = "<group>";
@@ -1499,6 +1509,7 @@
 				A1D745C61C1AB9F60020BC1C /* BattleScene.cpp in Sources */,
 				A18524D91C1AF3BB00BE261D /* QuestCell.cpp in Sources */,
 				A1720E741BCCE0A200217E98 /* FixedLabelAtlas.cpp in Sources */,
+				30FD55611C2BF57F0078EC3C /* PassiveType.cpp in Sources */,
 				308B84631BE3752000377802 /* PathFinder.cpp in Sources */,
 				A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */,
 				A1720E8C1BCCE19300217E98 /* aes_ctr.c in Sources */,
@@ -1512,6 +1523,7 @@
 				A1720E8F1BCCE19300217E98 /* md5.cpp in Sources */,
 				A1D45C4A1BEB3B1400D1E921 /* ResourceButton.cpp in Sources */,
 				A1E929791C0D7F9A0026D85D /* ChatData.cpp in Sources */,
+				30FD55641C2CFDE80078EC3C /* Passive.cpp in Sources */,
 				A1720E7A1BCCE0F000217E98 /* CCShake.cpp in Sources */,
 				30DF03C41C0D898E00A1C6EB /* EffectType.cpp in Sources */,
 				307534711BF33ECF0057DCED /* Logger.cpp in Sources */,
