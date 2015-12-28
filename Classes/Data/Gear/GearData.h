@@ -9,10 +9,10 @@
 #ifndef GearData_h
 #define GearData_h
 
-#include <vector>
+#include <map>
 #include "json/document.h"
 
-class GearAttribute;
+class AttributeData;
 
 class GearData
 {
@@ -21,11 +21,11 @@ public:
     virtual ~GearData();
     
     int getId() const;
-    const std::vector<GearAttribute *>& getAttributes() const;
+    const AttributeData* getAttribute(int id) const;
     
 private:
     int _id;
-    std::vector<GearAttribute *> _attributes;
+    std::map<int, AttributeData *> _attributes;
 };
 
 #endif /* GearData_h */

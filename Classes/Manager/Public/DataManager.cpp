@@ -16,8 +16,18 @@
 #include "AchievementLocalData.h"
 #include "ObjectLocalData.h"
 #include "GearLocalData.h"
+#include "GearUpgradeData.h"
+#include "GearSetLocalData.h"
 #include "URConfigData.h"
 #include "MapParticleConfigData.h"
+#include "AttributeLocalData.h"
+#include "HeroLocalData.h"
+#include "HeroUpgradeData.h"
+#include "SkillLocalData.h"
+#include "SoldierLocalData.h"
+#include "SoldierUpgradeData.h"
+#include "TowerLocalData.h"
+#include "TowerUpgradeData.h"
 
 USING_NS_CC;
 using namespace std;
@@ -59,6 +69,8 @@ DataManager::~DataManager()
     
     Utils::clearMap(_achievements);
     Utils::clearMap(_gears);
+    Utils::clearMap(_gearUpgradeDatas);
+    Utils::clearMap(_gearSets);
     Utils::clearMap(_animationParameters);
     Utils::clearMap(_unitResourceConfigData);
     
@@ -66,6 +78,15 @@ DataManager::~DataManager()
         Utils::clearVector(iter->second);
     }
     _mapParticleConfigData.clear();
+    
+    Utils::clearMap(_attributes);
+    Utils::clearMap(_heroes);
+    Utils::clearMap(_heroUpgradeDatas);
+    Utils::clearMap(_skills);
+    Utils::clearMap(_soldiers);
+    Utils::clearMap(_soldierUpgradeDatas);
+    Utils::clearMap(_towers);
+    Utils::clearMap(_towerUpgradeDatas);
 }
 
 void DataManager::init()
@@ -76,9 +97,19 @@ void DataManager::init()
     parseAchievementData();
     parseObjectData();
     parseGearData();
+    parseGearUpgradeData();
+    parseGearSetData();
     parseAnimationConfigData();
     parseURConfigData();
     parseMapParticleConfigData();
+    parseAttributeLocalData();
+    parseHeroLocalData();
+    parseHeroUpgradeData();
+    parseSkillLocalData();
+    parseSoldierLocalData();
+    parseSoldierUpgradeData();
+    parseTowerLocalData();
+    parseTowerUpgradeData();
 }
 
 #pragma mark - getters
@@ -130,6 +161,25 @@ const GearLocalData* DataManager::getGearData(int gearId) const
     return nullptr;
 }
 
+const GearUpgradeData* DataManager::getGearUpgradeData(int id, int level) const
+{
+    string key = StringUtils::format("%d_%d", id, level);
+    if (_gearUpgradeDatas.find(key) != _gearUpgradeDatas.end()) {
+        return _gearUpgradeDatas.at(key);
+    }
+    
+    return nullptr;
+}
+
+const GearSetLocalData* DataManager::getGearSetData(int id) const
+{
+    if (_gearSets.find(id) != _gearSets.end()) {
+        return _gearSets.at(id);
+    }
+    
+    return nullptr;
+}
+
 AnimationParameters DataManager::getAnimationParameters(const string& name, UnderWorld::Core::SkillClass skillClass, UnitDirection direction) const
 {
     string key = name + StringUtils::format("_%d", skillClass);
@@ -160,6 +210,87 @@ const vector<MapParticleConfigData*>& DataManager::getMapParticleConfigData(int 
     
     static vector<MapParticleConfigData*> empty;
     return empty;
+}
+
+const AttributeLocalData* DataManager::getAttributeData(int id) const
+{
+    if (_attributes.find(id) != _attributes.end()) {
+        return _attributes.at(id);
+    }
+    
+    return nullptr;
+}
+
+const HeroLocalData* DataManager::getHeroData(int id) const
+{
+    if (_heroes.find(id) != _heroes.end()) {
+        return _heroes.at(id);
+    }
+    
+    return nullptr;
+}
+
+
+const HeroUpgradeData* DataManager::getHeroUpgradeData(int id, int level) const
+{
+    string key = StringUtils::format("%d_%d", id, level);
+    if (_heroUpgradeDatas.find(key) != _heroUpgradeDatas.end()) {
+        return _heroUpgradeDatas.at(key);
+    }
+    
+    return nullptr;
+}
+
+
+const SkillLocalData* DataManager::getSkillData(int id) const
+{
+    if (_skills.find(id) != _skills.end()) {
+        return _skills.at(id);
+    }
+    
+    return nullptr;
+}
+
+
+const SoldierLocalData* DataManager::getSoldierData(int id) const
+{
+    if (_soldiers.find(id) != _soldiers.end()) {
+        return _soldiers.at(id);
+    }
+    
+    return nullptr;
+}
+
+
+const SoldierUpgradeData* DataManager::getSoldierUpgradeData(int id, int level) const
+{
+    string key = StringUtils::format("%d_%d", id, level);
+    if (_soldierUpgradeDatas.find(key) != _soldierUpgradeDatas.end()) {
+        return _soldierUpgradeDatas.at(key);
+    }
+    
+    return nullptr;
+}
+
+
+const TowerLocalData* DataManager::getTowerData(int id) const
+{
+    if (_towers.find(id) != _towers.end()) {
+        return _towers.at(id);
+    }
+    
+    return nullptr;
+}
+
+
+const TowerUpgradeData* DataManager::getTowerUpgradeData(int id, int level) const
+{
+    string key = StringUtils::format("%d_%d", id, level);
+    if (_towerUpgradeDatas.find(key) != _towerUpgradeDatas.end()) {
+        return _towerUpgradeDatas.at(key);
+    }
+    
+    return nullptr;
 }
 
 #pragma mark - parsers
@@ -324,6 +455,64 @@ void DataManager::parseGearData()
     }
 }
 
+void DataManager::parseGearUpgradeData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                GearUpgradeData* data = new (nothrow) GearUpgradeData(item);
+                string key = StringUtils::format("%d_%d", data->getId(), data->level());
+                if (_gearUpgradeDatas.find(key) != _gearUpgradeDatas.end()) {
+                    assert(false);
+                } else {
+                    _gearUpgradeDatas.insert(make_pair(key, data));
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
+void DataManager::parseGearSetData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                GearSetLocalData* data = new (nothrow) GearSetLocalData(item);
+                const int key = data->getId();
+                if (_gearSets.find(key) != _gearSets.end()) {
+                    assert(false);
+                } else {
+                    _gearSets.insert(make_pair(key, data));
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
 void DataManager::parseAnimationConfigData()
 {
     string fileName = LocalHelper::getLocalizedConfigFilePath("AnimationConfig.xml");
@@ -416,6 +605,238 @@ void DataManager::parseMapParticleConfigData()
                 
                 CC_SAFE_DELETE(xmlDoc);
             }
+        }
+    }
+}
+
+void DataManager::parseAttributeLocalData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                AttributeLocalData* data = new (nothrow) AttributeLocalData(item);
+                const int key = data->getId();
+                if (_attributes.find(key) != _attributes.end()) {
+                    assert(false);
+                } else {
+                    _attributes.insert(make_pair(key, data));
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
+void DataManager::parseHeroLocalData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                HeroLocalData* data = new (nothrow) HeroLocalData(item);
+                const int key = data->getId();
+                if (_heroes.find(key) != _heroes.end()) {
+                    assert(false);
+                } else {
+                    _heroes.insert(make_pair(key, data));
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
+void DataManager::parseHeroUpgradeData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                HeroUpgradeData* data = new (nothrow) HeroUpgradeData(item);
+                string key = StringUtils::format("%d_%d", data->getId(), data->level());
+                if (_heroUpgradeDatas.find(key) != _heroUpgradeDatas.end()) {
+                    assert(false);
+                } else {
+                    _heroUpgradeDatas.insert(make_pair(key, data));
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
+void DataManager::parseSkillLocalData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                SkillLocalData* data = new (nothrow) SkillLocalData(item);
+                const int key = data->getId();
+                if (_skills.find(key) != _skills.end()) {
+                    assert(false);
+                } else {
+                    _skills.insert(make_pair(key, data));
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
+void DataManager::parseSoldierLocalData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                SoldierLocalData* data = new (nothrow) SoldierLocalData(item);
+                const int key = data->getId();
+                if (_soldiers.find(key) != _soldiers.end()) {
+                    assert(false);
+                } else {
+                    _soldiers.insert(make_pair(key, data));
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
+void DataManager::parseSoldierUpgradeData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                SoldierUpgradeData* data = new (nothrow) SoldierUpgradeData(item);
+                string key = StringUtils::format("%d_%d", data->getId(), data->level());
+                if (_soldierUpgradeDatas.find(key) != _soldierUpgradeDatas.end()) {
+                    assert(false);
+                } else {
+                    _soldierUpgradeDatas.insert(make_pair(key, data));
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
+void DataManager::parseTowerLocalData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                TowerLocalData* data = new (nothrow) TowerLocalData(item);
+                const int key = data->getId();
+                if (_towers.find(key) != _towers.end()) {
+                    assert(false);
+                } else {
+                    _towers.insert(make_pair(key, data));
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
+void DataManager::parseTowerUpgradeData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                TowerUpgradeData* data = new (nothrow) TowerUpgradeData(item);
+                string key = StringUtils::format("%d_%d", data->getId(), data->level());
+                if (_towerUpgradeDatas.find(key) != _towerUpgradeDatas.end()) {
+                    assert(false);
+                } else {
+                    _towerUpgradeDatas.insert(make_pair(key, data));
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
         }
     }
 }

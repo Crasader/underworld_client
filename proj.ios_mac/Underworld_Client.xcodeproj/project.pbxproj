@@ -100,6 +100,19 @@
 		A1211B271C0BF5CC00C27CCC /* RandomCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B251C0BF5CC00C27CCC /* RandomCreator.cpp */; };
 		A1211B291C0BF68E00C27CCC /* GameConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B281C0BF68E00C27CCC /* GameConstants.cpp */; };
 		A13108A51C046BF900EAAD90 /* particle in Resources */ = {isa = PBXBuildFile; fileRef = A13108A41C046BF900EAAD90 /* particle */; };
+		A14B5EFB1C311908006FB0DB /* Addon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14B5EF91C311908006FB0DB /* Addon.cpp */; };
+		A16BF2821C313E1300E91458 /* AttributeLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF2801C313E1300E91458 /* AttributeLocalData.cpp */; };
+		A16BF2851C313E2900E91458 /* HeroLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF2831C313E2900E91458 /* HeroLocalData.cpp */; };
+		A16BF2891C313E5900E91458 /* HeroUpgradeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF2871C313E5900E91458 /* HeroUpgradeData.cpp */; };
+		A16BF28C1C313E7D00E91458 /* SoldierLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF28A1C313E7D00E91458 /* SoldierLocalData.cpp */; };
+		A16BF28F1C313E8E00E91458 /* SoldierUpgradeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF28D1C313E8E00E91458 /* SoldierUpgradeData.cpp */; };
+		A16BF2921C313E9F00E91458 /* TowerLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF2901C313E9F00E91458 /* TowerLocalData.cpp */; };
+		A16BF2951C313EAF00E91458 /* TowerUpgradeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF2931C313EAF00E91458 /* TowerUpgradeData.cpp */; };
+		A16BF2981C31406A00E91458 /* ResourceData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF2961C31406A00E91458 /* ResourceData.cpp */; };
+		A16BF29C1C31434500E91458 /* SkillLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF29A1C31434500E91458 /* SkillLocalData.cpp */; };
+		A16BF2A11C314DA000E91458 /* GearSetLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF29F1C314DA000E91458 /* GearSetLocalData.cpp */; };
+		A16BF2A41C314E5100E91458 /* AttributeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF2A21C314E5100E91458 /* AttributeData.cpp */; };
+		A16BF2A71C3156A100E91458 /* GearUpgradeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF2A51C3156A100E91458 /* GearUpgradeData.cpp */; };
 		A1720E6F1BCCDF9100217E98 /* CocosUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720E6D1BCCDF9100217E98 /* CocosUtils.cpp */; };
 		A1720E741BCCE0A200217E98 /* FixedLabelAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720E721BCCE0A200217E98 /* FixedLabelAtlas.cpp */; };
 		A1720E7A1BCCE0F000217E98 /* CCShake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720E761BCCE0F000217E98 /* CCShake.cpp */; };
@@ -175,7 +188,6 @@
 		A1F395F71C23DB8600B75923 /* MapParticleConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F395F51C23DB8600B75923 /* MapParticleConfigData.cpp */; };
 		A1F5BF921C1FC36C007C08CB /* GearLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BF901C1FC36C007C08CB /* GearLocalData.cpp */; };
 		A1F5BF951C1FC381007C08CB /* GearData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BF931C1FC381007C08CB /* GearData.cpp */; };
-		A1F5BF981C1FC3D3007C08CB /* GearAttribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BF961C1FC3D3007C08CB /* GearAttribute.cpp */; };
 		A1F5BF9B1C1FC724007C08CB /* QuestData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BF991C1FC724007C08CB /* QuestData.cpp */; };
 		A1F5BF9F1C1FD508007C08CB /* AchievementLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BF9D1C1FD508007C08CB /* AchievementLocalData.cpp */; };
 		A1F5BFA21C1FD519007C08CB /* AchievementData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BFA01C1FD519007C08CB /* AchievementData.cpp */; };
@@ -379,6 +391,32 @@
 		A1211B261C0BF5CC00C27CCC /* RandomCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RandomCreator.h; path = Core/Utils/RandomCreator.h; sourceTree = "<group>"; };
 		A1211B281C0BF68E00C27CCC /* GameConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameConstants.cpp; path = Core/Game/GameConstants.cpp; sourceTree = "<group>"; };
 		A13108A41C046BF900EAAD90 /* particle */ = {isa = PBXFileReference; lastKnownFileType = folder; path = particle; sourceTree = "<group>"; };
+		A14B5EF91C311908006FB0DB /* Addon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Addon.cpp; path = Core/Unit/Type/Addon.cpp; sourceTree = "<group>"; };
+		A14B5EFA1C311908006FB0DB /* Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Addon.h; path = Core/Unit/Type/Addon.h; sourceTree = "<group>"; };
+		A16BF2801C313E1300E91458 /* AttributeLocalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AttributeLocalData.cpp; sourceTree = "<group>"; };
+		A16BF2811C313E1300E91458 /* AttributeLocalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttributeLocalData.h; sourceTree = "<group>"; };
+		A16BF2831C313E2900E91458 /* HeroLocalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HeroLocalData.cpp; sourceTree = "<group>"; };
+		A16BF2841C313E2900E91458 /* HeroLocalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroLocalData.h; sourceTree = "<group>"; };
+		A16BF2871C313E5900E91458 /* HeroUpgradeData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HeroUpgradeData.cpp; sourceTree = "<group>"; };
+		A16BF2881C313E5900E91458 /* HeroUpgradeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroUpgradeData.h; sourceTree = "<group>"; };
+		A16BF28A1C313E7D00E91458 /* SoldierLocalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoldierLocalData.cpp; sourceTree = "<group>"; };
+		A16BF28B1C313E7D00E91458 /* SoldierLocalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoldierLocalData.h; sourceTree = "<group>"; };
+		A16BF28D1C313E8E00E91458 /* SoldierUpgradeData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoldierUpgradeData.cpp; sourceTree = "<group>"; };
+		A16BF28E1C313E8E00E91458 /* SoldierUpgradeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoldierUpgradeData.h; sourceTree = "<group>"; };
+		A16BF2901C313E9F00E91458 /* TowerLocalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TowerLocalData.cpp; sourceTree = "<group>"; };
+		A16BF2911C313E9F00E91458 /* TowerLocalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TowerLocalData.h; sourceTree = "<group>"; };
+		A16BF2931C313EAF00E91458 /* TowerUpgradeData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TowerUpgradeData.cpp; sourceTree = "<group>"; };
+		A16BF2941C313EAF00E91458 /* TowerUpgradeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TowerUpgradeData.h; sourceTree = "<group>"; };
+		A16BF2961C31406A00E91458 /* ResourceData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResourceData.cpp; sourceTree = "<group>"; };
+		A16BF2971C31406A00E91458 /* ResourceData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceData.h; sourceTree = "<group>"; };
+		A16BF29A1C31434500E91458 /* SkillLocalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SkillLocalData.cpp; sourceTree = "<group>"; };
+		A16BF29B1C31434500E91458 /* SkillLocalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkillLocalData.h; sourceTree = "<group>"; };
+		A16BF29F1C314DA000E91458 /* GearSetLocalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GearSetLocalData.cpp; sourceTree = "<group>"; };
+		A16BF2A01C314DA000E91458 /* GearSetLocalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GearSetLocalData.h; sourceTree = "<group>"; };
+		A16BF2A21C314E5100E91458 /* AttributeData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AttributeData.cpp; sourceTree = "<group>"; };
+		A16BF2A31C314E5100E91458 /* AttributeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttributeData.h; sourceTree = "<group>"; };
+		A16BF2A51C3156A100E91458 /* GearUpgradeData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GearUpgradeData.cpp; sourceTree = "<group>"; };
+		A16BF2A61C3156A100E91458 /* GearUpgradeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GearUpgradeData.h; sourceTree = "<group>"; };
 		A1720E6D1BCCDF9100217E98 /* CocosUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosUtils.cpp; sourceTree = "<group>"; };
 		A1720E6E1BCCDF9100217E98 /* CocosUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosUtils.h; sourceTree = "<group>"; };
 		A1720E721BCCE0A200217E98 /* FixedLabelAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FixedLabelAtlas.cpp; sourceTree = "<group>"; };
@@ -528,8 +566,6 @@
 		A1F5BF911C1FC36C007C08CB /* GearLocalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GearLocalData.h; sourceTree = "<group>"; };
 		A1F5BF931C1FC381007C08CB /* GearData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GearData.cpp; sourceTree = "<group>"; };
 		A1F5BF941C1FC381007C08CB /* GearData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GearData.h; sourceTree = "<group>"; };
-		A1F5BF961C1FC3D3007C08CB /* GearAttribute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GearAttribute.cpp; sourceTree = "<group>"; };
-		A1F5BF971C1FC3D3007C08CB /* GearAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GearAttribute.h; sourceTree = "<group>"; };
 		A1F5BF991C1FC724007C08CB /* QuestData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuestData.cpp; sourceTree = "<group>"; };
 		A1F5BF9A1C1FC724007C08CB /* QuestData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestData.h; sourceTree = "<group>"; };
 		A1F5BF9D1C1FD508007C08CB /* AchievementLocalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AchievementLocalData.cpp; sourceTree = "<group>"; };
@@ -710,6 +746,8 @@
 		045116DB1BCFBA23002AA721 /* Type */ = {
 			isa = PBXGroup;
 			children = (
+				A14B5EF91C311908006FB0DB /* Addon.cpp */,
+				A14B5EFA1C311908006FB0DB /* Addon.h */,
 				045116E51BCFBA44002AA721 /* BuffType.cpp */,
 				045116E61BCFBA44002AA721 /* BuffType.h */,
 				045116E71BCFBA44002AA721 /* BulletType.cpp */,
@@ -964,20 +1002,90 @@
 			isa = PBXGroup;
 			children = (
 				A1F5BF9C1C1FD508007C08CB /* Achievement */,
+				A16BF27C1C313D6D00E91458 /* Attribute */,
 				A1F5BF8F1C1FC36C007C08CB /* Gear */,
+				A16BF29D1C314CE500E91458 /* GearSet */,
+				A16BF27D1C313D6D00E91458 /* Hero */,
 				A1F395EC1C23BBA800B75923 /* Object */,
 				A1E830611C1EA50200FE01B8 /* Quest */,
 				A10A66E21C1A7CE100A2DD13 /* Resource */,
+				A16BF2991C31432800E91458 /* Skill */,
+				A16BF27E1C313D6D00E91458 /* Soldier */,
+				A16BF27F1C313D6D00E91458 /* Tower */,
 				A1E929771C0D7F9A0026D85D /* ChatData.cpp */,
 				A1E929781C0D7F9A0026D85D /* ChatData.h */,
 				A19EE96B1C1C0F1300E46D77 /* LevelLocalData.cpp */,
 				A19EE96C1C1C0F1300E46D77 /* LevelLocalData.h */,
+				A16BF2961C31406A00E91458 /* ResourceData.cpp */,
+				A16BF2971C31406A00E91458 /* ResourceData.h */,
 				A1F8854B1C1044500035B4C5 /* UserData.cpp */,
 				A1F8854C1C1044500035B4C5 /* UserData.h */,
 				A1F8854E1C1044640035B4C5 /* UserSimpleData.cpp */,
 				A1F8854F1C1044640035B4C5 /* UserSimpleData.h */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		A16BF27C1C313D6D00E91458 /* Attribute */ = {
+			isa = PBXGroup;
+			children = (
+				A16BF2A21C314E5100E91458 /* AttributeData.cpp */,
+				A16BF2A31C314E5100E91458 /* AttributeData.h */,
+				A16BF2801C313E1300E91458 /* AttributeLocalData.cpp */,
+				A16BF2811C313E1300E91458 /* AttributeLocalData.h */,
+			);
+			path = Attribute;
+			sourceTree = "<group>";
+		};
+		A16BF27D1C313D6D00E91458 /* Hero */ = {
+			isa = PBXGroup;
+			children = (
+				A16BF2831C313E2900E91458 /* HeroLocalData.cpp */,
+				A16BF2841C313E2900E91458 /* HeroLocalData.h */,
+				A16BF2871C313E5900E91458 /* HeroUpgradeData.cpp */,
+				A16BF2881C313E5900E91458 /* HeroUpgradeData.h */,
+			);
+			path = Hero;
+			sourceTree = "<group>";
+		};
+		A16BF27E1C313D6D00E91458 /* Soldier */ = {
+			isa = PBXGroup;
+			children = (
+				A16BF28A1C313E7D00E91458 /* SoldierLocalData.cpp */,
+				A16BF28B1C313E7D00E91458 /* SoldierLocalData.h */,
+				A16BF28D1C313E8E00E91458 /* SoldierUpgradeData.cpp */,
+				A16BF28E1C313E8E00E91458 /* SoldierUpgradeData.h */,
+			);
+			path = Soldier;
+			sourceTree = "<group>";
+		};
+		A16BF27F1C313D6D00E91458 /* Tower */ = {
+			isa = PBXGroup;
+			children = (
+				A16BF2901C313E9F00E91458 /* TowerLocalData.cpp */,
+				A16BF2911C313E9F00E91458 /* TowerLocalData.h */,
+				A16BF2931C313EAF00E91458 /* TowerUpgradeData.cpp */,
+				A16BF2941C313EAF00E91458 /* TowerUpgradeData.h */,
+			);
+			path = Tower;
+			sourceTree = "<group>";
+		};
+		A16BF2991C31432800E91458 /* Skill */ = {
+			isa = PBXGroup;
+			children = (
+				A16BF29A1C31434500E91458 /* SkillLocalData.cpp */,
+				A16BF29B1C31434500E91458 /* SkillLocalData.h */,
+			);
+			path = Skill;
+			sourceTree = "<group>";
+		};
+		A16BF29D1C314CE500E91458 /* GearSet */ = {
+			isa = PBXGroup;
+			children = (
+				A16BF29F1C314DA000E91458 /* GearSetLocalData.cpp */,
+				A16BF2A01C314DA000E91458 /* GearSetLocalData.h */,
+			);
+			path = GearSet;
 			sourceTree = "<group>";
 		};
 		A1720E661BCCDECA00217E98 /* Manager */ = {
@@ -1319,12 +1427,12 @@
 		A1F5BF8F1C1FC36C007C08CB /* Gear */ = {
 			isa = PBXGroup;
 			children = (
-				A1F5BF961C1FC3D3007C08CB /* GearAttribute.cpp */,
-				A1F5BF971C1FC3D3007C08CB /* GearAttribute.h */,
 				A1F5BF931C1FC381007C08CB /* GearData.cpp */,
 				A1F5BF941C1FC381007C08CB /* GearData.h */,
 				A1F5BF901C1FC36C007C08CB /* GearLocalData.cpp */,
 				A1F5BF911C1FC36C007C08CB /* GearLocalData.h */,
+				A16BF2A51C3156A100E91458 /* GearUpgradeData.cpp */,
+				A16BF2A61C3156A100E91458 /* GearUpgradeData.h */,
 			);
 			path = Gear;
 			sourceTree = "<group>";
@@ -1503,6 +1611,7 @@
 				A18524D61C1AE47A00BE261D /* BagNode.cpp in Sources */,
 				A1F395EF1C23BBA800B75923 /* ObjectLocalData.cpp in Sources */,
 				CBA296431BE37FB1006BE7A0 /* GameScheduler.cpp in Sources */,
+				A16BF2981C31406A00E91458 /* ResourceData.cpp in Sources */,
 				309F76A01BEA3ABA00B2791F /* CoreUtils.cpp in Sources */,
 				A1B4ADFF1C200480005906A6 /* DataManager.cpp in Sources */,
 				A1A4BA491BCE096300175E8A /* Utils.cpp in Sources */,
@@ -1518,23 +1627,29 @@
 				045116E41BCFBA39002AA721 /* World.cpp in Sources */,
 				A1B4AE2E1C200521005906A6 /* GearManager.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
+				A16BF28C1C313E7D00E91458 /* SoldierLocalData.cpp in Sources */,
 				A103F45F1BE38112007F9A83 /* GameRender.cpp in Sources */,
 				A1720EB81BCD2D2E00217E98 /* Api.mm in Sources */,
 				A1720E8F1BCCE19300217E98 /* md5.cpp in Sources */,
 				A1D45C4A1BEB3B1400D1E921 /* ResourceButton.cpp in Sources */,
 				A1E929791C0D7F9A0026D85D /* ChatData.cpp in Sources */,
 				30FD55641C2CFDE80078EC3C /* Passive.cpp in Sources */,
+				A16BF28F1C313E8E00E91458 /* SoldierUpgradeData.cpp in Sources */,
 				A1720E7A1BCCE0F000217E98 /* CCShake.cpp in Sources */,
 				30DF03C41C0D898E00A1C6EB /* EffectType.cpp in Sources */,
+				A16BF2821C313E1300E91458 /* AttributeLocalData.cpp in Sources */,
 				307534711BF33ECF0057DCED /* Logger.cpp in Sources */,
+				A16BF2A71C3156A100E91458 /* GearUpgradeData.cpp in Sources */,
 				A1720E971BCCE41A00217E98 /* ScrollBar.cpp in Sources */,
 				A18524D01C1AE42000BE261D /* BagLayer.cpp in Sources */,
 				A1E7BAE21C2149E800CE2A85 /* Constants.cpp in Sources */,
+				A16BF2A41C314E5100E91458 /* AttributeData.cpp in Sources */,
 				309F769A1BE9D7BD00B2791F /* Camp.cpp in Sources */,
 				A1B4AE301C200521005906A6 /* QuestManager.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				A1F395F71C23DB8600B75923 /* MapParticleConfigData.cpp in Sources */,
 				A1720EB91BCD2D2E00217E98 /* KeychainItemWrapper.m in Sources */,
+				A16BF2A11C314DA000E91458 /* GearSetLocalData.cpp in Sources */,
 				A1720E8B1BCCE19300217E98 /* aes_core.c in Sources */,
 				045117101BCFBA5F002AA721 /* Game.cpp in Sources */,
 				3028EBC31BFF0CBD00511C51 /* DynamicValue.cpp in Sources */,
@@ -1548,7 +1663,6 @@
 				301F63F21BE0C56D00DA6D70 /* Damage.cpp in Sources */,
 				A1F5BFA21C1FD519007C08CB /* AchievementData.cpp in Sources */,
 				A1720E6F1BCCDF9100217E98 /* CocosUtils.cpp in Sources */,
-				A1F5BF981C1FC3D3007C08CB /* GearAttribute.cpp in Sources */,
 				A18524D31C1AE46400BE261D /* QuestNode.cpp in Sources */,
 				300098D61BD5E81700B6E284 /* InstanceFactory.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
@@ -1570,12 +1684,14 @@
 				301F63FC1BE3680600DA6D70 /* GameLooper.cpp in Sources */,
 				A1F5BF951C1FC381007C08CB /* GearData.cpp in Sources */,
 				A1F5BF921C1FC36C007C08CB /* GearLocalData.cpp in Sources */,
+				A16BF2851C313E2900E91458 /* HeroLocalData.cpp in Sources */,
 				A1720E8D1BCCE19300217E98 /* AESCTREncryptor.cpp in Sources */,
 				0451170B1BCFBA53002AA721 /* Unit.cpp in Sources */,
 				045117061BCFBA53002AA721 /* Buff.cpp in Sources */,
 				A18524CC1C1AE3E800BE261D /* QuestLayer.cpp in Sources */,
 				A1F885501C1044640035B4C5 /* UserSimpleData.cpp in Sources */,
 				A1F395F21C23BBC500B75923 /* ObjectData.cpp in Sources */,
+				A14B5EFB1C311908006FB0DB /* Addon.cpp in Sources */,
 				A1720E901BCCE19300217E98 /* MD5Verifier.cpp in Sources */,
 				A1720EBA1BCD2D2E00217E98 /* RMStore.m in Sources */,
 				047228B01C193A4D00E7F71B /* Geometry.cpp in Sources */,
@@ -1585,6 +1701,7 @@
 				307534691BF1B2F20057DCED /* Commander.cpp in Sources */,
 				A1A4BA381BCDF81500175E8A /* IapObject.cpp in Sources */,
 				A103F45B1BE37E2A007F9A83 /* BulletNode.cpp in Sources */,
+				A16BF2951C313EAF00E91458 /* TowerUpgradeData.cpp in Sources */,
 				A10A66E81C1A7CE100A2DD13 /* URConfigData.cpp in Sources */,
 				A1A110A01C22BF570046E274 /* PveInfoLayer.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
@@ -1614,9 +1731,12 @@
 				A19EE96D1C1C0F1300E46D77 /* LevelLocalData.cpp in Sources */,
 				A1720EAD1BCD2A8400217E98 /* NetworkApi.cpp in Sources */,
 				300098D31BD0CDB000B6E284 /* ResourceType.cpp in Sources */,
+				A16BF29C1C31434500E91458 /* SkillLocalData.cpp in Sources */,
 				300098CD1BD0A94B00B6E284 /* Coordinate.cpp in Sources */,
 				045116F41BCFBA44002AA721 /* BulletType.cpp in Sources */,
 				0451170A1BCFBA53002AA721 /* Skill.cpp in Sources */,
+				A16BF2891C313E5900E91458 /* HeroUpgradeData.cpp in Sources */,
+				A16BF2921C313E9F00E91458 /* TowerLocalData.cpp in Sources */,
 				A1DF4BEC1C05902C000F2FDA /* DisplayBar.cpp in Sources */,
 				CBD778C71C29390B0070D293 /* AnnouncementNode.cpp in Sources */,
 				045116F81BCFBA44002AA721 /* TechTree.cpp in Sources */,

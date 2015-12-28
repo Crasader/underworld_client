@@ -8,7 +8,7 @@
 
 #include "GearData.h"
 #include "Utils.h"
-#include "GearAttribute.h"
+#include "AttributeData.h"
 
 using namespace std;
 
@@ -20,7 +20,7 @@ GearData::GearData(const rapidjson::Value& jsonDict)
 
 GearData::~GearData()
 {
-    Utils::clearVector(_attributes);
+    Utils::clearMap(_attributes);
 }
 
 int GearData::getId() const
@@ -28,7 +28,11 @@ int GearData::getId() const
     return _id;
 }
 
-const std::vector<GearAttribute *>& GearData::getAttributes() const
+const AttributeData* GearData::getAttribute(int id) const
 {
-    return _attributes;
+    if (_attributes.find(id) != _attributes.end()) {
+        return _attributes.at(id);
+    }
+    
+    return nullptr;
 }

@@ -27,29 +27,35 @@ static const int TILEDMAP_ZORDER = 2;
 static const string TILEDMAP_LAYER_LOGIC = "logic";
 static const string TILEDMAP_LAYER_FOREGROUND = "fg";
 
-static const std::string CONFIG_KEY_LOCATION_SETTING_TAG("location_setting");
-static const std::string CONFIG_KEY_RESOURCE_SETTINGS_TAG("resource_settings");
-static const std::string CONFIG_KEY_RESOURCE_SETTING_TAG("resource_setting");
-static const std::string CONFIG_KEY_FIXED_UNIT_SETTING_TAG("fixed_unit_setting");
-static const std::string CONFIG_KEY_UNIT_SETTING_TAG("unit_setting");
-static const std::string CONFIG_KEY_ATTR_INDEX("index");
-static const std::string CONFIG_KEY_ATTR_CORE_LOCATION("core_location");
-static const std::string CONFIG_KEY_ATTR_BUILDING_LOCAITON("building_location");
-static const std::string CONFIG_KEY_ATTR_ASSEMBLE_LOCATION("assemble_location");
-static const std::string CONFIG_KEY_ATTR_RESOURCE_NAME("resource_name");
-static const std::string CONFIG_KEY_ATTR_INIT_BALANCE("init_balance");
-static const std::string CONFIG_KEY_ATTR_INIT_SALARY("init_salary");
-static const std::string CONFIG_KEY_ATTR_SALARY_ACCELERATE("salary_accelerate");
-static const std::string CONFIG_KEY_ATTR_UNIT_TYPE_NAME("unit_type_name");
-static const std::string CONFIG_KEY_ATTR_POS("pos");
+static const string CONFIG_KEY_LOCATION_SETTING_TAG("location_setting");
+static const string CONFIG_KEY_RESOURCE_SETTINGS_TAG("resource_settings");
+static const string CONFIG_KEY_RESOURCE_SETTING_TAG("resource_setting");
+static const string CONFIG_KEY_FIXED_UNIT_SETTING_TAG("fixed_unit_setting");
+static const string CONFIG_KEY_UNIT_SETTING_TAG("unit_setting");
+static const string CONFIG_KEY_ATTR_INDEX("index");
+static const string CONFIG_KEY_ATTR_CORE_LOCATION("core_location");
+static const string CONFIG_KEY_ATTR_BUILDING_LOCAITON("building_location");
+static const string CONFIG_KEY_ATTR_ASSEMBLE_LOCATION("assemble_location");
+static const string CONFIG_KEY_ATTR_RESOURCE_NAME("resource_name");
+static const string CONFIG_KEY_ATTR_INIT_BALANCE("init_balance");
+static const string CONFIG_KEY_ATTR_INIT_SALARY("init_salary");
+static const string CONFIG_KEY_ATTR_SALARY_ACCELERATE("salary_accelerate");
+static const string CONFIG_KEY_ATTR_UNIT_TYPE_NAME("unit_type_name");
+static const string CONFIG_KEY_ATTR_POS("pos");
 
-static UnderWorld::Core::Coordinate parseCoordinate(const std::string& s) {
-    int x = atoi(s.substr(0, s.find_first_of(",")).c_str());
-    int y = atoi(s.substr(s.find_first_of(",") + 1).c_str());
-    return UnderWorld::Core::Coordinate(x, y);
+static UnderWorld::Core::Coordinate parseCoordinate(const string& s) {
+    string::size_type length = s.find_first_of(",");
+    if (length != string::npos) {
+        int x = atoi(s.substr(0, length).c_str());
+        int y = atoi(s.substr(length + 1).c_str());
+        return UnderWorld::Core::Coordinate(x, y);
+    }
+    
+    assert(false);
+    return UnderWorld::Core::Coordinate(0, 0);
 }
 
-static void loadMapSetting(const std::string& xml,
+static void loadMapSetting(const string& xml,
     UnderWorld::Core:: MapSetting& setting) {
     tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
     xmlDoc->Parse(xml.c_str());
@@ -59,16 +65,16 @@ static void loadMapSetting(const std::string& xml,
         if (item->Name() == CONFIG_KEY_LOCATION_SETTING_TAG) {
             UnderWorld::Core::LocationSetting locationSetting;
             int index = atoi(item->Attribute(CONFIG_KEY_ATTR_INDEX.c_str()));
-            std::string coreLoaction = item->Attribute(CONFIG_KEY_ATTR_CORE_LOCATION.c_str());
+            string coreLoaction = item->Attribute(CONFIG_KEY_ATTR_CORE_LOCATION.c_str());
             locationSetting.setCoreLocation(parseCoordinate(coreLoaction));
-            std::string buildingLocations = item->Attribute(CONFIG_KEY_ATTR_BUILDING_LOCAITON.c_str());
-            std::vector<std::string> buildingLocationsVec;
+            string buildingLocations = item->Attribute(CONFIG_KEY_ATTR_BUILDING_LOCAITON.c_str());
+            vector<string> buildingLocationsVec;
             UnderWorld::Core::Utils::split(buildingLocationsVec, buildingLocations, ";");
             for (int i = 0; i < buildingLocationsVec.size(); ++i) {
                 locationSetting.addBuildingLocation(parseCoordinate(buildingLocationsVec[i]));
             }
-            std::string assembleLocations = item->Attribute(CONFIG_KEY_ATTR_ASSEMBLE_LOCATION.c_str());
-            std::vector<std::string> assembleLocationsVec;
+            string assembleLocations = item->Attribute(CONFIG_KEY_ATTR_ASSEMBLE_LOCATION.c_str());
+            vector<string> assembleLocationsVec;
             UnderWorld::Core::Utils::split(assembleLocationsVec, assembleLocations, ";");
             for (int i = 0; i < assembleLocationsVec.size(); ++i) {
                 int p = atoi(assembleLocationsVec[i].substr(0, assembleLocationsVec[i].find_first_of(":")).c_str());
@@ -78,7 +84,7 @@ static void loadMapSetting(const std::string& xml,
             setting.setLocationSetting(index, locationSetting);
         } else if (item->Name() == CONFIG_KEY_RESOURCE_SETTINGS_TAG) {
             int index = atoi(item->Attribute(CONFIG_KEY_ATTR_INDEX.c_str()));
-            std::vector<UnderWorld::Core::ResourceSetting> vec;
+            vector<UnderWorld::Core::ResourceSetting> vec;
             for (const tinyxml2::XMLElement* node = item->FirstChildElement();
                  node;
                  node = node->NextSiblingElement()) {
@@ -94,7 +100,7 @@ static void loadMapSetting(const std::string& xml,
             setting.setStartResource(index, vec);
         } else if (item->Name() == CONFIG_KEY_FIXED_UNIT_SETTING_TAG) {
             int index = atoi(item->Attribute(CONFIG_KEY_ATTR_INDEX.c_str()));
-            std::vector<std::pair<UnderWorld::Core::UnitSetting, UnderWorld::Core::Coordinate> > vec;
+            vector<pair<UnderWorld::Core::UnitSetting, UnderWorld::Core::Coordinate> > vec;
             for (const tinyxml2::XMLElement* node = item->FirstChildElement();
                  node;
                  node = node->NextSiblingElement()) {
@@ -102,12 +108,14 @@ static void loadMapSetting(const std::string& xml,
                     UnderWorld::Core::UnitSetting us;
                     us.setUnitTypeName(node->Attribute(CONFIG_KEY_ATTR_UNIT_TYPE_NAME.c_str()));
                     UnderWorld::Core::Coordinate pos = parseCoordinate(node->Attribute(CONFIG_KEY_ATTR_POS.c_str()));
-                    vec.push_back(std::make_pair(us, pos));
+                    vec.push_back(make_pair(us, pos));
                 }
             }
             setting.setFixedUnits(index, vec);
         }
     }
+    
+    CC_SAFE_DELETE(xmlDoc);
 }
 
 MapLayer::MapLayer()
@@ -130,10 +138,10 @@ MapLayer::~MapLayer()
     
 }
 
-MapLayer* MapLayer::create(int mapId)
+MapLayer* MapLayer::create(int mapId, const string& mapData)
 {
     MapLayer* pRet = new (nothrow)MapLayer();
-    if(pRet && pRet->init(mapId)) {
+    if(pRet && pRet->init(mapId, mapData)) {
         pRet->autorelease();
         return pRet;
     }
@@ -141,7 +149,7 @@ MapLayer* MapLayer::create(int mapId)
     return nullptr;
 }
 
-bool MapLayer::init(int mapId)
+bool MapLayer::init(int mapId, const string& mapData)
 {
     if (LayerColor::init()) {
         _mapId = mapId;
@@ -211,8 +219,8 @@ bool MapLayer::init(int mapId)
         cocos2d::experimental::TMXLayer *logicLayer = _tiledMap->getLayer(TILEDMAP_LAYER_LOGIC);
         logicLayer->setVisible(false);
         const Size &logicSize = logicLayer->getLayerSize();
-        mapSetting.setWidth(logicSize.width);
-        mapSetting.setHeight(logicSize.height);
+        _mapSetting.setWidth(logicSize.width);
+        _mapSetting.setHeight(logicSize.height);
         for (unsigned int x = 0; x < logicSize.width; x++)
         {
             for (unsigned int y = 0; y < logicSize.height; y++)
@@ -220,15 +228,14 @@ bool MapLayer::init(int mapId)
                 int gid = logicLayer->getTileGIDAt(Vec2(x, y));
                 if (gid == 0) {
                     //can walk
-                    mapSetting.addWalkableArea(mapCoordinate2coreCoordinate(x, y));
+                    _mapSetting.addWalkableArea(mapCoordinate2coreCoordinate(x, y));
                 } else {
                     //can not walk
                 }
             }
         }
-        std::string mapSettingXml = "<root> <location_setting index=\"0\" core_location=\"400,600\" building_location=\"\" assemble_location=\"0:600,600;2:800,600\"/> <resource_settings index=\"0\"> <resource_setting resource_name=\"金子\" init_balance=\"300\" init_salary=\"5\" salary_accelerate=\"0\"/> <resource_setting resource_name=\"人口\" init_balance=\"200\" init_salary=\"0\" salary_accelerate=\"0\"/> </resource_settings> <fixed_unit_setting index=\"0\"> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> </fixed_unit_setting> <location_setting index=\"1\" core_location=\"2000,600\" building_location=\"\" assemble_location=\"0:1600,600;2:1200,600\"/> <resource_settings index=\"1\"> <resource_setting resource_name=\"金子\" init_balance=\"300\" init_salary=\"5\" salary_accelerate=\"0\"/> <resource_setting resource_name=\"人口\" init_balance=\"200\" init_salary=\"0\" salary_accelerate=\"0\"/> </resource_settings> <fixed_unit_setting index=\"1\"> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> </fixed_unit_setting> </root>";
-        loadMapSetting(mapSettingXml, mapSetting);
-        CCLOG("%zd logicLayer", mapSetting.getWalkableArea().size());
+        loadMapSetting(mapData, _mapSetting);
+        CCLOG("%zd logicLayer", _mapSetting.getWalkableArea().size());
         logicLayer->removeFromParent();
         
         //--------- effect ---------//
@@ -301,6 +308,11 @@ bool MapLayer::init(int mapId)
     return false;
 }
 
+const UnderWorld::Core::MapSetting& MapLayer::getMapSetting() const
+{
+    return _mapSetting;
+}
+
 int MapLayer::calcZOrder(int coreCoordinateY)
 {
     return 2 * (_height - coreCoordinateY + 1);
@@ -341,7 +353,7 @@ void MapLayer::repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& co
     reorderChild(unit, zOrder);
 }
 
-void MapLayer::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event)
+void MapLayer::onTouchesMoved(const vector<cocos2d::Touch*>& touches, cocos2d::Event *event)
 {
 //    Sprite* x = Sprite::create("map/images/tree1.png");
 //    addUnit(x, UnderWorld::Core::Coordinate(200,30));
@@ -359,6 +371,7 @@ void MapLayer::scrollViewDidZoom(cocos2d::extension::ScrollView* view)
 {
 }
 
+#pragma mark - effects
 void MapLayer::addParticle(const MapParticleConfigData* data)
 {
     const string& name = data->getName();
