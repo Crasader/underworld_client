@@ -51,6 +51,7 @@
 		30DF03C41C0D898E00A1C6EB /* EffectType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DF03C21C0D898E00A1C6EB /* EffectType.cpp */; };
 		30FD55611C2BF57F0078EC3C /* PassiveType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD555F1C2BF57F0078EC3C /* PassiveType.cpp */; };
 		30FD55641C2CFDE80078EC3C /* Passive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD55621C2CFDE80078EC3C /* Passive.cpp */; };
+		30FD55691C2FD2920078EC3C /* Addon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD55671C2FD2920078EC3C /* Addon.cpp */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
@@ -350,6 +351,8 @@
 		30FD55601C2BF57F0078EC3C /* PassiveType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PassiveType.h; path = Core/Unit/Type/PassiveType.h; sourceTree = "<group>"; };
 		30FD55621C2CFDE80078EC3C /* Passive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Passive.cpp; path = Core/Unit/Instance/Passive.cpp; sourceTree = "<group>"; };
 		30FD55631C2CFDE80078EC3C /* Passive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Passive.h; path = Core/Unit/Instance/Passive.h; sourceTree = "<group>"; };
+		30FD55671C2FD2920078EC3C /* Addon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Addon.cpp; path = Core/Unit/Type/Addon.cpp; sourceTree = "<group>"; };
+		30FD55681C2FD2920078EC3C /* Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Addon.h; path = Core/Unit/Type/Addon.h; sourceTree = "<group>"; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		46880B8519C43A87006E1F66 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -824,6 +827,8 @@
 				30DF03C31C0D898E00A1C6EB /* EffectType.h */,
 				30FD555F1C2BF57F0078EC3C /* PassiveType.cpp */,
 				30FD55601C2BF57F0078EC3C /* PassiveType.h */,
+				30FD55671C2FD2920078EC3C /* Addon.cpp */,
+				30FD55681C2FD2920078EC3C /* Addon.h */,
 			);
 			name = Type;
 			sourceTree = "<group>";
