@@ -1,13 +1,13 @@
 //
-//  HeroUpgradeData.h
+//  ArtifactUpgradeData.h
 //  Underworld_Client
 //
-//  Created by Andy on 15/12/28.
+//  Created by Andy on 15/12/29.
 //  Copyright (c) 2015 Mofish Studio. All rights reserved.
 //
 
-#ifndef HeroUpgradeData_h
-#define HeroUpgradeData_h
+#ifndef ArtifactUpgradeData_h
+#define ArtifactUpgradeData_h
 
 #include "CocosGlobal.h"
 #include <map>
@@ -16,27 +16,24 @@ namespace tinyxml2 { class XMLElement; }
 
 class ResourceData;
 class AttributeData;
-class ArtifactLocalData;
 
-class HeroUpgradeData
+class ArtifactUpgradeData
 {
 public:
-    HeroUpgradeData(tinyxml2::XMLElement *xmlElement);
-    virtual ~HeroUpgradeData();
+    ArtifactUpgradeData(tinyxml2::XMLElement *xmlElement);
+    virtual ~ArtifactUpgradeData();
     
     int getId() const;
     int level() const;
     int getResourceCount(ResourceType type) const;
     const std::map<int, AttributeData *>& getAttributes() const;
     const AttributeData* getAttribute(int id) const;
-    const ArtifactLocalData* getUnlockedArtifactData() const;
     
 private:
     int _id;
     int _level;
     std::map<ResourceType, ResourceData*> _cost;
     std::map<int, AttributeData *> _attributes;
-    int _artifactId;
 };
 
-#endif /* HeroUpgradeData_h */
+#endif /* ArtifactUpgradeData_h */

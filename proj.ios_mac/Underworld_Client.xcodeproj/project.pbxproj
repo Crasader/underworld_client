@@ -186,6 +186,11 @@
 		A1F395EF1C23BBA800B75923 /* ObjectLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F395ED1C23BBA800B75923 /* ObjectLocalData.cpp */; };
 		A1F395F21C23BBC500B75923 /* ObjectData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F395F01C23BBC500B75923 /* ObjectData.cpp */; };
 		A1F395F71C23DB8600B75923 /* MapParticleConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F395F51C23DB8600B75923 /* MapParticleConfigData.cpp */; };
+		A1F58D521C32391200C8A2DD /* GearAttributeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F58D501C32391200C8A2DD /* GearAttributeData.cpp */; };
+		A1F58D561C32444B00C8A2DD /* SoldierQualityData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F58D541C32444B00C8A2DD /* SoldierQualityData.cpp */; };
+		A1F58D591C32465900C8A2DD /* SoldierTalentData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F58D571C32465900C8A2DD /* SoldierTalentData.cpp */; };
+		A1F58D5D1C3248F700C8A2DD /* ArtifactLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F58D5B1C3248F700C8A2DD /* ArtifactLocalData.cpp */; };
+		A1F58D601C32526E00C8A2DD /* ArtifactUpgradeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F58D5E1C32526E00C8A2DD /* ArtifactUpgradeData.cpp */; };
 		A1F5BF921C1FC36C007C08CB /* GearLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BF901C1FC36C007C08CB /* GearLocalData.cpp */; };
 		A1F5BF951C1FC381007C08CB /* GearData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BF931C1FC381007C08CB /* GearData.cpp */; };
 		A1F5BF9B1C1FC724007C08CB /* QuestData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BF991C1FC724007C08CB /* QuestData.cpp */; };
@@ -562,6 +567,16 @@
 		A1F395F11C23BBC500B75923 /* ObjectData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectData.h; sourceTree = "<group>"; };
 		A1F395F51C23DB8600B75923 /* MapParticleConfigData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapParticleConfigData.cpp; sourceTree = "<group>"; };
 		A1F395F61C23DB8600B75923 /* MapParticleConfigData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapParticleConfigData.h; sourceTree = "<group>"; };
+		A1F58D501C32391200C8A2DD /* GearAttributeData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GearAttributeData.cpp; sourceTree = "<group>"; };
+		A1F58D511C32391200C8A2DD /* GearAttributeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GearAttributeData.h; sourceTree = "<group>"; };
+		A1F58D541C32444B00C8A2DD /* SoldierQualityData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoldierQualityData.cpp; sourceTree = "<group>"; };
+		A1F58D551C32444B00C8A2DD /* SoldierQualityData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoldierQualityData.h; sourceTree = "<group>"; };
+		A1F58D571C32465900C8A2DD /* SoldierTalentData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoldierTalentData.cpp; sourceTree = "<group>"; };
+		A1F58D581C32465900C8A2DD /* SoldierTalentData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoldierTalentData.h; sourceTree = "<group>"; };
+		A1F58D5B1C3248F700C8A2DD /* ArtifactLocalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ArtifactLocalData.cpp; sourceTree = "<group>"; };
+		A1F58D5C1C3248F700C8A2DD /* ArtifactLocalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtifactLocalData.h; sourceTree = "<group>"; };
+		A1F58D5E1C32526E00C8A2DD /* ArtifactUpgradeData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ArtifactUpgradeData.cpp; sourceTree = "<group>"; };
+		A1F58D5F1C32526E00C8A2DD /* ArtifactUpgradeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtifactUpgradeData.h; sourceTree = "<group>"; };
 		A1F5BF901C1FC36C007C08CB /* GearLocalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GearLocalData.cpp; sourceTree = "<group>"; };
 		A1F5BF911C1FC36C007C08CB /* GearLocalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GearLocalData.h; sourceTree = "<group>"; };
 		A1F5BF931C1FC381007C08CB /* GearData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GearData.cpp; sourceTree = "<group>"; };
@@ -1002,6 +1017,7 @@
 			isa = PBXGroup;
 			children = (
 				A1F5BF9C1C1FD508007C08CB /* Achievement */,
+				A1F58D5A1C3248EA00C8A2DD /* Artifact */,
 				A16BF27C1C313D6D00E91458 /* Attribute */,
 				A1F5BF8F1C1FC36C007C08CB /* Gear */,
 				A16BF29D1C314CE500E91458 /* GearSet */,
@@ -1053,6 +1069,10 @@
 			children = (
 				A16BF28A1C313E7D00E91458 /* SoldierLocalData.cpp */,
 				A16BF28B1C313E7D00E91458 /* SoldierLocalData.h */,
+				A1F58D541C32444B00C8A2DD /* SoldierQualityData.cpp */,
+				A1F58D551C32444B00C8A2DD /* SoldierQualityData.h */,
+				A1F58D571C32465900C8A2DD /* SoldierTalentData.cpp */,
+				A1F58D581C32465900C8A2DD /* SoldierTalentData.h */,
 				A16BF28D1C313E8E00E91458 /* SoldierUpgradeData.cpp */,
 				A16BF28E1C313E8E00E91458 /* SoldierUpgradeData.h */,
 			);
@@ -1424,9 +1444,22 @@
 			path = Object;
 			sourceTree = "<group>";
 		};
+		A1F58D5A1C3248EA00C8A2DD /* Artifact */ = {
+			isa = PBXGroup;
+			children = (
+				A1F58D5B1C3248F700C8A2DD /* ArtifactLocalData.cpp */,
+				A1F58D5C1C3248F700C8A2DD /* ArtifactLocalData.h */,
+				A1F58D5E1C32526E00C8A2DD /* ArtifactUpgradeData.cpp */,
+				A1F58D5F1C32526E00C8A2DD /* ArtifactUpgradeData.h */,
+			);
+			path = Artifact;
+			sourceTree = "<group>";
+		};
 		A1F5BF8F1C1FC36C007C08CB /* Gear */ = {
 			isa = PBXGroup;
 			children = (
+				A1F58D501C32391200C8A2DD /* GearAttributeData.cpp */,
+				A1F58D511C32391200C8A2DD /* GearAttributeData.h */,
 				A1F5BF931C1FC381007C08CB /* GearData.cpp */,
 				A1F5BF941C1FC381007C08CB /* GearData.h */,
 				A1F5BF901C1FC36C007C08CB /* GearLocalData.cpp */,
@@ -1618,7 +1651,9 @@
 				A1D745C61C1AB9F60020BC1C /* BattleScene.cpp in Sources */,
 				A18524D91C1AF3BB00BE261D /* QuestCell.cpp in Sources */,
 				A1720E741BCCE0A200217E98 /* FixedLabelAtlas.cpp in Sources */,
+				A1F58D521C32391200C8A2DD /* GearAttributeData.cpp in Sources */,
 				30FD55611C2BF57F0078EC3C /* PassiveType.cpp in Sources */,
+				A1F58D591C32465900C8A2DD /* SoldierTalentData.cpp in Sources */,
 				308B84631BE3752000377802 /* PathFinder.cpp in Sources */,
 				A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */,
 				A1720E8C1BCCE19300217E98 /* aes_ctr.c in Sources */,
@@ -1637,6 +1672,7 @@
 				A16BF28F1C313E8E00E91458 /* SoldierUpgradeData.cpp in Sources */,
 				A1720E7A1BCCE0F000217E98 /* CCShake.cpp in Sources */,
 				30DF03C41C0D898E00A1C6EB /* EffectType.cpp in Sources */,
+				A1F58D5D1C3248F700C8A2DD /* ArtifactLocalData.cpp in Sources */,
 				A16BF2821C313E1300E91458 /* AttributeLocalData.cpp in Sources */,
 				307534711BF33ECF0057DCED /* Logger.cpp in Sources */,
 				A16BF2A71C3156A100E91458 /* GearUpgradeData.cpp in Sources */,
@@ -1713,6 +1749,7 @@
 				A1F5BFA81C1FDFBE007C08CB /* ResourceNode.cpp in Sources */,
 				A1E830591C1E75B200FE01B8 /* ChatCell.cpp in Sources */,
 				A1D745C31C1AB7C40020BC1C /* VictoryLayer.cpp in Sources */,
+				A1F58D561C32444B00C8A2DD /* SoldierQualityData.cpp in Sources */,
 				A1B4AE001C200480005906A6 /* OnlineUpdater.cpp in Sources */,
 				300F25331BFC67550080765C /* FeatureType.cpp in Sources */,
 				A1A74CA81C17DFE800648671 /* MainLayer.cpp in Sources */,
@@ -1723,6 +1760,7 @@
 				A1720ECB1BCD37FC00217E98 /* MessageBoxLayer.cpp in Sources */,
 				308B84661BE3853C00377802 /* AIBody.cpp in Sources */,
 				300098D01BD0CD5900B6E284 /* Resource.cpp in Sources */,
+				A1F58D601C32526E00C8A2DD /* ArtifactUpgradeData.cpp in Sources */,
 				A1720EBD1BCD309A00217E98 /* NetworkController.cpp in Sources */,
 				A1A74CAB1C17DFFA00648671 /* MainUILayer.cpp in Sources */,
 				A1720EA41BCD29FF00217E98 /* GameData.cpp in Sources */,

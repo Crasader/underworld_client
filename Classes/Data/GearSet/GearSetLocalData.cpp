@@ -26,23 +26,30 @@ GearSetLocalData::GearSetLocalData(tinyxml2::XMLElement *xmlElement)
             }
         }
         {
+            const char *data = xmlElement->Attribute("set1");
+            if (data) {
+                AttributeData* attr = new (nothrow) AttributeData(data);
+                _attributes.insert(make_pair(1, attr));
+            }
+        }
+        {
             const char *data = xmlElement->Attribute("set2");
             if (data) {
-                AttributeData* attr = new AttributeData(data);
+                AttributeData* attr = new (nothrow) AttributeData(data);
                 _attributes.insert(make_pair(2, attr));
             }
         }
         {
             const char *data = xmlElement->Attribute("set3");
             if (data) {
-                AttributeData* attr = new AttributeData(data);
+                AttributeData* attr = new (nothrow) AttributeData(data);
                 _attributes.insert(make_pair(3, attr));
             }
         }
         {
             const char *data = xmlElement->Attribute("set4");
             if (data) {
-                AttributeData* attr = new AttributeData(data);
+                AttributeData* attr = new (nothrow) AttributeData(data);
                 _attributes.insert(make_pair(4, attr));
             }
         }

@@ -1,12 +1,12 @@
 //
-//  SoldierUpgradeData.cpp
+//  ArtifactUpgradeData.cpp
 //  Underworld_Client
 //
-//  Created by Andy on 15/12/28.
+//  Created by Andy on 15/12/29.
 //  Copyright (c) 2015 Mofish Studio. All rights reserved.
 //
 
-#include "SoldierUpgradeData.h"
+#include "ArtifactUpgradeData.h"
 #include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
 #include "ResourceData.h"
@@ -14,7 +14,7 @@
 
 using namespace std;
 
-SoldierUpgradeData::SoldierUpgradeData(tinyxml2::XMLElement *xmlElement)
+ArtifactUpgradeData::ArtifactUpgradeData(tinyxml2::XMLElement *xmlElement)
 :_id(0)
 ,_level(0)
 {
@@ -51,23 +51,23 @@ SoldierUpgradeData::SoldierUpgradeData(tinyxml2::XMLElement *xmlElement)
     }
 }
 
-SoldierUpgradeData::~SoldierUpgradeData()
+ArtifactUpgradeData::~ArtifactUpgradeData()
 {
     Utils::clearMap(_cost);
     Utils::clearMap(_attributes);
 }
 
-int SoldierUpgradeData::getId() const
+int ArtifactUpgradeData::getId() const
 {
     return _id;
 }
 
-int SoldierUpgradeData::level() const
+int ArtifactUpgradeData::level() const
 {
     return _level;
 }
 
-int SoldierUpgradeData::getResourceCount(ResourceType type) const
+int ArtifactUpgradeData::getResourceCount(ResourceType type) const
 {
     if (_cost.find(type) != _cost.end())
     {
@@ -77,12 +77,12 @@ int SoldierUpgradeData::getResourceCount(ResourceType type) const
     return 99999;
 }
 
-const map<int, AttributeData *>& SoldierUpgradeData::getAttributes() const
+const map<int, AttributeData *>& ArtifactUpgradeData::getAttributes() const
 {
     return _attributes;
 }
 
-const AttributeData* SoldierUpgradeData::getAttribute(int id) const
+const AttributeData* ArtifactUpgradeData::getAttribute(int id) const
 {
     if (_attributes.find(id) != _attributes.end()) {
         return _attributes.at(id);

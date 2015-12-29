@@ -13,16 +13,12 @@
 
 using namespace std;
 
-#pragma mark =====================================================
-#pragma mark Gear Data
-#pragma mark =====================================================
-
 GearLocalData::GearLocalData(tinyxml2::XMLElement *xmlElement)
 :_id(0)
+,_setId(0)
 ,_type(static_cast<GearType>(-1))
 ,_quality(static_cast<GearQuality>(-1))
 ,_maxCount(0)
-,_extraAttribute(0)
 {
     if (xmlElement) {
         const char *gearId = xmlElement->Attribute("id");
@@ -47,9 +43,25 @@ GearLocalData::GearLocalData(tinyxml2::XMLElement *xmlElement)
             }
         }
         {
-            const char *data = xmlElement->Attribute("extra");
+            const char *data = xmlElement->Attribute("attr1");
             if (data) {
-                _extraAttribute = atoi(data);
+                vector<string> result;
+                Utils::split(result, data, ",", "");
+                for (int i = 0; i < result.size(); ++i)
+                {
+                    _attributes.insert(atoi(result.at(i).c_str()));
+                }
+            }
+        }
+        {
+            const char *data = xmlElement->Attribute("attr2");
+            if (data) {
+                vector<string> result;
+                Utils::split(result, data, ",", "");
+                for (int i = 0; i < result.size(); ++i)
+                {
+                    _subAttributes.insert(atoi(result.at(i).c_str()));
+                }
             }
         }
         {
@@ -59,7 +71,7 @@ GearLocalData::GearLocalData(tinyxml2::XMLElement *xmlElement)
                 Utils::split(result, data, ";", "");
                 for (vector<string>::const_iterator iter = result.begin(); iter != result.end(); ++iter)
                 {
-                    RewardData* reward = new RewardData(*iter);
+                    RewardData* reward = new (nothrow) RewardData(*iter);
                     _soldRewards.push_back(reward);
                 }
             }
@@ -83,6 +95,11 @@ int GearLocalData::getId() const
     return _id;
 }
 
+int GearLocalData::getSetId() const
+{
+    return _setId;
+}
+
 GearType GearLocalData::getType() const
 {
     return _type;
@@ -98,9 +115,14 @@ int GearLocalData::getMaxCount() const
     return _maxCount;
 }
 
-int GearLocalData::getExtraAttribute() const
+const std::set<int>& GearLocalData::getAttributes() const
 {
-    return _extraAttribute;
+    return _attributes;
+}
+
+const std::set<int>& GearLocalData::getSubAttributes() const
+{
+    return _subAttributes;
 }
 
 const vector<RewardData*>& GearLocalData::getSoldRewards() const

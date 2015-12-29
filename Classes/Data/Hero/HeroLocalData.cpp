@@ -8,11 +8,16 @@
 
 #include "HeroLocalData.h"
 #include "tinyxml2/tinyxml2.h"
+#include "Utils.h"
+#include "AttributeData.h"
+#include "DataManager.h"
+#include "SkillLocalData.h"
 
 using namespace std;
 
 HeroLocalData::HeroLocalData(tinyxml2::XMLElement *xmlElement)
 :_id(0)
+,_skillId(0)
 {
     if (xmlElement) {
         _id = atoi(xmlElement->Attribute("id"));
@@ -27,6 +32,24 @@ HeroLocalData::HeroLocalData(tinyxml2::XMLElement *xmlElement)
             const char *data = xmlElement->Attribute("desc");
             if (data) {
                 _description.assign(data);
+            }
+        }
+        {
+            const char *data = xmlElement->Attribute("attr");
+            if (data) {
+                vector<string> result;
+                Utils::split(result, data, ",", "");
+                for (vector<string>::const_iterator iter = result.begin(); iter != result.end(); ++iter)
+                {
+                    AttributeData* attr = new (nothrow) AttributeData(*iter);
+                    _attributes.insert(make_pair(attr->getId(), attr));
+                }
+            }
+        }
+        {
+            const char *data = xmlElement->Attribute("skill");
+            if (data) {
+                _skillId = atoi(data);
             }
         }
     }
@@ -50,4 +73,23 @@ const string& HeroLocalData::getName() const
 const string& HeroLocalData::getDescription() const
 {
     return _description;
+}
+
+const map<int, AttributeData *>& HeroLocalData::getAttributes() const
+{
+    return _attributes;
+}
+
+const AttributeData* HeroLocalData::getAttribute(int id) const
+{
+    if (_attributes.find(id) != _attributes.end()) {
+        return _attributes.at(id);
+    }
+    
+    return nullptr;
+}
+
+const SkillLocalData* HeroLocalData::getSkillData() const
+{
+    return DataManager::getInstance()->getSkillData(_skillId);
 }

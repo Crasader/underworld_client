@@ -1,13 +1,13 @@
 //
-//  HeroLocalData.h
+//  ArtifactLocalData.h
 //  Underworld_Client
 //
-//  Created by Andy on 15/12/28.
+//  Created by Andy on 15/12/29.
 //  Copyright (c) 2015 Mofish Studio. All rights reserved.
 //
 
-#ifndef HeroLocalData_h
-#define HeroLocalData_h
+#ifndef ArtifactLocalData_h
+#define ArtifactLocalData_h
 
 #include <iostream>
 #include <map>
@@ -17,11 +17,11 @@ namespace tinyxml2 { class XMLElement; }
 class AttributeData;
 class SkillLocalData;
 
-class HeroLocalData
+class ArtifactLocalData
 {
 public:
-    HeroLocalData(tinyxml2::XMLElement *xmlElement);
-    virtual ~HeroLocalData();
+    ArtifactLocalData(tinyxml2::XMLElement *xmlElement);
+    virtual ~ArtifactLocalData();
     
     int getId() const;
     const std::string& getName() const;
@@ -38,4 +38,4 @@ private:
     int _skillId;
 };
 
-#endif /* HeroLocalData_h */
+#endif /* ArtifactLocalData_h */

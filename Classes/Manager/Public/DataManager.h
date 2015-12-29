@@ -19,15 +19,20 @@ class AchievementLocalData;
 class ObjectLocalData;
 class GearLocalData;
 class GearUpgradeData;
+class GearAttributeData;
 class GearSetLocalData;
 class URConfigData;
 class MapParticleConfigData;
+class ArtifactLocalData;
+class ArtifactUpgradeData;
 class AttributeLocalData;
 class HeroLocalData;
 class HeroUpgradeData;
 class SkillLocalData;
 class SoldierLocalData;
 class SoldierUpgradeData;
+class SoldierQualityData;
+class SoldierTalentData;
 class TowerLocalData;
 class TowerUpgradeData;
 
@@ -42,18 +47,39 @@ public:
     const QuestLocalData* getQuestData(QuestType type, int questId) const;
     const AchievementLocalData* getAchievementData(int achievementId) const;
     const ObjectLocalData* getObjectData(int objectId) const;
+    
+    // ---------- gear ----------
     const GearLocalData* getGearData(int gearId) const;
     const GearUpgradeData* getGearUpgradeData(int id, int level) const;
+    const GearAttributeData* getGearAttributeData(int id, int level, int attributeId) const;
     const GearSetLocalData* getGearSetData(int id) const;
+    
+    // ---------- animations ----------
     AnimationParameters getAnimationParameters(const std::string& name, UnderWorld::Core::SkillClass skillClass, UnitDirection direction) const;
     const URConfigData* getURConfigData(const std::string& name) const;
     const std::vector<MapParticleConfigData*>& getMapParticleConfigData(int mapId) const;
+    
+    // ---------- artifact ----------
+    const ArtifactLocalData* getArtifactData(int id) const;
+    const ArtifactUpgradeData* getArtifactUpgradeData(int id, int level) const;
+    
+    // ---------- attribute ----------
     const AttributeLocalData* getAttributeData(int id) const;
+    
+    // ---------- hero ----------
     const HeroLocalData* getHeroData(int id) const;
     const HeroUpgradeData* getHeroUpgradeData(int id, int level) const;
+    
+    // ---------- skill ----------
     const SkillLocalData* getSkillData(int id) const;
+    
+    // ---------- soldier ----------
     const SoldierLocalData* getSoldierData(int id) const;
     const SoldierUpgradeData* getSoldierUpgradeData(int id, int level) const;
+    const SoldierQualityData* getSoldierQualityData(int id, int level) const;
+    const SoldierTalentData* getSoldierTalentData(int id, int level) const;
+    
+    // ---------- tower ----------
     const TowerLocalData* getTowerData(int id) const;
     const TowerUpgradeData* getTowerUpgradeData(int id, int level) const;
     
@@ -69,17 +95,22 @@ protected:
     void parseObjectData();
     void parseGearData();
     void parseGearUpgradeData();
+    void parseGearAttributeData();
     void parseGearSetData();
     void parseAnimationConfigData();
     void parseURConfigData();
     void parseMapParticleConfigData();
-    void parseAttributeLocalData();
-    void parseHeroLocalData();
+    void parseArtifactData();
+    void parseArtifactUpgradeData();
+    void parseAttributeData();
+    void parseHeroData();
     void parseHeroUpgradeData();
-    void parseSkillLocalData();
-    void parseSoldierLocalData();
+    void parseSkillData();
+    void parseSoldierData();
     void parseSoldierUpgradeData();
-    void parseTowerLocalData();
+    void parseSoldierQualityData();
+    void parseSoldierTalentData();
+    void parseTowerData();
     void parseTowerUpgradeData();
     
 private:
@@ -89,16 +120,21 @@ private:
     std::map<int, ObjectLocalData*> _objects;
     std::map<int, GearLocalData*> _gears;
     std::map<std::string, GearUpgradeData*> _gearUpgradeDatas;
+    std::map<std::string, GearAttributeData*> _gearAttributeDatas;
     std::map<int, GearSetLocalData*> _gearSets;
     std::map<std::string, UAConfigData*> _animationParameters;
     std::map<std::string, URConfigData*> _unitResourceConfigData;
     std::map<int, std::vector<MapParticleConfigData*>> _mapParticleConfigData;
+    std::map<int, ArtifactLocalData*> _artifacts;
+    std::map<std::string, ArtifactUpgradeData*> _artifactUpgradeData;
     std::map<int, AttributeLocalData*> _attributes;
     std::map<int, HeroLocalData*> _heroes;
     std::map<std::string, HeroUpgradeData*> _heroUpgradeDatas;
     std::map<int, SkillLocalData*> _skills;
     std::map<int, SoldierLocalData*> _soldiers;
     std::map<std::string, SoldierUpgradeData*> _soldierUpgradeDatas;
+    std::map<std::string, SoldierQualityData*> _soldierQualityDatas;
+    std::map<std::string, SoldierTalentData*> _soldierTalentDatas;
     std::map<int, TowerLocalData*> _towers;
     std::map<std::string, TowerUpgradeData*> _towerUpgradeDatas;
 };

@@ -1,19 +1,21 @@
 //
-//  SoldierLocalData.cpp
+//  ArtifactLocalData.cpp
 //  Underworld_Client
 //
-//  Created by Andy on 15/12/28.
+//  Created by Andy on 15/12/29.
 //  Copyright (c) 2015 Mofish Studio. All rights reserved.
 //
 
-#include "SoldierLocalData.h"
+#include "ArtifactLocalData.h"
 #include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
 #include "AttributeData.h"
+#include "DataManager.h"
+#include "SkillLocalData.h"
 
 using namespace std;
 
-SoldierLocalData::SoldierLocalData(tinyxml2::XMLElement *xmlElement)
+ArtifactLocalData::ArtifactLocalData(tinyxml2::XMLElement *xmlElement)
 :_id(0)
 {
     if (xmlElement) {
@@ -43,39 +45,50 @@ SoldierLocalData::SoldierLocalData(tinyxml2::XMLElement *xmlElement)
                 }
             }
         }
+        {
+            const char *data = xmlElement->Attribute("skill");
+            if (data) {
+                _skillId = atoi(data);
+            }
+        }
     }
 }
 
-SoldierLocalData::~SoldierLocalData()
+ArtifactLocalData::~ArtifactLocalData()
 {
     Utils::clearMap(_attributes);
 }
 
-int SoldierLocalData::getId() const
+int ArtifactLocalData::getId() const
 {
     return _id;
 }
 
-const string& SoldierLocalData::getName() const
+const string& ArtifactLocalData::getName() const
 {
     return _name;
 }
 
-const string& SoldierLocalData::getDescription() const
+const string& ArtifactLocalData::getDescription() const
 {
     return _description;
 }
 
-const map<int, AttributeData *>& SoldierLocalData::getAttributes() const
+const map<int, AttributeData *>& ArtifactLocalData::getAttributes() const
 {
     return _attributes;
 }
 
-const AttributeData* SoldierLocalData::getAttribute(int id) const
+const AttributeData* ArtifactLocalData::getAttribute(int id) const
 {
     if (_attributes.find(id) != _attributes.end()) {
         return _attributes.at(id);
     }
     
     return nullptr;
+}
+
+const SkillLocalData* ArtifactLocalData::getSkillData() const
+{
+    return DataManager::getInstance()->getSkillData(_skillId);
 }

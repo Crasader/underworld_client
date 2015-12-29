@@ -21,6 +21,7 @@ public:
     virtual ~GearData();
     
     int getId() const;
+    const std::map<int, AttributeData *>& getAttributes() const;
     const AttributeData* getAttribute(int id) const;
     
 private:

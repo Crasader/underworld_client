@@ -10,8 +10,11 @@
 #define SoldierLocalData_h
 
 #include <iostream>
+#include <map>
 
 namespace tinyxml2 { class XMLElement; }
+
+class AttributeData;
 
 class SoldierLocalData
 {
@@ -22,11 +25,14 @@ public:
     int getId() const;
     const std::string& getName() const;
     const std::string& getDescription() const;
+    const std::map<int, AttributeData *>& getAttributes() const;
+    const AttributeData* getAttribute(int id) const;
     
 private:
     int _id;
     std::string _name;
     std::string _description;
+    std::map<int, AttributeData *> _attributes;
 };
 
 #endif /* SoldierLocalData_h */

@@ -28,6 +28,11 @@ int GearData::getId() const
     return _id;
 }
 
+const map<int, AttributeData *>& GearData::getAttributes() const
+{
+    return _attributes;
+}
+
 const AttributeData* GearData::getAttribute(int id) const
 {
     if (_attributes.find(id) != _attributes.end()) {

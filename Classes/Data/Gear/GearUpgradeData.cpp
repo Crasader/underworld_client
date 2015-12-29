@@ -22,15 +22,17 @@ GearUpgradeData::GearUpgradeData(tinyxml2::XMLElement *xmlElement)
         _id = atoi(xmlElement->Attribute("id"));
         _level = atoi(xmlElement->Attribute("level"));
         
-        const char *cost = xmlElement->Attribute("cost");
-        if (cost)
         {
-            vector<string> result;
-            Utils::split(result, cost, ";", "");
-            for (vector<string>::const_iterator iter = result.begin(); iter != result.end(); ++iter)
+            const char *data = xmlElement->Attribute("cost");
+            if (data)
             {
-                ResourceData* data = new ResourceData(*iter);
-                _cost.insert(make_pair(data->getId(), data));
+                vector<string> result;
+                Utils::split(result, data, ",", "");
+                for (vector<string>::const_iterator iter = result.begin(); iter != result.end(); ++iter)
+                {
+                    ResourceData* data = new (nothrow) ResourceData(*iter);
+                    _cost.insert(make_pair(data->getId(), data));
+                }
             }
         }
     }

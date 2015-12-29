@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <vector>
+#include <set>
 #include "CocosGlobal.h"
 
 namespace tinyxml2 { class XMLElement; }
@@ -24,20 +25,24 @@ public:
     virtual ~GearLocalData();
     
     int getId() const;
+    int getSetId() const;
     GearType getType() const;
     GearQuality getQuality() const;
     int getMaxCount() const;
-    int getExtraAttribute() const;
+    const std::set<int>& getAttributes() const;
+    const std::set<int>& getSubAttributes() const;
     const std::vector<RewardData*>& getSoldRewards() const;
     const std::string& getName() const;
     const std::string& getDescription() const;
     
 private:
     int _id;
+    int _setId;
     GearType _type;
     GearQuality _quality;
     int _maxCount;
-    int _extraAttribute;
+    std::set<int> _attributes;
+    std::set<int> _subAttributes;
     std::vector<RewardData*> _soldRewards;
     std::string _name;
     std::string _description;

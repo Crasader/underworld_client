@@ -17,15 +17,20 @@
 #include "ObjectLocalData.h"
 #include "GearLocalData.h"
 #include "GearUpgradeData.h"
+#include "GearAttributeData.h"
 #include "GearSetLocalData.h"
 #include "URConfigData.h"
 #include "MapParticleConfigData.h"
+#include "ArtifactLocalData.h"
+#include "ArtifactUpgradeData.h"
 #include "AttributeLocalData.h"
 #include "HeroLocalData.h"
 #include "HeroUpgradeData.h"
 #include "SkillLocalData.h"
 #include "SoldierLocalData.h"
 #include "SoldierUpgradeData.h"
+#include "SoldierQualityData.h"
+#include "SoldierTalentData.h"
 #include "TowerLocalData.h"
 #include "TowerUpgradeData.h"
 
@@ -70,6 +75,7 @@ DataManager::~DataManager()
     Utils::clearMap(_achievements);
     Utils::clearMap(_gears);
     Utils::clearMap(_gearUpgradeDatas);
+    Utils::clearMap(_gearAttributeDatas);
     Utils::clearMap(_gearSets);
     Utils::clearMap(_animationParameters);
     Utils::clearMap(_unitResourceConfigData);
@@ -79,12 +85,16 @@ DataManager::~DataManager()
     }
     _mapParticleConfigData.clear();
     
+    Utils::clearMap(_artifacts);
+    Utils::clearMap(_artifactUpgradeData);
     Utils::clearMap(_attributes);
     Utils::clearMap(_heroes);
     Utils::clearMap(_heroUpgradeDatas);
     Utils::clearMap(_skills);
     Utils::clearMap(_soldiers);
     Utils::clearMap(_soldierUpgradeDatas);
+    Utils::clearMap(_soldierQualityDatas);
+    Utils::clearMap(_soldierTalentDatas);
     Utils::clearMap(_towers);
     Utils::clearMap(_towerUpgradeDatas);
 }
@@ -98,17 +108,22 @@ void DataManager::init()
     parseObjectData();
     parseGearData();
     parseGearUpgradeData();
+    parseGearAttributeData();
     parseGearSetData();
     parseAnimationConfigData();
     parseURConfigData();
     parseMapParticleConfigData();
-    parseAttributeLocalData();
-    parseHeroLocalData();
+    parseArtifactData();
+    parseArtifactUpgradeData();
+    parseAttributeData();
+    parseHeroData();
     parseHeroUpgradeData();
-    parseSkillLocalData();
-    parseSoldierLocalData();
+    parseSkillData();
+    parseSoldierData();
     parseSoldierUpgradeData();
-    parseTowerLocalData();
+    parseSoldierQualityData();
+    parseSoldierTalentData();
+    parseTowerData();
     parseTowerUpgradeData();
 }
 
@@ -171,6 +186,16 @@ const GearUpgradeData* DataManager::getGearUpgradeData(int id, int level) const
     return nullptr;
 }
 
+const GearAttributeData* DataManager::getGearAttributeData(int id, int level, int attributeId) const
+{
+    string key = StringUtils::format("%d_%d_%d", id, level, attributeId);
+    if (_gearAttributeDatas.find(key) != _gearAttributeDatas.end()) {
+        return _gearAttributeDatas.at(key);
+    }
+    
+    return nullptr;
+}
+
 const GearSetLocalData* DataManager::getGearSetData(int id) const
 {
     if (_gearSets.find(id) != _gearSets.end()) {
@@ -212,6 +237,25 @@ const vector<MapParticleConfigData*>& DataManager::getMapParticleConfigData(int 
     return empty;
 }
 
+const ArtifactLocalData* DataManager::getArtifactData(int id) const
+{
+    if (_artifacts.find(id) != _artifacts.end()) {
+        return _artifacts.at(id);
+    }
+    
+    return nullptr;
+}
+
+const ArtifactUpgradeData* DataManager::getArtifactUpgradeData(int id, int level) const
+{
+    string key = StringUtils::format("%d_%d", id, level);
+    if (_artifactUpgradeData.find(key) != _artifactUpgradeData.end()) {
+        return _artifactUpgradeData.at(key);
+    }
+    
+    return nullptr;
+}
+
 const AttributeLocalData* DataManager::getAttributeData(int id) const
 {
     if (_attributes.find(id) != _attributes.end()) {
@@ -230,7 +274,6 @@ const HeroLocalData* DataManager::getHeroData(int id) const
     return nullptr;
 }
 
-
 const HeroUpgradeData* DataManager::getHeroUpgradeData(int id, int level) const
 {
     string key = StringUtils::format("%d_%d", id, level);
@@ -241,7 +284,6 @@ const HeroUpgradeData* DataManager::getHeroUpgradeData(int id, int level) const
     return nullptr;
 }
 
-
 const SkillLocalData* DataManager::getSkillData(int id) const
 {
     if (_skills.find(id) != _skills.end()) {
@@ -251,7 +293,6 @@ const SkillLocalData* DataManager::getSkillData(int id) const
     return nullptr;
 }
 
-
 const SoldierLocalData* DataManager::getSoldierData(int id) const
 {
     if (_soldiers.find(id) != _soldiers.end()) {
@@ -260,7 +301,6 @@ const SoldierLocalData* DataManager::getSoldierData(int id) const
     
     return nullptr;
 }
-
 
 const SoldierUpgradeData* DataManager::getSoldierUpgradeData(int id, int level) const
 {
@@ -272,6 +312,25 @@ const SoldierUpgradeData* DataManager::getSoldierUpgradeData(int id, int level) 
     return nullptr;
 }
 
+const SoldierQualityData* DataManager::getSoldierQualityData(int id, int level) const
+{
+    string key = StringUtils::format("%d_%d", id, level);
+    if (_soldierQualityDatas.find(key) != _soldierQualityDatas.end()) {
+        return _soldierQualityDatas.at(key);
+    }
+    
+    return nullptr;
+}
+
+const SoldierTalentData* DataManager::getSoldierTalentData(int id, int level) const
+{
+    string key = StringUtils::format("%d_%d", id, level);
+    if (_soldierTalentDatas.find(key) != _soldierTalentDatas.end()) {
+        return _soldierTalentDatas.at(key);
+    }
+    
+    return nullptr;
+}
 
 const TowerLocalData* DataManager::getTowerData(int id) const
 {
@@ -281,7 +340,6 @@ const TowerLocalData* DataManager::getTowerData(int id) const
     
     return nullptr;
 }
-
 
 const TowerUpgradeData* DataManager::getTowerUpgradeData(int id, int level) const
 {
@@ -299,7 +357,7 @@ void DataManager::parseLevelData()
     string fileName = LocalHelper::getLocalizedConfigFilePath("LevelData.xml");
     if (FileUtils::getInstance()->isFileExist(fileName))
     {
-        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
         if (xmlDoc)
         {
             string content = LocalHelper::loadFileContentString(fileName);
@@ -342,7 +400,7 @@ void DataManager::parseQuestData(QuestType type)
     
     if (FileUtils::getInstance()->isFileExist(fileName))
     {
-        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
         if (xmlDoc)
         {
             string content = LocalHelper::loadFileContentString(fileName);
@@ -373,7 +431,7 @@ void DataManager::parseAchievementData()
     string fileName = LocalHelper::getLocalizedConfigFilePath("EquipProperty.xml");
     if (FileUtils::getInstance()->isFileExist(fileName))
     {
-        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
         if (xmlDoc)
         {
             string content = LocalHelper::loadFileContentString(fileName);
@@ -402,7 +460,7 @@ void DataManager::parseObjectData()
     string fileName = LocalHelper::getLocalizedConfigFilePath("ObjectProperty.xml");
     if (FileUtils::getInstance()->isFileExist(fileName))
     {
-        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
         if (xmlDoc)
         {
             string content = LocalHelper::loadFileContentString(fileName);
@@ -431,7 +489,7 @@ void DataManager::parseGearData()
     string fileName = LocalHelper::getLocalizedConfigFilePath("EquipProperty.xml");
     if (FileUtils::getInstance()->isFileExist(fileName))
     {
-        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
         if (xmlDoc)
         {
             string content = LocalHelper::loadFileContentString(fileName);
@@ -460,7 +518,7 @@ void DataManager::parseGearUpgradeData()
     string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
     if (FileUtils::getInstance()->isFileExist(fileName))
     {
-        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
         if (xmlDoc)
         {
             string content = LocalHelper::loadFileContentString(fileName);
@@ -484,12 +542,41 @@ void DataManager::parseGearUpgradeData()
     }
 }
 
+void DataManager::parseGearAttributeData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                GearAttributeData* data = new (nothrow) GearAttributeData(item);
+                string key = StringUtils::format("%d_%d_%d", data->getId(), data->level(), data->getAttributeId());
+                if (_gearAttributeDatas.find(key) != _gearAttributeDatas.end()) {
+                    assert(false);
+                } else {
+                    _gearAttributeDatas.insert(make_pair(key, data));
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
 void DataManager::parseGearSetData()
 {
     string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
     if (FileUtils::getInstance()->isFileExist(fileName))
     {
-        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
         if (xmlDoc)
         {
             string content = LocalHelper::loadFileContentString(fileName);
@@ -518,7 +605,7 @@ void DataManager::parseAnimationConfigData()
     string fileName = LocalHelper::getLocalizedConfigFilePath("AnimationConfig.xml");
     if (FileUtils::getInstance()->isFileExist(fileName))
     {
-        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
         if (xmlDoc)
         {
             string content = LocalHelper::loadFileContentString(fileName);
@@ -551,7 +638,7 @@ void DataManager::parseURConfigData()
     string fileName = LocalHelper::getLocalizedConfigFilePath("UnitResourceConfig.xml");
     if (FileUtils::getInstance()->isFileExist(fileName))
     {
-        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
         if (xmlDoc)
         {
             string content = LocalHelper::loadFileContentString(fileName);
@@ -587,7 +674,7 @@ void DataManager::parseMapParticleConfigData()
                 _mapParticleConfigData.insert(make_pair(i, vector<MapParticleConfigData*>()));
             }
             
-            tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+            tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
             if (xmlDoc)
             {
                 string content = LocalHelper::loadFileContentString(fileName);
@@ -609,12 +696,70 @@ void DataManager::parseMapParticleConfigData()
     }
 }
 
-void DataManager::parseAttributeLocalData()
+void DataManager::parseArtifactData()
 {
     string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
     if (FileUtils::getInstance()->isFileExist(fileName))
     {
-        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                ArtifactLocalData* data = new (nothrow) ArtifactLocalData(item);
+                const int key = data->getId();
+                if (_artifacts.find(key) != _artifacts.end()) {
+                    assert(false);
+                } else {
+                    _artifacts.insert(make_pair(key, data));
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
+void DataManager::parseArtifactUpgradeData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                ArtifactUpgradeData* data = new (nothrow) ArtifactUpgradeData(item);
+                string key = StringUtils::format("%d_%d", data->getId(), data->level());
+                if (_artifactUpgradeData.find(key) != _artifactUpgradeData.end()) {
+                    assert(false);
+                } else {
+                    _artifactUpgradeData.insert(make_pair(key, data));
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
+void DataManager::parseAttributeData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
         if (xmlDoc)
         {
             string content = LocalHelper::loadFileContentString(fileName);
@@ -638,12 +783,12 @@ void DataManager::parseAttributeLocalData()
     }
 }
 
-void DataManager::parseHeroLocalData()
+void DataManager::parseHeroData()
 {
     string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
     if (FileUtils::getInstance()->isFileExist(fileName))
     {
-        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
         if (xmlDoc)
         {
             string content = LocalHelper::loadFileContentString(fileName);
@@ -672,7 +817,7 @@ void DataManager::parseHeroUpgradeData()
     string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
     if (FileUtils::getInstance()->isFileExist(fileName))
     {
-        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
         if (xmlDoc)
         {
             string content = LocalHelper::loadFileContentString(fileName);
@@ -696,12 +841,12 @@ void DataManager::parseHeroUpgradeData()
     }
 }
 
-void DataManager::parseSkillLocalData()
+void DataManager::parseSkillData()
 {
     string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
     if (FileUtils::getInstance()->isFileExist(fileName))
     {
-        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
         if (xmlDoc)
         {
             string content = LocalHelper::loadFileContentString(fileName);
@@ -725,12 +870,12 @@ void DataManager::parseSkillLocalData()
     }
 }
 
-void DataManager::parseSoldierLocalData()
+void DataManager::parseSoldierData()
 {
     string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
     if (FileUtils::getInstance()->isFileExist(fileName))
     {
-        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
         if (xmlDoc)
         {
             string content = LocalHelper::loadFileContentString(fileName);
@@ -759,7 +904,7 @@ void DataManager::parseSoldierUpgradeData()
     string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
     if (FileUtils::getInstance()->isFileExist(fileName))
     {
-        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
         if (xmlDoc)
         {
             string content = LocalHelper::loadFileContentString(fileName);
@@ -783,12 +928,70 @@ void DataManager::parseSoldierUpgradeData()
     }
 }
 
-void DataManager::parseTowerLocalData()
+void DataManager::parseSoldierQualityData()
 {
     string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
     if (FileUtils::getInstance()->isFileExist(fileName))
     {
-        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                SoldierQualityData* data = new (nothrow) SoldierQualityData(item);
+                string key = StringUtils::format("%d_%d", data->getId(), data->level());
+                if (_soldierQualityDatas.find(key) != _soldierQualityDatas.end()) {
+                    assert(false);
+                } else {
+                    _soldierQualityDatas.insert(make_pair(key, data));
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
+void DataManager::parseSoldierTalentData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                SoldierTalentData* data = new (nothrow) SoldierTalentData(item);
+                string key = StringUtils::format("%d_%d", data->getId(), data->level());
+                if (_soldierTalentDatas.find(key) != _soldierTalentDatas.end()) {
+                    assert(false);
+                } else {
+                    _soldierTalentDatas.insert(make_pair(key, data));
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
+void DataManager::parseTowerData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
         if (xmlDoc)
         {
             string content = LocalHelper::loadFileContentString(fileName);
@@ -817,7 +1020,7 @@ void DataManager::parseTowerUpgradeData()
     string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
     if (FileUtils::getInstance()->isFileExist(fileName))
     {
-        tinyxml2::XMLDocument *xmlDoc = new tinyxml2::XMLDocument();
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
         if (xmlDoc)
         {
             string content = LocalHelper::loadFileContentString(fileName);

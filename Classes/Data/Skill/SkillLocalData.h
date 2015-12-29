@@ -21,10 +21,12 @@ public:
     
     int getId() const;
     const std::string& getName() const;
+    const std::string& getDescription() const;
     
 private:
     int _id;
     std::string _name;
+    std::string _description;
 };
 
 #endif /* SkillLocalData_h */

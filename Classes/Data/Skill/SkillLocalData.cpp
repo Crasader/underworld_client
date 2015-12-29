@@ -23,6 +23,12 @@ SkillLocalData::SkillLocalData(tinyxml2::XMLElement *xmlElement)
                 _name.assign(data);
             }
         }
+        {
+            const char *data = xmlElement->Attribute("desc");
+            if (data) {
+                _description.assign(data);
+            }
+        }
     }
 }
 
@@ -39,4 +45,9 @@ int SkillLocalData::getId() const
 const string& SkillLocalData::getName() const
 {
     return _name;
+}
+
+const std::string& SkillLocalData::getDescription() const
+{
+    return _description;
 }
