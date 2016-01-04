@@ -101,6 +101,9 @@
 		A1211B291C0BF68E00C27CCC /* GameConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B281C0BF68E00C27CCC /* GameConstants.cpp */; };
 		A13108A51C046BF900EAAD90 /* particle in Resources */ = {isa = PBXBuildFile; fileRef = A13108A41C046BF900EAAD90 /* particle */; };
 		A14B5EFB1C311908006FB0DB /* Addon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14B5EF91C311908006FB0DB /* Addon.cpp */; };
+		A15698D51C3A95B300B94345 /* SpellType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A15698D31C3A95B300B94345 /* SpellType.cpp */; };
+		A15698DB1C3A969A00B94345 /* Spell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A15698D91C3A969A00B94345 /* Spell.cpp */; };
+		A15698E11C3A96E500B94345 /* DamageType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A15698DF1C3A96E500B94345 /* DamageType.cpp */; };
 		A16BF2821C313E1300E91458 /* AttributeLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF2801C313E1300E91458 /* AttributeLocalData.cpp */; };
 		A16BF2851C313E2900E91458 /* HeroLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF2831C313E2900E91458 /* HeroLocalData.cpp */; };
 		A16BF2891C313E5900E91458 /* HeroUpgradeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF2871C313E5900E91458 /* HeroUpgradeData.cpp */; };
@@ -398,6 +401,12 @@
 		A13108A41C046BF900EAAD90 /* particle */ = {isa = PBXFileReference; lastKnownFileType = folder; path = particle; sourceTree = "<group>"; };
 		A14B5EF91C311908006FB0DB /* Addon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Addon.cpp; path = Core/Unit/Type/Addon.cpp; sourceTree = "<group>"; };
 		A14B5EFA1C311908006FB0DB /* Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Addon.h; path = Core/Unit/Type/Addon.h; sourceTree = "<group>"; };
+		A15698D31C3A95B300B94345 /* SpellType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SpellType.cpp; path = Core/Unit/Type/SpellType.cpp; sourceTree = "<group>"; };
+		A15698D41C3A95B300B94345 /* SpellType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpellType.h; path = Core/Unit/Type/SpellType.h; sourceTree = "<group>"; };
+		A15698D91C3A969A00B94345 /* Spell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Spell.cpp; path = Core/Unit/Instance/Spell.cpp; sourceTree = "<group>"; };
+		A15698DA1C3A969A00B94345 /* Spell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Spell.h; path = Core/Unit/Instance/Spell.h; sourceTree = "<group>"; };
+		A15698DF1C3A96E500B94345 /* DamageType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DamageType.cpp; path = Core/Unit/Type/DamageType.cpp; sourceTree = "<group>"; };
+		A15698E01C3A96E500B94345 /* DamageType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DamageType.h; path = Core/Unit/Type/DamageType.h; sourceTree = "<group>"; };
 		A16BF2801C313E1300E91458 /* AttributeLocalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AttributeLocalData.cpp; sourceTree = "<group>"; };
 		A16BF2811C313E1300E91458 /* AttributeLocalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttributeLocalData.h; sourceTree = "<group>"; };
 		A16BF2831C313E2900E91458 /* HeroLocalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HeroLocalData.cpp; sourceTree = "<group>"; };
@@ -744,6 +753,8 @@
 				045117011BCFBA53002AA721 /* Faction.h */,
 				045117021BCFBA53002AA721 /* Skill.cpp */,
 				045117031BCFBA53002AA721 /* Skill.h */,
+				A15698D91C3A969A00B94345 /* Spell.cpp */,
+				A15698DA1C3A969A00B94345 /* Spell.h */,
 				300098CE1BD0CD5900B6E284 /* Resource.cpp */,
 				300098CF1BD0CD5900B6E284 /* Resource.h */,
 				045117041BCFBA53002AA721 /* Unit.cpp */,
@@ -769,10 +780,14 @@
 				045116E81BCFBA44002AA721 /* BulletType.h */,
 				045116E91BCFBA44002AA721 /* CommandType.cpp */,
 				045116EA1BCFBA44002AA721 /* CommandType.h */,
+				A15698DF1C3A96E500B94345 /* DamageType.cpp */,
+				A15698E01C3A96E500B94345 /* DamageType.h */,
 				045116EB1BCFBA44002AA721 /* FactionType.cpp */,
 				045116EC1BCFBA44002AA721 /* FactionType.h */,
 				045116ED1BCFBA44002AA721 /* SkllType.cpp */,
 				045116EE1BCFBA44002AA721 /* SkllType.h */,
+				A15698D31C3A95B300B94345 /* SpellType.cpp */,
+				A15698D41C3A95B300B94345 /* SpellType.h */,
 				045116EF1BCFBA44002AA721 /* TechTree.cpp */,
 				045116F01BCFBA44002AA721 /* TechTree.h */,
 				045116F11BCFBA44002AA721 /* UnitType.cpp */,
@@ -1660,6 +1675,7 @@
 				A1720E8E1BCCE19300217E98 /* AESEncryptor.cpp in Sources */,
 				A18524E31C1AF67800BE261D /* MapUIUnitNode.cpp in Sources */,
 				045116E41BCFBA39002AA721 /* World.cpp in Sources */,
+				A15698E11C3A96E500B94345 /* DamageType.cpp in Sources */,
 				A1B4AE2E1C200521005906A6 /* GearManager.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				A16BF28C1C313E7D00E91458 /* SoldierLocalData.cpp in Sources */,
@@ -1699,6 +1715,7 @@
 				301F63F21BE0C56D00DA6D70 /* Damage.cpp in Sources */,
 				A1F5BFA21C1FD519007C08CB /* AchievementData.cpp in Sources */,
 				A1720E6F1BCCDF9100217E98 /* CocosUtils.cpp in Sources */,
+				A15698D51C3A95B300B94345 /* SpellType.cpp in Sources */,
 				A18524D31C1AE46400BE261D /* QuestNode.cpp in Sources */,
 				300098D61BD5E81700B6E284 /* InstanceFactory.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
@@ -1710,6 +1727,7 @@
 				A1E8305C1C1E75BB00FE01B8 /* ChatLayer.cpp in Sources */,
 				A10A66E71C1A7CE100A2DD13 /* UAConfigData.cpp in Sources */,
 				A103F45C1BE37E2A007F9A83 /* UnitNode.cpp in Sources */,
+				A15698DB1C3A969A00B94345 /* Spell.cpp in Sources */,
 				A1211B291C0BF68E00C27CCC /* GameConstants.cpp in Sources */,
 				301C1B7A1C0EA67200B378A6 /* Effect.cpp in Sources */,
 				A1211B231C0BF55200C27CCC /* LiteralValue.cpp in Sources */,
