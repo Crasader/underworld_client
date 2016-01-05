@@ -177,6 +177,9 @@
 		A1DE80391BD669BB004DEED1 /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1DE80381BD669BA004DEED1 /* CrashReporter.framework */; };
 		A1DF4BEC1C05902C000F2FDA /* DisplayBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1DF4BEA1C05902C000F2FDA /* DisplayBar.cpp */; };
 		A1DF50ED1C229488001CCFF2 /* TabButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1DF50EB1C229488001CCFF2 /* TabButton.cpp */; };
+		A1E5BED01C3B7CF4005BC78B /* TowerData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E5BECE1C3B7CF4005BC78B /* TowerData.cpp */; };
+		A1E5BED31C3B7D08005BC78B /* SoldierData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E5BED11C3B7D08005BC78B /* SoldierData.cpp */; };
+		A1E5BED61C3B7D2C005BC78B /* HeroData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E5BED41C3B7D2C005BC78B /* HeroData.cpp */; };
 		A1E7BAE21C2149E800CE2A85 /* Constants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E7BAE01C2149E800CE2A85 /* Constants.cpp */; };
 		A1E830561C1E75A700FE01B8 /* ChatNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E830541C1E75A700FE01B8 /* ChatNode.cpp */; };
 		A1E830591C1E75B200FE01B8 /* ChatCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E830571C1E75B200FE01B8 /* ChatCell.cpp */; };
@@ -552,6 +555,12 @@
 		A1DF4BEB1C05902C000F2FDA /* DisplayBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayBar.h; sourceTree = "<group>"; };
 		A1DF50EB1C229488001CCFF2 /* TabButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TabButton.cpp; sourceTree = "<group>"; };
 		A1DF50EC1C229488001CCFF2 /* TabButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabButton.h; sourceTree = "<group>"; };
+		A1E5BECE1C3B7CF4005BC78B /* TowerData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TowerData.cpp; sourceTree = "<group>"; };
+		A1E5BECF1C3B7CF4005BC78B /* TowerData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TowerData.h; sourceTree = "<group>"; };
+		A1E5BED11C3B7D08005BC78B /* SoldierData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoldierData.cpp; sourceTree = "<group>"; };
+		A1E5BED21C3B7D08005BC78B /* SoldierData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoldierData.h; sourceTree = "<group>"; };
+		A1E5BED41C3B7D2C005BC78B /* HeroData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HeroData.cpp; sourceTree = "<group>"; };
+		A1E5BED51C3B7D2C005BC78B /* HeroData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroData.h; sourceTree = "<group>"; };
 		A1E7BAE01C2149E800CE2A85 /* Constants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Constants.cpp; sourceTree = "<group>"; };
 		A1E7BAE11C2149E800CE2A85 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		A1E830541C1E75A700FE01B8 /* ChatNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChatNode.cpp; sourceTree = "<group>"; };
@@ -1071,6 +1080,8 @@
 		A16BF27D1C313D6D00E91458 /* Hero */ = {
 			isa = PBXGroup;
 			children = (
+				A1E5BED41C3B7D2C005BC78B /* HeroData.cpp */,
+				A1E5BED51C3B7D2C005BC78B /* HeroData.h */,
 				A16BF2831C313E2900E91458 /* HeroLocalData.cpp */,
 				A16BF2841C313E2900E91458 /* HeroLocalData.h */,
 				A16BF2871C313E5900E91458 /* HeroUpgradeData.cpp */,
@@ -1082,6 +1093,8 @@
 		A16BF27E1C313D6D00E91458 /* Soldier */ = {
 			isa = PBXGroup;
 			children = (
+				A1E5BED11C3B7D08005BC78B /* SoldierData.cpp */,
+				A1E5BED21C3B7D08005BC78B /* SoldierData.h */,
 				A16BF28A1C313E7D00E91458 /* SoldierLocalData.cpp */,
 				A16BF28B1C313E7D00E91458 /* SoldierLocalData.h */,
 				A1F58D541C32444B00C8A2DD /* SoldierQualityData.cpp */,
@@ -1097,6 +1110,8 @@
 		A16BF27F1C313D6D00E91458 /* Tower */ = {
 			isa = PBXGroup;
 			children = (
+				A1E5BECE1C3B7CF4005BC78B /* TowerData.cpp */,
+				A1E5BECF1C3B7CF4005BC78B /* TowerData.h */,
 				A16BF2901C313E9F00E91458 /* TowerLocalData.cpp */,
 				A16BF2911C313E9F00E91458 /* TowerLocalData.h */,
 				A16BF2931C313EAF00E91458 /* TowerUpgradeData.cpp */,
@@ -1674,6 +1689,8 @@
 				A1720E8C1BCCE19300217E98 /* aes_ctr.c in Sources */,
 				A1720E8E1BCCE19300217E98 /* AESEncryptor.cpp in Sources */,
 				A18524E31C1AF67800BE261D /* MapUIUnitNode.cpp in Sources */,
+				A1E5BED01C3B7CF4005BC78B /* TowerData.cpp in Sources */,
+				A1E5BED61C3B7D2C005BC78B /* HeroData.cpp in Sources */,
 				045116E41BCFBA39002AA721 /* World.cpp in Sources */,
 				A15698E11C3A96E500B94345 /* DamageType.cpp in Sources */,
 				A1B4AE2E1C200521005906A6 /* GearManager.cpp in Sources */,
@@ -1801,6 +1818,7 @@
 				045116E21BCFBA39002AA721 /* Clock.cpp in Sources */,
 				A1720E931BCCE1D900217E98 /* LocalHelper.cpp in Sources */,
 				A1E8306A1C1EA50200FE01B8 /* RewardData.cpp in Sources */,
+				A1E5BED31C3B7D08005BC78B /* SoldierData.cpp in Sources */,
 				045117091BCFBA53002AA721 /* Faction.cpp in Sources */,
 				A1E8306D1C1EA55D00FE01B8 /* ContentData.cpp in Sources */,
 				045116F31BCFBA44002AA721 /* BuffType.cpp in Sources */,
