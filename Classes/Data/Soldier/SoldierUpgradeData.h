@@ -25,6 +25,7 @@ public:
     
     int getId() const;
     int level() const;
+    int getUnlockedLevel() const;
     int getResourceCount(ResourceType type) const;
     const std::map<int, AttributeData *>& getAttributes() const;
     const AttributeData* getAttribute(int id) const;
@@ -32,6 +33,7 @@ public:
 private:
     int _id;
     int _level;
+    int _unlockedLevel;
     std::map<ResourceType, ResourceData*> _cost;
     std::map<int, AttributeData *> _attributes;
 };

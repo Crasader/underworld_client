@@ -45,9 +45,15 @@ URConfigData::URConfigData(tinyxml2::XMLElement *xmlElement)
         {
             const char *data = xmlElement->Attribute("icon_name");
             if (data && strlen(data) > 0) {
-                static const string prefix("GameImages/test/");
                 static const string suffix(".png");
-                _icon = prefix + data + suffix;
+                {
+                    static const string prefix("GameImages/icons/unit/big/");
+                    _icon = prefix + data + suffix;
+                }
+                {
+                    static const string prefix("GameImages/icons/unit/small/");
+                    _smallIcon = prefix + data + "_1" + suffix;
+                }
             }
         }
         {
@@ -148,7 +154,7 @@ URConfigData::~URConfigData()
     
 }
 
-const std::string& URConfigData::getName() const
+const string& URConfigData::getName() const
 {
     return _name;
 }
@@ -163,82 +169,87 @@ bool URConfigData::isFaceRight() const
     return _isFaceRight;
 }
 
-const std::string& URConfigData::getIcon() const
+const string& URConfigData::getIcon() const
 {
     return _icon;
 }
 
-const std::string& URConfigData::getPrefix() const
+const string& URConfigData::getSmallIcon() const
+{
+    return _smallIcon;
+}
+
+const string& URConfigData::getPrefix() const
 {
     return _prefix;
 }
 
-const std::string& URConfigData::getBNormal() const
+const string& URConfigData::getBNormal() const
 {
     return _bNormal;
 }
 
-const std::string& URConfigData::getBDamaged() const
+const string& URConfigData::getBDamaged() const
 {
     return _bDamaged;
 }
 
-const std::string& URConfigData::getBDestroyed() const
+const string& URConfigData::getBDestroyed() const
 {
     return _bDestroyed;
 }
 
-const std::string& URConfigData::getBAttackBegin() const
+const string& URConfigData::getBAttackBegin() const
 {
     return _bAttackBegin;
 }
 
-const std::string& URConfigData::getBAttack() const
+const string& URConfigData::getBAttack() const
 {
     return _bAttack;
 }
 
-const std::string& URConfigData::getBAttackEnd() const
+const string& URConfigData::getBAttackEnd() const
 {
     return _bAttackEnd;
 }
 
-const std::string& URConfigData::getBullet() const
+const string& URConfigData::getBullet() const
 {
     return _bullet;
 }
 
-const std::string& URConfigData::getCritBullet() const
+const string& URConfigData::getCritBullet() const
 {
     return _critBullet;
 }
 
-const std::string& URConfigData::getSwordEffect() const
+const string& URConfigData::getSwordEffect() const
 {
     return _swordEffect;
 }
 
-const std::string& URConfigData::getHurtEffect() const
+const string& URConfigData::getHurtEffect() const
 {
     return _hurtEffect;
 }
 
-const std::string& URConfigData::getCritHurtEffect() const
+const string& URConfigData::getCritHurtEffect() const
 {
     return _critHurtEffect;
 }
 
-const std::string& URConfigData::getAttackSound() const
+const string& URConfigData::getAttackSound() const
 {
     return _attckSound;
 }
 
-const std::string& URConfigData::getHurtSound() const
+const string& URConfigData::getHurtSound() const
 {
     return _hurtSound;
 }
 
-const std::string& URConfigData::getDieSound() const
+const string& URConfigData::getDieSound() const
 {
     return _dieSound;
 }

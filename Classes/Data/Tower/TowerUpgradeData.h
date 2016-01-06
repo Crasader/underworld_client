@@ -24,11 +24,13 @@ public:
     
     int getId() const;
     int level() const;
+    int getUnlockedLevel() const;
     int getResourceCount(ResourceType type) const;
     
 private:
     int _id;
     int _level;
+    int _unlockedLevel;
     std::map<ResourceType, ResourceData*> _cost;
 };
 

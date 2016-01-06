@@ -27,9 +27,11 @@ class ArtifactLocalData;
 class ArtifactUpgradeData;
 class AttributeLocalData;
 class HeroLocalData;
+class HeroPieceData;
 class HeroUpgradeData;
 class SkillLocalData;
 class SoldierLocalData;
+class SoldierPieceData;
 class SoldierUpgradeData;
 class SoldierQualityData;
 class SoldierTalentData;
@@ -68,6 +70,7 @@ public:
     
     // ---------- hero ----------
     const HeroLocalData* getHeroData(int id) const;
+    const HeroPieceData* getHeroPieceData(int id) const;
     const HeroUpgradeData* getHeroUpgradeData(int id, int level) const;
     
     // ---------- skill ----------
@@ -75,6 +78,7 @@ public:
     
     // ---------- soldier ----------
     const SoldierLocalData* getSoldierData(int id) const;
+    const SoldierPieceData* getSoldierPieceData(int id) const;
     const SoldierUpgradeData* getSoldierUpgradeData(int id, int level) const;
     const SoldierQualityData* getSoldierQualityData(int id, int level) const;
     const SoldierTalentData* getSoldierTalentData(int id, int level) const;
@@ -104,9 +108,11 @@ protected:
     void parseArtifactUpgradeData();
     void parseAttributeData();
     void parseHeroData();
+    void parseHeroPieceData();
     void parseHeroUpgradeData();
     void parseSkillData();
     void parseSoldierData();
+    void parseSoldierPieceData();
     void parseSoldierUpgradeData();
     void parseSoldierQualityData();
     void parseSoldierTalentData();
@@ -129,9 +135,11 @@ private:
     std::map<std::string, ArtifactUpgradeData*> _artifactUpgradeData;
     std::map<int, AttributeLocalData*> _attributes;
     std::map<int, HeroLocalData*> _heroes;
+    std::map<int, HeroPieceData*> _heroPieceDatas;
     std::map<std::string, HeroUpgradeData*> _heroUpgradeDatas;
     std::map<int, SkillLocalData*> _skills;
     std::map<int, SoldierLocalData*> _soldiers;
+    std::map<int, SoldierPieceData*> _soldierPieceDatas;
     std::map<std::string, SoldierUpgradeData*> _soldierUpgradeDatas;
     std::map<std::string, SoldierQualityData*> _soldierQualityDatas;
     std::map<std::string, SoldierTalentData*> _soldierTalentDatas;

@@ -17,11 +17,13 @@ using namespace std;
 SoldierUpgradeData::SoldierUpgradeData(tinyxml2::XMLElement *xmlElement)
 :_id(0)
 ,_level(0)
+,_unlockedLevel(0)
 {
     if (xmlElement)
     {
         _id = atoi(xmlElement->Attribute("id"));
         _level = atoi(xmlElement->Attribute("level"));
+        _unlockedLevel = atoi(xmlElement->Attribute("unlock"));
         
         {
             const char *data = xmlElement->Attribute("resource");
@@ -65,6 +67,11 @@ int SoldierUpgradeData::getId() const
 int SoldierUpgradeData::level() const
 {
     return _level;
+}
+
+int SoldierUpgradeData::getUnlockedLevel() const
+{
+    return _unlockedLevel;
 }
 
 int SoldierUpgradeData::getResourceCount(ResourceType type) const

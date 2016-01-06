@@ -11,23 +11,22 @@
 #include "Utils.h"
 #include "ResourceData.h"
 #include "AttributeData.h"
-#include "DataManager.h"
-#include "ArtifactLocalData.h"
 
 using namespace std;
 
 HeroUpgradeData::HeroUpgradeData(tinyxml2::XMLElement *xmlElement)
 :_id(0)
 ,_level(0)
-,_artifactId(0)
+,_unlockedLevel(0)
 {
     if (xmlElement)
     {
         _id = atoi(xmlElement->Attribute("id"));
         _level = atoi(xmlElement->Attribute("level"));
+        _unlockedLevel = atoi(xmlElement->Attribute("unlock"));
         
         {
-            const char *data = xmlElement->Attribute("cost");
+            const char *data = xmlElement->Attribute("resource");
             if (data)
             {
                 vector<string> result;
@@ -51,12 +50,6 @@ HeroUpgradeData::HeroUpgradeData(tinyxml2::XMLElement *xmlElement)
                 }
             }
         }
-        {
-            const char *data = xmlElement->Attribute("equipment");
-            if (data) {
-                _artifactId = atoi(data);
-            }
-        }
     }
 }
 
@@ -73,6 +66,11 @@ int HeroUpgradeData::getId() const
 int HeroUpgradeData::level() const
 {
     return _level;
+}
+
+int HeroUpgradeData::getUnlockedLevel() const
+{
+    return _unlockedLevel;
 }
 
 int HeroUpgradeData::getResourceCount(ResourceType type) const
@@ -97,9 +95,4 @@ const AttributeData* HeroUpgradeData::getAttribute(int id) const
 const map<int, AttributeData *>& HeroUpgradeData::getAttributes() const
 {
     return _attributes;
-}
-
-const ArtifactLocalData* HeroUpgradeData::getUnlockedArtifactData() const
-{
-    return DataManager::getInstance()->getArtifactData(_artifactId);
 }

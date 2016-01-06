@@ -16,7 +16,6 @@ namespace tinyxml2 { class XMLElement; }
 
 class ResourceData;
 class AttributeData;
-class ArtifactLocalData;
 
 class HeroUpgradeData
 {
@@ -26,17 +25,17 @@ public:
     
     int getId() const;
     int level() const;
+    int getUnlockedLevel() const;
     int getResourceCount(ResourceType type) const;
     const std::map<int, AttributeData *>& getAttributes() const;
     const AttributeData* getAttribute(int id) const;
-    const ArtifactLocalData* getUnlockedArtifactData() const;
     
 private:
     int _id;
     int _level;
+    int _unlockedLevel;
     std::map<ResourceType, ResourceData*> _cost;
     std::map<int, AttributeData *> _attributes;
-    int _artifactId;
 };
 
 #endif /* HeroUpgradeData_h */

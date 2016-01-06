@@ -229,6 +229,6 @@ string MapUIUnitNode::getIconFile(const Camp* camp) const
 {
     const string& unitName = camp ? camp->getUnitSetting().getUnitTypeName() : "";
     const URConfigData* configData = DataManager::getInstance()->getURConfigData(unitName);
-    const string& iconFile = configData ? configData->getIcon() : "GameImages/test/icon_w_langdun.png";
+    const string& iconFile = configData ? configData->getIcon() : "GameImages/icons/unit/big/icon_w_langdun.png";
     return iconFile;
 }

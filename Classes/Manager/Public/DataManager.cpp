@@ -25,9 +25,11 @@
 #include "ArtifactUpgradeData.h"
 #include "AttributeLocalData.h"
 #include "HeroLocalData.h"
+#include "HeroPieceData.h"
 #include "HeroUpgradeData.h"
 #include "SkillLocalData.h"
 #include "SoldierLocalData.h"
+#include "SoldierPieceData.h"
 #include "SoldierUpgradeData.h"
 #include "SoldierQualityData.h"
 #include "SoldierTalentData.h"
@@ -89,9 +91,11 @@ DataManager::~DataManager()
     Utils::clearMap(_artifactUpgradeData);
     Utils::clearMap(_attributes);
     Utils::clearMap(_heroes);
+    Utils::clearMap(_heroPieceDatas);
     Utils::clearMap(_heroUpgradeDatas);
     Utils::clearMap(_skills);
     Utils::clearMap(_soldiers);
+    Utils::clearMap(_soldierPieceDatas);
     Utils::clearMap(_soldierUpgradeDatas);
     Utils::clearMap(_soldierQualityDatas);
     Utils::clearMap(_soldierTalentDatas);
@@ -117,9 +121,11 @@ void DataManager::init()
     parseArtifactUpgradeData();
     parseAttributeData();
     parseHeroData();
+    parseHeroPieceData();
     parseHeroUpgradeData();
     parseSkillData();
     parseSoldierData();
+    parseSoldierPieceData();
     parseSoldierUpgradeData();
     parseSoldierQualityData();
     parseSoldierTalentData();
@@ -274,6 +280,15 @@ const HeroLocalData* DataManager::getHeroData(int id) const
     return nullptr;
 }
 
+const HeroPieceData* DataManager::getHeroPieceData(int id) const
+{
+    if (_heroPieceDatas.find(id) != _heroPieceDatas.end()) {
+        return _heroPieceDatas.at(id);
+    }
+    
+    return nullptr;
+}
+
 const HeroUpgradeData* DataManager::getHeroUpgradeData(int id, int level) const
 {
     string key = StringUtils::format("%d_%d", id, level);
@@ -297,6 +312,15 @@ const SoldierLocalData* DataManager::getSoldierData(int id) const
 {
     if (_soldiers.find(id) != _soldiers.end()) {
         return _soldiers.at(id);
+    }
+    
+    return nullptr;
+}
+
+const SoldierPieceData* DataManager::getSoldierPieceData(int id) const
+{
+    if (_soldierPieceDatas.find(id) != _soldierPieceDatas.end()) {
+        return _soldierPieceDatas.at(id);
     }
     
     return nullptr;
@@ -812,6 +836,35 @@ void DataManager::parseHeroData()
     }
 }
 
+void DataManager::parseHeroPieceData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                HeroPieceData* data = new (nothrow) HeroPieceData(item);
+                const int key = data->getId();
+                if (_heroPieceDatas.find(key) != _heroPieceDatas.end()) {
+                    assert(false);
+                } else {
+                    _heroPieceDatas.insert(make_pair(key, data));
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
 void DataManager::parseHeroUpgradeData()
 {
     string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
@@ -891,6 +944,35 @@ void DataManager::parseSoldierData()
                     assert(false);
                 } else {
                     _soldiers.insert(make_pair(key, data));
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
+void DataManager::parseSoldierPieceData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                SoldierPieceData* data = new (nothrow) SoldierPieceData(item);
+                const int key = data->getId();
+                if (_soldierPieceDatas.find(key) != _soldierPieceDatas.end()) {
+                    assert(false);
+                } else {
+                    _soldierPieceDatas.insert(make_pair(key, data));
                 }
             }
             

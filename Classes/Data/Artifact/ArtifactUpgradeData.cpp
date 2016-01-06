@@ -11,17 +11,20 @@
 #include "Utils.h"
 #include "ResourceData.h"
 #include "AttributeData.h"
+#include "RewardData.h"
 
 using namespace std;
 
 ArtifactUpgradeData::ArtifactUpgradeData(tinyxml2::XMLElement *xmlElement)
 :_id(0)
 ,_level(0)
+,_unlockedLevel(0)
 {
     if (xmlElement)
     {
         _id = atoi(xmlElement->Attribute("id"));
         _level = atoi(xmlElement->Attribute("level"));
+        _unlockedLevel = atoi(xmlElement->Attribute("unlock"));
         
         {
             const char *data = xmlElement->Attribute("resource");
@@ -48,6 +51,18 @@ ArtifactUpgradeData::ArtifactUpgradeData(tinyxml2::XMLElement *xmlElement)
                 }
             }
         }
+        {
+            const char *data = xmlElement->Attribute("worth");
+            if (data) {
+                vector<string> result;
+                Utils::split(result, data, ";", "");
+                for (vector<string>::const_iterator iter = result.begin(); iter != result.end(); ++iter)
+                {
+                    RewardData* reward = new (nothrow) RewardData(*iter);
+                    _soldRewards.push_back(reward);
+                }
+            }
+        }
     }
 }
 
@@ -65,6 +80,11 @@ int ArtifactUpgradeData::getId() const
 int ArtifactUpgradeData::level() const
 {
     return _level;
+}
+
+int ArtifactUpgradeData::getUnlockedLevel() const
+{
+    return _unlockedLevel;
 }
 
 int ArtifactUpgradeData::getResourceCount(ResourceType type) const
@@ -89,4 +109,9 @@ const AttributeData* ArtifactUpgradeData::getAttribute(int id) const
     }
     
     return nullptr;
+}
+
+const vector<RewardData*>& ArtifactUpgradeData::getSoldRewards() const
+{
+    return _soldRewards;
 }

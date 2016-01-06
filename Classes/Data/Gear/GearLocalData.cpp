@@ -65,18 +65,6 @@ GearLocalData::GearLocalData(tinyxml2::XMLElement *xmlElement)
             }
         }
         {
-            const char *data = xmlElement->Attribute("worth");
-            if (data) {
-                vector<string> result;
-                Utils::split(result, data, ";", "");
-                for (vector<string>::const_iterator iter = result.begin(); iter != result.end(); ++iter)
-                {
-                    RewardData* reward = new (nothrow) RewardData(*iter);
-                    _soldRewards.push_back(reward);
-                }
-            }
-        }
-        {
             const char *data = xmlElement->Attribute("info");
             if (data) {
                 _description.assign(data);
@@ -87,7 +75,7 @@ GearLocalData::GearLocalData(tinyxml2::XMLElement *xmlElement)
 
 GearLocalData::~GearLocalData()
 {
-    Utils::clearVector(_soldRewards);
+    
 }
 
 int GearLocalData::getId() const
@@ -123,11 +111,6 @@ const std::set<int>& GearLocalData::getAttributes() const
 const std::set<int>& GearLocalData::getSubAttributes() const
 {
     return _subAttributes;
-}
-
-const vector<RewardData*>& GearLocalData::getSoldRewards() const
-{
-    return _soldRewards;
 }
 
 const string& GearLocalData::getName() const

@@ -16,8 +16,6 @@
 
 namespace tinyxml2 { class XMLElement; }
 
-class RewardData;
-
 class GearLocalData
 {
 public:
@@ -31,7 +29,6 @@ public:
     int getMaxCount() const;
     const std::set<int>& getAttributes() const;
     const std::set<int>& getSubAttributes() const;
-    const std::vector<RewardData*>& getSoldRewards() const;
     const std::string& getName() const;
     const std::string& getDescription() const;
     
@@ -43,7 +40,6 @@ private:
     int _maxCount;
     std::set<int> _attributes;
     std::set<int> _subAttributes;
-    std::vector<RewardData*> _soldRewards;
     std::string _name;
     std::string _description;
 };

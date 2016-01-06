@@ -10,12 +10,14 @@
 #define HeroLocalData_h
 
 #include <iostream>
+#include <vector>
 #include <map>
 
 namespace tinyxml2 { class XMLElement; }
 
 class AttributeData;
 class SkillLocalData;
+class ArtifactLocalData;
 
 class HeroLocalData
 {
@@ -29,6 +31,8 @@ public:
     const std::map<int, AttributeData *>& getAttributes() const;
     const AttributeData* getAttribute(int id) const;
     const SkillLocalData* getSkillData() const;
+    const std::vector<int>& getArtifacts() const;
+    const ArtifactLocalData* getUnlockedArtifactData(int index) const;
     
 private:
     int _id;
@@ -36,6 +40,7 @@ private:
     std::string _description;
     std::map<int, AttributeData *> _attributes;
     int _skillId;
+    std::vector<int> _artifactIds;
 };
 
 #endif /* HeroLocalData_h */

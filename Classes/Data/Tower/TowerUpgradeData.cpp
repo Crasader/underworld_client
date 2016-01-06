@@ -16,11 +16,13 @@ using namespace std;
 TowerUpgradeData::TowerUpgradeData(tinyxml2::XMLElement *xmlElement)
 :_id(0)
 ,_level(0)
+,_unlockedLevel(0)
 {
     if (xmlElement)
     {
         _id = atoi(xmlElement->Attribute("id"));
         _level = atoi(xmlElement->Attribute("level"));
+        _unlockedLevel = atoi(xmlElement->Attribute("unlock"));
         
         {
             const char *data = xmlElement->Attribute("cost");
@@ -51,6 +53,11 @@ int TowerUpgradeData::getId() const
 int TowerUpgradeData::level() const
 {
     return _level;
+}
+
+int TowerUpgradeData::getUnlockedLevel() const
+{
+    return _unlockedLevel;
 }
 
 int TowerUpgradeData::getResourceCount(ResourceType type) const

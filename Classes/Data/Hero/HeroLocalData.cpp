@@ -12,6 +12,8 @@
 #include "AttributeData.h"
 #include "DataManager.h"
 #include "SkillLocalData.h"
+#include "ArtifactLocalData.h"
+#include "DataManager.h"
 
 using namespace std;
 
@@ -50,6 +52,17 @@ HeroLocalData::HeroLocalData(tinyxml2::XMLElement *xmlElement)
             const char *data = xmlElement->Attribute("skill");
             if (data) {
                 _skillId = atoi(data);
+            }
+        }
+        {
+            const char *data = xmlElement->Attribute("equipment");
+            if (data) {
+                vector<string> result;
+                Utils::split(result, data, ",", "");
+                for (vector<string>::const_iterator iter = result.begin(); iter != result.end(); ++iter)
+                {
+                    _artifactIds.push_back(atoi((*iter).c_str()));
+                }
             }
         }
     }
@@ -92,4 +105,18 @@ const AttributeData* HeroLocalData::getAttribute(int id) const
 const SkillLocalData* HeroLocalData::getSkillData() const
 {
     return DataManager::getInstance()->getSkillData(_skillId);
+}
+
+const vector<int>& HeroLocalData::getArtifacts() const
+{
+    return _artifactIds;
+}
+
+const ArtifactLocalData* HeroLocalData::getUnlockedArtifactData(int index) const
+{
+    if (index > _artifactIds.size()) {
+        return DataManager::getInstance()->getArtifactData(_artifactIds.at(index));
+    }
+    
+    return nullptr;
 }

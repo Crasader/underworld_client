@@ -94,6 +94,8 @@
 		A103F45B1BE37E2A007F9A83 /* BulletNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F4571BE37E2A007F9A83 /* BulletNode.cpp */; };
 		A103F45C1BE37E2A007F9A83 /* UnitNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F4591BE37E2A007F9A83 /* UnitNode.cpp */; };
 		A103F45F1BE38112007F9A83 /* GameRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F45D1BE38112007F9A83 /* GameRender.cpp */; };
+		A10611FF1C3D20A40065070F /* SoldierPieceData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10611FD1C3D20A40065070F /* SoldierPieceData.cpp */; };
+		A10612021C3D22260065070F /* HeroPieceData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10612001C3D22260065070F /* HeroPieceData.cpp */; };
 		A10A66E71C1A7CE100A2DD13 /* UAConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10A66E31C1A7CE100A2DD13 /* UAConfigData.cpp */; };
 		A10A66E81C1A7CE100A2DD13 /* URConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10A66E51C1A7CE100A2DD13 /* URConfigData.cpp */; };
 		A1211B231C0BF55200C27CCC /* LiteralValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B211C0BF55200C27CCC /* LiteralValue.cpp */; };
@@ -391,6 +393,10 @@
 		A103F45A1BE37E2A007F9A83 /* UnitNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitNode.h; sourceTree = "<group>"; };
 		A103F45D1BE38112007F9A83 /* GameRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameRender.cpp; sourceTree = "<group>"; };
 		A103F45E1BE38112007F9A83 /* GameRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRender.h; sourceTree = "<group>"; };
+		A10611FD1C3D20A40065070F /* SoldierPieceData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoldierPieceData.cpp; sourceTree = "<group>"; };
+		A10611FE1C3D20A40065070F /* SoldierPieceData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoldierPieceData.h; sourceTree = "<group>"; };
+		A10612001C3D22260065070F /* HeroPieceData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HeroPieceData.cpp; sourceTree = "<group>"; };
+		A10612011C3D22260065070F /* HeroPieceData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroPieceData.h; sourceTree = "<group>"; };
 		A10A66E31C1A7CE100A2DD13 /* UAConfigData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UAConfigData.cpp; sourceTree = "<group>"; };
 		A10A66E41C1A7CE100A2DD13 /* UAConfigData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAConfigData.h; sourceTree = "<group>"; };
 		A10A66E51C1A7CE100A2DD13 /* URConfigData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = URConfigData.cpp; sourceTree = "<group>"; };
@@ -1084,6 +1090,8 @@
 				A1E5BED51C3B7D2C005BC78B /* HeroData.h */,
 				A16BF2831C313E2900E91458 /* HeroLocalData.cpp */,
 				A16BF2841C313E2900E91458 /* HeroLocalData.h */,
+				A10612001C3D22260065070F /* HeroPieceData.cpp */,
+				A10612011C3D22260065070F /* HeroPieceData.h */,
 				A16BF2871C313E5900E91458 /* HeroUpgradeData.cpp */,
 				A16BF2881C313E5900E91458 /* HeroUpgradeData.h */,
 			);
@@ -1097,6 +1105,8 @@
 				A1E5BED21C3B7D08005BC78B /* SoldierData.h */,
 				A16BF28A1C313E7D00E91458 /* SoldierLocalData.cpp */,
 				A16BF28B1C313E7D00E91458 /* SoldierLocalData.h */,
+				A10611FD1C3D20A40065070F /* SoldierPieceData.cpp */,
+				A10611FE1C3D20A40065070F /* SoldierPieceData.h */,
 				A1F58D541C32444B00C8A2DD /* SoldierQualityData.cpp */,
 				A1F58D551C32444B00C8A2DD /* SoldierQualityData.h */,
 				A1F58D571C32465900C8A2DD /* SoldierTalentData.cpp */,
@@ -1724,6 +1734,7 @@
 				3028EBC31BFF0CBD00511C51 /* DynamicValue.cpp in Sources */,
 				045117081BCFBA53002AA721 /* Command.cpp in Sources */,
 				045117071BCFBA53002AA721 /* Bullet.cpp in Sources */,
+				A10611FF1C3D20A40065070F /* SoldierPieceData.cpp in Sources */,
 				A1E830681C1EA50200FE01B8 /* ConditionData.cpp in Sources */,
 				045116F71BCFBA44002AA721 /* SkllType.cpp in Sources */,
 				A1B4AE021C200480005906A6 /* UserDefaultsDataManager.cpp in Sources */,
@@ -1805,6 +1816,7 @@
 				A1720EAD1BCD2A8400217E98 /* NetworkApi.cpp in Sources */,
 				300098D31BD0CDB000B6E284 /* ResourceType.cpp in Sources */,
 				A16BF29C1C31434500E91458 /* SkillLocalData.cpp in Sources */,
+				A10612021C3D22260065070F /* HeroPieceData.cpp in Sources */,
 				300098CD1BD0A94B00B6E284 /* Coordinate.cpp in Sources */,
 				045116F41BCFBA44002AA721 /* BulletType.cpp in Sources */,
 				0451170A1BCFBA53002AA721 /* Skill.cpp in Sources */,
