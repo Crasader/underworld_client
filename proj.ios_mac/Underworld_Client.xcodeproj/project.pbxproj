@@ -52,6 +52,9 @@
 		30FD55611C2BF57F0078EC3C /* PassiveType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD555F1C2BF57F0078EC3C /* PassiveType.cpp */; };
 		30FD55641C2CFDE80078EC3C /* Passive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD55621C2CFDE80078EC3C /* Passive.cpp */; };
 		30FD55691C2FD2920078EC3C /* Addon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD55671C2FD2920078EC3C /* Addon.cpp */; };
+		30FD556C1C322FBF0078EC3C /* SpellType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD556A1C322FBF0078EC3C /* SpellType.cpp */; };
+		30FD556F1C328B020078EC3C /* Spell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD556D1C328B020078EC3C /* Spell.cpp */; };
+		30FD55721C34E0530078EC3C /* DamageType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD55701C34E0530078EC3C /* DamageType.cpp */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
@@ -353,6 +356,12 @@
 		30FD55631C2CFDE80078EC3C /* Passive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Passive.h; path = Core/Unit/Instance/Passive.h; sourceTree = "<group>"; };
 		30FD55671C2FD2920078EC3C /* Addon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Addon.cpp; path = Core/Unit/Type/Addon.cpp; sourceTree = "<group>"; };
 		30FD55681C2FD2920078EC3C /* Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Addon.h; path = Core/Unit/Type/Addon.h; sourceTree = "<group>"; };
+		30FD556A1C322FBF0078EC3C /* SpellType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SpellType.cpp; path = Core/Unit/Type/SpellType.cpp; sourceTree = "<group>"; };
+		30FD556B1C322FBF0078EC3C /* SpellType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpellType.h; path = Core/Unit/Type/SpellType.h; sourceTree = "<group>"; };
+		30FD556D1C328B020078EC3C /* Spell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Spell.cpp; path = Core/Unit/Instance/Spell.cpp; sourceTree = "<group>"; };
+		30FD556E1C328B020078EC3C /* Spell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Spell.h; path = Core/Unit/Instance/Spell.h; sourceTree = "<group>"; };
+		30FD55701C34E0530078EC3C /* DamageType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DamageType.cpp; path = Core/Unit/Type/DamageType.cpp; sourceTree = "<group>"; };
+		30FD55711C34E0530078EC3C /* DamageType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DamageType.h; path = Core/Unit/Type/DamageType.h; sourceTree = "<group>"; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		46880B8519C43A87006E1F66 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -792,6 +801,8 @@
 				309F76991BE9D7BD00B2791F /* Camp.h */,
 				30FD55621C2CFDE80078EC3C /* Passive.cpp */,
 				30FD55631C2CFDE80078EC3C /* Passive.h */,
+				30FD556D1C328B020078EC3C /* Spell.cpp */,
+				30FD556E1C328B020078EC3C /* Spell.h */,
 			);
 			name = Instance;
 			sourceTree = "<group>";
@@ -829,6 +840,10 @@
 				30FD55601C2BF57F0078EC3C /* PassiveType.h */,
 				30FD55671C2FD2920078EC3C /* Addon.cpp */,
 				30FD55681C2FD2920078EC3C /* Addon.h */,
+				30FD556A1C322FBF0078EC3C /* SpellType.cpp */,
+				30FD556B1C322FBF0078EC3C /* SpellType.h */,
+				30FD55701C34E0530078EC3C /* DamageType.cpp */,
+				30FD55711C34E0530078EC3C /* DamageType.h */,
 			);
 			name = Type;
 			sourceTree = "<group>";
@@ -1734,6 +1749,7 @@
 				A1D461601C3E251000E8E60B /* UAConfigData.cpp in Sources */,
 				308B84631BE3752000377802 /* PathFinder.cpp in Sources */,
 				A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */,
+				30FD556F1C328B020078EC3C /* Spell.cpp in Sources */,
 				A1720E8C1BCCE19300217E98 /* aes_ctr.c in Sources */,
 				A1720E8E1BCCE19300217E98 /* AESEncryptor.cpp in Sources */,
 				A18524E31C1AF67800BE261D /* MapUIUnitNode.cpp in Sources */,
@@ -1748,6 +1764,7 @@
 				A1720EB81BCD2D2E00217E98 /* Api.mm in Sources */,
 				A1720E8F1BCCE19300217E98 /* md5.cpp in Sources */,
 				A1D45C4A1BEB3B1400D1E921 /* ResourceButton.cpp in Sources */,
+				30FD556C1C322FBF0078EC3C /* SpellType.cpp in Sources */,
 				A1E929791C0D7F9A0026D85D /* ChatData.cpp in Sources */,
 				30FD55641C2CFDE80078EC3C /* Passive.cpp in Sources */,
 				A16BF28F1C313E8E00E91458 /* SoldierUpgradeData.cpp in Sources */,
@@ -1816,6 +1833,7 @@
 				047228B01C193A4D00E7F71B /* Geometry.cpp in Sources */,
 				3075346D1BF324340057DCED /* EventTrigger.cpp in Sources */,
 				A1B4AE011C200480005906A6 /* SoundManager.cpp in Sources */,
+				30FD55721C34E0530078EC3C /* DamageType.cpp in Sources */,
 				A1B4AE2D1C200521005906A6 /* ChatManager.cpp in Sources */,
 				307534691BF1B2F20057DCED /* Commander.cpp in Sources */,
 				A1A4BA381BCDF81500175E8A /* IapObject.cpp in Sources */,

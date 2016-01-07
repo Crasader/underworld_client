@@ -78,7 +78,7 @@ void BattleScene::start(int mapId)
     }
     
     // 1. add map layer
-    string mapSettingXml = "<root> <location_setting index=\"0\" core_location=\"400,600\" building_location=\"\" assemble_location=\"0:600,600;2:800,600\"/> <resource_settings index=\"0\"> <resource_setting resource_name=\"金子\" init_balance=\"300\" init_salary=\"5\" salary_accelerate=\"0\"/> <resource_setting resource_name=\"人口\" init_balance=\"200\" init_salary=\"0\" salary_accelerate=\"0\"/> </resource_settings> <fixed_unit_setting index=\"0\"> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> <unit_setting unit_type_name=\"狼人步兵\" pos=\"600,600\"/> </fixed_unit_setting> <location_setting index=\"1\" core_location=\"2000,600\" building_location=\"\" assemble_location=\"0:1600,600;2:1200,600\"/> <resource_settings index=\"1\"> <resource_setting resource_name=\"金子\" init_balance=\"300\" init_salary=\"5\" salary_accelerate=\"0\"/> <resource_setting resource_name=\"人口\" init_balance=\"200\" init_salary=\"0\" salary_accelerate=\"0\"/> </resource_settings> <fixed_unit_setting index=\"1\"> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> <unit_setting unit_type_name=\"吸血鬼战士\" pos=\"1500,600\"/> </fixed_unit_setting> </root>";
+    string mapSettingXml = "<root> <location_setting index=\"0\" core_location=\"400,600\" building_location=\"\" assemble_location=\"0:600,600;2:800,600\"/> <resource_settings index=\"0\"> <resource_setting resource_name=\"金子\" init_balance=\"300\" init_salary=\"5\" salary_accelerate=\"0\"/> <resource_setting resource_name=\"人口\" init_balance=\"200\" init_salary=\"0\" salary_accelerate=\"0\"/> </resource_settings> <fixed_unit_setting index=\"0\"> </fixed_unit_setting> <location_setting index=\"1\" core_location=\"2000,600\" building_location=\"\" assemble_location=\"0:1600,600;2:1200,600\"/> <resource_settings index=\"1\"> <resource_setting resource_name=\"金子\" init_balance=\"300\" init_salary=\"5\" salary_accelerate=\"0\"/> <resource_setting resource_name=\"人口\" init_balance=\"200\" init_salary=\"0\" salary_accelerate=\"0\"/> </resource_settings> <fixed_unit_setting index=\"1\">  </fixed_unit_setting> </root>";
     
     _mapLayer = MapLayer::create(mapId, mapSettingXml);
     addChild(_mapLayer);
@@ -95,8 +95,204 @@ void BattleScene::start(int mapId)
     setting.setMap(_mapLayer->getMapSetting());
     
     //2. set techTree;
-    std::string techTree = "<root> <faction name=\"狼人族\"> <unit name=\"狼人基地\" class=\"core\" hp=\"1000\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"400\" size=\"120\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"8\" maxdamage=\"10\" range=\"400\" fields=\"3\"> <bullet speed=\"200\" size=\"0\"/> </skill> </unit> <unit name=\"狼人箭塔\" class=\"building\" hp=\"1000\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"400\" size=\"64\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"8\" maxdamage=\"10\" range=\"400\" fields=\"3\"> <bullet speed=\"200\" size=\"0\"/> </skill> </unit> <unit name=\"狼人步兵\" class=\"warrior\" hp=\"200\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"300\" size=\"32\" cost=\"金子:50;人口:1\" priority=\"0\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.3\" perform=\"0.0\" cd=\"1.0\" mindamage=\"5\" maxdamage=\"8\" range=\"8\" fields=\"2\"/> <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"40\"/> <feature type=\"income_damage_reduce\" value=\"p:0.2\"/> </unit> <unit name=\"狼人射手\" class=\"warrior\" hp=\"200\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"400\" size=\"20\" cost=\"金子:100;人口:1\" priority=\"1\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"8\" maxdamage=\"10\" range=\"320\" fields=\"3\"> <bullet speed=\"200\" size=\"0\"/> </skill> <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"40\"/> <feature type=\"rebound\" value=\"p:0.5\" range=\"100\" count=\"3\"/> </unit> <unit name=\"吸血鬼蜘蛛\" class=\"warrior\" hp=\"165\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"400\" size=\"40\" cost=\"金子:235;人口:1\" priority=\"1\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"1.5\" mindamage=\"14\" maxdamage=\"18\" range=\"266\" fields=\"3\"> <bullet speed=\"400\" size=\"20\"/> </skill> <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"60\"/> <feature type=\"rebound\" value=\"p:0.5\" range=\"100\" count=\"3\"/> </unit> <unit name=\"狼人巫师\" class=\"warrior\" hp=\"200\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"300\" size=\"20\" cost=\"金子:200;人口:1\" priority=\"1\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"4\" maxdamage=\"5\" range=\"160\" fields=\"3\"> <bullet speed=\"200\" size=\"0\"/> </skill> <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"40\"/> <feature type=\"splash\" value=\"p:0.4\" range=\"100\"/> </unit> <unit name=\"狼人独角兽\" class=\"warrior\" hp=\"200\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"300\" size=\"32\" cost=\"金子:50;人口:1\" priority=\"0\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.3\" perform=\"0.0\" cd=\"1.0\" mindamage=\"5\" maxdamage=\"8\" range=\"8\" fields=\"2\"/> <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"40\"/> <feature type=\"income_damage_reduce\" value=\"p:0.2\"/> </unit> <unit name=\"狼人森林之魂\" class=\"warrior\" hp=\"200\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"300\" size=\"20\" cost=\"金子:200;人口:1\" priority=\"1\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"4\" maxdamage=\"5\" range=\"160\" fields=\"3\"> <bullet speed=\"200\" size=\"0\"/> </skill> <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"40\"/> <feature type=\"splash\" value=\"p:0.4\" range=\"100\"/> </unit> <unit name=\"七恶魔拉玛什图\" class=\"warrior\" hp=\"200\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"300\" size=\"32\" cost=\"金子:50;人口:1\" priority=\"0\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.3\" perform=\"0.0\" cd=\"1.0\" mindamage=\"5\" maxdamage=\"8\" range=\"8\" fields=\"2\"/> <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"40\"/> <feature type=\"income_damage_reduce\" value=\"p:0.2\"/> </unit> <unit name=\"莉莉丝\" class=\"warrior\" hp=\"200\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"300\" size=\"20\" cost=\"金子:200;人口:1\" priority=\"1\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"4\" maxdamage=\"5\" range=\"160\" fields=\"3\"> <bullet speed=\"200\" size=\"0\"/> </skill> <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"40\"/> <feature type=\"splash\" value=\"p:0.4\" range=\"100\"/> </unit> <unit name=\"时光法师\" class=\"warrior\" hp=\"200\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"300\" size=\"20\" cost=\"金子:200;人口:1\" priority=\"1\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"4\" maxdamage=\"5\" range=\"160\" fields=\"3\"> <bullet speed=\"200\" size=\"0\"/> </skill> <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"40\"/> <feature type=\"splash\" value=\"p:0.4\" range=\"100\"/> </unit> <unit name=\"时光女神\" class=\"warrior\" hp=\"200\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"300\" size=\"20\" cost=\"金子:200;人口:1\" priority=\"1\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"4\" maxdamage=\"5\" range=\"160\" fields=\"3\"> <bullet speed=\"200\" size=\"0\"/> </skill> <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"40\"/> <feature type=\"splash\" value=\"p:0.4\" range=\"100\"/> </unit> <unit name=\"特斯拉\" class=\"warrior\" hp=\"200\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"300\" size=\"32\" cost=\"金子:50;人口:1\" priority=\"0\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.3\" perform=\"0.0\" cd=\"1.0\" mindamage=\"5\" maxdamage=\"8\" range=\"8\" fields=\"2\"/> <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"40\"/> <feature type=\"income_damage_reduce\" value=\"p:0.2\"/> </unit> <unit name=\"天空女神\" class=\"warrior\" hp=\"200\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"300\" size=\"20\" cost=\"金子:200;人口:1\" priority=\"1\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"4\" maxdamage=\"5\" range=\"160\" fields=\"3\"> <bullet speed=\"200\" size=\"0\"/> </skill> <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"40\"/> <feature type=\"splash\" value=\"p:0.4\" range=\"100\"/> </unit> </faction> <faction name=\"吸血鬼族\"> <unit name=\"吸血鬼核心\" class=\"core\" hp=\"1000\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"400\" size=\"120\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"8\" maxdamage=\"10\" range=\"400\" fields=\"3\"> <bullet speed=\"200\" size=\"0\"/> </skill> </unit> <unit name=\"吸血鬼箭塔\" class=\"building\" hp=\"1000\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"400\" size=\"64\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"8\" maxdamage=\"10\" range=\"400\" fields=\"3\"> <bullet speed=\"200\" size=\"0\"/> </skill> </unit> <unit name=\"吸血鬼战士\" class=\"warrior\" hp=\"200\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"300\" size=\"32\" cost=\"金子:50;人口:1\" priority=\"0\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.3\" perform=\"0.0\" cd=\"1.0\" mindamage=\"5\" maxdamage=\"8\" range=\"8\" fields=\"2\"/> <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"40\"/> <feature type=\"drain\" value=\"p:0.2\"/> </unit> <unit name=\"吸血鬼弓兵\" class=\"warrior\" hp=\"200\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"400\" size=\"20\" cost=\"金子:100;人口:1\" priority=\"1\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"8\" maxdamage=\"10\" range=\"300\" fields=\"3\"> <bullet speed=\"200\" size=\"0\"/> </skill> <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"40\"/> </unit> <unit name=\"吸血鬼巫师\" class=\"warrior\" hp=\"200\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" attacksight=\"300\" size=\"20\" cost=\"金子:200;人口:1\" priority=\"1\"> <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/> <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\"/> <skill class=\"attack\" preperform=\"0.2\" perform=\"0.0\" cd=\"0.8\" mindamage=\"1\" maxdamage=\"20\" range=\"300\" fields=\"3\"> <bullet speed=\"200\" size=\"0\"/> </skill> <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"40\"/> <feature type=\"splash\" value=\"p:0.4\" range=\"100\"/> </unit> </faction> <resource name=\"金子\" class=\"consumable\"/> <resource name=\"人口\" class=\"holdable\"/> </root>";
-    
+
+    std::string techTree = "<root>\
+    <!-- ==========单位&势力配置========== -->\
+    <faction name=\"狼人族\">\
+    <unit name=\"狼人基地\" class=\"core\" hp=\"1000\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"城甲\" armor=\"1000\" attacksight=\"400\" size=\"300\">\
+    <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
+    <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\" occupy=\"0\"/>\
+    <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"1.5\" min_damage=\"30\" max_damage=\"70\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"400\" fields=\"3\">\
+				<bullet speed=\"400\" size=\"0\"/>\
+    </skill>\
+    </unit>\
+    <unit name=\"狼人箭塔\" class=\"building\" hp=\"1000\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"城甲\" armor=\"500\" attacksight=\"400\" size=\"64\">\
+    <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
+    <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\"/>\
+    <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"8\" max_damage=\"10\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"400\" fields=\"3\">\
+				<bullet speed=\"400\" size=\"0\"/>\
+    </skill>\
+    </unit>\
+    <unit name=\"狼人弓箭手\" class=\"hero\" hp=\"200\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"轻甲\" armor=\"300\" armor_preference=\"无甲\" armor_preference_factor=\"1.5f\" magical_defense=\"0.25f\" attacksight=\"400\" size=\"25\" cost=\"金子:1000;人口:1\" priority=\"1\" max_level=\"100\" spell_names=\"激励_等级1\">\
+    <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
+    <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
+    <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"18\" max_damage=\"22\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"280\" fields=\"3\">\
+				<bullet speed=\"400\" size=\"0\"/>\
+    </skill>\
+    <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"60\"/>\
+    </unit>\
+    <unit name=\"狼人法师\" class=\"hero\" hp=\"200\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"无甲\" armor=\"100\" armor_preference=\"重甲\" armor_preference_factor=\"1.5f\" magical_defense=\"0.25f\" attacksight=\"400\" size=\"25\" cost=\"金子:1000;人口:1\" priority=\"1\" max_level=\"100\">\
+    <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
+    <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
+    <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"18\" max_damage=\"22\" deliver_class=\"magical\" damage_distance=\"faraway\" range=\"280\" fields=\"3\">\
+				<bullet speed=\"400\" size=\"0\"/>\
+    </skill>\
+    <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"40\"/>\
+    </unit>\
+    <unit name=\"被救赎的精灵卫士\" class=\"warrior\" hp=\"40\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"轻甲\" armor=\"400\" armor_preference=\"无甲\" armor_preference_factor=\"1.5f\" attacksight=\"400\" size=\"25\" cost=\"金子:200;人口:1\" priority=\"1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" passive_names=\"减速弹_等级1\">\
+    <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
+    <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
+    <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"18\" max_damage=\"22\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"280\" fields=\"3\">\
+				<bullet speed=\"400\" size=\"0\"/>\
+    </skill>\
+    <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"60\"/>\
+    </unit>\
+    <unit name=\"狼人刺客\" class=\"warrior\" hp=\"60\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"轻甲\" armor=\"400\" armor_preference=\"轻甲\" armor_preference_factor=\"1.5f\" attacksight=\"300\" size=\"25\" cost=\"金子:200;人口:1\" priority=\"1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\">\
+    <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
+    <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
+    <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"18\" max_damage=\"22\" deliver_class=\"physical\" damage_distance=\"nearby\" range=\"20\" fields=\"0\">\
+    </skill>\
+    <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"80\"/>\
+    </unit>\
+    <unit name=\"狼人射手\" class=\"warrior\" hp=\"40\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"轻甲\" armor=\"300\" armor_preference=\"无甲\" armor_preference_factor=\"1.5f\" attacksight=\"400\" size=\"25\" cost=\"金子:200;人口:1\" priority=\"0\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\">\
+    <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
+    <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
+    <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"18\" max_damage=\"22\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"280\" fields=\"0\">\
+				<bullet speed=\"400\" size=\"0\"/>\
+    </skill>\
+    <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"60\"/>\
+    </unit>\
+    <unit name=\"狼人巫医\" class=\"warrior\" hp=\"40\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"无甲\" armor=\"300\" armor_preference=\"无甲\" armor_preference_factor=\"1.5f\" attacksight=\"400\" size=\"25\" cost=\"金子:200;人口:1\" priority=\"1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\">\
+    <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
+    <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
+    <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"18\" max_damage=\"22\" deliver_class=\"magical\" damage_distance=\"faraway\" range=\"280\" fields=\"0\">\
+				<bullet speed=\"400\" size=\"0\"/>\
+    </skill>\
+    <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"40\"/>\
+    </unit>\
+    <unit name=\"机械甲虫\" class=\"warrior\" hp=\"80\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"重甲\" armor=\"500\" armor_preference=\"城甲\" armor_preference_factor=\"2.0f\" attacksight=\"400\" size=\"25\" cost=\"金子:400;人口:1\" priority=\"1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\">\
+    <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
+    <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
+    <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"18\" max_damage=\"22\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"400\" fields=\"0\">\
+				<bullet speed=\"400\" size=\"0\"/>\
+    </skill>\
+    <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"40\"/>\
+    </unit>\
+    </faction>\
+    <faction name=\"吸血鬼族\">\
+    <unit name=\"吸血鬼基地\" class=\"core\" hp=\"1000\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"城甲\" armor=\"1000\" attacksight=\"400\" size=\"300\">\
+    <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
+    <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\" occupy=\"0\"/>\
+    <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"1.5\" min_damage=\"30\" max_damage=\"70\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"400\" fields=\"3\">\
+				<bullet speed=\"400\" size=\"0\"/>\
+    </skill>\
+    </unit>\
+    <unit name=\"吸血鬼箭塔\" class=\"building\" hp=\"1000\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"城甲\" armor=\"500\" attacksight=\"400\" size=\"64\">\
+    <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
+    <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\"/>\
+    <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"8\" max_damage=\"10\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"400\" fields=\"3\">\
+				<bullet speed=\"400\" size=\"0\"/>\
+    </skill>\
+    </unit>\
+    <unit name=\"吸血鬼战士\" class=\"warrior\" hp=\"80\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"重甲\" armor=\"800\" armor_preference=\"无甲\" armor_preference_factor=\"1.5f\" attacksight=\"300\" size=\"25\" cost=\"金子:300;人口:1\" priority=\"0\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\">\
+    <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
+    <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
+    <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"18\" max_damage=\"22\" deliver_class=\"physical\" damage_distance=\"nearby\" range=\"30\" fields=\"0\">\
+    </skill>\
+    <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"60\"/>\
+    </unit>\
+    <unit name=\"吸血鬼弓箭手\" class=\"warrior\" hp=\"40\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"无甲\" armor=\"200\" armor_preference=\"重甲\" armor_preference_factor=\"2.0f\" attacksight=\"400\" size=\"25\" cost=\"金子:200;人口:1\" priority=\"1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\">\
+    <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
+    <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
+    <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"18\" max_damage=\"22\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"280\" fields=\"3\">\
+				<bullet speed=\"400\" size=\"0\"/>\
+    </skill>\
+    <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"60\"/>\
+    </unit>\
+    <unit name=\"巨型蜘蛛\" class=\"warrior\" hp=\"100\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"重甲\" armor=\"700\" armor_preference=\"无甲\" armor_preference_factor=\"2.0f\" attacksight=\"300\" size=\"25\" cost=\"金子:1000;人口:1\" priority=\"0\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\">\
+    <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
+    <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
+    <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"18\" max_damage=\"22\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"150\" fields=\"0\">\
+				<bullet speed=\"400\" size=\"0\"/>\
+    </skill>\
+    <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"60\"/>\
+    </unit>\
+    <unit name=\"蛇女莉莉丝\" class=\"hero\" hp=\"200\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"轻甲\" armor=\"500\" attacksight=\"400\" size=\"25\" cost=\"金子:1000;人口:1\" priority=\"1\" max_level=\"100\">\
+    <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
+    <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
+    <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"18\" max_damage=\"22\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"300\" fields=\"3\">\
+				<bullet speed=\"400\" size=\"0\"/>\
+    </skill>\
+    <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"60\"/>\
+    </unit>\
+    <unit name=\"昆虫学家鲁斯凡\" class=\"hero\" hp=\"200\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"轻甲\" armor=\"500\" attacksight=\"400\" size=\"25\" cost=\"金子:1000;人口:1\" priority=\"1\" max_level=\"100\">\
+    <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
+    <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
+    <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"18\" max_damage=\"22\" deliver_class=\"physical\" damage_distance=\"nearby\" range=\"30\" fields=\"0\"/>\
+    <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"60\"/>\
+    </unit>\
+    <unit name=\"被腐化的科瑞隆\" class=\"warrior\" hp=\"80\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"重甲\" armor=\"700\" armor_preference=\"无甲\" armor_preference_factor=\"2.0f\" attacksight=\"300\" size=\"25\" cost=\"金子:500;人口:1\" priority=\"1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\">\
+    <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
+    <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
+    <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"18\" max_damage=\"22\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"300\" fields=\"0\">\
+				<bullet speed=\"400\" size=\"0\"/>\
+    </skill>\
+    <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"60\"/>\
+    </unit>\
+    <unit name=\"吸血鬼法师2号\" class=\"warrior\" hp=\"40\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"无甲\" armor=\"200\" armor_preference=\"重甲\" armor_preference_factor=\"1.5f\" attacksight=\"300\" size=\"25\" cost=\"金子:300;人口:1\" priority=\"1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\">\
+    <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
+    <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
+    <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"18\" max_damage=\"22\" deliver_class=\"magical\" damage_distance=\"faraway\" range=\"300\" fields=\"3\">\
+				<bullet speed=\"400\" size=\"0\"/>\
+    </skill>\
+    <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"60\"/>\
+    </unit>\
+    </faction>\
+    <!-- ==========资源类别配置========== -->\
+    <resource name=\"金子\" class=\"consumable\"/>\
+    <resource name=\"木头\" class=\"consumable\"/>\
+    <resource name=\"人口\" class=\"holdable\"/>\
+    <!-- ==========护甲类别配置&护甲规则配置========== -->\
+    <armor name=\"无甲\"/>\
+    <armor name=\"轻甲\"/>\
+    <armor name=\"重甲\"/>\
+    <armor name=\"城甲\"/>\
+    <armor_rule armor_base=\"1000\"/>\
+    <!-- ==========效果分类配置========== -->\
+    <effect_alias name=\"减移动速度\" unique=\"1\"/>\
+    <effect_alias name=\"加移动速度\"/>\
+    <effect_alias name=\"减攻击速度\" unique=\"1\"/>\
+    <effect_alias name=\"加攻击速度\"/>\
+    <effect_alias name=\"减受到伤害\" unique=\"1\"/>\
+    <effect_alias name=\"加受到伤害\"/>\
+    <effect_alias name=\"加攻击特效\"/>\
+    <!-- ==========被动技能配置========== -->\
+    <!-- 减速弹 -->\
+    <passive alias=\"减速弹\" name=\"减速弹_等级1\" level=\"1\" buff_types=\"减速弹_等级1_持有者增益效果\"/>\
+    <!-- ==========主动技能配置========== -->\
+    <!-- 激励 -->\
+    <spell alias=\"激励\" spell_name=\"激励_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"ally\" cast_distance=\"0\" cast_type=\"self\" immediate_elements=\"0,激励_等级1_激励施法效果,1\" preperform=\"0.5\" perform=\"0.0\" cd=\"120.0\" class=\"cast\"/>\
+    <!-- ==========主动技能原子配置========== -->\
+    <!-- 激励 -->\
+    <spell_pattern name=\"激励_等级1_激励施法效果\" class=\"damage_all\" deliver_nature=\"ally\">\
+    <damage damage_value=\"0\" damage_nature=\"heal\">\
+    <feature type=\"add_buff\" buff_type_name=\"激励_等级1_攻速增益效果\" overlay=\"1\"/>\
+    </damage>\
+    </spell_pattern>\
+    <!-- ==========增益减益效果配置========== -->\
+    <!-- 激励 -->\
+    <buff name=\"激励_等级1_攻速增益效果\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"15.f\" max_overlay=\"1\">\
+    <buff_effect>\
+    <buff_effect_description buff_effect_condition=\"immediate\"/>\
+    <effect class=\"alter_attr\" alias_name=\"加攻击速度\" attr_name=\"attack_speed\" value=\"p:0.5f\"/>\
+    </buff_effect>\
+    </buff>\
+    <!-- 减速弹 -->\
+    <buff name=\"减速弹_等级1_持有者增益效果\" deliver_nature=\"ally\" deliver_class=\"physical\" span_type=\"eternal\">\
+    <buff_effect>\
+    <buff_effect_description buff_effect_condition=\"immediate\"/>\
+    <effect class=\"add_feature\" alias_name=\"加攻击特效\">\
+				<feature type=\"add_buff\" buff_type_name=\"减速弹_等级1_减速减益效果\" overlay=\"1\"/>\
+    </effect>\
+    </buff_effect>\
+    </buff>\
+    <buff name=\"减速弹_等级1_减速减益效果\" deliver_nature=\"enemy\" deliver_class=\"physical\" span_type=\"limited\" span=\"5.f\" max_overlay=\"1\">\
+    <buff_effect>\
+    <buff_effect_description buff_effect_condition=\"immediate\"/>\
+    <effect class=\"alter_attr\" alias_name=\"减移动速度\" attr_name=\"move_speed\" value=\"p:-0.4f\"/>\
+    </buff_effect>\
+    </buff>\
+    </root>";
     setting.setTechTree(techTree);
     
     //3. set faction data
@@ -116,7 +312,7 @@ void BattleScene::start(int mapId)
     core0.setUnitTypeName("狼人基地");
     setting.setCore(0, core0);
     UnderWorld::Core::UnitSetting core1;
-    core1.setUnitTypeName("吸血鬼核心");
+    core1.setUnitTypeName("吸血鬼基地");
     setting.setCore(1, core1);
     UnderWorld::Core::UnitSetting tower0;
     tower0.setUnitTypeName("狼人箭塔");
@@ -129,20 +325,11 @@ void BattleScene::start(int mapId)
     // 5.1 werewolf
     {
         vector<UnderWorld::Core::CampSetting> cs;
-        static const unsigned int camp_count = 12;
+        static const unsigned int camp_count = 3;
         static const string camp_names[camp_count] = {
-            "狼人步兵",
+            "狼人刺客",
             "狼人射手",
-            "狼人巫师",
-            "吸血鬼蜘蛛",
-            "狼人独角兽",
-            "狼人森林之魂",
-            "七恶魔拉玛什图",
-            "莉莉丝",
-            "时光法师",
-            "时光女神",
-            "特斯拉",
-            "天空女神",
+            "狼人巫医"
         };
         cs.resize(camp_count);
         
@@ -160,8 +347,8 @@ void BattleScene::start(int mapId)
         static const unsigned int camp_count = 3;
         static const string camp_names[camp_count] = {
             "吸血鬼战士",
-            "吸血鬼弓兵",
-            "吸血鬼巫师",
+            "吸血鬼弓箭手",
+            "巨型蜘蛛"
         };
         cs.resize(camp_count);
         
