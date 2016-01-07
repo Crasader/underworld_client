@@ -70,7 +70,7 @@ bool BulletNode::init(const Bullet* bullet)
         
         const Unit* trigger = bullet->getTrigger();
         if (trigger) {
-            const string& name = trigger->getUnitBase().getUnitName();
+            const string& name = trigger->getUnitBase().getRenderKey();
             const string& file = DataManager::getInstance()->getURConfigData(name)->getBullet();
             if (file.length() > 0) {
                 _actionNode = CSLoader::createNode(file);

@@ -11,6 +11,7 @@
 
 #include "json/document.h"
 #include "CocosGlobal.h"
+#include <vector>
 
 class AchievementData;
 

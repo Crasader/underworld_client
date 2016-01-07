@@ -15,15 +15,14 @@
 using namespace std;
 
 LevelLocalData::LevelLocalData(tinyxml2::XMLElement *xmlElement)
-:_levelId(0)
+:AbstractLocalData(xmlElement)
 {
     if (xmlElement) {
-        _levelId = atoi(xmlElement->Attribute("id"));
         {
             const char *data = xmlElement->Attribute("cond");
             if (data) {
                 vector<string> result;
-                Utils::split(result, data, ";", "");
+                Utils::split(result, data, ",", "");
                 for (int i = 0; i < result.size(); ++i) {
                     ConditionData* cd = new (nothrow) ConditionData(result.at(i));
                     _conditions.push_back(cd);
@@ -34,10 +33,10 @@ LevelLocalData::LevelLocalData(tinyxml2::XMLElement *xmlElement)
             const char *data = xmlElement->Attribute("reward");
             if (data) {
                 vector<string> result;
-                Utils::split(result, data, ";", "");
+                Utils::split(result, data, ",", "");
                 for (int i = 0; i < result.size(); ++i) {
-                    RewardData* rd = new (nothrow) RewardData(result.at(i));
-                    _rewards.push_back(rd);
+                    RewardData* reward = new (nothrow) RewardData(result.at(i));
+                    _rewards.insert(make_pair(reward->getId(), reward));
                 }
             }
         }
@@ -47,12 +46,7 @@ LevelLocalData::LevelLocalData(tinyxml2::XMLElement *xmlElement)
 LevelLocalData::~LevelLocalData()
 {
     Utils::clearVector(_conditions);
-    Utils::clearVector(_rewards);
-}
-
-int LevelLocalData::getLevelId() const
-{
-    return _levelId;
+    Utils::clearMap(_rewards);
 }
 
 const vector<ConditionData*>& LevelLocalData::getConditions() const
@@ -60,7 +54,11 @@ const vector<ConditionData*>& LevelLocalData::getConditions() const
     return _conditions;
 }
 
-const vector<RewardData *>& LevelLocalData::getRewards() const
+const RewardData* LevelLocalData::getReward(int type) const
 {
-    return _rewards;
+    if (_rewards.find(type) != _rewards.end()) {
+        return _rewards.at(type);
+    }
+    
+    return nullptr;
 }

@@ -7,10 +7,6 @@
 //
 
 #include "ObjectLocalData.h"
-#include "tinyxml2/tinyxml2.h"
-#include "Utils.h"
-
-using namespace std;
 
 ObjectLocalData::ObjectLocalData(tinyxml2::XMLElement *xmlElement)
 :AbstractLocalData(xmlElement)

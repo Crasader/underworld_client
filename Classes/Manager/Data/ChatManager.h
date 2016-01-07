@@ -10,8 +10,9 @@
 #define ChatManager_h
 
 #include "json/document.h"
-#include <map>
 #include "CocosGlobal.h"
+#include <vector>
+#include <map>
 
 class ChatData;
 

@@ -392,7 +392,7 @@ void DataManager::parseLevelData()
                  item = item->NextSiblingElement())
             {
                 LevelLocalData* data = new (nothrow) LevelLocalData(item);
-                const int levelId = data->getLevelId();
+                const int levelId = data->getId();
                 if (_levels.find(levelId) != _levels.end()) {
                     assert(false);
                 } else {
@@ -553,7 +553,7 @@ void DataManager::parseGearUpgradeData()
                  item = item->NextSiblingElement())
             {
                 GearUpgradeData* data = new (nothrow) GearUpgradeData(item);
-                string key = StringUtils::format("%d_%d", data->getId(), data->level());
+                string key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
                 if (_gearUpgradeDatas.find(key) != _gearUpgradeDatas.end()) {
                     assert(false);
                 } else {
@@ -582,7 +582,7 @@ void DataManager::parseGearAttributeData()
                  item = item->NextSiblingElement())
             {
                 GearAttributeData* data = new (nothrow) GearAttributeData(item);
-                string key = StringUtils::format("%d_%d_%d", data->getId(), data->level(), data->getAttributeId());
+                string key = StringUtils::format("%d_%d_%d", data->getId(), data->getLevel(), data->getAttributeId());
                 if (_gearAttributeDatas.find(key) != _gearAttributeDatas.end()) {
                     assert(false);
                 } else {
@@ -765,7 +765,7 @@ void DataManager::parseArtifactUpgradeData()
                  item = item->NextSiblingElement())
             {
                 ArtifactUpgradeData* data = new (nothrow) ArtifactUpgradeData(item);
-                string key = StringUtils::format("%d_%d", data->getId(), data->level());
+                string key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
                 if (_artifactUpgradeData.find(key) != _artifactUpgradeData.end()) {
                     assert(false);
                 } else {
@@ -881,7 +881,7 @@ void DataManager::parseHeroUpgradeData()
                  item = item->NextSiblingElement())
             {
                 HeroUpgradeData* data = new (nothrow) HeroUpgradeData(item);
-                string key = StringUtils::format("%d_%d", data->getId(), data->level());
+                string key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
                 if (_heroUpgradeDatas.find(key) != _heroUpgradeDatas.end()) {
                     assert(false);
                 } else {
@@ -997,7 +997,7 @@ void DataManager::parseSoldierUpgradeData()
                  item = item->NextSiblingElement())
             {
                 SoldierUpgradeData* data = new (nothrow) SoldierUpgradeData(item);
-                string key = StringUtils::format("%d_%d", data->getId(), data->level());
+                string key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
                 if (_soldierUpgradeDatas.find(key) != _soldierUpgradeDatas.end()) {
                     assert(false);
                 } else {
@@ -1026,7 +1026,7 @@ void DataManager::parseSoldierQualityData()
                  item = item->NextSiblingElement())
             {
                 SoldierQualityData* data = new (nothrow) SoldierQualityData(item);
-                string key = StringUtils::format("%d_%d", data->getId(), data->level());
+                string key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
                 if (_soldierQualityDatas.find(key) != _soldierQualityDatas.end()) {
                     assert(false);
                 } else {
@@ -1055,7 +1055,7 @@ void DataManager::parseSoldierTalentData()
                  item = item->NextSiblingElement())
             {
                 SoldierTalentData* data = new (nothrow) SoldierTalentData(item);
-                string key = StringUtils::format("%d_%d", data->getId(), data->level());
+                string key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
                 if (_soldierTalentDatas.find(key) != _soldierTalentDatas.end()) {
                     assert(false);
                 } else {
@@ -1113,7 +1113,7 @@ void DataManager::parseTowerUpgradeData()
                  item = item->NextSiblingElement())
             {
                 TowerUpgradeData* data = new (nothrow) TowerUpgradeData(item);
-                string key = StringUtils::format("%d_%d", data->getId(), data->level());
+                string key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
                 if (_towerUpgradeDatas.find(key) != _towerUpgradeDatas.end()) {
                     assert(false);
                 } else {

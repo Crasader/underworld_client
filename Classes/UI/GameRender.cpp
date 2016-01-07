@@ -228,7 +228,7 @@ void GameRender::onUnitNodePlayDeadAnimationFinished(UnitNode* node)
 void GameRender::onUnitNodeHurtTheTarget(UnitNode* node)
 {
     const Unit* unit = node->getUnit();
-    hurtUnit(unit->getTarget(), unit->getUnitBase().getUnitName());
+    hurtUnit(unit->getTarget(), unit->getUnitBase().getRenderKey());
     node->addSwordEffect();
 }
 
@@ -241,7 +241,7 @@ void GameRender::onBulletNodeReachedTarget(BulletNode* node)
 void GameRender::onBulletNodeExploded(BulletNode* node)
 {
     const Bullet* bullet = node->getBullet();
-    hurtUnit(bullet->getTarget(), bullet->getTrigger()->getUnitBase().getUnitName());
+    hurtUnit(bullet->getTarget(), bullet->getTrigger()->getUnitBase().getRenderKey());
 }
 
 #pragma mark - MapUILayerObserver
@@ -382,7 +382,9 @@ void GameRender::updateResources()
             if (kResourceClass_holdable == resourceType->_class) {
                 _mapUILayer->updatePopulation(resource->getOccpied(), resource->getBalance());
             } else {
-                _mapUILayer->updateGold(resource->getBalance());
+                if (resourceType->_name == RES_NAME_GOLD) {
+                    _mapUILayer->updateGold(resource->getBalance());
+                }
             }
         }
     }

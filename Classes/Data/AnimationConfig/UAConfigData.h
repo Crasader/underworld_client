@@ -9,8 +9,9 @@
 #ifndef UAConfigData_h
 #define UAConfigData_h
 
-#include <map>
 #include "CocosGlobal.h"
+#include <map>
+#include <vector>
 
 namespace tinyxml2 { class XMLElement; }
 

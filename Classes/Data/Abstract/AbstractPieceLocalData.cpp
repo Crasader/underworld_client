@@ -25,7 +25,7 @@ AbstractPieceLocalData::AbstractPieceLocalData(tinyxml2::XMLElement *xmlElement)
             const char *data = xmlElement->Attribute("worth");
             if (data) {
                 vector<string> result;
-                Utils::split(result, data, ";", "");
+                Utils::split(result, data, ",", "");
                 for (vector<string>::const_iterator iter = result.begin(); iter != result.end(); ++iter)
                 {
                     RewardData* reward = new (nothrow) RewardData(*iter);

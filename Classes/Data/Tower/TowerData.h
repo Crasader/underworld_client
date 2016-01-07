@@ -9,22 +9,17 @@
 #ifndef TowerData_h
 #define TowerData_h
 
-#include "json/document.h"
+#include "AbstractData.h"
 
 class TowerLocalData;
 
-class TowerData
+class TowerData : public AbstractData
 {
 public:
     TowerData(const rapidjson::Value& jsonDict);
     virtual ~TowerData();
     
-    int getUniqueId() const;
     const TowerLocalData* getLocalData() const;
-    
-private:
-    int _id;
-    int _uniqueId;
 };
 
 #endif /* TowerData_h */

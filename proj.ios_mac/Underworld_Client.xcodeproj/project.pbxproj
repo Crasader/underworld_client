@@ -177,6 +177,7 @@
 		A1D4615F1C3E251000E8E60B /* MapParticleConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D461591C3E251000E8E60B /* MapParticleConfigData.cpp */; };
 		A1D461601C3E251000E8E60B /* UAConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D4615B1C3E251000E8E60B /* UAConfigData.cpp */; };
 		A1D461611C3E251000E8E60B /* URConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D4615D1C3E251000E8E60B /* URConfigData.cpp */; };
+		A1D461651C3E478F00E8E60B /* AbstractData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D461631C3E478E00E8E60B /* AbstractData.cpp */; };
 		A1D745BF1C1AB7C40020BC1C /* PvePreparationLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D745B51C1AB7C40020BC1C /* PvePreparationLayer.cpp */; };
 		A1D745C01C1AB7C40020BC1C /* DefeatLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D745B71C1AB7C40020BC1C /* DefeatLayer.cpp */; };
 		A1D745C11C1AB7C40020BC1C /* MapLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D745B91C1AB7C40020BC1C /* MapLayer.cpp */; };
@@ -569,6 +570,8 @@
 		A1D4615C1C3E251000E8E60B /* UAConfigData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAConfigData.h; sourceTree = "<group>"; };
 		A1D4615D1C3E251000E8E60B /* URConfigData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = URConfigData.cpp; sourceTree = "<group>"; };
 		A1D4615E1C3E251000E8E60B /* URConfigData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URConfigData.h; sourceTree = "<group>"; };
+		A1D461631C3E478E00E8E60B /* AbstractData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AbstractData.cpp; sourceTree = "<group>"; };
+		A1D461641C3E478E00E8E60B /* AbstractData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractData.h; sourceTree = "<group>"; };
 		A1D745B51C1AB7C40020BC1C /* PvePreparationLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PvePreparationLayer.cpp; sourceTree = "<group>"; };
 		A1D745B61C1AB7C40020BC1C /* PvePreparationLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PvePreparationLayer.h; sourceTree = "<group>"; };
 		A1D745B71C1AB7C40020BC1C /* DefeatLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DefeatLayer.cpp; sourceTree = "<group>"; };
@@ -1437,6 +1440,8 @@
 		A1D4614D1C3E166900E8E60B /* Abstract */ = {
 			isa = PBXGroup;
 			children = (
+				A1D461631C3E478E00E8E60B /* AbstractData.cpp */,
+				A1D461641C3E478E00E8E60B /* AbstractData.h */,
 				A1D4614E1C3E166900E8E60B /* AbstractLocalData.cpp */,
 				A1D4614F1C3E166900E8E60B /* AbstractLocalData.h */,
 				A1D461501C3E166900E8E60B /* AbstractPieceLocalData.cpp */,
@@ -1872,6 +1877,7 @@
 				A16BF2891C313E5900E91458 /* HeroUpgradeData.cpp in Sources */,
 				A16BF2921C313E9F00E91458 /* TowerLocalData.cpp in Sources */,
 				A1DF4BEC1C05902C000F2FDA /* DisplayBar.cpp in Sources */,
+				A1D461651C3E478F00E8E60B /* AbstractData.cpp in Sources */,
 				CBD778C71C29390B0070D293 /* AnnouncementNode.cpp in Sources */,
 				045116F81BCFBA44002AA721 /* TechTree.cpp in Sources */,
 				A1B4AE311C200521005906A6 /* UserManager.cpp in Sources */,

@@ -55,7 +55,7 @@ int AbstractUpgradeData::getId() const
     return _id;
 }
 
-int AbstractUpgradeData::level() const
+int AbstractUpgradeData::getLevel() const
 {
     return _level;
 }

@@ -7,14 +7,8 @@
 //
 
 #include "UserData.h"
-#include "tinyxml2/tinyxml2.h"
-#include "Utils.h"
 
 using namespace std;
-
-#pragma mark =====================================================
-#pragma mark User Data
-#pragma mark =====================================================
 
 UserData::UserData(const rapidjson::Value& jsonDict)
 :_userId(0)

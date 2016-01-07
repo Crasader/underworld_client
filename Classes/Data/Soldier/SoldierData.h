@@ -9,22 +9,27 @@
 #ifndef SoldierData_h
 #define SoldierData_h
 
-#include "json/document.h"
+#include "AbstractData.h"
 
 class SoldierLocalData;
+class SoldierUpgradeData;
+class SoldierQualityData;
+class SoldierTalentData;
 
-class SoldierData
+class SoldierData : public AbstractData
 {
 public:
     SoldierData(const rapidjson::Value& jsonDict);
     virtual ~SoldierData();
     
-    int getUniqueId() const;
     const SoldierLocalData* getLocalData() const;
+    const SoldierUpgradeData* getUpgradeData() const;
+    const SoldierQualityData* getQualityData() const;
+    const SoldierTalentData* getTalentData() const;
     
 private:
-    int _id;
-    int _uniqueId;
+    int _quality;
+    int _talent;
 };
 
 #endif /* SoldierData_h */

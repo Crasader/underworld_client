@@ -14,10 +14,9 @@
 using namespace cocostudio;
 
 ObjectData::ObjectData(const rapidjson::Value& jsonDict)
-:_id(0)
+:AbstractData(jsonDict)
 ,_count(0)
 {
-    _id = DICTOOL->getIntValue_json(jsonDict, "id");
     _count = DICTOOL->getIntValue_json(jsonDict, "count");
 }
 
@@ -26,14 +25,9 @@ ObjectData::~ObjectData()
     
 }
 
-int ObjectData::getId() const
-{
-    return _id;
-}
-
 const ObjectLocalData* ObjectData::getLocalData() const
 {
-    return DataManager::getInstance()->getObjectData(_id);
+    return DataManager::getInstance()->getObjectData(getId());
 }
 
 int ObjectData::getCount() const

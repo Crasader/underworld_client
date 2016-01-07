@@ -9,23 +9,28 @@
 #ifndef GearData_h
 #define GearData_h
 
+#include "AbstractData.h"
 #include <map>
-#include "json/document.h"
+#include "CocosGlobal.h"
 
 class AttributeData;
+class GearLocalData;
+class GearUpgradeData;
 
-class GearData
+class GearData : public AbstractData
 {
 public:
     GearData(const rapidjson::Value& jsonDict);
     virtual ~GearData();
     
-    int getId() const;
+    GearQuality getQuality() const;
     const std::map<int, AttributeData *>& getAttributes() const;
     const AttributeData* getAttribute(int id) const;
     
+    const GearLocalData* getLocalData() const;
+    const GearUpgradeData* getUpgradeData() const;
+    
 private:
-    int _id;
     std::map<int, AttributeData *> _attributes;
 };
 

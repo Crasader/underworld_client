@@ -9,7 +9,6 @@
 #include "ArtifactUpgradeData.h"
 #include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
-#include "ResourceData.h"
 #include "AttributeData.h"
 #include "RewardData.h"
 
@@ -36,11 +35,11 @@ ArtifactUpgradeData::ArtifactUpgradeData(tinyxml2::XMLElement *xmlElement)
             const char *data = xmlElement->Attribute("worth");
             if (data) {
                 vector<string> result;
-                Utils::split(result, data, ";", "");
+                Utils::split(result, data, ",", "");
                 for (vector<string>::const_iterator iter = result.begin(); iter != result.end(); ++iter)
                 {
                     RewardData* reward = new (nothrow) RewardData(*iter);
-                    _soldRewards.push_back(reward);
+                    _soldRewards.insert(make_pair(reward->getId(), reward));
                 }
             }
         }
@@ -50,6 +49,7 @@ ArtifactUpgradeData::ArtifactUpgradeData(tinyxml2::XMLElement *xmlElement)
 ArtifactUpgradeData::~ArtifactUpgradeData()
 {
     Utils::clearMap(_attributes);
+    Utils::clearMap(_soldRewards);
 }
 
 const map<int, AttributeData *>& ArtifactUpgradeData::getAttributes() const
@@ -66,7 +66,11 @@ const AttributeData* ArtifactUpgradeData::getAttribute(int id) const
     return nullptr;
 }
 
-const vector<RewardData*>& ArtifactUpgradeData::getSoldRewards() const
+const RewardData* ArtifactUpgradeData::getSoldReward(int type) const
 {
-    return _soldRewards;
+    if (_soldRewards.find(type) != _soldRewards.end()) {
+        return _soldRewards.at(type);
+    }
+    
+    return nullptr;
 }

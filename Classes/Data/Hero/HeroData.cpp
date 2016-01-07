@@ -10,15 +10,14 @@
 #include "DataManager.h"
 #include "cocostudio/CocoStudio.h"
 #include "HeroLocalData.h"
+#include "HeroUpgradeData.h"
 
 using namespace cocostudio;
 
 HeroData::HeroData(const rapidjson::Value& jsonDict)
-:_id(0)
-,_uniqueId(0)
+:AbstractData(jsonDict)
 {
-    _id = DICTOOL->getIntValue_json(jsonDict, "qid");
-    _uniqueId = DICTOOL->getIntValue_json(jsonDict, "uid");
+    
 }
 
 HeroData::~HeroData()
@@ -26,12 +25,12 @@ HeroData::~HeroData()
     
 }
 
-int HeroData::getUniqueId() const
-{
-    return _id;
-}
-
 const HeroLocalData* HeroData::getLocalData() const
 {
-    return DataManager::getInstance()->getHeroData(_id);
+    return DataManager::getInstance()->getHeroData(getId());
+}
+
+const HeroUpgradeData* HeroData::getUpgradeData() const
+{
+    return DataManager::getInstance()->getHeroUpgradeData(getId(), getLevel());
 }

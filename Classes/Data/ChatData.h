@@ -13,10 +13,6 @@
 #include "CocosGlobal.h"
 #include "json/document.h"
 
-// =====================================================
-// Chat Data
-// =====================================================
-
 class ChatData
 {
 public:
@@ -36,7 +32,5 @@ private:
     int _userId;
     std::string _message;
 };
-
-
 
 #endif /* ChatData_h */

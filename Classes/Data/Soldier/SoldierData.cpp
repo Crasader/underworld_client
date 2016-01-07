@@ -10,15 +10,18 @@
 #include "DataManager.h"
 #include "cocostudio/CocoStudio.h"
 #include "SoldierLocalData.h"
+#include "SoldierUpgradeData.h"
+#include "SoldierQualityData.h"
+#include "SoldierTalentData.h"
 
 using namespace cocostudio;
 
 SoldierData::SoldierData(const rapidjson::Value& jsonDict)
-:_id(0)
-,_uniqueId(0)
+:AbstractData(jsonDict)
+,_quality(0)
+,_talent(0)
 {
-    _id = DICTOOL->getIntValue_json(jsonDict, "qid");
-    _uniqueId = DICTOOL->getIntValue_json(jsonDict, "uid");
+    
 }
 
 SoldierData::~SoldierData()
@@ -26,12 +29,23 @@ SoldierData::~SoldierData()
     
 }
 
-int SoldierData::getUniqueId() const
-{
-    return _id;
-}
-
 const SoldierLocalData* SoldierData::getLocalData() const
 {
-    return DataManager::getInstance()->getSoldierData(_id);
+    return DataManager::getInstance()->getSoldierData(getId());
 }
+
+const SoldierUpgradeData* SoldierData::getUpgradeData() const
+{
+    return DataManager::getInstance()->getSoldierUpgradeData(getId(), getLevel());
+}
+
+const SoldierQualityData* SoldierData::getQualityData() const
+{
+    return DataManager::getInstance()->getSoldierQualityData(getId(), _quality);
+}
+
+const SoldierTalentData* SoldierData::getTalentData() const
+{
+    return DataManager::getInstance()->getSoldierTalentData(getId(), _talent);
+}
+

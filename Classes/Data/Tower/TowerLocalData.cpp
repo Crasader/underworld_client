@@ -7,9 +7,6 @@
 //
 
 #include "TowerLocalData.h"
-#include "tinyxml2/tinyxml2.h"
-
-using namespace std;
 
 TowerLocalData::TowerLocalData(tinyxml2::XMLElement *xmlElement)
 :AbstractLocalData(xmlElement)

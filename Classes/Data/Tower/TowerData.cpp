@@ -14,11 +14,9 @@
 using namespace cocostudio;
 
 TowerData::TowerData(const rapidjson::Value& jsonDict)
-:_id(0)
-,_uniqueId(0)
+:AbstractData(jsonDict)
 {
-    _id = DICTOOL->getIntValue_json(jsonDict, "qid");
-    _uniqueId = DICTOOL->getIntValue_json(jsonDict, "uid");
+    
 }
 
 TowerData::~TowerData()
@@ -26,12 +24,7 @@ TowerData::~TowerData()
     
 }
 
-int TowerData::getUniqueId() const
-{
-    return _id;
-}
-
 const TowerLocalData* TowerData::getLocalData() const
 {
-    return DataManager::getInstance()->getTowerData(_id);
+    return DataManager::getInstance()->getTowerData(getId());
 }

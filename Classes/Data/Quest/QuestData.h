@@ -9,7 +9,6 @@
 #ifndef QuestData_h
 #define QuestData_h
 
-#include <vector>
 #include "json/document.h"
 #include "CocosGlobal.h"
 

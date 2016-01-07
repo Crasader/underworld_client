@@ -9,23 +9,20 @@
 #ifndef ObjectData_h
 #define ObjectData_h
 
-#include "json/document.h"
-#include "CocosGlobal.h"
+#include "AbstractData.h"
 
 class ObjectLocalData;
 
-class ObjectData
+class ObjectData : public AbstractData
 {
 public:
     ObjectData(const rapidjson::Value& jsonDict);
     virtual ~ObjectData();
     
-    int getId() const;
     const ObjectLocalData* getLocalData() const;
     int getCount() const;
     
 private:
-    int _id;
     int _count;
 };
 

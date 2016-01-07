@@ -23,7 +23,7 @@ public:
     virtual ~AbstractUpgradeData() = 0;
     
     int getId() const;
-    int level() const;
+    int getLevel() const;
     int getUnlockedLevel() const;
     int getResourceCount(ResourceType type) const;
     

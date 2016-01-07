@@ -7,11 +7,6 @@
 //
 
 #include "TowerUpgradeData.h"
-#include "tinyxml2/tinyxml2.h"
-#include "Utils.h"
-#include "ResourceData.h"
-
-using namespace std;
 
 TowerUpgradeData::TowerUpgradeData(tinyxml2::XMLElement *xmlElement)
 :AbstractUpgradeData(xmlElement)

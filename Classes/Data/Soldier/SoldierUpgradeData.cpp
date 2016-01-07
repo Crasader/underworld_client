@@ -9,7 +9,6 @@
 #include "SoldierUpgradeData.h"
 #include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
-#include "ResourceData.h"
 #include "AttributeData.h"
 
 using namespace std;

@@ -9,11 +9,15 @@
 #include "GearData.h"
 #include "Utils.h"
 #include "AttributeData.h"
+#include "DataManager.h"
+#include "cocostudio/CocoStudio.h"
+#include "GearLocalData.h"
+#include "GearUpgradeData.h"
 
 using namespace std;
 
 GearData::GearData(const rapidjson::Value& jsonDict)
-:_id(0)
+:AbstractData(jsonDict)
 {
     
 }
@@ -23,9 +27,9 @@ GearData::~GearData()
     Utils::clearMap(_attributes);
 }
 
-int GearData::getId() const
+GearQuality GearData::getQuality() const
 {
-    return _id;
+    return kGearQuality_White;
 }
 
 const map<int, AttributeData *>& GearData::getAttributes() const
@@ -40,4 +44,14 @@ const AttributeData* GearData::getAttribute(int id) const
     }
     
     return nullptr;
+}
+
+const GearLocalData* GearData::getLocalData() const
+{
+    return DataManager::getInstance()->getGearData(getId());
+}
+
+const GearUpgradeData* GearData::getUpgradeData() const
+{
+    return DataManager::getInstance()->getGearUpgradeData(getId(), getLevel());
 }

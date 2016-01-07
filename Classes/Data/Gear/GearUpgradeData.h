@@ -19,10 +19,10 @@ public:
     GearUpgradeData(tinyxml2::XMLElement *xmlElement);
     virtual ~GearUpgradeData();
     
-    const std::vector<RewardData*>& getSoldRewards() const;
+    const RewardData* getSoldReward(int type) const;
     
 private:
-    std::vector<RewardData*> _soldRewards;
+    std::map<int, RewardData*> _soldRewards;
 };
 
 #endif /* GearUpgradeData_h */

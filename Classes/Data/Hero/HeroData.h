@@ -9,22 +9,19 @@
 #ifndef HeroData_h
 #define HeroData_h
 
-#include "json/document.h"
+#include "AbstractData.h"
 
 class HeroLocalData;
+class HeroUpgradeData;
 
-class HeroData
+class HeroData : public AbstractData
 {
 public:
     HeroData(const rapidjson::Value& jsonDict);
     virtual ~HeroData();
     
-    int getUniqueId() const;
     const HeroLocalData* getLocalData() const;
-    
-private:
-    int _id;
-    int _uniqueId;
+    const HeroUpgradeData* getUpgradeData() const;
 };
 
 #endif /* HeroData_h */
