@@ -16,11 +16,10 @@
 using namespace std;
 
 QuestLocalData::QuestLocalData(tinyxml2::XMLElement *xmlElement)
-:_id(0)
+:AbstractLocalData(xmlElement)
 ,_race(0)
 {
     if (xmlElement) {
-        _id = atoi(xmlElement->Attribute("id"));
         {
             const char *data = xmlElement->Attribute("race");
             if (data) {
@@ -60,18 +59,6 @@ QuestLocalData::QuestLocalData(tinyxml2::XMLElement *xmlElement)
                 }
             }
         }
-        {
-            const char *data = xmlElement->Attribute("taskname");
-            if (data) {
-                _name.assign(data);
-            }
-        }
-        {
-            const char *data = xmlElement->Attribute("desc");
-            if (data) {
-                _description.assign(data);
-            }
-        }
     }
 }
 
@@ -80,11 +67,6 @@ QuestLocalData::~QuestLocalData()
     Utils::clearVector(_conditions);
     Utils::clearVector(_contents);
     Utils::clearVector(_rewards);
-}
-
-int QuestLocalData::getId() const
-{
-    return _id;
 }
 
 int QuestLocalData::getRace() const
@@ -105,14 +87,4 @@ const vector<ContentData*>& QuestLocalData::getContents() const
 const vector<RewardData *>& QuestLocalData::getRewards() const
 {
     return _rewards;
-}
-
-const string& QuestLocalData::getName() const
-{
-    return _name;
-}
-
-const string& QuestLocalData::getDescription() const
-{
-    return _description;
 }

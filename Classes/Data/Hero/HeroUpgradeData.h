@@ -9,32 +9,20 @@
 #ifndef HeroUpgradeData_h
 #define HeroUpgradeData_h
 
-#include "CocosGlobal.h"
-#include <map>
+#include "AbstractUpgradeData.h"
 
-namespace tinyxml2 { class XMLElement; }
-
-class ResourceData;
 class AttributeData;
 
-class HeroUpgradeData
+class HeroUpgradeData : public AbstractUpgradeData
 {
 public:
     HeroUpgradeData(tinyxml2::XMLElement *xmlElement);
     virtual ~HeroUpgradeData();
     
-    int getId() const;
-    int level() const;
-    int getUnlockedLevel() const;
-    int getResourceCount(ResourceType type) const;
     const std::map<int, AttributeData *>& getAttributes() const;
     const AttributeData* getAttribute(int id) const;
     
 private:
-    int _id;
-    int _level;
-    int _unlockedLevel;
-    std::map<ResourceType, ResourceData*> _cost;
     std::map<int, AttributeData *> _attributes;
 };
 

@@ -9,24 +9,13 @@
 #ifndef TowerLocalData_h
 #define TowerLocalData_h
 
-#include <iostream>
+#include "AbstractLocalData.h"
 
-namespace tinyxml2 { class XMLElement; }
-
-class TowerLocalData
+class TowerLocalData : public AbstractLocalData
 {
 public:
     TowerLocalData(tinyxml2::XMLElement *xmlElement);
     virtual ~TowerLocalData();
-    
-    int getId() const;
-    const std::string& getName() const;
-    const std::string& getDescription() const;
-    
-private:
-    int _id;
-    std::string _name;
-    std::string _description;
 };
 
 #endif /* TowerLocalData_h */

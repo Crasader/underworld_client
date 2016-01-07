@@ -9,31 +9,23 @@
 #ifndef ArtifactLocalData_h
 #define ArtifactLocalData_h
 
-#include <iostream>
+#include "AbstractLocalData.h"
 #include <map>
-
-namespace tinyxml2 { class XMLElement; }
 
 class AttributeData;
 class SkillLocalData;
 
-class ArtifactLocalData
+class ArtifactLocalData : public AbstractLocalData
 {
 public:
     ArtifactLocalData(tinyxml2::XMLElement *xmlElement);
     virtual ~ArtifactLocalData();
     
-    int getId() const;
-    const std::string& getName() const;
-    const std::string& getDescription() const;
     const std::map<int, AttributeData *>& getAttributes() const;
     const AttributeData* getAttribute(int id) const;
     const SkillLocalData* getSkillData() const;
     
 private:
-    int _id;
-    std::string _name;
-    std::string _description;
     std::map<int, AttributeData *> _attributes;
     int _skillId;
 };

@@ -9,25 +9,18 @@
 #ifndef GearAttributeData_h
 #define GearAttributeData_h
 
-#include <map>
-#include "CocosGlobal.h"
+#include "AbstractUpgradeData.h"
 
-namespace tinyxml2 { class XMLElement; }
-
-class GearAttributeData
+class GearAttributeData : public AbstractUpgradeData
 {
 public:
     GearAttributeData(tinyxml2::XMLElement *xmlElement);
     virtual ~GearAttributeData();
     
-    int getId() const;
-    int level() const;
     int getAttributeId() const;
     int getAttributeValue(GearQuality type) const;
     
 private:
-    int _id;
-    int _level;
     int _attributeId;
     std::map<GearQuality, int> _attributes;
 };

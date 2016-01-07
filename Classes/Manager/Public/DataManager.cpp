@@ -495,7 +495,7 @@ void DataManager::parseObjectData()
                  item = item->NextSiblingElement())
             {
                 ObjectLocalData* data = new (nothrow) ObjectLocalData(item);
-                const int id = data->getObjectId();
+                const int id = data->getId();
                 if (_objects.find(id) != _objects.end()) {
                     assert(false);
                 } else {

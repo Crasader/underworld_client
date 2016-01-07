@@ -16,23 +16,9 @@
 using namespace std;
 
 ArtifactLocalData::ArtifactLocalData(tinyxml2::XMLElement *xmlElement)
-:_id(0)
+:AbstractLocalData(xmlElement)
 {
     if (xmlElement) {
-        _id = atoi(xmlElement->Attribute("id"));
-        
-        {
-            const char *data = xmlElement->Attribute("name");
-            if (data) {
-                _name.assign(data);
-            }
-        }
-        {
-            const char *data = xmlElement->Attribute("desc");
-            if (data) {
-                _description.assign(data);
-            }
-        }
         {
             const char *data = xmlElement->Attribute("attr");
             if (data) {
@@ -57,21 +43,6 @@ ArtifactLocalData::ArtifactLocalData(tinyxml2::XMLElement *xmlElement)
 ArtifactLocalData::~ArtifactLocalData()
 {
     Utils::clearMap(_attributes);
-}
-
-int ArtifactLocalData::getId() const
-{
-    return _id;
-}
-
-const string& ArtifactLocalData::getName() const
-{
-    return _name;
-}
-
-const string& ArtifactLocalData::getDescription() const
-{
-    return _description;
 }
 
 const map<int, AttributeData *>& ArtifactLocalData::getAttributes() const

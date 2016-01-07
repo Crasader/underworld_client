@@ -13,29 +13,12 @@
 using namespace std;
 
 ObjectLocalData::ObjectLocalData(tinyxml2::XMLElement *xmlElement)
-:_objectId(0)
+:AbstractLocalData(xmlElement)
 {
-    if (xmlElement) {
-        
-    }
+    
 }
 
 ObjectLocalData::~ObjectLocalData()
 {
     
-}
-
-int ObjectLocalData::getObjectId() const
-{
-    return _objectId;
-}
-
-const string& ObjectLocalData::getName() const
-{
-    return _name;
-}
-
-const string& ObjectLocalData::getDescription() const
-{
-    return _description;
 }

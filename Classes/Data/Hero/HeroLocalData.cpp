@@ -18,24 +18,10 @@
 using namespace std;
 
 HeroLocalData::HeroLocalData(tinyxml2::XMLElement *xmlElement)
-:_id(0)
+:AbstractLocalData(xmlElement)
 ,_skillId(0)
 {
     if (xmlElement) {
-        _id = atoi(xmlElement->Attribute("id"));
-        
-        {
-            const char *data = xmlElement->Attribute("name");
-            if (data) {
-                _name.assign(data);
-            }
-        }
-        {
-            const char *data = xmlElement->Attribute("desc");
-            if (data) {
-                _description.assign(data);
-            }
-        }
         {
             const char *data = xmlElement->Attribute("attr");
             if (data) {
@@ -71,21 +57,6 @@ HeroLocalData::HeroLocalData(tinyxml2::XMLElement *xmlElement)
 HeroLocalData::~HeroLocalData()
 {
     
-}
-
-int HeroLocalData::getId() const
-{
-    return _id;
-}
-
-const string& HeroLocalData::getName() const
-{
-    return _name;
-}
-
-const string& HeroLocalData::getDescription() const
-{
-    return _description;
 }
 
 const map<int, AttributeData *>& HeroLocalData::getAttributes() const

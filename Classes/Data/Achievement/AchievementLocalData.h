@@ -11,8 +11,6 @@
 
 #include "QuestLocalData.h"
 
-namespace tinyxml2 { class XMLElement; }
-
 class AchievementLocalData : public QuestLocalData
 {
 public:

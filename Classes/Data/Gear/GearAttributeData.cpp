@@ -13,14 +13,11 @@
 using namespace std;
 
 GearAttributeData::GearAttributeData(tinyxml2::XMLElement *xmlElement)
-:_id(0)
-,_level(0)
+:AbstractUpgradeData(xmlElement)
 ,_attributeId(0)
 {
     if (xmlElement)
     {
-        _id = atoi(xmlElement->Attribute("id"));
-        _level = atoi(xmlElement->Attribute("level"));
         _attributeId = atoi(xmlElement->Attribute("key"));
         
         const char *value = xmlElement->Attribute("value");
@@ -39,16 +36,6 @@ GearAttributeData::GearAttributeData(tinyxml2::XMLElement *xmlElement)
 GearAttributeData::~GearAttributeData()
 {
     
-}
-
-int GearAttributeData::getId() const
-{
-    return _id;
-}
-
-int GearAttributeData::level() const
-{
-    return _level;
 }
 
 int GearAttributeData::getAttributeId() const

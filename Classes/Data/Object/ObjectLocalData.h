@@ -9,25 +9,13 @@
 #ifndef ObjectLocalData_h
 #define ObjectLocalData_h
 
-#include <iostream>
-#include <vector>
+#include "AbstractLocalData.h"
 
-namespace tinyxml2 { class XMLElement; }
-
-class ObjectLocalData
+class ObjectLocalData : public AbstractLocalData
 {
 public:
     ObjectLocalData(tinyxml2::XMLElement *xmlElement);
     virtual ~ObjectLocalData();
-    
-    int getObjectId() const;
-    const std::string& getName() const;
-    const std::string& getDescription() const;
-    
-private:
-    int _objectId;
-    std::string _name;
-    std::string _description;
 };
 
 #endif /* ObjectLocalData_h */

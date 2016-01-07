@@ -13,10 +13,6 @@
 #include "CocosGlobal.h"
 #include "json/document.h"
 
-// =====================================================
-// User Simple Data
-// =====================================================
-
 class UserSimpleData
 {
 public:

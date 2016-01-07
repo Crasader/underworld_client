@@ -7,36 +7,16 @@
 //
 
 #include "AttributeLocalData.h"
-#include "tinyxml2/tinyxml2.h"
 
 using namespace std;
 
 AttributeLocalData::AttributeLocalData(tinyxml2::XMLElement *xmlElement)
-:_id(0)
+:AbstractLocalData(xmlElement)
 {
-    if (xmlElement) {
-        _id = atoi(xmlElement->Attribute("id"));
-        
-        {
-            const char *data = xmlElement->Attribute("name");
-            if (data) {
-                _name.assign(data);
-            }
-        }
-    }
+    
 }
 
 AttributeLocalData::~AttributeLocalData()
 {
     
-}
-
-int AttributeLocalData::getId() const
-{
-    return _id;
-}
-
-const string& AttributeLocalData::getName() const
-{
-    return _name;
 }

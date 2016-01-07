@@ -14,17 +14,9 @@
 using namespace std;
 
 GearSetLocalData::GearSetLocalData(tinyxml2::XMLElement *xmlElement)
-:_id(0)
+:AbstractLocalData(xmlElement)
 {
     if (xmlElement) {
-        _id = atoi(xmlElement->Attribute("id"));
-        
-        {
-            const char *data = xmlElement->Attribute("name");
-            if (data) {
-                _name.assign(data);
-            }
-        }
         {
             const char *data = xmlElement->Attribute("set1");
             if (data) {
@@ -59,16 +51,6 @@ GearSetLocalData::GearSetLocalData(tinyxml2::XMLElement *xmlElement)
 GearSetLocalData::~GearSetLocalData()
 {
     Utils::clearMap(_attributes);
-}
-
-int GearSetLocalData::getId() const
-{
-    return _id;
-}
-
-const string& GearSetLocalData::getName() const
-{
-    return _name;
 }
 
 const AttributeData* GearSetLocalData::getAttribute(int gearCount) const

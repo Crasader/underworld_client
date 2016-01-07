@@ -14,22 +14,14 @@
 using namespace std;
 
 GearLocalData::GearLocalData(tinyxml2::XMLElement *xmlElement)
-:_id(0)
+:AbstractLocalData(xmlElement)
 ,_setId(0)
 ,_type(static_cast<GearType>(-1))
 ,_quality(static_cast<GearQuality>(-1))
 ,_maxCount(0)
 {
     if (xmlElement) {
-        const char *gearId = xmlElement->Attribute("id");
-        _id = atoi(gearId);
-        _type = static_cast<GearType>(gearId[0] - '0');
-        {
-            const char *data = xmlElement->Attribute("desc");
-            if (data) {
-                _name.assign(data);
-            }
-        }
+        _type = static_cast<GearType>('1' - '0');
         {
             const char *data = xmlElement->Attribute("max");
             if (data) {
@@ -64,23 +56,12 @@ GearLocalData::GearLocalData(tinyxml2::XMLElement *xmlElement)
                 }
             }
         }
-        {
-            const char *data = xmlElement->Attribute("info");
-            if (data) {
-                _description.assign(data);
-            }
-        }
     }
 }
 
 GearLocalData::~GearLocalData()
 {
     
-}
-
-int GearLocalData::getId() const
-{
-    return _id;
 }
 
 int GearLocalData::getSetId() const
@@ -111,14 +92,4 @@ const std::set<int>& GearLocalData::getAttributes() const
 const std::set<int>& GearLocalData::getSubAttributes() const
 {
     return _subAttributes;
-}
-
-const string& GearLocalData::getName() const
-{
-    return _name;
-}
-
-const string& GearLocalData::getDescription() const
-{
-    return _description;
 }

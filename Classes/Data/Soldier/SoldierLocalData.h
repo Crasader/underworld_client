@@ -9,29 +9,21 @@
 #ifndef SoldierLocalData_h
 #define SoldierLocalData_h
 
-#include <iostream>
+#include "AbstractLocalData.h"
 #include <map>
-
-namespace tinyxml2 { class XMLElement; }
 
 class AttributeData;
 
-class SoldierLocalData
+class SoldierLocalData : public AbstractLocalData
 {
 public:
     SoldierLocalData(tinyxml2::XMLElement *xmlElement);
     virtual ~SoldierLocalData();
     
-    int getId() const;
-    const std::string& getName() const;
-    const std::string& getDescription() const;
     const std::map<int, AttributeData *>& getAttributes() const;
     const AttributeData* getAttribute(int id) const;
     
 private:
-    int _id;
-    std::string _name;
-    std::string _description;
     std::map<int, AttributeData *> _attributes;
 };
 

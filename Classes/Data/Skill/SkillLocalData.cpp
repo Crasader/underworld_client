@@ -7,47 +7,16 @@
 //
 
 #include "SkillLocalData.h"
-#include "tinyxml2/tinyxml2.h"
 
 using namespace std;
 
 SkillLocalData::SkillLocalData(tinyxml2::XMLElement *xmlElement)
-:_id(0)
+:AbstractLocalData(xmlElement)
 {
-    if (xmlElement) {
-        _id = atoi(xmlElement->Attribute("id"));
-        
-        {
-            const char *data = xmlElement->Attribute("name");
-            if (data) {
-                _name.assign(data);
-            }
-        }
-        {
-            const char *data = xmlElement->Attribute("desc");
-            if (data) {
-                _description.assign(data);
-            }
-        }
-    }
+    
 }
 
 SkillLocalData::~SkillLocalData()
 {
     
-}
-
-int SkillLocalData::getId() const
-{
-    return _id;
-}
-
-const string& SkillLocalData::getName() const
-{
-    return _name;
-}
-
-const std::string& SkillLocalData::getDescription() const
-{
-    return _description;
 }

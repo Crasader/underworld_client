@@ -14,23 +14,9 @@
 using namespace std;
 
 SoldierLocalData::SoldierLocalData(tinyxml2::XMLElement *xmlElement)
-:_id(0)
+:AbstractLocalData(xmlElement)
 {
     if (xmlElement) {
-        _id = atoi(xmlElement->Attribute("id"));
-        
-        {
-            const char *data = xmlElement->Attribute("name");
-            if (data) {
-                _name.assign(data);
-            }
-        }
-        {
-            const char *data = xmlElement->Attribute("desc");
-            if (data) {
-                _description.assign(data);
-            }
-        }
         {
             const char *data = xmlElement->Attribute("attr");
             if (data) {
@@ -49,21 +35,6 @@ SoldierLocalData::SoldierLocalData(tinyxml2::XMLElement *xmlElement)
 SoldierLocalData::~SoldierLocalData()
 {
     Utils::clearMap(_attributes);
-}
-
-int SoldierLocalData::getId() const
-{
-    return _id;
-}
-
-const string& SoldierLocalData::getName() const
-{
-    return _name;
-}
-
-const string& SoldierLocalData::getDescription() const
-{
-    return _description;
 }
 
 const map<int, AttributeData *>& SoldierLocalData::getAttributes() const

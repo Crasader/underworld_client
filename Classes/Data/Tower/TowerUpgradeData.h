@@ -9,29 +9,13 @@
 #ifndef TowerUpgradeData_h
 #define TowerUpgradeData_h
 
-#include "CocosGlobal.h"
-#include <map>
+#include "AbstractUpgradeData.h"
 
-namespace tinyxml2 { class XMLElement; }
-
-class ResourceData;
-
-class TowerUpgradeData
+class TowerUpgradeData : public AbstractUpgradeData
 {
 public:
     TowerUpgradeData(tinyxml2::XMLElement *xmlElement);
     virtual ~TowerUpgradeData();
-    
-    int getId() const;
-    int level() const;
-    int getUnlockedLevel() const;
-    int getResourceCount(ResourceType type) const;
-    
-private:
-    int _id;
-    int _level;
-    int _unlockedLevel;
-    std::map<ResourceType, ResourceData*> _cost;
 };
 
 #endif /* TowerUpgradeData_h */

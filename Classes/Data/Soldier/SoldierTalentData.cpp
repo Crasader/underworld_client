@@ -17,27 +17,11 @@
 using namespace std;
 
 SoldierTalentData::SoldierTalentData(tinyxml2::XMLElement *xmlElement)
-:_id(0)
-,_level(0)
+:AbstractUpgradeData(xmlElement)
 ,_skillId(0)
 {
     if (xmlElement)
     {
-        _id = atoi(xmlElement->Attribute("id"));
-        _level = atoi(xmlElement->Attribute("level"));
-        
-        {
-            const char *data = xmlElement->Attribute("resource");
-            if (data) {
-                vector<string> result;
-                Utils::split(result, data, ",", "");
-                for (vector<string>::const_iterator iter = result.begin(); iter != result.end(); ++iter)
-                {
-                    ResourceData* data = new (nothrow) ResourceData(*iter);
-                    _cost.insert(make_pair(data->getId(), data));
-                }
-            }
-        }
         {
             const char *data = xmlElement->Attribute("attr");
             if (data) {
@@ -61,28 +45,7 @@ SoldierTalentData::SoldierTalentData(tinyxml2::XMLElement *xmlElement)
 
 SoldierTalentData::~SoldierTalentData()
 {
-    Utils::clearMap(_cost);
     Utils::clearMap(_attributes);
-}
-
-int SoldierTalentData::getId() const
-{
-    return _id;
-}
-
-int SoldierTalentData::level() const
-{
-    return _level;
-}
-
-int SoldierTalentData::getResourceCount(ResourceType type) const
-{
-    if (_cost.find(type) != _cost.end())
-    {
-        return _cost.at(type)->getCount();
-    }
-    
-    return 99999;
 }
 
 const map<int, AttributeData *>& SoldierTalentData::getAttributes() const

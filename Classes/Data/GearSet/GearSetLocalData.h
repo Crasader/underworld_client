@@ -9,26 +9,20 @@
 #ifndef GearSetLocalData_h
 #define GearSetLocalData_h
 
-#include <iostream>
+#include "AbstractLocalData.h"
 #include <map>
-
-namespace tinyxml2 { class XMLElement; }
 
 class AttributeData;
 
-class GearSetLocalData
+class GearSetLocalData : public AbstractLocalData
 {
 public:
     GearSetLocalData(tinyxml2::XMLElement *xmlElement);
     virtual ~GearSetLocalData();
     
-    int getId() const;
-    const std::string& getName() const;
     const AttributeData* getAttribute(int gearCount) const;
     
 private:
-    int _id;
-    std::string _name;
     std::map<int, AttributeData*> _attributes;
 };
 
