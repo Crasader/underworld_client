@@ -88,7 +88,7 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
 ,_isPlayingAttackAnimation(false)
 ,_animationCounter(0)
 {
-    _unitName = unit->getUnitBase().getUnitName();
+    _unitName = unit->getUnitBase().getRenderKey();
     
     UnitClass uc = unit->getUnitBase().getUnitClass();
     _isBuilding = (kUnitClass_Core == uc || kUnitClass_Building == uc);

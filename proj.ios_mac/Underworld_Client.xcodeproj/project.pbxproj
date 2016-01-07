@@ -51,10 +51,7 @@
 		30DF03C41C0D898E00A1C6EB /* EffectType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DF03C21C0D898E00A1C6EB /* EffectType.cpp */; };
 		30FD55611C2BF57F0078EC3C /* PassiveType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD555F1C2BF57F0078EC3C /* PassiveType.cpp */; };
 		30FD55641C2CFDE80078EC3C /* Passive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD55621C2CFDE80078EC3C /* Passive.cpp */; };
-		30FD55691C2FD2920078EC3C /* Addon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD55671C2FD2920078EC3C /* Addon.cpp */; };
 		30FD556C1C322FBF0078EC3C /* SpellType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD556A1C322FBF0078EC3C /* SpellType.cpp */; };
-		30FD556F1C328B020078EC3C /* Spell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD556D1C328B020078EC3C /* Spell.cpp */; };
-		30FD55721C34E0530078EC3C /* DamageType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD55701C34E0530078EC3C /* DamageType.cpp */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
@@ -105,7 +102,6 @@
 		A1211B291C0BF68E00C27CCC /* GameConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B281C0BF68E00C27CCC /* GameConstants.cpp */; };
 		A13108A51C046BF900EAAD90 /* particle in Resources */ = {isa = PBXBuildFile; fileRef = A13108A41C046BF900EAAD90 /* particle */; };
 		A14B5EFB1C311908006FB0DB /* Addon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14B5EF91C311908006FB0DB /* Addon.cpp */; };
-		A15698D51C3A95B300B94345 /* SpellType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A15698D31C3A95B300B94345 /* SpellType.cpp */; };
 		A15698DB1C3A969A00B94345 /* Spell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A15698D91C3A969A00B94345 /* Spell.cpp */; };
 		A15698E11C3A96E500B94345 /* DamageType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A15698DF1C3A96E500B94345 /* DamageType.cpp */; };
 		A16BF2821C313E1300E91458 /* AttributeLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF2801C313E1300E91458 /* AttributeLocalData.cpp */; };
@@ -1749,7 +1745,6 @@
 				A1D461601C3E251000E8E60B /* UAConfigData.cpp in Sources */,
 				308B84631BE3752000377802 /* PathFinder.cpp in Sources */,
 				A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */,
-				30FD556F1C328B020078EC3C /* Spell.cpp in Sources */,
 				A1720E8C1BCCE19300217E98 /* aes_ctr.c in Sources */,
 				A1720E8E1BCCE19300217E98 /* AESEncryptor.cpp in Sources */,
 				A18524E31C1AF67800BE261D /* MapUIUnitNode.cpp in Sources */,
@@ -1799,7 +1794,6 @@
 				A1F5BFA21C1FD519007C08CB /* AchievementData.cpp in Sources */,
 				A1720E6F1BCCDF9100217E98 /* CocosUtils.cpp in Sources */,
 				A1D461531C3E166900E8E60B /* AbstractPieceLocalData.cpp in Sources */,
-				A15698D51C3A95B300B94345 /* SpellType.cpp in Sources */,
 				A18524D31C1AE46400BE261D /* QuestNode.cpp in Sources */,
 				300098D61BD5E81700B6E284 /* InstanceFactory.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
@@ -1833,7 +1827,6 @@
 				047228B01C193A4D00E7F71B /* Geometry.cpp in Sources */,
 				3075346D1BF324340057DCED /* EventTrigger.cpp in Sources */,
 				A1B4AE011C200480005906A6 /* SoundManager.cpp in Sources */,
-				30FD55721C34E0530078EC3C /* DamageType.cpp in Sources */,
 				A1B4AE2D1C200521005906A6 /* ChatManager.cpp in Sources */,
 				307534691BF1B2F20057DCED /* Commander.cpp in Sources */,
 				A1A4BA381BCDF81500175E8A /* IapObject.cpp in Sources */,
