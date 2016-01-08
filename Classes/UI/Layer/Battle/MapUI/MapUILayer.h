@@ -12,6 +12,7 @@
 #include "cocos2d.h"
 #include "cocos-ext.h"
 #include "MapUIUnitNode.h"
+#include "DisplayIconNode.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -21,6 +22,7 @@ namespace UnderWorld { namespace Core {
 }}
 
 class ResourceButton;
+class UnitInfoNode;
 
 class MapUILayerObserver
 {
@@ -32,7 +34,7 @@ public:
     virtual const UnderWorld::Core::Camp* onMapUILayerCampAtIndex(ssize_t idx) = 0;
 };
 
-class MapUILayer: public LayerColor, public TableViewDataSource, public MapUIUnitNodeObserver
+class MapUILayer: public LayerColor, public TableViewDataSource, public MapUIUnitNodeObserver, public DisplayIconNodeObserver
 {
 public:
     static MapUILayer* create(const std::string& myAccount, const std::string& opponentsAccount);
@@ -63,6 +65,9 @@ protected:
     virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node) override;
     virtual void onMapUIUnitNodeUpdated(MapUIUnitNode* node) override;
     
+    // DisplayIconNodeObserver
+    virtual void onDisplayIconNodeTouchedEnded(int unitId) override;
+    
     void onUnitTouched(MapUIUnitNode* node);
     
 private:
@@ -83,6 +88,8 @@ private:
     ProgressTimer *_opponentsHpProgress;
     Label *_opponentsHpPercentageLabel;
     MenuItem *_pauseMenuItem;
+    DisplayIconNode *_displayIconNode;
+    UnitInfoNode *_unitInfoNode;
     // ======================== test =============================
 };
 

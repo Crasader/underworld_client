@@ -13,6 +13,8 @@
 #include "LocalHelper.h"
 #include "MapUIUnitCell.h"
 #include "ResourceButton.h"
+#include "DisplayIconNode.h"
+#include "UnitInfoNode.h"
 #include "SoundManager.h"
 
 using namespace std;
@@ -67,6 +69,8 @@ MapUILayer::MapUILayer()
 ,_opponentsHpProgress(nullptr)
 ,_opponentsHpPercentageLabel(nullptr)
 ,_pauseMenuItem(nullptr)
+,_displayIconNode(nullptr)
+,_unitInfoNode(nullptr)
 {
     static const Size unitNodeSize = MapUIUnitNode::create(nullptr, 0)->getContentSize();
     _cellSize.height = unitNodeSize.height + unitNodeOffsetY * 2;
@@ -202,6 +206,17 @@ void MapUILayer::onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node)
 void MapUILayer::onMapUIUnitNodeUpdated(MapUIUnitNode* node)
 {
     
+}
+
+#pragma mark - DisplayIconNodeObserver
+void MapUILayer::onDisplayIconNodeTouchedEnded(int unitId)
+{
+    if (_unitInfoNode) {
+        _unitInfoNode->update(nullptr);
+    } else {
+        _unitInfoNode = UnitInfoNode::create(nullptr);
+        addChild(_unitInfoNode);
+    }
 }
 
 #pragma mark -
@@ -408,19 +423,26 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
                     _observer->onMapUILayerClickedPauseButton();
                 }
             });
-            _pauseMenuItem->setAnchorPoint(Point(1.0f, 1.0f));
+            _pauseMenuItem->setAnchorPoint(Point::ANCHOR_TOP_RIGHT);
             _pauseMenuItem->setPosition(Point(winSize.width - 5.0f, winSize.height - 5.0f));
             Menu *menu = Menu::create(_pauseMenuItem, nullptr);
             menu->setPosition(Point::ZERO);
             root->addChild(menu);
         }
+        
+        const Point displayIconPos(-winSize.width / 2, winSize.height / 2);
+        _displayIconNode = DisplayIconNode::create(true, displayIconPos);
+        _displayIconNode->registerObserver(this);
+        _displayIconNode->setPosition(displayIconPos);
+        root->addChild(_displayIconNode);
 #endif
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
         eventListener->onTouchBegan = [=](Touch *touch, Event *unused_event) {
             const Point& p = touch->getLocation();
-            if (_tableView && _tableView->getBoundingBox().containsPoint(p)) {
+            if ((_tableView && _tableView->getBoundingBox().containsPoint(p)) ||
+                (_displayIconNode && _displayIconNode->getBoundingBox().containsPoint(p))) {
                 return true;
             }
             return false;

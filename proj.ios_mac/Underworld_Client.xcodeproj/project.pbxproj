@@ -211,6 +211,8 @@
 		A1F5BF9F1C1FD508007C08CB /* AchievementLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BF9D1C1FD508007C08CB /* AchievementLocalData.cpp */; };
 		A1F5BFA21C1FD519007C08CB /* AchievementData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BFA01C1FD519007C08CB /* AchievementData.cpp */; };
 		A1F5BFA81C1FDFBE007C08CB /* ResourceNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BFA61C1FDFBE007C08CB /* ResourceNode.cpp */; };
+		A1F727F11C3F825E002E8776 /* DisplayIconNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F727EF1C3F825E002E8776 /* DisplayIconNode.cpp */; };
+		A1F727F51C3FBD5B002E8776 /* UnitInfoNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F727F31C3FBD5B002E8776 /* UnitInfoNode.cpp */; };
 		A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A1FC49B31BD8C249005C1B2E /* CrashHelper.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		A1FC49B61BD8DBCF005C1B2E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1FC49B51BD8DBCF005C1B2E /* MessageUI.framework */; };
 		A1FF6E881C16B9890017CAD2 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = A1FF6E871C16B9890017CAD2 /* configs */; };
@@ -637,6 +639,10 @@
 		A1F5BFA11C1FD519007C08CB /* AchievementData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementData.h; sourceTree = "<group>"; };
 		A1F5BFA61C1FDFBE007C08CB /* ResourceNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResourceNode.cpp; sourceTree = "<group>"; };
 		A1F5BFA71C1FDFBE007C08CB /* ResourceNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceNode.h; sourceTree = "<group>"; };
+		A1F727EF1C3F825E002E8776 /* DisplayIconNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DisplayIconNode.cpp; sourceTree = "<group>"; };
+		A1F727F01C3F825E002E8776 /* DisplayIconNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayIconNode.h; sourceTree = "<group>"; };
+		A1F727F31C3FBD5B002E8776 /* UnitInfoNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UnitInfoNode.cpp; sourceTree = "<group>"; };
+		A1F727F41C3FBD5B002E8776 /* UnitInfoNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitInfoNode.h; sourceTree = "<group>"; };
 		A1FC49B21BD8C249005C1B2E /* CrashHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashHelper.h; sourceTree = "<group>"; };
 		A1FC49B31BD8C249005C1B2E /* CrashHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrashHelper.m; sourceTree = "<group>"; };
 		A1FC49B51BD8DBCF005C1B2E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = DEVELOPER_DIR; };
@@ -1191,10 +1197,13 @@
 		A1720E711BCCE0A200217E98 /* Node */ = {
 			isa = PBXGroup;
 			children = (
+				A103F4561BE37E2A007F9A83 /* Unit */,
 				CBD778C51C29390B0070D293 /* AnnouncementNode.cpp */,
 				CBD778C61C29390B0070D293 /* AnnouncementNode.h */,
 				A1DF4BEA1C05902C000F2FDA /* DisplayBar.cpp */,
 				A1DF4BEB1C05902C000F2FDA /* DisplayBar.h */,
+				A1F727EF1C3F825E002E8776 /* DisplayIconNode.cpp */,
+				A1F727F01C3F825E002E8776 /* DisplayIconNode.h */,
 				A1720E721BCCE0A200217E98 /* FixedLabelAtlas.cpp */,
 				A1720E731BCCE0A200217E98 /* FixedLabelAtlas.h */,
 				A1D45C481BEB3B1400D1E921 /* ResourceButton.cpp */,
@@ -1205,7 +1214,8 @@
 				A1720E961BCCE41A00217E98 /* ScrollBar.h */,
 				A1DF50EB1C229488001CCFF2 /* TabButton.cpp */,
 				A1DF50EC1C229488001CCFF2 /* TabButton.h */,
-				A103F4561BE37E2A007F9A83 /* Unit */,
+				A1F727F31C3FBD5B002E8776 /* UnitInfoNode.cpp */,
+				A1F727F41C3FBD5B002E8776 /* UnitInfoNode.h */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -1747,6 +1757,7 @@
 				A1F58D521C32391200C8A2DD /* GearAttributeData.cpp in Sources */,
 				30FD55611C2BF57F0078EC3C /* PassiveType.cpp in Sources */,
 				A1F58D591C32465900C8A2DD /* SoldierTalentData.cpp in Sources */,
+				A1F727F11C3F825E002E8776 /* DisplayIconNode.cpp in Sources */,
 				A1D461601C3E251000E8E60B /* UAConfigData.cpp in Sources */,
 				308B84631BE3752000377802 /* PathFinder.cpp in Sources */,
 				A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */,
@@ -1883,6 +1894,7 @@
 				A1B4AE311C200521005906A6 /* UserManager.cpp in Sources */,
 				A1720ECE1BCD382700217E98 /* MessageBoxBaseLayer.cpp in Sources */,
 				A1D461441C3E111B00E8E60B /* UserSimpleData.cpp in Sources */,
+				A1F727F51C3FBD5B002E8776 /* UnitInfoNode.cpp in Sources */,
 				045116E21BCFBA39002AA721 /* Clock.cpp in Sources */,
 				A1720E931BCCE1D900217E98 /* LocalHelper.cpp in Sources */,
 				A1E8306A1C1EA50200FE01B8 /* RewardData.cpp in Sources */,

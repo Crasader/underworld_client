@@ -36,9 +36,34 @@ UAConfigData::UAConfigData(tinyxml2::XMLElement *xmlElement)
                 Utils::split(v2, speed, "_");
             }
             
+            Point effect_pos(0, 0);
+            {
+                const char* data = xmlElement->Attribute("effect_pos");
+                if (data) {
+                    vector<string> v;
+                    Utils::split(v, data, "_");
+                    if (v.size() >= 2) {
+                        effect_pos.x = atof(v.at(0).c_str());
+                        effect_pos.y = atof(v.at(1).c_str());
+                    }
+                }
+            }
+            
+            float effect_scale(1.0f);
+            {
+                const char* data = xmlElement->Attribute("effect_scale");
+                if (data) {
+                    effect_scale = atof(data);
+                }
+            }
+            
+            AnimationParameters params;
+            params.effect_pos = effect_pos;
+            params.effect_scale = effect_scale;
+            
             const size_t size(v.size());
             if (1 == v.size()) {
-                AnimationParameters params = parse(v, v1, v2, 0);
+                parse(params, v, v1, v2, 0);
                 if (params.scale != 1.0f || params.speed != 1.0f) {
                     for (int i = 0; i < UNIT_DIRECTIONS_COUNT; ++i) {
                         UnitDirection ud = static_cast<UnitDirection>(i + 2);
@@ -48,7 +73,7 @@ UAConfigData::UAConfigData(tinyxml2::XMLElement *xmlElement)
             } else {
                 const size_t cnt((size > UNIT_DIRECTIONS_COUNT) ? UNIT_DIRECTIONS_COUNT : size);
                 for (int i = 0; i < cnt; ++i) {
-                    AnimationParameters params = parse(v, v1, v2, i);
+                    parse(params, v, v1, v2, i);
                     if (params.scale != 1.0f || params.speed != 1.0f) {
                         UnitDirection ud = static_cast<UnitDirection>(i + 2);
                         _data.insert(make_pair(ud, params));
@@ -70,13 +95,11 @@ AnimationParameters UAConfigData::getAnimationParameters(UnitDirection direction
         return _data.at(direction);
     }
     
-    return {1.0f, 1.0f};
+    return AnimationParameters();
 }
 
-AnimationParameters UAConfigData::parse(const vector<string>& directions, const vector<string>& scales, const vector<string>& speeds, int index)
+void UAConfigData::parse(AnimationParameters& params, const vector<string>& directions, const vector<string>& scales, const vector<string>& speeds, int index)
 {
-    AnimationParameters params {1.0f, 1.0f};
-    
     if (directions.size() > index) {
         const string& string(directions.at(index));
         if (string.length() > 0) {
@@ -100,6 +123,4 @@ AnimationParameters UAConfigData::parse(const vector<string>& directions, const 
             assert(false);
         }
     }
-    
-    return params;
 }

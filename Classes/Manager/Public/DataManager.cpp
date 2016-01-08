@@ -221,7 +221,7 @@ AnimationParameters DataManager::getAnimationParameters(const string& name, Unde
         }
     }
     
-    return {1.0f, 1.0f};
+    return AnimationParameters();
 }
 
 const URConfigData* DataManager::getURConfigData(const string& name) const
