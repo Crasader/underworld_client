@@ -18,6 +18,7 @@
 #include "Constants.h"
 #include "DataManager.h"
 #include "MapParticleConfigData.h"
+#include "GameConstants.h"
 
 using namespace cocostudio;
 using namespace std;
@@ -228,14 +229,15 @@ bool MapLayer::init(int mapId, const string& mapData)
                 int gid = logicLayer->getTileGIDAt(Vec2(x, y));
                 if (gid == 0) {
                     //can walk
-                    _mapSetting.addWalkableArea(mapCoordinate2coreCoordinate(x, y));
                 } else {
                     //can not walk
+                    //TODO: land can't walk & air can't walk
+                    _mapSetting.addUnWalkableArea(mapCoordinate2coreCoordinate(x, y), UnderWorld::Core::kFieldType_Land);
                 }
             }
         }
         loadMapSetting(mapData, _mapSetting);
-        CCLOG("%zd logicLayer", _mapSetting.getWalkableArea().size());
+        CCLOG("%zd logicLayer", _mapSetting.getUnWalkableArea().size());
         logicLayer->removeFromParent();
         
         //--------- effect ---------//
@@ -321,7 +323,8 @@ int MapLayer::calcZOrder(int coreCoordinateY)
 
 UnderWorld::Core::Coordinate MapLayer::mapCoordinate2coreCoordinate(int x, int y)
 {
-    return UnderWorld::Core::Coordinate(x, _height - y);
+    //fix:y is [0 - (_height - 1)]
+    return UnderWorld::Core::Coordinate(x, (_height - 1) - y);
 }
 
 void MapLayer::coordinateConvert(const UnderWorld::Core::Coordinate& coreCoordinate, Point& mapPosition, int& zOrder)
