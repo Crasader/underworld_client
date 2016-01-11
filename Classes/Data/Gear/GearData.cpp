@@ -22,6 +22,16 @@ GearData::GearData(const rapidjson::Value& jsonDict)
     
 }
 
+GearData::GearData(const GearData& instance)
+:AbstractData(instance)
+{
+    const map<int, AttributeData *>& attrs = instance.getAttributes();
+    for (map<int, AttributeData *>::const_iterator iter = attrs.begin(); iter != attrs.end(); ++iter) {
+        const AttributeData* data = iter->second;
+        _attributes.insert(make_pair(iter->first, new (nothrow) AttributeData(*data)));
+    }
+}
+
 GearData::~GearData()
 {
     Utils::clearMap(_attributes);

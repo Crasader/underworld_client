@@ -13,6 +13,20 @@
 
 using namespace std;
 
+void AttributeData::calculateAttributes(const map<int, AttributeData *>& attributes, map<int, int>& output)
+{
+    for (map<int, AttributeData *>::const_iterator iter = attributes.begin(); iter != attributes.end(); ++iter) {
+        const int attrId = iter->first;
+        const int count = iter->second->getCount();
+        if (output.find(attrId) != output.end()) {
+            const int value = output.at(attrId);
+            output.at(attrId) = value + count;
+        } else {
+            output.insert(make_pair(attrId, count));
+        }
+    }
+}
+
 AttributeData::AttributeData(const string& content)
 :_id(0)
 ,_count(0)
@@ -26,6 +40,20 @@ AttributeData::AttributeData(const string& content)
     } else {
         assert(false);
     }
+}
+
+AttributeData::AttributeData(int id, int count)
+:_id(id)
+,_count(count)
+{
+    
+}
+
+AttributeData::AttributeData(const AttributeData& instance)
+:_id(instance._id)
+,_count(instance._count)
+{
+    
 }
 
 AttributeData::~AttributeData()

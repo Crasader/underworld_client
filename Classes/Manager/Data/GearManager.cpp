@@ -23,22 +23,16 @@ GearManager::~GearManager()
     Utils::clearVector(_gears);
 }
 
-void GearManager::initGear(const rapidjson::Value& jsonDict)
+void GearManager::init(const rapidjson::Value& jsonDict)
 {
     
 }
 
-void GearManager::upgradeGear()
+void GearManager::resolve(int index)
 {
-    
-}
-
-void GearManager::recastGear()
-{
-    
-}
-
-void GearManager::sellGear()
-{
-    
+    if (_gears.size() > index) {
+        
+    } else {
+        assert(false);
+    }
 }

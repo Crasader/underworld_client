@@ -21,10 +21,8 @@ public:
     GearManager();
     virtual ~GearManager();
     
-    void initGear(const rapidjson::Value& jsonDict);
-    void upgradeGear();
-    void recastGear();
-    void sellGear();
+    void init(const rapidjson::Value& jsonDict);
+    void resolve(int index);
     
 protected:
     M_DISALLOW_COPY_AND_ASSIGN(GearManager);

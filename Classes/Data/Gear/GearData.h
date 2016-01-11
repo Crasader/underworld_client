@@ -21,6 +21,7 @@ class GearData : public AbstractData
 {
 public:
     GearData(const rapidjson::Value& jsonDict);
+    GearData(const GearData& instance);
     virtual ~GearData();
     
     GearQuality getQuality() const;

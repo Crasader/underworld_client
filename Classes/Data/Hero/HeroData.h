@@ -10,9 +10,12 @@
 #define HeroData_h
 
 #include "AbstractData.h"
+#include <map>
 
+class AttributeData;
 class HeroLocalData;
 class HeroUpgradeData;
+class ArtifactData;
 
 class HeroData : public AbstractData
 {
@@ -22,6 +25,19 @@ public:
     
     const HeroLocalData* getLocalData() const;
     const HeroUpgradeData* getUpgradeData() const;
+    const ArtifactData* getArtifactData(int index) const;
+    
+    // setters
+    void setLevel(int level);
+    void setArtifact(int index, const ArtifactData* artifact);
+    void setArtifactLevel(int index, int level);
+    
+private:
+    void calculateTotalAttributes();    
+    
+private:
+    std::map<int, AttributeData*> _attributes;
+    std::map<int, ArtifactData*> _artifacts;
 };
 
 #endif /* HeroData_h */

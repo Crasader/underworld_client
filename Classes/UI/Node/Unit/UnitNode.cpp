@@ -708,7 +708,7 @@ void UnitNode::removeHPBar()
 void UnitNode::addShadow()
 {
     if (!_shadow) {
-        static const string file("GameImages/test/backcircle.png");
+        static const string file("GameImages/effects/backcircle.png");
         const Size& size = _sprite->getContentSize();
         const Point& pos = _sprite->getPosition();
         _shadow = Sprite::create(file);

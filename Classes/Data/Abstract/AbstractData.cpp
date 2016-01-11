@@ -21,6 +21,14 @@ AbstractData::AbstractData(const rapidjson::Value& jsonDict)
     _level = DICTOOL->getIntValue_json(jsonDict, "level");
 }
 
+AbstractData::AbstractData(const AbstractData& instance)
+:_id(instance._id)
+,_uniqueId(instance._uniqueId)
+,_level(instance._level)
+{
+    
+}
+
 AbstractData::~AbstractData()
 {
     
@@ -39,4 +47,9 @@ int AbstractData::getUniqueId() const
 int AbstractData::getLevel() const
 {
     return _level;
+}
+
+void AbstractData::setLevel(int level)
+{
+    _level = level;
 }

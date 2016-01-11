@@ -10,13 +10,18 @@
 #define AttributeData_h
 
 #include <iostream>
+#include <map>
 
 class AttributeLocalData;
 
 class AttributeData
 {
 public:
+    static void calculateAttributes(const std::map<int, AttributeData *>& attributes, std::map<int, int>& output);
+    
     AttributeData(const std::string& content);
+    AttributeData(int id, int count);
+    AttributeData(const AttributeData& instance);
     virtual ~AttributeData();
     
     int getId() const;
