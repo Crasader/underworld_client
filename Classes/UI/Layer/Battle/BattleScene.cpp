@@ -132,13 +132,13 @@ void BattleScene::start(int mapId)
     <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"40\"/>\
     </unit>\
     <!-- 大型远程兵 -->\
-    <unit name=\"被救赎的精灵卫士\" class=\"warrior\" hp=\"40\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"轻甲\" armor=\"400\" armor_preference=\"无甲\" armor_preference_factor=\"1.5f\" attacksight=\"400\" size=\"25\" cost=\"金子:200;人口:1\" priority=\"1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" passive_names=\"减速弹_等级1\" render_key=\"被救赎的精灵卫士\">\
+    <unit name=\"天空女神\" class=\"warrior\" hp=\"40\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"轻甲\" armor=\"400\" armor_preference=\"无甲\" armor_preference_factor=\"1.5f\" attacksight=\"400\" size=\"25\" cost=\"金子:200;人口:1\" priority=\"1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" passive_names=\"减速弹_等级1\" render_key=\"天空女神\">\
     <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
     <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
     <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"18\" max_damage=\"22\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"280\" fields=\"3\">\
 				<bullet speed=\"400\" size=\"0\"/>\
     </skill>\
-    <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"60\"/>\
+    <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"40\"/>\
     </unit>\
     <!-- 近战兵 -->\
     <unit name=\"狼人刺客\" class=\"warrior\" hp=\"60\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"轻甲\" armor=\"400\" armor_preference=\"轻甲\" armor_preference_factor=\"1.5f\" attacksight=\"300\" size=\"25\" cost=\"金子:200;人口:1\" priority=\"1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" passive_names=\"冲击波_等级1\" render_key=\"狼人步兵\">\
@@ -263,6 +263,8 @@ void BattleScene::start(int mapId)
     <effect_alias name=\"减受到伤害\" unique=\"1\"/>\
     <effect_alias name=\"加受到伤害\"/>\
     <effect_alias name=\"加攻击特效\"/>\
+    <effect_alias name=\"加攻击力\"/>\
+    <effect_alias name=\"恢复效果\"/>\
     <effect_alias name=\"未分类\"/>\
     <!-- ==========被动技能配置========== -->\
     <!-- 减速弹 -->\
@@ -279,11 +281,11 @@ void BattleScene::start(int mapId)
     <!-- 激励 -->\
     <spell alias=\"激励\" spell_name=\"激励_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"ally\" cast_distance=\"0\" cast_type=\"self\" immediate_elements=\"0,激励_等级1_激励施法效果,1\" preperform=\"0.5\" perform=\"0.0\" cd=\"120.0\" class=\"cast\"/>\
     <!-- 治疗 -->\
-    <spell alias=\"治疗\" spell_name=\"治疗_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"ally\" cast_distance=\"0\" cast_type=\"unit\" immediate_elements=\"0,治疗_治疗等级1_治疗效果,1\" preperform=\"0.5\" perform=\"0.0\" cd=\"5.0\" class=\"cast\"/>\
+    <spell alias=\"治疗\" spell_name=\"治疗_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"ally\" cast_distance=\"0\" cast_type=\"unit\" immediate_elements=\"0,治疗_等级1_治疗效果,1\" preperform=\"0.5\" perform=\"0.0\" cd=\"5.0\" class=\"cast\"/>\
     <!-- 狂暴 -->\
     <spell alias=\"狂暴\" spell_name=\"狂暴_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"ally\" cast_distance=\"0\" cast_type=\"self\" immediate_elements=\"0,狂暴_等级1_狂暴效果,1\" preperform=\"0.5\" perform=\"0.0\" cd=\"120.0\" class=\"cast\"/>\
     <!-- 全体恢复 -->\
-    <spell alias=\"全体恢复\" spell_name=\"全体恢复_全体恢复等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"ally\" cast_distance=\"0\" cast_type=\"self\" immediate_elements=\"0,全体恢复_全体恢复等级1_恢复效果,1\" preperform=\"0.5\" perform=\"0.0\" cd=\"120.0\" class=\"cast\"/>\
+    <spell alias=\"全体恢复\" spell_name=\"全体恢复_全体恢复等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"ally\" cast_distance=\"0\" cast_type=\"self\" immediate_elements=\"0,全体恢复_等级1_恢复效果,1\" preperform=\"0.5\" perform=\"0.0\" cd=\"120.0\" class=\"cast\"/>\
     <!-- 冲锋 -->\
     <spell alias=\"冲锋\" spell_name=\"冲锋_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"ally\" cast_distance=\"0\" cast_type=\"self\" immediate_elements=\"0,冲锋_等级1_加移动速度,1\" preperform=\"0.5\" perform=\"0.0\" cd=\"20.0\" class=\"cast\"/>\
     <!-- 强风护盾 -->\
@@ -296,20 +298,19 @@ void BattleScene::start(int mapId)
     </damage>\
     </spell_pattern>\
     <!-- 治疗 -->\
-    <spell_pattern name=\"治疗_治疗等级1_治疗效果\" class=\"damage_target\" deliver_nature=\"ally\">\
-    <damage damage_value=\"100\" damage_nature=\"heal\">\
-    <!--<feature type=\"add_buff\" buff_type_name=\"激励_等级1_攻速增益效果\" overlay=\"1\"/>-->\
-    </damage>\
+    <spell_pattern name=\"治疗_等级1_治疗效果\" class=\"damage_target\" deliver_nature=\"ally\">\
+    <damage damage_value=\"100\" damage_nature=\"heal\"/>\
     </spell_pattern>\
     <!-- 全体恢复 -->\
-    <spell_pattern name=\"全体恢复_全体恢复等级1_恢复效果\" class=\"damage_all\" deliver_nature=\"ally\">\
+    <spell_pattern name=\"全体恢复_等级1_恢复效果\" class=\"damage_all\" deliver_nature=\"ally\">\
     <damage damage_value=\"0\" damage_nature=\"heal\">\
-    <feature type=\"add_buff\" buff_type_name=\"全体恢复_全体恢复等级1_恢复效果\" overlay=\"1\"/>\
+    <feature type=\"add_buff\" buff_type_name=\"全体恢复_等级1_恢复效果\" overlay=\"1\"/>\
     </damage>\
     </spell_pattern>\
     <!-- 狂暴 -->\
-    <spell_pattern name=\"狂暴_狂暴等级1_狂暴效果\" class=\"damage_target\" deliver_nature=\"ally\">\
+    <spell_pattern name=\"狂暴_等级1_狂暴效果\" class=\"damage_target\" deliver_nature=\"ally\">\
     <damage damage_value=\"d:target:opposite;type:max_hp;v:0.1f;0\" damage_nature=\"hurt\">\
+    <feature type=\"add_buff\" buff_type_name=\"狂暴_等级1_攻速增益效果\" overlay=\"1\"/>\
     </damage>\
     </spell_pattern>\
     <!-- 冲锋 -->\
@@ -365,15 +366,15 @@ void BattleScene::start(int mapId)
     </effect>\
     </buff_effect>\
     </buff>\
-    <!-- 激励 -->\
+    <!-- 狂暴 -->\
     <buff name=\"狂暴_等级1_攻速增益效果\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"15.f\" max_overlay=\"1\">\
     <buff_effect>\
     <buff_effect_description buff_effect_condition=\"immediate\"/>\
-    <effect class=\"alter_attr\" alias_name=\"加攻击力\" attr_name=\"attack_damage\" value=\"p:0.3f\"/>\
+    <effect class=\"alter_attr\" alias_name=\"加攻击力\" attr_name=\"attack_speed\" value=\"p:3.0f\"/>\
     </buff_effect>\
     </buff>\
     <!-- 全体恢复 -->\
-    <buff name=\"全体恢复_全体恢复等级1_恢复效果\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"15.f\" max_overlay=\"1\">\
+    <buff name=\"全体恢复_等级1_恢复效果\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"15.f\" max_overlay=\"1\">\
     <buff_effect>\
     <buff_effect_description buff_effect_condition=\"loop\" buff_effect_time=\"3.f\"/>\
     <effect class=\"damage\" alias_name=\"恢复效果\">\
@@ -450,7 +451,7 @@ void BattleScene::start(int mapId)
         vector<UnderWorld::Core::CampSetting> cs;
         static const unsigned int camp_count = 3;
         static const string camp_names[camp_count] = {
-            "狼人刺客",
+            "时光女神",
             "狼人射手",
             "狼人巫师"
         };
