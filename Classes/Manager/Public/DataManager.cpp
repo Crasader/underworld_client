@@ -20,6 +20,7 @@
 #include "GearSetLocalData.h"
 #include "URConfigData.h"
 #include "MapParticleConfigData.h"
+#include "SpellConfigData.h"
 #include "ArtifactLocalData.h"
 #include "ArtifactUpgradeData.h"
 #include "AttributeLocalData.h"
@@ -85,6 +86,7 @@ DataManager::~DataManager()
         Utils::clearVector(iter->second);
     }
     _mapParticleConfigData.clear();
+    Utils::clearMap(_spellConfigData);
     
     Utils::clearMap(_artifacts);
     Utils::clearMap(_artifactUpgradeData);
@@ -116,6 +118,7 @@ void DataManager::init()
     parseAnimationConfigData();
     parseURConfigData();
     parseMapParticleConfigData();
+    parseSpellConfigData();
     parseArtifactData();
     parseArtifactUpgradeData();
     parseAttributeData();
@@ -240,6 +243,15 @@ const vector<MapParticleConfigData*>& DataManager::getMapParticleConfigData(int 
     
     static vector<MapParticleConfigData*> empty;
     return empty;
+}
+
+const SpellConfigData* DataManager::getSpellConfigData(const string& name) const
+{
+    if (_spellConfigData.find(name) != _spellConfigData.end()) {
+        return _spellConfigData.at(name);
+    }
+    
+    return nullptr;
 }
 
 const ArtifactLocalData* DataManager::getArtifactData(int id) const
@@ -715,6 +727,39 @@ void DataManager::parseMapParticleConfigData()
                 
                 CC_SAFE_DELETE(xmlDoc);
             }
+        }
+    }
+}
+
+void DataManager::parseSpellConfigData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath("SpellConfig.xml");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                SpellConfigData* data = new (nothrow) SpellConfigData(item);
+                const string& key = data->getSpellName();
+                if (_spellConfigData.find(key) != _spellConfigData.end()) {
+                    assert(false);
+                } else {
+                    if (key.length() > 0) {
+                        _spellConfigData.insert(make_pair(key, data));
+                    } else {
+                        CC_SAFE_DELETE(data);
+                    }
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
         }
     }
 }

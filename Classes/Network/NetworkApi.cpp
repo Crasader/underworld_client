@@ -44,6 +44,33 @@ static const string kLifeQuestProgress  = kServerPrefix + "quest/lifeList.json";
 static const string kFinishQuest        = kServerPrefix + "quest/finish.json";
 static const string kiOSIAP             = kServerPrefix + "iosiap.json";
 
+// ======================= Hero =======================
+static const string kGetHeroesList      = kServerPrefix + "hero/list.json";
+static const string kGetHeroDetail      = kServerPrefix + "hero/detail.json";
+static const string kUpgradeHero        = kServerPrefix + "hero/upgrade.json";
+static const string kSetArtifact        = kServerPrefix + "hero/equip.json";
+static const string kUpgradeArtifact    = kServerPrefix + "hero/upgradeEquip.json";
+static const string kSellArtifact       = kServerPrefix + "hero/decomposeEquip.json";
+static const string kComposeHero        = kServerPrefix + "hero/compose.json";
+static const string kSellHeroPiece      = kServerPrefix + "hero/sellPiece.json";
+
+// ======================= Soldier =======================
+static const string kGetSoldiersList    = kServerPrefix + "soldier/list.json";
+static const string kGetSoldierDetail   = kServerPrefix + "soldier/detail.json";
+static const string kUpgradeSoldier     = kServerPrefix + "soldier/upgrade.json";
+static const string kRecastSoldier      = kServerPrefix + "soldier/evolve.json";
+static const string kSwitchSoldierTalent= kServerPrefix + "soldier/switchSkill.json";
+static const string kSetGear            = kServerPrefix + "soldier/equip.json";
+static const string kUpgradeGear        = kServerPrefix + "soldier/upgradeEquip.json";
+static const string kSellGear           = kServerPrefix + "soldier/decomposeEquip.json";
+static const string kComposeSoldier     = kServerPrefix + "soldier/compose.json";
+static const string kSellSoldierPiece   = kServerPrefix + "soldier/sellPiece.json";
+
+// ======================= Tower =======================
+static const string kGetTowersList      = kServerPrefix + "building/.json";
+static const string kGetTowerDetail     = kServerPrefix + "building/.json";
+static const string kUpgradeTower       = kServerPrefix + "building/.json";
+
 static string headerString(const string& key, const string& value)
 {
     return StringUtils::format("%s:%s", key.c_str(), value.c_str());
@@ -290,6 +317,157 @@ void NetworkApi::finishQuest(QuestType type, int questId, const ccHttpRequestCal
 }
 
 #pragma mark - Guild
+
+
+#pragma mark - Hero
+void NetworkApi::getHeroesList(const cocos2d::network::ccHttpRequestCallback& callback)
+{
+    request(kGetHeroesList, callback);
+}
+
+void NetworkApi::getHeroDetail(int id, const cocos2d::network::ccHttpRequestCallback& callback)
+{
+    map<string, string> params;
+    params.insert(make_pair("id", StringUtils::format("%d", id)));
+    request(kGetHeroDetail, callback, &params);
+}
+
+void NetworkApi::upgradeHero(int id, const cocos2d::network::ccHttpRequestCallback& callback)
+{
+    map<string, string> params;
+    params.insert(make_pair("id", StringUtils::format("%d", id)));
+    request(kUpgradeHero, callback, &params);
+}
+
+void NetworkApi::setArtifact(int heroId, int artifactId, const cocos2d::network::ccHttpRequestCallback& callback)
+{
+    map<string, string> params;
+    params.insert(make_pair("suid", StringUtils::format("%d", heroId)));
+    params.insert(make_pair("euid", StringUtils::format("%d", artifactId)));
+    request(kSetArtifact, callback, &params);
+}
+
+void NetworkApi::upgradeArtifact(int heroId, int artifactId, const cocos2d::network::ccHttpRequestCallback& callback)
+{
+    map<string, string> params;
+    params.insert(make_pair("id", StringUtils::format("%d", heroId)));
+    params.insert(make_pair("index", StringUtils::format("%d", artifactId)));
+    request(kUpgradeArtifact, callback, &params);
+}
+
+void NetworkApi::sellArtifact(int artifactId, const cocos2d::network::ccHttpRequestCallback& callback)
+{
+    map<string, string> params;
+    params.insert(make_pair("euid", StringUtils::format("%d", artifactId)));
+    request(kSellArtifact, callback, &params);
+}
+
+void NetworkApi::composeHero(int id, const cocos2d::network::ccHttpRequestCallback& callback)
+{
+    map<string, string> params;
+    params.insert(make_pair("puid", StringUtils::format("%d", id)));
+    request(kComposeHero, callback, &params);
+}
+
+void NetworkApi::sellHeroPiece(int id, int count, const cocos2d::network::ccHttpRequestCallback& callback)
+{
+    map<string, string> params;
+    params.insert(make_pair("puid", StringUtils::format("%d", id)));
+    params.insert(make_pair("amount", StringUtils::format("%d", count)));
+    request(kSellHeroPiece, callback, &params);
+}
+
+#pragma mark - Soldier
+void NetworkApi::getSoldiersList(const cocos2d::network::ccHttpRequestCallback& callback)
+{
+    request(kGetSoldiersList, callback);
+}
+
+void NetworkApi::getSoldierDetail(int id, const cocos2d::network::ccHttpRequestCallback& callback)
+{
+    map<string, string> params;
+    params.insert(make_pair("id", StringUtils::format("%d", id)));
+    request(kGetSoldierDetail, callback, &params);
+}
+
+void NetworkApi::upgradeSoldier(int id, const cocos2d::network::ccHttpRequestCallback& callback)
+{
+    map<string, string> params;
+    params.insert(make_pair("id", StringUtils::format("%d", id)));
+    request(kUpgradeSoldier, callback, &params);
+}
+
+void NetworkApi::recastSoldier(int id, const cocos2d::network::ccHttpRequestCallback& callback)
+{
+    map<string, string> params;
+    params.insert(make_pair("id", StringUtils::format("%d", id)));
+    request(kRecastSoldier, callback, &params);
+}
+
+void NetworkApi::switchSoldierTalent(int soldierId, int talentId, const cocos2d::network::ccHttpRequestCallback& callback)
+{
+    map<string, string> params;
+    params.insert(make_pair("id", StringUtils::format("%d", soldierId)));
+    params.insert(make_pair("index", StringUtils::format("%d", talentId)));
+    request(kSwitchSoldierTalent, callback, &params);
+}
+
+void NetworkApi::setGear(int soldierId, int gearId, const cocos2d::network::ccHttpRequestCallback& callback)
+{
+    map<string, string> params;
+    params.insert(make_pair("suid", StringUtils::format("%d", soldierId)));
+    params.insert(make_pair("euid", StringUtils::format("%d", gearId)));
+    request(kSetGear, callback, &params);
+}
+
+void NetworkApi::upgradeGear(int gearId, const cocos2d::network::ccHttpRequestCallback& callback)
+{
+    map<string, string> params;
+    params.insert(make_pair("euid", StringUtils::format("%d", gearId)));
+    request(kUpgradeGear, callback, &params);
+}
+
+void NetworkApi::sellGear(int gearId, const cocos2d::network::ccHttpRequestCallback& callback)
+{
+    map<string, string> params;
+    params.insert(make_pair("euid", StringUtils::format("%d", gearId)));
+    request(kSellGear, callback, &params);
+}
+
+void NetworkApi::composeSoldier(int id, const cocos2d::network::ccHttpRequestCallback& callback)
+{
+    map<string, string> params;
+    params.insert(make_pair("puid", StringUtils::format("%d", id)));
+    request(kComposeSoldier, callback, &params);
+}
+
+void NetworkApi::sellSoldierPiece(int id, int count, const cocos2d::network::ccHttpRequestCallback& callback)
+{
+    map<string, string> params;
+    params.insert(make_pair("puid", StringUtils::format("%d", id)));
+    params.insert(make_pair("amount", StringUtils::format("%d", count)));
+    request(kSellSoldierPiece, callback, &params);
+}
+
+#pragma mark - Tower
+void NetworkApi::getTowersList(const cocos2d::network::ccHttpRequestCallback& callback)
+{
+    request(kGetTowersList, callback);
+}
+
+void NetworkApi::getTowerDetail(int id, const cocos2d::network::ccHttpRequestCallback& callback)
+{
+    map<string, string> params;
+    params.insert(make_pair("id", StringUtils::format("%d", id)));
+    request(kGetTowerDetail, callback, &params);
+}
+
+void NetworkApi::upgradeTower(int id, const cocos2d::network::ccHttpRequestCallback& callback)
+{
+    map<string, string> params;
+    params.insert(make_pair("id", StringUtils::format("%d", id)));
+    request(kUpgradeTower, callback, &params);
+}
 
 #pragma mark - IAP
 void NetworkApi::iap(bool isSandBox, const string& receiptData, const ccHttpRequestCallback& callback)

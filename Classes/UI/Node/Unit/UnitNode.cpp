@@ -13,11 +13,13 @@
 #include "UnitType.h"
 #include "Skill.h"
 #include "SkllType.h"
+#include "Spell.h"
 #include "DisplayBar.h"
 #include "CocosGlobal.h"
 #include "DataManager.h"
 #include "UAConfigData.h"
 #include "URConfigData.h"
+#include "SpellConfigData.h"
 #include "SoundManager.h"
 
 using namespace std;
@@ -336,6 +338,11 @@ void UnitNode::getCsbFiles(vector<string>& output, UnitDirection direction, bool
         case kSkillClass_Cast:
         {
             // TODO
+            if (_isStandby) {
+                csbFile = getStandbyCsbFile(direction, isHealthy);
+            } else {
+                getAttackCsbFiles(output, direction, isHealthy);
+            }
         }
             break;
         case kSkillClass_Die:
@@ -646,9 +653,38 @@ void UnitNode::updateActionNode(const Skill* skill, int frameIndex, bool flip)
                         }
                     });
                 } else {
-                    // run / standby
+                    // run / standby / cast
                     const bool playAnimation(kUnitClass_Building != _unit->getUnitBase().getUnitClass());
                     addActionNode(file, playAnimation, true, 0.0f, frameIndex, flip, nullptr);
+                    
+                    if (kSkillClass_Cast == skillClass) {
+                        const Spell* spell = dynamic_cast<const Spell*>(_unit->getCurrentSkill());
+                        if (spell) {
+                            const string& spellName = spell->getSpellType()->getAlias();
+                            const SpellConfigData* data = DataManager::getInstance()->getSpellConfigData(spellName);
+                            if (data) {
+                                const vector<string>& resources = data->getCasterResourceNames();
+                                const size_t cnt = resources.size();
+                                switch (cnt) {
+                                    case 1:
+                                    {
+                                        addEffect(resources.at(0));
+                                    }
+                                        break;
+                                    case 2:
+                                    {
+                                        addEffect(resources.at(0));
+                                        Node* second = addEffect(resources.at(1));
+                                        second->setLocalZOrder(-1);
+                                        
+                                    }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
