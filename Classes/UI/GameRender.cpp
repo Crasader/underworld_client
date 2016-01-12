@@ -126,16 +126,19 @@ void GameRender::updateUnits(const Game* game, int index)
     const Faction* f = world->getFaction(index);
     const vector<Unit*>& units = f->getAllUnits();
     for (int i = 0; i < units.size(); ++i) {
-        const Unit* unit = units.at(i);
-        const Coordinate& pos = unit->getCenterPos();
+        Unit* unit = units.at(i);
         const int key = unit->getUnitId();
+        if (_units.find(key) == _units.end()) {
+            _units.insert(make_pair(key, unit));
+        }
+        const Coordinate& pos = unit->getCenterPos();
         const Skill* skill = unit->getCurrentSkill();
         // TODO: remove test code
         if (skill) {
             SkillClass sc = skill->getSkillType()->getSkillClass();
-            if (_allUnits.find(key) != _allUnits.end()) {
+            if (_allUnitNodes.find(key) != _allUnitNodes.end()) {
                 // already exist, update it
-                UnitNode* node = _allUnits.at(key);
+                UnitNode* node = _allUnitNodes.at(key);
                 node->update();
                 if (kSkillClass_Move == sc) {
                     _mapLayer->repositionUnit(node, pos);
@@ -147,7 +150,7 @@ void GameRender::updateUnits(const Game* game, int index)
                     UnitNode* node = UnitNode::create(unit, factionIndex != 0);
                     node->registerObserver(this);
                     _mapLayer->addUnit(node, pos);
-                    _allUnits.insert(make_pair(key, node));
+                    _allUnitNodes.insert(make_pair(key, node));
                 }
             }
         }
@@ -162,13 +165,13 @@ void GameRender::updateBullets(const Game* game)
         const Coordinate& pos = bullet->getPos();
         const int64_t key = reinterpret_cast<int64_t>(bullet);
         const bool isExploded(bullet->isExploded());
-        if (_allBullets.find(key) != _allBullets.end()) {
+        if (_allBulletNodes.find(key) != _allBulletNodes.end()) {
             // already exist, update it
-            BulletNode* node = _allBullets.at(key);
+            BulletNode* node = _allBulletNodes.at(key);
             node->update();
             if (isExploded) {
                 node->removeFromParent();
-                _allBullets.erase(key);
+                _allBulletNodes.erase(key);
             } else {
                 _mapLayer->repositionUnit(node, pos);
             }
@@ -177,7 +180,7 @@ void GameRender::updateBullets(const Game* game)
                 BulletNode* node = BulletNode::create(bullet);
                 node->registerObserver(this);
                 _mapLayer->addUnit(node, pos);
-                _allBullets.insert(make_pair(key, node));
+                _allBulletNodes.insert(make_pair(key, node));
             }
         }
     }
@@ -205,12 +208,21 @@ void GameRender::updateUILayer()
     }
 }
 
+void GameRender::castSpell(Unit* unit, const string& name)
+{
+    CastCommand* command = dynamic_cast<CastCommand*>(Command::create(kCommandClass_Cast));
+    if (command) {
+        command->setSpellAlias(name);
+        unit->giveCommand(command);
+    }
+}
+
 void GameRender::hurtUnit(const Unit* target, const string& trigger)
 {
     if (target && kSkillClass_Die != target->getCurrentSkill()->getSkillType()->getSkillClass()) {
         const int key = target->getUnitId();
-        if (_allUnits.find(key) != _allUnits.end()) {
-            UnitNode* node = _allUnits.at(key);
+        if (_allUnitNodes.find(key) != _allUnitNodes.end()) {
+            UnitNode* node = _allUnitNodes.at(key);
             if (node) {
                 node->onHurt(trigger);
             }
@@ -219,10 +231,17 @@ void GameRender::hurtUnit(const Unit* target, const string& trigger)
 }
 
 #pragma mark - UnitNodeObserver
-void GameRender::onUnitNodePlayDeadAnimationFinished(UnitNode* node)
+void GameRender::onUnitNodeUpdatedFeatures(int unitId)
 {
-    node->removeFromParent();
-    _allUnits.erase(node->getUnit()->getUnitId());
+    if (_allUnitNodes.find(unitId) != _allUnitNodes.end()) {
+        Unit* unit = _units.at(unitId);
+        unit->clearEventLogs();
+    }
+}
+
+void GameRender::onUnitNodePlayDeadAnimationFinished(int unitId)
+{
+    removeUnit(unitId);
 }
 
 void GameRender::onUnitNodeHurtTheTarget(UnitNode* node)
@@ -311,22 +330,34 @@ void GameRender::onVictoryLayerContinued(Layer* pSender)
     }
 }
 
+void GameRender::removeUnit(int unitId)
+{
+    if (_allUnitNodes.find(unitId) != _allUnitNodes.end()) {
+        Node* node = _allUnitNodes.at(unitId);
+        node->removeFromParent();
+        _allUnitNodes.erase(unitId);
+    }
+    
+    _units.erase(unitId);
+}
+
 void GameRender::removeAllBullets()
 {
-    for (map<int64_t, BulletNode*>::iterator iter = _allBullets.begin(); iter != _allBullets.end(); ++iter) {
+    for (map<int64_t, BulletNode*>::iterator iter = _allBulletNodes.begin(); iter != _allBulletNodes.end(); ++iter) {
         iter->second->removeFromParent();
     }
     
-    _allBullets.clear();
+    _allBulletNodes.clear();
 }
 
 void GameRender::removeAllUnits()
 {
-    for (map<int, UnitNode*>::iterator iter = _allUnits.begin(); iter != _allUnits.end(); ++iter) {
+    for (map<int, UnitNode*>::iterator iter = _allUnitNodes.begin(); iter != _allUnitNodes.end(); ++iter) {
         iter->second->removeFromParent();
     }
     
-    _allUnits.clear();
+    _allUnitNodes.clear();
+    _units.clear();
 }
 
 void GameRender::pauseGame()
@@ -418,7 +449,7 @@ void GameRender::onGameOver()
         win = true;
     }
     
-    for (map<int, UnitNode*>::iterator iter = _allUnits.begin(); iter != _allUnits.end(); ++iter) {
+    for (map<int, UnitNode*>::iterator iter = _allUnitNodes.begin(); iter != _allUnitNodes.end(); ++iter) {
         UnitNode* node = iter->second;
         const int factionIndex = node->getUnit()->getBelongFaction()->getFactionIndex();
         if (factionIndex == _game->getWorld()->getThisFactionIndex()) {

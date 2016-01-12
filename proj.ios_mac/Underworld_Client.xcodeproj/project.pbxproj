@@ -218,6 +218,7 @@
 		A1F5BF9F1C1FD508007C08CB /* AchievementLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BF9D1C1FD508007C08CB /* AchievementLocalData.cpp */; };
 		A1F5BFA21C1FD519007C08CB /* AchievementData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BFA01C1FD519007C08CB /* AchievementData.cpp */; };
 		A1F5BFA81C1FDFBE007C08CB /* ResourceNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BFA61C1FDFBE007C08CB /* ResourceNode.cpp */; };
+		A1F6A1171C4506A3005DC0CC /* HeroSpellHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F6A1151C4506A3005DC0CC /* HeroSpellHandler.cpp */; };
 		A1F727F11C3F825E002E8776 /* DisplayIconNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F727EF1C3F825E002E8776 /* DisplayIconNode.cpp */; };
 		A1F727F51C3FBD5B002E8776 /* UnitInfoNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F727F31C3FBD5B002E8776 /* UnitInfoNode.cpp */; };
 		A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A1FC49B31BD8C249005C1B2E /* CrashHelper.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -660,6 +661,8 @@
 		A1F5BFA11C1FD519007C08CB /* AchievementData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementData.h; sourceTree = "<group>"; };
 		A1F5BFA61C1FDFBE007C08CB /* ResourceNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResourceNode.cpp; sourceTree = "<group>"; };
 		A1F5BFA71C1FDFBE007C08CB /* ResourceNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceNode.h; sourceTree = "<group>"; };
+		A1F6A1151C4506A3005DC0CC /* HeroSpellHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HeroSpellHandler.cpp; sourceTree = "<group>"; };
+		A1F6A1161C4506A3005DC0CC /* HeroSpellHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroSpellHandler.h; sourceTree = "<group>"; };
 		A1F727EF1C3F825E002E8776 /* DisplayIconNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DisplayIconNode.cpp; sourceTree = "<group>"; };
 		A1F727F01C3F825E002E8776 /* DisplayIconNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayIconNode.h; sourceTree = "<group>"; };
 		A1F727F31C3FBD5B002E8776 /* UnitInfoNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UnitInfoNode.cpp; sourceTree = "<group>"; };
@@ -1206,6 +1209,7 @@
 			children = (
 				A1720E751BCCE0F000217E98 /* Action */,
 				A1720EBF1BCD310100217E98 /* Layer */,
+				A1F6A1141C450690005DC0CC /* Misc */,
 				A1720E711BCCE0A200217E98 /* Node */,
 				A103F45D1BE38112007F9A83 /* GameRender.cpp */,
 				A103F45E1BE38112007F9A83 /* GameRender.h */,
@@ -1618,6 +1622,15 @@
 			path = Achievement;
 			sourceTree = "<group>";
 		};
+		A1F6A1141C450690005DC0CC /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				A1F6A1151C4506A3005DC0CC /* HeroSpellHandler.cpp */,
+				A1F6A1161C4506A3005DC0CC /* HeroSpellHandler.h */,
+			);
+			path = Misc;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1910,6 +1923,7 @@
 				A1720ECB1BCD37FC00217E98 /* MessageBoxLayer.cpp in Sources */,
 				308B84661BE3853C00377802 /* AIBody.cpp in Sources */,
 				300098D01BD0CD5900B6E284 /* Resource.cpp in Sources */,
+				A1F6A1171C4506A3005DC0CC /* HeroSpellHandler.cpp in Sources */,
 				A1F58D601C32526E00C8A2DD /* ArtifactUpgradeData.cpp in Sources */,
 				A1720EBD1BCD309A00217E98 /* NetworkController.cpp in Sources */,
 				A1D4615F1C3E251000E8E60B /* MapParticleConfigData.cpp in Sources */,

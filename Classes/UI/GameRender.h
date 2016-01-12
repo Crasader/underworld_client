@@ -45,7 +45,8 @@ public:
     
 protected:
     // UnitNodeObserver
-    virtual void onUnitNodePlayDeadAnimationFinished(UnitNode* node) override;
+    virtual void onUnitNodeUpdatedFeatures(int unitId) override;
+    virtual void onUnitNodePlayDeadAnimationFinished(int unitId) override;
     virtual void onUnitNodeHurtTheTarget(UnitNode* node) override;
     
     // BulletNodeObserver
@@ -66,7 +67,9 @@ private:
     void updateUnits(const UnderWorld::Core::Game* game, int index);
     void updateBullets(const UnderWorld::Core::Game* game);
     void updateUILayer();
+    void castSpell(UnderWorld::Core::Unit* unit, const std::string& name);
     void hurtUnit(const UnderWorld::Core::Unit* target, const std::string& trigger);
+    void removeUnit(int unitId);
     void removeAllBullets();
     void removeAllUnits();
     void pauseGame();
@@ -86,8 +89,9 @@ private:
     MapUILayer* _mapUILayer;
     const UnderWorld::Core::Game* _game;
     UnderWorld::Core::Commander* _commander;
-    std::map<int, UnitNode*> _allUnits;
-    std::map<int64_t, BulletNode*> _allBullets;
+    std::map<int, UnitNode*> _allUnitNodes;
+    std::map<int64_t, BulletNode*> _allBulletNodes;
+    std::map<int, UnderWorld::Core::Unit*> _units;
     std::map<int, UnderWorld::Core::Unit*> _cores;
     bool _paused;
     bool _isGameOver;

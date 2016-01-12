@@ -30,7 +30,8 @@ class UnitNodeObserver
 {
 public:
     virtual ~UnitNodeObserver() {}
-    virtual void onUnitNodePlayDeadAnimationFinished(UnitNode* node) = 0;
+    virtual void onUnitNodeUpdatedFeatures(int unitId) = 0;
+    virtual void onUnitNodePlayDeadAnimationFinished(int unitId) = 0;
     virtual void onUnitNodeHurtTheTarget(UnitNode* node) = 0;
 };
 
@@ -47,8 +48,6 @@ public:
     void addBlockEffect();
     void addRecoveryEffect();
     void addSwordEffect();
-    void addBuf();
-    void removeBuf();
     
     // --------------- callbacks ---------------
     void onHurt(const std::string& trigger);
@@ -76,6 +75,11 @@ protected:
     void updateActionNode(const UnderWorld::Core::Skill* skill, int frameIndex, bool flip);
     void removeActionNode();
     // --------------- effects ---------------
+    void updateBufs();
+    void addBuf(const std::string& name);
+    void removeBuf(const std::string& name);
+    void removeAllBufs();
+    void updateFeatures();
     void addHPBar();
     void updateHPBar();
     void removeHPBar();
@@ -98,7 +102,8 @@ private:
     Scheduler *_speedScheduler;
     ActionManager *_actionManager;
     Node *_shadow;
-    Node *_buf;
+    std::set<std::string> _bufNames;
+    std::map<std::string, Node*> _bufs;
     DisplayBar* _hpBar;
     Sprite *_sprite;
     // save last status

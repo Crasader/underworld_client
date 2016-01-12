@@ -78,7 +78,6 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
 ,_speedScheduler(nullptr)
 ,_actionManager(nullptr)
 ,_shadow(nullptr)
-,_buf(nullptr)
 ,_hpBar(nullptr)
 ,_sprite(nullptr)
 ,_lastSkill(nullptr)
@@ -209,6 +208,8 @@ void UnitNode::update()
         }
         
         updateHPBar();
+        updateBufs();
+        updateFeatures();
     }
 }
 
@@ -232,29 +233,6 @@ void UnitNode::addSwordEffect()
     }
 }
 
-void UnitNode::addBuf()
-{
-    if (!_buf) {
-        static const string file("effect-buff-2.csb");
-        const Size& size = _sprite->getContentSize();
-        const Point& pos = _sprite->getPosition();
-        _buf = CSLoader::createNode(file);
-        _buf->setPosition(pos - Point(0, size.height * 0.25f));
-        addChild(_buf, -1);
-        cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
-        _buf->runAction(action);
-        action->gotoFrameAndPlay(0, true);
-    }
-}
-
-void UnitNode::removeBuf()
-{
-    if (_buf) {
-        _buf->removeFromParent();
-        _buf = nullptr;
-    }
-}
-
 void UnitNode::onHurt(const string& trigger)
 {
     const URConfigData* data = DataManager::getInstance()->getURConfigData(trigger);
@@ -271,7 +249,7 @@ void UnitNode::onHurt(const string& trigger)
 void UnitNode::onDead()
 {
     removeShadow();
-    removeBuf();
+    removeAllBufs();
     removeHPBar();
     
     const string file = _configData->getDieSound();
@@ -649,7 +627,7 @@ void UnitNode::updateActionNode(const Skill* skill, int frameIndex, bool flip)
                 if (isDead) {
                     addActionNode(file, true, false, 0.0f, frameIndex, flip, [=]() {
                         if (_observer) {
-                            _observer->onUnitNodePlayDeadAnimationFinished(this);
+                            _observer->onUnitNodePlayDeadAnimationFinished(_unit->getUnitId());
                         }
                     });
                 } else {
@@ -714,6 +692,102 @@ void UnitNode::removeActionNode()
 }
 
 #pragma mark - effects
+void UnitNode::updateBufs()
+{
+    set<string> last = _bufNames;
+    
+    _bufNames.clear();
+    for (Unit::BuffIter iter = _unit->getBuffsBegin(); iter != _unit->getBuffsEnd(); ++iter)
+    {
+        const string& bufName = iter->second->getBuffType()->getRenderKey();
+        if (bufName.length() > 0) {
+            _bufNames.insert(bufName);
+        }
+    }
+    
+    set<string> intersections;
+    set_intersection(last.begin(), last.end(), _bufNames.begin(), _bufNames.end(), inserter(intersections, intersections.begin()));
+    
+    set<string> added;
+    set_difference(_bufNames.begin(), _bufNames.end(), intersections.begin(), intersections.end(), inserter(added, added.begin()));
+    
+    set<string> removed;
+    set_difference(last.begin(), last.end(), intersections.begin(), intersections.end(), inserter(removed, removed.begin()));
+    
+    for (set<string>::const_iterator iter = removed.begin(); iter != removed.end(); ++iter) {
+        removeBuf(*iter);
+    }
+    
+    for (set<string>::const_iterator iter = added.begin(); iter != added.end(); ++iter) {
+        addBuf(*iter);
+    }
+}
+
+void UnitNode::addBuf(const string& name)
+{
+    if (_bufs.find(name) == _bufs.end()) {
+        const Size& size = _sprite->getContentSize();
+        const Point& pos = _sprite->getPosition();
+        Node* buf = CSLoader::createNode(name);
+        buf->setPosition(pos - Point(0, size.height * 0.25f));
+        addChild(buf, -1);
+        cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(name);
+        buf->runAction(action);
+        action->gotoFrameAndPlay(0, true);
+    }
+}
+
+void UnitNode::removeBuf(const string& name)
+{
+    if (_bufs.find(name) != _bufs.end()) {
+        Node* buf = _bufs.at(name);
+        if (buf) {
+            buf->removeFromParent();
+        }
+        _bufs.erase(name);
+    }
+}
+
+void UnitNode::removeAllBufs()
+{
+    for (map<string, Node*>::iterator iter = _bufs.begin(); iter != _bufs.end(); ++iter) {
+        Node* buf = iter->second;
+        if (buf) {
+            buf->removeFromParent();
+        }
+    }
+    
+    _bufs.clear();
+}
+
+void UnitNode::updateFeatures()
+{
+    const list<Unit::EventLog>& eventLogs = _unit->getEventLogs();
+    for (list<Unit::EventLog>::const_iterator iter = eventLogs.begin(); iter != eventLogs.end(); ++iter) {
+        const Unit::EventLog& log = *iter;
+        Unit::EventLogType type = log._type;
+        if (type == Unit::kEventLogType_DamageOutput ||
+            type == Unit::kEventLogType_DamageInupt) {
+            DamageNature dn = log._damageNature;
+            if (dn == kDamageNature_Hurt) {
+                // TODO:
+            } else if (dn == kDamageNature_Heal) {
+                // TODO:
+            }
+        } else if (type == Unit::kEventLogType_FeatureTakeEffect) {
+            const FeatureType* ft = log._featureType;
+            if (ft) {
+                const string& renderKey = ft->getRenderKey();
+                addEffect(renderKey);
+            }
+        }
+    }
+    
+    if (_observer) {
+        _observer->onUnitNodeUpdatedFeatures(_unit->getUnitId());
+    }
+}
+
 void UnitNode::addHPBar()
 {
     if (!_hpBar && _unit) {
