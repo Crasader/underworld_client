@@ -42,14 +42,6 @@ typedef std::function<void(long errorCode)> httpErrorCallback;
 #define RES_NAME_GOLD       ("金子")
 #define RES_NAME_POPULATION ("人口")
 
-// unit directions
-#define UNIT_DIRECTIONS_COUNT   (3)
-typedef enum {
-    kUnitDirection_LeftUp = 2,
-    kUnitDirection_Left,
-    kUnitDirection_LeftDown,
-}UnitDirection;
-
 typedef enum
 {
     kResourceType_Gem = 100,

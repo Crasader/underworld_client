@@ -7,11 +7,13 @@
 //
 
 #include "HeroSpellHandler.h"
-#include "Unit.h"
+#include "Spell.h"
 
 using namespace UnderWorld::Core;
 
-HeroSpellHandler::HeroSpellHandler(Unit* unit)
+HeroSpellHandler::HeroSpellHandler(Spell* spell)
+:_observer(nullptr)
+,_spell(spell)
 {
     
 }
@@ -19,4 +21,16 @@ HeroSpellHandler::HeroSpellHandler(Unit* unit)
 HeroSpellHandler::~HeroSpellHandler()
 {
     
+}
+
+void HeroSpellHandler::registerObserver(HeroSpellHandlerObserver *observer)
+{
+    _observer = observer;
+}
+
+void HeroSpellHandler::update()
+{
+    if (_spell && _observer) {
+        _observer->onHeroSpellHandlerUpdatingCD(_spell);
+    }
 }

@@ -65,17 +65,17 @@ UAConfigData::UAConfigData(tinyxml2::XMLElement *xmlElement)
             if (1 == v.size()) {
                 parse(params, v, v1, v2, 0);
                 if (params.scale != 1.0f || params.speed != 1.0f) {
-                    for (int i = 0; i < UNIT_DIRECTIONS_COUNT; ++i) {
-                        UnitDirection ud = static_cast<UnitDirection>(i + 2);
+                    for (int i = 0; i < UnderWorld::Core::Unit::DIRECTION_COUNT; ++i) {
+                        UnderWorld::Core::Unit::Direction ud = static_cast<UnderWorld::Core::Unit::Direction>(i);
                         _data.insert(make_pair(ud, params));
                     }
                 }
             } else {
-                const size_t cnt((size > UNIT_DIRECTIONS_COUNT) ? UNIT_DIRECTIONS_COUNT : size);
+                const size_t cnt((size > UnderWorld::Core::Unit::DIRECTION_COUNT) ? UnderWorld::Core::Unit::DIRECTION_COUNT : size);
                 for (int i = 0; i < cnt; ++i) {
                     parse(params, v, v1, v2, i);
                     if (params.scale != 1.0f || params.speed != 1.0f) {
-                        UnitDirection ud = static_cast<UnitDirection>(i + 2);
+                        UnderWorld::Core::Unit::Direction ud = static_cast<UnderWorld::Core::Unit::Direction>(i);
                         _data.insert(make_pair(ud, params));
                     }
                 }
@@ -89,7 +89,7 @@ UAConfigData::~UAConfigData()
     
 }
 
-AnimationParameters UAConfigData::getAnimationParameters(UnitDirection direction)
+AnimationParameters UAConfigData::getAnimationParameters(UnderWorld::Core::Unit::Direction direction)
 {
     if (_data.find(direction) != _data.end()) {
         return _data.at(direction);

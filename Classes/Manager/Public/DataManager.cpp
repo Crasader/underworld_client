@@ -213,7 +213,7 @@ const GearSetLocalData* DataManager::getGearSetData(int id) const
     return nullptr;
 }
 
-AnimationParameters DataManager::getAnimationParameters(const string& name, UnderWorld::Core::SkillClass skillClass, UnitDirection direction) const
+AnimationParameters DataManager::getAnimationParameters(const string& name, UnderWorld::Core::SkillClass skillClass, UnderWorld::Core::Unit::Direction direction) const
 {
     string key = name + StringUtils::format("_%d", skillClass);
     if (_animationParameters.find(key) != _animationParameters.end()) {

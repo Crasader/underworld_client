@@ -10,6 +10,7 @@
 #define DataManager_h
 
 #include "CocosGlobal.h"
+#include "Unit.h"
 #include "UAConfigData.h"
 #include "SkllType.h"
 
@@ -58,7 +59,7 @@ public:
     const GearSetLocalData* getGearSetData(int id) const;
     
     // ---------- animations ----------
-    AnimationParameters getAnimationParameters(const std::string& name, UnderWorld::Core::SkillClass skillClass, UnitDirection direction) const;
+    AnimationParameters getAnimationParameters(const std::string& name, UnderWorld::Core::SkillClass skillClass, UnderWorld::Core::Unit::Direction direction) const;
     const URConfigData* getURConfigData(const std::string& name) const;
     const std::vector<MapParticleConfigData*>& getMapParticleConfigData(int mapId) const;
     const SpellConfigData* getSpellConfigData(const std::string& name) const;

@@ -11,6 +11,7 @@
 
 #include "CocosGlobal.h"
 #include "cocos2d.h"
+#include "Unit.h"
 #include <map>
 #include <vector>
 
@@ -48,13 +49,13 @@ public:
     UAConfigData(tinyxml2::XMLElement *xmlElement);
     virtual ~UAConfigData();
     
-    AnimationParameters getAnimationParameters(UnitDirection direction);
+    AnimationParameters getAnimationParameters(UnderWorld::Core::Unit::Direction direction);
     
 protected:
     void parse(AnimationParameters& params, const std::vector<std::string>& directions, const std::vector<std::string>& scales, const std::vector<std::string>& speeds, int index);
     
 private:
-    std::map<UnitDirection, AnimationParameters> _data;
+    std::map<UnderWorld::Core::Unit::Direction, AnimationParameters> _data;
 };
 
 #endif /* UAConfigData_h */

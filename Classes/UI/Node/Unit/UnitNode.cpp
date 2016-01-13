@@ -9,7 +9,6 @@
 #include "UnitNode.h"
 #include "World.h"
 #include "Faction.h"
-#include "Unit.h"
 #include "UnitType.h"
 #include "Skill.h"
 #include "SkllType.h"
@@ -26,8 +25,6 @@ using namespace std;
 using namespace UnderWorld::Core;
 
 #pragma mark ======================= static =======================
-static const float directionAngelEdge[UNIT_DIRECTIONS_COUNT] = { -30.f, 30.f, 90.f };
-static const int animationCheckerFrames = GameConstants::FRAME_PER_SEC;
 static const float hpPercentageThreshold(50.0f);
 
 static inline SkillClass unit_getSkillClass(const Unit* unit)
@@ -46,6 +43,25 @@ static void node_setScale(Node* node, float scale)
     const float scaleX = node->getScaleX();
     const float scaleY = node->getScaleY();
     node->setScale(scale * scaleX, scale * scaleY);
+}
+
+static int getResourceId(Unit::Direction direction)
+{
+    switch (direction) {
+        case Unit::kDirection_right:
+        case Unit::kDirection_left:
+            return 3;
+        case Unit::kDirection_rightUp:
+        case Unit::kDirection_leftUp:
+            return 2;
+        case Unit::kDirectoin_rightDown:
+        case Unit::kDirection_leftDown:
+            return 4;
+            
+        default:
+            assert(false);
+            return 0;
+    }
 }
 
 #pragma mark ======================= Class UnitNode =======================
@@ -68,7 +84,6 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
 // base
 :_observer(nullptr)
 ,_unit(unit)
-,_isBornOnTheRight(rightSide)
 ,_isBuilding(false)
 ,_configData(nullptr)
 ,_needToFlip(false)
@@ -81,10 +96,9 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
 ,_hpBar(nullptr)
 ,_sprite(nullptr)
 ,_lastSkill(nullptr)
-,_lastDirection(static_cast<UnitDirection>(-1))
+,_lastDirection(static_cast<Unit::Direction>(-1))
 ,_isLastHealthy(true)
 ,_isLastFlipped(false)
-,_switchAnimationCounter(0)
 ,_isStandby(false)
 ,_isPlayingAttackAnimation(false)
 ,_animationCounter(0)
@@ -94,7 +108,7 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
     UnitClass uc = unit->getUnitBase().getUnitClass();
     _isBuilding = (kUnitClass_Core == uc || kUnitClass_Building == uc);
     _configData = DataManager::getInstance()->getURConfigData(_unitName);
-    _needToFlip = (_isBornOnTheRight == _configData->isFaceRight());
+    _needToFlip = (rightSide == _configData->isFaceRight());
 }
 
 UnitNode::~UnitNode()
@@ -130,9 +144,8 @@ void UnitNode::update()
         const Skill* currentSkill = _unit->getCurrentSkill();
         if (currentSkill) {
             // direction and flip
-            UnitDirection direction(kUnitDirection_Left);
-            bool flip(false);
-            calculateDirectionAndFlip(direction, flip);
+            Unit::Direction direction = _unit->getDirection();
+            bool flip = needToFlip(direction);
             
             //
             bool needToUpdateUI(false);
@@ -165,19 +178,14 @@ void UnitNode::update()
                         needToUpdateUI = true;
                     }
                     else if (_lastDirection != direction || _isLastFlipped != flip) {
-                        // check the direction every (_switchAnimationCounter) frames,
-                        // in order to avoid changing the direction frequently.
-                        ++ _switchAnimationCounter;
-                        if (_switchAnimationCounter >= animationCheckerFrames) {
-                            // check if the unit is standby
-                            if (needToChangeStandbyStatus()) {
-                                _isStandby = !_isStandby;
-                            }
-                            
-                            needToUpdateUI = true;
-                            if (_currentAction) {
-                                currentFrame = _currentAction->getCurrentFrame();
-                            }
+                        // check if the unit is standby
+                        if (needToChangeStandbyStatus()) {
+                            _isStandby = !_isStandby;
+                        }
+                        
+                        needToUpdateUI = true;
+                        if (_currentAction) {
+                            currentFrame = _currentAction->getCurrentFrame();
                         }
                     } else {
                         // check if the unit is standby
@@ -282,7 +290,7 @@ bool UnitNode::init()
 }
 
 #pragma mark - getters
-void UnitNode::getCsbFiles(vector<string>& output, UnitDirection direction, bool isHealthy)
+void UnitNode::getCsbFiles(vector<string>& output, Unit::Direction direction, bool isHealthy)
 {
     output.clear();
     
@@ -300,7 +308,7 @@ void UnitNode::getCsbFiles(vector<string>& output, UnitDirection direction, bool
             if (_isBuilding) {
                 assert(false);
             } else {
-                csbFile = prefix + StringUtils::format("-run-%d.csb", direction);
+                csbFile = prefix + StringUtils::format("-run-%d.csb", getResourceId(direction));
             }
         }
             break;
@@ -328,7 +336,7 @@ void UnitNode::getCsbFiles(vector<string>& output, UnitDirection direction, bool
             if (_isBuilding) {
                 csbFile = _configData->getBDestroyed();
             } else {
-                csbFile = prefix + StringUtils::format("-dead-%d.csb", direction);
+                csbFile = prefix + StringUtils::format("-dead-%d.csb", getResourceId(direction));
             }
         }
             break;
@@ -342,22 +350,22 @@ void UnitNode::getCsbFiles(vector<string>& output, UnitDirection direction, bool
     }
 }
 
-const string UnitNode::getStandbyCsbFile(UnitDirection direction, bool isHealthy)
+const string UnitNode::getStandbyCsbFile(Unit::Direction direction, bool isHealthy)
 {
     string csbFile;
     if (_isBuilding) {
-        const string& normal = StringUtils::format(_configData->getBNormal().c_str(), direction);
-        const string& damaged = StringUtils::format(_configData->getBDamaged().c_str(), direction);
+        const string& normal = StringUtils::format(_configData->getBNormal().c_str(), getResourceId(direction));
+        const string& damaged = StringUtils::format(_configData->getBDamaged().c_str(), getResourceId(direction));
         csbFile = isHealthy ? normal : (damaged.length() > 0 ? damaged : normal);
     } else {
         const string& prefix = _configData->getPrefix();
-        csbFile = prefix + StringUtils::format("-standby-%d.csb", direction);
+        csbFile = prefix + StringUtils::format("-standby-%d.csb", getResourceId(direction));
     }
     
     return csbFile;
 }
 
-void UnitNode::getAttackCsbFiles(vector<string>& output, UnitDirection direction, bool isHealthy)
+void UnitNode::getAttackCsbFiles(vector<string>& output, Unit::Direction direction, bool isHealthy)
 {
     output.clear();
     if (_isBuilding) {
@@ -367,7 +375,7 @@ void UnitNode::getAttackCsbFiles(vector<string>& output, UnitDirection direction
             output.push_back(attackBegin);
         }
         // 2. attack
-        const string& attack = StringUtils::format(_configData->getBAttack().c_str(), direction);
+        const string& attack = StringUtils::format(_configData->getBAttack().c_str(), getResourceId(direction));
         if (attack.length() > 0) {
             output.push_back(attack);
         } else {
@@ -381,11 +389,11 @@ void UnitNode::getAttackCsbFiles(vector<string>& output, UnitDirection direction
     } else {
         const string& prefix = _configData->getPrefix();
         {
-            const string& attack = prefix + StringUtils::format("-attack-%d.csb", direction);
+            const string& attack = prefix + StringUtils::format("-attack-%d.csb", getResourceId(direction));
             output.push_back(attack);
         }
         {
-            const string& backSing = prefix + StringUtils::format("-attack-%d-1.csb", direction);
+            const string& backSing = prefix + StringUtils::format("-attack-%d-1.csb", getResourceId(direction));
             output.push_back(backSing);
         }
     }
@@ -409,61 +417,33 @@ bool UnitNode::needToChangeStandbyStatus()
     return false;
 }
 
-void UnitNode::calculateDirectionAndFlip(UnitDirection& direction, bool& flip)
+bool UnitNode::needToFlip(Unit::Direction direction)
 {
+    bool flip(false);
     if (_unit) {
-        const Coordinate& lastPos = _unit->getLastPos();
-        if (lastPos.x == INVALID_VALUE && lastPos.y == INVALID_VALUE) {
-            // new created
-            direction = kUnitDirection_Left;
-            flip = false;
-        } else {
-            const Coordinate& centerPos = _unit->getCenterPos();
-            Coordinate currentPos(0, 0);
-            Coordinate targetPos(0, 0);
-            if (kSkillClass_Attack == unit_getSkillClass(_unit)) {
-                currentPos = centerPos;
-                targetPos = _unit->getTargetPos();
-            } else {
-                const int size = _unit->getUnitBase().getSize();
-                currentPos = lastPos + Coordinate(size / 2, size / 2);
-                targetPos = centerPos;
+        const bool isFaceRight = _configData->isFaceRight();
+        switch (direction) {
+            case Unit::kDirection_right:
+            case Unit::kDirection_rightUp:
+            case Unit::kDirectoin_rightDown:
+            {
+                flip = !isFaceRight;
             }
-            
-            const float deltaX = abs(targetPos.x - currentPos.x);
-            const float deltaY = targetPos.y - currentPos.y;
-            
-            float angel = 0.0f;
-            if (deltaX == 0) {
-                if (deltaY > 0) {
-                    angel = 90.0f;
-                } else if (deltaY < 0) {
-                    angel = -90.0f;
-                }
-            } else {
-                angel = 180.0f * atanf(deltaY / deltaX) / M_PI;
+                break;
+            case Unit::kDirection_left:
+            case Unit::kDirection_leftUp:
+            case Unit::kDirection_leftDown:
+            {
+                flip = isFaceRight;
             }
-            
-//            CCLOG("==== angel : %.1f ====\n currentPos: %d-%d, targetPos: %d-%d", angel, currentPos.x, currentPos.y, targetPos.x, targetPos.y);
-            direction = kUnitDirection_Left;
-            for (int i = 0; i < UNIT_DIRECTIONS_COUNT; ++i) {
-                if (angel < directionAngelEdge[i]) {
-                    direction = static_cast<UnitDirection>(4 - i);
-                    break;
-                }
-            }
-            
-            // flip if the unit walks rear
-            flip = false;
-            if (deltaX > 5 && _observer) {
-                const bool dx = (targetPos.x - currentPos.x) >= 0;
-                flip = (dx == _isBornOnTheRight);
-            }
+                break;
+                
+            default:
+                break;
         }
-        
-        // get the real flip
-        flip = flip ? !_needToFlip : _needToFlip;
     }
+    
+    return flip;
 }
 
 float UnitNode::calculateHpPercentage()
@@ -540,9 +520,8 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
 
 void UnitNode::addStandbyActionNode()
 {
-    UnitDirection direction(kUnitDirection_Left);
-    bool flip(false);
-    calculateDirectionAndFlip(direction, flip);
+    Unit::Direction direction = _unit->getDirection();
+    bool flip = needToFlip(direction);
     const string& file = getStandbyCsbFile(direction, calculateHpPercentage() > hpPercentageThreshold);
     addActionNode(file, true, true, 0.0f, 0, flip, nullptr);
 }
@@ -593,7 +572,6 @@ void UnitNode::onAttackAnimationFinished()
 
 void UnitNode::reset()
 {
-    _switchAnimationCounter = 0;
     _isPlayingAttackAnimation = false;
     _animationCounter = 0;
     _animationFiles.clear();
@@ -625,9 +603,12 @@ void UnitNode::updateActionNode(const Skill* skill, int frameIndex, bool flip)
                 const string& file = _animationFiles.front();
                 // die
                 if (isDead) {
+                    // the unit might has been destroyed when animation finished,
+                    // so save the unitId before playing the animation
+                    const int unitId = _unit->getUnitId();
                     addActionNode(file, true, false, 0.0f, frameIndex, flip, [=]() {
                         if (_observer) {
-                            _observer->onUnitNodePlayDeadAnimationFinished(_unit->getUnitId());
+                            _observer->onUnitNodePlayDeadAnimationFinished(unitId);
                         }
                     });
                 } else {
@@ -726,14 +707,22 @@ void UnitNode::updateBufs()
 void UnitNode::addBuf(const string& name)
 {
     if (_bufs.find(name) == _bufs.end()) {
-        const Size& size = _sprite->getContentSize();
-        const Point& pos = _sprite->getPosition();
-        Node* buf = CSLoader::createNode(name);
-        buf->setPosition(pos - Point(0, size.height * 0.25f));
-        addChild(buf, -1);
-        cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(name);
-        buf->runAction(action);
-        action->gotoFrameAndPlay(0, true);
+        const SpellConfigData* data = DataManager::getInstance()->getSpellConfigData(name);
+        if (data) {
+            const vector<string>& files = data->getResourceNames();
+            if (files.size() > 0) {
+                const string& file = files.at(0);
+                const Size& size = _sprite->getContentSize();
+                const Point& pos = _sprite->getPosition();
+                Node* buf = CSLoader::createNode(file);
+                buf->setPosition(pos - Point(0, size.height * 0.25f));
+                addChild(buf, -1);
+                cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
+                buf->runAction(action);
+                action->gotoFrameAndPlay(0, true);
+                _bufs.insert(make_pair(name, buf));
+            }
+        }
     }
 }
 
@@ -778,7 +767,14 @@ void UnitNode::updateFeatures()
             const FeatureType* ft = log._featureType;
             if (ft) {
                 const string& renderKey = ft->getRenderKey();
-                addEffect(renderKey);
+                const SpellConfigData* data = DataManager::getInstance()->getSpellConfigData(renderKey);
+                if (data) {
+                    const vector<string>& files = data->getResourceNames();
+                    if (files.size() > 0) {
+                        const string& file = files.at(0);
+                        addEffect(file);
+                    }
+                }
             }
         }
     }

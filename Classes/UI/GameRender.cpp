@@ -128,9 +128,6 @@ void GameRender::updateUnits(const Game* game, int index)
     for (int i = 0; i < units.size(); ++i) {
         Unit* unit = units.at(i);
         const int key = unit->getUnitId();
-        if (_units.find(key) == _units.end()) {
-            _units.insert(make_pair(key, unit));
-        }
         const Coordinate& pos = unit->getCenterPos();
         const Skill* skill = unit->getCurrentSkill();
         // TODO: remove test code
@@ -151,6 +148,16 @@ void GameRender::updateUnits(const Game* game, int index)
                     node->registerObserver(this);
                     _mapLayer->addUnit(node, pos);
                     _allUnitNodes.insert(make_pair(key, node));
+                    
+                    // add existent unit
+                    if (_units.find(key) == _units.end()) {
+                        _units.insert(make_pair(key, unit));
+                    }
+                } else {
+                    if (_units.find(key) != _units.end()) {
+                        assert(false);
+                        _units.erase(key);
+                    }
                 }
             }
         }
@@ -233,7 +240,7 @@ void GameRender::hurtUnit(const Unit* target, const string& trigger)
 #pragma mark - UnitNodeObserver
 void GameRender::onUnitNodeUpdatedFeatures(int unitId)
 {
-    if (_allUnitNodes.find(unitId) != _allUnitNodes.end()) {
+    if (_units.find(unitId) != _units.end()) {
         Unit* unit = _units.at(unitId);
         unit->clearEventLogs();
     }

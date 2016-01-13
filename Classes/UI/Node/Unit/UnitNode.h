@@ -13,12 +13,12 @@
 #include "ui/CocosGUI.h"
 #include "cocostudio/CocoStudio.h"
 #include "CocosGlobal.h"
+#include "Unit.h"
 
 USING_NS_CC;
 using namespace ui;
 
 namespace UnderWorld { namespace Core {
-    class Unit;
     class Skill;
 } }
 
@@ -58,11 +58,11 @@ public:
 protected:
     UnitNode(const UnderWorld::Core::Unit* unit, bool rightSide);
     bool init();
-    void getCsbFiles(std::vector<std::string>& output, UnitDirection direction, bool isHealthy);
-    const std::string getStandbyCsbFile(UnitDirection direction, bool isHealthy);
-    void getAttackCsbFiles(std::vector<std::string>& output, UnitDirection direction, bool isHealthy);
+    void getCsbFiles(std::vector<std::string>& output, UnderWorld::Core::Unit::Direction direction, bool isHealthy);
+    const std::string getStandbyCsbFile(UnderWorld::Core::Unit::Direction direction, bool isHealthy);
+    void getAttackCsbFiles(std::vector<std::string>& output, UnderWorld::Core::Unit::Direction direction, bool isHealthy);
     bool needToChangeStandbyStatus();
-    void calculateDirectionAndFlip(UnitDirection& direction, bool& flip);
+    bool needToFlip(UnderWorld::Core::Unit::Direction direction);
     float calculateHpPercentage();
     void addActionNode(const std::string& file, bool play, bool loop, float playTime, int frameIndex, bool flip, const std::function<void()>& lastFrameCallFunc);
     // standby
@@ -91,7 +91,6 @@ private:
     // --------------- base ---------------
     UnitNodeObserver *_observer;
     const UnderWorld::Core::Unit* _unit;
-    const bool _isBornOnTheRight;
     std::string _unitName;
     bool _isBuilding;
     const URConfigData* _configData;
@@ -108,10 +107,9 @@ private:
     Sprite *_sprite;
     // save last status
     const UnderWorld::Core::Skill* _lastSkill;
-    UnitDirection _lastDirection;
+    UnderWorld::Core::Unit::Direction _lastDirection;
     bool _isLastHealthy;
     bool _isLastFlipped;
-    int _switchAnimationCounter;
     bool _isStandby;
     std::vector<std::string> _animationFiles;
     // only used for attack animations

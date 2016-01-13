@@ -10,17 +10,27 @@
 #define HeroSpellHandler_h
 
 namespace UnderWorld { namespace Core {
-    class Unit;
+    class Spell;
 }}
+
+class HeroSpellHandlerObserver
+{
+public:
+    virtual ~HeroSpellHandlerObserver() {}
+    virtual void onHeroSpellHandlerUpdatingCD(const UnderWorld::Core::Spell* spell) = 0;
+};
 
 class HeroSpellHandler
 {
 public:
-    HeroSpellHandler(UnderWorld::Core::Unit* unit);
+    HeroSpellHandler(UnderWorld::Core::Spell* spell);
     virtual ~HeroSpellHandler();
+    void registerObserver(HeroSpellHandlerObserver *observer);
+    void update();
     
 private:
-    
+    HeroSpellHandlerObserver *_observer;
+    const UnderWorld::Core::Spell* _spell;
 };
 
 #endif /* HeroSpellHandler_h */
