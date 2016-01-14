@@ -24,8 +24,12 @@ class MapLayer : public LayerColor, public cocos2d::extension::ScrollViewDelegat
 public:
     static MapLayer* create(int mapId, const std::string& mapData);
     
+    UnderWorld::Core::Coordinate convertPoint(const Point& layerPoint);
     void addUnit(Node* unit, const UnderWorld::Core::Coordinate& coreCoordinate);
     void repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& coreCoordinate);
+    
+    void updateSpellRangeRing(const Point& layerPoint);
+    void removeSpellRangeRing();
     
     const UnderWorld::Core::MapSetting& getMapSetting() const;
 protected:
@@ -58,7 +62,8 @@ private:
     cocos2d::extension::ScrollView *_scrollView;
     UnderWorld::Core::MapSetting _mapSetting;
     Node* _mainLayer;
-    Node *_butterfly;
+    Node* _spellRing;
+    Node* _butterfly;
     Vec2 _scrollViewOffset;
     bool _isScrolling;
     std::set<ParticleSystemQuad*> _particles;

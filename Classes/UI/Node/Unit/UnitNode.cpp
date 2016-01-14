@@ -774,7 +774,7 @@ void UnitNode::updateFeatures()
             if (dn == kDamageNature_Hurt) {
                 // TODO:
             } else if (dn == kDamageNature_Heal) {
-                static string file("huifu.csb");
+                static string file("huifu-2.csb");
                 addEffect(file);
             }
         } else if (type == Unit::kEventLogType_FeatureTakeEffect) {
@@ -804,7 +804,12 @@ void UnitNode::addHPBar()
         _hpBar = DisplayBar::create(kHP, _unit->getBelongFaction()->getFactionIndex(), _unit->getUnitBase().getUnitClass());
         const Size& size = _sprite->getContentSize();
         const Point& pos = _sprite->getPosition();
-        const Point position(pos + Point(0, size.height / 2 + 10.0f));
+        Point position(Point::ZERO);
+        if (kUnitClass_Building == _unit->getUnitBase().getUnitClass()) {
+            position = pos + Point(0, size.height / 2 - 150.0f);
+        } else {
+            position = pos + Point(pos + Point(0, size.height / 2 + 10.0f));
+        }
         _hpBar->setPosition(convertToNodeSpace(_actionNode->convertToWorldSpace(position)));
         addChild(_hpBar);
     }

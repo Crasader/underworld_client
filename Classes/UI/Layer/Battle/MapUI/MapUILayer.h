@@ -32,6 +32,9 @@ public:
     virtual void onMapUILayerClickedPauseButton() = 0;
     virtual ssize_t onMapUILayerCampsCount() = 0;
     virtual const UnderWorld::Core::Camp* onMapUILayerCampAtIndex(ssize_t idx) = 0;
+    virtual void onMapUILayerSpellRingMoved(ssize_t idx, const Point& position) = 0;
+    virtual void onMapUILayerSpellRingCancelled() = 0;
+    virtual void onMapUILayerTryToCastSpell(ssize_t idx, const Point& position) = 0;
 };
 
 class MapUILayer: public LayerColor, public TableViewDataSource, public MapUIUnitNodeObserver, public DisplayIconNodeObserver
@@ -55,6 +58,9 @@ protected:
     
     // LayerColor
     bool init(const std::string& myAccount, const std::string& opponentsAccount);
+    virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
+    virtual void onTouchMoved(Touch *touch, Event *unused_event) override;
+    virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
     // TableViewDataSource
     virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx) override;
@@ -62,6 +68,7 @@ protected:
     virtual ssize_t numberOfCellsInTableView(TableView *table) override;
     
     // MapUIUnitNodeObserver
+    virtual void onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node) override;
     virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node) override;
     virtual void onMapUIUnitNodeUpdated(MapUIUnitNode* node) override;
     
@@ -69,13 +76,16 @@ protected:
     virtual void onDisplayIconNodeTouchedEnded(int unitId) override;
     
     void onUnitTouched(MapUIUnitNode* node);
+    Rect getTableViewBoundingBox() const;
     
 private:
     MapUILayerObserver *_observer;
     Size _tableViewMaxSize;
     Size _cellSize;
     ssize_t _cellsCount;
-    ssize_t _selectedUnitIdx;
+    ssize_t _touchedCampIdx;
+    bool _isTouchingUnitTableView;
+    ssize_t _selectedIdx;
     // ======================== UI =============================
     TableView *_tableView;
     Label *_timeLabel;

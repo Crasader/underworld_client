@@ -24,6 +24,7 @@ namespace UnderWorld { namespace Core {
     class Game;
     class Commander;
     class Unit;
+    class Camp;
 }}
 
 class GameRenderObserver
@@ -58,6 +59,9 @@ protected:
     virtual void onMapUILayerClickedPauseButton() override;
     virtual ssize_t onMapUILayerCampsCount() override;
     virtual const UnderWorld::Core::Camp* onMapUILayerCampAtIndex(ssize_t idx) override;
+    virtual void onMapUILayerSpellRingMoved(ssize_t idx, const Point& position) override;
+    virtual void onMapUILayerSpellRingCancelled() override;
+    virtual void onMapUILayerTryToCastSpell(ssize_t idx, const Point& position) override;
     
     // VictoryLayerObserver
     virtual void onVictoryLayerClosed(Layer* pSender) override;
@@ -68,7 +72,7 @@ private:
     void updateBullets(const UnderWorld::Core::Game* game);
     void updateUILayer();
     std::string getSpellName(UnderWorld::Core::Unit* unit, int idx);
-    void castSpell(UnderWorld::Core::Unit* unit, const std::string& name);
+    bool castSpell(const UnderWorld::Core::Camp* camp, const UnderWorld::Core::Coordinate& coordinate, UnderWorld::Core::Unit* target);
     void hurtUnit(const UnderWorld::Core::Unit* target, const std::string& trigger);
     void removeUnit(int unitId);
     void removeAllBullets();

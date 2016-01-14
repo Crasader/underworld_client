@@ -86,6 +86,9 @@ bool MapUIUnitNode::init(const Camp* camp, ssize_t idx)
             Widget* button = dynamic_cast<Widget*>(pSender);
             if (type == Widget::TouchEventType::BEGAN) {
                 _touchInvalid = false;
+                if(_observer) {
+                    _observer->onMapUIUnitNodeTouchedBegan(this);
+                }
             } else if (type == Widget::TouchEventType::MOVED) {
                 if (!_touchInvalid && button->getTouchMovePosition().distance(button->getTouchBeganPosition()) > TOUCH_CANCEL_BY_MOVING_DISTANCE) {
                     _touchInvalid = true;

@@ -26,6 +26,7 @@ class MapUIUnitNodeObserver
 {
 public:
     virtual ~MapUIUnitNodeObserver() {}
+    virtual void onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node) = 0;
     virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node) = 0;
     virtual void onMapUIUnitNodeUpdated(MapUIUnitNode* node) = 0;
 };

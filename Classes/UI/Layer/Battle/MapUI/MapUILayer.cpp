@@ -57,7 +57,9 @@ MapUILayer* MapUILayer::create(const string& myAccount, const string& opponentsA
 MapUILayer::MapUILayer()
 :_observer(nullptr)
 ,_cellsCount(3)
-,_selectedUnitIdx(CC_INVALID_INDEX)
+,_touchedCampIdx(CC_INVALID_INDEX)
+,_isTouchingUnitTableView(false)
+,_selectedIdx(CC_INVALID_INDEX)
 ,_tableView(nullptr)
 ,_timeLabel(nullptr)
 ,_nextWaveTimeLabel(nullptr)
@@ -178,7 +180,7 @@ TableViewCell* MapUILayer::tableCellAtIndex(TableView *table, ssize_t idx)
             MapUIUnitNode* unitNode = cell->getUnitNode();
             if (unitNode) {
                 unitNode->reuse(camp, idx);
-                unitNode->setSelected(idx == _selectedUnitIdx);
+                unitNode->setSelected(idx == _touchedCampIdx);
             } else {
                 unitNode = MapUIUnitNode::create(camp, idx);
                 unitNode->setPosition(Point(unitNodeOffsetX, unitNodeOffsetY));
@@ -198,6 +200,11 @@ ssize_t MapUILayer::numberOfCellsInTableView(TableView *table)
 }
 
 #pragma mark - MapUIUnitNodeObserver
+void MapUILayer::onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node)
+{
+    _selectedIdx = node->getIdx();
+}
+
 void MapUILayer::onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node)
 {
     onUnitTouched(node);
@@ -439,14 +446,9 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
-        eventListener->onTouchBegan = [=](Touch *touch, Event *unused_event) {
-            const Point& p = touch->getLocation();
-            if ((_tableView && _tableView->getBoundingBox().containsPoint(p)) ||
-                (_displayIconNode && _displayIconNode->getBoundingBox().containsPoint(p))) {
-                return true;
-            }
-            return false;
-        };
+        eventListener->onTouchBegan = CC_CALLBACK_2(MapUILayer::onTouchBegan, this);
+        eventListener->onTouchMoved = CC_CALLBACK_2(MapUILayer::onTouchMoved, this);
+        eventListener->onTouchEnded = CC_CALLBACK_2(MapUILayer::onTouchEnded, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
         
         return true;
@@ -455,13 +457,56 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
     return false;
 }
 
+bool MapUILayer::onTouchBegan(Touch *touch, Event *unused_event)
+{
+    const Point& p = touch->getLocation();
+    if (_tableView && getTableViewBoundingBox().containsPoint(p)) {
+        _isTouchingUnitTableView = true;
+        return true;
+    } else if (_displayIconNode && _displayIconNode->getBoundingBox().containsPoint(p)) {
+        return true;
+    }
+    
+    return false;
+}
+
+void MapUILayer::onTouchMoved(Touch *touch, Event *unused_event)
+{
+    Point point = touch->getLocation();
+    if (_isTouchingUnitTableView) {
+        if (_observer) {
+            _observer->onMapUILayerSpellRingMoved(_selectedIdx, point);
+        }
+    }
+}
+
+void MapUILayer::onTouchEnded(Touch *touch, Event *unused_event)
+{
+    Point point = touch->getLocation();
+    const Rect& rect = getTableViewBoundingBox();
+    if (_isTouchingUnitTableView) {
+        if (rect.containsPoint(point)) {
+            if (_observer) {
+                _observer->onMapUILayerSpellRingCancelled();
+            }
+        } else {
+            if (_observer) {
+                _observer->onMapUILayerTryToCastSpell(_selectedIdx, point);
+            }
+            
+            _isTouchingUnitTableView = false;
+            _selectedIdx = CC_INVALID_INDEX;
+        }
+    }
+}
+
 #pragma mark private
 void MapUILayer::onUnitTouched(MapUIUnitNode* node)
 {
-    const ssize_t oldIdx = _selectedUnitIdx;
+    const ssize_t oldIdx = _touchedCampIdx;
     const ssize_t newIdx = node->getIdx();
     if (newIdx != oldIdx) {
-        _selectedUnitIdx = newIdx;
+        _touchedCampIdx = newIdx;
         
         if (oldIdx != CC_INVALID_INDEX) {
             _tableView->updateCellAtIndex(oldIdx);
@@ -475,4 +520,9 @@ void MapUILayer::onUnitTouched(MapUIUnitNode* node)
     if (_observer) {
         _observer->onMapUILayerUnitSelected(node);
     }
+}
+
+Rect MapUILayer::getTableViewBoundingBox() const
+{
+    return _tableView->getBoundingBox();
 }
