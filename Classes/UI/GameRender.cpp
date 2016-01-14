@@ -11,6 +11,7 @@
 #include "Map.h"
 #include "Camp.h"
 #include "Unit.h"
+#include "Spell.h"
 #include "SoundManager.h"
 #include "MapLayer.h"
 #include "UnitNode.h"
@@ -128,7 +129,7 @@ void GameRender::updateUnits(const Game* game, int index)
     for (int i = 0; i < units.size(); ++i) {
         Unit* unit = units.at(i);
         const int key = unit->getUnitId();
-        const Coordinate& pos = unit->getCenterPos();
+        const Coordinate& pos = unit->getCenterPos() + Coordinate(0, unit->getUnitBase().getHeight());
         const Skill* skill = unit->getCurrentSkill();
         // TODO: remove test code
         if (skill) {
@@ -149,15 +150,34 @@ void GameRender::updateUnits(const Game* game, int index)
                     _mapLayer->addUnit(node, pos);
                     _allUnitNodes.insert(make_pair(key, node));
                     
-                    // add existent unit
-                    if (_units.find(key) == _units.end()) {
-                        _units.insert(make_pair(key, unit));
+                    if (factionIndex == world->getThisFactionIndex()) {
+                        // add existent unit
+                        if (_myUnits.find(key) == _myUnits.end()) {
+                            _myUnits.insert(make_pair(key, unit));
+                        }
+                        
+                        // add existent hero
+                        const UnitType* unitType = unit->getUnitBase().getUnitType();
+                        const UnitClass unitClass = unitType->getUnitClass();
+                        if (kUnitClass_Hero == unitClass) {
+                            const string& unitName = unitType->getName();
+                            if (_myHeroes.find(unitName) == _myHeroes.end()) {
+                                _myHeroes.insert(make_pair(unitName, map<int, Unit*>()));
+                            }
+                            
+                            map<int, Unit*>& m = _myHeroes.at(unitName);
+                            if (m.find(key) == m.end()) {
+                                m.insert(make_pair(key, unit));
+                            }
+                        }
                     }
                 } else {
-                    if (_units.find(key) != _units.end()) {
+#if COCOS2D_DEBUG
+                    if (_allUnitNodes.find(key) != _allUnitNodes.end()) {
                         assert(false);
-                        _units.erase(key);
+                        removeUnit(key);
                     }
+#endif
                 }
             }
         }
@@ -169,7 +189,7 @@ void GameRender::updateBullets(const Game* game)
     const World* world = game->getWorld();
     for (int i = 0; i < world->getBulletCount(); ++i) {
         const Bullet* bullet = world->getBullet(i);
-        const Coordinate& pos = bullet->getPos();
+        const Coordinate& pos = bullet->getPos() + Coordinate(0, bullet->getHeight());
         const int64_t key = reinterpret_cast<int64_t>(bullet);
         const bool isExploded(bullet->isExploded());
         if (_allBulletNodes.find(key) != _allBulletNodes.end()) {
@@ -215,12 +235,36 @@ void GameRender::updateUILayer()
     }
 }
 
+string GameRender::getSpellName(Unit* unit, int idx)
+{
+    if (unit) {
+        const int cnt = unit->getSpellCount();
+        if (idx < cnt) {
+            const Spell* spell = unit->getSpellByIndex(idx);
+            if (spell) {
+                const SpellType* sp = spell->getSpellType();
+                if (sp) {
+                    return sp->getAlias();
+                }
+            }
+        }
+    }
+    
+    return "";
+}
+
 void GameRender::castSpell(Unit* unit, const string& name)
 {
-    CastCommand* command = dynamic_cast<CastCommand*>(Command::create(kCommandClass_Cast));
-    if (command) {
-        command->setSpellAlias(name);
-        unit->giveCommand(command);
+    const Spell* spell = unit->getSpellByAlias(name);
+    if (spell) {
+        const int cd = spell->getCDProgress();
+        if (cd <= 0) {
+            CastCommand* command = dynamic_cast<CastCommand*>(Command::create(kCommandClass_Cast));
+            if (command) {
+                command->setSpellAlias(name);
+                unit->giveCommand(command);
+            }
+        }
     }
 }
 
@@ -240,8 +284,8 @@ void GameRender::hurtUnit(const Unit* target, const string& trigger)
 #pragma mark - UnitNodeObserver
 void GameRender::onUnitNodeUpdatedFeatures(int unitId)
 {
-    if (_units.find(unitId) != _units.end()) {
-        Unit* unit = _units.at(unitId);
+    if (_myUnits.find(unitId) != _myUnits.end()) {
+        Unit* unit = _myUnits.at(unitId);
         unit->clearEventLogs();
     }
 }
@@ -280,16 +324,44 @@ void GameRender::onMapUILayerUnitSelected(MapUIUnitNode* node)
         if (index < world->getCampCount(factionIndex)) {
             const Camp* camp = world->getCamp(factionIndex, index);
             if (camp) {
-                CommandResult result = _commander->tryGiveCampCommand(camp, 1);
-                if (kCommandResult_suc == result) {
-                    // TODO: replace the temp code with callback from camp
-                    Scheduler *s = Director::getInstance()->getScheduler();
-                    if (s) {
-                        static string key("temp_test_update_MapUIUnitNode");
-                        s->schedule([=](float dt) {
-                            s->unschedule(key, this);
-                            node->update(false);
-                        }, this, 0.1f, false, key);
+                const UnitType* unitType = camp->getUnitType();
+                UnitClass unitClass = unitType->getUnitClass();
+                bool send(true);
+                switch (unitClass) {
+                    case kUnitClass_Hero:
+                        if (camp->getProduction() >= 1) {
+                            send = false;
+                            const string& unitName = camp->getUnitSetting().getUnitTypeName();
+                            if (_myHeroes.find(unitName) != _myHeroes.end()) {
+                                map<int, Unit*>& heroes = _myHeroes.at(unitName);
+                                if (heroes.size() > 0) {
+                                    Unit* hero = heroes.begin()->second;
+                                    if (hero) {
+                                        const string& name = getSpellName(hero, 0);
+                                        if (name.length() > 0) {
+                                            castSpell(hero, name);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                        
+                    default:
+                        break;
+                }
+                if (send) {
+                    CommandResult result = _commander->tryGiveCampCommand(camp, 1);
+                    if (kCommandResult_suc == result) {
+                        // TODO: replace the temp code with callback from camp
+                        Scheduler *s = Director::getInstance()->getScheduler();
+                        if (s) {
+                            static string key("temp_test_update_MapUIUnitNode");
+                            s->schedule([=](float dt) {
+                                s->unschedule(key, this);
+                                node->update(false);
+                            }, this, 0.1f, false, key);
+                        }
                     }
                 }
             }
@@ -337,6 +409,7 @@ void GameRender::onVictoryLayerContinued(Layer* pSender)
     }
 }
 
+#pragma mark - private
 void GameRender::removeUnit(int unitId)
 {
     if (_allUnitNodes.find(unitId) != _allUnitNodes.end()) {
@@ -345,7 +418,18 @@ void GameRender::removeUnit(int unitId)
         _allUnitNodes.erase(unitId);
     }
     
-    _units.erase(unitId);
+    _myUnits.erase(unitId);
+    
+    for (map<string, map<int, Unit*>>::iterator iter = _myHeroes.begin(); iter != _myHeroes.end(); ++iter) {
+        map<int, Unit*>& heroes = iter->second;
+        if (heroes.find(unitId) != heroes.end()) {
+            heroes.erase(unitId);
+            if (heroes.size() == 0) {
+                _myHeroes.erase(iter);
+            }
+            break;
+        }
+    }
 }
 
 void GameRender::removeAllBullets()
@@ -364,7 +448,9 @@ void GameRender::removeAllUnits()
     }
     
     _allUnitNodes.clear();
-    _units.clear();
+    _myUnits.clear();
+    _myHeroes.clear();
+    _cores.clear();
 }
 
 void GameRender::pauseGame()

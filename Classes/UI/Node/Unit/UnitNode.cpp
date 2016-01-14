@@ -19,6 +19,7 @@
 #include "UAConfigData.h"
 #include "URConfigData.h"
 #include "SpellConfigData.h"
+#include "EffectConfigData.h"
 #include "SoundManager.h"
 
 using namespace std;
@@ -706,21 +707,33 @@ void UnitNode::updateBufs()
 
 void UnitNode::addBuf(const string& name)
 {
-    if (_bufs.find(name) == _bufs.end()) {
-        const SpellConfigData* data = DataManager::getInstance()->getSpellConfigData(name);
+    if (_sprite && _bufs.find(name) == _bufs.end()) {
+        DataManager* dm = DataManager::getInstance();
+        const SpellConfigData* data = dm->getSpellConfigData(name);
         if (data) {
             const vector<string>& files = data->getResourceNames();
             if (files.size() > 0) {
                 const string& file = files.at(0);
-                const Size& size = _sprite->getContentSize();
-                const Point& pos = _sprite->getPosition();
-                Node* buf = CSLoader::createNode(file);
-                buf->setPosition(pos - Point(0, size.height * 0.25f));
-                addChild(buf, -1);
-                cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
-                buf->runAction(action);
-                action->gotoFrameAndPlay(0, true);
-                _bufs.insert(make_pair(name, buf));
+                Node* buf = addEffect(file, true);
+                if (buf) {
+                    const Point& basePos = _sprite->getPosition();
+                    const EffectConfigData* ecd = dm->getEffectConfigData(file);
+                    if (ecd) {
+                        // set zOrder
+                        buf->setLocalZOrder(-1);
+                        
+                        // set position
+                        const Point& pos = _configData->getFootEffectPosition();
+                        buf->setPosition(basePos + pos);
+                        // set scale
+                        buf->setScale(_configData->getFootEffectScaleX(), _configData->getFootEffectScaleY());
+                    } else {
+                        const Point& pos = _configData->getBodyEffectPosition();
+                        buf->setPosition(basePos + pos);
+                        buf->setScale(_configData->getBodyEffectScaleX(), _configData->getBodyEffectScaleY());
+                    }
+                    _bufs.insert(make_pair(name, buf));
+                }
             }
         }
     }
@@ -761,7 +774,8 @@ void UnitNode::updateFeatures()
             if (dn == kDamageNature_Hurt) {
                 // TODO:
             } else if (dn == kDamageNature_Heal) {
-                // TODO:
+                static string file("huifu.csb");
+                addEffect(file);
             }
         } else if (type == Unit::kEventLogType_FeatureTakeEffect) {
             const FeatureType* ft = log._featureType;
@@ -834,18 +848,30 @@ void UnitNode::removeShadow()
 Node* UnitNode::addEffect(const string& file)
 {
     if (_sprite) {
-        Node *effect = CSLoader::createNode(file);
+        Node* effect = addEffect(file, false);
         effect->setPosition(_sprite->getPosition());
+        return effect;
+    }
+    
+    return nullptr;
+}
+
+Node* UnitNode::addEffect(const string& file, bool loop)
+{
+    if (file.length() > 0) {
+        Node *effect = CSLoader::createNode(file);
         if (_needToFlip != _isLastFlipped) {
             node_flipX(effect);
         }
         addChild(effect);
         cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
         effect->runAction(action);
-        action->gotoFrameAndPlay(0, false);
-        action->setLastFrameCallFunc([effect]() {
-            effect->removeFromParent();
-        });
+        action->gotoFrameAndPlay(0, loop);
+        if (!loop) {
+            action->setLastFrameCallFunc([effect]() {
+                effect->removeFromParent();
+            });
+        }
         
         return effect;
     }

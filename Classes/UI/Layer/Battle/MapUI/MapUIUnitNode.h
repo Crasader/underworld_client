@@ -48,6 +48,7 @@ protected:
     MapUIUnitNode();
     bool init(const UnderWorld::Core::Camp* camp, ssize_t idx);
     std::string getIconFile(const UnderWorld::Core::Camp* camp) const;
+    bool isHero(const UnderWorld::Core::Camp* camp) const;
     
 private:
     MapUIUnitNodeObserver *_observer;

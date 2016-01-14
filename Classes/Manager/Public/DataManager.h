@@ -25,6 +25,7 @@ class GearSetLocalData;
 class URConfigData;
 class MapParticleConfigData;
 class SpellConfigData;
+class EffectConfigData;
 class ArtifactLocalData;
 class ArtifactUpgradeData;
 class AttributeLocalData;
@@ -63,6 +64,7 @@ public:
     const URConfigData* getURConfigData(const std::string& name) const;
     const std::vector<MapParticleConfigData*>& getMapParticleConfigData(int mapId) const;
     const SpellConfigData* getSpellConfigData(const std::string& name) const;
+    const EffectConfigData* getEffectConfigData(const std::string& name) const;
     
     // ---------- artifact ----------
     const ArtifactLocalData* getArtifactData(int id) const;
@@ -108,6 +110,7 @@ protected:
     void parseURConfigData();
     void parseMapParticleConfigData();
     void parseSpellConfigData();
+    void parseEffectConfigData();
     void parseArtifactData();
     void parseArtifactUpgradeData();
     void parseAttributeData();
@@ -136,6 +139,7 @@ private:
     std::map<std::string, URConfigData*> _unitResourceConfigData;
     std::map<int, std::vector<MapParticleConfigData*>> _mapParticleConfigData;
     std::map<std::string, SpellConfigData*> _spellConfigData;
+    std::map<std::string, EffectConfigData*> _effectConfigData;
     std::map<int, ArtifactLocalData*> _artifacts;
     std::map<std::string, ArtifactUpgradeData*> _artifactUpgradeData;
     std::map<int, AttributeLocalData*> _attributes;

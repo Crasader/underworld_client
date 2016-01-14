@@ -10,6 +10,9 @@
 #define URConfigData_h
 
 #include <iostream>
+#include "cocos2d.h"
+
+USING_NS_CC;
 
 namespace tinyxml2 { class XMLElement; }
 
@@ -44,6 +47,14 @@ public:
     const std::string& getHurtSound() const;
     const std::string& getDieSound() const;
     
+    const Point& getBodyEffectPosition() const;
+    float getBodyEffectScaleX() const;
+    float getBodyEffectScaleY() const;
+    
+    const Point& getFootEffectPosition() const;
+    float getFootEffectScaleX() const;
+    float getFootEffectScaleY() const;
+    
 private:
     std::string _name;
     bool _isShortRange;
@@ -65,8 +76,14 @@ private:
     std::string _attckSound;
     std::string _hurtSound;
     std::string _dieSound;
+    
+    Point _bodyEffectPosition;
+    float _bodyEffectScaleX;
+    float _bodyEffectScaleY;
+    
+    Point _footEffectPosition;
+    float _footEffectScaleX;
+    float _footEffectScaleY;
 };
-
-
 
 #endif /* URConfigData_h */

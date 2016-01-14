@@ -175,7 +175,11 @@ void MapUIUnitNode::reuse(const Camp* camp, ssize_t idx)
 void MapUIUnitNode::update(bool reuse)
 {
     if (_camp) {
-        _countLabel->setString(StringUtils::format("%d/%d", _camp->getProduction(), _camp->getMaxProduction()));
+        const bool show = !isHero(_camp);
+        _countLabel->setVisible(show);
+        if (show) {
+            _countLabel->setString(StringUtils::format("%d/%d", _camp->getProduction(), _camp->getMaxProduction()));
+        }
         
         const map<string, int>* costs = _camp->getCosts();
         if (costs) {
@@ -231,4 +235,14 @@ string MapUIUnitNode::getIconFile(const Camp* camp) const
     const URConfigData* configData = DataManager::getInstance()->getURConfigData(unitName);
     const string& iconFile = configData ? configData->getIcon() : "GameImages/icons/unit/big/icon_w_langdun.png";
     return iconFile;
+}
+
+bool MapUIUnitNode::isHero(const Camp* camp) const
+{
+    const UnitType* unitType = camp->getUnitType();
+    if (kUnitClass_Hero == unitType->getUnitClass()) {
+        return true;
+    }
+    
+    return false;
 }

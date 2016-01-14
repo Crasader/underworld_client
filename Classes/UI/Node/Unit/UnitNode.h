@@ -86,6 +86,7 @@ protected:
     void addShadow();
     void removeShadow();
     Node* addEffect(const std::string& file);
+    Node* addEffect(const std::string& file, bool loop);
     
 private:
     // --------------- base ---------------

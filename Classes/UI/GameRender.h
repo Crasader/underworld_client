@@ -67,6 +67,7 @@ private:
     void updateUnits(const UnderWorld::Core::Game* game, int index);
     void updateBullets(const UnderWorld::Core::Game* game);
     void updateUILayer();
+    std::string getSpellName(UnderWorld::Core::Unit* unit, int idx);
     void castSpell(UnderWorld::Core::Unit* unit, const std::string& name);
     void hurtUnit(const UnderWorld::Core::Unit* target, const std::string& trigger);
     void removeUnit(int unitId);
@@ -91,7 +92,8 @@ private:
     UnderWorld::Core::Commander* _commander;
     std::map<int, UnitNode*> _allUnitNodes;
     std::map<int64_t, BulletNode*> _allBulletNodes;
-    std::map<int, UnderWorld::Core::Unit*> _units;
+    std::map<int, UnderWorld::Core::Unit*> _myUnits;
+    std::map<std::string, std::map<int, UnderWorld::Core::Unit*>> _myHeroes;
     std::map<int, UnderWorld::Core::Unit*> _cores;
     bool _paused;
     bool _isGameOver;
