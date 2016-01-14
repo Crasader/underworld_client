@@ -128,6 +128,7 @@ MapLayer::MapLayer()
 ,_tiledMap(nullptr)
 ,_scrollView(nullptr)
 ,_mainLayer(nullptr)
+,_spellRing(nullptr)
 ,_butterfly(nullptr)
 ,_isScrolling(false)
 {
@@ -335,6 +336,15 @@ void MapLayer::coordinateConvert(const UnderWorld::Core::Coordinate& coreCoordin
     zOrder = 2 * (_height - coreCoordinate.y + 1);
 }
 
+UnderWorld::Core::Coordinate MapLayer::convertPoint(const Point& layerPoint)
+{
+    Point realPoint = (-1) * _scrollView->getContentOffset() + layerPoint;
+    UnderWorld::Core::Coordinate coordinate;
+    coordinate.x = realPoint.x * UnderWorld::Core::Map::TILE_2_ELEMENT_SCALE / _tileWidth;
+    coordinate.y = realPoint.y * UnderWorld::Core::Map::TILE_2_ELEMENT_SCALE / _tileHeight;
+    return coordinate;
+}
+
 void MapLayer::addUnit(Node* unit, const UnderWorld::Core::Coordinate& coreCoordinate)
 {
     Point pos;
@@ -354,6 +364,30 @@ void MapLayer::repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& co
     }
     unit->setPosition(pos);
     reorderChild(unit, zOrder);
+}
+
+void MapLayer::updateSpellRangeRing(const Point& layerPoint)
+{
+    if (!_spellRing) {
+        static const string name("guangquan.csb");
+        _spellRing = CSLoader::createNode(name);
+        timeline::ActionTimeline *action = CSLoader::createTimeline(name);
+        _spellRing->runAction(action);
+        action->gotoFrameAndPlay(0, true);
+        _scrollView->addChild(_spellRing);
+    }
+    
+    Point realPoint = _scrollView->convertToNodeSpace(convertToWorldSpace(layerPoint));
+    _spellRing->setPosition(realPoint);
+}
+
+void MapLayer::removeSpellRangeRing()
+{
+    if (_spellRing) {
+        _spellRing->stopAllActions();
+        _spellRing->removeFromParent();
+        _spellRing = nullptr;
+    }
 }
 
 void MapLayer::onTouchesMoved(const vector<cocos2d::Touch*>& touches, cocos2d::Event *event)

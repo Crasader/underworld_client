@@ -253,19 +253,42 @@ string GameRender::getSpellName(Unit* unit, int idx)
     return "";
 }
 
-void GameRender::castSpell(Unit* unit, const string& name)
+bool GameRender::castSpell(const Camp* camp, const Coordinate& coordinate, Unit* target)
 {
-    const Spell* spell = unit->getSpellByAlias(name);
-    if (spell) {
-        const int cd = spell->getCDProgress();
-        if (cd <= 0) {
-            CastCommand* command = dynamic_cast<CastCommand*>(Command::create(kCommandClass_Cast));
-            if (command) {
-                command->setSpellAlias(name);
-                unit->giveCommand(command);
+    bool full(false);
+    if (camp) {
+        const UnitType* unitType = camp->getUnitType();
+        UnitClass unitClass = unitType->getUnitClass();
+        if (kUnitClass_Hero == unitClass && camp->getProduction() >= 1) {
+            full = true;
+            
+            const string& unitName = camp->getUnitSetting().getUnitTypeName();
+            if (_myHeroes.find(unitName) != _myHeroes.end()) {
+                map<int, Unit*>& heroes = _myHeroes.at(unitName);
+                if (heroes.size() > 0) {
+                    Unit* hero = heroes.begin()->second;
+                    if (hero) {
+                        const string& name = getSpellName(hero, 0);
+                        if (name.length() > 0) {
+                            const Spell* spell = hero->getSpellByAlias(name);
+                            if (spell) {
+                                const int cd = spell->getCDProgress();
+                                if (cd <= 0) {
+                                    CastCommand* command = dynamic_cast<CastCommand*>(Command::create(kCommandClass_Cast, coordinate, target));
+                                    if (command) {
+                                        command->setSpellAlias(name);
+                                        hero->giveCommand(command);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
+    
+    return full;
 }
 
 void GameRender::hurtUnit(const Unit* target, const string& trigger)
@@ -324,33 +347,8 @@ void GameRender::onMapUILayerUnitSelected(MapUIUnitNode* node)
         if (index < world->getCampCount(factionIndex)) {
             const Camp* camp = world->getCamp(factionIndex, index);
             if (camp) {
-                const UnitType* unitType = camp->getUnitType();
-                UnitClass unitClass = unitType->getUnitClass();
-                bool send(true);
-                switch (unitClass) {
-                    case kUnitClass_Hero:
-                        if (camp->getProduction() >= 1) {
-                            send = false;
-                            const string& unitName = camp->getUnitSetting().getUnitTypeName();
-                            if (_myHeroes.find(unitName) != _myHeroes.end()) {
-                                map<int, Unit*>& heroes = _myHeroes.at(unitName);
-                                if (heroes.size() > 0) {
-                                    Unit* hero = heroes.begin()->second;
-                                    if (hero) {
-                                        const string& name = getSpellName(hero, 0);
-                                        if (name.length() > 0) {
-                                            castSpell(hero, name);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        break;
-                        
-                    default:
-                        break;
-                }
-                if (send) {
+                bool full = castSpell(camp, Coordinate::ZERO, nullptr);
+                if (!full) {
                     CommandResult result = _commander->tryGiveCampCommand(camp, 1);
                     if (kCommandResult_suc == result) {
                         // TODO: replace the temp code with callback from camp
@@ -386,12 +384,39 @@ ssize_t GameRender::onMapUILayerCampsCount()
     return world->getCampCount(factionIndex);
 }
 
-const UnderWorld::Core::Camp* GameRender::onMapUILayerCampAtIndex(ssize_t idx)
+const Camp* GameRender::onMapUILayerCampAtIndex(ssize_t idx)
 {
     const World* world = _game->getWorld();
     const int factionIndex = world->getThisFactionIndex();
     const Camp* camp = world->getCamp(factionIndex, (int)idx);
     return camp;
+}
+
+void GameRender::onMapUILayerSpellRingCancelled()
+{
+    if (_mapLayer) {
+        _mapLayer->removeSpellRangeRing();
+    }
+}
+
+void GameRender::onMapUILayerSpellRingMoved(ssize_t idx, const Point& position)
+{
+    if (_mapLayer) {
+        _mapLayer->updateSpellRangeRing(position);
+    }
+}
+
+void GameRender::onMapUILayerTryToCastSpell(ssize_t idx, const Point& position)
+{
+    const Camp* camp = onMapUILayerCampAtIndex(idx);
+    if (camp) {
+        Coordinate coordinate = _mapLayer->convertPoint(position);
+        castSpell(camp, coordinate, nullptr);
+    }
+    
+    if (_mapLayer) {
+        _mapLayer->removeSpellRangeRing();
+    }
 }
 
 #pragma mark - VictoryLayerObserver
