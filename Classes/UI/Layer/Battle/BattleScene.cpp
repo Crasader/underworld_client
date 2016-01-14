@@ -78,7 +78,7 @@ void BattleScene::start(int mapId)
     }
     
     // 1. add map layer
-    string mapSettingXml = "<root> <location_setting index=\"0\" core_location=\"200,400\" building_location=\"1000,600;1700,600\" assemble_location=\"0:500,600;1:600,600\"/> <resource_settings index=\"0\"> <resource_setting resource_name=\"金子\" init_balance=\"300\" init_salary=\"5\" salary_accelerate=\"0\"/> <resource_setting resource_name=\"人口\" init_balance=\"200\" init_salary=\"0\" salary_accelerate=\"0\"/> </resource_settings> <fixed_unit_setting index=\"0\"> </fixed_unit_setting> <location_setting index=\"1\" core_location=\"4300,400\" building_location=\"3600,600;2900,600\" assemble_location=\"0:4100,600;2:4000,600\"/> <resource_settings index=\"1\"> <resource_setting resource_name=\"金子\" init_balance=\"300\" init_salary=\"5\" salary_accelerate=\"0\"/> <resource_setting resource_name=\"人口\" init_balance=\"200\" init_salary=\"0\" salary_accelerate=\"0\"/> </resource_settings> <fixed_unit_setting index=\"1\">  </fixed_unit_setting> </root>";
+    string mapSettingXml = "<root> <location_setting index=\"0\" core_location=\"200,400\" building_location=\"1000,600;1700,600\" assemble_location=\"0:500,600;1:600,600\"/> <resource_settings index=\"0\"> <resource_setting resource_name=\"金子\" init_balance=\"300\" init_salary=\"5\" salary_accelerate=\"0\"/> <resource_setting resource_name=\"人口\" init_balance=\"200\" init_salary=\"0\" salary_accelerate=\"0\"/> </resource_settings> <fixed_unit_setting index=\"0\"> </fixed_unit_setting> <location_setting index=\"1\" core_location=\"4400,400\" building_location=\"3600,600;2900,600\" assemble_location=\"0:4100,600;2:4000,600\"/> <resource_settings index=\"1\"> <resource_setting resource_name=\"金子\" init_balance=\"300\" init_salary=\"5\" salary_accelerate=\"0\"/> <resource_setting resource_name=\"人口\" init_balance=\"200\" init_salary=\"0\" salary_accelerate=\"0\"/> </resource_settings> <fixed_unit_setting index=\"1\">  </fixed_unit_setting> </root>";
     
     _mapLayer = MapLayer::create(mapId, mapSettingXml);
     addChild(_mapLayer);
@@ -106,10 +106,10 @@ void BattleScene::start(int mapId)
 				<bullet speed=\"400\" size=\"0\"/>\
     </skill>\
     </unit>\
-    <unit name=\"狼人箭塔\" class=\"building\" hp=\"1000\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"城甲\" armor=\"500\" attacksight=\"400\" size=\"64\" height=\"100\" render_key=\"狼人箭塔\">\
+    <unit name=\"狼人箭塔\" class=\"building\" hp=\"1000\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"城甲\" armor=\"500\" attacksight=\"400\" size=\"100\" height=\"100\" render_key=\"狼人箭塔\">\
     <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
     <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\"/>\
-    <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"8\" max_damage=\"10\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"400\" fields=\"3\">\
+    <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"80\" max_damage=\"100\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"400\" fields=\"3\">\
 				<bullet speed=\"400\" size=\"0\"/>\
     </skill>\
     </unit>\
@@ -191,7 +191,7 @@ void BattleScene::start(int mapId)
 				<bullet speed=\"400\" size=\"0\"/>\
     </skill>\
     </unit>\
-    <unit name=\"吸血鬼战士\" class=\"warrior\" hp=\"80\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"重甲\" armor=\"800\" armor_preference=\"无甲\" armor_preference_factor=\"1.5f\" attacksight=\"300\" size=\"25\" height=\"100\" cost=\"金子:300;人口:1\" priority=\"0\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" passive_names=\"刚毅_等级1\" render_key=\"吸血鬼战士\">\
+    <unit name=\"吸血鬼战士\" class=\"warrior\" hp=\"50\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"重甲\" armor=\"800\" armor_preference=\"无甲\" armor_preference_factor=\"1.5f\" attacksight=\"300\" size=\"25\" height=\"100\" cost=\"金子:300;人口:1\" priority=\"0\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" passive_names=\"刚毅_等级1\" render_key=\"吸血鬼战士\">\
     <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
     <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
     <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"18\" max_damage=\"22\" deliver_class=\"physical\" damage_distance=\"nearby\" range=\"30\" fields=\"1\">\
@@ -281,7 +281,7 @@ void BattleScene::start(int mapId)
     <passive alias=\"刚毅\" name=\"刚毅_等级1\" level=\"1\" buff_types=\"刚毅_等级1_刚毅效果\"/>\
     <!-- ==========主动技能配置========== -->\
     <!-- 激励 -->\
-    <spell alias=\"激励\" spell_name=\"激励_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"ally\" cast_distance=\"0\" cast_type=\"self\" immediate_elements=\"0,激励_等级1_激励施法效果,1\" preperform=\"0.5\" perform=\"0.0\" cd=\"120.0\" class=\"cast\"/>\
+    <spell alias=\"激励\" spell_name=\"激励_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"ally\" cast_distance=\"0\" cast_type=\"self\" immediate_elements=\"0,激励_等级1_激励施法效果,1\" preperform=\"0.5\" perform=\"0.0\" cd=\"5.0\" class=\"cast\"/>\
     <!-- 治疗 -->\
     <spell alias=\"治疗\" spell_name=\"治疗_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"ally\" cast_distance=\"0\" cast_type=\"unit\" immediate_elements=\"0,治疗_等级1_治疗效果,1\" preperform=\"0.5\" perform=\"0.0\" cd=\"5.0\" class=\"cast\"/>\
     <!-- 狂暴 -->\
