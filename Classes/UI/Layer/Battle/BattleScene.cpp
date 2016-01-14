@@ -78,13 +78,13 @@ void BattleScene::start(int mapId)
     }
     
     // 1. add map layer
-    string mapSettingXml = "<root> <location_setting index=\"0\" core_location=\"400,600\" building_location=\"\" assemble_location=\"0:600,600;2:800,600\"/> <resource_settings index=\"0\"> <resource_setting resource_name=\"金子\" init_balance=\"300\" init_salary=\"5\" salary_accelerate=\"0\"/> <resource_setting resource_name=\"人口\" init_balance=\"200\" init_salary=\"0\" salary_accelerate=\"0\"/> </resource_settings> <fixed_unit_setting index=\"0\"> </fixed_unit_setting> <location_setting index=\"1\" core_location=\"2000,600\" building_location=\"\" assemble_location=\"0:1600,600;2:1200,600\"/> <resource_settings index=\"1\"> <resource_setting resource_name=\"金子\" init_balance=\"300\" init_salary=\"5\" salary_accelerate=\"0\"/> <resource_setting resource_name=\"人口\" init_balance=\"200\" init_salary=\"0\" salary_accelerate=\"0\"/> </resource_settings> <fixed_unit_setting index=\"1\">  </fixed_unit_setting> </root>";
+    string mapSettingXml = "<root> <location_setting index=\"0\" core_location=\"200,400\" building_location=\"1000,600;1700,600\" assemble_location=\"0:500,600;1:600,600\"/> <resource_settings index=\"0\"> <resource_setting resource_name=\"金子\" init_balance=\"300\" init_salary=\"5\" salary_accelerate=\"0\"/> <resource_setting resource_name=\"人口\" init_balance=\"200\" init_salary=\"0\" salary_accelerate=\"0\"/> </resource_settings> <fixed_unit_setting index=\"0\"> </fixed_unit_setting> <location_setting index=\"1\" core_location=\"4300,400\" building_location=\"3600,600;2900,600\" assemble_location=\"0:4100,600;2:4000,600\"/> <resource_settings index=\"1\"> <resource_setting resource_name=\"金子\" init_balance=\"300\" init_salary=\"5\" salary_accelerate=\"0\"/> <resource_setting resource_name=\"人口\" init_balance=\"200\" init_salary=\"0\" salary_accelerate=\"0\"/> </resource_settings> <fixed_unit_setting index=\"1\">  </fixed_unit_setting> </root>";
     
     _mapLayer = MapLayer::create(mapId, mapSettingXml);
     addChild(_mapLayer);
     
     // 2. add map ui layer
-    _render = new GameRender(this, mapId, _mapLayer, "对手的名字");
+    _render = new GameRender(this, mapId, _mapLayer, "吸血鬼军团");
     _render->registerObserver(this);
     
     _sch = new GameScheduler();
@@ -191,7 +191,7 @@ void BattleScene::start(int mapId)
 				<bullet speed=\"400\" size=\"0\"/>\
     </skill>\
     </unit>\
-    <unit name=\"吸血鬼战士\" class=\"warrior\" hp=\"80\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"重甲\" armor=\"800\" armor_preference=\"无甲\" armor_preference_factor=\"1.5f\" attacksight=\"300\" size=\"25\" height=\"100\" cost=\"金子:300;人口:1\" priority=\"0\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" spell_names=\"冲锋_等级1\" render_key=\"吸血鬼战士\">\
+    <unit name=\"吸血鬼战士\" class=\"warrior\" hp=\"80\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"重甲\" armor=\"800\" armor_preference=\"无甲\" armor_preference_factor=\"1.5f\" attacksight=\"300\" size=\"25\" height=\"100\" cost=\"金子:300;人口:1\" priority=\"0\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" passive_names=\"刚毅_等级1\" render_key=\"吸血鬼战士\">\
     <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
     <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
     <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"18\" max_damage=\"22\" deliver_class=\"physical\" damage_distance=\"nearby\" range=\"30\" fields=\"1\">\
@@ -222,13 +222,13 @@ void BattleScene::start(int mapId)
     </skill>\
     <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"60\"/>\
     </unit>\
-    <unit name=\"昆虫学家鲁斯凡\" class=\"hero\" hp=\"200\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"轻甲\" armor=\"500\" attacksight=\"400\" size=\"25\" height=\"100\" cost=\"金子:1000;人口:1\" priority=\"1\" max_level=\"100\" render_key=\"吸血鬼战士\">\
+    <unit name=\"七恶魔拉玛什图\" class=\"hero\" hp=\"200\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"轻甲\" armor=\"500\" attacksight=\"400\" size=\"25\" height=\"100\" cost=\"金子:1000;人口:1\" priority=\"1\" max_level=\"100\" render_key=\"七恶魔拉玛什图\">\
     <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
     <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
     <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"18\" max_damage=\"22\" deliver_class=\"physical\" damage_distance=\"nearby\" range=\"30\" fields=\"1\"/>\
     <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"60\"/>\
     </unit>\
-    <unit name=\"被腐化的科瑞隆\" class=\"warrior\" hp=\"80\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"重甲\" armor=\"700\" armor_preference=\"无甲\" armor_preference_factor=\"2.0f\" attacksight=\"300\" size=\"25\" height=\"100\" cost=\"金子:500;人口:1\" priority=\"1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" render_key=\"吸血鬼弓兵\">\
+    <unit name=\"吸血鬼弓兵\" class=\"warrior\" hp=\"80\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"重甲\" armor=\"700\" armor_preference=\"无甲\" armor_preference_factor=\"2.0f\" attacksight=\"300\" size=\"25\" height=\"100\" cost=\"金子:500;人口:1\" priority=\"1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" render_key=\"吸血鬼弓兵\">\
     <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
     <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
     <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"18\" max_damage=\"22\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"300\" fields=\"1\">\
@@ -236,7 +236,7 @@ void BattleScene::start(int mapId)
     </skill>\
     <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"60\"/>\
     </unit>\
-    <unit name=\"吸血鬼法师2号\" class=\"warrior\" hp=\"40\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"无甲\" armor=\"200\" armor_preference=\"重甲\" armor_preference_factor=\"1.5f\" attacksight=\"300\" size=\"25\" height=\"100\" cost=\"金子:300;人口:1\" priority=\"1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" passive_names=\"血雾_等级1\" render_key=\"吸血鬼巫师\">\
+    <unit name=\"吸血鬼巫师\" class=\"warrior\" hp=\"40\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"无甲\" armor=\"200\" armor_preference=\"重甲\" armor_preference_factor=\"1.5f\" attacksight=\"300\" size=\"25\" height=\"100\" cost=\"金子:300;人口:1\" priority=\"1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" passive_names=\"血雾_等级1\" render_key=\"吸血鬼巫师\">\
     <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
     <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
     <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"18\" max_damage=\"22\" deliver_class=\"magical\" damage_distance=\"faraway\" range=\"300\" fields=\"3\">\
@@ -311,7 +311,7 @@ void BattleScene::start(int mapId)
     </spell_pattern>\
     <!-- 狂暴 -->\
     <spell_pattern name=\"狂暴_等级1_狂暴效果\" class=\"damage_target\" deliver_nature=\"ally\">\
-    <damage damage_value=\"d:target:opposite;type:max_hp;v:0.1f;0\" damage_nature=\"hurt\">\
+    <damage damage_value=\"d:target:owner;type:max_hp;v:0.1f;0\" damage_nature=\"hurt\">\
     <feature type=\"add_buff\" buff_type_name=\"狂暴_等级1_攻速增益效果\" overlay=\"1\"/>\
     </damage>\
     </spell_pattern>\
@@ -329,7 +329,7 @@ void BattleScene::start(int mapId)
     </spell_pattern>\
     <!-- ==========增益减益效果配置========== -->\
     <!-- 激励 -->\
-    <buff name=\"激励_等级1_攻速增益效果\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"15.f\" max_overlay=\"1\" render_key=\"kuangbao\">\
+    <buff name=\"激励_等级1_攻速增益效果\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"15.f\" max_overlay=\"1\" render_key=\"激励\">\
     <buff_effect>\
     <buff_effect_description buff_effect_condition=\"immediate\"/>\
     <effect class=\"alter_attr\" alias_name=\"加攻击速度\" attr_name=\"attack_speed\" value=\"p:0.5f\"/>\
@@ -344,14 +344,14 @@ void BattleScene::start(int mapId)
     </effect>\
     </buff_effect>\
     </buff>\
-    <buff name=\"减速弹_等级1_减速减益效果\" deliver_nature=\"enemy\" deliver_class=\"physical\" span_type=\"limited\" span=\"5.f\" max_overlay=\"1\">\
+    <buff name=\"减速弹_等级1_减速减益效果\" deliver_nature=\"enemy\" deliver_class=\"physical\" span_type=\"limited\" span=\"5.f\" max_overlay=\"1\" render_key=\"减速弹\">\
     <buff_effect>\
     <buff_effect_description buff_effect_condition=\"immediate\"/>\
     <effect class=\"alter_attr\" alias_name=\"减移动速度\" attr_name=\"move_speed\" value=\"p:-0.4f\"/>\
     </buff_effect>\
     </buff>\
     <!-- 冲击波 -->\
-    <buff name=\"冲击波_等级1_持有者增益效果\" deliver_nature=\"ally\" deliver_class=\"physical\" span_type=\"eternal\" render_key=\"baolie\">\
+    <buff name=\"冲击波_等级1_持有者增益效果\" deliver_nature=\"ally\" deliver_class=\"physical\" span_type=\"eternal\" render_key=\"冲击波\">\
     <buff_effect>\
     <buff_effect_description buff_effect_condition=\"immediate\"/>\
     <effect class=\"add_feature\" alias_name=\"未分类\">\
@@ -376,7 +376,7 @@ void BattleScene::start(int mapId)
     </buff_effect>\
     </buff>\
     <!-- 全体恢复 -->\
-    <buff name=\"全体恢复_等级1_恢复效果\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"15.f\" max_overlay=\"1\" render_key=\"huifu\">\
+    <buff name=\"全体恢复_等级1_恢复效果\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"15.f\" max_overlay=\"1\" render_key=\"全体恢复\">\
     <buff_effect>\
     <buff_effect_description buff_effect_condition=\"loop\" buff_effect_time=\"3.f\"/>\
     <effect class=\"damage\" alias_name=\"恢复效果\">\
@@ -385,14 +385,14 @@ void BattleScene::start(int mapId)
     </buff_effect>\
     </buff>\
     <!-- 冲锋 -->\
-    <buff name=\"冲锋_等级1_加移动速度\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"15.f\" max_overlay=\"1\" render_key=\"chongfeng\">\
+    <buff name=\"冲锋_等级1_加移动速度\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"15.f\" max_overlay=\"1\" render_key=\"冲锋\">\
     <buff_effect>\
     <buff_effect_description buff_effect_condition=\"immediate\"/>\
-    <effect class=\"alter_attr\" alias_name=\"加移动速度\" attr_name=\"move_speed\" value=\"p:3.0f\"/>\
+    <effect class=\"alter_attr\" alias_name=\"加移动速度\" attr_name=\"move_speed\" value=\"p:2.0f\"/>\
     </buff_effect>\
     </buff>\
     <!-- 血雾 -->\
-    <buff name=\"血雾_等级1_持有者增益效果\" deliver_nature=\"ally\" deliver_class=\"physical\" span_type=\"eternal\" render_key=\"xuewu\">\
+    <buff name=\"血雾_等级1_持有者增益效果\" deliver_nature=\"ally\" deliver_class=\"physical\" span_type=\"eternal\" render_key=\"血雾\">\
     <buff_effect>\
     <buff_effect_description buff_effect_condition=\"immediate\"/>\
     <effect class=\"add_feature\" alias_name=\"未分类\">\
@@ -410,7 +410,7 @@ void BattleScene::start(int mapId)
     </buff_effect>\
     </buff>\
     <!-- 强风护盾 -->\
-    <buff name=\"强风护盾_等级1_强风护盾效果\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"15.f\" max_overlay=\"1\" render_key=\"dun.1\">\
+    <buff name=\"强风护盾_等级1_强风护盾效果\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"15.f\" max_overlay=\"1\" render_key=\"强风护盾\">\
     <buff_effect>\
     <buff_effect_description buff_effect_condition=\"immediate\"/>\
     <effect class=\"add_feature\" alias_name=\"未分类\">\
@@ -419,11 +419,11 @@ void BattleScene::start(int mapId)
     </buff_effect>\
     </buff>\
     <!-- 刚毅 -->\
-    <buff name=\"刚毅_等级1_刚毅效果\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"eternal\" max_overlay=\"1\" render_key=\"dun.2\">\
+    <buff name=\"刚毅_等级1_刚毅效果\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"eternal\" max_overlay=\"1\" render_key=\"刚毅\">\
     <buff_effect>\
     <buff_effect_description buff_effect_condition=\"immediate\"/>\
     <effect class=\"add_feature\" alias_name=\"未分类\">\
-    <feature type=\"tough\" value=\"d:target:opposite;type:max_hp;v:0.1f;0\"/>\
+    <feature type=\"tough\" value=\"d:target:owner;type:max_hp;v:0.1f;0\"/>\
     </effect>\
     </buff_effect>\
     </buff>\
