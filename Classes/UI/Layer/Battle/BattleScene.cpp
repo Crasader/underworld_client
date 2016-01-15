@@ -419,11 +419,11 @@ void BattleScene::start(int mapId)
     </buff_effect>\
     </buff>\
     <!-- 刚毅 -->\
-    <buff name=\"刚毅_等级1_刚毅效果\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"eternal\" max_overlay=\"1\" render_key=\"刚毅\">\
+    <buff name=\"刚毅_等级1_刚毅效果\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"eternal\" max_overlay=\"1\">\
     <buff_effect>\
     <buff_effect_description buff_effect_condition=\"immediate\"/>\
-    <effect class=\"add_feature\" alias_name=\"未分类\">\
-    <feature type=\"tough\" value=\"d:target:owner;type:max_hp;v:0.1f;0\"/>\
+    <effect class=\"add_feature\" alias_name=\"未分类\" >\
+    <feature type=\"tough\" value=\"d:target:owner;type:max_hp;v:0.1f;0\" render_key=\"刚毅\"/>\
     </effect>\
     </buff_effect>\
     </buff>\
