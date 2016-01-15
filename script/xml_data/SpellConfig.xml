@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <root>
 	<item spell_name="激励" resource_name="kuangbao"/>
-	<item spell_name="全体恢复" resource_name="huifu"/>
+	<item spell_name="全体恢复" resource_name="huifu-2"/>
 	<item spell_name="减速弹"/>
 	<item spell_name="冲击波" resource_name="baolie"/>
 	<item spell_name="狂暴" resource_name="jiasu"/>

@@ -59,7 +59,7 @@ MapUILayer::MapUILayer()
 ,_cellsCount(3)
 ,_touchedCampIdx(CC_INVALID_INDEX)
 ,_isTouchingUnitTableView(false)
-,_selectedIdx(CC_INVALID_INDEX)
+,_selectedCamp(nullptr)
 ,_tableView(nullptr)
 ,_timeLabel(nullptr)
 ,_nextWaveTimeLabel(nullptr)
@@ -202,7 +202,7 @@ ssize_t MapUILayer::numberOfCellsInTableView(TableView *table)
 #pragma mark - MapUIUnitNodeObserver
 void MapUILayer::onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node)
 {
-    _selectedIdx = node->getIdx();
+    _selectedCamp = node->getCamp();
 }
 
 void MapUILayer::onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node)
@@ -475,7 +475,7 @@ void MapUILayer::onTouchMoved(Touch *touch, Event *unused_event)
     Point point = touch->getLocation();
     if (_isTouchingUnitTableView) {
         if (_observer) {
-            _observer->onMapUILayerSpellRingMoved(_selectedIdx, point);
+            _observer->onMapUILayerSpellRingMoved(_selectedCamp, point);
         }
     }
 }
@@ -490,12 +490,12 @@ void MapUILayer::onTouchEnded(Touch *touch, Event *unused_event)
                 _observer->onMapUILayerSpellRingCancelled();
             }
         } else {
-            if (_selectedIdx != CC_INVALID_INDEX) {
+            if (_selectedCamp) {
                 if (_observer) {
-                    _observer->onMapUILayerTryToCastSpell(_selectedIdx, point);
+                    _observer->onMapUILayerTryToCastSpell(_selectedCamp, point);
                 }
                 
-                _selectedIdx = CC_INVALID_INDEX;
+                _selectedCamp = nullptr;
             }
             
             _isTouchingUnitTableView = false;

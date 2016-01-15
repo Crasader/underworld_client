@@ -32,9 +32,9 @@ public:
     virtual void onMapUILayerClickedPauseButton() = 0;
     virtual ssize_t onMapUILayerCampsCount() = 0;
     virtual const UnderWorld::Core::Camp* onMapUILayerCampAtIndex(ssize_t idx) = 0;
-    virtual void onMapUILayerSpellRingMoved(ssize_t idx, const Point& position) = 0;
+    virtual void onMapUILayerSpellRingMoved(const UnderWorld::Core::Camp* camp, const Point& position) = 0;
     virtual void onMapUILayerSpellRingCancelled() = 0;
-    virtual void onMapUILayerTryToCastSpell(ssize_t idx, const Point& position) = 0;
+    virtual void onMapUILayerTryToCastSpell(const UnderWorld::Core::Camp* camp, const Point& position) = 0;
 };
 
 class MapUILayer: public LayerColor, public TableViewDataSource, public MapUIUnitNodeObserver, public DisplayIconNodeObserver
@@ -85,7 +85,7 @@ private:
     ssize_t _cellsCount;
     ssize_t _touchedCampIdx;
     bool _isTouchingUnitTableView;
-    ssize_t _selectedIdx;
+    const UnderWorld::Core::Camp* _selectedCamp;
     // ======================== UI =============================
     TableView *_tableView;
     Label *_timeLabel;

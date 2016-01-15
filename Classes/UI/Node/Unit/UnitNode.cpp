@@ -290,6 +290,23 @@ bool UnitNode::init()
     return false;
 }
 
+void UnitNode::setOpacity(GLubyte opacity)
+{
+    Node::setOpacity(opacity);
+    if (_sprite) {
+        _sprite->setOpacity(opacity);
+    }
+}
+
+GLubyte UnitNode::getOpacity() const
+{
+    if (_sprite) {
+        return _sprite->getOpacity();
+    }
+    
+    return Node::getOpacity();
+}
+
 #pragma mark - getters
 void UnitNode::getCsbFiles(vector<string>& output, Unit::Direction direction, bool isHealthy)
 {

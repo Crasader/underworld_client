@@ -392,6 +392,43 @@ void MapLayer::removeSpellRangeRing()
     }
 }
 
+void MapLayer::checkUnitInSpellRangeRing(Node* unit)
+{
+    if (_spellRing) {
+        const Rect& rect = getSpellRangeRingBoundingBox();
+        if (rect.containsPoint(unit->getPosition())) {
+            unit->setOpacity(180);
+        } else {
+            unit->setOpacity(255);
+        }
+    }
+}
+
+void MapLayer::addFireballSpellEffect()
+{
+    if (_spellRing) {
+        static string skyFile("jinenghuoqiu.csb");
+        const Point& targetPos = _spellRing->getPosition();
+        const Size& winSize = Director::getInstance()->getWinSize();
+        static const float offsetY(80.0f);
+        const Point startPos = targetPos + Point(0, _scrollView->convertToNodeSpace(Point(0, winSize.height + offsetY)).y);
+        Node* skyEffecy = addSpellEffect(skyFile, true, startPos);
+        skyEffecy->runAction(Sequence::create(MoveTo::create(1.0f, targetPos + Point(0, offsetY)), CallFunc::create([=] {
+            removeSpellEffect(skyEffecy);
+            static string groundFile("jinenghuoqiukuosan.csb");
+            addSpellEffect(groundFile, false, targetPos);
+        }), nullptr));
+    }
+}
+
+void MapLayer::removeAllSpellEffects()
+{
+    for (set<Node*>::iterator iter = _spellEffects.begin(); iter != _spellEffects.end(); ++iter)
+    {
+        removeSpellEffect(*iter);
+    }
+}
+
 void MapLayer::onTouchesMoved(const vector<cocos2d::Touch*>& touches, cocos2d::Event *event)
 {
 //    Sprite* x = Sprite::create("map/images/tree1.png");
@@ -436,9 +473,11 @@ void MapLayer::addParticle(const MapParticleConfigData* data)
 
 void MapLayer::removeParticle(ParticleSystemQuad* effect)
 {
-    effect->removeFromParent();
-    if (_particles.find(effect) != _particles.end()) {
-        _particles.erase(effect);
+    if (effect) {
+        effect->removeFromParent();
+        if (_particles.find(effect) != _particles.end()) {
+            _particles.erase(effect);
+        }
     }
 }
 
@@ -480,6 +519,39 @@ void MapLayer::addButterfly()
     _butterfly->setPosition(Point(x, y));
 }
 
+Node* MapLayer::addSpellEffect(const string& file, bool loop, const Point& position)
+{
+    if (file.length() > 0) {
+        Node *effect = CSLoader::createNode(file);
+        effect->setPosition(position);
+        _scrollView->addChild(effect);
+        cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
+        effect->runAction(action);
+        action->gotoFrameAndPlay(0, loop);
+        if (!loop) {
+            action->setLastFrameCallFunc([=]() {
+                effect->removeFromParent();
+                removeSpellEffect(effect);
+            });
+        }
+        
+        _spellEffects.insert(effect);
+        
+        return effect;
+    }
+    
+    return nullptr;
+}
+
+void MapLayer::removeSpellEffect(Node* effect)
+{
+    if (effect) {
+        effect->stopAllActions();
+        effect->removeFromParent();
+        _spellEffects.erase(effect);
+    }
+}
+
 void MapLayer::scrollChecking(float dt)
 {
     const Vec2& offset = _scrollView->getContentOffset();
@@ -498,4 +570,23 @@ void MapLayer::scrollChecking(float dt)
             _scheduler->schedule(selector, this, 0.1f, false);
         }
     }
+}
+
+Rect MapLayer::getSpellRangeRingBoundingBox() const
+{
+    if (_spellRing) {
+        const Vector<Node*>& children = _spellRing->getChildren();
+        if (children.size() > 0) {
+            Sprite* sprite = dynamic_cast<Sprite*>(children.at(0));
+            if (sprite) {
+                Point origin(_spellRing->getPosition());
+                const Size& size = sprite->getContentSize();
+                origin.x = origin.x - size.width / 2;
+                origin.y = origin.y - size.height / 2;
+                return Rect(origin, size);
+            }
+        }
+    }
+    
+    return Rect::ZERO;
 }

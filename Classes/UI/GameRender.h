@@ -59,9 +59,9 @@ protected:
     virtual void onMapUILayerClickedPauseButton() override;
     virtual ssize_t onMapUILayerCampsCount() override;
     virtual const UnderWorld::Core::Camp* onMapUILayerCampAtIndex(ssize_t idx) override;
-    virtual void onMapUILayerSpellRingMoved(ssize_t idx, const Point& position) override;
+    virtual void onMapUILayerSpellRingMoved(const UnderWorld::Core::Camp* camp, const Point& position) override;
     virtual void onMapUILayerSpellRingCancelled() override;
-    virtual void onMapUILayerTryToCastSpell(ssize_t idx, const Point& position) override;
+    virtual void onMapUILayerTryToCastSpell(const UnderWorld::Core::Camp* camp, const Point& position) override;
     
     // VictoryLayerObserver
     virtual void onVictoryLayerClosed(Layer* pSender) override;
@@ -71,8 +71,11 @@ private:
     void updateUnits(const UnderWorld::Core::Game* game, int index);
     void updateBullets(const UnderWorld::Core::Game* game);
     void updateUILayer();
-    std::string getSpellName(UnderWorld::Core::Unit* unit, int idx);
-    bool castSpell(const UnderWorld::Core::Camp* camp, const UnderWorld::Core::Coordinate& coordinate, UnderWorld::Core::Unit* target);
+    bool isCampFull(const UnderWorld::Core::Camp* camp) const;
+    UnderWorld::Core::Spell* getSpell(const UnderWorld::Core::Camp* camp, int idx, UnderWorld::Core::Unit** trigger) const;
+    UnderWorld::Core::SpellCastType getSpellCastType(const UnderWorld::Core::Camp* camp, int idx) const;
+    bool canCastSpell(const UnderWorld::Core::Camp* camp, std::string& spellAlias, UnderWorld::Core::Unit** trigger) const;
+    void castSpell(const UnderWorld::Core::Camp* camp, const UnderWorld::Core::Coordinate& coordinate, UnderWorld::Core::Unit* target);
     void hurtUnit(const UnderWorld::Core::Unit* target, const std::string& trigger);
     void removeUnit(int unitId);
     void removeAllBullets();

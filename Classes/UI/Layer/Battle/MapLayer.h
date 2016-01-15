@@ -30,8 +30,12 @@ public:
     
     void updateSpellRangeRing(const Point& layerPoint);
     void removeSpellRangeRing();
+    void checkUnitInSpellRangeRing(Node* unit);
     
     const UnderWorld::Core::MapSetting& getMapSetting() const;
+    
+    void addFireballSpellEffect();
+    void removeAllSpellEffects();
 protected:
     virtual ~MapLayer();
     MapLayer();
@@ -51,7 +55,11 @@ protected:
     void addParticle(const MapParticleConfigData* data);
     void removeParticle(ParticleSystemQuad* effect);
     void addButterfly();
+    Node* addSpellEffect(const std::string& file, bool loop, const Point& position);
+    void removeSpellEffect(Node* effect);
     void scrollChecking(float dt);
+    
+    Rect getSpellRangeRingBoundingBox() const;
 private:
     int _mapId;
     int _width;
@@ -67,6 +75,8 @@ private:
     Vec2 _scrollViewOffset;
     bool _isScrolling;
     std::set<ParticleSystemQuad*> _particles;
+    std::set<Node*> _nodesInTheRing;
+    std::set<Node*> _spellEffects;
 };
 
 #endif /* MapLayer_h */

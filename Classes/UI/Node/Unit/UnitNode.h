@@ -57,7 +57,9 @@ public:
     
 protected:
     UnitNode(const UnderWorld::Core::Unit* unit, bool rightSide);
-    bool init();
+    virtual bool init() override;
+    virtual void setOpacity(GLubyte opacity) override;
+    virtual GLubyte getOpacity() const override;
     void getCsbFiles(std::vector<std::string>& output, UnderWorld::Core::Unit::Direction direction, bool isHealthy);
     const std::string getStandbyCsbFile(UnderWorld::Core::Unit::Direction direction, bool isHealthy);
     void getAttackCsbFiles(std::vector<std::string>& output, UnderWorld::Core::Unit::Direction direction, bool isHealthy);

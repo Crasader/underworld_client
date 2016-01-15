@@ -138,8 +138,11 @@ void GameRender::updateUnits(const Game* game, int index)
                 // already exist, update it
                 UnitNode* node = _allUnitNodes.at(key);
                 node->update();
-                if (kSkillClass_Move == sc) {
-                    _mapLayer->repositionUnit(node, pos);
+                if (_mapLayer) {
+                    if (kSkillClass_Move == sc) {
+                        _mapLayer->repositionUnit(node, pos);
+                    }
+                    _mapLayer->checkUnitInSpellRangeRing(node);
                 }
             } else {
                 if (kSkillClass_Die != sc) {
@@ -244,60 +247,93 @@ void GameRender::updateUILayer()
     }
 }
 
-string GameRender::getSpellName(Unit* unit, int idx)
+bool GameRender::isCampFull(const Camp* camp) const
 {
-    if (unit) {
-        const int cnt = unit->getSpellCount();
-        if (idx < cnt) {
-            const Spell* spell = unit->getSpellByIndex(idx);
-            if (spell) {
-                const SpellType* sp = spell->getSpellType();
-                if (sp) {
-                    return sp->getAlias();
-                }
+    if (camp) {
+        const int production = camp->getProduction();
+        if (production >= camp->getMaxProduction()) {
+            return true;
+        } else {
+            const UnitType* unitType = camp->getUnitType();
+            UnitClass unitClass = unitType->getUnitClass();
+            if (kUnitClass_Hero == unitClass && production >= 1) {
+                return true;
             }
         }
     }
     
-    return "";
+    return false;
 }
 
-bool GameRender::castSpell(const Camp* camp, const Coordinate& coordinate, Unit* target)
+Spell* GameRender::getSpell(const Camp* camp, int idx, Unit** trigger) const
 {
-    bool full(false);
     if (camp) {
-        const UnitType* unitType = camp->getUnitType();
-        UnitClass unitClass = unitType->getUnitClass();
-        if (kUnitClass_Hero == unitClass && camp->getProduction() >= 1) {
-            full = true;
-            
-            const string& unitName = camp->getUnitSetting().getUnitTypeName();
-            if (_myHeroes.find(unitName) != _myHeroes.end()) {
-                map<int, Unit*>& heroes = _myHeroes.at(unitName);
-                if (heroes.size() > 0) {
-                    Unit* hero = heroes.begin()->second;
-                    if (hero) {
-                        const string& name = getSpellName(hero, 0);
-                        if (name.length() > 0) {
-                            const Spell* spell = hero->getSpellByAlias(name);
-                            if (spell) {
-                                const int cd = spell->getCDProgress();
-                                if (cd <= 0) {
-                                    CastCommand* command = dynamic_cast<CastCommand*>(Command::create(kCommandClass_Cast, coordinate, target));
-                                    if (command) {
-                                        command->setSpellAlias(name);
-                                        hero->giveCommand(command);
-                                    }
-                                }
-                            }
-                        }
+        const string& unitName = camp->getUnitSetting().getUnitTypeName();
+        if (_myHeroes.find(unitName) != _myHeroes.end()) {
+            const map<int, Unit*>& heroes = _myHeroes.at(unitName);
+            if (heroes.size() > 0) {
+                Unit* hero = heroes.begin()->second;
+                if (hero) {
+                    const int cnt = hero->getSpellCount();
+                    if (idx < cnt) {
+                        *trigger = hero;
+                        return hero->getSpellByIndex(idx);
                     }
                 }
             }
         }
     }
     
-    return full;
+    return nullptr;
+}
+
+SpellCastType GameRender::getSpellCastType(const Camp* camp, int idx) const
+{
+    Unit* trigger(nullptr);
+    Spell* spell = getSpell(camp, idx, &trigger);
+    if (spell) {
+        const SpellCastType castType = spell->getSpellType()->getCastType();
+        return castType;
+    }
+    
+    return SPELL_CAST_TYPE_COUNT;
+}
+
+bool GameRender::canCastSpell(const Camp* camp, string& spellAlias, Unit** trigger) const
+{
+    Spell* spell = getSpell(camp, 0, trigger);
+    if (spell) {
+        const SpellType* sp = spell->getSpellType();
+        if (sp) {
+            Unit* hero = *trigger;
+            if (hero) {
+                spellAlias = sp->getAlias();
+                const int cd = spell->getCDProgress();
+                if (cd <= 0) {
+                    return true;
+                }
+            }
+        }
+    }
+    
+    return false;
+}
+
+void GameRender::castSpell(const Camp* camp, const Coordinate& coordinate, Unit* target)
+{
+    string spellAlias;
+    Unit* trigger(nullptr);
+    if (canCastSpell(camp, spellAlias, &trigger)) {
+        CastCommand* command = dynamic_cast<CastCommand*>(Command::create(kCommandClass_Cast, coordinate, target));
+        if (command) {
+            command->setSpellAlias(spellAlias);
+            if (trigger) {
+                trigger->giveCommand(command);
+            } else {
+                assert(false);
+            }
+        }
+    }
 }
 
 void GameRender::hurtUnit(const Unit* target, const string& trigger)
@@ -356,8 +392,12 @@ void GameRender::onMapUILayerUnitSelected(MapUIUnitNode* node)
         if (index < world->getCampCount(factionIndex)) {
             const Camp* camp = world->getCamp(factionIndex, index);
             if (camp) {
-                bool full = castSpell(camp, Coordinate::ZERO, nullptr);
-                if (!full) {
+                if (isCampFull(camp)) {
+                    SpellCastType castType = getSpellCastType(camp, 0);
+                    if (kSpellCastType_Self == castType) {
+                        castSpell(camp, Coordinate::ZERO, nullptr);
+                    }
+                } else {
                     CommandResult result = _commander->tryGiveCampCommand(camp, 1);
                     if (kCommandResult_suc == result) {
                         // TODO: replace the temp code with callback from camp
@@ -408,20 +448,37 @@ void GameRender::onMapUILayerSpellRingCancelled()
     }
 }
 
-void GameRender::onMapUILayerSpellRingMoved(ssize_t idx, const Point& position)
+void GameRender::onMapUILayerSpellRingMoved(const Camp* camp, const Point& position)
 {
-    if (_mapLayer) {
-        const Point& realPos = _mapLayer->convertToNodeSpace(_mapUILayer->convertToWorldSpace(position));
-        _mapLayer->updateSpellRangeRing(realPos);
+    SpellCastType castType = getSpellCastType(camp, 0);
+    if (kSpellCastType_Position == castType ||
+        kSpellCastType_PositionOrUnit == castType) {
+        string spellAlias;
+        Unit* trigger(nullptr);
+        if (canCastSpell(camp, spellAlias, &trigger)) {
+            if (_mapLayer) {
+                const Point& realPos = _mapLayer->convertToNodeSpace(_mapUILayer->convertToWorldSpace(position));
+                _mapLayer->updateSpellRangeRing(realPos);
+            }
+        }
     }
 }
 
-void GameRender::onMapUILayerTryToCastSpell(ssize_t idx, const Point& position)
+void GameRender::onMapUILayerTryToCastSpell(const Camp* camp, const Point& position)
 {
-    const Camp* camp = onMapUILayerCampAtIndex(idx);
-    if (camp) {
-        Coordinate coordinate = _mapLayer->convertPoint(position);
-        castSpell(camp, coordinate, nullptr);
+    Unit* trigger(nullptr);
+    Spell* spell = getSpell(camp, 0, &trigger);
+    if (spell) {
+        SpellCastType castType = spell->getSpellType()->getCastType();
+        if (kSpellCastType_Position == castType) {
+            Coordinate coordinate = _mapLayer->convertPoint(position);
+            castSpell(camp, coordinate, nullptr);
+            if (spell->getSpellName().find("火球术") != string::npos) {
+                if (_mapLayer) {
+                    _mapLayer->addFireballSpellEffect();
+                }
+            }
+        }
     }
     
     if (_mapLayer) {
@@ -474,6 +531,7 @@ void GameRender::removeAllBullets()
     }
     
     _allBulletNodes.clear();
+    _bulletParams.clear();
 }
 
 void GameRender::removeAllUnits()

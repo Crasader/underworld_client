@@ -123,7 +123,7 @@ void BattleScene::start(int mapId)
     <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"60\"/>\
     </unit>\
     <!-- 法师英雄 -->\
-    <unit name=\"狼人森林之魂\" class=\"hero\" hp=\"200\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"无甲\" armor=\"100\" armor_preference=\"重甲\" armor_preference_factor=\"1.5f\" magical_defense=\"0.25f\" attacksight=\"400\" size=\"25\" height=\"0\" cost=\"金子:50;人口:1\" priority=\"1\" max_level=\"100\" spell_names=\"全体恢复_等级1\" render_key=\"狼人森林之魂\">\
+    <unit name=\"狼人森林之魂\" class=\"hero\" hp=\"200\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"无甲\" armor=\"100\" armor_preference=\"重甲\" armor_preference_factor=\"1.5f\" magical_defense=\"0.25f\" attacksight=\"400\" size=\"25\" height=\"0\" cost=\"金子:50;人口:1\" priority=\"1\" max_level=\"100\" spell_names=\"火球术_等级1\" render_key=\"狼人森林之魂\">\
     <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
     <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
     <skill class=\"attack\" preperform=\"1.0\" perform=\"0.0\" cd=\"0.8\" min_damage=\"18\" max_damage=\"22\" deliver_class=\"magical\" damage_distance=\"faraway\" range=\"280\" fields=\"3\">\
