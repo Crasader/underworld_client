@@ -490,12 +490,15 @@ void MapUILayer::onTouchEnded(Touch *touch, Event *unused_event)
                 _observer->onMapUILayerSpellRingCancelled();
             }
         } else {
-            if (_observer) {
-                _observer->onMapUILayerTryToCastSpell(_selectedIdx, point);
+            if (_selectedIdx != CC_INVALID_INDEX) {
+                if (_observer) {
+                    _observer->onMapUILayerTryToCastSpell(_selectedIdx, point);
+                }
+                
+                _selectedIdx = CC_INVALID_INDEX;
             }
             
             _isTouchingUnitTableView = false;
-            _selectedIdx = CC_INVALID_INDEX;
         }
     }
 }

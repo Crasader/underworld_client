@@ -55,6 +55,8 @@ public:
     float getFootEffectScaleX() const;
     float getFootEffectScaleY() const;
     
+    float getHpBarPosY() const;
+    
 private:
     std::string _name;
     bool _isShortRange;
@@ -84,6 +86,8 @@ private:
     Point _footEffectPosition;
     float _footEffectScaleX;
     float _footEffectScaleY;
+    
+    float _hpBarPosY;
 };
 
 #endif /* URConfigData_h */

@@ -804,12 +804,11 @@ void UnitNode::addHPBar()
         _hpBar = DisplayBar::create(kHP, _unit->getBelongFaction()->getFactionIndex(), _unit->getUnitBase().getUnitClass());
         const Size& size = _sprite->getContentSize();
         const Point& pos = _sprite->getPosition();
-        Point position(Point::ZERO);
-        if (kUnitClass_Building == _unit->getUnitBase().getUnitClass()) {
-            position = pos + Point(0, size.height / 2 - 150.0f);
-        } else {
-            position = pos + Point(pos + Point(0, size.height / 2 + 10.0f));
+        float offsetY(0);
+        if (_configData) {
+            offsetY = _configData->getHpBarPosY();
         }
+        const Point position(pos + Point(0, size.height / 2 + 10.0f + offsetY));
         _hpBar->setPosition(convertToNodeSpace(_actionNode->convertToWorldSpace(position)));
         addChild(_hpBar);
     }

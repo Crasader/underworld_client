@@ -129,7 +129,7 @@ void GameRender::updateUnits(const Game* game, int index)
     for (int i = 0; i < units.size(); ++i) {
         Unit* unit = units.at(i);
         const int key = unit->getUnitId();
-        const Coordinate& pos = unit->getCenterPos() + Coordinate(0, unit->getUnitBase().getHeight());
+        const Coordinate& pos = unit->getCenterPos();
         const Skill* skill = unit->getCurrentSkill();
         // TODO: remove test code
         if (skill) {
@@ -189,7 +189,9 @@ void GameRender::updateBullets(const Game* game)
     const World* world = game->getWorld();
     for (int i = 0; i < world->getBulletCount(); ++i) {
         const Bullet* bullet = world->getBullet(i);
-        const Coordinate& pos = bullet->getPos() + Coordinate(0, bullet->getHeight());
+        const Coordinate& pos = bullet->getPos();
+        const Coordinate& targetPos = bullet->targetPos();
+        const float distance = sqrt(pow(abs(pos.x- targetPos.x), 2) + pow(abs(pos.y - targetPos.y), 2));
         const int64_t key = reinterpret_cast<int64_t>(bullet);
         const bool isExploded(bullet->isExploded());
         if (_allBulletNodes.find(key) != _allBulletNodes.end()) {
@@ -199,15 +201,22 @@ void GameRender::updateBullets(const Game* game)
             if (isExploded) {
                 node->removeFromParent();
                 _allBulletNodes.erase(key);
+                _bulletParams.erase(key);
             } else {
-                _mapLayer->repositionUnit(node, pos);
+                const pair<float, float>& params = _bulletParams.at(key);
+                const float d1 = params.first;
+                const float h1 = params.second;
+                const float height = h1 * distance / d1;
+                _mapLayer->repositionUnit(node, pos + Coordinate(0, height));
             }
         } else {
             if (!isExploded) {
                 BulletNode* node = BulletNode::create(bullet);
                 node->registerObserver(this);
-                _mapLayer->addUnit(node, pos);
+                const float height = bullet->getHeight();
+                _mapLayer->addUnit(node, pos + Coordinate(0, height));
                 _allBulletNodes.insert(make_pair(key, node));
+                _bulletParams.insert(make_pair(key, make_pair(distance, height)));
             }
         }
     }
@@ -402,7 +411,8 @@ void GameRender::onMapUILayerSpellRingCancelled()
 void GameRender::onMapUILayerSpellRingMoved(ssize_t idx, const Point& position)
 {
     if (_mapLayer) {
-        _mapLayer->updateSpellRangeRing(position);
+        const Point& realPos = _mapLayer->convertToNodeSpace(_mapUILayer->convertToWorldSpace(position));
+        _mapLayer->updateSpellRangeRing(realPos);
     }
 }
 

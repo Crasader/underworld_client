@@ -95,6 +95,7 @@ private:
     const UnderWorld::Core::Game* _game;
     UnderWorld::Core::Commander* _commander;
     std::map<int, UnitNode*> _allUnitNodes;
+    std::map<int64_t, std::pair<float, float>> _bulletParams;
     std::map<int64_t, BulletNode*> _allBulletNodes;
     std::map<int, UnderWorld::Core::Unit*> _myUnits;
     std::map<std::string, std::map<int, UnderWorld::Core::Unit*>> _myHeroes;

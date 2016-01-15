@@ -377,8 +377,10 @@ void MapLayer::updateSpellRangeRing(const Point& layerPoint)
         _scrollView->addChild(_spellRing);
     }
     
-    Point realPoint = _scrollView->convertToNodeSpace(convertToWorldSpace(layerPoint));
-    _spellRing->setPosition(realPoint);
+    Node* container = _scrollView->getContainer();
+    const Point pos = _scrollView->convertToNodeSpace(convertToWorldSpace(layerPoint)) - container->getPosition();
+    const Point realPos = Point(pos.x / container->getScaleX(), pos.y / container->getScaleY());
+    _spellRing->setPosition(realPos);
 }
 
 void MapLayer::removeSpellRangeRing()

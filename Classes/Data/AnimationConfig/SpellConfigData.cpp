@@ -43,7 +43,10 @@ SpellConfigData::SpellConfigData(tinyxml2::XMLElement *xmlElement)
                 Utils::split(v, data, ",");
                 for (int i = 0; i < v.size(); ++i) {
                     const string& name = v.at(i);
-                    if (name.length() > 0) {
+                    const size_t found = name.find_last_of(".");
+                    if (found != string::npos && name.substr(found + 1) == "plist") {
+                        _resourceNames.push_back("particle/" + name);
+                    } else if (name.length() > 0) {
                         _resourceNames.push_back(name + suffix);
                     }
                 }
