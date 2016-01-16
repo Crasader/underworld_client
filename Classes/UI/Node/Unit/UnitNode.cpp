@@ -21,6 +21,7 @@
 #include "SpellConfigData.h"
 #include "EffectConfigData.h"
 #include "SoundManager.h"
+#include "CocosUtils.h"
 
 using namespace std;
 using namespace UnderWorld::Core;
@@ -96,6 +97,7 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
 ,_shadow(nullptr)
 ,_hpBar(nullptr)
 ,_sprite(nullptr)
+,_idLabel(nullptr)
 ,_lastSkill(nullptr)
 ,_lastDirection(static_cast<Unit::Direction>(-1))
 ,_isLastHealthy(true)
@@ -219,6 +221,11 @@ void UnitNode::update()
         updateHPBar();
         updateBufs();
         updateFeatures();
+        if (!_idLabel) {
+//            _idLabel = CocosUtils::createLabel(StringUtils::format("%d", _unit->getUnitId()), 120.f);
+//            this->addChild(_idLabel, 9999);
+            
+        }
     }
 }
 

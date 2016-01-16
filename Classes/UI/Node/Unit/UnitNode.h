@@ -108,6 +108,7 @@ private:
     std::map<std::string, Node*> _bufs;
     DisplayBar* _hpBar;
     Sprite *_sprite;
+    Label *_idLabel;
     // save last status
     const UnderWorld::Core::Skill* _lastSkill;
     UnderWorld::Core::Unit::Direction _lastDirection;
