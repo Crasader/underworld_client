@@ -303,12 +303,21 @@ void MapLayer::removeSpellRangeRing()
 
 void MapLayer::checkUnitInSpellRangeRing(Node* unit)
 {
-    if (_spellRing) {
-        const Rect& rect = getSpellRangeRingBoundingBox();
-        if (rect.containsPoint(unit->getPosition())) {
-            unit->setOpacity(180);
-        } else {
-            unit->setOpacity(255);
+    static GLubyte selectedOpacity(180);
+    static GLubyte normalOpacity(255);
+    bool selected(false);
+    if (_spellRing && getSpellRangeRingBoundingBox().containsPoint(unit->getPosition())) {
+        selected = true;
+    }
+    
+    const GLubyte opacity(unit->getOpacity());
+    if (selected) {
+        if (opacity != selectedOpacity) {
+            unit->setOpacity(selectedOpacity);
+        }
+    } else {
+        if (opacity != normalOpacity) {
+            unit->setOpacity(normalOpacity);
         }
     }
 }

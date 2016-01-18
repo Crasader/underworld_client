@@ -65,7 +65,6 @@ MapUILayer::MapUILayer()
 ,_nextWaveTimeLabel(nullptr)
 ,_energyResourceButton(nullptr)
 ,_populationLabel(nullptr)
-,_unitCostLabel(nullptr)
 ,_myHpProgress(nullptr)
 ,_myHpPercentageLabel(nullptr)
 ,_opponentsHpProgress(nullptr)
@@ -420,11 +419,6 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
         }
         // buttons
         {
-            static const Size size(180, 60);
-            Sprite* sprite = CocosUtils::createPureColorSprite(size, Color4B::ORANGE);
-            _unitCostLabel = CocosUtils::createLabel(StringUtils::format("%d", 100), DEFAULT_FONT_SIZE);
-            _unitCostLabel->setPosition(Point(size.width / 2, size.height / 2));
-            sprite->addChild(_unitCostLabel);
             _pauseMenuItem = MenuItemImage::create("GameImages/test/ui_zt.png", "GameImages/test/ui_zt.png", [this](Ref*) {
                 if (_observer) {
                     _observer->onMapUILayerClickedPauseButton();

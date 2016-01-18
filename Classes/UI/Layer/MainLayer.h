@@ -38,11 +38,14 @@ protected:
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
+    void addLevelButtons();
+    
 private:
     MainLayerObserver *_observer;
     MainUILayer *_uiLayer;
     Node *_mainNode;
     ui::ScrollView *_scrollView;
+    bool _touchInvalid;
 };
 
 #endif /* MainLayer_h */

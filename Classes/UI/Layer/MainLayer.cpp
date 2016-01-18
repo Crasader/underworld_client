@@ -13,6 +13,7 @@
 #include "CocosUtils.h"
 #include "SoundManager.h"
 #include "MainUILayer.h"
+#include "BattleScene.h"
 
 using namespace std;
 using namespace ui;
@@ -44,6 +45,7 @@ MainLayer::MainLayer()
 ,_uiLayer(nullptr)
 ,_mainNode(nullptr)
 ,_scrollView(nullptr)
+,_touchInvalid(false)
 {
     
 }
@@ -92,6 +94,8 @@ bool MainLayer::init()
         _uiLayer = MainUILayer::create();
         addChild(_uiLayer);
         
+        addLevelButtons();
+        
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
         eventListener->onTouchBegan = CC_CALLBACK_2(MainLayer::onTouchBegan, this);
@@ -122,4 +126,35 @@ bool MainLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 void MainLayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
     
+}
+
+void MainLayer::addLevelButtons()
+{
+    static const size_t count(4);
+    static const Vec2 positions[count] = {Vec2(0.5, 0.5), Vec2(0.47, 0.8), Vec2(0.75, 0.5), Vec2(0.8, 0.75)};
+    const Size& size = _mainNode->getContentSize();
+    for (int i = 0; i < count; ++i) {
+        string file = StringUtils::format("GameImages/icons/guanqia/icon_guanka_%d.png", i + 1);
+        Button* button = Button::create(file, file);
+        button->addTouchEventListener([=](Ref* pSender, Widget::TouchEventType type) {
+            Widget* button = dynamic_cast<Widget*>(pSender);
+            if (type == Widget::TouchEventType::BEGAN) {
+                _touchInvalid = false;
+            } else if (type == Widget::TouchEventType::MOVED) {
+                if (!_touchInvalid && button->getTouchMovePosition().distance(button->getTouchBeganPosition()) > TOUCH_CANCEL_BY_MOVING_DISTANCE) {
+                    _touchInvalid = true;
+                }
+            } else if (type == Widget::TouchEventType::ENDED) {
+                if (!_touchInvalid) {
+                    SoundManager::getInstance()->playButtonSound();
+                    // TODO:
+                    SoundManager::getInstance()->playButtonSound();
+                    CocosUtils::replaceScene(BattleScene::create(1 /*button->getTag()*/));
+                }
+            }
+        });
+        button->setPosition(Point(size.width * positions[i].x, size.height * positions[i].y));
+        button->setSwallowTouches(false);
+        _mainNode->addChild(button, 0, i);
+    }
 }

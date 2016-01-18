@@ -14,7 +14,11 @@
 
 USING_NS_CC;
 
-class SoldierData;
+class AbstractData;
+
+namespace UnderWorld { namespace Core {
+    class Unit;
+} }
 
 class UnitInfoNodeObserver
 {
@@ -25,19 +29,38 @@ public:
 class UnitInfoNode : public Node
 {
 public:
-    static UnitInfoNode* create(const SoldierData* data);
+    static UnitInfoNode* create(const AbstractData* data);
+    static UnitInfoNode* create(const UnderWorld::Core::Unit* unit);
+    static UnitInfoNode* create(std::nullptr_t nullp);
     virtual ~UnitInfoNode();
     
     void registerObserver(UnitInfoNodeObserver *observer);
-    void update(const SoldierData* data);
+    void update(const AbstractData* data);
+    void update(const UnderWorld::Core::Unit* unit);
+    void update(std::nullptr_t nullp);
     
 protected:
     UnitInfoNode();
-    bool init(const SoldierData* data);
+    virtual bool init() override;
     
 private:
     UnitInfoNodeObserver *_observer;
-    const SoldierData* _data;
+    const AbstractData* _data;
+    const UnderWorld::Core::Unit* _unit;
+    // top
+    Sprite* _raceIcon;
+    Label* _nameLabel;
+    LabelAtlas* _hpLabel;
+    LabelAtlas* _armorLabel;
+    LabelAtlas* _dmgRateLabel;
+    LabelAtlas* _dmgLabel;
+    LabelAtlas* _dpsLabel;
+    LabelAtlas* _rangeLabel;
+    // bottom
+    Sprite* _skillIcon;
+    LabelAtlas* _skillLevelLabel;
+    Label* _skillNameLabel;
+    Label* _skillDescriptionLabel;
 };
 
 #endif /* UnitInfoNode_h */

@@ -752,8 +752,7 @@ void UnitNode::addBuf(const string& name)
                         // set scale
                         buf->setScale(_configData->getFootEffectScaleX(), _configData->getFootEffectScaleY());
                     } else {
-                        const Point& pos = _configData->getBodyEffectPosition();
-                        buf->setPosition(basePos + pos);
+                        buf->setPosition(basePos/* + _configData->getBodyEffectPosition()*/);
                         buf->setScale(_configData->getBodyEffectScaleX(), _configData->getBodyEffectScaleY());
                     }
                     _bufs.insert(make_pair(name, buf));

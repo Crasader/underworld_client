@@ -102,6 +102,7 @@
 		A1211B271C0BF5CC00C27CCC /* RandomCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B251C0BF5CC00C27CCC /* RandomCreator.cpp */; };
 		A1211B291C0BF68E00C27CCC /* GameConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B281C0BF68E00C27CCC /* GameConstants.cpp */; };
 		A126B0EE1C4767C700586F9B /* EffectConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A126B0EC1C4767C700586F9B /* EffectConfigData.cpp */; };
+		A1270FFF1C4CE724004968C8 /* UnitSimpleInfoNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1270FFD1C4CE724004968C8 /* UnitSimpleInfoNode.cpp */; };
 		A13108A51C046BF900EAAD90 /* particle in Resources */ = {isa = PBXBuildFile; fileRef = A13108A41C046BF900EAAD90 /* particle */; };
 		A14B5EFB1C311908006FB0DB /* Addon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14B5EF91C311908006FB0DB /* Addon.cpp */; };
 		A15698DB1C3A969A00B94345 /* Spell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A15698D91C3A969A00B94345 /* Spell.cpp */; };
@@ -430,6 +431,8 @@
 		A1211B281C0BF68E00C27CCC /* GameConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameConstants.cpp; path = Core/Game/GameConstants.cpp; sourceTree = "<group>"; };
 		A126B0EC1C4767C700586F9B /* EffectConfigData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectConfigData.cpp; sourceTree = "<group>"; };
 		A126B0ED1C4767C700586F9B /* EffectConfigData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectConfigData.h; sourceTree = "<group>"; };
+		A1270FFD1C4CE724004968C8 /* UnitSimpleInfoNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UnitSimpleInfoNode.cpp; sourceTree = "<group>"; };
+		A1270FFE1C4CE724004968C8 /* UnitSimpleInfoNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitSimpleInfoNode.h; sourceTree = "<group>"; };
 		A13108A41C046BF900EAAD90 /* particle */ = {isa = PBXFileReference; lastKnownFileType = folder; path = particle; sourceTree = "<group>"; };
 		A14B5EF91C311908006FB0DB /* Addon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Addon.cpp; path = Core/Unit/Type/Addon.cpp; sourceTree = "<group>"; };
 		A14B5EFA1C311908006FB0DB /* Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Addon.h; path = Core/Unit/Type/Addon.h; sourceTree = "<group>"; };
@@ -1247,6 +1250,8 @@
 				A1DF50EC1C229488001CCFF2 /* TabButton.h */,
 				A1F727F31C3FBD5B002E8776 /* UnitInfoNode.cpp */,
 				A1F727F41C3FBD5B002E8776 /* UnitInfoNode.h */,
+				A1270FFD1C4CE724004968C8 /* UnitSimpleInfoNode.cpp */,
+				A1270FFE1C4CE724004968C8 /* UnitSimpleInfoNode.h */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -1924,6 +1929,7 @@
 				A1D745C31C1AB7C40020BC1C /* VictoryLayer.cpp in Sources */,
 				A1F58D561C32444B00C8A2DD /* SoldierQualityData.cpp in Sources */,
 				A1B4AE001C200480005906A6 /* OnlineUpdater.cpp in Sources */,
+				A1270FFF1C4CE724004968C8 /* UnitSimpleInfoNode.cpp in Sources */,
 				300F25331BFC67550080765C /* FeatureType.cpp in Sources */,
 				A1A74CA81C17DFE800648671 /* MainLayer.cpp in Sources */,
 				3028EBC61BFF0D4800511C51 /* Condition.cpp in Sources */,
