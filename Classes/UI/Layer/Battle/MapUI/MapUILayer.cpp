@@ -13,8 +13,7 @@
 #include "LocalHelper.h"
 #include "MapUIUnitCell.h"
 #include "ResourceButton.h"
-#include "DisplayIconNode.h"
-#include "UnitInfoNode.h"
+#include "CampInfoNode.h"
 #include "SoundManager.h"
 
 using namespace std;
@@ -70,8 +69,6 @@ MapUILayer::MapUILayer()
 ,_opponentsHpProgress(nullptr)
 ,_opponentsHpPercentageLabel(nullptr)
 ,_pauseMenuItem(nullptr)
-,_displayIconNode(nullptr)
-,_unitInfoNode(nullptr)
 {
     static const Size unitNodeSize = MapUIUnitNode::create(nullptr, 0)->getContentSize();
     _cellSize.height = unitNodeSize.height + unitNodeOffsetY * 2;
@@ -110,6 +107,22 @@ void MapUILayer::reload()
                 _tableView->setViewSize(Size(contentWidth, _tableViewMaxSize.height));
             }
         }
+    }
+}
+
+void MapUILayer::insertCampInfo(size_t idx, const vector<pair<const Camp*, const UnitBase*>>& units)
+{
+    if (_campInfoNodes.size() > idx) {
+        CampInfoNode* node = _campInfoNodes.at(idx);
+        node->insert(units);
+    }
+}
+
+void MapUILayer::updateCampInfos(size_t idx)
+{
+    if (_campInfoNodes.size() > idx) {
+        CampInfoNode* node = _campInfoNodes.at(idx);
+        node->update();
     }
 }
 
@@ -212,17 +225,6 @@ void MapUILayer::onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node)
 void MapUILayer::onMapUIUnitNodeUpdated(MapUIUnitNode* node)
 {
     
-}
-
-#pragma mark - DisplayIconNodeObserver
-void MapUILayer::onDisplayIconNodeTouchedEnded(int unitId)
-{
-    if (_unitInfoNode) {
-        _unitInfoNode->update(nullptr);
-    } else {
-        _unitInfoNode = UnitInfoNode::create(nullptr);
-        addChild(_unitInfoNode);
-    }
 }
 
 #pragma mark -
@@ -431,11 +433,21 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             root->addChild(menu);
         }
         
-        const Point displayIconPos(-winSize.width / 2, winSize.height / 2);
-        _displayIconNode = DisplayIconNode::create(true, displayIconPos);
-        _displayIconNode->registerObserver(this);
-        _displayIconNode->setPosition(displayIconPos);
-        root->addChild(_displayIconNode);
+        {
+            CampInfoNode* campInfoNode = CampInfoNode::create(false);
+            campInfoNode->registerObserver(this);
+            const Size& size = campInfoNode->getContentSize();
+            const float height = winSize.height / 2 - size.height / 2;
+            campInfoNode->setPosition(Point(0, height));
+            root->addChild(campInfoNode);
+            _campInfoNodes.push_back(campInfoNode);
+            
+            campInfoNode = CampInfoNode::create(true);
+            campInfoNode->registerObserver(this);
+            campInfoNode->setPosition(Point(winSize.width - size.width, height));
+            root->addChild(campInfoNode);
+            _campInfoNodes.push_back(campInfoNode);
+        }
 #endif
         
         auto eventListener = EventListenerTouchOneByOne::create();
@@ -457,8 +469,19 @@ bool MapUILayer::onTouchBegan(Touch *touch, Event *unused_event)
     if (_tableView && getTableViewBoundingBox().containsPoint(p)) {
         _isTouchingUnitTableView = true;
         return true;
-    } else if (_displayIconNode && _displayIconNode->getBoundingBox().containsPoint(p)) {
-        return true;
+    } else {
+        for (int i = 0; i < _campInfoNodes.size(); ++i) {
+            CampInfoNode* node = _campInfoNodes.at(i);
+            if (node) {
+                const Rect& bb = node->getIconsBoundingBox();
+                Rect boundingBox(Rect::ZERO);
+                boundingBox.origin = convertToNodeSpace(node->convertToWorldSpace(bb.origin));
+                boundingBox.size = bb.size;
+                if (boundingBox.containsPoint(p)) {
+                    return true;
+                }
+            }
+        }
     }
     
     return false;

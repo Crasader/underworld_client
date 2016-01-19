@@ -12,13 +12,14 @@
 #include "cocos2d.h"
 #include "cocos-ext.h"
 #include "MapUIUnitNode.h"
-#include "DisplayIconNode.h"
+#include "CampInfoNode.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
 
 namespace UnderWorld { namespace Core {
     class Camp;
+    class Unit;
 }}
 
 class ResourceButton;
@@ -37,13 +38,15 @@ public:
     virtual void onMapUILayerTryToCastSpell(const UnderWorld::Core::Camp* camp, const Point& position) = 0;
 };
 
-class MapUILayer: public LayerColor, public TableViewDataSource, public MapUIUnitNodeObserver, public DisplayIconNodeObserver
+class MapUILayer: public LayerColor, public TableViewDataSource, public MapUIUnitNodeObserver, public CampInfoNodeObserver
 {
 public:
     static MapUILayer* create(const std::string& myAccount, const std::string& opponentsAccount);
     virtual ~MapUILayer();
     void registerObserver(MapUILayerObserver *observer);
     void reload();
+    void insertCampInfo(size_t idx, const std::vector<std::pair<const UnderWorld::Core::Camp*, const UnderWorld::Core::UnitBase*>>& units);
+    void updateCampInfos(size_t idx);
     void updateMyHpProgress(int progress);
     void updateOpponentsHpProgress(int progress);
     void updateWaveTime(int time);
@@ -72,9 +75,6 @@ protected:
     virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node) override;
     virtual void onMapUIUnitNodeUpdated(MapUIUnitNode* node) override;
     
-    // DisplayIconNodeObserver
-    virtual void onDisplayIconNodeTouchedEnded(int unitId) override;
-    
     void onUnitTouched(MapUIUnitNode* node);
     Rect getTableViewBoundingBox() const;
     
@@ -97,8 +97,7 @@ private:
     ProgressTimer *_opponentsHpProgress;
     Label *_opponentsHpPercentageLabel;
     MenuItem *_pauseMenuItem;
-    DisplayIconNode *_displayIconNode;
-    UnitInfoNode *_unitInfoNode;
+    std::vector<CampInfoNode*> _campInfoNodes;
     // ======================== test =============================
 };
 
