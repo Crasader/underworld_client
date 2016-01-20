@@ -104,12 +104,11 @@ bool MapUIUnitNode::init(const Camp* camp, ssize_t idx)
         });
         
         if (camp) {
-            const map<string, int>* costs = camp->getCosts();
-            if (costs) {
-                if (costs->find(RES_NAME_GOLD) != costs->end()) {
-                    _resourceButton = ResourceButton::create(false, kResourceType_Gold, costs->at(RES_NAME_GOLD), nullptr);
-                    addChild(_resourceButton);
-                }
+            const map<string, int>& costs = camp->getCosts();
+            if (costs.find(RES_NAME_GOLD) != costs.end()) {
+                _resourceButton = ResourceButton::create(false, kResourceType_Gold, costs.at(RES_NAME_GOLD), nullptr);
+                addChild(_resourceButton);
+
             }
         } else {
             _resourceButton = ResourceButton::create(false, kResourceType_Gold, 100, nullptr);
@@ -184,12 +183,11 @@ void MapUIUnitNode::update(bool reuse)
             _countLabel->setString(StringUtils::format("%d/%d", _camp->getProduction(), _camp->getMaxProduction()));
         }
         
-        const map<string, int>* costs = _camp->getCosts();
-        if (costs) {
-            if (costs->find(RES_NAME_GOLD) != costs->end()) {
-                _resourceButton->setCount(costs->at(RES_NAME_GOLD));
-            }
+        const map<string, int> costs = _camp->getCosts();
+        if (costs.find(RES_NAME_GOLD) != costs.end()) {
+            _resourceButton->setCount(costs.at(RES_NAME_GOLD));
         }
+
     }
     
     if (!reuse) {
