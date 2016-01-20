@@ -342,7 +342,7 @@ void MapLayer::addFireballSpellEffect()
         Node* skyEffecy = addSpellEffect(skyFile, true, startPos);
         skyEffecy->runAction(Sequence::create(MoveTo::create(1.0f, targetPos + Point(0, offsetY)), CallFunc::create([=] {
             removeSpellEffect(skyEffecy);
-            static string groundFile("jinenghuoqiukuosan.csb");
+            static string groundFile("jinenghuoqiukuosan-1.csb");
             addSpellEffect(groundFile, false, targetPos);
         }), nullptr));
     }
