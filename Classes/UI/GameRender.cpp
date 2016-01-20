@@ -26,6 +26,7 @@ using namespace std;
 using namespace UnderWorld::Core;
 
 static const string tickSelectorKey("tickSelectorKey");
+static const int startWaveTime(10);
 static const int waveTime(20);
 static const int battleTotalTime(600);
 
@@ -39,8 +40,8 @@ GameRender::GameRender(Scene* scene, int mapId, MapLayer* mapLayer, const string
 ,_commander(nullptr)
 ,_paused(false)
 ,_isGameOver(false)
-,_waveTime(11)  // TODO: reset wave time
 ,_remainingTime(battleTotalTime)
+,_hasUpdatedBattleCampInfos(false)
 {    
     _mapUILayer = MapUILayer::create("我的名字", opponentsAccount);
     _mapUILayer->registerObserver(this);
@@ -52,6 +53,7 @@ GameRender::~GameRender()
     stopAllTimers();
     removeAllUnits();
     removeAllBullets();
+    removeBattleCampInfos();
 }
 
 void GameRender::registerObserver(GameRenderObserver *observer)
@@ -116,6 +118,22 @@ void GameRender::render(const Game* game)
             
             // update ui layer
             updateUILayer();
+            
+            {
+                if (_mapUILayer) {
+                    const int remainingWaveTime = getRemainingWaveTime();
+                    _mapUILayer->updateWaveTime(remainingWaveTime);
+                    _mapUILayer->updateRemainingTime(_remainingTime);
+                    if (waveTime == remainingWaveTime) {
+                        if (!_hasUpdatedBattleCampInfos) {
+                            updateBattleCampInfos();
+                            _hasUpdatedBattleCampInfos = true;
+                        }
+                    } else {
+                        _hasUpdatedBattleCampInfos = false;
+                    }
+                }
+            }
         }
     }
 }
@@ -242,6 +260,47 @@ void GameRender::updateUILayer()
                 } else {
                     _mapUILayer->updateOpponentsHpProgress(percentage);
                 }
+            }
+        }
+    }
+}
+
+void GameRender::updateBattleCampInfos()
+{
+    const World* world = _game->getWorld();
+    const int factionCount = world->getFactionCount();
+    for (int factionIndex = 0; factionIndex < factionCount; ++factionIndex) {
+        if (_battleCampInfos.find(factionIndex) == _battleCampInfos.end()) {
+            _battleCampInfos.insert(make_pair(factionIndex, BattleCampInfos()));
+        }
+        
+        BattleCampInfos& infos = _battleCampInfos.at(factionIndex);
+        const int campCount = world->getCampCount(factionIndex);
+        vector<pair<const Camp*, const UnitBase*>> newAdded;
+        for (int campIndex = 0; campIndex < campCount; ++campIndex) {
+            const Camp* camp = world->getCamp(factionIndex, campIndex);
+            if (camp->getProduction() > 0) {
+                set<const Camp*>& campSet = infos.campSet;
+                if (campSet.find(camp) == campSet.end()) {
+                    infos.campsVector.push_back(camp);
+                    campSet.insert(camp);
+                    
+                    UnitBase* unit = new UnitBase();
+                    if (unit) {
+                        const UnitSetting& us = camp->getUnitSetting();
+                        unit->create(camp->getUnitType(), _game->getWorld(), us.getLevel(), us.getQuality(), us.getTalentLevel());
+                    }
+                    infos.units.insert(make_pair(camp, unit));
+                    newAdded.push_back(make_pair(camp, unit));
+                }
+            }
+        }
+        
+        if (_mapUILayer) {
+            if (newAdded.size() > 0) {
+                _mapUILayer->insertCampInfo(factionIndex, newAdded);
+            } else {
+                _mapUILayer->updateCampInfos(factionIndex);
             }
         }
     }
@@ -546,6 +605,17 @@ void GameRender::removeAllUnits()
     _cores.clear();
 }
 
+void GameRender::removeBattleCampInfos()
+{
+    for (map<int, BattleCampInfos>::iterator iter = _battleCampInfos.begin(); iter != _battleCampInfos.end(); ++iter) {
+        map<const Camp*, UnitBase*>& units = iter->second.units;
+        for (map<const Camp*, UnitBase*>::iterator uIter = units.begin(); uIter != units.end(); ++uIter) {
+            CC_SAFE_DELETE(uIter->second);
+        }
+        
+    }
+}
+
 void GameRender::pauseGame()
 {
     MessageBoxLayer::getInstance()->show(LocalHelper::getString("hint_exitPve"), kMessageBoxYesNo, [](Ref*) {
@@ -569,20 +639,10 @@ void GameRender::tick(float dt)
         return;
     }
     
-    -- _waveTime;
     -- _remainingTime;
-    
-    if (_waveTime <= 0) {
-        _waveTime = waveTime;
-    }
     
     if (_remainingTime <= 0) {
         _remainingTime = 0;
-    }
-    
-    if (_mapUILayer) {
-        _mapUILayer->updateWaveTime(_waveTime);
-        _mapUILayer->updateRemainingTime(_remainingTime);
     }
 }
 
@@ -610,12 +670,21 @@ void GameRender::updateResources()
 void GameRender::initUILayer()
 {
     if (_mapUILayer) {
-        _mapUILayer->updateWaveTime(_waveTime);
+        _mapUILayer->updateWaveTime(startWaveTime);
         _mapUILayer->updateRemainingTime(_remainingTime);
         _mapUILayer->updateMyHpProgress(100);
         _mapUILayer->updateOpponentsHpProgress(100);
         updateResources();
     }
+}
+
+int GameRender::getRemainingWaveTime() const
+{
+    if (_game) {
+        return waveTime - (_game->getWorld()->getClock()->getSecondCount() + startWaveTime) % waveTime;
+    }
+    
+    return 0;
 }
 
 void GameRender::stopAllTimers()

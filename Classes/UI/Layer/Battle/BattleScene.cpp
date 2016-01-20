@@ -484,6 +484,9 @@ void BattleScene::start(int mapId)
         for (int i = 0; i < camp_count; ++i) {
             UnderWorld::Core::UnitSetting us;
             us.setUnitTypeName(camp_names[i]);
+            us.setLevel(0);
+            us.setQuality(0);
+            us.setTalentLevel(0);
             cs[i].setUnitSetting(us);
             cs[i].setMaxProduction(20);
         }
@@ -506,6 +509,9 @@ void BattleScene::start(int mapId)
         for (int i = 0; i < camp_count; ++i) {
             UnderWorld::Core::UnitSetting us;
             us.setUnitTypeName(camp_names[i]);
+            us.setLevel(0);
+            us.setQuality(0);
+            us.setTalentLevel(0);
             cs[i].setUnitSetting(us);
             cs[i].setMaxProduction(5);
         }

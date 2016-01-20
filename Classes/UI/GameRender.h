@@ -71,6 +71,7 @@ private:
     void updateUnits(const UnderWorld::Core::Game* game, int index);
     void updateBullets(const UnderWorld::Core::Game* game);
     void updateUILayer();
+    void updateBattleCampInfos();
     bool isCampFull(const UnderWorld::Core::Camp* camp) const;
     UnderWorld::Core::Spell* getSpell(const UnderWorld::Core::Camp* camp, int idx, UnderWorld::Core::Unit** trigger) const;
     UnderWorld::Core::SpellCastType getSpellCastType(const UnderWorld::Core::Camp* camp, int idx) const;
@@ -80,14 +81,23 @@ private:
     void removeUnit(int unitId);
     void removeAllBullets();
     void removeAllUnits();
+    void removeBattleCampInfos();
     void pauseGame();
     void resumeGame();
     void restartGame();
     void tick(float dt);
     void updateResources();
     void initUILayer();
+    int getRemainingWaveTime() const;
     void stopAllTimers();
     void onGameOver();
+    
+private:
+    struct BattleCampInfos {
+        std::vector<const UnderWorld::Core::Camp*> campsVector;
+        std::set<const UnderWorld::Core::Camp*> campSet;
+        std::map<const UnderWorld::Core::Camp*, UnderWorld::Core::UnitBase*> units;
+    };
     
 private:
     GameRenderObserver *_observer;
@@ -103,10 +113,11 @@ private:
     std::map<int, UnderWorld::Core::Unit*> _myUnits;
     std::map<std::string, std::map<int, UnderWorld::Core::Unit*>> _myHeroes;
     std::map<int, UnderWorld::Core::Unit*> _cores;
+    std::map<int, BattleCampInfos> _battleCampInfos;
     bool _paused;
     bool _isGameOver;
-    int _waveTime;
     int _remainingTime;
+    bool _hasUpdatedBattleCampInfos;
 };
 
 #endif /* GameRender_h */
