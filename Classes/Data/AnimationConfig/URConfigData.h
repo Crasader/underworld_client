@@ -31,6 +31,7 @@ public:
     bool isFaceRight() const;
     const std::string& getIcon() const;
     const std::string& getSmallIcon() const;
+    const std::string& getDisabledIcon() const;
     const std::string& getPrefix() const;
     const std::string& getBNormal() const;
     const std::string& getBDamaged() const;
@@ -63,6 +64,7 @@ private:
     bool _isFaceRight;
     std::string _icon;
     std::string _smallIcon;
+    std::string _disabledIcon;
     std::string _prefix;
     std::string _bNormal;
     std::string _bDamaged;

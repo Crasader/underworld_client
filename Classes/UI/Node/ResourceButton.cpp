@@ -15,9 +15,12 @@ using namespace std;
 using namespace cocostudio;
 
 ResourceButton::ResourceButton()
-:_type(kResourceType_Gold)
+:_animated(false)
+,_needResize(false)
+,_type(kResourceType_Gold)
 ,_count(INVALID_VALUE)
 ,_icon(nullptr)
+,_iconNode(nullptr)
 ,_countLabel(nullptr)
 ,_button(nullptr)
 {
@@ -29,10 +32,10 @@ ResourceButton::~ResourceButton()
     removeAllChildren();
 }
 
-ResourceButton* ResourceButton::create(bool isBigSize, ResourceType type, int count, const Button::ccWidgetClickCallback& callback)
+ResourceButton* ResourceButton::create(bool isBigSize, bool animated, bool needResize, ResourceType type, int count, const Button::ccWidgetClickCallback& callback)
 {
     ResourceButton *p = new (std::nothrow)ResourceButton();
-    if(p && p->init(isBigSize, type, count, callback))
+    if(p && p->init(isBigSize, animated, needResize, type, count, callback))
     {
         p->autorelease();
         return p;
@@ -42,10 +45,13 @@ ResourceButton* ResourceButton::create(bool isBigSize, ResourceType type, int co
     return nullptr;
 }
 
-bool ResourceButton::init(bool isBigSize, ResourceType type, int count, const Button::ccWidgetClickCallback& callback)
+bool ResourceButton::init(bool isBigSize, bool animated, bool needResize, ResourceType type, int count, const Button::ccWidgetClickCallback& callback)
 {
     if(Node::init())
     {
+        _animated = animated;
+        _needResize = needResize;
+        
 #if false
         const string csbFile = isBigSize ? "LevelupButton_UI.csb" : "formationButton_UI.csb";
         Node *bn = CSLoader::createNode(csbFile);
@@ -93,12 +99,19 @@ bool ResourceButton::init(bool isBigSize, ResourceType type, int count, const Bu
         setType(type);
         setContentSize(_button->getContentSize());
 #else
-        _icon = Sprite::create("GameImages/test/icon_glod.png");
+        addIconNode(type);
         _countLabel = CocosUtils::create12x30Number(StringUtils::format("%d", count));
-        addChild(_icon);
         addChild(_countLabel);
         
-        resize();
+        if (needResize) {
+            resize();
+        } else {
+            Node* icon = _animated ? _iconNode : _icon;
+            const Size size(150, 40);
+            setContentSize(size);
+            icon->setPosition(Point(size.width / 4, size.height / 2));
+            _countLabel->setPosition(Point(size.width * 3 / 4, size.height / 2));
+        }
 #endif
         
         return true;
@@ -121,12 +134,8 @@ void ResourceButton::setType(ResourceType type)
 {
     _type = type;
     
-    if (_icon)
-    {
-        string fileName = StringUtils::format("GameImages/resources/%dS.png", type);
-        assert(FileUtils::getInstance()->isFileExist(fileName));
-        _icon->setTexture(fileName);
-    }
+    addIconNode(type);
+    
     resize();
 }
 
@@ -165,25 +174,60 @@ void ResourceButton::setClickEventListener(const Button::ccWidgetClickCallback& 
     }
 }
 
+void ResourceButton::addIconNode(ResourceType type)
+{
+    if (_animated) {
+        Point pos(-1, -1);
+        if (_iconNode) {
+            pos = _icon->getPosition();
+            _iconNode->stopAllActions();
+            _iconNode->removeFromParent();
+            _iconNode = nullptr;
+        }
+        
+        const string& file(StringUtils::format("%d.csb", type));
+        _iconNode = CSLoader::createNode(file);
+        addChild(_iconNode);
+        timeline::ActionTimeline *action = CSLoader::createTimeline(file);
+        _iconNode->runAction(action);
+        action->gotoFrameAndPlay(0, true);
+        
+        if (pos.x > 0) {
+            _iconNode->setPosition(pos);
+        }
+    } else {
+        const string& file(StringUtils::format("GameImages/resources/icon_%dS.png", type));
+        if (_icon) {
+            _icon->setTexture(file);
+        } else {
+            _icon = Sprite::create(file);
+            addChild(_icon);
+        }
+    }
+}
+
 void ResourceButton::resize()
 {
-    if (_button) {
-        const float buttonWidth = _button->getContentSize().width;
-        const float iconWidth = _icon->getContentSize().width;
-        const float labelWidth = _countLabel->getContentSize().width;
-        const float x = buttonWidth / 2 - labelWidth / 2;
-        _icon->setPositionX(x);
-        _countLabel->setPositionX(x + 5.0f + iconWidth / 2 + labelWidth * _countLabel->getAnchorPoint().x);
-    } else {
-        const Size& iconSize = _icon->getContentSize();
-        const Size& labelSize = _countLabel->getContentSize();
-        
-        static const float offsetX = 5.0f;
-        const Size size(iconSize.width + labelSize.width + offsetX, MAX(iconSize.height, labelSize.height));
-        
-        setContentSize(size);
-        
-        _icon->setPosition(Point(iconSize.width / 2, size.height / 2));
-        _countLabel->setPosition(Point(size.width - labelSize.width / 2, size.height / 2));
+    if (_needResize) {
+        if (_button) {
+            const float buttonWidth = _button->getContentSize().width;
+            const float iconWidth = _icon->getContentSize().width;
+            const float labelWidth = _countLabel->getContentSize().width;
+            const float x = buttonWidth / 2 - labelWidth / 2;
+            _icon->setPositionX(x);
+            _countLabel->setPositionX(x + 5.0f + iconWidth / 2 + labelWidth * _countLabel->getAnchorPoint().x);
+        } else {
+            Node* icon = _animated ? _iconNode : _icon;
+            const Size& iconSize = icon->getContentSize();
+            const Size& labelSize = _countLabel->getContentSize();
+            
+            static const float offsetX = 5.0f;
+            const Size size(iconSize.width + labelSize.width + offsetX, MAX(iconSize.height, labelSize.height));
+            
+            setContentSize(size);
+            
+            icon->setPosition(Point(iconSize.width / 2, size.height / 2));
+            _countLabel->setPosition(Point(size.width - labelSize.width / 2, size.height / 2));
+        }
     }
 }

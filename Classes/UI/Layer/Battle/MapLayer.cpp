@@ -29,7 +29,8 @@ static const string TILEDMAP_LAYER_LOGIC = "logic";
 static const string TILEDMAP_LAYER_FOREGROUND = "fg";
 
 MapLayer::MapLayer()
-:_mapId(INVALID_VALUE)
+:_observer(nullptr)
+,_mapId(INVALID_VALUE)
 ,_width(0)
 ,_height(0)
 ,_tileWidth(0)
@@ -212,12 +213,20 @@ bool MapLayer::init(int mapId, const string& mapData)
         _scrollViewOffset = _scrollView->getContentOffset();
         
         //--------- event ---------//
-        auto listener = EventListenerTouchAllAtOnce::create();
-        listener->onTouchesMoved = CC_CALLBACK_2(MapLayer::onTouchesMoved, this);
-        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+        auto eventListener = EventListenerTouchOneByOne::create();
+        eventListener->setSwallowTouches(true);
+        eventListener->onTouchBegan = CC_CALLBACK_2(MapLayer::onTouchBegan, this);
+        eventListener->onTouchMoved = CC_CALLBACK_2(MapLayer::onTouchMoved, this);
+        eventListener->onTouchEnded = CC_CALLBACK_2(MapLayer::onTouchEnded, this);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
         return true;
     }
     return false;
+}
+
+void MapLayer::registerObserver(MapLayerObserver *observer)
+{
+    _observer = observer;
 }
 
 const UnderWorld::Core::MapSetting& MapLayer::getMapSetting() const
@@ -347,10 +356,21 @@ void MapLayer::removeAllSpellEffects()
     }
 }
 
-void MapLayer::onTouchesMoved(const vector<cocos2d::Touch*>& touches, cocos2d::Event *event)
+bool MapLayer::onTouchBegan(Touch *touch, Event *unused_event)
 {
-//    Sprite* x = Sprite::create("map/images/tree1.png");
-//    addUnit(x, UnderWorld::Core::Coordinate(200,30));
+    return true;
+}
+
+void MapLayer::onTouchMoved(Touch *touch, Event *unused_event)
+{
+    
+}
+
+void MapLayer::onTouchEnded(Touch *touch, Event *unused_event)
+{
+    if (_observer) {
+        _observer->onMapLayerTouchEnded();
+    }
 }
 
 void MapLayer::scrollViewDidScroll(cocos2d::extension::ScrollView* view)

@@ -13,12 +13,11 @@
 #include "GameInterface.h"
 #include "UnitNode.h"
 #include "BulletNode.h"
+#include "MapLayer.h"
 #include "MapUILayer.h"
 #include "VictoryLayer.h"
 
 USING_NS_CC;
-
-class MapLayer;
 
 namespace UnderWorld { namespace Core {
     class Game;
@@ -34,7 +33,7 @@ public:
     virtual void onGameRenderRestart() = 0;
 };
 
-class GameRender : public UnderWorld::Core::AbstractRender, public UnitNodeObserver, public BulletNodeObserver, public MapUILayerObserver, public VictoryLayerObserver
+class GameRender : public UnderWorld::Core::AbstractRender, public UnitNodeObserver, public BulletNodeObserver, public MapLayerObserver, public MapUILayerObserver, public VictoryLayerObserver
 {
 public:
     GameRender(Scene* scene, int mapId, MapLayer* mapLayer, const std::string& opponentsAccount);
@@ -53,6 +52,9 @@ protected:
     // BulletNodeObserver
     virtual void onBulletNodeReachedTarget(BulletNode* node) override;
     virtual void onBulletNodeExploded(BulletNode* node) override;
+    
+    // MapLayerObserver
+    virtual void onMapLayerTouchEnded() override;
     
     // MapUILayerObserver
     virtual void onMapUILayerUnitSelected(MapUIUnitNode* node) override;

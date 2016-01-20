@@ -7,7 +7,6 @@
 //
 
 #include "MapUIUnitNode.h"
-#include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "Camp.h"
 #include "ResourceButton.h"
@@ -36,7 +35,6 @@ MapUIUnitNode* MapUIUnitNode::create(const Camp* camp, ssize_t idx)
 MapUIUnitNode::MapUIUnitNode()
 :_observer(nullptr)
 ,_iconButton(nullptr)
-,_resourceButton(nullptr)
 ,_countLabel(nullptr)
 ,_camp(nullptr)
 ,_idx(CC_INVALID_INDEX)
@@ -103,23 +101,26 @@ bool MapUIUnitNode::init(const Camp* camp, ssize_t idx)
             }
         });
         
+        createResourceButton(kResourceType_Gold);
+        createResourceButton(kResourceType_Wood);
+        
         if (camp) {
             const map<string, int>& costs = camp->getCosts();
             if (costs.find(RES_NAME_GOLD) != costs.end()) {
-                _resourceButton = ResourceButton::create(false, kResourceType_Gold, costs.at(RES_NAME_GOLD), nullptr);
-                addChild(_resourceButton);
+                _resourceButtons.at(kResourceType_Gold)->setCount(costs.at(RES_NAME_GOLD));
+            }
+            if (costs.find(RES_NAME_WOOD) != costs.end()) {
+                _resourceButtons.at(kResourceType_Wood)->setCount(costs.at(RES_NAME_WOOD));
             }
 
-        } else {
-            _resourceButton = ResourceButton::create(false, kResourceType_Gold, 100, nullptr);
-            addChild(_resourceButton);
         }
         
         _countLabel = CocosUtils::createLabel("0", DEFAULT_FONT_SIZE);
         addChild(_countLabel);
         
+        ResourceButton* rb = _resourceButtons.at(kResourceType_Gold);
         const float iconHeight = _iconButton->getContentSize().height;
-        const float resourceHeight = _resourceButton->getContentSize().height;
+        const float resourceHeight = rb->getContentSize().height;
         const float countHeight = _countLabel->getContentSize().height;
         static const float offsetY(2.0f);
 #if true
@@ -129,8 +130,8 @@ bool MapUIUnitNode::init(const Camp* camp, ssize_t idx)
         const float x = size.width / 2;
         const float y = size.height / 2;
         _iconButton->setPosition(Point(x, y));
-        _resourceButton->setAnchorPoint(Point::ANCHOR_MIDDLE);
-        _resourceButton->setPosition(Point(x, resourceHeight / 2 + offsetY));
+        rb->setPosition(Point(x, resourceHeight / 2 + offsetY));
+        _resourceButtons.at(kResourceType_Wood)->setPosition(rb->getPosition() + Point(0, resourceHeight));
         _countLabel->setPosition(Point(x, size.height - countHeight / 2 - offsetY));
 #else
         const Size size(_iconButton->getContentSize().width, iconHeight + resourceHeight + countHeight + offsetY * 4);
@@ -184,10 +185,26 @@ void MapUIUnitNode::update(bool reuse)
         }
         
         const map<string, int>& costs = _camp->getCosts();
-        if (costs.find(RES_NAME_GOLD) != costs.end()) {
-            _resourceButton->setCount(costs.at(RES_NAME_GOLD));
+        ResourceButton* goldRB = _resourceButtons.at(kResourceType_Gold);
+        {
+            bool show = costs.find(RES_NAME_GOLD) != costs.end();
+            goldRB->setVisible(show);
+            if (show) {
+                goldRB->setCount(costs.at(RES_NAME_GOLD));
+            }
         }
-
+        {
+            bool show = costs.find(RES_NAME_WOOD) != costs.end();
+            ResourceButton* rb = _resourceButtons.at(kResourceType_Wood);
+            rb->setVisible(show);
+            if (show) {
+                rb->setCount(costs.at(RES_NAME_GOLD));
+                const Point& goldPos = goldRB->getPosition();
+                if (rb->getPosition() == goldPos) {
+                    rb->setPosition(goldPos + Point(0, rb->getContentSize().height));
+                }
+            }
+        }
     }
     
     if (!reuse) {
@@ -234,7 +251,7 @@ string MapUIUnitNode::getIconFile(const Camp* camp) const
 {
     const string& unitName = camp ? camp->getUnitSetting().getUnitTypeName() : "";
     const URConfigData* configData = DataManager::getInstance()->getURConfigData(unitName);
-    const string& iconFile = configData ? configData->getIcon() : "GameImages/icons/unit/big/icon_w_langdun.png";
+    const string& iconFile = configData ? configData->getIcon() : "GameImages/icons/unit/big/normal/icon_w_langdun.png";
     return iconFile;
 }
 
@@ -246,4 +263,12 @@ bool MapUIUnitNode::isHero(const Camp* camp) const
     }
     
     return false;
+}
+
+void MapUIUnitNode::createResourceButton(::ResourceType type)
+{
+    ResourceButton* button = ResourceButton::create(false, false, true, type, 0, nullptr);
+    button->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    addChild(button);
+    _resourceButtons.insert(make_pair(type, button));
 }

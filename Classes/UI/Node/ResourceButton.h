@@ -19,7 +19,7 @@ using namespace ui;
 class ResourceButton : public Node
 {
 public:
-    static ResourceButton* create(bool isBigSize, ResourceType type, int count, const Button::ccWidgetClickCallback& callback);
+    static ResourceButton* create(bool isBigSize, bool animated, bool needResize, ResourceType type, int count, const Button::ccWidgetClickCallback& callback);
     virtual ~ResourceButton();
     ResourceType getType() const;
     int getCount() const;
@@ -30,13 +30,17 @@ public:
     
 protected:
     ResourceButton();
-    bool init(bool isBigSize, ResourceType type, int count, const Button::ccWidgetClickCallback& callback);
+    bool init(bool isBigSize, bool animated, bool needResize, ResourceType type, int count, const Button::ccWidgetClickCallback& callback);
+    void addIconNode(ResourceType type);
     void resize();
     
 private:
+    bool _animated;
+    bool _needResize;
     ResourceType _type;
     int _count;
     Sprite *_icon;
+    Node* _iconNode;
     LabelAtlas *_countLabel;
     Button *_button;
 };

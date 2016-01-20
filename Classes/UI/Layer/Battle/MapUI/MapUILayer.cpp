@@ -34,10 +34,6 @@ static ProgressTimer* createProgressTimer()
     return pt;
 }
 
-#pragma mark =====================================================
-#pragma mark MapUILayer
-#pragma mark =====================================================
-
 MapUILayer* MapUILayer::create(const string& myAccount, const string& opponentsAccount)
 {
     MapUILayer *ret = new (nothrow) MapUILayer();
@@ -62,7 +58,8 @@ MapUILayer::MapUILayer()
 ,_tableView(nullptr)
 ,_timeLabel(nullptr)
 ,_nextWaveTimeLabel(nullptr)
-,_energyResourceButton(nullptr)
+,_goldResourceButton(nullptr)
+,_woodResourceButton(nullptr)
 ,_populationLabel(nullptr)
 ,_myHpProgress(nullptr)
 ,_myHpPercentageLabel(nullptr)
@@ -126,36 +123,69 @@ void MapUILayer::updateCampInfos(size_t idx)
     }
 }
 
+void MapUILayer::closeAllUnitInfoNodes()
+{
+    for (int i = 0; i < _campInfoNodes.size(); ++i) {
+        CampInfoNode* node = _campInfoNodes.at(i);
+        node->closeUnitInfoNode();
+    }
+}
+
 void MapUILayer::updateMyHpProgress(int progress)
 {
-    _myHpProgress->setPercentage(progress);
-    _myHpPercentageLabel->setString(StringUtils::format("%d%%", progress));
+    if (_myHpProgress) {
+        _myHpProgress->setPercentage(progress);
+    }
+    
+    if (_myHpPercentageLabel) {
+        _myHpPercentageLabel->setString(StringUtils::format("%d%%", progress));
+    }
 }
 
 void MapUILayer::updateOpponentsHpProgress(int progress)
 {
-    _opponentsHpProgress->setPercentage(progress);
-    _opponentsHpPercentageLabel->setString(StringUtils::format("%d%%", progress));
+    if (_opponentsHpProgress) {
+        _opponentsHpProgress->setPercentage(progress);
+    }
+    
+    if (_opponentsHpPercentageLabel) {
+        _opponentsHpPercentageLabel->setString(StringUtils::format("%d%%", progress));
+    }
 }
 
 void MapUILayer::updateWaveTime(int time)
 {
-    _nextWaveTimeLabel->setString(StringUtils::format("%ds", time));
+    if (_nextWaveTimeLabel) {
+        _nextWaveTimeLabel->setString(StringUtils::format("%ds", time));
+    }
 }
 
 void MapUILayer::updateRemainingTime(int time)
 {
-    _timeLabel->setString(CocosUtils::getFormattedTime(time));
+    if (_timeLabel) {
+        _timeLabel->setString(CocosUtils::getFormattedTime(time));
+    }
 }
 
 void MapUILayer::updatePopulation(int count, int maxCount)
 {
-    _populationLabel->setString(StringUtils::format("%d/%d", count, maxCount));
+    if (_populationLabel) {
+        _populationLabel->setString(StringUtils::format("%d/%d", count, maxCount));
+    }
 }
 
 void MapUILayer::updateGold(int count)
 {
-    _energyResourceButton->setCount(count);
+    if (_goldResourceButton) {
+        _goldResourceButton->setCount(count);
+    }
+}
+
+void MapUILayer::updateWood(int count)
+{
+    if (_woodResourceButton) {
+        _woodResourceButton->setCount(count);
+    }
 }
 
 void MapUILayer::pauseGame()
@@ -227,6 +257,17 @@ void MapUILayer::onMapUIUnitNodeUpdated(MapUIUnitNode* node)
     
 }
 
+#pragma mark - CampInfoNodeObserver
+void MapUILayer::onCampInfoNodeClickedIcon(CampInfoNode* pSender, const UnitBase* unit)
+{
+    for (int i = 0; i < _campInfoNodes.size(); ++i) {
+        CampInfoNode* node = _campInfoNodes.at(i);
+        if (pSender != node) {
+            node->closeUnitInfoNode();
+        }
+    }
+}
+
 #pragma mark -
 bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
 {
@@ -285,25 +326,27 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
         }
 #else
         Node* root = this;
-        static const float leftOffset(20.0f);
+        static const float leftOffset(5.0f);
         static const float ceilOffset(10.0f);
         static const Size progressSize(170.0f, 20.0f);
         //
         {
-            Sprite* sprite = Sprite::create("GameImages/test/icon_nl.png");
+            Sprite* sprite = Sprite::create("GameImages/test/ui_black_14.png");
             sprite->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
             sprite->setPosition(Point(leftOffset, winSize.height - ceilOffset));
             root->addChild(sprite);
             
             const Size& size = sprite->getContentSize();
             
-            Label* label = CocosUtils::createLabel(LocalHelper::getString("battle_mapUI_nextWaveTime"), DEFAULT_FONT_SIZE);
-            label->setPosition(Point(size.width / 2, size.height * 0.75));
+            Label* label = CocosUtils::createLabel(LocalHelper::getString("battle_mapUI_nextWaveTime"), 16);
+            label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+            label->setPosition(Point(20, size.height / 2));
             sprite->addChild(label);
             
             _nextWaveTimeLabel = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
             _nextWaveTimeLabel->setTextColor(Color4B::RED);
-            _nextWaveTimeLabel->setPosition(Point(size.width / 2, size.height * 0.25f));
+            _nextWaveTimeLabel->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+            _nextWaveTimeLabel->setPosition(Point(size.width * 0.75f, size.height / 2));
             sprite->addChild(_nextWaveTimeLabel);
         }
         //
@@ -382,29 +425,35 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
         }
         //
         {
-            Sprite* sprite = Sprite::create("GameImages/test/icon_bg.png");
+            Sprite* sprite = Sprite::create("GameImages/test/ui_black_12.png");
             sprite->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
             sprite->setPosition(Point(leftOffset, ceilOffset));
             root->addChild(sprite);
             
             const Size& size = sprite->getContentSize();
             
-            Label* label = CocosUtils::createLabel(LocalHelper::getString("battle_mapUI_totalPopulation"), DEFAULT_FONT_SIZE);
-            label->setPosition(Point(size.width / 2, size.height * 0.875));
-            sprite->addChild(label);
+//            Label* label = CocosUtils::createLabel(LocalHelper::getString("battle_mapUI_totalPopulation"), DEFAULT_FONT_SIZE);
+//            label->setPosition(Point(size.width / 2, size.height * 0.875));
+//            sprite->addChild(label);
             
-            _populationLabel = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
-            _populationLabel->setPosition(Point(size.width / 2, size.height * 0.625));
+            _populationLabel = CocosUtils::create10x25Number("");
+            _populationLabel->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+            _populationLabel->setPosition(Point(80, 94));
             sprite->addChild(_populationLabel);
             
-            label = CocosUtils::createLabel(LocalHelper::getString("battle_mapUI_totalResource"), DEFAULT_FONT_SIZE);
-            label->setPosition(Point(size.width / 2, size.height * 0.375));
-            sprite->addChild(label);
+//            label = CocosUtils::createLabel(LocalHelper::getString("battle_mapUI_totalResource"), DEFAULT_FONT_SIZE);
+//            label->setPosition(Point(size.width / 2, size.height * 0.375));
+//            sprite->addChild(label);
             
-            _energyResourceButton = ResourceButton::create(false, kResourceType_Gold, 2000, nullptr);
-            _energyResourceButton->setAnchorPoint(Point::ANCHOR_MIDDLE);
-            _energyResourceButton->setPosition(Point(size.width / 2, size.height * 0.125));
-            sprite->addChild(_energyResourceButton);
+            _woodResourceButton = ResourceButton::create(false, true, false, kResourceType_Wood, 2000, nullptr);
+            _woodResourceButton->setAnchorPoint(Point::ANCHOR_MIDDLE);
+            _woodResourceButton->setPosition(Point(size.width / 2, 60));
+            sprite->addChild(_woodResourceButton);
+            
+            _goldResourceButton = ResourceButton::create(false, true, false, kResourceType_Gold, 2000, nullptr);
+            _goldResourceButton->setAnchorPoint(Point::ANCHOR_MIDDLE);
+            _goldResourceButton->setPosition(Point(size.width / 2, 20));
+            sprite->addChild(_goldResourceButton);
             
             // units table
             const Point& pos = sprite->getPosition() + Point(sprite->getContentSize().width + leftOffset, - unitNodeOffsetY);
@@ -437,14 +486,14 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             CampInfoNode* campInfoNode = CampInfoNode::create(false);
             campInfoNode->registerObserver(this);
             const Size& size = campInfoNode->getContentSize();
-            const float height = winSize.height / 2 - size.height / 2;
-            campInfoNode->setPosition(Point(0, height));
+            static const float posY = 160.0f;
+            campInfoNode->setPosition(Point(0, posY));
             root->addChild(campInfoNode);
             _campInfoNodes.push_back(campInfoNode);
             
             campInfoNode = CampInfoNode::create(true);
             campInfoNode->registerObserver(this);
-            campInfoNode->setPosition(Point(winSize.width - size.width, height));
+            campInfoNode->setPosition(Point(winSize.width - size.width, posY));
             root->addChild(campInfoNode);
             _campInfoNodes.push_back(campInfoNode);
         }
@@ -489,8 +538,8 @@ bool MapUILayer::onTouchBegan(Touch *touch, Event *unused_event)
 
 void MapUILayer::onTouchMoved(Touch *touch, Event *unused_event)
 {
-    Point point = touch->getLocation();
-    if (_isTouchingUnitTableView) {
+    if (_isTouchingUnitTableView && _selectedCamp) {
+        const Point& point = touch->getLocation();
         if (_observer) {
             _observer->onMapUILayerSpellRingMoved(_selectedCamp, point);
         }
@@ -499,9 +548,9 @@ void MapUILayer::onTouchMoved(Touch *touch, Event *unused_event)
 
 void MapUILayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
-    Point point = touch->getLocation();
-    const Rect& rect = getTableViewBoundingBox();
     if (_isTouchingUnitTableView) {
+        const Point& point = touch->getLocation();
+        const Rect& rect = getTableViewBoundingBox();
         if (rect.containsPoint(point)) {
             if (_observer) {
                 _observer->onMapUILayerSpellRingCancelled();

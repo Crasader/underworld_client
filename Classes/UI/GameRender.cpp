@@ -42,7 +42,8 @@ GameRender::GameRender(Scene* scene, int mapId, MapLayer* mapLayer, const string
 ,_isGameOver(false)
 ,_remainingTime(battleTotalTime)
 ,_hasUpdatedBattleCampInfos(false)
-{    
+{
+    _mapLayer->registerObserver(this);
     _mapUILayer = MapUILayer::create("我的名字", opponentsAccount);
     _mapUILayer->registerObserver(this);
     scene->addChild(_mapUILayer);
@@ -441,6 +442,14 @@ void GameRender::onBulletNodeExploded(BulletNode* node)
     hurtUnit(bullet->getTarget(), bullet->getTrigger()->getUnitBase().getRenderKey());
 }
 
+#pragma mark - MapLayerObserver
+void GameRender::onMapLayerTouchEnded()
+{
+    if (_mapUILayer) {
+        _mapUILayer->closeAllUnitInfoNodes();
+    }
+}
+
 #pragma mark - MapUILayerObserver
 void GameRender::onMapUILayerUnitSelected(MapUIUnitNode* node)
 {
@@ -659,8 +668,11 @@ void GameRender::updateResources()
             if (kResourceClass_holdable == resourceType->_class) {
                 _mapUILayer->updatePopulation(resource->getOccpied(), resource->getBalance());
             } else {
-                if (resourceType->_name == RES_NAME_GOLD) {
+                const string& name = resourceType->_name;
+                if (name == RES_NAME_GOLD) {
                     _mapUILayer->updateGold(resource->getBalance());
+                } else if (name == RES_NAME_WOOD) {
+                    _mapUILayer->updateWood(resource->getBalance());
                 }
             }
         }

@@ -40,13 +40,15 @@ typedef std::function<void(long errorCode)> httpErrorCallback;
 
 // TODO: remove temp code
 #define RES_NAME_GOLD       ("金子")
+#define RES_NAME_WOOD       ("木头")
 #define RES_NAME_POPULATION ("人口")
 
 typedef enum
 {
     kResourceType_Gem = 100,
     kResourceType_Gold = 101,
-    kResourceType_Jade = 102,
+    kResourceType_Wood = 102,
+    kResourceType_Jade = 103,
     
     kResourceType_MAX,          // Used to network parsing
 }ResourceType;

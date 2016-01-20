@@ -47,7 +47,6 @@
 		308B84631BE3752000377802 /* PathFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84611BE3752000377802 /* PathFinder.cpp */; };
 		308B84661BE3853C00377802 /* AIBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84641BE3853C00377802 /* AIBody.cpp */; };
 		308B84691BE3856F00377802 /* AIBrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84671BE3856F00377802 /* AIBrain.cpp */; };
-		308D61CE1C49E9D90011AA7E /* GameSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308D61CD1C49E9D90011AA7E /* GameSettings.cpp */; };
 		309F769A1BE9D7BD00B2791F /* Camp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F76981BE9D7BD00B2791F /* Camp.cpp */; };
 		309F76A01BEA3ABA00B2791F /* CoreUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F769E1BEA3AB900B2791F /* CoreUtils.cpp */; };
 		30DF03C41C0D898E00A1C6EB /* EffectType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DF03C21C0D898E00A1C6EB /* EffectType.cpp */; };
@@ -353,7 +352,6 @@
 		308B84651BE3853C00377802 /* AIBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AIBody.h; path = Core/AI/AIBody.h; sourceTree = "<group>"; };
 		308B84671BE3856F00377802 /* AIBrain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AIBrain.cpp; path = Core/AI/AIBrain.cpp; sourceTree = "<group>"; };
 		308B84681BE3856F00377802 /* AIBrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AIBrain.h; path = Core/AI/AIBrain.h; sourceTree = "<group>"; };
-		308D61CD1C49E9D90011AA7E /* GameSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameSettings.cpp; path = Core/Game/GameSettings.cpp; sourceTree = "<group>"; };
 		309F76981BE9D7BD00B2791F /* Camp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Camp.cpp; path = Core/Unit/Instance/Camp.cpp; sourceTree = "<group>"; };
 		309F76991BE9D7BD00B2791F /* Camp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Camp.h; path = Core/Unit/Instance/Camp.h; sourceTree = "<group>"; };
 		309F769D1BEA37D200B2791F /* Global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Global.h; path = Core/Utils/Global.h; sourceTree = "<group>"; };
@@ -788,7 +786,6 @@
 				301F63FA1BE3680600DA6D70 /* GameLooper.cpp */,
 				301F63FB1BE3680600DA6D70 /* GameLooper.h */,
 				0451170F1BCFBA5F002AA721 /* GameSettings.h */,
-				308D61CD1C49E9D90011AA7E /* GameSettings.cpp */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -1822,7 +1819,6 @@
 				045116E31BCFBA39002AA721 /* Map.cpp in Sources */,
 				A18524D61C1AE47A00BE261D /* BagNode.cpp in Sources */,
 				A1F395EF1C23BBA800B75923 /* ObjectLocalData.cpp in Sources */,
-				308D61CE1C49E9D90011AA7E /* GameSettings.cpp in Sources */,
 				CBA296431BE37FB1006BE7A0 /* GameScheduler.cpp in Sources */,
 				A16BF2981C31406A00E91458 /* ResourceData.cpp in Sources */,
 				309F76A01BEA3ABA00B2791F /* CoreUtils.cpp in Sources */,

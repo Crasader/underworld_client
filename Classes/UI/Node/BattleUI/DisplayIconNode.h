@@ -27,6 +27,7 @@ class DisplayIconNodeObserver
 public:
     virtual ~DisplayIconNodeObserver() {}
     virtual void onDisplayIconNodeTouchedEnded(const UnderWorld::Core::UnitBase* unit) = 0;
+    virtual void onDisplayIconNodeChangedContentSize(const Size& lastSize, const Size& newSize) = 0;
 };
 
 class DisplayIconNode : public Node, public TableViewDataSource, public UnitSimpleInfoNodeObserver
@@ -43,6 +44,7 @@ public:
 protected:
     DisplayIconNode();
     bool init(bool scrollToLeft);
+    void setTableViewSize(const Size& size);
     void reload();
     
     // TableViewDataSource

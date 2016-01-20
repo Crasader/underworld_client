@@ -17,11 +17,6 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-namespace UnderWorld { namespace Core {
-    class Camp;
-    class Unit;
-}}
-
 class ResourceButton;
 class UnitInfoNode;
 
@@ -47,12 +42,14 @@ public:
     void reload();
     void insertCampInfo(size_t idx, const std::vector<std::pair<const UnderWorld::Core::Camp*, const UnderWorld::Core::UnitBase*>>& units);
     void updateCampInfos(size_t idx);
+    void closeAllUnitInfoNodes();
     void updateMyHpProgress(int progress);
     void updateOpponentsHpProgress(int progress);
     void updateWaveTime(int time);
     void updateRemainingTime(int time);
     void updatePopulation(int count, int maxCount);
     void updateGold(int count);
+    void updateWood(int count);
     void pauseGame();
     void resumeGame();
     
@@ -75,6 +72,9 @@ protected:
     virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node) override;
     virtual void onMapUIUnitNodeUpdated(MapUIUnitNode* node) override;
     
+    // CampInfoNodeObserver
+    virtual void onCampInfoNodeClickedIcon(CampInfoNode* pSender, const UnderWorld::Core::UnitBase* unit) override;
+    
     void onUnitTouched(MapUIUnitNode* node);
     Rect getTableViewBoundingBox() const;
     
@@ -90,15 +90,15 @@ private:
     TableView *_tableView;
     Label *_timeLabel;
     Label *_nextWaveTimeLabel;
-    ResourceButton *_energyResourceButton;
-    Label *_populationLabel;
+    ResourceButton *_goldResourceButton;
+    ResourceButton *_woodResourceButton;
+    LabelAtlas *_populationLabel;
     ProgressTimer *_myHpProgress;
     Label *_myHpPercentageLabel;
     ProgressTimer *_opponentsHpProgress;
     Label *_opponentsHpPercentageLabel;
     MenuItem *_pauseMenuItem;
     std::vector<CampInfoNode*> _campInfoNodes;
-    // ======================== test =============================
 };
 
 #endif /* MapUILayer_h */

@@ -75,6 +75,17 @@ bool DisplayIconNode::init(bool scrollToLeft)
     return false;
 }
 
+void DisplayIconNode::setTableViewSize(const Size& size)
+{
+    if (_tableView) {
+        if (_tableView->getViewSize().width != size.width) {
+            _tableView->setViewSize(size);
+        }
+        
+        setContentSize(size);
+    }
+}
+
 void DisplayIconNode::reload()
 {
     // 1. save offset
@@ -91,9 +102,8 @@ void DisplayIconNode::reload()
             _tableView->setContentOffset(_contentOffset);
             
             // 3.2 set view size if needed
-            if (_tableView->getViewSize().width != tableViewMaxSize.width) {
-                _tableView->setViewSize(tableViewMaxSize);
-            }
+            const Size lastSize = getContentSize();
+            setTableViewSize(tableViewMaxSize);
             
             // 3.3 scroll if needed
             static const float duration = 0.5f;
@@ -113,15 +123,23 @@ void DisplayIconNode::reload()
             if (_scrollToLeft && _position != _basePosition) {
                 setPositionX(_basePosition.x);
             }
-        } else {
-            const Size size(cnt * cellSize.width, tableViewMaxSize.height);
-            if (_tableView->getViewSize().width != size.width) {
-                _tableView->setViewSize(size);
+            
+            // 3.5 callback
+            if (_observer) {
+                _observer->onDisplayIconNodeChangedContentSize(lastSize, getContentSize());
             }
+        } else {
+            const Size lastSize = getContentSize();
+            const Size size(cnt * cellSize.width, tableViewMaxSize.height);
+            setTableViewSize(size);
             
             _tableView->setContentOffset(Point::ZERO);
             if (_scrollToLeft) {
                 setPositionX(_basePosition.x + (maxCount - cnt) * cellSize.width);
+            }
+            
+            if (_observer) {
+                _observer->onDisplayIconNodeChangedContentSize(lastSize, getContentSize());
             }
         }
     }

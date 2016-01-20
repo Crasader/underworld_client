@@ -23,10 +23,13 @@ namespace UnderWorld { namespace Core {
     class UnitBase;
 } }
 
+class CampInfoNode;
+
 class CampInfoNodeObserver
 {
 public:
     virtual ~CampInfoNodeObserver() {}
+    virtual void onCampInfoNodeClickedIcon(CampInfoNode* pSender, const UnderWorld::Core::UnitBase* unit) = 0;
 };
 
 class CampInfoNode : public Node, public DisplayIconNodeObserver, public UnitInfoNodeObserver
@@ -39,6 +42,7 @@ public:
     void registerObserver(CampInfoNodeObserver *observer);
     void insert(const std::vector<std::pair<const UnderWorld::Core::Camp*, const UnderWorld::Core::UnitBase*>>& units);
     void update();
+    void closeUnitInfoNode();
     Rect getIconsBoundingBox();
     
 protected:
@@ -46,9 +50,11 @@ protected:
     bool init(bool scrollToLeft);
     std::string getButtonFile(bool isFold);
     void setFold(bool fold, bool animated);
+    void resetButtonPosition();
     
     // DisplayIconNodeObserver
     virtual void onDisplayIconNodeTouchedEnded(const UnderWorld::Core::UnitBase* unit) override;
+    virtual void onDisplayIconNodeChangedContentSize(const Size& lastSize, const Size& newSize) override;
     
     // UnitInfoNodeObserver
     

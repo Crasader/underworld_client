@@ -51,6 +51,7 @@ bool CampInfoNode::init(bool scrollToLeft)
 {
     if (Node::init()) {
         _isScrollToLeft = scrollToLeft;
+        
         _displayIconNode = DisplayIconNode::create(scrollToLeft);
         const Size& s1 = _displayIconNode->getContentSize();
         const Size& s2 = UnitInfoNode::create(nullptr)->getContentSize();
@@ -70,17 +71,13 @@ bool CampInfoNode::init(bool scrollToLeft)
         
         const string& file = getButtonFile(_isFold);
         _button = Button::create(file, file);
-        static float offsetX = 20.0f;
-        if (_isScrollToLeft) {
-            _button->setPosition(Point(position.x - offsetX, position.y + s1.height / 2));
-        } else {
-            _button->setPosition(Point(position.x + s1.width + offsetX, position.y + s1.height / 2));
-        }
         _button->addClickEventListener([this](Ref*) {
             setFold(!_isFold, true);
         });
         _button->setVisible(false);
         addChild(_button);
+        
+        resetButtonPosition();
         
         return true;
     }
@@ -104,9 +101,6 @@ void CampInfoNode::insert(const vector<pair<const Camp*, const UnitBase*>>& unit
     if (_displayIconNode) {
         _displayIconNode->setVisible(true);
         _displayIconNode->insert(units);
-        if (!_unitInfoNode) {
-            onDisplayIconNodeTouchedEnded(units.at(0).second);
-        }
     }
     
     if (_button) {
@@ -118,6 +112,14 @@ void CampInfoNode::update()
 {
     if (_displayIconNode) {
         _displayIconNode->update();
+    }
+}
+
+void CampInfoNode::closeUnitInfoNode()
+{
+    if (_unitInfoNode) {
+        _unitInfoNode->removeFromParent();
+        _unitInfoNode = nullptr;
     }
 }
 
@@ -137,8 +139,26 @@ void CampInfoNode::onDisplayIconNodeTouchedEnded(const UnitBase* unit)
         _unitInfoNode->update(unit);
     } else {
         _unitInfoNode = UnitInfoNode::create(unit);
+        _unitInfoNode->registerObserver(this);
         addChild(_unitInfoNode);
     }
+    
+    if (_observer) {
+        _observer->onCampInfoNodeClickedIcon(this, unit);
+    }
+}
+
+void CampInfoNode::onDisplayIconNodeChangedContentSize(const Size& lastSize, const Size& newSize)
+{
+    setContentSize(newSize);
+    
+    if (_isFold) {
+        const float offset = newSize.width - lastSize.width;
+        const Point& lastPosition = getPosition();
+        Node::setPositionX(lastPosition.x + (_isScrollToLeft ? offset : -offset));
+    }
+    
+    resetButtonPosition();
 }
 
 #pragma mark - private
@@ -163,17 +183,10 @@ void CampInfoNode::setFold(bool fold, bool animated)
     _button->loadTextures(file, file);
     
     Point destinationPos(_basePosition);
-    const Size& s1 = _displayIconNode->getContentSize();
-    const Size& s2 = _unitInfoNode->getContentSize();
-    float offset = MAX(s1.width, s2.width);
-    if (_isScrollToLeft) {
-        if (fold) {
-            destinationPos = _basePosition + Point(offset, 0);
-        }
-    } else {
-        if (fold) {
-            destinationPos = _basePosition - Point(offset, 0);
-        }
+    const Size& size = _displayIconNode->getContentSize();
+    float offset = size.width;
+    if (fold) {
+        destinationPos = _basePosition + Point(_isScrollToLeft ? offset : (-offset), 0);
     }
     
     if (animated) {
@@ -181,6 +194,23 @@ void CampInfoNode::setFold(bool fold, bool animated)
             
         }), nullptr));
     } else {
-        setPosition(destinationPos);
+        Node::setPosition(destinationPos);
+    }
+    
+    closeUnitInfoNode();
+}
+
+void CampInfoNode::resetButtonPosition()
+{
+    if (_button) {
+        static float offsetX = 20.0f;
+        const Size& size = _displayIconNode->getContentSize();
+        const Point& position = _displayIconNode->getPosition();
+        const float posY = position.y + size.height / 2;
+        if (_isScrollToLeft) {
+            _button->setPosition(Point(position.x - offsetX, posY));
+        } else {
+            _button->setPosition(Point(position.x + size.width + offsetX, posY));
+        }
     }
 }

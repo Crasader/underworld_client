@@ -11,6 +11,7 @@
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
+#include "CocosGlobal.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -50,11 +51,12 @@ protected:
     bool init(const UnderWorld::Core::Camp* camp, ssize_t idx);
     std::string getIconFile(const UnderWorld::Core::Camp* camp) const;
     bool isHero(const UnderWorld::Core::Camp* camp) const;
+    void createResourceButton(ResourceType type);
     
 private:
     MapUIUnitNodeObserver *_observer;
     Button *_iconButton;
-    ResourceButton *_resourceButton;
+    std::map<ResourceType, ResourceButton*> _resourceButtons;
     Label *_countLabel;
     const UnderWorld::Core::Camp* _camp;
     ssize_t _idx;

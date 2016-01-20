@@ -19,10 +19,18 @@ USING_NS_CC;
 
 class MapParticleConfigData;
 
+class MapLayerObserver
+{
+public:
+    virtual ~MapLayerObserver() {}
+    virtual void onMapLayerTouchEnded() = 0;
+};
+
 class MapLayer : public LayerColor, public cocos2d::extension::ScrollViewDelegate
 {
 public:
     static MapLayer* create(int mapId, const std::string& mapData);
+    void registerObserver(MapLayerObserver *observer);
     
     UnderWorld::Core::Coordinate convertPoint(const Point& layerPoint);
     void addUnit(Node* unit, const UnderWorld::Core::Coordinate& coreCoordinate);
@@ -40,11 +48,13 @@ protected:
     virtual ~MapLayer();
     MapLayer();
     bool init(int mapId, const std::string& mapData);
-    virtual void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
+    virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
+    virtual void onTouchMoved(Touch *touch, Event *unused_event) override;
+    virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
     //-------- scrollviewdelegate --------//
-    virtual void scrollViewDidScroll(cocos2d::extension::ScrollView* view);
-    virtual void scrollViewDidZoom(cocos2d::extension::ScrollView* view);
+    virtual void scrollViewDidScroll(cocos2d::extension::ScrollView* view) override;
+    virtual void scrollViewDidZoom(cocos2d::extension::ScrollView* view) override;
     
     //-------- coordinates --------//
     inline UnderWorld::Core::Coordinate mapCoordinate2coreCoordinate(int x, int y);
@@ -61,6 +71,7 @@ protected:
     
     Rect getSpellRangeRingBoundingBox() const;
 private:
+    MapLayerObserver *_observer;
     int _mapId;
     int _width;
     int _height;

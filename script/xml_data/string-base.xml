@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <root>
 	 <!-- 战斗 -->
-	<item key="battle_mapUI_nextWaveTime" value="下一波进攻时间"/>
+	<item key="battle_mapUI_nextWaveTime" value="下一波时间"/>
 	<item key="battle_mapUI_battleTime" value="战斗时间"/>
 	<item key="battle_mapUI_totalPopulation" value="训练后的总兵力"/>
 	<item key="battle_mapUI_totalResource" value="能量"/>
