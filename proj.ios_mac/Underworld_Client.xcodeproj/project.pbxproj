@@ -211,7 +211,6 @@
 		A1E830691C1EA50200FE01B8 /* QuestLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E830641C1EA50200FE01B8 /* QuestLocalData.cpp */; };
 		A1E8306A1C1EA50200FE01B8 /* RewardData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E830661C1EA50200FE01B8 /* RewardData.cpp */; };
 		A1E8306D1C1EA55D00FE01B8 /* ContentData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E8306B1C1EA55D00FE01B8 /* ContentData.cpp */; };
-		A1E929791C0D7F9A0026D85D /* ChatData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E929771C0D7F9A0026D85D /* ChatData.cpp */; };
 		A1F395EF1C23BBA800B75923 /* ObjectLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F395ED1C23BBA800B75923 /* ObjectLocalData.cpp */; };
 		A1F395F21C23BBC500B75923 /* ObjectData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F395F01C23BBC500B75923 /* ObjectData.cpp */; };
 		A1F58D521C32391200C8A2DD /* GearAttributeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F58D501C32391200C8A2DD /* GearAttributeData.cpp */; };
@@ -232,6 +231,8 @@
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
+		CB3EC8971C4E4D1200447FE3 /* ChatData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB3EC8961C4E4D1200447FE3 /* ChatData.cpp */; settings = {ASSET_TAGS = (); }; };
+		CB3EC89A1C4E4DA600447FE3 /* ChatMark.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB3EC8981C4E4DA600447FE3 /* ChatMark.cpp */; settings = {ASSET_TAGS = (); }; };
 		CBA296431BE37FB1006BE7A0 /* GameScheduler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBA296411BE37FB1006BE7A0 /* GameScheduler.cpp */; };
 		CBD778C71C29390B0070D293 /* AnnouncementNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBD778C51C29390B0070D293 /* AnnouncementNode.cpp */; };
 		CBDBD2131BD7B3B9004706A8 /* map in Resources */ = {isa = PBXBuildFile; fileRef = CBDBD2121BD7B3B9004706A8 /* map */; };
@@ -651,8 +652,6 @@
 		A1E830671C1EA50200FE01B8 /* RewardData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardData.h; sourceTree = "<group>"; };
 		A1E8306B1C1EA55D00FE01B8 /* ContentData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ContentData.cpp; sourceTree = "<group>"; };
 		A1E8306C1C1EA55D00FE01B8 /* ContentData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentData.h; sourceTree = "<group>"; };
-		A1E929771C0D7F9A0026D85D /* ChatData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChatData.cpp; sourceTree = "<group>"; };
-		A1E929781C0D7F9A0026D85D /* ChatData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatData.h; sourceTree = "<group>"; };
 		A1F395ED1C23BBA800B75923 /* ObjectLocalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectLocalData.cpp; sourceTree = "<group>"; };
 		A1F395EE1C23BBA800B75923 /* ObjectLocalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectLocalData.h; sourceTree = "<group>"; };
 		A1F395F01C23BBC500B75923 /* ObjectData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectData.cpp; sourceTree = "<group>"; };
@@ -688,6 +687,10 @@
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		CB3EC8951C4E4D1200447FE3 /* ChatData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatData.h; path = Chat/ChatData.h; sourceTree = "<group>"; };
+		CB3EC8961C4E4D1200447FE3 /* ChatData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ChatData.cpp; path = Chat/ChatData.cpp; sourceTree = "<group>"; };
+		CB3EC8981C4E4DA600447FE3 /* ChatMark.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ChatMark.cpp; path = Chat/ChatMark.cpp; sourceTree = "<group>"; };
+		CB3EC8991C4E4DA600447FE3 /* ChatMark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatMark.h; path = Chat/ChatMark.h; sourceTree = "<group>"; };
 		CBA296411BE37FB1006BE7A0 /* GameScheduler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScheduler.cpp; sourceTree = "<group>"; };
 		CBA296421BE37FB1006BE7A0 /* GameScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScheduler.h; sourceTree = "<group>"; };
 		CBD778C51C29390B0070D293 /* AnnouncementNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnnouncementNode.cpp; sourceTree = "<group>"; };
@@ -1106,6 +1109,7 @@
 		A12D2F571BFDE88A00389DAC /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				CB3EC8941C4E4CBC00447FE3 /* Chat */,
 				A1D4614D1C3E166900E8E60B /* Abstract */,
 				A1F5BF9C1C1FD508007C08CB /* Achievement */,
 				A1D461581C3E251000E8E60B /* AnimationConfig */,
@@ -1120,8 +1124,6 @@
 				A16BF27E1C313D6D00E91458 /* Soldier */,
 				A16BF27F1C313D6D00E91458 /* Tower */,
 				A1D4613E1C3E111B00E8E60B /* User */,
-				A1E929771C0D7F9A0026D85D /* ChatData.cpp */,
-				A1E929781C0D7F9A0026D85D /* ChatData.h */,
 				A19EE96B1C1C0F1300E46D77 /* LevelLocalData.cpp */,
 				A19EE96C1C1C0F1300E46D77 /* LevelLocalData.h */,
 				A11C481D1C57490F0024E921 /* MapUnitConfigData.cpp */,
@@ -1662,6 +1664,17 @@
 			path = Misc;
 			sourceTree = "<group>";
 		};
+		CB3EC8941C4E4CBC00447FE3 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				CB3EC8961C4E4D1200447FE3 /* ChatData.cpp */,
+				CB3EC8951C4E4D1200447FE3 /* ChatData.h */,
+				CB3EC8981C4E4DA600447FE3 /* ChatMark.cpp */,
+				CB3EC8991C4E4DA600447FE3 /* ChatMark.h */,
+			);
+			name = Chat;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1859,7 +1872,6 @@
 				A1720E8F1BCCE19300217E98 /* md5.cpp in Sources */,
 				A1D45C4A1BEB3B1400D1E921 /* ResourceButton.cpp in Sources */,
 				30FD556C1C322FBF0078EC3C /* SpellType.cpp in Sources */,
-				A1E929791C0D7F9A0026D85D /* ChatData.cpp in Sources */,
 				30FD55641C2CFDE80078EC3C /* Passive.cpp in Sources */,
 				A188856A1C438F1800C9586F /* ResourceManager.cpp in Sources */,
 				A16BF28F1C313E8E00E91458 /* SoldierUpgradeData.cpp in Sources */,
@@ -1881,6 +1893,8 @@
 				A1720E8B1BCCE19300217E98 /* aes_core.c in Sources */,
 				045117101BCFBA5F002AA721 /* Game.cpp in Sources */,
 				3028EBC31BFF0CBD00511C51 /* DynamicValue.cpp in Sources */,
+				CB3EC89A1C4E4DA600447FE3 /* ChatMark.cpp in Sources */,
+				CB3EC8971C4E4D1200447FE3 /* ChatData.cpp in Sources */,
 				045117081BCFBA53002AA721 /* Command.cpp in Sources */,
 				045117071BCFBA53002AA721 /* Bullet.cpp in Sources */,
 				A10611FF1C3D20A40065070F /* SoldierPieceData.cpp in Sources */,

@@ -15,6 +15,7 @@
 #include <map>
 
 class ChatData;
+class ChatMark;
 
 class ChatManager
 {
@@ -22,16 +23,21 @@ public:
     ChatManager();
     virtual ~ChatManager();
     
-    void init(const rapidjson::Value& jsonDict);
+    void parse(const rapidjson::Value& jsonDict);
     const std::vector<const ChatData*>& getChatData(ChatType type);
     
     void sendMessage(ChatType type, int contacter, const std::string& message);
     
 protected:
     M_DISALLOW_COPY_AND_ASSIGN(ChatManager);
+
+private:
+    void clear();
+    void parseChannel(ChatType type, const rapidjson::Value& messages, const char* key);
     
 private:
     std::map<ChatType, std::vector<const ChatData*>> _chatData;
+    ChatMark* _mark;
 };
 
 #endif /* ChatManager_h */

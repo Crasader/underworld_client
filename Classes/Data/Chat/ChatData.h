@@ -22,14 +22,20 @@ public:
     int getId() const;
     ChatType getType() const;
     long getTimeStamp() const;
-    int getUserId() const;
+    int getFromUserId() const;
+    int getToUserId() const;
+    const std::string& getFromUserName() const;
+    const std::string& getToUserName() const;
     const std::string& getMessage() const;
     
 private:
     int _id;
     ChatType _type;
     long _timeStamp;
-    int _userId;
+    int _fromUserId;
+    std::string _fromUserName;
+    int _toUserId;
+    std::string _toUserName;
     std::string _message;
 };
 
