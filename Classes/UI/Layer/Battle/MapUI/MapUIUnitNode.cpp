@@ -109,6 +109,7 @@ bool MapUIUnitNode::init(const Camp* camp, ssize_t idx)
                 _resourceButton = ResourceButton::create(false, kResourceType_Gold, costs.at(RES_NAME_GOLD), nullptr);
                 addChild(_resourceButton);
             }
+
         } else {
             _resourceButton = ResourceButton::create(false, kResourceType_Gold, 100, nullptr);
             addChild(_resourceButton);

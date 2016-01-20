@@ -488,6 +488,7 @@ void BattleScene::start(int mapId)
             us.setQuality(0);
             us.setTalentLevel(0);
             cs[i].setUnitSetting(us);
+
             cs[i].setMaxProduction(20);
         }
         setting.setCamps(0, cs);
