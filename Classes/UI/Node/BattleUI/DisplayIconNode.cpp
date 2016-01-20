@@ -45,7 +45,7 @@ DisplayIconNode::DisplayIconNode()
 ,_touchInvalid(false)
 ,_tableView(nullptr)
 {
-    iconSize = UnitSimpleInfoNode::create(nullptr)->getContentSize() + Size(0, 18);
+    iconSize = UnitSimpleInfoNode::create(nullptr)->getContentSize();
     cellSize = iconSize + Size(cellOffsetX, cellOffsetY * 2);
     tableViewMaxSize = Size(maxCount * cellSize.width, cellSize.height);
 }
@@ -96,7 +96,11 @@ void DisplayIconNode::reload()
     
     // 3. fit
     if (false == _tableView->isBounceable() && extension::ScrollView::Direction::HORIZONTAL == _tableView->getDirection()) {
+#if ENABLE_CAMP_INFO
         const size_t cnt = _camps.size();
+#else
+        const size_t cnt = _unitBases.size();
+#endif
         if (cnt >= maxCount) {
             // 3.1 reset offset
             _tableView->setContentOffset(_contentOffset);
@@ -160,6 +164,7 @@ void DisplayIconNode::registerObserver(DisplayIconNodeObserver *observer)
     _observer = observer;
 }
 
+#if ENABLE_CAMP_INFO
 void DisplayIconNode::insert(const vector<pair<const Camp*, const UnitBase*>>& units)
 {
     _currentCount = _camps.size();
@@ -169,10 +174,24 @@ void DisplayIconNode::insert(const vector<pair<const Camp*, const UnitBase*>>& u
     }
     reload();
 }
+#else
+void DisplayIconNode::insert(const vector<const UnitBase*>& units)
+{
+    _currentCount = _unitBases.size();
+    for (int i = 0; i < units.size(); ++i) {
+        _unitBases.push_back(units.at(i));
+    }
+    reload();
+}
+#endif
 
 void DisplayIconNode::update()
 {
+#if ENABLE_CAMP_INFO
     _currentCount = _camps.size();
+#else
+    _currentCount = _unitBases.size();
+#endif
     reload();
 }
 
@@ -195,9 +214,15 @@ TableViewCell* DisplayIconNode::tableCellAtIndex(TableView *table, ssize_t idx)
     }
     
     static const int tag = 100;
+#if ENABLE_CAMP_INFO
     const size_t cnt = _camps.size();
     const Camp* camp = _camps.at(_scrollToLeft ? idx : cnt - (idx + 1));
     const UnitBase* unit = _units.at(camp);
+#else
+    const size_t cnt = _unitBases.size();
+    const Camp* camp = nullptr;
+    const UnitBase* unit = _unitBases.at(_scrollToLeft ? idx : cnt - (idx + 1));
+#endif
     UnitSimpleInfoNode* unitNode = dynamic_cast<UnitSimpleInfoNode*>(cell->getChildByTag(tag));
     if (unitNode) {
         unitNode->update(camp, unit);
@@ -215,7 +240,11 @@ TableViewCell* DisplayIconNode::tableCellAtIndex(TableView *table, ssize_t idx)
 
 ssize_t DisplayIconNode::numberOfCellsInTableView(TableView *table)
 {
+#if ENABLE_CAMP_INFO
     return _camps.size();
+#else
+    return _unitBases.size();
+#endif
 }
 
 #pragma mark - UnitSimpleInfoNodeObserver

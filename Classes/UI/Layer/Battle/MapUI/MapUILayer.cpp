@@ -107,6 +107,7 @@ void MapUILayer::reload()
     }
 }
 
+#if ENABLE_CAMP_INFO
 void MapUILayer::insertCampInfo(size_t idx, const vector<pair<const Camp*, const UnitBase*>>& units)
 {
     if (_campInfoNodes.size() > idx) {
@@ -122,6 +123,23 @@ void MapUILayer::updateCampInfos(size_t idx)
         node->update();
     }
 }
+#else
+void MapUILayer::insertUnitInfos(size_t idx, const vector<const UnitBase*>& units)
+{
+    if (_campInfoNodes.size() > idx) {
+        CampInfoNode* node = _campInfoNodes.at(idx);
+        node->insert(units);
+    }
+}
+
+void MapUILayer::updateUnitInfos(size_t idx)
+{
+    if (_campInfoNodes.size() > idx) {
+        CampInfoNode* node = _campInfoNodes.at(idx);
+        node->update();
+    }
+}
+#endif
 
 void MapUILayer::closeAllUnitInfoNodes()
 {

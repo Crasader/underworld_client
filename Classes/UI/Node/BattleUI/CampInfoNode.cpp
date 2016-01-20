@@ -96,6 +96,7 @@ void CampInfoNode::registerObserver(CampInfoNodeObserver *observer)
     _observer = observer;
 }
 
+#if ENABLE_CAMP_INFO
 void CampInfoNode::insert(const vector<pair<const Camp*, const UnitBase*>>& units)
 {
     if (_displayIconNode) {
@@ -107,6 +108,19 @@ void CampInfoNode::insert(const vector<pair<const Camp*, const UnitBase*>>& unit
         _button->setVisible(true);
     }
 }
+#else
+void CampInfoNode::insert(const std::vector<const UnderWorld::Core::UnitBase*>& units)
+{
+    if (_displayIconNode) {
+        _displayIconNode->setVisible(true);
+        _displayIconNode->insert(units);
+    }
+    
+    if (_button) {
+        _button->setVisible(true);
+    }
+}
+#endif
 
 void CampInfoNode::update()
 {

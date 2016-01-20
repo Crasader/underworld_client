@@ -38,7 +38,11 @@ public:
     
     virtual void setPosition(const Point& position) override;
     void registerObserver(DisplayIconNodeObserver *observer);
+#if ENABLE_CAMP_INFO
     void insert(const std::vector<std::pair<const UnderWorld::Core::Camp*, const UnderWorld::Core::UnitBase*>>& units);
+#else
+    void insert(const std::vector<const UnderWorld::Core::UnitBase*>& units);
+#endif
     void update();
     
 protected:
@@ -61,8 +65,12 @@ private:
     Point _basePosition;
     Point _contentOffset;
     size_t _currentCount;
+#if ENABLE_CAMP_INFO
     std::vector<const UnderWorld::Core::Camp*> _camps;
     std::map<const UnderWorld::Core::Camp*, const UnderWorld::Core::UnitBase*> _units;
+#else
+    std::vector<const UnderWorld::Core::UnitBase*> _unitBases;
+#endif
     bool _touchInvalid;
     TableView *_tableView;
 };

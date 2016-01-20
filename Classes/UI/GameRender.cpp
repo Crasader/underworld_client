@@ -54,7 +54,12 @@ GameRender::~GameRender()
     stopAllTimers();
     removeAllUnits();
     removeAllBullets();
+    
+#if ENABLE_CAMP_INFO
     removeBattleCampInfos();
+#else
+    removeBattleUnitInfos();
+#endif
 }
 
 void GameRender::registerObserver(GameRenderObserver *observer)
@@ -127,7 +132,11 @@ void GameRender::render(const Game* game)
                     _mapUILayer->updateRemainingTime(_remainingTime);
                     if (waveTime == remainingWaveTime) {
                         if (!_hasUpdatedBattleCampInfos) {
+#if ENABLE_CAMP_INFO
                             updateBattleCampInfos();
+#else
+                            updateBattleUnitInfos();
+#endif
                             _hasUpdatedBattleCampInfos = true;
                         }
                     } else {
@@ -145,6 +154,13 @@ void GameRender::updateUnits(const Game* game, int index)
 
     const Faction* f = world->getFaction(index);
     const vector<Unit*>& units = f->getAllUnits();
+#if !ENABLE_CAMP_INFO
+    if (_newAddedUnitBases.find(index) == _newAddedUnitBases.end()) {
+        _newAddedUnitBases.insert(make_pair(index, vector<const UnitBase*>()));
+    }
+    vector<const UnitBase*>& newAddedUnitBases = _newAddedUnitBases.at(index);
+    newAddedUnitBases.clear();
+#endif
     for (int i = 0; i < units.size(); ++i) {
         Unit* unit = units.at(i);
         const int key = unit->getUnitId();
@@ -203,6 +219,26 @@ void GameRender::updateUnits(const Game* game, int index)
                 }
             }
         }
+        
+#if !ENABLE_CAMP_INFO
+        if (_battleUnitInfos.find(index) == _battleUnitInfos.end()) {
+            _battleUnitInfos.insert(make_pair(index, BattleUnitInfos()));
+        }
+        
+        BattleUnitInfos& infos = _battleUnitInfos.at(index);
+        const string& name = unit->getUnitBase().getUnitName();
+        map<string, UnitBase*>& unitBaseMap = infos.unitBaseMap;
+        if (unitBaseMap.find(name) == unitBaseMap.end()) {
+            const UnitBase& ub = unit->getUnitBase();
+            UnitBase* newUb = new UnitBase();
+            if (newUb) {
+                newUb->create(ub.getUnitType(), _game->getWorld(), ub.getLevel(), ub.getQuality(), ub.getTalent());
+            }
+            unitBaseMap.insert(make_pair(name, newUb));
+            infos.unitBaseVector.push_back(newUb);
+            newAddedUnitBases.push_back(newUb);
+        }
+#endif
     }
 }
 
@@ -266,6 +302,7 @@ void GameRender::updateUILayer()
     }
 }
 
+#if ENABLE_CAMP_INFO
 void GameRender::updateBattleCampInfos()
 {
     const World* world = _game->getWorld();
@@ -306,6 +343,23 @@ void GameRender::updateBattleCampInfos()
         }
     }
 }
+#else
+void GameRender::updateBattleUnitInfos()
+{
+    if (_mapUILayer) {
+        for (map<int, vector<const UnitBase*>>::iterator iter = _newAddedUnitBases.begin(); iter != _newAddedUnitBases.end(); ++iter)
+        {
+            const int factionIndex = iter->first;
+            vector<const UnitBase*>& v = iter->second;
+            if (v.size() > 0) {
+                _mapUILayer->insertUnitInfos(factionIndex, v);
+            } else {
+                _mapUILayer->updateUnitInfos(factionIndex);
+            }
+        }
+    }
+}
+#endif
 
 bool GameRender::isCampFull(const Camp* camp) const
 {
@@ -614,6 +668,7 @@ void GameRender::removeAllUnits()
     _cores.clear();
 }
 
+#if ENABLE_CAMP_INFO
 void GameRender::removeBattleCampInfos()
 {
     for (map<int, BattleCampInfos>::iterator iter = _battleCampInfos.begin(); iter != _battleCampInfos.end(); ++iter) {
@@ -624,6 +679,18 @@ void GameRender::removeBattleCampInfos()
         
     }
 }
+#else
+void GameRender::removeBattleUnitInfos()
+{
+    for (map<int, BattleUnitInfos>::iterator iter = _battleUnitInfos.begin(); iter != _battleUnitInfos.end(); ++iter) {
+        map<string, UnitBase*>& units = iter->second.unitBaseMap;
+        for (map<string, UnitBase*>::iterator uIter = units.begin(); uIter != units.end(); ++uIter) {
+            CC_SAFE_DELETE(uIter->second);
+        }
+        
+    }
+}
+#endif
 
 void GameRender::pauseGame()
 {

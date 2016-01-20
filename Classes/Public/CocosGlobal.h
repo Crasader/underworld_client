@@ -12,6 +12,8 @@
 #include "Global.h"
 #include <iostream>
 
+#define ENABLE_CAMP_INFO (0)
+
 #define USER_TOKEN_LENGTH   (64)
 
 #define RESOLUTION_WIDTH    (1136)

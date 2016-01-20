@@ -218,7 +218,7 @@ void ResourceButton::resize()
             _countLabel->setPositionX(x + 5.0f + iconWidth / 2 + labelWidth * _countLabel->getAnchorPoint().x);
         } else {
             Node* icon = _animated ? _iconNode : _icon;
-            const Size& iconSize = icon->getContentSize();
+            const Size& iconSize = Size(36, 36) /*icon->getContentSize()*/;
             const Size& labelSize = _countLabel->getContentSize();
             
             static const float offsetX = 5.0f;

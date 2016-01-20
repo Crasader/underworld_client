@@ -40,7 +40,11 @@ public:
     virtual void setPosition(const Point& position) override;
     
     void registerObserver(CampInfoNodeObserver *observer);
+#if ENABLE_CAMP_INFO
     void insert(const std::vector<std::pair<const UnderWorld::Core::Camp*, const UnderWorld::Core::UnitBase*>>& units);
+#else
+    void insert(const std::vector<const UnderWorld::Core::UnitBase*>& units);
+#endif
     void update();
     void closeUnitInfoNode();
     Rect getIconsBoundingBox();

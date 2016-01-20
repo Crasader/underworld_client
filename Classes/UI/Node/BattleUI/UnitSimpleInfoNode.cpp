@@ -172,13 +172,15 @@ void UnitSimpleInfoNode::update(const Camp* camp, const UnitBase* unit)
     assert(!_data);
     if (camp) {
         _countLabel->setString(StringUtils::format("%d/%d", camp->getProduction(), camp->getMaxProduction()));
-        const string& file = DataManager::getInstance()->getURConfigData(camp->getUnitType()->getRenderKey())->getSmallIcon();
-        if (FileUtils::getInstance()->isFileExist(file)) {
-            _icon->setTexture(file);
-        }
+    } else {
+        _countLabel->setString("");
     }
     
     if (unit) {
+        const string& file = DataManager::getInstance()->getURConfigData(unit->getUnitType()->getRenderKey())->getSmallIcon();
+        if (FileUtils::getInstance()->isFileExist(file)) {
+            _icon->setTexture(file);
+        }
         _levelLabel->setString(StringUtils::format("&'%d", unit->getLevel()));
     }
 }

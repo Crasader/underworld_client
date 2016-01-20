@@ -40,8 +40,13 @@ public:
     virtual ~MapUILayer();
     void registerObserver(MapUILayerObserver *observer);
     void reload();
+#if ENABLE_CAMP_INFO
     void insertCampInfo(size_t idx, const std::vector<std::pair<const UnderWorld::Core::Camp*, const UnderWorld::Core::UnitBase*>>& units);
     void updateCampInfos(size_t idx);
+#else
+    void insertUnitInfos(size_t idx, const std::vector<const UnderWorld::Core::UnitBase*>& units);
+    void updateUnitInfos(size_t idx);
+#endif
     void closeAllUnitInfoNodes();
     void updateMyHpProgress(int progress);
     void updateOpponentsHpProgress(int progress);
