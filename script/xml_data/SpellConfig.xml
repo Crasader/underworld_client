@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <root>
-	<item spell_name="激励" resource_name="kuangbao"/>
-	<item spell_name="全体恢复" resource_name="huifu-2"/>
-	<item spell_name="减速弹"/>
-	<item spell_name="冲击波" resource_name="baolie"/>
-	<item spell_name="狂暴" resource_name="jiasu"/>
-	<item spell_name="治疗" resource_name="yicixinghuixue"/>
+	<item spell_name="激励" caster_resource_name="Goddess-of-time-Yayse-Tati-jineng-3" caster_is_body="1" resource_name="kuangbao" receiver_is_body="1"/>
+	<item spell_name="全体恢复" caster_resource_name="The-sky-goddess-Inanna-jineng-3" caster_is_body="1" resource_name="huifu-2" receiver_is_body="1"/>
+	<item spell_name="减速" resource_name="JanSu.plist" receiver_is_body="0"/>
+	<item spell_name="冲击波" resource_name="baolie" receiver_is_body="1"/>
+	<item spell_name="狂暴" resource_name="jiasu" receiver_is_body="1"/>
+	<item spell_name="治疗" resource_name="yicixinghuixue" receiver_is_body="1"/>
 	<item spell_name="轰击"/>
-	<item spell_name="冲锋" resource_name="chongfengtuowei.plist"/>
-	<item spell_name="刚毅" resource_name="dun.2"/>
-	<item spell_name="强风护盾" resource_name="fengdun"/>
-	<item spell_name="血雾" resource_name="xuewu"/>
+	<item spell_name="冲锋" resource_name="chongfengtuowei.plist" receiver_is_body="1"/>
+	<item spell_name="刚毅" resource_name="dun.2" receiver_is_body="1"/>
+	<item spell_name="强风护盾" resource_name="fengdun" receiver_is_body="1"/>
+	<item spell_name="血雾" resource_name="xuewu" receiver_is_body="1"/>
+	<item spell_name="火球术" resource_name="jinenghuoqiukuosan" receiver_is_body="1"/>
+	<item spell_name="闪电攻击" caster_resource_name="Seven-Lamashen-devil-figure-jineng-3-GS,Seven-Lamashen-devil-figure-jineng-3-XC,Seven-Lamashen-devil-figure-jineng-Zhao"/>
 </root>

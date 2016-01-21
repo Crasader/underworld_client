@@ -47,6 +47,13 @@ static void node_setScale(Node* node, float scale)
     node->setScale(scale * scaleX, scale * scaleY);
 }
 
+static void node_setScale(Node* node, float scaleX, float scaleY)
+{
+    const float x = node->getScaleX();
+    const float y = node->getScaleY();
+    node->setScale(x * scaleX, y * scaleY);
+}
+
 static int getResourceId(Unit::Direction direction)
 {
     switch (direction) {
@@ -348,9 +355,9 @@ void UnitNode::getCsbFiles(vector<string>& output, Unit::Direction direction, bo
             break;
         case kSkillClass_Cast:
         {
-            // TODO
-            if (_isStandby) {
-                csbFile = getStandbyCsbFile(direction, isHealthy);
+            const string& file = prefix + StringUtils::format("-skill-%d.csb", getResourceId(direction));
+            if (FileUtils::getInstance()->isFileExist(file)) {
+                csbFile = file;
             } else {
                 getAttackCsbFiles(output, direction, isHealthy);
             }
@@ -649,23 +656,54 @@ void UnitNode::updateActionNode(const Skill* skill, int frameIndex, bool flip)
                             if (data) {
                                 const vector<string>& resources = data->getCasterResourceNames();
                                 const size_t cnt = resources.size();
+                                const bool isOnBody = data->isCasterEffectOnBody();
                                 switch (cnt) {
                                     case 1:
                                     {
-                                        addEffect(resources.at(0));
+                                        Node* node = addEffect(resources.at(0));
+                                        if (!isOnBody) {
+                                            node->setPosition(_configData->getFootEffectPosition());
+                                            node_setScale(node, _configData->getFootEffectScaleX(), _configData->getFootEffectScaleY());
+                                            node->setLocalZOrder(-1);
+                                        }
                                     }
                                         break;
                                     case 2:
                                     {
                                         addEffect(resources.at(0));
-                                        Node* second = addEffect(resources.at(1));
-                                        second->setLocalZOrder(-1);
+                                        {
+                                            Node* node = addEffect(resources.at(1));
+                                            node->setPosition(_configData->getFootEffectPosition());
+                                            node_setScale(node, _configData->getFootEffectScaleX(), _configData->getFootEffectScaleY());
+                                            node->setLocalZOrder(-1);
+                                        }
                                         
                                     }
                                         break;
+                                    case 3:
+                                    {
+                                        // TODO
+                                        addEffect(resources.at(0));
+                                        {
+                                            Node* node = addEffect(resources.at(1));
+                                            node->setPosition(_configData->getFootEffectPosition());
+                                            node_setScale(node, _configData->getFootEffectScaleX(), _configData->getFootEffectScaleY());
+                                            node->setLocalZOrder(-1);
+                                        }
+                                        {
+                                            Node* node = addEffect(resources.at(2));
+                                            node->setPosition(node->getPosition() + Point(0, 87));
+                                        }
+                                    }
                                     default:
                                         break;
                                 }
+                            }
+                            
+                            // scale if needed
+                            const float rate = data->getCasterVolumeRate();
+                            if (rate != 1.0f) {
+                                node_setScale(_actionNode, rate);
                             }
                         }
                     }
@@ -735,7 +773,7 @@ void UnitNode::addBuf(const string& name)
         DataManager* dm = DataManager::getInstance();
         const SpellConfigData* data = dm->getSpellConfigData(name);
         if (data) {
-            const vector<string>& files = data->getResourceNames();
+            const vector<string>& files = data->getReceiverResourceNames();
             if (files.size() > 0) {
                 const string& file = files.at(0);
                 Node* buf = addEffect(file, true);
@@ -806,7 +844,7 @@ void UnitNode::updateFeatures()
                 const string& renderKey = ft->getRenderKey();
                 const SpellConfigData* data = DataManager::getInstance()->getSpellConfigData(renderKey);
                 if (data) {
-                    const vector<string>& files = data->getResourceNames();
+                    const vector<string>& files = data->getReceiverResourceNames();
                     if (files.size() > 0) {
                         const string& file = files.at(0);
                         addEffect(file);

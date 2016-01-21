@@ -15,6 +15,10 @@ using namespace std;
 static const string suffix(".csb");
 
 SpellConfigData::SpellConfigData(tinyxml2::XMLElement *xmlElement)
+:_isCasterEffectOnBody(false)
+,_isReceiverEffectOnBody(false)
+,_casterVolumeRate(1.0f)
+,_receiverVolumeRate(1.0f)
 {
     if (xmlElement) {
         {
@@ -37,6 +41,18 @@ SpellConfigData::SpellConfigData(tinyxml2::XMLElement *xmlElement)
             }
         }
         {
+            const char *data = xmlElement->Attribute("caster_is_body");
+            if (data && strlen(data) > 0) {
+                _isCasterEffectOnBody = (atoi(data) != 0) ? true : false;
+            }
+        }
+        {
+            const char *data = xmlElement->Attribute("caster_volume_rate");
+            if (data && strlen(data) > 0) {
+                _casterVolumeRate = atof(data);
+            }
+        }
+        {
             const char *data = xmlElement->Attribute("resource_name");
             if (data && strlen(data) > 0) {
                 vector<string> v;
@@ -50,6 +66,18 @@ SpellConfigData::SpellConfigData(tinyxml2::XMLElement *xmlElement)
                         _resourceNames.push_back(name + suffix);
                     }
                 }
+            }
+        }
+        {
+            const char *data = xmlElement->Attribute("receiver_is_body");
+            if (data && strlen(data) > 0) {
+                _isReceiverEffectOnBody = (atoi(data) != 0) ? true : false;
+            }
+        }
+        {
+            const char *data = xmlElement->Attribute("receiver_volume_rate");
+            if (data && strlen(data) > 0) {
+                _receiverVolumeRate = atof(data);
             }
         }
     }
@@ -70,7 +98,27 @@ const vector<string>& SpellConfigData::getCasterResourceNames() const
     return _casterResourceNames;
 }
 
-const vector<string>& SpellConfigData::getResourceNames() const
+bool SpellConfigData::isCasterEffectOnBody() const
+{
+    return _isCasterEffectOnBody;
+}
+
+float SpellConfigData::getCasterVolumeRate() const
+{
+    return _casterVolumeRate;
+}
+
+const vector<string>& SpellConfigData::getReceiverResourceNames() const
 {
     return _resourceNames;
+}
+
+bool SpellConfigData::isReceiverEffectOnBody() const
+{
+    return _isReceiverEffectOnBody;
+}
+
+float SpellConfigData::getReceiverVolumeRate() const
+{
+    return _receiverVolumeRate;
 }
