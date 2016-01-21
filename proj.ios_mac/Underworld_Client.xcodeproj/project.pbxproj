@@ -34,6 +34,7 @@
 		300098D01BD0CD5900B6E284 /* Resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098CE1BD0CD5900B6E284 /* Resource.cpp */; };
 		300098D31BD0CDB000B6E284 /* ResourceType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098D11BD0CDB000B6E284 /* ResourceType.cpp */; };
 		300098D61BD5E81700B6E284 /* InstanceFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098D41BD5E81700B6E284 /* InstanceFactory.cpp */; };
+		300B1E581C50C4D800F8D6ED /* GameSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04FF24601C4A497100A66D71 /* GameSettings.cpp */; };
 		300F25331BFC67550080765C /* FeatureType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300F25311BFC67550080765C /* FeatureType.cpp */; };
 		301C1B7A1C0EA67200B378A6 /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 301C1B781C0EA67200B378A6 /* Effect.cpp */; };
 		301F63F21BE0C56D00DA6D70 /* Damage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 301F63F01BE0C56D00DA6D70 /* Damage.cpp */; };
@@ -1814,6 +1815,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				300B1E581C50C4D800F8D6ED /* GameSettings.cpp in Sources */,
 				A1B4AE0B1C2004AB005906A6 /* User.cpp in Sources */,
 				045116E31BCFBA39002AA721 /* Map.cpp in Sources */,
 				A18524D61C1AE47A00BE261D /* BagNode.cpp in Sources */,

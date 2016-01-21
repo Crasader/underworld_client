@@ -989,7 +989,7 @@ void UnitNode::rollHintNode(cocos2d::Node *hintNode, float delay) {
     hintNode->setVisible(false);
     this->getParent()->addChild(hintNode);
     float duration = 2.0f;
-    FadeTo* fadeTo = FadeTo::create(duration, 0);
+    Sequence* fadeTo = Sequence::create(DelayTime::create(1.5f), FadeTo::create(duration - 1.5f, 0), NULL);
     MoveBy* moveBy = MoveBy::create(duration, Vec2(0.f, 100.f));
     hintNode->runAction(Sequence::create(
         DelayTime::create(delay),
