@@ -1,55 +1,97 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <root>
-<!-- 
-动作说明(skill字段)：
-0 	待机
-1 	跑
-2 	攻击
-3 	(目前没用到，应该是暴击)
-4 	死亡
-
-direction字段：
-1. 	若该动作不用调整，填0（或不填，或删掉该字段）,此时解析时会自动忽略scale和speed字段
-2. 	1) 若所有方向均使用相同的参数调整，填1
-	2) 若不同的方向有不同的参数调整，如"1_1_1, 1_0_0, 0_1_1"等，从左至右方向分别为左下、左、左上
-	以"0_1_1"为例，表示左和左上方向需要调整，此时scale和speed字段分别为：
-	scale="1_1.3_1.2" speed="1_2.1_2.2"，表示左下方向scale和speed保持不变(默认比率为1)，
-	左边scale和speed缩放比率为1.3和2.1，左上scale和speed缩放比率为1.2和2.2
--->
-
-    <item name="狼人步兵" skill="0" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="狼人步兵" skill="1" direction="0" scale="1.2_1_0.8" speed="1.2_1_0.9" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="狼人步兵" skill="2" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="狼人步兵" skill="3" direction="0" scale="2.8" speed="2.9" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="狼人步兵" skill="4" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <!--
+     动作说明(skill字段)：
+     0 	待机
+     1 	跑
+     2 	攻击
+     3 	(目前没用到，应该是暴击)
+     4 	死亡
+     
+     direction字段：
+     1. 	若该动作不用调整，填0（或不填，或删掉该字段）,此时解析时会自动忽略scale和speed字段
+     2. 	1) 若所有方向均使用相同的参数调整，填1
+     2) 若不同的方向有不同的参数调整，如"1_1_1, 1_0_0, 0_1_1"等，从左至右方向分别为左下、左、左上
+     以"0_1_1"为例，表示左和左上方向需要调整，此时scale和speed字段分别为：
+     scale="1_1.3_1.2" speed="1_2.1_2.2"，表示左下方向scale和speed保持不变(默认比率为1)，
+     左边scale和speed缩放比率为1.3和2.1，左上scale和speed缩放比率为1.2和2.2
+     -->
     
-    <item name="狼人射手" skill="0" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="狼人射手" skill="1" direction="0" scale="1.2_1.3_1.4" speed="1.5_1.6_1.7" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="狼人射手" skill="2" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="狼人射手" skill="3" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="狼人射手" skill="4" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="时光女神" skill="0" direction="1" scale="1.0" speed="0.9" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="时光女神" skill="1" direction="1" scale="1.0" speed="0.9" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="时光女神" skill="2" direction="1" scale="1.0" speed="0.9" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="时光女神" skill="3" direction="1" scale="1.0" speed="0.9" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="时光女神" skill="4" direction="1" scale="1.0" speed="0.9" effect_pos="0.0_0.0" effect_scale="1.0f"/>
     
-    <item name="狼人巫师" skill="0" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="狼人巫师" skill="1" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="狼人巫师" skill="2" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="狼人巫师" skill="3" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="狼人巫师" skill="4" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="狼人森林之魂" skill="0" direction="1" scale="1.0" speed="0.9" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="狼人森林之魂" skill="1" direction="1" scale="1.0" speed="0.9" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="狼人森林之魂" skill="2" direction="1" scale="1.0" speed="0.9" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="狼人森林之魂" skill="3" direction="1" scale="1.0" speed="0.9" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="狼人森林之魂" skill="4" direction="1" scale="1.0" speed="0.9" effect_pos="0.0_0.0" effect_scale="1.0f"/>
     
-    <item name="吸血鬼战士" skill="0" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="吸血鬼战士" skill="1" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="吸血鬼战士" skill="2" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="吸血鬼战士" skill="3" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="吸血鬼战士" skill="4" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="天空女神" skill="0" direction="1" scale="1.0" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="天空女神" skill="1" direction="1" scale="1.0" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="天空女神" skill="2" direction="1" scale="1.0" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="天空女神" skill="3" direction="1" scale="1.0" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="天空女神" skill="4" direction="1" scale="1.0" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
     
-    <item name="吸血鬼弓兵" skill="0" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="吸血鬼弓兵" skill="1" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="吸血鬼弓兵" skill="2" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="吸血鬼弓兵" skill="3" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="吸血鬼弓兵" skill="4" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="狼人步兵" skill="0" direction="1" scale="0.7" speed="0.8" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="狼人步兵" skill="1" direction="1" scale="0.7" speed="0.8" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="狼人步兵" skill="2" direction="1" scale="0.7" speed="0.8" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="狼人步兵" skill="3" direction="1" scale="0.7" speed="0.8" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="狼人步兵" skill="4" direction="1" scale="0.7" speed="0.8" effect_pos="0.0_0.0" effect_scale="1.0f"/>
     
-    <item name="吸血鬼巫师" skill="0" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="吸血鬼巫师" skill="1" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="吸血鬼巫师" skill="2" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="吸血鬼巫师" skill="3" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="吸血鬼巫师" skill="4" direction="0" scale="1.2" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="狼人射手" skill="0" direction="1" scale="0.7" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="狼人射手" skill="1" direction="1" scale="0.7" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="狼人射手" skill="2" direction="1" scale="0.7" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="狼人射手" skill="3" direction="1" scale="0.7" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="狼人射手" skill="4" direction="1" scale="0.7" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    
+    <item name="狼人巫师" skill="0" direction="1" scale="0.8" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="狼人巫师" skill="1" direction="1" scale="0.8" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="狼人巫师" skill="2" direction="1" scale="0.8" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="狼人巫师" skill="3" direction="1" scale="0.8" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="狼人巫师" skill="4" direction="1" scale="0.8" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    
+    <item name="时光法师" skill="0" direction="1" scale="1.5" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="时光法师" skill="1" direction="1" scale="1.5" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="时光法师" skill="2" direction="1" scale="1.5" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="时光法师" skill="3" direction="1" scale="1.5" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="时光法师" skill="4" direction="1" scale="1.5" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    
+    <item name="吸血鬼战士" skill="0" direction="1" scale="0.6" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="吸血鬼战士" skill="1" direction="1" scale="0.6" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="吸血鬼战士" skill="2" direction="1" scale="0.6" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="吸血鬼战士" skill="3" direction="1" scale="0.6" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="吸血鬼战士" skill="4" direction="1" scale="0.6" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    
+    <item name="吸血鬼弓兵" skill="0" direction="1" scale="1.2" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="吸血鬼弓兵" skill="1" direction="1" scale="1.2" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="吸血鬼弓兵" skill="2" direction="1" scale="1.2" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="吸血鬼弓兵" skill="3" direction="1" scale="1.2" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="吸血鬼弓兵" skill="4" direction="1" scale="1.2" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    
+    <item name="吸血鬼蜘蛛" skill="0" direction="1" scale="0.8" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="吸血鬼蜘蛛" skill="1" direction="1" scale="0.8" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="吸血鬼蜘蛛" skill="2" direction="1" scale="0.8" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="吸血鬼蜘蛛" skill="3" direction="1" scale="0.8" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="吸血鬼蜘蛛" skill="4" direction="1" scale="0.8" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    
+    <item name="莉莉丝" skill="0" direction="1" scale="0.8" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="莉莉丝" skill="1" direction="1" scale="0.8" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="莉莉丝" skill="2" direction="1" scale="0.8" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="莉莉丝" skill="3" direction="1" scale="0.8" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="莉莉丝" skill="4" direction="1" scale="0.8" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    
+    <item name="七恶魔拉玛什图" skill="0" direction="1" scale="1.0" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="七恶魔拉玛什图" skill="1" direction="1" scale="1.0" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="七恶魔拉玛什图" skill="2" direction="1" scale="1.0" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="七恶魔拉玛什图" skill="3" direction="1" scale="1.0" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="七恶魔拉玛什图" skill="4" direction="1" scale="1.0" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    
+    <item name="吸血鬼巫师" skill="0" direction="1" scale="1.2" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="吸血鬼巫师" skill="1" direction="1" scale="1.2" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="吸血鬼巫师" skill="2" direction="1" scale="1.2" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="吸血鬼巫师" skill="3" direction="1" scale="1.2" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="吸血鬼巫师" skill="4" direction="1" scale="1.2" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
 </root>
