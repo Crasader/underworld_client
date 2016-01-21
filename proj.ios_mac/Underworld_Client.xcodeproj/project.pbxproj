@@ -35,21 +35,24 @@
 		300098D31BD0CDB000B6E284 /* ResourceType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098D11BD0CDB000B6E284 /* ResourceType.cpp */; };
 		300098D61BD5E81700B6E284 /* InstanceFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300098D41BD5E81700B6E284 /* InstanceFactory.cpp */; };
 		300B1E581C50C4D800F8D6ED /* GameSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04FF24601C4A497100A66D71 /* GameSettings.cpp */; };
+		300B1E5C1C50CCED00F8D6ED /* PathFinderImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300B1E5A1C50CCED00F8D6ED /* PathFinderImpl.cpp */; };
 		300F25331BFC67550080765C /* FeatureType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300F25311BFC67550080765C /* FeatureType.cpp */; };
 		301C1B7A1C0EA67200B378A6 /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 301C1B781C0EA67200B378A6 /* Effect.cpp */; };
 		301F63F21BE0C56D00DA6D70 /* Damage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 301F63F01BE0C56D00DA6D70 /* Damage.cpp */; };
 		301F63FC1BE3680600DA6D70 /* GameLooper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 301F63FA1BE3680600DA6D70 /* GameLooper.cpp */; };
+		30236FF71C5B6AFA00FB1802 /* PathFinderInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30236FF61C5B6AFA00FB1802 /* PathFinderInterface.cpp */; };
 		3028EBC31BFF0CBD00511C51 /* DynamicValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3028EBC11BFF0CBD00511C51 /* DynamicValue.cpp */; };
 		3028EBC61BFF0D4800511C51 /* Condition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3028EBC41BFF0D4700511C51 /* Condition.cpp */; };
 		307534691BF1B2F20057DCED /* Commander.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 307534671BF1B2F20057DCED /* Commander.cpp */; };
 		3075346D1BF324340057DCED /* EventTrigger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3075346B1BF324340057DCED /* EventTrigger.cpp */; };
 		307534711BF33ECF0057DCED /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3075346F1BF33ECF0057DCED /* Logger.cpp */; };
-		308B84631BE3752000377802 /* PathFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84611BE3752000377802 /* PathFinder.cpp */; };
 		308B84661BE3853C00377802 /* AIBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84641BE3853C00377802 /* AIBody.cpp */; };
 		308B84691BE3856F00377802 /* AIBrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84671BE3856F00377802 /* AIBrain.cpp */; };
 		309F769A1BE9D7BD00B2791F /* Camp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F76981BE9D7BD00B2791F /* Camp.cpp */; };
 		309F76A01BEA3ABA00B2791F /* CoreUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F769E1BEA3AB900B2791F /* CoreUtils.cpp */; };
+		30C6C3921C52183500DD1C8F /* AStarNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30C6C3901C52183500DD1C8F /* AStarNode.cpp */; };
 		30DF03C41C0D898E00A1C6EB /* EffectType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DF03C21C0D898E00A1C6EB /* EffectType.cpp */; };
+		30E05B2C1C56450700A3A3E9 /* PathService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30E05B2A1C56450700A3A3E9 /* PathService.cpp */; };
 		30FD55611C2BF57F0078EC3C /* PassiveType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD555F1C2BF57F0078EC3C /* PassiveType.cpp */; };
 		30FD55641C2CFDE80078EC3C /* Passive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD55621C2CFDE80078EC3C /* Passive.cpp */; };
 		30FD556C1C322FBF0078EC3C /* SpellType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD556A1C322FBF0078EC3C /* SpellType.cpp */; };
@@ -314,6 +317,8 @@
 		300098D21BD0CDB000B6E284 /* ResourceType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResourceType.h; path = Core/Unit/Type/ResourceType.h; sourceTree = "<group>"; };
 		300098D41BD5E81700B6E284 /* InstanceFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InstanceFactory.cpp; path = Core/Unit/InstanceFactory.cpp; sourceTree = "<group>"; };
 		300098D51BD5E81700B6E284 /* InstanceFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstanceFactory.h; path = Core/Unit/InstanceFactory.h; sourceTree = "<group>"; };
+		300B1E5A1C50CCED00F8D6ED /* PathFinderImpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PathFinderImpl.cpp; path = Core/AI/Path/PathFinderImpl.cpp; sourceTree = "<group>"; };
+		300B1E5B1C50CCED00F8D6ED /* PathFinderImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PathFinderImpl.h; path = Core/AI/Path/PathFinderImpl.h; sourceTree = "<group>"; };
 		300F25311BFC67550080765C /* FeatureType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FeatureType.cpp; path = Core/Unit/Type/FeatureType.cpp; sourceTree = "<group>"; };
 		300F25321BFC67550080765C /* FeatureType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FeatureType.h; path = Core/Unit/Type/FeatureType.h; sourceTree = "<group>"; };
 		301C1B781C0EA67200B378A6 /* Effect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Effect.cpp; path = Core/Unit/Instance/Effect.cpp; sourceTree = "<group>"; };
@@ -323,6 +328,8 @@
 		301F63FA1BE3680600DA6D70 /* GameLooper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameLooper.cpp; path = Core/Game/GameLooper.cpp; sourceTree = "<group>"; };
 		301F63FB1BE3680600DA6D70 /* GameLooper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameLooper.h; path = Core/Game/GameLooper.h; sourceTree = "<group>"; };
 		301F63FE1BE3694C00DA6D70 /* GameInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameInterface.h; path = Core/Game/GameInterface.h; sourceTree = "<group>"; };
+		30236FF41C5B5E3100FB1802 /* PathScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PathScheduler.h; path = Core/AI/Path/PathScheduler.h; sourceTree = "<group>"; };
+		30236FF61C5B6AFA00FB1802 /* PathFinderInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PathFinderInterface.cpp; path = Core/AI/Path/PathFinderInterface.cpp; sourceTree = "<group>"; };
 		3028EBC11BFF0CBD00511C51 /* DynamicValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DynamicValue.cpp; path = Core/Unit/Element/DynamicValue.cpp; sourceTree = "<group>"; };
 		3028EBC21BFF0CBD00511C51 /* DynamicValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DynamicValue.h; path = Core/Unit/Element/DynamicValue.h; sourceTree = "<group>"; };
 		3028EBC41BFF0D4700511C51 /* Condition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Condition.cpp; path = Core/Unit/Element/Condition.cpp; sourceTree = "<group>"; };
@@ -333,8 +340,6 @@
 		3075346C1BF324340057DCED /* EventTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventTrigger.h; path = Core/Game/EventTrigger.h; sourceTree = "<group>"; };
 		3075346F1BF33ECF0057DCED /* Logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Logger.cpp; path = Core/Test/Logger.cpp; sourceTree = "<group>"; };
 		307534701BF33ECF0057DCED /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Logger.h; path = Core/Test/Logger.h; sourceTree = "<group>"; };
-		308B84611BE3752000377802 /* PathFinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PathFinder.cpp; path = Core/AI/PathFinder.cpp; sourceTree = "<group>"; };
-		308B84621BE3752000377802 /* PathFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PathFinder.h; path = Core/AI/PathFinder.h; sourceTree = "<group>"; };
 		308B84641BE3853C00377802 /* AIBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AIBody.cpp; path = Core/AI/AIBody.cpp; sourceTree = "<group>"; };
 		308B84651BE3853C00377802 /* AIBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AIBody.h; path = Core/AI/AIBody.h; sourceTree = "<group>"; };
 		308B84671BE3856F00377802 /* AIBrain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AIBrain.cpp; path = Core/AI/AIBrain.cpp; sourceTree = "<group>"; };
@@ -344,11 +349,16 @@
 		309F769D1BEA37D200B2791F /* Global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Global.h; path = Core/Utils/Global.h; sourceTree = "<group>"; };
 		309F769E1BEA3AB900B2791F /* CoreUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CoreUtils.cpp; path = Core/Utils/CoreUtils.cpp; sourceTree = "<group>"; };
 		309F769F1BEA3AB900B2791F /* CoreUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CoreUtils.h; path = Core/Utils/CoreUtils.h; sourceTree = "<group>"; };
+		30C6C3901C52183500DD1C8F /* AStarNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AStarNode.cpp; path = Core/AI/Path/AStarNode.cpp; sourceTree = "<group>"; };
+		30C6C3911C52183500DD1C8F /* AStarNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AStarNode.h; path = Core/AI/Path/AStarNode.h; sourceTree = "<group>"; };
+		30C6C3931C52186B00DD1C8F /* PathFinderInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PathFinderInterface.h; path = Core/AI/Path/PathFinderInterface.h; sourceTree = "<group>"; };
 		30DF03B21C06C14600A1C6EB /* EnumParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EnumParser.h; path = Core/Utils/EnumParser.h; sourceTree = "<group>"; };
 		30DF03BA1C085C2400A1C6EB /* RandomCreator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RandomCreator.cpp; path = Core/Utils/RandomCreator.cpp; sourceTree = "<group>"; };
 		30DF03BB1C085C2400A1C6EB /* RandomCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RandomCreator.h; path = Core/Utils/RandomCreator.h; sourceTree = "<group>"; };
 		30DF03C21C0D898E00A1C6EB /* EffectType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EffectType.cpp; path = Core/Unit/Type/EffectType.cpp; sourceTree = "<group>"; };
 		30DF03C31C0D898E00A1C6EB /* EffectType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectType.h; path = Core/Unit/Type/EffectType.h; sourceTree = "<group>"; };
+		30E05B2A1C56450700A3A3E9 /* PathService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PathService.cpp; path = Core/AI/Path/PathService.cpp; sourceTree = "<group>"; };
+		30E05B2B1C56450700A3A3E9 /* PathService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PathService.h; path = Core/AI/Path/PathService.h; sourceTree = "<group>"; };
 		30FD555F1C2BF57F0078EC3C /* PassiveType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PassiveType.cpp; path = Core/Unit/Type/PassiveType.cpp; sourceTree = "<group>"; };
 		30FD55601C2BF57F0078EC3C /* PassiveType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PassiveType.h; path = Core/Unit/Type/PassiveType.h; sourceTree = "<group>"; };
 		30FD55621C2CFDE80078EC3C /* Passive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Passive.cpp; path = Core/Unit/Instance/Passive.cpp; sourceTree = "<group>"; };
@@ -738,8 +748,7 @@
 		045116D61BCFB9EF002AA721 /* AI */ = {
 			isa = PBXGroup;
 			children = (
-				308B84611BE3752000377802 /* PathFinder.cpp */,
-				308B84621BE3752000377802 /* PathFinder.h */,
+				300B1E591C50CBAF00F8D6ED /* Path */,
 				308B84641BE3853C00377802 /* AIBody.cpp */,
 				308B84651BE3853C00377802 /* AIBody.h */,
 				308B84671BE3856F00377802 /* AIBrain.cpp */,
@@ -964,6 +973,22 @@
 				047228AF1C193A4D00E7F71B /* Geometry.h */,
 			);
 			name = Utils;
+			sourceTree = "<group>";
+		};
+		300B1E591C50CBAF00F8D6ED /* Path */ = {
+			isa = PBXGroup;
+			children = (
+				30C6C3931C52186B00DD1C8F /* PathFinderInterface.h */,
+				30236FF61C5B6AFA00FB1802 /* PathFinderInterface.cpp */,
+				300B1E5B1C50CCED00F8D6ED /* PathFinderImpl.h */,
+				300B1E5A1C50CCED00F8D6ED /* PathFinderImpl.cpp */,
+				30236FF41C5B5E3100FB1802 /* PathScheduler.h */,
+				30C6C3901C52183500DD1C8F /* AStarNode.cpp */,
+				30C6C3911C52183500DD1C8F /* AStarNode.h */,
+				30E05B2A1C56450700A3A3E9 /* PathService.cpp */,
+				30E05B2B1C56450700A3A3E9 /* PathService.h */,
+			);
+			name = Path;
 			sourceTree = "<group>";
 		};
 		3028EBBD1BFF0B7700511C51 /* Element */ = {
@@ -1784,6 +1809,7 @@
 			files = (
 				300B1E581C50C4D800F8D6ED /* GameSettings.cpp in Sources */,
 				A1B4AE0B1C2004AB005906A6 /* User.cpp in Sources */,
+				30E05B2C1C56450700A3A3E9 /* PathService.cpp in Sources */,
 				045116E31BCFBA39002AA721 /* Map.cpp in Sources */,
 				A18524D61C1AE47A00BE261D /* BagNode.cpp in Sources */,
 				A1F395EF1C23BBA800B75923 /* ObjectLocalData.cpp in Sources */,
@@ -1802,8 +1828,8 @@
 				30FD55611C2BF57F0078EC3C /* PassiveType.cpp in Sources */,
 				A1F58D591C32465900C8A2DD /* SoldierTalentData.cpp in Sources */,
 				A1D461601C3E251000E8E60B /* UAConfigData.cpp in Sources */,
-				308B84631BE3752000377802 /* PathFinder.cpp in Sources */,
 				A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */,
+				300B1E5C1C50CCED00F8D6ED /* PathFinderImpl.cpp in Sources */,
 				A1720E8C1BCCE19300217E98 /* aes_ctr.c in Sources */,
 				A1720E8E1BCCE19300217E98 /* AESEncryptor.cpp in Sources */,
 				A18885671C43843800C9586F /* SoldierManager.cpp in Sources */,
@@ -1880,6 +1906,7 @@
 				A1F5BF9B1C1FC724007C08CB /* QuestData.cpp in Sources */,
 				301F63FC1BE3680600DA6D70 /* GameLooper.cpp in Sources */,
 				A1F5BF951C1FC381007C08CB /* GearData.cpp in Sources */,
+				30C6C3921C52183500DD1C8F /* AStarNode.cpp in Sources */,
 				A1F5BF921C1FC36C007C08CB /* GearLocalData.cpp in Sources */,
 				A16BF2851C313E2900E91458 /* HeroLocalData.cpp in Sources */,
 				A1720E8D1BCCE19300217E98 /* AESCTREncryptor.cpp in Sources */,
@@ -1942,6 +1969,7 @@
 				045116F41BCFBA44002AA721 /* BulletType.cpp in Sources */,
 				0451170A1BCFBA53002AA721 /* Skill.cpp in Sources */,
 				A16BF2891C313E5900E91458 /* HeroUpgradeData.cpp in Sources */,
+				30236FF71C5B6AFA00FB1802 /* PathFinderInterface.cpp in Sources */,
 				A16BF2921C313E9F00E91458 /* TowerLocalData.cpp in Sources */,
 				A1DF4BEC1C05902C000F2FDA /* DisplayBar.cpp in Sources */,
 				A1D461651C3E478F00E8E60B /* AbstractData.cpp in Sources */,

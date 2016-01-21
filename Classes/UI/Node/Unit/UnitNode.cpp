@@ -238,7 +238,8 @@ void UnitNode::update()
         updateBufs();
         updateFeatures();
         if (!_idLabel) {
-//            _idLabel = CocosUtils::createLabel(StringUtils::format("%d", _unit->getUnitId()), 120.f);
+//            _idLabel = CocosUtils::createLabel(StringUtils::format("%d", _unit->getUnitId()), 40.f);
+//            _idLabel->setPosition(0.f, 50.f);
 //            this->addChild(_idLabel, 9999);
             
         }
