@@ -45,6 +45,8 @@ void DisplayBar::setPercentage(float percentage)
         // if the unit is hurt
         if (!_visible && (percentage < 100 || lastPercentage < 100)) {
             setVisible(true);
+        } else if (_visible && percentage >= 100 && !isAlwaysVisible()) {
+            setVisible(false);
         }
         
         if (_visible) {
@@ -73,6 +75,10 @@ float DisplayBar::getPercentage() const
     return 0.0f;
 }
 
+bool DisplayBar::isAlwaysVisible() const {
+    return _unitClass == UnderWorld::Core::kUnitClass_Hero;
+}
+
 bool DisplayBar::init(DisplayBarType type, int factionIndex, UnderWorld::Core::UnitClass unitClass)
 {
     if (Node::init()) {
@@ -99,7 +105,9 @@ bool DisplayBar::init(DisplayBarType type, int factionIndex, UnderWorld::Core::U
         bg->addChild(_pt);
         
         // hide first
-        setVisible(false);
+        if (!isAlwaysVisible()) {
+            setVisible(false);
+        }
         
         return true;
     }
@@ -110,13 +118,19 @@ bool DisplayBar::init(DisplayBarType type, int factionIndex, UnderWorld::Core::U
 void DisplayBar::getFiles(bool green, std::string& bgFile, std::string& ptFile) const
 {
     const bool isBig = (UnderWorld::Core::kUnitClass_Building == _unitClass || UnderWorld::Core::kUnitClass_Core == _unitClass) ? true : false;
+    const bool isHero = UnderWorld::Core::kUnitClass_Hero == _unitClass;
     if (true) {
         if (isBig) {
             bgFile.assign("GameImages/test/ui_blood_3.png");
             ptFile.assign(green ? "GameImages/test/ui_blood_5.png" : "GameImages/test/ui_blood_4.png");
         } else {
-            bgFile.assign("GameImages/test/ui_blood.png");
-            ptFile.assign(green ? "GameImages/test/ui_blood_2.png" : "GameImages/test/ui_blood_1.png");
+            if (isHero) {
+                bgFile.assign("GameImages/test/ui_blood_hero_bg.png");
+                ptFile.assign("GameImages/test/ui_blood_hero.png");
+            } else {
+                bgFile.assign("GameImages/test/ui_blood.png");
+                ptFile.assign(green ? "GameImages/test/ui_blood_2.png" : "GameImages/test/ui_blood_1.png");
+            }
         }
     }
 }

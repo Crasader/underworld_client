@@ -153,7 +153,6 @@ void GameRender::updateUnits(const Game* game, int index)
     const World* world = game->getWorld();
 
     const Faction* f = world->getFaction(index);
-    const vector<Unit*>& units = f->getAllUnits();
 #if !ENABLE_CAMP_INFO
     if (_newAddedUnitBases.find(index) == _newAddedUnitBases.end()) {
         _newAddedUnitBases.insert(make_pair(index, vector<const UnitBase*>()));
@@ -161,8 +160,8 @@ void GameRender::updateUnits(const Game* game, int index)
     vector<const UnitBase*>& newAddedUnitBases = _newAddedUnitBases.at(index);
     newAddedUnitBases.clear();
 #endif
-    for (int i = 0; i < units.size(); ++i) {
-        Unit* unit = units.at(i);
+    for (int i = 0; i < f->getUnitCount(); ++i) {
+        const Unit* unit = f->getUnitByIndex(i);
         const int key = unit->getUnitId();
         const Coordinate& pos = unit->getCenterPos();
         const Skill* skill = unit->getCurrentSkill();
@@ -189,21 +188,16 @@ void GameRender::updateUnits(const Game* game, int index)
                     _allUnitNodes.insert(make_pair(key, node));
                     
                     if (factionIndex == world->getThisFactionIndex()) {
-                        // add existent unit
-                        if (_myUnits.find(key) == _myUnits.end()) {
-                            _myUnits.insert(make_pair(key, unit));
-                        }
-                        
                         // add existent hero
                         const UnitType* unitType = unit->getUnitBase().getUnitType();
                         const UnitClass unitClass = unitType->getUnitClass();
                         if (kUnitClass_Hero == unitClass) {
                             const string& unitName = unitType->getName();
                             if (_myHeroes.find(unitName) == _myHeroes.end()) {
-                                _myHeroes.insert(make_pair(unitName, map<int, Unit*>()));
+                                _myHeroes.insert(make_pair(unitName, map<int, const Unit*>()));
                             }
                             
-                            map<int, Unit*>& m = _myHeroes.at(unitName);
+                            map<int, const Unit*>& m = _myHeroes.at(unitName);
                             if (m.find(key) == m.end()) {
                                 m.insert(make_pair(key, unit));
                             }
@@ -286,7 +280,7 @@ void GameRender::updateUILayer()
     
     const World* world = _game->getWorld();
     if (world) {
-        for (map<int, Unit*>::iterator iter = _cores.begin(); iter != _cores.end(); ++iter) {
+        for (map<int, const Unit*>::iterator iter = _cores.begin(); iter != _cores.end(); ++iter) {
             const Unit* core(iter->second);
             if (core) {
                 const int maxHp = core->getUnitBase().getMaxHp();
@@ -379,14 +373,14 @@ bool GameRender::isCampFull(const Camp* camp) const
     return false;
 }
 
-Spell* GameRender::getSpell(const Camp* camp, int idx, Unit** trigger) const
+const Spell* GameRender::getSpell(const Camp* camp, int idx, const Unit** trigger) const
 {
     if (camp) {
         const string& unitName = camp->getUnitSetting().getUnitTypeName();
         if (_myHeroes.find(unitName) != _myHeroes.end()) {
-            const map<int, Unit*>& heroes = _myHeroes.at(unitName);
+            const map<int, const Unit*>& heroes = _myHeroes.at(unitName);
             if (heroes.size() > 0) {
-                Unit* hero = heroes.begin()->second;
+                const Unit* hero = heroes.begin()->second;
                 if (hero) {
                     const int cnt = hero->getSpellCount();
                     if (idx < cnt) {
@@ -403,8 +397,8 @@ Spell* GameRender::getSpell(const Camp* camp, int idx, Unit** trigger) const
 
 SpellCastType GameRender::getSpellCastType(const Camp* camp, int idx) const
 {
-    Unit* trigger(nullptr);
-    Spell* spell = getSpell(camp, idx, &trigger);
+    const Unit* trigger(nullptr);
+    const Spell* spell = getSpell(camp, idx, &trigger);
     if (spell) {
         const SpellCastType castType = spell->getSpellType()->getCastType();
         return castType;
@@ -413,13 +407,13 @@ SpellCastType GameRender::getSpellCastType(const Camp* camp, int idx) const
     return SPELL_CAST_TYPE_COUNT;
 }
 
-bool GameRender::canCastSpell(const Camp* camp, string& spellAlias, Unit** trigger) const
+bool GameRender::canCastSpell(const Camp* camp, string& spellAlias, const Unit** trigger) const
 {
-    Spell* spell = getSpell(camp, 0, trigger);
+    const Spell* spell = getSpell(camp, 0, trigger);
     if (spell) {
         const SpellType* sp = spell->getSpellType();
         if (sp) {
-            Unit* hero = *trigger;
+            const Unit* hero = *trigger;
             if (hero) {
                 spellAlias = sp->getAlias();
                 const int cd = spell->getCDProgress();
@@ -433,19 +427,15 @@ bool GameRender::canCastSpell(const Camp* camp, string& spellAlias, Unit** trigg
     return false;
 }
 
-void GameRender::castSpell(const Camp* camp, const Coordinate& coordinate, Unit* target)
+void GameRender::castSpell(const Camp* camp, const Coordinate& coordinate, const Unit* target)
 {
     string spellAlias;
-    Unit* trigger(nullptr);
+    const Unit* trigger(nullptr);
     if (canCastSpell(camp, spellAlias, &trigger)) {
-        CastCommand* command = dynamic_cast<CastCommand*>(Command::create(kCommandClass_Cast, coordinate, target));
-        if (command) {
-            command->setSpellAlias(spellAlias);
-            if (trigger) {
-                trigger->giveCommand(command);
-            } else {
-                assert(false);
-            }
+        if (trigger) {
+            _commander->tryGiveUnitCommand(trigger, kCommandClass_Cast, &coordinate, target, spellAlias);
+        } else {
+            assert(false);
         }
     }
 }
@@ -466,10 +456,7 @@ void GameRender::hurtUnit(const Unit* target, const string& trigger)
 #pragma mark - UnitNodeObserver
 void GameRender::onUnitNodeUpdatedFeatures(int unitId)
 {
-    if (_myUnits.find(unitId) != _myUnits.end()) {
-        Unit* unit = _myUnits.at(unitId);
-        unit->clearEventLogs();
-    }
+    
 }
 
 void GameRender::onUnitNodePlayDeadAnimationFinished(int unitId)
@@ -576,7 +563,7 @@ void GameRender::onMapUILayerSpellRingMoved(const Camp* camp, const Point& posit
     if (kSpellCastType_Position == castType ||
         kSpellCastType_PositionOrUnit == castType) {
         string spellAlias;
-        Unit* trigger(nullptr);
+        const Unit* trigger(nullptr);
         if (canCastSpell(camp, spellAlias, &trigger)) {
             if (_mapLayer) {
                 const Point& realPos = _mapLayer->convertToNodeSpace(_mapUILayer->convertToWorldSpace(position));
@@ -588,8 +575,8 @@ void GameRender::onMapUILayerSpellRingMoved(const Camp* camp, const Point& posit
 
 void GameRender::onMapUILayerTryToCastSpell(const Camp* camp, const Point& position)
 {
-    Unit* trigger(nullptr);
-    Spell* spell = getSpell(camp, 0, &trigger);
+    const Unit* trigger(nullptr);
+    const Spell* spell = getSpell(camp, 0, &trigger);
     if (spell) {
         SpellCastType castType = spell->getSpellType()->getCastType();
         if (kSpellCastType_Position == castType) {
@@ -632,10 +619,8 @@ void GameRender::removeUnit(int unitId)
         _allUnitNodes.erase(unitId);
     }
     
-    _myUnits.erase(unitId);
-    
-    for (map<string, map<int, Unit*>>::iterator iter = _myHeroes.begin(); iter != _myHeroes.end(); ++iter) {
-        map<int, Unit*>& heroes = iter->second;
+    for (map<string, map<int, const Unit*>>::iterator iter = _myHeroes.begin(); iter != _myHeroes.end(); ++iter) {
+        map<int, const Unit*>& heroes = iter->second;
         if (heroes.find(unitId) != heroes.end()) {
             heroes.erase(unitId);
             if (heroes.size() == 0) {
@@ -663,7 +648,6 @@ void GameRender::removeAllUnits()
     }
     
     _allUnitNodes.clear();
-    _myUnits.clear();
     _myHeroes.clear();
     _cores.clear();
 }

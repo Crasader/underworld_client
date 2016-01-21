@@ -28,6 +28,8 @@ using namespace UnderWorld::Core;
 
 #pragma mark ======================= static =======================
 static const float hpPercentageThreshold(50.0f);
+static const string rollHintScheduleKeyPrefix("ROLL_HINT_SCHEDULE_KEY_");
+static const string rollHintScheduleKeySplitor("_");
 
 static inline SkillClass unit_getSkillClass(const Unit* unit)
 {
@@ -112,6 +114,7 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
 ,_isStandby(false)
 ,_isPlayingAttackAnimation(false)
 ,_animationCounter(0)
+, _rollHintCounter(0)
 {
     _unitName = unit->getUnitBase().getRenderKey();
     
@@ -851,12 +854,27 @@ void UnitNode::updateFeatures()
                     }
                 }
             }
+        } else if (type == Unit::kEventLogType_ResourceOutput) {
+            if (log._factionIndex == _unit->getWorld()->getThisFactionIndex()) {
+                float delay = 0.3f;
+                int index = 0;
+                for (std::map<string, int>::const_iterator iter = log._resources.begin();
+                     iter != log._resources.end();
+                     ++iter) {
+                    string resource = iter->first;
+                    int amount = iter->second;
+                    string scheduleKey = rollHintScheduleKeyPrefix
+                        + to_string(_unit->getUnitId())
+                        + rollHintScheduleKeySplitor
+                        + to_string(++_rollHintCounter);
+                    rollHintResource(resource, amount, delay * index);
+                    ++index;
+                }
+            }
         }
     }
     
-    if (_observer) {
-        _observer->onUnitNodeUpdatedFeatures(_unit->getUnitId());
-    }
+    _unit->clearEventLogs();
 }
 
 void UnitNode::addHPBar()
@@ -942,4 +960,40 @@ Node* UnitNode::addEffect(const string& file, bool loop)
     }
     
     return nullptr;
+}
+
+void UnitNode::rollHintResource(const std::string &resource, int amount, float delay) {
+    Node* hintNode = Node::create();
+    Node* iconNode = nullptr;
+    if (resource == "金子") {
+        iconNode = Sprite::create("GameImages/resources/icon_gold_s.png");
+    } else if (resource == "木头") {
+        iconNode = Sprite::create("GameImages/resources/icon_wood_s.png");
+    }
+    assert(iconNode);
+    iconNode->setAnchorPoint(Vec2(1.f, 0.5f));
+    iconNode->setScale(0.5f);
+    
+    auto amountNode = CocosUtils::create10x25Number("+" + to_string(amount));
+    amountNode->setAnchorPoint(Vec2(0.f, 0.5f));
+    
+    hintNode->addChild(iconNode);
+    hintNode->addChild(amountNode);
+    rollHintNode(hintNode, delay);
+}
+
+void UnitNode::rollHintNode(cocos2d::Node *hintNode, float delay) {
+    if (!hintNode) return;
+    hintNode->setCascadeOpacityEnabled(true);
+    hintNode->setPosition(this->getPosition());
+    hintNode->setVisible(false);
+    this->getParent()->addChild(hintNode);
+    float duration = 2.0f;
+    FadeTo* fadeTo = FadeTo::create(duration, 0);
+    MoveBy* moveBy = MoveBy::create(duration, Vec2(0.f, 100.f));
+    hintNode->runAction(Sequence::create(
+        DelayTime::create(delay),
+        CallFunc::create([hintNode](){ hintNode->setVisible(true); }),
+        Spawn::create(fadeTo, moveBy, NULL),
+        RemoveSelf::create(), NULL));
 }

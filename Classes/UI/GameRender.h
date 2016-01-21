@@ -79,10 +79,10 @@ private:
     void updateBattleUnitInfos();
 #endif
     bool isCampFull(const UnderWorld::Core::Camp* camp) const;
-    UnderWorld::Core::Spell* getSpell(const UnderWorld::Core::Camp* camp, int idx, UnderWorld::Core::Unit** trigger) const;
+    const UnderWorld::Core::Spell* getSpell(const UnderWorld::Core::Camp* camp, int idx, const UnderWorld::Core::Unit** trigger) const;
     UnderWorld::Core::SpellCastType getSpellCastType(const UnderWorld::Core::Camp* camp, int idx) const;
-    bool canCastSpell(const UnderWorld::Core::Camp* camp, std::string& spellAlias, UnderWorld::Core::Unit** trigger) const;
-    void castSpell(const UnderWorld::Core::Camp* camp, const UnderWorld::Core::Coordinate& coordinate, UnderWorld::Core::Unit* target);
+    bool canCastSpell(const UnderWorld::Core::Camp* camp, std::string& spellAlias, const UnderWorld::Core::Unit** trigger) const;
+    void castSpell(const UnderWorld::Core::Camp* camp, const UnderWorld::Core::Coordinate& coordinate, const UnderWorld::Core::Unit* target);
     void hurtUnit(const UnderWorld::Core::Unit* target, const std::string& trigger);
     void removeUnit(int unitId);
     void removeAllBullets();
@@ -127,9 +127,9 @@ private:
     std::map<int, UnitNode*> _allUnitNodes;
     std::map<int64_t, std::pair<float, float>> _bulletParams;
     std::map<int64_t, BulletNode*> _allBulletNodes;
-    std::map<int, UnderWorld::Core::Unit*> _myUnits;
-    std::map<std::string, std::map<int, UnderWorld::Core::Unit*>> _myHeroes;
-    std::map<int, UnderWorld::Core::Unit*> _cores;
+
+    std::map<std::string, std::map<int, const UnderWorld::Core::Unit*>> _myHeroes;
+    std::map<int, const UnderWorld::Core::Unit*> _cores;
 #if ENABLE_CAMP_INFO
     std::map<int, BattleCampInfos> _battleCampInfos;
 #else

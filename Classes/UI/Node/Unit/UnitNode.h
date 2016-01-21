@@ -89,6 +89,8 @@ protected:
     void removeShadow();
     Node* addEffect(const std::string& file);
     Node* addEffect(const std::string& file, bool loop);
+    void rollHintResource(const std::string& resource, int amount, float delay = 0.f);
+    void rollHintNode(Node* hintNode, float delay = 0.f);
     
 private:
     // --------------- base ---------------
@@ -119,6 +121,7 @@ private:
     // only used for attack animations
     bool _isPlayingAttackAnimation;
     int _animationCounter;
+    int _rollHintCounter;
 };
 
 #endif /* UnitNode_h */

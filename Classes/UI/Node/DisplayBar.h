@@ -27,6 +27,7 @@ public:
     virtual ~DisplayBar();
     void setPercentage(float percentage);
     float getPercentage() const;
+    bool isAlwaysVisible() const;
     
 protected:
     DisplayBar();
