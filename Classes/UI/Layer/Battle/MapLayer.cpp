@@ -256,7 +256,7 @@ void MapLayer::coordinateConvert(const UnderWorld::Core::Coordinate& coreCoordin
 
 UnderWorld::Core::Coordinate MapLayer::convertPoint(const Point& layerPoint)
 {
-    Point realPoint = (-1) * _scrollView->getContentOffset() + layerPoint;
+    Point realPoint = _mainLayer->convertToNodeSpace(convertToWorldSpace(layerPoint));
     UnderWorld::Core::Coordinate coordinate;
     coordinate.x = realPoint.x * UnderWorld::Core::Map::TILE_2_ELEMENT_SCALE / _tileWidth;
     coordinate.y = realPoint.y * UnderWorld::Core::Map::TILE_2_ELEMENT_SCALE / _tileHeight;

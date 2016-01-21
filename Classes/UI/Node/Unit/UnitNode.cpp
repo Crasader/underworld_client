@@ -965,9 +965,9 @@ Node* UnitNode::addEffect(const string& file, bool loop)
 void UnitNode::rollHintResource(const std::string &resource, int amount, float delay) {
     Node* hintNode = Node::create();
     Node* iconNode = nullptr;
-    if (resource == "金子") {
+    if (resource == RES_NAME_GOLD) {
         iconNode = Sprite::create("GameImages/resources/icon_gold_s.png");
-    } else if (resource == "木头") {
+    } else if (resource == RES_NAME_WOOD) {
         iconNode = Sprite::create("GameImages/resources/icon_wood_s.png");
     }
     assert(iconNode);

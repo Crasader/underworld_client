@@ -11,6 +11,7 @@
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
+#include "Camp.h"
 #include "MapUIUnitCell.h"
 #include "ResourceButton.h"
 #include "CampInfoNode.h"
@@ -20,8 +21,14 @@ using namespace std;
 using namespace cocostudio;
 using namespace UnderWorld::Core;
 
-static const float unitNodeOffsetX(17.0f);
+static const float unitNodeOffsetX(5.0f);
 static const float unitNodeOffsetY(17.0f);
+
+static const UnitClass tableUnitClass[] = {
+    kUnitClass_Hero,
+    kUnitClass_Warrior
+};
+static const size_t tableUnitClassCount = sizeof(tableUnitClass) / sizeof(UnitClass);
 
 static ProgressTimer* createProgressTimer()
 {
@@ -51,11 +58,12 @@ MapUILayer* MapUILayer::create(const string& myAccount, const string& opponentsA
 
 MapUILayer::MapUILayer()
 :_observer(nullptr)
-,_cellsCount(3)
-,_touchedCampIdx(CC_INVALID_INDEX)
-,_isTouchingUnitTableView(false)
+,_createdTableViewsCount(0)
+,_tableViewPos(Point::ZERO)
+,_isTouchingHeroTableView(false)
 ,_selectedCamp(nullptr)
-,_tableView(nullptr)
+,_goldCount(0)
+,_woodCount(0)
 ,_timeLabel(nullptr)
 ,_nextWaveTimeLabel(nullptr)
 ,_goldResourceButton(nullptr)
@@ -67,9 +75,12 @@ MapUILayer::MapUILayer()
 ,_opponentsHpPercentageLabel(nullptr)
 ,_pauseMenuItem(nullptr)
 {
-    static const Size unitNodeSize = MapUIUnitNode::create(nullptr, 0)->getContentSize();
+    static const Size unitNodeSize = MapUIUnitNode::create(nullptr)->getContentSize();
     _cellSize.height = unitNodeSize.height + unitNodeOffsetY * 2;
     _cellSize.width = unitNodeSize.width + unitNodeOffsetX;
+    
+    _touchedCamp.first = nullptr;
+    _touchedCamp.second = CC_INVALID_INDEX;
 }
 
 MapUILayer::~MapUILayer()
@@ -84,24 +95,25 @@ void MapUILayer::registerObserver(MapUILayerObserver *observer)
 
 void MapUILayer::reload()
 {
-    if (_tableView) {
-        if (_observer) {
-            _cellsCount = _observer->onMapUILayerCampsCount();
-        }
-        
-        // if setTouchEnabled to false, tableCellTouched() will never be called
-        const int visibleCellsCount = (_tableViewMaxSize.width - unitNodeOffsetX) / _cellSize.width;
-        _tableView->setTouchEnabled(_cellsCount > visibleCellsCount);
-        _tableView->reloadData();
-        
-        // fit
-        if (false == _tableView->isBounceable() && extension::ScrollView::Direction::HORIZONTAL == _tableView->getDirection()) {
-            _tableView->getContainer()->setPosition(Point::ZERO);
-            const int contentWidth = _cellSize.width * _cellsCount + unitNodeOffsetX;
-            if (contentWidth >= _tableViewMaxSize.width) {
-                _tableView->setViewSize(_tableViewMaxSize);
-            } else {
-                _tableView->setViewSize(Size(contentWidth, _tableViewMaxSize.height));
+    for (map<UnitClass, TableView*>::iterator iter = _tableViews.begin(); iter != _tableViews.end(); ++iter) {
+        TableView* table = iter->second;
+        if (table) {
+            const ssize_t cnt = getCellsCount(table);
+            
+            // if setTouchEnabled to false, tableCellTouched() will never be called
+            const int visibleCellsCount = (_tableViewMaxSize.width - unitNodeOffsetX) / _cellSize.width;
+            table->setTouchEnabled(cnt > visibleCellsCount);
+            table->reloadData();
+            
+            // fit
+            if (false == table->isBounceable() && extension::ScrollView::Direction::HORIZONTAL == table->getDirection()) {
+                table->getContainer()->setPosition(Point::ZERO);
+                const int contentWidth = _cellSize.width * cnt + unitNodeOffsetX;
+                if (contentWidth >= _tableViewMaxSize.width) {
+                    table->setViewSize(_tableViewMaxSize);
+                } else {
+                    table->setViewSize(Size(contentWidth, _tableViewMaxSize.height));
+                }
             }
         }
     }
@@ -192,17 +204,29 @@ void MapUILayer::updatePopulation(int count, int maxCount)
     }
 }
 
-void MapUILayer::updateGold(int count)
+void MapUILayer::updateGoldAndWood(int gold, int wood)
 {
-    if (_goldResourceButton) {
-        _goldResourceButton->setCount(count);
+    bool update(false);
+    if (_goldCount != gold) {
+        update = true;
+        _goldCount = gold;
+        
+        if (_goldResourceButton) {
+            _goldResourceButton->setCount(gold);
+        }
     }
-}
-
-void MapUILayer::updateWood(int count)
-{
-    if (_woodResourceButton) {
-        _woodResourceButton->setCount(count);
+    
+    if (_woodCount != wood) {
+        update = true;
+        _woodCount = wood;
+        
+        if (_woodResourceButton) {
+            _woodResourceButton->setCount(wood);
+        }
+    }
+    
+    if (update) {
+        reload();
     }
 }
 
@@ -219,7 +243,8 @@ void MapUILayer::resumeGame()
 #pragma mark - TableViewDataSource
 Size MapUILayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
 {
-    if (idx == _cellsCount - 1) {
+    const ssize_t cnt = getCellsCount(table);
+    if (idx == cnt - 1) {
         return Size(_cellSize.width + unitNodeOffsetX, _cellSize.height);
     }
     
@@ -235,14 +260,17 @@ TableViewCell* MapUILayer::tableCellAtIndex(TableView *table, ssize_t idx)
     }
     
     if (_observer) {
-        const Camp* camp = _observer->onMapUILayerCampAtIndex(idx);
+        UnitClass uc = getUnitClass(table);
+        const Camp* camp = _observer->onMapUILayerCampAtIndex(uc, idx);
         if (camp) {
             MapUIUnitNode* unitNode = cell->getUnitNode();
             if (unitNode) {
-                unitNode->reuse(camp, idx);
-                unitNode->setSelected(idx == _touchedCampIdx);
+                unitNode->reuse(camp, idx, _goldCount, _woodCount);
+                unitNode->setSelected(table == _touchedCamp.first && idx == _touchedCamp.second);
+                unitNode->addTouchedAction(false);
             } else {
-                unitNode = MapUIUnitNode::create(camp, idx);
+                unitNode = MapUIUnitNode::create(camp);
+                unitNode->reuse(camp, idx, _goldCount, _woodCount);
                 unitNode->setPosition(Point(unitNodeOffsetX, unitNodeOffsetY));
                 unitNode->registerObserver(this);
                 cell->addChild(unitNode);
@@ -256,7 +284,7 @@ TableViewCell* MapUILayer::tableCellAtIndex(TableView *table, ssize_t idx)
 
 ssize_t MapUILayer::numberOfCellsInTableView(TableView *table)
 {
-    return _cellsCount;
+    return getCellsCount(table);
 }
 
 #pragma mark - MapUIUnitNodeObserver
@@ -474,17 +502,9 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             sprite->addChild(_goldResourceButton);
             
             // units table
-            const Point& pos = sprite->getPosition() + Point(sprite->getContentSize().width + leftOffset, - unitNodeOffsetY);
-            
-            _tableViewMaxSize.width = winSize.width - (pos.x + leftOffset);
+            _tableViewPos = sprite->getPosition() + Point(sprite->getContentSize().width + leftOffset, - unitNodeOffsetY);
+            _tableViewMaxSize.width = winSize.width - (_tableViewPos.x + leftOffset);
             _tableViewMaxSize.height = _cellSize.height;
-            
-            _tableView = TableView::create(this, _tableViewMaxSize);
-            _tableView->setDirection(extension::ScrollView::Direction::HORIZONTAL);
-            _tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
-            _tableView->setPosition(pos);
-            _tableView->setBounceable(false);
-            root->addChild(_tableView);
         }
         // buttons
         {
@@ -530,23 +550,36 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
     return false;
 }
 
+void MapUILayer::onEnterTransitionDidFinish()
+{
+    LayerColor::onEnter();
+    createTableViews();
+}
+
 bool MapUILayer::onTouchBegan(Touch *touch, Event *unused_event)
 {
     const Point& p = touch->getLocation();
-    if (_tableView && getTableViewBoundingBox().containsPoint(p)) {
-        _isTouchingUnitTableView = true;
-        return true;
-    } else {
-        for (int i = 0; i < _campInfoNodes.size(); ++i) {
-            CampInfoNode* node = _campInfoNodes.at(i);
-            if (node) {
-                const Rect& bb = node->getIconsBoundingBox();
-                Rect boundingBox(Rect::ZERO);
-                boundingBox.origin = convertToNodeSpace(node->convertToWorldSpace(bb.origin));
-                boundingBox.size = bb.size;
-                if (boundingBox.containsPoint(p)) {
-                    return true;
-                }
+    for (map<UnitClass, TableView*>::iterator iter = _tableViews.begin(); iter != _tableViews.end(); ++iter) {
+        UnitClass uc = iter->first;
+        TableView* tableView = iter->second;
+        if (tableView && getTableViewBoundingBox(uc).containsPoint(p)) {
+            if (uc == kUnitClass_Hero) {
+                _isTouchingHeroTableView = true;
+            }
+            
+            return true;
+        }
+    }
+    
+    for (int i = 0; i < _campInfoNodes.size(); ++i) {
+        CampInfoNode* node = _campInfoNodes.at(i);
+        if (node) {
+            const Rect& bb = node->getIconsBoundingBox();
+            Rect boundingBox(Rect::ZERO);
+            boundingBox.origin = convertToNodeSpace(node->convertToWorldSpace(bb.origin));
+            boundingBox.size = bb.size;
+            if (boundingBox.containsPoint(p)) {
+                return true;
             }
         }
     }
@@ -556,7 +589,7 @@ bool MapUILayer::onTouchBegan(Touch *touch, Event *unused_event)
 
 void MapUILayer::onTouchMoved(Touch *touch, Event *unused_event)
 {
-    if (_isTouchingUnitTableView && _selectedCamp) {
+    if (_isTouchingHeroTableView && _selectedCamp) {
         const Point& point = touch->getLocation();
         if (_observer) {
             _observer->onMapUILayerSpellRingMoved(_selectedCamp, point);
@@ -566,9 +599,9 @@ void MapUILayer::onTouchMoved(Touch *touch, Event *unused_event)
 
 void MapUILayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
-    if (_isTouchingUnitTableView) {
+    if (_isTouchingHeroTableView) {
         const Point& point = touch->getLocation();
-        const Rect& rect = getTableViewBoundingBox();
+        const Rect& rect = getTableViewBoundingBox(kUnitClass_Hero);
         if (rect.containsPoint(point)) {
             if (_observer) {
                 _observer->onMapUILayerSpellRingCancelled();
@@ -582,7 +615,7 @@ void MapUILayer::onTouchEnded(Touch *touch, Event *unused_event)
                 _selectedCamp = nullptr;
             }
             
-            _isTouchingUnitTableView = false;
+            _isTouchingHeroTableView = false;
         }
     }
 }
@@ -590,16 +623,30 @@ void MapUILayer::onTouchEnded(Touch *touch, Event *unused_event)
 #pragma mark private
 void MapUILayer::onUnitTouched(MapUIUnitNode* node)
 {
-    const ssize_t oldIdx = _touchedCampIdx;
-    const ssize_t newIdx = node->getIdx();
-    if (newIdx != oldIdx) {
-        _touchedCampIdx = newIdx;
-        
-        if (oldIdx != CC_INVALID_INDEX) {
-            _tableView->updateCellAtIndex(oldIdx);
+    UnitClass uc = node->getCamp()->getUnitType()->getUnitClass();
+    TableView* table = _tableViews.at(uc);
+    const ssize_t idx = node->getIdx();
+    
+    TableView* lastTable = _touchedCamp.first;
+    ssize_t lastIdx = _touchedCamp.second;
+    
+    _touchedCamp.first = table;
+    _touchedCamp.second = idx;
+    
+    if (table != lastTable) {
+        if (lastTable != nullptr && lastIdx != CC_INVALID_INDEX) {
+            lastTable->updateCellAtIndex(lastIdx);
         }
         
-        _tableView->updateCellAtIndex(newIdx);
+        table->updateCellAtIndex(idx);
+    } else {
+        if (lastIdx != idx) {
+            if (lastIdx != CC_INVALID_INDEX) {
+                table->updateCellAtIndex(lastIdx);
+            }
+            
+            table->updateCellAtIndex(idx);
+        }
     }
     
     SoundManager::getInstance()->playButtonSelectUnitSound();
@@ -609,7 +656,84 @@ void MapUILayer::onUnitTouched(MapUIUnitNode* node)
     }
 }
 
-Rect MapUILayer::getTableViewBoundingBox() const
+void MapUILayer::createTableViews()
 {
-    return _tableView->getBoundingBox();
+    static float offsetX(10.0f);
+    vector<Node*> created;
+    for (int i = 0; i < tableUnitClassCount; ++i) {
+        Node* node = createTableView(tableUnitClass[i], this);
+        if (node) {
+            const size_t cnt = created.size();
+            Point pos(_tableViewPos);
+            if (cnt > 0) {
+                Node* n = created.back();
+                pos = n->getPosition() + Point(n->getContentSize().width + offsetX, 0);
+            }
+            node->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+            node->setPosition(pos);
+            created.push_back(node);
+        }
+    }
+}
+
+Node* MapUILayer::createTableView(UnitClass uc, Node* parent)
+{
+    ssize_t cnt(0);
+    if (_observer) {
+        cnt = _observer->onMapUILayerCampsCount(uc);
+    }
+    if (cnt > 0) {
+        const int width = _cellSize.width * cnt + unitNodeOffsetX;
+        const Size size(width, _cellSize.height);
+        
+        static const float offset(5.0f);
+        Scale9Sprite* sprite = Scale9Sprite::create("GameImages/test/ui_black_13.png", Rect(0, 0, 54, 114), Rect(4, 4, 46, 116));
+        sprite->setContentSize(size + Size(offset * 2, 0));
+        parent->addChild(sprite);
+        
+        TableView* tableView = TableView::create(this, size);
+        tableView->setDirection(extension::ScrollView::Direction::HORIZONTAL);
+        tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
+        tableView->setBounceable(false);
+        tableView->setTag(uc);
+        tableView->setPosition(Point(offset, 0));
+        sprite->addChild(tableView);
+        _tableViews.insert(make_pair(uc, tableView));
+        ++ _createdTableViewsCount;
+        return sprite;
+    }
+    
+    return nullptr;
+}
+
+UnitClass MapUILayer::getUnitClass(TableView* table) const
+{
+    if (_createdTableViewsCount < 2) {
+        return tableUnitClass[_createdTableViewsCount];
+    }
+    
+    return static_cast<UnitClass>(table->getTag());
+}
+
+ssize_t MapUILayer::getCellsCount(TableView* table) const
+{
+    ssize_t cnt(0);
+    if (_observer) {
+        cnt = _observer->onMapUILayerCampsCount(getUnitClass(table));
+    }
+    
+    return cnt;
+}
+
+Rect MapUILayer::getTableViewBoundingBox(UnitClass uc) const
+{
+    if (_tableViews.find(uc) != _tableViews.end()) {
+        TableView* tv = _tableViews.at(uc);
+        Rect rect = tv->getBoundingBox();
+        Point origin = rect.origin;
+        rect.origin = convertToNodeSpace(tv->getParent()->convertToWorldSpace(origin));
+        return rect;
+    }
+    
+    return Rect::ZERO;
 }

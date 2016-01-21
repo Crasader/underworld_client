@@ -13,6 +13,7 @@
 #include "cocos-ext.h"
 #include "MapUIUnitNode.h"
 #include "CampInfoNode.h"
+#include "UnitType.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -26,8 +27,8 @@ public:
     virtual ~MapUILayerObserver() {}
     virtual void onMapUILayerUnitSelected(MapUIUnitNode* node) = 0;
     virtual void onMapUILayerClickedPauseButton() = 0;
-    virtual ssize_t onMapUILayerCampsCount() = 0;
-    virtual const UnderWorld::Core::Camp* onMapUILayerCampAtIndex(ssize_t idx) = 0;
+    virtual ssize_t onMapUILayerCampsCount(UnderWorld::Core::UnitClass uc) = 0;
+    virtual const UnderWorld::Core::Camp* onMapUILayerCampAtIndex(UnderWorld::Core::UnitClass uc, ssize_t idx) = 0;
     virtual void onMapUILayerSpellRingMoved(const UnderWorld::Core::Camp* camp, const Point& position) = 0;
     virtual void onMapUILayerSpellRingCancelled() = 0;
     virtual void onMapUILayerTryToCastSpell(const UnderWorld::Core::Camp* camp, const Point& position) = 0;
@@ -53,8 +54,7 @@ public:
     void updateWaveTime(int time);
     void updateRemainingTime(int time);
     void updatePopulation(int count, int maxCount);
-    void updateGold(int count);
-    void updateWood(int count);
+    void updateGoldAndWood(int gold, int wood);
     void pauseGame();
     void resumeGame();
     
@@ -63,6 +63,7 @@ protected:
     
     // LayerColor
     bool init(const std::string& myAccount, const std::string& opponentsAccount);
+    virtual void onEnterTransitionDidFinish() override;
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchMoved(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
@@ -81,18 +82,25 @@ protected:
     virtual void onCampInfoNodeClickedIcon(CampInfoNode* pSender, const UnderWorld::Core::UnitBase* unit) override;
     
     void onUnitTouched(MapUIUnitNode* node);
-    Rect getTableViewBoundingBox() const;
+    void createTableViews();
+    Node* createTableView(UnderWorld::Core::UnitClass, Node* parent);
+    UnderWorld::Core::UnitClass getUnitClass(TableView* table) const;
+    ssize_t getCellsCount(TableView* table) const;
+    Rect getTableViewBoundingBox(UnderWorld::Core::UnitClass uc) const;
     
 private:
     MapUILayerObserver *_observer;
+    int _createdTableViewsCount;
     Size _tableViewMaxSize;
+    Point _tableViewPos;
     Size _cellSize;
-    ssize_t _cellsCount;
-    ssize_t _touchedCampIdx;
-    bool _isTouchingUnitTableView;
+    std::pair<TableView*, ssize_t> _touchedCamp;
+    bool _isTouchingHeroTableView;
     const UnderWorld::Core::Camp* _selectedCamp;
+    int _goldCount;
+    int _woodCount;
     // ======================== UI =============================
-    TableView *_tableView;
+    std::map<UnderWorld::Core::UnitClass, TableView*> _tableViews;
     Label *_timeLabel;
     Label *_nextWaveTimeLabel;
     ResourceButton *_goldResourceButton;

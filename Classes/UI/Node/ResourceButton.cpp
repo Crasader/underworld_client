@@ -17,6 +17,7 @@ using namespace cocostudio;
 ResourceButton::ResourceButton()
 :_animated(false)
 ,_needResize(false)
+,_enabled(true)
 ,_type(kResourceType_Gold)
 ,_count(INVALID_VALUE)
 ,_icon(nullptr)
@@ -148,6 +149,24 @@ void ResourceButton::setCount(int count)
         _countLabel->setString(StringUtils::format("%d", count));
     }
     resize();
+}
+
+void ResourceButton::setEnabled(bool enable)
+{
+    if (_enabled != enable) {
+        _enabled = enable;
+        const Point& pos = _countLabel->getPosition();
+        const string& message = _countLabel->getString();
+        Node* parent = _countLabel->getParent();
+        _countLabel->removeFromParent();
+        if (enable) {
+            _countLabel = CocosUtils::create12x30Number(message);
+        } else {
+            _countLabel = CocosUtils::create12x30Number_Red(message);
+        }
+        _countLabel->setPosition(pos);
+        parent->addChild(_countLabel);
+    }
 }
 
 void ResourceButton::setTouchEventListener(const Button::ccWidgetTouchCallback& callback)

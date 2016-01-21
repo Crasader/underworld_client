@@ -59,8 +59,8 @@ protected:
     // MapUILayerObserver
     virtual void onMapUILayerUnitSelected(MapUIUnitNode* node) override;
     virtual void onMapUILayerClickedPauseButton() override;
-    virtual ssize_t onMapUILayerCampsCount() override;
-    virtual const UnderWorld::Core::Camp* onMapUILayerCampAtIndex(ssize_t idx) override;
+    virtual ssize_t onMapUILayerCampsCount(UnderWorld::Core::UnitClass uc) override;
+    virtual const UnderWorld::Core::Camp* onMapUILayerCampAtIndex(UnderWorld::Core::UnitClass uc, ssize_t idx) override;
     virtual void onMapUILayerSpellRingMoved(const UnderWorld::Core::Camp* camp, const Point& position) override;
     virtual void onMapUILayerSpellRingCancelled() override;
     virtual void onMapUILayerTryToCastSpell(const UnderWorld::Core::Camp* camp, const Point& position) override;
@@ -127,7 +127,7 @@ private:
     std::map<int, UnitNode*> _allUnitNodes;
     std::map<int64_t, std::pair<float, float>> _bulletParams;
     std::map<int64_t, BulletNode*> _allBulletNodes;
-
+    std::map<UnderWorld::Core::UnitClass, vector<const UnderWorld::Core::Camp*>> _myCamps;
     std::map<std::string, std::map<int, const UnderWorld::Core::Unit*>> _myHeroes;
     std::map<int, const UnderWorld::Core::Unit*> _cores;
 #if ENABLE_CAMP_INFO

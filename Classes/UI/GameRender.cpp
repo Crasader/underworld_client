@@ -84,10 +84,21 @@ void GameRender::init(const Game* game, Commander* commander)
     const World* world = game->getWorld();
     world = game->getWorld();
     if (world) {
-        const int cnt = world->getFactionCount();
-        for (int i = 0; i < cnt; ++i) {
+        const int factionsCount = world->getFactionCount();
+        for (int i = 0; i < factionsCount; ++i) {
             const Faction* faction = world->getFaction(i);
             _cores.insert(make_pair(faction->getFactionIndex(), faction->findFirstUnitByClass(kUnitClass_Core)));
+        }
+        
+        const int factionIndex = world->getThisFactionIndex();
+        const int campsCount = world->getCampCount(factionIndex);
+        for (int i = 0; i < campsCount; ++i) {
+            const Camp* camp = world->getCamp(factionIndex, i);
+            UnitClass uc = camp->getUnitType()->getUnitClass();
+            if (_myCamps.find(uc) == _myCamps.end()) {
+                _myCamps.insert(make_pair(uc, vector<const Camp*>()));
+            }
+            _myCamps.at(uc).push_back(camp);
         }
     }
     
@@ -495,31 +506,15 @@ void GameRender::onMapLayerTouchEnded()
 void GameRender::onMapUILayerUnitSelected(MapUIUnitNode* node)
 {
     if (_commander) {
-        int index = (int)node->getIdx();
-        const World* world = _game->getWorld();
-        const int factionIndex = world->getThisFactionIndex();
-        if (index < world->getCampCount(factionIndex)) {
-            const Camp* camp = world->getCamp(factionIndex, index);
-            if (camp) {
-                if (isCampFull(camp)) {
-                    SpellCastType castType = getSpellCastType(camp, 0);
-                    if (kSpellCastType_Self == castType) {
-                        castSpell(camp, Coordinate::ZERO, nullptr);
-                    }
-                } else {
-                    CommandResult result = _commander->tryGiveCampCommand(camp, 1);
-                    if (kCommandResult_suc == result) {
-                        // TODO: replace the temp code with callback from camp
-                        Scheduler *s = Director::getInstance()->getScheduler();
-                        if (s) {
-                            static string key("temp_test_update_MapUIUnitNode");
-                            s->schedule([=](float dt) {
-                                s->unschedule(key, this);
-                                node->update(false);
-                            }, this, 0.1f, false, key);
-                        }
-                    }
+        const Camp* camp = node->getCamp();
+        if (camp) {
+            if (isCampFull(camp)) {
+                SpellCastType castType = getSpellCastType(camp, 0);
+                if (kSpellCastType_Self == castType) {
+                    castSpell(camp, Coordinate::ZERO, nullptr);
                 }
+            } else {
+                _commander->tryGiveCampCommand(camp, 1);
             }
         }
     }
@@ -535,19 +530,25 @@ void GameRender::onMapUILayerClickedPauseButton()
     }
 }
 
-ssize_t GameRender::onMapUILayerCampsCount()
+ssize_t GameRender::onMapUILayerCampsCount(UnitClass uc)
 {
-    const World* world = _game->getWorld();
-    const int factionIndex = world->getThisFactionIndex();
-    return world->getCampCount(factionIndex);
+    if (_myCamps.find(uc) != _myCamps.end()) {
+        return _myCamps.at(uc).size();
+    }
+    
+    return 0;
 }
 
-const Camp* GameRender::onMapUILayerCampAtIndex(ssize_t idx)
+const Camp* GameRender::onMapUILayerCampAtIndex(UnitClass uc, ssize_t idx)
 {
-    const World* world = _game->getWorld();
-    const int factionIndex = world->getThisFactionIndex();
-    const Camp* camp = world->getCamp(factionIndex, (int)idx);
-    return camp;
+    if (_myCamps.find(uc) != _myCamps.end()) {
+        vector<const Camp*>& vc = _myCamps.at(uc);
+        if (idx < vc.size()) {
+            return vc.at(idx);
+        }
+    }
+    
+    return nullptr;
 }
 
 void GameRender::onMapUILayerSpellRingCancelled()
@@ -713,20 +714,28 @@ void GameRender::updateResources()
         const TechTree* techTree = world->getTechTree();
         const Faction* faction = world->getThisFaction();
         int count = techTree->getResourceTypeCount();
+        int populationOccpied(0);
+        int populationBalance(0);
+        int gold(0);
+        int wood(0);
         for (int i = 0; i < count; ++i) {
             const UnderWorld::Core::ResourceType* resourceType = techTree->getResourceTypeByIndex(i);
             const Resource* resource = faction->getResource(resourceType);
             if (kResourceClass_holdable == resourceType->_class) {
-                _mapUILayer->updatePopulation(resource->getOccpied(), resource->getBalance());
+                populationOccpied = resource->getOccpied();
+                populationBalance = resource->getBalance();
             } else {
                 const string& name = resourceType->_name;
                 if (name == RES_NAME_GOLD) {
-                    _mapUILayer->updateGold(resource->getBalance());
+                    gold = resource->getBalance();
                 } else if (name == RES_NAME_WOOD) {
-                    _mapUILayer->updateWood(resource->getBalance());
+                    wood = resource->getBalance();
                 }
             }
         }
+        
+        _mapUILayer->updatePopulation(populationOccpied, populationBalance);
+        _mapUILayer->updateGoldAndWood(gold, wood);
     }
 }
 

@@ -35,12 +35,13 @@ public:
 class MapUIUnitNode: public Node
 {
 public:
-    static MapUIUnitNode* create(const UnderWorld::Core::Camp* camp, ssize_t idx);
+    static MapUIUnitNode* create(const UnderWorld::Core::Camp* camp);
     virtual ~MapUIUnitNode();
     void registerObserver(MapUIUnitNodeObserver *observer);
-    void reuse(const UnderWorld::Core::Camp* camp, ssize_t idx);
-    void update(bool reuse);
+    void reuse(const UnderWorld::Core::Camp* camp, ssize_t idx, int gold, int wood);
+    void update(bool reuse, int gold, int wood);
     void setSelected(bool selected);
+    void addTouchedAction(bool touched);
     
     // getters
     const UnderWorld::Core::Camp* getCamp() const;
@@ -48,19 +49,22 @@ public:
     
 protected:
     MapUIUnitNode();
-    bool init(const UnderWorld::Core::Camp* camp, ssize_t idx);
-    std::string getIconFile(const UnderWorld::Core::Camp* camp) const;
+    bool init(const UnderWorld::Core::Camp* camp);
+    std::string getIconFile(const UnderWorld::Core::Camp* camp, bool enable) const;
     bool isHero(const UnderWorld::Core::Camp* camp) const;
     void createResourceButton(ResourceType type);
     
 private:
     MapUIUnitNodeObserver *_observer;
+    Sprite *_shadow;
     Button *_iconButton;
+    Sprite *_mask;
     std::map<ResourceType, ResourceButton*> _resourceButtons;
     Label *_countLabel;
     const UnderWorld::Core::Camp* _camp;
     ssize_t _idx;
     bool _touchInvalid;
+    Point _basePosition;
 };
 
 #endif /* MapUIUnitNode_h */

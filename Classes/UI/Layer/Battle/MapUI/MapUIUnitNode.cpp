@@ -17,10 +17,13 @@
 using namespace std;
 using namespace UnderWorld::Core;
 
-MapUIUnitNode* MapUIUnitNode::create(const Camp* camp, ssize_t idx)
+static const int bottomZOrder(-1);
+static const int topZOrder(1);
+
+MapUIUnitNode* MapUIUnitNode::create(const Camp* camp)
 {
     MapUIUnitNode *ret = new (nothrow) MapUIUnitNode();
-    if (ret && ret->init(camp, idx))
+    if (ret && ret->init(camp))
     {
         ret->autorelease();
         return ret;
@@ -34,7 +37,9 @@ MapUIUnitNode* MapUIUnitNode::create(const Camp* camp, ssize_t idx)
 
 MapUIUnitNode::MapUIUnitNode()
 :_observer(nullptr)
+,_shadow(nullptr)
 ,_iconButton(nullptr)
+,_mask(nullptr)
 ,_countLabel(nullptr)
 ,_camp(nullptr)
 ,_idx(CC_INVALID_INDEX)
@@ -48,7 +53,7 @@ MapUIUnitNode::~MapUIUnitNode()
     removeAllChildren();
 }
 
-bool MapUIUnitNode::init(const Camp* camp, ssize_t idx)
+bool MapUIUnitNode::init(const Camp* camp)
 {
     if (Node::init())
     {
@@ -75,7 +80,10 @@ bool MapUIUnitNode::init(const Camp* camp, ssize_t idx)
             }
         }
 #else
-        const string& iconFile = getIconFile(camp);
+        _shadow = Sprite::create("GameImages/test/ui_iconyingzi.png");
+        addChild(_shadow, bottomZOrder);
+        
+        const string& iconFile = getIconFile(camp, true);
         _iconButton = Button::create(iconFile, iconFile);
         _iconButton->setPressedActionEnabled(false);
         _iconButton->setSwallowTouches(false);
@@ -84,6 +92,7 @@ bool MapUIUnitNode::init(const Camp* camp, ssize_t idx)
             Widget* button = dynamic_cast<Widget*>(pSender);
             if (type == Widget::TouchEventType::BEGAN) {
                 _touchInvalid = false;
+                addTouchedAction(true);
                 if(_observer) {
                     _observer->onMapUIUnitNodeTouchedBegan(this);
                 }
@@ -94,10 +103,13 @@ bool MapUIUnitNode::init(const Camp* camp, ssize_t idx)
             } else if (type == Widget::TouchEventType::ENDED) {
                 if (!_touchInvalid) {
                     SoundManager::getInstance()->playButtonSound();
+                    addTouchedAction(false);
                     if(_observer) {
                         _observer->onMapUIUnitNodeTouchedEnded(this);
                     }
                 }
+            } else {
+                addTouchedAction(false);
             }
         });
         
@@ -119,21 +131,32 @@ bool MapUIUnitNode::init(const Camp* camp, ssize_t idx)
         addChild(_countLabel);
         
         ResourceButton* rb = _resourceButtons.at(kResourceType_Gold);
-        const float iconHeight = _iconButton->getContentSize().height;
         const float resourceHeight = rb->getContentSize().height;
         const float countHeight = _countLabel->getContentSize().height;
+        const Size& shadowSize = _shadow->getContentSize();
+        const Size& iconSize = _iconButton->getContentSize();
         static const float offsetY(2.0f);
 #if true
-        const Size size(_iconButton->getContentSize().width, iconHeight);
+        static const float shadowOffsetY(5.0f);
+        const Size size(MAX(shadowSize.width, iconSize.width), iconSize.width / 2 + shadowSize.height / 2 + shadowOffsetY);
         setContentSize(size);
         
         const float x = size.width / 2;
-        const float y = size.height / 2;
-        _iconButton->setPosition(Point(x, y));
-        rb->setPosition(Point(x, resourceHeight / 2 + offsetY));
+        _shadow->setPosition(x, shadowSize.height / 2);
+        _basePosition = _shadow->getPosition() + Point(0, shadowOffsetY);
+        _iconButton->setPosition(_basePosition);
+        
+        _mask = Sprite::create("GameImages/test/ui_iconzhezhao.png");
+        _mask->setPosition(Point(iconSize.width / 2, iconSize.height / 2));
+        _mask->setVisible(false);
+        _iconButton->addChild(_mask, topZOrder);
+        
+        const float y = _iconButton->getPosition().y - iconSize.height / 2;
+        rb->setPosition(Point(x, resourceHeight / 2 + offsetY + y));
         _resourceButtons.at(kResourceType_Wood)->setPosition(rb->getPosition() + Point(0, resourceHeight));
-        _countLabel->setPosition(Point(x, size.height - countHeight / 2 - offsetY));
+        _countLabel->setPosition(Point(x, size.height - countHeight / 2 - offsetY + y));
 #else
+        const float iconHeight = _iconButton->getContentSize().height;
         const Size size(_iconButton->getContentSize().width, iconHeight + resourceHeight + countHeight + offsetY * 4);
         setContentSize(size);
         
@@ -145,9 +168,6 @@ bool MapUIUnitNode::init(const Camp* camp, ssize_t idx)
         _countLabel->setPosition(Point(x, y + (iconHeight + countHeight) / 2 + offsetY));
 #endif
         
-        if (camp) {
-            reuse(camp, idx);
-        }
 #endif
         
         return true;
@@ -161,27 +181,30 @@ void MapUIUnitNode::registerObserver(MapUIUnitNodeObserver *observer)
     _observer = observer;
 }
 
-void MapUIUnitNode::reuse(const Camp* camp, ssize_t idx)
+void MapUIUnitNode::reuse(const Camp* camp, ssize_t idx, int gold, int wood)
 {
     _camp = camp;
     _idx = idx;
     
-    const string& iconFile = getIconFile(camp);
-    if (iconFile.length() > 0) {
-        _iconButton->loadTextures(iconFile, iconFile);
-    }
-    
     // update mutable data
-    update(true);
+    update(true, gold, wood);
 }
 
-void MapUIUnitNode::update(bool reuse)
+void MapUIUnitNode::update(bool reuse, int gold, int wood)
 {
     if (_camp) {
+        const int production = _camp->getProduction();
+        const int maxProduction = _camp->getMaxProduction();
+        const bool enable = production < maxProduction;
+        const string& iconFile = getIconFile(_camp, enable);
+        if (iconFile.length() > 0) {
+            _iconButton->loadTextures(iconFile, iconFile);
+        }
+        
         const bool show = !isHero(_camp);
         _countLabel->setVisible(show);
         if (show) {
-            _countLabel->setString(StringUtils::format("%d/%d", _camp->getProduction(), _camp->getMaxProduction()));
+            _countLabel->setString(StringUtils::format("%d/%d", production, maxProduction));
         }
         
         const map<string, int>& costs = _camp->getCosts();
@@ -190,7 +213,9 @@ void MapUIUnitNode::update(bool reuse)
             bool show = costs.find(RES_NAME_GOLD) != costs.end();
             goldRB->setVisible(show);
             if (show) {
-                goldRB->setCount(costs.at(RES_NAME_GOLD));
+                const int count = costs.at(RES_NAME_GOLD);
+                goldRB->setCount(count);
+                goldRB->setEnabled(gold >= count);
             }
         }
         {
@@ -198,7 +223,9 @@ void MapUIUnitNode::update(bool reuse)
             ResourceButton* rb = _resourceButtons.at(kResourceType_Wood);
             rb->setVisible(show);
             if (show) {
-                rb->setCount(costs.at(RES_NAME_GOLD));
+                const int count = costs.at(RES_NAME_WOOD);
+                rb->setCount(count);
+                rb->setEnabled(wood >= count);
                 const Point& goldPos = goldRB->getPosition();
                 if (rb->getPosition() == goldPos) {
                     rb->setPosition(goldPos + Point(0, rb->getContentSize().height));
@@ -216,22 +243,21 @@ void MapUIUnitNode::update(bool reuse)
 
 void MapUIUnitNode::setSelected(bool selected)
 {
+    return;
     if (_iconButton) {
-        Node *parent = _iconButton->getParent();
-        if (parent) {
-            static const int selectedTag(100);
-            Node *selectedSprite = parent->getChildByTag(selectedTag);
-            if (selected) {
-                if (!selectedSprite) {
-                    Sprite *s = Sprite::create("GameImages/test/ui_xuanzhong.png");
-                    s->setTag(selectedTag);
-                    s->setPosition(_iconButton->getPosition());
-                    parent->addChild(s, 1);
-                }
-            } else {
-                if (selectedSprite) {
-                    parent->removeChild(selectedSprite);
-                }
+        static const int selectedTag(100);
+        Node *selectedSprite = _iconButton->getChildByTag(selectedTag);
+        if (selected) {
+            if (!selectedSprite) {
+                Sprite *s = Sprite::create("GameImages/test/ui_xuanzhong.png");
+                s->setTag(selectedTag);
+                const Size& size = _iconButton->getContentSize();
+                s->setPosition(Point(size.width / 2, size.height / 2));
+                _iconButton->addChild(s, topZOrder);
+            }
+        } else {
+            if (selectedSprite) {
+                _iconButton->removeChild(selectedSprite);
             }
         }
     }
@@ -247,11 +273,17 @@ ssize_t MapUIUnitNode::getIdx() const
     return _idx;
 }
 
-string MapUIUnitNode::getIconFile(const Camp* camp) const
+string MapUIUnitNode::getIconFile(const Camp* camp, bool enable) const
 {
     const string& unitName = camp ? camp->getUnitSetting().getUnitTypeName() : "";
     const URConfigData* configData = DataManager::getInstance()->getURConfigData(unitName);
-    const string& iconFile = configData ? configData->getIcon() : "GameImages/icons/unit/big/normal/icon_w_langdun.png";
+    string iconFile;
+    static const string defaultFile("GameImages/icons/unit/big/normal/icon_w_langdun.png");
+    if (enable) {
+        iconFile = configData ? configData->getIcon() : defaultFile;
+    } else {
+        iconFile = configData ? configData->getDisabledIcon() : defaultFile;
+    }
     return iconFile;
 }
 
@@ -271,4 +303,22 @@ void MapUIUnitNode::createResourceButton(::ResourceType type)
     button->setAnchorPoint(Point::ANCHOR_MIDDLE);
     addChild(button);
     _resourceButtons.insert(make_pair(type, button));
+}
+
+void MapUIUnitNode::addTouchedAction(bool touched)
+{
+    static float duration(0.2f);
+    _iconButton->stopAllActions();
+    if (touched) {
+        const Point destinationPos = _basePosition - Point(0, 6.0f);
+        _shadow->setVisible(false);
+        _mask->setVisible(true);
+        _iconButton->runAction(Sequence::create(MoveTo::create(duration, destinationPos), CallFunc::create([this] {
+        }), nullptr));
+    } else {
+        _mask->setVisible(false);
+        _iconButton->runAction(Sequence::create(MoveTo::create(duration, _basePosition), CallFunc::create([this] {
+            _shadow->setVisible(true);
+        }), nullptr));
+    }
 }

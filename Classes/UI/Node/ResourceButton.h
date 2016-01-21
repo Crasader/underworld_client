@@ -25,6 +25,7 @@ public:
     int getCount() const;
     void setType(ResourceType type);
     void setCount(int count);
+    void setEnabled(bool enable);
     void setTouchEventListener(const Button::ccWidgetTouchCallback& callback);
     void setClickEventListener(const Button::ccWidgetClickCallback& callback);
     
@@ -37,6 +38,7 @@ protected:
 private:
     bool _animated;
     bool _needResize;
+    bool _enabled;
     ResourceType _type;
     int _count;
     Sprite *_icon;
