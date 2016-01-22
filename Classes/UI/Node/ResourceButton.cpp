@@ -50,6 +50,7 @@ bool ResourceButton::init(bool isBigSize, bool animated, bool needResize, Resour
 {
     if(Node::init())
     {
+        _isBigSize = isBigSize;
         _animated = animated;
         _needResize = needResize;
         
@@ -101,14 +102,19 @@ bool ResourceButton::init(bool isBigSize, bool animated, bool needResize, Resour
         setContentSize(_button->getContentSize());
 #else
         addIconNode(type);
-        _countLabel = CocosUtils::create12x30Number(StringUtils::format("%d", count));
+        const string& message = StringUtils::format("%d", count);
+        if (_isBigSize) {
+            _countLabel = CocosUtils::create12x30Number(message);
+        } else {
+            _countLabel = CocosUtils::create10x25Number(message);
+        }
         addChild(_countLabel);
         
         if (needResize) {
             resize();
         } else {
             Node* icon = _animated ? _iconNode : _icon;
-            const Size size(150, 40);
+            const Size size = isBigSize ? Size(150, 40) : Size(35, 20);
             setContentSize(size);
             icon->setPosition(Point(size.width / 4, size.height / 2));
             _countLabel->setPosition(Point(size.width * 3 / 4, size.height / 2));
@@ -160,9 +166,17 @@ void ResourceButton::setEnabled(bool enable)
         Node* parent = _countLabel->getParent();
         _countLabel->removeFromParent();
         if (enable) {
-            _countLabel = CocosUtils::create12x30Number(message);
+            if (_isBigSize) {
+                _countLabel = CocosUtils::create12x30Number(message);
+            } else {
+                _countLabel = CocosUtils::create10x25Number(message);
+            }
         } else {
-            _countLabel = CocosUtils::create12x30Number_Red(message);
+            if (_isBigSize) {
+                _countLabel = CocosUtils::create12x30Number_Red(message);
+            } else {
+                _countLabel = CocosUtils::create10x25Number_Red(message);
+            }
         }
         _countLabel->setPosition(pos);
         parent->addChild(_countLabel);
@@ -215,7 +229,13 @@ void ResourceButton::addIconNode(ResourceType type)
             _iconNode->setPosition(pos);
         }
     } else {
-        const string& file(StringUtils::format("GameImages/resources/icon_%dS.png", type));
+        string file;
+        if (_isBigSize) {
+            file = StringUtils::format("GameImages/resources/icon_%dB.png", type);
+        } else {
+            file = StringUtils::format("GameImages/resources/icon_%dS.png", type);
+        }
+        
         if (_icon) {
             _icon->setTexture(file);
         } else {
@@ -237,10 +257,10 @@ void ResourceButton::resize()
             _countLabel->setPositionX(x + 5.0f + iconWidth / 2 + labelWidth * _countLabel->getAnchorPoint().x);
         } else {
             Node* icon = _animated ? _iconNode : _icon;
-            const Size& iconSize = Size(36, 36) /*icon->getContentSize()*/;
+            const Size& iconSize = _isBigSize ? Size(36, 36) : Size(24, 20) /*icon->getContentSize()*/;
             const Size& labelSize = _countLabel->getContentSize();
             
-            static const float offsetX = 5.0f;
+            static const float offsetX = _isBigSize ? 5.0f : 2.0f;
             const Size size(iconSize.width + labelSize.width + offsetX, MAX(iconSize.height, labelSize.height));
             
             setContentSize(size);

@@ -29,7 +29,7 @@ public:
     virtual ~MapUIUnitNodeObserver() {}
     virtual void onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node) = 0;
     virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node) = 0;
-    virtual void onMapUIUnitNodeUpdated(MapUIUnitNode* node) = 0;
+    virtual void onMapUIUnitNodeTouchedCanceled(MapUIUnitNode* node) = 0;
 };
 
 class MapUIUnitNode: public Node
@@ -41,7 +41,7 @@ public:
     void reuse(const UnderWorld::Core::Camp* camp, ssize_t idx, int gold, int wood);
     void update(bool reuse, int gold, int wood);
     void setSelected(bool selected);
-    void addTouchedAction(bool touched);
+    void setTouched(bool touched);
     
     // getters
     const UnderWorld::Core::Camp* getCamp() const;
@@ -53,18 +53,19 @@ protected:
     std::string getIconFile(const UnderWorld::Core::Camp* camp, bool enable) const;
     bool isHero(const UnderWorld::Core::Camp* camp) const;
     void createResourceButton(ResourceType type);
+    void addTouchedAction(bool touched, bool animated);
     
 private:
     MapUIUnitNodeObserver *_observer;
     Sprite *_shadow;
     Button *_iconButton;
+    Point _iconBasePosition;
     Sprite *_mask;
     std::map<ResourceType, ResourceButton*> _resourceButtons;
     Label *_countLabel;
     const UnderWorld::Core::Camp* _camp;
     ssize_t _idx;
     bool _touchInvalid;
-    Point _basePosition;
 };
 
 #endif /* MapUIUnitNode_h */

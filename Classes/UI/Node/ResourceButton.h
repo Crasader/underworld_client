@@ -36,6 +36,7 @@ protected:
     void resize();
     
 private:
+    bool _isBigSize;
     bool _animated;
     bool _needResize;
     bool _enabled;

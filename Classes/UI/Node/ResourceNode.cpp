@@ -64,7 +64,7 @@ bool ResourceNode::init(ResourceType type, int count)
                 switch (child->getTag()) {
                     case 21:
                     {
-                        _icon = Sprite::create(StringUtils::format("GameImages/resources/icon_%dS.png", type));
+                        _icon = Sprite::create(StringUtils::format("GameImages/resources/icon_%dB.png", type));
                         _icon->setPosition(position);
                         parent->addChild(_icon);
                     }
@@ -109,7 +109,7 @@ void ResourceNode::setType(ResourceType type)
     
     if (_icon)
     {
-        string fileName = StringUtils::format("GameImages/resources/icon_%dS.png", type);
+        string fileName = StringUtils::format("GameImages/resources/icon_%dB.png", type);
         assert(FileUtils::getInstance()->isFileExist(fileName));
         _icon->setTexture(fileName);
     }

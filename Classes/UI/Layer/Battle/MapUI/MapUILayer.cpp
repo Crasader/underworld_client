@@ -22,11 +22,11 @@ using namespace cocostudio;
 using namespace UnderWorld::Core;
 
 static const float unitNodeOffsetX(5.0f);
-static const float unitNodeOffsetY(17.0f);
+static const float unitNodeOffsetY(0.0f);
 
 static const UnitClass tableUnitClass[] = {
+    kUnitClass_Warrior,
     kUnitClass_Hero,
-    kUnitClass_Warrior
 };
 static const size_t tableUnitClassCount = sizeof(tableUnitClass) / sizeof(UnitClass);
 
@@ -61,7 +61,7 @@ MapUILayer::MapUILayer()
 ,_createdTableViewsCount(0)
 ,_tableViewPos(Point::ZERO)
 ,_isTouchingHeroTableView(false)
-,_selectedCamp(nullptr)
+,_selectedHeroCamp(nullptr)
 ,_goldCount(0)
 ,_woodCount(0)
 ,_timeLabel(nullptr)
@@ -79,8 +79,10 @@ MapUILayer::MapUILayer()
     _cellSize.height = unitNodeSize.height + unitNodeOffsetY * 2;
     _cellSize.width = unitNodeSize.width + unitNodeOffsetX;
     
-    _touchedCamp.first = nullptr;
-    _touchedCamp.second = CC_INVALID_INDEX;
+    _selectedCampIdx.first = nullptr;
+    _selectedCampIdx.second = CC_INVALID_INDEX;
+    
+    clearTouchedCampIdx();
 }
 
 MapUILayer::~MapUILayer()
@@ -266,8 +268,8 @@ TableViewCell* MapUILayer::tableCellAtIndex(TableView *table, ssize_t idx)
             MapUIUnitNode* unitNode = cell->getUnitNode();
             if (unitNode) {
                 unitNode->reuse(camp, idx, _goldCount, _woodCount);
-                unitNode->setSelected(table == _touchedCamp.first && idx == _touchedCamp.second);
-                unitNode->addTouchedAction(false);
+                unitNode->setSelected(table == _selectedCampIdx.first && idx == _selectedCampIdx.second);
+                unitNode->setTouched(table == _touchedCampIdx.first && idx == _touchedCampIdx.second);
             } else {
                 unitNode = MapUIUnitNode::create(camp);
                 unitNode->reuse(camp, idx, _goldCount, _woodCount);
@@ -290,17 +292,28 @@ ssize_t MapUILayer::numberOfCellsInTableView(TableView *table)
 #pragma mark - MapUIUnitNodeObserver
 void MapUILayer::onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node)
 {
-    _selectedCamp = node->getCamp();
+    _selectedHeroCamp = node->getCamp();
+    
+    clearTouchedCampIdx();
+    UnitClass uc = node->getCamp()->getUnitType()->getUnitClass();
+    if (_tableViews.find(uc) != _tableViews.end()) {
+        TableView* table = _tableViews.at(uc);
+        if (table) {
+            _touchedCampIdx.first = table;
+            _touchedCampIdx.second = node->getIdx();
+        }
+    }
 }
 
 void MapUILayer::onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node)
 {
     onUnitTouched(node);
+    clearTouchedCampIdx();
 }
 
-void MapUILayer::onMapUIUnitNodeUpdated(MapUIUnitNode* node)
+void MapUILayer::onMapUIUnitNodeTouchedCanceled(MapUIUnitNode* node)
 {
-    
+    clearTouchedCampIdx();
 }
 
 #pragma mark - CampInfoNodeObserver
@@ -491,12 +504,12 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
 //            label->setPosition(Point(size.width / 2, size.height * 0.375));
 //            sprite->addChild(label);
             
-            _woodResourceButton = ResourceButton::create(false, true, false, kResourceType_Wood, 2000, nullptr);
+            _woodResourceButton = ResourceButton::create(true, true, false, kResourceType_Wood, 2000, nullptr);
             _woodResourceButton->setAnchorPoint(Point::ANCHOR_MIDDLE);
             _woodResourceButton->setPosition(Point(size.width / 2, 60));
             sprite->addChild(_woodResourceButton);
             
-            _goldResourceButton = ResourceButton::create(false, true, false, kResourceType_Gold, 2000, nullptr);
+            _goldResourceButton = ResourceButton::create(true, true, false, kResourceType_Gold, 2000, nullptr);
             _goldResourceButton->setAnchorPoint(Point::ANCHOR_MIDDLE);
             _goldResourceButton->setPosition(Point(size.width / 2, 20));
             sprite->addChild(_goldResourceButton);
@@ -589,10 +602,10 @@ bool MapUILayer::onTouchBegan(Touch *touch, Event *unused_event)
 
 void MapUILayer::onTouchMoved(Touch *touch, Event *unused_event)
 {
-    if (_isTouchingHeroTableView && _selectedCamp) {
+    if (_isTouchingHeroTableView && _selectedHeroCamp) {
         const Point& point = touch->getLocation();
         if (_observer) {
-            _observer->onMapUILayerSpellRingMoved(_selectedCamp, point);
+            _observer->onMapUILayerSpellRingMoved(_selectedHeroCamp, point);
         }
     }
 }
@@ -607,12 +620,12 @@ void MapUILayer::onTouchEnded(Touch *touch, Event *unused_event)
                 _observer->onMapUILayerSpellRingCancelled();
             }
         } else {
-            if (_selectedCamp) {
+            if (_selectedHeroCamp) {
                 if (_observer) {
-                    _observer->onMapUILayerTryToCastSpell(_selectedCamp, point);
+                    _observer->onMapUILayerTryToCastSpell(_selectedHeroCamp, point);
                 }
                 
-                _selectedCamp = nullptr;
+                _selectedHeroCamp = nullptr;
             }
             
             _isTouchingHeroTableView = false;
@@ -627,11 +640,11 @@ void MapUILayer::onUnitTouched(MapUIUnitNode* node)
     TableView* table = _tableViews.at(uc);
     const ssize_t idx = node->getIdx();
     
-    TableView* lastTable = _touchedCamp.first;
-    ssize_t lastIdx = _touchedCamp.second;
+    TableView* lastTable = _selectedCampIdx.first;
+    ssize_t lastIdx = _selectedCampIdx.second;
     
-    _touchedCamp.first = table;
-    _touchedCamp.second = idx;
+    _selectedCampIdx.first = table;
+    _selectedCampIdx.second = idx;
     
     if (table != lastTable) {
         if (lastTable != nullptr && lastIdx != CC_INVALID_INDEX) {
@@ -654,6 +667,12 @@ void MapUILayer::onUnitTouched(MapUIUnitNode* node)
     if (_observer) {
         _observer->onMapUILayerUnitSelected(node);
     }
+}
+
+void MapUILayer::clearTouchedCampIdx()
+{
+    _touchedCampIdx.first = nullptr;
+    _touchedCampIdx.second = CC_INVALID_INDEX;
 }
 
 void MapUILayer::createTableViews()
@@ -687,7 +706,10 @@ Node* MapUILayer::createTableView(UnitClass uc, Node* parent)
         const Size size(width, _cellSize.height);
         
         static const float offset(5.0f);
-        Scale9Sprite* sprite = Scale9Sprite::create("GameImages/test/ui_black_13.png", Rect(0, 0, 54, 114), Rect(4, 4, 46, 116));
+        Rect rect(0, 0, 54, 114);
+        static const float capInsets(4.0f);
+        Rect capInsetsRect(capInsets, capInsets, rect.size.width - capInsets, rect.size.height - capInsets);
+        Scale9Sprite* sprite = Scale9Sprite::create("GameImages/test/ui_black_13.png", rect, capInsetsRect);
         sprite->setContentSize(size + Size(offset * 2, 0));
         parent->addChild(sprite);
         

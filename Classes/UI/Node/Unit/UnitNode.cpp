@@ -942,21 +942,34 @@ Node* UnitNode::addEffect(const string& file)
 Node* UnitNode::addEffect(const string& file, bool loop)
 {
     if (file.length() > 0) {
-        Node *effect = CSLoader::createNode(file);
-        if (_needToFlip != _isLastFlipped) {
-            node_flipX(effect);
+        const size_t found = file.find_last_of(".");
+        if (found != string::npos) {
+            const string& suffix = file.substr(found + 1);
+            if ("csb" == suffix) {
+                Node *effect = CSLoader::createNode(file);
+                if (_needToFlip != _isLastFlipped) {
+                    node_flipX(effect);
+                }
+                addChild(effect);
+                cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
+                effect->runAction(action);
+                action->gotoFrameAndPlay(0, loop);
+                if (!loop) {
+                    action->setLastFrameCallFunc([effect]() {
+                        effect->removeFromParent();
+                    });
+                }
+                
+                return effect;
+            } else if ("plist" == suffix) {
+                ParticleSystemQuad *effect = ParticleSystemQuad::create(file);
+                if (!loop) {
+                    effect->setAutoRemoveOnFinish(true);
+                }
+                addChild(effect);
+                return effect;
+            }
         }
-        addChild(effect);
-        cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
-        effect->runAction(action);
-        action->gotoFrameAndPlay(0, loop);
-        if (!loop) {
-            action->setLastFrameCallFunc([effect]() {
-                effect->removeFromParent();
-            });
-        }
-        
-        return effect;
     }
     
     return nullptr;
@@ -966,9 +979,9 @@ void UnitNode::rollHintResource(const std::string &resource, int amount, float d
     Node* hintNode = Node::create();
     Node* iconNode = nullptr;
     if (resource == RES_NAME_GOLD) {
-        iconNode = Sprite::create("GameImages/resources/icon_gold_s.png");
+        iconNode = Sprite::create(StringUtils::format("GameImages/resources/icon_%dB.png", kResourceType_Gold));
     } else if (resource == RES_NAME_WOOD) {
-        iconNode = Sprite::create("GameImages/resources/icon_wood_s.png");
+        iconNode = Sprite::create(StringUtils::format("GameImages/resources/icon_%dB.png", kResourceType_Wood));
     }
     assert(iconNode);
     iconNode->setAnchorPoint(Vec2(1.f, 0.5f));

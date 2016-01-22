@@ -76,12 +76,13 @@ protected:
     // MapUIUnitNodeObserver
     virtual void onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node) override;
     virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node) override;
-    virtual void onMapUIUnitNodeUpdated(MapUIUnitNode* node) override;
+    virtual void onMapUIUnitNodeTouchedCanceled(MapUIUnitNode* node) override;
     
     // CampInfoNodeObserver
     virtual void onCampInfoNodeClickedIcon(CampInfoNode* pSender, const UnderWorld::Core::UnitBase* unit) override;
     
     void onUnitTouched(MapUIUnitNode* node);
+    void clearTouchedCampIdx();
     void createTableViews();
     Node* createTableView(UnderWorld::Core::UnitClass, Node* parent);
     UnderWorld::Core::UnitClass getUnitClass(TableView* table) const;
@@ -94,9 +95,10 @@ private:
     Size _tableViewMaxSize;
     Point _tableViewPos;
     Size _cellSize;
-    std::pair<TableView*, ssize_t> _touchedCamp;
+    std::pair<TableView*, ssize_t> _selectedCampIdx;
+    std::pair<TableView*, ssize_t> _touchedCampIdx;
     bool _isTouchingHeroTableView;
-    const UnderWorld::Core::Camp* _selectedCamp;
+    const UnderWorld::Core::Camp* _selectedHeroCamp;
     int _goldCount;
     int _woodCount;
     // ======================== UI =============================

@@ -287,7 +287,7 @@ void MapLayer::repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& co
 void MapLayer::updateSpellRangeRing(const Point& layerPoint)
 {
     if (!_spellRing) {
-        static const string name("guangquan.csb");
+        static const string name("quan-1.csb");
         _spellRing = CSLoader::createNode(name);
         timeline::ActionTimeline *action = CSLoader::createTimeline(name);
         _spellRing->runAction(action);
@@ -337,11 +337,16 @@ void MapLayer::addFireballSpellEffect()
         static string skyFile("jinenghuoqiu.csb");
         const Point& targetPos = _spellRing->getPosition();
         const Size& winSize = Director::getInstance()->getWinSize();
-        static const float offsetY(80.0f);
+        Node* skyEffect = addSpellEffect(skyFile, true, Point::ZERO);
+        float offsetY(0.0f);
+        if (skyEffect->getChildren().size() > 0) {
+            Node* sprite = skyEffect->getChildren().at(0);
+            offsetY = sprite->getContentSize().height / 2;
+        }
         const Point startPos = targetPos + Point(0, _scrollView->convertToNodeSpace(Point(0, winSize.height + offsetY)).y);
-        Node* skyEffecy = addSpellEffect(skyFile, true, startPos);
-        skyEffecy->runAction(Sequence::create(MoveTo::create(1.0f, targetPos + Point(0, offsetY)), CallFunc::create([=] {
-            removeSpellEffect(skyEffecy);
+        skyEffect->setPosition(startPos);
+        skyEffect->runAction(Sequence::create(MoveTo::create(1.0f, targetPos + Point(0, offsetY)), CallFunc::create([=] {
+            removeSpellEffect(skyEffect);
             static string groundFile("jinenghuoqiukuosan-1.csb");
             addSpellEffect(groundFile, false, targetPos);
         }), nullptr));
