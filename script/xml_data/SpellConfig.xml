@@ -7,7 +7,7 @@
 	<item spell_name="狂暴" resource_name="jiasu" receiver_is_body="1"/>
 	<item spell_name="治疗" resource_name="yicixinghuixue" receiver_is_body="1"/>
 	<item spell_name="轰击"/>
-	<item spell_name="冲锋" resource_name="chongfengtuowei.plist" receiver_is_body="1"/>
+	<item spell_name="冲锋" resource_name="jineng-JiaSu" receiver_is_body="1"/>
 	<item spell_name="刚毅" resource_name="dun.2" receiver_is_body="1"/>
 	<item spell_name="强风护盾" resource_name="fengdun" receiver_is_body="1"/>
 	<item spell_name="血雾" resource_name="xuewu" receiver_is_body="1"/>

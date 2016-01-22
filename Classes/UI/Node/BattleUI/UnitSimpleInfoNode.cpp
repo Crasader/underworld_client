@@ -22,9 +22,9 @@ using namespace ui;
 using namespace cocostudio;
 using namespace UnderWorld::Core;
 
-static LabelAtlas* createLabelAtlas(Node* parent, const string& message)
+static Label* createLabel(Node* parent, const string& message)
 {
-    LabelAtlas* label = CocosUtils::create10x25Number(message);
+    Label* label = CocosUtils::createLabel(message, DEFAULT_FONT_SIZE);
     label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
     parent->addChild(label);
     return label;
@@ -121,7 +121,7 @@ bool UnitSimpleInfoNode::init()
                                         switch (tag) {
                                             case 30:
                                             {
-                                                _countLabel = createLabelAtlas(child, "0/2");
+                                                _countLabel = createLabel(child, "0/2");
                                                 _countLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
                                             }
                                                 break;
@@ -135,7 +135,7 @@ bool UnitSimpleInfoNode::init()
                             break;
                         case 31:
                         {
-                            _levelLabel = createLabelAtlas(child, "&'1");
+                            _levelLabel = createLabel(child, "LV1");
                         }
                             break;
                         default:
@@ -181,6 +181,6 @@ void UnitSimpleInfoNode::update(const Camp* camp, const UnitBase* unit)
         if (FileUtils::getInstance()->isFileExist(file)) {
             _icon->setTexture(file);
         }
-        _levelLabel->setString(StringUtils::format("&'%d", unit->getLevel()));
+        _levelLabel->setString(StringUtils::format("LV%d", unit->getLevel()));
     }
 }

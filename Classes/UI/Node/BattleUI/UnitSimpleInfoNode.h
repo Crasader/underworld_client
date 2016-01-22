@@ -50,8 +50,8 @@ private:
     const UnderWorld::Core::UnitBase* _unit;
     // top
     Sprite* _icon;
-    LabelAtlas* _countLabel;
-    LabelAtlas* _levelLabel;
+    Label* _countLabel;
+    Label* _levelLabel;
 };
 
 #endif /* UnitSimpleInfoNode_h */

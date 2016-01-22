@@ -35,6 +35,7 @@ namespace CocosUtils
     
     // numer jump
     void jumpNumber(cocos2d::LabelAtlas *label, int toNumer, float duration);
+    void jumpNumber(cocos2d::Label *label, int toNumer, float duration);
     
     float getFitScreenScale(cocos2d::Node *root);
     void replaceScene(cocos2d::Scene* scene);

@@ -27,14 +27,6 @@ static Label* createLabel(Node* parent, const string& message)
     return label;
 }
 
-static LabelAtlas* createLabelAtlas(Node* parent, const string& message)
-{
-    LabelAtlas* label = CocosUtils::create10x25Number(message);
-    label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
-    parent->addChild(label);
-    return label;
-}
-
 static float getUnitAttributeValue(const UnitBase* unitBase, UnitAttributeType type)
 {
     const int cnt = unitBase->getAttributeCount(type);
@@ -157,32 +149,32 @@ bool UnitInfoNode::init()
                                 break;
                             case 12:
                             {
-                                _hpLabel = createLabelAtlas(child, "0");
+                                _hpLabel = createLabel(child, "0");
                             }
                                 break;
                             case 13:
                             {
-                                _armorLabel = createLabelAtlas(child, "0");
+                                _armorLabel = createLabel(child, "0");
                             }
                                 break;
                             case 14:
                             {
-                                _armorPreferLabel = createLabelAtlas(child, "0");
+                                _armorPreferLabel = createLabel(child, "0");
                             }
                                 break;
                             case 15:
                             {
-                                _dmgLabel = createLabelAtlas(child, "0");
+                                _dmgLabel = createLabel(child, "0");
                             }
                                 break;
                             case 16:
                             {
-                                _atkSpeedLabel = createLabelAtlas(child, "0");
+                                _atkSpeedLabel = createLabel(child, "0");
                             }
                                 break;
                             case 17:
                             {
-                                _atkRangeLabel = createLabelAtlas(child, "0");
+                                _atkRangeLabel = createLabel(child, "0");
                             }
                                 break;
                             default:
@@ -215,7 +207,7 @@ bool UnitInfoNode::init()
                                             switch (tag) {
                                                 case 21:
                                                 {
-                                                    _skillLevelLabel = createLabelAtlas(child, "0");
+                                                    _skillLevelLabel = createLabel(child, "0");
                                                 }
                                                     break;
                                                 case 22:
@@ -296,7 +288,7 @@ void UnitInfoNode::update(const UnitBase* unit)
             if (passiveTypeCount > 0) {
                 const PassiveType* pt = unit->getPassiveType(0);
                 if (pt) {
-                    _skillLevelLabel->setString(StringUtils::format("&'%d", pt->getLevel()));
+                    _skillLevelLabel->setString(StringUtils::format("LV%d", pt->getLevel()));
                     _skillNameLabel->setString(pt->getAlias());
                     _skillDescriptionLabel->setString(pt->getAlias());
                 }
@@ -305,7 +297,7 @@ void UnitInfoNode::update(const UnitBase* unit)
                 if (spellTypeCount > 0) {
                     const SpellType* st = unit->getSpellType(0);
                     if (st) {
-                        _skillLevelLabel->setString(StringUtils::format("&'%d", st->getLevel()));
+                        _skillLevelLabel->setString(StringUtils::format("LV%d", st->getLevel()));
                         _skillNameLabel->setString(st->getAlias());
                         _skillDescriptionLabel->setString(st->getAlias());
                     }

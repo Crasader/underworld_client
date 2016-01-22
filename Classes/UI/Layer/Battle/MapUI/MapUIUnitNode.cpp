@@ -120,25 +120,12 @@ bool MapUIUnitNode::init(const Camp* camp)
             }
         });
         
-        createResourceButton(kResourceType_Gold);
-        createResourceButton(kResourceType_Wood);
-        
-        if (camp) {
-            const map<string, int>& costs = camp->getCosts();
-            if (costs.find(RES_NAME_GOLD) != costs.end()) {
-                _resourceButtons.at(kResourceType_Gold)->setCount(costs.at(RES_NAME_GOLD));
-            }
-            if (costs.find(RES_NAME_WOOD) != costs.end()) {
-                _resourceButtons.at(kResourceType_Wood)->setCount(costs.at(RES_NAME_WOOD));
-            }
-        }
+        _resourcesMask = Sprite::create("GameImages/test/ui_black_15.png");
+        addChild(_resourcesMask);
         
         _countLabel = CocosUtils::createLabel("0", DEFAULT_FONT_SIZE);
         addChild(_countLabel);
         
-        ResourceButton* rb = _resourceButtons.at(kResourceType_Gold);
-        const float resourceHeight = rb->getContentSize().height;
-        const float countHeight = _countLabel->getContentSize().height;
         const Size& shadowSize = _shadow->getContentSize();
         const Size& iconSize = _iconButton->getContentSize();
         static const float offsetY(2.0f);
@@ -156,10 +143,18 @@ bool MapUIUnitNode::init(const Camp* camp)
         _mask->setVisible(false);
         _iconButton->addChild(_mask, topZOrder);
         
-        const float y = _iconButton->getPosition().y - iconSize.height / 2;
-        rb->setPosition(Point(x, resourceHeight / 2 + offsetY + y));
-        _resourceButtons.at(kResourceType_Wood)->setPosition(rb->getPosition() + Point(0, resourceHeight));
-        _countLabel->setPosition(Point(x, size.height - countHeight / 2 - offsetY));
+        {
+            const float height = _countLabel->getContentSize().height;
+            _countLabel->setPosition(Point(x, size.height - height / 2 - offsetY));
+        }
+        
+        {
+            const float height = _resourcesMask->getContentSize().height;
+            _resourcesMask->setPosition(Point(x, height / 2));
+            
+            createResourceButton(kResourceType_Gold, _resourcesMask);
+            createResourceButton(kResourceType_Wood, _resourcesMask);
+        }
 #endif
         
         return true;
@@ -200,29 +195,39 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
         }
         
         const map<string, int>& costs = _camp->getCosts();
-        ResourceButton* goldRB = _resourceButtons.at(kResourceType_Gold);
-        {
-            bool show = costs.find(RES_NAME_GOLD) != costs.end();
-            goldRB->setVisible(show);
-            if (show) {
-                const int count = costs.at(RES_NAME_GOLD);
-                goldRB->setCount(count);
-                goldRB->setEnabled(gold >= count);
-            }
+        ResourceButton* woodButton = _resourceButtons.at(kResourceType_Wood);
+        woodButton->setVisible(costs.find(RES_NAME_WOOD) != costs.end());
+        if (woodButton->isVisible()) {
+            int count = costs.at(RES_NAME_WOOD);
+            woodButton->setCount(count);
+            woodButton->setEnabled(wood >= count);
         }
-        {
-            bool show = costs.find(RES_NAME_WOOD) != costs.end();
-            ResourceButton* rb = _resourceButtons.at(kResourceType_Wood);
-            rb->setVisible(show);
-            if (show) {
-                const int count = costs.at(RES_NAME_WOOD);
-                rb->setCount(count);
-                rb->setEnabled(wood >= count);
-                const Point& goldPos = goldRB->getPosition();
-                if (rb->getPosition() == goldPos) {
-                    rb->setPosition(goldPos + Point(0, rb->getContentSize().height));
-                }
-            }
+        
+        ResourceButton* goldButton = _resourceButtons.at(kResourceType_Gold);
+        goldButton->setVisible(costs.find(RES_NAME_GOLD) != costs.end());
+        if (goldButton->isVisible()) {
+            int count = costs.at(RES_NAME_GOLD);
+            goldButton->setCount(count);
+            goldButton->setEnabled(gold >= count);
+        }
+        
+        const float resourceMaskWidth = _resourcesMask->getContentSize().width;
+        if (woodButton->isVisible() && goldButton->isVisible()) {
+            ResourceButton* woodButton = _resourceButtons.at(kResourceType_Wood);
+            ResourceButton* goldButton = _resourceButtons.at(kResourceType_Gold);
+            const float width1 = woodButton->getContentSize().width;
+            const float width2 = goldButton->getContentSize().width;
+            const float totalWidth = width1 + width2;
+            const float offsetX = (resourceMaskWidth - totalWidth) / 2;
+            woodButton->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+            goldButton->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+            woodButton->setPosition(offsetX, 0);
+            goldButton->setPosition(offsetX + width1, 0);
+            
+        } else {
+            ResourceButton* button = woodButton->isVisible() ? woodButton : goldButton;
+            button->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
+            button->setPosition(resourceMaskWidth / 2, 0);
         }
     }
 }
@@ -290,11 +295,11 @@ bool MapUIUnitNode::isHero(const Camp* camp) const
     return false;
 }
 
-void MapUIUnitNode::createResourceButton(::ResourceType type)
+void MapUIUnitNode::createResourceButton(::ResourceType type, Node* parent)
 {
     ResourceButton* button = ResourceButton::create(false, false, true, type, 0, nullptr);
     button->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    addChild(button);
+    parent->addChild(button);
     _resourceButtons.insert(make_pair(type, button));
 }
 

@@ -27,6 +27,8 @@ using namespace std;
 using namespace UnderWorld::Core;
 
 #pragma mark ======================= static =======================
+static const int bottomZOrder(-1);
+static const int topZOrder(1);
 static const float hpPercentageThreshold(50.0f);
 static const string rollHintScheduleKeyPrefix("ROLL_HINT_SCHEDULE_KEY_");
 static const string rollHintScheduleKeySplitor("_");
@@ -916,7 +918,7 @@ void UnitNode::addShadow()
         const Point& pos = _sprite->getPosition();
         _shadow = Sprite::create(file);
         _shadow->setPosition(pos - Point(0, size.height * 0.25f));
-        addChild(_shadow, -1);
+        addChild(_shadow, bottomZOrder);
     }
 }
 
@@ -950,7 +952,7 @@ Node* UnitNode::addEffect(const string& file, bool loop)
                 if (_needToFlip != _isLastFlipped) {
                     node_flipX(effect);
                 }
-                addChild(effect);
+                addChild(effect, topZOrder);
                 cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
                 effect->runAction(action);
                 action->gotoFrameAndPlay(0, loop);
@@ -966,7 +968,7 @@ Node* UnitNode::addEffect(const string& file, bool loop)
                 if (!loop) {
                     effect->setAutoRemoveOnFinish(true);
                 }
-                addChild(effect);
+                addChild(effect, topZOrder);
                 return effect;
             }
         }

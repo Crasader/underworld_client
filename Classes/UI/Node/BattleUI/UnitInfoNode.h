@@ -50,15 +50,15 @@ private:
     // top
     Sprite* _raceIcon;
     Label* _nameLabel;
-    LabelAtlas* _hpLabel;
-    LabelAtlas* _armorLabel;
-    LabelAtlas* _armorPreferLabel;
-    LabelAtlas* _dmgLabel;
-    LabelAtlas* _atkSpeedLabel;
-    LabelAtlas* _atkRangeLabel;
+    Label* _hpLabel;
+    Label* _armorLabel;
+    Label* _armorPreferLabel;
+    Label* _dmgLabel;
+    Label* _atkSpeedLabel;
+    Label* _atkRangeLabel;
     // bottom
     Sprite* _skillIcon;
-    LabelAtlas* _skillLevelLabel;
+    Label* _skillLevelLabel;
     Label* _skillNameLabel;
     Label* _skillDescriptionLabel;
 };

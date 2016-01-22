@@ -99,7 +99,7 @@ bool MainUILayer::init()
                                 break;
                             case 8:
                             {
-                                Label* label = CocosUtils::createLabel("123", DEFAULT_FONT_SIZE);
+                                Label* label = CocosUtils::createLabel("User Name", BIG_FONT_SIZE);
                                 label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
                                 child->addChild(label);
                                 _nameLabel = label;
@@ -107,7 +107,7 @@ bool MainUILayer::init()
                                 break;
                             case 11:
                             {
-                                LabelAtlas* label = CocosUtils::create10x25Number("&'.56");
+                                Label* label = CocosUtils::createLabel("LV.10", DEFAULT_FONT_SIZE);
                                 label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
                                 child->addChild(label);
                                 _levelLabel = label;

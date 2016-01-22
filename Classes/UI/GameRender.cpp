@@ -102,10 +102,7 @@ void GameRender::init(const Game* game, Commander* commander)
         }
     }
     
-    if (_mapUILayer) {
-        _mapUILayer->reload();
-        initUILayer();
-    }
+    initUILayer();
     
     // tick
     Scheduler* scheduler = Director::getInstance()->getScheduler();
@@ -747,6 +744,7 @@ void GameRender::initUILayer()
         _mapUILayer->updateMyHpProgress(100);
         _mapUILayer->updateOpponentsHpProgress(100);
         updateResources();
+        _mapUILayer->reload();
     }
 }
 

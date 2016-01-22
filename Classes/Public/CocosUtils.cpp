@@ -24,11 +24,16 @@ using namespace std;
 #pragma mark - labels
 Label *CocosUtils::createLabel(const string& text, float fontSize, const Size& dimensions, TextHAlignment hAlignment, TextVAlignment vAlignment)
 {
+#if true
+    static const string fontName("TimesNewRomanPS-BoldMT");
+    Label *ret = Label::createWithSystemFont(text, fontName, fontSize, dimensions, hAlignment, vAlignment);
+#else
     static const string fontName("fonts/Font.ttf");
     Label *ret = Label::createWithTTF(text, fontName, fontSize, dimensions, hAlignment, vAlignment);
-    float posOffset = MIN(5.0f, MAX(1.0f, fontSize * 0.05f));
-    ret->enableShadow(Color4B::BLACK, Size(.0f, -posOffset));
-    ret->enableOutline(Color4B::BLACK, 1);
+#endif
+//    float posOffset = MIN(5.0f, MAX(1.0f, fontSize * 0.05f));
+//    ret->enableShadow(Color4B::BLACK, Size(.0f, -posOffset));
+//    ret->enableOutline(Color4B::BLACK, 1);
     return ret;
 }
 
@@ -51,7 +56,7 @@ LabelAtlas *CocosUtils::create42x52Number(const string& text)
  $ % L V v ￥ x + s - . / 0 1 2 3 4 5 6 7 8 9 0 :
  $ % & ' ( ) * + s - . / 0 1 2 3 4 5 6 7 8 9 0 :
  */
-cocos2d::LabelAtlas *CocosUtils::create10x25Number(const std::string& text) {
+LabelAtlas *CocosUtils::create10x25Number(const std::string& text) {
     static const char *charMapFile = "fonts/10X25.png";
     static const int charMapWidth = 10;
     static const int charMapHeight = 25;
@@ -62,7 +67,7 @@ cocos2d::LabelAtlas *CocosUtils::create10x25Number(const std::string& text) {
     return labelAtlas;
 }
 
-cocos2d::LabelAtlas *CocosUtils::create10x25Number_Green(const std::string& text) {
+LabelAtlas *CocosUtils::create10x25Number_Green(const std::string& text) {
     static const char *charMapFile = "fonts/10X25_green.png";
     static const int charMapWidth = 10;
     static const int charMapHeight = 25;
@@ -73,7 +78,7 @@ cocos2d::LabelAtlas *CocosUtils::create10x25Number_Green(const std::string& text
     return labelAtlas;
 }
 
-cocos2d::LabelAtlas *CocosUtils::create10x25Number_Red(const std::string& text) {
+LabelAtlas *CocosUtils::create10x25Number_Red(const std::string& text) {
     static const char *charMapFile = "fonts/10X25_red.png";
     static const int charMapWidth = 10;
     static const int charMapHeight = 25;
@@ -85,7 +90,7 @@ cocos2d::LabelAtlas *CocosUtils::create10x25Number_Red(const std::string& text) 
 }
 
 
-cocos2d::LabelAtlas *CocosUtils::create12x30Number(const std::string& text) {
+LabelAtlas *CocosUtils::create12x30Number(const std::string& text) {
     static const char *charMapFile = "fonts/12X30.png";
     static const int charMapWidth = 12;
     static const int charMapHeight = 30;
@@ -96,7 +101,7 @@ cocos2d::LabelAtlas *CocosUtils::create12x30Number(const std::string& text) {
     return labelAtlas;
 }
 
-cocos2d::LabelAtlas *CocosUtils::create12x30Number_Green(const std::string& text) {
+LabelAtlas *CocosUtils::create12x30Number_Green(const std::string& text) {
     static const char *charMapFile = "fonts/12X30_green.png";
     static const int charMapWidth = 12;
     static const int charMapHeight = 30;
@@ -107,7 +112,7 @@ cocos2d::LabelAtlas *CocosUtils::create12x30Number_Green(const std::string& text
     return labelAtlas;
 }
 
-cocos2d::LabelAtlas *CocosUtils::create12x30Number_Red(const std::string& text) {
+LabelAtlas *CocosUtils::create12x30Number_Red(const std::string& text) {
     static const char *charMapFile = "fonts/12X30_red.png";
     static const int charMapWidth = 12;
     static const int charMapHeight = 30;
@@ -119,7 +124,7 @@ cocos2d::LabelAtlas *CocosUtils::create12x30Number_Red(const std::string& text) 
 }
 
 
-cocos2d::LabelAtlas *CocosUtils::create16x40Number(const std::string& text) {
+LabelAtlas *CocosUtils::create16x40Number(const std::string& text) {
     static const char *charMapFile = "fonts/16X40.png";
     static const int charMapWidth = 16;
     static const int charMapHeight = 40;
@@ -130,7 +135,7 @@ cocos2d::LabelAtlas *CocosUtils::create16x40Number(const std::string& text) {
     return labelAtlas;
 }
 
-cocos2d::LabelAtlas *CocosUtils::create16x40Number_Green(const std::string& text) {
+LabelAtlas *CocosUtils::create16x40Number_Green(const std::string& text) {
     static const char *charMapFile = "fonts/16X40_green.png";
     static const int charMapWidth = 16;
     static const int charMapHeight = 40;
@@ -141,7 +146,7 @@ cocos2d::LabelAtlas *CocosUtils::create16x40Number_Green(const std::string& text
     return labelAtlas;
 }
 
-cocos2d::LabelAtlas *CocosUtils::create16x40Number_Red(const std::string& text) {
+LabelAtlas *CocosUtils::create16x40Number_Red(const std::string& text) {
     static const char *charMapFile = "fonts/16X40_red.png";
     static const int charMapWidth = 16;
     static const int charMapHeight = 40;
@@ -152,7 +157,7 @@ cocos2d::LabelAtlas *CocosUtils::create16x40Number_Red(const std::string& text) 
     return labelAtlas;
 }
 
-cocos2d::LabelAtlas *CocosUtils::create28x44Number(const std::string& text){
+LabelAtlas *CocosUtils::create28x44Number(const std::string& text){
     static const char *charMapFile = "fonts/28X44.png";
     static const int charMapWidth = 28;
     static const int charMapHeight = 44;
@@ -163,7 +168,7 @@ cocos2d::LabelAtlas *CocosUtils::create28x44Number(const std::string& text){
     return labelAtlas;
 }
 
-void CocosUtils::jumpNumber(cocos2d::LabelAtlas *label, int toNumer, float duration)
+void CocosUtils::jumpNumber(LabelAtlas *label, int toNumer, float duration)
 {
     if(label) {
         label->stopActionByTag(NUMBERJUMP_ACTION_TAG);
@@ -178,6 +183,31 @@ void CocosUtils::jumpNumber(cocos2d::LabelAtlas *label, int toNumer, float durat
         NumberJump* jump = NumberJump::create(duration, fromNumer, toNumer, CC_CALLBACK_1(LabelAtlas::setString, label));
         Sequence* seq = Sequence::create(jump, CallFuncN::create([toNumer](Ref* pSender){
             LabelAtlas *label = dynamic_cast<LabelAtlas*>(pSender);
+            if(label) {
+                label->setString(StringUtils::format("%d", toNumer));
+            }
+        }), NULL);
+        seq->setTag(NUMBERJUMP_ACTION_TAG);
+        
+        label->runAction(seq);
+    }
+}
+
+void CocosUtils::jumpNumber(Label *label, int toNumer, float duration)
+{
+    if(label) {
+        label->stopActionByTag(NUMBERJUMP_ACTION_TAG);
+        int fromNumer = 0;
+        string curNumerStr = label->getString();
+        if(!curNumerStr.empty()){
+            fromNumer = atoi(curNumerStr.c_str());
+        }
+        if (toNumer == fromNumer) {
+            return;
+        }
+        NumberJump* jump = NumberJump::create(duration, fromNumer, toNumer, CC_CALLBACK_1(Label::setString, label));
+        Sequence* seq = Sequence::create(jump, CallFuncN::create([toNumer](Ref* pSender){
+            Label *label = dynamic_cast<Label*>(pSender);
             if(label) {
                 label->setString(StringUtils::format("%d", toNumer));
             }

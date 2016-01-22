@@ -103,11 +103,8 @@ bool ResourceButton::init(bool isBigSize, bool animated, bool needResize, Resour
 #else
         addIconNode(type);
         const string& message = StringUtils::format("%d", count);
-        if (_isBigSize) {
-            _countLabel = CocosUtils::create12x30Number(message);
-        } else {
-            _countLabel = CocosUtils::create10x25Number(message);
-        }
+        const int fontSize = _isBigSize ? DEFAULT_FONT_SIZE : SMALL_FONT_SIZE;
+        _countLabel = CocosUtils::createLabel(message, fontSize);
         addChild(_countLabel);
         
         if (needResize) {
@@ -161,25 +158,9 @@ void ResourceButton::setEnabled(bool enable)
 {
     if (_enabled != enable) {
         _enabled = enable;
-        const Point& pos = _countLabel->getPosition();
-        const string& message = _countLabel->getString();
-        Node* parent = _countLabel->getParent();
-        _countLabel->removeFromParent();
-        if (enable) {
-            if (_isBigSize) {
-                _countLabel = CocosUtils::create12x30Number(message);
-            } else {
-                _countLabel = CocosUtils::create10x25Number(message);
-            }
-        } else {
-            if (_isBigSize) {
-                _countLabel = CocosUtils::create12x30Number_Red(message);
-            } else {
-                _countLabel = CocosUtils::create10x25Number_Red(message);
-            }
-        }
-        _countLabel->setPosition(pos);
-        parent->addChild(_countLabel);
+        
+        const Color4B color = enable ? Color4B::WHITE : Color4B::RED;
+        _countLabel->setTextColor(color);
     }
 }
 

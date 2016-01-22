@@ -44,7 +44,7 @@ private:
     int _count;
     Sprite *_icon;
     Node* _iconNode;
-    LabelAtlas *_countLabel;
+    Label *_countLabel;
     Button *_button;
 };
 

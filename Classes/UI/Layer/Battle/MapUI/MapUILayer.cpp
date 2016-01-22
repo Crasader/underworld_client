@@ -28,7 +28,7 @@ static const UnitClass tableUnitClass[] = {
     kUnitClass_Warrior,
     kUnitClass_Hero,
 };
-static const size_t tableUnitClassCount = sizeof(tableUnitClass) / sizeof(UnitClass);
+static const size_t tablesCount = sizeof(tableUnitClass) / sizeof(UnitClass);
 
 static ProgressTimer* createProgressTimer()
 {
@@ -97,24 +97,28 @@ void MapUILayer::registerObserver(MapUILayerObserver *observer)
 
 void MapUILayer::reload()
 {
-    for (map<UnitClass, TableView*>::iterator iter = _tableViews.begin(); iter != _tableViews.end(); ++iter) {
-        TableView* table = iter->second;
-        if (table) {
-            const ssize_t cnt = getCellsCount(table);
-            
-            // if setTouchEnabled to false, tableCellTouched() will never be called
-            const int visibleCellsCount = (_tableViewMaxSize.width - unitNodeOffsetX) / _cellSize.width;
-            table->setTouchEnabled(cnt > visibleCellsCount);
-            table->reloadData();
-            
-            // fit
-            if (false == table->isBounceable() && extension::ScrollView::Direction::HORIZONTAL == table->getDirection()) {
-                table->getContainer()->setPosition(Point::ZERO);
-                const int contentWidth = _cellSize.width * cnt + unitNodeOffsetX;
-                if (contentWidth >= _tableViewMaxSize.width) {
-                    table->setViewSize(_tableViewMaxSize);
-                } else {
-                    table->setViewSize(Size(contentWidth, _tableViewMaxSize.height));
+    if (0 == _createdTableViewsCount) {
+        createTableViews();
+    } else {
+        for (map<UnitClass, TableView*>::iterator iter = _tableViews.begin(); iter != _tableViews.end(); ++iter) {
+            TableView* table = iter->second;
+            if (table) {
+                const ssize_t cnt = getCellsCount(table);
+                
+                // if setTouchEnabled to false, tableCellTouched() will never be called
+                const int visibleCellsCount = (_tableViewMaxSize.width - unitNodeOffsetX) / _cellSize.width;
+                table->setTouchEnabled(cnt > visibleCellsCount);
+                table->reloadData();
+                
+                // fit
+                if (false == table->isBounceable() && extension::ScrollView::Direction::HORIZONTAL == table->getDirection()) {
+                    table->getContainer()->setPosition(Point::ZERO);
+                    const int contentWidth = _cellSize.width * cnt + unitNodeOffsetX;
+                    if (contentWidth >= _tableViewMaxSize.width) {
+                        table->setViewSize(_tableViewMaxSize);
+                    } else {
+                        table->setViewSize(Size(contentWidth, _tableViewMaxSize.height));
+                    }
                 }
             }
         }
@@ -495,7 +499,7 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
 //            label->setPosition(Point(size.width / 2, size.height * 0.875));
 //            sprite->addChild(label);
             
-            _populationLabel = CocosUtils::create10x25Number("");
+            _populationLabel = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
             _populationLabel->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
             _populationLabel->setPosition(Point(80, 94));
             sprite->addChild(_populationLabel);
@@ -504,12 +508,12 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
 //            label->setPosition(Point(size.width / 2, size.height * 0.375));
 //            sprite->addChild(label);
             
-            _woodResourceButton = ResourceButton::create(true, true, false, kResourceType_Wood, 2000, nullptr);
+            _woodResourceButton = ResourceButton::create(true, true, false, kResourceType_Wood, 0, nullptr);
             _woodResourceButton->setAnchorPoint(Point::ANCHOR_MIDDLE);
             _woodResourceButton->setPosition(Point(size.width / 2, 60));
             sprite->addChild(_woodResourceButton);
             
-            _goldResourceButton = ResourceButton::create(true, true, false, kResourceType_Gold, 2000, nullptr);
+            _goldResourceButton = ResourceButton::create(true, true, false, kResourceType_Gold, 0, nullptr);
             _goldResourceButton->setAnchorPoint(Point::ANCHOR_MIDDLE);
             _goldResourceButton->setPosition(Point(size.width / 2, 20));
             sprite->addChild(_goldResourceButton);
@@ -561,12 +565,6 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
     }
     
     return false;
-}
-
-void MapUILayer::onEnterTransitionDidFinish()
-{
-    LayerColor::onEnter();
-    createTableViews();
 }
 
 bool MapUILayer::onTouchBegan(Touch *touch, Event *unused_event)
@@ -679,7 +677,7 @@ void MapUILayer::createTableViews()
 {
     static float offsetX(10.0f);
     vector<Node*> created;
-    for (int i = 0; i < tableUnitClassCount; ++i) {
+    for (int i = 0; i < tablesCount; ++i) {
         Node* node = createTableView(tableUnitClass[i], this);
         if (node) {
             const size_t cnt = created.size();
@@ -730,7 +728,7 @@ Node* MapUILayer::createTableView(UnitClass uc, Node* parent)
 
 UnitClass MapUILayer::getUnitClass(TableView* table) const
 {
-    if (_createdTableViewsCount < 2) {
+    if (_createdTableViewsCount < tablesCount) {
         return tableUnitClass[_createdTableViewsCount];
     }
     

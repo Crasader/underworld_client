@@ -63,7 +63,6 @@ protected:
     
     // LayerColor
     bool init(const std::string& myAccount, const std::string& opponentsAccount);
-    virtual void onEnterTransitionDidFinish() override;
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchMoved(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
@@ -107,7 +106,7 @@ private:
     Label *_nextWaveTimeLabel;
     ResourceButton *_goldResourceButton;
     ResourceButton *_woodResourceButton;
-    LabelAtlas *_populationLabel;
+    Label *_populationLabel;
     ProgressTimer *_myHpProgress;
     Label *_myHpPercentageLabel;
     ProgressTimer *_opponentsHpProgress;

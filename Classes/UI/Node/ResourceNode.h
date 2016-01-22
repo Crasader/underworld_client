@@ -32,7 +32,7 @@ private:
     ResourceType _type;
     int _count;
     Sprite *_icon;
-    LabelAtlas *_countLabel;
+    Label *_countLabel;
 };
 
 #endif /* ResourceNode_h */

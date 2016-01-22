@@ -52,7 +52,7 @@ protected:
     bool init(const UnderWorld::Core::Camp* camp);
     std::string getIconFile(const UnderWorld::Core::Camp* camp, bool enable) const;
     bool isHero(const UnderWorld::Core::Camp* camp) const;
-    void createResourceButton(ResourceType type);
+    void createResourceButton(ResourceType type, Node* parent);
     void addTouchedAction(bool touched, bool animated);
     
 private:
@@ -61,6 +61,7 @@ private:
     Button *_iconButton;
     Point _iconBasePosition;
     Sprite *_mask;
+    Sprite *_resourcesMask;
     std::map<ResourceType, ResourceButton*> _resourceButtons;
     Label *_countLabel;
     const UnderWorld::Core::Camp* _camp;

@@ -71,7 +71,7 @@ bool ResourceNode::init(ResourceType type, int count)
                         break;
                     case 22:
                     {
-                        _countLabel = CocosUtils::create12x30Number(StringUtils::format("%d", count));
+                        _countLabel = CocosUtils::createLabel(StringUtils::format("%d", count), DEFAULT_FONT_SIZE);
                         _countLabel->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
                         _countLabel->setPosition(position);
                         parent->addChild(_countLabel);

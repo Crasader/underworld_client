@@ -19,8 +19,9 @@
 #define RESOLUTION_WIDTH    (1136)
 #define RESOLUTION_HEIGHT   (640)
 
-#define DEFAULT_FONT_SIZE   (20.0f)
-#define BIG_FONT_SIZE       (30.0f)
+#define SMALL_FONT_SIZE     (10.0f)
+#define DEFAULT_FONT_SIZE   (18.0f)
+#define BIG_FONT_SIZE       (24.0f)
 #define TITLE_FONT_SIZE     (40.0f)
 
 #define LAYER_DEFAULT_COLOR (Color4B(0, 0, 0, 0))

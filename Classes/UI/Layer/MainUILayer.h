@@ -57,7 +57,7 @@ private:
     std::map<ui::Button*, ButtonIconInfo> _buttonIconInfos;
     ui::Button* _iconButton;
     Label* _nameLabel;
-    LabelAtlas* _levelLabel;
+    Label* _levelLabel;
     ui::LoadingBar *_expProgressBar;
     ui::Button* _pvpButton;
     ui::Button* _bagButton;
