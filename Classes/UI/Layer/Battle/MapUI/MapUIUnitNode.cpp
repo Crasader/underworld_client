@@ -297,7 +297,8 @@ bool MapUIUnitNode::isHero(const Camp* camp) const
 
 void MapUIUnitNode::createResourceButton(::ResourceType type, Node* parent)
 {
-    ResourceButton* button = ResourceButton::create(false, false, true, type, 0, nullptr);
+    Color4B color = (type == kResourceType_Gold) ? Color4B(255, 222, 0, 255) : Color4B(0, 228, 255, 255);
+    ResourceButton* button = ResourceButton::create(false, false, true, type, 0, color, nullptr);
     button->setAnchorPoint(Point::ANCHOR_MIDDLE);
     parent->addChild(button);
     _resourceButtons.insert(make_pair(type, button));

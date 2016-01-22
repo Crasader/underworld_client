@@ -20,6 +20,7 @@ ResourceButton::ResourceButton()
 ,_enabled(true)
 ,_type(kResourceType_Gold)
 ,_count(INVALID_VALUE)
+,_color(Color4B::WHITE)
 ,_icon(nullptr)
 ,_iconNode(nullptr)
 ,_countLabel(nullptr)
@@ -33,10 +34,10 @@ ResourceButton::~ResourceButton()
     removeAllChildren();
 }
 
-ResourceButton* ResourceButton::create(bool isBigSize, bool animated, bool needResize, ResourceType type, int count, const Button::ccWidgetClickCallback& callback)
+ResourceButton* ResourceButton::create(bool isBigSize, bool animated, bool needResize, ResourceType type, int count, const Color4B& color, const Button::ccWidgetClickCallback& callback)
 {
     ResourceButton *p = new (std::nothrow)ResourceButton();
-    if(p && p->init(isBigSize, animated, needResize, type, count, callback))
+    if(p && p->init(isBigSize, animated, needResize, type, count, color, callback))
     {
         p->autorelease();
         return p;
@@ -46,13 +47,14 @@ ResourceButton* ResourceButton::create(bool isBigSize, bool animated, bool needR
     return nullptr;
 }
 
-bool ResourceButton::init(bool isBigSize, bool animated, bool needResize, ResourceType type, int count, const Button::ccWidgetClickCallback& callback)
+bool ResourceButton::init(bool isBigSize, bool animated, bool needResize, ResourceType type, int count, const Color4B& color, const Button::ccWidgetClickCallback& callback)
 {
     if(Node::init())
     {
         _isBigSize = isBigSize;
         _animated = animated;
         _needResize = needResize;
+        _color = color;
         
 #if false
         const string csbFile = isBigSize ? "LevelupButton_UI.csb" : "formationButton_UI.csb";
@@ -105,6 +107,7 @@ bool ResourceButton::init(bool isBigSize, bool animated, bool needResize, Resour
         const string& message = StringUtils::format("%d", count);
         const int fontSize = _isBigSize ? DEFAULT_FONT_SIZE : SMALL_FONT_SIZE;
         _countLabel = CocosUtils::createLabel(message, fontSize);
+        _countLabel->setTextColor(color);
         addChild(_countLabel);
         
         if (needResize) {
@@ -159,7 +162,7 @@ void ResourceButton::setEnabled(bool enable)
     if (_enabled != enable) {
         _enabled = enable;
         
-        const Color4B color = enable ? Color4B::WHITE : Color4B::RED;
+        const Color4B color = enable ? _color : Color4B::RED;
         _countLabel->setTextColor(color);
     }
 }

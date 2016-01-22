@@ -84,7 +84,7 @@ void BattleScene::start(int mapId)
     addChild(_mapLayer);
     
     // 2. add map ui layer
-    _render = new GameRender(this, mapId, _mapLayer, "吸血鬼军团");
+    _render = new GameRender(this, mapId, _mapLayer, "Vampire");
     _render->registerObserver(this);
     
     _sch = new GameScheduler();

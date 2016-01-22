@@ -508,12 +508,12 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
 //            label->setPosition(Point(size.width / 2, size.height * 0.375));
 //            sprite->addChild(label);
             
-            _woodResourceButton = ResourceButton::create(true, true, false, kResourceType_Wood, 0, nullptr);
+            _woodResourceButton = ResourceButton::create(true, true, false, kResourceType_Wood, 0, Color4B::WHITE, nullptr);
             _woodResourceButton->setAnchorPoint(Point::ANCHOR_MIDDLE);
             _woodResourceButton->setPosition(Point(size.width / 2, 60));
             sprite->addChild(_woodResourceButton);
             
-            _goldResourceButton = ResourceButton::create(true, true, false, kResourceType_Gold, 0, nullptr);
+            _goldResourceButton = ResourceButton::create(true, true, false, kResourceType_Gold, 0, Color4B::WHITE, nullptr);
             _goldResourceButton->setAnchorPoint(Point::ANCHOR_MIDDLE);
             _goldResourceButton->setPosition(Point(size.width / 2, 20));
             sprite->addChild(_goldResourceButton);

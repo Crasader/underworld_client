@@ -44,7 +44,7 @@ GameRender::GameRender(Scene* scene, int mapId, MapLayer* mapLayer, const string
 ,_hasUpdatedBattleCampInfos(false)
 {
     _mapLayer->registerObserver(this);
-    _mapUILayer = MapUILayer::create("我的名字", opponentsAccount);
+    _mapUILayer = MapUILayer::create("Warewolf", opponentsAccount);
     _mapUILayer->registerObserver(this);
     scene->addChild(_mapUILayer);
 }

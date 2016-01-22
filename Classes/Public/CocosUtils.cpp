@@ -25,7 +25,7 @@ using namespace std;
 Label *CocosUtils::createLabel(const string& text, float fontSize, const Size& dimensions, TextHAlignment hAlignment, TextVAlignment vAlignment)
 {
 #if true
-    static const string fontName("TimesNewRomanPS-BoldMT");
+    static const string fontName("TimesNewRomanPSMT");
     Label *ret = Label::createWithSystemFont(text, fontName, fontSize, dimensions, hAlignment, vAlignment);
 #else
     static const string fontName("fonts/Font.ttf");

@@ -255,7 +255,7 @@ void UnitNode::addRecoveryEffect()
 
 void UnitNode::addSwordEffect()
 {
-    const string& file = _configData->getSwordEffect();
+    const string& file = StringUtils::format(_configData->getSwordEffect().c_str(), _lastDirection);
     if (file.length() > 0) {
         addEffect(file);
     }
@@ -784,19 +784,12 @@ void UnitNode::addBuf(const string& name)
                 Node* buf = addEffect(file, true);
                 if (buf) {
                     const Point& basePos = _sprite->getPosition();
-                    const EffectConfigData* ecd = dm->getEffectConfigData(file);
-                    if (ecd) {
-                        // set zOrder
-                        buf->setLocalZOrder(-1);
-                        
-                        // set position
-                        const Point& pos = _configData->getFootEffectPosition();
-                        buf->setPosition(basePos + pos);
-                        // set scale
-                        buf->setScale(_configData->getFootEffectScaleX(), _configData->getFootEffectScaleY());
-                    } else {
+                    if (data->isReceiverEffectOnBody()) {
                         buf->setPosition(basePos/* + _configData->getBodyEffectPosition()*/);
-                        buf->setScale(_configData->getBodyEffectScaleX(), _configData->getBodyEffectScaleY());
+                        /*node_setScale(buf, _configData->getBodyEffectScaleX(), _configData->getBodyEffectScaleY())*/;
+                    } else {
+                        buf->setPosition(_configData->getFootEffectPosition());
+                        node_setScale(buf, _configData->getFootEffectScaleX(), _configData->getFootEffectScaleY());
                     }
                     _bufs.insert(make_pair(name, buf));
                 }
@@ -949,10 +942,14 @@ Node* UnitNode::addEffect(const string& file, bool loop)
             const string& suffix = file.substr(found + 1);
             if ("csb" == suffix) {
                 Node *effect = CSLoader::createNode(file);
-                if (_needToFlip != _isLastFlipped) {
+                // TODO: remove temp code
+                bool flip(file == "jineng-JiaSu.csb");
+                
+                if (flip ^ (_needToFlip != _isLastFlipped)) {
                     node_flipX(effect);
                 }
-                addChild(effect, topZOrder);
+                
+                addChild(effect, 0);
                 cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
                 effect->runAction(action);
                 action->gotoFrameAndPlay(0, loop);
@@ -968,7 +965,7 @@ Node* UnitNode::addEffect(const string& file, bool loop)
                 if (!loop) {
                     effect->setAutoRemoveOnFinish(true);
                 }
-                addChild(effect, topZOrder);
+                addChild(effect, 0);
                 return effect;
             }
         }
