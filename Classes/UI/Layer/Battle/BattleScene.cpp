@@ -78,7 +78,61 @@ void BattleScene::start(int mapId)
     }
     
     // 1. add map layer
-    string mapSettingXml = "<root> <location_setting index=\"0\" core_location=\"200,550\" building_location=\"1000,800;1700,800\" assemble_location=\"0:500,600;1:600,600\"/> <resource_settings index=\"0\"> <resource_setting resource_name=\"金子\" init_balance=\"20000\" init_salary=\"5\" salary_accelerate=\"0\"/> <resource_setting resource_name=\"木头\" init_balance=\"20000\" init_salary=\"0\" salary_accelerate=\"0\"/> <resource_setting resource_name=\"人口\" init_balance=\"100\" init_salary=\"0\" salary_accelerate=\"0\"/> </resource_settings> <fixed_unit_setting index=\"0\"> </fixed_unit_setting> <location_setting index=\"1\" core_location=\"4400,550\" building_location=\"3600,800;2900,800\" assemble_location=\"0:4100,600;2:4000,600\"/> <resource_settings index=\"1\"> <resource_setting resource_name=\"金子\" init_balance=\"200\" init_salary=\"7\" salary_accelerate=\"0\"/> <resource_setting resource_name=\"人口\" init_balance=\"200\" init_salary=\"0\" salary_accelerate=\"0\"/> </resource_settings> <fixed_unit_setting index=\"1\">  </fixed_unit_setting> </root>";
+    string mapSettingXml = "<root>\
+    <location_setting index=\"0\" core_location=\"200,550\" building_location=\"1000,800;1700,800\" assemble_location=\"0:500,600;1:600,600\"/>\
+    <resource_settings index=\"0\">\
+    <resource_setting resource_name=\"金子\" init_balance=\"3000\" init_salary=\"5\" salary_accelerate=\"0\"/>\
+    <resource_setting resource_name=\"人口\" init_balance=\"100\" init_salary=\"0\" salary_accelerate=\"0\"/>\
+    </resource_settings>\
+    <fixed_unit_settings index=\"0\">\
+    <fixed_unit_setting position=\"950,550\" count=\"0\" wave=\"1\">\
+    <unit_setting name=\"时光女神\"/>\
+    </fixed_unit_setting>\
+    <fixed_unit_setting position=\"950,550\" count=\"0\" wave=\"1\">\
+    <unit_setting name=\"狼人森林之魂\"/>\
+    </fixed_unit_setting>\
+    <fixed_unit_setting position=\"950,550\" count=\"0\" wave=\"1\">\
+    <unit_setting name=\"天空女神\"/>\
+    </fixed_unit_setting>\
+    <fixed_unit_setting position=\"950,550\" count=\"0\" wave=\"1\">\
+    <unit_setting name=\"时光法师\"/>\
+    </fixed_unit_setting>\
+    <fixed_unit_setting position=\"950,550\" count=\"0\" wave=\"1\">\
+    <unit_setting name=\"狼人射手\"/>\
+    </fixed_unit_setting>\
+    <fixed_unit_setting position=\"950,550\" count=\"0\" wave=\"1\">\
+    <unit_setting name=\"狼人巫师\"/>\
+    </fixed_unit_setting>\
+    <fixed_unit_setting position=\"950,550\" count=\"0\" wave=\"1\">\
+    <unit_setting name=\"狼人步兵\"/>\
+    </fixed_unit_setting>\
+    </fixed_unit_settings>\
+    <location_setting index=\"1\" core_location=\"4400,550\" building_location=\"3600,800;2900,800\" assemble_location=\"0:4100,600;2:4000,600\"/>\
+    <resource_settings index=\"1\">\
+    <resource_setting resource_name=\"金子\" init_balance=\"200\" init_salary=\"7\" salary_accelerate=\"0\"/>\
+    <resource_setting resource_name=\"人口\" init_balance=\"200\" init_salary=\"0\" salary_accelerate=\"0\"/>\
+    </resource_settings>\
+    <fixed_unit_settings index=\"1\">\
+    <fixed_unit_setting position=\"4000,550\" count=\"1\" wave=\"1\">\
+    <unit_setting name=\"吸血鬼战士\"/>\
+    </fixed_unit_setting>\
+    <fixed_unit_setting position=\"4000,550\" count=\"1\" wave=\"1\">\
+    <unit_setting name=\"吸血鬼弓箭手\"/>\
+    </fixed_unit_setting>\
+    <fixed_unit_setting position=\"4000,550\" count=\"1\" wave=\"1\">\
+    <unit_setting name=\"巨型蜘蛛\"/>\
+    </fixed_unit_setting>\
+    <fixed_unit_setting position=\"4000,550\" count=\"1\" wave=\"1\">\
+    <unit_setting name=\"蛇女莉莉丝\"/>\
+    </fixed_unit_setting>\
+    <fixed_unit_setting position=\"4000,550\" count=\"1\" wave=\"1\">\
+    <unit_setting name=\"七恶魔拉玛什图\"/>\
+    </fixed_unit_setting>\
+    <fixed_unit_setting position=\"4000,550\" count=\"1\" wave=\"1\">\
+    <unit_setting name=\"吸血鬼巫师\"/>\
+    </fixed_unit_setting>\
+    </fixed_unit_settings>\
+    </root>";
     
     _mapLayer = MapLayer::create(mapId, mapSettingXml);
     addChild(_mapLayer);
@@ -149,7 +203,7 @@ void BattleScene::start(int mapId)
     <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"130\"/>\
     </unit>\
     <!-- 重装炮兵 -->\
-    <unit name=\"狼人射手\" class=\"warrior\" hp=\"30\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"轻甲\" armor=\"300\" armor_preference=\"无甲\" armor_preference_factor=\"1.5f\" attacksight=\"600\" size=\"25\" height=\"0\" cost=\"金子:320;人口:2\" priority=\"0\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" spell_names=\"轰击_等级1\" render_key=\"狼人射手\" produce=\"木头:320\" reward=\"金子:3\">\
+    <unit name=\"狼人射手\" class=\"warrior\" hp=\"30\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"轻甲\" armor=\"300\" armor_preference=\"无甲\" armor_preference_factor=\"1.5f\" attacksight=\"600\" size=\"25\" height=\"0\" cost=\"金子:320;人口:2\" priority=\"0\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" passive_names=\"轰击_等级1\" render_key=\"狼人射手\" produce=\"木头:320\" reward=\"金子:3\">\
     <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
     <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
     <skill class=\"attack\" preperform=\"0.5\" perform=\"0.0\" cd=\"1.5\" min_damage=\"60\" max_damage=\"100\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"550\" fields=\"1\">\
@@ -158,7 +212,7 @@ void BattleScene::start(int mapId)
     <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"130\"/>\
     </unit>\
     <!-- 迫击炮小队 -->\
-    <unit name=\"狼人巫师\" class=\"warrior\" hp=\"280\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"轻甲\" armor=\"0\" armor_preference=\"城甲\" armor_preference_factor=\"1.5f\" attacksight=\"1100\" size=\"40\" height=\"0\" cost=\"金子:210;人口:2\" priority=\"1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" passive_names=\"轰炸_等级1\" render_key=\"狼人机械狼\" produce=\"木头:210\" reward=\"金子:2\">\
+    <unit name=\"狼人巫师\" class=\"warrior\" hp=\"280\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"轻甲\" armor=\"0\" armor_preference=\"城甲\" armor_preference_factor=\"1.5f\" attacksight=\"1100\" size=\"40\" height=\"0\" cost=\"金子:210;人口:2\" priority=\"1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" passive_names=\"轰炸_等级1\" render_key=\"狼人巫师\" produce=\"木头:210\" reward=\"金子:2\">\
     <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
     <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
     <skill class=\"attack\" preperform=\"0.5\" perform=\"0.0\" cd=\"3.5\" min_damage=\"68\" max_damage=\"80\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"1000\" fields=\"1\">\
@@ -167,7 +221,7 @@ void BattleScene::start(int mapId)
     <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"130\"/>\
     </unit>\
     <!-- 术士 -->\
-    <unit name=\"时光法师\" class=\"warrior\" hp=\"320\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"无甲\" armor=\"100\" attacksight=\"600\" size=\"60\" height=\"0\" cost=\"金子:300;人口:3\" priority=\"1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" passive_names=\"暗影烈焰_等级1\" render_key=\"时光法师\" produce=\"木头:3\" reward=\"金子:3\">\
+    <unit name=\"时光法师\" class=\"warrior\" hp=\"320\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"无甲\" armor=\"100\" attacksight=\"600\" size=\"60\" height=\"0\" cost=\"金子:300;人口:3\" priority=\"1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" render_key=\"时光法师\" produce=\"木头:3\" reward=\"金子:3\">\
     <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
     <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
     <skill class=\"attack\" preperform=\"0.5\" perform=\"0.0\" cd=\"2\" min_damage=\"30\" max_damage=\"33\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"160\" fields=\"1\">\
