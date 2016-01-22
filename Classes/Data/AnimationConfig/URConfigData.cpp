@@ -62,7 +62,7 @@ URConfigData::URConfigData(tinyxml2::XMLElement *xmlElement)
                     _smallIcon = prefix + data + "_1" + suffix;
                 }
                 {
-                    static const string prefix("GameImages/icons/unit/small/disabled/");
+                    static const string prefix("GameImages/icons/unit/big/disabled/");
                     _disabledIcon = prefix + data + "_2" + suffix;
                 }
             }

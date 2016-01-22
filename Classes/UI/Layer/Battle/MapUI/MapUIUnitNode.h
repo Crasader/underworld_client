@@ -62,6 +62,7 @@ private:
     Point _iconBasePosition;
     Sprite *_mask;
     Sprite *_resourcesMask;
+    ProgressTimer* _spellColdDown;
     std::map<ResourceType, ResourceButton*> _resourceButtons;
     Label *_countLabel;
     const UnderWorld::Core::Camp* _camp;

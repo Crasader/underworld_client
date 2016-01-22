@@ -78,7 +78,7 @@ void BattleScene::start(int mapId)
     }
     
     // 1. add map layer
-    string mapSettingXml = "<root> <location_setting index=\"0\" core_location=\"200,550\" building_location=\"1000,800;1700,800\" assemble_location=\"0:500,600;1:600,600\"/> <resource_settings index=\"0\"> <resource_setting resource_name=\"金子\" init_balance=\"100\" init_salary=\"5\" salary_accelerate=\"0\"/> <resource_setting resource_name=\"人口\" init_balance=\"100\" init_salary=\"0\" salary_accelerate=\"0\"/> </resource_settings> <fixed_unit_setting index=\"0\"> </fixed_unit_setting> <location_setting index=\"1\" core_location=\"4400,550\" building_location=\"3600,800;2900,800\" assemble_location=\"0:4100,600;2:4000,600\"/> <resource_settings index=\"1\"> <resource_setting resource_name=\"金子\" init_balance=\"200\" init_salary=\"7\" salary_accelerate=\"0\"/> <resource_setting resource_name=\"人口\" init_balance=\"200\" init_salary=\"0\" salary_accelerate=\"0\"/> </resource_settings> <fixed_unit_setting index=\"1\">  </fixed_unit_setting> </root>";
+    string mapSettingXml = "<root> <location_setting index=\"0\" core_location=\"200,550\" building_location=\"1000,800;1700,800\" assemble_location=\"0:500,600;1:600,600\"/> <resource_settings index=\"0\"> <resource_setting resource_name=\"金子\" init_balance=\"20000\" init_salary=\"5\" salary_accelerate=\"0\"/> <resource_setting resource_name=\"木头\" init_balance=\"20000\" init_salary=\"0\" salary_accelerate=\"0\"/> <resource_setting resource_name=\"人口\" init_balance=\"100\" init_salary=\"0\" salary_accelerate=\"0\"/> </resource_settings> <fixed_unit_setting index=\"0\"> </fixed_unit_setting> <location_setting index=\"1\" core_location=\"4400,550\" building_location=\"3600,800;2900,800\" assemble_location=\"0:4100,600;2:4000,600\"/> <resource_settings index=\"1\"> <resource_setting resource_name=\"金子\" init_balance=\"200\" init_salary=\"7\" salary_accelerate=\"0\"/> <resource_setting resource_name=\"人口\" init_balance=\"200\" init_salary=\"0\" salary_accelerate=\"0\"/> </resource_settings> <fixed_unit_setting index=\"1\">  </fixed_unit_setting> </root>";
     
     _mapLayer = MapLayer::create(mapId, mapSettingXml);
     addChild(_mapLayer);
@@ -489,7 +489,7 @@ void BattleScene::start(int mapId)
             us.setTalentLevel(0);
             cs[i].setUnitSetting(us);
 
-            cs[i].setMaxProduction(20);
+            cs[i].setMaxProduction(1);
         }
         setting.setCamps(0, cs);
     }

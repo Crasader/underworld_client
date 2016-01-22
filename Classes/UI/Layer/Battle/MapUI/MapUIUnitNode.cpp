@@ -13,6 +13,7 @@
 #include "DataManager.h"
 #include "URConfigData.h"
 #include "SoundManager.h"
+#include "Spell.h"
 
 using namespace std;
 using namespace UnderWorld::Core;
@@ -123,6 +124,11 @@ bool MapUIUnitNode::init(const Camp* camp)
         _resourcesMask = Sprite::create("GameImages/test/ui_black_15.png");
         addChild(_resourcesMask);
         
+        _spellColdDown = ProgressTimer::create(Sprite::create("GameImages/test/ui_iconzhezhao.png"));
+        _spellColdDown->setType(ProgressTimer::Type::RADIAL);
+        _spellColdDown->setMidpoint(Vec2(0.5f, 0.5f));
+        addChild(_spellColdDown, topZOrder);
+        
         _countLabel = CocosUtils::createLabel("0", DEFAULT_FONT_SIZE);
         addChild(_countLabel);
         
@@ -155,6 +161,10 @@ bool MapUIUnitNode::init(const Camp* camp)
             createResourceButton(kResourceType_Gold, _resourcesMask);
             createResourceButton(kResourceType_Wood, _resourcesMask);
         }
+        
+        {
+            _spellColdDown->setPosition(x, shadowSize.height / 2);
+        }
 #endif
         
         return true;
@@ -183,20 +193,22 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
         const int production = _camp->getProduction();
         const int maxProduction = _camp->getMaxProduction();
         const bool enable = production < maxProduction;
-        const string& iconFile = getIconFile(_camp, enable);
+        const bool hero = isHero(_camp);
+        const Unit* heroUnit = _camp->getTrackUnit(0);
+        bool colorful = !(hero && heroUnit && !heroUnit->isAlive());
+        const string& iconFile = getIconFile(_camp, colorful);
         if (iconFile.length() > 0) {
             _iconButton->loadTextures(iconFile, iconFile);
         }
         
-        const bool show = !isHero(_camp);
-        _countLabel->setVisible(show);
-        if (show) {
+        _countLabel->setVisible(!hero);
+        if (!hero) {
             _countLabel->setString(StringUtils::format("%d/%d", production, maxProduction));
         }
         
         const map<string, int>& costs = _camp->getCosts();
         ResourceButton* woodButton = _resourceButtons.at(kResourceType_Wood);
-        woodButton->setVisible(costs.find(RES_NAME_WOOD) != costs.end());
+        woodButton->setVisible(costs.find(RES_NAME_WOOD) != costs.end() && enable);
         if (woodButton->isVisible()) {
             int count = costs.at(RES_NAME_WOOD);
             woodButton->setCount(count);
@@ -204,7 +216,7 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
         }
         
         ResourceButton* goldButton = _resourceButtons.at(kResourceType_Gold);
-        goldButton->setVisible(costs.find(RES_NAME_GOLD) != costs.end());
+        goldButton->setVisible(costs.find(RES_NAME_GOLD) != costs.end() && enable);
         if (goldButton->isVisible()) {
             int count = costs.at(RES_NAME_GOLD);
             goldButton->setCount(count);
@@ -212,6 +224,7 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
         }
         
         const float resourceMaskWidth = _resourcesMask->getContentSize().width;
+        _resourcesMask->setVisible(woodButton->isVisible() || goldButton->isVisible());
         if (woodButton->isVisible() && goldButton->isVisible()) {
             ResourceButton* woodButton = _resourceButtons.at(kResourceType_Wood);
             ResourceButton* goldButton = _resourceButtons.at(kResourceType_Gold);
@@ -228,6 +241,18 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
             ResourceButton* button = woodButton->isVisible() ? woodButton : goldButton;
             button->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
             button->setPosition(resourceMaskWidth / 2, 0);
+        }
+        
+        if (!heroUnit || heroUnit->getSpellByIndex(0)->getCDProgress() == 0) {
+            _spellColdDown->setVisible(false);
+        } else {
+            _spellColdDown->setVisible(true);
+            if (colorful) {
+                _spellColdDown->setSprite(Sprite::create("GameImages/test/ui_iconzhezhao.png"));
+            } else {
+                _spellColdDown->setSprite(Sprite::create("GameImages/test/ui_iconzhezhao_white.png"));
+            }
+            _spellColdDown->setPercentage(((float)heroUnit->getSpellByIndex(0)->getCDProgress()) * 100.f / heroUnit->getSpellByIndex(0)->getTotalCDFrames());
         }
     }
 }
