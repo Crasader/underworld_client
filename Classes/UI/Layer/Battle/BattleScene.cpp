@@ -184,10 +184,10 @@ void BattleScene::start(int mapId)
     <bullet speed=\"600\" size=\"0\"/>\
     </skill>\
     </unit>\
-    <unit name=\"吸血鬼箭塔\" class=\"building\" hp=\"200\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"城甲\" armor=\"0\" attacksight=\"600\" size=\"100\" height=\"70\" render_key=\"吸血鬼箭塔\" reward=\"金子:100;木头:20\">\
+    <unit name=\"吸血鬼箭塔\" class=\"building\" hp=\"200\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"城甲\" armor=\"0\" attacksight=\"600\" size=\"100\" height=\"62\" render_key=\"吸血鬼箭塔\" reward=\"金子:100;木头:20\">\
     <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
     <skill class=\"die\" preperform=\"0.0\" perform=\"10.0\" cd=\"0.0\"/>\
-    <skill class=\"attack\" preperform=\"0.3\" perform=\"0.0\" cd=\"1.0\" min_damage=\"8\" max_damage=\"12\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"300\" fields=\"3\">\
+    <skill class=\"attack\" preperform=\"0.1\" perform=\"0.0\" cd=\"1.0\" min_damage=\"8\" max_damage=\"12\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"300\" fields=\"3\">\
     <bullet speed=\"800\" size=\"0\"/>\
     </skill>\
     </unit>\
@@ -279,11 +279,11 @@ void BattleScene::start(int mapId)
     <!-- 治疗 -->\
     <spell alias=\"治疗\" spell_name=\"治疗_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"ally\" cast_distance=\"0\" cast_type=\"unit\" immediate_elements=\"0,治疗_等级1_治疗效果,1\" preperform=\"0.5\" perform=\"0.0\" cd=\"5.0\" class=\"cast\" desc=\"治疗一个受伤的友军，每秒恢复10点生命值。\"/>\
     <!-- 狂暴 -->\
-    <spell alias=\"狂暴\" spell_name=\"狂暴_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"ally\" cast_distance=\"0\" cast_type=\"self\" immediate_elements=\"0,狂暴_等级1_狂暴效果,1\" preperform=\"0.5\" perform=\"0.0\" cd=\"10.0\" class=\"cast\" desc=\"攻击敌人时会狂暴，损失10%最大生命值，攻击速度提升30%，持续10秒。\"/>\
+    <spell alias=\"狂暴\" spell_name=\"狂暴_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"ally\" cast_distance=\"0\" cast_type=\"self\" immediate_elements=\"0,狂暴_等级1_狂暴效果,1\" preperform=\"0.0\" perform=\"0.0\" cd=\"10.0\" class=\"cast\" desc=\"攻击敌人时会狂暴，损失10%最大生命值，攻击速度提升30%，持续10秒。\"/>\
     <!-- 全体恢复 -->\
     <spell alias=\"全体恢复\" spell_name=\"全体恢复_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"ally\" cast_distance=\"0\" cast_type=\"self\" immediate_elements=\"0,全体恢复_等级1_恢复效果,1\" preperform=\"0.5\" perform=\"0.0\" cd=\"120.0\" class=\"cast\" desc=\"施放一片大范围的治疗，恢复所有区域内的友军50点生命。\"/>\
     <!-- 冲锋 -->\
-    <spell alias=\"冲锋\" spell_name=\"冲锋_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"ally\" cast_distance=\"0\" cast_type=\"self\" immediate_elements=\"0,冲锋_等级1_加移动速度,1\" preperform=\"0.5\" perform=\"0.0\" cd=\"20.0\" class=\"cast\" desc=\"当视野内有出现敌人时，会提升120%移动速度，持续1秒。\"/>\
+    <spell alias=\"冲锋\" spell_name=\"冲锋_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"ally\" cast_distance=\"0\" cast_type=\"self\" immediate_elements=\"0,冲锋_等级1_加移动速度,1\" preperform=\"0.0\" perform=\"0.0\" cd=\"20.0\" class=\"cast\" desc=\"当视野内有出现敌人时，会提升120%移动速度，持续1秒。\"/>\
     <!-- 强风护盾 -->\
     <spell alias=\"强风护盾\" spell_name=\"强风护盾_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"ally\" cast_distance=\"0\" cast_type=\"self\" immediate_elements=\"0,强风护盾_等级1_强风护盾效果,1\" preperform=\"0.5\" perform=\"0.0\" cd=\"120.0\" class=\"cast\" desc=\"周围的友军会获得一个护盾，护盾持续期间收到的所有伤害减少10点。持续15秒\"/>\
     <!-- 火球术 -->\
@@ -350,10 +350,10 @@ void BattleScene::start(int mapId)
     </effect>\
     </buff_effect>\
     </buff>\
-    <buff name=\"减速弹_等级1_减速减益效果\" deliver_nature=\"enemy\" deliver_class=\"physical\" span_type=\"limited\" span=\"5.f\" max_overlay=\"1\">\
+    <buff name=\"减速弹_等级1_减速减益效果\" deliver_nature=\"enemy\" deliver_class=\"physical\" span_type=\"limited\" span=\"5.f\" max_overlay=\"1\" render_key=\"减速\">\
     <buff_effect>\
     <buff_effect_description buff_effect_condition=\"immediate\"/>\
-    <effect class=\"alter_attr\" alias_name=\"减移动速度\" attr_name=\"move_speed\" value=\"p:-0.4f\"  render_key=\"减速弹\"/>\
+    <effect class=\"alter_attr\" alias_name=\"减移动速度\" attr_name=\"move_speed\" value=\"p:-0.4f\"/>\
     </buff_effect>\
     </buff>\
     <!-- 冲击波 -->\
@@ -375,17 +375,17 @@ void BattleScene::start(int mapId)
     </buff_effect>\
     </buff>\
     <!-- 狂暴 -->\
-    <buff name=\"狂暴_等级1_攻速增益效果\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"15.f\" max_overlay=\"1\" >\
+    <buff name=\"狂暴_等级1_攻速增益效果\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"15.f\" max_overlay=\"1\" render_key=\"狂暴\">\
     <buff_effect>\
     <buff_effect_description buff_effect_condition=\"immediate\"/>\
-    <effect class=\"alter_attr\" alias_name=\"加攻击力\" attr_name=\"attack_damage\" value=\"p:0.5f\" render_key=\"狂暴\"/>\
+    <effect class=\"alter_attr\" alias_name=\"加攻击速度\" attr_name=\"attack_speed\" value=\"p:1.f\"/>\
     </buff_effect>\
     </buff>\
     <!-- 全体恢复 -->\
-    <buff name=\"全体恢复_等级1_恢复效果\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"15.f\" max_overlay=\"1\" >\
+    <buff name=\"全体恢复_等级1_恢复效果\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"15.f\" max_overlay=\"1\" render_key=\"全体恢复\">\
     <buff_effect>\
     <buff_effect_description buff_effect_condition=\"loop\" buff_effect_time=\"3.f\"/>\
-    <effect class=\"damage\" alias_name=\"恢复效果\" render_key=\"全体恢复\">\
+    <effect class=\"damage\" alias_name=\"恢复效果\">\
     <damage damage_value=\"200\" damage_nature=\"heal\" />\
     </effect>\
     </buff_effect>\
@@ -398,11 +398,11 @@ void BattleScene::start(int mapId)
     </buff_effect>\
     </buff>\
     <!-- 血雾 -->\
-    <buff name=\"血雾_等级1_持有者增益效果\" deliver_nature=\"ally\" deliver_class=\"physical\" span_type=\"eternal\">\
+    <buff name=\"血雾_等级1_持有者增益效果\" deliver_nature=\"ally\" deliver_class=\"physical\" span_type=\"eternal\" render_key=\"血雾\">\
     <buff_effect>\
     <buff_effect_description buff_effect_condition=\"immediate\"/>\
     <effect class=\"add_feature\" alias_name=\"未分类\">\
-    <feature type=\"splash\" value=\"p:0.3f\" range=\"100\" render_key=\"血雾\"/>\
+    <feature type=\"splash\" value=\"p:0.3f\" range=\"100\"/>\
     </effect>\
     </buff_effect>\
     </buff>\
@@ -416,20 +416,20 @@ void BattleScene::start(int mapId)
     </buff_effect>\
     </buff>\
     <!-- 强风护盾 -->\
-    <buff name=\"强风护盾_等级1_伤害减少\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"15.f\" max_overlay=\"1\">\
+    <buff name=\"强风护盾_等级1_伤害减少\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"15.f\" max_overlay=\"1\"  render_key=\"强风护盾\">\
     <buff_effect>\
     <buff_effect_description buff_effect_condition=\"immediate\"/>\
     <effect class=\"add_feature\" alias_name=\"未分类\">\
-    <feature type=\"income_damage_reduce\" value=\"20.f\" render_key=\"强风护盾\"/>\
+    <feature type=\"income_damage_reduce\" value=\"20.f\"/>\
     </effect>\
     </buff_effect>\
     </buff>\
     <!-- 刚毅 -->\
-    <buff name=\"刚毅_等级1_刚毅效果\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"eternal\" max_overlay=\"1\">\
+    <buff name=\"刚毅_等级1_刚毅效果\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"eternal\" max_overlay=\"1\" render_key=\"刚毅\">\
     <buff_effect>\
     <buff_effect_description buff_effect_condition=\"immediate\"/>\
     <effect class=\"add_feature\" alias_name=\"未分类\" >\
-    <feature type=\"tough\" value=\"d:target:owner;type:max_hp;v:0.1f;0\" render_key=\"刚毅\"/>\
+    <feature type=\"tough\" value=\"d:target:owner;type:max_hp;v:0.1f;0\"/>\
     </effect>\
     </buff_effect>\
     </buff>\
