@@ -627,22 +627,39 @@ void BattleScene::start(int mapId)
     // 5.1 werewolf
     {
         vector<UnderWorld::Core::CampSetting> cs;
-        static const unsigned int camp_count = 8;
-        static const string camp_names[camp_count] = {
+        static const string hero_camp_names[] = {
             "时光女神",
             "狼人森林之魂",
             "天空女神",
+        };
+        const unsigned int heroes_count = sizeof(hero_camp_names) / sizeof(string);
+        
+        static const string soldier_camp_names[] = {
             "时光法师",
             "狼人射手",
             "狼人巫师",
             "狼人步兵",
             "狼人机械狼"
         };
-        cs.resize(camp_count);
+        const unsigned int soldiers_count = sizeof(soldier_camp_names) / sizeof(string);
         
-        for (int i = 0; i < camp_count; ++i) {
+        cs.resize(heroes_count + soldiers_count);
+        
+        int i = 0;
+        for (; i < heroes_count; ++i) {
             UnderWorld::Core::UnitSetting us;
-            us.setUnitTypeName(camp_names[i]);
+            us.setUnitTypeName(hero_camp_names[i]);
+            us.setLevel(0);
+            us.setQuality(0);
+            us.setTalentLevel(0);
+            cs[i].setUnitSetting(us);
+            
+            cs[i].setMaxProduction(1);
+        }
+        
+        for (; i < heroes_count + soldiers_count; ++i) {
+            UnderWorld::Core::UnitSetting us;
+            us.setUnitTypeName(soldier_camp_names[i - heroes_count]);
             us.setLevel(0);
             us.setQuality(0);
             us.setTalentLevel(0);
@@ -650,13 +667,13 @@ void BattleScene::start(int mapId)
             
             cs[i].setMaxProduction(2);
         }
+        
         setting.setCamps(0, cs);
     }
     // 5.2 vampire
     {
         vector<UnderWorld::Core::CampSetting> cs;
-        static const unsigned int camp_count = 6;
-        static const string camp_names[camp_count] = {
+        static const string camp_names[] = {
             "吸血鬼战士",
             "吸血鬼弓箭手",
             "巨型蜘蛛",
@@ -664,6 +681,7 @@ void BattleScene::start(int mapId)
             "七恶魔拉玛什图",
             "吸血鬼巫师"
         };
+        const unsigned int camp_count = sizeof(camp_names) / sizeof(string);
         cs.resize(camp_count);
         
         for (int i = 0; i < camp_count; ++i) {

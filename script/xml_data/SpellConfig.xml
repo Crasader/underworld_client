@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <root>
-	<item spell_name="激励" caster_resource_name="Goddess-of-time-Yayse-Tati-jineng-3" caster_is_body="1" resource_name="kuangbao" receiver_is_body="1"/>
-	<item spell_name="全体恢复" caster_resource_name="The-sky-goddess-Inanna-jineng-3" caster_is_body="1" resource_name="huifu-2" receiver_is_body="1"/>
+	<item spell_name="激励" caster_resource_name="The-sky-goddess-Inanna-jineng-3" caster_is_body="1" resource_name="kuangbao" receiver_is_body="1"/>
+	<item spell_name="全体恢复" caster_resource_name="Goddess-of-time-Yayse-Tati-jineng-3" caster_is_body="1" resource_name="huifu-2" receiver_is_body="1"/>
 	<item spell_name="减速" resource_name="jineng-jiansu" receiver_is_body="0"/>
 	<item spell_name="冲击波" resource_name="baolie" receiver_is_body="1"/>
 	<item spell_name="狂暴" resource_name="jiasu" receiver_is_body="1"/>
