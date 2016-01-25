@@ -81,30 +81,12 @@ void BattleScene::start(int mapId)
     string mapSettingXml = "<root>\
     <location_setting index=\"0\" core_location=\"200,550\" building_location=\"1000,800;1700,800\" assemble_location=\"0:500,600;1:600,600\"/>\
     <resource_settings index=\"0\">\
-<<<<<<< HEAD
     <resource_setting resource_name=\"金子\" init_balance=\"3000\" init_salary=\"5\" salary_accelerate=\"0\"/>\
-<<<<<<< HEAD
-=======
-=======
->>>>>>> g
     <resource_setting resource_name=\"木头\" init_balance=\"3000\" init_salary=\"5\" salary_accelerate=\"0\"/>\
->>>>>>> config
     <resource_setting resource_name=\"人口\" init_balance=\"100\" init_salary=\"0\" salary_accelerate=\"0\"/>\
     </resource_settings>\
     <fixed_unit_settings index=\"0\">\
     <fixed_unit_setting position=\"950,550\" count=\"0\" wave=\"1\">\
-<<<<<<< HEAD
-    <unit_setting name=\"时光女神\"/>\
-    </fixed_unit_setting>\
-    <fixed_unit_setting position=\"950,550\" count=\"0\" wave=\"1\">\
-    <unit_setting name=\"狼人森林之魂\"/>\
-    </fixed_unit_setting>\
-    <fixed_unit_setting position=\"950,550\" count=\"0\" wave=\"1\">\
-    <unit_setting name=\"天空女神\"/>\
-    </fixed_unit_setting>\
-    <fixed_unit_setting position=\"950,550\" count=\"0\" wave=\"1\">\
-=======
->>>>>>> config
     <unit_setting name=\"时光法师\"/>\
     </fixed_unit_setting>\
     <fixed_unit_setting position=\"950,550\" count=\"0\" wave=\"1\">\
