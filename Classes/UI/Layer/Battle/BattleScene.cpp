@@ -8,10 +8,7 @@
 
 #include "BattleScene.h"
 #include "GameSettings.h"
-#include "MapLayer.h"
 #include "SoundManager.h"
-
-USING_NS_CC;
 
 BattleScene* BattleScene::create(int mapId)
 {
@@ -28,7 +25,6 @@ BattleScene* BattleScene::create(int mapId)
 
 BattleScene::BattleScene()
 :_mapId(0)
-,_mapLayer(nullptr)
 ,_render(nullptr)
 ,_looper(nullptr)
 ,_sch(nullptr)
@@ -73,7 +69,7 @@ void BattleScene::onGameRenderRestart()
 
 void BattleScene::start(int mapId)
 {
-    if (_mapLayer) {
+    if (_render) {
         clear();
     }
     
@@ -135,19 +131,16 @@ void BattleScene::start(int mapId)
     </fixed_unit_settings>\
     </root>";
     
-    _mapLayer = MapLayer::create(mapId, mapSettingXml);
-    addChild(_mapLayer);
-    
     // 2. add map ui layer
-    _render = new GameRender(this, mapId, _mapLayer, "Vampire");
+    _render = new (nothrow) GameRender(this, mapId, mapSettingXml, "Vampire");
     _render->registerObserver(this);
     
-    _sch = new GameScheduler();
+    _sch = new (nothrow) GameScheduler();
     
     UnderWorld::Core::GameSettings setting;
     
     //1. set map setting
-    setting.setMap(_mapLayer->getMapSetting());
+    setting.setMap(_render->getMapSetting());
     
     //2. set techTree;
     
@@ -683,7 +676,7 @@ void BattleScene::start(int mapId)
         setting.setCamps(1, cs);
     }
     
-    _looper = new UnderWorld::Core::GameLooper(_render, _sch);
+    _looper = new (nothrow) UnderWorld::Core::GameLooper(_render, _sch);
     _looper->init(setting);
     _looper->start();
 }
@@ -697,5 +690,4 @@ void BattleScene::clear()
     CC_SAFE_DELETE(_sch);
     CC_SAFE_DELETE(_render);
     removeAllChildren();
-    _mapLayer = nullptr;
 }

@@ -30,11 +30,11 @@ static const int startWaveTime(10);
 static const int waveTime(20);
 static const int battleTotalTime(600);
 
-GameRender::GameRender(Scene* scene, int mapId, MapLayer* mapLayer, const string& opponentsAccount)
+GameRender::GameRender(Scene* scene, int mapId, const string& mapData, const string& opponentsAccount)
 :_observer(nullptr)
 ,_scene(scene)
 ,_mapId(mapId)
-,_mapLayer(mapLayer)
+,_mapLayer(nullptr)
 ,_mapUILayer(nullptr)
 ,_game(nullptr)
 ,_commander(nullptr)
@@ -46,7 +46,10 @@ GameRender::GameRender(Scene* scene, int mapId, MapLayer* mapLayer, const string
 ,_woodCount(0)
 ,_hasUpdatedBattleCampInfos(false)
 {
+    _mapLayer = MapLayer::create(mapId, mapData);
     _mapLayer->registerObserver(this);
+    scene->addChild(_mapLayer);
+    
     _mapUILayer = MapUILayer::create("Warewolf", opponentsAccount);
     _mapUILayer->registerObserver(this);
     scene->addChild(_mapUILayer);
@@ -68,6 +71,11 @@ GameRender::~GameRender()
 void GameRender::registerObserver(GameRenderObserver *observer)
 {
     _observer = observer;
+}
+
+const MapSetting& GameRender::getMapSetting() const
+{
+    return _mapLayer->getMapSetting();
 }
 
 void GameRender::init(const Game* game, Commander* commander)
@@ -509,6 +517,11 @@ void GameRender::onMapLayerTouchEnded()
 }
 
 #pragma mark - MapUILayerObserver
+bool GameRender::onMapUILayerIsGameOver()
+{
+    return _isGameOver;
+}
+
 void GameRender::onMapUILayerUnitSelected(MapUIUnitNode* node)
 {
     if (_commander) {

@@ -265,7 +265,7 @@ TableViewCell* MapUILayer::tableCellAtIndex(TableView *table, ssize_t idx)
             if (unitNode) {
                 unitNode->reuse(camp, idx, goldCount, woodCount);
                 unitNode->setSelected(table == _selectedCampIdx.first && idx == _selectedCampIdx.second);
-                unitNode->setTouched(table == _touchedCampIdx.first && idx == _touchedCampIdx.second);
+                unitNode->setTouched(table == _touchedCampIdx.first && idx == _touchedCampIdx.second, isGameOver());
             } else {
                 unitNode = MapUIUnitNode::create(camp);
                 unitNode->reuse(camp, idx, goldCount, woodCount);
@@ -303,8 +303,10 @@ void MapUILayer::onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node)
 
 void MapUILayer::onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node)
 {
-    onUnitTouched(node);
-    clearTouchedCampIdx();
+    if (!isGameOver()) {
+        onUnitTouched(node);
+        clearTouchedCampIdx();
+    }
 }
 
 void MapUILayer::onMapUIUnitNodeTouchedCanceled(MapUIUnitNode* node)
@@ -625,6 +627,16 @@ void MapUILayer::onTouchEnded(Touch *touch, Event *unused_event)
 }
 
 #pragma mark private
+bool MapUILayer::isGameOver() const
+{
+    bool isGameOver(false);
+    if (_observer) {
+        isGameOver = _observer->onMapUILayerIsGameOver();
+    }
+    
+    return isGameOver;
+}
+
 void MapUILayer::onUnitTouched(MapUIUnitNode* node)
 {
     UnitClass uc = node->getCamp()->getUnitType()->getUnitClass();

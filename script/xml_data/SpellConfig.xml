@@ -12,6 +12,6 @@
 	<item spell_name="强风护盾" resource_name="fengdun" receiver_is_body="1"/>
 	<item spell_name="血雾" resource_name="xuewu" receiver_is_body="1"/>
 	<item spell_name="火球术"/>
-	<item spell_name="闪电攻击" caster_resource_name="Seven-Lamashen-devil-figure-jineng-3-GS,Seven-Lamashen-devil-figure-jineng-3-XC,Seven-Lamashen-devil-figure-jineng-Zhao"/>
+	<item spell_name="闪电攻击" caster_resource_name="Seven-Lamashen-devil-figure-jineng-3-GS,Seven-Lamashen-devil-figure-jineng-3-XC,Seven-Lamashen-devil-figure-jineng-Zhao" caster_is_body="1"/>
 	<item spell_name="眩晕" resource_name="xuanyun" receiver_is_body="1"/>
 </root>

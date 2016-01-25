@@ -46,16 +46,20 @@ static void node_flipX(Node* node)
 
 static void node_setScale(Node* node, float scale)
 {
-    const float scaleX = node->getScaleX();
-    const float scaleY = node->getScaleY();
-    node->setScale(scale * scaleX, scale * scaleY);
+    const float x = node->getScaleX();
+    node->setScale(scale);
+    if ((x > 0) ^ (scale > 0)) {
+        node_flipX(node);
+    }
 }
 
 static void node_setScale(Node* node, float scaleX, float scaleY)
 {
     const float x = node->getScaleX();
-    const float y = node->getScaleY();
-    node->setScale(x * scaleX, y * scaleY);
+    node->setScale(scaleX, scaleY);
+    if ((x > 0) ^ (scaleX > 0)) {
+        node_flipX(node);
+    }
 }
 
 static int getResourceId(Unit::Direction direction)
@@ -116,7 +120,11 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
 ,_isStandby(false)
 ,_isPlayingAttackAnimation(false)
 ,_animationCounter(0)
-, _rollHintCounter(0)
+,_rollHintCounter(0)
+,_baseScale(1.0f)
+,_extraCasterScale(1.0f)
+,_extraFeatureScale(1.0f)
+,_extraBufScale(1.0f)
 {
     _unitName = unit->getUnitBase().getRenderKey();
     
@@ -537,7 +545,8 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
             
             // set scale
             if (scale != 1.0f && scale > 0) {
-                node_setScale(_actionNode, scale);
+                _baseScale = scale;
+                scaleActionNode();
             }
             
             // the attack animation should be fit for preperforming time
@@ -662,52 +671,36 @@ void UnitNode::updateActionNode(const Skill* skill, int frameIndex, bool flip)
                                 const vector<string>& resources = data->getCasterResourceNames();
                                 const size_t cnt = resources.size();
                                 const bool isOnBody = data->isCasterEffectOnBody();
-                                switch (cnt) {
-                                    case 1:
-                                    {
-                                        Node* node = addEffect(resources.at(0));
-                                        if (!isOnBody) {
-                                            node->setPosition(_configData->getFootEffectPosition());
-                                            node_setScale(node, _configData->getFootEffectScaleX(), _configData->getFootEffectScaleY());
-                                            node->setLocalZOrder(-1);
-                                        }
+                                if (cnt > 0) {
+                                    Node* node = addEffect(resources.at(0), [this]() {
+                                        _extraCasterScale = 1.0f;
+                                        scaleActionNode();
+                                    });
+                                    
+                                    if (!isOnBody) {
+                                        node->setPosition(_configData->getFootEffectPosition());
+                                        node_setScale(node, _configData->getFootEffectScaleX(), _configData->getFootEffectScaleY());
+                                        node->setLocalZOrder(-1);
                                     }
-                                        break;
-                                    case 2:
-                                    {
-                                        addEffect(resources.at(0));
-                                        {
-                                            Node* node = addEffect(resources.at(1));
-                                            node->setPosition(_configData->getFootEffectPosition());
-                                            node_setScale(node, _configData->getFootEffectScaleX(), _configData->getFootEffectScaleY());
-                                            node->setLocalZOrder(-1);
-                                        }
+                                    
+                                    if (cnt > 1) {
+                                        Node* node = addEffect(resources.at(1));
+                                        node->setPosition(_configData->getFootEffectPosition());
+                                        node_setScale(node, _configData->getFootEffectScaleX(), _configData->getFootEffectScaleY());
+                                        node->setLocalZOrder(-1);
                                         
-                                    }
-                                        break;
-                                    case 3:
-                                    {
-                                        // TODO
-                                        addEffect(resources.at(0));
-                                        {
-                                            Node* node = addEffect(resources.at(1));
-                                            node->setPosition(_configData->getFootEffectPosition());
-                                            node_setScale(node, _configData->getFootEffectScaleX(), _configData->getFootEffectScaleY());
-                                            node->setLocalZOrder(-1);
-                                        }
-                                        {
+                                        if (cnt > 2) {
                                             Node* node = addEffect(resources.at(2));
                                             node->setPosition(node->getPosition() + Point(0, 87));
                                         }
                                     }
-                                    default:
-                                        break;
                                 }
                                 
                                 // scale if needed
                                 const float rate = data->getCasterVolumeRate();
                                 if (rate != 1.0f) {
-                                    node_setScale(_actionNode, rate);
+                                    _extraCasterScale = rate;
+                                    scaleActionNode();
                                 }
                             }
                         }
@@ -737,6 +730,15 @@ void UnitNode::removeActionNode()
         _actionNode->removeFromParent();
         _actionNode = nullptr;
         _currentAction = nullptr;
+        _baseScale = 1.0f;
+    }
+}
+
+void UnitNode::scaleActionNode()
+{
+    if (_actionNode) {
+        const float scale = _baseScale * MAX(_extraCasterScale, MAX(_extraFeatureScale, _extraBufScale));
+        node_setScale(_actionNode, scale);
     }
 }
 
@@ -767,9 +769,21 @@ void UnitNode::updateBufs()
         removeBuf(*iter);
     }
     
+    // re-calculate the buf scale
     for (set<string>::const_iterator iter = added.begin(); iter != added.end(); ++iter) {
-        addBuf(*iter);
+        const string& name = *iter;
+        const SpellConfigData* data = DataManager::getInstance()->getSpellConfigData(name);
+        if (data) {
+            const float rate = data->getReceiverVolumeRate();
+            if (rate != 1.0f) {
+                _extraBufScale = MAX(_extraBufScale, rate);
+            }
+            
+            addBuf(*iter);
+        }
     }
+    
+    scaleActionNode();
 }
 
 void UnitNode::addBuf(const string& name)
@@ -781,7 +795,7 @@ void UnitNode::addBuf(const string& name)
             const vector<string>& files = data->getReceiverResourceNames();
             if (files.size() > 0) {
                 const string& file = files.at(0);
-                Node* buf = addEffect(file, true);
+                Node* buf = addEffect(file, true, nullptr);
                 if (buf) {
                     const Point& basePos = _sprite->getPosition();
                     if (data->isReceiverEffectOnBody()) {
@@ -845,7 +859,17 @@ void UnitNode::updateFeatures()
                     const vector<string>& files = data->getReceiverResourceNames();
                     if (files.size() > 0) {
                         const string& file = files.at(0);
-                        addEffect(file);
+                        addEffect(file, [this]() {
+                            _extraFeatureScale = 1.0f;
+                            scaleActionNode();
+                        });
+                        
+                        // scale if needed
+                        const float rate = data->getReceiverVolumeRate();
+                        if (rate != 1.0f) {
+                            _extraFeatureScale = rate;
+                            scaleActionNode();
+                        }
                     }
                 }
             }
@@ -923,10 +947,10 @@ void UnitNode::removeShadow()
     }
 }
 
-Node* UnitNode::addEffect(const string& file)
+Node* UnitNode::addEffect(const string& file, const function<void()>& callback)
 {
     if (_sprite) {
-        Node* effect = addEffect(file, false);
+        Node* effect = addEffect(file, false, callback);
         effect->setPosition(_sprite->getPosition());
         return effect;
     }
@@ -934,7 +958,7 @@ Node* UnitNode::addEffect(const string& file)
     return nullptr;
 }
 
-Node* UnitNode::addEffect(const string& file, bool loop)
+Node* UnitNode::addEffect(const string& file, bool loop, const function<void()>& callback)
 {
     if (file.length() > 0) {
         const size_t found = file.find_last_of(".");
@@ -949,13 +973,16 @@ Node* UnitNode::addEffect(const string& file, bool loop)
                     node_flipX(effect);
                 }
                 
-                addChild(effect, 0);
+                addChild(effect, topZOrder);
                 cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
                 effect->runAction(action);
                 action->gotoFrameAndPlay(0, loop);
                 if (!loop) {
-                    action->setLastFrameCallFunc([effect]() {
+                    action->setLastFrameCallFunc([effect, callback]() {
                         effect->removeFromParent();
+                        if (callback) {
+                            callback();
+                        }
                     });
                 }
                 
@@ -965,7 +992,7 @@ Node* UnitNode::addEffect(const string& file, bool loop)
                 if (!loop) {
                     effect->setAutoRemoveOnFinish(true);
                 }
-                addChild(effect, 0);
+                addChild(effect, topZOrder);
                 return effect;
             }
         }

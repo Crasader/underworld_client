@@ -242,7 +242,8 @@ static void request(const string& path,
         });
         
         // Timeout
-        HttpClient::getInstance()->setTimeoutForConnect(timeout);
+        HttpClient::getInstance()->setTimeoutForConnect(10);
+        HttpClient::getInstance()->setTimeoutForRead(timeout);
         
         if (isImmediate)
         {

@@ -25,6 +25,7 @@ class MapUILayerObserver
 {
 public:
     virtual ~MapUILayerObserver() {}
+    virtual bool onMapUILayerIsGameOver() = 0;
     virtual void onMapUILayerUnitSelected(MapUIUnitNode* node) = 0;
     virtual void onMapUILayerClickedPauseButton() = 0;
     virtual ssize_t onMapUILayerCampsCount(UnderWorld::Core::UnitClass uc) = 0;
@@ -81,6 +82,7 @@ protected:
     // CampInfoNodeObserver
     virtual void onCampInfoNodeClickedIcon(CampInfoNode* pSender, const UnderWorld::Core::UnitBase* unit) override;
     
+    bool isGameOver() const;
     void onUnitTouched(MapUIUnitNode* node);
     void clearTouchedCampIdx();
     void createTableViews();

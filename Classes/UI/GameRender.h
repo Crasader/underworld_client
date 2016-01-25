@@ -36,9 +36,10 @@ public:
 class GameRender : public UnderWorld::Core::AbstractRender, public UnitNodeObserver, public BulletNodeObserver, public MapLayerObserver, public MapUILayerObserver, public VictoryLayerObserver
 {
 public:
-    GameRender(Scene* scene, int mapId, MapLayer* mapLayer, const std::string& opponentsAccount);
+    GameRender(Scene* scene, int mapId, const std::string& mapData, const std::string& opponentsAccount);
     virtual ~GameRender();
     void registerObserver(GameRenderObserver *observer);
+    const UnderWorld::Core::MapSetting& getMapSetting() const;
     
     virtual void init(const UnderWorld::Core::Game* game, UnderWorld::Core::Commander* commander) override;
     virtual void render(const UnderWorld::Core::Game* game) override;
@@ -57,6 +58,7 @@ protected:
     virtual void onMapLayerTouchEnded() override;
     
     // MapUILayerObserver
+    virtual bool onMapUILayerIsGameOver() override;
     virtual void onMapUILayerUnitSelected(MapUIUnitNode* node) override;
     virtual void onMapUILayerClickedPauseButton() override;
     virtual ssize_t onMapUILayerCampsCount(UnderWorld::Core::UnitClass uc) override;

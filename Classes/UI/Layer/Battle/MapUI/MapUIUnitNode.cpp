@@ -94,6 +94,7 @@ bool MapUIUnitNode::init(const Camp* camp)
         _iconButton->addTouchEventListener([=](Ref *pSender, Widget::TouchEventType type) {
             Widget* button = dynamic_cast<Widget*>(pSender);
             if (type == Widget::TouchEventType::BEGAN) {
+                _isIconTouched = true;
                 addTouchedAction(true, true);
                 
                 _touchInvalid = false;
@@ -105,6 +106,7 @@ bool MapUIUnitNode::init(const Camp* camp)
                     _touchInvalid = true;
                 }
             } else if (type == Widget::TouchEventType::ENDED) {
+                _isIconTouched = false;
                 addTouchedAction(false, true);
                 
                 if (!_touchInvalid) {
@@ -114,6 +116,7 @@ bool MapUIUnitNode::init(const Camp* camp)
                     }
                 }
             } else {
+                _isIconTouched = false;
                 addTouchedAction(false, true);
                 if(_observer) {
                     _observer->onMapUIUnitNodeTouchedCanceled(this);
@@ -280,9 +283,9 @@ void MapUIUnitNode::setSelected(bool selected)
 #endif
 }
 
-void MapUIUnitNode::setTouched(bool touched)
+void MapUIUnitNode::setTouched(bool touched, bool isGameOver)
 {
-    addTouchedAction(touched, false);
+    addTouchedAction(isGameOver ? _isIconTouched : touched, false);
 }
 
 const Camp* MapUIUnitNode::getCamp() const

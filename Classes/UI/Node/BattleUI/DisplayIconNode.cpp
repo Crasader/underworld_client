@@ -110,17 +110,19 @@ void DisplayIconNode::reload()
             setTableViewSize(tableViewMaxSize);
             
             // 3.3 scroll if needed
-            static const float duration = 0.5f;
-            if (_scrollToLeft) {
-                const float offsetX = (tableViewMaxSize - _tableView->getContentSize()).width;
-                _tableView->setContentOffsetInDuration(Point(offsetX, 0), duration);
-            } else {
-                if (_contentOffset.x == 0)
-                {
-                    const float offsetX = _currentCount * cellSize.width - _tableView->getContentSize().width;
-                    _tableView->setContentOffset(Point(offsetX, 0));
+            if (_currentCount != cnt) {
+                static const float duration = 0.5f;
+                if (_scrollToLeft) {
+                    const float offsetX = (tableViewMaxSize - _tableView->getContentSize()).width;
+                    _tableView->setContentOffsetInDuration(Point(offsetX, 0), duration);
+                } else {
+                    if (_contentOffset.x == 0) {
+                        const float offsetX = _currentCount * cellSize.width - _tableView->getContentSize().width;
+                        _tableView->setContentOffset(Point(offsetX, 0));
+                    }
+                    
+                    _tableView->setContentOffsetInDuration(Point::ZERO, duration);
                 }
-                _tableView->setContentOffsetInDuration(Point::ZERO, duration);
             }
             
             // 3.4 reset position if needed

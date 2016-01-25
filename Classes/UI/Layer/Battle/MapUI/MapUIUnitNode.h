@@ -41,7 +41,7 @@ public:
     void reuse(const UnderWorld::Core::Camp* camp, ssize_t idx, int gold, int wood);
     void update(bool reuse, int gold, int wood);
     void setSelected(bool selected);
-    void setTouched(bool touched);
+    void setTouched(bool touched, bool isGameOver);
     
     // getters
     const UnderWorld::Core::Camp* getCamp() const;
@@ -68,6 +68,7 @@ private:
     const UnderWorld::Core::Camp* _camp;
     ssize_t _idx;
     bool _touchInvalid;
+    bool _isIconTouched;
 };
 
 #endif /* MapUIUnitNode_h */

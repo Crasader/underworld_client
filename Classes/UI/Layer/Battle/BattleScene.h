@@ -38,7 +38,6 @@ private:
     
 private:
     int _mapId;
-    MapLayer* _mapLayer;
     GameRender* _render;
     UnderWorld::Core::GameLooper* _looper;
     GameScheduler* _sch;

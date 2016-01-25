@@ -76,6 +76,7 @@ protected:
     // public
     void updateActionNode(const UnderWorld::Core::Skill* skill, int frameIndex, bool flip);
     void removeActionNode();
+    void scaleActionNode();
     // --------------- effects ---------------
     void updateBufs();
     void addBuf(const std::string& name);
@@ -87,8 +88,8 @@ protected:
     void removeHPBar();
     void addShadow();
     void removeShadow();
-    Node* addEffect(const std::string& file);
-    Node* addEffect(const std::string& file, bool loop);
+    Node* addEffect(const std::string& file, const std::function<void()>& callback = nullptr);
+    Node* addEffect(const std::string& file, bool loop, const std::function<void()>& callback);
     void rollHintResource(const std::string& resource, int amount, float delay = 0.f);
     void rollHintNode(Node* hintNode, float delay = 0.f);
     
@@ -122,6 +123,10 @@ private:
     bool _isPlayingAttackAnimation;
     int _animationCounter;
     int _rollHintCounter;
+    float _baseScale;
+    float _extraCasterScale;
+    float _extraFeatureScale;
+    float _extraBufScale;
 };
 
 #endif /* UnitNode_h */
