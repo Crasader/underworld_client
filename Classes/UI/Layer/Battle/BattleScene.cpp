@@ -119,7 +119,7 @@ void BattleScene::start(int mapId)
     <fixed_unit_setting position=\"4000,550\" count=\"0\" wave=\"1\">\
     <unit_setting name=\"巨型蜘蛛\"/>\
     </fixed_unit_setting>\
-    <fixed_unit_setting position=\"4000,550\" count=\"0\" wave=\"1\">\
+    <fixed_unit_setting position=\"4000,550\" count=\"1\" wave=\"1\">\
     <unit_setting name=\"蛇女莉莉丝\"/>\
     </fixed_unit_setting>\
     <fixed_unit_setting position=\"4000,550\" count=\"0\" wave=\"1\">\
@@ -518,7 +518,9 @@ void BattleScene::start(int mapId)
     <buff name=\"增幅_等级1_加攻击力\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"1.f\" max_overlay=\"1\" render_key=\"冲锋\">\
     <buff_effect>\
     <buff_effect_description buff_effect_condition=\"immediate\"/>\
-    <effect class=\"alter_attr\" alias_name=\"加攻击力\" attr_name=\"attack_damage\" value=\"d:target:owner;type:armor;v:1.0f;0\"/>\
+    <effect class=\"add_feature\" alias_name=\"未分类\">\
+    <feature type=\"out_damage_enhance\" value=\"d:target:owner;type:armor;v:1.0f;0\"/>\
+    </effect>\
     </buff_effect>\
     </buff>\
     <!-- 血雾 -->\
