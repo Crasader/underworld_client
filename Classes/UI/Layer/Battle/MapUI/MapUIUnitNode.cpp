@@ -198,7 +198,7 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
         const int maxProduction = _camp->getMaxProduction();
         const bool enable = production < maxProduction;
         const bool hero = isHero(_camp);
-        const Unit* heroUnit = _camp->getTrackUnit(0);
+        const Unit* heroUnit = _camp->getHero();
         bool colorful = !(hero && heroUnit && !heroUnit->isAlive());
         const string& iconFile = getIconFile(_camp, colorful);
         if (iconFile.length() > 0) {
