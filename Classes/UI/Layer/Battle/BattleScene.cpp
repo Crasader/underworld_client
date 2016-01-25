@@ -87,6 +87,15 @@ void BattleScene::start(int mapId)
     </resource_settings>\
     <fixed_unit_settings index=\"0\">\
     <fixed_unit_setting position=\"950,550\" count=\"0\" wave=\"1\">\
+    <unit_setting name=\"时光女神\"/>\
+    </fixed_unit_setting>\
+    <fixed_unit_setting position=\"950,550\" count=\"0\" wave=\"1\">\
+    <unit_setting name=\"狼人森林之魂\"/>\
+    </fixed_unit_setting>\
+    <fixed_unit_setting position=\"950,550\" count=\"0\" wave=\"1\">\
+    <unit_setting name=\"天空女神\"/>\
+    </fixed_unit_setting>\
+    <fixed_unit_setting position=\"950,550\" count=\"0\" wave=\"1\">\
     <unit_setting name=\"时光法师\"/>\
     </fixed_unit_setting>\
     <fixed_unit_setting position=\"950,550\" count=\"0\" wave=\"1\">\
@@ -106,7 +115,6 @@ void BattleScene::start(int mapId)
     </resource_settings>\
     <fixed_unit_settings index=\"1\">\
     <fixed_unit_setting position=\"4000,550\" count=\"10\" wave=\"1\">\
-    <fixed_unit_setting position=\"4000,550\" count=\"2\" wave=\"1\">\
     <unit_setting name=\"吸血鬼战士\"/>\
     </fixed_unit_setting>\
     <fixed_unit_setting position=\"4000,550\" count=\"0\" wave=\"1\">\
@@ -142,7 +150,7 @@ void BattleScene::start(int mapId)
     setting.setMap(_mapLayer->getMapSetting());
     
     //2. set techTree;
-
+    
     std::string techTree = "<root>\
     <!-- ==========单位&势力配置========== -->\
     <faction name=\"狼人族\">\
@@ -161,7 +169,7 @@ void BattleScene::start(int mapId)
     </skill>\
     </unit>\
     <!-- 力量号角 -->\
-    <unit name=\"时光女神\" class=\"hero\" hp=\"550\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"英雄\" armor=\"0\" magical_defense=\"0.f\" attacksight=\"600\" size=\"75\" height=\"0\" cost=\"金子:225;木头:750;人口:5\" priority=\"1\" max_level=\"100\" spell_names=\"激励_等级1\" render_key=\"时光女神\" produce=\"木头:225\" reward=\"金子:2\">\
+    <unit name=\"时光女神\" class=\"hero\" hp=\"550\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"英雄\" armor=\"0\" magical_defense=\"0.f\" attacksight=\"600\" size=\"75\" height=\"0\" cost=\"金子:225;木头:750;人口:5\" priority=\"1\" max_level=\"100\" spell_names=\"全体恢复_等级1\" render_key=\"时光女神\" produce=\"木头:225\" reward=\"金子:2\">\
     <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
     <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
     <skill class=\"attack\" preperform=\"0.5\" perform=\"0.0\" cd=\"1.5\" min_damage=\"28\" max_damage=\"32\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"600\" fields=\"3\">\
@@ -179,7 +187,7 @@ void BattleScene::start(int mapId)
     <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"130\"/>\
     </unit>\
     <!-- 战鼓 -->\
-    <unit name=\"天空女神\" class=\"hero\" hp=\"550\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"英雄\" armor=\"0\" attacksight=\"600\" size=\"75\" height=\"0\" cost=\"金子:650;人口:5\" priority=\"1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" spell_names=\"全体恢复_等级1\" render_key=\"天空女神\" produce=\"木头:650\" reward=\"金子:6\">\
+    <unit name=\"天空女神\" class=\"hero\" hp=\"550\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"英雄\" armor=\"0\" attacksight=\"600\" size=\"75\" height=\"0\" cost=\"金子:650;人口:5\" priority=\"1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" spell_names=\"激励_等级1\" render_key=\"天空女神\" produce=\"木头:650\" reward=\"金子:6\">\
     <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
     <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
     <skill class=\"attack\" preperform=\"0.5\" perform=\"0.0\" cd=\"0.8\" min_damage=\"28\" max_damage=\"32\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"600\" fields=\"3\">\
@@ -196,7 +204,6 @@ void BattleScene::start(int mapId)
     <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"130\"/>\
     </unit>\
     <!-- 十字军 -->\
-    <unit name=\"狼人机械狼\" class=\"warrior\" hp=\"575\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"重甲\" armor=\"600\" attacksight=\"400\" size=\"60\" height=\"0\" cost=\"金子:280;人口:2\" priority=\"1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" render_key=\"狼人机械狼\" produce=\"木头:280\" reward=\"金子:2\">\
     <unit name=\"狼人机械狼\" class=\"warrior\" hp=\"575\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"重甲\" armor=\"600\" attacksight=\"400\" size=\"60\" height=\"0\" cost=\"金子:280;人口:2\" priority=\"1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" spell_names=\"王者祝福_等级1\" render_key=\"狼人机械狼\" produce=\"木头:280\" reward=\"金子:2\">\
     <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
     <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
@@ -205,8 +212,7 @@ void BattleScene::start(int mapId)
     <skill class=\"move\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\" speed=\"130\"/>\
     </unit>\
     <!-- 增幅 -->\
-    <unit name=\"狼人射手\" class=\"warrior\" hp=\"500\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"轻甲\" armor=\"0\" armor_preference=\"无甲\" armor_preference_factor=\"1.5f\" attacksight=\"600\" size=\"25\" height=\"0\" cost=\"金子:320;人口:2\" priority=\"0\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" render_key=\"狼人射手\" produce=\"木头:320\" reward=\"金子:3\">\
-    <unit name=\"狼人射手\" class=\"warrior\" hp=\"500\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"轻甲\" armor=\"0\" armor_preference=\"无甲\" armor_preference_factor=\"1.5f\" attacksight=\"600\" size=\"25\" height=\"0\" cost=\"金子:320;人口:2\" priority=\"0\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\"  passive_names=\"增幅_等级1\" render_key=\"狼人射手\" produce=\"木头:320\" reward=\"金子:3\">\
+    <unit name=\"狼人射手\" class=\"warrior\" hp=\"500\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"轻甲\" armor=\"0\" armor_preference=\"无甲\" armor_preference_factor=\"1.5f\" attacksight=\"600\" size=\"25\" height=\"0\" cost=\"金子:320;人口:2\" priority=\"0\" passive_names=\"增幅_等级1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" render_key=\"狼人射手\" produce=\"木头:320\" reward=\"金子:3\">\
     <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
     <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
     <skill class=\"attack\" preperform=\"0.5\" perform=\"0.0\" cd=\"1.5\" min_damage=\"60\" max_damage=\"100\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"550\" fields=\"1\">\
@@ -225,7 +231,6 @@ void BattleScene::start(int mapId)
     </unit>\
     <!-- 术士 -->\
     <unit name=\"时光法师\" class=\"warrior\" hp=\"320\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"无甲\" armor=\"100\" attacksight=\"600\" size=\"60\" height=\"0\" cost=\"金子:300;人口:3\" priority=\"1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\" render_key=\"时光法师\" produce=\"木头:3\" reward=\"金子:3\">\
-    <unit name=\"时光法师\" class=\"warrior\" hp=\"320\" mp=\"0\" hpregen=\"0\" mpregen=\"0\" field=\"0\" armor_type=\"无甲\" armor=\"100\" attacksight=\"600\" size=\"60\" height=\"0\" cost=\"金子:300;人口:3\" priority=\"1\" max_level=\"100\" max_quality=\"5\" max_talent=\"20\"  spell_names=\"吸血_等级1\" render_key=\"时光法师\" produce=\"木头:3\" reward=\"金子:3\">\
     <skill class=\"stop\" preperform=\"0.0\" perform=\"0.0\" cd=\"0.0\"/>\
     <skill class=\"die\" preperform=\"1.0\" perform=\"10.0\" cd=\"0.0\"/>\
     <skill class=\"attack\" preperform=\"0.5\" perform=\"0.0\" cd=\"2\" min_damage=\"30\" max_damage=\"33\" deliver_class=\"physical\" damage_distance=\"faraway\" range=\"160\" fields=\"1\">\
@@ -358,14 +363,14 @@ void BattleScene::start(int mapId)
     <spell alias=\"全体恢复\" spell_name=\"全体恢复_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"ally\" cast_distance=\"0\" cast_type=\"self\" immediate_elements=\"0,全体恢复_等级1_恢复效果,1\" preperform=\"0.5\" perform=\"0.0\" cd=\"120.0\" class=\"cast\" desc=\"施放一片大范围的治疗，恢复所有区域内的友军50点生命。\"/>\
     <!-- 冲锋 -->\
     <spell alias=\"冲锋\" spell_name=\"冲锋_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"ally\" cast_distance=\"0\" cast_type=\"self\" immediate_elements=\"0,冲锋_等级1_加移动速度,1\" preperform=\"0.0\" perform=\"0.0\" cd=\"20.0\" class=\"cast\" desc=\"当视野内有出现敌人时，会提升120%移动速度，持续1秒。\"/>\
-    <!-- 吸血 -->\
-    <spell alias=\"吸血\" spell_name=\"吸血_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"ally\" cast_distance=\"0\" cast_type=\"self\" immediate_elements=\"0,冲锋_等级1_加移动速度,1\" preperform=\"0.0\" perform=\"0.0\" cd=\"20.0\" class=\"cast\" desc=\"当视野内有出现敌人时，会提升120%移动速度，持续1秒。\"/>\
     <!-- 王者祝福 -->\
     <spell alias=\"王者祝福\" spell_name=\"王者祝福_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"ally\" cast_distance=\"0\" cast_type=\"self\" immediate_elements=\"0,王者祝福_等级1_王者祝福效果,1\" preperform=\"0.0\" perform=\"0.0\" cd=\"20.0\" class=\"cast\" desc=\"增加周围友军700点护甲。\"/>\
     <!-- 强风护盾 -->\
     <spell alias=\"强风护盾\" spell_name=\"强风护盾_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"ally\" cast_distance=\"0\" cast_type=\"self\" immediate_elements=\"0,强风护盾_等级1_强风护盾效果,1\" preperform=\"0.5\" perform=\"0.0\" cd=\"120.0\" class=\"cast\" desc=\"周围的友军会获得一个护盾，护盾持续期间收到的所有伤害减少10点。持续15秒\"/>\
+    <!-- 吸血 -->\
+    <spell alias=\"吸血\" spell_name=\"吸血_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"ally\" cast_distance=\"0\" cast_type=\"self\" immediate_elements=\"0,吸血_等级1_吸血效果,1\" preperform=\"0.5\" perform=\"0.0\" cd=\"30.0\" class=\"cast\" desc=\"周围的友军会获得一个吸血效果。持续15秒\"/>\
     <!-- 火球术 -->\
-    <spell alias=\"火球术\" spell_name=\"火球术_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"enemy\" cast_distance=\"600\" cast_type=\"self\" immediate_elements=\"0,火球术_等级1_火球术效果,1\" preperform=\"0.5\" perform=\"0.0\" cd=\"60.0\" class=\"cast\" desc=\"向目标区域施放一个火球，对区域内的所有敌方单位造成50点伤害。\"/>\
+    <spell alias=\"火球术\" spell_name=\"火球术_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"enemy\" cast_distance=\"600\" cast_type=\"position\" immediate_elements=\"0,火球术_等级1_火球术效果,1\" preperform=\"0.5\" perform=\"0.0\" cd=\"60.0\" class=\"cast\" desc=\"向目标区域施放一个火球，对区域内的所有敌方单位造成50点伤害。\"/>\
     <!-- 暗影烈焰 -->\
     <spell alias=\"暗影烈焰\" spell_name=\"暗影烈焰_等级1\" level=\"1\" deliver_class=\"magical\" deliver_nature=\"enemy\" cast_distance=\"300\" cast_type=\"unit\" immediate_elements=\"0,暗影烈焰_等级1_暗影烈焰效果,1\" preperform=\"0.5\" perform=\"0.0\" cd=\"12.0\" class=\"cast\" desc=\"向目标区域施放一个火球，对区域内的所有敌方单位造成50点伤害。\"/>\
     <!-- ==========主动技能原子配置========== -->\
@@ -415,8 +420,14 @@ void BattleScene::start(int mapId)
     <feature type=\"add_buff\" buff_type_name=\"强风护盾_等级1_伤害减少\" overlay=\"1\"/>\
     </damage>\
     </spell_pattern>\
+    <!-- 吸血 -->\
+    <spell_pattern name=\"吸血_等级1_吸血效果\" class=\"damage_target_position_circle\" radius=\"600\" deliver_nature=\"ally\">\
+    <damage damage_value=\"0\" damage_nature=\"heal\">\
+    <feature type=\"add_buff\" buff_type_name=\"吸血_等级1_吸血效果\" overlay=\"1\"/>\
+    </damage>\
+    </spell_pattern>\
     <!-- 王者祝福 -->\
-    <spell_pattern name=\"王者祝福_等级1_王者祝福效果\" class=\"damage_all\" deliver_nature=\"ally\">\
+    <spell_pattern name=\"王者祝福_等级1_王者祝福效果\" class=\"damage_target_position_circle\" radius=\"600\" deliver_nature=\"ally\">\
     <damage damage_value=\"0\" damage_nature=\"heal\">\
     <feature type=\"add_buff\" buff_type_name=\"王者祝福_等级1_王者祝福效果\" overlay=\"1\"/>\
     </damage>\
@@ -544,6 +555,15 @@ void BattleScene::start(int mapId)
     </effect>\
     </buff_effect>\
     </buff>\
+    <!-- 吸血 -->\
+    <buff name=\"吸血_等级1_吸血效果\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"15.f\" max_overlay=\"1\" render_key=\"强风护盾\">\
+    <buff_effect>\
+    <buff_effect_description buff_effect_condition=\"immediate\"/>\
+    <effect class=\"add_feature\" alias_name=\"未分类\">\
+    <feature type=\"drain\" value=\"p:0.2f\"/>\
+    </effect>\
+    </buff_effect>\
+    </buff>\
     <!-- 王者祝福 -->\
     <buff name=\"王者祝福_等级1_王者祝福效果\" deliver_nature=\"ally\" deliver_class=\"magical\" span_type=\"limited\" span=\"15.f\" max_overlay=\"1\">\
     <buff_effect>\
@@ -632,9 +652,8 @@ void BattleScene::start(int mapId)
             us.setQuality(0);
             us.setTalentLevel(0);
             cs[i].setUnitSetting(us);
-
-            cs[i].setMaxProduction(1);
-            cs[i].setMaxProduction(5);
+            
+            cs[i].setMaxProduction(2);
         }
         setting.setCamps(0, cs);
     }
