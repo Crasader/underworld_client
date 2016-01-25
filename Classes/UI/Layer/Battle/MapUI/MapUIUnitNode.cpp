@@ -129,6 +129,7 @@ bool MapUIUnitNode::init(const Camp* camp)
         
         _spellColdDown = ProgressTimer::create(Sprite::create("GameImages/test/ui_iconzhezhao.png"));
         _spellColdDown->setType(ProgressTimer::Type::RADIAL);
+        _spellColdDown->setReverseDirection(true);
         _spellColdDown->setMidpoint(Vec2(0.5f, 0.5f));
         _iconButton->addChild(_spellColdDown, topZOrder);
         
