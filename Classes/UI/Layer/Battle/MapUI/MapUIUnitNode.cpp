@@ -122,12 +122,12 @@ bool MapUIUnitNode::init(const Camp* camp)
         });
         
         _resourcesMask = Sprite::create("GameImages/test/ui_black_15.png");
-        addChild(_resourcesMask);
+        _iconButton->addChild(_resourcesMask);
         
         _spellColdDown = ProgressTimer::create(Sprite::create("GameImages/test/ui_iconzhezhao.png"));
         _spellColdDown->setType(ProgressTimer::Type::RADIAL);
         _spellColdDown->setMidpoint(Vec2(0.5f, 0.5f));
-        addChild(_spellColdDown, topZOrder);
+        _iconButton->addChild(_spellColdDown, topZOrder);
         
         _countLabel = CocosUtils::createLabel("0", DEFAULT_FONT_SIZE);
         addChild(_countLabel);
@@ -155,15 +155,15 @@ bool MapUIUnitNode::init(const Camp* camp)
         }
         
         {
-            const float height = _resourcesMask->getContentSize().height;
-            _resourcesMask->setPosition(Point(x, height / 2));
+            const Size& size = _resourcesMask->getContentSize();
+            _resourcesMask->setPosition(Point(size.width / 2, size.height / 2));
             
             createResourceButton(kResourceType_Gold, _resourcesMask);
             createResourceButton(kResourceType_Wood, _resourcesMask);
         }
         
         {
-            _spellColdDown->setPosition(x, shadowSize.height / 2);
+            _spellColdDown->setPosition(Point(iconSize.width / 2, iconSize.height / 2));
         }
 #endif
         

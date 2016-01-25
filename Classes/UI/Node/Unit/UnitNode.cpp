@@ -703,12 +703,12 @@ void UnitNode::updateActionNode(const Skill* skill, int frameIndex, bool flip)
                                     default:
                                         break;
                                 }
-                            }
-                            
-                            // scale if needed
-                            const float rate = data->getCasterVolumeRate();
-                            if (rate != 1.0f) {
-                                node_setScale(_actionNode, rate);
+                                
+                                // scale if needed
+                                const float rate = data->getCasterVolumeRate();
+                                if (rate != 1.0f) {
+                                    node_setScale(_actionNode, rate);
+                                }
                             }
                         }
                     }

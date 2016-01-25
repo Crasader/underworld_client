@@ -70,6 +70,7 @@ protected:
     virtual void onVictoryLayerContinued(Layer* pSender) override;
     
 private:
+    void updateAll();
     void updateUnits(const UnderWorld::Core::Game* game, int index);
     void updateBullets(const UnderWorld::Core::Game* game);
     void updateUILayer();
@@ -97,7 +98,6 @@ private:
     void restartGame();
     void tick(float dt);
     void updateResources();
-    void initUILayer();
     int getRemainingWaveTime() const;
     void stopAllTimers();
     void onGameOver();
@@ -139,6 +139,9 @@ private:
     bool _paused;
     bool _isGameOver;
     int _remainingTime;
+    int _population;
+    int _goldCount;
+    int _woodCount;
     bool _hasUpdatedBattleCampInfos;
 };
 

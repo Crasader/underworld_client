@@ -62,8 +62,6 @@ MapUILayer::MapUILayer()
 ,_tableViewPos(Point::ZERO)
 ,_isTouchingHeroTableView(false)
 ,_selectedHeroCamp(nullptr)
-,_goldCount(0)
-,_woodCount(0)
 ,_timeLabel(nullptr)
 ,_nextWaveTimeLabel(nullptr)
 ,_goldResourceButton(nullptr)
@@ -101,24 +99,31 @@ void MapUILayer::reload()
         createTableViews();
     } else {
         for (map<UnitClass, TableView*>::iterator iter = _tableViews.begin(); iter != _tableViews.end(); ++iter) {
-            TableView* table = iter->second;
-            if (table) {
-                const ssize_t cnt = getCellsCount(table);
-                
-                // if setTouchEnabled to false, tableCellTouched() will never be called
-                const int visibleCellsCount = (_tableViewMaxSize.width - unitNodeOffsetX) / _cellSize.width;
-                table->setTouchEnabled(cnt > visibleCellsCount);
-                table->reloadData();
-                
-                // fit
-                if (false == table->isBounceable() && extension::ScrollView::Direction::HORIZONTAL == table->getDirection()) {
-                    table->getContainer()->setPosition(Point::ZERO);
-                    const int contentWidth = _cellSize.width * cnt + unitNodeOffsetX;
-                    if (contentWidth >= _tableViewMaxSize.width) {
-                        table->setViewSize(_tableViewMaxSize);
-                    } else {
-                        table->setViewSize(Size(contentWidth, _tableViewMaxSize.height));
-                    }
+            reloadTable(iter->first);
+        }
+    }
+}
+
+void MapUILayer::reloadTable(UnitClass uc)
+{
+    if (_tableViews.find(uc) != _tableViews.end()) {
+        TableView* table = _tableViews.at(uc);
+        if (table) {
+            const ssize_t cnt = getCellsCount(table);
+            
+            // if setTouchEnabled to false, tableCellTouched() will never be called
+            const int visibleCellsCount = (_tableViewMaxSize.width - unitNodeOffsetX) / _cellSize.width;
+            table->setTouchEnabled(cnt > visibleCellsCount);
+            table->reloadData();
+            
+            // fit
+            if (false == table->isBounceable() && extension::ScrollView::Direction::HORIZONTAL == table->getDirection()) {
+                table->getContainer()->setPosition(Point::ZERO);
+                const int contentWidth = _cellSize.width * cnt + unitNodeOffsetX;
+                if (contentWidth >= _tableViewMaxSize.width) {
+                    table->setViewSize(_tableViewMaxSize);
+                } else {
+                    table->setViewSize(Size(contentWidth, _tableViewMaxSize.height));
                 }
             }
         }
@@ -212,27 +217,12 @@ void MapUILayer::updatePopulation(int count, int maxCount)
 
 void MapUILayer::updateGoldAndWood(int gold, int wood)
 {
-    bool update(false);
-    if (_goldCount != gold) {
-        update = true;
-        _goldCount = gold;
-        
-        if (_goldResourceButton) {
-            _goldResourceButton->setCount(gold);
-        }
+    if (_goldResourceButton) {
+        _goldResourceButton->setCount(gold);
     }
     
-    if (_woodCount != wood) {
-        update = true;
-        _woodCount = wood;
-        
-        if (_woodResourceButton) {
-            _woodResourceButton->setCount(wood);
-        }
-    }
-    
-    if (update) {
-        reload();
+    if (_woodResourceButton) {
+        _woodResourceButton->setCount(wood);
     }
 }
 
@@ -270,13 +260,15 @@ TableViewCell* MapUILayer::tableCellAtIndex(TableView *table, ssize_t idx)
         const Camp* camp = _observer->onMapUILayerCampAtIndex(uc, idx);
         if (camp) {
             MapUIUnitNode* unitNode = cell->getUnitNode();
+            const int goldCount = _goldResourceButton->getCount();
+            const int woodCount = _woodResourceButton->getCount();
             if (unitNode) {
-                unitNode->reuse(camp, idx, _goldCount, _woodCount);
+                unitNode->reuse(camp, idx, goldCount, woodCount);
                 unitNode->setSelected(table == _selectedCampIdx.first && idx == _selectedCampIdx.second);
                 unitNode->setTouched(table == _touchedCampIdx.first && idx == _touchedCampIdx.second);
             } else {
                 unitNode = MapUIUnitNode::create(camp);
-                unitNode->reuse(camp, idx, _goldCount, _woodCount);
+                unitNode->reuse(camp, idx, goldCount, woodCount);
                 unitNode->setPosition(Point(unitNodeOffsetX, unitNodeOffsetY));
                 unitNode->registerObserver(this);
                 cell->addChild(unitNode);
@@ -394,26 +386,6 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
         static const Size progressSize(170.0f, 20.0f);
         //
         {
-            Sprite* sprite = Sprite::create("GameImages/test/ui_black_14.png");
-            sprite->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
-            sprite->setPosition(Point(leftOffset, winSize.height - ceilOffset));
-            root->addChild(sprite);
-            
-            const Size& size = sprite->getContentSize();
-            
-            Label* label = CocosUtils::createLabel(LocalHelper::getString("battle_mapUI_nextWaveTime"), 16);
-            label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
-            label->setPosition(Point(20, size.height / 2));
-            sprite->addChild(label);
-            
-            _nextWaveTimeLabel = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
-            _nextWaveTimeLabel->setTextColor(Color4B::RED);
-            _nextWaveTimeLabel->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
-            _nextWaveTimeLabel->setPosition(Point(size.width * 0.75f, size.height / 2));
-            sprite->addChild(_nextWaveTimeLabel);
-        }
-        //
-        {
             Sprite* sprite = Sprite::create("GameImages/test/ui_xt.png");
             sprite->setAnchorPoint(Point::ANCHOR_MIDDLE_TOP);
             sprite->setPosition(Point(winSize.width / 2 - 192.0f, winSize.height - ceilOffset));
@@ -522,6 +494,27 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             _tableViewPos = sprite->getPosition() + Point(sprite->getContentSize().width + leftOffset, - unitNodeOffsetY);
             _tableViewMaxSize.width = winSize.width - (_tableViewPos.x + leftOffset);
             _tableViewMaxSize.height = _cellSize.height;
+        }
+        //
+        {
+            Sprite* sprite = Sprite::create("GameImages/test/ui_black_14.png");
+            sprite->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+            static const float offsetY(2.0f);
+            sprite->setPosition(_tableViewPos + Point(0, _cellSize.height + offsetY));
+            root->addChild(sprite);
+            
+            const Size& size = sprite->getContentSize();
+            
+            Label* label = CocosUtils::createLabel(LocalHelper::getString("battle_mapUI_nextWaveTime"), 16);
+            label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+            label->setPosition(Point(20, size.height / 2));
+            sprite->addChild(label);
+            
+            _nextWaveTimeLabel = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
+            _nextWaveTimeLabel->setTextColor(Color4B::RED);
+            _nextWaveTimeLabel->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+            _nextWaveTimeLabel->setPosition(Point(size.width * 0.75f, size.height / 2));
+            sprite->addChild(_nextWaveTimeLabel);
         }
         // buttons
         {

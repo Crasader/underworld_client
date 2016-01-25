@@ -41,6 +41,9 @@ GameRender::GameRender(Scene* scene, int mapId, MapLayer* mapLayer, const string
 ,_paused(false)
 ,_isGameOver(false)
 ,_remainingTime(battleTotalTime)
+,_population(0)
+,_goldCount(0)
+,_woodCount(0)
 ,_hasUpdatedBattleCampInfos(false)
 {
     _mapLayer->registerObserver(this);
@@ -72,14 +75,6 @@ void GameRender::init(const Game* game, Commander* commander)
     _game = game;
     _commander = commander;
     
-    // create units
-    for (int i = 0; i < game->getWorld()->getFactionCount(); ++i) {
-        updateUnits(game, i);
-    }
-    
-    // create bullets
-    updateBullets(game);
-    
     // get cores
     const World* world = game->getWorld();
     world = game->getWorld();
@@ -102,7 +97,12 @@ void GameRender::init(const Game* game, Commander* commander)
         }
     }
     
-    initUILayer();
+    updateAll();
+    
+    // create tables
+    if (_mapUILayer) {
+        _mapUILayer->reload();
+    }
     
     // tick
     Scheduler* scheduler = Director::getInstance()->getScheduler();
@@ -122,38 +122,27 @@ void GameRender::render(const Game* game)
         if (_isGameOver) {
             onGameOver();
         } else {
-            // update units
-            for (int i = 0; i < game->getWorld()->getFactionCount(); ++i) {
-                updateUnits(game, i);
-            }
+            updateAll();
             
-            // update bullets
-            updateBullets(game);
-            
-            // update ui layer
-            updateUILayer();
-            
-            {
-                if (_mapUILayer) {
-                    const int remainingWaveTime = getRemainingWaveTime();
-                    _mapUILayer->updateWaveTime(remainingWaveTime);
-                    _mapUILayer->updateRemainingTime(_remainingTime);
-                    if (waveTime == remainingWaveTime) {
-                        if (!_hasUpdatedBattleCampInfos) {
-#if ENABLE_CAMP_INFO
-                            updateBattleCampInfos();
-#else
-                            updateBattleUnitInfos();
-#endif
-                            _hasUpdatedBattleCampInfos = true;
-                        }
-                    } else {
-                        _hasUpdatedBattleCampInfos = false;
-                    }
-                }
+            if (_mapUILayer) {
+                _mapUILayer->reloadTable(kUnitClass_Hero);
             }
         }
     }
+}
+
+void GameRender::updateAll()
+{
+    // update units
+    for (int i = 0; i < _game->getWorld()->getFactionCount(); ++i) {
+        updateUnits(_game, i);
+    }
+    
+    // update bullets
+    updateBullets(_game);
+    
+    // update ui layer
+    updateUILayer();
 }
 
 void GameRender::updateUnits(const Game* game, int index)
@@ -284,6 +273,11 @@ void GameRender::updateBullets(const Game* game)
 
 void GameRender::updateUILayer()
 {
+    if (!_mapUILayer) {
+        assert(false);
+        return;
+    }
+    
     updateResources();
     
     const World* world = _game->getWorld();
@@ -301,6 +295,23 @@ void GameRender::updateUILayer()
                 }
             }
         }
+    }
+    
+    
+    const int remainingWaveTime = getRemainingWaveTime();
+    _mapUILayer->updateWaveTime(remainingWaveTime);
+    _mapUILayer->updateRemainingTime(_remainingTime);
+    if (waveTime == remainingWaveTime) {
+        if (!_hasUpdatedBattleCampInfos) {
+#if ENABLE_CAMP_INFO
+            updateBattleCampInfos();
+#else
+            updateBattleUnitInfos();
+#endif
+            _hasUpdatedBattleCampInfos = true;
+        }
+    } else {
+        _hasUpdatedBattleCampInfos = false;
     }
 }
 
@@ -348,16 +359,14 @@ void GameRender::updateBattleCampInfos()
 #else
 void GameRender::updateBattleUnitInfos()
 {
-    if (_mapUILayer) {
-        for (map<int, vector<const UnitBase*>>::iterator iter = _newAddedUnitBases.begin(); iter != _newAddedUnitBases.end(); ++iter)
-        {
-            const int factionIndex = iter->first;
-            vector<const UnitBase*>& v = iter->second;
-            if (v.size() > 0) {
-                _mapUILayer->insertUnitInfos(factionIndex, v);
-            } else {
-                _mapUILayer->updateUnitInfos(factionIndex);
-            }
+    for (map<int, vector<const UnitBase*>>::iterator iter = _newAddedUnitBases.begin(); iter != _newAddedUnitBases.end(); ++iter)
+    {
+        const int factionIndex = iter->first;
+        vector<const UnitBase*>& v = iter->second;
+        if (v.size() > 0) {
+            _mapUILayer->insertUnitInfos(factionIndex, v);
+        } else {
+            _mapUILayer->updateUnitInfos(factionIndex);
         }
     }
 }
@@ -731,20 +740,29 @@ void GameRender::updateResources()
             }
         }
         
-        _mapUILayer->updatePopulation(populationOccpied, populationBalance);
-        _mapUILayer->updateGoldAndWood(gold, wood);
-    }
-}
-
-void GameRender::initUILayer()
-{
-    if (_mapUILayer) {
-        _mapUILayer->updateWaveTime(startWaveTime);
-        _mapUILayer->updateRemainingTime(_remainingTime);
-        _mapUILayer->updateMyHpProgress(100);
-        _mapUILayer->updateOpponentsHpProgress(100);
-        updateResources();
-        _mapUILayer->reload();
+        {
+            if (_population != populationOccpied) {
+                _population = populationOccpied;
+            }
+            _mapUILayer->updatePopulation(populationOccpied, populationBalance);
+            
+            // check if need to reload table view
+            bool update(false);
+            if (_goldCount != gold) {
+                update = true;
+                _goldCount = gold;
+            }
+            
+            if (_woodCount != wood) {
+                update = true;
+                _woodCount = wood;
+            }
+            
+            if (update) {
+                _mapUILayer->updateGoldAndWood(gold, wood);
+                _mapUILayer->reloadTable(kUnitClass_Warrior);
+            }
+        }
     }
 }
 

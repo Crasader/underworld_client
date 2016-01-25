@@ -41,6 +41,7 @@ public:
     virtual ~MapUILayer();
     void registerObserver(MapUILayerObserver *observer);
     void reload();
+    void reloadTable(UnderWorld::Core::UnitClass uc);
 #if ENABLE_CAMP_INFO
     void insertCampInfo(size_t idx, const std::vector<std::pair<const UnderWorld::Core::Camp*, const UnderWorld::Core::UnitBase*>>& units);
     void updateCampInfos(size_t idx);
@@ -98,8 +99,6 @@ private:
     std::pair<TableView*, ssize_t> _touchedCampIdx;
     bool _isTouchingHeroTableView;
     const UnderWorld::Core::Camp* _selectedHeroCamp;
-    int _goldCount;
-    int _woodCount;
     // ======================== UI =============================
     std::map<UnderWorld::Core::UnitClass, TableView*> _tableViews;
     Label *_timeLabel;

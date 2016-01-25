@@ -28,7 +28,10 @@ void ProgressLayer::hideSingleton()
     Scene *runningScene = cocos2d::Director::getInstance()->getRunningScene();
     if (runningScene)
     {
-        runningScene->removeChildByTag(ProgressLayerTag);
+        Node* child = runningScene->getChildByTag(ProgressLayerTag);
+        if (child) {
+            runningScene->removeChild(child);
+        }
     }
 }
 
