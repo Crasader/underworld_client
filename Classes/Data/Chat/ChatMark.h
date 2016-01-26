@@ -17,6 +17,7 @@ class ChatMark
 public:
     ChatMark();
     virtual ~ChatMark();
+    void toMap(std::map<std::string, std::string>& params) const;
 public:
     int _groupId; //server list id
     int _wid; //world chat

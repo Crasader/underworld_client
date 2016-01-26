@@ -28,6 +28,7 @@ public:
     
     void sendMessage(ChatType type, int contacter, const std::string& message);
     
+    void recieve();
 protected:
     M_DISALLOW_COPY_AND_ASSIGN(ChatManager);
 

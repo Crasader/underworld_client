@@ -24,7 +24,7 @@ public:
     virtual ~ChatLayerObserver() {}
 };
 
-class ChatLayer : public LayerColor, public TableViewDataSource, public ui::EditBoxDelegate
+class ChatLayer : public LayerColor, public TableViewDataSource, public TableViewDelegate, public ui::EditBoxDelegate
 {
 public:
     static ChatLayer* create(int levelId);

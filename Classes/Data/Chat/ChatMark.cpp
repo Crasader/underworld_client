@@ -9,6 +9,8 @@
 #include "ChatMark.h"
 #include "Global.h"
 
+USING_NS_CC;
+
 ChatMark::ChatMark()
 :_groupId(INVALID_VALUE)
 ,_wid(INVALID_VALUE)
@@ -22,4 +24,13 @@ ChatMark::ChatMark()
 ChatMark::~ChatMark()
 {
     
+}
+
+void ChatMark::toMap(std::map<std::string, std::string> &params) const
+{
+    params.insert(make_pair("group", StringUtils::format("%d", _groupId)));
+    params.insert(make_pair("w", StringUtils::format("%d", _wid)));
+    params.insert(make_pair("p", StringUtils::format("%d", _pid)));
+    params.insert(make_pair("g", StringUtils::format("%d", _gid)));
+    params.insert(make_pair("t", StringUtils::format("%d", _tid)));
 }

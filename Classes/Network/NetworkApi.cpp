@@ -13,6 +13,7 @@
 #include "GameData.h"
 #include "NetworkController.h"
 #include "ProgressLayer.h"
+#include "ChatMark.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "ApiBridge.h"
@@ -67,9 +68,13 @@ static const string kComposeSoldier     = kServerPrefix + "soldier/compose.json"
 static const string kSellSoldierPiece   = kServerPrefix + "soldier/sellPiece.json";
 
 // ======================= Tower =======================
-static const string kGetTowersList      = kServerPrefix + "building/.json";
-static const string kGetTowerDetail     = kServerPrefix + "building/.json";
-static const string kUpgradeTower       = kServerPrefix + "building/.json";
+static const string kGetTowersList      = kServerPrefix + "building/list.json";
+static const string kGetTowerDetail     = kServerPrefix + "building/detail.json";
+static const string kUpgradeTower       = kServerPrefix + "building/upgrade.json";
+
+// ======================= Chat =======================
+static const string kChatSend      = kServerPrefix + "chat/send.json";
+static const string kChatRecieve     = kServerPrefix + "chat/recieve.json";
 
 static string headerString(const string& key, const string& value)
 {
@@ -468,6 +473,24 @@ void NetworkApi::upgradeTower(int id, const cocos2d::network::ccHttpRequestCallb
     map<string, string> params;
     params.insert(make_pair("id", StringUtils::format("%d", id)));
     request(kUpgradeTower, callback, &params);
+}
+
+#pragma mark - Chat
+void NetworkApi::sendMessage(const ChatMark* mark, ChatType type, int contactor, const std::string& message, const cocos2d::network::ccHttpRequestCallback& callback)
+{
+    map<string, string> params;
+    mark->toMap(params);
+    params.insert(make_pair("channel", StringUtils::format("%d", type)));
+    params.insert(make_pair("to", StringUtils::format("%d", contactor)));
+    params.insert(make_pair("content", message));
+    request(kChatSend, callback, &params);
+}
+
+void NetworkApi::recieveMessages(const ChatMark* mark, const cocos2d::network::ccHttpRequestCallback& callback)
+{
+    map<string, string> params;
+    mark->toMap(params);
+    request(kChatRecieve, callback, &params);
 }
 
 #pragma mark - IAP

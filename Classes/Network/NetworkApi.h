@@ -21,6 +21,8 @@
 #define VersionErrorCode        (888)
 #define OfflineCode             (999)
 
+class ChatMark;
+
 namespace NetworkApi
 {
     // basic    
@@ -69,6 +71,9 @@ namespace NetworkApi
     void getTowersList(const cocos2d::network::ccHttpRequestCallback& callback);
     void getTowerDetail(int id, const cocos2d::network::ccHttpRequestCallback& callback);
     void upgradeTower(int id, const cocos2d::network::ccHttpRequestCallback& callback);
+    // ======================= Chat =======================
+    void sendMessage(const ChatMark* mark, ChatType type, int contactor, const std::string& message, const cocos2d::network::ccHttpRequestCallback& callback);
+    void recieveMessages(const ChatMark* mark, const cocos2d::network::ccHttpRequestCallback& callback);
     
     // ======================= IAP =======================
     void iap(bool isSandBox, const std::string& receiptData, const cocos2d::network::ccHttpRequestCallback& callback);

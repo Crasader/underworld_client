@@ -64,9 +64,9 @@ typedef enum {
 
 typedef enum {
     kChatType_World = 0,
+    kChatType_Private,
     kChatType_Guild,
     kChatType_Group,
-    kChatType_Private,
 }ChatType;
 
 typedef enum {

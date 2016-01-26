@@ -92,3 +92,8 @@ void ChatManager::sendMessage(ChatType type, int contacter, const string& messag
 {
     
 }
+
+void ChatManager::recieve()
+{
+    
+}

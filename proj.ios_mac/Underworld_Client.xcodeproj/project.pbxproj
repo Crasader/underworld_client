@@ -233,6 +233,8 @@
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		CB3EC8971C4E4D1200447FE3 /* ChatData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB3EC8961C4E4D1200447FE3 /* ChatData.cpp */; settings = {ASSET_TAGS = (); }; };
 		CB3EC89A1C4E4DA600447FE3 /* ChatMark.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB3EC8981C4E4DA600447FE3 /* ChatMark.cpp */; settings = {ASSET_TAGS = (); }; };
+		CB3EC89F1C521C7F00447FE3 /* FriendCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB3EC89D1C521C7F00447FE3 /* FriendCell.cpp */; settings = {ASSET_TAGS = (); }; };
+		CB3EC8A31C523D6700447FE3 /* FriendData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB3EC8A11C523D6700447FE3 /* FriendData.cpp */; settings = {ASSET_TAGS = (); }; };
 		CBA296431BE37FB1006BE7A0 /* GameScheduler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBA296411BE37FB1006BE7A0 /* GameScheduler.cpp */; };
 		CBD778C71C29390B0070D293 /* AnnouncementNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBD778C51C29390B0070D293 /* AnnouncementNode.cpp */; };
 		CBDBD2131BD7B3B9004706A8 /* map in Resources */ = {isa = PBXBuildFile; fileRef = CBDBD2121BD7B3B9004706A8 /* map */; };
@@ -691,6 +693,10 @@
 		CB3EC8961C4E4D1200447FE3 /* ChatData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ChatData.cpp; path = Chat/ChatData.cpp; sourceTree = "<group>"; };
 		CB3EC8981C4E4DA600447FE3 /* ChatMark.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ChatMark.cpp; path = Chat/ChatMark.cpp; sourceTree = "<group>"; };
 		CB3EC8991C4E4DA600447FE3 /* ChatMark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatMark.h; path = Chat/ChatMark.h; sourceTree = "<group>"; };
+		CB3EC89D1C521C7F00447FE3 /* FriendCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FriendCell.cpp; path = Friend/FriendCell.cpp; sourceTree = "<group>"; };
+		CB3EC89E1C521C7F00447FE3 /* FriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendCell.h; path = Friend/FriendCell.h; sourceTree = "<group>"; };
+		CB3EC8A11C523D6700447FE3 /* FriendData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FriendData.cpp; path = Friend/FriendData.cpp; sourceTree = "<group>"; };
+		CB3EC8A21C523D6700447FE3 /* FriendData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendData.h; path = Friend/FriendData.h; sourceTree = "<group>"; };
 		CBA296411BE37FB1006BE7A0 /* GameScheduler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScheduler.cpp; sourceTree = "<group>"; };
 		CBA296421BE37FB1006BE7A0 /* GameScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScheduler.h; sourceTree = "<group>"; };
 		CBD778C51C29390B0070D293 /* AnnouncementNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnnouncementNode.cpp; sourceTree = "<group>"; };
@@ -1109,6 +1115,7 @@
 		A12D2F571BFDE88A00389DAC /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				CB3EC8A01C523D4E00447FE3 /* Friend */,
 				CB3EC8941C4E4CBC00447FE3 /* Chat */,
 				A1D4614D1C3E166900E8E60B /* Abstract */,
 				A1F5BF9C1C1FD508007C08CB /* Achievement */,
@@ -1363,6 +1370,7 @@
 				A18524CD1C1AE41700BE261D /* Bag */,
 				A1D745B41C1AB7C40020BC1C /* Battle */,
 				A1E830531C1E758E00FE01B8 /* Chat */,
+				CB3EC89C1C521B2100447FE3 /* Friend */,
 				A18524C91C1AE3E800BE261D /* Quest */,
 				A1A74CA61C17DFE800648671 /* MainLayer.cpp */,
 				A1A74CA71C17DFE800648671 /* MainLayer.h */,
@@ -1675,6 +1683,24 @@
 			name = Chat;
 			sourceTree = "<group>";
 		};
+		CB3EC89C1C521B2100447FE3 /* Friend */ = {
+			isa = PBXGroup;
+			children = (
+				CB3EC89D1C521C7F00447FE3 /* FriendCell.cpp */,
+				CB3EC89E1C521C7F00447FE3 /* FriendCell.h */,
+			);
+			name = Friend;
+			sourceTree = "<group>";
+		};
+		CB3EC8A01C523D4E00447FE3 /* Friend */ = {
+			isa = PBXGroup;
+			children = (
+				CB3EC8A11C523D6700447FE3 /* FriendData.cpp */,
+				CB3EC8A21C523D6700447FE3 /* FriendData.h */,
+			);
+			name = Friend;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1866,6 +1892,7 @@
 				A1B4AE2E1C200521005906A6 /* GearManager.cpp in Sources */,
 				A1D91BEE1C4E087C00C778F4 /* CampInfoNode.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
+				CB3EC8A31C523D6700447FE3 /* FriendData.cpp in Sources */,
 				A16BF28C1C313E7D00E91458 /* SoldierLocalData.cpp in Sources */,
 				A103F45F1BE38112007F9A83 /* GameRender.cpp in Sources */,
 				A1720EB81BCD2D2E00217E98 /* Api.mm in Sources */,
@@ -1878,6 +1905,7 @@
 				A1720E7A1BCCE0F000217E98 /* CCShake.cpp in Sources */,
 				30DF03C41C0D898E00A1C6EB /* EffectType.cpp in Sources */,
 				A1F58D5D1C3248F700C8A2DD /* ArtifactLocalData.cpp in Sources */,
+				CB3EC89F1C521C7F00447FE3 /* FriendCell.cpp in Sources */,
 				A16BF2821C313E1300E91458 /* AttributeLocalData.cpp in Sources */,
 				307534711BF33ECF0057DCED /* Logger.cpp in Sources */,
 				A16BF2A71C3156A100E91458 /* GearUpgradeData.cpp in Sources */,
