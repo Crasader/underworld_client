@@ -138,7 +138,7 @@
             <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
         </unit>
         <!-- 毁灭古树 -->
-        <unit name="七恶魔拉玛什图" class="hero" hp="1800" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="8" attacksight="400" size="70" height="0" cost="金子:750;木头:350;人口:4" priority="1" max_level="100" render_key="七恶魔拉玛什图" passive_names="闪电攻击_等级1" produce="木头:4" reward="金子:4" armor_preference="轻甲" armor_preference_factor="1.5f">
+        <unit name="七恶魔拉玛什图" class="hero" hp="1800" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="8" attacksight="400" size="70" height="0" cost="金子:750;木头:350;人口:4" priority="1" max_level="100" render_key="七恶魔拉玛什图" produce="木头:4" reward="金子:4" armor_preference="轻甲" armor_preference_factor="1.5f">
             <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
             <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
             <skill class="attack" preperform="0.5" perform="0.0" cd="1.3" min_damage="140" max_damage="160" deliver_class="physical" damage_distance="nearby" range="120" fields="1"/>
@@ -455,7 +455,7 @@
         </buff_effect>
     </buff>
     <!-- 王者祝福 -->
-    <buff name="王者祝福_等级1_王者祝福效果" deliver_nature="ally" deliver_class="magical" span_type="limited" span="15.f" max_overlay="1">
+    <buff name="王者祝福_等级1_王者祝福效果" deliver_nature="ally" deliver_class="magical" span_type="limited" span="15.f" max_overlay="1"  render_key="心灵之火">
         <buff_effect>
             <buff_effect_description buff_effect_condition="immediate"/>
             <effect class="alter_attr" alias_name="未分类" attr_name="armor" value="700.f"/>

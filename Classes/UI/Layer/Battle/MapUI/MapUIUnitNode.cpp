@@ -271,7 +271,7 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
         
         int spellCD(10);
         if (heroUnit) {
-            spellCD = heroUnit->getSpellByIndex(0)->getCDProgress();
+            spellCD = heroUnit->getSpellCount() > 0 ?  heroUnit->getSpellByIndex(0)->getCDProgress() : 0;
         }
         
         if (!heroUnit || spellCD == 0) {
