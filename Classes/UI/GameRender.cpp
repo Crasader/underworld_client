@@ -493,7 +493,6 @@ void GameRender::onUnitNodeHurtTheTarget(UnitNode* node)
 {
     const Unit* unit = node->getUnit();
     hurtUnit(unit->getTarget(), unit->getUnitBase().getRenderKey());
-    node->addSwordEffect();
 }
 
 #pragma mark - BulletNodeObserver

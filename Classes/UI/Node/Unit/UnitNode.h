@@ -44,10 +44,8 @@ public:
     void registerObserver(UnitNodeObserver *observer);
     void update();
     
-    // --------------- effects ---------------
-    void addBlockEffect();
-    void addRecoveryEffect();
-    void addSwordEffect();
+    void addSpellRing(int range);
+    void removeSpellRing();
     
     // --------------- callbacks ---------------
     void onHurt(const std::string& trigger);
@@ -88,6 +86,7 @@ protected:
     void removeHPBar();
     void addShadow();
     void removeShadow();
+    void addSwordEffect();
     Node* addEffect(const std::string& file, const std::function<void()>& callback = nullptr);
     Node* addEffect(const std::string& file, bool loop, const std::function<void()>& callback);
     void rollHintResource(const std::string& resource, int amount, float delay = 0.f);
@@ -107,6 +106,7 @@ private:
     Scheduler *_speedScheduler;
     ActionManager *_actionManager;
     Node *_shadow;
+    Node *_spellRing;
     std::set<std::string> _bufNames;
     std::map<std::string, Node*> _bufs;
     DisplayBar* _hpBar;

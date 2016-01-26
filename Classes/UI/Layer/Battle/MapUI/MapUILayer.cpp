@@ -179,6 +179,7 @@ void MapUILayer::updateMyHpProgress(int progress)
     }
     
     if (_myHpPercentageLabel) {
+        progress = MAX(0, MIN(progress, 100));
         _myHpPercentageLabel->setString(StringUtils::format("%d%%", progress));
     }
 }
@@ -190,6 +191,7 @@ void MapUILayer::updateOpponentsHpProgress(int progress)
     }
     
     if (_opponentsHpPercentageLabel) {
+        progress = MAX(0, MIN(progress, 100));
         _opponentsHpPercentageLabel->setString(StringUtils::format("%d%%", progress));
     }
 }

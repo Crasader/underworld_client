@@ -110,6 +110,7 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
 ,_speedScheduler(nullptr)
 ,_actionManager(nullptr)
 ,_shadow(nullptr)
+,_spellRing(nullptr)
 ,_hpBar(nullptr)
 ,_sprite(nullptr)
 ,_idLabel(nullptr)
@@ -169,8 +170,6 @@ void UnitNode::update()
             // direction and flip
             Unit::Direction direction = _unit->getDirection();
             bool flip = needToFlip(direction);
-            
-            //
             bool needToUpdateUI(false);
             int currentFrame(0);
             const float percentage(calculateHpPercentage());
@@ -223,8 +222,6 @@ void UnitNode::update()
             }
             
             if (needToUpdateUI) {
-//                CCLOG("--------------------- direction: %d ---------------------", direction);
-                
                 // reset
                 _lastSkill = currentSkill;
                 _lastDirection = direction;
@@ -249,23 +246,35 @@ void UnitNode::update()
     }
 }
 
-void UnitNode::addBlockEffect()
+void UnitNode::addSpellRing(int range)
 {
-    Node* effect = addEffect("effect-Block.csb");
-    node_setScale(effect, 1.5f);
+    removeSpellRing();
+    
+    if (!_spellRing) {
+        static const string file("quan-2.csb");
+        const Point& pos = _sprite->getPosition();
+        _spellRing = CSLoader::createNode(file);
+        _spellRing->setPosition(pos + _configData->getFootEffectPosition());
+        addChild(_spellRing, bottomZOrder);
+        
+        // calculate scale
+        static const float defaultRange(500);
+        if (range != SpellType::CAST_DISTANCE_INFINITE) {
+            const float scale = range / defaultRange;
+            _spellRing->setScale(scale);
+        }
+        
+        cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
+        _spellRing->runAction(action);
+        action->gotoFrameAndPlay(0, true);
+    }
 }
 
-void UnitNode::addRecoveryEffect()
+void UnitNode::removeSpellRing()
 {
-    Node* effect = addEffect("effect-recovery.csb");
-    effect->setLocalZOrder(-1);
-}
-
-void UnitNode::addSwordEffect()
-{
-    const string& file = StringUtils::format(_configData->getSwordEffect().c_str(), _lastDirection);
-    if (file.length() > 0) {
-        addEffect(file);
+    if (_spellRing) {
+        _spellRing->removeFromParent();
+        _spellRing = nullptr;
     }
 }
 
@@ -602,6 +611,8 @@ void UnitNode::onAttackAnimationFinished()
             if (_observer) {
                 _observer->onUnitNodeHurtTheTarget(this);
             }
+            
+            addSwordEffect();
         }
     }
     
@@ -709,13 +720,10 @@ void UnitNode::updateActionNode(const Skill* skill, int frameIndex, bool flip)
             }
         }
         
-        // 4. add new effects
-        if (_sprite) {
-            // add HP bar
-            if (!isDead && !_hpBar) {
-                addHPBar();
-                updateHPBar();
-            }
+        // 4. add HP bar
+        if (!isDead) {
+            addHPBar();
+            updateHPBar();
         }
         
     } else {
@@ -800,10 +808,10 @@ void UnitNode::addBuf(const string& name)
                     const Point& basePos = _sprite->getPosition();
                     if (data->isReceiverEffectOnBody()) {
                         buf->setPosition(basePos/* + _configData->getBodyEffectPosition()*/);
-                        /*node_setScale(buf, _configData->getBodyEffectScaleX(), _configData->getBodyEffectScaleY())*/;
+                        node_setScale(buf, _baseScale);
                     } else {
-                        buf->setPosition(_configData->getFootEffectPosition());
-                        node_setScale(buf, _configData->getFootEffectScaleX(), _configData->getFootEffectScaleY());
+                        buf->setPosition(basePos + _configData->getFootEffectPosition());
+                        node_setScale(buf, _configData->getFootEffectScaleX() * _baseScale, _configData->getFootEffectScaleY() * _baseScale);
                     }
                     _bufs.insert(make_pair(name, buf));
                 }
@@ -859,10 +867,11 @@ void UnitNode::updateFeatures()
                     const vector<string>& files = data->getReceiverResourceNames();
                     if (files.size() > 0) {
                         const string& file = files.at(0);
-                        addEffect(file, [this]() {
+                        Node* effect = addEffect(file, [this]() {
                             _extraFeatureScale = 1.0f;
                             scaleActionNode();
                         });
+                        node_setScale(effect, _baseScale);
                         
                         // scale if needed
                         const float rate = data->getReceiverVolumeRate();
@@ -898,7 +907,7 @@ void UnitNode::updateFeatures()
 
 void UnitNode::addHPBar()
 {
-    if (!_hpBar && _unit) {
+    if (!_hpBar && _unit && _sprite) {
         _hpBar = DisplayBar::create(kHP, _unit->getBelongFaction()->getFactionIndex(), _unit->getUnitBase().getUnitClass());
         const Size& size = _sprite->getContentSize();
         const Point& pos = _sprite->getPosition();
@@ -908,7 +917,7 @@ void UnitNode::addHPBar()
         }
         const Point position(pos + Point(0, size.height / 2 + 10.0f + offsetY));
         _hpBar->setPosition(convertToNodeSpace(_actionNode->convertToWorldSpace(position)));
-        addChild(_hpBar);
+        addChild(_hpBar, topZOrder);
     }
 }
 
@@ -931,10 +940,9 @@ void UnitNode::addShadow()
 {
     if (!_shadow) {
         static const string file("GameImages/effects/backcircle.png");
-        const Size& size = _sprite->getContentSize();
         const Point& pos = _sprite->getPosition();
         _shadow = Sprite::create(file);
-        _shadow->setPosition(pos - Point(0, size.height * 0.25f));
+        _shadow->setPosition(pos + _configData->getFootEffectPosition());
         addChild(_shadow, bottomZOrder);
     }
 }
@@ -944,6 +952,14 @@ void UnitNode::removeShadow()
     if (_shadow) {
         _shadow->removeFromParent();
         _shadow = nullptr;
+    }
+}
+
+void UnitNode::addSwordEffect()
+{
+    const string& file = StringUtils::format(_configData->getSwordEffect().c_str(), _lastDirection);
+    if (file.length() > 0) {
+        addEffect(file);
     }
 }
 
