@@ -98,6 +98,7 @@
 		A103F45F1BE38112007F9A83 /* GameRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F45D1BE38112007F9A83 /* GameRender.cpp */; };
 		A10611FF1C3D20A40065070F /* SoldierPieceData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10611FD1C3D20A40065070F /* SoldierPieceData.cpp */; };
 		A10612021C3D22260065070F /* HeroPieceData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10612001C3D22260065070F /* HeroPieceData.cpp */; };
+		A11C481F1C57490F0024E921 /* MapUnitConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A11C481D1C57490F0024E921 /* MapUnitConfigData.cpp */; };
 		A1211B231C0BF55200C27CCC /* LiteralValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B211C0BF55200C27CCC /* LiteralValue.cpp */; };
 		A1211B271C0BF5CC00C27CCC /* RandomCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B251C0BF5CC00C27CCC /* RandomCreator.cpp */; };
 		A1211B291C0BF68E00C27CCC /* GameConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B281C0BF68E00C27CCC /* GameConstants.cpp */; };
@@ -424,6 +425,8 @@
 		A10611FE1C3D20A40065070F /* SoldierPieceData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoldierPieceData.h; sourceTree = "<group>"; };
 		A10612001C3D22260065070F /* HeroPieceData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HeroPieceData.cpp; sourceTree = "<group>"; };
 		A10612011C3D22260065070F /* HeroPieceData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroPieceData.h; sourceTree = "<group>"; };
+		A11C481D1C57490F0024E921 /* MapUnitConfigData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapUnitConfigData.cpp; sourceTree = "<group>"; };
+		A11C481E1C57490F0024E921 /* MapUnitConfigData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapUnitConfigData.h; sourceTree = "<group>"; };
 		A1211B211C0BF55200C27CCC /* LiteralValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LiteralValue.cpp; path = Core/Unit/Element/LiteralValue.cpp; sourceTree = "<group>"; };
 		A1211B221C0BF55200C27CCC /* LiteralValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LiteralValue.h; path = Core/Unit/Element/LiteralValue.h; sourceTree = "<group>"; };
 		A1211B241C0BF5CC00C27CCC /* EnumParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EnumParser.h; path = Core/Utils/EnumParser.h; sourceTree = "<group>"; };
@@ -1121,6 +1124,8 @@
 				A1E929781C0D7F9A0026D85D /* ChatData.h */,
 				A19EE96B1C1C0F1300E46D77 /* LevelLocalData.cpp */,
 				A19EE96C1C1C0F1300E46D77 /* LevelLocalData.h */,
+				A11C481D1C57490F0024E921 /* MapUnitConfigData.cpp */,
+				A11C481E1C57490F0024E921 /* MapUnitConfigData.h */,
 				A16BF2961C31406A00E91458 /* ResourceData.cpp */,
 				A16BF2971C31406A00E91458 /* ResourceData.h */,
 			);
@@ -1965,6 +1970,7 @@
 				A19EE96D1C1C0F1300E46D77 /* LevelLocalData.cpp in Sources */,
 				A1720EAD1BCD2A8400217E98 /* NetworkApi.cpp in Sources */,
 				300098D31BD0CDB000B6E284 /* ResourceType.cpp in Sources */,
+				A11C481F1C57490F0024E921 /* MapUnitConfigData.cpp in Sources */,
 				A16BF29C1C31434500E91458 /* SkillLocalData.cpp in Sources */,
 				A10612021C3D22260065070F /* HeroPieceData.cpp in Sources */,
 				300098CD1BD0A94B00B6E284 /* Coordinate.cpp in Sources */,

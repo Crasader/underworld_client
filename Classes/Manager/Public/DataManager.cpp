@@ -10,6 +10,7 @@
 #include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
 #include "LocalHelper.h"
+#include "MapUnitConfigData.h"
 #include "LevelLocalData.h"
 #include "QuestLocalData.h"
 #include "AchievementLocalData.h"
@@ -108,6 +109,7 @@ DataManager::~DataManager()
 void DataManager::init()
 {
     parseLevelData();
+    parseMapUnitConfigData();
     parseQuestData(kQuestType_Daily);
     parseQuestData(kQuestType_Life);
     parseAchievementData();
@@ -137,11 +139,50 @@ void DataManager::init()
     parseTowerUpgradeData();
 }
 
+string DataManager::getMapData(int mapId) const
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath(StringUtils::format("MapData/%d.xml", mapId));
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            return LocalHelper::loadFileContentString(fileName);
+        }
+    }
+    
+    return "";
+}
+
+string DataManager::getTechTreeData(int mapId) const
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath(StringUtils::format("TechTreeData/%d.xml", mapId));
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            return LocalHelper::loadFileContentString(fileName);
+        }
+    }
+    
+    return "";
+}
+
 #pragma mark - getters
 const LevelLocalData* DataManager::getLevelData(int levelId) const
 {
     if (_levels.find(levelId) != _levels.end()) {
         return _levels.at(levelId);
+    }
+    
+    return nullptr;
+}
+
+const MapUnitConfigData* DataManager::getMapUnitConfigData(int mapId) const
+{
+    if (_mapUnitData.find(mapId) != _mapUnitData.end()) {
+        return _mapUnitData.at(mapId);
     }
     
     return nullptr;
@@ -419,6 +460,35 @@ void DataManager::parseLevelData()
                     assert(false);
                 } else {
                     _levels.insert(make_pair(levelId, data));
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
+void DataManager::parseMapUnitConfigData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath("MapUnitConfig.xml");
+    if (FileUtils::getInstance()->isFileExist(fileName))
+    {
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
+        if (xmlDoc)
+        {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement())
+            {
+                MapUnitConfigData* data = new (nothrow) MapUnitConfigData(item);
+                const int mapId = data->getMapId();
+                if (_mapUnitData.find(mapId) != _mapUnitData.end()) {
+                    assert(false);
+                } else {
+                    _mapUnitData.insert(make_pair(mapId, data));
                 }
             }
             
