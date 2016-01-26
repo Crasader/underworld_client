@@ -28,7 +28,7 @@ class MapUIUnitNodeObserver
 public:
     virtual ~MapUIUnitNodeObserver() {}
     virtual void onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node) = 0;
-    virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node) = 0;
+    virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node, bool isValid) = 0;
     virtual void onMapUIUnitNodeTouchedCanceled(MapUIUnitNode* node) = 0;
 };
 
@@ -62,6 +62,7 @@ private:
     Point _iconBasePosition;
     Sprite *_mask;
     Sprite *_resourcesMask;
+    Sprite *_shiningSprite;
     ProgressTimer* _spellColdDown;
     std::map<ResourceType, ResourceButton*> _resourceButtons;
     Label *_countLabel;

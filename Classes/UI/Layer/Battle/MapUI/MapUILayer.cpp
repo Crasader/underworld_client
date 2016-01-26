@@ -303,10 +303,13 @@ void MapUILayer::onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node)
     }
 }
 
-void MapUILayer::onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node)
+void MapUILayer::onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node, bool isValid)
 {
     if (!isGameOver()) {
-        onUnitTouched(node);
+        if (isValid) {
+            onUnitTouched(node);
+        }
+        
         clearTouchedCampIdx();
     }
 }

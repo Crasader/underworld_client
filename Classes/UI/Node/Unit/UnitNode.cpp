@@ -258,10 +258,10 @@ void UnitNode::addSpellRing(int range)
         addChild(_spellRing, bottomZOrder);
         
         // calculate scale
-        static const float defaultRange(500);
+        static const float defaultRange(435);
         if (range != SpellType::CAST_DISTANCE_INFINITE) {
             const float scale = range / defaultRange;
-            _spellRing->setScale(scale);
+            node_setScale(_spellRing, scale);
         }
         
         cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
@@ -808,7 +808,12 @@ void UnitNode::addBuf(const string& name)
                 if (buf) {
                     const Point& basePos = _sprite->getPosition();
                     if (data->isReceiverEffectOnBody()) {
-                        buf->setPosition(basePos/* + _configData->getBodyEffectPosition()*/);
+                        // TODO
+                        if (name.find("shengdun") != string::npos) {
+                            buf->setPosition(_hpBar->getPosition() + Point(0, 10.0f));
+                        } else {
+                            buf->setPosition(basePos/* + _configData->getBodyEffectPosition()*/);
+                        }
                         node_setScale(buf, _baseScale);
                     } else {
                         buf->setPosition(basePos + _configData->getFootEffectPosition());

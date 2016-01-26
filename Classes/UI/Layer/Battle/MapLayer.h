@@ -36,7 +36,7 @@ public:
     void addUnit(Node* unit, const UnderWorld::Core::Coordinate& coreCoordinate);
     void repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& coreCoordinate);
     
-    void updateSpellRangeRing(const Point& layerPoint);
+    void updateSpellRangeRing(const Point& layerPoint, int range);
     void removeSpellRangeRing();
     void checkUnitInSpellRangeRing(Node* unit);
     

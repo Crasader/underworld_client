@@ -284,7 +284,7 @@ void MapLayer::repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& co
     reorderChild(unit, zOrder);
 }
 
-void MapLayer::updateSpellRangeRing(const Point& layerPoint)
+void MapLayer::updateSpellRangeRing(const Point& layerPoint, int range)
 {
     if (!_spellRing) {
         static const string name("quan-1.csb");
@@ -293,6 +293,13 @@ void MapLayer::updateSpellRangeRing(const Point& layerPoint)
         _spellRing->runAction(action);
         action->gotoFrameAndPlay(0, true);
         _scrollView->addChild(_spellRing);
+    }
+    
+    // calculate scale
+    static const float defaultRange(435);
+    if (range != UnderWorld::Core::SpellType::CAST_DISTANCE_INFINITE) {
+        const float scale = range / defaultRange;
+        _spellRing->setScale(scale);
     }
     
     Node* container = _scrollView->getContainer();

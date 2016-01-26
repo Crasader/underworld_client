@@ -43,6 +43,8 @@ MapUIUnitNode::MapUIUnitNode()
 ,_iconButton(nullptr)
 ,_iconBasePosition(Point::ZERO)
 ,_mask(nullptr)
+,_resourcesMask(nullptr)
+,_shiningSprite(nullptr)
 ,_countLabel(nullptr)
 ,_camp(nullptr)
 ,_idx(CC_INVALID_INDEX)
@@ -83,8 +85,11 @@ bool MapUIUnitNode::init(const Camp* camp)
             }
         }
 #else
-        _shadow = Sprite::create("GameImages/test/ui_iconyingzi.png");
-        addChild(_shadow, bottomZOrder);
+        // background shadow
+        {
+            _shadow = Sprite::create("GameImages/test/ui_iconyingzi.png");
+            addChild(_shadow, bottomZOrder);
+        }
         
         const string& iconFile = getIconFile(camp, true);
         _iconButton = Button::create(iconFile, iconFile);
@@ -102,8 +107,12 @@ bool MapUIUnitNode::init(const Camp* camp)
                     _observer->onMapUIUnitNodeTouchedBegan(this);
                 }
             } else if (type == Widget::TouchEventType::MOVED) {
-                if (!_touchInvalid && button->getTouchMovePosition().distance(button->getTouchBeganPosition()) > TOUCH_CANCEL_BY_MOVING_DISTANCE) {
-                    _touchInvalid = true;
+                if (!_touchInvalid) {
+                    const Point& currentPoint = button->getTouchMovePosition();
+                    const Point& beganPoint = button->getTouchBeganPosition();
+                    if (abs(currentPoint.x - beganPoint.x) > 40.0f) {
+                        _touchInvalid = true;
+                    }
                 }
             } else if (type == Widget::TouchEventType::ENDED) {
                 _isIconTouched = false;
@@ -111,9 +120,10 @@ bool MapUIUnitNode::init(const Camp* camp)
                 
                 if (!_touchInvalid) {
                     SoundManager::getInstance()->playButtonSound();
-                    if(_observer) {
-                        _observer->onMapUIUnitNodeTouchedEnded(this);
-                    }
+                }
+                
+                if(_observer) {
+                    _observer->onMapUIUnitNodeTouchedEnded(this, !_touchInvalid);
                 }
             } else {
                 _isIconTouched = false;
@@ -124,50 +134,60 @@ bool MapUIUnitNode::init(const Camp* camp)
             }
         });
         
-        _resourcesMask = Sprite::create("GameImages/test/ui_black_15.png");
-        _iconButton->addChild(_resourcesMask);
-        
-        _spellColdDown = ProgressTimer::create(Sprite::create("GameImages/test/ui_iconzhezhao.png"));
-        _spellColdDown->setType(ProgressTimer::Type::RADIAL);
-        _spellColdDown->setReverseDirection(true);
-        _spellColdDown->setMidpoint(Vec2(0.5f, 0.5f));
-        _iconButton->addChild(_spellColdDown, topZOrder);
-        
-        _countLabel = CocosUtils::createLabel("0", DEFAULT_FONT_SIZE);
-        addChild(_countLabel);
+        // count label
+        {
+            _countLabel = CocosUtils::createLabel("0", DEFAULT_FONT_SIZE);
+            addChild(_countLabel);
+        }
         
         const Size& shadowSize = _shadow->getContentSize();
         const Size& iconSize = _iconButton->getContentSize();
-        static const float offsetY(2.0f);
+        const float countLabelheight = _countLabel->getContentSize().height;
         static const float shadowOffsetY(5.0f);
-        const Size size(MAX(shadowSize.width, iconSize.width), shadowSize.height / 2 + MAX(shadowSize.height / 2, iconSize.height / 2 + shadowOffsetY));
+        const Size size(MAX(shadowSize.width, iconSize.width), shadowSize.height / 2 + MAX(shadowSize.height / 2, iconSize.height / 2 + shadowOffsetY) + countLabelheight);
         setContentSize(size);
         
         const float x = size.width / 2;
         _shadow->setPosition(x, shadowSize.height / 2);
         _iconBasePosition = _shadow->getPosition() + Point(0, shadowOffsetY);
         _iconButton->setPosition(_iconBasePosition);
+        _countLabel->setPosition(_iconBasePosition + Point(0, (iconSize.height + countLabelheight) / 2));
         
-        _mask = Sprite::create("GameImages/test/ui_iconzhezhao.png");
-        _mask->setPosition(Point(iconSize.width / 2, iconSize.height / 2));
-        _mask->setVisible(false);
-        _iconButton->addChild(_mask, topZOrder);
-        
+        // mask
         {
-            const float height = _countLabel->getContentSize().height;
-            _countLabel->setPosition(Point(x, size.height - height / 2 - offsetY));
+            _mask = Sprite::create("GameImages/test/ui_iconzhezhao.png");
+            _mask->setPosition(Point(iconSize.width / 2, iconSize.height / 2));
+            _mask->setVisible(false);
+            _iconButton->addChild(_mask, topZOrder);
         }
         
+        // resources
         {
+            _resourcesMask = Sprite::create("GameImages/test/ui_black_15.png");
             const Size& size = _resourcesMask->getContentSize();
             _resourcesMask->setPosition(Point(size.width / 2, size.height / 2));
+            _iconButton->addChild(_resourcesMask);
             
             createResourceButton(kResourceType_Gold, _resourcesMask);
             createResourceButton(kResourceType_Wood, _resourcesMask);
         }
         
+        // spell CD
         {
+            _spellColdDown = ProgressTimer::create(Sprite::create("GameImages/test/ui_iconzhezhao.png"));
+            _spellColdDown->setType(ProgressTimer::Type::RADIAL);
+            _spellColdDown->setReverseDirection(true);
+            _spellColdDown->setMidpoint(Vec2(0.5f, 0.5f));
+            _iconButton->addChild(_spellColdDown, topZOrder);
             _spellColdDown->setPosition(Point(iconSize.width / 2, iconSize.height / 2));
+        }
+        
+        // spell activated sprite
+        {
+            _shiningSprite = Sprite::create("GameImages/test/ui_xuanzhong.png");
+            _shiningSprite->setPosition(Point(iconSize.width / 2, iconSize.height / 2));
+            _shiningSprite->setVisible(false);
+            _iconButton->addChild(_shiningSprite, topZOrder);
         }
 #endif
         
@@ -264,22 +284,8 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
 void MapUIUnitNode::setSelected(bool selected)
 {
 #if false
-    if (_iconButton) {
-        static const int selectedTag(100);
-        Node *selectedSprite = _iconButton->getChildByTag(selectedTag);
-        if (selected) {
-            if (!selectedSprite) {
-                Sprite *s = Sprite::create("GameImages/test/ui_xuanzhong.png");
-                s->setTag(selectedTag);
-                const Size& size = _iconButton->getContentSize();
-                s->setPosition(Point(size.width / 2, size.height / 2));
-                _iconButton->addChild(s, topZOrder);
-            }
-        } else {
-            if (selectedSprite) {
-                _iconButton->removeChild(selectedSprite);
-            }
-        }
+    if (_shiningSprite) {
+        _shiningSprite->setVisible(selected);
     }
 #endif
 }

@@ -76,7 +76,7 @@ protected:
     
     // MapUIUnitNodeObserver
     virtual void onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node) override;
-    virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node) override;
+    virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node, bool isValid) override;
     virtual void onMapUIUnitNodeTouchedCanceled(MapUIUnitNode* node) override;
     
     // CampInfoNodeObserver

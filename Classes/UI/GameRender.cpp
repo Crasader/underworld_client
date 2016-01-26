@@ -575,7 +575,7 @@ void GameRender::onMapUILayerSpellRingMoved(const Camp* camp, const Point& posit
             
             if (_mapLayer) {
                 const Point& realPos = _mapLayer->convertToNodeSpace(_mapUILayer->convertToWorldSpace(position));
-                _mapLayer->updateSpellRangeRing(realPos);
+                _mapLayer->updateSpellRangeRing(realPos, 400);
             }
         }
     }

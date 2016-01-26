@@ -149,7 +149,7 @@ void MainLayer::addLevelButtons()
                     SoundManager::getInstance()->playButtonSound();
                     // TODO:
                     SoundManager::getInstance()->playButtonSound();
-                    CocosUtils::replaceScene(BattleScene::create(1 /*button->getTag()*/));
+                    CocosUtils::replaceScene(BattleScene::create(button->getTag()));
                 }
             }
         });
