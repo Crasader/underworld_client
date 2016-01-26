@@ -248,7 +248,6 @@ void GameRender::updateBullets(const Game* game)
         const Bullet* bullet = world->getBullet(i);
         const Coordinate& pos = bullet->getPos();
         const Coordinate& targetPos = bullet->targetPos();
-        const float distance = sqrt(pow(abs(pos.x- targetPos.x), 2) + pow(abs(pos.y - targetPos.y), 2));
         const int64_t key = reinterpret_cast<int64_t>(bullet);
         const bool isExploded(bullet->isExploded());
         if (_allBulletNodes.find(key) != _allBulletNodes.end()) {
@@ -260,10 +259,15 @@ void GameRender::updateBullets(const Game* game)
                 _allBulletNodes.erase(key);
                 _bulletParams.erase(key);
             } else {
-                const pair<float, float>& params = _bulletParams.at(key);
-                const float d1 = params.first;
-                const float h1 = params.second;
-                const float height = h1 * distance / d1;
+                const pair<Coordinate, float>& params = _bulletParams.at(key);
+                const Coordinate& opos = params.first;
+                const float h = params.second;
+                const float d = sqrt(pow(abs(opos.x- targetPos.x), 2) + pow(abs(opos.y - targetPos.y), 2));
+                const float distance = sqrt(pow(abs(pos.x- opos.x), 2) + pow(abs(pos.y - opos.y), 2));
+                
+                const float a = - (2.0f * d/3.0f + h + sqrt(4.0f * d * d / 9.0f + 4.0f * d * h / 3.0f)) / pow(d, 2);
+                const float b = 2.0f * (d/3.0f + sqrt(d * d / 9.0f + d * h / 3.0f)) / d;
+                const float height = a * pow(distance, 2) + b * distance + h;
                 _mapLayer->repositionUnit(node, pos + Coordinate(0, height));
             }
         } else {
@@ -273,7 +277,7 @@ void GameRender::updateBullets(const Game* game)
                 const float height = bullet->getHeight();
                 _mapLayer->addUnit(node, pos + Coordinate(0, height));
                 _allBulletNodes.insert(make_pair(key, node));
-                _bulletParams.insert(make_pair(key, make_pair(distance, height)));
+                _bulletParams.insert(make_pair(key, make_pair(pos, height)));
             }
         }
     }
