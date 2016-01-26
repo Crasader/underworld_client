@@ -30,6 +30,8 @@ static const int startWaveTime(10);
 static const int waveTime(20);
 static const int battleTotalTime(600);
 
+static const float bulletMaxHeightFactor = 1.0f / 5;
+
 GameRender::GameRender(Scene* scene, int mapId, const string& mapData, const string& opponentsAccount)
 :_observer(nullptr)
 ,_scene(scene)
@@ -264,9 +266,8 @@ void GameRender::updateBullets(const Game* game)
                 const float h = params.second;
                 const float d = sqrt(pow(abs(opos.x- targetPos.x), 2) + pow(abs(opos.y - targetPos.y), 2));
                 const float distance = sqrt(pow(abs(pos.x- opos.x), 2) + pow(abs(pos.y - opos.y), 2));
-                
-                const float a = - (2.0f * d/3.0f + h + sqrt(4.0f * d * d / 9.0f + 4.0f * d * h / 3.0f)) / pow(d, 2);
-                const float b = 2.0f * (d/3.0f + sqrt(d * d / 9.0f + d * h / 3.0f)) / d;
+                const float a = - (2.0f * d * bulletMaxHeightFactor + h + 2.0f * sqrt(pow(d * bulletMaxHeightFactor, 2) + d * h * bulletMaxHeightFactor)) / pow(d, 2);
+                const float b = 2.0f * (d * bulletMaxHeightFactor + sqrt(pow(d * bulletMaxHeightFactor, 2) + d * h * bulletMaxHeightFactor)) / d;
                 const float height = a * pow(distance, 2) + b * distance + h;
                 _mapLayer->repositionUnit(node, pos + Coordinate(0, height));
             }
