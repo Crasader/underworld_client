@@ -64,7 +64,7 @@ protected:
     virtual ssize_t onMapUILayerCampsCount(UnderWorld::Core::UnitClass uc) override;
     virtual const UnderWorld::Core::Camp* onMapUILayerCampAtIndex(UnderWorld::Core::UnitClass uc, ssize_t idx) override;
     virtual void onMapUILayerSpellRingMoved(const UnderWorld::Core::Camp* camp, const Point& position) override;
-    virtual void onMapUILayerSpellRingCancelled() override;
+    virtual void onMapUILayerSpellRingCancelled(const UnderWorld::Core::Camp* camp) override;
     virtual void onMapUILayerTryToCastSpell(const UnderWorld::Core::Camp* camp, const Point& position) override;
     
     // VictoryLayerObserver
@@ -82,10 +82,9 @@ private:
     void updateBattleUnitInfos();
 #endif
     bool isCampFull(const UnderWorld::Core::Camp* camp) const;
-    const UnderWorld::Core::Spell* getSpell(const UnderWorld::Core::Camp* camp, int idx, const UnderWorld::Core::Unit** trigger) const;
-    UnderWorld::Core::SpellCastType getSpellCastType(const UnderWorld::Core::Camp* camp, int idx) const;
-    bool canCastSpell(const UnderWorld::Core::Camp* camp, std::string& spellAlias, const UnderWorld::Core::Unit** trigger) const;
-    void castSpell(const UnderWorld::Core::Camp* camp, const UnderWorld::Core::Coordinate& coordinate, const UnderWorld::Core::Unit* target);
+    const UnderWorld::Core::Spell* getSpell(const UnderWorld::Core::Camp* camp, int idx) const;
+    UnderWorld::Core::CommandResult castSpell(const UnderWorld::Core::Spell* spell, const UnderWorld::Core::Unit* trigger, const UnderWorld::Core::Coordinate& coordinate, const UnderWorld::Core::Unit* target);
+    UnitNode* getHeroUnitNode(const UnderWorld::Core::Camp* camp);
     void hurtUnit(const UnderWorld::Core::Unit* target, const std::string& trigger);
     void removeUnit(int unitId);
     void removeAllBullets();

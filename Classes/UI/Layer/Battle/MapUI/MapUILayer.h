@@ -31,7 +31,7 @@ public:
     virtual ssize_t onMapUILayerCampsCount(UnderWorld::Core::UnitClass uc) = 0;
     virtual const UnderWorld::Core::Camp* onMapUILayerCampAtIndex(UnderWorld::Core::UnitClass uc, ssize_t idx) = 0;
     virtual void onMapUILayerSpellRingMoved(const UnderWorld::Core::Camp* camp, const Point& position) = 0;
-    virtual void onMapUILayerSpellRingCancelled() = 0;
+    virtual void onMapUILayerSpellRingCancelled(const UnderWorld::Core::Camp* camp) = 0;
     virtual void onMapUILayerTryToCastSpell(const UnderWorld::Core::Camp* camp, const Point& position) = 0;
 };
 

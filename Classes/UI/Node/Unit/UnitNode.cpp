@@ -296,6 +296,7 @@ void UnitNode::onDead()
     removeShadow();
     removeAllBufs();
     removeHPBar();
+    removeSpellRing();
     
     const string file = _configData->getDieSound();
     if (file.length() > 0) {
@@ -812,6 +813,7 @@ void UnitNode::addBuf(const string& name)
                     } else {
                         buf->setPosition(basePos + _configData->getFootEffectPosition());
                         node_setScale(buf, _configData->getFootEffectScaleX() * _baseScale, _configData->getFootEffectScaleY() * _baseScale);
+                        buf->setLocalZOrder(bottomZOrder);
                     }
                     _bufs.insert(make_pair(name, buf));
                 }

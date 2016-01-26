@@ -610,19 +610,16 @@ void MapUILayer::onTouchEnded(Touch *touch, Event *unused_event)
     if (_isTouchingHeroTableView) {
         const Point& point = touch->getLocation();
         const Rect& rect = getTableViewBoundingBox(kUnitClass_Hero);
-        if (rect.containsPoint(point)) {
+        if (_selectedHeroCamp) {
             if (_observer) {
-                _observer->onMapUILayerSpellRingCancelled();
-            }
-        } else {
-            if (_selectedHeroCamp) {
-                if (_observer) {
+                if (rect.containsPoint(point)) {
+                    _observer->onMapUILayerSpellRingCancelled(_selectedHeroCamp);
+                } else {
                     _observer->onMapUILayerTryToCastSpell(_selectedHeroCamp, point);
                 }
-                
-                _selectedHeroCamp = nullptr;
             }
             
+            _selectedHeroCamp = nullptr;
             _isTouchingHeroTableView = false;
         }
     }

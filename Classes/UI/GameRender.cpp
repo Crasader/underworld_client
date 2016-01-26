@@ -398,71 +398,40 @@ bool GameRender::isCampFull(const Camp* camp) const
     return false;
 }
 
-const Spell* GameRender::getSpell(const Camp* camp, int idx, const Unit** trigger) const
+const Spell* GameRender::getSpell(const Camp* camp, int idx) const
 {
     if (camp) {
-        const string& unitName = camp->getUnitSetting().getUnitTypeName();
-        if (_myHeroes.find(unitName) != _myHeroes.end()) {
-            const map<int, const Unit*>& heroes = _myHeroes.at(unitName);
-            if (heroes.size() > 0) {
-                const Unit* hero = heroes.begin()->second;
-                if (hero) {
-                    const int cnt = hero->getSpellCount();
-                    if (idx < cnt) {
-                        *trigger = hero;
-                        return hero->getSpellByIndex(idx);
-                    }
-                }
-            }
+        const Unit* hero = camp->getHero();
+        if (hero) {
+            return hero->getSpellByIndex(idx);
         }
     }
     
     return nullptr;
 }
 
-SpellCastType GameRender::getSpellCastType(const Camp* camp, int idx) const
+CommandResult GameRender::castSpell(const Spell* spell, const Unit* trigger, const Coordinate& coordinate, const Unit* target)
 {
-    const Unit* trigger(nullptr);
-    const Spell* spell = getSpell(camp, idx, &trigger);
-    if (spell) {
-        const SpellCastType castType = spell->getSpellType()->getCastType();
-        return castType;
+    if (spell && trigger) {
+        const string& spellAlias = spell->getSpellType()->getAlias();
+        return _commander->tryGiveUnitCommand(trigger, kCommandClass_Cast, &coordinate, target, spellAlias);
     }
     
-    return SPELL_CAST_TYPE_COUNT;
+    return kCommandResult_failed;
 }
 
-bool GameRender::canCastSpell(const Camp* camp, string& spellAlias, const Unit** trigger) const
+UnitNode* GameRender::getHeroUnitNode(const Camp* camp)
 {
-    const Spell* spell = getSpell(camp, 0, trigger);
-    if (spell) {
-        const SpellType* sp = spell->getSpellType();
-        if (sp) {
-            const Unit* hero = *trigger;
-            if (hero) {
-                spellAlias = sp->getAlias();
-                const int cd = spell->getCDProgress();
-                if (cd <= 0) {
-                    return true;
-                }
-            }
+    const Unit* trigger = camp->getHero();
+    if (trigger) {
+        const int unitId = trigger->getUnitId();
+        if (_allUnitNodes.find(unitId) != _allUnitNodes.end()) {
+            UnitNode* node = _allUnitNodes.at(unitId);
+            return node;
         }
     }
     
-    return false;
-}
-
-void GameRender::castSpell(const Camp* camp, const Coordinate& coordinate, const Unit* target)
-{
-    string spellAlias;
-    const Unit* trigger(nullptr);
-    if (canCastSpell(camp, spellAlias, &trigger)) {
-        if (trigger) {
-            _commander->tryGiveUnitCommand(trigger, kCommandClass_Cast, &coordinate, target, spellAlias);
-        } else {
-            assert(false);
-        }
-    }
+    return nullptr;
 }
 
 void GameRender::hurtUnit(const Unit* target, const string& trigger)
@@ -527,9 +496,12 @@ void GameRender::onMapUILayerUnitSelected(MapUIUnitNode* node)
         const Camp* camp = node->getCamp();
         if (camp) {
             if (isCampFull(camp)) {
-                SpellCastType castType = getSpellCastType(camp, 0);
-                if (kSpellCastType_Self == castType) {
-                    castSpell(camp, Coordinate::ZERO, nullptr);
+                const Spell* spell = getSpell(camp, 0);
+                if (spell) {
+                    SpellCastType castType = spell->getSpellType()->getCastType();
+                    if (kSpellCastType_Self == castType) {
+                        castSpell(spell, camp->getHero(), Coordinate::ZERO, nullptr);
+                    }
                 }
             } else {
                 _commander->tryGiveCampCommand(camp, 1);
@@ -569,8 +541,13 @@ const Camp* GameRender::onMapUILayerCampAtIndex(UnitClass uc, ssize_t idx)
     return nullptr;
 }
 
-void GameRender::onMapUILayerSpellRingCancelled()
+void GameRender::onMapUILayerSpellRingCancelled(const Camp* camp)
 {
+    UnitNode* node = getHeroUnitNode(camp);
+    if (node) {
+        node->removeSpellRing();
+    }
+    
     if (_mapLayer) {
         _mapLayer->removeSpellRangeRing();
     }
@@ -578,12 +555,24 @@ void GameRender::onMapUILayerSpellRingCancelled()
 
 void GameRender::onMapUILayerSpellRingMoved(const Camp* camp, const Point& position)
 {
-    SpellCastType castType = getSpellCastType(camp, 0);
-    if (kSpellCastType_Position == castType ||
-        kSpellCastType_PositionOrUnit == castType) {
-        string spellAlias;
-        const Unit* trigger(nullptr);
-        if (canCastSpell(camp, spellAlias, &trigger)) {
+    const Spell* spell = getSpell(camp, 0);
+    if (!spell) {
+        return;
+    }
+    
+    const SpellType* spellType = spell->getSpellType();
+    if (!spellType) {
+        return;
+    }
+    
+    SpellCastType castType = spellType->getCastType();
+    if (kSpellCastType_Position == castType || kSpellCastType_PositionOrUnit == castType) {
+        if (spell->getCDProgress() <= 0) {
+            UnitNode* node = getHeroUnitNode(camp);
+            if (node) {
+                node->addSpellRing(spellType->getCastDistance());
+            }
+            
             if (_mapLayer) {
                 const Point& realPos = _mapLayer->convertToNodeSpace(_mapUILayer->convertToWorldSpace(position));
                 _mapLayer->updateSpellRangeRing(realPos);
@@ -594,19 +583,25 @@ void GameRender::onMapUILayerSpellRingMoved(const Camp* camp, const Point& posit
 
 void GameRender::onMapUILayerTryToCastSpell(const Camp* camp, const Point& position)
 {
-    const Unit* trigger(nullptr);
-    const Spell* spell = getSpell(camp, 0, &trigger);
+    const Spell* spell = getSpell(camp, 0);
     if (spell) {
         SpellCastType castType = spell->getSpellType()->getCastType();
-        if (kSpellCastType_Position == castType) {
-            Coordinate coordinate = _mapLayer->convertPoint(position);
-            castSpell(camp, coordinate, nullptr);
-            if (spell->getSpellName().find("火球术") != string::npos) {
-                if (_mapLayer) {
-                    _mapLayer->addFireballSpellEffect();
+        if (kSpellCastType_Position == castType || kSpellCastType_PositionOrUnit == castType) {
+            const Coordinate& coordinate = _mapLayer->convertPoint(position);
+            CommandResult result = castSpell(spell, camp->getHero(), coordinate, nullptr);
+            if (kCommandResult_suc == result) {
+                if (spell->getSpellName().find("火球术") != string::npos) {
+                    if (_mapLayer) {
+                        _mapLayer->addFireballSpellEffect();
+                    }
                 }
             }
         }
+    }
+    
+    UnitNode* node = getHeroUnitNode(camp);
+    if (node) {
+        node->removeSpellRing();
     }
     
     if (_mapLayer) {
