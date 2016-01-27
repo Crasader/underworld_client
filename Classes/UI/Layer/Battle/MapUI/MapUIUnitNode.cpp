@@ -271,24 +271,26 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
             button->setPosition(resourceMaskWidth / 2, 0);
         }
         
-        if (hero && colorful) {
-            if (heroUnit) {
-                if (!heroUnit->isAlive()) {
-                    colorful = false;
+        if (hero) {
+            if (colorful) {
+                if (heroUnit) {
+                    if (!heroUnit->isAlive()) {
+                        colorful = false;
+                    }
+                } else {
+                    if (!_resourcesMask->isVisible()) {
+                        colorful = false;
+                    }
                 }
-            } else {
-                if (!_resourcesMask->isVisible()) {
-                    colorful = false;
+                
+                if (!colorful) {
+                    _countLabel->setString("召唤中");
+                } else {
+                    _countLabel->setString(" ");
                 }
-            }
-            
-            if (!colorful) {
-                _countLabel->setString("召唤中");
             } else {
                 _countLabel->setString(" ");
             }
-        } else {
-            _countLabel->setString(" ");
         }
         
         const string& iconFile = getIconFile(_camp, colorful);

@@ -95,7 +95,7 @@ bool MapLayer::init(int mapId, const string& mapData)
         }
         //--------- foreground ---------- //
         // TODO: change "_mapId"
-        _tiledMap = cocos2d::experimental::TMXTiledMap::create(StringUtils::format("map/%d.tmx", (_mapId % 2)));
+        _tiledMap = cocos2d::experimental::TMXTiledMap::create(StringUtils::format("map/%d.tmx", (2 - _mapId % 2)));
         _scrollView->addChild(_tiledMap, TILEDMAP_ZORDER, TILEDMAP_TAG);
         _mainLayer = _tiledMap->getLayer(TILEDMAP_LAYER_FOREGROUND);
         const Size &mapSize = _tiledMap->getMapSize();
