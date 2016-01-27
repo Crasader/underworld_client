@@ -105,6 +105,7 @@ private:
     std::map<UnderWorld::Core::UnitClass, TableView*> _tableViews;
     Label *_timeLabel;
     Label *_nextWaveTimeLabel;
+    ProgressTimer *_nextWaveProgress;
     ResourceButton *_goldResourceButton;
     ResourceButton *_woodResourceButton;
     Label *_populationLabel;

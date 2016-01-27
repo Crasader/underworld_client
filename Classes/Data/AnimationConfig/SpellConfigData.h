@@ -11,31 +11,52 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
+#include "SkllType.h"
 
 namespace tinyxml2 { class XMLElement; }
 
 class SpellConfigData
 {
 public:
+    typedef enum
+    {
+        kFoot = 0,
+        kBody = 1,
+        kHead = 2,
+    }SpellPosition;
+    
+public:
     SpellConfigData(tinyxml2::XMLElement *xmlElement);
     virtual ~SpellConfigData();
     
+    // key
     const std::string& getSpellName() const;
+    
+    // caster params
     const std::vector<std::string>& getCasterResourceNames() const;
-    bool isCasterEffectOnBody() const;
-    float getCasterVolumeRate() const;
+    SpellPosition getCasterSpellPosition() const;
+    bool isCasterShakeScreen() const;
+    
+    // receiver params
     const std::vector<std::string>& getReceiverResourceNames() const;
-    bool isReceiverEffectOnBody() const;
-    float getReceiverVolumeRate() const;
+    SpellPosition getReceiverSpellPosition() const;
+    const std::map<UnderWorld::Core::SkillClass, float>& getReceiverSpeedRates() const;
+    float getReceiverSpeedRate(UnderWorld::Core::SkillClass sc) const;
+    const std::map<UnderWorld::Core::SkillClass, float>& getReceiverVolumeRates() const;
+    float getReceiverVolumeRate(UnderWorld::Core::SkillClass sc) const;
     
 private:
     std::string _spellName;
+    
     std::vector<std::string> _casterResourceNames;
-    bool _isCasterEffectOnBody;
-    float _casterVolumeRate;
-    std::vector<std::string> _resourceNames;
-    bool _isReceiverEffectOnBody;
-    float _receiverVolumeRate;
+    SpellPosition _casterSpellPosition;
+    bool _isCasterShakeScreen;
+    
+    std::vector<std::string> _receiverResourceNames;
+    SpellPosition _receiverSpellPosition;
+    std::map<UnderWorld::Core::SkillClass, float> _receiverSpeedRates;
+    std::map<UnderWorld::Core::SkillClass, float> _receiverVolumeRates;
 };
 
 #endif /* SpellConfigData_h */

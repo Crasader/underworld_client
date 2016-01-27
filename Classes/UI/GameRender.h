@@ -49,6 +49,7 @@ protected:
     virtual void onUnitNodeUpdatedFeatures(int unitId) override;
     virtual void onUnitNodePlayDeadAnimationFinished(int unitId) override;
     virtual void onUnitNodeHurtTheTarget(UnitNode* node) override;
+    virtual void onUnitNodeShakeScreen(UnitNode* node) override;
     
     // BulletNodeObserver
     virtual void onBulletNodeReachedTarget(BulletNode* node) override;

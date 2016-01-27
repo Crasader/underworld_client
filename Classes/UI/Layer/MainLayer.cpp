@@ -114,7 +114,8 @@ void MainLayer::onEnter()
     
     if (_scrollView)
     {
-        _scrollView->jumpToBottom();
+//        _scrollView->jumpToBottom();
+        _scrollView->setInnerContainerPosition(Point(-1180, -720));
     }
 }
 
@@ -146,10 +147,9 @@ void MainLayer::addLevelButtons()
                 }
             } else if (type == Widget::TouchEventType::ENDED) {
                 if (!_touchInvalid) {
-                    SoundManager::getInstance()->playButtonSound();
                     // TODO:
                     SoundManager::getInstance()->playButtonSound();
-                    CocosUtils::replaceScene(BattleScene::create(button->getTag()));
+                    CocosUtils::replaceScene(BattleScene::create(button->getTag() + 1));
                 }
             }
         });

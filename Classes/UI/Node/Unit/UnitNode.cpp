@@ -18,7 +18,6 @@
 #include "DataManager.h"
 #include "UAConfigData.h"
 #include "URConfigData.h"
-#include "SpellConfigData.h"
 #include "EffectConfigData.h"
 #include "SoundManager.h"
 #include "CocosUtils.h"
@@ -122,10 +121,9 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
 ,_isPlayingAttackAnimation(false)
 ,_animationCounter(0)
 ,_rollHintCounter(0)
+,_baseSpeed(1.0f)
 ,_baseScale(1.0f)
 ,_extraCasterScale(1.0f)
-,_extraFeatureScale(1.0f)
-,_extraBufScale(1.0f)
 {
     _unitName = unit->getUnitBase().getRenderKey();
     
@@ -565,11 +563,11 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
                 speed = animationDuration / playTime;
             }
             
-            if (speed != 1.0f) {
-                _speedScheduler->setTimeScale(speed);
-            } else if (_speedScheduler->getTimeScale() != 1.0f) {
-                _speedScheduler->setTimeScale(1.0f);
+            if (speed != 1.0f && speed > 0) {
+                _baseSpeed = speed;
             }
+            
+            scheduleSpeed();
         }
     }
 }
@@ -682,24 +680,11 @@ void UnitNode::updateActionNode(const Skill* skill, int frameIndex, bool flip)
                             if (data) {
                                 const vector<string>& resources = data->getCasterResourceNames();
                                 const size_t cnt = resources.size();
-                                const bool isOnBody = data->isCasterEffectOnBody();
                                 if (cnt > 0) {
-                                    Node* node = addEffect(resources.at(0), [this]() {
-                                        _extraCasterScale = 1.0f;
-                                        scaleActionNode();
-                                    });
-                                    
-                                    if (!isOnBody) {
-                                        node->setPosition(_configData->getFootEffectPosition());
-                                        node_setScale(node, _configData->getFootEffectScaleX(), _configData->getFootEffectScaleY());
-                                        node->setLocalZOrder(-1);
-                                    }
+                                    addEffect(resources.at(0));
                                     
                                     if (cnt > 1) {
-                                        Node* node = addEffect(resources.at(1));
-                                        node->setPosition(_configData->getFootEffectPosition());
-                                        node_setScale(node, _configData->getFootEffectScaleX(), _configData->getFootEffectScaleY());
-                                        node->setLocalZOrder(-1);
+                                        addEffect(resources.at(1), SpellConfigData::kFoot, false, false, nullptr);
                                         
                                         if (cnt > 2) {
                                             Node* node = addEffect(resources.at(2));
@@ -708,11 +693,9 @@ void UnitNode::updateActionNode(const Skill* skill, int frameIndex, bool flip)
                                     }
                                 }
                                 
-                                // scale if needed
-                                const float rate = data->getCasterVolumeRate();
-                                if (rate != 1.0f) {
-                                    _extraCasterScale = rate;
-                                    scaleActionNode();
+                                const bool shakeScreen = data->isCasterShakeScreen();
+                                if (shakeScreen && _observer) {
+                                    _observer->onUnitNodeShakeScreen(this);
                                 }
                             }
                         }
@@ -740,13 +723,39 @@ void UnitNode::removeActionNode()
         _actionNode = nullptr;
         _currentAction = nullptr;
         _baseScale = 1.0f;
+        _baseSpeed = 1.0f;
+    }
+}
+
+void UnitNode::scheduleSpeed()
+{
+    if (_speedScheduler) {
+        float extraSpeed(1.0f);
+        const SkillClass skillClass(unit_getSkillClass(_unit));
+        if (_extraBufSpeeds.find(skillClass) != _extraBufSpeeds.end()) {
+            extraSpeed = _extraBufSpeeds.at(skillClass);
+        }
+        
+        const float speed = _baseSpeed * extraSpeed;
+        
+        if (speed != 1.0f) {
+            _speedScheduler->setTimeScale(speed);
+        } else if (_speedScheduler->getTimeScale() != 1.0f) {
+            _speedScheduler->setTimeScale(1.0f);
+        }
     }
 }
 
 void UnitNode::scaleActionNode()
 {
     if (_actionNode) {
-        const float scale = _baseScale * MAX(_extraCasterScale, MAX(_extraFeatureScale, _extraBufScale));
+        float extraScale(1.0f);
+        const SkillClass skillClass(unit_getSkillClass(_unit));
+        if (_extraBufScales.find(skillClass) != _extraBufScales.end()) {
+            extraScale = _extraBufScales.at(skillClass);
+        }
+        
+        const float scale = _baseScale * extraScale;
         node_setScale(_actionNode, scale);
     }
 }
@@ -778,20 +787,62 @@ void UnitNode::updateBufs()
         removeBuf(*iter);
     }
     
-    // re-calculate the buf scale
-    for (set<string>::const_iterator iter = added.begin(); iter != added.end(); ++iter) {
-        const string& name = *iter;
-        const SpellConfigData* data = DataManager::getInstance()->getSpellConfigData(name);
-        if (data) {
-            const float rate = data->getReceiverVolumeRate();
-            if (rate != 1.0f) {
-                _extraBufScale = MAX(_extraBufScale, rate);
+    ssize_t cnt = added.size();
+    if (cnt > 0) {
+        // re-calculate the buf scale
+        for (set<string>::const_iterator iter = added.begin(); iter != added.end(); ++iter) {
+            const string& name = *iter;
+            const SpellConfigData* data = DataManager::getInstance()->getSpellConfigData(name);
+            if (data) {
+                {
+                    const map<SkillClass, float>& rates = data->getReceiverSpeedRates();
+                    for (map<SkillClass, float>::const_iterator iter = rates.begin(); iter != rates.end(); ++iter) {
+                        const SkillClass sc = iter->first;
+                        const float rate = iter->second;
+                        if (_extraBufSpeeds.find(sc) != _extraBufSpeeds.end()) {
+                            const float extraRate = _extraBufSpeeds.at(sc);
+                            _extraBufSpeeds.at(sc) = rate + extraRate;
+                        } else {
+                            _extraBufSpeeds.insert(make_pair(sc, rate));
+                        }
+                    }
+                }
+                
+                {
+                    const map<SkillClass, float>& rates = data->getReceiverVolumeRates();
+                    for (map<SkillClass, float>::const_iterator iter = rates.begin(); iter != rates.end(); ++iter) {
+                        const SkillClass sc = iter->first;
+                        const float rate = iter->second;
+                        if (_extraBufScales.find(sc) != _extraBufScales.end()) {
+                            const float extraRate = _extraBufScales.at(sc);
+                            _extraBufScales.at(sc) = rate + extraRate;
+                        } else {
+                            _extraBufScales.insert(make_pair(sc, rate));
+                        }
+                    }
+                }
+                
+                addBuf(*iter);
             }
-            
-            addBuf(*iter);
+        }
+        
+        // calculate average
+        {
+            for (map<SkillClass, float>::iterator iter = _extraBufSpeeds.begin(); iter != _extraBufSpeeds.end(); ++iter) {
+                const float sum = iter->second;
+                iter->second = sum / cnt;
+            }
+        }
+        
+        {
+            for (map<SkillClass, float>::iterator iter = _extraBufScales.begin(); iter != _extraBufScales.end(); ++iter) {
+                const float sum = iter->second;
+                iter->second = sum / cnt;
+            }
         }
     }
     
+    scheduleSpeed();
     scaleActionNode();
 }
 
@@ -804,22 +855,9 @@ void UnitNode::addBuf(const string& name)
             const vector<string>& files = data->getReceiverResourceNames();
             if (files.size() > 0) {
                 const string& file = files.at(0);
-                Node* buf = addEffect(file, true, nullptr);
+                const SpellConfigData::SpellPosition& spellPosition = data->getReceiverSpellPosition();
+                Node* buf = addEffect(file, spellPosition, true, true, nullptr);
                 if (buf) {
-                    const Point& basePos = _sprite->getPosition();
-                    if (data->isReceiverEffectOnBody()) {
-                        // TODO
-                        if (name.find("shengdun") != string::npos) {
-                            buf->setPosition(_hpBar->getPosition() + Point(0, 10.0f));
-                        } else {
-                            buf->setPosition(basePos/* + _configData->getBodyEffectPosition()*/);
-                        }
-                        node_setScale(buf, _baseScale);
-                    } else {
-                        buf->setPosition(basePos + _configData->getFootEffectPosition());
-                        node_setScale(buf, _configData->getFootEffectScaleX() * _baseScale, _configData->getFootEffectScaleY() * _baseScale);
-                        buf->setLocalZOrder(bottomZOrder);
-                    }
                     _bufs.insert(make_pair(name, buf));
                 }
             }
@@ -874,18 +912,7 @@ void UnitNode::updateFeatures()
                     const vector<string>& files = data->getReceiverResourceNames();
                     if (files.size() > 0) {
                         const string& file = files.at(0);
-                        Node* effect = addEffect(file, [this]() {
-                            _extraFeatureScale = 1.0f;
-                            scaleActionNode();
-                        });
-                        node_setScale(effect, _baseScale);
-                        
-                        // scale if needed
-                        const float rate = data->getReceiverVolumeRate();
-                        if (rate != 1.0f) {
-                            _extraFeatureScale = rate;
-                            scaleActionNode();
-                        }
+                        addEffect(file, SpellConfigData::kBody, true, false, nullptr);
                     }
                 }
             }
@@ -916,14 +943,7 @@ void UnitNode::addHPBar()
 {
     if (!_hpBar && _unit && _sprite) {
         _hpBar = DisplayBar::create(kHP, _unit->getBelongFaction()->getFactionIndex(), _unit->getUnitBase().getUnitClass());
-        const Size& size = _sprite->getContentSize();
-        const Point& pos = _sprite->getPosition();
-        float offsetY(0);
-        if (_configData) {
-            offsetY = _configData->getHpBarPosY();
-        }
-        const Point position(pos + Point(0, size.height / 2 + 10.0f + offsetY));
-        _hpBar->setPosition(convertToNodeSpace(_actionNode->convertToWorldSpace(position)));
+        _hpBar->setPosition(getHPBarPosition());
         addChild(_hpBar, topZOrder);
     }
 }
@@ -941,6 +961,26 @@ void UnitNode::removeHPBar()
         _hpBar->removeFromParent();
         _hpBar = nullptr;
     }
+}
+
+Point UnitNode::getHPBarPosition() const
+{
+    if (_hpBar && (Point::ZERO != _hpBar->getPosition())) {
+        return _hpBar->getPosition();
+    } else if (_sprite) {
+        const Size& size = _sprite->getContentSize();
+        const Point& pos = _sprite->getPosition();
+        float offsetY(0);
+        if (_configData) {
+            offsetY = _configData->getHpBarPosY();
+        }
+        
+        Point position(pos + Point(0, size.height / 2 + 10.0f + offsetY));
+        position = convertToNodeSpace(_actionNode->convertToWorldSpace(position));
+        return position;
+    }
+    
+    return Point::ZERO;
 }
 
 void UnitNode::addShadow()
@@ -970,54 +1010,82 @@ void UnitNode::addSwordEffect()
     }
 }
 
-Node* UnitNode::addEffect(const string& file, const function<void()>& callback)
+Node* UnitNode::addEffect(const string& file)
 {
     if (_sprite) {
-        Node* effect = addEffect(file, false, callback);
-        effect->setPosition(_sprite->getPosition());
+        Node* effect = addEffect(file, SpellConfigData::kBody, false, false, nullptr);
         return effect;
     }
     
     return nullptr;
 }
 
-Node* UnitNode::addEffect(const string& file, bool loop, const function<void()>& callback)
+Node* UnitNode::addEffect(const string& file,
+                          const SpellConfigData::SpellPosition& position,
+                          bool scale,
+                          bool loop,
+                          const function<void()>& callback)
 {
-    if (file.length() > 0) {
-        const size_t found = file.find_last_of(".");
-        if (found != string::npos) {
-            const string& suffix = file.substr(found + 1);
-            if ("csb" == suffix) {
-                Node *effect = CSLoader::createNode(file);
-                // TODO: remove temp code
-                bool flip(file == "jineng-JiaSu.csb");
-                
-                if (flip ^ (_needToFlip != _isLastFlipped)) {
-                    node_flipX(effect);
-                }
-                
-                addChild(effect, topZOrder);
-                cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
-                effect->runAction(action);
-                action->gotoFrameAndPlay(0, loop);
-                if (!loop) {
-                    action->setLastFrameCallFunc([effect, callback]() {
-                        effect->removeFromParent();
-                        if (callback) {
-                            callback();
-                        }
-                    });
-                }
-                
-                return effect;
-            } else if ("plist" == suffix) {
-                ParticleSystemQuad *effect = ParticleSystemQuad::create(file);
-                if (!loop) {
-                    effect->setAutoRemoveOnFinish(true);
-                }
-                addChild(effect, topZOrder);
-                return effect;
+    if (!_sprite || file.empty()) {
+        return nullptr;
+    }
+    
+    const size_t found = file.find_last_of(".");
+    if (found != string::npos) {
+        const string& suffix = file.substr(found + 1);
+        if ("csb" == suffix) {
+            Node *effect = CSLoader::createNode(file);
+            // TODO: remove temp code
+            bool flip(file == "jineng-JiaSu.csb");
+            
+            if (flip ^ (_needToFlip != _isLastFlipped)) {
+                node_flipX(effect);
             }
+            
+            addChild(effect, topZOrder);
+            cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
+            effect->runAction(action);
+            action->gotoFrameAndPlay(0, loop);
+            if (!loop) {
+                action->setLastFrameCallFunc([effect, callback]() {
+                    effect->removeFromParent();
+                    if (callback) {
+                        callback();
+                    }
+                });
+            } else {
+                assert(!callback);
+            }
+            
+            // set position
+            if (SpellConfigData::kFoot == position) {
+                effect->setPosition(_configData->getFootEffectPosition());
+                if (scale) {
+                    node_setScale(effect, _configData->getFootEffectScaleX() * _baseScale, _configData->getFootEffectScaleY() * _baseScale);
+                } else {
+                    node_setScale(effect, _configData->getFootEffectScaleX(), _configData->getFootEffectScaleY());
+                }
+                effect->setLocalZOrder(bottomZOrder);
+            } else if (SpellConfigData::kBody == position) {
+                effect->setPosition(_sprite->getPosition());
+                if (scale) {
+                    node_setScale(effect, _baseScale);
+                }
+            } else if (SpellConfigData::kHead == position) {
+                effect->setPosition(getHPBarPosition());
+                if (scale) {
+                    node_setScale(effect, _baseScale);
+                }
+            }
+            
+            return effect;
+        } else if ("plist" == suffix) {
+            ParticleSystemQuad *effect = ParticleSystemQuad::create(file);
+            if (!loop) {
+                effect->setAutoRemoveOnFinish(true);
+            }
+            addChild(effect, topZOrder);
+            return effect;
         }
     }
     

@@ -21,6 +21,7 @@
 #include "DefeatLayer.h"
 #include "MainLayer.h"
 #include "MessageBoxLayer.h"
+#include "CCShake.h"
 
 using namespace std;
 using namespace UnderWorld::Core;
@@ -467,6 +468,20 @@ void GameRender::onUnitNodeHurtTheTarget(UnitNode* node)
 {
     const Unit* unit = node->getUnit();
     hurtUnit(unit->getTarget(), unit->getUnitBase().getRenderKey());
+}
+
+void GameRender::onUnitNodeShakeScreen(UnitNode* node)
+{
+    if (_scene) {
+        static float shake_duration = 0.4f;
+        static float shake_strength = 10.0f;
+        static float shake_action_tag = 2016;
+        
+        CCShake* shakeAction = CCShake::actionWithDuration(shake_duration, shake_strength, Point::ZERO);
+        shakeAction->setTag(shake_action_tag);
+        _scene->stopActionByTag(shake_action_tag);
+        _scene->runAction(shakeAction);
+    }
 }
 
 #pragma mark - BulletNodeObserver

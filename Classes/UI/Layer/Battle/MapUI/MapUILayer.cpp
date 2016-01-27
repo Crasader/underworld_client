@@ -30,9 +30,9 @@ static const UnitClass tableUnitClass[] = {
 };
 static const size_t tablesCount = sizeof(tableUnitClass) / sizeof(UnitClass);
 
-static ProgressTimer* createProgressTimer()
+static ProgressTimer* createProgressTimer(const string& file)
 {
-    Sprite* s = Sprite::create("GameImages/test/ui_xt_1.png");
+    Sprite* s = Sprite::create(file);
     ProgressTimer* pt = ProgressTimer::create(s);
     pt->setType(ProgressTimer::Type::BAR);
     pt->setBarChangeRate(Vec2(1.0f, 0.0f));
@@ -64,6 +64,7 @@ MapUILayer::MapUILayer()
 ,_selectedHeroCamp(nullptr)
 ,_timeLabel(nullptr)
 ,_nextWaveTimeLabel(nullptr)
+,_nextWaveProgress(nullptr)
 ,_goldResourceButton(nullptr)
 ,_woodResourceButton(nullptr)
 ,_populationLabel(nullptr)
@@ -201,12 +202,23 @@ void MapUILayer::updateWaveTime(int time)
     if (_nextWaveTimeLabel) {
         _nextWaveTimeLabel->setString(StringUtils::format("%ds", time));
     }
+    
+    if (_nextWaveProgress) {
+        static const unsigned int totalTime(20.0f);
+        _nextWaveProgress->setPercentage(100.0f * time / totalTime);
+    }
 }
 
 void MapUILayer::updateRemainingTime(int time)
 {
     if (_timeLabel) {
         _timeLabel->setString(CocosUtils::getFormattedTime(time));
+        
+        if (time <= 180) {
+            _timeLabel->setTextColor(Color4B::RED);
+        } else {
+            _timeLabel->setTextColor(Color4B::WHITE);
+        }
     }
 }
 
@@ -404,7 +416,7 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             label->setPosition(Point(size.width / 2, size.height * 0.75));
             sprite->addChild(label);
             
-            _myHpProgress = createProgressTimer();
+            _myHpProgress = createProgressTimer("GameImages/test/ui_xt_1.png");
             _myHpProgress->setPosition(Point(size.width / 2, 8.0f));
             sprite->addChild(_myHpProgress);
             
@@ -433,7 +445,6 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             sprite->addChild(label);
             
             _timeLabel = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
-            _timeLabel->setTextColor(Color4B::RED);
             _timeLabel->setPosition(Point(size.width / 2, size.height * 0.25f));
             sprite->addChild(_timeLabel);
         }
@@ -457,7 +468,7 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             label->setPosition(Point(size.width / 2, size.height * 0.75));
             sprite->addChild(label);
             
-            _opponentsHpProgress = createProgressTimer();
+            _opponentsHpProgress = createProgressTimer("GameImages/test/ui_xt_1.png");
             _opponentsHpProgress->setPosition(Point(size.width / 2, 10.0f));
             sprite->addChild(_opponentsHpProgress);
             
@@ -514,14 +525,21 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             
             Label* label = CocosUtils::createLabel(LocalHelper::getString("battle_mapUI_nextWaveTime"), 16);
             label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
-            label->setPosition(Point(20, size.height / 2));
-            sprite->addChild(label);
+            label->setPosition(Point(20, size.height * 0.7f));
+            sprite->addChild(label, 1);
             
             _nextWaveTimeLabel = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
-            _nextWaveTimeLabel->setTextColor(Color4B::RED);
             _nextWaveTimeLabel->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
-            _nextWaveTimeLabel->setPosition(Point(size.width * 0.75f, size.height / 2));
-            sprite->addChild(_nextWaveTimeLabel);
+            _nextWaveTimeLabel->setPosition(Point(size.width * 0.75f, label->getPosition().y));
+            sprite->addChild(_nextWaveTimeLabel, 1);
+            
+            Sprite* progressBg = Sprite::create("GameImages/test/ui_blood_7.png");
+            progressBg->setPosition(Point(size.width / 2, size.height * 0.4f));
+            sprite->addChild(progressBg);
+            
+            _nextWaveProgress = createProgressTimer("GameImages/test/ui_blood_6.png");
+            _nextWaveProgress->setPosition(progressBg->getPosition());
+            sprite->addChild(_nextWaveProgress);
         }
         // buttons
         {

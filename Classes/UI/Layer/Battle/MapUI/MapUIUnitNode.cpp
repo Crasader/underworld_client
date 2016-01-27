@@ -7,6 +7,7 @@
 //
 
 #include "MapUIUnitNode.h"
+#include "cocostudio/CocoStudio.h"
 #include "CocosUtils.h"
 #include "Camp.h"
 #include "ResourceButton.h"
@@ -16,6 +17,7 @@
 #include "Spell.h"
 
 using namespace std;
+using namespace cocostudio;
 using namespace UnderWorld::Core;
 
 static const int bottomZOrder(-1);
@@ -267,7 +269,12 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
             button->setPosition(resourceMaskWidth / 2, 0);
         }
         
-        if (!heroUnit || heroUnit->getSpellByIndex(0)->getCDProgress() == 0) {
+        int spellCD(10);
+        if (heroUnit) {
+            spellCD = heroUnit->getSpellByIndex(0)->getCDProgress();
+        }
+        
+        if (!heroUnit || spellCD == 0) {
             _spellColdDown->setVisible(false);
         } else {
             _spellColdDown->setVisible(true);
@@ -276,7 +283,28 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
             } else {
                 _spellColdDown->setSprite(Sprite::create("GameImages/test/ui_iconzhezhao_white.png"));
             }
-            _spellColdDown->setPercentage(((float)heroUnit->getSpellByIndex(0)->getCDProgress()) * 100.f / heroUnit->getSpellByIndex(0)->getTotalCDFrames());
+            _spellColdDown->setPercentage(((float)spellCD) * 100.f / heroUnit->getSpellByIndex(0)->getTotalCDFrames());
+        }
+        
+        // add effect
+        if (_iconButton) {
+            static const int spellActivatedTag(2016);
+            Node* spellActivatedNode = getChildByTag(spellActivatedTag);
+            if (heroUnit && spellCD == 0) {
+                if (!spellActivatedNode) {
+                    static const string file("kapai-UI.csb");
+                    spellActivatedNode = CSLoader::createNode(file);
+                    const Size& iconSize = _iconButton->getContentSize();
+                    spellActivatedNode->setPosition(_iconBasePosition);
+                    addChild(spellActivatedNode, bottomZOrder, spellActivatedTag);
+                    timeline::ActionTimeline *action = CSLoader::createTimeline(file);
+                    spellActivatedNode->runAction(action);
+                    action->gotoFrameAndPlay(0, true);
+                }
+            } else if (spellActivatedNode) {
+                spellActivatedNode->stopAllActions();
+                spellActivatedNode->removeFromParent();
+            }
         }
     }
 }

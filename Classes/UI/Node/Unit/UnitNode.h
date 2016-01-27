@@ -14,6 +14,7 @@
 #include "cocostudio/CocoStudio.h"
 #include "CocosGlobal.h"
 #include "Unit.h"
+#include "SpellConfigData.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -33,6 +34,7 @@ public:
     virtual void onUnitNodeUpdatedFeatures(int unitId) = 0;
     virtual void onUnitNodePlayDeadAnimationFinished(int unitId) = 0;
     virtual void onUnitNodeHurtTheTarget(UnitNode* node) = 0;
+    virtual void onUnitNodeShakeScreen(UnitNode* node) = 0;
 };
 
 class UnitNode : public Node
@@ -74,6 +76,7 @@ protected:
     // public
     void updateActionNode(const UnderWorld::Core::Skill* skill, int frameIndex, bool flip);
     void removeActionNode();
+    void scheduleSpeed();
     void scaleActionNode();
     // --------------- effects ---------------
     void updateBufs();
@@ -84,11 +87,12 @@ protected:
     void addHPBar();
     void updateHPBar();
     void removeHPBar();
+    Point getHPBarPosition() const;
     void addShadow();
     void removeShadow();
     void addSwordEffect();
-    Node* addEffect(const std::string& file, const std::function<void()>& callback = nullptr);
-    Node* addEffect(const std::string& file, bool loop, const std::function<void()>& callback);
+    Node* addEffect(const std::string& file);
+    Node* addEffect(const std::string& file, const SpellConfigData::SpellPosition& position, bool scale, bool loop, const std::function<void()>& callback);
     void rollHintResource(const std::string& resource, int amount, float delay = 0.f);
     void rollHintNode(Node* hintNode, float delay = 0.f);
     
@@ -123,10 +127,11 @@ private:
     bool _isPlayingAttackAnimation;
     int _animationCounter;
     int _rollHintCounter;
+    float _baseSpeed;
     float _baseScale;
     float _extraCasterScale;
-    float _extraFeatureScale;
-    float _extraBufScale;
+    std::map<UnderWorld::Core::SkillClass, float> _extraBufSpeeds;
+    std::map<UnderWorld::Core::SkillClass, float> _extraBufScales;
 };
 
 #endif /* UnitNode_h */
