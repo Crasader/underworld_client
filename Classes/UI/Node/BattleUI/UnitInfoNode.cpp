@@ -290,7 +290,7 @@ void UnitInfoNode::update(const UnitBase* unit)
                 if (pt) {
                     _skillLevelLabel->setString(StringUtils::format("LV%d", pt->getLevel()));
                     _skillNameLabel->setString(pt->getAlias());
-                    _skillDescriptionLabel->setString(pt->getAlias());
+                    _skillDescriptionLabel->setString(pt->getDesc());
                 }
             } else {
                 const int spellTypeCount = unit->getSpellTypeCount();
@@ -299,7 +299,7 @@ void UnitInfoNode::update(const UnitBase* unit)
                     if (st) {
                         _skillLevelLabel->setString(StringUtils::format("LV%d", st->getLevel()));
                         _skillNameLabel->setString(st->getAlias());
-                        _skillDescriptionLabel->setString(st->getAlias());
+                        _skillDescriptionLabel->setString(st->getDesc());
                     }
                 }
             }

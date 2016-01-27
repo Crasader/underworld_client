@@ -105,7 +105,7 @@ bool ResourceButton::init(bool isBigSize, bool animated, bool needResize, Resour
 #else
         addIconNode(type);
         const string& message = StringUtils::format("%d", count);
-        const int fontSize = _isBigSize ? DEFAULT_FONT_SIZE : SMALL_FONT_SIZE;
+        const int fontSize = _isBigSize ? DEFAULT_FONT_SIZE : DEFAULT_FONT_SIZE;
         _countLabel = CocosUtils::createLabel(message, fontSize);
         _countLabel->setTextColor(color);
         addChild(_countLabel);
