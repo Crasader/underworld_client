@@ -825,11 +825,11 @@ void GameRender::onGameOver()
     // pop layer
     if (_scene) {
         if (win) {
-            VictoryLayer* layer = VictoryLayer::create(_mapId);
+            VictoryLayer* layer = VictoryLayer::create(1 /*_mapId*/);
             layer->registerObserver(this);
             _scene->addChild(layer);
         } else {
-            VictoryLayer* layer = VictoryLayer::create(_mapId);
+            VictoryLayer* layer = VictoryLayer::create(1 /*_mapId*/);
             layer->registerObserver(this);
             _scene->addChild(layer);
         }

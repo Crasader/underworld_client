@@ -9,8 +9,8 @@
 #ifndef ChatMark_h
 #define ChatMark_h
 
-#include <stdio.h>
-
+#include <iostream>
+#include <map>
 
 class ChatMark
 {
