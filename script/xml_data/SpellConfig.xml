@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <root>
-	<item spell_name="激励" caster_resource_name="The-sky-goddess-Inanna-jineng-3" caster_is_body="1" resource_name="kuangbao" receiver_is_body="1"/>
-	<item spell_name="全体恢复" caster_resource_name="Goddess-of-time-Yayse-Tati-jineng-3" caster_is_body="1" resource_name="huifu-2" receiver_is_body="1"/>
-	<item spell_name="减速" resource_name="jineng-jiansu" receiver_is_body="0"/>
-	<item spell_name="冲击波" resource_name="baolie" receiver_is_body="1"/>
-	<item spell_name="狂暴" resource_name="jiasu" receiver_is_body="1"/>
-	<item spell_name="治疗" resource_name="yicixinghuixue" receiver_is_body="1"/>
+	<item spell_name="激励" caster_resource_name="The-sky-goddess-Inanna-jineng-3" caster_spell_pos="1" receiver_resource_name="kuangbao" receiver_spell_pos="1" receiver_volume_rate="1.2_1.2_1.2_1.2_1.2"/>
+	<item spell_name="全体恢复" caster_resource_name="Goddess-of-time-Yayse-Tati-jineng-3" caster_spell_pos="1" receiver_resource_name="huifu-2" receiver_spell_pos="1"/>
+	<item spell_name="减速" receiver_resource_name="jineng-jiansu" receiver_spell_pos="0" receiver_speed_rate="1.0_0.6_1.0_1.0_1.0"/>
+	<item spell_name="冲击波" receiver_resource_name="baolie" receiver_spell_pos="1"/>
+	<item spell_name="狂暴" receiver_resource_name="jiasu" receiver_spell_pos="1" receiver_speed_rate="1.0_1.0_1.4_1.0_1.0" receiver_volume_rate="1.2_1.2_1.2_1.2_1.2"/>
+	<item spell_name="治疗" receiver_resource_name="yicixinghuixue" receiver_spell_pos="1"/>
 	<item spell_name="轰击"/>
-	<item spell_name="冲锋" resource_name="jineng-JiaSu" receiver_is_body="1"/>
-	<item spell_name="刚毅" resource_name="dun.2" receiver_is_body="1"/>
-	<item spell_name="强风护盾" resource_name="fengdun" receiver_is_body="1"/>
-	<item spell_name="血雾" resource_name="xuewu" receiver_is_body="1"/>
+	<item spell_name="冲锋" receiver_resource_name="jineng-JiaSu" receiver_spell_pos="1" receiver_speed_rate="1.0_1.6_1.0_1.0_1.0"/>
+	<item spell_name="刚毅" receiver_resource_name="dun.2" receiver_spell_pos="1"/>
+	<item spell_name="强风护盾" receiver_resource_name="fengdun" receiver_spell_pos="1"/>
+	<item spell_name="血雾" receiver_resource_name="xuewu" receiver_spell_pos="1"/>
 	<item spell_name="火球术"/>
-	<item spell_name="闪电攻击" caster_resource_name="Seven-Lamashen-devil-figure-jineng-3-GS,Seven-Lamashen-devil-figure-jineng-3-XC,Seven-Lamashen-devil-figure-jineng-Zhao" caster_is_body="1"/>
-	<item spell_name="眩晕" resource_name="xuanyun" receiver_is_body="1"/>
-	<item spell_name="吸血" resource_name="Vampiric-Aura-1" receiver_is_body="0"/>
-	<item spell_name="心灵之火" resource_name="shengdun" receiver_is_body="1"/>
+	<item spell_name="闪电攻击" caster_resource_name="Seven-Lamashen-devil-figure-jineng-3-GS,Seven-Lamashen-devil-figure-jineng-3-XC,Seven-Lamashen-devil-figure-jineng-Zhao" caster_spell_pos="1"/>
+	<item spell_name="眩晕" receiver_resource_name="xuanyun" receiver_spell_pos="1"/>
+	<item spell_name="吸血" receiver_resource_name="Vampiric-Aura-1" receiver_spell_pos="0"/>
+	<item spell_name="心灵之火" receiver_resource_name="shengdun" receiver_spell_pos="1"/>
+	<item spell_name="地震" caster_shake_screen="1"/>
+	<item spell_name="冰霜之心" receiver_speed_rate="1.0_1.0_0.6_1.0_1.0"/>
 </root>

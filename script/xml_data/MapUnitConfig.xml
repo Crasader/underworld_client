@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <root>
-<<<<<<< HEAD
-	<item mapId="1" is_werewolf="1" my_heroes="时光女神,天空女神,狼人森林之魂" my_soldiers="狼人步兵,狼人射手,狼人机械狼,狼人巫师,机械甲虫" cpu_units="吸血鬼战士,吸血鬼弓箭手,巨型蜘蛛,蛇女莉莉丝,七恶魔拉玛什图,吸血鬼巫师"/>
-	<item mapId="2" is_werewolf="0" my_heroes="七恶魔拉玛什图,蛇女莉莉丝" my_soldiers="吸血鬼战士,吸血鬼弓箭手,巨型蜘蛛,吸血鬼巫师" cpu_units="时光女神,天空女神,狼人森林之魂,狼人步兵,狼人射手,狼人机械狼,狼人巫师,机械甲虫"/>
-=======
 	<item mapId="1" is_werewolf="1" my_heroes="时光女神,天空女神,狼人森林之魂" my_soldiers="狼人步兵,狼人射手,狼人机械狼,狼人巫师,机械甲虫" cpu_units="吸血鬼战士,吸血鬼弓箭手,巨型蜘蛛,蛇女莉莉丝,七恶魔拉玛什图,吸血鬼巫师,甲壳虫,时光女神"/>
 	<item mapId="4" is_werewolf="0" my_heroes="七恶魔拉玛什图,蛇女莉莉丝,时光女神" my_soldiers="吸血鬼战士,吸血鬼弓箭手,巨型蜘蛛,吸血鬼巫师,甲壳虫" cpu_units="时光女神,天空女神,狼人森林之魂,狼人步兵,狼人射手,狼人机械狼,狼人巫师,机械甲虫"/>
     <item mapId="3" is_werewolf="1" my_heroes="时光女神,天空女神,狼人森林之魂" my_soldiers="狼人步兵,狼人射手,狼人机械狼,狼人巫师,机械甲虫" cpu_units="时光法师"/>
     <item mapId="2" is_werewolf="1" my_heroes="时光女神,天空女神,狼人森林之魂" my_soldiers="狼人步兵,狼人射手,狼人机械狼,狼人巫师,机械甲虫" cpu_units="时光法师"/>
->>>>>>> 2c44668... save
 </root>

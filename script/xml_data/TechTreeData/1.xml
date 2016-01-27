@@ -147,9 +147,6 @@
             <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
         </unit>
         <!-- 毁灭古树 -->
-<<<<<<< HEAD
-        <unit name="七恶魔拉玛什图" class="hero" hp="1800" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="8" attacksight="400" size="70" height="0" cost="金子:750;木头:350;人口:4" priority="1" max_level="100" render_key="七恶魔拉玛什图" produce="木头:4" reward="金子:4" armor_preference="轻甲" armor_preference_factor="1.5f">
-=======
         <unit name="七恶魔拉玛什图" class="warrior" hp="1800" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="8" attacksight="400" size="70" height="0" cost="金子:750;木头:350;人口:4" priority="1" max_level="100" render_key="七恶魔拉玛什图" produce="木头:75" passive_names="刚毅_等级1" reward="金子:4" armor_preference="轻甲" armor_preference_factor="1.5f">
             <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
             <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
@@ -158,7 +155,6 @@
         </unit>
         <!-- 甲壳虫 -->
         <unit name="甲壳虫" class="warrior" hp="800" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="8" attacksight="400" size="70" height="0" cost="金子:350;木头:350;人口:4" priority="1" max_level="100" render_key="甲壳虫" produce="木头:36" reward="金子:4" armor_preference="轻甲" armor_preference_factor="1.5f">
->>>>>>> 2c44668... save
             <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
             <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
             <skill class="attack" preperform="0.5" perform="0.0" cd="1.3" min_damage="140" max_damage="160" deliver_class="physical" damage_distance="nearby" range="120" fields="1"/>
