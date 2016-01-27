@@ -1,47 +1,12 @@
 <?xml version="1.0"?>
 <root>
-<<<<<<< HEAD
-    <location_setting index="0" core_location="200,550" building_location="1000,800;1700,800" assemble_location="0:500,600;1:600,600" />
+    <location_setting index="0" core_location="200,550" building_location="1000,800" assemble_location="0:500,600;1:600,600" />
     <resource_settings index="0">
         <resource_setting resource_name="金子" init_balance="3000" init_salary="5" salary_accelerate="0" />
         <resource_setting resource_name="木头" init_balance="3000" init_salary="5" salary_accelerate="0" />
         <resource_setting resource_name="人口" init_balance="100" init_salary="0" salary_accelerate="0" />
     </resource_settings>
     <fixed_unit_settings index="0">
-        <fixed_unit_setting position="4000,550" count="10" wave="1">
-            <unit_setting name="吸血鬼战士" />
-        </fixed_unit_setting>
-        <fixed_unit_setting position="4000,550" count="0" wave="1">
-            <unit_setting name="吸血鬼弓箭手" />
-        </fixed_unit_setting>
-        <fixed_unit_setting position="4000,550" count="0" wave="1">
-            <unit_setting name="巨型蜘蛛" />
-        </fixed_unit_setting>
-        <fixed_unit_setting position="4000,550" count="1" wave="1">
-            <unit_setting name="蛇女莉莉丝" />
-        </fixed_unit_setting>
-        <fixed_unit_setting position="4000,550" count="0" wave="1">
-            <unit_setting name="七恶魔拉玛什图" />
-        </fixed_unit_setting>
-        <fixed_unit_setting position="4000,550" count="0" wave="1">
-            <unit_setting name="吸血鬼巫师" />
-        </fixed_unit_setting>
-    </fixed_unit_settings>
-    <location_setting index="1" core_location="4400,550" building_location="3600,800;2900,800" assemble_location="0:4100,600;2:4000,600" />
-    <resource_settings index="1">
-        <resource_setting resource_name="金子" init_balance="0" init_salary="0" salary_accelerate="0" />
-        <resource_setting resource_name="人口" init_balance="200" init_salary="0" salary_accelerate="0" />
-    </resource_settings>
-    <fixed_unit_settings index="1">
-=======
-    <location_setting index="0" core_location="200,550" building_location="" assemble_location="0:500,600;1:600,600" />
-    <resource_settings index="0">
-        <resource_setting resource_name="金子" init_balance="500" init_salary="20" salary_accelerate="0" />
-        <resource_setting resource_name="木头" init_balance="0" init_salary="0" salary_accelerate="0" />
-        <resource_setting resource_name="人口" init_balance="100" init_salary="0" salary_accelerate="0" />
-    </resource_settings>
-    <fixed_unit_settings index="0">
->>>>>>> 2c44668... save
         <fixed_unit_setting position="950,550" count="0" wave="1">
             <unit_setting name="时光女神" />
         </fixed_unit_setting>
@@ -64,9 +29,7 @@
             <unit_setting name="狼人步兵" />
         </fixed_unit_setting>
     </fixed_unit_settings>
-<<<<<<< HEAD
-=======
-    <location_setting index="1" core_location="2000,550" building_location="" assemble_location="0:1700,550;2:1600,550" />
+    <location_setting index="1" core_location="4400,550" building_location="3600,800" assemble_location="0:4100,600;2:4000,600" />
     <resource_settings index="1">
         <resource_setting resource_name="金子" init_balance="0" init_salary="0" salary_accelerate="0" />
         <resource_setting resource_name="人口" init_balance="200" init_salary="0" salary_accelerate="0" />
@@ -90,9 +53,5 @@
         <fixed_unit_setting position="4000,550" count="0" wave="1">
             <unit_setting name="吸血鬼巫师" />
         </fixed_unit_setting>
-        <fixed_unit_setting position="1800,600" count="1" wave="1">
-            <unit_setting name="时光法师" />
-        </fixed_unit_setting>
     </fixed_unit_settings>
->>>>>>> 2c44668... save
 </root>

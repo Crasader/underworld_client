@@ -136,7 +136,7 @@ bool VictoryLayer::init(int levelId)
                             break;
                         case 13:
                         {
-                            Sprite* bg = Sprite::create(StringUtils::format("GameImages/level_bg/level_%d.png", levelId));
+                            Sprite* bg = Sprite::create(StringUtils::format("GameImages/level_bg/level_%d.png", 1));
                             child->addChild(bg, -1);
                             
                             const Vector<Node*>& children = child->getChildren();
