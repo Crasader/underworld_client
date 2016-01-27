@@ -53,7 +53,7 @@ public:
     void closeAllUnitInfoNodes();
     void updateMyHpProgress(int progress);
     void updateOpponentsHpProgress(int progress);
-    void updateWaveTime(int time);
+    void updateWaveTime(int time, int totalTime);
     void updateRemainingTime(int time);
     void updatePopulation(int count, int maxCount);
     void updateGoldAndWood(int gold, int wood);

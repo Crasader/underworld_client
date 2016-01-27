@@ -15,7 +15,7 @@
 	<item spell_name="闪电攻击" caster_resource_name="Seven-Lamashen-devil-figure-jineng-3-GS,Seven-Lamashen-devil-figure-jineng-3-XC,Seven-Lamashen-devil-figure-jineng-Zhao" caster_spell_pos="1"/>
 	<item spell_name="眩晕" receiver_resource_name="xuanyun" receiver_spell_pos="1"/>
 	<item spell_name="吸血" receiver_resource_name="Vampiric-Aura-1" receiver_spell_pos="0"/>
-	<item spell_name="心灵之火" receiver_resource_name="shengdun" receiver_spell_pos="1"/>
+	<item spell_name="心灵之火" receiver_resource_name="shengdun" receiver_spell_pos="2"/>
 	<item spell_name="地震" caster_shake_screen="1"/>
 	<item spell_name="冰霜之心" receiver_speed_rate="1.0_1.0_0.6_1.0_1.0"/>
 </root>

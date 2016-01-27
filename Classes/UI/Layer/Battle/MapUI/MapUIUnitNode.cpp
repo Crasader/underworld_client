@@ -138,7 +138,7 @@ bool MapUIUnitNode::init(const Camp* camp)
         
         // count label
         {
-            _countLabel = CocosUtils::createLabel("0", DEFAULT_FONT_SIZE);
+            _countLabel = CocosUtils::createLabel(" ", DEFAULT_FONT_SIZE);
             addChild(_countLabel);
         }
         
@@ -221,24 +221,22 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
         const bool enable = production < maxProduction;
         const bool hero = isHero(_camp);
         const Unit* heroUnit = _camp->getHero();
-        bool colorful = !(hero && heroUnit && !heroUnit->isAlive());
-        const string& iconFile = getIconFile(_camp, colorful);
-        if (iconFile.length() > 0) {
-            _iconButton->loadTextures(iconFile, iconFile);
-        }
         
-        _countLabel->setVisible(!hero);
         if (!hero) {
             _countLabel->setString(StringUtils::format("%d/%d", production, maxProduction));
         }
         
+        bool colorful(true);
         const map<string, int>& costs = _camp->getCosts();
         ResourceButton* woodButton = _resourceButtons.at(kResourceType_Wood);
         woodButton->setVisible(costs.find(RES_NAME_WOOD) != costs.end() && enable);
         if (woodButton->isVisible()) {
             int count = costs.at(RES_NAME_WOOD);
             woodButton->setCount(count);
-            woodButton->setEnabled(wood >= count);
+            if (wood < count) {
+                colorful = false;
+            }
+//            woodButton->setEnabled(wood >= count);
         }
         
         ResourceButton* goldButton = _resourceButtons.at(kResourceType_Gold);
@@ -246,7 +244,10 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
         if (goldButton->isVisible()) {
             int count = costs.at(RES_NAME_GOLD);
             goldButton->setCount(count);
-            goldButton->setEnabled(gold >= count);
+            if (gold < count) {
+                colorful = false;
+            }
+//            goldButton->setEnabled(gold >= count);
         }
         
         const float resourceMaskWidth = _resourcesMask->getContentSize().width;
@@ -258,15 +259,41 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
             const float width2 = goldButton->getContentSize().width;
             const float totalWidth = width1 + width2;
             const float offsetX = (resourceMaskWidth - totalWidth) / 2;
+            static const float gap(10.0f);
             woodButton->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
             goldButton->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
             woodButton->setPosition(offsetX, 0);
-            goldButton->setPosition(offsetX + width1, 0);
+            goldButton->setPosition(offsetX + width1 + gap, 0);
             
         } else {
             ResourceButton* button = woodButton->isVisible() ? woodButton : goldButton;
             button->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
             button->setPosition(resourceMaskWidth / 2, 0);
+        }
+        
+        if (hero && colorful) {
+            if (heroUnit) {
+                if (!heroUnit->isAlive()) {
+                    colorful = false;
+                }
+            } else {
+                if (!_resourcesMask->isVisible()) {
+                    colorful = false;
+                }
+            }
+            
+            if (!colorful) {
+                _countLabel->setString("召唤中");
+            } else {
+                _countLabel->setString(" ");
+            }
+        } else {
+            _countLabel->setString(" ");
+        }
+        
+        const string& iconFile = getIconFile(_camp, colorful);
+        if (iconFile.length() > 0) {
+            _iconButton->loadTextures(iconFile, iconFile);
         }
         
         int spellCD(10);
@@ -291,6 +318,13 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
         
         // add effect
         if (_iconButton) {
+#if true
+            if (heroUnit && heroUnit->isAlive() && spellCD == 0) {
+                _shiningSprite->setVisible(true);
+            } else {
+                _shiningSprite->setVisible(false);
+            }
+#else
             static const int spellActivatedTag(2016);
             Node* spellActivatedNode = getChildByTag(spellActivatedTag);
             if (heroUnit && heroUnit->isAlive() && spellCD == 0) {
@@ -307,6 +341,7 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
                 spellActivatedNode->stopAllActions();
                 spellActivatedNode->removeFromParent();
             }
+#endif
         }
     }
 }
@@ -362,8 +397,8 @@ bool MapUIUnitNode::isHero(const Camp* camp) const
 
 void MapUIUnitNode::createResourceButton(::ResourceType type, Node* parent)
 {
-    Color4B color = (type == kResourceType_Gold) ? Color4B(255, 246, 0, 255) : Color4B(0, 228, 255, 255);
-    ResourceButton* button = ResourceButton::create(false, false, true, type, 0, color, nullptr);
+    Color4B color = (type == kResourceType_Gold) ? GOLD_LABEL_COLOR : WOOD_LABEL_COLOR;
+    ResourceButton* button = ResourceButton::create(false, false, true, kResourceType_MAX, 0, color, nullptr);
     button->setAnchorPoint(Point::ANCHOR_MIDDLE);
     parent->addChild(button);
     _resourceButtons.insert(make_pair(type, button));

@@ -27,6 +27,9 @@
 #define LAYER_DEFAULT_COLOR (Color4B(0, 0, 0, 0))
 #define LAYER_MASK_COLOR    (Color4B(0, 0, 0, 128))
 
+#define GOLD_LABEL_COLOR    (Color4B(255, 246, 0, 255))
+#define WOOD_LABEL_COLOR    (Color4B(0, 228, 255, 255))
+
 #define TOUCH_CANCEL_BY_MOVING_DISTANCE (10.0f)
 
 #define ONLINE_UPDATE_SEARCH_PATH       (FileUtils::getInstance()->getWritablePath() + "Resource/")

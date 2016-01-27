@@ -193,6 +193,10 @@ void ResourceButton::setClickEventListener(const Button::ccWidgetClickCallback& 
 
 void ResourceButton::addIconNode(ResourceType type)
 {
+    if (type == kResourceType_MAX) {
+        return;
+    }
+    
     if (_animated) {
         Point pos(-1, -1);
         if (_iconNode) {
@@ -233,15 +237,17 @@ void ResourceButton::resize()
 {
     if (_needResize) {
         if (_button) {
-            const float buttonWidth = _button->getContentSize().width;
-            const float iconWidth = _icon->getContentSize().width;
-            const float labelWidth = _countLabel->getContentSize().width;
-            const float x = buttonWidth / 2 - labelWidth / 2;
-            _icon->setPositionX(x);
-            _countLabel->setPositionX(x + 5.0f + iconWidth / 2 + labelWidth * _countLabel->getAnchorPoint().x);
+            if (_icon) {
+                const float buttonWidth = _button->getContentSize().width;
+                const float iconWidth = _icon->getContentSize().width;
+                const float labelWidth = _countLabel->getContentSize().width;
+                const float x = buttonWidth / 2 - labelWidth / 2;
+                _icon->setPositionX(x);
+                _countLabel->setPositionX(x + 5.0f + iconWidth / 2 + labelWidth * _countLabel->getAnchorPoint().x);
+            }
         } else {
             Node* icon = _animated ? _iconNode : _icon;
-            const Size& iconSize = _isBigSize ? Size(36, 36) : icon->getContentSize() /*icon->getContentSize()*/;
+            const Size& iconSize = _isBigSize ? Size(36, 36) : icon ? icon->getContentSize() : Size::ZERO /*icon->getContentSize()*/;
             const Size& labelSize = _countLabel->getContentSize();
             
             static const float offsetX = _isBigSize ? 5.0f : 0.0f;
@@ -249,7 +255,9 @@ void ResourceButton::resize()
             
             setContentSize(size);
             
-            icon->setPosition(Point(iconSize.width / 2, size.height / 2));
+            if (icon) {
+                icon->setPosition(Point(iconSize.width / 2, size.height / 2));
+            }
             _countLabel->setPosition(Point(size.width - labelSize.width / 2, size.height / 2));
         }
     }

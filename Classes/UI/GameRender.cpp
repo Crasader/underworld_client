@@ -27,8 +27,6 @@ using namespace std;
 using namespace UnderWorld::Core;
 
 static const string tickSelectorKey("tickSelectorKey");
-static const int startWaveTime(10);
-static const int waveTime(20);
 static const int battleTotalTime(600);
 
 static const float bulletMaxHeightFactor = 1.0f / 5;
@@ -47,6 +45,8 @@ GameRender::GameRender(Scene* scene, int mapId, const string& mapData, const str
 ,_population(0)
 ,_goldCount(0)
 ,_woodCount(0)
+,_nextWave(INVALID_VALUE)
+,_nextWaveTotalTime(INVALID_VALUE)
 ,_hasUpdatedBattleCampInfos(false)
 {
     _mapLayer = MapLayer::create(mapId, mapData);
@@ -107,6 +107,9 @@ void GameRender::init(const Game* game, Commander* commander)
             _myCamps.at(uc).push_back(camp);
         }
     }
+    
+    _nextWave = _game->getEventTrigger()->getWave();
+    _nextWaveTotalTime = getRemainingWaveTime();
     
     updateAll();
     
@@ -311,11 +314,12 @@ void GameRender::updateUILayer()
         }
     }
     
-    
     const int remainingWaveTime = getRemainingWaveTime();
-    _mapUILayer->updateWaveTime(remainingWaveTime);
+    _mapUILayer->updateWaveTime(remainingWaveTime, _nextWaveTotalTime);
     _mapUILayer->updateRemainingTime(_remainingTime);
-    if (waveTime == remainingWaveTime) {
+    
+    const int nextWave = _game->getEventTrigger()->getWave();
+    if (nextWave != _nextWave) {
         if (!_hasUpdatedBattleCampInfos) {
 #if ENABLE_CAMP_INFO
             updateBattleCampInfos();
@@ -323,6 +327,8 @@ void GameRender::updateUILayer()
             updateBattleUnitInfos();
 #endif
             _hasUpdatedBattleCampInfos = true;
+            _nextWave = nextWave;
+            _nextWaveTotalTime = remainingWaveTime;
         }
     } else {
         _hasUpdatedBattleCampInfos = false;
@@ -795,8 +801,11 @@ void GameRender::updateResources()
 
 int GameRender::getRemainingWaveTime() const
 {
-    if (_game) {
-        return waveTime - (_game->getWorld()->getClock()->getSecondCount() + startWaveTime) % waveTime;
+    const int wave = _game->getEventTrigger()->getWave();
+    const vector<int>& waves = _game->getEventTrigger()->getWaves();
+    const int currentTime = _game->getWorld()->getClock()->getSecondCount();
+    if (wave < waves.size()) {
+        return waves.at(wave) - currentTime;
     }
     
     return 0;

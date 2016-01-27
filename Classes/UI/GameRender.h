@@ -144,6 +144,8 @@ private:
     int _population;
     int _goldCount;
     int _woodCount;
+    int _nextWave;
+    int _nextWaveTotalTime;
     bool _hasUpdatedBattleCampInfos;
 };
 
