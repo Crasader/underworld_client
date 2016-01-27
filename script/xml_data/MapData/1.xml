@@ -92,7 +92,7 @@
         <fixed_unit_setting position="4000,550" count="2" wave="4">
             <unit_setting name="吸血鬼战士" />
         </fixed_unit_setting>
-        <fixed_unit_setting position="4000,550" count="2" wave="4">
+        <fixed_unit_setting position="4000,550" count="1" wave="4">
             <unit_setting name="吸血鬼弓箭手" />
         </fixed_unit_setting>
         <fixed_unit_setting position="4000,550" count="1" wave="4">
@@ -110,7 +110,7 @@
         <fixed_unit_setting position="4000,550" count="3" wave="5">
             <unit_setting name="吸血鬼战士" />
         </fixed_unit_setting>
-        <fixed_unit_setting position="4000,550" count="3" wave="5">
+        <fixed_unit_setting position="4000,550" count="2" wave="5">
             <unit_setting name="吸血鬼弓箭手" />
         </fixed_unit_setting>
         <fixed_unit_setting position="4000,550" count="1" wave="5">
@@ -128,7 +128,7 @@
         <fixed_unit_setting position="4000,550" count="3" wave="6">
             <unit_setting name="吸血鬼战士" />
         </fixed_unit_setting>
-        <fixed_unit_setting position="4000,550" count="3" wave="6">
+        <fixed_unit_setting position="4000,550" count="2" wave="6">
             <unit_setting name="吸血鬼弓箭手" />
         </fixed_unit_setting>
         <fixed_unit_setting position="4000,550" count="1" wave="6">
@@ -140,13 +140,13 @@
         <fixed_unit_setting position="4000,550" count="1" wave="6">
             <unit_setting name="七恶魔拉玛什图" />
         </fixed_unit_setting>
-        <fixed_unit_setting position="4000,550" count="1" wave="6">
+        <fixed_unit_setting position="4000,550" count="0" wave="6">
             <unit_setting name="吸血鬼巫师" />
         </fixed_unit_setting>
-        <fixed_unit_setting position="4000,550" count="4" wave="7">
+        <fixed_unit_setting position="4000,550" count="2" wave="7">
             <unit_setting name="吸血鬼战士" />
         </fixed_unit_setting>
-        <fixed_unit_setting position="4000,550" count="4" wave="7">
+        <fixed_unit_setting position="4000,550" count="2" wave="7">
             <unit_setting name="吸血鬼弓箭手" />
         </fixed_unit_setting>
         <fixed_unit_setting position="4000,550" count="1" wave="7">
@@ -161,10 +161,10 @@
         <fixed_unit_setting position="4000,550" count="1" wave="7">
             <unit_setting name="吸血鬼巫师" />
         </fixed_unit_setting>
-        <fixed_unit_setting position="4000,550" count="4" wave="8">
+        <fixed_unit_setting position="4000,550" count="3" wave="8">
             <unit_setting name="吸血鬼战士" />
         </fixed_unit_setting>
-        <fixed_unit_setting position="4000,550" count="6" wave="8">
+        <fixed_unit_setting position="4000,550" count="3" wave="8">
             <unit_setting name="吸血鬼弓箭手" />
         </fixed_unit_setting>
         <fixed_unit_setting position="4000,550" count="1" wave="8">
@@ -178,11 +178,11 @@
         </fixed_unit_setting>
         <fixed_unit_setting position="4000,550" count="1" wave="8">
             <unit_setting name="吸血鬼巫师" />
+        </fixed_unit_setting>
+        <fixed_unit_setting position="4000,550" count="3" wave="9">
+            <unit_setting name="吸血鬼战士" />
         </fixed_unit_setting>
         <fixed_unit_setting position="4000,550" count="4" wave="9">
-            <unit_setting name="吸血鬼战士" />
-        </fixed_unit_setting>
-        <fixed_unit_setting position="4000,550" count="6" wave="9">
             <unit_setting name="吸血鬼弓箭手" />
         </fixed_unit_setting>
         <fixed_unit_setting position="4000,550" count="1" wave="9">
@@ -200,7 +200,7 @@
         <fixed_unit_setting position="4000,550" count="4" wave="10">
             <unit_setting name="吸血鬼战士" />
         </fixed_unit_setting>
-        <fixed_unit_setting position="4000,550" count="6" wave="10">
+        <fixed_unit_setting position="4000,550" count="3" wave="10">
             <unit_setting name="吸血鬼弓箭手" />
         </fixed_unit_setting>
         <fixed_unit_setting position="4000,550" count="2" wave="10">
@@ -212,7 +212,7 @@
         <fixed_unit_setting position="4000,550" count="1" wave="10">
             <unit_setting name="七恶魔拉玛什图" />
         </fixed_unit_setting>
-        <fixed_unit_setting position="4000,550" count="3" wave="10">
+        <fixed_unit_setting position="4000,550" count="1" wave="10">
             <unit_setting name="吸血鬼巫师" />
         </fixed_unit_setting>
     </fixed_unit_settings>

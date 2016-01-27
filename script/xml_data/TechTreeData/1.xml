@@ -112,7 +112,7 @@
             <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
         </unit>
         <!-- 战争古树 -->
-        <unit name="吸血鬼战士" class="warrior" hp="640" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="500" armor_preference="无甲" armor_preference_factor="1.5f" attacksight="600" size="50" height="0" cost="金子:250;人口:2" priority="0" max_level="100" max_quality="5" max_talent="20" spell_names="冲锋_等级1" render_key="吸血鬼战士" produce="木头:25" reward="金子:3">
+        <unit name="吸血鬼战士" class="warrior" hp="640" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="500" armor_preference="轻甲" armor_preference_factor="1.5f" attacksight="600" size="50" height="0" cost="金子:250;人口:2" priority="0" max_level="100" max_quality="5" max_talent="20" spell_names="冲锋_等级1" render_key="吸血鬼战士" produce="木头:25" reward="金子:3">
             <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
             <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
             <skill class="attack" preperform="0.5" perform="0.0" cd="1.4" min_damage="50" max_damage="55" deliver_class="physical" damage_distance="nearby" range="30" fields="1">
@@ -246,7 +246,7 @@
     <!-- 荆棘光环 -->
     <spell alias="荆棘" spell_name="荆棘_等级1" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="500" cast_type="self" immediate_elements="0,荆棘_等级1_荆棘效果,1" preperform="0.5" perform="0.0" cd="10.0" class="cast" desc="周围的友军会获得一个荆棘效果，反弹50%受到的伤害。持续15秒"/>
     <!-- 火球术 -->
-    <spell alias="火球术" spell_name="火球术_等级1" level="1" deliver_class="magical" deliver_nature="enemy" cast_distance="600" cast_type="position" immediate_elements="0,火球术_等级1_火球术效果,1" preperform="0.5" perform="0.0" cd="60.0" class="cast" desc="向目标区域施放一个火球，对区域内的所有敌方单位造成50点伤害。"/>
+    <spell alias="火球术" spell_name="火球术_等级1" level="1" deliver_class="magical" deliver_nature="enemy" cast_distance="1200" cast_type="position" immediate_elements="0,火球术_等级1_火球术效果,1" preperform="0.5" perform="0.0" cd="60.0" class="cast" desc="向目标区域施放一个火球，对区域内的所有敌方单位造成50点伤害。"/>
     <!-- 自爆 -->
     <spell alias="自爆" spell_name="自爆_等级1" level="1" deliver_class="magical" deliver_nature="enemy" cast_distance="0" cast_type="self" immediate_elements="0,自爆_等级1_自爆效果,1" preperform="0.5" perform="0.0" cd="60.0" class="cast" desc="死亡后自爆，对周围的所有敌方单位造成50点伤害。"/>
     <!-- 暗影烈焰 -->
@@ -320,7 +320,7 @@
     </spell_pattern>
     <!-- 火球术 -->
     <spell_pattern name="火球术_等级1_火球术效果" class="damage_target_position_circle" radius="300" deliver_nature="enemy">
-        <damage damage_value="200" damage_nature="hurt"/>
+        <damage damage_value="400" damage_nature="hurt"/>
     </spell_pattern>
     <!-- 地震 -->
     <spell_pattern name="地震_等级1_地震效果" class="damage_target_position_circle" radius="600" deliver_nature="enemy">
@@ -462,7 +462,7 @@
         <buff_effect>
             <buff_effect_description buff_effect_condition="immediate"/>
             <effect class="add_feature" alias_name="未分类">
-                <feature type="income_damage_reduce" value="100.f"/>
+                <feature type="income_damage_reduce" value="50.f"/>
             </effect>
         </buff_effect>
     </buff>
