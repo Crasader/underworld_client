@@ -251,6 +251,13 @@ void CocosUtils::replaceScene(Scene* scene)
     }
 }
 
+void CocosUtils::cleanMemory()
+{
+    AnimationCache::destroyInstance();
+    SpriteFrameCache::destroyInstance();
+    Director::getInstance()->getTextureCache()->removeAllTextures();
+}
+
 Sprite* CocosUtils::createPureColorSprite(const Size& size, const Color4B& color)
 {
     // 1. create texture

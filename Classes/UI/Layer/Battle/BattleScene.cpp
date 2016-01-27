@@ -7,6 +7,7 @@
 //
 
 #include "BattleScene.h"
+#include "CocosUtils.h"
 #include "GameSettings.h"
 #include "DataManager.h"
 #include "SoundManager.h"
@@ -37,6 +38,7 @@ BattleScene::BattleScene()
 BattleScene::~BattleScene()
 {
     clear();
+    CocosUtils::cleanMemory();
 }
 
 // on "init" you need to initialize your instance

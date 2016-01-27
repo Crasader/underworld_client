@@ -270,8 +270,8 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
         }
         
         int spellCD(10);
-        if (heroUnit) {
-            spellCD = heroUnit->getSpellCount() > 0 ?  heroUnit->getSpellByIndex(0)->getCDProgress() : 0;
+        if (heroUnit && heroUnit->getSpellCount() > 0) {
+            spellCD = heroUnit->getSpellByIndex(0)->getCDProgress();
         }
         
         if (!heroUnit || spellCD == 0) {
@@ -283,18 +283,20 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
             } else {
                 _spellColdDown->setSprite(Sprite::create("GameImages/test/ui_iconzhezhao_white.png"));
             }
-            _spellColdDown->setPercentage(((float)spellCD) * 100.f / heroUnit->getSpellByIndex(0)->getTotalCDFrames());
+            
+            if (heroUnit->getSpellCount() > 0) {
+                _spellColdDown->setPercentage(((float)spellCD) * 100.f / heroUnit->getSpellByIndex(0)->getTotalCDFrames());
+            }
         }
         
         // add effect
         if (_iconButton) {
             static const int spellActivatedTag(2016);
             Node* spellActivatedNode = getChildByTag(spellActivatedTag);
-            if (heroUnit && spellCD == 0) {
+            if (heroUnit && heroUnit->isAlive() && spellCD == 0) {
                 if (!spellActivatedNode) {
                     static const string file("kapai-UI.csb");
                     spellActivatedNode = CSLoader::createNode(file);
-                    const Size& iconSize = _iconButton->getContentSize();
                     spellActivatedNode->setPosition(_iconBasePosition);
                     addChild(spellActivatedNode, bottomZOrder, spellActivatedTag);
                     timeline::ActionTimeline *action = CSLoader::createTimeline(file);
@@ -360,7 +362,7 @@ bool MapUIUnitNode::isHero(const Camp* camp) const
 
 void MapUIUnitNode::createResourceButton(::ResourceType type, Node* parent)
 {
-    Color4B color = (type == kResourceType_Gold) ? Color4B(255, 222, 0, 255) : Color4B(0, 228, 255, 255);
+    Color4B color = (type == kResourceType_Gold) ? Color4B(255, 246, 0, 255) : Color4B(0, 228, 255, 255);
     ResourceButton* button = ResourceButton::create(false, false, true, type, 0, color, nullptr);
     button->setAnchorPoint(Point::ANCHOR_MIDDLE);
     parent->addChild(button);

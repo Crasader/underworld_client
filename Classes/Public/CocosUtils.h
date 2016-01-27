@@ -40,6 +40,8 @@ namespace CocosUtils
     float getFitScreenScale(cocos2d::Node *root);
     void replaceScene(cocos2d::Scene* scene);
     
+    void cleanMemory();
+    
     // test
     cocos2d::Sprite* createPureColorSprite(const cocos2d::Size& size, const cocos2d::Color4B& color);
     

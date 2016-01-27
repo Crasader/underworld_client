@@ -297,7 +297,7 @@ void MapLayer::updateSpellRangeRing(const Point& layerPoint, int range)
     }
     
     // calculate scale
-    static const float defaultRange(435);
+    static const float defaultRange(218);
     if (range != UnderWorld::Core::SpellType::CAST_DISTANCE_INFINITE) {
         const float scale = range / defaultRange;
         _spellRing->setScale(scale);

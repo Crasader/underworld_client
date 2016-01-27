@@ -256,7 +256,7 @@ void UnitNode::addSpellRing(int range)
         addChild(_spellRing, bottomZOrder);
         
         // calculate scale
-        static const float defaultRange(435);
+        static const float defaultRange(218);
         if (range != SpellType::CAST_DISTANCE_INFINITE) {
             const float scale = range / defaultRange;
             node_setScale(_spellRing, scale);
@@ -658,6 +658,7 @@ void UnitNode::updateActionNode(const Skill* skill, int frameIndex, bool flip)
             } else {
                 const string& file = _animationFiles.front();
                 // die
+                const bool isBuilding(kUnitClass_Building == _unit->getUnitBase().getUnitClass());
                 if (isDead) {
                     // the unit might has been destroyed when animation finished,
                     // so save the unitId before playing the animation
@@ -667,10 +668,15 @@ void UnitNode::updateActionNode(const Skill* skill, int frameIndex, bool flip)
                             _observer->onUnitNodePlayDeadAnimationFinished(unitId);
                         }
                     });
+                    
+                    if (isBuilding) {
+                        if (_observer) {
+                            _observer->onUnitNodeShakeScreen(this);
+                        }
+                    }
                 } else {
                     // run / standby / cast
-                    const bool playAnimation(kUnitClass_Building != _unit->getUnitBase().getUnitClass());
-                    addActionNode(file, playAnimation, true, 0.0f, frameIndex, flip, nullptr);
+                    addActionNode(file, !isBuilding, true, 0.0f, frameIndex, flip, nullptr);
                     
                     if (kSkillClass_Cast == skillClass) {
                         const Spell* spell = dynamic_cast<const Spell*>(_unit->getCurrentSkill());
