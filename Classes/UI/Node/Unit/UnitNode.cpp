@@ -21,6 +21,7 @@
 #include "EffectConfigData.h"
 #include "SoundManager.h"
 #include "CocosUtils.h"
+#include "CocosGlobal.h"
 
 using namespace std;
 using namespace UnderWorld::Core;
@@ -513,9 +514,16 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
     
     if (file.length() > 0) {
         // add node
+        Texture2D::PixelFormat defaultPixelFormat = Texture2D::getDefaultAlphaPixelFormat();
+        if (defaultPixelFormat != LOW_PIXELFORMAT) {
+            Texture2D::setDefaultAlphaPixelFormat(LOW_PIXELFORMAT);
+        }
         _actionNode = CSLoader::createNode(file);
         _sprite = dynamic_cast<Sprite*>(*(_actionNode->getChildren().begin()));
         addChild(_actionNode);
+        if (defaultPixelFormat != Texture2D::getDefaultAlphaPixelFormat()) {
+            Texture2D::setDefaultAlphaPixelFormat(defaultPixelFormat);
+        }
         
         // flip if needed
         if (flip) {

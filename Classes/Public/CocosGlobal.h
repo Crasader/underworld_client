@@ -41,6 +41,9 @@ TypeName(const TypeName &) = delete; \
 TypeName &operator =(const TypeName &) = delete;
 #endif // DISALLOW_COPY_AND_ASSIGN
 
+
+#define LOW_PIXELFORMAT (cocos2d::Texture2D::PixelFormat::RGB5A1)
+
 typedef std::function<void()> httpRequestCallback;
 typedef std::function<void(long errorCode)> httpErrorCallback;
 
