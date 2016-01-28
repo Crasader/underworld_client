@@ -232,8 +232,9 @@ bool UnitInfoNode::init()
                                 break;
                             case 24:
                             {
-                                _skillDescriptionLabel = createLabel(child, "skill description");
+                                _skillDescriptionLabel = CocosUtils::createLabel("skill description", DEFAULT_FONT_SIZE, Size(170, 130));
                                 _skillDescriptionLabel->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
+                                child->addChild(_skillDescriptionLabel);
                             }
                                 break;
                             default:

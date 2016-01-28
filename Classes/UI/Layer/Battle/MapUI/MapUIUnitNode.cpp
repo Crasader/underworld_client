@@ -258,8 +258,8 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
             const float width1 = woodButton->getContentSize().width;
             const float width2 = goldButton->getContentSize().width;
             const float totalWidth = width1 + width2;
-            const float offsetX = (resourceMaskWidth - totalWidth) / 2;
             static const float gap(10.0f);
+            const float offsetX = (resourceMaskWidth - totalWidth - gap) / 2;
             woodButton->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
             goldButton->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
             woodButton->setPosition(offsetX, 0);

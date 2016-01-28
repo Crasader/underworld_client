@@ -515,14 +515,21 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
     if (file.length() > 0) {
         // add node
         Texture2D::PixelFormat defaultPixelFormat = Texture2D::getDefaultAlphaPixelFormat();
-        if (defaultPixelFormat != LOW_PIXELFORMAT) {
-            Texture2D::setDefaultAlphaPixelFormat(LOW_PIXELFORMAT);
+        // TODO: if we change the "PixelFormat" with buildings, it may cause some display bugs(eg: the shadow of the cores)
+        if (!_isBuilding) {
+            if (defaultPixelFormat != LOW_PIXELFORMAT) {
+                Texture2D::setDefaultAlphaPixelFormat(LOW_PIXELFORMAT);
+            }
         }
+        
         _actionNode = CSLoader::createNode(file);
         _sprite = dynamic_cast<Sprite*>(*(_actionNode->getChildren().begin()));
         addChild(_actionNode);
-        if (defaultPixelFormat != Texture2D::getDefaultAlphaPixelFormat()) {
-            Texture2D::setDefaultAlphaPixelFormat(defaultPixelFormat);
+        
+        if (!_isBuilding) {
+            if (defaultPixelFormat != Texture2D::getDefaultAlphaPixelFormat()) {
+                Texture2D::setDefaultAlphaPixelFormat(defaultPixelFormat);
+            }
         }
         
         // flip if needed
