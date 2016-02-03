@@ -18,6 +18,7 @@ static const string suffix(".csb");
 SpellConfigData::SpellConfigData(tinyxml2::XMLElement *xmlElement)
 :_casterSpellPosition(kBody)
 ,_isCasterShakeScreen(false)
+,_receiverSpellDirection(kNone)
 ,_receiverSpellPosition(kBody)
 {
     if (xmlElement) {
@@ -66,6 +67,12 @@ SpellConfigData::SpellConfigData(tinyxml2::XMLElement *xmlElement)
                         _receiverResourceNames.push_back(name + suffix);
                     }
                 }
+            }
+        }
+        {
+            const char *data = xmlElement->Attribute("receiver_spell_direction");
+            if (data && strlen(data) > 0) {
+                _receiverSpellDirection = static_cast<SpellDirection>(atoi(data));
             }
         }
         {
@@ -129,6 +136,11 @@ bool SpellConfigData::isCasterShakeScreen() const
 const vector<string>& SpellConfigData::getReceiverResourceNames() const
 {
     return _receiverResourceNames;
+}
+
+SpellConfigData::SpellDirection SpellConfigData::getReceiverSpellDirection() const
+{
+    return _receiverSpellDirection;
 }
 
 SpellConfigData::SpellPosition SpellConfigData::getReceiverSpellPosition() const

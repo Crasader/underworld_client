@@ -16,6 +16,7 @@
 #include "MapLayer.h"
 #include "MapUILayer.h"
 #include "VictoryLayer.h"
+#include "DefeatLayer.h"
 
 USING_NS_CC;
 
@@ -33,7 +34,14 @@ public:
     virtual void onGameRenderRestart() = 0;
 };
 
-class GameRender : public UnderWorld::Core::AbstractRender, public UnitNodeObserver, public BulletNodeObserver, public MapLayerObserver, public MapUILayerObserver, public VictoryLayerObserver
+class GameRender
+: public UnderWorld::Core::AbstractRender
+, public UnitNodeObserver
+, public BulletNodeObserver
+, public MapLayerObserver
+, public MapUILayerObserver
+, public VictoryLayerObserver
+, public DefeatLayerObserver
 {
 public:
     GameRender(Scene* scene, int mapId, const std::string& mapData, const std::string& opponentsAccount);
@@ -71,6 +79,10 @@ protected:
     // VictoryLayerObserver
     virtual void onVictoryLayerClosed(Layer* pSender) override;
     virtual void onVictoryLayerContinued(Layer* pSender) override;
+    
+    // DefeatLayerObserver
+    virtual void onDefeatLayerClosed(Layer* pSender) override;
+    virtual void onDefeatLayerContinued(Layer* pSender) override;
     
 private:
     void updateAll();

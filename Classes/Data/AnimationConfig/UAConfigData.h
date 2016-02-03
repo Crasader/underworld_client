@@ -49,7 +49,7 @@ public:
     UAConfigData(tinyxml2::XMLElement *xmlElement);
     virtual ~UAConfigData();
     
-    AnimationParameters getAnimationParameters(UnderWorld::Core::Unit::Direction direction);
+    const AnimationParameters& getAnimationParameters(UnderWorld::Core::Unit::Direction direction);
     
 protected:
     void parse(AnimationParameters& params, const std::vector<std::string>& directions, const std::vector<std::string>& scales, const std::vector<std::string>& speeds, int index);

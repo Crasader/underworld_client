@@ -15,6 +15,7 @@
 #include "URConfigData.h"
 #include "SoundManager.h"
 #include "Spell.h"
+#include "LocalHelper.h"
 
 using namespace std;
 using namespace cocostudio;
@@ -284,12 +285,12 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
                 }
                 
                 if (!colorful) {
-                    _countLabel->setString("召唤中");
+                    _countLabel->setString(LocalHelper::getString("battle_summoning"));
                 } else {
-                    _countLabel->setString(" ");
+                    _countLabel->setString("");
                 }
             } else {
-                _countLabel->setString(" ");
+                _countLabel->setString("");
             }
         }
         

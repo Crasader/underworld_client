@@ -13,6 +13,7 @@
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "SoundManager.h"
+#include "ResourceNode.h"
 
 using namespace std;
 using namespace ui;
@@ -53,7 +54,7 @@ bool DefeatLayer::init(int levelId)
     {
         const Size& winSize = Director::getInstance()->getWinSize();
         
-        static const string CsbFile("zhuchangjing.csb");
+        static const string CsbFile("UI_Win.csb");
         Node* mainNode = CSLoader::createNode(CsbFile);
         mainNode->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(mainNode);
@@ -62,7 +63,7 @@ bool DefeatLayer::init(int levelId)
         mainNode->runAction(action);
         action->gotoFrameAndPlay(0, false);
         
-        Node* root = mainNode->getChildByTag(7);
+        Node* root = mainNode->getChildByTag(6);
         const Vector<Node*>& children = root->getChildren();
         for (int i = 0; i < children.size(); ++i)
         {
@@ -71,63 +72,148 @@ bool DefeatLayer::init(int levelId)
                 const int tag = child->getTag();
                 if (tag > 0) {
                     switch (tag) {
-                        case 100:
+                        case 9:
                         {
                             Button* button = dynamic_cast<Button*>(child);
                             if (button) {
                                 button->setPressedActionEnabled(true);
                                 button->addClickEventListener([this](Ref *pSender){
-                                    SoundManager::getInstance()->playButtonSound();
-                                    // TODO:
+                                    SoundManager::getInstance()->playButtonCancelSound();
+                                    removeFromParent();
                                 });
                             }
                         }
                             break;
-                        case 101:
+                        case 7:
                         {
-                            LabelAtlas* label = CocosUtils::create12x30Number(StringUtils::format("%d", 1));
-                            label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
-                            child->addChild(label);
+                            const Vector<Node*>& children = child->getChildren();
+                            for (int i = 0; i < children.size(); ++i)
+                            {
+                                Node* child = children.at(i);
+                                if (child) {
+                                    const int tag = child->getTag();
+                                    if (tag > 0) {
+                                        switch (tag) {
+                                            case 8:
+                                            {
+                                                Label* label = CocosUtils::createLabel(LocalHelper::getString("battle_defeat_title"), DEFAULT_FONT_SIZE);
+                                                child->addChild(label);
+                                            }
+                                                break;
+                                                
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                }
+                            }
                         }
                             break;
-                        case 102:
+                        case 23:
                         {
-                            LabelAtlas* label = CocosUtils::create12x30Number(StringUtils::format("%d", 1));
-                            label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
-                            child->addChild(label);
+                            const Vector<Node*>& children = child->getChildren();
+                            for (int i = 0; i < children.size(); ++i)
+                            {
+                                Node* child = children.at(i);
+                                if (child) {
+                                    const int tag = child->getTag();
+                                    if (tag > 0) {
+                                        switch (tag) {
+                                            case 24:
+                                            {
+                                                Label* label = CocosUtils::createLabel(LocalHelper::getString("battle_defeat_reward_label"), DEFAULT_FONT_SIZE);
+                                                child->addChild(label);
+                                            }
+                                                break;
+                                                
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                }
+                            }
                         }
                             break;
-                        case 103:
+                        case 13:
                         {
-                            LabelAtlas* label = CocosUtils::create12x30Number(StringUtils::format("%d", 1));
-                            label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
-                            child->addChild(label);
+                            Sprite* bg = Sprite::create(StringUtils::format("GameImages/level_bg/level_%d.png", levelId));
+                            child->addChild(bg, -1);
+                            
+                            const Vector<Node*>& children = child->getChildren();
+                            for (int i = 0; i < children.size(); ++i)
+                            {
+                                Node* child = children.at(i);
+                                if (child) {
+                                    const int tag = child->getTag();
+                                    if (tag > 0) {
+                                        switch (tag) {
+                                            case 12:
+                                            {
+                                                Label* label = CocosUtils::createLabel(LocalHelper::getString("battle_defeat_hint"), BIG_FONT_SIZE);
+                                                child->addChild(label);
+                                            }
+                                                break;
+                                                
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                }
+                            }
                         }
                             break;
-                        case 104:
+                        case 15:
+                        {
+                            ResourceNode* rn = ResourceNode::create(kResourceType_Jade, 100);
+                            child->addChild(rn);
+                        }
+                            break;
+                        case 14:
+                        {
+                            ResourceNode* rn = ResourceNode::create(kResourceType_Gold, 100);
+                            child->addChild(rn);
+                        }
+                            break;
+                        case 16:
+                        {
+                            ResourceNode* rn = ResourceNode::create(kResourceType_Gem, 100);
+                            child->addChild(rn);
+                        }
+                            break;
+                        case 17:
                         {
                             Button* button = dynamic_cast<Button*>(child);
                             if (button) {
                                 button->setPressedActionEnabled(true);
                                 button->addClickEventListener([this](Ref *pSender){
-                                    SoundManager::getInstance()->playButtonSound();
-                                    // TODO:
+                                    SoundManager::getInstance()->playButtonGoOnSound();
+                                    if (_observer) {
+                                        _observer->onDefeatLayerContinued(this);
+                                    }
                                 });
+                                
+                                const Vector<Node*>& children = child->getChildren();
+                                for (int i = 0; i < children.size(); ++i)
+                                {
+                                    Node* child = children.at(i);
+                                    if (child) {
+                                        const int tag = child->getTag();
+                                        if (tag > 0) {
+                                            switch (tag) {
+                                                case 18:
+                                                {
+                                                    Label* label = CocosUtils::createLabel(LocalHelper::getString("battle_defeat_button_label"), DEFAULT_FONT_SIZE);
+                                                    child->addChild(label);
+                                                }
+                                                    break;
+                                                    
+                                                default:
+                                                    break;
+                                            }
+                                        }
+                                    }
+                                }
                             }
-                        }
-                            break;
-                        case 105:
-                        {
-                            Label* label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
-                            label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
-                            child->addChild(label);
-                        }
-                            break;
-                        case 106:
-                        {
-                            Label* label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
-                            label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
-                            child->addChild(label);
                         }
                             break;
                         default:

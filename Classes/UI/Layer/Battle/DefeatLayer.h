@@ -18,6 +18,8 @@ class DefeatLayerObserver
 {
 public:
     virtual ~DefeatLayerObserver() {}
+    virtual void onDefeatLayerClosed(Layer* pSender) = 0;
+    virtual void onDefeatLayerContinued(Layer* pSender) = 0;
 };
 
 class DefeatLayer : public LayerColor

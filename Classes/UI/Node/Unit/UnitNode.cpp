@@ -18,7 +18,6 @@
 #include "DataManager.h"
 #include "UAConfigData.h"
 #include "URConfigData.h"
-#include "EffectConfigData.h"
 #include "SoundManager.h"
 #include "CocosUtils.h"
 #include "CocosGlobal.h"
@@ -516,7 +515,7 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
     if (file.length() > 0) {
         // add node
         Texture2D::PixelFormat defaultPixelFormat = Texture2D::getDefaultAlphaPixelFormat();
-        // TODO: if we change the "PixelFormat" with buildings, it may cause some display bugs(eg: the shadow of the cores)
+        // TODO: if we change the "PixelFormat", it may cause some display bugs(eg: the shadow of the units)
         if (!_isBuilding) {
             if (defaultPixelFormat != LOW_PIXELFORMAT) {
                 Texture2D::setDefaultAlphaPixelFormat(LOW_PIXELFORMAT);
@@ -563,7 +562,7 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
             
             const SkillClass skillClass(unit_getSkillClass(_unit));
 
-            AnimationParameters params = DataManager::getInstance()->getAnimationParameters(_unitName, skillClass, _lastDirection);
+            const AnimationParameters& params = DataManager::getInstance()->getAnimationParameters(_unitName, skillClass, _lastDirection);
             float scale = params.scale;
             float speed = params.speed;
             
@@ -706,7 +705,7 @@ void UnitNode::updateActionNode(const Skill* skill, int frameIndex, bool flip)
                                     addEffect(resources.at(0));
                                     
                                     if (cnt > 1) {
-                                        addEffect(resources.at(1), SpellConfigData::kFoot, false, false, nullptr);
+                                        addEffect(resources.at(1), data->getReceiverSpellDirection(), SpellConfigData::kFoot, false, false, nullptr);
                                         
                                         if (cnt > 2) {
                                             Node* node = addEffect(resources.at(2));
@@ -877,8 +876,7 @@ void UnitNode::addBuf(const string& name)
             const vector<string>& files = data->getReceiverResourceNames();
             if (files.size() > 0) {
                 const string& file = files.at(0);
-                const SpellConfigData::SpellPosition& spellPosition = data->getReceiverSpellPosition();
-                Node* buf = addEffect(file, spellPosition, true, true, nullptr);
+                Node* buf = addEffect(file, data->getReceiverSpellDirection(), data->getReceiverSpellPosition(), true, true, nullptr);
                 if (buf) {
                     _bufs.insert(make_pair(name, buf));
                 }
@@ -934,7 +932,7 @@ void UnitNode::updateFeatures()
                     const vector<string>& files = data->getReceiverResourceNames();
                     if (files.size() > 0) {
                         const string& file = files.at(0);
-                        addEffect(file, SpellConfigData::kBody, true, false, nullptr);
+                        addEffect(file, data->getReceiverSpellDirection(), SpellConfigData::kBody, true, false, nullptr);
                     }
                 }
             }
@@ -1035,7 +1033,7 @@ void UnitNode::addSwordEffect()
 Node* UnitNode::addEffect(const string& file)
 {
     if (_sprite) {
-        Node* effect = addEffect(file, SpellConfigData::kBody, false, false, nullptr);
+        Node* effect = addEffect(file, SpellConfigData::kNone, SpellConfigData::kBody, false, false, nullptr);
         return effect;
     }
     
@@ -1043,6 +1041,7 @@ Node* UnitNode::addEffect(const string& file)
 }
 
 Node* UnitNode::addEffect(const string& file,
+                          const SpellConfigData::SpellDirection& direction,
                           const SpellConfigData::SpellPosition& position,
                           bool scale,
                           bool loop,
@@ -1057,8 +1056,11 @@ Node* UnitNode::addEffect(const string& file,
         const string& suffix = file.substr(found + 1);
         if ("csb" == suffix) {
             Node *effect = CSLoader::createNode(file);
-            // TODO: remove temp code
-            bool flip(file == "jineng-JiaSu.csb");
+            bool flip(false);
+            if (SpellConfigData::kNone != direction) {
+                const bool isFaceRight = _needToFlip ^ _configData->isFaceRight();
+                flip = (isFaceRight ^ (SpellConfigData::kRight == direction));
+            }
             
             if (flip ^ (_needToFlip != _isLastFlipped)) {
                 node_flipX(effect);

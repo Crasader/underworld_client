@@ -22,7 +22,6 @@
 #include "URConfigData.h"
 #include "MapParticleConfigData.h"
 #include "SpellConfigData.h"
-#include "EffectConfigData.h"
 #include "ArtifactLocalData.h"
 #include "ArtifactUpgradeData.h"
 #include "AttributeLocalData.h"
@@ -122,7 +121,6 @@ void DataManager::init()
     parseURConfigData();
     parseMapParticleConfigData();
     parseSpellConfigData();
-    parseEffectConfigData();
     parseArtifactData();
     parseArtifactUpgradeData();
     parseAttributeData();
@@ -256,7 +254,7 @@ const GearSetLocalData* DataManager::getGearSetData(int id) const
     return nullptr;
 }
 
-AnimationParameters DataManager::getAnimationParameters(const string& name, UnderWorld::Core::SkillClass skillClass, UnderWorld::Core::Unit::Direction direction) const
+const AnimationParameters& DataManager::getAnimationParameters(const string& name, UnderWorld::Core::SkillClass skillClass, UnderWorld::Core::Unit::Direction direction) const
 {
     string key = name + StringUtils::format("_%d", skillClass);
     if (_animationParameters.find(key) != _animationParameters.end()) {
@@ -266,7 +264,8 @@ AnimationParameters DataManager::getAnimationParameters(const string& name, Unde
         }
     }
     
-    return AnimationParameters();
+    static AnimationParameters ret;
+    return ret;
 }
 
 const URConfigData* DataManager::getURConfigData(const string& name) const
@@ -292,15 +291,6 @@ const SpellConfigData* DataManager::getSpellConfigData(const string& name) const
 {
     if (_spellConfigData.find(name) != _spellConfigData.end()) {
         return _spellConfigData.at(name);
-    }
-    
-    return nullptr;
-}
-
-const EffectConfigData* DataManager::getEffectConfigData(const string& name) const
-{
-    if (_effectConfigData.find(name) != _effectConfigData.end()) {
-        return _effectConfigData.at(name);
     }
     
     return nullptr;
@@ -834,39 +824,6 @@ void DataManager::parseSpellConfigData()
                 } else {
                     if (key.length() > 0) {
                         _spellConfigData.insert(make_pair(key, data));
-                    } else {
-                        CC_SAFE_DELETE(data);
-                    }
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
-        }
-    }
-}
-
-void DataManager::parseEffectConfigData()
-{
-    string fileName = LocalHelper::getLocalizedConfigFilePath("EffectConfig.xml");
-    if (FileUtils::getInstance()->isFileExist(fileName))
-    {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc)
-        {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement())
-            {
-                EffectConfigData* data = new (nothrow) EffectConfigData(item);
-                const string& key = data->getName();
-                if (_effectConfigData.find(key) != _effectConfigData.end()) {
-                    assert(false);
-                } else {
-                    if (key.length() > 0) {
-                        _effectConfigData.insert(make_pair(key, data));
                     } else {
                         CC_SAFE_DELETE(data);
                     }

@@ -21,6 +21,13 @@ class SpellConfigData
 public:
     typedef enum
     {
+        kNone = 0,
+        kLeft = 1,
+        kRight = 2,
+    }SpellDirection;
+    
+    typedef enum
+    {
         kFoot = 0,
         kBody = 1,
         kHead = 2,
@@ -40,6 +47,7 @@ public:
     
     // receiver params
     const std::vector<std::string>& getReceiverResourceNames() const;
+    SpellDirection getReceiverSpellDirection() const;
     SpellPosition getReceiverSpellPosition() const;
     const std::map<UnderWorld::Core::SkillClass, float>& getReceiverSpeedRates() const;
     float getReceiverSpeedRate(UnderWorld::Core::SkillClass sc) const;
@@ -54,6 +62,7 @@ private:
     bool _isCasterShakeScreen;
     
     std::vector<std::string> _receiverResourceNames;
+    SpellDirection _receiverSpellDirection;
     SpellPosition _receiverSpellPosition;
     std::map<UnderWorld::Core::SkillClass, float> _receiverSpeedRates;
     std::map<UnderWorld::Core::SkillClass, float> _receiverVolumeRates;

@@ -20,6 +20,9 @@
 	<item key="battle_pveInfo_reward_label" value="过关奖励"/>
 	<item key="battle_pveInfo_rewardObject_label" value="过关奖励"/>
 	<item key="battle_pveInfo_button_label" value="开始"/>
+    
+    
+    <item key="battle_summoning" value="召唤中"/>
 	
 	
 	 <!-- 任务 -->

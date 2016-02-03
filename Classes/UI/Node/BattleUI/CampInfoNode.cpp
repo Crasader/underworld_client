@@ -38,6 +38,7 @@ CampInfoNode::CampInfoNode()
 ,_unitInfoNode(nullptr)
 ,_button(nullptr)
 ,_isFold(false)
+,_isMoving(false)
 {
     
 }
@@ -192,6 +193,10 @@ string CampInfoNode::getButtonFile(bool isFold)
 
 void CampInfoNode::setFold(bool fold, bool animated)
 {
+    if (animated && _isMoving) {
+        return;
+    }
+    
     _isFold = fold;
     const string& file = getButtonFile(fold);
     _button->loadTextures(file, file);
@@ -204,8 +209,9 @@ void CampInfoNode::setFold(bool fold, bool animated)
     }
     
     if (animated) {
+        _isMoving = true;
         runAction(Sequence::create(MoveTo::create(0.5f, destinationPos), CallFunc::create([=] {
-            
+            _isMoving = false;
         }), nullptr));
     } else {
         Node::setPosition(destinationPos);

@@ -70,6 +70,7 @@ private:
     bool _isScrollToLeft;
     bool _isFold;
     Point _basePosition;
+    bool _isMoving;
 };
 
 #endif /* CampInfoNode_h */

@@ -89,13 +89,14 @@ UAConfigData::~UAConfigData()
     
 }
 
-AnimationParameters UAConfigData::getAnimationParameters(UnderWorld::Core::Unit::Direction direction)
+const AnimationParameters& UAConfigData::getAnimationParameters(UnderWorld::Core::Unit::Direction direction)
 {
     if (_data.find(direction) != _data.end()) {
         return _data.at(direction);
     }
     
-    return AnimationParameters();
+    static AnimationParameters ret;
+    return ret;
 }
 
 void UAConfigData::parse(AnimationParameters& params, const vector<string>& directions, const vector<string>& scales, const vector<string>& speeds, int index)

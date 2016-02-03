@@ -23,9 +23,6 @@ static const string audioSuffix(".mp3");
 URConfigData::URConfigData(tinyxml2::XMLElement *xmlElement)
 :_isShortRange(false)
 ,_isFaceRight(false)
-,_bodyEffectPosition(Point::ZERO)
-,_bodyEffectScaleX(1.0f)
-,_bodyEffectScaleY(1.0f)
 ,_footEffectPosition(Point::ZERO)
 ,_footEffectScaleX(1.0f)
 ,_footEffectScaleY(1.0f)
@@ -155,30 +152,6 @@ URConfigData::URConfigData(tinyxml2::XMLElement *xmlElement)
             const char *data = xmlElement->Attribute("die_sound");
             if (data && strlen(data) > 0) {
                 _dieSound = audioPrefix + data + audioSuffix;
-            }
-        }
-        {
-            const char *data = xmlElement->Attribute("body_pos_x");
-            if (data) {
-                _bodyEffectPosition.x = atof(data);
-            }
-        }
-        {
-            const char *data = xmlElement->Attribute("body_pos_y");
-            if (data) {
-                _bodyEffectPosition.y = atof(data);
-            }
-        }
-        {
-            const char *data = xmlElement->Attribute("body_scale_x");
-            if (data) {
-                _bodyEffectScaleX = atof(data);
-            }
-        }
-        {
-            const char *data = xmlElement->Attribute("body_scale_y");
-            if (data) {
-                _bodyEffectScaleY = atof(data);
             }
         }
         {
@@ -322,20 +295,6 @@ const string& URConfigData::getHurtSound() const
 const string& URConfigData::getDieSound() const
 {
     return _dieSound;
-}
-const Point& URConfigData::getBodyEffectPosition() const
-{
-    return _bodyEffectPosition;
-}
-
-float URConfigData::getBodyEffectScaleX() const
-{
-    return _bodyEffectScaleX;
-}
-
-float URConfigData::getBodyEffectScaleY() const
-{
-    return _bodyEffectScaleY;
 }
 
 const Point& URConfigData::getFootEffectPosition() const

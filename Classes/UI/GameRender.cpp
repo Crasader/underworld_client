@@ -188,6 +188,7 @@ void GameRender::updateUnits(const Game* game, int index)
                     if (kSkillClass_Move == sc) {
                         _mapLayer->repositionUnit(node, pos);
                     }
+                    
                     _mapLayer->checkUnitInSpellRangeRing(node);
                 }
             } else {
@@ -655,6 +656,17 @@ void GameRender::onVictoryLayerContinued(Layer* pSender)
     }
 }
 
+#pragma mark - DefeatLayerObserver
+void GameRender::onDefeatLayerClosed(Layer* pSender)
+{
+    
+}
+
+void GameRender::onDefeatLayerContinued(Layer* pSender)
+{
+    
+}
+
 #pragma mark - private
 void GameRender::removeUnit(int unitId)
 {
@@ -853,12 +865,13 @@ void GameRender::onGameOver()
     
     // pop layer
     if (_scene) {
+        // TODO: change "_mapId"
         if (win) {
             VictoryLayer* layer = VictoryLayer::create(1 /*_mapId*/);
             layer->registerObserver(this);
             _scene->addChild(layer);
         } else {
-            VictoryLayer* layer = VictoryLayer::create(1 /*_mapId*/);
+            DefeatLayer* layer = DefeatLayer::create(1 /*_mapId*/);
             layer->registerObserver(this);
             _scene->addChild(layer);
         }
