@@ -60,8 +60,8 @@ MapUILayer::MapUILayer()
 :_observer(nullptr)
 ,_createdTableViewsCount(0)
 ,_tableViewPos(Point::ZERO)
-,_isTouchingHeroTableView(false)
-,_selectedHeroCamp(nullptr)
+,_isTouchingTableView(false)
+,_selectedCamp(nullptr)
 ,_timeLabel(nullptr)
 ,_nextWaveTimeLabel(nullptr)
 ,_nextWaveProgress(nullptr)
@@ -249,6 +249,19 @@ void MapUILayer::resumeGame()
     
 }
 
+bool MapUILayer::isPointInTableView(const Point& point)
+{
+    for (map<UnitClass, TableView*>::iterator iter = _tableViews.begin(); iter != _tableViews.end(); ++iter) {
+        UnitClass uc = iter->first;
+        TableView* tableView = iter->second;
+        if (tableView && getTableViewBoundingBox(uc).containsPoint(point)) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
 #pragma mark - TableViewDataSource
 Size MapUILayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
 {
@@ -301,7 +314,7 @@ ssize_t MapUILayer::numberOfCellsInTableView(TableView *table)
 #pragma mark - MapUIUnitNodeObserver
 void MapUILayer::onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node)
 {
-    _selectedHeroCamp = node->getCamp();
+    _selectedCamp = node->getCamp();
     
     clearTouchedCampIdx();
     UnitClass uc = node->getCamp()->getUnitType()->getUnitClass();
@@ -586,17 +599,10 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
 
 bool MapUILayer::onTouchBegan(Touch *touch, Event *unused_event)
 {
-    const Point& p = touch->getLocation();
-    for (map<UnitClass, TableView*>::iterator iter = _tableViews.begin(); iter != _tableViews.end(); ++iter) {
-        UnitClass uc = iter->first;
-        TableView* tableView = iter->second;
-        if (tableView && getTableViewBoundingBox(uc).containsPoint(p)) {
-            if (uc == kUnitClass_Hero) {
-                _isTouchingHeroTableView = true;
-            }
-            
-            return true;
-        }
+    const Point& point = touch->getLocation();
+    if (isPointInTableView(point)) {
+        _isTouchingTableView = true;
+        return true;
     }
     
     for (int i = 0; i < _campInfoNodes.size(); ++i) {
@@ -606,7 +612,7 @@ bool MapUILayer::onTouchBegan(Touch *touch, Event *unused_event)
             Rect boundingBox(Rect::ZERO);
             boundingBox.origin = convertToNodeSpace(node->convertToWorldSpace(bb.origin));
             boundingBox.size = bb.size;
-            if (boundingBox.containsPoint(p)) {
+            if (boundingBox.containsPoint(point)) {
                 return true;
             }
         }
@@ -617,43 +623,39 @@ bool MapUILayer::onTouchBegan(Touch *touch, Event *unused_event)
 
 void MapUILayer::onTouchMoved(Touch *touch, Event *unused_event)
 {
-    if (_isTouchingHeroTableView && _selectedHeroCamp) {
+    if (_isTouchingTableView && _selectedCamp && _observer) {
         const Point& point = touch->getLocation();
-        if (_observer) {
-            _observer->onMapUILayerSpellRingMoved(_selectedHeroCamp, point);
-        }
+        _observer->onMapUILayerTouchMoved(_selectedCamp, point);
     }
 }
 
 void MapUILayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
-    if (_isTouchingHeroTableView) {
-        const Point& point = touch->getLocation();
-        const Rect& rect = getTableViewBoundingBox(kUnitClass_Hero);
-        if (_selectedHeroCamp) {
-            if (_observer) {
-                if (rect.containsPoint(point)) {
-                    _observer->onMapUILayerSpellRingCancelled(_selectedHeroCamp);
-                } else {
-                    _observer->onMapUILayerTryToCastSpell(_selectedHeroCamp, point);
-                }
-            }
+    if (_isTouchingTableView && _selectedCamp) {
+        if (_observer) {
+            const Point& point = touch->getLocation();
+            const bool cancelled = isPointInTableView(point);
             
-            _selectedHeroCamp = nullptr;
-            _isTouchingHeroTableView = false;
+            if (cancelled) {
+                _observer->onMapUILayerTouchCancelled(_selectedCamp);
+            } else {
+                _observer->onMapUILayerTouchEnded(_selectedCamp, point);
+            }
         }
+        
+        _selectedCamp = nullptr;
+        _isTouchingTableView = false;
     }
 }
 
 #pragma mark private
 bool MapUILayer::isGameOver() const
 {
-    bool isGameOver(false);
     if (_observer) {
-        isGameOver = _observer->onMapUILayerIsGameOver();
+        return _observer->onMapUILayerIsGameOver();
     }
     
-    return isGameOver;
+    return false;
 }
 
 void MapUILayer::onUnitTouched(MapUIUnitNode* node)
@@ -687,7 +689,7 @@ void MapUILayer::onUnitTouched(MapUIUnitNode* node)
     SoundManager::getInstance()->playButtonSelectUnitSound();
     
     if (_observer) {
-        _observer->onMapUILayerUnitSelected(node);
+        _observer->onMapUILayerUnitSelected(node->getCamp());
     }
 }
 
@@ -761,12 +763,11 @@ UnitClass MapUILayer::getUnitClass(TableView* table) const
 
 ssize_t MapUILayer::getCellsCount(TableView* table) const
 {
-    ssize_t cnt(0);
     if (_observer) {
-        cnt = _observer->onMapUILayerCampsCount(getUnitClass(table));
+        return _observer->onMapUILayerCampsCount(getUnitClass(table));
     }
     
-    return cnt;
+    return 0;
 }
 
 Rect MapUILayer::getTableViewBoundingBox(UnitClass uc) const

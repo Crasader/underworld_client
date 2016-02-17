@@ -11,6 +11,7 @@
 #include "Map.h"
 #include "Camp.h"
 #include "Unit.h"
+#include "UnitType.h"
 #include "Spell.h"
 #include "SoundManager.h"
 #include "MapLayer.h"
@@ -40,6 +41,9 @@ GameRender::GameRender(Scene* scene, int mapId, const string& mapData, const str
 ,_mapUILayer(nullptr)
 ,_game(nullptr)
 ,_commander(nullptr)
+#if ENABLE_DRAG_CARD
+,_selectedCamp(nullptr)
+#endif
 ,_paused(false)
 ,_isGameOver(false)
 ,_remainingTime(battleTotalTime)
@@ -509,8 +513,24 @@ void GameRender::onBulletNodeExploded(BulletNode* node)
 }
 
 #pragma mark - MapLayerObserver
-void GameRender::onMapLayerTouchEnded()
+void GameRender::onMapLayerTouchMoved(const Point& point)
 {
+#if false
+    if (_selectedCamp) {
+        onMapUILayerTouchMoved(_selectedCamp, point);
+    }
+#endif
+}
+
+void GameRender::onMapLayerTouchEnded(const Point& point)
+{
+#if ENABLE_DRAG_CARD
+    if (_selectedCamp) {
+        onMapUILayerTouchEnded(_selectedCamp, point);
+        _selectedCamp = nullptr;
+    }
+#endif
+    
     if (_mapUILayer) {
         _mapUILayer->closeAllUnitInfoNodes();
     }
@@ -522,24 +542,25 @@ bool GameRender::onMapUILayerIsGameOver()
     return _isGameOver;
 }
 
-void GameRender::onMapUILayerUnitSelected(MapUIUnitNode* node)
+void GameRender::onMapUILayerUnitSelected(const Camp* camp)
 {
-    if (_commander) {
-        const Camp* camp = node->getCamp();
-        if (camp) {
-            if (isCampFull(camp)) {
-                const Spell* spell = getSpell(camp, 0);
-                if (spell) {
-                    SpellCastType castType = spell->getSpellType()->getCastType();
-                    if (kSpellCastType_Self == castType) {
-                        castSpell(spell, camp->getHero(), Coordinate::ZERO, nullptr);
-                    }
+#if ENABLE_DRAG_CARD
+    _selectedCamp = camp;
+#else
+    if (_commander && camp) {
+        if (isCampFull(camp)) {
+            const Spell* spell = getSpell(camp, 0);
+            if (spell) {
+                SpellCastType castType = spell->getSpellType()->getCastType();
+                if (kSpellCastType_Self == castType) {
+                    castSpell(spell, camp->getHero(), Coordinate::ZERO, nullptr);
                 }
-            } else {
-                _commander->tryGiveCampCommand(camp, 1);
             }
+        } else {
+            _commander->tryGiveCampCommand(camp, 1);
         }
     }
+#endif
 }
 
 void GameRender::onMapUILayerClickedPauseButton()
@@ -573,7 +594,7 @@ const Camp* GameRender::onMapUILayerCampAtIndex(UnitClass uc, ssize_t idx)
     return nullptr;
 }
 
-void GameRender::onMapUILayerSpellRingCancelled(const Camp* camp)
+void GameRender::onMapUILayerTouchCancelled(const Camp* camp)
 {
     UnitNode* node = getHeroUnitNode(camp);
     if (node) {
@@ -585,49 +606,59 @@ void GameRender::onMapUILayerSpellRingCancelled(const Camp* camp)
     }
 }
 
-void GameRender::onMapUILayerSpellRingMoved(const Camp* camp, const Point& position)
+void GameRender::onMapUILayerTouchMoved(const Camp* camp, const Point& point)
 {
     const Spell* spell = getSpell(camp, 0);
-    if (!spell) {
-        return;
-    }
-    
-    const SpellType* spellType = spell->getSpellType();
-    if (!spellType) {
-        return;
-    }
-    
-    SpellCastType castType = spellType->getCastType();
-    if (kSpellCastType_Position == castType || kSpellCastType_PositionOrUnit == castType) {
-        if (spell->getCDProgress() <= 0) {
-            UnitNode* node = getHeroUnitNode(camp);
-            if (node) {
-                node->addSpellRing(spellType->getCastDistance());
+    if (spell) {
+        const SpellType* spellType = spell->getSpellType();
+        if (spellType) {
+            SpellCastType castType = spellType->getCastType();
+            if (kSpellCastType_Position == castType || kSpellCastType_PositionOrUnit == castType) {
+                if (spell->getCDProgress() <= 0) {
+                    UnitNode* node = getHeroUnitNode(camp);
+                    if (node) {
+                        node->addSpellRing(spellType->getCastDistance());
+                    }
+                    
+                    if (_mapLayer) {
+                        const Point& realPos = _mapLayer->convertToNodeSpace(_mapUILayer->convertToWorldSpace(point));
+                        _mapLayer->updateSpellRangeRing(realPos, 400);
+                    }
+                }
             }
-            
-            if (_mapLayer) {
-                const Point& realPos = _mapLayer->convertToNodeSpace(_mapUILayer->convertToWorldSpace(position));
-                _mapLayer->updateSpellRangeRing(realPos, 400);
-            }
+        }
+    } else {
+        if (_mapLayer) {
+            const string& name = camp->getUnitType()->getName();
+            const Point& realPos = _mapLayer->convertToNodeSpace(_mapUILayer->convertToWorldSpace(point));
+            _mapLayer->updateUnitMask(name, realPos);
         }
     }
 }
 
-void GameRender::onMapUILayerTryToCastSpell(const Camp* camp, const Point& position)
+void GameRender::onMapUILayerTouchEnded(const Camp* camp, const Point& point)
 {
     const Spell* spell = getSpell(camp, 0);
     if (spell) {
-        SpellCastType castType = spell->getSpellType()->getCastType();
-        if (kSpellCastType_Position == castType || kSpellCastType_PositionOrUnit == castType) {
-            const Coordinate& coordinate = _mapLayer->convertPoint(position);
-            CommandResult result = castSpell(spell, camp->getHero(), coordinate, nullptr);
-            if (kCommandResult_suc == result) {
-                if (spell->getSpellName().find("火球术") != string::npos) {
-                    if (_mapLayer) {
-                        _mapLayer->addFireballSpellEffect();
+        const SpellType* spellType = spell->getSpellType();
+        if (spellType) {
+            SpellCastType castType = spellType->getCastType();
+            if (kSpellCastType_Position == castType || kSpellCastType_PositionOrUnit == castType) {
+                const Coordinate& coordinate = _mapLayer->convertPoint(point);
+                CommandResult result = castSpell(spell, camp->getHero(), coordinate, nullptr);
+                if (kCommandResult_suc == result) {
+                    if (spell->getSpellName().find("火球术") != string::npos) {
+                        if (_mapLayer) {
+                            _mapLayer->addFireballSpellEffect();
+                        }
                     }
                 }
             }
+        }
+    } else {
+        if (_mapLayer) {
+            // TODO: place the unit
+            _mapLayer->removeUnitMask();
         }
     }
     

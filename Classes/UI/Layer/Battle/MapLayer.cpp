@@ -11,6 +11,7 @@
 #include "2d/CCFastTMXLayer.h"
 #include "2d/CCFastTMXTiledMap.h"
 #include "Coordinate.h"
+#include "UnitType.h"
 #include "Map.h"
 #include "cocostudio/CocoStudio.h"
 #include "tinyxml2/tinyxml2.h"
@@ -41,6 +42,7 @@ MapLayer::MapLayer()
 ,_spellRing(nullptr)
 ,_butterfly(nullptr)
 ,_isScrolling(false)
+,_selectedUnitMask(nullptr)
 {
     
 }
@@ -285,6 +287,32 @@ void MapLayer::repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& co
     reorderChild(unit, zOrder);
 }
 
+void MapLayer::updateUnitMask(const string& name, const Point& layerPoint)
+{
+    if (_selectedUnitName != name) {
+        removeUnitMask();
+    }
+    
+    if (!_selectedUnitMask) {
+        _selectedUnitMask = Sprite::create("GameImages/resources/icon_101B.png");
+        _scrollView->addChild(_selectedUnitMask);
+    }
+    
+    Node* container = _scrollView->getContainer();
+    const Point pos = _scrollView->convertToNodeSpace(convertToWorldSpace(layerPoint)) - container->getPosition();
+    const Point realPos = Point(pos.x / container->getScaleX(), pos.y / container->getScaleY());
+    _selectedUnitMask->setPosition(realPos);
+}
+
+void MapLayer::removeUnitMask()
+{
+    if (_selectedUnitMask) {
+        _selectedUnitMask->stopAllActions();
+        _selectedUnitMask->removeFromParent();
+        _selectedUnitMask = nullptr;
+    }
+}
+
 void MapLayer::updateSpellRangeRing(const Point& layerPoint, int range)
 {
     if (!_spellRing) {
@@ -376,13 +404,20 @@ bool MapLayer::onTouchBegan(Touch *touch, Event *unused_event)
 
 void MapLayer::onTouchMoved(Touch *touch, Event *unused_event)
 {
-    
+    if (_observer) {
+        const Point& point = touch->getLocation();
+        _observer->onMapLayerTouchMoved(point);
+    }
 }
 
 void MapLayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
     if (_observer) {
-        _observer->onMapLayerTouchEnded();
+        const Point& point = touch->getLocation();
+        const Point& startPoint = touch->getStartLocation();
+        if (startPoint.distance(point) < TOUCH_CANCEL_BY_MOVING_DISTANCE) {
+            _observer->onMapLayerTouchEnded(point);
+        }
     }
 }
 

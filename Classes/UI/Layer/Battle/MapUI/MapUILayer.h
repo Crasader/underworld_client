@@ -19,20 +19,21 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 
 class ResourceButton;
-class UnitInfoNode;
 
 class MapUILayerObserver
 {
 public:
     virtual ~MapUILayerObserver() {}
     virtual bool onMapUILayerIsGameOver() = 0;
-    virtual void onMapUILayerUnitSelected(MapUIUnitNode* node) = 0;
     virtual void onMapUILayerClickedPauseButton() = 0;
     virtual ssize_t onMapUILayerCampsCount(UnderWorld::Core::UnitClass uc) = 0;
     virtual const UnderWorld::Core::Camp* onMapUILayerCampAtIndex(UnderWorld::Core::UnitClass uc, ssize_t idx) = 0;
-    virtual void onMapUILayerSpellRingMoved(const UnderWorld::Core::Camp* camp, const Point& position) = 0;
-    virtual void onMapUILayerSpellRingCancelled(const UnderWorld::Core::Camp* camp) = 0;
-    virtual void onMapUILayerTryToCastSpell(const UnderWorld::Core::Camp* camp, const Point& position) = 0;
+    
+    virtual void onMapUILayerUnitSelected(const UnderWorld::Core::Camp* camp) = 0;
+    
+    virtual void onMapUILayerTouchMoved(const UnderWorld::Core::Camp* camp, const Point& position) = 0;
+    virtual void onMapUILayerTouchCancelled(const UnderWorld::Core::Camp* camp) = 0;
+    virtual void onMapUILayerTouchEnded(const UnderWorld::Core::Camp* camp, const Point& position) = 0;
 };
 
 class MapUILayer: public LayerColor, public TableViewDataSource, public MapUIUnitNodeObserver, public CampInfoNodeObserver
@@ -59,6 +60,7 @@ public:
     void updateGoldAndWood(int gold, int wood);
     void pauseGame();
     void resumeGame();
+    bool isPointInTableView(const Point& point);
     
 protected:
     MapUILayer();
@@ -99,8 +101,8 @@ private:
     Size _cellSize;
     std::pair<TableView*, ssize_t> _selectedCampIdx;
     std::pair<TableView*, ssize_t> _touchedCampIdx;
-    bool _isTouchingHeroTableView;
-    const UnderWorld::Core::Camp* _selectedHeroCamp;
+    bool _isTouchingTableView;
+    const UnderWorld::Core::Camp* _selectedCamp;
     // ======================== UI =============================
     std::map<UnderWorld::Core::UnitClass, TableView*> _tableViews;
     Label *_timeLabel;

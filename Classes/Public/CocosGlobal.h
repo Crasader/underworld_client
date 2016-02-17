@@ -12,7 +12,8 @@
 #include "Global.h"
 #include <iostream>
 
-#define ENABLE_CAMP_INFO (0)
+#define ENABLE_CAMP_INFO    (0)
+#define ENABLE_DRAG_CARD    (0)
 
 #define USER_TOKEN_LENGTH   (64)
 

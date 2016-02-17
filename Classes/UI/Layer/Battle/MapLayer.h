@@ -23,7 +23,8 @@ class MapLayerObserver
 {
 public:
     virtual ~MapLayerObserver() {}
-    virtual void onMapLayerTouchEnded() = 0;
+    virtual void onMapLayerTouchMoved(const Point& point) = 0;
+    virtual void onMapLayerTouchEnded(const Point& point) = 0;
 };
 
 class MapLayer : public LayerColor, public cocos2d::extension::ScrollViewDelegate
@@ -35,6 +36,9 @@ public:
     UnderWorld::Core::Coordinate convertPoint(const Point& layerPoint);
     void addUnit(Node* unit, const UnderWorld::Core::Coordinate& coreCoordinate);
     void repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& coreCoordinate);
+    
+    void updateUnitMask(const std::string& name, const Point& layerPoint);
+    void removeUnitMask();
     
     void updateSpellRangeRing(const Point& layerPoint, int range);
     void removeSpellRangeRing();
@@ -88,6 +92,8 @@ private:
     std::set<ParticleSystemQuad*> _particles;
     std::set<Node*> _nodesInTheRing;
     std::set<Node*> _spellEffects;
+    std::string _selectedUnitName;
+    Node* _selectedUnitMask;
 };
 
 #endif /* MapLayer_h */

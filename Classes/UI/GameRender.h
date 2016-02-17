@@ -64,17 +64,18 @@ protected:
     virtual void onBulletNodeExploded(BulletNode* node) override;
     
     // MapLayerObserver
-    virtual void onMapLayerTouchEnded() override;
+    virtual void onMapLayerTouchMoved(const Point& point) override;
+    virtual void onMapLayerTouchEnded(const Point& point) override;
     
     // MapUILayerObserver
     virtual bool onMapUILayerIsGameOver() override;
-    virtual void onMapUILayerUnitSelected(MapUIUnitNode* node) override;
     virtual void onMapUILayerClickedPauseButton() override;
     virtual ssize_t onMapUILayerCampsCount(UnderWorld::Core::UnitClass uc) override;
     virtual const UnderWorld::Core::Camp* onMapUILayerCampAtIndex(UnderWorld::Core::UnitClass uc, ssize_t idx) override;
-    virtual void onMapUILayerSpellRingMoved(const UnderWorld::Core::Camp* camp, const Point& position) override;
-    virtual void onMapUILayerSpellRingCancelled(const UnderWorld::Core::Camp* camp) override;
-    virtual void onMapUILayerTryToCastSpell(const UnderWorld::Core::Camp* camp, const Point& position) override;
+    virtual void onMapUILayerUnitSelected(const UnderWorld::Core::Camp* camp) override;
+    virtual void onMapUILayerTouchMoved(const UnderWorld::Core::Camp* camp, const Point& point) override;
+    virtual void onMapUILayerTouchCancelled(const UnderWorld::Core::Camp* camp) override;
+    virtual void onMapUILayerTouchEnded(const UnderWorld::Core::Camp* camp, const Point& point) override;
     
     // VictoryLayerObserver
     virtual void onVictoryLayerClosed(Layer* pSender) override;
@@ -144,12 +145,18 @@ private:
     std::map<UnderWorld::Core::UnitClass, vector<const UnderWorld::Core::Camp*>> _myCamps;
     std::map<std::string, std::map<int, const UnderWorld::Core::Unit*>> _myHeroes;
     std::map<int, const UnderWorld::Core::Unit*> _cores;
+    
+#if ENABLE_DRAG_CARD
+    const UnderWorld::Core::Camp* _selectedCamp;
+#endif
+    
 #if ENABLE_CAMP_INFO
     std::map<int, BattleCampInfos> _battleCampInfos;
 #else
     std::map<int, BattleUnitInfos> _battleUnitInfos;
     std::map<int, std::vector<const UnderWorld::Core::UnitBase*>> _newAddedUnitBases;
 #endif
+    
     bool _paused;
     bool _isGameOver;
     int _remainingTime;
