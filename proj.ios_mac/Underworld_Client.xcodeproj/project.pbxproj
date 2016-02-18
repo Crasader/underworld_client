@@ -83,6 +83,7 @@
 		A103F45F1BE38112007F9A83 /* GameRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F45D1BE38112007F9A83 /* GameRender.cpp */; };
 		A10611FF1C3D20A40065070F /* SoldierPieceData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10611FD1C3D20A40065070F /* SoldierPieceData.cpp */; };
 		A10612021C3D22260065070F /* HeroPieceData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10612001C3D22260065070F /* HeroPieceData.cpp */; };
+		A1098E9C1C758C3500B2E044 /* BattleResourceNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1098E9A1C758C3500B2E044 /* BattleResourceNode.cpp */; };
 		A11C481F1C57490F0024E921 /* MapUnitConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A11C481D1C57490F0024E921 /* MapUnitConfigData.cpp */; };
 		A1211B231C0BF55200C27CCC /* LiteralValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B211C0BF55200C27CCC /* LiteralValue.cpp */; };
 		A1211B271C0BF5CC00C27CCC /* RandomCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B251C0BF5CC00C27CCC /* RandomCreator.cpp */; };
@@ -401,6 +402,8 @@
 		A10611FE1C3D20A40065070F /* SoldierPieceData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoldierPieceData.h; sourceTree = "<group>"; };
 		A10612001C3D22260065070F /* HeroPieceData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HeroPieceData.cpp; sourceTree = "<group>"; };
 		A10612011C3D22260065070F /* HeroPieceData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroPieceData.h; sourceTree = "<group>"; };
+		A1098E9A1C758C3500B2E044 /* BattleResourceNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattleResourceNode.cpp; sourceTree = "<group>"; };
+		A1098E9B1C758C3500B2E044 /* BattleResourceNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BattleResourceNode.h; sourceTree = "<group>"; };
 		A11C481D1C57490F0024E921 /* MapUnitConfigData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapUnitConfigData.cpp; sourceTree = "<group>"; };
 		A11C481E1C57490F0024E921 /* MapUnitConfigData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapUnitConfigData.h; sourceTree = "<group>"; };
 		A1211B211C0BF55200C27CCC /* LiteralValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LiteralValue.cpp; path = Core/Unit/Element/LiteralValue.cpp; sourceTree = "<group>"; };
@@ -1521,6 +1524,8 @@
 		A1D91BE51C4E087C00C778F4 /* BattleUI */ = {
 			isa = PBXGroup;
 			children = (
+				A1098E9A1C758C3500B2E044 /* BattleResourceNode.cpp */,
+				A1098E9B1C758C3500B2E044 /* BattleResourceNode.h */,
 				A1D91BE61C4E087C00C778F4 /* CampInfoNode.cpp */,
 				A1D91BE71C4E087C00C778F4 /* CampInfoNode.h */,
 				A1D91BE81C4E087C00C778F4 /* DisplayIconNode.cpp */,
@@ -1819,6 +1824,7 @@
 				A18524D91C1AF3BB00BE261D /* QuestCell.cpp in Sources */,
 				A1720E741BCCE0A200217E98 /* FixedLabelAtlas.cpp in Sources */,
 				A1F58D521C32391200C8A2DD /* GearAttributeData.cpp in Sources */,
+				A1098E9C1C758C3500B2E044 /* BattleResourceNode.cpp in Sources */,
 				A1D91BF01C4E087C00C778F4 /* UnitInfoNode.cpp in Sources */,
 				30FD55611C2BF57F0078EC3C /* PassiveType.cpp in Sources */,
 				A1F58D591C32465900C8A2DD /* SoldierTalentData.cpp in Sources */,

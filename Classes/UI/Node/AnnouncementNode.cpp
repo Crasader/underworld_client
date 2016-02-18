@@ -129,7 +129,7 @@ bool AnnouncementNode::init(const std::string &content, float width)
     
     if (suspense.size() == 1) {
         const BlockConfig& config = suspense.top();
-        Label *label = CocosUtils::createLabel(config._content, config._fontSize, Size(width, .0f));
+        Label *label = CocosUtils::createLabel(config._content, config._fontSize, DEFAULT_FONT, Size(width, .0f));
         label->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
         addChild(label);
         _contentSize = label->getContentSize();

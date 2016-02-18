@@ -53,11 +53,11 @@ bool MessageBoxBaseLayer::init()
         _confirmButton->setPosition(_confirmButtonPosition);
         _cancelButton->setPosition(_cancelButtonPosition);
         
-        _confirmLabel = CocosUtils::createLabel(LocalHelper::getString("hint_confirm"), BIG_FONT_SIZE, Size::ZERO, TextHAlignment::CENTER, TextVAlignment::CENTER);
+        _confirmLabel = CocosUtils::createLabel(LocalHelper::getString("hint_confirm"), BIG_FONT_SIZE, DEFAULT_FONT, Size::ZERO, TextHAlignment::CENTER, TextVAlignment::CENTER);
         _confirmLabel->setPosition(Point(sizeg.width / 2, sizeg.height * 0.55f));
         _confirmButton->addChild(_confirmLabel);
         
-        _cancelLabel = CocosUtils::createLabel(LocalHelper::getString("hint_cancel"), BIG_FONT_SIZE, Size::ZERO, TextHAlignment::CENTER, TextVAlignment::CENTER);
+        _cancelLabel = CocosUtils::createLabel(LocalHelper::getString("hint_cancel"), BIG_FONT_SIZE, DEFAULT_FONT, Size::ZERO, TextHAlignment::CENTER, TextVAlignment::CENTER);
         _cancelLabel->setPosition(Point(sizeb.width / 2, sizeb.height * 0.55f));
         _cancelButton->addChild(_cancelLabel);
         

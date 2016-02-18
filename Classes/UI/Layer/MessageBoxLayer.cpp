@@ -62,7 +62,7 @@ bool MessageBoxLayer::init()
     if (MessageBoxBaseLayer::init())
     {
         static const Size dimensions(440, 120);
-        _messageLabel = CocosUtils::createLabel("", MESSAGEBOX_DEFAULT_FONT_SIZE, dimensions, TextHAlignment::CENTER, TextVAlignment::CENTER);
+        _messageLabel = CocosUtils::createLabel("", MESSAGEBOX_DEFAULT_FONT_SIZE, DEFAULT_FONT, dimensions, TextHAlignment::CENTER, TextVAlignment::CENTER);
         _background->addChild(_messageLabel);
         
         const Size& size = _background->getContentSize();

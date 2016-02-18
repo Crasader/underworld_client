@@ -18,7 +18,7 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-class ResourceButton;
+class BattleResourceNode;
 
 class MapUILayerObserver
 {
@@ -30,6 +30,8 @@ public:
     virtual const UnderWorld::Core::Camp* onMapUILayerCampAtIndex(UnderWorld::Core::UnitClass uc, ssize_t idx) = 0;
     
     virtual void onMapUILayerUnitSelected(const UnderWorld::Core::Camp* camp) = 0;
+    virtual void onMapUILayerUnitAdd(const UnderWorld::Core::Camp* camp) = 0;
+    virtual void onMapUILayerUnitUpgrade(const UnderWorld::Core::Camp* camp) = 0;
     
     virtual void onMapUILayerTouchMoved(const UnderWorld::Core::Camp* camp, const Point& position) = 0;
     virtual void onMapUILayerTouchCancelled(const UnderWorld::Core::Camp* camp) = 0;
@@ -54,9 +56,11 @@ public:
     void closeAllUnitInfoNodes();
     void updateMyHpProgress(int progress);
     void updateOpponentsHpProgress(int progress);
-    void updateWaveTime(int time, int totalTime);
     void updateRemainingTime(int time);
+#if false
+    void updateWaveTime(int time, int totalTime);
     void updatePopulation(int count, int maxCount);
+#endif
     void updateGoldAndWood(int gold, int wood);
     void pauseGame();
     void resumeGame();
@@ -77,6 +81,8 @@ protected:
     virtual ssize_t numberOfCellsInTableView(TableView *table) override;
     
     // MapUIUnitNodeObserver
+    virtual void onMapUIUnitNodeClickedAddButton(MapUIUnitNode* node) override;
+    virtual void onMapUIUnitNodeClickedUpgradeButton(MapUIUnitNode* node) override;
     virtual void onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node) override;
     virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node, bool isValid) override;
     virtual void onMapUIUnitNodeTouchedCanceled(MapUIUnitNode* node) override;
@@ -84,6 +90,7 @@ protected:
     // CampInfoNodeObserver
     virtual void onCampInfoNodeClickedIcon(CampInfoNode* pSender, const UnderWorld::Core::UnitBase* unit) override;
     
+    void createUserInfo(bool left, const std::string& account);
     bool isGameOver() const;
     void onUnitTouched(MapUIUnitNode* node);
     void clearTouchedCampIdx();
@@ -106,11 +113,13 @@ private:
     // ======================== UI =============================
     std::map<UnderWorld::Core::UnitClass, TableView*> _tableViews;
     Label *_timeLabel;
+    BattleResourceNode *_goldResourceNode;
+    BattleResourceNode *_woodResourceNode;
+#if false
     Label *_nextWaveTimeLabel;
     ProgressTimer *_nextWaveProgress;
-    ResourceButton *_goldResourceButton;
-    ResourceButton *_woodResourceButton;
     Label *_populationLabel;
+#endif
     ProgressTimer *_myHpProgress;
     Label *_myHpPercentageLabel;
     ProgressTimer *_opponentsHpProgress;

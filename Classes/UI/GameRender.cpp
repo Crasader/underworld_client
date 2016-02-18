@@ -47,11 +47,13 @@ GameRender::GameRender(Scene* scene, int mapId, const string& mapData, const str
 ,_paused(false)
 ,_isGameOver(false)
 ,_remainingTime(battleTotalTime)
-,_population(0)
 ,_goldCount(0)
 ,_woodCount(0)
+#if false
+,_population(0)
 ,_nextWave(INVALID_VALUE)
 ,_nextWaveTotalTime(INVALID_VALUE)
+#endif
 ,_hasUpdatedBattleCampInfos(false)
 {
     _mapLayer = MapLayer::create(mapId, mapData);
@@ -113,8 +115,10 @@ void GameRender::init(const Game* game, Commander* commander)
         }
     }
     
+#if false
     _nextWave = _game->getEventTrigger()->getWave();
     _nextWaveTotalTime = getRemainingWaveTime();
+#endif
     
     updateAll();
     
@@ -324,9 +328,11 @@ void GameRender::updateUILayer()
         }
     }
     
+    _mapUILayer->updateRemainingTime(_remainingTime);
+    
+#if false
     const int remainingWaveTime = getRemainingWaveTime();
     _mapUILayer->updateWaveTime(remainingWaveTime, _nextWaveTotalTime);
-    _mapUILayer->updateRemainingTime(_remainingTime);
     
     const int nextWave = _game->getEventTrigger()->getWave();
     if (nextWave != _nextWave) {
@@ -343,6 +349,7 @@ void GameRender::updateUILayer()
     } else {
         _hasUpdatedBattleCampInfos = false;
     }
+#endif
 }
 
 #if ENABLE_CAMP_INFO
@@ -556,11 +563,21 @@ void GameRender::onMapUILayerUnitSelected(const Camp* camp)
                     castSpell(spell, camp->getHero(), Coordinate::ZERO, nullptr);
                 }
             }
-        } else {
-            _commander->tryGiveCampCommand(camp, 1);
         }
     }
 #endif
+}
+
+void GameRender::onMapUILayerUnitAdd(const UnderWorld::Core::Camp* camp)
+{
+    if (_commander && camp && !isCampFull(camp)) {
+        _commander->tryGiveCampCommand(camp, 1);
+    }
+}
+
+void GameRender::onMapUILayerUnitUpgrade(const UnderWorld::Core::Camp* camp)
+{
+    
 }
 
 void GameRender::onMapUILayerClickedPauseButton()
@@ -822,11 +839,6 @@ void GameRender::updateResources()
         }
         
         {
-            if (_population != populationOccpied) {
-                _population = populationOccpied;
-            }
-            _mapUILayer->updatePopulation(populationOccpied, populationBalance);
-            
             // check if need to reload table view
             bool update(false);
             if (_goldCount != gold) {

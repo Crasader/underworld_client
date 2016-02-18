@@ -20,6 +20,9 @@
 #define RESOLUTION_WIDTH    (1136)
 #define RESOLUTION_HEIGHT   (640)
 
+#define DEFAULT_FONT        ("TimesNewRomanPS-BoldMT")
+#define DEFAULT_NUMBER_FONT ("HelveticaNeue-Bold")
+
 #define SMALL_FONT_SIZE     (14.0f)
 #define DEFAULT_FONT_SIZE   (18.0f)
 #define BIG_FONT_SIZE       (24.0f)

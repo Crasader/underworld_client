@@ -42,16 +42,21 @@ MapUIUnitNode* MapUIUnitNode::create(const Camp* camp)
 
 MapUIUnitNode::MapUIUnitNode()
 :_observer(nullptr)
-,_shadow(nullptr)
-,_iconButton(nullptr)
-,_iconBasePosition(Point::ZERO)
-,_mask(nullptr)
-,_resourcesMask(nullptr)
-,_shiningSprite(nullptr)
+,_cardWidget(nullptr)
+,_addButton(nullptr)
+,_iconSprite(nullptr)
+,_qualitySprite(nullptr)
+,_goldSprite(nullptr)
+,_woodSprite(nullptr)
 ,_countLabel(nullptr)
+,_goldLabel(nullptr)
+,_woodLabel(nullptr)
+
+,_shiningSprite(nullptr)
 ,_camp(nullptr)
 ,_idx(CC_INVALID_INDEX)
 ,_touchInvalid(false)
+,_isIconTouched(false)
 {
     
 }
@@ -65,14 +70,13 @@ bool MapUIUnitNode::init(const Camp* camp)
 {
     if (Node::init())
     {
-#if false
-        const string CsbFile = "facebook_UI.csb";
-        Node *mainNode = CSLoader::createNode(CsbFile);
+        static const string csbFile("UI_BattleCard.csb");
+        Node *mainNode = CSLoader::createNode(csbFile);
         addChild(mainNode);
-        timeline::ActionTimeline *action = CSLoader::createTimeline(CsbFile);
+        timeline::ActionTimeline *action = CSLoader::createTimeline(csbFile);
         mainNode->runAction(action);
         action->gotoFrameAndPlay(0, false);
-        Widget* root = dynamic_cast<Widget *>(mainNode->getChildByTag(501));
+        Widget* root = dynamic_cast<Widget *>(mainNode->getChildByTag(4));
         root->setSwallowTouches(false);
         const Vector<Node*>& children = root->getChildren();
         for (int i = 0; i < children.size(); ++i)
@@ -80,26 +84,133 @@ bool MapUIUnitNode::init(const Camp* camp)
             Node* child = children.at(i);
             if (child) {
                 const int tag = child->getTag();
-                const Point& position = child->getPosition();
-                Node *parent = child->getParent();
                 switch (tag) {
+                    case 20: {
+                        Button* button = dynamic_cast<Button*>(child);
+                        if (button) {
+                            button->setPressedActionEnabled(true);
+                            button->addClickEventListener([this](Ref *pSender){
+                                SoundManager::getInstance()->playButtonSound();
+                                if (_observer) {
+                                    _observer->onMapUIUnitNodeClickedAddButton(this);
+                                }
+                            });
+                            
+                            _addButton = button;
+                        } else {
+                            assert(false);
+                        }
+                    }
+                        break;
+                    case 21: {
+                        Button* button = dynamic_cast<Button*>(child);
+                        if (button) {
+                            button->setPressedActionEnabled(true);
+                            button->addClickEventListener([this](Ref *pSender){
+                                SoundManager::getInstance()->playButtonSound();
+                                if (_observer) {
+                                    _observer->onMapUIUnitNodeClickedUpgradeButton(this);
+                                }
+                            });
+                        } else {
+                            assert(false);
+                        }
+                    }
+                        break;
+                    case 23: {
+                        _cardWidget = dynamic_cast<Widget*>(child);
                         
+                        const Vector<Node*>& children = child->getChildren();
+                        for (int i = 0; i < children.size(); ++i)
+                        {
+                            Node* child = children.at(i);
+                            if (child) {
+                                const int tag = child->getTag();
+                                switch (tag) {
+                                    case 6: {
+                                        _qualitySprite = Sprite::create("GameImages/test/ui_kuang_1.png");
+                                        child->addChild(_qualitySprite);
+                                    }
+                                        break;
+                                    case 7: {
+                                        const string& iconFile = getIconFile(camp, true);
+                                        _iconSprite = Sprite::create(iconFile);
+                                        child->addChild(_iconSprite);
+                                    }
+                                        break;
+                                    case 8: {
+                                        Node* node = child->getChildByTag(10);
+                                        if (node) {
+                                            _countLabel = CocosUtils::createLabel("0", DEFAULT_FONT_SIZE, DEFAULT_NUMBER_FONT);
+                                            node->addChild(_countLabel);
+                                        } else {
+                                            assert(false);
+                                        }
+                                    }
+                                        break;
+                                    case 9: {
+                                        _goldSprite = dynamic_cast<Sprite*>(child);
+                                        if (_goldSprite) {
+                                            _goldSprite->setLocalZOrder(topZOrder);
+                                        }
+                                        
+                                        Node* node = child->getChildByTag(11);
+                                        if (node) {
+                                            _goldLabel = CocosUtils::createLabel("0", DEFAULT_FONT_SIZE, DEFAULT_NUMBER_FONT);
+                                            node->addChild(_goldLabel);
+                                        } else {
+                                            assert(false);
+                                        }
+                                    }
+                                        break;
+                                    case 12: {
+                                        _woodSprite = dynamic_cast<Sprite*>(child);
+                                        if (_woodSprite) {
+                                            _woodSprite->setLocalZOrder(topZOrder);
+                                        }
+                                        
+                                        Node* node = child->getChildByTag(13);
+                                        if (node) {
+                                            _woodLabel = CocosUtils::createLabel("0", DEFAULT_FONT_SIZE, DEFAULT_NUMBER_FONT);
+                                            node->addChild(_woodLabel);
+                                        } else {
+                                            assert(false);
+                                        }
+                                    }
+                                        break;
+                                    case 14: {
+                                        const Vector<Node*>& children = child->getChildren();
+                                        for (int i = 0; i < children.size(); ++i)
+                                        {
+                                            Node* child = children.at(i);
+                                            if (child) {
+                                                const int tag = child->getTag();
+                                                if (tag >= 15 && tag <= 19) {
+                                                    Sprite* star = Sprite::create("GameImages/test/icon_xingxing.png");
+                                                    child->addChild(star);
+                                                    _starSprites.insert(make_pair(tag - 15, star));
+                                                }
+                                            }
+                                        }
+                                    }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                        break;
+                    default:
+                        break;
                 }
             }
         }
-#else
-        // background shadow
-        {
-            _shadow = Sprite::create("GameImages/test/ui_iconyingzi.png");
-            addChild(_shadow, bottomZOrder);
-        }
         
-        const string& iconFile = getIconFile(camp, true);
-        _iconButton = Button::create(iconFile, iconFile);
-        _iconButton->setPressedActionEnabled(false);
-        _iconButton->setSwallowTouches(false);
-        addChild(_iconButton);
-        _iconButton->addTouchEventListener([=](Ref *pSender, Widget::TouchEventType type) {
+        setContentSize(root->getContentSize());
+        
+        _cardWidget->setSwallowTouches(false);
+        _cardWidget->addTouchEventListener([=](Ref *pSender, Widget::TouchEventType type) {
             Widget* button = dynamic_cast<Widget*>(pSender);
             if (type == Widget::TouchEventType::BEGAN) {
                 _isIconTouched = true;
@@ -137,62 +248,27 @@ bool MapUIUnitNode::init(const Camp* camp)
             }
         });
         
-        // count label
-        {
-            _countLabel = CocosUtils::createLabel(" ", DEFAULT_FONT_SIZE);
-            addChild(_countLabel);
-        }
-        
-        const Size& shadowSize = _shadow->getContentSize();
-        const Size& iconSize = _iconButton->getContentSize();
-        const float countLabelheight = _countLabel->getContentSize().height;
-        static const float shadowOffsetY(5.0f);
-        const Size size(MAX(shadowSize.width, iconSize.width), shadowSize.height / 2 + MAX(shadowSize.height / 2, iconSize.height / 2 + shadowOffsetY) + countLabelheight);
-        setContentSize(size);
-        
-        const float x = size.width / 2;
-        _shadow->setPosition(x, shadowSize.height / 2);
-        _iconBasePosition = _shadow->getPosition() + Point(0, shadowOffsetY);
-        _iconButton->setPosition(_iconBasePosition);
-        _countLabel->setPosition(_iconBasePosition + Point(0, (iconSize.height + countLabelheight) / 2));
-        
-        // mask
-        {
-            _mask = Sprite::create("GameImages/test/ui_iconzhezhao.png");
-            _mask->setPosition(Point(iconSize.width / 2, iconSize.height / 2));
-            _mask->setVisible(false);
-            _iconButton->addChild(_mask, topZOrder);
-        }
-        
-        // resources
-        {
-            _resourcesMask = Sprite::create("GameImages/test/ui_black_15.png");
-            const Size& size = _resourcesMask->getContentSize();
-            _resourcesMask->setPosition(Point(size.width / 2, size.height / 2));
-            _iconButton->addChild(_resourcesMask);
-            
-            createResourceButton(kResourceType_Gold, _resourcesMask);
-            createResourceButton(kResourceType_Wood, _resourcesMask);
-        }
-        
         // spell CD
         {
             _spellColdDown = ProgressTimer::create(Sprite::create("GameImages/test/ui_iconzhezhao.png"));
             _spellColdDown->setType(ProgressTimer::Type::RADIAL);
             _spellColdDown->setReverseDirection(true);
             _spellColdDown->setMidpoint(Vec2(0.5f, 0.5f));
-            _iconButton->addChild(_spellColdDown, topZOrder);
-            _spellColdDown->setPosition(Point(iconSize.width / 2, iconSize.height / 2));
+            _iconSprite->addChild(_spellColdDown, topZOrder);
+            
+            const Size& size = _iconSprite->getContentSize();
+            _spellColdDown->setPosition(Point(size.width / 2, size.height / 2));
         }
         
         // spell activated sprite
         {
             _shiningSprite = Sprite::create("GameImages/test/ui_xuanzhong.png");
-            _shiningSprite->setPosition(Point(iconSize.width / 2, iconSize.height / 2));
             _shiningSprite->setVisible(false);
-            _iconButton->addChild(_shiningSprite, topZOrder);
+            _cardWidget->addChild(_shiningSprite);
+            
+            const Size& size = _cardWidget->getContentSize();
+            _shiningSprite->setPosition(Point(size.width / 2, size.height / 2));
         }
-#endif
         
         return true;
     }
@@ -229,47 +305,22 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
         
         bool colorful(true);
         const map<string, int>& costs = _camp->getCosts();
-        ResourceButton* woodButton = _resourceButtons.at(kResourceType_Wood);
-        woodButton->setVisible(costs.find(RES_NAME_WOOD) != costs.end() && enable);
-        if (woodButton->isVisible()) {
+        _woodSprite->setVisible(costs.find(RES_NAME_WOOD) != costs.end() && enable);
+        if (_woodSprite->isVisible()) {
             int count = costs.at(RES_NAME_WOOD);
-            woodButton->setCount(count);
+            _woodLabel->setString(StringUtils::format("%d", count));
             if (wood < count) {
                 colorful = false;
             }
-//            woodButton->setEnabled(wood >= count);
         }
         
-        ResourceButton* goldButton = _resourceButtons.at(kResourceType_Gold);
-        goldButton->setVisible(costs.find(RES_NAME_GOLD) != costs.end() && enable);
-        if (goldButton->isVisible()) {
+        _goldSprite->setVisible(costs.find(RES_NAME_GOLD) != costs.end() && enable);
+        if (_goldSprite->isVisible()) {
             int count = costs.at(RES_NAME_GOLD);
-            goldButton->setCount(count);
+            _goldLabel->setString(StringUtils::format("%d", count));
             if (gold < count) {
                 colorful = false;
             }
-//            goldButton->setEnabled(gold >= count);
-        }
-        
-        const float resourceMaskWidth = _resourcesMask->getContentSize().width;
-        _resourcesMask->setVisible(woodButton->isVisible() || goldButton->isVisible());
-        if (woodButton->isVisible() && goldButton->isVisible()) {
-            ResourceButton* woodButton = _resourceButtons.at(kResourceType_Wood);
-            ResourceButton* goldButton = _resourceButtons.at(kResourceType_Gold);
-            const float width1 = woodButton->getContentSize().width;
-            const float width2 = goldButton->getContentSize().width;
-            const float totalWidth = width1 + width2;
-            static const float gap(10.0f);
-            const float offsetX = (resourceMaskWidth - totalWidth - gap) / 2;
-            woodButton->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
-            goldButton->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
-            woodButton->setPosition(offsetX, 0);
-            goldButton->setPosition(offsetX + width1 + gap, 0);
-            
-        } else {
-            ResourceButton* button = woodButton->isVisible() ? woodButton : goldButton;
-            button->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
-            button->setPosition(resourceMaskWidth / 2, 0);
         }
         
         if (hero) {
@@ -279,7 +330,8 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
                         colorful = false;
                     }
                 } else {
-                    if (!_resourcesMask->isVisible()) {
+                    const bool hasResources = _woodSprite->isVisible() || _goldSprite->isVisible();
+                    if (!hasResources) {
                         colorful = false;
                     }
                 }
@@ -296,7 +348,7 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
         
         const string& iconFile = getIconFile(_camp, colorful);
         if (iconFile.length() > 0) {
-            _iconButton->loadTextures(iconFile, iconFile);
+            _iconSprite->setTexture(iconFile);
         }
         
         int spellCD(10);
@@ -320,7 +372,7 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
         }
         
         // add effect
-        if (_iconButton) {
+        if (_iconSprite) {
 #if true
             if (heroUnit && heroUnit->isAlive() && spellCD == 0) {
                 _shiningSprite->setVisible(true);
@@ -351,11 +403,22 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
 
 void MapUIUnitNode::setSelected(bool selected)
 {
-#if false
     if (_shiningSprite) {
         _shiningSprite->setVisible(selected);
     }
-#endif
+    
+    static const float maxScale(1.1f);
+    static const float minScale(1.0f);
+    const float scale = _cardWidget->getScale();
+    if (selected) {
+        if (scale != maxScale) {
+            _cardWidget->setScale(maxScale);
+        }
+    } else {
+        if (scale != minScale) {
+            _cardWidget->setScale(minScale);
+        }
+    }
 }
 
 void MapUIUnitNode::setTouched(bool touched, bool isGameOver)
@@ -398,31 +461,9 @@ bool MapUIUnitNode::isHero(const Camp* camp) const
     return false;
 }
 
-void MapUIUnitNode::createResourceButton(::ResourceType type, Node* parent)
-{
-    Color4B color = (type == kResourceType_Gold) ? GOLD_LABEL_COLOR : WOOD_LABEL_COLOR;
-    ResourceButton* button = ResourceButton::create(false, false, true, kResourceType_MAX, 0, color, nullptr);
-    button->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    parent->addChild(button);
-    _resourceButtons.insert(make_pair(type, button));
-}
-
 void MapUIUnitNode::addTouchedAction(bool touched, bool animated)
 {
-    if (_iconButton) {
-        _iconButton->stopAllActions();
-        _shadow->setVisible(!touched);
-        _mask->setVisible(touched);
-        
-        const Point destinationPos = _iconBasePosition + (touched ? iconTouchOffset : Point::ZERO);
-        if (_iconButton->getPosition() != destinationPos) {
-            if (animated) {
-                static float duration(0.2f);
-                _iconButton->runAction(Sequence::create(MoveTo::create(duration, destinationPos), CallFunc::create([this] {
-                }), nullptr));
-            } else {
-                _iconButton->setPosition(destinationPos);
-            }
-        }
+    if (_cardWidget) {
+        _cardWidget->stopAllActions();
     }
 }

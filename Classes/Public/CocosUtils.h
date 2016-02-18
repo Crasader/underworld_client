@@ -10,11 +10,12 @@
 #define CocosUtils_h
 
 #include "cocos2d.h"
+#include "CocosGlobal.h"
 
 namespace CocosUtils
 {
 #pragma mark - labels
-    cocos2d::Label *createLabel(const std::string& text, float fontSize, const cocos2d::Size& dimensions = cocos2d::Size::ZERO, cocos2d::TextHAlignment hAlignment = cocos2d::TextHAlignment::LEFT, cocos2d::TextVAlignment vAlignment = cocos2d::TextVAlignment::TOP);
+    cocos2d::Label *createLabel(const std::string& text, float fontSize, const std::string& fontName = DEFAULT_FONT, const cocos2d::Size& dimensions = cocos2d::Size::ZERO, cocos2d::TextHAlignment hAlignment = cocos2d::TextHAlignment::LEFT, cocos2d::TextVAlignment vAlignment = cocos2d::TextVAlignment::TOP);
     
     cocos2d::LabelAtlas *create42x52Number(const std::string& text);
     

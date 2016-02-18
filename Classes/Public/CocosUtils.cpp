@@ -22,18 +22,18 @@ using namespace ui;
 using namespace std;
 
 #pragma mark - labels
-Label *CocosUtils::createLabel(const string& text, float fontSize, const Size& dimensions, TextHAlignment hAlignment, TextVAlignment vAlignment)
+Label *CocosUtils::createLabel(const string& text, float fontSize, const std::string& fontName, const Size& dimensions, TextHAlignment hAlignment, TextVAlignment vAlignment)
 {
 #if true
-    static const string fontName("TimesNewRomanPS-BoldMT");
     Label *ret = Label::createWithSystemFont(text, fontName, fontSize, dimensions, hAlignment, vAlignment);
 #else
     static const string fontName("fonts/Font.ttf");
     Label *ret = Label::createWithTTF(text, fontName, fontSize, dimensions, hAlignment, vAlignment);
+    float posOffset = MIN(5.0f, MAX(1.0f, fontSize * 0.05f));
+    ret->enableShadow(Color4B::BLACK, Size(.0f, -posOffset));
+    ret->enableOutline(Color4B::BLACK, 1);
 #endif
-//    float posOffset = MIN(5.0f, MAX(1.0f, fontSize * 0.05f));
-//    ret->enableShadow(Color4B::BLACK, Size(.0f, -posOffset));
-//    ret->enableOutline(Color4B::BLACK, 1);
+    
     return ret;
 }
 
@@ -323,7 +323,7 @@ string CocosUtils::getFormattedTime(long timeInterval)
     }
     int second = timeInterval % 60;
     long minute = timeInterval / 60;
-    return StringUtils::format("%02ld:%02d", minute % 60, second);
+    return StringUtils::format("%ld:%02d", minute % 60, second);
 }
 
 string CocosUtils::getTimeString(int64_t timeMillSecond)

@@ -73,6 +73,8 @@ protected:
     virtual ssize_t onMapUILayerCampsCount(UnderWorld::Core::UnitClass uc) override;
     virtual const UnderWorld::Core::Camp* onMapUILayerCampAtIndex(UnderWorld::Core::UnitClass uc, ssize_t idx) override;
     virtual void onMapUILayerUnitSelected(const UnderWorld::Core::Camp* camp) override;
+    virtual void onMapUILayerUnitAdd(const UnderWorld::Core::Camp* camp) override;
+    virtual void onMapUILayerUnitUpgrade(const UnderWorld::Core::Camp* camp) override;
     virtual void onMapUILayerTouchMoved(const UnderWorld::Core::Camp* camp, const Point& point) override;
     virtual void onMapUILayerTouchCancelled(const UnderWorld::Core::Camp* camp) override;
     virtual void onMapUILayerTouchEnded(const UnderWorld::Core::Camp* camp, const Point& point) override;
@@ -160,11 +162,13 @@ private:
     bool _paused;
     bool _isGameOver;
     int _remainingTime;
-    int _population;
     int _goldCount;
     int _woodCount;
+#if false
+    int _population;
     int _nextWave;
     int _nextWaveTotalTime;
+#endif
     bool _hasUpdatedBattleCampInfos;
 };
 

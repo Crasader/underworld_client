@@ -27,6 +27,9 @@ class MapUIUnitNodeObserver
 {
 public:
     virtual ~MapUIUnitNodeObserver() {}
+    virtual void onMapUIUnitNodeClickedAddButton(MapUIUnitNode* node) = 0;
+    virtual void onMapUIUnitNodeClickedUpgradeButton(MapUIUnitNode* node) = 0;
+    
     virtual void onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node) = 0;
     virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node, bool isValid) = 0;
     virtual void onMapUIUnitNodeTouchedCanceled(MapUIUnitNode* node) = 0;
@@ -52,23 +55,27 @@ protected:
     bool init(const UnderWorld::Core::Camp* camp);
     std::string getIconFile(const UnderWorld::Core::Camp* camp, bool enable) const;
     bool isHero(const UnderWorld::Core::Camp* camp) const;
-    void createResourceButton(ResourceType type, Node* parent);
     void addTouchedAction(bool touched, bool animated);
     
 private:
     MapUIUnitNodeObserver *_observer;
-    Sprite *_shadow;
-    Button *_iconButton;
-    Point _iconBasePosition;
-    Sprite *_mask;
-    Sprite *_resourcesMask;
+    Widget *_cardWidget;
+    Button *_addButton;
+    Sprite *_iconSprite;
+    Sprite *_qualitySprite;
+    Sprite *_goldSprite;
+    Sprite *_woodSprite;
+    Label *_countLabel;
+    Label *_goldLabel;
+    Label *_woodLabel;
+    std::map<int, Sprite*> _starSprites;
+    
     Sprite *_shiningSprite;
     ProgressTimer* _spellColdDown;
-    std::map<ResourceType, ResourceButton*> _resourceButtons;
-    Label *_countLabel;
     const UnderWorld::Core::Camp* _camp;
     ssize_t _idx;
     bool _touchInvalid;
+    
     bool _isIconTouched;
 };
 
