@@ -107,7 +107,7 @@ void GameRender::init(const Game* game, Commander* commander)
         const int campsCount = world->getCampCount(factionIndex);
         for (int i = 0; i < campsCount; ++i) {
             const Camp* camp = world->getCamp(factionIndex, i);
-            UnitClass uc = camp->getUnitType()->getUnitClass();
+            UnitClass uc = camp->getCurrentUnitType()->getUnitClass();
             if (_myCamps.find(uc) == _myCamps.end()) {
                 _myCamps.insert(make_pair(uc, vector<const Camp*>()));
             }
@@ -416,7 +416,7 @@ bool GameRender::isCampFull(const Camp* camp) const
         if (production >= camp->getMaxProduction()) {
             return true;
         } else {
-            const UnitType* unitType = camp->getUnitType();
+            const UnitType* unitType = camp->getCurrentUnitType();
             UnitClass unitClass = unitType->getUnitClass();
             if (kUnitClass_Hero == unitClass && production >= 1) {
                 return true;
@@ -571,7 +571,7 @@ void GameRender::onMapUILayerUnitSelected(const Camp* camp)
 void GameRender::onMapUILayerUnitAdd(const UnderWorld::Core::Camp* camp)
 {
     if (_commander && camp && !isCampFull(camp)) {
-        _commander->tryGiveCampCommand(camp, 1);
+        _commander->tryGiveCampIncreaseCommand(camp, 1);
     }
 }
 
@@ -646,7 +646,7 @@ void GameRender::onMapUILayerTouchMoved(const Camp* camp, const Point& point)
         }
     } else {
         if (_mapLayer) {
-            const string& name = camp->getUnitType()->getName();
+            const string& name = camp->getCurrentUnitType()->getName();
             const Point& realPos = _mapLayer->convertToNodeSpace(_mapUILayer->convertToWorldSpace(point));
             _mapLayer->updateUnitMask(name, realPos);
         }

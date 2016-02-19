@@ -336,7 +336,7 @@ void MapUILayer::onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node)
     _selectedCamp = node->getCamp();
     
     clearTouchedCampIdx();
-    UnitClass uc = node->getCamp()->getUnitType()->getUnitClass();
+    UnitClass uc = node->getCamp()->getCurrentUnitType()->getUnitClass();
     if (_tableViews.find(uc) != _tableViews.end()) {
         TableView* table = _tableViews.at(uc);
         if (table) {
@@ -469,7 +469,7 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             _goldResourceNode->setPosition(_woodResourceNode->getPosition() + Point(size.width + leftOffset, 0));
             
             // units table
-            _tableViewPos = Point(_goldResourceNode->getPosition().x + size.width / 2 + leftOffset, - unitNodeOffsetY);
+            _tableViewPos = Point(_goldResourceNode->getPositionX() + size.width / 2 + leftOffset, - unitNodeOffsetY);
             _tableViewMaxSize.width = winSize.width - (_tableViewPos.x + leftOffset);
             _tableViewMaxSize.height = _cellSize.height;
         }
@@ -668,7 +668,7 @@ bool MapUILayer::isGameOver() const
 
 void MapUILayer::onUnitTouched(MapUIUnitNode* node)
 {
-    UnitClass uc = node->getCamp()->getUnitType()->getUnitClass();
+    UnitClass uc = node->getCamp()->getCurrentUnitType()->getUnitClass();
     TableView* table = _tableViews.at(uc);
     const ssize_t idx = node->getIdx();
     
@@ -703,7 +703,7 @@ void MapUILayer::onUnitTouched(MapUIUnitNode* node)
         }
     }
     
-    CCLOG("_selectedCampIdx: %d", _selectedCampIdx.second);
+    CCLOG("_selectedCampIdx: %ld", _selectedCampIdx.second);
     
     SoundManager::getInstance()->playButtonSelectUnitSound();
     

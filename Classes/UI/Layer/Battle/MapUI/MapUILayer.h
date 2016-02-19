@@ -95,7 +95,7 @@ protected:
     void onUnitTouched(MapUIUnitNode* node);
     void clearTouchedCampIdx();
     void createTableViews();
-    Node* createTableView(UnderWorld::Core::UnitClass, Node* parent);
+    Node* createTableView(UnderWorld::Core::UnitClass uc, Node* parent);
     UnderWorld::Core::UnitClass getUnitClass(TableView* table) const;
     ssize_t getCellsCount(TableView* table) const;
     Rect getTableViewBoundingBox(UnderWorld::Core::UnitClass uc) const;

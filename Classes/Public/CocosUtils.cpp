@@ -287,6 +287,16 @@ Sprite* CocosUtils::createPureColorSprite(const Size& size, const Color4B& color
     return newSprite;
 }
 
+Sprite* CocosUtils::createTitle(const std::string& title, float fontSize)
+{
+    Sprite* titleBg = Sprite::create("GameImages/test/ui_black_6.png");
+    Label* titleLabel = CocosUtils::createLabel(title, fontSize);
+    titleBg->addChild(titleLabel);
+    const Size& titleSize = titleBg->getContentSize();
+    titleLabel->setPosition(Point(titleSize.width / 2, titleSize.height / 2));
+    return titleBg;
+}
+
 #pragma mark - notifications
 void CocosUtils::postNotification(const string& notification)
 {

@@ -45,6 +45,7 @@ namespace CocosUtils
     
     // test
     cocos2d::Sprite* createPureColorSprite(const cocos2d::Size& size, const cocos2d::Color4B& color);
+    cocos2d::Sprite* createTitle(const std::string& title, float fontSize);
     
 #pragma mark - notifications
     void postNotification(const std::string& notification);

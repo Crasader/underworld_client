@@ -1,13 +1,13 @@
 //
-//  MapUIUnitNode.h
+//  BattleDeckUnitNode.h
 //  Underworld_Client
 //
-//  Created by Andy on 15/12/11.
+//  Created by Andy on 16/2/19.
 //  Copyright (c) 2015 Mofish Studio. All rights reserved.
 //
 
-#ifndef MapUIUnitNode_h
-#define MapUIUnitNode_h
+#ifndef BattleDeckUnitNode_h
+#define BattleDeckUnitNode_h
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
@@ -20,44 +20,40 @@ namespace UnderWorld { namespace Core {
     class Camp;
 }}
 
-class MapUIUnitNode;
+class BattleDeckUnitNode;
 
-class MapUIUnitNodeObserver
+class BattleDeckUnitNodeObserver
 {
 public:
-    virtual ~MapUIUnitNodeObserver() {}
-    virtual void onMapUIUnitNodeClickedAddButton(MapUIUnitNode* node) = 0;
-    virtual void onMapUIUnitNodeClickedUpgradeButton(MapUIUnitNode* node) = 0;
-    
-    virtual void onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node) = 0;
-    virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node, bool isValid) = 0;
-    virtual void onMapUIUnitNodeTouchedCanceled(MapUIUnitNode* node) = 0;
+    virtual ~BattleDeckUnitNodeObserver() {}
+    virtual void onBattleDeckUnitNodeTouchedBegan(const UnderWorld::Core::Camp* camp) = 0;
+    virtual void onBattleDeckUnitNodeTouchedEnded(const UnderWorld::Core::Camp* camp, bool isValid) = 0;
+    virtual void onBattleDeckUnitNodeTouchedCanceled(const UnderWorld::Core::Camp* camp) = 0;
 };
 
-class MapUIUnitNode: public Node
+class BattleDeckUnitNode: public Node
 {
 public:
-    static MapUIUnitNode* create(const UnderWorld::Core::Camp* camp);
-    virtual ~MapUIUnitNode();
-    void registerObserver(MapUIUnitNodeObserver *observer);
-    void reuse(const UnderWorld::Core::Camp* camp, ssize_t idx, int gold, int wood);
-    void update(bool reuse, int gold, int wood);
+    static BattleDeckUnitNode* create(const UnderWorld::Core::Camp* camp);
+    virtual ~BattleDeckUnitNode();
+    void registerObserver(BattleDeckUnitNodeObserver *observer);
+    void reuse(const UnderWorld::Core::Camp* camp, ssize_t idx);
+    void update(bool reuse);
     void setSelected(bool selected);
     void setTouched(bool touched, bool isGameOver);
     
     // getters
     const UnderWorld::Core::Camp* getCamp() const;
-    ssize_t getIdx() const;
     
 protected:
-    MapUIUnitNode();
+    BattleDeckUnitNode();
     bool init(const UnderWorld::Core::Camp* camp);
     std::string getIconFile(const UnderWorld::Core::Camp* camp, bool enable) const;
     bool isHero(const UnderWorld::Core::Camp* camp) const;
     void addTouchedAction(bool touched, bool animated);
     
 private:
-    MapUIUnitNodeObserver *_observer;
+    BattleDeckUnitNodeObserver *_observer;
     Widget *_cardWidget;
     Button *_addButton;
     Sprite *_iconSprite;
@@ -70,7 +66,6 @@ private:
     std::map<int, Sprite*> _starSprites;
     
     Sprite *_shiningSprite;
-    ProgressTimer* _spellColdDown;
     const UnderWorld::Core::Camp* _camp;
     ssize_t _idx;
     bool _touchInvalid;
@@ -78,4 +73,4 @@ private:
     bool _isIconTouched;
 };
 
-#endif /* MapUIUnitNode_h */
+#endif /* BattleDeckUnitNode_h */

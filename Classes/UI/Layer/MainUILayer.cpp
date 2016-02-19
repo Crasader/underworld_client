@@ -14,6 +14,7 @@
 #include "SoundManager.h"
 #include "ResourceNode.h"
 #include "BattleScene.h"
+#include "BattleDeckLayer.h"
 
 using namespace std;
 using namespace ui;
@@ -263,7 +264,7 @@ bool MainUILayer::init()
             _armyButton = addFunctionButton("icon_jundui_1", "icon_jundui_2", "button_2", basePosition - Point((size.width + offset) * 2, 0));
             _armyButton->addClickEventListener([this](Ref *pSender){
                 SoundManager::getInstance()->playButtonSound();
-                // TODO:
+                Director::getInstance()->getRunningScene()->addChild(BattleDeckLayer::create());
             });
         }
         
