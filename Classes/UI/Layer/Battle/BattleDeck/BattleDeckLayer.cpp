@@ -82,8 +82,8 @@ bool BattleDeckLayer::init()
         
         // table views
         const float width = bgSize.width - (_infoNode->getPositionX() + infoNodeSize.width / 2);
-        _tableViewPos.x = ceilY - marginY;
-        _tableViewPos.y = marginX + infoNodeSize.width + width / 2;
+        _tableViewPos.x = marginX + infoNodeSize.width + width / 2;
+        _tableViewPos.y = ceilY - marginY;
         createTableViews(width);
         
         // card deck
@@ -236,7 +236,7 @@ void BattleDeckLayer::createTableViews(float width)
 
 Node* BattleDeckLayer::createTableView(UnitClass uc, float width)
 {
-    ssize_t cnt(1);
+    const ssize_t cnt = getCellsCount(uc);
     if (cnt > 0) {
         Node* parent = Node::create();
         
@@ -248,7 +248,7 @@ Node* BattleDeckLayer::createTableView(UnitClass uc, float width)
             message = "Warriors";
         }
         
-        Sprite* title = CocosUtils::createTitle(message + StringUtils::format(":%d", 0), BIG_FONT_SIZE);
+        Sprite* title = CocosUtils::createTitle(message + StringUtils::format(":%ld", cnt), BIG_FONT_SIZE);
         parent->addChild(title);
         
         // table view
@@ -303,8 +303,29 @@ Node* BattleDeckLayer::createTableView(UnitClass uc, float width)
     return nullptr;
 }
 
+UnitClass BattleDeckLayer::getUnitClass(TableView* table) const
+{
+    const size_t createdCount = _tableViews.size();
+    if (createdCount < tablesCount) {
+        return tableUnitClass[createdCount];
+    }
+    
+    return static_cast<UnitClass>(table->getTag());
+}
+
 ssize_t BattleDeckLayer::getCellsCount(TableView* table) const
 {
+    return getCellsCount(getUnitClass(table));
+}
+
+ssize_t BattleDeckLayer::getCellsCount(UnitClass uc) const
+{
+    if (kUnitClass_Hero == uc) {
+        return 17;
+    } else if (kUnitClass_Warrior == uc) {
+        return 17;
+    }
+    
     return 0;
 }
 

@@ -56,7 +56,9 @@ protected:
     
     void createTableViews(float width);
     Node* createTableView(UnderWorld::Core::UnitClass uc, float width);
+    UnderWorld::Core::UnitClass getUnitClass(TableView* table) const;
     ssize_t getCellsCount(TableView* table) const;
+    ssize_t getCellsCount(UnderWorld::Core::UnitClass uc) const;
     Rect getTableViewBoundingBox(TableView* table) const;
     
 private:

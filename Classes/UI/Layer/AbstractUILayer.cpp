@@ -27,7 +27,7 @@ AbstractUILayer::~AbstractUILayer()
 
 bool AbstractUILayer::init(const string& title)
 {
-    if (LayerColor::initWithColor(LAYER_MASK_COLOR))
+    if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR))
     {
         const Size& winSize = Director::getInstance()->getWinSize();
         

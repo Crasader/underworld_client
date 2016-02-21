@@ -114,34 +114,52 @@ bool BattleDeckUnitInfoNode::init()
                         _nameLabel = createLabel(child, "vampire");
                     }
                         break;
-                    case 66:
+                    case 65:
                     {
-                        _hpLabel = createLabel(child, "0");
+                        Node* node = child->getChildByTag(66);
+                        if (node) {
+                            _hpLabel = createLabel(node, "0");
+                        }
                     }
                         break;
-                    case 68:
+                    case 67:
                     {
-                        _armorLabel = createLabel(child, "0");
+                        Node* node = child->getChildByTag(68);
+                        if (node) {
+                            _armorLabel = createLabel(node, "0");
+                        }
                     }
                         break;
-                    case 70:
+                    case 69:
                     {
-                        _armorPreferLabel = createLabel(child, "0");
+                        Node* node = child->getChildByTag(70);
+                        if (node) {
+                            _armorPreferLabel = createLabel(node, "0");
+                        }
                     }
                         break;
-                    case 72:
+                    case 71:
                     {
-                        _dmgLabel = createLabel(child, "0");
+                        Node* node = child->getChildByTag(72);
+                        if (node) {
+                            _dmgLabel = createLabel(node, "0");
+                        }
                     }
                         break;
-                    case 74:
+                    case 73:
                     {
-                        _atkSpeedLabel = createLabel(child, "0");
+                        Node* node = child->getChildByTag(74);
+                        if (node) {
+                            _atkSpeedLabel = createLabel(node, "0");
+                        }
                     }
                         break;
-                    case 76:
+                    case 75:
                     {
-                        _atkRangeLabel = createLabel(child, "0");
+                        Node* node = child->getChildByTag(76);
+                        if (node) {
+                            _atkRangeLabel = createLabel(node, "0");
+                        }
                     }
                         break;
                     case 21:
