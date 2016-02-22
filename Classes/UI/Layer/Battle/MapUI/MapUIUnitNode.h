@@ -70,7 +70,8 @@ private:
     std::map<int, Sprite*> _starSprites;
     
     Sprite *_shiningSprite;
-    ProgressTimer* _spellColdDown;
+    Sprite *_maxIconSprite;
+    ProgressTimer* _coldDownProgress;
     const UnderWorld::Core::Camp* _camp;
     ssize_t _idx;
     bool _touchInvalid;

@@ -41,6 +41,8 @@ private:
     BattleDeckUnitInfoNodeObserver *_observer;
     const UnderWorld::Core::UnitBase* _unit;
     // top
+    Sprite* _unitIcon;
+    Sprite* _qualityIcon;
     Sprite* _raceIcon;
     Label* _nameLabel;
     Label* _hpLabel;

@@ -29,6 +29,31 @@ static const UnitClass tableUnitClass[] = {
 };
 static const size_t tablesCount = sizeof(tableUnitClass) / sizeof(UnitClass);
 
+// test data
+static const string heroes[] = {
+    "时光女神",
+    "狼人森林之魂",
+    "天空女神",
+    "蛇女莉莉丝",
+    "时光法师",
+};
+static const size_t heroesCount = sizeof(heroes) / sizeof(string);
+
+static const string warriors[] = {
+    "狼人步兵",
+    "狼人机械狼",
+    "狼人射手",
+    "机械甲虫",
+    "狼人巫师",
+    "吸血鬼战士",
+    "吸血鬼弓箭手",
+    "巨型蜘蛛",
+    "七恶魔拉玛什图",
+    "甲壳虫",
+    "吸血鬼巫师",
+};
+static const size_t warriorsCount = sizeof(warriors) / sizeof(string);
+
 BattleDeckLayer* BattleDeckLayer::create()
 {
     BattleDeckLayer *ret = new (nothrow) BattleDeckLayer();
@@ -48,7 +73,7 @@ BattleDeckLayer::BattleDeckLayer()
 ,_infoNode(nullptr)
 ,_selectedCardsLabel(nullptr)
 {
-    static const Size unitNodeSize = BattleDeckUnitNode::create(nullptr)->getContentSize();
+    static const Size unitNodeSize = BattleDeckTestNode::create("", false)->getContentSize();
     _cellSize.height = unitNodeSize.height + unitNodeOffsetY * 2 + 6.0f;
     _cellSize.width = unitNodeSize.width + unitNodeOffsetX;
 }
@@ -170,16 +195,25 @@ TableViewCell* BattleDeckLayer::tableCellAtIndex(TableView *table, ssize_t idx)
         cell = TableViewCell::create();
     }
     
+    string name;
+    UnitClass uc = getUnitClass(table);
+    const bool isHero(kUnitClass_Hero == uc);
+    if (isHero) {
+        name = heroes[idx];
+    } else {
+        name = warriors[idx];
+    }
+    
     const Camp* camp = nullptr;
-    if (camp) {
+    if (name.length() > 0) {
         static const int nodeTag(100);
-        BattleDeckUnitNode* unitNode = dynamic_cast<BattleDeckUnitNode*>(cell->getChildByTag(nodeTag));
+        BattleDeckTestNode* unitNode = dynamic_cast<BattleDeckTestNode*>(cell->getChildByTag(nodeTag));
         if (unitNode) {
-            unitNode->reuse(camp, idx);
+            unitNode->reuse(name, idx);
             unitNode->setSelected(table == _selectedCampIdx.first && idx == _selectedCampIdx.second);
         } else {
-            unitNode = BattleDeckUnitNode::create(camp);
-            unitNode->reuse(camp, idx);
+            unitNode = BattleDeckTestNode::create(name, isHero);
+            unitNode->reuse(name, idx);
             const Size& size = unitNode->getContentSize();
             unitNode->setPosition(Point(size.width / 2, size.height / 2) + Point(unitNodeOffsetX, unitNodeOffsetY));
             unitNode->registerObserver(this);
@@ -208,6 +242,22 @@ void BattleDeckLayer::onBattleDeckUnitNodeTouchedEnded(const Camp* camp, bool is
 }
 
 void BattleDeckLayer::onBattleDeckUnitNodeTouchedCanceled(const Camp* camp)
+{
+    
+}
+
+#pragma mark - BattleDeckTestNodeObserver
+void BattleDeckLayer::onBattleDeckTestNodeTouchedBegan(const std::string& name)
+{
+    
+}
+
+void BattleDeckLayer::onBattleDeckTestNodeTouchedEnded(const std::string& name, bool isValid)
+{
+    
+}
+
+void BattleDeckLayer::onBattleDeckTestNodeTouchedCanceled(const std::string& name)
 {
     
 }
@@ -321,9 +371,9 @@ ssize_t BattleDeckLayer::getCellsCount(TableView* table) const
 ssize_t BattleDeckLayer::getCellsCount(UnitClass uc) const
 {
     if (kUnitClass_Hero == uc) {
-        return 17;
+        return heroesCount;
     } else if (kUnitClass_Warrior == uc) {
-        return 17;
+        return warriorsCount;
     }
     
     return 0;

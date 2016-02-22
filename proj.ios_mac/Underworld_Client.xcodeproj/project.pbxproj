@@ -88,6 +88,7 @@
 		A1211B231C0BF55200C27CCC /* LiteralValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B211C0BF55200C27CCC /* LiteralValue.cpp */; };
 		A1211B271C0BF5CC00C27CCC /* RandomCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B251C0BF5CC00C27CCC /* RandomCreator.cpp */; };
 		A1211B291C0BF68E00C27CCC /* GameConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B281C0BF68E00C27CCC /* GameConstants.cpp */; };
+		A12AE1441C7B1242003C8E8A /* BattleDeckTestNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12AE1421C7B1242003C8E8A /* BattleDeckTestNode.cpp */; };
 		A13108A51C046BF900EAAD90 /* particle in Resources */ = {isa = PBXBuildFile; fileRef = A13108A41C046BF900EAAD90 /* particle */; };
 		A14B5EFB1C311908006FB0DB /* Addon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14B5EF91C311908006FB0DB /* Addon.cpp */; };
 		A15698DB1C3A969A00B94345 /* Spell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A15698D91C3A969A00B94345 /* Spell.cpp */; };
@@ -414,6 +415,8 @@
 		A1211B251C0BF5CC00C27CCC /* RandomCreator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RandomCreator.cpp; path = Core/Utils/RandomCreator.cpp; sourceTree = "<group>"; };
 		A1211B261C0BF5CC00C27CCC /* RandomCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RandomCreator.h; path = Core/Utils/RandomCreator.h; sourceTree = "<group>"; };
 		A1211B281C0BF68E00C27CCC /* GameConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameConstants.cpp; path = Core/Game/GameConstants.cpp; sourceTree = "<group>"; };
+		A12AE1421C7B1242003C8E8A /* BattleDeckTestNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattleDeckTestNode.cpp; sourceTree = "<group>"; };
+		A12AE1431C7B1242003C8E8A /* BattleDeckTestNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BattleDeckTestNode.h; sourceTree = "<group>"; };
 		A13108A41C046BF900EAAD90 /* particle */ = {isa = PBXFileReference; lastKnownFileType = folder; path = particle; sourceTree = "<group>"; };
 		A14B5EF91C311908006FB0DB /* Addon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Addon.cpp; path = Core/Unit/Type/Addon.cpp; sourceTree = "<group>"; };
 		A14B5EFA1C311908006FB0DB /* Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Addon.h; path = Core/Unit/Type/Addon.h; sourceTree = "<group>"; };
@@ -1647,6 +1650,8 @@
 			children = (
 				A1F9B0771C76C3A0007BC409 /* BattleDeckLayer.cpp */,
 				A1F9B0781C76C3A0007BC409 /* BattleDeckLayer.h */,
+				A12AE1421C7B1242003C8E8A /* BattleDeckTestNode.cpp */,
+				A12AE1431C7B1242003C8E8A /* BattleDeckTestNode.h */,
 				A1F9B0871C76F54D007BC409 /* BattleDeckUnitInfoNode.cpp */,
 				A1F9B0881C76F54D007BC409 /* BattleDeckUnitInfoNode.h */,
 				A1F9B07D1C76C457007BC409 /* BattleDeckUnitNode.cpp */,
@@ -1886,6 +1891,7 @@
 				A1B4AE301C200521005906A6 /* QuestManager.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				A1720EB91BCD2D2E00217E98 /* KeychainItemWrapper.m in Sources */,
+				A12AE1441C7B1242003C8E8A /* BattleDeckTestNode.cpp in Sources */,
 				A16BF2A11C314DA000E91458 /* GearSetLocalData.cpp in Sources */,
 				A1720E8B1BCCE19300217E98 /* aes_core.c in Sources */,
 				045117101BCFBA5F002AA721 /* Game.cpp in Sources */,

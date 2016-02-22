@@ -53,6 +53,7 @@ MapUIUnitNode::MapUIUnitNode()
 ,_woodLabel(nullptr)
 
 ,_shiningSprite(nullptr)
+,_maxIconSprite(nullptr)
 ,_camp(nullptr)
 ,_idx(CC_INVALID_INDEX)
 ,_touchInvalid(false)
@@ -97,6 +98,12 @@ bool MapUIUnitNode::init(const Camp* camp)
                             });
                             
                             _addButton = button;
+                            
+                            Sprite* sprite = Sprite::create("GameImages/test/button_yellow_4.png");
+                            sprite->setPosition(child->getPosition());
+                            child->getParent()->addChild(sprite);
+                            
+                            _maxIconSprite = sprite;
                         } else {
                             assert(false);
                         }
@@ -143,6 +150,7 @@ bool MapUIUnitNode::init(const Camp* camp)
                                         if (node) {
                                             _countLabel = CocosUtils::createLabel("0", DEFAULT_FONT_SIZE, DEFAULT_NUMBER_FONT);
                                             node->addChild(_countLabel);
+                                            child->setVisible(!isHero(camp));
                                         } else {
                                             assert(false);
                                         }
@@ -250,14 +258,14 @@ bool MapUIUnitNode::init(const Camp* camp)
         
         // spell CD
         {
-            _spellColdDown = ProgressTimer::create(Sprite::create("GameImages/test/ui_iconzhezhao.png"));
-            _spellColdDown->setType(ProgressTimer::Type::RADIAL);
-            _spellColdDown->setReverseDirection(true);
-            _spellColdDown->setMidpoint(Vec2(0.5f, 0.5f));
-            _iconSprite->addChild(_spellColdDown, topZOrder);
+            _coldDownProgress = ProgressTimer::create(Sprite::create("GameImages/test/ui_iconzhezhao.png"));
+            _coldDownProgress->setType(ProgressTimer::Type::RADIAL);
+            _coldDownProgress->setReverseDirection(true);
+            _coldDownProgress->setMidpoint(Point::ANCHOR_MIDDLE);
+            _iconSprite->addChild(_coldDownProgress, topZOrder);
             
             const Size& size = _iconSprite->getContentSize();
-            _spellColdDown->setPosition(Point(size.width / 2, size.height / 2));
+            _coldDownProgress->setPosition(Point(size.width / 2, size.height / 2));
         }
         
         // spell activated sprite
@@ -307,7 +315,7 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
         const map<string, int>& costs = _camp->getCosts();
         _woodSprite->setVisible(costs.find(RES_NAME_WOOD) != costs.end() && enable);
         if (_woodSprite->isVisible()) {
-            int count = costs.at(RES_NAME_WOOD);
+            const int count = costs.at(RES_NAME_WOOD);
             _woodLabel->setString(StringUtils::format("%d", count));
             if (wood < count) {
                 colorful = false;
@@ -316,12 +324,15 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
         
         _goldSprite->setVisible(costs.find(RES_NAME_GOLD) != costs.end() && enable);
         if (_goldSprite->isVisible()) {
-            int count = costs.at(RES_NAME_GOLD);
+            const int count = costs.at(RES_NAME_GOLD);
             _goldLabel->setString(StringUtils::format("%d", count));
             if (gold < count) {
                 colorful = false;
             }
         }
+        
+        _addButton->setVisible(enable);
+        _maxIconSprite->setVisible(!enable);
         
         if (hero) {
             if (colorful) {
@@ -351,30 +362,35 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
             _iconSprite->setTexture(iconFile);
         }
         
-        int spellCD(10);
-        if (heroUnit && heroUnit->getSpellCount() > 0) {
-            spellCD = heroUnit->getSpellByIndex(0)->getCDProgress();
+        float cd(10);
+        const bool isSpell(heroUnit && heroUnit->getSpellCount() > 0);
+        if (isSpell) {
+            cd = heroUnit->getSpellByIndex(0)->getCDProgress();
+        } else {
+            cd = _camp->getColdDown();
         }
         
-        if (!heroUnit || spellCD == 0) {
-            _spellColdDown->setVisible(false);
+        if (cd <= 0) {
+            _coldDownProgress->setVisible(false);
         } else {
-            _spellColdDown->setVisible(true);
+            _coldDownProgress->setVisible(true);
             if (colorful) {
-                _spellColdDown->setSprite(Sprite::create("GameImages/test/ui_iconzhezhao.png"));
+                _coldDownProgress->setSprite(Sprite::create("GameImages/test/ui_iconzhezhao.png"));
             } else {
-                _spellColdDown->setSprite(Sprite::create("GameImages/test/ui_iconzhezhao_white.png"));
+                _coldDownProgress->setSprite(Sprite::create("GameImages/test/ui_iconzhezhao_white.png"));
             }
             
-            if (heroUnit->getSpellCount() > 0) {
-                _spellColdDown->setPercentage(((float)spellCD) * 100.f / heroUnit->getSpellByIndex(0)->getTotalCDFrames());
+            if (isSpell) {
+                _coldDownProgress->setPercentage(cd * 100.f / heroUnit->getSpellByIndex(0)->getTotalCDFrames());
+            } else {
+                _coldDownProgress->setPercentage(cd * 100.f / _camp->getSpan());
             }
         }
         
         // add effect
         if (_iconSprite) {
 #if true
-            if (heroUnit && heroUnit->isAlive() && spellCD == 0) {
+            if (heroUnit && heroUnit->isAlive() && cd == 0) {
                 _shiningSprite->setVisible(true);
             } else {
                 _shiningSprite->setVisible(false);
@@ -453,9 +469,11 @@ string MapUIUnitNode::getIconFile(const Camp* camp, bool enable) const
 
 bool MapUIUnitNode::isHero(const Camp* camp) const
 {
-    const UnitType* unitType = camp->getCurrentUnitType();
-    if (kUnitClass_Hero == unitType->getUnitClass()) {
-        return true;
+    if (camp) {
+        const UnitType* unitType = camp->getCurrentUnitType();
+        if (kUnitClass_Hero == unitType->getUnitClass()) {
+            return true;
+        }
     }
     
     return false;

@@ -17,6 +17,10 @@
 
 USING_NS_CC;
 
+namespace UnderWorld { namespace Core {
+    class Camp;
+}}
+
 class MapParticleConfigData;
 
 class MapLayerObserver
@@ -37,7 +41,7 @@ public:
     void addUnit(Node* unit, const UnderWorld::Core::Coordinate& coreCoordinate);
     void repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& coreCoordinate);
     
-    void updateUnitMask(const std::string& name, const Point& layerPoint);
+    void updateUnitMask(const UnderWorld::Core::Camp* camp, const Point& layerPoint);
     void removeUnitMask();
     
     void updateSpellRangeRing(const Point& layerPoint, int range);
@@ -48,6 +52,9 @@ public:
     
     void addFireballSpellEffect();
     void removeAllSpellEffects();
+    
+    void addPlaceUnitEffect(const Point& point);
+    
 protected:
     virtual ~MapLayer();
     MapLayer();
@@ -64,6 +71,7 @@ protected:
     inline UnderWorld::Core::Coordinate mapCoordinate2coreCoordinate(int x, int y);
     inline void coordinateConvert(const UnderWorld::Core::Coordinate& coreCoordinate, Point& mapPosition, int& zOrder);
     inline int calcZOrder(int coreCoordinateY);
+    Point convertToScrollViewPoint(const Point& layerPoint);
     
     //-------- effects --------//
     void addParticle(const MapParticleConfigData* data);

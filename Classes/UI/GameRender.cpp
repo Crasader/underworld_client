@@ -416,12 +416,38 @@ bool GameRender::isCampFull(const Camp* camp) const
         if (production >= camp->getMaxProduction()) {
             return true;
         } else {
-            const UnitType* unitType = camp->getCurrentUnitType();
-            UnitClass unitClass = unitType->getUnitClass();
-            if (kUnitClass_Hero == unitClass && production >= 1) {
+            if (kUnitClass_Hero == camp->getCurrentUnitType()->getUnitClass() && production >= 1) {
                 return true;
             }
         }
+    }
+    
+    return false;
+}
+
+bool GameRender::isValidAoeSpell(const Spell* spell) const
+{
+    if (spell) {
+        const SpellType* spellType = spell->getSpellType();
+        if (spellType) {
+            SpellCastType castType = spellType->getCastType();
+            if (kSpellCastType_Position == castType || kSpellCastType_PositionOrUnit == castType) {
+                if (spell->getCDProgress() <= 0) {
+                    return true;
+                }
+            }
+        }
+    }
+    
+    return false;
+}
+
+bool GameRender::isProducibleCamp(const Camp* camp) const
+{
+    const int production = camp->getProduction();
+    const float cd = camp->getColdDown();
+    if (production > 0 && cd <= 0) {
+        return true;
     }
     
     return false;
@@ -533,8 +559,7 @@ void GameRender::onMapLayerTouchEnded(const Point& point)
 {
 #if ENABLE_DRAG_CARD
     if (_selectedCamp) {
-        onMapUILayerTouchEnded(_selectedCamp, point);
-        _selectedCamp = nullptr;
+        onMapUILayerTouchEnded(_selectedCamp, convertToUILayer(point));
     }
 #endif
     
@@ -547,37 +572,6 @@ void GameRender::onMapLayerTouchEnded(const Point& point)
 bool GameRender::onMapUILayerIsGameOver()
 {
     return _isGameOver;
-}
-
-void GameRender::onMapUILayerUnitSelected(const Camp* camp)
-{
-#if ENABLE_DRAG_CARD
-    _selectedCamp = camp;
-#else
-    if (_commander && camp) {
-        if (isCampFull(camp)) {
-            const Spell* spell = getSpell(camp, 0);
-            if (spell) {
-                SpellCastType castType = spell->getSpellType()->getCastType();
-                if (kSpellCastType_Self == castType) {
-                    castSpell(spell, camp->getHero(), Coordinate::ZERO, nullptr);
-                }
-            }
-        }
-    }
-#endif
-}
-
-void GameRender::onMapUILayerUnitAdd(const UnderWorld::Core::Camp* camp)
-{
-    if (_commander && camp && !isCampFull(camp)) {
-        _commander->tryGiveCampIncreaseCommand(camp, 1);
-    }
-}
-
-void GameRender::onMapUILayerUnitUpgrade(const UnderWorld::Core::Camp* camp)
-{
-    
 }
 
 void GameRender::onMapUILayerClickedPauseButton()
@@ -611,6 +605,47 @@ const Camp* GameRender::onMapUILayerCampAtIndex(UnitClass uc, ssize_t idx)
     return nullptr;
 }
 
+void GameRender::onMapUILayerUnitSelected(const Camp* camp)
+{
+#if ENABLE_DRAG_CARD
+    const Spell* spell = getSpell(camp, 0);
+    if (spell) {
+        SpellCastType castType = spell->getSpellType()->getCastType();
+        if (kSpellCastType_Self == castType) {
+            castSpell(spell, camp->getHero(), Coordinate::ZERO, nullptr);
+        }
+        
+        _selectedCamp = nullptr;
+    } else {
+        _selectedCamp = camp;
+    }
+#else
+    if (_commander && camp) {
+        if (isCampFull(camp)) {
+            const Spell* spell = getSpell(camp, 0);
+            if (spell) {
+                SpellCastType castType = spell->getSpellType()->getCastType();
+                if (kSpellCastType_Self == castType) {
+                    castSpell(spell, camp->getHero(), Coordinate::ZERO, nullptr);
+                }
+            }
+        }
+    }
+#endif
+}
+
+void GameRender::onMapUILayerUnitAdd(const Camp* camp)
+{
+    if (_commander && camp && !isCampFull(camp)) {
+        _commander->tryGiveCampIncreaseCommand(camp, 1);
+    }
+}
+
+void GameRender::onMapUILayerUnitUpgrade(const Camp* camp)
+{
+    
+}
+
 void GameRender::onMapUILayerTouchCancelled(const Camp* camp)
 {
     UnitNode* node = getHeroUnitNode(camp);
@@ -625,57 +660,59 @@ void GameRender::onMapUILayerTouchCancelled(const Camp* camp)
 
 void GameRender::onMapUILayerTouchMoved(const Camp* camp, const Point& point)
 {
+    const Point& realPos = convertToMapLayer(point);
     const Spell* spell = getSpell(camp, 0);
-    if (spell) {
-        const SpellType* spellType = spell->getSpellType();
-        if (spellType) {
-            SpellCastType castType = spellType->getCastType();
-            if (kSpellCastType_Position == castType || kSpellCastType_PositionOrUnit == castType) {
-                if (spell->getCDProgress() <= 0) {
-                    UnitNode* node = getHeroUnitNode(camp);
-                    if (node) {
-                        node->addSpellRing(spellType->getCastDistance());
-                    }
-                    
-                    if (_mapLayer) {
-                        const Point& realPos = _mapLayer->convertToNodeSpace(_mapUILayer->convertToWorldSpace(point));
-                        _mapLayer->updateSpellRangeRing(realPos, 400);
-                    }
-                }
-            }
+    if (isValidAoeSpell(spell)) {
+        UnitNode* node = getHeroUnitNode(camp);
+        if (node) {
+            node->addSpellRing(spell->getSpellType()->getCastDistance());
+        }
+        
+        if (_mapLayer) {
+            _mapLayer->updateSpellRangeRing(realPos, 400);
         }
     } else {
-        if (_mapLayer) {
-            const string& name = camp->getCurrentUnitType()->getName();
-            const Point& realPos = _mapLayer->convertToNodeSpace(_mapUILayer->convertToWorldSpace(point));
-            _mapLayer->updateUnitMask(name, realPos);
+        const bool isHero(kUnitClass_Hero == camp->getCurrentUnitType()->getUnitClass());
+        if (isProducibleCamp(camp) || isHero) {
+            if (_mapLayer) {
+                _mapLayer->updateUnitMask(camp, realPos);
+            }
         }
     }
 }
 
 void GameRender::onMapUILayerTouchEnded(const Camp* camp, const Point& point)
 {
+    const Point& realPos = convertToMapLayer(point);
     const Spell* spell = getSpell(camp, 0);
-    if (spell) {
-        const SpellType* spellType = spell->getSpellType();
-        if (spellType) {
-            SpellCastType castType = spellType->getCastType();
-            if (kSpellCastType_Position == castType || kSpellCastType_PositionOrUnit == castType) {
-                const Coordinate& coordinate = _mapLayer->convertPoint(point);
-                CommandResult result = castSpell(spell, camp->getHero(), coordinate, nullptr);
-                if (kCommandResult_suc == result) {
-                    if (spell->getSpellName().find("火球术") != string::npos) {
-                        if (_mapLayer) {
-                            _mapLayer->addFireballSpellEffect();
-                        }
-                    }
+    if (isValidAoeSpell(spell)) {
+        const Coordinate& coordinate = _mapLayer->convertPoint(realPos);
+        CommandResult result = castSpell(spell, camp->getHero(), coordinate, nullptr);
+        if (kCommandResult_suc == result) {
+            if (spell->getSpellName().find("火球术") != string::npos) {
+                if (_mapLayer) {
+                    _mapLayer->addFireballSpellEffect();
                 }
             }
         }
     } else {
-        if (_mapLayer) {
-            // TODO: place the unit
-            _mapLayer->removeUnitMask();
+        const bool isHero(kUnitClass_Hero == camp->getCurrentUnitType()->getUnitClass());
+        if (isProducibleCamp(camp) || isHero) {
+            bool success(true);
+            if (isHero) {
+                const CommandResult result = _commander->tryGiveCampIncreaseCommand(camp, 1);
+                if (kCommandResult_suc != result) {
+                    success = false;
+                }
+            }
+            
+            if (success && _mapLayer) {
+                const Coordinate& coordinate = _mapLayer->convertPoint(point);
+                CommandResult result = _commander->tryGiveCampGenerateCommand(camp, coordinate);
+                if (kCommandResult_suc == result) {
+                    _mapLayer->addPlaceUnitEffect(realPos);
+                }
+            }
         }
     }
     
@@ -686,6 +723,7 @@ void GameRender::onMapUILayerTouchEnded(const Camp* camp, const Point& point)
     
     if (_mapLayer) {
         _mapLayer->removeSpellRangeRing();
+        _mapLayer->removeUnitMask();
     }
 }
 
@@ -928,4 +966,15 @@ void GameRender::onGameOver()
         audioFile = "sound_failed";
     }
     SoundManager::getInstance()->playSound("sounds/effect/" + audioFile + ".mp3");
+}
+
+
+Point GameRender::convertToMapLayer(const Point& uiLayerPoint) const
+{
+    return _mapLayer->convertToNodeSpace(_mapUILayer->convertToWorldSpace(uiLayerPoint));
+}
+
+Point GameRender::convertToUILayer(const Point& mapLayerPoint) const
+{
+    return _mapUILayer->convertToNodeSpace(_mapLayer->convertToWorldSpace(mapLayerPoint));
 }

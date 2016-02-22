@@ -98,6 +98,8 @@ private:
     void updateBattleUnitInfos();
 #endif
     bool isCampFull(const UnderWorld::Core::Camp* camp) const;
+    bool isValidAoeSpell(const UnderWorld::Core::Spell* spell) const;
+    bool isProducibleCamp(const UnderWorld::Core::Camp* camp) const;
     const UnderWorld::Core::Spell* getSpell(const UnderWorld::Core::Camp* camp, int idx) const;
     UnderWorld::Core::CommandResult castSpell(const UnderWorld::Core::Spell* spell, const UnderWorld::Core::Unit* trigger, const UnderWorld::Core::Coordinate& coordinate, const UnderWorld::Core::Unit* target);
     UnitNode* getHeroUnitNode(const UnderWorld::Core::Camp* camp);
@@ -118,6 +120,9 @@ private:
     int getRemainingWaveTime() const;
     void stopAllTimers();
     void onGameOver();
+    
+    Point convertToMapLayer(const Point& uiLayerPoint) const;
+    Point convertToUILayer(const Point& mapLayerPoint) const;
     
 private:
 #if ENABLE_CAMP_INFO

@@ -11,7 +11,7 @@
 #include "2d/CCFastTMXLayer.h"
 #include "2d/CCFastTMXTiledMap.h"
 #include "Coordinate.h"
-#include "UnitType.h"
+#include "Camp.h"
 #include "Map.h"
 #include "cocostudio/CocoStudio.h"
 #include "tinyxml2/tinyxml2.h"
@@ -20,6 +20,7 @@
 #include "DataManager.h"
 #include "MapParticleConfigData.h"
 #include "GameConstants.h"
+#include "URConfigData.h"
 
 using namespace cocostudio;
 using namespace std;
@@ -28,6 +29,36 @@ static const int TILEDMAP_TAG = 2;
 static const int TILEDMAP_ZORDER = 2;
 static const string TILEDMAP_LAYER_LOGIC = "logic";
 static const string TILEDMAP_LAYER_FOREGROUND = "fg";
+
+static Node* createUnitMask(const UnderWorld::Core::Camp* camp)
+{
+    if (camp) {
+        string file;
+        const string& name = camp->getBaseUnitType()->getName();
+        const URConfigData* data = DataManager::getInstance()->getURConfigData(name);
+        if (data) {
+            static const int resourceId(2);
+            UnderWorld::Core::UnitClass uc = camp->getBaseUnitType()->getUnitClass();
+            if (UnderWorld::Core::kUnitClass_Core == uc || UnderWorld::Core::kUnitClass_Building == uc) {
+                file = StringUtils::format(data->getBNormal().c_str(), resourceId);
+            } else {
+                const string& prefix = data->getPrefix();
+                file = prefix + StringUtils::format("-standby-%d.csb", resourceId);
+            }
+            
+            if (FileUtils::getInstance()->isFileExist(file)) {
+                Node* actionNode = CSLoader::createNode(file);
+                Sprite* sprite = dynamic_cast<Sprite*>(actionNode->getChildren().front());
+                if (sprite) {
+                    sprite->setOpacity(180);
+                }
+                return actionNode;
+            }
+        }
+    }
+    
+    return nullptr;
+}
 
 MapLayer::MapLayer()
 :_observer(nullptr)
@@ -257,6 +288,14 @@ void MapLayer::coordinateConvert(const UnderWorld::Core::Coordinate& coreCoordin
     zOrder = 2 * (_height - coreCoordinate.y + 1);
 }
 
+Point MapLayer::convertToScrollViewPoint(const Point& layerPoint)
+{
+    Node* container = _scrollView->getContainer();
+    const Point pos = _scrollView->convertToNodeSpace(convertToWorldSpace(layerPoint)) - container->getPosition();
+    const Point realPos = Point(pos.x / container->getScaleX(), pos.y / container->getScaleY());
+    return realPos;
+}
+
 UnderWorld::Core::Coordinate MapLayer::convertPoint(const Point& layerPoint)
 {
     Point realPoint = _mainLayer->convertToNodeSpace(convertToWorldSpace(layerPoint));
@@ -287,21 +326,20 @@ void MapLayer::repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& co
     reorderChild(unit, zOrder);
 }
 
-void MapLayer::updateUnitMask(const string& name, const Point& layerPoint)
+void MapLayer::updateUnitMask(const UnderWorld::Core::Camp* camp, const Point& layerPoint)
 {
+    const string& name = camp->getBaseUnitType()->getName();
     if (_selectedUnitName != name) {
         removeUnitMask();
     }
     
     if (!_selectedUnitMask) {
-        _selectedUnitMask = Sprite::create("GameImages/resources/icon_101B.png");
+        _selectedUnitName = name;
+        _selectedUnitMask = createUnitMask(camp);
         _scrollView->addChild(_selectedUnitMask);
     }
     
-    Node* container = _scrollView->getContainer();
-    const Point pos = _scrollView->convertToNodeSpace(convertToWorldSpace(layerPoint)) - container->getPosition();
-    const Point realPos = Point(pos.x / container->getScaleX(), pos.y / container->getScaleY());
-    _selectedUnitMask->setPosition(realPos);
+    _selectedUnitMask->setPosition(convertToScrollViewPoint(layerPoint));
 }
 
 void MapLayer::removeUnitMask()
@@ -310,6 +348,7 @@ void MapLayer::removeUnitMask()
         _selectedUnitMask->stopAllActions();
         _selectedUnitMask->removeFromParent();
         _selectedUnitMask = nullptr;
+        _selectedUnitName = "";
     }
 }
 
@@ -331,10 +370,7 @@ void MapLayer::updateSpellRangeRing(const Point& layerPoint, int range)
         _spellRing->setScale(scale);
     }
     
-    Node* container = _scrollView->getContainer();
-    const Point pos = _scrollView->convertToNodeSpace(convertToWorldSpace(layerPoint)) - container->getPosition();
-    const Point realPos = Point(pos.x / container->getScaleX(), pos.y / container->getScaleY());
-    _spellRing->setPosition(realPos);
+    _spellRing->setPosition(convertToScrollViewPoint(layerPoint));
 }
 
 void MapLayer::removeSpellRangeRing()
@@ -395,6 +431,20 @@ void MapLayer::removeAllSpellEffects()
     {
         removeSpellEffect(*iter);
     }
+}
+
+void MapLayer::addPlaceUnitEffect(const Point& point)
+{
+    static string file("chuchang-fazhen.csb");
+    Node *effect = CSLoader::createNode(file);
+    effect->setPosition(convertToScrollViewPoint(point));
+    _scrollView->addChild(effect);
+    cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
+    effect->runAction(action);
+    action->gotoFrameAndPlay(0, false);
+    action->setLastFrameCallFunc([effect]() {
+        effect->removeFromParent();
+    });
 }
 
 bool MapLayer::onTouchBegan(Touch *touch, Event *unused_event)

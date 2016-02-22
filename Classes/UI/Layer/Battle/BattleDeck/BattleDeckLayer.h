@@ -12,6 +12,7 @@
 #include "AbstractUILayer.h"
 #include "cocos-ext.h"
 #include "BattleDeckUnitNode.h"
+#include "BattleDeckTestNode.h"
 #include "UnitType.h"
 
 USING_NS_CC;
@@ -25,7 +26,7 @@ public:
     virtual ~BattleDeckLayerObserver() {}
 };
 
-class BattleDeckLayer : public AbstractUILayer, public TableViewDelegate, public TableViewDataSource, public BattleDeckUnitNodeObserver
+class BattleDeckLayer : public AbstractUILayer, public TableViewDelegate, public TableViewDataSource, public BattleDeckUnitNodeObserver, public BattleDeckTestNodeObserver
 {
 public:
     static BattleDeckLayer* create();
@@ -53,6 +54,11 @@ protected:
     virtual void onBattleDeckUnitNodeTouchedBegan(const UnderWorld::Core::Camp* camp) override;
     virtual void onBattleDeckUnitNodeTouchedEnded(const UnderWorld::Core::Camp* camp, bool isValid) override;
     virtual void onBattleDeckUnitNodeTouchedCanceled(const UnderWorld::Core::Camp* camp) override;
+    
+    // BattleDeckTestNodeObserver
+    virtual void onBattleDeckTestNodeTouchedBegan(const std::string& name) override;
+    virtual void onBattleDeckTestNodeTouchedEnded(const std::string& name, bool isValid) override;
+    virtual void onBattleDeckTestNodeTouchedCanceled(const std::string& name) override;
     
     void createTableViews(float width);
     Node* createTableView(UnderWorld::Core::UnitClass uc, float width);

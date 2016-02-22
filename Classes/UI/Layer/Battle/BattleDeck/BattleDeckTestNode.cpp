@@ -1,15 +1,14 @@
 //
-//  BattleDeckUnitNode.cpp
+//  BattleDeckTestNode.cpp
 //  Underworld_Client
 //
-//  Created by Andy on 16/2/19.
+//  Created by Andy on 16/2/22.
 //  Copyright (c) 2015 Mofish Studio. All rights reserved.
 //
 
-#include "BattleDeckUnitNode.h"
+#include "BattleDeckTestNode.h"
 #include "cocostudio/CocoStudio.h"
 #include "CocosUtils.h"
-#include "Camp.h"
 #include "ResourceButton.h"
 #include "DataManager.h"
 #include "URConfigData.h"
@@ -24,22 +23,19 @@ using namespace UnderWorld::Core;
 static const int topZOrder(1);
 static const Point iconTouchOffset(0, -6.0f);
 
-BattleDeckUnitNode* BattleDeckUnitNode::create(const Camp* camp)
+BattleDeckTestNode* BattleDeckTestNode::create(const string& name, bool isHero)
 {
-    BattleDeckUnitNode *ret = new (nothrow) BattleDeckUnitNode();
-    if (ret && ret->init(camp))
-    {
+    BattleDeckTestNode *ret = new (nothrow) BattleDeckTestNode();
+    if (ret && ret->init(name, isHero)) {
         ret->autorelease();
         return ret;
     }
-    else
-    {
-        CC_SAFE_DELETE(ret);
-        return nullptr;
-    }
+    
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
-BattleDeckUnitNode::BattleDeckUnitNode()
+BattleDeckTestNode::BattleDeckTestNode()
 :_observer(nullptr)
 ,_cardWidget(nullptr)
 ,_addButton(nullptr)
@@ -52,23 +48,26 @@ BattleDeckUnitNode::BattleDeckUnitNode()
 ,_woodLabel(nullptr)
 
 ,_shiningSprite(nullptr)
-,_camp(nullptr)
 ,_idx(CC_INVALID_INDEX)
+,_isHero(false)
 ,_touchInvalid(false)
 ,_isIconTouched(false)
 {
     
 }
 
-BattleDeckUnitNode::~BattleDeckUnitNode()
+BattleDeckTestNode::~BattleDeckTestNode()
 {
     removeAllChildren();
 }
 
-bool BattleDeckUnitNode::init(const Camp* camp)
+bool BattleDeckTestNode::init(const std::string& name, bool isHero)
 {
     if (Node::init())
     {
+        _unitName = name;
+        _isHero = isHero;
+        
         static const string csbFile("UI_Card.csb");
         Node *mainNode = CSLoader::createNode(csbFile);
         addChild(mainNode);
@@ -93,7 +92,7 @@ bool BattleDeckUnitNode::init(const Camp* camp)
                     }
                         break;
                     case 45: {
-                        const string& iconFile = getIconFile(camp, true);
+                        const string& iconFile = getIconFile(name, true);
                         _iconSprite = Sprite::create(iconFile);
                         child->addChild(_iconSprite);
                     }
@@ -103,6 +102,7 @@ bool BattleDeckUnitNode::init(const Camp* camp)
                         if (node) {
                             _countLabel = CocosUtils::createLabel("0", DEFAULT_FONT_SIZE, DEFAULT_NUMBER_FONT);
                             node->addChild(_countLabel);
+                            child->setVisible(!isHero);
                         } else {
                             assert(false);
                         }
@@ -172,7 +172,7 @@ bool BattleDeckUnitNode::init(const Camp* camp)
                 
                 _touchInvalid = false;
                 if(_observer) {
-                    _observer->onBattleDeckUnitNodeTouchedBegan(_camp);
+                    _observer->onBattleDeckTestNodeTouchedBegan(_unitName);
                 }
             } else if (type == Widget::TouchEventType::MOVED) {
                 if (!_touchInvalid) {
@@ -191,13 +191,13 @@ bool BattleDeckUnitNode::init(const Camp* camp)
                 }
                 
                 if(_observer) {
-                    _observer->onBattleDeckUnitNodeTouchedEnded(_camp, !_touchInvalid);
+                    _observer->onBattleDeckTestNodeTouchedEnded(_unitName, !_touchInvalid);
                 }
             } else {
                 _isIconTouched = false;
                 addTouchedAction(false, true);
                 if(_observer) {
-                    _observer->onBattleDeckUnitNodeTouchedCanceled(_camp);
+                    _observer->onBattleDeckTestNodeTouchedCanceled(_unitName);
                 }
             }
         });
@@ -218,53 +218,29 @@ bool BattleDeckUnitNode::init(const Camp* camp)
     return false;
 }
 
-void BattleDeckUnitNode::registerObserver(BattleDeckUnitNodeObserver *observer)
+void BattleDeckTestNode::registerObserver(BattleDeckTestNodeObserver *observer)
 {
     _observer = observer;
 }
 
-void BattleDeckUnitNode::reuse(const Camp* camp, ssize_t idx)
+void BattleDeckTestNode::reuse(const string& name, ssize_t idx)
 {
-    _camp = camp;
+    _unitName = name;
     _idx = idx;
     
     // update mutable data
     update(true);
 }
 
-void BattleDeckUnitNode::update(bool reuse)
+void BattleDeckTestNode::update(bool reuse)
 {
-    if (_camp) {
-        const int production = _camp->getProduction();
-        const int maxProduction = _camp->getMaxProduction();
-        const bool enable = production < maxProduction;
-        const bool hero = isHero(_camp);
-        
-        if (!hero) {
-            _countLabel->setString(StringUtils::format("%d/%d", production, maxProduction));
-        }
-        
-        const map<string, int>& costs = _camp->getCosts();
-        _woodSprite->setVisible(costs.find(RES_NAME_WOOD) != costs.end() && enable);
-        if (_woodSprite->isVisible()) {
-            int count = costs.at(RES_NAME_WOOD);
-            _woodLabel->setString(StringUtils::format("%d", count));
-        }
-        
-        _goldSprite->setVisible(costs.find(RES_NAME_GOLD) != costs.end() && enable);
-        if (_goldSprite->isVisible()) {
-            int count = costs.at(RES_NAME_GOLD);
-            _goldLabel->setString(StringUtils::format("%d", count));
-        }
-        
-        const string& iconFile = getIconFile(_camp, true);
-        if (iconFile.length() > 0) {
-            _iconSprite->setTexture(iconFile);
-        }
+    const string& iconFile = getIconFile(_unitName, true);
+    if (iconFile.length() > 0) {
+        _iconSprite->setTexture(iconFile);
     }
 }
 
-void BattleDeckUnitNode::setSelected(bool selected)
+void BattleDeckTestNode::setSelected(bool selected)
 {
     if (_shiningSprite) {
         _shiningSprite->setVisible(selected);
@@ -284,20 +260,19 @@ void BattleDeckUnitNode::setSelected(bool selected)
     }
 }
 
-void BattleDeckUnitNode::setTouched(bool touched, bool isGameOver)
+void BattleDeckTestNode::setTouched(bool touched, bool isGameOver)
 {
     addTouchedAction(isGameOver ? _isIconTouched : touched, false);
 }
 
-const Camp* BattleDeckUnitNode::getCamp() const
+const string& BattleDeckTestNode::getUnitName() const
 {
-    return _camp;
+    return _unitName;
 }
 
-string BattleDeckUnitNode::getIconFile(const Camp* camp, bool enable) const
+string BattleDeckTestNode::getIconFile(const string& name, bool enable) const
 {
-    const string& unitName = camp ? camp->getCurrentUnitSetting().getUnitTypeName() : "GameImages/icons/unit/big/normal/icon_w_langdun.png";
-    const URConfigData* configData = DataManager::getInstance()->getURConfigData(unitName);
+    const URConfigData* configData = DataManager::getInstance()->getURConfigData(name);
     string iconFile;
     static const string defaultFile("GameImages/icons/unit/big/normal/icon_w_langdun.png");
     if (enable) {
@@ -309,17 +284,12 @@ string BattleDeckUnitNode::getIconFile(const Camp* camp, bool enable) const
     return iconFile;
 }
 
-bool BattleDeckUnitNode::isHero(const Camp* camp) const
+bool BattleDeckTestNode::isHero() const
 {
-    const UnitType* unitType = camp->getCurrentUnitType();
-    if (kUnitClass_Hero == unitType->getUnitClass()) {
-        return true;
-    }
-    
-    return false;
+    return _isHero;
 }
 
-void BattleDeckUnitNode::addTouchedAction(bool touched, bool animated)
+void BattleDeckTestNode::addTouchedAction(bool touched, bool animated)
 {
     if (_cardWidget) {
         _cardWidget->stopAllActions();

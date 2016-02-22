@@ -58,7 +58,6 @@ MapUILayer* MapUILayer::create(const string& myAccount, const string& opponentsA
 
 MapUILayer::MapUILayer()
 :_observer(nullptr)
-,_createdTableViewsCount(0)
 ,_tableViewPos(Point::ZERO)
 ,_isTouchingTableView(false)
 ,_selectedCamp(nullptr)
@@ -98,7 +97,8 @@ void MapUILayer::registerObserver(MapUILayerObserver *observer)
 
 void MapUILayer::reload()
 {
-    if (0 == _createdTableViewsCount) {
+    const size_t cnt = _tableViews.size();
+    if (0 == cnt) {
         createTableViews();
     } else {
         for (map<UnitClass, TableView*>::iterator iter = _tableViews.begin(); iter != _tableViews.end(); ++iter) {
@@ -740,10 +740,7 @@ void MapUILayer::createTableViews()
 
 Node* MapUILayer::createTableView(UnitClass uc, Node* parent)
 {
-    ssize_t cnt(0);
-    if (_observer) {
-        cnt = _observer->onMapUILayerCampsCount(uc);
-    }
+    ssize_t cnt = getCellsCount(uc);
     if (cnt > 0) {
         const int width = _cellSize.width * cnt + unitNodeOffsetX;
         const Size size(width, _cellSize.height);
@@ -764,7 +761,6 @@ Node* MapUILayer::createTableView(UnitClass uc, Node* parent)
         tableView->setPosition(Point(offset, 0));
         sprite->addChild(tableView);
         _tableViews.insert(make_pair(uc, tableView));
-        ++ _createdTableViewsCount;
         return sprite;
     }
     
@@ -773,8 +769,9 @@ Node* MapUILayer::createTableView(UnitClass uc, Node* parent)
 
 UnitClass MapUILayer::getUnitClass(TableView* table) const
 {
-    if (_createdTableViewsCount < tablesCount) {
-        return tableUnitClass[_createdTableViewsCount];
+    const size_t cnt = _tableViews.size();
+    if (cnt < tablesCount) {
+        return tableUnitClass[cnt];
     }
     
     return static_cast<UnitClass>(table->getTag());
@@ -782,8 +779,13 @@ UnitClass MapUILayer::getUnitClass(TableView* table) const
 
 ssize_t MapUILayer::getCellsCount(TableView* table) const
 {
+    return getCellsCount(getUnitClass(table));
+}
+
+ssize_t MapUILayer::getCellsCount(UnitClass uc) const
+{
     if (_observer) {
-        return _observer->onMapUILayerCampsCount(getUnitClass(table));
+        return _observer->onMapUILayerCampsCount(uc);
     }
     
     return 0;

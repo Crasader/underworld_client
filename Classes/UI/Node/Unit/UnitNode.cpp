@@ -652,6 +652,8 @@ void UnitNode::updateActionNode(const Skill* skill, int frameIndex, bool flip)
 {
     const ssize_t cnt = _animationFiles.size();
     if (_unit && cnt > 0) {
+        const bool isNewCreated(nullptr == _actionNode);
+        
         // 1. remove the old action node
         removeActionNode();
         
@@ -729,6 +731,10 @@ void UnitNode::updateActionNode(const Skill* skill, int frameIndex, bool flip)
         if (!isDead) {
             addHPBar();
             updateHPBar();
+        }
+        
+        if (isNewCreated && !_isBuilding) {
+            addEffect("chuchang-huanrao.csb");
         }
         
     } else {

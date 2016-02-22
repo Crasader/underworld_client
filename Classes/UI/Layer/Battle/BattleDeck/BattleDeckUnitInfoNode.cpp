@@ -11,6 +11,8 @@
 #include "cocostudio/CocoStudio.h"
 #include "CocosUtils.h"
 #include "Unit.h"
+#include "DataManager.h"
+#include "URConfigData.h"
 #include "SoundManager.h"
 
 using namespace std;
@@ -53,6 +55,8 @@ BattleDeckUnitInfoNode* BattleDeckUnitInfoNode::create(const UnitBase* unit)
 
 BattleDeckUnitInfoNode::BattleDeckUnitInfoNode()
 :_observer(nullptr)
+,_unitIcon(nullptr)
+,_qualityIcon(nullptr)
 ,_raceIcon(nullptr)
 ,_nameLabel(nullptr)
 ,_hpLabel(nullptr)
@@ -94,12 +98,16 @@ bool BattleDeckUnitInfoNode::init()
                 switch (tag) {
                     case 80:
                     {
-                        
+                        static const string file("GameImages/icons/unit/small/icon_v_nvgongjianshou_1.png");
+                        _unitIcon = Sprite::create(file);
+                        child->addChild(_unitIcon);
                     }
                         break;
                     case 81:
                     {
-                        
+                        static const string file("GameImages/test/ui_kuang_4.png");
+                        _qualityIcon = Sprite::create(file);
+                        child->addChild(_qualityIcon);
                     }
                         break;
                     case 63:
@@ -212,6 +220,11 @@ void BattleDeckUnitInfoNode::update(const UnitBase* unit)
     _unit = unit;
     
     if (unit) {
+        const string& file = DataManager::getInstance()->getURConfigData(unit->getUnitType()->getRenderKey())->getSmallIcon();
+        if (FileUtils::getInstance()->isFileExist(file)) {
+            _unitIcon->setTexture(file);
+        }
+        
         _nameLabel->setString(unit->getUnitName());
         _hpLabel->setString(StringUtils::format("%.0f", getUnitAttributeValue(unit, kUnitAttribute_MaxHp)));
         _armorLabel->setString(StringUtils::format("%.0f", getUnitAttributeValue(unit, kUnitAttribute_Armor)));
