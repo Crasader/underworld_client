@@ -1,187 +1,344 @@
-<?xml version="1.0"?>
 <root>
     <!-- ==========单位&势力配置========== -->
     <faction name="狼人族">
-        <unit name="狼人基地" class="core" hp="6000" mp="0" hpregen="0" mpregen="0" field="0" armor_type="城甲" armor="0" attacksight="600" size="300" height="100" render_key="狼人基地">
+        <unit name="狼人基地" class="core" hp="600" mp="0" hpregen="0" mpregen="0" field="0" armor_type="城甲" armor="0" attacksight="800" size="300" height="100" render_key="狼人基地">
             <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
             <skill class="die" preperform="0.0" perform="10.0" cd="0.0" occupy="0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="2.0" min_damage="200" max_damage="300" deliver_class="physical" damage_distance="faraway" range="600" fields="3">
-                <bullet speed="1000" height="0" size="0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="2.0" min_damage="18" max_damage="22" deliver_class="physical" damage_distance="faraway" range="800" fields="3">
+                <bullet speed="600" size="0"/>
             </skill>
         </unit>
-        <unit name="狼人箭塔" class="building" hp="4000" mp="0" hpregen="0" mpregen="0" field="0" armor_type="城甲" armor="0" attacksight="600" size="100" height="50" render_key="狼人箭塔" reward="金子:200">
+        <unit name="狼人箭塔" class="building" hp="200" mp="0" hpregen="0" mpregen="0" field="0" armor_type="城甲" armor="0" attacksight="800" size="100" height="50" render_key="狼人箭塔" reward="金子:200">
             <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
             <skill class="die" preperform="0.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="250" max_damage="300" deliver_class="physical" damage_distance="faraway" range="600" fields="3">
-                <bullet speed="1200"  height="0" size="0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="20" max_damage="40" deliver_class="physical" damage_distance="faraway" range="800" fields="3">
+                <bullet speed="800" size="0"/>
             </skill>
         </unit>
-        <!-- 力量号角 -->
-        <unit name="时光女神" class="hero" hp="550" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="0" magical_defense="0.f" attacksight="600" size="75" height="0" cost="金子:225;木头:750;人口:5" priority="1" max_level="100" spell_names="全体恢复_等级1" render_key="时光女神" produce="木头:22" reward="金子:2">
+        <!-- 辉月狼人 -->
+        <!-- 狼人弓箭手 -->
+        <unit name="疾风弓手" class="warrior" race="辉月狼人" hp="210" mp="0" hpregen="0" mpregen="0" field="0" armor_type="轻甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0" attacksight="600" size="48" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" render_key="">
             <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
             <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
             <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="28" max_damage="32" deliver_class="physical" damage_distance="faraway" range="600" fields="3">
-                <bullet speed="600"  height="0" size="0"/>
+                <bullet speed="800" size="0"/>
             </skill>
             <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
         </unit>
-        <!-- 爆 -->
-        <unit name="狼人森林之魂" class="hero" hp="550" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="0" magical_defense="0.f" attacksight="600" size="75" height="0" cost="金子:100;木头:500;人口:5" priority="1" max_level="100" spell_names="火球术_等级1" render_key="狼人森林之魂" produce="木头:50" reward="金子:1">
+        <unit name="疾风弓手_作战" class="warrior" race="辉月狼人" hp="300" mp="0" hpregen="0" mpregen="0" field="0" armor_type="轻甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" passive_names="复合弓;弓手经验;等级上升" render_key="">
             <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
             <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="28" max_damage="32" deliver_class="magical" damage_distance="faraway" range="400" fields="3">
-                <bullet speed="600"  height="0" size="0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="42" max_damage="48" deliver_class="physical" damage_distance="faraway" range="750" fields="3">
+                <bullet speed="800" size="0"/>
             </skill>
             <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
         </unit>
-        <!-- 战鼓 -->
-        <unit name="天空女神" class="hero" hp="550" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="0" attacksight="600" size="75" height="0" cost="金子:650;人口:5" priority="1" max_level="100" max_quality="5" max_talent="20" spell_names="激励_等级1" render_key="天空女神" produce="木头:65" reward="金子:6">
+        <unit name="疾风弓手_激流" class="warrior" race="辉月狼人" hp="300" mp="0" hpregen="0" mpregen="0" field="0" armor_type="轻甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" passive_names="激流射术;瞄准要害;等级上升" render_key="">
             <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
             <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="0.8" min_damage="28" max_damage="32" deliver_class="physical" damage_distance="faraway" range="400" fields="3">
-                <bullet speed="600"  height="0" size="0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="42" max_damage="48" deliver_class="physical" damage_distance="faraway" range="750" fields="3">
+                <bullet speed="800" size="0"/>
             </skill>
             <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
         </unit>
-        <!-- 拥护 -->
-        <unit name="狼人步兵" class="warrior" hp="575" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="700" armor_preference="中甲" armor_preference_factor="1.5f" attacksight="400" size="60" height="0" cost="金子:275;人口:2" priority="1" max_level="100" max_quality="5" max_talent="20" render_key="狼人步兵" produce="木头:27" reward="金子:2">
+        <unit name="疾风弓手_掌握" class="warrior" race="辉月狼人" hp="300" mp="0" hpregen="0" mpregen="0" field="0" armor_type="轻甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" passive_names="致残射击;等级上升" render_key="">
             <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
             <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.4" min_damage="45" max_damage="60" deliver_class="physical" damage_distance="nearby" range="35" fields="1">
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="42" max_damage="48" deliver_class="physical" damage_distance="faraway" range="750" fields="3">
+                <bullet speed="800" size="0"/>
             </skill>
             <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
         </unit>
-        <!-- 十字军 -->
-        <unit name="狼人机械狼" class="warrior" hp="575" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="600" attacksight="400" size="60" height="0" cost="金子:280;木头:400;人口:2" priority="1" max_level="100" max_quality="5" max_talent="20" spell_names="王者祝福_等级1" render_key="狼人机械狼" produce="木头:28" reward="金子:2">
+        <unit name="疾风弓手_克制" class="warrior" race="辉月狼人" hp="300" mp="0" hpregen="0" mpregen="0" field="0" armor_type="轻甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" passive_names="恶魔克星;等级上升" render_key="">
             <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
             <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.4" min_damage="50" max_damage="70" deliver_class="physical" damage_distance="nearby" range="35" fields="1">
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="42" max_damage="48" deliver_class="physical" damage_distance="faraway" range="750" fields="3">
+                <bullet speed="800" size="0"/>
             </skill>
             <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
         </unit>
-        <!-- 增幅 -->
-        <unit name="狼人射手" class="warrior" hp="500" mp="0" hpregen="0" mpregen="0" field="0" armor_type="轻甲" armor="0" armor_preference="无甲" armor_preference_factor="1.5f" attacksight="600" size="25" height="0" cost="金子:320;人口:2" priority="0" passive_names="增幅_等级1" max_level="100" max_quality="5" max_talent="20" render_key="狼人射手" produce="木头:32" reward="金子:3">
+        <unit name="疾风弓手_精英" class="warrior" race="辉月狼人" hp="450" mp="0" hpregen="0" mpregen="0" field="0" armor_type="轻甲" armor="200" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" passive_names="身手敏捷_等级1;多重箭_等级1;等级上升_精英" render_key="">
             <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
             <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="60" max_damage="100" deliver_class="physical" damage_distance="faraway" range="375" fields="1">
-                <bullet speed="800"  height="0" size="0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="55" max_damage="65" deliver_class="physical" damage_distance="faraway" range="750" fields="3">
+                <bullet speed="800" size="0"/>
             </skill>
             <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
         </unit>
-        <!-- 迫击炮小队 -->
-            <unit name="机械甲虫" class="warrior" hp="280" mp="0" hpregen="0" mpregen="0" field="0" armor_type="轻甲" armor="0" armor_preference="城甲" armor_preference_factor="1.5f" attacksight="1100" size="40" height="100" cost="金子:210;木头:750;人口:2" priority="1" passive_names="轰击_等级1" max_level="100" max_quality="5" max_talent="20" render_key="机械甲虫" produce="木头:21" reward="金子:2">
+        <!-- 狼人巫师 -->
+        <unit name="辉月侍僧" class="warrior" race="辉月狼人" hp="300" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="600" size="24" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" spell_names="基础治疗术" render_key="">
             <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
             <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="3.5" min_damage="68" max_damage="80" deliver_class="physical" damage_distance="faraway" range="700" fields="1">
-                <bullet speed="600"  height="0" size="0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="16" max_damage="24" deliver_class="physical" damage_distance="faraway" range="750" fields="3">
+                <bullet speed="800" size="0"/>
             </skill>
             <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
         </unit>
-        <!-- 术士 -->
-        <unit name="狼人巫师" class="warrior" hp="320" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="100" attacksight="600" size="60" height="0" cost="金子:300;木头:300;人口:3" priority="1" max_level="100" max_quality="5" max_talent="20" render_key="狼人巫师" spell_names="吸血_等级1" produce="木头:30" reward="金子:3">
+        <unit name="辉月侍僧_作战" class="warrior" race="辉月狼人" hp="450" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="600" size="24" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" spell_names="基础治疗术" passive_names="复合弓;击落;等级上升" render_key="">
             <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
             <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="2" min_damage="30" max_damage="33" deliver_class="physical" damage_distance="faraway" range="200" fields="1">
-                <bullet speed="800"  height="0" size="0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="physical" damage_distance="faraway" range="750" fields="3">
+                <bullet speed="800" size="0"/>
+            </skill>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <unit name="辉月侍僧_激流" class="warrior" race="辉月狼人" hp="450" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="600" size="24" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" spell_names="基础治疗术;顺风之力" passive_names="激流射术;等级上升" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="physical" damage_distance="faraway" range="750" fields="3">
+                <bullet speed="800" size="0"/>
+            </skill>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <unit name="辉月侍僧_掌握" class="warrior" race="辉月狼人" hp="450" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="600" size="24" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" spell_names="基础治疗术;枷锁" passive_names="等级上升" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="physical" damage_distance="faraway" range="750" fields="3">
+                <bullet speed="800" size="0"/>
+            </skill>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <unit name="辉月侍僧_月神" class="warrior" race="辉月狼人" hp="450" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="600" size="24" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" spell_names="基础治疗术;月神能量" passive_names="等级上升" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="physical" damage_distance="faraway" range="750" fields="3">
+                <bullet speed="800" size="0"/>
+            </skill>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <unit name="辉月侍僧_入侵" class="warrior" race="辉月狼人" hp="450" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="600" size="24" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" spell_names="基础治疗术;辉月印记" passive_names="等级上升" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="physical" damage_distance="faraway" range="750" fields="3">
+                <bullet speed="800" size="0"/>
+            </skill>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <!-- 狼人步兵 -->
+        <unit name="轻装武士" class="warrior" race="辉月狼人" hp="600" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="200" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:6" max_level="100" produce="木头:0.24;金子:0.12" reward="金子:0.18f" passive_names="肉搏术" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.2" perform="0.0" cd="1.5" min_damage="28" max_damage="32" deliver_class="physical" damage_distance="nearby" range="48" fields="1">
+                <bullet speed="600" size="0"/>
+            </skill>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <unit name="轻装武士_入侵" class="warrior" race="辉月狼人" hp="600" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="200" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:6" max_level="100" produce="木头:0.24;金子:0.12" reward="金子:0.18f" spell_names="辉月印记_等级1" passive_names="肉搏术;投掷技巧" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.2" perform="0.0" cd="1.5" min_damage="28" max_damage="32" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <unit name="轻装武士_作战" class="warrior" race="辉月狼人" hp="600" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="200" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:6" max_level="100" produce="木头:0.24;金子:0.12" reward="金子:0.18f" passive_names="肉搏术;狩猎;还击" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.2" perform="0.0" cd="1.5" min_damage="28" max_damage="32" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <unit name="轻装武士_克制" class="warrior" race="辉月狼人" hp="600" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="200" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:6" max_level="100" produce="木头:0.24;金子:0.12" reward="金子:0.18f" passive_names="肉搏术;恶魔克星" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.2" perform="0.0" cd="1.5" min_damage="28" max_damage="32" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <!-- 狼人魔枪手 -->
+        <unit name="流星投枪者" class="warrior" race="辉月狼人" hp="330" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="布甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:5;木头:1" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" passive_names="抗魔学识" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="2.0" min_damage="20" max_damage="40" deliver_class="physical" damage_distance="faraway" range="750" fields="3">
+                <bullet speed="800" size="0"/>
+            </skill>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <unit name="流星投枪者_作战" class="warrior" race="辉月狼人" hp="480" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="布甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:5;木头:1" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" spell_names="流星术" passive_names="抗魔学识;复合弓;等级上升" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="2.0" min_damage="30" max_damage="60" deliver_class="physical" damage_distance="faraway" range="750" fields="3">
+                <bullet speed="800" size="0"/>
+            </skill>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <unit name="流星投枪者_激流" class="warrior" race="辉月狼人" hp="480" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="布甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:5;木头:1" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" passive_names="抗魔学识;激流射术;流星打击;等级上升" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="2.0" min_damage="30" max_damage="60" deliver_class="physical" damage_distance="faraway" range="750" fields="3">
+                <bullet speed="800" size="0"/>
+            </skill>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <unit name="流星投枪者_掌握" class="warrior" race="辉月狼人" hp="480" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="布甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:5;木头:1" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" passive_names="抗魔学识;淬毒标枪;等级上升" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="2.0" min_damage="30" max_damage="60" deliver_class="physical" damage_distance="faraway" range="750" fields="3">
+                <bullet speed="800" size="0"/>
+            </skill>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <unit name="流星投枪者_月神" class="warrior" race="辉月狼人" hp="480" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="布甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:5;木头:1" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" spell_names="荒野祈福" passive_names="抗魔学识;等级上升" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="2.0" min_damage="30" max_damage="60" deliver_class="physical" damage_distance="faraway" range="750" fields="3">
+                <bullet speed="800" size="0"/>
+            </skill>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <!-- TODO 驱散 -->
+        <unit name="流星投枪者_入侵" class="warrior" race="辉月狼人" hp="480" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="布甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:5;木头:1" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" spell_names="驱散" passive_names="抗魔学识;等级上升" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="2.0" min_damage="30" max_damage="60" deliver_class="physical" damage_distance="faraway" range="750" fields="3">
+                <bullet speed="800" size="0"/>
+            </skill>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <!-- 狼人飞骑兵 -->
+        <unit name="巨鹰" class="warrior" race="辉月狼人" hp="750" mp="0" hpregen="0" mpregen="0" field="1" armor_type="无甲" armor="0" armor_preference="布甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="600" size="12" height="0" cost="金子:8;木头:2" max_level="100" produce="木头:0.32;金子:0.16" reward="金子:0.24f" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.2" min_damage="110" max_damage="130" deliver_class="physical" damage_distance="nearby" range="48" fields="2"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.2" min_damage="22" max_damage="30" deliver_class="physical" damage_distance="faraway" range="400" fields="1">
+                <bullet speed="800" size="0"/>
+            </skill>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <unit name="巨鹰_激流" class="warrior" race="辉月狼人" hp="750" mp="0" hpregen="0" mpregen="0" field="1" armor_type="无甲" armor="0" armor_preference="布甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="600" size="12" height="0" cost="金子:8;木头:2" max_level="100" produce="木头:0.32;金子:0.16" reward="金子:0.24f" spell_names="激流之涌" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.2" min_damage="110" max_damage="130" deliver_class="physical" damage_distance="nearby" range="48" fields="2"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.2" min_damage="22" max_damage="30" deliver_class="physical" damage_distance="faraway" range="400" fields="1">
+                <bullet speed="800" size="0"/>
+            </skill>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <unit name="巨鹰_精英" class="warrior" race="辉月狼人" hp="1200" mp="0" hpregen="0" mpregen="0" field="1" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="600" size="12" height="0" cost="金子:8;木头:2" max_level="100" produce="木头:0.32;金子:0.16" reward="金子:0.24f" passive_names="等级上升_精英;重型改造;空中重型溅射;焚烧" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="2.8" min_damage="120" max_damage="150" deliver_class="physical" damage_distance="faraway" range="400" fields="1">
+                <bullet speed="800" size="0"/>
+            </skill>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <!-- 狼人投石车 -->
+        <unit name="攻城弩" class="warrior" race="辉月狼人" hp="420" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="500" armor_preference="城甲" armor_preference_factor="1.4f" magical_defense="0.f" attacksight="600" size="72" height="0" cost="金子:9" max_level="100" produce="木头:0.36;金子:0.18" reward="金子:0.27f" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="2.8" min_damage="40" max_damage="80" deliver_class="physical" damage_distance="faraway" range="1000" fields="1">
+                <bullet speed="800" size="0"/>
+            </skill>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <unit name="攻城弩_作战" class="warrior" race="辉月狼人" hp="420" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="500" armor_preference="城甲" armor_preference_factor="1.4f" magical_defense="0.f" attacksight="600" size="72" height="0" cost="金子:9" max_level="100" produce="木头:0.36;金子:0.18" reward="金子:0.27f" passive_names="复合弓;远程轻型溅射" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="2.8" min_damage="40" max_damage="80" deliver_class="physical" damage_distance="faraway" range="1000" fields="1">
+                <bullet speed="800" size="0"/>
+            </skill>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <unit name="攻城弩_激流" class="warrior" race="辉月狼人" hp="420" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="500" armor_preference="城甲" armor_preference_factor="1.4f" magical_defense="0.f" attacksight="600" size="72" height="0" cost="金子:9" max_level="100" produce="木头:0.36;金子:0.18" reward="金子:0.27f" passive_names="精密结构" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.4" min_damage="18" max_damage="54" deliver_class="physical" damage_distance="faraway" range="1000" fields="1">
+                <bullet speed="800" size="0"/>
+            </skill>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <unit name="攻城弩_入侵" class="warrior" race="辉月狼人" hp="420" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="500" armor_preference="城甲" armor_preference_factor="3.0f" magical_defense="0.f" attacksight="600" size="72" height="0" cost="金子:9" max_level="100" produce="木头:0.36;金子:0.18" reward="金子:0.27f" passive_names="攻城;投掷技巧" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.8" min_damage="40" max_damage="80" deliver_class="physical" damage_distance="faraway" range="1000" fields="1">
+                <bullet speed="800" size="0"/>
+            </skill>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <!-- 狼人近战英雄 -->
+        <unit name="伊利丹" class="hero" race="辉月狼人" hp="650" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="600" armor_preference="皮甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="30" max_damage="36" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <unit name="伊利丹_作战" class="hero" race="辉月狼人" hp="900" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="800" armor_preference="皮甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" passive_names="身经百战;战斗之血" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="30" max_damage="36" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <unit name="伊利丹_入侵" class="hero" race="辉月狼人" hp="650" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="600" armor_preference="皮甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" spell_names="风暴" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="30" max_damage="36" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <!-- todo 召唤 -->
+        <unit name="伊利丹_掌握" class="hero" race="辉月狼人" hp="650" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="600" armor_preference="皮甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" spell_names="召唤巨像" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="30" max_damage="36" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <!-- todo 光环 -->
+        <!-- 狼人远程英雄 -->
+        <unit name="泰兰德" class="hero" race="辉月狼人" hp="400" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="300" armor_preference="无甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" passive_names="辉月光环" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="40" max_damage="56" deliver_class="physical" damage_distance="faraway" range="750" fields="3">
+                <bullet speed="800" size="0"/>
+            </skill>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <unit name="泰兰德_作战" class="hero" race="辉月狼人" hp="400" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="300" armor_preference="无甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" passive_names="辉月光环;推进光环" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="40" max_damage="56" deliver_class="physical" damage_distance="faraway" range="750" fields="3">
+                <bullet speed="800" size="0"/>
+            </skill>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <unit name="泰兰德_激流" class="hero" race="辉月狼人" hp="400" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="300" armor_preference="无甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" passive_names="辉月光环" spell_names="激流爆发" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="40" max_damage="56" deliver_class="physical" damage_distance="faraway" range="750" fields="3">
+                <bullet speed="800" size="0"/>
+            </skill>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <unit name="泰兰德_精英" class="hero" race="辉月狼人" hp="800" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="700" armor_preference="无甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" passive_names="辉月光环;等级上升_精英;身手敏捷_等级2" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="80" max_damage="100" deliver_class="physical" damage_distance="faraway" range="750" fields="3">
+                <bullet speed="800" size="0"/>
+            </skill>
+            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+        </unit>
+        <unit name="泰兰德_月神" class="hero" race="辉月狼人" hp="400" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="300" armor_preference="无甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" passive_names="辉月光环" spell_names="月神的恩赐" render_key="">
+            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="40" max_damage="56" deliver_class="physical" damage_distance="faraway" range="750" fields="3">
+                <bullet speed="800" size="0"/>
             </skill>
             <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
         </unit>
     </faction>
     <faction name="吸血鬼族">
-        <unit name="吸血鬼基地" class="core" hp="6000" mp="0" hpregen="0" mpregen="0" field="0" armor_type="城甲" armor="0" attacksight="600" size="300" height="0" render_key="吸血鬼核心">
+        <unit name="吸血鬼基地" class="core" hp="600" mp="0" hpregen="0" mpregen="0" field="0" armor_type="城甲" armor="0" attacksight="600" size="300" height="0" render_key="吸血鬼核心">
             <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
             <skill class="die" preperform="0.0" perform="10.0" cd="0.0" occupy="0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="200" max_damage="300" deliver_class="physical" damage_distance="faraway" range="600" fields="3">
-                <bullet speed="1000"  height="0" size="0"/>
+            <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="18" max_damage="22" deliver_class="physical" damage_distance="faraway" range="600" fields="3">
+                <bullet speed="600" size="0"/>
             </skill>
         </unit>
-        <unit name="吸血鬼箭塔" class="building" hp="4000" mp="0" hpregen="0" mpregen="0" field="0" armor_type="城甲" armor="0" attacksight="600" size="100" height="70" render_key="吸血鬼箭塔" reward="金子:100;木头:20">
+        <unit name="吸血鬼箭塔" class="building" hp="200" mp="0" hpregen="0" mpregen="0" field="0" armor_type="城甲" armor="0" attacksight="600" size="100" height="70" render_key="吸血鬼箭塔" reward="金子:100;木头:20">
             <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
             <skill class="die" preperform="0.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.3" perform="0.0" cd="1.0" min_damage="250" max_damage="300" deliver_class="physical" damage_distance="faraway" range="600" fields="3">
-                <bullet speed="1200"  height="0" size="0"/>
+            <skill class="attack" preperform="0.3" perform="0.0" cd="1.0" min_damage="8" max_damage="12" deliver_class="physical" damage_distance="faraway" range="300" fields="3">
+                <bullet speed="800" size="0"/>
             </skill>
-        </unit>
-        <!-- 力量号角 -->
-        <unit name="时光女神" class="hero" hp="550" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="0" magical_defense="0.f" attacksight="600" size="75" height="0" cost="金子:225;木头:750;人口:5" priority="1" max_level="100" spell_names="全体恢复_等级1" render_key="时光女神" produce="木头:22" reward="金子:2">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="28" max_damage="32" deliver_class="physical" damage_distance="faraway" range="400" fields="3">
-                <bullet speed="600"  height="0" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <!-- 战争古树 -->
-        <unit name="吸血鬼战士" class="warrior" hp="640" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="500" armor_preference="轻甲" armor_preference_factor="1.5f" attacksight="600" size="50" height="0" cost="金子:250;人口:2" priority="0" max_level="100" max_quality="5" max_talent="20" spell_names="冲锋_等级1" render_key="吸血鬼战士" produce="木头:25" reward="金子:3">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.4" min_damage="50" max_damage="55" deliver_class="physical" damage_distance="nearby" range="30" fields="1">
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <!-- 虚空守护者 -->
-        <unit name="吸血鬼弓箭手" class="warrior" hp="740" mp="0" hpregen="0" mpregen="0" field="0" armor_type="轻甲" armor="400" armor_preference="重甲" armor_preference_factor="1.5f"  attacksight="600" size="25" height="0" cost="金子:380;人口:2" priority="1" max_level="100" max_quality="5" max_talent="20" render_key="吸血鬼弓兵" produce="木头:38" reward="金子:2">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="2.5" perform="0.0" cd="1.6" min_damage="75" max_damage="85" deliver_class="physical" damage_distance="faraway" range="300" fields="3">
-                <bullet speed="800"  height="0" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <!-- 地狱坦克 -->
-        <unit name="巨型蜘蛛" class="warrior" hp="850" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="400" armor_preference="城甲" armor_preference_factor="1.5f" attacksight="800" size="50" height="0" cost="金子:450;人口:4" priority="0" max_level="100" max_quality="5" max_talent="20" passive_names="刚毅_等级1" render_key="吸血鬼蜘蛛" produce="木头:45" reward="金子:4">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.45" min_damage="70" max_damage="90" deliver_class="physical" damage_distance="faraway" range="400" fields="1">
-                <bullet speed="600"  height="0" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <!-- 堕落之眼 -->
-        <unit name="蛇女莉莉丝" class="hero" hp="550" mp="0" hpregen="0" mpregen="0" field="0" armor_type="轻甲" armor="500" attacksight="500" size="75" height="0" cost="金子:500;木头:1350;人口:5" priority="1" max_level="100" spell_names="强风护盾_等级1" render_key="莉莉丝" produce="木头:50" reward="金子:5">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="55" max_damage="75" deliver_class="physical" damage_distance="faraway" range="300" fields="3">
-                <bullet speed="800"  height="0" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <!-- 毁灭古树 -->
-        <unit name="七恶魔拉玛什图" class="warrior" hp="1800" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="8" attacksight="400" size="70" height="0" cost="金子:750;木头:350;人口:4" priority="1" max_level="100" render_key="七恶魔拉玛什图" produce="木头:75" passive_names="刚毅_等级1" reward="金子:4" armor_preference="轻甲" armor_preference_factor="1.5f">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.3" min_damage="140" max_damage="160" deliver_class="physical" damage_distance="nearby" range="120" fields="1"/>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <!-- 甲壳虫 -->
-        <unit name="甲壳虫" class="warrior" hp="800" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="8" attacksight="400" size="70" height="0" cost="金子:350;木头:350;人口:4" priority="1" max_level="100" render_key="甲壳虫" produce="木头:36" reward="金子:4" armor_preference="轻甲" armor_preference_factor="1.5f">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.3" min_damage="140" max_damage="160" deliver_class="physical" damage_distance="nearby" range="120" fields="1"/>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <!-- boss -->
-        <unit name="时光法师" class="hero" hp="50000" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="0" magical_defense="0.f" attacksight="600" size="75" height="0" cost="金子:225;木头:750;人口:5" priority="1" max_level="100" spell_names="地震_等级1" render_key="时光法师" produce="木头:225" reward="金子:2">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="200" max_damage="300" deliver_class="physical" damage_distance="faraway" range="800" fields="3">
-                <bullet speed="800"  height="0" size="0"/>
-            </skill>
-        </unit>
-        <!-- 恶魔雕像 -->
-        <unit name="吸血鬼巫师" class="warrior" hp="1000" mp="0" hpregen="0" mpregen="0" field="0" armor_type="中甲" armor="400" attacksight="500" size="25" height="0" cost="金子:520;木头:200;人口:2" priority="1" max_level="100" max_quality="5" max_talent="20" passive_names="血雾_等级1" render_key="吸血鬼巫师"  produce="木头:52" reward="金子:2">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.6" min_damage="90" max_damage="115" deliver_class="magical" damage_distance="faraway" range="320" fields="3">
-                <bullet speed="600"  height="0" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
         </unit>
     </faction>
     <!-- ==========资源类别配置========== -->
     <resource name="金子" class="consumable"/>
     <resource name="木头" class="consumable"/>
-    <resource name="人口" class="holdable"/>
     <!-- ==========护甲类别配置&护甲规则配置========== -->
     <armor name="英雄"/>
     <armor name="轻甲"/>
@@ -191,332 +348,506 @@
     <armor name="中甲"/>
     <armor_rule armor_base="1000"/>
     <!-- ==========效果分类配置========== -->
-    <effect_alias name="减移动速度" unique="1"/>
-    <effect_alias name="加移动速度"/>
-    <effect_alias name="减攻击速度" unique="1"/>
-    <effect_alias name="加攻击速度"/>
-    <effect_alias name="减受到伤害" unique="1"/>
-    <effect_alias name="加受到伤害"/>
-    <effect_alias name="加攻击特效"/>
-    <effect_alias name="加攻击力"/>
-    <effect_alias name="恢复效果"/>
-    <effect_alias name="未分类"/>
+    <effect_alias name="增加攻速_可叠加" unique="0"/>
+    <effect_alias name="增加攻击_百分比_可叠加" unique="0"/>
+    <effect_alias name="减少伤害_百分比_不可叠加" unique="1"/>
+    <effect_alias name="增加魔抗_固定值_可叠加" unique="0"/>
+    <effect_alias name="增加护甲_固定值_可叠加" unique="0"/>
+    <effect_alias name="减少护甲_固定值_可叠加" unique="0"/>
+    <effect_alias name="减速_百分比_不可叠加" unique="1"/>
+    <effect_alias name="晕眩效果" unique="0"/>
+    <effect_alias name="定身效果" unique="0"/>
+    <effect_alias name="闪避效果_可叠加" unique="0"/>
+    <effect_alias name="分裂攻击效果_不可叠加" unique="1"/>
     <!-- ==========被动技能配置========== -->
-    <!-- 减速弹 -->
-    <passive alias="减速弹" name="减速弹_等级1" level="1" buff_types="减速弹_等级1_持有者增益效果" desc="被减速弹击中的目标移动速度会降低50%，持续3秒。"/>
-    <!-- 冰霜之心 -->
-    <passive alias="冰霜之心" name="冰霜之心_等级1" level="1" buff_types="冰霜之心_等级1_冰霜之心效果" desc="每次攻击都会使目标攻击速度降低10%，最多叠加5次，持续3秒。"/>
-    <!-- 拥护 -->
-    <passive alias="拥护" name="拥护_等级1" level="1" buff_types="拥护_等级1_拥护效果" desc="15%概率闪避近战攻击，减少其他类型伤害50%。"/>
-    <!-- 冲击波 -->
-    <passive alias="冲击波" name="冲击波_等级1" level="1" buff_types="冲击波_等级1_持有者增益效果" desc="每次攻击都会对目标以及目标周围的敌人造成伤害。"/>
-    <!-- 轰击 -->
-    <passive alias="轰击" name="轰击_等级1" level="1" buff_types="轰击_等级1_持有者增益效果" desc="向目标投掷一个炸弹，炸弹爆炸会对目标造成30点伤害，同时也会伤害目标周围的敌人。"/>
-    <!-- 轰击 -->
-    <passive alias="轰炸" name="轰炸_等级1" level="1" buff_types="轰炸_等级1_持有者增益效果" desc="轰炸目标造成220码溅射。"/>
-    <!-- 血雾 -->
-    <passive alias="血雾" name="血雾_等级1" level="1" buff_types="血雾_等级1_持有者增益效果" desc="向目标区域施放一个血雾，区域内的敌人会受到大量伤害。"/>
-    <!-- 闪电攻击 -->
-    <passive alias="闪电攻击" name="闪电攻击_等级1" level="1" buff_types="闪电攻击_等级1_持有者增益效果" desc="机械公爵的闪电攻击可以伤害到前方的所有敌人。"/>
-    <!-- 刚毅 -->
-    <passive alias="刚毅" name="刚毅_等级1" level="1" buff_types="刚毅_等级1_刚毅效果" desc="每次受到伤害不会超过生命最大值的5%。"/>
-    <!-- 增幅 -->
-    <passive alias="增幅" name="增幅_等级1" level="1" buff_types="增幅_等级1_加攻击力" desc="提升相当于自身护甲值的攻击力。"/>
+    <!-- 等级上升 -->
+    <passive alias="等级上升" name="等级上升" level="1" desc="提升少量基础属性"/>
+    <passive alias="等级上升_精英" name="等级上升_精英" level="1" desc="提升大量基础属性"/>
+    <!-- 说明性 -->
+    <passive alias="重型改造" name="重型改造" level="1" desc="降低移动速度，丧失对空能力"/>
+    <passive alias="精密结构" name="精密结构" level="1" desc="降低伤害但大幅度提升攻速"/>
+    <passive alias="攻城" name="攻城" level="1" desc="大幅度提升对建筑的攻击偏好"/>
+    <passive alias="战斗之血" name="战斗之血" level="1" desc="提升生命值和护甲"/>
+    <!-- 复合弓 -->
+    <passive alias="复合弓" name="复合弓" level="1" desc="提升少量的攻击力和射程">
+        <addon attribute_addons="attack_range:120;attack_damage:9"/>
+    </passive>
+    <!-- 弓手经验 -->
+    <passive alias="弓手经验" name="弓手经验" level="1" desc="减少受到的远程物理伤害">
+        <addon>
+            <feature_group determine_timing="be_hit" conditions="type:damage_distance;target:damage;condition:is:faraway|type:deliver_class;target:damage;condition:is:physical">
+                <feature_item effect_timing="settle_hurt_damage_r1">
+                    <feature type="damage_reduce" render_key="" value="0.2f"/>
+                </feature_item>
+            </feature_group>
+        </addon>
+    </passive>
+    <!-- 激流射术 -->
+    <passive alias="激流射术" name="激流射术" level="1" desc="在攻击时有很低的概率获得激流效果，激流效果可以叠加">
+        <addon>
+            <feature_group determine_timing="attack" probability="0.2">
+                <feature_item effect_timing="attack">
+                    <feature type="add_buff" buff_type_name="激流" overlay="1" is_to_self="1"/>
+                </feature_item>
+            </feature_group>
+        </addon>
+    </passive>
+    <!-- 瞄准要害 -->
+    <passive alias="瞄准要害" name="瞄准要害" level="1" desc="在攻击时有很低的概率造成少量额外伤害">
+        <addon>
+            <feature_group determine_timing="settle_attack_damage_r1" probability="0.2">
+                <feature_item effect_timing="hit">
+                    <feature type="extra_damage" render_key="" value="12.f" deliver_class="physical"/>
+                </feature_item>
+            </feature_group>
+        </addon>
+    </passive>
+    <!-- 致残射击 -->
+    <passive alias="致残射击" name="致残射击" level="1" desc="在攻击时有很低的概率造成大量额外伤害，并使目标短暂晕眩">
+        <addon>
+            <feature_group determine_timing="attack" probability="0.2">
+                <feature_item effect_timing="hit">
+                    <feature type="extra_damage" render_key="" value="81.f" deliver_class="physical"/>
+                </feature_item>
+                <feature_item effect_timing="hit">
+                    <feature type="add_buff" buff_type_name="短暂晕眩_物理" overlay="1" is_to_self="0"/>
+                </feature_item>
+            </feature_group>
+        </addon>
+    </passive>
+    <!-- 恶魔克星 -->
+    <passive alias="恶魔克星" name="恶魔克星" level="1" buff_types="恶魔克星_持有者增益效果_等级1" desc="极大的提升对恶魔的战斗力"/>
+    <!-- 闪避 -->
+    <!-- 身手敏捷 -->
+    <passive alias="身手敏捷" name="身手敏捷_等级1" level="1" desc="有低概率闪避物理攻击">
+        <addon>
+            <feature_group determine_timing="be_attack" probability="0.2f" conditions="type:deliver_class;target:damage;condition:is:physical">
+                    <feature_item effect_timing="be_attack"> 
+                        <feature type="evade"/>
+                    </feature_item>
+                </feature_group>
+        </addon>
+    </passive> 
+    <passive alias="身手敏捷" name="身手敏捷_等级2" level="2" desc="有低概率闪避物理攻击">
+        <addon>
+            <feature_group determine_timing="be_attack" probability="0.3f" conditions="type:deliver_class;target:damage;condition:is:physical">
+                    <feature_item effect_timing="be_attack"> 
+                        <feature type="evade"/>
+                    </feature_item>
+                </feature_group>
+        </addon>
+    </passive> 
+    <!-- 多重箭 -->
+    <passive alias="多重箭" name="多重箭_等级1" level="1" buff_types="多重箭_持有者增益效果_等级1" desc="同时攻击3个目标"/>
+    <passive alias="多重箭" name="多重箭_等级2" level="1" buff_types="多重箭_持有者增益效果_等级2" desc="同时攻击7个目标"/>
+    <!-- 击落 -->
+    <passive alias="击落" name="击落_等级1" level="1" desc="对空中目标攻击力增加200%">
+        <addon>
+            <feature_group determine_timing="attack" conditions="type:field_type;target:opposite;condition:is:air">
+                    <feature_item effect_timing="settle_attack_damage_r1">
+                        <feature type="damage_enhance" value="p:2.0f"/>
+                    </feature_item>
+               </feature_group> 
+        </addon>
+    </passive>
+    <!-- 肉搏术 -->
+    <passive alias="肉搏术" name="肉搏术" level="1" desc="减少受到的近战物理伤害">
+        <addon>
+            <feature_group determine_timing="settle_hurt_damage_r1" conditions="type:deliver_class;target:damage;condition:is:physical|type:damage_distance;target:damage;condition:is:nearby">
+                <feature_item effect_timing="settle_hurt_damage_r1">
+                    <feature type="damage_reduce" value="p:0.2f"/>
+                </feature_item>
+            </feature_group>
+        </addon>
+    </passive>
+    <!-- 投掷技巧 -->
+    <passive alias="投掷技巧" name="投掷技巧" level="1" desc="攻击会弹射附近的目标">
+        <addon>
+            <feature_group determine_timing="attack">
+                <feature_item effect_timing="hit">
+                    <feature type="rebound" value="p:0.8f" range="150" count="4"/>
+                </feature_item>
+            </feature_group>
+        </addon>
+    </passive>
+    <!-- 狩猎 -->
+    <passive alias="狩猎" name="狩猎" level="1" desc="杀死单位后回复少量生命值">
+        <addon>
+            <feature_group determine_timing="kill">
+                <feature_item effect_timing="kill">
+                    <feature type="drain" value="120.f"/>
+                </feature_item>
+            </feature_group>
+        </addon>
+    </passive>
+    <!-- 还击 -->
+    <passive alias="狩猎" name="狩猎" level="1" desc="对近战物理攻击做出还击">
+        <addon>
+            <feature_group determine_timing="be_hurt">
+                <feature_item effect_timing="be_hurt">
+                    <feature type="reflect" value="15.f"/>
+                </feature_item>
+            </feature_group>
+        </addon>
+    </passive>
+    <!-- 抗魔学识 -->
+    <passive alias="抗魔学识" name="抗魔学识" level="1" desc="对魔法伤害有极强的抵抗力">
+        <addon attribute_addons="magical_defense:3000"/>
+    </passive>
+    <!-- 流星打击 -->
+    <passive alias="流星打击" name="流星打击" level="1" desc="攻击附加少量的魔法伤害">
+        <addon>
+            <feature_group determine_timing="attack">
+                <feature_item effect_timing="hit">
+                    <feature type="extra_damage" value="30" deliver_class="magical"/>
+                </feature_item>
+            </feature_group>
+        </addon>
+    </passive>
+    <!-- 淬毒标枪 -->
+    <passive alias="淬毒标枪" name="淬毒标枪" level="1" desc="攻击会让目标中毒">
+        <addon>
+            <feature_group determine_timing="attack">
+                <feature_item effect_timing="hit">
+                    <feature type="add_buff" buff_type_name="毒药_减速" overlay="1" is_to_self="0"/>
+                </feature_item>
+            </feature_group>
+        </addon>
+    </passive>
+    <!-- 焚烧 -->
+    <passive alias="焚烧" name="焚烧" level="1" desc="增加对建筑的伤害">
+        <addon>
+            <feature_group determine_timing="attack" conditions="type:unit_class;target:opposite;condition:is:building">
+                <feature_item effect_timing="settle_attack_damage_r1">
+                    <feature type="damage_enhance" value="p:0.3f"/>
+                </feature_item>
+            </feature_group>
+        </addon>
+    </passive>
+    <!-- 溅射 -->
+    <!-- 空中重型溅射 -->
+    <passive alias="空中重型溅射" name="空中重型溅射" level="1" desc="溅射周围目标">
+        <addon>
+            <feature_group determine_timing="attack">
+                <feature_item effect_timing="hit">
+                    <feature type="splash" value="0.5f" range="180"/>
+                </feature_item>
+            </feature_group>
+        </addon>
+    </passive>
+    <!-- 远程轻型溅射 -->
+    <passive alias="远程轻型溅射" name="空中重型溅射" level="1" desc="溅射周围目标">
+        <addon>
+            <feature_group determine_timing="attack">
+                <feature_item effect_timing="hit">
+                    <feature type="splash" value="0.2f" range="100"/>
+                </feature_item>
+            </feature_group>
+        </addon>
+    </passive>
+    <!-- 减伤 -->
+    <passive alias="身经百战" name="身经百战" buff_types="身经百战_持有者增益效果_等级1" level="1" desc="减少受到的物理伤害"/>
     <!-- ==========主动技能配置========== -->
-    <!-- 激励 -->
-    <spell alias="激励" spell_name="激励_等级1" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="0" cast_type="self" immediate_elements="0,激励_等级1_激励施法效果,1" preperform="0.5" perform="0.0" cd="60.0" class="cast" desc="提升周围500码内友军的攻击速度30%。"/>
-    <!-- 战鼓 -->
-    <spell alias="战鼓" spell_name="战鼓_等级1" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="0" cast_type="self" immediate_elements="0,战鼓_等级1_战鼓效果,1" preperform="0.5" perform="0.0" cd="20.0" class="cast" desc="提升所有友军的攻击力33%。"/>
-    <!-- 时空扭曲 -->
-    <spell alias="时空扭曲" spell_name="时空扭曲_等级1" level="1" deliver_class="magical" deliver_nature="enemy" cast_distance="0" cast_type="self" immediate_elements="0,时空扭曲_等级1_时空扭曲效果,1" preperform="0.5" perform="0.0" cd="10.0" class="cast" desc="降低所有敌人的移动速度"/>
-    <!-- 治疗 -->
-    <spell alias="治疗" spell_name="治疗_等级1" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="0" cast_type="unit" immediate_elements="0,治疗_等级1_治疗效果,1" preperform="0.5" perform="0.0" cd="5.0" class="cast" desc="治疗一个受伤的友军，每秒恢复10点生命值。"/>
-    <!-- 狂暴 -->
-    <spell alias="狂暴" spell_name="狂暴_等级1" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="0" cast_type="self" immediate_elements="0,狂暴_等级1_狂暴效果,1" preperform="0.5" perform="0.0" cd="10.0" class="cast" desc="攻击敌人时会狂暴，损失10%最大生命值，攻击速度提升30%，持续10秒。"/>
-    <!-- 全体恢复 -->
-    <spell alias="全体恢复" spell_name="全体恢复_等级1" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="0" cast_type="self" immediate_elements="0,全体恢复_等级1_恢复效果,1" preperform="0.5" perform="0.0" cd="120.0" class="cast" desc="施放一片大范围的治疗，恢复所有区域内的友军50点生命。"/>
-    <!-- 冲锋 -->
-    <spell alias="冲锋" spell_name="冲锋_等级1" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="0" cast_type="self" immediate_elements="0,冲锋_等级1_加移动速度,1" preperform="0.0" perform="0.0" cd="20.0" class="cast" desc="当视野内有出现敌人时，会提升120%移动速度，持续1秒。"/>
-    <!-- 王者祝福 -->
-    <spell alias="王者祝福" spell_name="王者祝福_等级1" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="0" cast_type="self" immediate_elements="0,王者祝福_等级1_王者祝福效果,1" preperform="0.0" perform="0.0" cd="20.0" class="cast" desc="增加周围友军700点护甲。"/>
-    <!-- 强风护盾 -->
-    <spell alias="强风护盾" spell_name="强风护盾_等级1" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="0" cast_type="self" immediate_elements="0,强风护盾_等级1_强风护盾效果,1" preperform="0.5" perform="0.0" cd="120.0" class="cast" desc="周围的友军会获得一个护盾，护盾持续期间收到的所有伤害减少10点。持续15秒"/>
-    <!-- 吸血 -->
-    <spell alias="吸血" spell_name="吸血_等级1" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="0" cast_type="self" immediate_elements="0,吸血_等级1_吸血效果,1" preperform="0.5" perform="0.0" cd="10.0" class="cast" desc="周围的友军会获得一个吸血效果。持续15秒"/>
-    <!-- 荆棘光环 -->
-    <spell alias="荆棘" spell_name="荆棘_等级1" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="500" cast_type="self" immediate_elements="0,荆棘_等级1_荆棘效果,1" preperform="0.5" perform="0.0" cd="10.0" class="cast" desc="周围的友军会获得一个荆棘效果，反弹50%受到的伤害。持续15秒"/>
-    <!-- 火球术 -->
-    <spell alias="火球术" spell_name="火球术_等级1" level="1" deliver_class="magical" deliver_nature="enemy" cast_distance="1200" cast_type="position" immediate_elements="0,火球术_等级1_火球术效果,1" preperform="0.5" perform="0.0" cd="60.0" class="cast" desc="向目标区域施放一个火球，对区域内的所有敌方单位造成50点伤害。"/>
-    <!-- 自爆 -->
-    <spell alias="自爆" spell_name="自爆_等级1" level="1" deliver_class="magical" deliver_nature="enemy" cast_distance="0" cast_type="self" immediate_elements="0,自爆_等级1_自爆效果,1" preperform="0.5" perform="0.0" cd="60.0" class="cast" desc="死亡后自爆，对周围的所有敌方单位造成50点伤害。"/>
-    <!-- 暗影烈焰 -->
-    <spell alias="暗影烈焰" spell_name="暗影烈焰_等级1" level="1" deliver_class="magical" deliver_nature="enemy" cast_distance="300" cast_type="unit" immediate_elements="0,暗影烈焰_等级1_暗影烈焰效果,1" preperform="0.5" perform="0.0" cd="12.0" class="cast" desc="向目标区域施放一个火球，对区域内的所有敌方单位造成50点伤害。"/>
-    <!-- 地震 -->
-    <spell alias="地震" spell_name="地震_等级1" shake_screen="1" level="1" deliver_class="magical" deliver_nature="enemy" cast_distance="0" cast_type="self" immediate_elements="0,地震_等级1_地震效果,1" preperform="0.5" perform="0.0" cd="5.0" class="cast" desc="每5秒引发一次地震，对全体敌人造成100点伤害。"/>
+    <!-- 基础治疗术 -->
+    <spell alias="基础治疗术" spell_name="基础治疗术" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="750" cast_type="unit" immediate_elements="0,基础治疗术_基础治疗术施法效果,1" preperform="0.5" perform="0.0" cd="10.0" class="cast" desc="按照自身生命值上限的比例对目标进行治疗"/>
+    <!-- 顺风之力 -->
+    <spell alias="顺风之力" spell_name="顺风之力" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="750" cast_type="unit_but_self" immediate_elements="0,顺风之力_顺风之力施法效果,1" preperform="0.5" perform="0.0" cd="30.0" class="cast" desc="增加其他友军攻击速度，并获得一层激流效果"/>
+    <!-- 枷锁 -->
+    <spell alias="枷锁" spell_name="枷锁" level="1" deliver_class="magical" deliver_nature="enemy" cast_distance="750" cast_type="unit" immediate_elements="0,枷锁_枷锁施法效果,1" preperform="0.5" perform="0.0" cd="12.0" class="cast" desc="使目标6秒内不能移动"/>
+    <!-- 月神能量 -->
+    <spell alias="月神能量" spell_name="月神能量" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="750" cast_type="unit" immediate_elements="0,月神能量_月神能量施法效果,1" preperform="0.5" perform="0.0" cd="30.0" class="cast" desc="持续恢复目标生命值"/>
+    <!-- 辉月印记 -->
+    <spell alias="辉月印记" spell_name="辉月印记_等级1" level="1" deliver_class="magical" deliver_nature="enemy" cast_distance="750" cast_type="unit" immediate_elements="0,辉月印记_辉月印记施法效果_等级1,1" preperform="0.5" perform="0.0" cd="12.0" class="cast" desc="虚弱目标中量护甲"/>
+    <spell alias="辉月印记" spell_name="辉月印记_等级2" level="2" deliver_class="magical" deliver_nature="enemy" cast_distance="750" cast_type="unit" immediate_elements="0,辉月印记_辉月印记施法效果_等级2,1" preperform="0.5" perform="0.0" cd="12.0" class="cast" desc="虚弱目标大量护甲"/>
+    <!-- 流星术 -->
+    <spell alias="流星术" spell_name="流星术" level="1" deliver_class="magical" deliver_nature="enemy" cast_distance="750" cast_type="unit" immediate_elements="0,流星术_流星术施法效果,1" preperform="0.5" perform="0.0" cd="8.0" class="cast" desc="对目标造成少量魔法伤害"/>
+    <!-- 荒野祈福 -->
+    <spell alias="荒野祈福" spell_name="荒野祈福" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="750" cast_type="unit_but_self" immediate_elements="0,荒野祈福_荒野祈福施法效果,1" preperform="0.5" perform="0.0" cd="45.0" class="cast" desc="对目标造成少量魔法伤害"/>
+    <!-- 激流之涌 -->
+    <spell alias="激流之涌" spell_name="激流之涌" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="0" cast_type="self" immediate_elements="0,激流之涌_激流之涌施法效果,1" preperform="0.5" perform="0.0" cd="20.0" class="cast" desc="为周围目标提供激流效果"/>
+    <!-- 风暴 -->
+    <spell alias="风暴" spell_name="风暴" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="0" cast_type="self" immediate_elements="0,风暴_风暴施法效果,1" preperform="0.5" perform="0.0" cd="30.0" class="cast" desc="对周围造成少量伤害"/>
+    <!-- 激流爆发 -->
+    <spell alias="激流爆发" spell_name="激流爆发" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="0" cast_type="self" immediate_elements="0,激流爆发_激流爆发施法效果,1" preperform="0.5" perform="0.0" cd="120.0" class="cast" desc="全场辉月族单位攻击速度大幅度提升"/>
+    <!-- 月神的恩赐 -->
+    <spell alias="月神的恩赐" spell_name="月神的恩赐" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="0" cast_type="self" immediate_elements="0,月神的恩赐_月神的恩赐施法效果,1" preperform="0.5" perform="0.0" cd="15.0" class="cast" desc="回复小范围内单位的生命值"/>
     <!-- ==========主动技能原子配置========== -->
-    <!-- 激励 -->
-    <spell_pattern name="激励_等级1_激励施法效果" class="damage_all" deliver_nature="ally">
-        <damage damage_value="0" damage_nature="heal">
-            <feature type="add_buff" buff_type_name="激励_等级1_攻速增益效果" overlay="1"/>
-        </damage>
+    <!-- 基础治疗术 -->
+    <spell_pattern name="基础治疗术_基础治疗术施法效果" class="target">
+        <spell_content name="基础治疗术_基础治疗术施法效果_内容" spell_content_class="damage">
+            <damage damage_value="d:target:owner;type:max_hp;v:0.25f;template:0.f" damage_nature="heal" deliver_class="magical"/>
+        </spell_content>
     </spell_pattern>
-    <!-- 战鼓 -->
-    <spell_pattern name="战鼓_等级1_战鼓效果" class="damage_all" deliver_nature="ally">
-        <damage damage_value="0" damage_nature="heal">
-            <feature type="add_buff" buff_type_name="战鼓_等级1_战鼓效果" overlay="1"/>
-        </damage>
+    <!-- 顺风之力 -->
+    <spell_pattern name="顺风之力_顺风之力施法效果" class="target">
+        <spell_content name="顺风之力_顺风之力施法效果_内容" spell_content_class="damage">
+            <damage damage_nature="heal" deliver_class="magical" damage_value="0.f">
+                <feature_group determine_timing="attack">
+                    <feature_item effect_timing="heal">
+                        <feature type="add_buff" buff_type_name="顺风之力_攻速提高增益效果_等级1" overlay="1" is_to_self="0"/>
+                    </feature_item>
+                    <feature_item effect_timing="heal">
+                        <feature type="add_buff" buff_type_name="激流" overlay="1" is_to_self="0"/>
+                    </feature_item>
+                </feature_group>
+            </damage>
+        </spell_content>
     </spell_pattern>
-    <!-- 时空扭曲 -->
-    <spell_pattern name="时空扭曲_等级1_时空扭曲效果" class="damage_all" deliver_nature="enemy">
-        <damage damage_value="0" damage_nature="heal">
-            <feature type="add_buff" buff_type_name="减速弹_等级1_减速减益效果" overlay="1"/>
-        </damage>
+    <!-- 枷锁 -->
+    <spell_pattern name="枷锁_枷锁施法效果" class="target">
+        <spell_content name="枷锁_枷锁施法效果_内容" spell_content_class="damage">
+            <damage damage_nature="hurt" deliver_class="magical" damage_value="0.f">
+                <feature_group determine_timing="attack">
+                    <feature_item effect_timing="hit">
+                        <feature type="add_buff" buff_type_name="中等定身效果_法术" overlay="1" is_to_self="0"/>
+                    </feature_item>
+                </feature_group>
+            </damage>
+        </spell_content>
     </spell_pattern>
-    <!-- 治疗 -->
-    <spell_pattern name="治疗_等级1_治疗效果" class="damage_target" deliver_nature="ally">
-        <damage damage_value="100" damage_nature="heal"/>
+    <!-- 月神能量 -->
+    <spell_pattern name="月神能量_月神能量施法效果" class="target">
+        <spell_content name="月神能量_月神能量施法效果_内容" spell_content_class="damage">
+            <damage damage_nature="heal" deliver_class="magical" damage_value="0.f">
+                <feature_group determine_timing="attack">
+                    <feature_item effect_timing="heal">
+                        <feature type="add_buff" buff_type_name="回春" overlay="1" is_to_self="0"/>
+                    </feature_item>
+                </feature_group>
+            </damage>
+        </spell_content>
     </spell_pattern>
-    <!-- 全体恢复 -->
-    <spell_pattern name="全体恢复_等级1_恢复效果" class="damage_all" deliver_nature="ally">
-        <damage damage_value="0" damage_nature="heal">
-            <feature type="add_buff" buff_type_name="全体恢复_等级1_恢复效果" overlay="1"/>
-        </damage>
+    <!-- 辉月印记 -->
+    <spell_pattern name="辉月印记_辉月印记施法效果_等级1" class="target">
+        <spell_content name="辉月印记_辉月印记施法效果_等级1_内容" spell_content_class="damage">
+            <damage damage_nature="hurt" deliver_class="magical" damage_value="0.f">
+                <feature_group determine_timing="attack">
+                    <feature_item effect_timing="hit">
+                        <feature type="add_buff" buff_type_name="辉月印记_减少护甲减益效果_等级1" overlay="1" is_to_self="0"/>
+                    </feature_item>
+                </feature_group>
+            </damage>
+        </spell_content>
     </spell_pattern>
-    <!-- 狂暴 -->
-    <spell_pattern name="狂暴_等级1_狂暴效果" class="damage_target" deliver_nature="ally">
-        <damage damage_value="d:target:owner;type:max_hp;v:0.1f;0" damage_nature="hurt">
-            <feature type="add_buff" buff_type_name="狂暴_等级1_攻速增益效果" overlay="1"/>
-        </damage>
+    <spell_pattern name="辉月印记_辉月印记施法效果_等级2" class="target">
+        <spell_content name="辉月印记_辉月印记施法效果_等级2_内容" spell_content_class="damage">
+            <damage damage_nature="hurt" deliver_class="magical" damage_value="0.f">
+                <feature_group determine_timing="attack">
+                    <feature_item effect_timing="hit">
+                        <feature type="add_buff" buff_type_name="辉月印记_减少护甲减益效果_等级2" overlay="1" is_to_self="0"/>
+                    </feature_item>
+                </feature_group>
+            </damage>
+        </spell_content>
     </spell_pattern>
-    <!-- 冲锋 -->
-    <spell_pattern name="冲锋_等级1_加移动速度" class="damage_target" deliver_nature="ally">
-        <damage damage_value="0" damage_nature="heal">
-            <feature type="add_buff" buff_type_name="冲锋_等级1_加移动速度" overlay="1"/>
-        </damage>
+    <!-- 流星术 -->
+    <spell_pattern name="流星术_流星术施法效果" class="target">
+        <spell_content name="流星术_流星术施法效果_内容" spell_content_class="damage">
+            <damage damage_nature="hurt" deliver_class="magical" damage_value="120.f"/>
+        </spell_content>
     </spell_pattern>
-    <!-- 强风护盾 -->
-    <spell_pattern name="强风护盾_等级1_强风护盾效果" class="damage_all" deliver_nature="ally">
-        <damage damage_value="0" damage_nature="heal">
-            <feature type="add_buff" buff_type_name="强风护盾_等级1_伤害减少" overlay="1"/>
-        </damage>
+    <!-- 荒野祈福 -->
+    <spell_pattern name="荒野祈福_荒野祈福施法效果" class="target">
+        <spell_content name="荒野祈福_荒野祈福施法效果_内容" spell_content_class="damage">
+            <damage damage_nature="heal" deliver_class="magical" damage_value="0.f">
+                <feature_group determine_timing="attack">
+                    <feature_item effect_timing="heal">
+                        <feature type="add_buff" buff_type_name="荒野祈福_增益效果" overlay="1" is_to_self="0"/>
+                    </feature_item>
+                </feature_group>
+            </damage>
+        </spell_content>
     </spell_pattern>
-    <!-- 吸血 -->
-    <spell_pattern name="吸血_等级1_吸血效果" class="damage_all" deliver_nature="ally">
-        <damage damage_value="0" damage_nature="heal">
-            <feature type="add_buff" buff_type_name="吸血_等级1_吸血效果" overlay="1"/>
-        </damage>
+    <!-- 激流之涌 -->
+    <spell_pattern name="激流之涌_激流之涌施法效果" class="target_position_circle" radius="240.0f" deliver_nature="ally">
+        <spell_content name="激流之涌_激流之涌施法效果_内容" spell_content_class="damage">
+            <damage damage_nature="heal" deliver_class="magical" damage_value="0.f">
+                <feature_group determine_timing="attack">
+                    <feature_item effect_timing="heal">
+                        <feature type="add_buff" buff_type_name="激流" overlay="1" is_to_self="0"/>
+                    </feature_item>
+                </feature_group>
+            </damage>
+        </spell_content>
     </spell_pattern>
-    <!-- 荆棘光环 -->
-    <spell_pattern name="荆棘_等级1_荆棘效果" class="damage_all" deliver_nature="ally">
-        <damage damage_value="0" damage_nature="heal">
-            <feature type="add_buff" buff_type_name="荆棘_等级1_荆棘效果" overlay="1"/>
-        </damage>
+    <!-- 风暴 -->
+    <spell_pattern name="风暴_风暴施法效果" class="target_position_circle" radius="240.0f" deliver_nature="enemy">
+        <spell_content name="风暴_风暴施法效果_内容" spell_content_class="damage">
+            <damage damage_nature="hurt" deliver_class="magical" damage_value="180.f"/>
+        </spell_content>
     </spell_pattern>
-    <!-- 王者祝福 -->
-    <spell_pattern name="王者祝福_等级1_王者祝福效果" class="damage_target_position_circle" radius="600" deliver_nature="ally">
-        <damage damage_value="0" damage_nature="heal">
-            <feature type="add_buff" buff_type_name="王者祝福_等级1_王者祝福效果" overlay="1"/>
-        </damage>
+    <!-- 激流爆发 -->
+    <spell_pattern name="激流爆发_激流爆发施法效果" class="all" deliver_nature="ally" conditions="type:unit_race;target:opposite;condition:is:辉月狼人,暗月狼人">
+        <spell_content name="激流爆发_激流爆发施法效果_内容" spell_content_class="damage">
+            <damage damage_nature="heal" deliver_class="magical" damage_value="0.f">
+                <feature_group determine_timing="attack">
+                    <feature_item effect_timing="heal">
+                        <feature type="add_buff" buff_type_name="激流爆发_增益效果" overlay="1" is_to_self="0"/>
+                    </feature_item>
+                </feature_group>
+            </damage>
+        </spell_content>
     </spell_pattern>
-    <!-- 火球术 -->
-    <spell_pattern name="火球术_等级1_火球术效果" class="damage_target_position_circle" radius="300" deliver_nature="enemy">
-        <damage damage_value="1400" damage_nature="hurt"/>
-    </spell_pattern>
-    <!-- 地震 -->
-    <spell_pattern name="地震_等级1_地震效果" class="damage_target_position_circle" radius="600" deliver_nature="enemy">
-        <damage damage_value="100" damage_nature="hurt"/>
-    </spell_pattern>
-    <!-- 自爆 -->
-    <spell_pattern name="自爆_等级1_自爆效果" class="damage_target_position_circle" radius="300" deliver_nature="enemy">
-        <damage damage_value="200" damage_nature="hurt"/>
-    </spell_pattern>
-    <!-- 暗影烈焰 -->
-    <spell_pattern name="暗影烈焰_等级1_暗影烈焰效果" class="damage_target" deliver_nature="enemy">
-        <damage damage_value="270" damage_nature="hurt"/>
+    <!-- 月神的恩赐 -->
+    <spell_pattern name="月神的恩赐_月神的恩赐施法效果" class="target_position_circle" radius="150.0f" deliver_nature="ally">
+        <spell_content name="月神的恩赐_月神的恩赐施法效果_内容" spell_content_class="damage">
+            <damage damage_nature="heal" deliver_class="magical" damage_value="150.f">
+                <feature_group determine_timing="attack">
+                    <feature_item effect_timing="heal">
+                        <feature type="add_buff" buff_type_name="月神的恩赐_增益效果" overlay="1" is_to_self="0"/>
+                    </feature_item>
+                </feature_group>
+            </damage>
+        </spell_content>
     </spell_pattern>
     <!-- ==========增益减益效果配置========== -->
-    <!-- 激励 -->
-    <buff name="激励_等级1_攻速增益效果" deliver_nature="ally" deliver_class="magical" span_type="limited" span="15.f" max_overlay="1" render_key="激励">
+    <!-- 激流 -->
+    <buff alias="激流" name="激流" level="1" deliver_nature="ally" deliver_class="magical" span_type="eternal" max_overlay="20" render_key="" unique_on_unit="1" dispelable="1">
         <buff_effect>
-            <buff_effect_description buff_effect_condition="immediate"/>
-            <effect class="alter_attr" alias_name="加攻击速度" attr_name="attack_speed" value="p:0.66f"/>
+            <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
+            <effect class="alter_attr" alias_name="增加攻速_可叠加" attr_name="attack_speed" value="0.1f" ref_value="0.1f"/>
         </buff_effect>
-    </buff>
-    <!-- 战鼓 -->
-    <buff name="战鼓_等级1_战鼓效果" deliver_nature="ally" deliver_class="magical" span_type="limited" span="20.f" max_overlay="1" render_key="激励">
         <buff_effect>
-            <buff_effect_description buff_effect_condition="immediate"/>
-            <effect class="alter_attr" alias_name="加攻击力" attr_name="attack_damage" value="p:0.33f"/>
-        </buff_effect>
-    </buff>
-    <!-- 减速弹 -->
-    <buff name="减速弹_等级1_持有者增益效果" deliver_nature="ally" deliver_class="physical" span_type="eternal">
-        <buff_effect>
-            <buff_effect_description buff_effect_condition="immediate"/>
-            <effect class="add_feature" alias_name="加攻击特效">
-                <feature type="add_buff" buff_type_name="减速弹_等级1_减速减益效果" overlay="1"/>
+            <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
+            <effect class="add_feature" alias_name="增加攻击_百分比_可叠加" ref_value="0.1f">
+                <feature_group determine_timing="settle_attack_damage_r1">
+                    <feature_item effect_timing="settle_attack_damage_r1">
+                        <feature type="damage_enhance" value="d:target:owner;type:attack_speed;v:1.0f;template:p:0.f"/>
+                    </feature_item>
+                </feature_group>
             </effect>
         </buff_effect>
     </buff>
-    <buff name="减速弹_等级1_减速减益效果" deliver_nature="enemy" deliver_class="physical" span_type="limited" span="5.f" max_overlay="1" render_key="减速弹" animation="1.0_1.0_1.0_1.0_1.0;1.0_0.8_1.0_1.0_1.0_1.0">
+    <!-- 激流爆发 -->
+    <buff alias="激流爆发_增益效果" name="激流爆发_增益效果" level="1" deliver_nature="ally" deliver_class="magical" span_type="limited" span="10.f" max_overlay="1" render_key="" unique_on_unit="1" dispelable="1">
         <buff_effect>
-            <buff_effect_description buff_effect_condition="immediate"/>
-            <effect class="alter_attr" alias_name="减移动速度" attr_name="move_speed" value="p:-0.4f"/>
+            <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
+            <effect class="alter_attr" alias_name="增加攻速_可叠加" attr_name="attack_speed" value="3.0f" ref_value="3.0f"/>
         </buff_effect>
     </buff>
-    <!-- 冰霜之心 -->
-    <buff name="冰霜之心_等级1_冰霜之心效果" deliver_nature="ally" deliver_class="physical" span_type="eternal">
+    <!-- 晕眩效果 -->
+    <!-- 短暂物理晕眩 -->
+    <buff alias="短暂晕眩_物理" name="短暂晕眩_物理" level="1" deliver_nature="enemy" deliver_class="physical" span_type="limited" span="0.5f" max_overlay="1" render_key="" unique_on_unit="0" dispelable="0">
         <buff_effect>
-            <buff_effect_description buff_effect_condition="immediate"/>
-            <effect class="add_feature" alias_name="加攻击特效">
-                <feature type="add_buff" buff_type_name="冰霜之心_等级1_减攻击速度效果" overlay="1"/>
+            <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
+            <effect class="set_state" alias="晕眩效果" set_state="stun" ref_value="0.5f"/>
+        </buff_effect>
+    </buff>
+    <!-- 定身效果 -->
+    <!-- 中等定身效果_法术 -->
+    <buff alias="中等定身效果_法术" name="中等定身效果_法术" level="1" deliver_nature="enemy" deliver_class="magical" span_type="limited" span="6.0f" max_overlay="1" render_key="" unique_on_unit="0" dispelable="1">
+        <buff_effect>
+            <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
+            <effect class="set_state" alias="定身效果" set_state="unmoveable" ref_value="6.f"/>
+        </buff_effect>
+    </buff>
+    <!-- hot效果 -->
+    <!-- 回春 -->
+    <buff alias="回春" name="回春" level="1" deliver_nature="ally" deliver_class="magical" span_type="limited" span="15.0f" max_overlay="1" render_key="" unique_on_unit="0" dispelable="1">
+        <buff_effect>
+            <buff_effect_description buff_effect_condition="loop" buff_effect_time="1.0f" is_damage="1"/>
+            <damage damage_value="60.f" damage_nature="heal" deliver_class="magical"/>
+        </buff_effect>
+    </buff>
+    <!-- 减甲效果 -->
+    <!-- 辉月印记 -->
+    <buff alias="辉月印记_减少护甲减益效果" name="辉月印记_减少护甲减益效果_等级1" level="1" deliver_nature="enemy" deliver_class="magical" span_type="limited" span="24.0f" max_overlay="1" render_key="" unique_on_unit="1" dispelable="1">
+        <buff_effect>
+            <buff_effect_description buff_effect_condition="loop" buff_effect_time="1.0f" is_damage="1"/>
+            <effect class="alter_attr" alias="减少护甲_固定值_可叠加" attr_name="armor" value="-400.f" ref_value="400.f"/>
+        </buff_effect>
+    </buff>
+    <buff alias="辉月印记_减少护甲减益效果" name="辉月印记_减少护甲减益效果_等级2" level="2" deliver_nature="enemy" deliver_class="magical" span_type="limited" span="24.0f" max_overlay="1" render_key="" unique_on_unit="1" dispelable="1">
+        <buff_effect>
+            <buff_effect_description buff_effect_condition="loop" buff_effect_time="1.0f" is_damage="1"/>
+            <effect class="alter_attr" alias="减少护甲_固定值_可叠加" attr_name="armor" value="-800.f" ref_value="800.f"/>
+        </buff_effect>
+    </buff>
+    <!-- dot效果 -->
+    <buff alias="毒药_减速" name="毒药_减速" level="1" deliver_nature="enemy" deliver_class="physical" span_type="limited" span="9.0f" max_overlay="1" render_key="" unique_on_unit="0" dispelable="1">
+        <buff_effect>
+            <buff_effect_description buff_effect_condition="loop" buff_effect_time="1.0f" is_damage="1"/>
+            <damage damage_value="18.f" damage_nature="hurt" deliver_class="physical"/>
+        </buff_effect>
+        <buff_effect>
+            <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
+            <effect class="alter_attr" alias="减速_百分比_不可叠加" attr_name="move_speed" value="p:-0.4f" ref_value="0.4f"/>
+        </buff_effect>
+    </buff>
+    <!-- 减伤效果 -->
+    <buff alias="身经百战_持有者增益效果" name="身经百战_持有者增益效果_等级1" level="1" deliver_nature="ally" deliver_class="physical" span_type="eternal" max_overlay="1" render_key="" unique_on_unit="1" dispelable="0">
+        <buff_effect>
+            <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
+            <effect class="add_feature" alias="减少伤害_百分比_不可叠加" ref_value="0.4f">
+                <feature_group determine_timing="settle_hurt_damage_r1" conditions="type:deliver_class;target:damage;condition:is:physical">
+                    <feature_item effect_timing="settle_hurt_damage_r1">
+                        <feature type="damage_reduce" value="p:0.4f"/>
+                    </feature_item>
+                </feature_group>
             </effect>
         </buff_effect>
     </buff>
-    <buff name="冰霜之心_等级1_减攻击速度效果" deliver_nature="enemy" deliver_class="physical" span_type="limited" span="5.f" max_overlay="5" render_key="减攻击速度">
+    <!-- 恶魔克星 -->
+    <buff alias="恶魔克星_持有者增益效果" name="恶魔克星_持有者增益效果_等级1" level="1" deliver_nature="ally" deliver_class="physical" span_type="eternal" max_overlay="1" render_key="" unique_on_unit="1" dispelable="0">
         <buff_effect>
-            <buff_effect_description buff_effect_condition="immediate"/>
-            <effect class="alter_attr" alias_name="减攻击速度" attr_name="attack_speed" value="p:-0.1f"/>
-        </buff_effect>
-    </buff>
-    <!-- 冲击波 -->
-    <buff name="冲击波_等级1_持有者增益效果" deliver_nature="ally" deliver_class="physical" span_type="eternal">
-        <buff_effect>
-            <buff_effect_description buff_effect_condition="immediate"/>
-            <effect class="add_feature" alias_name="未分类">
-                <feature type="splash" value="p:0.3f" range="40" render_key="冲击波"/>
+            <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
+            <effect class="add_feature" alias="增加攻击_百分比_可叠加" ref_value="1.0f">
+                <feature_group determine_timing="settle_attack_damage_r1" conditions="type:unit_race;target:opposite;condition:is:恶魔">
+                    <feature_item effect_timing="settle_attack_damage_r1">
+                        <feature type="damage_enhance" value="p:1.0f"/>
+                    </feature_item>
+                </feature_group>
+            </effect>
+            <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
+            <effect class="add_feature" alias="减少伤害_百分比_不可叠加" ref_value="0.5f">
+                <feature_group determine_timing="settle_hurt_damage_r1" conditions="type:unit_race;target:opposite;condition:is:恶魔">
+                    <feature_item effect_timing="settle_hurt_damage_r1">
+                        <feature type="damage_reduce" value="p:0.5f"/>
+                    </feature_item>
+                </feature_group>
             </effect>
         </buff_effect>
     </buff>
-    <!-- 轰击 -->
-    <buff name="轰击_等级1_持有者增益效果" deliver_nature="ally" deliver_class="physical" span_type="eternal">
+    <!-- 多重箭 -->
+    <buff alias="多重箭_持有者增益效果" name="多重箭_持有者增益效果_等级1" level="1" deliver_nature="ally" deliver_class="physical" span_type="eternal" max_overlay="1" render_key="" unique_on_unit="1" dispelable="0">
         <buff_effect>
-            <buff_effect_description buff_effect_condition="immediate"/>
-            <effect class="add_feature" alias_name="未分类">
-                <feature type="splash" value="p:0.3f" range="180" />
-                <feature type="out_damage_enhance" value="p:2.f" probability="0.15f"/>
+            <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
+            <effect class="add_feature" alias="分裂攻击效果_不可叠加" ref_value="3.0f">
+                <!-- TODO 分裂攻击feature -->
             </effect>
         </buff_effect>
     </buff>
-    <!-- 轰炸 -->
-    <buff name="轰炸_等级1_持有者增益效果" deliver_nature="ally" deliver_class="physical" span_type="eternal">
+    <buff alias="多重箭_持有者增益效果" name="多重箭_持有者增益效果_等级2" level="1" deliver_nature="ally" deliver_class="physical" span_type="eternal" max_overlay="1" render_key="" unique_on_unit="1" dispelable="0">
         <buff_effect>
-            <buff_effect_description buff_effect_condition="immediate"/>
-            <effect class="add_feature" alias_name="未分类">
-                <feature type="splash" value="p:0.5f" range="220" />
+            <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
+            <effect class="add_feature" alias="分裂攻击效果_不可叠加" ref_value="7.0f">
+                <!-- TODO 分裂攻击feature -->
             </effect>
         </buff_effect>
     </buff>
-    <!-- 狂暴 -->
-    <buff name="狂暴_等级1_攻速增益效果" deliver_nature="ally" deliver_class="magical" span_type="limited" span="15.f" max_overlay="1"  render_key="狂暴">
+    <!-- 顺风之力 -->
+    <buff alias="顺风之力_攻速提高增益效果" name="顺风之力_攻速提高增益效果_等级1" level="1" deliver_nature="ally" deliver_class="magical" span_type="limited" span="6.0f" max_overlay="1" render_key="" unique_on_unit="1" dispelable="1">
         <buff_effect>
-            <buff_effect_description buff_effect_condition="immediate"/>
-            <effect class="alter_attr" alias_name="加攻击力" attr_name="attack_damage" value="p:0.5f"/>
+            <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
+            <effect class="alter_attr" alias="增加攻速_可叠加" attr_name="attack_speed" value="0.3f" ref_value="0.3f"/>
         </buff_effect>
     </buff>
-    <!-- 全体恢复 -->
-    <buff name="全体恢复_等级1_恢复效果" deliver_nature="ally" deliver_class="magical" span_type="limited" span="15.f" max_overlay="1" render_key="全体恢复">
+    <!-- 荒野祈福 -->
+    <buff alias="荒野祈福_增益效果" name="荒野祈福_增益效果" level="1" deliver_nature="ally" deliver_class="magical" span_type="eternal" max_overlay="1" render_key="" unique_on_unit="1" dispelable="1">
         <buff_effect>
-            <buff_effect_description buff_effect_condition="loop" buff_effect_time="3.f"/>
-            <effect class="damage" alias_name="恢复效果">
-                <damage damage_value="200" damage_nature="heal" />
-            </effect>
+            <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
+            <effect class="alter_attr" alias="增加魔抗_固定值_可叠加" attr_name="magical_defense" value="800.f" ref_value="800.f"/>
+        </buff_effect>
+        <buff_effect>
+            <buff_effect_description buff_effect_condition="loop" buff_effect_time="1.0f" is_damage="1"/>
+            <damage damage_value="2.0f" damage_nature="heal" deliver_class="magical"/>
         </buff_effect>
     </buff>
-    <!-- 冲锋 -->
-    <buff name="冲锋_等级1_加移动速度" deliver_nature="ally" deliver_class="magical" span_type="limited" span="5.f" max_overlay="1" render_key="冲锋">
+    <!-- 月神的恩赐 -->
+    <buff alias="月神的恩赐_增益效果" name="月神的恩赐_增益效果" level="1" deliver_nature="ally" deliver_class="magical" span_type="limited" span="8.0f" max_overlay="1" render_key="" unique_on_unit="1" dispelable="1">
         <buff_effect>
-            <buff_effect_description buff_effect_condition="immediate"/>
-            <effect class="alter_attr" alias_name="加移动速度" attr_name="move_speed" value="p:0.5f"/>
-        </buff_effect>
-    </buff>
-    <!-- 增幅 -->
-    <buff name="增幅_等级1_加攻击力" deliver_nature="ally" deliver_class="magical" span_type="limited" span="1.f" max_overlay="1">
-        <buff_effect>
-            <buff_effect_description buff_effect_condition="immediate"/>
-            <effect class="add_feature" alias_name="未分类">
-                <feature type="out_damage_enhance" value="d:target:owner;type:armor;v:0.3f;0"/>
-            </effect>
-        </buff_effect>
-    </buff>
-    <!-- 血雾 -->
-    <buff name="血雾_等级1_持有者增益效果" deliver_nature="ally" deliver_class="physical" span_type="eternal">
-        <buff_effect>
-            <buff_effect_description buff_effect_condition="immediate"/>
-            <effect class="add_feature" alias_name="未分类">
-                <feature type="splash" value="p:0.3f" range="100" render_key="血雾"/>
-            </effect>
-        </buff_effect>
-    </buff>
-    <!-- 闪电攻击 -->
-    <buff name="闪电攻击_等级1_持有者增益效果" deliver_nature="ally" deliver_class="physical" span_type="eternal">
-        <buff_effect>
-            <buff_effect_description buff_effect_condition="immediate"/>
-            <effect class="add_feature" alias_name="未分类">
-                <feature type="splash" value="p:0.3f" range="100" />
-            </effect>
-        </buff_effect>
-    </buff>
-    <!-- 强风护盾 -->
-    <buff name="强风护盾_等级1_伤害减少" deliver_nature="ally" deliver_class="magical" span_type="limited" span="15.f" max_overlay="1" render_key="强风护盾">
-        <buff_effect>
-            <buff_effect_description buff_effect_condition="immediate"/>
-            <effect class="add_feature" alias_name="未分类">
-                <feature type="income_damage_reduce" value="50.f"/>
-            </effect>
-        </buff_effect>
-    </buff>
-    <!-- 吸血 -->
-    <buff name="吸血_等级1_吸血效果" deliver_nature="ally" deliver_class="magical" span_type="limited" span="15.f" max_overlay="1" render_key="吸血">
-        <buff_effect>
-            <buff_effect_description buff_effect_condition="immediate"/>
-            <effect class="add_feature" alias_name="未分类">
-                <feature type="drain" value="p:0.2f"/>
-            </effect>
-        </buff_effect>
-    </buff>
-    <!-- 荆棘 -->
-    <buff name="荆棘_等级1_荆棘效果" deliver_nature="ally" deliver_class="magical" span_type="limited" span="15.f" max_overlay="1" render_key="荆棘">
-        <buff_effect>
-            <buff_effect_description buff_effect_condition="immediate"/>
-            <effect class="add_feature" alias_name="未分类">
-                <feature type="reflect" value="p:0.5f"/>
-            </effect>
-        </buff_effect>
-    </buff>
-    <!-- 王者祝福 -->
-    <buff name="王者祝福_等级1_王者祝福效果" deliver_nature="ally" deliver_class="magical" span_type="limited" span="15.f" max_overlay="1"  render_key="心灵之火">
-        <buff_effect>
-            <buff_effect_description buff_effect_condition="immediate"/>
-            <effect class="alter_attr" alias_name="未分类" attr_name="armor" value="700.f"/>
-        </buff_effect>
-    </buff>
-    <!-- 刚毅 -->
-    <buff name="刚毅_等级1_刚毅效果" deliver_nature="ally" deliver_class="magical" span_type="limited" span="eternal" max_overlay="1">
-        <buff_effect>
-            <buff_effect_description buff_effect_condition="immediate"/>
-            <effect class="add_feature" alias_name="未分类" >
-                <feature type="tough" value="d:target:owner;type:max_hp;v:0.1f;0" render_key="刚毅"/>
-            </effect>
-        </buff_effect>
-    </buff>
-    <!-- 拥护 -->
-    <buff name="拥护_等级1_拥护效果" deliver_nature="ally" deliver_class="magical" span_type="limited" span="eternal" max_overlay="1">
-        <buff_effect>
-            <buff_effect_description buff_effect_condition="immediate"/>
-            <effect class="add_feature" alias_name="未分类" >
-                <feature type="income_damage_reduce" value="p:0.5f"  conditions="type:damage_distance;target:opposite;condition:not:nearby"/>
-                <feature type="evade" probability="0.15f" conditions="type:damage_distance;target:opposite;condition:is:nearby|type:deliver_class;target:opposite;condition:physcal"/>
-            </effect>
-        </buff_effect>
-    </buff>
-    <!-- 暗影烈焰 -->
-    <buff name="暗影烈焰_等级1_暗影烈焰效果" deliver_nature="enemy" deliver_class="magical" span_type="eternal">
-        <buff_effect>
-            <buff_effect_description buff_effect_condition="immediate"/>
-            <effect class="add_feature" alias_name="未分类">
-                <feature type="splash" value="p:1.0f" range="370" />
-            </effect>
+            <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
+            <effect class="alter_attr" alias="增加护甲_固定值_可叠加" attr_name="armor" value="500.f" ref_value="500.f"/>
         </buff_effect>
     </buff>
 </root>
