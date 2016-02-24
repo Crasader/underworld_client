@@ -44,7 +44,7 @@
 		3028EBC31BFF0CBD00511C51 /* DynamicValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3028EBC11BFF0CBD00511C51 /* DynamicValue.cpp */; };
 		3028EBC61BFF0D4800511C51 /* Condition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3028EBC41BFF0D4700511C51 /* Condition.cpp */; };
 		307534691BF1B2F20057DCED /* Commander.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 307534671BF1B2F20057DCED /* Commander.cpp */; };
-		3075346D1BF324340057DCED /* EventTrigger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3075346B1BF324340057DCED /* EventTrigger.cpp */; };
+		3075346D1BF324340057DCED /* EventTriggers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3075346B1BF324340057DCED /* EventTriggers.cpp */; };
 		307534711BF33ECF0057DCED /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3075346F1BF33ECF0057DCED /* Logger.cpp */; };
 		308B84661BE3853C00377802 /* AIBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84641BE3853C00377802 /* AIBody.cpp */; };
 		308B84691BE3856F00377802 /* AIBrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84671BE3856F00377802 /* AIBrain.cpp */; };
@@ -339,8 +339,8 @@
 		3028EBC51BFF0D4700511C51 /* Condition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Condition.h; path = Core/Unit/Element/Condition.h; sourceTree = "<group>"; };
 		307534671BF1B2F20057DCED /* Commander.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Commander.cpp; path = Core/Game/Commander.cpp; sourceTree = "<group>"; };
 		307534681BF1B2F20057DCED /* Commander.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Commander.h; path = Core/Game/Commander.h; sourceTree = "<group>"; };
-		3075346B1BF324340057DCED /* EventTrigger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EventTrigger.cpp; path = Core/Game/EventTrigger.cpp; sourceTree = "<group>"; };
-		3075346C1BF324340057DCED /* EventTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventTrigger.h; path = Core/Game/EventTrigger.h; sourceTree = "<group>"; };
+		3075346B1BF324340057DCED /* EventTriggers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EventTriggers.cpp; path = Core/Game/EventTriggers.cpp; sourceTree = "<group>"; };
+		3075346C1BF324340057DCED /* EventTriggers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventTriggers.h; path = Core/Game/EventTriggers.h; sourceTree = "<group>"; };
 		3075346F1BF33ECF0057DCED /* Logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Logger.cpp; path = Core/Test/Logger.cpp; sourceTree = "<group>"; };
 		307534701BF33ECF0057DCED /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Logger.h; path = Core/Test/Logger.h; sourceTree = "<group>"; };
 		308B84641BE3853C00377802 /* AIBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AIBody.cpp; path = Core/AI/AIBody.cpp; sourceTree = "<group>"; };
@@ -772,8 +772,8 @@
 				04FF24601C4A497100A66D71 /* GameSettings.cpp */,
 				307534671BF1B2F20057DCED /* Commander.cpp */,
 				307534681BF1B2F20057DCED /* Commander.h */,
-				3075346B1BF324340057DCED /* EventTrigger.cpp */,
-				3075346C1BF324340057DCED /* EventTrigger.h */,
+				3075346B1BF324340057DCED /* EventTriggers.cpp */,
+				3075346C1BF324340057DCED /* EventTriggers.h */,
 				0451170C1BCFBA5F002AA721 /* Game.cpp */,
 				0451170D1BCFBA5F002AA721 /* Game.h */,
 				A1211B281C0BF68E00C27CCC /* GameConstants.cpp */,
@@ -1944,7 +1944,7 @@
 				A1720E901BCCE19300217E98 /* MD5Verifier.cpp in Sources */,
 				A1720EBA1BCD2D2E00217E98 /* RMStore.m in Sources */,
 				047228B01C193A4D00E7F71B /* Geometry.cpp in Sources */,
-				3075346D1BF324340057DCED /* EventTrigger.cpp in Sources */,
+				3075346D1BF324340057DCED /* EventTriggers.cpp in Sources */,
 				A1D91BEF1C4E087C00C778F4 /* DisplayIconNode.cpp in Sources */,
 				A1B4AE011C200480005906A6 /* SoundManager.cpp in Sources */,
 				A1B4AE2D1C200521005906A6 /* ChatManager.cpp in Sources */,

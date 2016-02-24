@@ -93,7 +93,7 @@ protected:
     void addSwordEffect();
     Node* addEffect(const std::string& file);
     Node* addEffect(const std::string& file, const SpellConfigData::SpellDirection& direction,  const SpellConfigData::SpellPosition& position, bool scale, bool loop, const std::function<void()>& callback);
-    void rollHintResource(const std::string& resource, int amount, float delay = 0.f);
+    void rollHintResource(const std::string& resource, float amount, float delay = 0.f);
     void rollHintNode(Node* hintNode, float delay = 0.f);
     
 private:

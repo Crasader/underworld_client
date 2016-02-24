@@ -858,13 +858,13 @@ void GameRender::updateResources()
             const Resource* resource = faction->getResource(resourceType);
             if (kResourceClass_holdable == resourceType->_class) {
                 populationOccpied = resource->getOccpied();
-                populationBalance = resource->getBalance();
+                populationBalance = resource->getBalanceInt();
             } else {
                 const string& name = resourceType->_name;
                 if (name == RES_NAME_GOLD) {
-                    gold = resource->getBalance();
+                    gold = resource->getBalanceInt();
                 } else if (name == RES_NAME_WOOD) {
-                    wood = resource->getBalance();
+                    wood = resource->getBalanceInt();
                 }
             }
         }

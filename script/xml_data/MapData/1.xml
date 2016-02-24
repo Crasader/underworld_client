@@ -1,14 +1,24 @@
 <?xml version="1.0"?>
 <root>
     <map map_name="1"/>
-    <location_setting index="0" core_location="200,550" building_location="1000,800" assemble_location="0:500,600;1:600,600" />
-    <resource_settings index="0">
-        <resource_setting resource_name="金子" init_balance="10" init_salary="0.1" salary_accelerate="0" />
-        <resource_setting resource_name="木头" init_balance="5" init_salary="0.1" salary_accelerate="0" />
-    </resource_settings>
+    <location_setting index="0" core_location="200,550" building_location="1000,800" />
     <location_setting index="1" core_location="4400,550" building_location="3600,800" />
-    <resource_settings index="1">
-        <resource_setting resource_name="金子" init_balance="0" init_salary="0" salary_accelerate="0" />
-        <resource_setting resource_name="木头" init_balance="0" init_salary="0" salary_accelerate="0" />
-    </resource_settings> 
+    <schedule_events>
+        <event>
+            <event_trigger class="schedule" time="0"/>
+            <event_effect class="add_unit" map_index="0" position="500,500">
+                <unit_setting name="疾风弓手"/>
+            </event_effect>
+        </event>
+        <event>
+            <event_trigger class="schedule" time="0"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="金子" amount="5"/>
+        </event>
+    </schedule_events>
+    <loop_events>
+        <event>
+            <event_trigger class="loop" time="1" start_time="1" end_time="6"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="金子" amount="1"/>
+        </event>
+    </loop_events>
 </root>

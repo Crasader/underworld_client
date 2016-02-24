@@ -946,11 +946,11 @@ void UnitNode::updateFeatures()
             if (log._factionIndex == _unit->getWorld()->getThisFactionIndex()) {
                 float delay = 0.3f;
                 int index = 0;
-                for (std::map<string, int>::const_iterator iter = log._resources.begin();
+                for (std::map<string, float>::const_iterator iter = log._resources.begin();
                      iter != log._resources.end();
                      ++iter) {
                     string resource = iter->first;
-                    int amount = iter->second;
+                    float amount = iter->second;
                     string scheduleKey = rollHintScheduleKeyPrefix
                         + to_string(_unit->getUnitId())
                         + rollHintScheduleKeySplitor
@@ -1122,7 +1122,7 @@ Node* UnitNode::addEffect(const string& file,
     return nullptr;
 }
 
-void UnitNode::rollHintResource(const std::string &resource, int amount, float delay) {
+void UnitNode::rollHintResource(const std::string &resource, float amount, float delay) {
     Node* hintNode = Node::create();
     Node* iconNode = nullptr;
     if (resource == RES_NAME_GOLD) {
