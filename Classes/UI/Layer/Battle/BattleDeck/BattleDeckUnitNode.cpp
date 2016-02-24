@@ -296,7 +296,7 @@ const Camp* BattleDeckUnitNode::getCamp() const
 
 string BattleDeckUnitNode::getIconFile(const Camp* camp, bool enable) const
 {
-    const string& unitName = camp ? camp->getCurrentUnitSetting().getUnitTypeName() : "GameImages/icons/unit/big/normal/icon_w_langdun.png";
+    const string& unitName = camp ? camp->getCurrentUnitType()->getRenderKey() : "GameImages/icons/unit/big/normal/icon_w_langdun.png";
     const URConfigData* configData = DataManager::getInstance()->getURConfigData(unitName);
     string iconFile;
     static const string defaultFile("GameImages/icons/unit/big/normal/icon_w_langdun.png");

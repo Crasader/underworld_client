@@ -34,7 +34,7 @@ static Node* createUnitMask(const UnderWorld::Core::Camp* camp)
 {
     if (camp) {
         string file;
-        const string& name = camp->getBaseUnitType()->getName();
+        const string& name = camp->getBaseUnitType()->getRenderKey();
         const URConfigData* data = DataManager::getInstance()->getURConfigData(name);
         if (data) {
             static const int resourceId(2);
@@ -328,7 +328,7 @@ void MapLayer::repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& co
 
 void MapLayer::updateUnitMask(const UnderWorld::Core::Camp* camp, const Point& layerPoint)
 {
-    const string& name = camp->getBaseUnitType()->getName();
+    const string& name = camp->getBaseUnitType()->getRenderKey();
     if (_selectedUnitName != name) {
         removeUnitMask();
     }

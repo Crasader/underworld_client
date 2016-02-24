@@ -699,13 +699,6 @@ void GameRender::onMapUILayerTouchEnded(const Camp* camp, const Point& point)
         const bool isHero(kUnitClass_Hero == camp->getCurrentUnitType()->getUnitClass());
         if (isProducibleCamp(camp) || isHero) {
             bool success(true);
-            if (isHero) {
-                const CommandResult result = _commander->tryGiveCampIncreaseCommand(camp, 1);
-                if (kCommandResult_suc != result) {
-                    success = false;
-                }
-            }
-            
             if (success && _mapLayer) {
                 const Coordinate& coordinate = _mapLayer->convertPoint(point);
                 CommandResult result = _commander->tryGiveCampGenerateCommand(camp, coordinate);
@@ -899,13 +892,6 @@ void GameRender::updateResources()
 
 int GameRender::getRemainingWaveTime() const
 {
-    const int wave = _game->getEventTrigger()->getWave();
-    const vector<int>& waves = _game->getEventTrigger()->getWaves();
-    const int currentTime = _game->getWorld()->getClock()->getSecondCount();
-    if (wave < waves.size()) {
-        return waves.at(wave) - currentTime;
-    }
-    
     return 0;
 }
 

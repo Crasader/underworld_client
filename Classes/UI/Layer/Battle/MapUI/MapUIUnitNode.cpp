@@ -454,7 +454,7 @@ ssize_t MapUIUnitNode::getIdx() const
 
 string MapUIUnitNode::getIconFile(const Camp* camp, bool enable) const
 {
-    const string& unitName = camp ? camp->getCurrentUnitSetting().getUnitTypeName() : "";
+    const string& unitName = camp ? camp->getCurrentUnitType()->getRenderKey() : "";
     const URConfigData* configData = DataManager::getInstance()->getURConfigData(unitName);
     string iconFile;
     static const string defaultFile("GameImages/icons/unit/big/normal/icon_w_langdun.png");
