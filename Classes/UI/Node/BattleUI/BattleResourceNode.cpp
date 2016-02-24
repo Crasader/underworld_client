@@ -147,4 +147,8 @@ void BattleResourceNode::setSubCount(float count)
     if (_subCountLabel) {
         _subCountLabel->setString(StringUtils::format("%.2f", count));
     }
+    
+    if (_progressTimer) {
+        _progressTimer->setPercentage(100.0f * count / 1.0f);
+    }
 }

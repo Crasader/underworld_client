@@ -22,6 +22,7 @@ protected:
     virtual ~AbstractUILayer() = 0;
     bool init(const std::string& title);
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
+    virtual void onTouchMoved(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
 protected:

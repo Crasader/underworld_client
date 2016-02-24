@@ -161,7 +161,10 @@ bool BattleDeckUnitNode::init(const Camp* camp)
             }
         }
         
-        setContentSize(_cardWidget->getContentSize());
+        const Size size(_cardWidget->getContentSize());
+        setAnchorPoint(Point::ANCHOR_MIDDLE);
+        setContentSize(size);
+        mainNode->setPosition(Point(size.width / 2, size.height / 2));
         
         _cardWidget->setSwallowTouches(false);
         _cardWidget->addTouchEventListener([=](Ref *pSender, Widget::TouchEventType type) {
@@ -172,7 +175,7 @@ bool BattleDeckUnitNode::init(const Camp* camp)
                 
                 _touchInvalid = false;
                 if(_observer) {
-                    _observer->onBattleDeckUnitNodeTouchedBegan(_camp);
+                    _observer->onBattleDeckUnitNodeTouchedBegan(this);
                 }
             } else if (type == Widget::TouchEventType::MOVED) {
                 if (!_touchInvalid) {
@@ -191,13 +194,13 @@ bool BattleDeckUnitNode::init(const Camp* camp)
                 }
                 
                 if(_observer) {
-                    _observer->onBattleDeckUnitNodeTouchedEnded(_camp, !_touchInvalid);
+                    _observer->onBattleDeckUnitNodeTouchedEnded(this, !_touchInvalid);
                 }
             } else {
                 _isIconTouched = false;
                 addTouchedAction(false, true);
                 if(_observer) {
-                    _observer->onBattleDeckUnitNodeTouchedCanceled(_camp);
+                    _observer->onBattleDeckUnitNodeTouchedCanceled(this);
                 }
             }
         });

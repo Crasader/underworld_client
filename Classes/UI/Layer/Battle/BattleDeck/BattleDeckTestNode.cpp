@@ -161,7 +161,10 @@ bool BattleDeckTestNode::init(const std::string& name, bool isHero)
             }
         }
         
-        setContentSize(_cardWidget->getContentSize());
+        const Size size(_cardWidget->getContentSize());
+        setAnchorPoint(Point::ANCHOR_MIDDLE);
+        setContentSize(size);
+        mainNode->setPosition(Point(size.width / 2, size.height / 2));
         
         _cardWidget->setSwallowTouches(false);
         _cardWidget->addTouchEventListener([=](Ref *pSender, Widget::TouchEventType type) {
@@ -172,7 +175,7 @@ bool BattleDeckTestNode::init(const std::string& name, bool isHero)
                 
                 _touchInvalid = false;
                 if(_observer) {
-                    _observer->onBattleDeckTestNodeTouchedBegan(_unitName);
+                    _observer->onBattleDeckTestNodeTouchedBegan(this);
                 }
             } else if (type == Widget::TouchEventType::MOVED) {
                 if (!_touchInvalid) {
@@ -191,13 +194,13 @@ bool BattleDeckTestNode::init(const std::string& name, bool isHero)
                 }
                 
                 if(_observer) {
-                    _observer->onBattleDeckTestNodeTouchedEnded(_unitName, !_touchInvalid);
+                    _observer->onBattleDeckTestNodeTouchedEnded(this, !_touchInvalid);
                 }
             } else {
                 _isIconTouched = false;
                 addTouchedAction(false, true);
                 if(_observer) {
-                    _observer->onBattleDeckTestNodeTouchedCanceled(_unitName);
+                    _observer->onBattleDeckTestNodeTouchedCanceled(this);
                 }
             }
         });

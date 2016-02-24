@@ -62,11 +62,6 @@ MapUILayer::MapUILayer()
 ,_isTouchingTableView(false)
 ,_selectedCamp(nullptr)
 ,_timeLabel(nullptr)
-#if false
-,_nextWaveTimeLabel(nullptr)
-,_nextWaveProgress(nullptr)
-,_populationLabel(nullptr)
-#endif
 ,_goldResourceNode(nullptr)
 ,_woodResourceNode(nullptr)
 ,_myHpProgress(nullptr)
@@ -212,34 +207,16 @@ void MapUILayer::updateRemainingTime(int time)
     }
 }
 
-#if false
-void MapUILayer::updateWaveTime(int time, int totalTime)
-{
-    if (_nextWaveTimeLabel) {
-        _nextWaveTimeLabel->setString(StringUtils::format("%ds", time));
-    }
-    
-    if (_nextWaveProgress) {
-        _nextWaveProgress->setPercentage(100.0f * time / totalTime);
-    }
-}
-
-void MapUILayer::updatePopulation(int count, int maxCount)
-{
-    if (_populationLabel) {
-        _populationLabel->setString(StringUtils::format("%d/%d", count, maxCount));
-    }
-}
-#endif
-
-void MapUILayer::updateGoldAndWood(int gold, int wood)
+void MapUILayer::updateGoldAndWood(int gold, float decimalGold, int wood, float decimalWood)
 {
     if (_goldResourceNode) {
         _goldResourceNode->setCount(gold, false);
+        _goldResourceNode->setSubCount(decimalGold);
     }
     
     if (_woodResourceNode) {
         _woodResourceNode->setCount(wood, false);
+        _goldResourceNode->setSubCount(decimalWood);
     }
 }
 
@@ -473,37 +450,6 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             _tableViewMaxSize.width = winSize.width - (_tableViewPos.x + leftOffset);
             _tableViewMaxSize.height = _cellSize.height;
         }
-        
-#if false
-        //
-        {
-            Sprite* sprite = Sprite::create("GameImages/test/ui_black_14.png");
-            sprite->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
-            static const float offsetY(2.0f);
-            sprite->setPosition(_tableViewPos + Point(0, _cellSize.height + offsetY));
-            root->addChild(sprite);
-            
-            const Size& size = sprite->getContentSize();
-            
-            Label* label = CocosUtils::createLabel(LocalHelper::getString("battle_mapUI_nextWaveTime"), 16);
-            label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
-            label->setPosition(Point(20, size.height * 0.7f));
-            sprite->addChild(label, 1);
-            
-            _nextWaveTimeLabel = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
-            _nextWaveTimeLabel->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
-            _nextWaveTimeLabel->setPosition(Point(size.width * 0.75f, label->getPosition().y));
-            sprite->addChild(_nextWaveTimeLabel, 1);
-            
-            Sprite* progressBg = Sprite::create("GameImages/test/ui_blood_7.png");
-            progressBg->setPosition(Point(size.width / 2, size.height * 0.4f));
-            sprite->addChild(progressBg);
-            
-            _nextWaveProgress = createProgressTimer("GameImages/test/ui_blood_6.png");
-            _nextWaveProgress->setPosition(progressBg->getPosition());
-            sprite->addChild(_nextWaveProgress);
-        }
-#endif
         
         // buttons
         {

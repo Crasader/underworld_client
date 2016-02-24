@@ -44,6 +44,7 @@ protected:
     
     // TableViewDelegate
     virtual void tableCellTouched(TableView* table, TableViewCell* cell) override;
+    virtual void tableCellHighlight(TableView* table, TableViewCell* cell) override;
     
     // TableViewDataSource
     virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx) override;
@@ -51,31 +52,64 @@ protected:
     virtual ssize_t numberOfCellsInTableView(TableView *table) override;
     
     // BattleDeckUnitNodeObserver
-    virtual void onBattleDeckUnitNodeTouchedBegan(const UnderWorld::Core::Camp* camp) override;
-    virtual void onBattleDeckUnitNodeTouchedEnded(const UnderWorld::Core::Camp* camp, bool isValid) override;
-    virtual void onBattleDeckUnitNodeTouchedCanceled(const UnderWorld::Core::Camp* camp) override;
+    virtual void onBattleDeckUnitNodeTouchedBegan(BattleDeckUnitNode* node) override;
+    virtual void onBattleDeckUnitNodeTouchedEnded(BattleDeckUnitNode* node, bool isValid) override;
+    virtual void onBattleDeckUnitNodeTouchedCanceled(BattleDeckUnitNode* node) override;
     
     // BattleDeckTestNodeObserver
-    virtual void onBattleDeckTestNodeTouchedBegan(const std::string& name) override;
-    virtual void onBattleDeckTestNodeTouchedEnded(const std::string& name, bool isValid) override;
-    virtual void onBattleDeckTestNodeTouchedCanceled(const std::string& name) override;
+    virtual void onBattleDeckTestNodeTouchedBegan(BattleDeckTestNode* node) override;
+    virtual void onBattleDeckTestNodeTouchedEnded(BattleDeckTestNode* node, bool isValid) override;
+    virtual void onBattleDeckTestNodeTouchedCanceled(BattleDeckTestNode* node) override;
     
     void createTableViews(float width);
     Node* createTableView(UnderWorld::Core::UnitClass uc, float width);
     UnderWorld::Core::UnitClass getUnitClass(TableView* table) const;
     ssize_t getCellsCount(TableView* table) const;
     ssize_t getCellsCount(UnderWorld::Core::UnitClass uc) const;
-    Rect getTableViewBoundingBox(TableView* table) const;
+    Rect getRealBoundingBox(Node* node) const;
+    void configTable(UnderWorld::Core::UnitClass uc, bool reload);
+    void createDragNode(const std::string& name);
+    void removeDragNode();
+    void reloadCardDecks();
+    void onTableCardMoved(const Point& pos);
+    void onTableCardEnded(const Point& pos);
+    void cardBackToTable();
+    
+    int getIntersectedCardDeckIdx(const Rect& rect) const;
+    
+    const std::vector<std::string>& getCandidateCards(UnderWorld::Core::UnitClass uc) const;
+    const std::set<std::string>& getPickedCards() const;
+    UnderWorld::Core::UnitClass getUnitClass(const std::string& name) const;
+    void loadData(UnderWorld::Core::UnitClass uc);
+    void saveData();
+    void extract(UnderWorld::Core::UnitClass uc, const std::string& name);
+    void insert(const std::string& name);
+    void exchange(const std::string& picked, UnderWorld::Core::UnitClass uc, const std::string& candidate);
     
 private:
+    struct TableViewNode {
+        Label* titleLabel;
+        Button* leftButton;
+        Button* rightButton;
+        TableView* table;
+        float maxWidth;
+    };
+    
     BattleDeckLayerObserver *_observer;
     Point _tableViewPos;
     Size _cellSize;
-    std::pair<TableView*, ssize_t> _selectedCampIdx;
+    std::string _touchedCard;
+    std::pair<ssize_t, std::string> _selectedTableCard;
+    std::string _selectedCard;
+    
+    std::map<UnderWorld::Core::UnitClass, std::vector<std::string>> _candidateCards;
+    std::set<std::string> _pickedCards;
+    
     BattleDeckUnitInfoNode* _infoNode;
-    std::map<UnderWorld::Core::UnitClass, TableView*> _tableViews;
+    std::map<UnderWorld::Core::UnitClass, TableViewNode> _tableViewNodes;
     Label* _selectedCardsLabel;
     std::vector<Sprite*> _cardDecks;
+    Node* _dragNode;
 };
 
 #endif /* BattleDeckLayer_h */

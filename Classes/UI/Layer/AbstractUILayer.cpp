@@ -63,6 +63,7 @@ bool AbstractUILayer::init(const string& title)
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
         eventListener->onTouchBegan = CC_CALLBACK_2(AbstractUILayer::onTouchBegan, this);
+        eventListener->onTouchMoved = CC_CALLBACK_2(AbstractUILayer::onTouchMoved, this);
         eventListener->onTouchEnded = CC_CALLBACK_2(AbstractUILayer::onTouchEnded, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
         
@@ -75,6 +76,11 @@ bool AbstractUILayer::init(const string& title)
 bool AbstractUILayer::onTouchBegan(Touch *touch, Event *unused_event)
 {
     return true;
+}
+
+void AbstractUILayer::onTouchMoved(Touch *touch, Event *unused_event)
+{
+    
 }
 
 void AbstractUILayer::onTouchEnded(Touch *touch, Event *unused_event)

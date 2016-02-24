@@ -47,13 +47,8 @@ GameRender::GameRender(Scene* scene, int mapId, const string& mapData, const str
 ,_paused(false)
 ,_isGameOver(false)
 ,_remainingTime(battleTotalTime)
-,_goldCount(0)
-,_woodCount(0)
-#if false
-,_population(0)
-,_nextWave(INVALID_VALUE)
-,_nextWaveTotalTime(INVALID_VALUE)
-#endif
+,_goldCount(INVALID_VALUE)
+,_woodCount(INVALID_VALUE)
 ,_hasUpdatedBattleCampInfos(false)
 {
     _mapLayer = MapLayer::create(mapId, mapData);
@@ -114,11 +109,6 @@ void GameRender::init(const Game* game, Commander* commander)
             _myCamps.at(uc).push_back(camp);
         }
     }
-    
-#if false
-    _nextWave = _game->getEventTrigger()->getWave();
-    _nextWaveTotalTime = getRemainingWaveTime();
-#endif
     
     updateAll();
     
@@ -329,27 +319,6 @@ void GameRender::updateUILayer()
     }
     
     _mapUILayer->updateRemainingTime(_remainingTime);
-    
-#if false
-    const int remainingWaveTime = getRemainingWaveTime();
-    _mapUILayer->updateWaveTime(remainingWaveTime, _nextWaveTotalTime);
-    
-    const int nextWave = _game->getEventTrigger()->getWave();
-    if (nextWave != _nextWave) {
-        if (!_hasUpdatedBattleCampInfos) {
-#if ENABLE_CAMP_INFO
-            updateBattleCampInfos();
-#else
-            updateBattleUnitInfos();
-#endif
-            _hasUpdatedBattleCampInfos = true;
-            _nextWave = nextWave;
-            _nextWaveTotalTime = remainingWaveTime;
-        }
-    } else {
-        _hasUpdatedBattleCampInfos = false;
-    }
-#endif
 }
 
 #if ENABLE_CAMP_INFO
@@ -853,6 +822,8 @@ void GameRender::updateResources()
         int populationBalance(0);
         int gold(0);
         int wood(0);
+        float decimalGold(0);
+        float decimalWood(0);
         for (int i = 0; i < count; ++i) {
             const UnderWorld::Core::ResourceType* resourceType = techTree->getResourceTypeByIndex(i);
             const Resource* resource = faction->getResource(resourceType);
@@ -863,8 +834,10 @@ void GameRender::updateResources()
                 const string& name = resourceType->_name;
                 if (name == RES_NAME_GOLD) {
                     gold = resource->getBalanceInt();
+                    decimalGold = resource->getBalanceFloat();
                 } else if (name == RES_NAME_WOOD) {
                     wood = resource->getBalanceInt();
+                    decimalWood = resource->getBalanceFloat();
                 }
             }
         }
@@ -872,27 +845,22 @@ void GameRender::updateResources()
         {
             // check if need to reload table view
             bool update(false);
-            if (_goldCount != gold) {
+            if (_goldCount != decimalGold) {
                 update = true;
-                _goldCount = gold;
+                _goldCount = decimalGold;
             }
             
-            if (_woodCount != wood) {
+            if (_woodCount != decimalWood) {
                 update = true;
-                _woodCount = wood;
+                _woodCount = decimalWood;
             }
             
             if (update) {
-                _mapUILayer->updateGoldAndWood(gold, wood);
+                _mapUILayer->updateGoldAndWood(gold, decimalGold - gold, wood, decimalWood - wood);
                 _mapUILayer->reloadTable(kUnitClass_Warrior);
             }
         }
     }
-}
-
-int GameRender::getRemainingWaveTime() const
-{
-    return 0;
 }
 
 void GameRender::stopAllTimers()

@@ -221,7 +221,7 @@ void BattleDeckUnitInfoNode::update(const UnitBase* unit)
     
     if (unit) {
         const string& file = DataManager::getInstance()->getURConfigData(unit->getUnitType()->getRenderKey())->getSmallIcon();
-        if (FileUtils::getInstance()->isFileExist(file)) {
+        if (file.length() > 0 && FileUtils::getInstance()->isFileExist(file)) {
             _unitIcon->setTexture(file);
         }
         
@@ -268,4 +268,17 @@ void BattleDeckUnitInfoNode::update(const UnitBase* unit)
             }
         }
     }
+}
+
+void BattleDeckUnitInfoNode::update(const string& name)
+{
+    _unit = nullptr;
+    const URConfigData* data = DataManager::getInstance()->getURConfigData(name);
+    if (data) {
+        const string& file = data->getSmallIcon();
+        if (file.length() > 0 && FileUtils::getInstance()->isFileExist(file)) {
+            _unitIcon->setTexture(file);
+        }
+    }
+    _nameLabel->setString(name);
 }

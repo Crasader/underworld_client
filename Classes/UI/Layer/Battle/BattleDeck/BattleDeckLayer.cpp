@@ -14,6 +14,9 @@
 #include "LocalHelper.h"
 #include "BattleDeckUnitInfoNode.h"
 #include "SoundManager.h"
+#include "UserDefaultsDataManager.h"
+#include "Utils.h"
+#include "BattleScene.h"
 
 using namespace std;
 using namespace ui;
@@ -22,37 +25,40 @@ using namespace UnderWorld::Core;
 
 static const float unitNodeOffsetX(5.0f);
 static const float unitNodeOffsetY(0.0f);
+static const int topZOrder(1);
+static const unsigned int cardDecksCount(8);
 
-static const UnitClass tableUnitClass[] = {
-    kUnitClass_Hero,
-    kUnitClass_Warrior,
+static const vector<UnitClass> tableUnitClass{kUnitClass_Hero, kUnitClass_Warrior};
+static const map<UnitClass, set<string>> allCards{
+    {
+        kUnitClass_Hero,
+        {
+            "时光女神",
+            "狼人森林之魂",
+            "天空女神",
+            "蛇女莉莉丝",
+            "时光法师",
+        }
+    },
+    {
+        kUnitClass_Warrior,
+        {
+            "狼人步兵",
+            "狼人机械狼",
+            "狼人射手",
+            "机械甲虫",
+            "狼人巫师",
+            "吸血鬼战士",
+            "吸血鬼弓箭手",
+            "巨型蜘蛛",
+            "七恶魔拉玛什图",
+            "甲壳虫",
+            "吸血鬼巫师",
+        }
+    }
 };
-static const size_t tablesCount = sizeof(tableUnitClass) / sizeof(UnitClass);
 
-// test data
-static const string heroes[] = {
-    "时光女神",
-    "狼人森林之魂",
-    "天空女神",
-    "蛇女莉莉丝",
-    "时光法师",
-};
-static const size_t heroesCount = sizeof(heroes) / sizeof(string);
-
-static const string warriors[] = {
-    "狼人步兵",
-    "狼人机械狼",
-    "狼人射手",
-    "机械甲虫",
-    "狼人巫师",
-    "吸血鬼战士",
-    "吸血鬼弓箭手",
-    "巨型蜘蛛",
-    "七恶魔拉玛什图",
-    "甲壳虫",
-    "吸血鬼巫师",
-};
-static const size_t warriorsCount = sizeof(warriors) / sizeof(string);
+static const char* pickedCardsKey("pickedCardsKey");
 
 BattleDeckLayer* BattleDeckLayer::create()
 {
@@ -72,10 +78,17 @@ BattleDeckLayer::BattleDeckLayer()
 ,_tableViewPos(Point::ZERO)
 ,_infoNode(nullptr)
 ,_selectedCardsLabel(nullptr)
+,_dragNode(nullptr)
 {
     static const Size unitNodeSize = BattleDeckTestNode::create("", false)->getContentSize();
     _cellSize.height = unitNodeSize.height + unitNodeOffsetY * 2 + 6.0f;
     _cellSize.width = unitNodeSize.width + unitNodeOffsetX;
+    
+    for (int i = 0; i < tableUnitClass.size(); ++i) {
+        loadData(tableUnitClass.at(i));
+    }
+    
+//    loadData(kUnitClass_Warrior);
 }
 
 BattleDeckLayer::~BattleDeckLayer()
@@ -91,7 +104,7 @@ void BattleDeckLayer::registerObserver(BattleDeckLayerObserver *observer)
 bool BattleDeckLayer::init()
 {
     if (AbstractUILayer::init("Card Deck"))
-    {        
+    {
         Node* parent = _background;
         const Size& bgSize = parent->getContentSize();
         
@@ -120,9 +133,8 @@ bool BattleDeckLayer::init()
         title->setPosition(Point(bgSize.width / 2, ceilY - (infoNodeSize.height + marginY * 2 + titleSize.height / 2)));
         
         // cards
-        static const unsigned int cardsCount = 8;
         Point firstCardPos(Point::ZERO);
-        for (int i = 0; i < cardsCount; ++i) {
+        for (int i = 0; i < cardDecksCount; ++i) {
             Sprite* sprite = Sprite::create("GameImages/test/ui_jiabing.png");
             const Size& size = sprite->getContentSize();
             if (firstCardPos.x == 0) {
@@ -141,6 +153,13 @@ bool BattleDeckLayer::init()
         
         const Size& buttonSize = button->getContentSize();
         button->setPosition(Point(bgSize.width - (buttonSize.width / 2 + marginX), buttonSize.height / 2 + marginY));
+        button->addClickEventListener([this](Ref*) {
+            saveData();
+            // TODO
+            CocosUtils::replaceScene(BattleScene::create(1));
+        });
+        
+        reloadCardDecks();
                 
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -162,18 +181,88 @@ bool BattleDeckLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 
 void BattleDeckLayer::onTouchMoved(Touch *touch, Event *unused_event)
 {
-    
+    const string& name = _selectedTableCard.second;
+    const Point& point = _background->convertToNodeSpace(touch->getLocation());
+    if (name.length() > 0) {
+        TableView* table = _tableViewNodes.at(getUnitClass(name)).table;
+        const cocos2d::Rect& rect = getRealBoundingBox(table);
+        if (!rect.containsPoint(point)) {
+            table->onTouchEnded(touch, unused_event);
+        }
+        onTableCardMoved(point);
+    } else if (_selectedCard.length() > 0) {
+        _dragNode->setPosition(point);
+    }
 }
 
 void BattleDeckLayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
-    
+    const Point& point = _background->convertToNodeSpace(touch->getLocation());
+    if (_selectedTableCard.second.length() > 0) {
+        onTableCardEnded(point);
+        
+        // clear
+        _selectedTableCard.first = CC_INVALID_INDEX;
+        _selectedTableCard.second = "";
+        removeDragNode();
+    } else if (_selectedCard.length() > 0) {
+        UnitClass uc;
+        string exchangedCard;
+        for (auto iter = begin(_tableViewNodes); iter != end(_tableViewNodes); ++iter) {
+            TableView* table = iter->second.table;
+            const cocos2d::Rect& rect = getRealBoundingBox(table);
+            if (rect.containsPoint(point)) {
+                // TODO
+                uc = getUnitClass(table);
+                exchangedCard = "";
+            }
+        }
+        
+        UnitClass pickedCardUnitClass = getUnitClass(_selectedCard);
+        bool refreshUI(false);
+        if (exchangedCard.length() > 0) {
+            exchange(_selectedCard, uc, exchangedCard);
+            refreshUI = true;
+        } else if (CC_INVALID_INDEX == getIntersectedCardDeckIdx(_dragNode->getBoundingBox())) {
+            insert(_selectedCard);
+            refreshUI = true;
+            // set a flag to avoid refresh the TableView
+            uc = pickedCardUnitClass;
+        }
+        
+        if (refreshUI) {
+            // update UI
+            configTable(pickedCardUnitClass, true);
+            if (uc != pickedCardUnitClass) {
+                configTable(uc, true);
+            }
+            reloadCardDecks();
+        }
+        
+        removeDragNode();
+        
+        // clear
+        _selectedCard = "";
+    }
 }
 
 #pragma mark - TableViewDelegate
 void BattleDeckLayer::tableCellTouched(TableView* table, TableViewCell* cell)
 {
     
+}
+
+void BattleDeckLayer::tableCellHighlight(TableView* table, TableViewCell* cell)
+{
+    const UnitClass uc = getUnitClass(table);
+    if (_candidateCards.find(uc) != _candidateCards.end()) {
+        const vector<string>& vec = _candidateCards.at(uc);
+        const ssize_t idx = cell->getIdx();
+        if (vec.size() > idx) {
+            _selectedTableCard.first = idx;
+            _selectedTableCard.second = vec.at(idx);
+        }
+    }
 }
 
 #pragma mark - TableViewDataSource
@@ -195,28 +284,22 @@ TableViewCell* BattleDeckLayer::tableCellAtIndex(TableView *table, ssize_t idx)
         cell = TableViewCell::create();
     }
     
-    string name;
     UnitClass uc = getUnitClass(table);
-    const bool isHero(kUnitClass_Hero == uc);
-    if (isHero) {
-        name = heroes[idx];
-    } else {
-        name = warriors[idx];
-    }
+    string name = _candidateCards.at(uc).at(idx);
     
-    const Camp* camp = nullptr;
+//    const Camp* camp = nullptr;
     if (name.length() > 0) {
         static const int nodeTag(100);
         BattleDeckTestNode* unitNode = dynamic_cast<BattleDeckTestNode*>(cell->getChildByTag(nodeTag));
         if (unitNode) {
             unitNode->reuse(name, idx);
-            unitNode->setSelected(table == _selectedCampIdx.first && idx == _selectedCampIdx.second);
+            unitNode->setSelected(name == _touchedCard);
         } else {
-            unitNode = BattleDeckTestNode::create(name, isHero);
+            unitNode = BattleDeckTestNode::create(name, (kUnitClass_Hero == uc));
+            unitNode->registerObserver(this);
             unitNode->reuse(name, idx);
             const Size& size = unitNode->getContentSize();
             unitNode->setPosition(Point(size.width / 2, size.height / 2) + Point(unitNodeOffsetX, unitNodeOffsetY));
-            unitNode->registerObserver(this);
             unitNode->setTag(nodeTag);
             cell->addChild(unitNode);
         }
@@ -231,33 +314,39 @@ ssize_t BattleDeckLayer::numberOfCellsInTableView(TableView *table)
 }
 
 #pragma mark - BattleDeckUnitNodeObserver
-void BattleDeckLayer::onBattleDeckUnitNodeTouchedBegan(const Camp* camp)
+void BattleDeckLayer::onBattleDeckUnitNodeTouchedBegan(BattleDeckUnitNode* node)
 {
     
 }
 
-void BattleDeckLayer::onBattleDeckUnitNodeTouchedEnded(const Camp* camp, bool isValid)
+void BattleDeckLayer::onBattleDeckUnitNodeTouchedEnded(BattleDeckUnitNode* node, bool isValid)
 {
     
 }
 
-void BattleDeckLayer::onBattleDeckUnitNodeTouchedCanceled(const Camp* camp)
+void BattleDeckLayer::onBattleDeckUnitNodeTouchedCanceled(BattleDeckUnitNode* node)
 {
     
 }
 
 #pragma mark - BattleDeckTestNodeObserver
-void BattleDeckLayer::onBattleDeckTestNodeTouchedBegan(const std::string& name)
+void BattleDeckLayer::onBattleDeckTestNodeTouchedBegan(BattleDeckTestNode* node)
 {
-    
+    _selectedCard = node->getUnitName();
+    createDragNode(_selectedCard);
+    _dragNode->setPosition(_background->convertToNodeSpace(node->getParent()->convertToWorldSpace(node->getPosition())));
+    _dragNode->setVisible(true);
 }
 
-void BattleDeckLayer::onBattleDeckTestNodeTouchedEnded(const std::string& name, bool isValid)
+void BattleDeckLayer::onBattleDeckTestNodeTouchedEnded(BattleDeckTestNode* node, bool isValid)
 {
-    
+    _touchedCard = node->getUnitName();
+    _infoNode->update(_touchedCard);
+    // TODO
+//    node->setSelected(true);
 }
 
-void BattleDeckLayer::onBattleDeckTestNodeTouchedCanceled(const std::string& name)
+void BattleDeckLayer::onBattleDeckTestNodeTouchedCanceled(BattleDeckTestNode* node)
 {
     
 }
@@ -267,7 +356,7 @@ void BattleDeckLayer::createTableViews(float width)
 {
     static float offsetY(5.0f);
     vector<Node*> created;
-    for (int i = 0; i < tablesCount; ++i) {
+    for (int i = 0; i < tableUnitClass.size(); ++i) {
         Node* node = createTableView(tableUnitClass[i], width);
         if (node) {
             const size_t cnt = created.size();
@@ -282,23 +371,24 @@ void BattleDeckLayer::createTableViews(float width)
             created.push_back(node);
         }
     }
+    
+    // reload data after all TableViews have been created
+    for (auto iter = begin(_tableViewNodes); iter != end(_tableViewNodes); ++iter)
+    {
+        iter->second.table->reloadData();
+    }
 }
 
 Node* BattleDeckLayer::createTableView(UnitClass uc, float width)
 {
     const ssize_t cnt = getCellsCount(uc);
     if (cnt > 0) {
+        TableViewNode tableViewNode;
         Node* parent = Node::create();
         
         // title
-        string message;
-        if (kUnitClass_Hero == uc) {
-            message = "Heroes";
-        } else if (kUnitClass_Warrior == uc) {
-            message = "Warriors";
-        }
-        
-        Sprite* title = CocosUtils::createTitle(message + StringUtils::format(":%ld", cnt), BIG_FONT_SIZE);
+        Sprite* title = CocosUtils::createTitle("", BIG_FONT_SIZE);
+        tableViewNode.titleLabel = dynamic_cast<Label*>(title->getChildren().front());
         parent->addChild(title);
         
         // table view
@@ -308,28 +398,26 @@ Node* BattleDeckLayer::createTableView(UnitClass uc, float width)
         static const string leftFile("GameImages/public/button_sanjiao_3.png");
         Button* leftButton = Button::create(leftFile, leftFile);
         parent->addChild(leftButton);
+        tableViewNode.leftButton = leftButton;
         
         static const string rightFile("GameImages/public/button_sanjiao_2.png");
         Button* rightButton = Button::create(rightFile, rightFile);
         parent->addChild(rightButton);
+        tableViewNode.rightButton = rightButton;
         
         const float leftButtonWidth = leftButton->getContentSize().width;
         const float rightButtonWidth = rightButton->getContentSize().width;
-        const float maxWidth = width - (leftButtonWidth + rightButtonWidth + offsetX * 2);
-        const float totalWidth = _cellSize.width * cnt + unitNodeOffsetX;
-        const Size tableSize(MIN(maxWidth, totalWidth), _cellSize.height);
+        tableViewNode.maxWidth = width - (leftButtonWidth + rightButtonWidth + offsetX * 2);
         
-        TableView* tableView = TableView::create(this, tableSize);
+        TableView* tableView = TableView::create(this, _cellSize);
+        tableView->setDelegate(this);
         tableView->setDirection(extension::ScrollView::Direction::HORIZONTAL);
         tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
         tableView->setBounceable(false);
         tableView->setTag(uc);
         parent->addChild(tableView);
-        _tableViews.insert(make_pair(uc, tableView));
+        tableViewNode.table = tableView;
         
-        const bool canScroll(maxWidth < totalWidth);
-        leftButton->setVisible(canScroll);
-        rightButton->setVisible(canScroll);
         leftButton->addClickEventListener([](Ref*) {
             
         });
@@ -339,13 +427,17 @@ Node* BattleDeckLayer::createTableView(UnitClass uc, float width)
         
         // set positions
         const Size& titleSize = title->getContentSize();
-        const Size size(width, titleSize.height + offsetY + tableSize.height);
+        const Size size(width, titleSize.height + offsetY + _cellSize.height);
         parent->setContentSize(size);
         
         title->setPosition(Point(size.width / 2, size.height - titleSize.height / 2));
-        leftButton->setPosition(Point(leftButtonWidth / 2, tableSize.height / 2));
+        leftButton->setPosition(Point(leftButtonWidth / 2, _cellSize.height / 2));
         rightButton->setPosition(Point(size.width - rightButtonWidth / 2, leftButton->getPositionY()));
         tableView->setPosition(Point(leftButtonWidth + offsetX, 0));
+        _tableViewNodes.insert(make_pair(uc, tableViewNode));
+        
+        // reset
+        configTable(uc, false);
         
         return parent;
     }
@@ -355,8 +447,8 @@ Node* BattleDeckLayer::createTableView(UnitClass uc, float width)
 
 UnitClass BattleDeckLayer::getUnitClass(TableView* table) const
 {
-    const size_t createdCount = _tableViews.size();
-    if (createdCount < tablesCount) {
+    const size_t createdCount = _tableViewNodes.size();
+    if (createdCount < tableUnitClass.size()) {
         return tableUnitClass[createdCount];
     }
     
@@ -370,19 +462,294 @@ ssize_t BattleDeckLayer::getCellsCount(TableView* table) const
 
 ssize_t BattleDeckLayer::getCellsCount(UnitClass uc) const
 {
-    if (kUnitClass_Hero == uc) {
-        return heroesCount;
-    } else if (kUnitClass_Warrior == uc) {
-        return warriorsCount;
+    if (_candidateCards.find(uc) != _candidateCards.end()) {
+        return _candidateCards.at(uc).size();
     }
     
     return 0;
 }
 
-Rect BattleDeckLayer::getTableViewBoundingBox(TableView* table) const
+cocos2d::Rect BattleDeckLayer::getRealBoundingBox(Node* node) const
 {
-    Rect rect = table->getBoundingBox();
+    cocos2d::Rect rect = node->getBoundingBox();
     Point origin = rect.origin;
-    rect.origin = convertToNodeSpace(table->getParent()->convertToWorldSpace(origin));
+    rect.origin = _background->convertToNodeSpace(node->getParent()->convertToWorldSpace(origin));
     return rect;
+}
+
+void BattleDeckLayer::configTable(UnitClass uc, bool reload)
+{
+    if (_tableViewNodes.find(uc) != _tableViewNodes.end()) {
+        TableViewNode& node = _tableViewNodes.at(uc);
+        const ssize_t cnt = getCellsCount(uc);
+        const float totalWidth = _cellSize.width * cnt + unitNodeOffsetX;
+        const float maxWidth = node.maxWidth;
+        const Size tableSize(MIN(maxWidth, totalWidth), _cellSize.height);
+        const bool canScroll(maxWidth < totalWidth);
+        node.leftButton->setVisible(canScroll);
+        node.rightButton->setVisible(canScroll);
+        
+        TableView* table = node.table;
+        table->setViewSize(tableSize);
+        if (reload) {
+            table->reloadData();
+        }
+        
+        string message;
+        if (kUnitClass_Hero == uc) {
+            message = "Heroes";
+        } else if (kUnitClass_Warrior == uc) {
+            message = "Warriors";
+        }
+        node.titleLabel->setString(message + StringUtils::format(":%ld", cnt));
+    }
+}
+
+void BattleDeckLayer::createDragNode(const string& name)
+{
+    if (!_dragNode && name.length() > 0) {
+        _dragNode = BattleDeckTestNode::create(name, getUnitClass(name));
+        _dragNode->setVisible(false);
+        _background->addChild(_dragNode, topZOrder);
+    }
+}
+
+void BattleDeckLayer::removeDragNode()
+{
+    if (_dragNode) {
+        _dragNode->removeFromParent();
+        _dragNode = nullptr;
+    }
+}
+
+void BattleDeckLayer::reloadCardDecks()
+{
+    const set<string>& cards = getPickedCards();
+    static const int nodeTag(100);
+    const size_t cnt = _cardDecks.size();
+    // remove all
+    for (int i = 0; i < cnt; ++i) {
+        Sprite* deck = _cardDecks.at(i);
+        auto node = deck->getChildByTag(nodeTag);
+        if (node) {
+            deck->removeChild(node, true);
+        }
+    }
+    // add
+    int i = 0;
+    for (auto iter = begin(cards); iter != end(cards); ++iter, ++i) {
+        if (cnt > i) {
+            Sprite* deck = _cardDecks.at(i);
+            const string& name = *iter;
+            auto node = BattleDeckTestNode::create(name, getUnitClass(name));
+            node->registerObserver(this);
+            node->setTag(nodeTag);
+            deck->addChild(node);
+            const Size& size = deck->getContentSize();
+            node->setPosition(Size(size.width / 2, size.height / 2));
+        }
+    }
+}
+
+void BattleDeckLayer::onTableCardMoved(const Point& pos)
+{
+    const string& name = _selectedTableCard.second;
+    if (!_dragNode) {
+        createDragNode(name);
+    }
+    
+    TableView* table = _tableViewNodes.at(getUnitClass(name)).table;
+    const cocos2d::Rect& rect = getRealBoundingBox(table);
+    _dragNode->setVisible(!(rect.containsPoint(pos)));
+    _dragNode->setPosition(pos);
+}
+
+void BattleDeckLayer::onTableCardEnded(const Point& pos)
+{
+    if (_dragNode) {
+        int idx = getIntersectedCardDeckIdx(_dragNode->getBoundingBox());
+        if (INVALID_VALUE == idx) {
+            cardBackToTable();
+        } else if (_pickedCards.size() < cardDecksCount) {
+            const string& name = _selectedTableCard.second;
+            UnitClass uc = getUnitClass(name);
+            extract(uc, name);
+            
+            // update UI
+            configTable(uc, true);
+            reloadCardDecks();
+        }
+    }
+}
+
+void BattleDeckLayer::cardBackToTable()
+{
+    removeDragNode();
+}
+
+int BattleDeckLayer::getIntersectedCardDeckIdx(const cocos2d::Rect& rect) const
+{
+    float intersectedArea(0);
+    int idx(INVALID_VALUE);
+    for (int i = 0; i < _cardDecks.size(); ++i) {
+        const cocos2d::Rect& bd = _cardDecks.at(i)->getBoundingBox();
+        if (bd.intersectsRect(rect)) {
+            const Size& size = bd.unionWithRect(rect).size;
+            float area = size.width * size.height;
+            if (0 == intersectedArea || intersectedArea > area) {
+                intersectedArea = area;
+                idx = i;
+            }
+        }
+    }
+    
+    return idx;
+}
+
+#pragma mark - Logic
+template<typename T> static void eraseFromVector(vector<T>& vec, const T& element)
+{
+    for (auto iter = begin(vec); iter != end(vec); ++iter) {
+        if (element == *iter) {
+            vec.erase(iter);
+            break;
+        }
+    }
+}
+
+static bool sortByUnitClass(const string& first, const string& second)
+{
+    UnitClass firstUC(UNIT_CLASS_COUNT);
+    UnitClass secondUC(UNIT_CLASS_COUNT);
+    for (auto iter = begin(allCards); iter != end(allCards); ++iter) {
+        UnitClass uc = iter->first;
+        const set<string>& set = iter->second;
+        if (set.find(first) != end(set)) {
+            firstUC = uc;
+        }
+        if (set.find(second) != end(set)) {
+            secondUC = uc;
+        }
+        
+        if (firstUC != UNIT_CLASS_COUNT && secondUC != UNIT_CLASS_COUNT) {
+            break;
+        }
+    }
+    
+    if (firstUC != secondUC) {
+        return (firstUC > secondUC);
+    } else {
+        return (first > second);
+    }
+    
+    return false;
+}
+
+static bool sortByName(const string& first, const string& second)
+{
+    return (first > second);
+}
+
+static const vector<string> emptyVector;
+const vector<string>& BattleDeckLayer::getCandidateCards(UnitClass uc) const
+{
+    if (_candidateCards.find(uc) != _candidateCards.end()) {
+        return _candidateCards.at(uc);
+    }
+    
+    return emptyVector;
+}
+
+const set<string>& BattleDeckLayer::getPickedCards() const
+{
+    return _pickedCards;
+}
+
+UnitClass BattleDeckLayer::getUnitClass(const string& name) const
+{
+    for (auto iter = begin(allCards); iter != end(allCards); ++iter) {
+        UnitClass uc = iter->first;
+        const set<string>& set = iter->second;
+        if (set.find(name) != end(set)) {
+            return uc;
+        }
+    }
+    
+    return UNIT_CLASS_COUNT;
+}
+
+void BattleDeckLayer::loadData(UnitClass uc)
+{
+    if (0 == _pickedCards.size()) {
+        const string data = UserDefaultsDataManager::getInstance()->getStringForKey(pickedCardsKey, "");
+        if (data.length() > 0) {
+            vector<string> results;
+            Utils::split(results, data, ",", "");
+            for (int i = 0; i < results.size(); ++i) {
+                _pickedCards.insert(results.at(i));
+            }
+        }
+    }
+    
+    if (allCards.find(uc) != allCards.end()) {
+        const set<string>& total = allCards.at(uc);
+        if (_candidateCards.find(uc) == _candidateCards.end()) {
+            _candidateCards.insert(make_pair(uc, vector<string>()));
+        }
+        
+        vector<string>& vec = _candidateCards.at(uc);
+        vec.clear();
+        
+        set_difference(begin(total), end(total), begin(_pickedCards), end(_pickedCards), inserter(vec, begin(vec)));
+        sort(begin(vec), end(vec), sortByName);
+    }
+}
+
+void BattleDeckLayer::saveData()
+{
+    string data;
+    for (auto iter = begin(_pickedCards); iter != end(_pickedCards); ++iter) {
+        data += *iter + ",";
+    }
+    data.pop_back();
+    
+    UserDefaultsDataManager::getInstance()->setStringForKey(pickedCardsKey, data);
+}
+
+void BattleDeckLayer::extract(UnitClass uc, const string& name)
+{
+    // 1. erase
+    if (_candidateCards.find(uc) != _candidateCards.end()) {
+        vector<string>& vec = _candidateCards.at(uc);
+        eraseFromVector(vec, name);
+    }
+    
+    // 2. insert
+    _pickedCards.insert(name);
+//    sort(begin(_pickedCards), end(_pickedCards), sortByUnitClass);
+}
+
+void BattleDeckLayer::insert(const string& name)
+{
+    // 1. erase
+    _pickedCards.erase(name);
+    
+    // 2. insert
+    UnitClass uc = getUnitClass(name);
+    
+    if (UNIT_CLASS_COUNT != uc) {
+        if (_candidateCards.find(uc) == _candidateCards.end()) {
+            _candidateCards.insert(make_pair(uc, vector<string>()));
+        }
+        
+        vector<string>& vec = _candidateCards.at(uc);
+        vec.push_back(name);
+        sort(begin(vec), end(vec), sortByName);
+    }
+}
+
+void BattleDeckLayer::exchange(const string& picked, UnitClass uc, const string& candidate)
+{
+    extract(uc, candidate);
+    insert(picked);
 }

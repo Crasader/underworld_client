@@ -22,9 +22,9 @@ class BattleDeckTestNodeObserver
 {
 public:
     virtual ~BattleDeckTestNodeObserver() {}
-    virtual void onBattleDeckTestNodeTouchedBegan(const std::string& name) = 0;
-    virtual void onBattleDeckTestNodeTouchedEnded(const std::string& name, bool isValid) = 0;
-    virtual void onBattleDeckTestNodeTouchedCanceled(const std::string& name) = 0;
+    virtual void onBattleDeckTestNodeTouchedBegan(BattleDeckTestNode* node) = 0;
+    virtual void onBattleDeckTestNodeTouchedEnded(BattleDeckTestNode* node, bool isValid) = 0;
+    virtual void onBattleDeckTestNodeTouchedCanceled(BattleDeckTestNode* node) = 0;
 };
 
 class BattleDeckTestNode: public Node

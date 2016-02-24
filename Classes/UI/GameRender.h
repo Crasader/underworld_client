@@ -117,7 +117,6 @@ private:
     void restartGame();
     void tick(float dt);
     void updateResources();
-    int getRemainingWaveTime() const;
     void stopAllTimers();
     void onGameOver();
     
@@ -167,13 +166,8 @@ private:
     bool _paused;
     bool _isGameOver;
     int _remainingTime;
-    int _goldCount;
-    int _woodCount;
-#if false
-    int _population;
-    int _nextWave;
-    int _nextWaveTotalTime;
-#endif
+    float _goldCount;
+    float _woodCount;
     bool _hasUpdatedBattleCampInfos;
 };
 

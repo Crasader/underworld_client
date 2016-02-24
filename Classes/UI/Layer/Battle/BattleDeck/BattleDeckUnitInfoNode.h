@@ -32,6 +32,7 @@ public:
     
     void registerObserver(BattleDeckUnitInfoNodeObserver *observer);
     void update(const UnderWorld::Core::UnitBase* unit);
+    void update(const std::string& name);
     
 protected:
     BattleDeckUnitInfoNode();

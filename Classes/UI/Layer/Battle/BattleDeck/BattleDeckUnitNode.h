@@ -26,9 +26,9 @@ class BattleDeckUnitNodeObserver
 {
 public:
     virtual ~BattleDeckUnitNodeObserver() {}
-    virtual void onBattleDeckUnitNodeTouchedBegan(const UnderWorld::Core::Camp* camp) = 0;
-    virtual void onBattleDeckUnitNodeTouchedEnded(const UnderWorld::Core::Camp* camp, bool isValid) = 0;
-    virtual void onBattleDeckUnitNodeTouchedCanceled(const UnderWorld::Core::Camp* camp) = 0;
+    virtual void onBattleDeckUnitNodeTouchedBegan(BattleDeckUnitNode* node) = 0;
+    virtual void onBattleDeckUnitNodeTouchedEnded(BattleDeckUnitNode* node, bool isValid) = 0;
+    virtual void onBattleDeckUnitNodeTouchedCanceled(BattleDeckUnitNode* node) = 0;
 };
 
 class BattleDeckUnitNode: public Node

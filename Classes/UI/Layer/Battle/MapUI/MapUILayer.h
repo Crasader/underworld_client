@@ -57,11 +57,7 @@ public:
     void updateMyHpProgress(int progress);
     void updateOpponentsHpProgress(int progress);
     void updateRemainingTime(int time);
-#if false
-    void updateWaveTime(int time, int totalTime);
-    void updatePopulation(int count, int maxCount);
-#endif
-    void updateGoldAndWood(int gold, int wood);
+    void updateGoldAndWood(int gold, float decimalGold, int wood, float decimalWood);
     void pauseGame();
     void resumeGame();
     bool isPointInTableView(const Point& point);
@@ -115,11 +111,6 @@ private:
     Label *_timeLabel;
     BattleResourceNode *_goldResourceNode;
     BattleResourceNode *_woodResourceNode;
-#if false
-    Label *_nextWaveTimeLabel;
-    ProgressTimer *_nextWaveProgress;
-    Label *_populationLabel;
-#endif
     ProgressTimer *_myHpProgress;
     Label *_myHpPercentageLabel;
     ProgressTimer *_opponentsHpProgress;
