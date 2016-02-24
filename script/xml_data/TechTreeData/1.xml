@@ -1,341 +1,337 @@
 <root>
     <!-- ==========单位&势力配置========== -->
-    <faction name="狼人族">
-        <unit name="狼人基地" class="core" hp="6000" mp="0" hpregen="0" mpregen="0" field="0" armor_type="城甲" armor="600" attacksight="600" size="300" height="100" render_key="狼人基地">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="0.0" perform="10.0" cd="0.0" occupy="0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="2.0" min_damage="30" max_damage="120" deliver_class="physical" damage_distance="faraway" range="600" fields="3">
-                <bullet speed="600" size="0"/>
-            </skill>
-        </unit>
-        <unit name="狼人箭塔" class="building" hp="2400" mp="0" hpregen="0" mpregen="0" field="0" armor_type="城甲" armor="400" attacksight="600" size="100" height="50" render_key="狼人箭塔" reward="金子:200">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="0.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="56" max_damage="64" deliver_class="physical" damage_distance="faraway" range="600" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-        </unit>
-        <!-- 辉月狼人 -->
-        <!-- 狼人弓箭手 -->
-        <unit name="疾风弓手" class="warrior" race="辉月狼人" hp="210" mp="0" hpregen="0" mpregen="0" field="0" armor_type="轻甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0" attacksight="500" size="48" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" render_key="狼人射手">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="28" max_damage="32" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="疾风弓手_作战" class="warrior" race="辉月狼人" hp="300" mp="0" hpregen="0" mpregen="0" field="0" armor_type="轻甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" passive_names="复合弓;弓手经验;等级上升" render_key="狼人射手">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="42" max_damage="48" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="疾风弓手_激流" class="warrior" race="辉月狼人" hp="300" mp="0" hpregen="0" mpregen="0" field="0" armor_type="轻甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" passive_names="激流射术;瞄准要害;等级上升" render_key="狼人射手">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="42" max_damage="48" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="疾风弓手_掌握" class="warrior" race="辉月狼人" hp="300" mp="0" hpregen="0" mpregen="0" field="0" armor_type="轻甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" passive_names="致残射击;等级上升" render_key="狼人射手">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="42" max_damage="48" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="疾风弓手_克制" class="warrior" race="辉月狼人" hp="300" mp="0" hpregen="0" mpregen="0" field="0" armor_type="轻甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" passive_names="恶魔克星;等级上升" render_key="狼人射手">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="42" max_damage="48" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="疾风弓手_精英" class="warrior" race="辉月狼人" hp="450" mp="0" hpregen="0" mpregen="0" field="0" armor_type="轻甲" armor="200" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" passive_names="身手敏捷_等级1;多重箭_等级1;等级上升_精英" render_key="狼人射手">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="55" max_damage="65" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <!-- 狼人巫师 -->
-        <unit name="辉月侍僧" class="warrior" race="辉月狼人" hp="300" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="24" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" spell_names="基础治疗术" render_key="狼人巫师">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="16" max_damage="24" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="辉月侍僧_作战" class="warrior" race="辉月狼人" hp="450" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="24" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" spell_names="基础治疗术" passive_names="复合弓;击落;等级上升" render_key="狼人巫师">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="辉月侍僧_激流" class="warrior" race="辉月狼人" hp="450" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="24" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" spell_names="基础治疗术;顺风之力" passive_names="激流射术;等级上升" render_key="狼人巫师">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="辉月侍僧_掌握" class="warrior" race="辉月狼人" hp="450" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="24" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" spell_names="基础治疗术;枷锁" passive_names="等级上升" render_key="狼人巫师">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="辉月侍僧_月神" class="warrior" race="辉月狼人" hp="450" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="24" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" spell_names="基础治疗术;月神能量" passive_names="等级上升" render_key="狼人巫师">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="辉月侍僧_入侵" class="warrior" race="辉月狼人" hp="450" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="24" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" spell_names="基础治疗术;辉月印记" passive_names="等级上升" render_key="狼人巫师">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <!-- 狼人步兵 -->
-        <unit name="轻装武士" class="warrior" race="辉月狼人" hp="600" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="200" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:6" max_level="100" produce="木头:0.24;金子:0.12" reward="金子:0.18f" recover_span="12.0f" passive_names="肉搏术" render_key="狼人步兵">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.2" perform="0.0" cd="1.5" min_damage="28" max_damage="32" deliver_class="physical" damage_distance="nearby" range="48" fields="1">
-                <bullet speed="600" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="轻装武士_入侵" class="warrior" race="辉月狼人" hp="600" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="200" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:6" max_level="100" produce="木头:0.24;金子:0.12" reward="金子:0.18f" recover_span="12.0f" spell_names="辉月印记_等级1" passive_names="肉搏术;投掷技巧" render_key="狼人步兵">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.2" perform="0.0" cd="1.5" min_damage="28" max_damage="32" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="轻装武士_作战" class="warrior" race="辉月狼人" hp="600" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="200" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:6" max_level="100" produce="木头:0.24;金子:0.12" reward="金子:0.18f" recover_span="12.0f" passive_names="肉搏术;狩猎;还击" render_key="狼人步兵">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.2" perform="0.0" cd="1.5" min_damage="28" max_damage="32" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="轻装武士_克制" class="warrior" race="辉月狼人" hp="600" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="200" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:6" max_level="100" produce="木头:0.24;金子:0.12" reward="金子:0.18f" recover_span="12.0f" passive_names="肉搏术;恶魔克星" render_key="狼人步兵">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.2" perform="0.0" cd="1.5" min_damage="28" max_damage="32" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <!-- 狼人魔枪手 -->
-        <unit name="流星投枪者" class="warrior" race="辉月狼人" hp="330" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="布甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:5;木头:1" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" passive_names="抗魔学识" render_key="莉莉丝">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="2.0" min_damage="20" max_damage="40" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="流星投枪者_作战" class="warrior" race="辉月狼人" hp="480" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="布甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:5;木头:1" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" spell_names="流星术" passive_names="抗魔学识;复合弓;等级上升" render_key="莉莉丝">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="2.0" min_damage="30" max_damage="60" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="流星投枪者_激流" class="warrior" race="辉月狼人" hp="480" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="布甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:5;木头:1" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" passive_names="抗魔学识;激流射术;流星打击;等级上升" render_key="莉莉丝">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="2.0" min_damage="30" max_damage="60" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="流星投枪者_掌握" class="warrior" race="辉月狼人" hp="480" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="布甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:5;木头:1" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" passive_names="抗魔学识;淬毒标枪;等级上升" render_key="莉莉丝">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="2.0" min_damage="30" max_damage="60" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="流星投枪者_月神" class="warrior" race="辉月狼人" hp="480" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="布甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:5;木头:1" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" spell_names="荒野祈福" passive_names="抗魔学识;等级上升" render_key="莉莉丝">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="2.0" min_damage="30" max_damage="60" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <!-- TODO 驱散 -->
-        <unit name="流星投枪者_入侵" class="warrior" race="辉月狼人" hp="480" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="布甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:5;木头:1" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" passive_names="抗魔学识;等级上升" render_key="莉莉丝">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="2.0" min_damage="30" max_damage="60" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <!-- 狼人飞骑兵 -->
-        <unit name="巨鹰" class="warrior" race="辉月狼人" hp="750" mp="0" hpregen="0" mpregen="0" field="1" armor_type="无甲" armor="0" armor_preference="布甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="12" height="0" cost="金子:8;木头:2" max_level="100" produce="木头:0.32;金子:0.16" reward="金子:0.24f" recover_span="12.0f" render_key="天空女神">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.2" min_damage="110" max_damage="130" deliver_class="physical" damage_distance="nearby" range="48" fields="2"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.2" min_damage="22" max_damage="30" deliver_class="physical" damage_distance="faraway" range="250" fields="1">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="巨鹰_激流" class="warrior" race="辉月狼人" hp="750" mp="0" hpregen="0" mpregen="0" field="1" armor_type="无甲" armor="0" armor_preference="布甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="12" height="0" cost="金子:8;木头:2" max_level="100" produce="木头:0.32;金子:0.16" reward="金子:0.24f" recover_span="12.0f" spell_names="激流之涌" render_key="天空女神">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.2" min_damage="110" max_damage="130" deliver_class="physical" damage_distance="nearby" range="48" fields="2"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.2" min_damage="22" max_damage="30" deliver_class="physical" damage_distance="faraway" range="250" fields="1">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="巨鹰_精英" class="warrior" race="辉月狼人" hp="1200" mp="0" hpregen="0" mpregen="0" field="1" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="12" height="0" cost="金子:8;木头:2" max_level="100" produce="木头:0.32;金子:0.16" reward="金子:0.24f" recover_span="12.0f" passive_names="等级上升_精英;重型改造;空中重型溅射;焚烧" render_key="天空女神">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="2.8" min_damage="120" max_damage="150" deliver_class="physical" damage_distance="faraway" range="250" fields="1">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <!-- 狼人投石车 -->
-        <unit name="攻城弩" class="warrior" race="辉月狼人" hp="420" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="500" armor_preference="城甲" armor_preference_factor="1.4f" magical_defense="0.f" attacksight="700" size="72" height="0" cost="金子:9" max_level="100" produce="木头:0.36;金子:0.18" reward="金子:0.27f" recover_span="12.0f" render_key="机械甲虫">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="2.8" min_damage="40" max_damage="80" deliver_class="physical" damage_distance="faraway" range="700" fields="1">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="攻城弩_作战" class="warrior" race="辉月狼人" hp="420" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="500" armor_preference="城甲" armor_preference_factor="1.4f" magical_defense="0.f" attacksight="700" size="72" height="0" cost="金子:9" max_level="100" produce="木头:0.36;金子:0.18" reward="金子:0.27f" recover_span="12.0f" passive_names="复合弓;远程轻型溅射" render_key="机械甲虫">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="2.8" min_damage="40" max_damage="80" deliver_class="physical" damage_distance="faraway" range="700" fields="1">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="攻城弩_激流" class="warrior" race="辉月狼人" hp="420" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="500" armor_preference="城甲" armor_preference_factor="1.4f" magical_defense="0.f" attacksight="700" size="72" height="0" cost="金子:9" max_level="100" produce="木头:0.36;金子:0.18" reward="金子:0.27f" recover_span="12.0f" passive_names="精密结构" render_key="机械甲虫">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.4" min_damage="18" max_damage="54" deliver_class="physical" damage_distance="faraway" range="700" fields="1">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="攻城弩_入侵" class="warrior" race="辉月狼人" hp="420" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="500" armor_preference="城甲" armor_preference_factor="3.0f" magical_defense="0.f" attacksight="700" size="72" height="0" cost="金子:9" max_level="100" produce="木头:0.36;金子:0.18" reward="金子:0.27f" recover_span="12.0f" passive_names="攻城;投掷技巧" render_key="机械甲虫">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.8" min_damage="40" max_damage="80" deliver_class="physical" damage_distance="faraway" range="700" fields="1">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <!-- 狼人近战英雄 -->
-        <unit name="伊利丹" class="hero" race="辉月狼人" hp="650" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="600" armor_preference="皮甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" render_key="狼人森林之魂">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="30" max_damage="36" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="伊利丹_作战" class="hero" race="辉月狼人" hp="900" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="800" armor_preference="皮甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" passive_names="身经百战;战斗之血" render_key="狼人森林之魂">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="30" max_damage="36" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="伊利丹_入侵" class="hero" race="辉月狼人" hp="650" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="600" armor_preference="皮甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" spell_names="风暴" render_key="狼人森林之魂">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="30" max_damage="36" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <!-- todo 召唤 -->
-        <unit name="伊利丹_掌握" class="hero" race="辉月狼人" hp="650" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="600" armor_preference="皮甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" spell_names="召唤巨像" render_key="狼人森林之魂">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="30" max_damage="36" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <!-- todo 光环 -->
-        <!-- 狼人远程英雄 -->
-        <unit name="泰兰德" class="hero" race="辉月狼人" hp="400" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="300" armor_preference="无甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" passive_names="辉月光环" render_key="时光女神">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="40" max_damage="56" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="泰兰德_作战" class="hero" race="辉月狼人" hp="400" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="300" armor_preference="无甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" passive_names="辉月光环;推进光环" render_key="时光女神">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="40" max_damage="56" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="泰兰德_激流" class="hero" race="辉月狼人" hp="400" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="300" armor_preference="无甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" passive_names="辉月光环" spell_names="激流爆发" render_key="时光女神">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="40" max_damage="56" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="泰兰德_精英" class="hero" race="辉月狼人" hp="800" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="700" armor_preference="无甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" passive_names="辉月光环;等级上升_精英;身手敏捷_等级2" render_key="时光女神">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="80" max_damage="100" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-        <unit name="泰兰德_月神" class="hero" race="辉月狼人" hp="400" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="300" armor_preference="无甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" passive_names="辉月光环" spell_names="月神的恩赐" render_key="时光女神">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="40" max_damage="56" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-            <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-        </unit>
-    </faction>
-    <faction name="吸血鬼族">
-        <unit name="吸血鬼基地" class="core" hp="6000" mp="0" hpregen="0" mpregen="0" field="0" armor_type="城甲" armor="600" attacksight="600" size="300" height="0" render_key="吸血鬼核心">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="0.0" perform="10.0" cd="0.0" occupy="0"/>
-            <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="30" max_damage="120" deliver_class="physical" damage_distance="faraway" range="600" fields="3">
-                <bullet speed="600" size="0"/>
-            </skill>
-        </unit>
-        <unit name="吸血鬼箭塔" class="building" hp="2400" mp="0" hpregen="0" mpregen="0" field="0" armor_type="城甲" armor="400" attacksight="600" size="100" height="70" render_key="吸血鬼箭塔" reward="金子:100;木头:20">
-            <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-            <skill class="die" preperform="0.0" perform="10.0" cd="0.0"/>
-            <skill class="attack" preperform="0.3" perform="0.0" cd="1.0" min_damage="56" max_damage="64" deliver_class="physical" damage_distance="faraway" range="600" fields="3">
-                <bullet speed="800" size="0"/>
-            </skill>
-        </unit>
-    </faction>
+    <unit name="狼人基地" class="core" hp="6000" mp="0" hpregen="0" mpregen="0" field="0" armor_type="城甲" armor="600" attacksight="600" size="300" height="100" render_key="狼人基地">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="0.0" perform="10.0" cd="0.0" occupy="0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="2.0" min_damage="30" max_damage="120" deliver_class="physical" damage_distance="faraway" range="600" fields="3">
+            <bullet speed="600" size="0"/>
+        </skill>
+    </unit>
+    <unit name="狼人箭塔" class="building" hp="2400" mp="0" hpregen="0" mpregen="0" field="0" armor_type="城甲" armor="400" attacksight="600" size="100" height="50" render_key="狼人箭塔" reward="金子:200">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="0.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="56" max_damage="64" deliver_class="physical" damage_distance="faraway" range="600" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+    </unit>
+    <!-- 辉月狼人 -->
+    <!-- 狼人弓箭手 -->
+    <unit name="疾风弓手" class="warrior" race="辉月狼人" hp="210" mp="0" hpregen="0" mpregen="0" field="0" armor_type="轻甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0" attacksight="500" size="48" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" render_key="狼人射手">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="28" max_damage="32" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="疾风弓手_作战" class="warrior" race="辉月狼人" hp="300" mp="0" hpregen="0" mpregen="0" field="0" armor_type="轻甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" passive_names="复合弓;弓手经验;等级上升" render_key="狼人射手">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="42" max_damage="48" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="疾风弓手_激流" class="warrior" race="辉月狼人" hp="300" mp="0" hpregen="0" mpregen="0" field="0" armor_type="轻甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" passive_names="激流射术;瞄准要害;等级上升" render_key="狼人射手">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="42" max_damage="48" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="疾风弓手_掌握" class="warrior" race="辉月狼人" hp="300" mp="0" hpregen="0" mpregen="0" field="0" armor_type="轻甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" passive_names="致残射击;等级上升" render_key="狼人射手">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="42" max_damage="48" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="疾风弓手_克制" class="warrior" race="辉月狼人" hp="300" mp="0" hpregen="0" mpregen="0" field="0" armor_type="轻甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" passive_names="恶魔克星;等级上升" render_key="狼人射手">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="42" max_damage="48" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="疾风弓手_精英" class="warrior" race="辉月狼人" hp="450" mp="0" hpregen="0" mpregen="0" field="0" armor_type="轻甲" armor="200" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" passive_names="身手敏捷_等级1;多重箭_等级1;等级上升_精英" render_key="狼人射手">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="55" max_damage="65" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <!-- 狼人巫师 -->
+    <unit name="辉月侍僧" class="warrior" race="辉月狼人" hp="300" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="24" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" spell_names="基础治疗术" render_key="狼人巫师">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="16" max_damage="24" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="辉月侍僧_作战" class="warrior" race="辉月狼人" hp="450" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="24" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" spell_names="基础治疗术" passive_names="复合弓;击落;等级上升" render_key="狼人巫师">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="辉月侍僧_激流" class="warrior" race="辉月狼人" hp="450" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="24" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" spell_names="基础治疗术;顺风之力" passive_names="激流射术;等级上升" render_key="狼人巫师">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="辉月侍僧_掌握" class="warrior" race="辉月狼人" hp="450" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="24" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" spell_names="基础治疗术;枷锁" passive_names="等级上升" render_key="狼人巫师">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="辉月侍僧_月神" class="warrior" race="辉月狼人" hp="450" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="24" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" spell_names="基础治疗术;月神能量" passive_names="等级上升" render_key="狼人巫师">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="辉月侍僧_入侵" class="warrior" race="辉月狼人" hp="450" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="24" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" spell_names="基础治疗术;辉月印记" passive_names="等级上升" render_key="狼人巫师">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <!-- 狼人步兵 -->
+    <unit name="轻装武士" class="warrior" race="辉月狼人" hp="600" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="200" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:6" max_level="100" produce="木头:0.24;金子:0.12" reward="金子:0.18f" recover_span="12.0f" passive_names="肉搏术" render_key="狼人步兵">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.2" perform="0.0" cd="1.5" min_damage="28" max_damage="32" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="轻装武士_入侵" class="warrior" race="辉月狼人" hp="600" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="200" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:6" max_level="100" produce="木头:0.24;金子:0.12" reward="金子:0.18f" recover_span="12.0f" spell_names="辉月印记_等级1" passive_names="肉搏术;投掷技巧" render_key="狼人步兵">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.2" perform="0.0" cd="1.5" min_damage="28" max_damage="32" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="轻装武士_作战" class="warrior" race="辉月狼人" hp="600" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="200" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:6" max_level="100" produce="木头:0.24;金子:0.12" reward="金子:0.18f" recover_span="12.0f" passive_names="肉搏术;狩猎;还击" render_key="狼人步兵">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.2" perform="0.0" cd="1.5" min_damage="28" max_damage="32" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="轻装武士_克制" class="warrior" race="辉月狼人" hp="600" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="200" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:6" max_level="100" produce="木头:0.24;金子:0.12" reward="金子:0.18f" recover_span="12.0f" passive_names="肉搏术;恶魔克星" render_key="狼人步兵">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.2" perform="0.0" cd="1.5" min_damage="28" max_damage="32" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <!-- 狼人魔枪手 -->
+    <unit name="流星投枪者" class="warrior" race="辉月狼人" hp="330" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:5;木头:1" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" passive_names="抗魔学识" render_key="莉莉丝">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="2.0" min_damage="20" max_damage="40" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="流星投枪者_作战" class="warrior" race="辉月狼人" hp="480" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:5;木头:1" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" spell_names="流星术" passive_names="抗魔学识;复合弓;等级上升" render_key="莉莉丝">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="2.0" min_damage="30" max_damage="60" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="流星投枪者_激流" class="warrior" race="辉月狼人" hp="480" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:5;木头:1" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" passive_names="抗魔学识;激流射术;流星打击;等级上升" render_key="莉莉丝">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="2.0" min_damage="30" max_damage="60" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="流星投枪者_掌握" class="warrior" race="辉月狼人" hp="480" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:5;木头:1" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" passive_names="抗魔学识;淬毒标枪;等级上升" render_key="莉莉丝">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="2.0" min_damage="30" max_damage="60" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="流星投枪者_月神" class="warrior" race="辉月狼人" hp="480" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:5;木头:1" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" spell_names="荒野祈福" passive_names="抗魔学识;等级上升" render_key="莉莉丝">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="2.0" min_damage="30" max_damage="60" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <!-- TODO 驱散 -->
+    <unit name="流星投枪者_入侵" class="warrior" race="辉月狼人" hp="480" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:5;木头:1" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" passive_names="抗魔学识;等级上升" render_key="莉莉丝">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="2.0" min_damage="30" max_damage="60" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <!-- 狼人飞骑兵 -->
+    <unit name="巨鹰" class="warrior" race="辉月狼人" hp="750" mp="0" hpregen="0" mpregen="0" field="1" armor_type="无甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="12" height="0" cost="金子:8;木头:2" max_level="100" produce="木头:0.32;金子:0.16" reward="金子:0.24f" recover_span="12.0f" render_key="天空女神">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.2" min_damage="110" max_damage="130" deliver_class="physical" damage_distance="nearby" range="48" fields="2"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.2" min_damage="22" max_damage="30" deliver_class="physical" damage_distance="faraway" range="250" fields="1">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="巨鹰_激流" class="warrior" race="辉月狼人" hp="750" mp="0" hpregen="0" mpregen="0" field="1" armor_type="无甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="12" height="0" cost="金子:8;木头:2" max_level="100" produce="木头:0.32;金子:0.16" reward="金子:0.24f" recover_span="12.0f" spell_names="激流之涌" render_key="天空女神">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.2" min_damage="110" max_damage="130" deliver_class="physical" damage_distance="nearby" range="48" fields="2"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.2" min_damage="22" max_damage="30" deliver_class="physical" damage_distance="faraway" range="250" fields="1">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="巨鹰_精英" class="warrior" race="辉月狼人" hp="1200" mp="0" hpregen="0" mpregen="0" field="1" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="12" height="0" cost="金子:8;木头:2" max_level="100" produce="木头:0.32;金子:0.16" reward="金子:0.24f" recover_span="12.0f" passive_names="等级上升_精英;重型改造;空中重型溅射;焚烧" render_key="天空女神">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="2.8" min_damage="120" max_damage="150" deliver_class="physical" damage_distance="faraway" range="250" fields="1">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <!-- 狼人投石车 -->
+    <unit name="攻城弩" class="warrior" race="辉月狼人" hp="420" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="500" armor_preference="城甲" armor_preference_factor="1.4f" magical_defense="0.f" attacksight="700" size="72" height="0" cost="金子:9" max_level="100" produce="木头:0.36;金子:0.18" reward="金子:0.27f" recover_span="12.0f" render_key="机械甲虫">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="2.8" min_damage="40" max_damage="80" deliver_class="physical" damage_distance="faraway" range="700" fields="1">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="攻城弩_作战" class="warrior" race="辉月狼人" hp="420" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="500" armor_preference="城甲" armor_preference_factor="1.4f" magical_defense="0.f" attacksight="700" size="72" height="0" cost="金子:9" max_level="100" produce="木头:0.36;金子:0.18" reward="金子:0.27f" recover_span="12.0f" passive_names="复合弓;远程轻型溅射" render_key="机械甲虫">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="2.8" min_damage="40" max_damage="80" deliver_class="physical" damage_distance="faraway" range="700" fields="1">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="攻城弩_激流" class="warrior" race="辉月狼人" hp="420" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="500" armor_preference="城甲" armor_preference_factor="1.4f" magical_defense="0.f" attacksight="700" size="72" height="0" cost="金子:9" max_level="100" produce="木头:0.36;金子:0.18" reward="金子:0.27f" recover_span="12.0f" passive_names="精密结构" render_key="机械甲虫">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.4" min_damage="18" max_damage="54" deliver_class="physical" damage_distance="faraway" range="700" fields="1">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="攻城弩_入侵" class="warrior" race="辉月狼人" hp="420" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="500" armor_preference="城甲" armor_preference_factor="3.0f" magical_defense="0.f" attacksight="700" size="72" height="0" cost="金子:9" max_level="100" produce="木头:0.36;金子:0.18" reward="金子:0.27f" recover_span="12.0f" passive_names="攻城;投掷技巧" render_key="机械甲虫">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.8" min_damage="40" max_damage="80" deliver_class="physical" damage_distance="faraway" range="700" fields="1">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <!-- 狼人近战英雄 -->
+    <unit name="伊利丹" class="hero" race="辉月狼人" hp="650" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="600" armor_preference="皮甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" render_key="狼人森林之魂">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="30" max_damage="36" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="伊利丹_作战" class="hero" race="辉月狼人" hp="900" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="800" armor_preference="皮甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" passive_names="身经百战;战斗之血" render_key="狼人森林之魂">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="30" max_damage="36" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="伊利丹_入侵" class="hero" race="辉月狼人" hp="650" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="600" armor_preference="皮甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" spell_names="风暴" render_key="狼人森林之魂">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="30" max_damage="36" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <!-- todo 召唤 -->
+    <unit name="伊利丹_掌握" class="hero" race="辉月狼人" hp="650" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="600" armor_preference="皮甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" spell_names="召唤巨像" render_key="狼人森林之魂">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="30" max_damage="36" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <!-- todo 光环 -->
+    <!-- 狼人远程英雄 -->
+    <unit name="泰兰德" class="hero" race="辉月狼人" hp="400" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="300" armor_preference="无甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" passive_names="辉月光环" render_key="时光女神">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="40" max_damage="56" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="泰兰德_作战" class="hero" race="辉月狼人" hp="400" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="300" armor_preference="无甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" passive_names="辉月光环;推进光环" render_key="时光女神">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="40" max_damage="56" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="泰兰德_激流" class="hero" race="辉月狼人" hp="400" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="300" armor_preference="无甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" passive_names="辉月光环" spell_names="激流爆发" render_key="时光女神">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="40" max_damage="56" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="泰兰德_精英" class="hero" race="辉月狼人" hp="800" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="700" armor_preference="无甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" passive_names="辉月光环;等级上升_精英;身手敏捷_等级2" render_key="时光女神">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="80" max_damage="100" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="泰兰德_月神" class="hero" race="辉月狼人" hp="400" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="300" armor_preference="无甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" passive_names="辉月光环" spell_names="月神的恩赐" render_key="时光女神">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="40" max_damage="56" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
+    </unit>
+    <unit name="吸血鬼基地" class="core" hp="6000" mp="0" hpregen="0" mpregen="0" field="0" armor_type="城甲" armor="600" attacksight="600" size="300" height="0" render_key="吸血鬼核心">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="0.0" perform="10.0" cd="0.0" occupy="0"/>
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="30" max_damage="120" deliver_class="physical" damage_distance="faraway" range="600" fields="3">
+            <bullet speed="600" size="0"/>
+        </skill>
+    </unit>
+    <unit name="吸血鬼箭塔" class="building" hp="2400" mp="0" hpregen="0" mpregen="0" field="0" armor_type="城甲" armor="400" attacksight="600" size="100" height="70" render_key="吸血鬼箭塔" reward="金子:100;木头:20">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="0.0" perform="10.0" cd="0.0"/>
+        <skill class="attack" preperform="0.3" perform="0.0" cd="1.0" min_damage="56" max_damage="64" deliver_class="physical" damage_distance="faraway" range="600" fields="3">
+            <bullet speed="800" size="0"/>
+        </skill>
+    </unit>
+    <faction name="狼人族"/>
+    <faction name="吸血鬼族"/>
     <!-- ==========资源类别配置========== -->
     <resource name="金子" class="consumable"/>
     <resource name="木头" class="consumable"/>
