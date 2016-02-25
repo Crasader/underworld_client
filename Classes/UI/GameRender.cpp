@@ -137,6 +137,7 @@ void GameRender::render(const Game* game)
             
             if (_mapUILayer) {
                 _mapUILayer->reloadTable(kUnitClass_Hero);
+                _mapUILayer->reloadTable(kUnitClass_Warrior);
             }
         }
     }
@@ -828,7 +829,6 @@ void GameRender::updateResources()
         const TechTree* techTree = world->getTechTree();
         const Faction* faction = world->getThisFaction();
         const int count = techTree->getResourceTypeCount();
-        bool update(false);
         for (int i = 0; i < count; ++i) {
             const UnderWorld::Core::ResourceType* resourceType = techTree->getResourceTypeByIndex(i);
             const Resource* resource = faction->getResource(resourceType);
@@ -840,22 +840,16 @@ void GameRender::updateResources()
                 const float decimalCnt = resource->getBalanceFloat();
                 if (name == RES_NAME_GOLD) {
                     if (_goldCount != decimalCnt) {
-                        update = true;
                         _goldCount = decimalCnt;
                         _mapUILayer->updateGold(cnt, decimalCnt - cnt);
                     }
                 } else if (name == RES_NAME_WOOD) {
                     if (_woodCount != decimalCnt) {
-                        update = true;
                         _woodCount = decimalCnt;
                         _mapUILayer->updateWood(cnt, decimalCnt - cnt);
                     }
                 }
             }
-        }
-        
-        if (update) {
-            _mapUILayer->reloadTable(kUnitClass_Warrior);
         }
     }
 }
