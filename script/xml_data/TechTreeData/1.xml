@@ -443,21 +443,21 @@
     <passive alias="身手敏捷" name="身手敏捷_等级1" level="1" desc="有低概率闪避物理攻击">
         <addon>
             <feature_group determine_timing="be_attack" probability="0.2f" conditions="type:deliver_class;target:damage;condition:is:physical">
-                    <feature_item effect_timing="be_attack"> 
-                        <feature type="miss"/>
-                    </feature_item>
-                </feature_group>
+                <feature_item effect_timing="be_attack">
+                    <feature type="miss"/>
+                </feature_item>
+            </feature_group>
         </addon>
-    </passive> 
+    </passive>
     <passive alias="身手敏捷" name="身手敏捷_等级2" level="2" desc="有低概率闪避物理攻击">
         <addon>
             <feature_group determine_timing="be_attack" probability="0.3f" conditions="type:deliver_class;target:damage;condition:is:physical">
-                    <feature_item effect_timing="be_attack"> 
-                        <feature type="miss"/>
-                    </feature_item>
-                </feature_group>
+                <feature_item effect_timing="be_attack">
+                    <feature type="miss"/>
+                </feature_item>
+            </feature_group>
         </addon>
-    </passive> 
+    </passive>
     <!-- 多重箭 -->
     <passive alias="多重箭" name="多重箭_等级1" level="1" buff_types="多重箭_持有者增益效果_等级1" desc="同时攻击3个目标"/>
     <passive alias="多重箭" name="多重箭_等级2" level="1" buff_types="多重箭_持有者增益效果_等级2" desc="同时攻击7个目标"/>
@@ -465,10 +465,10 @@
     <passive alias="击落" name="击落" level="1" desc="对空中目标攻击力增加200%">
         <addon>
             <feature_group determine_timing="attack" conditions="type:field_type;target:opposite;condition:is:air">
-                    <feature_item effect_timing="settle_attack_damage_r1">
-                        <feature type="damage_enhance" value="p:2.0f"/>
-                    </feature_item>
-               </feature_group> 
+                <feature_item effect_timing="settle_attack_damage_r1">
+                    <feature type="damage_enhance" value="p:2.0f"/>
+                </feature_item>
+            </feature_group>
         </addon>
     </passive>
     <!-- 肉搏术 -->

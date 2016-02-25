@@ -11,17 +11,26 @@
         <event>
             <event_trigger class="schedule" time="0"/>
             <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="100"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="金子" amount="10"/>
+        </event>
+        <event>
+            <event_trigger class="schedule" time="0"/>
+            <event_effect class="alter_resource" map_index="1" resource_name="金子" amount="10"/>
         </event>
     </schedule_events>
     <loop_events>
         <event>
-            <event_trigger class="loop" time="1"/>
-            <event_effect class="alter_resource" map_index="0" resource_name="金子" amount="0.1"/>
+            <event_trigger class="loop" time="1" start_time="1" end_time="300"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="金子" amount="0.3f"/>
         </event>
         <event>
-            <event_trigger class="loop" time="30"/>
-            <event_effect class="add_unit" map_index="1" position="3000,600">
-                <unit_setting name="轻装武士"/>
+            <event_trigger class="loop" time="1" start_time="1" end_time="300"/>
+            <event_effect class="alter_resource" map_index="1" resource_name="金子" amount="0.3f"/>
+        </event>
+        <event>
+            <event_trigger class="loop" time="7" start_time="10" end_time="600"/>
+            <event_effect class="add_unit" map_index="1" position="3500,600">
+                <unit_setting name="疾风弓手"/>
             </event_effect>
         </event>
     </loop_events>
