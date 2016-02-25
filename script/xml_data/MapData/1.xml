@@ -13,9 +13,9 @@
             <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="100"/>
         </event>
         <event>
-            <event_trigger class="schedule" time="5"/>
+            <event_trigger class="schedule" time="0"/>
             <event_effect class="add_unit" map_index="1" position="3000,600">
-                <unit_setting name="轻装武士"/>
+                <unit_setting name="伊利丹_作战"/>
             </event_effect>
         </event>
     </schedule_events>
@@ -25,9 +25,9 @@
             <event_effect class="alter_resource" map_index="0" resource_name="金子" amount="0.1"/>
         </event>
         <event>
-            <event_trigger class="loop" time="30"/>
+            <event_trigger class="loop" time="40"/>
             <event_effect class="add_unit" map_index="1" position="3000,600">
-                <unit_setting name="轻装武士"/>
+                <unit_setting name="伊利丹_作战"/>
             </event_effect>
         </event>
     </loop_events>

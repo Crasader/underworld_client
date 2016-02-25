@@ -68,7 +68,7 @@
     <unit name="辉月侍僧" class="warrior" race="辉月狼人" hp="300" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="24" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" spell_names="基础治疗术" render_key="狼人巫师">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="16" max_damage="24" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="16" max_damage="24" deliver_class="magical" damage_distance="faraway" range="500" fields="3">
             <bullet speed="800" size="0"/>
         </skill>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
@@ -76,7 +76,7 @@
     <unit name="辉月侍僧_作战" class="warrior" race="辉月狼人" hp="450" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="24" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" spell_names="基础治疗术" passive_names="复合弓;击落;等级上升" render_key="狼人巫师">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="magical" damage_distance="faraway" range="500" fields="3">
             <bullet speed="800" size="0"/>
         </skill>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
@@ -84,7 +84,7 @@
     <unit name="辉月侍僧_激流" class="warrior" race="辉月狼人" hp="450" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="24" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" spell_names="基础治疗术;顺风之力" passive_names="激流射术;等级上升" render_key="狼人巫师">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="magical" damage_distance="faraway" range="500" fields="3">
             <bullet speed="800" size="0"/>
         </skill>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
@@ -92,7 +92,7 @@
     <unit name="辉月侍僧_掌握" class="warrior" race="辉月狼人" hp="450" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="24" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" spell_names="基础治疗术;枷锁" passive_names="等级上升" render_key="狼人巫师">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="magical" damage_distance="faraway" range="500" fields="3">
             <bullet speed="800" size="0"/>
         </skill>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
@@ -100,7 +100,7 @@
     <unit name="辉月侍僧_月神" class="warrior" race="辉月狼人" hp="450" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="24" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" spell_names="基础治疗术;月神能量" passive_names="等级上升" render_key="狼人巫师">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="magical" damage_distance="faraway" range="500" fields="3">
             <bullet speed="800" size="0"/>
         </skill>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
@@ -108,7 +108,7 @@
     <unit name="辉月侍僧_入侵" class="warrior" race="辉月狼人" hp="450" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="重甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="24" height="0" cost="金子:5" max_level="100" produce="木头:0.2;金子:0.1" reward="金子:0.15f" recover_span="12.0f" spell_names="基础治疗术;辉月印记" passive_names="等级上升" render_key="狼人巫师">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
-        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="24" max_damage="36" deliver_class="magical" damage_distance="faraway" range="500" fields="3">
             <bullet speed="800" size="0"/>
         </skill>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
@@ -189,7 +189,7 @@
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
     </unit>
     <!-- 狼人飞骑兵 -->
-    <unit name="巨鹰" class="warrior" race="辉月狼人" hp="750" mp="0" hpregen="0" mpregen="0" field="1" armor_type="无甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="12" height="0" cost="金子:8;木头:2" max_level="100" produce="木头:0.32;金子:0.16" reward="金子:0.24f" recover_span="12.0f" render_key="天空女神">
+    <unit name="巨鹰" class="warrior" race="辉月狼人" hp="750" mp="0" hpregen="0" mpregen="0" field="1" armor_type="无甲" armor="0" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="12" height="0" cost="金子:8;木头:2" max_level="100" produce="木头:0.32;金子:0.16" reward="金子:0.24f" recover_span="12.0f" render_key="天空女神">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="0.5" perform="0.0" cd="1.2" min_damage="110" max_damage="130" deliver_class="physical" damage_distance="nearby" range="48" fields="2"/>
@@ -198,7 +198,7 @@
         </skill>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
     </unit>
-    <unit name="巨鹰_激流" class="warrior" race="辉月狼人" hp="750" mp="0" hpregen="0" mpregen="0" field="1" armor_type="无甲" armor="0" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="12" height="0" cost="金子:8;木头:2" max_level="100" produce="木头:0.32;金子:0.16" reward="金子:0.24f" recover_span="12.0f" spell_names="激流之涌" render_key="天空女神">
+    <unit name="巨鹰_激流" class="warrior" race="辉月狼人" hp="750" mp="0" hpregen="0" mpregen="0" field="1" armor_type="无甲" armor="0" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="500" size="12" height="0" cost="金子:8;木头:2" max_level="100" produce="木头:0.32;金子:0.16" reward="金子:0.24f" recover_span="12.0f" spell_names="激流之涌" render_key="天空女神">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="0.5" perform="0.0" cd="1.2" min_damage="110" max_damage="130" deliver_class="physical" damage_distance="nearby" range="48" fields="2"/>
@@ -249,26 +249,26 @@
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
     </unit>
     <!-- 狼人近战英雄 -->
-    <unit name="伊利丹" class="hero" race="辉月狼人" hp="650" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="600" armor_preference="皮甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" render_key="狼人森林之魂">
+    <unit name="伊利丹" class="hero" race="辉月狼人" hp="650" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="600" armor_preference="轻甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" render_key="狼人森林之魂">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="30" max_damage="36" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
     </unit>
-    <unit name="伊利丹_作战" class="hero" race="辉月狼人" hp="900" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="800" armor_preference="皮甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" passive_names="身经百战;战斗之血" render_key="狼人森林之魂">
+    <unit name="伊利丹_作战" class="hero" race="辉月狼人" hp="900" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="800" armor_preference="轻甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" passive_names="身经百战;战斗之血" render_key="狼人森林之魂">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="30" max_damage="36" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
     </unit>
-    <unit name="伊利丹_入侵" class="hero" race="辉月狼人" hp="650" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="600" armor_preference="皮甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" spell_names="风暴" render_key="狼人森林之魂">
+    <unit name="伊利丹_入侵" class="hero" race="辉月狼人" hp="650" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="600" armor_preference="轻甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" spell_names="风暴" render_key="狼人森林之魂">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="30" max_damage="36" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
     </unit>
     <!-- todo 召唤 -->
-    <unit name="伊利丹_掌握" class="hero" race="辉月狼人" hp="650" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="600" armor_preference="皮甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" spell_names="召唤巨像" render_key="狼人森林之魂">
+    <unit name="伊利丹_掌握" class="hero" race="辉月狼人" hp="650" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="600" armor_preference="轻甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="500" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" spell_names="召唤巨像" render_key="狼人森林之魂">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="30" max_damage="36" deliver_class="physical" damage_distance="nearby" range="48" fields="1"/>
@@ -728,7 +728,7 @@
     <buff alias="短暂晕眩_物理" name="短暂晕眩_物理" level="1" deliver_nature="enemy" deliver_class="physical" span_type="limited" span="0.5f" max_overlay="1" render_key="" unique_on_unit="0" dispelable="0">
         <buff_effect>
             <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
-            <effect class="set_state" alias="晕眩效果" state_name="stun" ref_value="0.5f"/>
+            <effect class="set_state" alias_name="晕眩效果" state_name="stun" ref_value="0.5f"/>
         </buff_effect>
     </buff>
     <!-- 定身效果 -->
@@ -736,7 +736,7 @@
     <buff alias="中等定身效果_法术" name="中等定身效果_法术" level="1" deliver_nature="enemy" deliver_class="magical" span_type="limited" span="6.0f" max_overlay="1" render_key="" unique_on_unit="0" dispelable="1">
         <buff_effect>
             <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
-            <effect class="set_state" alias="定身效果" state_name="unmoveable" ref_value="6.f"/>
+            <effect class="set_state" alias_name="定身效果" state_name="unmoveable" ref_value="6.f"/>
         </buff_effect>
     </buff>
     <!-- hot效果 -->
@@ -752,31 +752,31 @@
     <buff alias="辉月印记_减少护甲减益效果" name="辉月印记_减少护甲减益效果_等级1" level="1" deliver_nature="enemy" deliver_class="magical" span_type="limited" span="24.0f" max_overlay="1" render_key="" unique_on_unit="1" dispelable="1">
         <buff_effect>
             <buff_effect_description buff_effect_condition="loop" buff_effect_time="1.0f" is_damage="1"/>
-            <effect class="alter_attr" alias="减少护甲_固定值_可叠加" attr_name="armor" value="-400.f" ref_value="400.f"/>
+            <effect class="alter_attr" alias_name="减少护甲_固定值_可叠加" attr_name="armor" value="-400.f" ref_value="400.f"/>
         </buff_effect>
     </buff>
     <buff alias="辉月印记_减少护甲减益效果" name="辉月印记_减少护甲减益效果_等级2" level="2" deliver_nature="enemy" deliver_class="magical" span_type="limited" span="24.0f" max_overlay="1" render_key="" unique_on_unit="1" dispelable="1">
         <buff_effect>
             <buff_effect_description buff_effect_condition="loop" buff_effect_time="1.0f" is_damage="1"/>
-            <effect class="alter_attr" alias="减少护甲_固定值_可叠加" attr_name="armor" value="-800.f" ref_value="800.f"/>
+            <effect class="alter_attr" alias_name="减少护甲_固定值_可叠加" attr_name="armor" value="-800.f" ref_value="800.f"/>
         </buff_effect>
     </buff>
     <!-- dot效果 -->
-    <buff alias="毒药_减速" name="毒药_减速" level="1" deliver_nature="enemy" deliver_class="physical" span_type="limited" span="9.0f" max_overlay="1" render_key="" unique_on_unit="0" dispelable="1">
+    <buff alias="毒药_减速" name="毒药_减速" level="1" deliver_nature="enemy" deliver_class="physical" span_type="limited" span="18.0f" max_overlay="1" render_key="" unique_on_unit="0" dispelable="1">
         <buff_effect>
             <buff_effect_description buff_effect_condition="loop" buff_effect_time="1.0f" is_damage="1"/>
-            <damage damage_value="18.f" damage_nature="hurt" deliver_class="physical"/>
+            <damage damage_value="8.f" damage_nature="hurt" deliver_class="physical"/>
         </buff_effect>
         <buff_effect>
             <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
-            <effect class="alter_attr" alias="减速_百分比_不可叠加" attr_name="move_speed" value="p:-0.4f" ref_value="0.4f"/>
+            <effect class="alter_attr" alias_name="减速_百分比_不可叠加" attr_name="move_speed" value="p:-0.4f" ref_value="0.4f"/>
         </buff_effect>
     </buff>
     <!-- 减伤效果 -->
     <buff alias="身经百战_持有者增益效果" name="身经百战_持有者增益效果_等级1" level="1" deliver_nature="ally" deliver_class="physical" span_type="eternal" max_overlay="1" render_key="" unique_on_unit="1" dispelable="0">
         <buff_effect>
             <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
-            <effect class="add_feature" alias="减少伤害_百分比_不可叠加" ref_value="0.4f">
+            <effect class="add_feature" alias_name="减少伤害_百分比_不可叠加" ref_value="0.4f">
                 <feature_group determine_timing="settle_hurt_damage_r1" conditions="type:deliver_class;target:damage;condition:is:physical">
                     <feature_item effect_timing="settle_hurt_damage_r1">
                         <feature type="damage_reduce" value="p:0.4f"/>
@@ -789,7 +789,7 @@
     <buff alias="恶魔克星_持有者增益效果" name="恶魔克星_持有者增益效果_等级1" level="1" deliver_nature="ally" deliver_class="physical" span_type="eternal" max_overlay="1" render_key="" unique_on_unit="1" dispelable="0">
         <buff_effect>
             <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
-            <effect class="add_feature" alias="增加攻击_百分比_可叠加" ref_value="1.0f">
+            <effect class="add_feature" alias_name="增加攻击_百分比_可叠加" ref_value="1.0f">
                 <feature_group determine_timing="settle_attack_damage_r1" conditions="type:unit_race;target:opposite;condition:is:恶魔">
                     <feature_item effect_timing="settle_attack_damage_r1">
                         <feature type="damage_enhance" value="p:1.0f"/>
@@ -797,7 +797,7 @@
                 </feature_group>
             </effect>
             <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
-            <effect class="add_feature" alias="减少伤害_百分比_不可叠加" ref_value="0.5f">
+            <effect class="add_feature" alias_name="减少伤害_百分比_不可叠加" ref_value="0.5f">
                 <feature_group determine_timing="settle_hurt_damage_r1" conditions="type:unit_race;target:opposite;condition:is:恶魔">
                     <feature_item effect_timing="settle_hurt_damage_r1">
                         <feature type="damage_reduce" value="p:0.5f"/>
@@ -810,7 +810,7 @@
     <buff alias="多重箭_持有者增益效果" name="多重箭_持有者增益效果_等级1" level="1" deliver_nature="ally" deliver_class="physical" span_type="eternal" max_overlay="1" render_key="" unique_on_unit="1" dispelable="0">
         <buff_effect>
             <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
-            <effect class="add_feature" alias="分裂攻击效果_不可叠加" ref_value="3.0f">
+            <effect class="add_feature" alias_name="分裂攻击效果_不可叠加" ref_value="3.0f">
                 <!-- TODO 分裂攻击feature -->
                 <feature_group determine_timing="attack">
                     <feature_item effect_timing="settle_attack_damage_r1">
@@ -823,7 +823,7 @@
     <buff alias="多重箭_持有者增益效果" name="多重箭_持有者增益效果_等级2" level="1" deliver_nature="ally" deliver_class="physical" span_type="eternal" max_overlay="1" render_key="" unique_on_unit="1" dispelable="0">
         <buff_effect>
             <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
-            <effect class="add_feature" alias="分裂攻击效果_不可叠加" ref_value="7.0f">
+            <effect class="add_feature" alias_name="分裂攻击效果_不可叠加" ref_value="7.0f">
                 <!-- TODO 分裂攻击feature -->
                 <feature_group determine_timing="attack">
                     <feature_item effect_timing="settle_attack_damage_r1">
@@ -837,14 +837,14 @@
     <buff alias="顺风之力_攻速提高增益效果" name="顺风之力_攻速提高增益效果_等级1" level="1" deliver_nature="ally" deliver_class="magical" span_type="limited" span="6.0f" max_overlay="1" render_key="" unique_on_unit="1" dispelable="1">
         <buff_effect>
             <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
-            <effect class="alter_attr" alias="增加攻速_可叠加" attr_name="attack_speed" value="0.3f" ref_value="0.3f"/>
+            <effect class="alter_attr" alias_name="增加攻速_可叠加" attr_name="attack_speed" value="0.3f" ref_value="0.3f"/>
         </buff_effect>
     </buff>
     <!-- 荒野祈福 -->
     <buff alias="荒野祈福_增益效果" name="荒野祈福_增益效果" level="1" deliver_nature="ally" deliver_class="magical" span_type="eternal" max_overlay="1" render_key="" unique_on_unit="1" dispelable="1">
         <buff_effect>
             <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
-            <effect class="alter_attr" alias="增加魔抗_固定值_可叠加" attr_name="magical_defense" value="800.f" ref_value="800.f"/>
+            <effect class="alter_attr" alias_name="增加魔抗_固定值_可叠加" attr_name="magical_defense" value="800.f" ref_value="800.f"/>
         </buff_effect>
         <buff_effect>
             <buff_effect_description buff_effect_condition="loop" buff_effect_time="1.0f" is_damage="1"/>
@@ -855,7 +855,7 @@
     <buff alias="月神的恩赐_增益效果" name="月神的恩赐_增益效果" level="1" deliver_nature="ally" deliver_class="magical" span_type="limited" span="8.0f" max_overlay="1" render_key="" unique_on_unit="1" dispelable="1">
         <buff_effect>
             <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
-            <effect class="alter_attr" alias="增加护甲_固定值_可叠加" attr_name="armor" value="500.f" ref_value="500.f"/>
+            <effect class="alter_attr" alias_name="增加护甲_固定值_可叠加" attr_name="armor" value="500.f" ref_value="500.f"/>
         </buff_effect>
     </buff>
 </root>
