@@ -67,10 +67,12 @@ protected:
     ssize_t getCellsCount(TableView* table) const;
     ssize_t getCellsCount(UnderWorld::Core::UnitClass uc) const;
     Rect getRealBoundingBox(Node* node) const;
+    void reloadTable(TableView* table);
     void configTable(UnderWorld::Core::UnitClass uc, bool reload);
     void createDragNode(const std::string& name);
     void removeDragNode();
     void reloadCardDecks();
+    void selectCardOnDecks(const std::string& name);
     void onTableCardMoved(const Point& pos);
     void onTableCardEnded(const Point& pos);
     void cardBackToTable();
@@ -98,7 +100,7 @@ private:
     BattleDeckLayerObserver *_observer;
     Point _tableViewPos;
     Size _cellSize;
-    std::string _touchedCard;
+    std::pair<TableView*, std::string> _touchedCard;
     std::pair<ssize_t, std::string> _selectedTableCard;
     std::string _selectedCard;
     
