@@ -427,7 +427,7 @@ void MapLayer::addFireballSpellEffect()
 
 void MapLayer::removeAllSpellEffects()
 {
-    for (set<Node*>::iterator iter = _spellEffects.begin(); iter != _spellEffects.end(); ++iter)
+    for (auto iter = begin(_spellEffects); iter != end(_spellEffects); ++iter)
     {
         removeSpellEffect(*iter);
     }
@@ -592,7 +592,7 @@ void MapLayer::scrollChecking(float dt)
 {
     const Vec2& offset = _scrollView->getContentOffset();
     const bool show(offset == _scrollViewOffset);
-    for (set<ParticleSystemQuad*>::iterator iter = _particles.begin(); iter != _particles.end(); ++iter) {
+    for (auto iter = begin(_particles); iter != end(_particles); ++iter) {
         (*iter)->setVisible(show);
     }
     

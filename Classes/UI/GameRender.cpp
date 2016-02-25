@@ -31,8 +31,6 @@ using namespace UnderWorld::Core;
 static const string tickSelectorKey("tickSelectorKey");
 static const int battleTotalTime(600);
 
-//static const float bulletMaxHeightFactor = 1.0f / 5;
-
 GameRender::GameRender(Scene* scene, int mapId, const string& mapData, const string& opponentsAccount)
 :_observer(nullptr)
 ,_scene(scene)
@@ -303,7 +301,7 @@ void GameRender::updateUILayer()
     
     const World* world = _game->getWorld();
     if (world) {
-        for (map<int, const Unit*>::iterator iter = _cores.begin(); iter != _cores.end(); ++iter) {
+        for (auto iter = begin(_cores); iter != end(_cores); ++iter) {
             const Unit* core(iter->second);
             if (core) {
                 const int maxHp = core->getUnitBase().getMaxHp();
@@ -365,7 +363,7 @@ void GameRender::updateBattleCampInfos()
 #else
 void GameRender::updateBattleUnitInfos()
 {
-    for (map<int, vector<const UnitBase*>>::iterator iter = _newAddedUnitBases.begin(); iter != _newAddedUnitBases.end(); ++iter)
+    for (auto iter = begin(_newAddedUnitBases); iter != end(_newAddedUnitBases); ++iter)
     {
         const int factionIndex = iter->first;
         vector<const UnitBase*>& v = iter->second;
@@ -416,6 +414,10 @@ bool GameRender::isProducibleCamp(const Camp* camp) const
     const int production = camp->getProduction();
     const float cd = camp->getColdDown();
     if (production > 0 && cd <= 0) {
+        if (onMapUILayerIsHeroAlive(camp)) {
+            return false;
+        }
+        
         return true;
     }
     
@@ -426,7 +428,7 @@ const Spell* GameRender::getSpell(const Camp* camp, int idx) const
 {
     if (camp) {
         const Unit* hero = camp->getHero();
-        if (hero) {
+        if (hero && hero->getSpellCount() > idx) {
             return hero->getSpellByIndex(idx);
         }
     }
@@ -538,7 +540,7 @@ void GameRender::onMapLayerTouchEnded(const Point& point)
 }
 
 #pragma mark - MapUILayerObserver
-bool GameRender::onMapUILayerIsGameOver()
+bool GameRender::onMapUILayerIsGameOver() const
 {
     return _isGameOver;
 }
@@ -553,7 +555,20 @@ void GameRender::onMapUILayerClickedPauseButton()
     }
 }
 
-ssize_t GameRender::onMapUILayerCampsCount(UnitClass uc)
+bool GameRender::onMapUILayerIsHeroAlive(const Camp* camp) const
+{
+    const UnitClass uc = camp->getCurrentUnitType()->getUnitClass();
+    if (kUnitClass_Hero == uc) {
+        const Unit* hero = camp->getHero();
+        if (hero && hero->isAlive()) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+ssize_t GameRender::onMapUILayerCampsCount(UnitClass uc) const
 {
     if (_myCamps.find(uc) != _myCamps.end()) {
         return _myCamps.at(uc).size();
@@ -562,10 +577,10 @@ ssize_t GameRender::onMapUILayerCampsCount(UnitClass uc)
     return 0;
 }
 
-const Camp* GameRender::onMapUILayerCampAtIndex(UnitClass uc, ssize_t idx)
+const Camp* GameRender::onMapUILayerCampAtIndex(UnitClass uc, ssize_t idx) const
 {
     if (_myCamps.find(uc) != _myCamps.end()) {
-        vector<const Camp*>& vc = _myCamps.at(uc);
+        const vector<const Camp*>& vc = _myCamps.at(uc);
         if (idx < vc.size()) {
             return vc.at(idx);
         }
@@ -576,6 +591,11 @@ const Camp* GameRender::onMapUILayerCampAtIndex(UnitClass uc, ssize_t idx)
 
 void GameRender::onMapUILayerUnitSelected(const Camp* camp)
 {
+    _selectedCamp = camp;
+}
+
+void GameRender::onMapUILayerUnitTouched(const Camp* camp)
+{
 #if ENABLE_DRAG_CARD
     const Spell* spell = getSpell(camp, 0);
     if (spell) {
@@ -583,10 +603,6 @@ void GameRender::onMapUILayerUnitSelected(const Camp* camp)
         if (kSpellCastType_Self == castType) {
             castSpell(spell, camp->getHero(), Coordinate::ZERO, nullptr);
         }
-        
-        _selectedCamp = nullptr;
-    } else {
-        _selectedCamp = camp;
     }
 #else
     if (_commander && camp) {
@@ -640,12 +656,9 @@ void GameRender::onMapUILayerTouchMoved(const Camp* camp, const Point& point)
         if (_mapLayer) {
             _mapLayer->updateSpellRangeRing(realPos, 400);
         }
-    } else {
-        const bool isHero(kUnitClass_Hero == camp->getCurrentUnitType()->getUnitClass());
-        if (isProducibleCamp(camp) || isHero) {
-            if (_mapLayer) {
-                _mapLayer->updateUnitMask(camp, realPos);
-            }
+    } else if (isProducibleCamp(camp)) {
+        if (_mapLayer) {
+            _mapLayer->updateUnitMask(camp, realPos);
         }
     }
 }
@@ -664,16 +677,14 @@ void GameRender::onMapUILayerTouchEnded(const Camp* camp, const Point& point)
                 }
             }
         }
-    } else {
-        const bool isHero(kUnitClass_Hero == camp->getCurrentUnitType()->getUnitClass());
-        if (isProducibleCamp(camp) || isHero) {
-            bool success(true);
-            if (success && _mapLayer) {
-                const Coordinate& coordinate = _mapLayer->convertPoint(point);
-                CommandResult result = _commander->tryGiveCampGenerateCommand(camp, coordinate);
-                if (kCommandResult_suc == result) {
-                    _mapLayer->addPlaceUnitEffect(realPos);
-                }
+    } else if (isProducibleCamp(camp)) {
+        // TODO: remove "success"
+        bool success(true);
+        if (success && _mapLayer) {
+            const Coordinate& coordinate = _mapLayer->convertPoint(point);
+            CommandResult result = _commander->tryGiveCampGenerateCommand(camp, coordinate);
+            if (kCommandResult_suc == result) {
+                _mapLayer->addPlaceUnitEffect(realPos);
             }
         }
     }
@@ -724,7 +735,7 @@ void GameRender::removeUnit(int unitId)
         _allUnitNodes.erase(unitId);
     }
     
-    for (map<string, map<int, const Unit*>>::iterator iter = _myHeroes.begin(); iter != _myHeroes.end(); ++iter) {
+    for (auto iter = begin(_myHeroes); iter != end(_myHeroes); ++iter) {
         map<int, const Unit*>& heroes = iter->second;
         if (heroes.find(unitId) != heroes.end()) {
             heroes.erase(unitId);
@@ -738,7 +749,7 @@ void GameRender::removeUnit(int unitId)
 
 void GameRender::removeAllBullets()
 {
-    for (map<int64_t, BulletNode*>::iterator iter = _allBulletNodes.begin(); iter != _allBulletNodes.end(); ++iter) {
+    for (auto iter = begin(_allBulletNodes); iter != end(_allBulletNodes); ++iter) {
         iter->second->removeFromParent();
     }
     
@@ -748,7 +759,7 @@ void GameRender::removeAllBullets()
 
 void GameRender::removeAllUnits()
 {
-    for (map<int, UnitNode*>::iterator iter = _allUnitNodes.begin(); iter != _allUnitNodes.end(); ++iter) {
+    for (auto iter = begin(_allUnitNodes); iter != end(_allUnitNodes); ++iter) {
         iter->second->removeFromParent();
     }
     
@@ -760,9 +771,9 @@ void GameRender::removeAllUnits()
 #if ENABLE_CAMP_INFO
 void GameRender::removeBattleCampInfos()
 {
-    for (map<int, BattleCampInfos>::iterator iter = _battleCampInfos.begin(); iter != _battleCampInfos.end(); ++iter) {
+    for (auto iter = begin(_battleCampInfos); iter != end(_battleCampInfos); ++iter) {
         map<const Camp*, UnitBase*>& units = iter->second.units;
-        for (map<const Camp*, UnitBase*>::iterator uIter = units.begin(); uIter != units.end(); ++uIter) {
+        for (auto uIter = begin(units); uIter != end(units); ++uIter) {
             CC_SAFE_DELETE(uIter->second);
         }
         
@@ -771,12 +782,11 @@ void GameRender::removeBattleCampInfos()
 #else
 void GameRender::removeBattleUnitInfos()
 {
-    for (map<int, BattleUnitInfos>::iterator iter = _battleUnitInfos.begin(); iter != _battleUnitInfos.end(); ++iter) {
+    for (auto iter = begin(_battleUnitInfos); iter != end(_battleUnitInfos); ++iter) {
         map<string, UnitBase*>& units = iter->second.unitBaseMap;
-        for (map<string, UnitBase*>::iterator uIter = units.begin(); uIter != units.end(); ++uIter) {
+        for (auto uIter = begin(units); uIter != end(units); ++uIter) {
             CC_SAFE_DELETE(uIter->second);
         }
-        
     }
 }
 #endif
@@ -817,48 +827,35 @@ void GameRender::updateResources()
     if (world && _mapUILayer) {
         const TechTree* techTree = world->getTechTree();
         const Faction* faction = world->getThisFaction();
-        int count = techTree->getResourceTypeCount();
-        int populationOccpied(0);
-        int populationBalance(0);
-        int gold(0);
-        int wood(0);
-        float decimalGold(0);
-        float decimalWood(0);
+        const int count = techTree->getResourceTypeCount();
+        bool update(false);
         for (int i = 0; i < count; ++i) {
             const UnderWorld::Core::ResourceType* resourceType = techTree->getResourceTypeByIndex(i);
             const Resource* resource = faction->getResource(resourceType);
             if (kResourceClass_holdable == resourceType->_class) {
-                populationOccpied = resource->getOccpied();
-                populationBalance = resource->getBalanceInt();
+                CCASSERT(false, "There is no population any more.");
             } else {
                 const string& name = resourceType->_name;
+                const int cnt = resource->getBalanceInt();
+                const float decimalCnt = resource->getBalanceFloat();
                 if (name == RES_NAME_GOLD) {
-                    gold = resource->getBalanceInt();
-                    decimalGold = resource->getBalanceFloat();
+                    if (_goldCount != decimalCnt) {
+                        update = true;
+                        _goldCount = decimalCnt;
+                        _mapUILayer->updateGold(cnt, decimalCnt - cnt);
+                    }
                 } else if (name == RES_NAME_WOOD) {
-                    wood = resource->getBalanceInt();
-                    decimalWood = resource->getBalanceFloat();
+                    if (_woodCount != decimalCnt) {
+                        update = true;
+                        _woodCount = decimalCnt;
+                        _mapUILayer->updateWood(cnt, decimalCnt - cnt);
+                    }
                 }
             }
         }
         
-        {
-            // check if need to reload table view
-            bool update(false);
-            if (_goldCount != decimalGold) {
-                update = true;
-                _goldCount = decimalGold;
-            }
-            
-            if (_woodCount != decimalWood) {
-                update = true;
-                _woodCount = decimalWood;
-            }
-            
-            if (update) {
-                _mapUILayer->updateGoldAndWood(gold, decimalGold - gold, wood, decimalWood - wood);
-                _mapUILayer->reloadTable(kUnitClass_Warrior);
-            }
+        if (update) {
+            _mapUILayer->reloadTable(kUnitClass_Warrior);
         }
     }
 }
@@ -880,7 +877,7 @@ void GameRender::onGameOver()
         win = true;
     }
     
-    for (map<int, UnitNode*>::iterator iter = _allUnitNodes.begin(); iter != _allUnitNodes.end(); ++iter) {
+    for (auto iter = begin(_allUnitNodes); iter != end(_allUnitNodes); ++iter) {
         UnitNode* node = iter->second;
         const int factionIndex = node->getUnit()->getBelongFaction()->getFactionIndex();
         if (factionIndex == _game->getWorld()->getThisFactionIndex()) {

@@ -26,12 +26,11 @@ class MapUIUnitNodeObserver
 {
 public:
     virtual ~MapUIUnitNodeObserver() {}
-    virtual void onMapUIUnitNodeClickedAddButton(MapUIUnitNode* node) = 0;
-    virtual void onMapUIUnitNodeClickedUpgradeButton(MapUIUnitNode* node) = 0;
+    virtual void onMapUIUnitNodeClickedAddButton(const UnderWorld::Core::Camp* camp) = 0;
+    virtual void onMapUIUnitNodeClickedUpgradeButton(const UnderWorld::Core::Camp* camp) = 0;
     
-    virtual void onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node) = 0;
-    virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node, bool isValid) = 0;
-    virtual void onMapUIUnitNodeTouchedCanceled(MapUIUnitNode* node) = 0;
+    virtual void onMapUIUnitNodeTouchedBegan(const UnderWorld::Core::Camp* camp) = 0;
+    virtual void onMapUIUnitNodeTouchedEnded(const UnderWorld::Core::Camp* camp, bool isValid) = 0;
 };
 
 class MapUIUnitNode: public Node
@@ -40,21 +39,18 @@ public:
     static MapUIUnitNode* create(const UnderWorld::Core::Camp* camp);
     virtual ~MapUIUnitNode();
     void registerObserver(MapUIUnitNodeObserver *observer);
-    void reuse(const UnderWorld::Core::Camp* camp, ssize_t idx, int gold, int wood);
+    void reuse(const UnderWorld::Core::Camp* camp, int gold, int wood);
     void update(bool reuse, int gold, int wood);
     void setSelected(bool selected);
-    void setTouched(bool touched, bool isGameOver);
     
     // getters
     const UnderWorld::Core::Camp* getCamp() const;
-    ssize_t getIdx() const;
     
 protected:
     MapUIUnitNode();
     bool init(const UnderWorld::Core::Camp* camp);
     std::string getIconFile(const UnderWorld::Core::Camp* camp, bool enable) const;
     bool isHero(const UnderWorld::Core::Camp* camp) const;
-    void addTouchedAction(bool touched, bool animated);
     
 private:
     MapUIUnitNodeObserver *_observer;
@@ -73,10 +69,7 @@ private:
     Sprite *_maxIconSprite;
     ProgressTimer* _coldDownProgress;
     const UnderWorld::Core::Camp* _camp;
-    ssize_t _idx;
     bool _touchInvalid;
-    
-    bool _isIconTouched;
 };
 
 #endif /* MapUIUnitNode_h */

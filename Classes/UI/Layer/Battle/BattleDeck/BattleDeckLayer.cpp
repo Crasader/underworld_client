@@ -292,12 +292,12 @@ TableViewCell* BattleDeckLayer::tableCellAtIndex(TableView *table, ssize_t idx)
         static const int nodeTag(100);
         BattleDeckTestNode* unitNode = dynamic_cast<BattleDeckTestNode*>(cell->getChildByTag(nodeTag));
         if (unitNode) {
-            unitNode->reuse(name, idx);
+            unitNode->reuse(name);
             unitNode->setSelected(name == _touchedCard);
         } else {
             unitNode = BattleDeckTestNode::create(name, (kUnitClass_Hero == uc));
             unitNode->registerObserver(this);
-            unitNode->reuse(name, idx);
+            unitNode->reuse(name);
             const Size& size = unitNode->getContentSize();
             unitNode->setPosition(Point(size.width / 2, size.height / 2) + Point(unitNodeOffsetX, unitNodeOffsetY));
             unitNode->setTag(nodeTag);

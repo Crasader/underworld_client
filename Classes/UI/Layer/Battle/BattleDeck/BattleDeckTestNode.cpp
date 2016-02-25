@@ -48,7 +48,6 @@ BattleDeckTestNode::BattleDeckTestNode()
 ,_woodLabel(nullptr)
 
 ,_shiningSprite(nullptr)
-,_idx(CC_INVALID_INDEX)
 ,_isHero(false)
 ,_touchInvalid(false)
 ,_isIconTouched(false)
@@ -226,10 +225,9 @@ void BattleDeckTestNode::registerObserver(BattleDeckTestNodeObserver *observer)
     _observer = observer;
 }
 
-void BattleDeckTestNode::reuse(const string& name, ssize_t idx)
+void BattleDeckTestNode::reuse(const string& name)
 {
     _unitName = name;
-    _idx = idx;
     
     // update mutable data
     update(true);

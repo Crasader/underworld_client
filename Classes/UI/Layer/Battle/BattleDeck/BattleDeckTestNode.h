@@ -33,7 +33,7 @@ public:
     static BattleDeckTestNode* create(const std::string& name, bool isHero);
     virtual ~BattleDeckTestNode();
     void registerObserver(BattleDeckTestNodeObserver *observer);
-    void reuse(const std::string& name, ssize_t idx);
+    void reuse(const std::string& name);
     void update(bool reuse);
     void setSelected(bool selected);
     void setTouched(bool touched, bool isGameOver);
@@ -63,7 +63,6 @@ private:
     
     Sprite *_shiningSprite;
     std::string _unitName;
-    ssize_t _idx;
     bool _isHero;
     bool _touchInvalid;
     

@@ -68,11 +68,13 @@ protected:
     virtual void onMapLayerTouchEnded(const Point& point) override;
     
     // MapUILayerObserver
-    virtual bool onMapUILayerIsGameOver() override;
+    virtual bool onMapUILayerIsGameOver() const override;
     virtual void onMapUILayerClickedPauseButton() override;
-    virtual ssize_t onMapUILayerCampsCount(UnderWorld::Core::UnitClass uc) override;
-    virtual const UnderWorld::Core::Camp* onMapUILayerCampAtIndex(UnderWorld::Core::UnitClass uc, ssize_t idx) override;
+    virtual bool onMapUILayerIsHeroAlive(const UnderWorld::Core::Camp* camp) const override;
+    virtual ssize_t onMapUILayerCampsCount(UnderWorld::Core::UnitClass uc) const override;
+    virtual const UnderWorld::Core::Camp* onMapUILayerCampAtIndex(UnderWorld::Core::UnitClass uc, ssize_t idx) const override;
     virtual void onMapUILayerUnitSelected(const UnderWorld::Core::Camp* camp) override;
+    virtual void onMapUILayerUnitTouched(const UnderWorld::Core::Camp* camp) override;
     virtual void onMapUILayerUnitAdd(const UnderWorld::Core::Camp* camp) override;
     virtual void onMapUILayerUnitUpgrade(const UnderWorld::Core::Camp* camp) override;
     virtual void onMapUILayerTouchMoved(const UnderWorld::Core::Camp* camp, const Point& point) override;

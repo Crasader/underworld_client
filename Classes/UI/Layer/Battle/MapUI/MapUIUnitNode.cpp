@@ -21,7 +21,6 @@ using namespace std;
 using namespace cocostudio;
 using namespace UnderWorld::Core;
 
-static const int bottomZOrder(-1);
 static const int topZOrder(1);
 static const Point iconTouchOffset(0, -6.0f);
 
@@ -55,9 +54,7 @@ MapUIUnitNode::MapUIUnitNode()
 ,_shiningSprite(nullptr)
 ,_maxIconSprite(nullptr)
 ,_camp(nullptr)
-,_idx(CC_INVALID_INDEX)
 ,_touchInvalid(false)
-,_isIconTouched(false)
 {
     
 }
@@ -93,7 +90,7 @@ bool MapUIUnitNode::init(const Camp* camp)
                             button->addClickEventListener([this](Ref *pSender){
                                 SoundManager::getInstance()->playButtonSound();
                                 if (_observer) {
-                                    _observer->onMapUIUnitNodeClickedAddButton(this);
+                                    _observer->onMapUIUnitNodeClickedAddButton(_camp);
                                 }
                             });
                             
@@ -116,7 +113,7 @@ bool MapUIUnitNode::init(const Camp* camp)
                             button->addClickEventListener([this](Ref *pSender){
                                 SoundManager::getInstance()->playButtonSound();
                                 if (_observer) {
-                                    _observer->onMapUIUnitNodeClickedUpgradeButton(this);
+                                    _observer->onMapUIUnitNodeClickedUpgradeButton(_camp);
                                 }
                             });
                         } else {
@@ -221,12 +218,9 @@ bool MapUIUnitNode::init(const Camp* camp)
         _cardWidget->addTouchEventListener([=](Ref *pSender, Widget::TouchEventType type) {
             Widget* button = dynamic_cast<Widget*>(pSender);
             if (type == Widget::TouchEventType::BEGAN) {
-                _isIconTouched = true;
-                addTouchedAction(true, true);
-                
                 _touchInvalid = false;
                 if(_observer) {
-                    _observer->onMapUIUnitNodeTouchedBegan(this);
+                    _observer->onMapUIUnitNodeTouchedBegan(_camp);
                 }
             } else if (type == Widget::TouchEventType::MOVED) {
                 if (!_touchInvalid) {
@@ -237,21 +231,12 @@ bool MapUIUnitNode::init(const Camp* camp)
                     }
                 }
             } else if (type == Widget::TouchEventType::ENDED) {
-                _isIconTouched = false;
-                addTouchedAction(false, true);
-                
                 if (!_touchInvalid) {
                     SoundManager::getInstance()->playButtonSound();
                 }
                 
                 if(_observer) {
-                    _observer->onMapUIUnitNodeTouchedEnded(this, !_touchInvalid);
-                }
-            } else {
-                _isIconTouched = false;
-                addTouchedAction(false, true);
-                if(_observer) {
-                    _observer->onMapUIUnitNodeTouchedCanceled(this);
+                    _observer->onMapUIUnitNodeTouchedEnded(_camp, !_touchInvalid);
                 }
             }
         });
@@ -289,10 +274,9 @@ void MapUIUnitNode::registerObserver(MapUIUnitNodeObserver *observer)
     _observer = observer;
 }
 
-void MapUIUnitNode::reuse(const Camp* camp, ssize_t idx, int gold, int wood)
+void MapUIUnitNode::reuse(const Camp* camp, int gold, int wood)
 {
     _camp = camp;
-    _idx = idx;
     
     // update mutable data
     update(true, gold, wood);
@@ -437,19 +421,9 @@ void MapUIUnitNode::setSelected(bool selected)
     }
 }
 
-void MapUIUnitNode::setTouched(bool touched, bool isGameOver)
-{
-    addTouchedAction(isGameOver ? _isIconTouched : touched, false);
-}
-
 const Camp* MapUIUnitNode::getCamp() const
 {
     return _camp;
-}
-
-ssize_t MapUIUnitNode::getIdx() const
-{
-    return _idx;
 }
 
 string MapUIUnitNode::getIconFile(const Camp* camp, bool enable) const
@@ -477,11 +451,4 @@ bool MapUIUnitNode::isHero(const Camp* camp) const
     }
     
     return false;
-}
-
-void MapUIUnitNode::addTouchedAction(bool touched, bool animated)
-{
-    if (_cardWidget) {
-        _cardWidget->stopAllActions();
-    }
 }

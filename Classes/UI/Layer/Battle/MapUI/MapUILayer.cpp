@@ -74,10 +74,7 @@ MapUILayer::MapUILayer()
     _cellSize.height = unitNodeSize.height + unitNodeOffsetY * 2 + 6.0f;
     _cellSize.width = unitNodeSize.width + unitNodeOffsetX;
     
-    _selectedCampIdx.first = nullptr;
-    _selectedCampIdx.second = CC_INVALID_INDEX;
-    
-    clearTouchedCampIdx();
+    setHighlightedCamp(nullptr, nullptr, false);
 }
 
 MapUILayer::~MapUILayer()
@@ -96,7 +93,7 @@ void MapUILayer::reload()
     if (0 == cnt) {
         createTableViews();
     } else {
-        for (map<UnitClass, TableView*>::iterator iter = _tableViews.begin(); iter != _tableViews.end(); ++iter) {
+        for (auto iter = begin(_tableViews); iter != end(_tableViews); ++iter) {
             reloadTable(iter->first);
         }
     }
@@ -207,16 +204,21 @@ void MapUILayer::updateRemainingTime(int time)
     }
 }
 
-void MapUILayer::updateGoldAndWood(int gold, float decimalGold, int wood, float decimalWood)
+void MapUILayer::updateGold(int cnt, float decimalCnt)
 {
-    if (_goldResourceNode) {
-        _goldResourceNode->setCount(gold, false);
-        _goldResourceNode->setSubCount(decimalGold);
+    auto node = _goldResourceNode;
+    if (node) {
+        node->setCount(cnt, false);
+        node->setSubCount(decimalCnt);
     }
-    
-    if (_woodResourceNode) {
-        _woodResourceNode->setCount(wood, false);
-        _goldResourceNode->setSubCount(decimalWood);
+}
+
+void MapUILayer::updateWood(int cnt, float decimalCnt)
+{
+    auto node = _woodResourceNode;
+    if (node) {
+        node->setCount(cnt, false);
+        node->setSubCount(decimalCnt);
     }
 }
 
@@ -232,10 +234,8 @@ void MapUILayer::resumeGame()
 
 bool MapUILayer::isPointInTableView(const Point& point)
 {
-    for (map<UnitClass, TableView*>::iterator iter = _tableViews.begin(); iter != _tableViews.end(); ++iter) {
-        UnitClass uc = iter->first;
-        TableView* tableView = iter->second;
-        if (tableView && getTableViewBoundingBox(uc).containsPoint(point)) {
+    for (auto iter = begin(_tableViews); iter != end(_tableViews); ++iter) {
+        if (getTableViewBoundingBox(iter->first).containsPoint(point)) {
             return true;
         }
     }
@@ -270,12 +270,11 @@ TableViewCell* MapUILayer::tableCellAtIndex(TableView *table, ssize_t idx)
             const int goldCount = _goldResourceNode->getCount();
             const int woodCount = _woodResourceNode->getCount();
             if (unitNode) {
-                unitNode->reuse(camp, idx, goldCount, woodCount);
-                unitNode->setSelected(table == _selectedCampIdx.first && idx == _selectedCampIdx.second);
-                unitNode->setTouched(table == _touchedCampIdx.first && idx == _touchedCampIdx.second, isGameOver());
+                unitNode->reuse(camp, goldCount, woodCount);
+                unitNode->setSelected(table == _highlightedCamp.first && camp == _highlightedCamp.second);
             } else {
                 unitNode = MapUIUnitNode::create(camp);
-                unitNode->reuse(camp, idx, goldCount, woodCount);
+                unitNode->reuse(camp, goldCount, woodCount);
                 const Size& size = unitNode->getContentSize();
                 unitNode->setPosition(Point(size.width / 2, size.height / 2) + Point(unitNodeOffsetX, unitNodeOffsetY));
                 unitNode->registerObserver(this);
@@ -294,49 +293,30 @@ ssize_t MapUILayer::numberOfCellsInTableView(TableView *table)
 }
 
 #pragma mark - MapUIUnitNodeObserver
-void MapUILayer::onMapUIUnitNodeClickedAddButton(MapUIUnitNode* node)
+void MapUILayer::onMapUIUnitNodeClickedAddButton(const Camp* camp)
 {
     if (_observer) {
-        _observer->onMapUILayerUnitAdd(node->getCamp());
+        _observer->onMapUILayerUnitAdd(camp);
     }
 }
 
-void MapUILayer::onMapUIUnitNodeClickedUpgradeButton(MapUIUnitNode* node)
+void MapUILayer::onMapUIUnitNodeClickedUpgradeButton(const Camp* camp)
 {
     if (_observer) {
-        _observer->onMapUILayerUnitUpgrade(node->getCamp());
+        _observer->onMapUILayerUnitUpgrade(camp);
     }
 }
 
-void MapUILayer::onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node)
+void MapUILayer::onMapUIUnitNodeTouchedBegan(const Camp* camp)
 {
-    _selectedCamp = node->getCamp();
-    
-    clearTouchedCampIdx();
-    UnitClass uc = node->getCamp()->getCurrentUnitType()->getUnitClass();
-    if (_tableViews.find(uc) != _tableViews.end()) {
-        TableView* table = _tableViews.at(uc);
-        if (table) {
-            _touchedCampIdx.first = table;
-            _touchedCampIdx.second = node->getIdx();
-        }
-    }
+    _selectedCamp = (camp->getProduction() > 0) ? camp : nullptr;
 }
 
-void MapUILayer::onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node, bool isValid)
+void MapUILayer::onMapUIUnitNodeTouchedEnded(const Camp* camp, bool isValid)
 {
-    if (!isGameOver()) {
-        if (isValid) {
-            onUnitTouched(node);
-        }
-        
-        clearTouchedCampIdx();
+    if (!isGameOver() && isValid) {
+        onUnitTouched(camp);
     }
-}
-
-void MapUILayer::onMapUIUnitNodeTouchedCanceled(MapUIUnitNode* node)
-{
-    clearTouchedCampIdx();
 }
 
 #pragma mark - CampInfoNodeObserver
@@ -523,6 +503,13 @@ void MapUILayer::onTouchMoved(Touch *touch, Event *unused_event)
 {
     if (_isTouchingTableView && _selectedCamp && _observer) {
         const Point& point = touch->getLocation();
+        if (_highlightedCamp.second != _selectedCamp && !isPointInTableView(point)) {
+            UnitClass uc = _selectedCamp->getBaseUnitType()->getUnitClass();
+            if (_tableViews.find(uc) != end(_tableViews)) {
+                setHighlightedCamp(_tableViews.at(uc), _selectedCamp, false);
+            }
+        }
+        
         _observer->onMapUILayerTouchMoved(_selectedCamp, point);
     }
 }
@@ -532,11 +519,7 @@ void MapUILayer::onTouchEnded(Touch *touch, Event *unused_event)
     if (_isTouchingTableView && _selectedCamp) {
         if (_observer) {
             const Point& point = touch->getLocation();
-            const bool cancelled = isPointInTableView(point);
-            
-            if (cancelled) {
-                _observer->onMapUILayerTouchCancelled(_selectedCamp);
-            } else {
+            if (!isPointInTableView(point)) {
                 _observer->onMapUILayerTouchEnded(_selectedCamp, point);
             }
         }
@@ -612,56 +595,12 @@ bool MapUILayer::isGameOver() const
     return false;
 }
 
-void MapUILayer::onUnitTouched(MapUIUnitNode* node)
+void MapUILayer::onUnitTouched(const Camp* camp)
 {
-    UnitClass uc = node->getCamp()->getCurrentUnitType()->getUnitClass();
+    UnitClass uc = camp->getCurrentUnitType()->getUnitClass();
     TableView* table = _tableViews.at(uc);
-    const ssize_t idx = node->getIdx();
-    
-    TableView* lastTable = _selectedCampIdx.first;
-    ssize_t lastIdx = _selectedCampIdx.second;
-    
-    const bool isSelected = (table != lastTable || lastIdx != idx);
-    
-    if (isSelected) {
-        _selectedCampIdx.first = table;
-        _selectedCampIdx.second = idx;
-        
-        if (table != lastTable) {
-            if (lastTable != nullptr && lastIdx != CC_INVALID_INDEX) {
-                lastTable->updateCellAtIndex(lastIdx);
-            }
-            
-            table->updateCellAtIndex(idx);
-        } else {
-            if (lastIdx != CC_INVALID_INDEX) {
-                table->updateCellAtIndex(lastIdx);
-            }
-            
-            table->updateCellAtIndex(idx);
-        }
-    } else {
-        _selectedCampIdx.first = nullptr;
-        _selectedCampIdx.second = CC_INVALID_INDEX;
-        
-        if (lastTable != nullptr && lastIdx != CC_INVALID_INDEX) {
-            lastTable->updateCellAtIndex(lastIdx);
-        }
-    }
-    
-    CCLOG("_selectedCampIdx: %ld", _selectedCampIdx.second);
-    
+    setHighlightedCamp(table, camp, true);
     SoundManager::getInstance()->playButtonSelectUnitSound();
-    
-    if (_observer) {
-        _observer->onMapUILayerUnitSelected(isSelected ? node->getCamp() : nullptr);
-    }
-}
-
-void MapUILayer::clearTouchedCampIdx()
-{
-    _touchedCampIdx.first = nullptr;
-    _touchedCampIdx.second = CC_INVALID_INDEX;
 }
 
 void MapUILayer::createTableViews()
@@ -748,4 +687,50 @@ Rect MapUILayer::getTableViewBoundingBox(UnitClass uc) const
     }
     
     return Rect::ZERO;
+}
+
+void MapUILayer::setHighlightedCamp(TableView* table, const Camp* camp, bool callback)
+{
+    TableView* lastTable = _highlightedCamp.first;
+    const Camp* lastCamp = _highlightedCamp.second;
+    
+    bool tryToSpell(false);
+    if (_observer) {
+        tryToSpell = _observer->onMapUILayerIsHeroAlive(camp);
+    }
+    const bool isNew = (lastCamp != camp);
+    
+    bool update(true);
+    if (isNew) {
+        if (!tryToSpell) {
+            _highlightedCamp.first = table;
+            _highlightedCamp.second = camp;
+            if (table != lastTable) {
+                table->reloadData();
+            }
+        } else {
+            update = false;
+        }
+    } else {
+        _highlightedCamp.first = nullptr;
+        _highlightedCamp.second = nullptr;
+    }
+    
+    if (update && lastTable) {
+        lastTable->reloadData();
+    }
+    
+    // callback
+    if (_observer) {
+        const Camp* selectedCamp = _highlightedCamp.second;
+        _observer->onMapUILayerUnitSelected(selectedCamp);
+        
+        if (callback) {
+            if (tryToSpell) {
+                _observer->onMapUILayerUnitTouched(camp);
+            } else {
+                _observer->onMapUILayerUnitTouched(selectedCamp);
+            }
+        }
+    }
 }

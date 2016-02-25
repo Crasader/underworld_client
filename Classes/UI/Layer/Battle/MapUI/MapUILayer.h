@@ -24,12 +24,15 @@ class MapUILayerObserver
 {
 public:
     virtual ~MapUILayerObserver() {}
-    virtual bool onMapUILayerIsGameOver() = 0;
+    virtual bool onMapUILayerIsGameOver() const = 0;
     virtual void onMapUILayerClickedPauseButton() = 0;
-    virtual ssize_t onMapUILayerCampsCount(UnderWorld::Core::UnitClass uc) = 0;
-    virtual const UnderWorld::Core::Camp* onMapUILayerCampAtIndex(UnderWorld::Core::UnitClass uc, ssize_t idx) = 0;
+    virtual bool onMapUILayerIsHeroAlive(const UnderWorld::Core::Camp* camp) const = 0;
+    
+    virtual ssize_t onMapUILayerCampsCount(UnderWorld::Core::UnitClass uc) const = 0;
+    virtual const UnderWorld::Core::Camp* onMapUILayerCampAtIndex(UnderWorld::Core::UnitClass uc, ssize_t idx) const = 0;
     
     virtual void onMapUILayerUnitSelected(const UnderWorld::Core::Camp* camp) = 0;
+    virtual void onMapUILayerUnitTouched(const UnderWorld::Core::Camp* camp) = 0;
     virtual void onMapUILayerUnitAdd(const UnderWorld::Core::Camp* camp) = 0;
     virtual void onMapUILayerUnitUpgrade(const UnderWorld::Core::Camp* camp) = 0;
     
@@ -57,7 +60,8 @@ public:
     void updateMyHpProgress(int progress);
     void updateOpponentsHpProgress(int progress);
     void updateRemainingTime(int time);
-    void updateGoldAndWood(int gold, float decimalGold, int wood, float decimalWood);
+    void updateGold(int cnt, float decimalCnt);
+    void updateWood(int cnt, float decimalCnt);
     void pauseGame();
     void resumeGame();
     bool isPointInTableView(const Point& point);
@@ -77,33 +81,31 @@ protected:
     virtual ssize_t numberOfCellsInTableView(TableView *table) override;
     
     // MapUIUnitNodeObserver
-    virtual void onMapUIUnitNodeClickedAddButton(MapUIUnitNode* node) override;
-    virtual void onMapUIUnitNodeClickedUpgradeButton(MapUIUnitNode* node) override;
-    virtual void onMapUIUnitNodeTouchedBegan(MapUIUnitNode* node) override;
-    virtual void onMapUIUnitNodeTouchedEnded(MapUIUnitNode* node, bool isValid) override;
-    virtual void onMapUIUnitNodeTouchedCanceled(MapUIUnitNode* node) override;
+    virtual void onMapUIUnitNodeClickedAddButton(const UnderWorld::Core::Camp* camp) override;
+    virtual void onMapUIUnitNodeClickedUpgradeButton(const UnderWorld::Core::Camp* camp) override;
+    virtual void onMapUIUnitNodeTouchedBegan(const UnderWorld::Core::Camp* camp) override;
+    virtual void onMapUIUnitNodeTouchedEnded(const UnderWorld::Core::Camp* camp, bool isValid) override;
     
     // CampInfoNodeObserver
     virtual void onCampInfoNodeClickedIcon(CampInfoNode* pSender, const UnderWorld::Core::UnitBase* unit) override;
     
     void createUserInfo(bool left, const std::string& account);
     bool isGameOver() const;
-    void onUnitTouched(MapUIUnitNode* node);
-    void clearTouchedCampIdx();
+    void onUnitTouched(const UnderWorld::Core::Camp* camp);
     void createTableViews();
     Node* createTableView(UnderWorld::Core::UnitClass uc, Node* parent);
     UnderWorld::Core::UnitClass getUnitClass(TableView* table) const;
     ssize_t getCellsCount(TableView* table) const;
     ssize_t getCellsCount(UnderWorld::Core::UnitClass uc) const;
     Rect getTableViewBoundingBox(UnderWorld::Core::UnitClass uc) const;
+    void setHighlightedCamp(TableView* table, const UnderWorld::Core::Camp* camp, bool callback);
     
 private:
     MapUILayerObserver *_observer;
     Size _tableViewMaxSize;
     Point _tableViewPos;
     Size _cellSize;
-    std::pair<TableView*, ssize_t> _selectedCampIdx;
-    std::pair<TableView*, ssize_t> _touchedCampIdx;
+    std::pair<TableView*, const UnderWorld::Core::Camp*> _highlightedCamp;
     bool _isTouchingTableView;
     const UnderWorld::Core::Camp* _selectedCamp;
     // ======================== UI =============================
