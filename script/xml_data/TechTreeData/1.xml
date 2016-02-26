@@ -323,7 +323,7 @@
         </skill>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
     </unit>
-    <unit name="泰兰德_精英" class="hero" race="辉月狼人" hp="800" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="700" armor_preference="无甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="800" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" passive_names="辉月光环;等级上升_精英;身手敏捷_等级2" render_key="时光女神">
+    <unit name="泰兰德_精英" class="hero" race="辉月狼人" hp="800" mp="0" hpregen="0" mpregen="0" field="0" armor_type="英雄" armor="700" armor_preference="无甲" armor_preference_factor="1.5f" magical_defense="0.f" attacksight="800" size="48" height="0" cost="金子:2;木头:4" max_level="100" produce="木头:0.08;金子:0.04" reward="金子:0.06f" recover_span="12.0f" passive_names="辉月光环;等级上升_精英;身手敏捷_等级2;多重箭_等级2" render_key="时光女神">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="1.0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="80" max_damage="100" deliver_class="physical" damage_distance="faraway" range="500" fields="3">
@@ -558,7 +558,7 @@
         <addon>
             <feature_group determine_timing="attack">
                 <feature_item effect_timing="hit">
-                    <feature type="splash" value="0.5f" range="180"/>
+                    <feature type="splash" value="p:0.5f" range="180"/>
                 </feature_item>
             </feature_group>
         </addon>
@@ -568,7 +568,7 @@
         <addon>
             <feature_group determine_timing="attack">
                 <feature_item effect_timing="hit">
-                    <feature type="splash" value="0.2f" range="100"/>
+                    <feature type="splash" value="p:0.2f" range="100"/>
                 </feature_item>
             </feature_group>
         </addon>
@@ -600,7 +600,7 @@
     <!-- 激流爆发 -->
     <spell alias="激流爆发" spell_name="激流爆发" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="0" cast_type="self" immediate_elements="0,激流爆发_激流爆发施法效果,1" preperform="0.5" perform="0.0" cd="120.0" class="cast" desc="全场辉月族单位攻击速度大幅度提升"/>
     <!-- 月神的恩赐 -->
-    <spell alias="月神的恩赐" spell_name="月神的恩赐" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="0" cast_type="self" immediate_elements="0,月神的恩赐_月神的恩赐施法效果,1" preperform="0.5" perform="0.0" cd="15.0" class="cast" desc="回复小范围内单位的生命值"/>
+    <spell alias="月神的恩赐" spell_name="月神的恩赐" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="1000" cast_type="position" immediate_elements="0,月神的恩赐_月神的恩赐施法效果,1" preperform="0.5" perform="0.0" cd="15.0" class="cast" desc="回复小范围内单位的生命值"/>
     <!-- ==========主动技能原子配置========== -->
     <!-- 基础治疗术 -->
     <spell_pattern name="基础治疗术_基础治疗术施法效果" class="target">
@@ -725,7 +725,7 @@
         </spell_content>
     </spell_pattern>
     <!-- 月神的恩赐 -->
-    <spell_pattern name="月神的恩赐_月神的恩赐施法效果" class="target_position_circle" radius="150.0f" deliver_nature="ally">
+    <spell_pattern name="月神的恩赐_月神的恩赐施法效果" class="target_position_circle" radius="75.0f" deliver_nature="ally">
         <spell_content name="月神的恩赐_月神的恩赐施法效果_内容" spell_content_class="damage">
             <damage damage_nature="heal" deliver_class="magical" damage_value="150.f">
                 <feature_group determine_timing="attack">
