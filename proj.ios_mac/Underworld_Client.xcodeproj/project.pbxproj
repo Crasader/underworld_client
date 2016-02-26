@@ -162,6 +162,8 @@
 		A1B5588F1BCB65A100D30D6A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B5588E1BCB65A100D30D6A /* StoreKit.framework */; };
 		A1C124DC1BF58AF700F3FDD2 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = A1C124DB1BF58AF700F3FDD2 /* sounds */; };
 		A1CE89DE1C44AB2900B60704 /* SpellConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1CE89DC1C44AB2900B60704 /* SpellConfigData.cpp */; };
+		A1D035B31C806C7E00C66C99 /* MapUIUpgradeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D035B11C806C7E00C66C99 /* MapUIUpgradeNode.cpp */; };
+		A1D035B61C806E9C00C66C99 /* MapUITalentNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D035B41C806E9C00C66C99 /* MapUITalentNode.cpp */; };
 		A1D45C4A1BEB3B1400D1E921 /* ResourceButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D45C481BEB3B1400D1E921 /* ResourceButton.cpp */; };
 		A1D45C4C1BEB594800D1E921 /* GameImages in Resources */ = {isa = PBXBuildFile; fileRef = A1D45C4B1BEB594800D1E921 /* GameImages */; };
 		A1D461431C3E111B00E8E60B /* UserData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D4613F1C3E111B00E8E60B /* UserData.cpp */; };
@@ -565,6 +567,10 @@
 		A1C124DB1BF58AF700F3FDD2 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sounds; sourceTree = "<group>"; };
 		A1CE89DC1C44AB2900B60704 /* SpellConfigData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpellConfigData.cpp; sourceTree = "<group>"; };
 		A1CE89DD1C44AB2900B60704 /* SpellConfigData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpellConfigData.h; sourceTree = "<group>"; };
+		A1D035B11C806C7E00C66C99 /* MapUIUpgradeNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapUIUpgradeNode.cpp; sourceTree = "<group>"; };
+		A1D035B21C806C7E00C66C99 /* MapUIUpgradeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapUIUpgradeNode.h; sourceTree = "<group>"; };
+		A1D035B41C806E9C00C66C99 /* MapUITalentNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapUITalentNode.cpp; sourceTree = "<group>"; };
+		A1D035B51C806E9C00C66C99 /* MapUITalentNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapUITalentNode.h; sourceTree = "<group>"; };
 		A1D45C481BEB3B1400D1E921 /* ResourceButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResourceButton.cpp; sourceTree = "<group>"; };
 		A1D45C491BEB3B1400D1E921 /* ResourceButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceButton.h; sourceTree = "<group>"; };
 		A1D45C4B1BEB594800D1E921 /* GameImages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = GameImages; sourceTree = "<group>"; };
@@ -1393,10 +1399,14 @@
 			children = (
 				A18524DE1C1AF66900BE261D /* MapUILayer.cpp */,
 				A18524DF1C1AF66900BE261D /* MapUILayer.h */,
+				A1D035B41C806E9C00C66C99 /* MapUITalentNode.cpp */,
+				A1D035B51C806E9C00C66C99 /* MapUITalentNode.h */,
 				A18524E41C1AF68400BE261D /* MapUIUnitCell.cpp */,
 				A18524E51C1AF68400BE261D /* MapUIUnitCell.h */,
 				A18524E11C1AF67800BE261D /* MapUIUnitNode.cpp */,
 				A18524E21C1AF67800BE261D /* MapUIUnitNode.h */,
+				A1D035B11C806C7E00C66C99 /* MapUIUpgradeNode.cpp */,
+				A1D035B21C806C7E00C66C99 /* MapUIUpgradeNode.h */,
 			);
 			path = MapUI;
 			sourceTree = "<group>";
@@ -1957,6 +1967,7 @@
 				A188856F1C43921700C9586F /* PieceManager.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				A1720EC21BCD316000217E98 /* ProgressLayer.cpp in Sources */,
+				A1D035B31C806C7E00C66C99 /* MapUIUpgradeNode.cpp in Sources */,
 				A1F9B0891C76F54D007BC409 /* BattleDeckUnitInfoNode.cpp in Sources */,
 				A1211B271C0BF5CC00C27CCC /* RandomCreator.cpp in Sources */,
 				A18524E61C1AF68400BE261D /* MapUIUnitCell.cpp in Sources */,
@@ -2003,6 +2014,7 @@
 				A18885771C43ACFB00C9586F /* ArtifactData.cpp in Sources */,
 				045116F81BCFBA44002AA721 /* TechTree.cpp in Sources */,
 				A1B4AE311C200521005906A6 /* UserManager.cpp in Sources */,
+				A1D035B61C806E9C00C66C99 /* MapUITalentNode.cpp in Sources */,
 				A1720ECE1BCD382700217E98 /* MessageBoxBaseLayer.cpp in Sources */,
 				A1D461441C3E111B00E8E60B /* UserSimpleData.cpp in Sources */,
 				A188857A1C43BA1C00C9586F /* TowerManager.cpp in Sources */,

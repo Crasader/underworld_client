@@ -433,11 +433,16 @@ void MapLayer::removeAllSpellEffects()
     }
 }
 
-void MapLayer::addPlaceUnitEffect(const Point& point)
+void MapLayer::addPlaceUnitEffect(const UnderWorld::Core::Coordinate& point)
 {
+    Point pos;
+    int zOrder;
+    coordinateConvert(point, pos, zOrder);
+    pos = convertToNodeSpace(_mainLayer->convertToWorldSpace(pos));
+    
     static string file("chuchang-fazhen.csb");
     Node *effect = CSLoader::createNode(file);
-    effect->setPosition(convertToScrollViewPoint(point));
+    effect->setPosition(convertToScrollViewPoint(pos));
     _scrollView->addChild(effect);
     cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
     effect->runAction(action);

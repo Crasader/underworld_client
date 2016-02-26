@@ -8,8 +8,10 @@
 
 #include "BattleResourceNode.h"
 #include "CocosUtils.h"
+#include "cocostudio/CocoStudio.h"
 
 using namespace std;
+using namespace cocostudio;
 
 static string getProgressTimerSprite(ResourceType type)
 {
@@ -75,6 +77,18 @@ bool BattleResourceNode::init(ResourceType type)
         _subCountLabel = CocosUtils::createLabel("0.60", 18, DEFAULT_NUMBER_FONT);
         addChild(_subCountLabel);
         
+        string file;
+        if (kResourceType_Gold == type) {
+            file = "UI-number-hong.csb";
+        } else if (kResourceType_Wood == type) {
+            file = "UI-number-lan.csb";
+        }
+        Node *effect = CSLoader::createNode(file);
+        addChild(effect);
+        timeline::ActionTimeline *action = CSLoader::createTimeline(file);
+        effect->runAction(action);
+        action->gotoFrameAndPlay(0, true);
+        
         // set content size
         const Size& pSize = _progressTimer->getContentSize();
         setContentSize(pSize + Size(0, 18 + _subCountLabel->getContentSize().height / 2));
@@ -87,6 +101,7 @@ bool BattleResourceNode::init(ResourceType type)
         _icon->setPosition(mid + Point(0, pSize.height / 2 - 5.0f));
         _countLabel->setPosition(mid);
         _subCountLabel->setPosition(mid - Point(0, pSize.height / 2));
+        effect->setPosition(mid);
         
         setType(type);
         

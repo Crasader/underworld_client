@@ -201,15 +201,19 @@ void GameRender::updateUnits(const Game* game, int index)
                         // add existent hero
                         const UnitType* unitType = unit->getUnitBase().getUnitType();
                         const UnitClass unitClass = unitType->getUnitClass();
-                        if (kUnitClass_Hero == unitClass) {
-                            const string& unitName = unitType->getName();
-                            if (_myHeroes.find(unitName) == _myHeroes.end()) {
-                                _myHeroes.insert(make_pair(unitName, map<int, const Unit*>()));
-                            }
+                        if (kUnitClass_Building != unitClass && kUnitClass_Core != unitClass) {
+                            _mapLayer->addPlaceUnitEffect(pos);
                             
-                            map<int, const Unit*>& m = _myHeroes.at(unitName);
-                            if (m.find(key) == m.end()) {
-                                m.insert(make_pair(key, unit));
+                            if (kUnitClass_Hero == unitClass) {
+                                const string& unitName = unitType->getName();
+                                if (_myHeroes.find(unitName) == _myHeroes.end()) {
+                                    _myHeroes.insert(make_pair(unitName, map<int, const Unit*>()));
+                                }
+                                
+                                map<int, const Unit*>& m = _myHeroes.at(unitName);
+                                if (m.find(key) == m.end()) {
+                                    m.insert(make_pair(key, unit));
+                                }
                             }
                         }
                     }
@@ -537,6 +541,7 @@ void GameRender::onMapLayerTouchEnded(const Point& point)
     
     if (_mapUILayer) {
         _mapUILayer->closeAllUnitInfoNodes();
+        _mapUILayer->removeUpgradeNode();
     }
 }
 
@@ -679,13 +684,11 @@ void GameRender::onMapUILayerTouchEnded(const Camp* camp, const Point& point)
             }
         }
     } else if (isProducibleCamp(camp)) {
-        // TODO: remove "success"
-        bool success(true);
-        if (success && _mapLayer) {
+        if (_mapLayer) {
             const Coordinate& coordinate = _mapLayer->convertPoint(point);
             CommandResult result = _commander->tryGiveCampGenerateCommand(camp, coordinate);
             if (kCommandResult_suc == result) {
-                _mapLayer->addPlaceUnitEffect(realPos);
+                _mapUILayer->clearHighlightedCamp();
             }
         }
     }

@@ -666,6 +666,7 @@ void UnitNode::updateActionNode(const Skill* skill, int frameIndex, bool flip)
         }
         
         // 3. add the new action node
+        const UnitClass uc = _unit->getUnitBase().getUnitClass();
         {
             // attack
             if (kSkillClass_Attack == skillClass && !_isStandby) {
@@ -675,7 +676,7 @@ void UnitNode::updateActionNode(const Skill* skill, int frameIndex, bool flip)
             } else {
                 const string& file = _animationFiles.front();
                 // die
-                const bool isBuilding(kUnitClass_Building == _unit->getUnitBase().getUnitClass());
+                const bool isBuilding(kUnitClass_Building == uc);
                 if (isDead) {
                     // the unit might has been destroyed when animation finished,
                     // so save the unitId before playing the animation
@@ -734,7 +735,22 @@ void UnitNode::updateActionNode(const Skill* skill, int frameIndex, bool flip)
         }
         
         if (isNewCreated && !_isBuilding) {
-            addEffect("chuchang-huanrao.csb");
+            const bool isThisFaction(_unit->getWorld()->getThisFactionIndex() == _unit->getBelongFaction()->getFactionIndex());
+            if (isThisFaction) {
+                addEffect("chuchang-huanrao.csb");
+            }
+            
+#if false
+            if (kUnitClass_Hero == uc) {
+                string file;
+                if (isThisFaction) {
+                    file = "hero-quan.csb";
+                } else {
+                    file = "hero-quan-1.csb";
+                }
+                addEffect(file, SpellConfigData::kNone, SpellConfigData::kFoot, false, true, nullptr);
+            }
+#endif
         }
         
     } else {

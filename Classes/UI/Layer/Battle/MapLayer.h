@@ -53,7 +53,7 @@ public:
     void addFireballSpellEffect();
     void removeAllSpellEffects();
     
-    void addPlaceUnitEffect(const Point& point);
+    void addPlaceUnitEffect(const UnderWorld::Core::Coordinate& point);
     
 protected:
     virtual ~MapLayer();

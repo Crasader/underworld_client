@@ -70,12 +70,13 @@ MapUILayer::MapUILayer()
 ,_opponentsHpProgress(nullptr)
 ,_opponentsHpPercentageLabel(nullptr)
 ,_pauseMenuItem(nullptr)
+,_upgradeNode(nullptr)
 {
     static const Size unitNodeSize = MapUIUnitNode::create(nullptr)->getContentSize();
     _cellSize.height = unitNodeSize.height + unitNodeOffsetY * 2 + 6.0f;
     _cellSize.width = unitNodeSize.width + unitNodeOffsetX;
     
-    setHighlightedCamp(nullptr, nullptr, false);
+    setHighlightedCamp(nullptr, nullptr);
 }
 
 MapUILayer::~MapUILayer()
@@ -244,6 +245,19 @@ bool MapUILayer::isPointInTableView(const Point& point)
     return false;
 }
 
+void MapUILayer::clearHighlightedCamp()
+{
+    setHighlightedCamp(nullptr, nullptr);
+}
+
+void MapUILayer::removeUpgradeNode()
+{
+    if (_upgradeNode) {
+        _upgradeNode->removeFromParent();
+        _upgradeNode = nullptr;
+    }
+}
+
 #pragma mark - TableViewDataSource
 Size MapUILayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
 {
@@ -296,13 +310,22 @@ ssize_t MapUILayer::numberOfCellsInTableView(TableView *table)
 #pragma mark - MapUIUnitNodeObserver
 void MapUILayer::onMapUIUnitNodeClickedAddButton(const Camp* camp)
 {
+    setHighlightedCamp(getTableView(camp), camp, false, true, false);
+    
     if (_observer) {
         _observer->onMapUILayerUnitAdd(camp);
     }
 }
 
-void MapUILayer::onMapUIUnitNodeClickedUpgradeButton(const Camp* camp)
+void MapUILayer::onMapUIUnitNodeClickedUpgradeButton(MapUIUnitNode* node)
 {
+    const Camp* camp = node->getCamp();
+    setHighlightedCamp(getTableView(camp), camp, false, false, false);
+    
+    createUpgradeNode(camp);
+    const Point& point = convertToNodeSpace(node->getParent()->convertToWorldSpace(node->getPosition()));
+    _upgradeNode->setPosition(point);
+    
     if (_observer) {
         _observer->onMapUILayerUnitUpgrade(camp);
     }
@@ -329,6 +352,12 @@ void MapUILayer::onCampInfoNodeClickedIcon(CampInfoNode* pSender, const UnitBase
             node->closeUnitInfoNode();
         }
     }
+}
+
+#pragma mark - MapUIUpgradeNodeObserver
+void MapUILayer::onMapUIUpgradeNodeClickedButton(const Camp* camp, int idx)
+{
+    
 }
 
 #pragma mark -
@@ -505,10 +534,7 @@ void MapUILayer::onTouchMoved(Touch *touch, Event *unused_event)
     if (_isTouchingTableView && _selectedCamp && _observer) {
         const Point& point = touch->getLocation();
         if (_highlightedCamp.second != _selectedCamp && !isPointInTableView(point)) {
-            UnitClass uc = _selectedCamp->getBaseUnitType()->getUnitClass();
-            if (_tableViews.find(uc) != end(_tableViews)) {
-                setHighlightedCamp(_tableViews.at(uc), _selectedCamp, false);
-            }
+            setHighlightedCamp(getTableView(_selectedCamp), _selectedCamp);
         }
         
         _observer->onMapUILayerTouchMoved(_selectedCamp, point);
@@ -662,6 +688,18 @@ UnitClass MapUILayer::getUnitClass(TableView* table) const
     return static_cast<UnitClass>(table->getTag());
 }
 
+TableView* MapUILayer::getTableView(const Camp* camp) const
+{
+    if (camp && camp->getBaseUnitType()) {
+        UnitClass uc = camp->getBaseUnitType()->getUnitClass();
+        if (_tableViews.find(uc) != end(_tableViews)) {
+            return _tableViews.at(uc);
+        }
+    }
+    
+    return nullptr;
+}
+
 ssize_t MapUILayer::getCellsCount(TableView* table) const
 {
     return getCellsCount(getUnitClass(table));
@@ -689,13 +727,13 @@ Rect MapUILayer::getTableViewBoundingBox(UnitClass uc) const
     return Rect::ZERO;
 }
 
-void MapUILayer::setHighlightedCamp(TableView* table, const Camp* camp, bool callback)
+void MapUILayer::setHighlightedCamp(TableView* table, const Camp* camp, bool callback, bool ignoreProduction, bool check)
 {
     TableView* lastTable = _highlightedCamp.first;
     const Camp* lastCamp = _highlightedCamp.second;
     
     bool tryToSpell(false);
-    if (_observer) {
+    if (_observer && camp) {
         tryToSpell = _observer->onMapUILayerIsHeroAlive(camp);
     }
     const bool isNew = (lastCamp != camp);
@@ -703,17 +741,27 @@ void MapUILayer::setHighlightedCamp(TableView* table, const Camp* camp, bool cal
     bool update(true);
     if (isNew) {
         if (!tryToSpell) {
-            _highlightedCamp.first = table;
-            _highlightedCamp.second = camp;
-            if (table != lastTable) {
-                table->reloadData();
+            if (!camp || ((ignoreProduction || camp->getProduction() > 0) && camp->getColdDown() <= 0)) {
+                _highlightedCamp.first = table;
+                _highlightedCamp.second = camp;
+                if (table && table != lastTable) {
+                    table->reloadData();
+                }
             }
         } else {
             update = false;
         }
     } else {
-        _highlightedCamp.first = nullptr;
-        _highlightedCamp.second = nullptr;
+        if (check) {
+            _highlightedCamp.first = nullptr;
+            _highlightedCamp.second = nullptr;
+        } else {
+            update = false;
+        }
+    }
+    
+    if (isNew || check) {
+        removeUpgradeNode();
     }
     
     if (update && lastTable) {
@@ -732,5 +780,17 @@ void MapUILayer::setHighlightedCamp(TableView* table, const Camp* camp, bool cal
                 _observer->onMapUILayerUnitTouched(selectedCamp);
             }
         }
+    }
+}
+
+void MapUILayer::createUpgradeNode(const Camp* camp)
+{
+    if (_upgradeNode && _upgradeNode->getCamp() != camp) {
+        removeUpgradeNode();
+    }
+    
+    if (!_upgradeNode && !camp->isUpgraded()) {
+        _upgradeNode = MapUIUpgradeNode::create(camp);
+        addChild(_upgradeNode);
     }
 }

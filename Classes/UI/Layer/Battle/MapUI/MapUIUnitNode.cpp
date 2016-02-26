@@ -113,7 +113,7 @@ bool MapUIUnitNode::init(const Camp* camp)
                             button->addClickEventListener([this](Ref *pSender){
                                 SoundManager::getInstance()->playButtonSound();
                                 if (_observer) {
-                                    _observer->onMapUIUnitNodeClickedUpgradeButton(_camp);
+                                    _observer->onMapUIUnitNodeClickedUpgradeButton(this);
                                 }
                             });
                         } else {
@@ -166,6 +166,15 @@ bool MapUIUnitNode::init(const Camp* camp)
                                         } else {
                                             assert(false);
                                         }
+                                        
+                                        static string file("UI-quan-2.csb");
+                                        Node *effect = CSLoader::createNode(file);
+                                        const Size& size = child->getContentSize();
+                                        effect->setPosition(size.width / 2, size.height / 2);
+                                        child->addChild(effect, -1);
+                                        timeline::ActionTimeline *action = CSLoader::createTimeline(file);
+                                        effect->runAction(action);
+                                        action->gotoFrameAndPlay(0, true);
                                     }
                                         break;
                                     case 12: {
@@ -181,6 +190,15 @@ bool MapUIUnitNode::init(const Camp* camp)
                                         } else {
                                             assert(false);
                                         }
+                                        
+                                        static string file("UI-quan-1.csb");
+                                        Node *effect = CSLoader::createNode(file);
+                                        const Size& size = child->getContentSize();
+                                        effect->setPosition(size.width / 2, size.height / 2);
+                                        child->addChild(effect, -1);
+                                        timeline::ActionTimeline *action = CSLoader::createTimeline(file);
+                                        effect->runAction(action);
+                                        action->gotoFrameAndPlay(0, true);
                                     }
                                         break;
                                     case 14: {
@@ -287,116 +305,43 @@ void MapUIUnitNode::update(bool reuse, int gold, int wood)
     if (_camp) {
         const int production = _camp->getProduction();
         const int maxProduction = _camp->getMaxProduction();
-        const bool enable = production < maxProduction;
+        const bool isNotFull = production < maxProduction;
         const bool hero = isHero(_camp);
         const Unit* heroUnit = _camp->getHero();
         
-        if (!hero) {
-            _countLabel->setString(StringUtils::format("%d/%d", production, maxProduction));
-        }
-        
         bool colorful(true);
-        const map<string, int>& costs = _camp->getCosts();
-        _woodSprite->setVisible(costs.find(RES_NAME_WOOD) != costs.end() && enable);
-        if (_woodSprite->isVisible()) {
-            const int count = costs.at(RES_NAME_WOOD);
-            _woodLabel->setString(StringUtils::format("%d", count));
-            if (wood < count) {
-                colorful = false;
+        const bool valid(_camp->getColdDown() <= 0);
+        if (!hero || !heroUnit) {
+            if (!hero) {
+                _countLabel->setString(StringUtils::format("%d/%d", production, maxProduction));
             }
-        }
-        
-        _goldSprite->setVisible(costs.find(RES_NAME_GOLD) != costs.end() && enable);
-        if (_goldSprite->isVisible()) {
-            const int count = costs.at(RES_NAME_GOLD);
-            _goldLabel->setString(StringUtils::format("%d", count));
-            if (gold < count) {
-                colorful = false;
-            }
-        }
-        
-        _addButton->setVisible(enable);
-        _maxIconSprite->setVisible(!enable);
-        
-        if (hero) {
-            if (colorful) {
-                if (heroUnit) {
-                    if (!heroUnit->isAlive()) {
-                        colorful = false;
-                    }
+            
+            bool enoughResources = setResourceStatus(true, gold, isNotFull) && setResourceStatus(false, wood, isNotFull);
+            _addButton->setVisible(isNotFull);
+            _maxIconSprite->setVisible(!isNotFull);
+            
+            if (isNotFull) {
+                _addButton->setEnabled(enoughResources);
+                if (production < 1) {
+                    colorful = false;
                 } else {
-                    const bool hasResources = _woodSprite->isVisible() || _goldSprite->isVisible();
-                    if (!hasResources) {
-                        colorful = false;
-                    }
-                }
-                
-                if (!colorful) {
-                    _countLabel->setString(LocalHelper::getString("battle_summoning"));
-                } else {
-                    _countLabel->setString("");
+                    colorful = valid;
                 }
             } else {
-                _countLabel->setString("");
+                colorful = valid;
+            }
+        } else {
+            if (!heroUnit->isAlive()) {
+                colorful = valid;
             }
         }
         
+        setColdDownProgress(colorful);
+        
+        // set icon
         const string& iconFile = getIconFile(_camp, colorful);
         if (iconFile.length() > 0) {
             _iconSprite->setTexture(iconFile);
-        }
-        
-        float cd(10);
-        const bool isSpell(heroUnit && heroUnit->getSpellCount() > 0);
-        if (isSpell) {
-            cd = heroUnit->getSpellByIndex(0)->getCDProgress();
-        } else {
-            cd = _camp->getColdDown();
-        }
-        
-        if (cd <= 0) {
-            _coldDownProgress->setVisible(false);
-        } else {
-            _coldDownProgress->setVisible(true);
-            if (colorful) {
-                _coldDownProgress->setSprite(Sprite::create("GameImages/test/ui_iconzhezhao.png"));
-            } else {
-                _coldDownProgress->setSprite(Sprite::create("GameImages/test/ui_iconzhezhao_white.png"));
-            }
-            
-            if (isSpell) {
-                _coldDownProgress->setPercentage(cd * 100.f / heroUnit->getSpellByIndex(0)->getTotalCDFrames());
-            } else {
-                _coldDownProgress->setPercentage(cd * 100.f / _camp->getSpan());
-            }
-        }
-        
-        // add effect
-        if (_iconSprite) {
-#if true
-            if (heroUnit && heroUnit->isAlive() && cd == 0) {
-                _shiningSprite->setVisible(true);
-            } else {
-                _shiningSprite->setVisible(false);
-            }
-#else
-            static const int spellActivatedTag(2016);
-            Node* spellActivatedNode = getChildByTag(spellActivatedTag);
-            if (heroUnit && heroUnit->isAlive() && spellCD == 0) {
-                if (!spellActivatedNode) {
-                    static const string file("kapai-UI.csb");
-                    spellActivatedNode = CSLoader::createNode(file);
-                    spellActivatedNode->setPosition(_iconBasePosition);
-                    addChild(spellActivatedNode, bottomZOrder, spellActivatedTag);
-                    timeline::ActionTimeline *action = CSLoader::createTimeline(file);
-                    spellActivatedNode->runAction(action);
-                    action->gotoFrameAndPlay(0, true);
-                }
-            } else if (spellActivatedNode) {
-                spellActivatedNode->stopAllActions();
-                spellActivatedNode->removeFromParent();
-            }
-#endif
         }
     }
 }
@@ -451,4 +396,57 @@ bool MapUIUnitNode::isHero(const Camp* camp) const
     }
     
     return false;
+}
+
+bool MapUIUnitNode::setResourceStatus(bool isGold, int count, bool enable)
+{
+    Sprite* sprite = isGold ? _goldSprite : _woodSprite;
+    Label* label = isGold ? _goldLabel : _woodLabel;
+    
+    const map<string, int>& costs = _camp->getCosts();
+    const string& name = isGold ? RES_NAME_GOLD : RES_NAME_WOOD;
+    const bool isEnable(costs.find(name) != costs.end() && enable);
+    sprite->setVisible(isEnable);
+    
+    bool enoughResources(true);
+    if (isEnable) {
+        static const Color4B& enabledColor(Color4B::WHITE);
+        static const Color4B& disabledColor(Color4B::RED);
+        const int neededCount = costs.at(name);
+        label->setString(StringUtils::format("%d", neededCount));
+        if (count < neededCount) {
+            enoughResources = false;
+            label->setTextColor(disabledColor);
+        } else {
+            label->setTextColor(enabledColor);
+        }
+    }
+    
+    return enoughResources;
+}
+
+void MapUIUnitNode::setColdDownProgress(bool colorful)
+{
+    const bool hero = isHero(_camp);
+    const Unit* heroUnit = _camp->getHero();
+    if (hero && heroUnit && heroUnit->isAlive()) {
+        if (heroUnit->getSpellCount() > 0) {
+            const Spell* spell = heroUnit->getSpellByIndex(0);
+            if (spell) {
+                float cd = spell->getCDProgress();
+                _coldDownProgress->setVisible(cd > 0);
+                _coldDownProgress->setPercentage(cd * 100.f / spell->getTotalCDFrames());
+            }
+        }
+    } else {
+        float cd = _camp->getColdDown();
+        _coldDownProgress->setVisible(cd > 0);
+        _coldDownProgress->setPercentage(cd * 100.f / _camp->getSpan());
+    }
+    
+    if (colorful) {
+        _coldDownProgress->setSprite(Sprite::create("GameImages/test/ui_iconzhezhao.png"));
+    } else {
+        _coldDownProgress->setSprite(Sprite::create("GameImages/test/ui_iconzhezhao_white.png"));
+    }
 }

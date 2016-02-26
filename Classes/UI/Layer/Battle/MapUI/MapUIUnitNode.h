@@ -27,7 +27,7 @@ class MapUIUnitNodeObserver
 public:
     virtual ~MapUIUnitNodeObserver() {}
     virtual void onMapUIUnitNodeClickedAddButton(const UnderWorld::Core::Camp* camp) = 0;
-    virtual void onMapUIUnitNodeClickedUpgradeButton(const UnderWorld::Core::Camp* camp) = 0;
+    virtual void onMapUIUnitNodeClickedUpgradeButton(MapUIUnitNode* node) = 0;
     
     virtual void onMapUIUnitNodeTouchedBegan(const UnderWorld::Core::Camp* camp) = 0;
     virtual void onMapUIUnitNodeTouchedEnded(const UnderWorld::Core::Camp* camp, bool isValid) = 0;
@@ -51,6 +51,8 @@ protected:
     bool init(const UnderWorld::Core::Camp* camp);
     std::string getIconFile(const UnderWorld::Core::Camp* camp, bool enable) const;
     bool isHero(const UnderWorld::Core::Camp* camp) const;
+    bool setResourceStatus(bool isGold, int count, bool enable);
+    void setColdDownProgress(bool colorful);
     
 private:
     MapUIUnitNodeObserver *_observer;
