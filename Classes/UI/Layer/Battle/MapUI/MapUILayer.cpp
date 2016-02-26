@@ -60,6 +60,7 @@ MapUILayer::MapUILayer()
 :_observer(nullptr)
 ,_tableViewPos(Point::ZERO)
 ,_isTouchingTableView(false)
+,_createdTablesIdx(INVALID_VALUE)
 ,_selectedCamp(nullptr)
 ,_timeLabel(nullptr)
 ,_goldResourceNode(nullptr)
@@ -607,8 +608,8 @@ void MapUILayer::createTableViews()
 {
     static float offsetX(0.0f);
     vector<Node*> created;
-    for (int i = 0; i < tablesCount; ++i) {
-        Node* node = createTableView(tableUnitClass[i], this);
+    for (_createdTablesIdx = 0; _createdTablesIdx < tablesCount; ++_createdTablesIdx) {
+        Node* node = createTableView(tableUnitClass[_createdTablesIdx], this);
         if (node) {
             const size_t cnt = created.size();
             Point pos(_tableViewPos);
@@ -654,9 +655,8 @@ Node* MapUILayer::createTableView(UnitClass uc, Node* parent)
 
 UnitClass MapUILayer::getUnitClass(TableView* table) const
 {
-    const size_t cnt = _tableViews.size();
-    if (cnt < tablesCount) {
-        return tableUnitClass[cnt];
+    if (_createdTablesIdx < _tableViews.size()) {
+        return tableUnitClass[_createdTablesIdx];
     }
     
     return static_cast<UnitClass>(table->getTag());

@@ -13,9 +13,11 @@
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "BattleDeckUnitInfoNode.h"
-#include "SoundManager.h"
+#include "DataManager.h"
 #include "UserDefaultsDataManager.h"
+#include "SoundManager.h"
 #include "Utils.h"
+#include "TechTree.h"
 #include "BattleScene.h"
 
 using namespace std;
@@ -34,32 +36,22 @@ static const map<UnitClass, set<string>> allCards{
     {
         kUnitClass_Hero,
         {
-            "时光女神",
-            "狼人森林之魂",
-            "天空女神",
-            "蛇女莉莉丝",
-            "时光法师",
+            "伊利丹",
+            "泰兰德"
         }
     },
     {
         kUnitClass_Warrior,
         {
-            "狼人步兵",
-            "狼人机械狼",
-            "狼人射手",
-            "机械甲虫",
-            "狼人巫师",
-            "吸血鬼战士",
-            "吸血鬼弓箭手",
-            "巨型蜘蛛",
-            "七恶魔拉玛什图",
-            "甲壳虫",
-            "吸血鬼巫师",
+            "疾风弓手",
+            "轻装武士_作战",
+            "辉月侍僧_入侵",
+            "攻城弩",
+            "巨鹰",
+            "流星投枪者_激流"
         }
     }
 };
-
-static const char* pickedCardsKey("pickedCardsKey");
 
 BattleDeckLayer* BattleDeckLayer::create()
 {
@@ -81,7 +73,7 @@ BattleDeckLayer::BattleDeckLayer()
 ,_selectedCardsLabel(nullptr)
 ,_dragNode(nullptr)
 {
-    static const Size unitNodeSize = BattleDeckTestNode::create("", false)->getContentSize();
+    static const Size unitNodeSize = BattleDeckTestNode::create("", "", false)->getContentSize();
     _cellSize.height = unitNodeSize.height + unitNodeOffsetY * 2 + 6.0f;
     _cellSize.width = unitNodeSize.width + unitNodeOffsetX;
     
@@ -89,12 +81,14 @@ BattleDeckLayer::BattleDeckLayer()
         loadData(tableUnitClass.at(i));
     }
     
-//    loadData(kUnitClass_Warrior);
+    _techTree = new TechTree();
+    _techTree->init(DataManager::getInstance()->getTechTreeData(1));
 }
 
 BattleDeckLayer::~BattleDeckLayer()
 {
     removeAllChildren();
+    CC_SAFE_DELETE(_techTree);
 }
 
 void BattleDeckLayer::registerObserver(BattleDeckLayerObserver *observer)
@@ -134,12 +128,12 @@ bool BattleDeckLayer::init()
         title->setPosition(Point(bgSize.width / 2, ceilY - (infoNodeSize.height + marginY * 2 + titleSize.height / 2)));
         
         // cards
+        static const float offsetX(12.0f);
+        static const float offsetY(8.0f);
         Point firstCardPos(Point::ZERO);
         for (int i = 0; i < cardDecksCount; ++i) {
             Sprite* sprite = Sprite::create("GameImages/test/ui_jiabing.png");
             const Size& size = sprite->getContentSize();
-            static const float offsetX(12.0f);
-            static const float offsetY(8.0f);
             if (firstCardPos.x == 0) {
                 firstCardPos.x = marginX + offsetX + size.width / 2;
                 firstCardPos.y = marginY + offsetY + size.height / 2;
@@ -155,7 +149,7 @@ bool BattleDeckLayer::init()
         parent->addChild(button);
         
         const Size& buttonSize = button->getContentSize();
-        button->setPosition(Point(bgSize.width - (buttonSize.width / 2 + marginX), buttonSize.height / 2 + marginY));
+        button->setPosition(Point(bgSize.width - (buttonSize.width / 2 + marginX), buttonSize.height / 2 + marginY + offsetY));
         button->addClickEventListener([this](Ref*) {
             saveData();
             // TODO
@@ -242,10 +236,8 @@ void BattleDeckLayer::onTouchEnded(Touch *touch, Event *unused_event)
             reloadCardDecks();
         }
         
-        removeDragNode();
-        
         // clear
-        _selectedCard = "";
+        removeDragNode();
     }
 }
 
@@ -288,19 +280,19 @@ TableViewCell* BattleDeckLayer::tableCellAtIndex(TableView *table, ssize_t idx)
     }
     
     UnitClass uc = getUnitClass(table);
-    string name = _candidateCards.at(uc).at(idx);
+    const string& name = _candidateCards.at(uc).at(idx);
+    const string& renderKey = getRenderKey(name);
     
-//    const Camp* camp = nullptr;
     if (name.length() > 0) {
         static const int nodeTag(100);
         BattleDeckTestNode* unitNode = dynamic_cast<BattleDeckTestNode*>(cell->getChildByTag(nodeTag));
         if (unitNode) {
-            unitNode->reuse(name);
+            unitNode->reuse(name, renderKey);
             unitNode->setSelected(name == _touchedCard.second);
         } else {
-            unitNode = BattleDeckTestNode::create(name, (kUnitClass_Hero == uc));
+            unitNode = BattleDeckTestNode::create(name, renderKey, (kUnitClass_Hero == uc));
             unitNode->registerObserver(this);
-            unitNode->reuse(name);
+            unitNode->reuse(name, renderKey);
             const Size& size = unitNode->getContentSize();
             unitNode->setPosition(Point(size.width / 2, size.height / 2) + Point(unitNodeOffsetX, unitNodeOffsetY));
             unitNode->setTag(nodeTag);
@@ -343,6 +335,8 @@ void BattleDeckLayer::onBattleDeckTestNodeTouchedBegan(BattleDeckTestNode* node)
 
 void BattleDeckLayer::onBattleDeckTestNodeTouchedEnded(BattleDeckTestNode* node, bool isValid)
 {
+    removeDragNode();
+    
     const string& lastCard = _touchedCard.second;
     const string& name = node->getUnitName();
     if (lastCard != name) {
@@ -420,8 +414,7 @@ void BattleDeckLayer::createTableViews(float width)
 
 Node* BattleDeckLayer::createTableView(UnitClass uc, float width)
 {
-    const ssize_t cnt = getCellsCount(uc);
-    if (cnt > 0) {
+    if (true) {
         TableViewNode tableViewNode;
         Node* parent = Node::create();
         
@@ -556,7 +549,7 @@ void BattleDeckLayer::configTable(UnitClass uc, bool reload)
 void BattleDeckLayer::createDragNode(const string& name)
 {
     if (!_dragNode && name.length() > 0) {
-        _dragNode = BattleDeckTestNode::create(name, getUnitClass(name));
+        _dragNode = BattleDeckTestNode::create(name, getRenderKey(name), getUnitClass(name));
         _dragNode->setVisible(false);
         _background->addChild(_dragNode, topZOrder);
     }
@@ -567,6 +560,8 @@ void BattleDeckLayer::removeDragNode()
     if (_dragNode) {
         _dragNode->removeFromParent();
         _dragNode = nullptr;
+        
+        _selectedCard = "";
     }
 }
 
@@ -588,7 +583,8 @@ void BattleDeckLayer::reloadCardDecks()
         if (cnt > i) {
             Sprite* deck = _cardDecks.at(i);
             const string& name = *iter;
-            auto node = BattleDeckTestNode::create(name, getUnitClass(name));
+            const string& renderKey = getRenderKey(name);
+            auto node = BattleDeckTestNode::create(name, renderKey, getUnitClass(name));
             node->registerObserver(this);
             node->setTag(cardTagOnDeck);
             deck->addChild(node);
@@ -596,6 +592,8 @@ void BattleDeckLayer::reloadCardDecks()
             node->setPosition(Size(size.width / 2, size.height / 2));
         }
     }
+    
+    _selectedCardsLabel->setString(StringUtils::format("Troops:%d/%d", i, cardDecksCount));
 }
 
 void BattleDeckLayer::selectCardOnDecks(const string& name)
@@ -712,6 +710,19 @@ static bool sortByName(const string& first, const string& second)
     return (first > second);
 }
 
+string BattleDeckLayer::getRenderKey(const string& name) const
+{
+    if (_techTree) {
+        const UnitType* unitType = _techTree->findUnitTypeByName(name);
+        if (unitType) {
+            return unitType->getRenderKey();
+        }
+    }
+    
+    assert(false);
+    return "";
+}
+
 static const vector<string> emptyVector;
 const vector<string>& BattleDeckLayer::getCandidateCards(UnitClass uc) const
 {
@@ -743,14 +754,7 @@ UnitClass BattleDeckLayer::getUnitClass(const string& name) const
 void BattleDeckLayer::loadData(UnitClass uc)
 {
     if (0 == _pickedCards.size()) {
-        const string data = UserDefaultsDataManager::getInstance()->getStringForKey(pickedCardsKey, "");
-        if (data.length() > 0) {
-            vector<string> results;
-            Utils::split(results, data, ",", "");
-            for (int i = 0; i < results.size(); ++i) {
-                _pickedCards.insert(results.at(i));
-            }
-        }
+        UserDefaultsDataManager::getInstance()->getSelectedCards(_pickedCards);
     }
     
     if (allCards.find(uc) != allCards.end()) {
@@ -769,13 +773,7 @@ void BattleDeckLayer::loadData(UnitClass uc)
 
 void BattleDeckLayer::saveData()
 {
-    string data;
-    for (auto iter = begin(_pickedCards); iter != end(_pickedCards); ++iter) {
-        data += *iter + ",";
-    }
-    data.pop_back();
-    
-    UserDefaultsDataManager::getInstance()->setStringForKey(pickedCardsKey, data);
+    UserDefaultsDataManager::getInstance()->setSelectedCards(_pickedCards);
 }
 
 void BattleDeckLayer::extract(UnitClass uc, const string& name)

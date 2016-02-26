@@ -10,8 +10,12 @@
 #include "CocosUtils.h"
 #include "GameSettings.h"
 #include "DataManager.h"
+#include "UserDefaultsDataManager.h"
 #include "SoundManager.h"
 #include "MapUnitConfigData.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#include "ApiBridge.h"
+#endif
 
 BattleScene* BattleScene::create(int mapId)
 {
@@ -56,32 +60,38 @@ bool BattleScene::init(int mapId)
 void BattleScene::onEnter()
 {
     Scene::onEnter();
-    start(_mapId);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    iOSApi::setMultipleTouchEnabled(true);
+#endif
+    start();
 }
 
 void BattleScene::onExit()
 {
     SoundManager::getInstance()->stopBackgroundMusic();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    iOSApi::setMultipleTouchEnabled(false);
+#endif
     Scene::onExit();
 }
 
 #pragma mark - GameRenderObserver
 void BattleScene::onGameRenderRestart()
 {
-    start(_mapId);
+    start();
 }
 
-void BattleScene::start(int mapId)
+void BattleScene::start()
 {
     if (_render) {
         clear();
     }
     
     // 1. add map layer
-    string mapSettingXml = DataManager::getInstance()->getMapData(mapId);
+    string mapSettingXml = DataManager::getInstance()->getMapData(_mapId);
     
     // 2. add map ui layer
-    _render = new (nothrow) GameRender(this, mapId, mapSettingXml, "Vampire");
+    _render = new (nothrow) GameRender(this, _mapId, mapSettingXml, "Vampire");
     _render->registerObserver(this);
     
     _sch = new (nothrow) GameScheduler();
@@ -100,7 +110,7 @@ void BattleScene::start(int mapId)
     setting.setFactionCount(2);
     setting.setThisFactionIndex(0);
     
-    const MapUnitConfigData* mapUnitData = DataManager::getInstance()->getMapUnitConfigData(mapId);
+    const MapUnitConfigData* mapUnitData = DataManager::getInstance()->getMapUnitConfigData(_mapId);
     if (mapUnitData) {
         const bool isWerewolf = mapUnitData->isWerewolf();
         
@@ -141,35 +151,26 @@ void BattleScene::start(int mapId)
         // set camps
         // werewolf
         {
-            const vector<string>& heroes = mapUnitData->getMyHeroes();
-            const size_t heroes_count = heroes.size();
-            
-            const vector<string>& soldiers = mapUnitData->getMySoldiers();
-            const size_t soldiers_count = soldiers.size();
+            set<string> cards;
+            UserDefaultsDataManager::getInstance()->getSelectedCards(cards);
             
             vector<UnderWorld::Core::CampSetting> cs;
-            cs.resize(heroes_count + soldiers_count);
+            cs.resize(cards.size());
             
             int i = 0;
-            for (; i < heroes_count; ++i) {
+            for (auto iter = begin(cards); iter != end(cards); ++iter, ++i) {
                 UnderWorld::Core::UnitSetting us;
-                us.setUnitTypeName(heroes.at(i));
+                const string& name = *iter;
+                us.setUnitTypeName(name);
                 us.setLevel(0);
                 us.setQuality(0);
                 us.setTalentLevel(0);
                 cs[i].setUnitSetting(us);
-                
-                cs[i].setMaxProduction(1);
-            }
-            
-            for (; i < heroes_count + soldiers_count; ++i) {
-                UnderWorld::Core::UnitSetting us;
-                us.setUnitTypeName(soldiers.at(i - heroes_count));
-                us.setLevel(0);
-                us.setQuality(0);
-                us.setTalentLevel(0);
-                cs[i].setUnitSetting(us);
-                cs[i].setMaxProduction(10);
+                if ((name.find("伊利丹") != string::npos) || (name.find("泰兰德") != string::npos)) {
+                    cs[i].setMaxProduction(1);
+                } else {
+                    cs[i].setMaxProduction(10);
+                }
             }
             
             setting.setCamps(0, cs);

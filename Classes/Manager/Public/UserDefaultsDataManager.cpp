@@ -10,6 +10,7 @@
 #include "CocosUtils.h"
 #include "AESCTREncryptor.h"
 #include "MD5Verifier.h"
+#include "Utils.h"
 
 USING_NS_CC;
 using namespace std;
@@ -22,7 +23,7 @@ UserDefaultsDataManager* UserDefaultsDataManager::getInstance()
 {
     if (!s_pSharedInstance)
     {
-        s_pSharedInstance = new (std::nothrow) UserDefaultsDataManager();
+        s_pSharedInstance = new (nothrow) UserDefaultsDataManager();
         CCASSERT(s_pSharedInstance, "FATAL: Not enough memory");
     }
     
@@ -52,12 +53,12 @@ void UserDefaultsDataManager::flush() const
     UserDefault::getInstance()->flush();
 }
 
-void UserDefaultsDataManager::setStringForKey(const char* pKey, const std::string & value) const
+void UserDefaultsDataManager::setStringForKey(const char* pKey, const string & value) const
 {
     UserDefault::getInstance()->setStringForKey(pKey, MD5Verifier::getInstance()->encrypt(value));
 }
 
-string UserDefaultsDataManager::getStringForKey(const char* pKey, const std::string & defaultValue) const
+string UserDefaultsDataManager::getStringForKey(const char* pKey, const string & defaultValue) const
 {
     string value = UserDefault::getInstance()->getStringForKey(pKey, "");
     if (value.empty()) {
@@ -70,13 +71,13 @@ string UserDefaultsDataManager::getStringForKey(const char* pKey, const std::str
     return defaultValue;
 }
 
-void UserDefaultsDataManager::setStringForKeyWithAES(const char* pKey, const std::string & value) const
+void UserDefaultsDataManager::setStringForKeyWithAES(const char* pKey, const string & value) const
 {
     string enValue = AESCTREncryptor::getInstance()->Encrypt(value);
     UserDefault::getInstance()->setStringForKey(pKey, MD5Verifier::getInstance()->encrypt(CocosUtils::charToHex(enValue)));
 }
 
-string UserDefaultsDataManager::getStringForKeyWithAES(const char* pKey, const std::string & defaultValue) const
+string UserDefaultsDataManager::getStringForKeyWithAES(const char* pKey, const string & defaultValue) const
 {
     string value = UserDefault::getInstance()->getStringForKey(pKey, "");
     if (value.empty()) {
@@ -144,4 +145,31 @@ void UserDefaultsDataManager::setMusicOn(bool on) const
 bool UserDefaultsDataManager::getMusicOn() const
 {
     return getBoolForKey(MUSIC_ON_TAG, true);
+}
+
+#pragma mark - card
+static const char* pickedCardsKey("pickedCardsKey");
+void UserDefaultsDataManager::getSelectedCards(set<string>& output) const
+{
+    output.clear();
+    
+    const string data = getStringForKey(pickedCardsKey, "");
+    if (data.length() > 0) {
+        vector<string> results;
+        Utils::split(results, data, ",", "");
+        for (int i = 0; i < results.size(); ++i) {
+            output.insert(results.at(i));
+        }
+    }
+}
+
+void UserDefaultsDataManager::setSelectedCards(const set<string>& output) const
+{
+    string data;
+    for (auto iter = begin(output); iter != end(output); ++iter) {
+        data += *iter + ",";
+    }
+    data.pop_back();
+    
+    setStringForKey(pickedCardsKey, data);
 }

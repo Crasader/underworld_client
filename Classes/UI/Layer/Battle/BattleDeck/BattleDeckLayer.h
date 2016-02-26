@@ -18,6 +18,9 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
+namespace UnderWorld { namespace Core {
+    class TechTree;
+}}
 class BattleDeckUnitInfoNode;
 
 class BattleDeckLayerObserver
@@ -79,6 +82,7 @@ protected:
     
     int getIntersectedCardDeckIdx(const Rect& rect) const;
     
+    std::string getRenderKey(const std::string& name) const;
     const std::vector<std::string>& getCandidateCards(UnderWorld::Core::UnitClass uc) const;
     const std::set<std::string>& getPickedCards() const;
     UnderWorld::Core::UnitClass getUnitClass(const std::string& name) const;
@@ -104,6 +108,7 @@ private:
     std::pair<ssize_t, std::string> _selectedTableCard;
     std::string _selectedCard;
     
+    UnderWorld::Core::TechTree* _techTree;
     std::map<UnderWorld::Core::UnitClass, std::vector<std::string>> _candidateCards;
     std::set<std::string> _pickedCards;
     

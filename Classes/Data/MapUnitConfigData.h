@@ -22,15 +22,11 @@ public:
     
     int getMapId() const;
     bool isWerewolf() const;
-    const std::vector<std::string>& getMyHeroes() const;
-    const std::vector<std::string>& getMySoldiers() const;
     const std::vector<std::string>& getCpuUnits() const;
     
 private:
     int _mapId;
     bool _isWerewolf;
-    std::vector<std::string> _myHeroes;
-    std::vector<std::string> _mySoldiers;
     std::vector<std::string> _cpuUnits;
 };
 

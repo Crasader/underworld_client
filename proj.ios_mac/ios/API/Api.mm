@@ -15,6 +15,10 @@
 #include "LocalHelper.h"
 #include "IapObject.h"
 
+#import "AppController.h"
+#import "RootViewController.h"
+#import "platform/ios/CCEAGLView-ios.h"
+
 #import <CommonCrypto/CommonCrypto.h>
 
 using namespace std;
@@ -324,6 +328,15 @@ string iOSApi::getBuildId()
 {
     NSDictionary *info = [[NSBundle mainBundle] infoDictionary];
     return [[info objectForKey:@"CFBundleVersion"] stdString];
+}
+
+void iOSApi::setMultipleTouchEnabled(bool enabled)
+{
+    auto ad = (AppController*)[UIApplication sharedApplication].delegate;
+    CCEAGLView* view = (CCEAGLView*)ad.viewController.view;
+    if (view) {
+        [view setMultipleTouchEnabled:enabled];
+    }
 }
 
 void iOSApi::showAlertView(const string& title, const string& message, bool showTwoButtons, int tag, const AlertViewClickedButtonCallback& callback)

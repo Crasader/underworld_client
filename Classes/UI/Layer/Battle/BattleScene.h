@@ -33,7 +33,7 @@ private:
     // GameRenderObserver
     virtual void onGameRenderRestart() override;
     
-    void start(int mapId);
+    void start();
     void clear();
     
 private:

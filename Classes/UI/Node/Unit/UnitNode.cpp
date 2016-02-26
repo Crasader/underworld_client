@@ -516,7 +516,7 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
         // add node
         Texture2D::PixelFormat defaultPixelFormat = Texture2D::getDefaultAlphaPixelFormat();
         // TODO: if we change the "PixelFormat", it may cause some display bugs(eg: the shadow of the units)
-        if (!_isBuilding) {
+        if (false) {
             if (defaultPixelFormat != LOW_PIXELFORMAT) {
                 Texture2D::setDefaultAlphaPixelFormat(LOW_PIXELFORMAT);
             }

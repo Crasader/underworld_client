@@ -10,6 +10,7 @@
 #define UserDefaultsDataManager_h
 
 #include <iostream>
+#include <set>
 #include "CocosGlobal.h"
 
 class UserDefaultsDataManager
@@ -26,6 +27,9 @@ public:
     void setStringForKeyWithAES(const char* pKey, const std::string & value) const;
     bool getBoolForKey(const char* pKey, bool defaultValue) const;
     void setBoolForKey(const char* pKey, bool value) const;
+    
+    void getSelectedCards(std::set<std::string>& output) const;
+    void setSelectedCards(const std::set<std::string>& output) const;
     
 protected:
     UserDefaultsDataManager();

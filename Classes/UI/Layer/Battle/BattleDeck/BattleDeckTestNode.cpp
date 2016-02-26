@@ -23,10 +23,10 @@ using namespace UnderWorld::Core;
 static const int topZOrder(1);
 static const Point iconTouchOffset(0, -6.0f);
 
-BattleDeckTestNode* BattleDeckTestNode::create(const string& name, bool isHero)
+BattleDeckTestNode* BattleDeckTestNode::create(const string& name, const string& renderKey, bool isHero)
 {
     BattleDeckTestNode *ret = new (nothrow) BattleDeckTestNode();
-    if (ret && ret->init(name, isHero)) {
+    if (ret && ret->init(name, renderKey, isHero)) {
         ret->autorelease();
         return ret;
     }
@@ -60,11 +60,12 @@ BattleDeckTestNode::~BattleDeckTestNode()
     removeAllChildren();
 }
 
-bool BattleDeckTestNode::init(const std::string& name, bool isHero)
+bool BattleDeckTestNode::init(const string& name, const string& renderKey, bool isHero)
 {
     if (Node::init())
     {
         _unitName = name;
+        _renderKey = renderKey;
         _isHero = isHero;
         
         static const string csbFile("UI_Card.csb");
@@ -91,7 +92,7 @@ bool BattleDeckTestNode::init(const std::string& name, bool isHero)
                     }
                         break;
                     case 45: {
-                        const string& iconFile = getIconFile(name, true);
+                        const string& iconFile = getIconFile(renderKey, true);
                         _iconSprite = Sprite::create(iconFile);
                         child->addChild(_iconSprite);
                     }
@@ -225,9 +226,10 @@ void BattleDeckTestNode::registerObserver(BattleDeckTestNodeObserver *observer)
     _observer = observer;
 }
 
-void BattleDeckTestNode::reuse(const string& name)
+void BattleDeckTestNode::reuse(const string& name, const string& renderKey)
 {
     _unitName = name;
+    _renderKey = renderKey;
     
     // update mutable data
     update(true);
@@ -235,7 +237,7 @@ void BattleDeckTestNode::reuse(const string& name)
 
 void BattleDeckTestNode::update(bool reuse)
 {
-    const string& iconFile = getIconFile(_unitName, true);
+    const string& iconFile = getIconFile(_renderKey, true);
     if (iconFile.length() > 0) {
         _iconSprite->setTexture(iconFile);
     }

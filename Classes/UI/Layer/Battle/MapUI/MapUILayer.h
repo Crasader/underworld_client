@@ -108,6 +108,7 @@ private:
     std::pair<TableView*, const UnderWorld::Core::Camp*> _highlightedCamp;
     bool _isTouchingTableView;
     const UnderWorld::Core::Camp* _selectedCamp;
+    int _createdTablesIdx;
     // ======================== UI =============================
     std::map<UnderWorld::Core::UnitClass, TableView*> _tableViews;
     Label *_timeLabel;

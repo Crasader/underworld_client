@@ -32,18 +32,6 @@ MapUnitConfigData::MapUnitConfigData(tinyxml2::XMLElement *xmlElement)
             }
         }
         {
-            const char *data = xmlElement->Attribute("my_heroes");
-            if (data && strlen(data) > 0) {
-                Utils::split(_myHeroes, data, ",");
-            }
-        }
-        {
-            const char *data = xmlElement->Attribute("my_soldiers");
-            if (data && strlen(data) > 0) {
-                Utils::split(_mySoldiers, data, ",");
-            }
-        }
-        {
             const char *data = xmlElement->Attribute("cpu_units");
             if (data && strlen(data) > 0) {
                 Utils::split(_cpuUnits, data, ",");
@@ -65,16 +53,6 @@ int MapUnitConfigData::getMapId() const
 bool MapUnitConfigData::isWerewolf() const
 {
     return _isWerewolf;
-}
-
-const vector<string>& MapUnitConfigData::getMyHeroes() const
-{
-    return _myHeroes;
-}
-
-const vector<string>& MapUnitConfigData::getMySoldiers() const
-{
-    return _mySoldiers;
 }
 
 const vector<string>& MapUnitConfigData::getCpuUnits() const
