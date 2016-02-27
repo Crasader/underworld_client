@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <root>
     <map map_name="1"/>
-    <location_setting index="0" core_location="200,550" building_location="1000,550" />
-    <location_setting index="1" core_location="4400,550" building_location="3600,550" />
+    <location_setting index="0" core_location="200,550" building_location="1000,550" putting_start_location="0,0" putting_end_location="1500,1200"/>
+    <location_setting index="1" core_location="4400,550" building_location="3600,550" putting_start_location="3600,0" putting_end_location="4800,1200"/>
     <schedule_events>
         <event>
             <event_trigger class="schedule" time="0"/>
