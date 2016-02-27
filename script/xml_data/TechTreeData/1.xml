@@ -792,7 +792,7 @@
             <addon>
                 <feature_group determine_timing="attack">
                     <feature_item effect_timing="hit">
-                        <feature type="extra_damage" value="d:target:owner;type:max_hp;v:0.05f;template:0.f"/>
+                        <feature type="extra_damage" value="d:target:owner;type:max_hp;v:0.05f;template:0.f" deliver_class="physical"/>
                     </feature_item>
                 </feature_group>
             </addon>
@@ -974,7 +974,7 @@
         <!-- 毒气投掷 -->
         <spell_pattern name="毒气投掷_毒气投掷施法效果" class="target_position_circle" radius="50.0f" deliver_nature="enemy">
             <spell_content name="毒气投掷_毒气投掷施法效果_内容" spell_content_class="damage">
-                <damage damage_nature="hurt" deliver_class="magical">
+                <damage damage_nature="hurt" deliver_class="magical" damage_value="0.f">
                     <feature_group determine_timing="attack">
                         <feature_item effect_timing="hit">
                             <feature type="add_buff" buff_type_name="毒药_爆发伤害" overlay="1" is_to_self="0"/>

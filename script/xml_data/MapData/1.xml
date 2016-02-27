@@ -73,18 +73,6 @@
             </event_effect>
         </event>
         <event>
-            <event_trigger class="loop" time="30" start_time="55" end_time="300"/>
-            <event_effect class="add_unit" map_index="1" position="4000,550">
-                <unit_setting name="大法师"/>
-            </event_effect>
-        </event>
-        <event>
-            <event_trigger class="loop" time="30" start_time="155" end_time="300"/>
-            <event_effect class="add_unit" map_index="1" position="4000,550">
-                <unit_setting name="大法师"/>
-            </event_effect>
-        </event>
-        <event>
             <event_trigger class="loop" time="30" start_time="90" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="4000,550">
                 <unit_setting name="伊利丹"/>
