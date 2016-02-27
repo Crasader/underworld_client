@@ -12,11 +12,11 @@
     <loop_events>
         <event>
             <event_trigger class="loop" time="1" start_time="1" end_time="300"/>
-            <event_effect class="alter_resource" map_index="0" resource_name="金子" amount="0.3f"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="金子" amount="0.1f"/>
         </event>
         <event>
             <event_trigger class="loop" time="1" start_time="1" end_time="300"/>
-            <event_effect class="alter_resource" map_index="1" resource_name="金子" amount="0.3f"/>
+            <event_effect class="alter_resource" map_index="1" resource_name="金子" amount="0.0f"/>
         </event>
         <event>
             <event_trigger class="loop" time="30" start_time="15" end_time="300"/>
@@ -58,6 +58,12 @@
             <event_trigger class="loop" time="30" start_time="25" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="4000,550">
                 <unit_setting name="骑士"/>
+            </event_effect>
+        </event>
+        <event>
+            <event_trigger class="loop" time="30" start_time="75" end_time="300"/>
+            <event_effect class="add_unit" map_index="1" position="4000,550">
+                <unit_setting name="辉月侍僧"/>
             </event_effect>
         </event>
         <event>
