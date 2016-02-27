@@ -45,6 +45,7 @@ MapUIUnitNode::MapUIUnitNode()
 :_observer(nullptr)
 ,_cardWidget(nullptr)
 ,_addButton(nullptr)
+,_upgradeButton(nullptr)
 ,_iconSprite(nullptr)
 ,_qualitySprite(nullptr)
 ,_countLabel(nullptr)
@@ -68,6 +69,8 @@ bool MapUIUnitNode::init(const Camp* camp)
 {
     if (Node::init())
     {
+        _camp = camp;
+        
         static const string csbFile("UI_BattleCard.csb");
         Node *mainNode = CSLoader::createNode(csbFile);
         addChild(mainNode);
@@ -116,6 +119,8 @@ bool MapUIUnitNode::init(const Camp* camp)
                                     _observer->onMapUIUnitNodeClickedUpgradeButton(this);
                                 }
                             });
+                            
+                            _upgradeButton = button;
                         } else {
                             assert(false);
                         }
@@ -268,14 +273,6 @@ void MapUIUnitNode::registerObserver(MapUIUnitNodeObserver *observer)
     _observer = observer;
 }
 
-void MapUIUnitNode::reuse(const Camp* camp, int gold, int wood)
-{
-    _camp = camp;
-    
-    // update mutable data
-    update(gold, wood);
-}
-
 void MapUIUnitNode::update(int gold, int wood)
 {
     if (_camp) {
@@ -295,6 +292,7 @@ void MapUIUnitNode::update(int gold, int wood)
             bool enoughResources = setResourceStatus(true, gold, isNotFull) && setResourceStatus(false, wood, isNotFull);
             _addButton->setVisible(isNotFull);
             _maxIconSprite->setVisible(!isNotFull);
+            _upgradeButton->setEnabled(!_camp->isUpgraded() && (_camp->getUpgradeCount() > 0));
             
             if (isNotFull) {
                 _addButton->setEnabled(enoughResources);
@@ -307,7 +305,11 @@ void MapUIUnitNode::update(int gold, int wood)
                 colorful = valid;
             }
         } else {
-            if (!heroUnit->isAlive()) {
+            if (heroUnit->isAlive()) {
+                if (heroUnit->getSpellCount() == 0) {
+                    colorful = false;
+                }
+            } else {
                 colorful = valid;
             }
         }

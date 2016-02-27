@@ -31,7 +31,8 @@ MapUITalentNode::MapUITalentNode()
 :_observer(nullptr)
 ,_camp(nullptr)
 ,_idx(INVALID_VALUE)
-,_resourceNode(nullptr)
+,_goldNode(nullptr)
+,_woodNode(nullptr)
 {
     
 }
@@ -59,16 +60,29 @@ bool MapUITalentNode::init(const Camp* camp, int idx)
             }
         });
         
-        _resourceNode = BattleSmallResourceNode::create(kResourceType_Gold, 1);
-        addChild(_resourceNode);
+        const map<string, int>& costs = camp->getUpCosts(idx);
+        if (costs.find(RES_NAME_GOLD) != costs.end()) {
+            _goldNode = BattleSmallResourceNode::create(kResourceType_Gold, costs.at(RES_NAME_GOLD));
+            addChild(_goldNode);
+        }
+        
+        if (costs.find(RES_NAME_WOOD) != costs.end()) {
+            _woodNode = BattleSmallResourceNode::create(kResourceType_Wood, costs.at(RES_NAME_WOOD));
+            addChild(_woodNode);
+        }
         
         const Size& buttonSize(button->getContentSize());
         static const Size nodeSize(30, 30);
-        const Size size(buttonSize + nodeSize / 2);
+        const Size size(buttonSize + nodeSize - Size(0, nodeSize.height / 2));
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         setContentSize(size);
-        button->setPosition(Point((buttonSize.width + nodeSize.width) / 2, buttonSize.height / 2));
-        _resourceNode->setPosition(Point(nodeSize.width / 2, buttonSize.height));        
+        button->setPosition(Point(size.width / 2, buttonSize.height / 2));
+        if (_goldNode) {
+            _goldNode->setPosition(Point(nodeSize.width / 2, buttonSize.height));
+        }
+        if (_woodNode) {
+            _woodNode->setPosition(Point(size.width - nodeSize.width / 2, buttonSize.height));
+        }
         
         return true;
     }
@@ -83,8 +97,12 @@ void MapUITalentNode::registerObserver(MapUITalentNodeObserver *observer)
 
 void MapUITalentNode::check(float gold, float wood)
 {
-    if (_resourceNode) {
-        _resourceNode->check(gold);
+    if (_goldNode) {
+        _goldNode->check(gold);
+    }
+    
+    if (_woodNode) {
+        _woodNode->check(wood);
     }
 }
 

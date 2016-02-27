@@ -43,12 +43,18 @@ static const map<UnitClass, set<string>> allCards{
     {
         kUnitClass_Warrior,
         {
-            "疾风弓手",
-            "轻装武士_作战",
-            "辉月侍僧_入侵",
-            "攻城弩",
-            "巨鹰",
-            "流星投枪者_激流"
+            "轻装武士",
+            "窃贼"
+            "骑士"
+            "刺客"
+            "疾风弓手"
+            "火炮小队"
+            "炼金师_毒气"
+            "辉月侍僧"
+            "流星投枪者"
+            "天使"
+            "巨鹰"
+            "攻城弩"
         }
     }
 };
@@ -81,7 +87,7 @@ BattleDeckLayer::BattleDeckLayer()
         loadData(tableUnitClass.at(i));
     }
     
-    _techTree = new TechTree();
+    _techTree = new (std::nothrow) TechTree();
     _techTree->init(DataManager::getInstance()->getTechTreeData(1));
 }
 

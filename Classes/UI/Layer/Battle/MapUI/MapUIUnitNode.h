@@ -39,7 +39,6 @@ public:
     static MapUIUnitNode* create(const UnderWorld::Core::Camp* camp);
     virtual ~MapUIUnitNode();
     void registerObserver(MapUIUnitNodeObserver *observer);
-    void reuse(const UnderWorld::Core::Camp* camp, int gold, int wood);
     void update(int gold, int wood);
     void setSelected(bool selected);
     
@@ -58,6 +57,7 @@ private:
     MapUIUnitNodeObserver *_observer;
     Widget *_cardWidget;
     Button *_addButton;
+    Button *_upgradeButton;
     Sprite *_iconSprite;
     Sprite *_qualitySprite;
     Label *_countLabel;

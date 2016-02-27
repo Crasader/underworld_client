@@ -50,7 +50,8 @@ private:
     MapUITalentNodeObserver *_observer;
     const UnderWorld::Core::Camp* _camp;
     int _idx;
-    BattleSmallResourceNode* _resourceNode;
+    BattleSmallResourceNode* _goldNode;
+    BattleSmallResourceNode* _woodNode;
 };
 
 #endif /* MapUITalentNode_h */

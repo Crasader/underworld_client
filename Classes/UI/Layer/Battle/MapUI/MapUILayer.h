@@ -10,14 +10,12 @@
 #define MapUILayer_h
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
-#include "MapUIUnitNode.h"
+#include "MapUITable.h"
 #include "CampInfoNode.h"
 #include "MapUIUpgradeNode.h"
 #include "UnitType.h"
 
 USING_NS_CC;
-USING_NS_CC_EXT;
 
 class BattleResourceNode;
 
@@ -29,13 +27,12 @@ public:
     virtual void onMapUILayerClickedPauseButton() = 0;
     virtual bool onMapUILayerIsHeroAlive(const UnderWorld::Core::Camp* camp) const = 0;
     
-    virtual ssize_t onMapUILayerCampsCount(UnderWorld::Core::UnitClass uc) const = 0;
-    virtual const UnderWorld::Core::Camp* onMapUILayerCampAtIndex(UnderWorld::Core::UnitClass uc, ssize_t idx) const = 0;
+    virtual const std::vector<const UnderWorld::Core::Camp*>& onMapUILayerGetCamps(UnderWorld::Core::UnitClass uc) const = 0;
     
     virtual void onMapUILayerUnitSelected(const UnderWorld::Core::Camp* camp) = 0;
     virtual void onMapUILayerUnitTouched(const UnderWorld::Core::Camp* camp) = 0;
     virtual void onMapUILayerUnitAdd(const UnderWorld::Core::Camp* camp) = 0;
-    virtual void onMapUILayerUnitUpgrade(const UnderWorld::Core::Camp* camp) = 0;
+    virtual void onMapUILayerUnitUpgrade(const UnderWorld::Core::Camp* camp, int idx) = 0;
     
     virtual void onMapUILayerTouchMoved(const UnderWorld::Core::Camp* camp, const Point& position) = 0;
     virtual void onMapUILayerTouchCancelled(const UnderWorld::Core::Camp* camp) = 0;
@@ -44,8 +41,7 @@ public:
 
 class MapUILayer
 : public LayerColor
-, public TableViewDataSource
-, public MapUIUnitNodeObserver
+, public MapUITableObserver
 , public CampInfoNodeObserver
 , public MapUIUpgradeNodeObserver
 {
@@ -54,7 +50,6 @@ public:
     virtual ~MapUILayer();
     void registerObserver(MapUILayerObserver *observer);
     void reload();
-    void reloadTable(UnderWorld::Core::UnitClass uc);
 #if ENABLE_CAMP_INFO
     void insertCampInfo(size_t idx, const std::vector<std::pair<const UnderWorld::Core::Camp*, const UnderWorld::Core::UnitBase*>>& units);
     void updateCampInfos(size_t idx);
@@ -82,16 +77,11 @@ protected:
     virtual void onTouchMoved(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
-    // TableViewDataSource
-    virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx) override;
-    virtual TableViewCell* tableCellAtIndex(TableView *table, ssize_t idx) override;
-    virtual ssize_t numberOfCellsInTableView(TableView *table) override;
-    
-    // MapUIUnitNodeObserver
-    virtual void onMapUIUnitNodeClickedAddButton(const UnderWorld::Core::Camp* camp) override;
-    virtual void onMapUIUnitNodeClickedUpgradeButton(MapUIUnitNode* node) override;
-    virtual void onMapUIUnitNodeTouchedBegan(const UnderWorld::Core::Camp* camp) override;
-    virtual void onMapUIUnitNodeTouchedEnded(const UnderWorld::Core::Camp* camp, bool isValid) override;
+    // MapUITableObserver
+    virtual void onMapUITableUnitAdd(const UnderWorld::Core::Camp* camp) override;
+    virtual void onMapUITableUnitUpgrade(MapUIUnitNode* node) override;
+    virtual void onMapUITableUnitTouchedBegan(const UnderWorld::Core::Camp* camp) override;
+    virtual void onMapUITableUnitTouchedEnded(const UnderWorld::Core::Camp* camp) override;
     
     // CampInfoNodeObserver
     virtual void onCampInfoNodeClickedIcon(CampInfoNode* pSender, const UnderWorld::Core::UnitBase* unit) override;
@@ -104,25 +94,18 @@ protected:
     void onUnitTouched(const UnderWorld::Core::Camp* camp);
     void createTableViews();
     Node* createTableView(UnderWorld::Core::UnitClass uc, Node* parent);
-    UnderWorld::Core::UnitClass getUnitClass(TableView* table) const;
-    TableView* getTableView(const UnderWorld::Core::Camp* camp) const;
-    ssize_t getCellsCount(TableView* table) const;
-    ssize_t getCellsCount(UnderWorld::Core::UnitClass uc) const;
     Rect getTableViewBoundingBox(UnderWorld::Core::UnitClass uc) const;
-    void setHighlightedCamp(TableView* table, const UnderWorld::Core::Camp* camp, bool callback = false, bool ignoreProduction = false, bool check = true);
+    void setHighlightedCamp(const UnderWorld::Core::Camp* camp, bool callback = false, bool ignoreProduction = false, bool check = true);
     void createUpgradeNode(const UnderWorld::Core::Camp* camp);
     
 private:
     MapUILayerObserver *_observer;
-    Size _tableViewMaxSize;
     Point _tableViewPos;
-    Size _cellSize;
-    std::pair<TableView*, const UnderWorld::Core::Camp*> _highlightedCamp;
     bool _isTouchingTableView;
+    const UnderWorld::Core::Camp* _highlightedCamp;
     const UnderWorld::Core::Camp* _selectedCamp;
-    int _createdTablesIdx;
     // ======================== UI =============================
-    std::map<UnderWorld::Core::UnitClass, TableView*> _tableViews;
+    std::map<UnderWorld::Core::UnitClass, MapUITable*> _tableViews;
     Label *_timeLabel;
     BattleResourceNode *_goldResourceNode;
     BattleResourceNode *_woodResourceNode;

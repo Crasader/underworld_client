@@ -110,11 +110,6 @@ void GameRender::init(const Game* game, Commander* commander)
     
     updateAll();
     
-    // create tables
-    if (_mapUILayer) {
-        _mapUILayer->reload();
-    }
-    
     // tick
     Scheduler* scheduler = Director::getInstance()->getScheduler();
     scheduler->schedule(CC_CALLBACK_1(GameRender::tick, this), this, 1.0f, false, tickSelectorKey);
@@ -136,8 +131,7 @@ void GameRender::render(const Game* game)
             updateAll();
             
             if (_mapUILayer) {
-                _mapUILayer->reloadTable(kUnitClass_Hero);
-                _mapUILayer->reloadTable(kUnitClass_Warrior);
+                _mapUILayer->reload();
             }
         }
     }
@@ -574,25 +568,14 @@ bool GameRender::onMapUILayerIsHeroAlive(const Camp* camp) const
     return false;
 }
 
-ssize_t GameRender::onMapUILayerCampsCount(UnitClass uc) const
+const vector<const Camp*>& GameRender::onMapUILayerGetCamps(UnitClass uc) const
 {
     if (_myCamps.find(uc) != _myCamps.end()) {
-        return _myCamps.at(uc).size();
+        return _myCamps.at(uc);
     }
     
-    return 0;
-}
-
-const Camp* GameRender::onMapUILayerCampAtIndex(UnitClass uc, ssize_t idx) const
-{
-    if (_myCamps.find(uc) != _myCamps.end()) {
-        const vector<const Camp*>& vc = _myCamps.at(uc);
-        if (idx < vc.size()) {
-            return vc.at(idx);
-        }
-    }
-    
-    return nullptr;
+    static vector<const Camp*> empty;
+    return empty;
 }
 
 void GameRender::onMapUILayerUnitSelected(const Camp* camp)
@@ -632,9 +615,15 @@ void GameRender::onMapUILayerUnitAdd(const Camp* camp)
     }
 }
 
-void GameRender::onMapUILayerUnitUpgrade(const Camp* camp)
+void GameRender::onMapUILayerUnitUpgrade(const Camp* camp, int idx)
 {
+    if (_commander && camp) {
+        _commander->tryGiveCampUpgradeCommand(camp, idx);
+    }
     
+    if (_mapUILayer) {
+        _mapUILayer->removeUpgradeNode();
+    }
 }
 
 void GameRender::onMapUILayerTouchCancelled(const Camp* camp)

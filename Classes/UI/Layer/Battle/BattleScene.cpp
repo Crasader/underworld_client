@@ -13,6 +13,7 @@
 #include "UserDefaultsDataManager.h"
 #include "SoundManager.h"
 #include "MapUnitConfigData.h"
+#include "TechTree.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "ApiBridge.h"
 #endif
@@ -35,6 +36,7 @@ BattleScene::BattleScene()
 ,_render(nullptr)
 ,_looper(nullptr)
 ,_sch(nullptr)
+,_techTree(nullptr)
 {
     
 }
@@ -103,8 +105,12 @@ void BattleScene::start()
     setting.setMap(_render->getMapSetting());
     
     // 3.2. set techTree;
-    std::string techTree = DataManager::getInstance()->getTechTreeData(1);
-    setting.setTechTree(techTree);
+    std::string techTreeData = DataManager::getInstance()->getTechTreeData(1);
+    setting.setTechTree(techTreeData);
+    if (!_techTree) {
+        _techTree = new (std::nothrow) UnderWorld::Core::TechTree();
+        _techTree->init(techTreeData);
+    }
     
     // 3.3. set faction data
     setting.setFactionCount(2);
@@ -161,15 +167,16 @@ void BattleScene::start()
             for (auto iter = begin(cards); iter != end(cards); ++iter, ++i) {
                 UnderWorld::Core::UnitSetting us;
                 const string& name = *iter;
-                us.setUnitTypeName(name);
-                us.setLevel(0);
-                us.setQuality(0);
-                us.setTalentLevel(0);
+                createUnitSetting(name, us);
                 cs[i].setUnitSetting(us);
-                if ((name.find("伊利丹") != string::npos) || (name.find("泰兰德") != string::npos)) {
-                    cs[i].setMaxProduction(1);
-                } else {
-                    cs[i].setMaxProduction(10);
+                cs[i].setMaxProduction(isHero(name) ? 1 : 10);
+                {
+                    UnderWorld::Core::UnitSetting us;
+                    const string& talentName = getTalentUnitName(name);
+                    if (talentName.length() > 0) {
+                        createUnitSetting(name, us);
+                        cs[i].addUpgradeUnitSetting(us);
+                    }
                 }
             }
             
@@ -186,12 +193,10 @@ void BattleScene::start()
             
             for (int i = 0; i < camp_count; ++i) {
                 UnderWorld::Core::UnitSetting us;
-                us.setUnitTypeName(cpuUnits.at(i));
-                us.setLevel(0);
-                us.setQuality(0);
-                us.setTalentLevel(0);
+                const string& name = cpuUnits.at(i);
+                createUnitSetting(name, us);
                 cs[i].setUnitSetting(us);
-                cs[i].setMaxProduction(10);
+                cs[i].setMaxProduction(isHero(name) ? 1 : 10);
             }
             
             setting.setCamps(1, cs);
@@ -211,5 +216,39 @@ void BattleScene::clear()
     CC_SAFE_DELETE(_looper);
     CC_SAFE_DELETE(_sch);
     CC_SAFE_DELETE(_render);
+    CC_SAFE_DELETE(_techTree);
     removeAllChildren();
+}
+
+
+bool BattleScene::isHero(const std::string& name) const
+{
+    if (_techTree) {
+        const UnderWorld::Core::UnitType* ut = _techTree->findUnitTypeByName(name);
+        if (ut) {
+            return (UnderWorld::Core::kUnitClass_Hero == ut->getUnitClass());
+        }
+    }
+    
+    return false;
+}
+
+std::string BattleScene::getTalentUnitName(const std::string& name) const
+{
+    if (_techTree) {
+        const UnderWorld::Core::UnitType* ut = _techTree->findUnitTypeByName(name);
+        if (ut) {
+            return ut->getTalentName();
+        }
+    }
+    
+    return "";
+}
+
+void BattleScene::createUnitSetting(const std::string& name, UnderWorld::Core::UnitSetting& output)
+{
+    output.setUnitTypeName(name);
+    output.setLevel(0);
+    output.setQuality(0);
+    output.setTalentLevel(0);
 }

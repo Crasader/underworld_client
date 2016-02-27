@@ -16,6 +16,10 @@
 
 USING_NS_CC;
 
+namespace UnderWorld { namespace Core {
+    class TechTree;
+}}
+
 class MapLayer;
 
 class BattleScene : public Scene, public GameRenderObserver
@@ -36,11 +40,16 @@ private:
     void start();
     void clear();
     
+    bool isHero(const std::string& name) const;
+    std::string getTalentUnitName(const std::string& name) const;
+    void createUnitSetting(const std::string& name, UnderWorld::Core::UnitSetting& output);
+    
 private:
     int _mapId;
     GameRender* _render;
     UnderWorld::Core::GameLooper* _looper;
     GameScheduler* _sch;
+    UnderWorld::Core::TechTree* _techTree;
 };
 
 #endif /* BattleScene_h */
