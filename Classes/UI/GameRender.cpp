@@ -832,6 +832,7 @@ void GameRender::updateResources()
         const TechTree* techTree = world->getTechTree();
         const Faction* faction = world->getThisFaction();
         const int count = techTree->getResourceTypeCount();
+        bool update(false);
         for (int i = 0; i < count; ++i) {
             const UnderWorld::Core::ResourceType* resourceType = techTree->getResourceTypeByIndex(i);
             const Resource* resource = faction->getResource(resourceType);
@@ -839,20 +840,23 @@ void GameRender::updateResources()
                 CCASSERT(false, "There is no population any more.");
             } else {
                 const string& name = resourceType->_name;
-                const int cnt = resource->getBalanceInt();
                 const float decimalCnt = resource->getBalanceFloat();
                 if (name == RES_NAME_GOLD) {
                     if (_goldCount != decimalCnt) {
                         _goldCount = decimalCnt;
-                        _mapUILayer->updateGold(cnt, decimalCnt - cnt);
+                        update = true;
                     }
                 } else if (name == RES_NAME_WOOD) {
                     if (_woodCount != decimalCnt) {
                         _woodCount = decimalCnt;
-                        _mapUILayer->updateWood(cnt, decimalCnt - cnt);
+                        update = true;
                     }
                 }
             }
+        }
+        
+        if (update) {
+            _mapUILayer->updateResources(_goldCount, _woodCount);
         }
     }
 }

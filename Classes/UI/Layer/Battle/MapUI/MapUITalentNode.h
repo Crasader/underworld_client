@@ -10,8 +10,6 @@
 #define MapUITalentNode_h
 
 #include "cocos2d.h"
-#include "ui/CocosGUI.h"
-#include "CocosGlobal.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -20,6 +18,7 @@ namespace UnderWorld { namespace Core {
     class Camp;
 }}
 
+class BattleSmallResourceNode;
 class MapUITalentNode;
 
 class MapUITalentNodeObserver
@@ -36,6 +35,8 @@ public:
     virtual ~MapUITalentNode();
     void registerObserver(MapUITalentNodeObserver *observer);
     
+    void check(float gold, float wood);
+    
     // getters
     const UnderWorld::Core::Camp* getCamp() const;
     int getIdx() const;
@@ -49,6 +50,7 @@ private:
     MapUITalentNodeObserver *_observer;
     const UnderWorld::Core::Camp* _camp;
     int _idx;
+    BattleSmallResourceNode* _resourceNode;
 };
 
 #endif /* MapUITalentNode_h */

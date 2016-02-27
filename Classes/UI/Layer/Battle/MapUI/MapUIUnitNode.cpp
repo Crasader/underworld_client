@@ -8,9 +8,11 @@
 
 #include "MapUIUnitNode.h"
 #include "cocostudio/CocoStudio.h"
+#include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "Camp.h"
 #include "ResourceButton.h"
+#include "BattleSmallResourceNode.h"
 #include "DataManager.h"
 #include "URConfigData.h"
 #include "SoundManager.h"
@@ -45,11 +47,9 @@ MapUIUnitNode::MapUIUnitNode()
 ,_addButton(nullptr)
 ,_iconSprite(nullptr)
 ,_qualitySprite(nullptr)
-,_goldSprite(nullptr)
-,_woodSprite(nullptr)
 ,_countLabel(nullptr)
-,_goldLabel(nullptr)
-,_woodLabel(nullptr)
+,_goldNode(nullptr)
+,_woodNode(nullptr)
 
 ,_shiningSprite(nullptr)
 ,_maxIconSprite(nullptr)
@@ -154,51 +154,27 @@ bool MapUIUnitNode::init(const Camp* camp)
                                     }
                                         break;
                                     case 9: {
-                                        _goldSprite = dynamic_cast<Sprite*>(child);
-                                        if (_goldSprite) {
-                                            _goldSprite->setLocalZOrder(topZOrder);
-                                        }
+                                        child->setLocalZOrder(topZOrder);
                                         
                                         Node* node = child->getChildByTag(11);
                                         if (node) {
-                                            _goldLabel = CocosUtils::createLabel("0", DEFAULT_FONT_SIZE, DEFAULT_NUMBER_FONT);
-                                            node->addChild(_goldLabel);
+                                            _goldNode = BattleSmallResourceNode::create(kResourceType_Gold, 0);
+                                            node->addChild(_goldNode);
                                         } else {
                                             assert(false);
                                         }
-                                        
-                                        static string file("UI-quan-2.csb");
-                                        Node *effect = CSLoader::createNode(file);
-                                        const Size& size = child->getContentSize();
-                                        effect->setPosition(size.width / 2, size.height / 2);
-                                        child->addChild(effect, -1);
-                                        timeline::ActionTimeline *action = CSLoader::createTimeline(file);
-                                        effect->runAction(action);
-                                        action->gotoFrameAndPlay(0, true);
                                     }
                                         break;
                                     case 12: {
-                                        _woodSprite = dynamic_cast<Sprite*>(child);
-                                        if (_woodSprite) {
-                                            _woodSprite->setLocalZOrder(topZOrder);
-                                        }
+                                        child->setLocalZOrder(topZOrder);
                                         
                                         Node* node = child->getChildByTag(13);
                                         if (node) {
-                                            _woodLabel = CocosUtils::createLabel("0", DEFAULT_FONT_SIZE, DEFAULT_NUMBER_FONT);
-                                            node->addChild(_woodLabel);
+                                            _woodNode = BattleSmallResourceNode::create(kResourceType_Wood, 0);
+                                            node->addChild(_woodNode);
                                         } else {
                                             assert(false);
                                         }
-                                        
-                                        static string file("UI-quan-1.csb");
-                                        Node *effect = CSLoader::createNode(file);
-                                        const Size& size = child->getContentSize();
-                                        effect->setPosition(size.width / 2, size.height / 2);
-                                        child->addChild(effect, -1);
-                                        timeline::ActionTimeline *action = CSLoader::createTimeline(file);
-                                        effect->runAction(action);
-                                        action->gotoFrameAndPlay(0, true);
                                     }
                                         break;
                                     case 14: {
@@ -297,10 +273,10 @@ void MapUIUnitNode::reuse(const Camp* camp, int gold, int wood)
     _camp = camp;
     
     // update mutable data
-    update(true, gold, wood);
+    update(gold, wood);
 }
 
-void MapUIUnitNode::update(bool reuse, int gold, int wood)
+void MapUIUnitNode::update(int gold, int wood)
 {
     if (_camp) {
         const int production = _camp->getProduction();
@@ -400,25 +376,20 @@ bool MapUIUnitNode::isHero(const Camp* camp) const
 
 bool MapUIUnitNode::setResourceStatus(bool isGold, int count, bool enable)
 {
-    Sprite* sprite = isGold ? _goldSprite : _woodSprite;
-    Label* label = isGold ? _goldLabel : _woodLabel;
+    auto node = isGold ? _goldNode : _woodNode;
     
     const map<string, int>& costs = _camp->getCosts();
     const string& name = isGold ? RES_NAME_GOLD : RES_NAME_WOOD;
     const bool isEnable(costs.find(name) != costs.end() && enable);
-    sprite->setVisible(isEnable);
+    node->getParent()->getParent()->setVisible(isEnable);
     
     bool enoughResources(true);
     if (isEnable) {
-        static const Color4B& enabledColor(Color4B::WHITE);
-        static const Color4B& disabledColor(Color4B::RED);
         const int neededCount = costs.at(name);
-        label->setString(StringUtils::format("%d", neededCount));
+        node->setCount(neededCount);
+        node->check(count);
         if (count < neededCount) {
             enoughResources = false;
-            label->setTextColor(disabledColor);
-        } else {
-            label->setTextColor(enabledColor);
         }
     }
     

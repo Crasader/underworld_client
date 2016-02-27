@@ -7,7 +7,9 @@
 //
 
 #include "MapUITalentNode.h"
+#include "ui/CocosGUI.h"
 #include "Camp.h"
+#include "BattleSmallResourceNode.h"
 
 using namespace std;
 using namespace UnderWorld::Core;
@@ -29,6 +31,7 @@ MapUITalentNode::MapUITalentNode()
 :_observer(nullptr)
 ,_camp(nullptr)
 ,_idx(INVALID_VALUE)
+,_resourceNode(nullptr)
 {
     
 }
@@ -56,12 +59,16 @@ bool MapUITalentNode::init(const Camp* camp, int idx)
             }
         });
         
-        const Size size(button->getContentSize());
+        _resourceNode = BattleSmallResourceNode::create(kResourceType_Gold, 1);
+        addChild(_resourceNode);
+        
+        const Size& buttonSize(button->getContentSize());
+        static const Size nodeSize(30, 30);
+        const Size size(buttonSize + nodeSize / 2);
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         setContentSize(size);
-        button->setPosition(Point(size.width / 2, size.height / 2));
-        
-        // TODO: add resource cost
+        button->setPosition(Point((buttonSize.width + nodeSize.width) / 2, buttonSize.height / 2));
+        _resourceNode->setPosition(Point(nodeSize.width / 2, buttonSize.height));        
         
         return true;
     }
@@ -72,6 +79,13 @@ bool MapUITalentNode::init(const Camp* camp, int idx)
 void MapUITalentNode::registerObserver(MapUITalentNodeObserver *observer)
 {
     _observer = observer;
+}
+
+void MapUITalentNode::check(float gold, float wood)
+{
+    if (_resourceNode) {
+        _resourceNode->check(gold);
+    }
 }
 
 const Camp* MapUITalentNode::getCamp() const

@@ -8,6 +8,7 @@
 
 #include "MapUIUpgradeNode.h"
 #include "Camp.h"
+#include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "MapUITalentNode.h"
 
@@ -84,6 +85,13 @@ bool MapUIUpgradeNode::init(const Camp* camp)
 void MapUIUpgradeNode::registerObserver(MapUIUpgradeNodeObserver *observer)
 {
     _observer = observer;
+}
+
+void MapUIUpgradeNode::check(float gold, float wood)
+{
+    for (int i = 0; i < _nodes.size(); ++i) {
+        _nodes.at(i)->check(gold, wood);
+    }
 }
 
 const Camp* MapUIUpgradeNode::getCamp() const

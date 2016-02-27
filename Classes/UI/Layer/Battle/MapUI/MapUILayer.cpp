@@ -12,7 +12,6 @@
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "Camp.h"
-#include "MapUIUnitCell.h"
 #include "BattleResourceNode.h"
 #include "CampInfoNode.h"
 #include "SoundManager.h"
@@ -206,21 +205,22 @@ void MapUILayer::updateRemainingTime(int time)
     }
 }
 
-void MapUILayer::updateGold(int cnt, float decimalCnt)
+void MapUILayer::updateResources(float gold, float wood)
 {
     auto node = _goldResourceNode;
     if (node) {
-        node->setCount(cnt, false);
-        node->setSubCount(decimalCnt);
+        node->setCount(gold, false);
+        node->setSubCount(gold - (int)gold);
     }
-}
-
-void MapUILayer::updateWood(int cnt, float decimalCnt)
-{
-    auto node = _woodResourceNode;
+    
+    node = _woodResourceNode;
     if (node) {
-        node->setCount(cnt, false);
-        node->setSubCount(decimalCnt);
+        node->setCount(wood, false);
+        node->setSubCount(wood - (int)wood);
+    }
+    
+    if (_upgradeNode) {
+        _upgradeNode->check(gold, wood);
     }
 }
 
@@ -271,17 +271,18 @@ Size MapUILayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
 
 TableViewCell* MapUILayer::tableCellAtIndex(TableView *table, ssize_t idx)
 {
-    MapUIUnitCell *cell = static_cast<MapUIUnitCell*>(table->dequeueCell());
+    TableViewCell *cell = table->dequeueCell();
     
     if (!cell) {
-        cell = MapUIUnitCell::create();
+        cell = TableViewCell::create();
     }
     
     if (_observer) {
         UnitClass uc = getUnitClass(table);
         const Camp* camp = _observer->onMapUILayerCampAtIndex(uc, idx);
         if (camp) {
-            MapUIUnitNode* unitNode = cell->getUnitNode();
+            static const int nodeTag(100);
+            MapUIUnitNode* unitNode = dynamic_cast<MapUIUnitNode*>(cell->getChildByTag(nodeTag));
             const int goldCount = _goldResourceNode->getCount();
             const int woodCount = _woodResourceNode->getCount();
             if (unitNode) {
@@ -289,12 +290,12 @@ TableViewCell* MapUILayer::tableCellAtIndex(TableView *table, ssize_t idx)
                 unitNode->setSelected(table == _highlightedCamp.first && camp == _highlightedCamp.second);
             } else {
                 unitNode = MapUIUnitNode::create(camp);
+                unitNode->registerObserver(this);
                 unitNode->reuse(camp, goldCount, woodCount);
                 const Size& size = unitNode->getContentSize();
                 unitNode->setPosition(Point(size.width / 2, size.height / 2) + Point(unitNodeOffsetX, unitNodeOffsetY));
-                unitNode->registerObserver(this);
+                unitNode->setTag(nodeTag);
                 cell->addChild(unitNode);
-                cell->setUnitNode(unitNode);
             }
         }
     }

@@ -66,8 +66,7 @@ public:
     void updateMyHpProgress(int progress);
     void updateOpponentsHpProgress(int progress);
     void updateRemainingTime(int time);
-    void updateGold(int cnt, float decimalCnt);
-    void updateWood(int cnt, float decimalCnt);
+    void updateResources(float gold, float wood);
     void pauseGame();
     void resumeGame();
     bool isPointInTableView(const Point& point);

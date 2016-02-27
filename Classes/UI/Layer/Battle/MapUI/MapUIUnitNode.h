@@ -11,7 +11,6 @@
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-#include "CocosGlobal.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -20,6 +19,7 @@ namespace UnderWorld { namespace Core {
     class Camp;
 }}
 
+class BattleSmallResourceNode;
 class MapUIUnitNode;
 
 class MapUIUnitNodeObserver
@@ -40,7 +40,7 @@ public:
     virtual ~MapUIUnitNode();
     void registerObserver(MapUIUnitNodeObserver *observer);
     void reuse(const UnderWorld::Core::Camp* camp, int gold, int wood);
-    void update(bool reuse, int gold, int wood);
+    void update(int gold, int wood);
     void setSelected(bool selected);
     
     // getters
@@ -60,11 +60,9 @@ private:
     Button *_addButton;
     Sprite *_iconSprite;
     Sprite *_qualitySprite;
-    Sprite *_goldSprite;
-    Sprite *_woodSprite;
     Label *_countLabel;
-    Label *_goldLabel;
-    Label *_woodLabel;
+    BattleSmallResourceNode *_goldNode;
+    BattleSmallResourceNode *_woodNode;
     std::map<int, Sprite*> _starSprites;
     
     Sprite *_shiningSprite;

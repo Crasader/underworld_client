@@ -10,8 +10,6 @@
 #define MapUIUpgradeNode_h
 
 #include "cocos2d.h"
-#include "ui/CocosGUI.h"
-#include "CocosGlobal.h"
 #include "MapUITalentNode.h"
 
 USING_NS_CC;
@@ -36,6 +34,8 @@ public:
     static MapUIUpgradeNode* create(const UnderWorld::Core::Camp* camp);
     virtual ~MapUIUpgradeNode();
     void registerObserver(MapUIUpgradeNodeObserver *observer);
+    
+    void check(float gold, float wood);
     
     // getters
     const UnderWorld::Core::Camp* getCamp() const;
