@@ -155,7 +155,6 @@ void BattleScene::start()
         }
         
         // set camps
-        // werewolf
         {
             set<string> cards;
             UserDefaultsDataManager::getInstance()->getSelectedCards(cards);
@@ -181,25 +180,6 @@ void BattleScene::start()
             }
             
             setting.setCamps(0, cs);
-        }
-        
-        // vampire
-        {
-            const vector<string>& cpuUnits = mapUnitData->getCpuUnits();
-            const size_t camp_count = cpuUnits.size();
-            
-            vector<UnderWorld::Core::CampSetting> cs;
-            cs.resize(camp_count);
-            
-            for (int i = 0; i < camp_count; ++i) {
-                UnderWorld::Core::UnitSetting us;
-                const string& name = cpuUnits.at(i);
-                createUnitSetting(name, us);
-                cs[i].setUnitSetting(us);
-                cs[i].setMaxProduction(isHero(name) ? 1 : 10);
-            }
-            
-            setting.setCamps(1, cs);
         }
     }
     

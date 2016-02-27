@@ -361,7 +361,7 @@ void BattleDeckLayer::onBattleDeckTestNodeTouchedEnded(BattleDeckTestNode* node,
         
         _touchedCard.first = table;
         _touchedCard.second = name;
-        _infoNode->update(name);
+        _infoNode->update(name, _techTree);
         
         if (lastTable == table) {
             if (table) {

@@ -31,12 +31,6 @@ MapUnitConfigData::MapUnitConfigData(tinyxml2::XMLElement *xmlElement)
                 _isWerewolf = (atoi(data) != 0) ? true : false;
             }
         }
-        {
-            const char *data = xmlElement->Attribute("cpu_units");
-            if (data && strlen(data) > 0) {
-                Utils::split(_cpuUnits, data, ",");
-            }
-        }
     }
 }
 
@@ -53,9 +47,4 @@ int MapUnitConfigData::getMapId() const
 bool MapUnitConfigData::isWerewolf() const
 {
     return _isWerewolf;
-}
-
-const vector<string>& MapUnitConfigData::getCpuUnits() const
-{
-    return _cpuUnits;
 }

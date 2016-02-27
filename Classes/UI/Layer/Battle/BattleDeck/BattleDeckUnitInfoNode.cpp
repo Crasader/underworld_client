@@ -189,7 +189,7 @@ bool BattleDeckUnitInfoNode::init(int rarity)
                         break;
                     case 79:
                     {
-                        _skillDescriptionLabel = CocosUtils::createLabel("skill description", DEFAULT_FONT_SIZE, DEFAULT_FONT, Size(170, 130));
+                        _skillDescriptionLabel = CocosUtils::createLabel("skill description", DEFAULT_FONT_SIZE, DEFAULT_FONT, Size(130, 130));
                         _skillDescriptionLabel->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
                         child->addChild(_skillDescriptionLabel);
                     }
@@ -217,8 +217,6 @@ void BattleDeckUnitInfoNode::registerObserver(BattleDeckUnitInfoNodeObserver *ob
 
 void BattleDeckUnitInfoNode::update(const UnitBase* unit)
 {
-    _unit = unit;
-    
     if (unit) {
         const string& file = DataManager::getInstance()->getURConfigData(unit->getUnitType()->getRenderKey())->getSmallIcon();
         if (file.length() > 0 && FileUtils::getInstance()->isFileExist(file)) {
@@ -270,15 +268,77 @@ void BattleDeckUnitInfoNode::update(const UnitBase* unit)
     }
 }
 
-void BattleDeckUnitInfoNode::update(const string& name)
+void BattleDeckUnitInfoNode::update(const string& name, TechTree* techTree)
 {
-    _unit = nullptr;
-    const URConfigData* data = DataManager::getInstance()->getURConfigData(name);
-    if (data) {
-        const string& file = data->getSmallIcon();
+    const UnitType* unit = techTree->findUnitTypeByName(name);
+    if (unit) {
+        const string& file = DataManager::getInstance()->getURConfigData(unit->getRenderKey())->getSmallIcon();
         if (file.length() > 0 && FileUtils::getInstance()->isFileExist(file)) {
             _unitIcon->setTexture(file);
         }
+        
+        _nameLabel->setString(unit->getName());
+        _hpLabel->setString(StringUtils::format("%d", unit->getMaxHp()));
+        _armorLabel->setString(StringUtils::format("%d", unit->getAmror()));
+        
+        const AttackSkillType* type = dynamic_cast<const AttackSkillType*>(unit->getDefaultAttackSkillType(kFieldType_Land));
+        if (!type) {
+            type = dynamic_cast<const AttackSkillType*>(unit->getDefaultAttackSkillType(kFieldType_Air));
+        }
+        
+        if (type) {
+            _dmgLabel->setString(StringUtils::format("%d", (type->getMinDamage() + type->getMaxDamage()) / 2));
+            _atkSpeedLabel->setString(StringUtils::format("%.1f", GameConstants::frame2Second(type->getPrePerformFrames() + type->getCDFrames())));
+            _atkRangeLabel->setString(StringUtils::format("%d", type->getRange()));
+        } else {
+            _dmgLabel->setString("");
+            _atkSpeedLabel->setString("");
+            _atkRangeLabel->setString("");
+        }
+        
+        const string& at = unit->getArmorPreference();
+        if (at.length() > 0) {
+            _armorPreferLabel->setString(StringUtils::format("%.1f", unit->getArmorPreferenceFactor()));
+        } else {
+            _armorPreferLabel->setString("");
+        }
+        
+        // skill
+        {
+            string name;
+            const size_t passiveTypeCount = unit->getPassiveNames().size();
+            if (passiveTypeCount > 0) {
+                name = unit->getPassiveNames().at(0);
+                
+            } else {
+                const size_t spellTypeCount = unit->getSpellNames().size();
+                if (spellTypeCount > 0) {
+                    name = unit->getSpellNames().at(0);
+                }
+            }
+            
+            if (name.length() > 0) {
+                const SpellType* spellType = techTree->findSpellTypeByName(name);
+                if (_skillLevelLabel) {
+                    _skillLevelLabel->setString(StringUtils::format("LV%d", spellType ? spellType->getLevel() : 0));
+                }
+                if (_skillNameLabel) {
+                    _skillNameLabel->setString(name);
+                }
+                if (_skillDescriptionLabel) {
+                    _skillDescriptionLabel->setString(spellType ? spellType->getDesc() : "");
+                }
+            } else {
+                if (_skillLevelLabel) {
+                    _skillLevelLabel->setString("");
+                }
+                if (_skillNameLabel) {
+                    _skillNameLabel->setString("");
+                }
+                if (_skillDescriptionLabel) {
+                    _skillDescriptionLabel->setString("");
+                }
+            }
+        }
     }
-    _nameLabel->setString(name);
 }

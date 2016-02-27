@@ -22,12 +22,10 @@ public:
     
     int getMapId() const;
     bool isWerewolf() const;
-    const std::vector<std::string>& getCpuUnits() const;
     
 private:
     int _mapId;
     bool _isWerewolf;
-    std::vector<std::string> _cpuUnits;
 };
 
 #endif /* MapUnitConfigData_h */

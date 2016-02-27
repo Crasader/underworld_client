@@ -644,6 +644,7 @@ void MapUILayer::createUpgradeNode(const Camp* camp)
     
     if (!_upgradeNode && !camp->isUpgraded()) {
         _upgradeNode = MapUIUpgradeNode::create(camp);
+        _upgradeNode->registerObserver(this);
         addChild(_upgradeNode);
     }
 }
