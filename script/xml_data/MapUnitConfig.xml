@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <root>
 	<item mapId="1" is_werewolf="1" cpu_units=""/>
-	<item mapId="4" is_werewolf="0" cpu_units="时光女神,天空女神,狼人森林之魂,狼人步兵,狼人射手,狼人机械狼,狼人巫师,机械甲虫"/>
-    <item mapId="3" is_werewolf="1" cpu_units="时光法师"/>
-    <item mapId="2" is_werewolf="1" cpu_units="时光法师"/>
+	<item mapId="4" is_werewolf="0" cpu_units=""/>
+    <item mapId="3" is_werewolf="1" cpu_units=""/>
+    <item mapId="2" is_werewolf="1" cpu_units=""/>
 </root>
