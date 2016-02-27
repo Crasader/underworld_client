@@ -171,10 +171,12 @@ void BattleScene::start()
                 cs[i].setMaxProduction(isHero(name) ? 1 : 10);
                 {
                     UnderWorld::Core::UnitSetting us;
-                    const string& talentName = getTalentUnitName(name);
-                    if (talentName.length() > 0) {
-                        createUnitSetting(name, us);
-                        cs[i].addUpgradeUnitSetting(us);
+                    const std::vector<std::string>& names = getUpgradeUnitNames(name);
+                    for (const auto& string : names) {
+                        if (string.length() > 0) {
+                            createUnitSetting(string, us);
+                            cs[i].addUpgradeUnitSetting(us);
+                        }
                     }
                 }
             }
@@ -213,16 +215,17 @@ bool BattleScene::isHero(const std::string& name) const
     return false;
 }
 
-std::string BattleScene::getTalentUnitName(const std::string& name) const
+const std::vector<std::string>& BattleScene::getUpgradeUnitNames(const std::string& name) const
 {
     if (_techTree) {
         const UnderWorld::Core::UnitType* ut = _techTree->findUnitTypeByName(name);
         if (ut) {
-            return ut->getTalentName();
+            return ut->getUpgradeNames();
         }
     }
     
-    return "";
+    static std::vector<std::string> empty;
+    return empty;
 }
 
 void BattleScene::createUnitSetting(const std::string& name, UnderWorld::Core::UnitSetting& output)

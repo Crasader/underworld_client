@@ -118,5 +118,5 @@ int MapUITalentNode::getIdx() const
 
 string MapUITalentNode::getIconFile(bool enable) const
 {
-    return StringUtils::format("GameImages/test/icon_j_%d.png", _idx);
+    return StringUtils::format("GameImages/test/icon_j_%d.png", _idx < 3 ? _idx : 2);
 }

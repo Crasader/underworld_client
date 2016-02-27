@@ -41,7 +41,7 @@ private:
     void clear();
     
     bool isHero(const std::string& name) const;
-    std::string getTalentUnitName(const std::string& name) const;
+    const std::vector<std::string>& getUpgradeUnitNames(const std::string& name) const;
     void createUnitSetting(const std::string& name, UnderWorld::Core::UnitSetting& output);
     
 private:
