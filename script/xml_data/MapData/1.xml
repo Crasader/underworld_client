@@ -19,19 +19,19 @@
             <event_effect class="alter_resource" map_index="1" resource_name="金子" amount="0.0f"/>
         </event>
         <event>
-            <event_trigger class="loop" time="30" start_time="15" end_time="300"/>
+            <event_trigger class="loop" time="30" start_time="25" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="4000,550">
                 <unit_setting name="疾风弓手"/>
             </event_effect>
         </event>
         <event>
-            <event_trigger class="loop" time="30" start_time="75" end_time="300"/>
+            <event_trigger class="loop" time="30" start_time="55" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="4000,550">
                 <unit_setting name="疾风弓手"/>
             </event_effect>
         </event>
         <event>
-            <event_trigger class="loop" time="30" start_time="135" end_time="300"/>
+            <event_trigger class="loop" time="30" start_time="145" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="4000,550">
                 <unit_setting name="疾风弓手"/>
             </event_effect>
@@ -55,7 +55,7 @@
             </event_effect>
         </event>
         <event>
-            <event_trigger class="loop" time="30" start_time="25" end_time="300"/>
+            <event_trigger class="loop" time="30" start_time="85" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="4000,550">
                 <unit_setting name="骑士"/>
             </event_effect>
@@ -67,19 +67,13 @@
             </event_effect>
         </event>
         <event>
-            <event_trigger class="loop" time="30" start_time="85" end_time="300"/>
-            <event_effect class="add_unit" map_index="1" position="4000,550">
-                <unit_setting name="骑士"/>
-            </event_effect>
-        </event>
-        <event>
-            <event_trigger class="loop" time="30" start_time="95" end_time="300"/>
+            <event_trigger class="loop" time="30" start_time="180" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="4000,550">
                 <unit_setting name="天使"/>
             </event_effect>
         </event>
         <event>
-            <event_trigger class="loop" time="30" start_time="90" end_time="300"/>
+            <event_trigger class="loop" time="30" start_time="240" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="4000,550">
                 <unit_setting name="伊利丹"/>
             </event_effect>
