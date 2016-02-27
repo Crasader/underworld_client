@@ -27,7 +27,7 @@ public:
 class BattleDeckUnitInfoNode : public Node
 {
 public:
-    static BattleDeckUnitInfoNode* create(const UnderWorld::Core::UnitBase* unit);
+    static BattleDeckUnitInfoNode* create(const UnderWorld::Core::UnitBase* unit, int rarity);
     virtual ~BattleDeckUnitInfoNode();
     
     void registerObserver(BattleDeckUnitInfoNodeObserver *observer);
@@ -36,7 +36,7 @@ public:
     
 protected:
     BattleDeckUnitInfoNode();
-    virtual bool init() override;
+    bool init(int rarity);
     
 private:
     BattleDeckUnitInfoNodeObserver *_observer;

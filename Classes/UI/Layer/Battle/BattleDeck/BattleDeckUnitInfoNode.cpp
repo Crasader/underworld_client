@@ -39,10 +39,10 @@ static float getUnitAttributeValue(const UnitBase* unitBase, UnitAttributeType t
     return .0f;
 }
 
-BattleDeckUnitInfoNode* BattleDeckUnitInfoNode::create(const UnitBase* unit)
+BattleDeckUnitInfoNode* BattleDeckUnitInfoNode::create(const UnitBase* unit, int rarity)
 {
     BattleDeckUnitInfoNode *ret = new (nothrow) BattleDeckUnitInfoNode();
-    if (ret && ret->init())
+    if (ret && ret->init(rarity))
     {
         ret->update(unit);
         ret->autorelease();
@@ -78,7 +78,7 @@ BattleDeckUnitInfoNode::~BattleDeckUnitInfoNode()
     removeAllChildren();
 }
 
-bool BattleDeckUnitInfoNode::init()
+bool BattleDeckUnitInfoNode::init(int rarity)
 {
     if (Node::init()) {
         static const string csbFile("UI_CardInfo.csb");
@@ -105,7 +105,7 @@ bool BattleDeckUnitInfoNode::init()
                         break;
                     case 81:
                     {
-                        static const string file("GameImages/test/ui_kuang_4.png");
+                        static const string file(StringUtils::format("GameImages/test/ui_kuang_%d.png", rarity + 4));
                         _qualityIcon = Sprite::create(file);
                         child->addChild(_qualityIcon);
                     }

@@ -79,7 +79,7 @@ BattleDeckLayer::BattleDeckLayer()
 ,_selectedCardsLabel(nullptr)
 ,_dragNode(nullptr)
 {
-    static const Size unitNodeSize = BattleDeckTestNode::create("", "", false)->getContentSize();
+    static const Size unitNodeSize = BattleDeckTestNode::create("", "", false, 0)->getContentSize();
     _cellSize.height = unitNodeSize.height + unitNodeOffsetY * 2 + 6.0f;
     _cellSize.width = unitNodeSize.width + unitNodeOffsetX;
     
@@ -114,7 +114,7 @@ bool BattleDeckLayer::init()
         static const float marginY(5.0f);
         
         // unit info node
-        _infoNode = BattleDeckUnitInfoNode::create(nullptr);
+        _infoNode = BattleDeckUnitInfoNode::create(nullptr, 0);
         parent->addChild(_infoNode);
         const Size& infoNodeSize = _infoNode->getContentSize();
         _infoNode->setPosition(Point(infoNodeSize.width / 2 + marginX, ceilY - (infoNodeSize.height / 2 + marginY)));
@@ -296,7 +296,7 @@ TableViewCell* BattleDeckLayer::tableCellAtIndex(TableView *table, ssize_t idx)
             unitNode->reuse(name, renderKey);
             unitNode->setSelected(name == _touchedCard.second);
         } else {
-            unitNode = BattleDeckTestNode::create(name, renderKey, (kUnitClass_Hero == uc));
+            unitNode = BattleDeckTestNode::create(name, renderKey, (kUnitClass_Hero == uc), _techTree->findUnitTypeByName(name)->getRarity());
             unitNode->registerObserver(this);
             unitNode->reuse(name, renderKey);
             const Size& size = unitNode->getContentSize();
@@ -555,7 +555,7 @@ void BattleDeckLayer::configTable(UnitClass uc, bool reload)
 void BattleDeckLayer::createDragNode(const string& name)
 {
     if (!_dragNode && name.length() > 0) {
-        _dragNode = BattleDeckTestNode::create(name, getRenderKey(name), getUnitClass(name));
+        _dragNode = BattleDeckTestNode::create(name, getRenderKey(name), getUnitClass(name), _techTree->findUnitTypeByName(name)->getRarity());
         _dragNode->setVisible(false);
         _background->addChild(_dragNode, topZOrder);
     }
@@ -590,7 +590,7 @@ void BattleDeckLayer::reloadCardDecks()
             Sprite* deck = _cardDecks.at(i);
             const string& name = *iter;
             const string& renderKey = getRenderKey(name);
-            auto node = BattleDeckTestNode::create(name, renderKey, getUnitClass(name));
+            auto node = BattleDeckTestNode::create(name, renderKey, getUnitClass(name), _techTree->findUnitTypeByName(name)->getRarity());
             node->registerObserver(this);
             node->setTag(cardTagOnDeck);
             deck->addChild(node);

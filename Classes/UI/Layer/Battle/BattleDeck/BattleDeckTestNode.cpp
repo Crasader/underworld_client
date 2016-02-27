@@ -23,10 +23,10 @@ using namespace UnderWorld::Core;
 static const int topZOrder(1);
 static const Point iconTouchOffset(0, -6.0f);
 
-BattleDeckTestNode* BattleDeckTestNode::create(const string& name, const string& renderKey, bool isHero)
+BattleDeckTestNode* BattleDeckTestNode::create(const string& name, const string& renderKey, bool isHero, int rarity)
 {
     BattleDeckTestNode *ret = new (nothrow) BattleDeckTestNode();
-    if (ret && ret->init(name, renderKey, isHero)) {
+    if (ret && ret->init(name, renderKey, isHero, rarity)) {
         ret->autorelease();
         return ret;
     }
@@ -60,7 +60,7 @@ BattleDeckTestNode::~BattleDeckTestNode()
     removeAllChildren();
 }
 
-bool BattleDeckTestNode::init(const string& name, const string& renderKey, bool isHero)
+bool BattleDeckTestNode::init(const string& name, const string& renderKey, bool isHero, int rarity)
 {
     if (Node::init())
     {
@@ -87,7 +87,7 @@ bool BattleDeckTestNode::init(const string& name, const string& renderKey, bool 
                 const int tag = child->getTag();
                 switch (tag) {
                     case 44: {
-                        _qualitySprite = Sprite::create("GameImages/test/ui_kuang_1.png");
+                        _qualitySprite = Sprite::create(StringUtils::format("GameImages/test/ui_kuang_%d.png", rarity + 1));
                         child->addChild(_qualitySprite);
                     }
                         break;

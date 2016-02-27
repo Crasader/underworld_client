@@ -88,7 +88,7 @@ bool BattleDeckUnitNode::init(const Camp* camp)
                 const int tag = child->getTag();
                 switch (tag) {
                     case 44: {
-                        _qualitySprite = Sprite::create("GameImages/test/ui_kuang_1.png");
+                        _qualitySprite = Sprite::create(StringUtils::format("GameImages/test/ui_kuang_%d.png", camp->getBaseUnitType()->getRarity() + 1));
                         child->addChild(_qualitySprite);
                     }
                         break;

@@ -30,7 +30,7 @@ public:
 class BattleDeckTestNode: public Node
 {
 public:
-    static BattleDeckTestNode* create(const std::string& name, const std::string& renderKey, bool isHero);
+    static BattleDeckTestNode* create(const std::string& name, const std::string& renderKey, bool isHero, int rarity);
     virtual ~BattleDeckTestNode();
     void registerObserver(BattleDeckTestNodeObserver *observer);
     void reuse(const std::string& name, const std::string& renderKey);
@@ -43,7 +43,7 @@ public:
     
 protected:
     BattleDeckTestNode();
-    bool init(const std::string& name, const std::string& renderKey, bool isHero);
+    bool init(const std::string& name, const std::string& renderKey, bool isHero, int rarity);
     std::string getIconFile(const std::string& name, bool enable) const;
     bool isHero() const;
     void addTouchedAction(bool touched, bool animated);
