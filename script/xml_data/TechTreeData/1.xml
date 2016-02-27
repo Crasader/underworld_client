@@ -15,7 +15,7 @@
         </skill>
     </unit>
     <!-- 狼人步兵 -->
-    <unit name="轻装武士" class="warrior" race="辉月狼人" hp="200" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="200" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:5" max_level="100" produce="木头:0.25;金子:0.25" reward="金子:0.25f" recover_span="30.0f" passive_names="肉搏术" render_key="狼人步兵" desc="常规的肉搏战士，对轻甲单位造成大量伤害。">
+    <unit name="轻装武士" class="warrior" race="辉月狼人" talent_name="基础" upgrade_talents="轻装武士_入侵;轻装武士_作战" hp="200" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="200" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:5" max_level="100" produce="木头:0.25;金子:0.25" reward="金子:0.25f" recover_span="30.0f" passive_names="肉搏术" render_key="狼人步兵" desc="常规的肉搏战士，对轻甲单位造成大量伤害。">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="18" max_damage="22" deliver_class="physical" damage_distance="nearby" range="48" fields="1">
@@ -23,7 +23,7 @@
         </skill>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
     </unit>
-    <unit name="轻装武士_入侵" class="warrior" race="辉月狼人" hp="200" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="200" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:6" max_level="100" produce="木头:0.3;金子:0.3" reward="金子:0.3f" recover_span="30.0f" spell_names="辉月印记_等级1" passive_names="肉搏术;投掷技巧" render_key="狼人步兵" desc="常规的肉搏战士，对轻甲单位造成大量伤害。并学会技能投掷技巧。">
+    <unit name="轻装武士_入侵" class="warrior" race="辉月狼人" talent_name="入侵" hp="200" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="200" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:6" max_level="100" produce="木头:0.3;金子:0.3" reward="金子:0.3f" recover_span="30.0f" spell_names="辉月印记_等级1" passive_names="肉搏术;投掷技巧" render_key="狼人步兵" desc="常规的肉搏战士，对轻甲单位造成大量伤害。并学会技能投掷技巧。">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="18" max_damage="22" deliver_class="physical" damage_distance="nearby" range="48" fields="1">
@@ -31,7 +31,7 @@
         </skill>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
     </unit>
-    <unit name="轻装武士_作战" class="warrior" race="辉月狼人" hp="200" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="200" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:6" max_level="100" produce="木头:0.3;金子:0.3" reward="金子:0.3f" recover_span="30.0f" passive_names="肉搏术;狩猎;还击" render_key="狼人步兵" desc="常规的肉搏战士，对轻甲单位造成大量伤害。并学会技能狩猎、技能还击。">
+    <unit name="轻装武士_作战" class="warrior" race="辉月狼人" talent_name="作战" hp="200" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="200" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:6" max_level="100" produce="木头:0.3;金子:0.3" reward="金子:0.3f" recover_span="30.0f" passive_names="肉搏术;狩猎;还击" render_key="狼人步兵" desc="常规的肉搏战士，对轻甲单位造成大量伤害。并学会技能狩猎、技能还击。">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="18" max_damage="22" deliver_class="physical" damage_distance="nearby" range="48" fields="1">
@@ -39,7 +39,7 @@
         </skill>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
     </unit>
-    <unit name="轻装武士_克制" class="warrior" race="辉月狼人" hp="200" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="200" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:6" max_level="100" produce="木头:0.3;金子:0.3" reward="金子:0.3f" recover_span="30.0f" passive_names="肉搏术;恶魔克星" render_key="狼人步兵" desc="常规的肉搏战士，对轻甲单位造成大量伤害。并学会技能恶魔克星。">
+    <unit name="轻装武士_克制" class="warrior" race="辉月狼人" talent_name="克制" hp="200" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="200" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:6" max_level="100" produce="木头:0.3;金子:0.3" reward="金子:0.3f" recover_span="30.0f" passive_names="肉搏术;恶魔克星" render_key="狼人步兵" desc="常规的肉搏战士，对轻甲单位造成大量伤害。并学会技能恶魔克星。">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="18" max_damage="22" deliver_class="physical" damage_distance="nearby" range="48" fields="1">
@@ -48,7 +48,7 @@
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
     </unit>
     <!-- 窃贼 -->
-    <unit name="窃贼" class="warrior" race="辉月狼人" hp="90" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="300" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:2" max_level="100" produce="木头:0.4;金子:0.4" reward="金子:0.2f" recover_span="30.0f" render_key="狼人步兵" desc="制造一个窃贼可以获得较多的资源，帮助你获取经济上的优势。">
+    <unit name="窃贼" class="warrior" race="辉月狼人" talent_name="基础" upgrade_talents="窃贼_欺软怕硬;窃贼_敏捷" hp="90" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="300" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:2" max_level="100" produce="木头:0.4;金子:0.4" reward="金子:0.2f" recover_span="30.0f" render_key="狼人步兵" desc="制造一个窃贼可以获得较多的资源，帮助你获取经济上的优势。">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="8" max_damage="12" deliver_class="physical" damage_distance="nearby" range="200" fields="1">
@@ -56,7 +56,7 @@
         </skill>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
     </unit>
-    <unit name="窃贼_欺软怕硬" class="warrior" race="辉月狼人" hp="90" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="300" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:4" max_level="100" produce="木头:0.4;金子:0.4" reward="金子:0.2f" recover_span="30.0f" passive_names="欺软怕硬" render_key="狼人步兵" desc="制造一个窃贼可以获得较多的资源，帮助你获取经济上的优势。对护甲比自己低的单位造成较多伤害，但是对比自己护甲高的单位造成伤害较少。">
+    <unit name="窃贼_欺软怕硬" class="warrior" race="辉月狼人" talent_name="欺软怕硬" hp="90" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="300" armor_preference="无甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:4" max_level="100" produce="木头:0.4;金子:0.4" reward="金子:0.2f" recover_span="30.0f" passive_names="欺软怕硬" render_key="狼人步兵" desc="制造一个窃贼可以获得较多的资源，帮助你获取经济上的优势。对护甲比自己低的单位造成较多伤害，但是对比自己护甲高的单位造成伤害较少。">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="8" max_damage="12" deliver_class="physical" damage_distance="nearby" range="200" fields="1">
@@ -64,7 +64,7 @@
         </skill>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
     </unit>
-    <unit name="窃贼_敏捷" class="warrior" race="辉月狼人" hp="90" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="300" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:4" max_level="100" produce="木头:0.4;金子:0.4" reward="金子:0.2f" recover_span="30.0f" passive_names="敏捷" render_key="狼人步兵" desc="制造一个窃贼可以获得较多的资源，帮助你获取经济上的优势。可以对远程单位造成较多伤害。">
+    <unit name="窃贼_敏捷" class="warrior" race="辉月狼人" talent_name="敏捷" hp="90" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="300" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:4" max_level="100" produce="木头:0.4;金子:0.4" reward="金子:0.2f" recover_span="30.0f" passive_names="敏捷" render_key="狼人步兵" desc="制造一个窃贼可以获得较多的资源，帮助你获取经济上的优势。可以对远程单位造成较多伤害。">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="8" max_damage="12" deliver_class="physical" damage_distance="nearby" range="200" fields="1">
@@ -73,7 +73,7 @@
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
     </unit>
     <!-- 骑士 -->
-    <unit name="骑士" class="warrior" race="辉月狼人" hp="600" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="600" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:6;木头:3" max_level="100" produce="木头:0.3;金子:0.3" reward="金子:0.3f" recover_span="30.0f" render_key="狼人步兵" desc="部队冲锋在最前的战士，有着最出色的生存能力。">
+    <unit name="骑士" class="warrior" race="辉月狼人" talent_name="基础" upgrade_talents="骑士_践踏;骑士_践踏;骑士_守护" hp="600" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="600" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:6;木头:3" max_level="100" produce="木头:0.3;金子:0.3" reward="金子:0.3f" recover_span="30.0f" render_key="狼人步兵" desc="部队冲锋在最前的战士，有着最出色的生存能力。">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="20" max_damage="28" deliver_class="physical" damage_distance="nearby" range="48" fields="1">
