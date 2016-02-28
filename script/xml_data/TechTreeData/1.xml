@@ -541,8 +541,8 @@
     <faction name="狼人族"/>
     <faction name="吸血鬼族"/>
     <!-- ==========资源类别配置========== -->
-    <resource name="金子" class="consumable"/>
-    <resource name="木头" class="consumable"/>
+    <resource name="金子" class="consumable" />
+    <resource name="木头" class="consumable" max="10"/>
     <!-- ==========护甲类别配置&护甲规则配置========== -->
     <armor name="英雄"/>
     <armor name="轻甲"/>
