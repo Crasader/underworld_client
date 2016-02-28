@@ -15,7 +15,7 @@
         </skill>
     </unit>
     <!-- 狼人步兵 -->
-    <unit name="轻装武士" class="warrior" race="辉月狼人" talent_name="基础" upgrade_talents="轻装武士_入侵;轻装武士_作战;轻装武士_克制" hp="200" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="200" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:5" max_level="100" produce="木头:0.5;金子:0.5" reward="金子:0.25f" rarity="1" recover_span="30.0f" passive_names="肉搏术" render_key="狼人步兵" desc="常规的肉搏战士，对轻甲单位造成大量伤害。">
+    <unit name="轻装武士" class="warrior" race="辉月狼人" talent_name="基础" upgrade_talents="轻装武士_入侵;轻装武士_作战" hp="200" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="200" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:5" max_level="100" produce="木头:0.25;金子:0.25" reward="金子:0.25f" put_cost="金子:2.5;木头:2.5|金子:3.5;木头:3.5" recover_span="30.0f" passive_names="肉搏术" render_key="狼人步兵" desc="常规的肉搏战士，对轻甲单位造成大量伤害。">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="18" max_damage="22" deliver_class="physical" damage_distance="nearby" range="48" fields="1">
