@@ -16,6 +16,7 @@
 USING_NS_CC;
 using namespace ui;
 
+class BattleSmallResourceNode;
 class BattleDeckTestNode;
 
 class BattleDeckTestNodeObserver
@@ -33,10 +34,8 @@ public:
     static BattleDeckTestNode* create(const std::string& name, const std::string& renderKey, bool isHero, int rarity);
     virtual ~BattleDeckTestNode();
     void registerObserver(BattleDeckTestNodeObserver *observer);
-    void reuse(const std::string& name, const std::string& renderKey);
-    void update(bool reuse);
+    void update(const std::string& name, const std::string& renderKey, bool isHero, int rarity);
     void setSelected(bool selected);
-    void setTouched(bool touched, bool isGameOver);
     
     // getters
     const std::string& getUnitName() const;
@@ -45,8 +44,7 @@ protected:
     BattleDeckTestNode();
     bool init(const std::string& name, const std::string& renderKey, bool isHero, int rarity);
     std::string getIconFile(const std::string& name, bool enable) const;
-    bool isHero() const;
-    void addTouchedAction(bool touched, bool animated);
+    BattleSmallResourceNode* readdResourceNode(Node* currentNode, ResourceType type, int count);
     
 private:
     BattleDeckTestNodeObserver *_observer;
@@ -54,20 +52,15 @@ private:
     Button *_addButton;
     Sprite *_iconSprite;
     Sprite *_qualitySprite;
-    Sprite *_goldSprite;
-    Sprite *_woodSprite;
+    Node* _countNode;
     Label *_countLabel;
-    Label *_goldLabel;
-    Label *_woodLabel;
+    BattleSmallResourceNode *_goldNode;
+    BattleSmallResourceNode *_woodNode;
     std::map<int, Sprite*> _starSprites;
     
     Sprite *_shiningSprite;
     std::string _unitName;
-    std::string _renderKey;
-    bool _isHero;
     bool _touchInvalid;
-    
-    bool _isIconTouched;
 };
 
 #endif /* BattleDeckTestNode_h */

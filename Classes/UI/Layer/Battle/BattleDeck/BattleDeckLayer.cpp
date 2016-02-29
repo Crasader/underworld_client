@@ -292,14 +292,19 @@ TableViewCell* BattleDeckLayer::tableCellAtIndex(TableView *table, ssize_t idx)
     
     if (name.length() > 0) {
         static const int nodeTag(100);
+        const bool isHero(kUnitClass_Hero == uc);
+        const UnitType* ut = _techTree->findUnitTypeByName(name);
+        int rarity(0);
+        if (ut) {
+            rarity = ut->getRarity();
+        }
         BattleDeckTestNode* unitNode = dynamic_cast<BattleDeckTestNode*>(cell->getChildByTag(nodeTag));
         if (unitNode) {
-            unitNode->reuse(name, renderKey);
+            unitNode->update(name, renderKey, isHero, rarity);
             unitNode->setSelected(name == _touchedCard.second);
         } else {
-            unitNode = BattleDeckTestNode::create(name, renderKey, (kUnitClass_Hero == uc), _techTree->findUnitTypeByName(name)->getRarity());
+            unitNode = BattleDeckTestNode::create(name, renderKey, isHero, rarity);
             unitNode->registerObserver(this);
-            unitNode->reuse(name, renderKey);
             const Size& size = unitNode->getContentSize();
             unitNode->setPosition(Point(size.width / 2, size.height / 2) + Point(unitNodeOffsetX, unitNodeOffsetY));
             unitNode->setTag(nodeTag);
@@ -436,12 +441,12 @@ Node* BattleDeckLayer::createTableView(UnitClass uc, float width)
         
         static const string leftFile("GameImages/public/button_sanjiao_3.png");
         Button* leftButton = Button::create(leftFile, leftFile);
-        parent->addChild(leftButton);
+        parent->addChild(leftButton, topZOrder);
         tableViewNode.leftButton = leftButton;
         
         static const string rightFile("GameImages/public/button_sanjiao_2.png");
         Button* rightButton = Button::create(rightFile, rightFile);
-        parent->addChild(rightButton);
+        parent->addChild(rightButton, topZOrder);
         tableViewNode.rightButton = rightButton;
         
         const float leftButtonWidth = leftButton->getContentSize().width;
@@ -594,6 +599,7 @@ void BattleDeckLayer::reloadCardDecks()
             auto node = BattleDeckTestNode::create(name, renderKey, getUnitClass(name), _techTree->findUnitTypeByName(name)->getRarity());
             node->registerObserver(this);
             node->setTag(cardTagOnDeck);
+            node->setSelected(name == _touchedCard.second);
             deck->addChild(node);
             const Size& size = deck->getContentSize();
             node->setPosition(Size(size.width / 2, size.height / 2));
@@ -642,9 +648,6 @@ void BattleDeckLayer::onTableCardEnded(const Point& pos)
             // update UI
             configTable(uc, true);
             reloadCardDecks();
-            if (name == _touchedCard.second) {
-                selectCardOnDecks(name);
-            }
         }
     }
 }

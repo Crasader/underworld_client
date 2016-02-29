@@ -168,11 +168,14 @@ void BattleScene::start()
                 const string& name = *iter;
                 createUnitSetting(name, us);
                 cs[i].setUnitSetting(us);
-                cs[i].setMaxProduction(isHero(name) ? 1 : 10);
-                {
-                    UnderWorld::Core::UnitSetting us;
-                    const std::vector<std::string>& names = getUpgradeUnitNames(name);
-                    for (const auto& string : names) {
+                
+                const UnderWorld::Core::UnitType* ut = getUnitType(name);
+                if (ut) {
+                    const int production = static_cast<int>(ut->getPutCost().size());
+                    cs[i].setMaxProduction(production);
+                    
+                    const std::vector<std::string>& upgradeNames = ut->getUpgradeNames();
+                    for (const auto& string : upgradeNames) {
                         if (string.length() > 0) {
                             createUnitSetting(string, us);
                             cs[i].addUpgradeUnitSetting(us);
@@ -202,30 +205,14 @@ void BattleScene::clear()
     removeAllChildren();
 }
 
-
-bool BattleScene::isHero(const std::string& name) const
+const UnderWorld::Core::UnitType* BattleScene::getUnitType(const std::string& name) const
 {
     if (_techTree) {
         const UnderWorld::Core::UnitType* ut = _techTree->findUnitTypeByName(name);
-        if (ut) {
-            return (UnderWorld::Core::kUnitClass_Hero == ut->getUnitClass());
-        }
+        return ut;
     }
     
-    return false;
-}
-
-const std::vector<std::string>& BattleScene::getUpgradeUnitNames(const std::string& name) const
-{
-    if (_techTree) {
-        const UnderWorld::Core::UnitType* ut = _techTree->findUnitTypeByName(name);
-        if (ut) {
-            return ut->getUpgradeNames();
-        }
-    }
-    
-    static std::vector<std::string> empty;
-    return empty;
+    return nullptr;
 }
 
 void BattleScene::createUnitSetting(const std::string& name, UnderWorld::Core::UnitSetting& output)

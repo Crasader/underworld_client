@@ -289,7 +289,9 @@ void MapUIUnitNode::update(int gold, int wood)
                 _countLabel->setString(StringUtils::format("%d/%d", production, maxProduction));
             }
             
-            bool enoughResources = setResourceStatus(true, gold, isNotFull) && setResourceStatus(false, wood, isNotFull);
+            const bool enoughGold = setResourceStatus(true, gold, isNotFull);
+            const bool enoughWood = setResourceStatus(false, wood, isNotFull);
+            const bool enoughResources = enoughGold && enoughWood;
             _addButton->setVisible(isNotFull);
             _maxIconSprite->setVisible(!isNotFull);
             _upgradeButton->setEnabled(!_camp->isUpgraded() && (_camp->getUpgradeCount() > 0));
@@ -379,15 +381,27 @@ bool MapUIUnitNode::isHero(const Camp* camp) const
 bool MapUIUnitNode::setResourceStatus(bool isGold, int count, bool enable)
 {
     auto node = isGold ? _goldNode : _woodNode;
-    
-    const map<string, int>& costs = _camp->getCosts();
     const string& name = isGold ? RES_NAME_GOLD : RES_NAME_WOOD;
-    const bool isEnable(costs.find(name) != costs.end() && enable);
+    int neededCount(0);
+    bool isEnable(false);
+    if (isGold) {
+        const auto& costs = _camp->getCosts();
+        isEnable = (costs.find(name) != costs.end() && enable);
+        if (isEnable) {
+            neededCount = costs.at(name);
+        }
+    } else {
+        const auto& costs = _camp->getCurrentPutCost();
+        isEnable = (costs.find(name) != costs.end() && enable);
+        if (isEnable) {
+            neededCount = costs.at(name);
+        }
+    }
+    
     node->getParent()->getParent()->setVisible(isEnable);
     
     bool enoughResources(true);
     if (isEnable) {
-        const int neededCount = costs.at(name);
         node->setCount(neededCount);
         node->check(count);
         if (count < neededCount) {

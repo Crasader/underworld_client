@@ -9,12 +9,10 @@
 #include "BattleDeckTestNode.h"
 #include "cocostudio/CocoStudio.h"
 #include "CocosUtils.h"
-#include "ResourceButton.h"
+#include "BattleSmallResourceNode.h"
 #include "DataManager.h"
 #include "URConfigData.h"
 #include "SoundManager.h"
-#include "Spell.h"
-#include "LocalHelper.h"
 
 using namespace std;
 using namespace cocostudio;
@@ -41,16 +39,12 @@ BattleDeckTestNode::BattleDeckTestNode()
 ,_addButton(nullptr)
 ,_iconSprite(nullptr)
 ,_qualitySprite(nullptr)
-,_goldSprite(nullptr)
-,_woodSprite(nullptr)
+,_countNode(nullptr)
 ,_countLabel(nullptr)
-,_goldLabel(nullptr)
-,_woodLabel(nullptr)
-
+,_goldNode(nullptr)
+,_woodNode(nullptr)
 ,_shiningSprite(nullptr)
-,_isHero(false)
 ,_touchInvalid(false)
-,_isIconTouched(false)
 {
     
 }
@@ -64,10 +58,6 @@ bool BattleDeckTestNode::init(const string& name, const string& renderKey, bool 
 {
     if (Node::init())
     {
-        _unitName = name;
-        _renderKey = renderKey;
-        _isHero = isHero;
-        
         static const string csbFile("UI_Card.csb");
         Node *mainNode = CSLoader::createNode(csbFile);
         addChild(mainNode);
@@ -87,52 +77,44 @@ bool BattleDeckTestNode::init(const string& name, const string& renderKey, bool 
                 const int tag = child->getTag();
                 switch (tag) {
                     case 44: {
-                        _qualitySprite = Sprite::create(StringUtils::format("GameImages/test/ui_kuang_%d.png", rarity + 1));
+                        _qualitySprite = Sprite::create();
                         child->addChild(_qualitySprite);
                     }
                         break;
                     case 45: {
-                        const string& iconFile = getIconFile(renderKey, true);
-                        _iconSprite = Sprite::create(iconFile);
+                        _iconSprite = Sprite::create();
                         child->addChild(_iconSprite);
                     }
                         break;
                     case 51: {
+                        _countNode = child;
+                        
                         Node* node = child->getChildByTag(52);
                         if (node) {
                             _countLabel = CocosUtils::createLabel("0", DEFAULT_FONT_SIZE, DEFAULT_NUMBER_FONT);
                             node->addChild(_countLabel);
-                            child->setVisible(!isHero);
-                        } else {
-                            assert(false);
-                        }
-                    }
-                        break;
-                    case 49: {
-                        _goldSprite = dynamic_cast<Sprite*>(child);
-                        if (_goldSprite) {
-                            _goldSprite->setLocalZOrder(topZOrder);
-                        }
-                        
-                        Node* node = child->getChildByTag(50);
-                        if (node) {
-                            _goldLabel = CocosUtils::createLabel("0", DEFAULT_FONT_SIZE, DEFAULT_NUMBER_FONT);
-                            node->addChild(_goldLabel);
                         } else {
                             assert(false);
                         }
                     }
                         break;
                     case 47: {
-                        _woodSprite = dynamic_cast<Sprite*>(child);
-                        if (_woodSprite) {
-                            _woodSprite->setLocalZOrder(topZOrder);
-                        }
+                        child->setLocalZOrder(topZOrder);
                         
                         Node* node = child->getChildByTag(48);
                         if (node) {
-                            _woodLabel = CocosUtils::createLabel("0", DEFAULT_FONT_SIZE, DEFAULT_NUMBER_FONT);
-                            node->addChild(_woodLabel);
+                            _goldNode = readdResourceNode(node, kResourceType_Gold, 0);
+                        } else {
+                            assert(false);
+                        }
+                    }
+                        break;
+                    case 49: {
+                        child->setLocalZOrder(topZOrder);
+                        
+                        Node* node = child->getChildByTag(50);
+                        if (node) {
+                            _woodNode = readdResourceNode(node, kResourceType_Wood, 0);
                         } else {
                             assert(false);
                         }
@@ -170,9 +152,6 @@ bool BattleDeckTestNode::init(const string& name, const string& renderKey, bool 
         _cardWidget->addTouchEventListener([=](Ref *pSender, Widget::TouchEventType type) {
             Widget* button = dynamic_cast<Widget*>(pSender);
             if (type == Widget::TouchEventType::BEGAN) {
-                _isIconTouched = true;
-                addTouchedAction(true, true);
-                
                 _touchInvalid = false;
                 if(_observer) {
                     _observer->onBattleDeckTestNodeTouchedBegan(this);
@@ -186,9 +165,6 @@ bool BattleDeckTestNode::init(const string& name, const string& renderKey, bool 
                     }
                 }
             } else if (type == Widget::TouchEventType::ENDED) {
-                _isIconTouched = false;
-                addTouchedAction(false, true);
-                
                 if (!_touchInvalid) {
                     SoundManager::getInstance()->playButtonSound();
                 }
@@ -197,8 +173,6 @@ bool BattleDeckTestNode::init(const string& name, const string& renderKey, bool 
                     _observer->onBattleDeckTestNodeTouchedEnded(this, !_touchInvalid);
                 }
             } else {
-                _isIconTouched = false;
-                addTouchedAction(false, true);
                 if(_observer) {
                     _observer->onBattleDeckTestNodeTouchedCanceled(this);
                 }
@@ -215,6 +189,8 @@ bool BattleDeckTestNode::init(const string& name, const string& renderKey, bool 
             _shiningSprite->setPosition(Point(size.width / 2, size.height / 2));
         }
         
+        update(name, renderKey, isHero, rarity);
+        
         return true;
     }
     
@@ -226,21 +202,27 @@ void BattleDeckTestNode::registerObserver(BattleDeckTestNodeObserver *observer)
     _observer = observer;
 }
 
-void BattleDeckTestNode::reuse(const string& name, const string& renderKey)
+void BattleDeckTestNode::update(const string& name, const string& renderKey, bool isHero, int rarity)
 {
     _unitName = name;
-    _renderKey = renderKey;
     
     // update mutable data
-    update(true);
-}
-
-void BattleDeckTestNode::update(bool reuse)
-{
-    const string& iconFile = getIconFile(_renderKey, true);
+    const string& iconFile = getIconFile(renderKey, true);
     if (iconFile.length() > 0) {
         _iconSprite->setTexture(iconFile);
     }
+    
+    if (_countNode) {
+        _countNode->setVisible(!isHero);
+    }
+    
+    if (_qualitySprite) {
+        _qualitySprite->setTexture(StringUtils::format("GameImages/test/ui_kuang_%d.png", rarity + 1));
+    }
+    
+    // !!!if we didn't re-add the resource nodes, the animation would be stopped(It may caused by the table's refreshing)
+    _goldNode = readdResourceNode(_goldNode, kResourceType_Gold, 0);
+    _woodNode = readdResourceNode(_woodNode, kResourceType_Wood, 0);
 }
 
 void BattleDeckTestNode::setSelected(bool selected)
@@ -263,11 +245,6 @@ void BattleDeckTestNode::setSelected(bool selected)
     }
 }
 
-void BattleDeckTestNode::setTouched(bool touched, bool isGameOver)
-{
-    addTouchedAction(isGameOver ? _isIconTouched : touched, false);
-}
-
 const string& BattleDeckTestNode::getUnitName() const
 {
     return _unitName;
@@ -287,14 +264,15 @@ string BattleDeckTestNode::getIconFile(const string& name, bool enable) const
     return iconFile;
 }
 
-bool BattleDeckTestNode::isHero() const
+BattleSmallResourceNode* BattleDeckTestNode::readdResourceNode(Node* currentNode, ::ResourceType type, int count)
 {
-    return _isHero;
-}
-
-void BattleDeckTestNode::addTouchedAction(bool touched, bool animated)
-{
-    if (_cardWidget) {
-        _cardWidget->stopAllActions();
+    if (currentNode) {
+        auto node = BattleSmallResourceNode::create(type, count);
+        node->setPosition(currentNode->getPosition());
+        currentNode->getParent()->addChild(node);
+        currentNode->removeFromParent();
+        return node;
     }
+    
+    return nullptr;
 }

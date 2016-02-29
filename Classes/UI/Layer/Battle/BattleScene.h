@@ -18,6 +18,7 @@ USING_NS_CC;
 
 namespace UnderWorld { namespace Core {
     class TechTree;
+    class UnitType;
 }}
 
 class MapLayer;
@@ -40,8 +41,7 @@ private:
     void start();
     void clear();
     
-    bool isHero(const std::string& name) const;
-    const std::vector<std::string>& getUpgradeUnitNames(const std::string& name) const;
+    const UnderWorld::Core::UnitType* getUnitType(const std::string& name) const;
     void createUnitSetting(const std::string& name, UnderWorld::Core::UnitSetting& output);
     
 private:
