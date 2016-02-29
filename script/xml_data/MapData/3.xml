@@ -6,7 +6,7 @@
     <schedule_events>
         <event>
             <event_trigger class="schedule" time="0"/>
-            <event_effect class="alter_resource" map_index="0" resource_name="金子" amount="9"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="金子" amount="9.0f"/>
         </event>
     </schedule_events>
     <loop_events>

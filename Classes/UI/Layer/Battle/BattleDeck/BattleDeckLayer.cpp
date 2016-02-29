@@ -37,7 +37,8 @@ static const map<UnitClass, set<string>> allCards{
         kUnitClass_Hero,
         {
             "伊利丹",
-            "泰兰德"
+            "泰兰德",
+            "火法"
         }
     },
     {

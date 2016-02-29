@@ -1,79 +1,99 @@
 <?xml version="1.0"?>
 <root>
     <map map_name="1"/>
-    <location_setting index="0" core_location="200,550" putting_start_location="0,0" putting_end_location="1000,1200"/>
-    <location_setting index="1" core_location="2000,550" putting_start_location="1400,0" putting_end_location="2400,1200"/>
+    <location_setting index="0" core_location="200,550" putting_start_location="0,0" putting_end_location="1150,1200"/>
+    <location_setting index="1" core_location="2000,550" putting_start_location="1250,0" putting_end_location="2400,1200"/>
     <schedule_events>
         <event>
             <event_trigger class="schedule" time="0"/>
-            <event_effect class="alter_resource" map_index="0" resource_name="金子" amount="9"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="金子" amount="5.0f"/>
+        </event>
+        <event>
+            <event_trigger class="schedule" time="0"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="5.0f"/>
         </event>
     </schedule_events>
     <loop_events>
         <event>
-            <event_trigger class="loop" time="1" start_time="1" end_time="350"/>
-            <event_effect class="alter_resource" map_index="0" resource_name="金子" amount="0.1f"/>
+            <event_trigger class="loop" time="1" start_time="1" end_time="300"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="金子" amount="0.2f"/>
         </event>
         <event>
-            <event_trigger class="loop" time="1" start_time="1" end_time="350"/>
-            <event_effect class="alter_resource" map_index="1" resource_name="金子" amount="0.0f"/>
+            <event_trigger class="loop" time="1" start_time="1" end_time="300"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="0.2f"/>
         </event>
         <event>
-            <event_trigger class="loop" time="35" start_time="30" end_time="350"/>
+            <event_trigger class="loop" time="1" start_time="31" end_time="300"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="0.1f"/>
+        </event>
+        <event>
+            <event_trigger class="loop" time="1" start_time="61" end_time="300"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="0.1f"/>
+        </event>
+        <event>
+            <event_trigger class="loop" time="1" start_time="91" end_time="300"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="0.1f"/>
+        </event>
+        <event>
+            <event_trigger class="loop" time="1" start_time="121" end_time="300"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="0.1f"/>
+        </event>
+        <event>
+            <event_trigger class="loop" time="35" start_time="30" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="1700,550">
                 <unit_setting name="疾风弓手"/>
             </event_effect>
         </event>
         <event>
-            <event_trigger class="loop" time="35" start_time="55" end_time="350"/>
+            <event_trigger class="loop" time="35" start_time="55" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="1700,550">
                 <unit_setting name="疾风弓手"/>
             </event_effect>
         </event>
         <event>
-            <event_trigger class="loop" time="35" start_time="105" end_time="350"/>
+            <event_trigger class="loop" time="35" start_time="105" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="1700,550">
                 <unit_setting name="疾风弓手"/>
             </event_effect>
         </event>
         <event>
-            <event_trigger class="loop" time="35" start_time="5" end_time="350"/>
+            <event_trigger class="loop" time="35" start_time="5" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="1700,550">
                 <unit_setting name="轻装武士"/>
             </event_effect>
         </event>
         <event>
-            <event_trigger class="loop" time="35" start_time="80" end_time="350"/>
+            <event_trigger class="loop" time="35" start_time="80" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="1700,550">
                 <unit_setting name="轻装武士"/>
             </event_effect>
         </event>
         <event>
-            <event_trigger class="loop" time="35" start_time="130" end_time="350"/>
+            <event_trigger class="loop" time="35" start_time="130" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="1700,550">
                 <unit_setting name="轻装武士"/>
             </event_effect>
         </event>
         <event>
-            <event_trigger class="loop" time="35" start_time="155" end_time="350"/>
+            <event_trigger class="loop" time="35" start_time="155" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="1700,550">
                 <unit_setting name="骑士"/>
             </event_effect>
         </event>
         <event>
-            <event_trigger class="loop" time="35" start_time="180" end_time="350"/>
+            <event_trigger class="loop" time="35" start_time="180" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="1700,550">
                 <unit_setting name="辉月侍僧"/>
             </event_effect>
         </event>
         <event>
-            <event_trigger class="loop" time="35" start_time="205" end_time="350"/>
+            <event_trigger class="loop" time="35" start_time="205" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="1700,550">
                 <unit_setting name="天使"/>
             </event_effect>
         </event>
         <event>
-            <event_trigger class="loop" time="35" start_time="240" end_time="350"/>
+            <event_trigger class="loop" time="35" start_time="240" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="1700,550">
                 <unit_setting name="伊利丹"/>
             </event_effect>
