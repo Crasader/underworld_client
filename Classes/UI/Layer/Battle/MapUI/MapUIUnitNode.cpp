@@ -86,46 +86,6 @@ bool MapUIUnitNode::init(const Camp* camp)
             if (child) {
                 const int tag = child->getTag();
                 switch (tag) {
-                    case 20: {
-                        Button* button = dynamic_cast<Button*>(child);
-                        if (button) {
-                            button->setPressedActionEnabled(true);
-                            button->addClickEventListener([this](Ref *pSender){
-                                SoundManager::getInstance()->playButtonSound();
-                                if (_observer) {
-                                    _observer->onMapUIUnitNodeClickedAddButton(_camp);
-                                }
-                            });
-                            
-                            _addButton = button;
-                            
-                            Sprite* sprite = Sprite::create("GameImages/test/button_yellow_4.png");
-                            sprite->setPosition(child->getPosition());
-                            child->getParent()->addChild(sprite);
-                            
-                            _maxIconSprite = sprite;
-                        } else {
-                            assert(false);
-                        }
-                    }
-                        break;
-                    case 21: {
-                        Button* button = dynamic_cast<Button*>(child);
-                        if (button) {
-                            button->setPressedActionEnabled(true);
-                            button->addClickEventListener([this](Ref *pSender){
-                                SoundManager::getInstance()->playButtonSound();
-                                if (_observer) {
-                                    _observer->onMapUIUnitNodeClickedUpgradeButton(this);
-                                }
-                            });
-                            
-                            _upgradeButton = button;
-                        } else {
-                            assert(false);
-                        }
-                    }
-                        break;
                     case 23: {
                         _cardWidget = dynamic_cast<Widget*>(child);
                         
@@ -137,13 +97,12 @@ bool MapUIUnitNode::init(const Camp* camp)
                                 const int tag = child->getTag();
                                 switch (tag) {
                                     case 6: {
-                                        _qualitySprite = Sprite::create(StringUtils::format("GameImages/test/ui_kuang_%d.png", camp->getBaseUnitType()->getRarity() + 1));
+                                        _qualitySprite = Sprite::create();
                                         child->addChild(_qualitySprite);
                                     }
                                         break;
                                     case 7: {
-                                        const string& iconFile = getIconFile(camp, true);
-                                        _iconSprite = Sprite::create(iconFile);
+                                        _iconSprite = Sprite::create();
                                         child->addChild(_iconSprite);
                                     }
                                         break;
@@ -260,6 +219,19 @@ bool MapUIUnitNode::init(const Camp* camp)
             
             const Size& size = _cardWidget->getContentSize();
             _shiningSprite->setPosition(Point(size.width / 2, size.height / 2));
+        }
+        
+        if (camp) {
+            if (_qualitySprite) {
+                _qualitySprite->setTexture(StringUtils::format("GameImages/test/ui_kuang_%d.png", camp->getBaseUnitType()->getRarity() + 1));
+            }
+            
+            if (_iconSprite) {
+                const string& iconFile = getIconFile(camp, true);
+                if (iconFile.length() > 0) {
+                    _iconSprite->setTexture(iconFile);
+                }
+            }
         }
         
         return true;

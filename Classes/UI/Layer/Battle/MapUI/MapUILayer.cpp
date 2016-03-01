@@ -13,18 +13,11 @@
 #include "LocalHelper.h"
 #include "Camp.h"
 #include "BattleResourceNode.h"
-#include "CampInfoNode.h"
 #include "SoundManager.h"
 
 using namespace std;
 using namespace cocostudio;
 using namespace UnderWorld::Core;
-
-static const UnitClass tableUnitClass[] = {
-    kUnitClass_Warrior,
-    kUnitClass_Hero,
-};
-static const size_t tablesCount = sizeof(tableUnitClass) / sizeof(UnitClass);
 
 static ProgressTimer* createProgressTimer(const string& file)
 {
@@ -52,19 +45,16 @@ MapUILayer* MapUILayer::create(const string& myAccount, const string& opponentsA
 
 MapUILayer::MapUILayer()
 :_observer(nullptr)
-,_tableViewPos(Point::ZERO)
 ,_isTouchingTableView(false)
 ,_highlightedCamp(nullptr)
 ,_selectedCamp(nullptr)
 ,_timeLabel(nullptr)
-,_goldResourceNode(nullptr)
-,_woodResourceNode(nullptr)
 ,_myHpProgress(nullptr)
 ,_myHpPercentageLabel(nullptr)
 ,_opponentsHpProgress(nullptr)
 ,_opponentsHpPercentageLabel(nullptr)
 ,_pauseMenuItem(nullptr)
-,_upgradeNode(nullptr)
+,_cardDeck(nullptr)
 {
     setHighlightedCamp(nullptr);
 }
@@ -81,55 +71,10 @@ void MapUILayer::registerObserver(MapUILayerObserver *observer)
 
 void MapUILayer::reload()
 {
-    const size_t cnt = _tableViews.size();
-    if (0 == cnt) {
-        createTableViews();
+    if (_cardDeck) {
+        _cardDeck->select(_highlightedCamp);
     } else {
-        for (auto iter = begin(_tableViews); iter != end(_tableViews); ++iter) {
-            iter->second->reload(_goldResourceNode->getCount(), _woodResourceNode->getCount(), _highlightedCamp);
-        }
-    }
-}
-
-#if ENABLE_CAMP_INFO
-void MapUILayer::insertCampInfo(size_t idx, const vector<pair<const Camp*, const UnitBase*>>& units)
-{
-    if (_campInfoNodes.size() > idx) {
-        CampInfoNode* node = _campInfoNodes.at(idx);
-        node->insert(units);
-    }
-}
-
-void MapUILayer::updateCampInfos(size_t idx)
-{
-    if (_campInfoNodes.size() > idx) {
-        CampInfoNode* node = _campInfoNodes.at(idx);
-        node->update();
-    }
-}
-#else
-void MapUILayer::insertUnitInfos(size_t idx, const vector<const UnitBase*>& units)
-{
-    if (_campInfoNodes.size() > idx) {
-        CampInfoNode* node = _campInfoNodes.at(idx);
-        node->insert(units);
-    }
-}
-
-void MapUILayer::updateUnitInfos(size_t idx)
-{
-    if (_campInfoNodes.size() > idx) {
-        CampInfoNode* node = _campInfoNodes.at(idx);
-        node->update();
-    }
-}
-#endif
-
-void MapUILayer::closeAllUnitInfoNodes()
-{
-    for (int i = 0; i < _campInfoNodes.size(); ++i) {
-        CampInfoNode* node = _campInfoNodes.at(i);
-        node->closeUnitInfoNode();
+        createCardDeck();
     }
 }
 
@@ -170,25 +115,6 @@ void MapUILayer::updateRemainingTime(int time)
     }
 }
 
-void MapUILayer::updateResources(float gold, float wood)
-{
-    auto node = _goldResourceNode;
-    if (node) {
-        node->setCount(gold, false);
-        node->setSubCount(gold - (int)gold);
-    }
-    
-    node = _woodResourceNode;
-    if (node) {
-        node->setCount(wood, false);
-        node->setSubCount(wood - (int)wood);
-    }
-    
-    if (_upgradeNode) {
-        _upgradeNode->check(gold, wood);
-    }
-}
-
 void MapUILayer::pauseGame()
 {
     
@@ -201,10 +127,8 @@ void MapUILayer::resumeGame()
 
 bool MapUILayer::isPointInTableView(const Point& point)
 {
-    for (auto iter = begin(_tableViews); iter != end(_tableViews); ++iter) {
-        if (getTableViewBoundingBox(iter->first).containsPoint(point)) {
-            return true;
-        }
+    if (_cardDeck && _cardDeck->getBoundingBox().containsPoint(point)) {
+        return true;
     }
     
     return false;
@@ -213,65 +137,6 @@ bool MapUILayer::isPointInTableView(const Point& point)
 void MapUILayer::clearHighlightedCamp()
 {
     setHighlightedCamp(nullptr);
-}
-
-void MapUILayer::removeUpgradeNode()
-{
-    if (_upgradeNode) {
-        _upgradeNode->removeFromParent();
-        _upgradeNode = nullptr;
-    }
-}
-
-#pragma mark - MapUITableObserver
-void MapUILayer::onMapUITableUnitAdd(const Camp* camp)
-{
-    setHighlightedCamp(camp, false, true, false);
-    
-    if (_observer) {
-        _observer->onMapUILayerUnitAdd(camp);
-    }
-}
-
-void MapUILayer::onMapUITableUnitUpgrade(MapUIUnitNode* node)
-{
-    const Camp* camp = node->getCamp();
-    setHighlightedCamp(camp, false, false, false);
-    
-    createUpgradeNode(camp);
-    const Point& point = convertToNodeSpace(node->getParent()->convertToWorldSpace(node->getPosition()));
-    _upgradeNode->setPosition(point);
-}
-
-void MapUILayer::onMapUITableUnitTouchedBegan(const Camp* camp)
-{
-    _selectedCamp = (camp->getProduction() > 0) ? camp : nullptr;
-}
-
-void MapUILayer::onMapUITableUnitTouchedEnded(const Camp* camp)
-{
-    if (!isGameOver()) {
-        onUnitTouched(camp);
-    }
-}
-
-#pragma mark - CampInfoNodeObserver
-void MapUILayer::onCampInfoNodeClickedIcon(CampInfoNode* pSender, const UnitBase* unit)
-{
-    for (int i = 0; i < _campInfoNodes.size(); ++i) {
-        CampInfoNode* node = _campInfoNodes.at(i);
-        if (pSender != node) {
-            node->closeUnitInfoNode();
-        }
-    }
-}
-
-#pragma mark - MapUIUpgradeNodeObserver
-void MapUILayer::onMapUIUpgradeNodeClickedButton(const Camp* camp, int idx)
-{
-    if (_observer) {
-        _observer->onMapUILayerUnitUpgrade(camp, idx);
-    }
 }
 
 #pragma mark -
@@ -332,7 +197,6 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
         }
 #else
         Node* root = this;
-        static const float leftOffset(5.0f);
         static const float ceilOffset(5.0f);
         static const Size progressSize(170.0f, 20.0f);
         
@@ -354,25 +218,6 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
         
         createUserInfo(false, opponentsAccount);
         
-        //
-        {
-            _woodResourceNode = BattleResourceNode::create(kResourceType_Wood);
-            root->addChild(_woodResourceNode);
-            
-            const Size& size = _woodResourceNode->getContentSize();
-            _woodResourceNode->setAnchorPoint(Point::ANCHOR_MIDDLE);
-            _woodResourceNode->setPosition(Point(size.width / 2 + leftOffset, size.height / 2 + ceilOffset));
-            
-            _goldResourceNode = BattleResourceNode::create(kResourceType_Gold);
-            root->addChild(_goldResourceNode);
-            
-            _goldResourceNode->setAnchorPoint(_woodResourceNode->getAnchorPoint());
-            _goldResourceNode->setPosition(_woodResourceNode->getPosition() + Point(size.width + leftOffset, 0));
-            
-            // units table
-            _tableViewPos = Point(_goldResourceNode->getPositionX() + size.width / 2 + leftOffset, 0);
-        }
-        
         // buttons
         {
             _pauseMenuItem = MenuItemImage::create("GameImages/test/ui_zt.png", "GameImages/test/ui_zt.png", [this](Ref*) {
@@ -385,22 +230,6 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             Menu *menu = Menu::create(_pauseMenuItem, nullptr);
             menu->setPosition(Point::ZERO);
             root->addChild(menu);
-        }
-        
-        {
-            CampInfoNode* campInfoNode = CampInfoNode::create(false);
-            campInfoNode->registerObserver(this);
-            const Size& size = campInfoNode->getContentSize();
-            static const float posY = 160.0f;
-            campInfoNode->setPosition(Point(0, posY));
-            root->addChild(campInfoNode);
-            _campInfoNodes.push_back(campInfoNode);
-            
-            campInfoNode = CampInfoNode::create(true);
-            campInfoNode->registerObserver(this);
-            campInfoNode->setPosition(Point(winSize.width - size.width, posY));
-            root->addChild(campInfoNode);
-            _campInfoNodes.push_back(campInfoNode);
         }
 #endif
         
@@ -423,19 +252,6 @@ bool MapUILayer::onTouchBegan(Touch *touch, Event *unused_event)
     if (isPointInTableView(point)) {
         _isTouchingTableView = true;
         return true;
-    }
-    
-    for (int i = 0; i < _campInfoNodes.size(); ++i) {
-        CampInfoNode* node = _campInfoNodes.at(i);
-        if (node) {
-            const Rect& bb = node->getIconsBoundingBox();
-            Rect boundingBox(Rect::ZERO);
-            boundingBox.origin = convertToNodeSpace(node->convertToWorldSpace(bb.origin));
-            boundingBox.size = bb.size;
-            if (boundingBox.containsPoint(point)) {
-                return true;
-            }
-        }
     }
     
     return false;
@@ -465,6 +281,19 @@ void MapUILayer::onTouchEnded(Touch *touch, Event *unused_event)
         
         _selectedCamp = nullptr;
         _isTouchingTableView = false;
+    }
+}
+
+#pragma mark - MapUICardDeckObserver
+void MapUILayer::onMapUICardDeckUnitTouchedBegan(const Camp* camp)
+{
+    _selectedCamp = (camp->getProduction() > 0) ? camp : nullptr;
+}
+
+void MapUILayer::onMapUICardDeckUnitTouchedEnded(const Camp* camp)
+{
+    if (!isGameOver()) {
+        onUnitTouched(camp);
     }
 }
 
@@ -525,6 +354,22 @@ void MapUILayer::createUserInfo(bool left, const string& account)
     }
 }
 
+void MapUILayer::createCardDeck()
+{
+    if (_observer) {
+        const vector<const Camp*>& camps = _observer->onMapUILayerGetCamps();
+        if (camps.size() > 0) {
+            _cardDeck = MapUICardDeck::create(camps);
+            _cardDeck->registerObserver(this);
+            addChild(_cardDeck);
+            
+            const Size& winSize = Director::getInstance()->getWinSize();
+            const Size& size = _cardDeck->getContentSize();
+            _cardDeck->setPosition(winSize.width / 2, size.height / 2);
+        }
+    }
+}
+
 bool MapUILayer::isGameOver() const
 {
     if (_observer) {
@@ -540,57 +385,6 @@ void MapUILayer::onUnitTouched(const Camp* camp)
     SoundManager::getInstance()->playButtonSelectUnitSound();
 }
 
-void MapUILayer::createTableViews()
-{
-    static float offsetX(0.0f);
-    vector<Node*> created;
-    for (int i = 0; i < tablesCount; ++i) {
-        Node* node = createTableView(tableUnitClass[i], this);
-        if (node) {
-            const size_t cnt = created.size();
-            Point pos(_tableViewPos);
-            if (cnt > 0) {
-                Node* n = created.back();
-                pos = n->getPosition() + Point(n->getContentSize().width + offsetX, 0);
-            }
-            node->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
-            node->setPosition(pos);
-            created.push_back(node);
-        }
-    }
-}
-
-Node* MapUILayer::createTableView(UnitClass uc, Node* parent)
-{
-    if (_observer) {
-        size_t cnt(0);
-        const vector<const Camp*>& camps = _observer->onMapUILayerGetCamps(uc);
-        cnt = camps.size();
-        if (cnt > 0) {
-            MapUITable* table = MapUITable::create(camps);
-            table->registerObserver(this);
-            parent->addChild(table);
-            _tableViews.insert(make_pair(uc, table));
-            return table;
-        }
-    }
-    
-    return nullptr;
-}
-
-Rect MapUILayer::getTableViewBoundingBox(UnitClass uc) const
-{
-    if (_tableViews.find(uc) != _tableViews.end()) {
-        MapUITable* tv = _tableViews.at(uc);
-        Rect rect = tv->getBoundingBox();
-        Point origin = rect.origin;
-        rect.origin = convertToNodeSpace(tv->getParent()->convertToWorldSpace(origin));
-        return rect;
-    }
-    
-    return Rect::ZERO;
-}
-
 void MapUILayer::setHighlightedCamp(const Camp* camp, bool callback, bool ignoreProduction, bool check)
 {
     const Camp* lastCamp = _highlightedCamp;
@@ -601,25 +395,16 @@ void MapUILayer::setHighlightedCamp(const Camp* camp, bool callback, bool ignore
     }
     const bool isNew = (lastCamp != camp);
     
-    bool update(true);
     if (isNew) {
         if (!tryToSpell) {
             if (!camp || ((ignoreProduction || camp->getProduction() > 0) && camp->getColdDown() <= 0)) {
                 _highlightedCamp = camp;
             }
-        } else {
-            update = false;
         }
     } else {
         if (check) {
             _highlightedCamp = nullptr;
-        } else {
-            update = false;
         }
-    }
-    
-    if (isNew || check) {
-        removeUpgradeNode();
     }
     
     // callback
@@ -633,18 +418,5 @@ void MapUILayer::setHighlightedCamp(const Camp* camp, bool callback, bool ignore
                 _observer->onMapUILayerUnitTouched(_highlightedCamp);
             }
         }
-    }
-}
-
-void MapUILayer::createUpgradeNode(const Camp* camp)
-{
-    if (_upgradeNode && _upgradeNode->getCamp() != camp) {
-        removeUpgradeNode();
-    }
-    
-    if (!_upgradeNode && !camp->isUpgraded()) {
-        _upgradeNode = MapUIUpgradeNode::create(camp);
-        _upgradeNode->registerObserver(this);
-        addChild(_upgradeNode);
     }
 }

@@ -71,11 +71,9 @@ protected:
     virtual bool onMapUILayerIsGameOver() const override;
     virtual void onMapUILayerClickedPauseButton() override;
     virtual bool onMapUILayerIsHeroAlive(const UnderWorld::Core::Camp* camp) const override;
-    virtual const std::vector<const UnderWorld::Core::Camp*>& onMapUILayerGetCamps(UnderWorld::Core::UnitClass uc) const override;
+    virtual const std::vector<const UnderWorld::Core::Camp*>& onMapUILayerGetCamps() const override;
     virtual void onMapUILayerUnitSelected(const UnderWorld::Core::Camp* camp) override;
     virtual void onMapUILayerUnitTouched(const UnderWorld::Core::Camp* camp) override;
-    virtual void onMapUILayerUnitAdd(const UnderWorld::Core::Camp* camp) override;
-    virtual void onMapUILayerUnitUpgrade(const UnderWorld::Core::Camp* camp, int idx) override;
     virtual void onMapUILayerTouchMoved(const UnderWorld::Core::Camp* camp, const Point& point) override;
     virtual void onMapUILayerTouchCancelled(const UnderWorld::Core::Camp* camp) override;
     virtual void onMapUILayerTouchEnded(const UnderWorld::Core::Camp* camp, const Point& point) override;
@@ -93,11 +91,6 @@ private:
     void updateUnits(const UnderWorld::Core::Game* game, int index);
     void updateBullets(const UnderWorld::Core::Game* game);
     void updateUILayer();
-#if ENABLE_CAMP_INFO
-    void updateBattleCampInfos();
-#else
-    void updateBattleUnitInfos();
-#endif
     bool isCampFull(const UnderWorld::Core::Camp* camp) const;
     bool isValidAoeSpell(const UnderWorld::Core::Spell* spell) const;
     bool isProducibleCamp(const UnderWorld::Core::Camp* camp) const;
@@ -108,11 +101,6 @@ private:
     void removeUnit(int unitId);
     void removeAllBullets();
     void removeAllUnits();
-#if ENABLE_CAMP_INFO
-    void removeBattleCampInfos();
-#else
-    void removeBattleUnitInfos();
-#endif
     void pauseGame();
     void resumeGame();
     void restartGame();
@@ -123,20 +111,6 @@ private:
     
     Point convertToMapLayer(const Point& uiLayerPoint) const;
     Point convertToUILayer(const Point& mapLayerPoint) const;
-    
-private:
-#if ENABLE_CAMP_INFO
-    struct BattleCampInfos {
-        std::vector<const UnderWorld::Core::Camp*> campsVector;
-        std::set<const UnderWorld::Core::Camp*> campSet;
-        std::map<const UnderWorld::Core::Camp*, UnderWorld::Core::UnitBase*> units;
-    };
-#else
-    struct BattleUnitInfos {
-        std::vector<const UnderWorld::Core::UnitBase*> unitBaseVector;
-        std::map<std::string, UnderWorld::Core::UnitBase*> unitBaseMap;
-    };
-#endif
     
 private:
     GameRenderObserver *_observer;
@@ -155,13 +129,6 @@ private:
     
 #if ENABLE_DRAG_CARD
     const UnderWorld::Core::Camp* _selectedCamp;
-#endif
-    
-#if ENABLE_CAMP_INFO
-    std::map<int, BattleCampInfos> _battleCampInfos;
-#else
-    std::map<int, BattleUnitInfos> _battleUnitInfos;
-    std::map<int, std::vector<const UnderWorld::Core::UnitBase*>> _newAddedUnitBases;
 #endif
     
     bool _paused;

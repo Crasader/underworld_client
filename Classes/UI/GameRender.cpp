@@ -63,12 +63,6 @@ GameRender::~GameRender()
     stopAllTimers();
     removeAllUnits();
     removeAllBullets();
-    
-#if ENABLE_CAMP_INFO
-    removeBattleCampInfos();
-#else
-    removeBattleUnitInfos();
-#endif
 }
 
 void GameRender::registerObserver(GameRenderObserver *observer)
@@ -156,13 +150,6 @@ void GameRender::updateUnits(const Game* game, int index)
     const World* world = game->getWorld();
 
     const Faction* f = world->getFaction(index);
-#if !ENABLE_CAMP_INFO
-    if (_newAddedUnitBases.find(index) == _newAddedUnitBases.end()) {
-        _newAddedUnitBases.insert(make_pair(index, vector<const UnitBase*>()));
-    }
-    vector<const UnitBase*>& newAddedUnitBases = _newAddedUnitBases.at(index);
-    newAddedUnitBases.clear();
-#endif
     for (int i = 0; i < f->getUnitCount(); ++i) {
         const Unit* unit = f->getUnitByIndex(i);
         const int key = unit->getUnitId();
@@ -221,26 +208,6 @@ void GameRender::updateUnits(const Game* game, int index)
                 }
             }
         }
-        
-#if !ENABLE_CAMP_INFO
-        if (_battleUnitInfos.find(index) == _battleUnitInfos.end()) {
-            _battleUnitInfos.insert(make_pair(index, BattleUnitInfos()));
-        }
-        
-        BattleUnitInfos& infos = _battleUnitInfos.at(index);
-        const string& name = unit->getUnitBase().getUnitName();
-        map<string, UnitBase*>& unitBaseMap = infos.unitBaseMap;
-        if (unitBaseMap.find(name) == unitBaseMap.end()) {
-            const UnitBase& ub = unit->getUnitBase();
-            UnitBase* newUb = new UnitBase();
-            if (newUb) {
-                newUb->create(ub.getUnitType(), _game->getWorld(), ub.getLevel(), ub.getQuality(), ub.getTalent());
-            }
-            unitBaseMap.insert(make_pair(name, newUb));
-            infos.unitBaseVector.push_back(newUb);
-            newAddedUnitBases.push_back(newUb);
-        }
-#endif
     }
 }
 
@@ -317,63 +284,6 @@ void GameRender::updateUILayer()
     
     _mapUILayer->updateRemainingTime(_remainingTime);
 }
-
-#if ENABLE_CAMP_INFO
-void GameRender::updateBattleCampInfos()
-{
-    const World* world = _game->getWorld();
-    const int factionCount = world->getFactionCount();
-    for (int factionIndex = 0; factionIndex < factionCount; ++factionIndex) {
-        if (_battleCampInfos.find(factionIndex) == _battleCampInfos.end()) {
-            _battleCampInfos.insert(make_pair(factionIndex, BattleCampInfos()));
-        }
-        
-        BattleCampInfos& infos = _battleCampInfos.at(factionIndex);
-        const int campCount = world->getCampCount(factionIndex);
-        vector<pair<const Camp*, const UnitBase*>> newAdded;
-        for (int campIndex = 0; campIndex < campCount; ++campIndex) {
-            const Camp* camp = world->getCamp(factionIndex, campIndex);
-            if (camp->getProduction() > 0) {
-                set<const Camp*>& campSet = infos.campSet;
-                if (campSet.find(camp) == campSet.end()) {
-                    infos.campsVector.push_back(camp);
-                    campSet.insert(camp);
-                    
-                    UnitBase* unit = new UnitBase();
-                    if (unit) {
-                        const UnitSetting& us = camp->getUnitSetting();
-                        unit->create(camp->getUnitType(), _game->getWorld(), us.getLevel(), us.getQuality(), us.getTalentLevel());
-                    }
-                    infos.units.insert(make_pair(camp, unit));
-                    newAdded.push_back(make_pair(camp, unit));
-                }
-            }
-        }
-        
-        if (_mapUILayer) {
-            if (newAdded.size() > 0) {
-                _mapUILayer->insertCampInfo(factionIndex, newAdded);
-            } else {
-                _mapUILayer->updateCampInfos(factionIndex);
-            }
-        }
-    }
-}
-#else
-void GameRender::updateBattleUnitInfos()
-{
-    for (auto iter = begin(_newAddedUnitBases); iter != end(_newAddedUnitBases); ++iter)
-    {
-        const int factionIndex = iter->first;
-        vector<const UnitBase*>& v = iter->second;
-        if (v.size() > 0) {
-            _mapUILayer->insertUnitInfos(factionIndex, v);
-        } else {
-            _mapUILayer->updateUnitInfos(factionIndex);
-        }
-    }
-}
-#endif
 
 bool GameRender::isCampFull(const Camp* camp) const
 {
@@ -532,11 +442,6 @@ void GameRender::onMapLayerTouchEnded(const Point& point)
         onMapUILayerTouchEnded(_selectedCamp, convertToUILayer(point));
     }
 #endif
-    
-    if (_mapUILayer) {
-        _mapUILayer->closeAllUnitInfoNodes();
-        _mapUILayer->removeUpgradeNode();
-    }
 }
 
 #pragma mark - MapUILayerObserver
@@ -568,10 +473,10 @@ bool GameRender::onMapUILayerIsHeroAlive(const Camp* camp) const
     return false;
 }
 
-const vector<const Camp*>& GameRender::onMapUILayerGetCamps(UnitClass uc) const
+const vector<const Camp*>& GameRender::onMapUILayerGetCamps() const
 {
-    if (_myCamps.find(uc) != _myCamps.end()) {
-        return _myCamps.at(uc);
+    if (_myCamps.find(kUnitClass_Warrior) != _myCamps.end()) {
+        return _myCamps.at(kUnitClass_Warrior);
     }
     
     static vector<const Camp*> empty;
@@ -606,24 +511,6 @@ void GameRender::onMapUILayerUnitTouched(const Camp* camp)
         }
     }
 #endif
-}
-
-void GameRender::onMapUILayerUnitAdd(const Camp* camp)
-{
-    if (_commander && camp && !isCampFull(camp)) {
-        _commander->tryGiveCampIncreaseCommand(camp, 1);
-    }
-}
-
-void GameRender::onMapUILayerUnitUpgrade(const Camp* camp, int idx)
-{
-    if (_commander && camp) {
-        _commander->tryGiveCampUpgradeCommand(camp, idx);
-    }
-    
-    if (_mapUILayer) {
-        _mapUILayer->removeUpgradeNode();
-    }
 }
 
 void GameRender::onMapUILayerTouchCancelled(const Camp* camp)
@@ -761,29 +648,6 @@ void GameRender::removeAllUnits()
     _cores.clear();
 }
 
-#if ENABLE_CAMP_INFO
-void GameRender::removeBattleCampInfos()
-{
-    for (auto iter = begin(_battleCampInfos); iter != end(_battleCampInfos); ++iter) {
-        map<const Camp*, UnitBase*>& units = iter->second.units;
-        for (auto uIter = begin(units); uIter != end(units); ++uIter) {
-            CC_SAFE_DELETE(uIter->second);
-        }
-        
-    }
-}
-#else
-void GameRender::removeBattleUnitInfos()
-{
-    for (auto iter = begin(_battleUnitInfos); iter != end(_battleUnitInfos); ++iter) {
-        map<string, UnitBase*>& units = iter->second.unitBaseMap;
-        for (auto uIter = begin(units); uIter != end(units); ++uIter) {
-            CC_SAFE_DELETE(uIter->second);
-        }
-    }
-}
-#endif
-
 void GameRender::pauseGame()
 {
     MessageBoxLayer::getInstance()->show(LocalHelper::getString("hint_exitPve"), kMessageBoxYesNo, [](Ref*) {
@@ -821,7 +685,6 @@ void GameRender::updateResources()
         const TechTree* techTree = world->getTechTree();
         const Faction* faction = world->getThisFaction();
         const int count = techTree->getResourceTypeCount();
-        bool update(false);
         for (int i = 0; i < count; ++i) {
             const UnderWorld::Core::ResourceType* resourceType = techTree->getResourceTypeByIndex(i);
             const Resource* resource = faction->getResource(resourceType);
@@ -833,19 +696,13 @@ void GameRender::updateResources()
                 if (name == RES_NAME_GOLD) {
                     if (_goldCount != decimalCnt) {
                         _goldCount = decimalCnt;
-                        update = true;
                     }
                 } else if (name == RES_NAME_WOOD) {
                     if (_woodCount != decimalCnt) {
                         _woodCount = decimalCnt;
-                        update = true;
                     }
                 }
             }
-        }
-        
-        if (update) {
-            _mapUILayer->updateResources(_goldCount, _woodCount);
         }
     }
 }

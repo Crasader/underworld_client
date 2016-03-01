@@ -26,9 +26,6 @@ class MapUIUnitNodeObserver
 {
 public:
     virtual ~MapUIUnitNodeObserver() {}
-    virtual void onMapUIUnitNodeClickedAddButton(const UnderWorld::Core::Camp* camp) = 0;
-    virtual void onMapUIUnitNodeClickedUpgradeButton(MapUIUnitNode* node) = 0;
-    
     virtual void onMapUIUnitNodeTouchedBegan(const UnderWorld::Core::Camp* camp) = 0;
     virtual void onMapUIUnitNodeTouchedEnded(const UnderWorld::Core::Camp* camp, bool isValid) = 0;
 };
