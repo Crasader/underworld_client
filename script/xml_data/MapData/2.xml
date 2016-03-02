@@ -12,6 +12,24 @@
             <event_trigger class="schedule" time="0"/>
             <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="5.0f"/>
         </event>
+        <event>
+            <event_trigger class="schedule" time="5" start_time="5" end_time="300"/>
+            <event_effect class="add_unit" map_index="1" position="1700,550">
+                <unit_setting name="轻装武士"/>
+            </event_effect>
+        </event>
+        <event>
+            <event_trigger class="schedule" time="5" start_time="5" end_time="300"/>
+            <event_effect class="add_unit" map_index="1" position="1700,550">
+                <unit_setting name="轻装武士"/>
+                </event_effect>
+        </event>
+        <event>
+                <event_trigger class="schedule" time="25" start_time="5" end_time="300"/>
+                <event_effect class="add_unit" map_index="1" position="1700,550">
+                <unit_setting name="疾风弓手"/>
+                </event_effect>
+        </event>
     </schedule_events>
     <loop_events>
         <event>
@@ -76,6 +94,12 @@
         </event>
         <event>
             <event_trigger class="loop" time="35" start_time="155" end_time="300"/>
+            <event_effect class="add_unit" map_index="1" position="1700,550">
+                <unit_setting name="骑士"/>
+            </event_effect>
+        </event>
+        <event>
+            <event_trigger class="loop" time="65" start_time="155" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="1700,550">
                 <unit_setting name="骑士"/>
             </event_effect>
