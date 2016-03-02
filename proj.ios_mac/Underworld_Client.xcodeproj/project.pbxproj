@@ -43,6 +43,7 @@
 		30236FF71C5B6AFA00FB1802 /* PathFinderInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30236FF61C5B6AFA00FB1802 /* PathFinderInterface.cpp */; };
 		3028EBC31BFF0CBD00511C51 /* DynamicValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3028EBC11BFF0CBD00511C51 /* DynamicValue.cpp */; };
 		3028EBC61BFF0D4800511C51 /* Condition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3028EBC41BFF0D4700511C51 /* Condition.cpp */; };
+		3068023D1C858E22000990F9 /* Deck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3068023B1C858E22000990F9 /* Deck.cpp */; };
 		307534691BF1B2F20057DCED /* Commander.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 307534671BF1B2F20057DCED /* Commander.cpp */; };
 		3075346D1BF324340057DCED /* EventTriggers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3075346B1BF324340057DCED /* EventTriggers.cpp */; };
 		307534711BF33ECF0057DCED /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3075346F1BF33ECF0057DCED /* Logger.cpp */; };
@@ -334,6 +335,8 @@
 		3028EBC21BFF0CBD00511C51 /* DynamicValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DynamicValue.h; path = Core/Unit/Element/DynamicValue.h; sourceTree = "<group>"; };
 		3028EBC41BFF0D4700511C51 /* Condition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Condition.cpp; path = Core/Unit/Element/Condition.cpp; sourceTree = "<group>"; };
 		3028EBC51BFF0D4700511C51 /* Condition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Condition.h; path = Core/Unit/Element/Condition.h; sourceTree = "<group>"; };
+		3068023B1C858E22000990F9 /* Deck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Deck.cpp; path = Core/Game/Deck.cpp; sourceTree = "<group>"; };
+		3068023C1C858E22000990F9 /* Deck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Deck.h; path = Core/Game/Deck.h; sourceTree = "<group>"; };
 		307534671BF1B2F20057DCED /* Commander.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Commander.cpp; path = Core/Game/Commander.cpp; sourceTree = "<group>"; };
 		307534681BF1B2F20057DCED /* Commander.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Commander.h; path = Core/Game/Commander.h; sourceTree = "<group>"; };
 		3075346B1BF324340057DCED /* EventTriggers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EventTriggers.cpp; path = Core/Game/EventTriggers.cpp; sourceTree = "<group>"; };
@@ -773,6 +776,8 @@
 				301F63FA1BE3680600DA6D70 /* GameLooper.cpp */,
 				301F63FB1BE3680600DA6D70 /* GameLooper.h */,
 				0451170F1BCFBA5F002AA721 /* GameSettings.h */,
+				3068023B1C858E22000990F9 /* Deck.cpp */,
+				3068023C1C858E22000990F9 /* Deck.h */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -1852,6 +1857,7 @@
 				A16BF28C1C313E7D00E91458 /* SoldierLocalData.cpp in Sources */,
 				A103F45F1BE38112007F9A83 /* GameRender.cpp in Sources */,
 				A1F9B0861C76CBAD007BC409 /* AbstractUILayer.cpp in Sources */,
+				3068023D1C858E22000990F9 /* Deck.cpp in Sources */,
 				A1720EB81BCD2D2E00217E98 /* Api.mm in Sources */,
 				A1720E8F1BCCE19300217E98 /* md5.cpp in Sources */,
 				A1D45C4A1BEB3B1400D1E921 /* ResourceButton.cpp in Sources */,
