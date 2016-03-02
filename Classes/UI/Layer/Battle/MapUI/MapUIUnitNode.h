@@ -47,23 +47,18 @@ protected:
     bool init(const UnderWorld::Core::Camp* camp);
     std::string getIconFile(const UnderWorld::Core::Camp* camp, bool enable) const;
     bool isHero(const UnderWorld::Core::Camp* camp) const;
-    bool setResourceStatus(bool isGold, int count, bool enable);
+    bool setResourceStatus(int count, bool enable);
     void setColdDownProgress(bool colorful);
     
 private:
     MapUIUnitNodeObserver *_observer;
     Widget *_cardWidget;
-    Button *_addButton;
-    Button *_upgradeButton;
     Sprite *_iconSprite;
     Sprite *_qualitySprite;
-    Label *_countLabel;
     BattleSmallResourceNode *_goldNode;
-    BattleSmallResourceNode *_woodNode;
     std::map<int, Sprite*> _starSprites;
     
     Sprite *_shiningSprite;
-    Sprite *_maxIconSprite;
     ProgressTimer* _coldDownProgress;
     const UnderWorld::Core::Camp* _camp;
     bool _touchInvalid;

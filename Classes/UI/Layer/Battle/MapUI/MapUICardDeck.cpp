@@ -13,7 +13,6 @@
 using namespace std;
 using namespace UnderWorld::Core;
 
-static const unsigned int cardMaxCount(6);
 static const unsigned int resourceMaxCount(10);
 static const int topZOrder(1);
 
@@ -58,7 +57,7 @@ bool MapUICardDeck::init(const vector<const Camp*>& camps)
         static const float y2(50.0f);
         
         const Size& nodeSize = MapUIUnitNode::create(nullptr)->getContentSize();
-        const Size size(x1 * 2 + x2 + (cardMaxCount + 1) * nodeSize.width + (cardMaxCount - 1) * x3, y1 + y2 + nodeSize.height);
+        const Size size(x1 * 2 + x2 + (CARD_DECKS_COUNT + 1) * nodeSize.width + (CARD_DECKS_COUNT - 1) * x3, y1 + y2 + nodeSize.height);
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         setContentSize(size);
         
@@ -73,7 +72,7 @@ bool MapUICardDeck::init(const vector<const Camp*>& camps)
         
         // children
         const float y = y2 + nodeSize.height / 2;
-        for (int i = cardMaxCount - 1; i >= 0; --i) {
+        for (int i = CARD_DECKS_COUNT - 1; i >= 0; --i) {
             const float x = x1 + x2 + nodeSize.width * (i + 1.5f) + x3 * i;
             _unitPositions.push_back(Point(x, y));
         }
@@ -109,7 +108,7 @@ bool MapUICardDeck::init(const vector<const Camp*>& camps)
         }
         
         static const float offsetX(1.0f);
-        const float midX = x1 + x2 + nodeSize.width + (cardMaxCount * (nodeSize.width + x3) - x3) / 2;
+        const float midX = x1 + x2 + nodeSize.width + (CARD_DECKS_COUNT * (nodeSize.width + x3) - x3) / 2;
         const float startX = midX - ((progressSize.width + offsetX) * resourceMaxCount - offsetX)  / 2;
         for (int i = 0; i < _resources.size(); ++i) {
             ProgressTimer* pt = _resources.at(i);

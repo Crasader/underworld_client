@@ -71,11 +71,7 @@ void MapUILayer::registerObserver(MapUILayerObserver *observer)
 
 void MapUILayer::reload()
 {
-    if (_cardDeck) {
-        _cardDeck->select(_highlightedCamp);
-    } else {
-        createCardDeck();
-    }
+    
 }
 
 void MapUILayer::updateMyHpProgress(int progress)
@@ -137,6 +133,60 @@ bool MapUILayer::isPointInTableView(const Point& point)
 void MapUILayer::clearHighlightedCamp()
 {
     setHighlightedCamp(nullptr);
+}
+
+#pragma mark - card deck
+void MapUILayer::createCardDeck(const vector<const Camp*>& camps)
+{
+    if (camps.size() > 0) {
+        _cardDeck = MapUICardDeck::create(camps);
+        _cardDeck->registerObserver(this);
+        addChild(_cardDeck);
+        
+        const Size& winSize = Director::getInstance()->getWinSize();
+        const Size& size = _cardDeck->getContentSize();
+        _cardDeck->setPosition(winSize.width / 2, size.height / 2);
+    }
+}
+
+void MapUILayer::initCardDeck(const set<const Camp*>& camps)
+{
+    if (_cardDeck) {
+        vector<const Camp*> vec;
+        for (auto iter = begin(camps); iter != end(camps); ++iter) {
+            vec.push_back(*iter);
+        }
+        
+        _cardDeck->initial(vec);
+    }
+}
+
+void MapUILayer::insertCamp(const Camp* camp)
+{
+    if (_cardDeck) {
+        _cardDeck->insert(camp);
+    }
+}
+
+void MapUILayer::removeCamp(const Camp* camp)
+{
+    if (_cardDeck) {
+        _cardDeck->remove(camp);
+    }
+}
+
+void MapUILayer::updateCardDeckCountDown(float time)
+{
+    if (_cardDeck) {
+        _cardDeck->updateTimer(time);
+    }
+}
+
+void MapUILayer::updateCardDeckResource(float count)
+{
+    if (_cardDeck) {
+        _cardDeck->updateResource(count);
+    }
 }
 
 #pragma mark -
@@ -202,7 +252,6 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
         
         createUserInfo(true, myAccount);
         
-        //
         {
             Sprite* sprite = Sprite::create("GameImages/test/ui_time.png");
             root->addChild(sprite);
@@ -354,22 +403,6 @@ void MapUILayer::createUserInfo(bool left, const string& account)
     }
 }
 
-void MapUILayer::createCardDeck()
-{
-    if (_observer) {
-        const vector<const Camp*>& camps = _observer->onMapUILayerGetCamps();
-        if (camps.size() > 0) {
-            _cardDeck = MapUICardDeck::create(camps);
-            _cardDeck->registerObserver(this);
-            addChild(_cardDeck);
-            
-            const Size& winSize = Director::getInstance()->getWinSize();
-            const Size& size = _cardDeck->getContentSize();
-            _cardDeck->setPosition(winSize.width / 2, size.height / 2);
-        }
-    }
-}
-
 bool MapUILayer::isGameOver() const
 {
     if (_observer) {
@@ -405,6 +438,10 @@ void MapUILayer::setHighlightedCamp(const Camp* camp, bool callback, bool ignore
         if (check) {
             _highlightedCamp = nullptr;
         }
+    }
+    
+    if (_cardDeck) {
+        _cardDeck->select(_highlightedCamp);
     }
     
     // callback

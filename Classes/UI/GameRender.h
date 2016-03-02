@@ -71,7 +71,6 @@ protected:
     virtual bool onMapUILayerIsGameOver() const override;
     virtual void onMapUILayerClickedPauseButton() override;
     virtual bool onMapUILayerIsHeroAlive(const UnderWorld::Core::Camp* camp) const override;
-    virtual const std::vector<const UnderWorld::Core::Camp*>& onMapUILayerGetCamps() const override;
     virtual void onMapUILayerUnitSelected(const UnderWorld::Core::Camp* camp) override;
     virtual void onMapUILayerUnitTouched(const UnderWorld::Core::Camp* camp) override;
     virtual void onMapUILayerTouchMoved(const UnderWorld::Core::Camp* camp, const Point& point) override;
@@ -112,6 +111,9 @@ private:
     Point convertToMapLayer(const Point& uiLayerPoint) const;
     Point convertToUILayer(const Point& mapLayerPoint) const;
     
+    // random
+    const UnderWorld::Core::Camp* generateRandomCamp() const;
+    
 private:
     GameRenderObserver *_observer;
     Scene* _scene;
@@ -123,17 +125,15 @@ private:
     std::map<int, UnitNode*> _allUnitNodes;
     std::map<int64_t, std::pair<UnderWorld::Core::Coordinate, float>> _bulletParams;
     std::map<int64_t, BulletNode*> _allBulletNodes;
-    std::map<UnderWorld::Core::UnitClass, vector<const UnderWorld::Core::Camp*>> _myCamps;
-    std::map<std::string, std::map<int, const UnderWorld::Core::Unit*>> _myHeroes;
+    std::vector<const UnderWorld::Core::Camp*> _myCamps;
     std::map<int, const UnderWorld::Core::Unit*> _cores;
-    
-#if ENABLE_DRAG_CARD
     const UnderWorld::Core::Camp* _selectedCamp;
-#endif
+    std::set<const UnderWorld::Core::Camp*> _pickedCamps;
     
     bool _paused;
     bool _isGameOver;
     int _remainingTime;
+    int _cardDeckTime;
     float _goldCount;
     float _woodCount;
     bool _hasUpdatedBattleCampInfos;

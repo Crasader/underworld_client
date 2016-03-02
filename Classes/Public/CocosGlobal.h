@@ -12,9 +12,6 @@
 #include "Global.h"
 #include <iostream>
 
-#define ENABLE_CAMP_INFO    (0)
-#define ENABLE_DRAG_CARD    (1)
-
 #define USER_TOKEN_LENGTH   (64)
 
 #define RESOLUTION_WIDTH    (1136)
@@ -38,6 +35,9 @@
 #define DISABLED_COLOR      (Color4B::RED)
 
 #define TOUCH_CANCEL_BY_MOVING_DISTANCE (10.0f)
+
+#define CANDIDATE_CARD_DECKS_COUNT  (8)
+#define CARD_DECKS_COUNT            (6)
 
 #define ONLINE_UPDATE_SEARCH_PATH       (FileUtils::getInstance()->getWritablePath() + "Resource/")
 #define DEFAULT_RESOURCE_FOLDER         ("res")

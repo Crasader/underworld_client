@@ -1,12 +1,12 @@
 //
-//  BattleDeckTestNode.cpp
+//  UnitCardNode.cpp
 //  Underworld_Client
 //
 //  Created by Andy on 16/2/22.
 //  Copyright (c) 2015 Mofish Studio. All rights reserved.
 //
 
-#include "BattleDeckTestNode.h"
+#include "UnitCardNode.h"
 #include "cocostudio/CocoStudio.h"
 #include "CocosUtils.h"
 #include "BattleSmallResourceNode.h"
@@ -21,10 +21,10 @@ using namespace UnderWorld::Core;
 static const int topZOrder(1);
 static const Point iconTouchOffset(0, -6.0f);
 
-BattleDeckTestNode* BattleDeckTestNode::create(const string& name, const string& renderKey, bool isHero, int rarity)
+UnitCardNode* UnitCardNode::create(const string& name, const string& renderKey, int rarity)
 {
-    BattleDeckTestNode *ret = new (nothrow) BattleDeckTestNode();
-    if (ret && ret->init(name, renderKey, isHero, rarity)) {
+    UnitCardNode *ret = new (nothrow) UnitCardNode();
+    if (ret && ret->init(name, renderKey, rarity)) {
         ret->autorelease();
         return ret;
     }
@@ -33,28 +33,25 @@ BattleDeckTestNode* BattleDeckTestNode::create(const string& name, const string&
     return nullptr;
 }
 
-BattleDeckTestNode::BattleDeckTestNode()
+UnitCardNode::UnitCardNode()
 :_observer(nullptr)
 ,_cardWidget(nullptr)
 ,_addButton(nullptr)
 ,_iconSprite(nullptr)
 ,_qualitySprite(nullptr)
-,_countNode(nullptr)
-,_countLabel(nullptr)
 ,_goldNode(nullptr)
-,_woodNode(nullptr)
 ,_shiningSprite(nullptr)
 ,_touchInvalid(false)
 {
     
 }
 
-BattleDeckTestNode::~BattleDeckTestNode()
+UnitCardNode::~UnitCardNode()
 {
     removeAllChildren();
 }
 
-bool BattleDeckTestNode::init(const string& name, const string& renderKey, bool isHero, int rarity)
+bool UnitCardNode::init(const string& name, const string& renderKey, int rarity)
 {
     if (Node::init())
     {
@@ -86,40 +83,6 @@ bool BattleDeckTestNode::init(const string& name, const string& renderKey, bool 
                         child->addChild(_iconSprite);
                     }
                         break;
-                    case 51: {
-                        _countNode = child;
-                        
-                        Node* node = child->getChildByTag(52);
-                        if (node) {
-                            _countLabel = CocosUtils::createLabel("0", DEFAULT_FONT_SIZE, DEFAULT_NUMBER_FONT);
-                            node->addChild(_countLabel);
-                        } else {
-                            assert(false);
-                        }
-                    }
-                        break;
-                    case 47: {
-                        child->setLocalZOrder(topZOrder);
-                        
-                        Node* node = child->getChildByTag(48);
-                        if (node) {
-                            _goldNode = readdResourceNode(node, kResourceType_Gold, 0);
-                        } else {
-                            assert(false);
-                        }
-                    }
-                        break;
-                    case 49: {
-                        child->setLocalZOrder(topZOrder);
-                        
-                        Node* node = child->getChildByTag(50);
-                        if (node) {
-                            _woodNode = readdResourceNode(node, kResourceType_Wood, 0);
-                        } else {
-                            assert(false);
-                        }
-                    }
-                        break;
                     case 53: {
                         const Vector<Node*>& children = child->getChildren();
                         for (int i = 0; i < children.size(); ++i)
@@ -137,6 +100,10 @@ bool BattleDeckTestNode::init(const string& name, const string& renderKey, bool 
                         }
                     }
                         break;
+                    case 58: {
+                        _goldNode = readdResourceNode(child, kResourceType_Gold, 0);
+                    }
+                        break;
                     default:
                         break;
                 }
@@ -148,13 +115,12 @@ bool BattleDeckTestNode::init(const string& name, const string& renderKey, bool 
         setContentSize(size);
         mainNode->setPosition(Point(size.width / 2, size.height / 2));
         
-        _cardWidget->setSwallowTouches(false);
         _cardWidget->addTouchEventListener([=](Ref *pSender, Widget::TouchEventType type) {
             Widget* button = dynamic_cast<Widget*>(pSender);
             if (type == Widget::TouchEventType::BEGAN) {
                 _touchInvalid = false;
                 if(_observer) {
-                    _observer->onBattleDeckTestNodeTouchedBegan(this);
+                    _observer->onUnitCardNodeTouchedBegan(this);
                 }
             } else if (type == Widget::TouchEventType::MOVED) {
                 if (!_touchInvalid) {
@@ -170,11 +136,7 @@ bool BattleDeckTestNode::init(const string& name, const string& renderKey, bool 
                 }
                 
                 if(_observer) {
-                    _observer->onBattleDeckTestNodeTouchedEnded(this, !_touchInvalid);
-                }
-            } else {
-                if(_observer) {
-                    _observer->onBattleDeckTestNodeTouchedCanceled(this);
+                    _observer->onUnitCardNodeTouchedEnded(this, !_touchInvalid);
                 }
             }
         });
@@ -189,7 +151,7 @@ bool BattleDeckTestNode::init(const string& name, const string& renderKey, bool 
             _shiningSprite->setPosition(Point(size.width / 2, size.height / 2));
         }
         
-        update(name, renderKey, isHero, rarity);
+        update(name, renderKey, rarity);
         
         return true;
     }
@@ -197,12 +159,12 @@ bool BattleDeckTestNode::init(const string& name, const string& renderKey, bool 
     return false;
 }
 
-void BattleDeckTestNode::registerObserver(BattleDeckTestNodeObserver *observer)
+void UnitCardNode::registerObserver(UnitCardNodeObserver *observer)
 {
     _observer = observer;
 }
 
-void BattleDeckTestNode::update(const string& name, const string& renderKey, bool isHero, int rarity)
+void UnitCardNode::update(const string& name, const string& renderKey, int rarity)
 {
     _unitName = name;
     
@@ -212,20 +174,15 @@ void BattleDeckTestNode::update(const string& name, const string& renderKey, boo
         _iconSprite->setTexture(iconFile);
     }
     
-    if (_countNode) {
-        _countNode->setVisible(!isHero);
-    }
-    
     if (_qualitySprite) {
         _qualitySprite->setTexture(StringUtils::format("GameImages/test/ui_kuang_%d.png", rarity + 1));
     }
     
     // !!!if we didn't re-add the resource nodes, the animation would be stopped(It may caused by the table's refreshing)
     _goldNode = readdResourceNode(_goldNode, kResourceType_Gold, 0);
-    _woodNode = readdResourceNode(_woodNode, kResourceType_Wood, 0);
 }
 
-void BattleDeckTestNode::setSelected(bool selected)
+void UnitCardNode::setSelected(bool selected)
 {
     if (_shiningSprite) {
         _shiningSprite->setVisible(selected);
@@ -245,12 +202,12 @@ void BattleDeckTestNode::setSelected(bool selected)
     }
 }
 
-const string& BattleDeckTestNode::getUnitName() const
+const string& UnitCardNode::getUnitName() const
 {
     return _unitName;
 }
 
-string BattleDeckTestNode::getIconFile(const string& name, bool enable) const
+string UnitCardNode::getIconFile(const string& name, bool enable) const
 {
     const URConfigData* configData = DataManager::getInstance()->getURConfigData(name);
     string iconFile;
@@ -264,7 +221,7 @@ string BattleDeckTestNode::getIconFile(const string& name, bool enable) const
     return iconFile;
 }
 
-BattleSmallResourceNode* BattleDeckTestNode::readdResourceNode(Node* currentNode, ::ResourceType type, int count)
+BattleSmallResourceNode* UnitCardNode::readdResourceNode(Node* currentNode, ::ResourceType type, int count)
 {
     if (currentNode) {
         auto node = BattleSmallResourceNode::create(type, count);

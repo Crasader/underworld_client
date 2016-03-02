@@ -44,16 +44,10 @@ MapUIUnitNode* MapUIUnitNode::create(const Camp* camp)
 MapUIUnitNode::MapUIUnitNode()
 :_observer(nullptr)
 ,_cardWidget(nullptr)
-,_addButton(nullptr)
-,_upgradeButton(nullptr)
 ,_iconSprite(nullptr)
 ,_qualitySprite(nullptr)
-,_countLabel(nullptr)
 ,_goldNode(nullptr)
-,_woodNode(nullptr)
-
 ,_shiningSprite(nullptr)
-,_maxIconSprite(nullptr)
 ,_camp(nullptr)
 ,_touchInvalid(false)
 {
@@ -71,97 +65,54 @@ bool MapUIUnitNode::init(const Camp* camp)
     {
         _camp = camp;
         
-        static const string csbFile("UI_BattleCard.csb");
+        static const string csbFile("UI_Card.csb");
         Node *mainNode = CSLoader::createNode(csbFile);
         addChild(mainNode);
+        
         timeline::ActionTimeline *action = CSLoader::createTimeline(csbFile);
         mainNode->runAction(action);
         action->gotoFrameAndPlay(0, false);
-        Widget* root = dynamic_cast<Widget *>(mainNode->getChildByTag(4));
-        root->setSwallowTouches(false);
-        const Vector<Node*>& children = root->getChildren();
+        
+        _cardWidget = dynamic_cast<Widget *>(mainNode->getChildByTag(42));
+        _cardWidget->setSwallowTouches(false);
+        
+        const Vector<Node*>& children = _cardWidget->getChildren();
         for (int i = 0; i < children.size(); ++i)
         {
             Node* child = children.at(i);
             if (child) {
                 const int tag = child->getTag();
                 switch (tag) {
-                    case 23: {
-                        _cardWidget = dynamic_cast<Widget*>(child);
-                        
+                    case 44: {
+                        _qualitySprite = Sprite::create();
+                        child->addChild(_qualitySprite);
+                    }
+                        break;
+                    case 45: {
+                        _iconSprite = Sprite::create();
+                        child->addChild(_iconSprite);
+                    }
+                        break;
+                    case 53: {
                         const Vector<Node*>& children = child->getChildren();
                         for (int i = 0; i < children.size(); ++i)
                         {
                             Node* child = children.at(i);
                             if (child) {
                                 const int tag = child->getTag();
-                                switch (tag) {
-                                    case 6: {
-                                        _qualitySprite = Sprite::create();
-                                        child->addChild(_qualitySprite);
-                                    }
-                                        break;
-                                    case 7: {
-                                        _iconSprite = Sprite::create();
-                                        child->addChild(_iconSprite);
-                                    }
-                                        break;
-                                    case 8: {
-                                        Node* node = child->getChildByTag(10);
-                                        if (node) {
-                                            _countLabel = CocosUtils::createLabel("0", DEFAULT_FONT_SIZE, DEFAULT_NUMBER_FONT);
-                                            node->addChild(_countLabel);
-                                            child->setVisible(!isHero(camp));
-                                        } else {
-                                            assert(false);
-                                        }
-                                    }
-                                        break;
-                                    case 9: {
-                                        child->setLocalZOrder(topZOrder);
-                                        
-                                        Node* node = child->getChildByTag(11);
-                                        if (node) {
-                                            _goldNode = BattleSmallResourceNode::create(kResourceType_Gold, 0);
-                                            node->addChild(_goldNode);
-                                        } else {
-                                            assert(false);
-                                        }
-                                    }
-                                        break;
-                                    case 12: {
-                                        child->setLocalZOrder(topZOrder);
-                                        
-                                        Node* node = child->getChildByTag(13);
-                                        if (node) {
-                                            _woodNode = BattleSmallResourceNode::create(kResourceType_Wood, 0);
-                                            node->addChild(_woodNode);
-                                        } else {
-                                            assert(false);
-                                        }
-                                    }
-                                        break;
-                                    case 14: {
-                                        const Vector<Node*>& children = child->getChildren();
-                                        for (int i = 0; i < children.size(); ++i)
-                                        {
-                                            Node* child = children.at(i);
-                                            if (child) {
-                                                const int tag = child->getTag();
-                                                if (tag >= 15 && tag <= 19) {
-                                                    Sprite* star = Sprite::create("GameImages/test/icon_xingxing.png");
-                                                    child->addChild(star);
-                                                    _starSprites.insert(make_pair(tag - 15, star));
-                                                }
-                                            }
-                                        }
-                                    }
-                                        break;
-                                    default:
-                                        break;
+                                static const int firstTag = 54;
+                                if (tag >= firstTag && tag <= (firstTag + 4)) {
+                                    Sprite* star = Sprite::create("GameImages/test/icon_xingxing.png");
+                                    child->addChild(star);
+                                    _starSprites.insert(make_pair(tag - firstTag, star));
                                 }
                             }
                         }
+                    }
+                        break;
+                    case 58: {
+                        _goldNode = BattleSmallResourceNode::create(kResourceType_Gold, 0);
+                        child->addChild(_goldNode);
                     }
                         break;
                     default:
@@ -170,9 +121,11 @@ bool MapUIUnitNode::init(const Camp* camp)
             }
         }
         
-        setContentSize(root->getContentSize());
+        const Size size(_cardWidget->getContentSize());
+        setAnchorPoint(Point::ANCHOR_MIDDLE);
+        setContentSize(size);
+        mainNode->setPosition(Point(size.width / 2, size.height / 2));
         
-        _cardWidget->setSwallowTouches(false);
         _cardWidget->addTouchEventListener([=](Ref *pSender, Widget::TouchEventType type) {
             Widget* button = dynamic_cast<Widget*>(pSender);
             if (type == Widget::TouchEventType::BEGAN) {
@@ -257,19 +210,9 @@ void MapUIUnitNode::update(int gold, int wood)
         bool colorful(true);
         const bool valid(_camp->getColdDown() <= 0);
         if (!hero || !heroUnit) {
-            if (!hero) {
-                _countLabel->setString(StringUtils::format("%d/%d", production, maxProduction));
-            }
-            
-            const bool enoughGold = setResourceStatus(true, gold, isNotFull);
-            const bool enoughWood = setResourceStatus(false, wood, isNotFull);
-            const bool enoughResources = enoughGold && enoughWood;
-            _addButton->setVisible(isNotFull);
-            _maxIconSprite->setVisible(!isNotFull);
-            _upgradeButton->setEnabled(!_camp->isUpgraded() && (_camp->getUpgradeCount() > 0));
+            setResourceStatus(gold, isNotFull);
             
             if (isNotFull) {
-                _addButton->setEnabled(enoughResources);
                 if (production < 1) {
                     colorful = false;
                 } else {
@@ -350,27 +293,16 @@ bool MapUIUnitNode::isHero(const Camp* camp) const
     return false;
 }
 
-bool MapUIUnitNode::setResourceStatus(bool isGold, int count, bool enable)
+bool MapUIUnitNode::setResourceStatus(int count, bool enable)
 {
-    auto node = isGold ? _goldNode : _woodNode;
-    const string& name = isGold ? RES_NAME_GOLD : RES_NAME_WOOD;
+    auto node = _goldNode;
+    const string& name = RES_NAME_GOLD;
     int neededCount(0);
-    bool isEnable(false);
-    if (isGold) {
-        const auto& costs = _camp->getCosts();
-        isEnable = (costs.find(name) != costs.end() && enable);
-        if (isEnable) {
-            neededCount = costs.at(name);
-        }
-    } else {
-        const auto& costs = _camp->getCurrentPutCost();
-        isEnable = (costs.find(name) != costs.end() && enable);
-        if (isEnable) {
-            neededCount = costs.at(name);
-        }
+    const auto& costs = _camp->getCurrentPutCost();
+    const bool isEnable(costs.find(name) != costs.end() && enable);
+    if (isEnable) {
+        neededCount = costs.at(name);
     }
-    
-    node->getParent()->getParent()->setVisible(isEnable);
     
     bool enoughResources(true);
     if (isEnable) {

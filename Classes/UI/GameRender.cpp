@@ -30,6 +30,7 @@ using namespace UnderWorld::Core;
 
 static const string tickSelectorKey("tickSelectorKey");
 static const int battleTotalTime(600);
+static const int cardDeckTotalTime(10);
 
 GameRender::GameRender(Scene* scene, int mapId, const string& mapData, const string& opponentsAccount)
 :_observer(nullptr)
@@ -39,12 +40,11 @@ GameRender::GameRender(Scene* scene, int mapId, const string& mapData, const str
 ,_mapUILayer(nullptr)
 ,_game(nullptr)
 ,_commander(nullptr)
-#if ENABLE_DRAG_CARD
 ,_selectedCamp(nullptr)
-#endif
 ,_paused(false)
 ,_isGameOver(false)
 ,_remainingTime(battleTotalTime)
+,_cardDeckTime(cardDeckTotalTime)
 ,_goldCount(INVALID_VALUE)
 ,_woodCount(INVALID_VALUE)
 ,_hasUpdatedBattleCampInfos(false)
@@ -94,15 +94,25 @@ void GameRender::init(const Game* game, Commander* commander)
         const int campsCount = world->getCampCount(factionIndex);
         for (int i = 0; i < campsCount; ++i) {
             const Camp* camp = world->getCamp(factionIndex, i);
-            UnitClass uc = camp->getCurrentUnitType()->getUnitClass();
-            if (_myCamps.find(uc) == _myCamps.end()) {
-                _myCamps.insert(make_pair(uc, vector<const Camp*>()));
-            }
-            _myCamps.at(uc).push_back(camp);
+            _myCamps.push_back(camp);
         }
     }
     
     updateAll();
+    
+    // card deck
+    for (int i = 0; i < 3; ++i) {
+        const Camp* camp = generateRandomCamp();
+        if (camp) {
+            _pickedCamps.insert(camp);
+        }
+    }
+    
+    if (_mapUILayer) {
+        _mapUILayer->createCardDeck(_myCamps);
+        _mapUILayer->initCardDeck(_pickedCamps);
+        _mapUILayer->updateCardDeckCountDown(cardDeckTotalTime);
+    }
     
     // tick
     Scheduler* scheduler = Director::getInstance()->getScheduler();
@@ -184,18 +194,6 @@ void GameRender::updateUnits(const Game* game, int index)
                         const UnitClass unitClass = unitType->getUnitClass();
                         if (kUnitClass_Building != unitClass && kUnitClass_Core != unitClass) {
                             _mapLayer->addPlaceUnitEffect(pos);
-                            
-                            if (kUnitClass_Hero == unitClass) {
-                                const string& unitName = unitType->getName();
-                                if (_myHeroes.find(unitName) == _myHeroes.end()) {
-                                    _myHeroes.insert(make_pair(unitName, map<int, const Unit*>()));
-                                }
-                                
-                                map<int, const Unit*>& m = _myHeroes.at(unitName);
-                                if (m.find(key) == m.end()) {
-                                    m.insert(make_pair(key, unit));
-                                }
-                            }
                         }
                     }
                 } else {
@@ -437,11 +435,9 @@ void GameRender::onMapLayerTouchMoved(const Point& point)
 
 void GameRender::onMapLayerTouchEnded(const Point& point)
 {
-#if ENABLE_DRAG_CARD
     if (_selectedCamp) {
         onMapUILayerTouchEnded(_selectedCamp, convertToUILayer(point));
     }
-#endif
 }
 
 #pragma mark - MapUILayerObserver
@@ -473,16 +469,6 @@ bool GameRender::onMapUILayerIsHeroAlive(const Camp* camp) const
     return false;
 }
 
-const vector<const Camp*>& GameRender::onMapUILayerGetCamps() const
-{
-    if (_myCamps.find(kUnitClass_Warrior) != _myCamps.end()) {
-        return _myCamps.at(kUnitClass_Warrior);
-    }
-    
-    static vector<const Camp*> empty;
-    return empty;
-}
-
 void GameRender::onMapUILayerUnitSelected(const Camp* camp)
 {
     _selectedCamp = camp;
@@ -490,7 +476,6 @@ void GameRender::onMapUILayerUnitSelected(const Camp* camp)
 
 void GameRender::onMapUILayerUnitTouched(const Camp* camp)
 {
-#if ENABLE_DRAG_CARD
     const Spell* spell = getSpell(camp, 0);
     if (spell) {
         SpellCastType castType = spell->getSpellType()->getCastType();
@@ -498,19 +483,6 @@ void GameRender::onMapUILayerUnitTouched(const Camp* camp)
             castSpell(spell, camp->getHero(), Coordinate::ZERO, nullptr);
         }
     }
-#else
-    if (_commander && camp) {
-        if (isCampFull(camp)) {
-            const Spell* spell = getSpell(camp, 0);
-            if (spell) {
-                SpellCastType castType = spell->getSpellType()->getCastType();
-                if (kSpellCastType_Self == castType) {
-                    castSpell(spell, camp->getHero(), Coordinate::ZERO, nullptr);
-                }
-            }
-        }
-    }
-#endif
 }
 
 void GameRender::onMapUILayerTouchCancelled(const Camp* camp)
@@ -614,17 +586,6 @@ void GameRender::removeUnit(int unitId)
         node->removeFromParent();
         _allUnitNodes.erase(unitId);
     }
-    
-    for (auto iter = begin(_myHeroes); iter != end(_myHeroes); ++iter) {
-        map<int, const Unit*>& heroes = iter->second;
-        if (heroes.find(unitId) != heroes.end()) {
-            heroes.erase(unitId);
-            if (heroes.size() == 0) {
-                _myHeroes.erase(iter);
-            }
-            break;
-        }
-    }
 }
 
 void GameRender::removeAllBullets()
@@ -644,7 +605,6 @@ void GameRender::removeAllUnits()
     }
     
     _allUnitNodes.clear();
-    _myHeroes.clear();
     _cores.clear();
 }
 
@@ -675,6 +635,25 @@ void GameRender::tick(float dt)
     
     if (_remainingTime <= 0) {
         _remainingTime = 0;
+    }
+    
+    -- _cardDeckTime;
+    if (_cardDeckTime <= 0) {
+        _cardDeckTime = cardDeckTotalTime;
+    }
+    
+    if (_mapUILayer) {
+        _mapUILayer->updateCardDeckCountDown(_cardDeckTime);
+    }
+    
+    if (cardDeckTotalTime == _cardDeckTime) {
+        if (_pickedCamps.size() < CARD_DECKS_COUNT) {
+            const Camp* camp = generateRandomCamp();
+            _pickedCamps.insert(camp);
+            if (_mapUILayer) {
+                _mapUILayer->insertCamp(camp);
+            }
+        }
     }
 }
 
@@ -775,4 +754,21 @@ Point GameRender::convertToMapLayer(const Point& uiLayerPoint) const
 Point GameRender::convertToUILayer(const Point& mapLayerPoint) const
 {
     return _mapUILayer->convertToNodeSpace(_mapLayer->convertToWorldSpace(mapLayerPoint));
+}
+
+#pragma mark - random
+const Camp* GameRender::generateRandomCamp() const
+{
+    if (_pickedCamps.size() < CARD_DECKS_COUNT) {
+        const size_t cnt = _myCamps.size();
+        const int idx = cocos2d::random() % cnt;
+        const Camp* camp = _myCamps.at(idx);
+        if (cnt < CARD_DECKS_COUNT || (_pickedCamps.find(camp) == _pickedCamps.end())) {
+            return camp;
+        }
+        
+        return generateRandomCamp();
+    }
+    
+    return nullptr;
 }
