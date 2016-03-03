@@ -91,9 +91,9 @@ void GameRender::init(const Game* game, Commander* commander)
         }
         
         const int factionIndex = world->getThisFactionIndex();
-        const int campsCount = world->getCampCount(factionIndex);
+        const int campsCount = game->getCampCount(factionIndex);
         for (int i = 0; i < campsCount; ++i) {
-            const Camp* camp = world->getCamp(factionIndex, i);
+            const Camp* camp = game->getCamp(factionIndex, i);
             _myCamps.push_back(camp);
         }
     }

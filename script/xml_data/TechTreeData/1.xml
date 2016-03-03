@@ -1,4 +1,6 @@
 <root>
+    <!-- ==========卡牌配置========== -->
+    <card name="骑士" class="unit" cost="木头:5" unit_name="骑士" unit_count="1" />
     <!-- ==========单位&势力配置========== -->
     <unit name="狼人基地" class="core" hp="4000" mp="0" hpregen="0" mpregen="0" field="0" armor_type="城甲" armor="600" attacksight="600" size="300" height="100" render_key="狼人基地">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>

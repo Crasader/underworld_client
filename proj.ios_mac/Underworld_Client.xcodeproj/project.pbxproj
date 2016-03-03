@@ -43,13 +43,14 @@
 		30236FF71C5B6AFA00FB1802 /* PathFinderInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30236FF61C5B6AFA00FB1802 /* PathFinderInterface.cpp */; };
 		3028EBC31BFF0CBD00511C51 /* DynamicValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3028EBC11BFF0CBD00511C51 /* DynamicValue.cpp */; };
 		3028EBC61BFF0D4800511C51 /* Condition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3028EBC41BFF0D4700511C51 /* Condition.cpp */; };
-		3068023D1C858E22000990F9 /* Deck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3068023B1C858E22000990F9 /* Deck.cpp */; };
+		306802431C87CB13000990F9 /* Deck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 306802411C87CB13000990F9 /* Deck.cpp */; };
+		306802461C87CB2A000990F9 /* CardType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 306802441C87CB2A000990F9 /* CardType.cpp */; };
+		306802491C881ABA000990F9 /* Camp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 306802471C881ABA000990F9 /* Camp.cpp */; };
 		307534691BF1B2F20057DCED /* Commander.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 307534671BF1B2F20057DCED /* Commander.cpp */; };
 		3075346D1BF324340057DCED /* EventTriggers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3075346B1BF324340057DCED /* EventTriggers.cpp */; };
 		307534711BF33ECF0057DCED /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3075346F1BF33ECF0057DCED /* Logger.cpp */; };
 		308B84661BE3853C00377802 /* AIBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84641BE3853C00377802 /* AIBody.cpp */; };
 		308B84691BE3856F00377802 /* AIBrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84671BE3856F00377802 /* AIBrain.cpp */; };
-		309F769A1BE9D7BD00B2791F /* Camp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F76981BE9D7BD00B2791F /* Camp.cpp */; };
 		309F76A01BEA3ABA00B2791F /* CoreUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F769E1BEA3AB900B2791F /* CoreUtils.cpp */; };
 		30C6C3921C52183500DD1C8F /* AStarNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30C6C3901C52183500DD1C8F /* AStarNode.cpp */; };
 		30DF03C41C0D898E00A1C6EB /* EffectType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DF03C21C0D898E00A1C6EB /* EffectType.cpp */; };
@@ -335,8 +336,12 @@
 		3028EBC21BFF0CBD00511C51 /* DynamicValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DynamicValue.h; path = Core/Unit/Element/DynamicValue.h; sourceTree = "<group>"; };
 		3028EBC41BFF0D4700511C51 /* Condition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Condition.cpp; path = Core/Unit/Element/Condition.cpp; sourceTree = "<group>"; };
 		3028EBC51BFF0D4700511C51 /* Condition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Condition.h; path = Core/Unit/Element/Condition.h; sourceTree = "<group>"; };
-		3068023B1C858E22000990F9 /* Deck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Deck.cpp; path = Core/Game/Deck.cpp; sourceTree = "<group>"; };
-		3068023C1C858E22000990F9 /* Deck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Deck.h; path = Core/Game/Deck.h; sourceTree = "<group>"; };
+		306802411C87CB13000990F9 /* Deck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Deck.cpp; path = Core/Game/Deck/Deck.cpp; sourceTree = "<group>"; };
+		306802421C87CB13000990F9 /* Deck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Deck.h; path = Core/Game/Deck/Deck.h; sourceTree = "<group>"; };
+		306802441C87CB2A000990F9 /* CardType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CardType.cpp; path = Core/Game/Deck/CardType.cpp; sourceTree = "<group>"; };
+		306802451C87CB2A000990F9 /* CardType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardType.h; path = Core/Game/Deck/CardType.h; sourceTree = "<group>"; };
+		306802471C881ABA000990F9 /* Camp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Camp.cpp; path = Core/Game/Camp/Camp.cpp; sourceTree = "<group>"; };
+		306802481C881ABA000990F9 /* Camp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Camp.h; path = Core/Game/Camp/Camp.h; sourceTree = "<group>"; };
 		307534671BF1B2F20057DCED /* Commander.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Commander.cpp; path = Core/Game/Commander.cpp; sourceTree = "<group>"; };
 		307534681BF1B2F20057DCED /* Commander.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Commander.h; path = Core/Game/Commander.h; sourceTree = "<group>"; };
 		3075346B1BF324340057DCED /* EventTriggers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EventTriggers.cpp; path = Core/Game/EventTriggers.cpp; sourceTree = "<group>"; };
@@ -347,8 +352,6 @@
 		308B84651BE3853C00377802 /* AIBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AIBody.h; path = Core/AI/AIBody.h; sourceTree = "<group>"; };
 		308B84671BE3856F00377802 /* AIBrain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AIBrain.cpp; path = Core/AI/AIBrain.cpp; sourceTree = "<group>"; };
 		308B84681BE3856F00377802 /* AIBrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AIBrain.h; path = Core/AI/AIBrain.h; sourceTree = "<group>"; };
-		309F76981BE9D7BD00B2791F /* Camp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Camp.cpp; path = Core/Unit/Instance/Camp.cpp; sourceTree = "<group>"; };
-		309F76991BE9D7BD00B2791F /* Camp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Camp.h; path = Core/Unit/Instance/Camp.h; sourceTree = "<group>"; };
 		309F769D1BEA37D200B2791F /* Global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Global.h; path = Core/Utils/Global.h; sourceTree = "<group>"; };
 		309F769E1BEA3AB900B2791F /* CoreUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CoreUtils.cpp; path = Core/Utils/CoreUtils.cpp; sourceTree = "<group>"; };
 		309F769F1BEA3AB900B2791F /* CoreUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CoreUtils.h; path = Core/Utils/CoreUtils.h; sourceTree = "<group>"; };
@@ -763,6 +766,8 @@
 		045116D71BCFB9F9002AA721 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				306802401C87CA34000990F9 /* Camp */,
+				3068023F1C87CA2C000990F9 /* Deck */,
 				04FF24601C4A497100A66D71 /* GameSettings.cpp */,
 				307534671BF1B2F20057DCED /* Commander.cpp */,
 				307534681BF1B2F20057DCED /* Commander.h */,
@@ -776,8 +781,6 @@
 				301F63FA1BE3680600DA6D70 /* GameLooper.cpp */,
 				301F63FB1BE3680600DA6D70 /* GameLooper.h */,
 				0451170F1BCFBA5F002AA721 /* GameSettings.h */,
-				3068023B1C858E22000990F9 /* Deck.cpp */,
-				3068023C1C858E22000990F9 /* Deck.h */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -830,8 +833,6 @@
 				045117051BCFBA53002AA721 /* Unit.h */,
 				301F63F01BE0C56D00DA6D70 /* Damage.cpp */,
 				301F63F11BE0C56D00DA6D70 /* Damage.h */,
-				309F76981BE9D7BD00B2791F /* Camp.cpp */,
-				309F76991BE9D7BD00B2791F /* Camp.h */,
 				30FD55621C2CFDE80078EC3C /* Passive.cpp */,
 				30FD55631C2CFDE80078EC3C /* Passive.h */,
 				30FD556D1C328B020078EC3C /* Spell.cpp */,
@@ -1007,6 +1008,26 @@
 				A1211B221C0BF55200C27CCC /* LiteralValue.h */,
 			);
 			name = Element;
+			sourceTree = "<group>";
+		};
+		3068023F1C87CA2C000990F9 /* Deck */ = {
+			isa = PBXGroup;
+			children = (
+				306802411C87CB13000990F9 /* Deck.cpp */,
+				306802421C87CB13000990F9 /* Deck.h */,
+				306802441C87CB2A000990F9 /* CardType.cpp */,
+				306802451C87CB2A000990F9 /* CardType.h */,
+			);
+			name = Deck;
+			sourceTree = "<group>";
+		};
+		306802401C87CA34000990F9 /* Camp */ = {
+			isa = PBXGroup;
+			children = (
+				306802471C881ABA000990F9 /* Camp.cpp */,
+				306802481C881ABA000990F9 /* Camp.h */,
+			);
+			name = Camp;
 			sourceTree = "<group>";
 		};
 		3075346E1BF33DEE0057DCED /* Test */ = {
@@ -1857,7 +1878,6 @@
 				A16BF28C1C313E7D00E91458 /* SoldierLocalData.cpp in Sources */,
 				A103F45F1BE38112007F9A83 /* GameRender.cpp in Sources */,
 				A1F9B0861C76CBAD007BC409 /* AbstractUILayer.cpp in Sources */,
-				3068023D1C858E22000990F9 /* Deck.cpp in Sources */,
 				A1720EB81BCD2D2E00217E98 /* Api.mm in Sources */,
 				A1720E8F1BCCE19300217E98 /* md5.cpp in Sources */,
 				A1D45C4A1BEB3B1400D1E921 /* ResourceButton.cpp in Sources */,
@@ -1877,7 +1897,6 @@
 				A18524D01C1AE42000BE261D /* BagLayer.cpp in Sources */,
 				A1E7BAE21C2149E800CE2A85 /* Constants.cpp in Sources */,
 				A16BF2A41C314E5100E91458 /* AttributeData.cpp in Sources */,
-				309F769A1BE9D7BD00B2791F /* Camp.cpp in Sources */,
 				A1B4AE301C200521005906A6 /* QuestManager.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				A1720EB91BCD2D2E00217E98 /* KeychainItemWrapper.m in Sources */,
@@ -1891,6 +1910,7 @@
 				045117071BCFBA53002AA721 /* Bullet.cpp in Sources */,
 				A10611FF1C3D20A40065070F /* SoldierPieceData.cpp in Sources */,
 				A1E830681C1EA50200FE01B8 /* ConditionData.cpp in Sources */,
+				306802431C87CB13000990F9 /* Deck.cpp in Sources */,
 				045116F71BCFBA44002AA721 /* SkllType.cpp in Sources */,
 				A1B4AE021C200480005906A6 /* UserDefaultsDataManager.cpp in Sources */,
 				A1D461521C3E166900E8E60B /* AbstractLocalData.cpp in Sources */,
@@ -1929,8 +1949,10 @@
 				A18524CC1C1AE3E800BE261D /* QuestLayer.cpp in Sources */,
 				A1F395F21C23BBC500B75923 /* ObjectData.cpp in Sources */,
 				A1D461431C3E111B00E8E60B /* UserData.cpp in Sources */,
+				306802491C881ABA000990F9 /* Camp.cpp in Sources */,
 				A14B5EFB1C311908006FB0DB /* Addon.cpp in Sources */,
 				A1720E901BCCE19300217E98 /* MD5Verifier.cpp in Sources */,
+				306802461C87CB2A000990F9 /* CardType.cpp in Sources */,
 				A1720EBA1BCD2D2E00217E98 /* RMStore.m in Sources */,
 				047228B01C193A4D00E7F71B /* Geometry.cpp in Sources */,
 				3075346D1BF324340057DCED /* EventTriggers.cpp in Sources */,
