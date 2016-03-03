@@ -1,6 +1,24 @@
 <root>
     <!-- ==========卡牌配置========== -->
-    <card name="骑士" class="unit" cost="木头:5" unit_name="骑士" unit_count="1" />
+    <card name="骑士" class="unit" cost="木头:3" unit_name="骑士" unit_count="1" />
+    <card name="巨人" class="unit" cost="木头:5" unit_name="巨人" unit_count="1" />
+    <card name="法师" class="unit" cost="木头:5" unit_name="法师" unit_count="1" />
+    <card name="弓箭手" class="unit" cost="木头:3" unit_name="弓箭手" unit_count="2" />
+    <card name="火枪手" class="unit" cost="木头:5" unit_name="火枪手" unit_count="1" />
+    <card name="迷你皮卡" class="unit" cost="木头:5" unit_name="迷你皮卡" unit_count="4" />
+    <card name="炸弹人" class="unit" cost="木头:3" unit_name="炸弹人" unit_count="1" />
+    <card name="王子" class="unit" cost="木头:5" unit_name="王子" unit_count="1" />
+    <card name="守卫" class="unit" cost="木头:5" unit_name="守卫" unit_count="1" />
+    <card name="狗" class="unit" cost="木头:5" unit_name="狗" unit_count="3" />
+    <card name="加血法师" class="unit" cost="木头:5" unit_name="加血法师" unit_count="1" />
+    <card name="狼人步兵" class="unit" cost="木头:4" unit_name="狼人步兵" unit_count="1" />
+    <card name="战士" class="unit" cost="木头:4" unit_name="战士" unit_count="1" />
+    <card name="眩晕战士" class="unit" cost="木头:4" unit_name="眩晕战士" unit_count="1" />
+    <card name="高攻击战士" class="unit" cost="木头:5" unit_name="高攻击战士" unit_count="1" />
+    <card name="三个弓箭手" class="unit" cost="木头:5" unit_name="三个弓箭手" unit_count="3" />
+    <card name="火球术" class="spell" cost="木头:4" spell_name="火球术" />
+    <card name="治愈" class="spell" cost="木头:4" spell_name="治愈" />
+    <card name="顺风之力" class="spell" cost="木头:4" spell_name="顺丰之力加强版" />
     <!-- ==========单位&势力配置========== -->
     <unit name="狼人基地" class="core" hp="4000" mp="0" hpregen="0" mpregen="0" field="0" armor_type="城甲" armor="600" attacksight="600" size="300" height="100" render_key="狼人基地">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
@@ -115,15 +133,6 @@
         </skill>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="70"/>
     </unit>
-    <!-- 狗-->
-    <unit name="狗" class="warrior" race="辉月狼人" talent_name="基础" hp="43" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="0" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="24" height="0" cost="金子:3" max_level="100" producee="木头:0.5;金子:0.5" put_cost="木头:4" rewarde="金子:0.25f" rarity="2" recover_span="0.f" render_key="七恶魔拉玛什图" desc="常规的肉搏战士，对轻甲单位造成大量伤害。">
-        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-        <skill class="die" preperform="0" perform="10.0" cd="0.0"/>
-        <skill class="attack" preperform="0.5" perform="0.0" cd="1" min_damage="40" max_damage="46" deliver_class="physical" damage_distance="faraway" range="24" fields="1">
-            <bullet speed="800" size="0"/>
-        </skill>
-        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
-    </unit>
     <!-- 狼人步兵-->
     <unit name="狼人步兵" class="warrior" race="辉月狼人" talent_name="基础" hp="2200" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="0" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="24" height="0" cost="金子:3" max_level="100" producee="木头:0.5;金子:0.5" put_cost="木头:3" rewarde="金子:0.25f" rarity="2" recover_span="0.f" render_key="七恶魔拉玛什图" desc="常规的肉搏战士，对轻甲单位造成大量伤害。">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
@@ -143,7 +152,7 @@
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="100"/>
     </unit>
     <!-- 眩晕战士-->
-    <unit name="战士" class="warrior" race="辉月狼人" talent_name="基础" hp="310" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="0" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="18" height="0" cost="金子:3" max_level="100" producee="木头:0.5;金子:0.5" put_cost="木头:5" rewarde="金子:0.25f" rarity="2" recover_span="0.f" render_key="七恶魔拉玛什图" desc="常规的肉搏战士，对轻甲单位造成大量伤害。">
+    <unit name="眩晕战士" class="warrior" race="辉月狼人" talent_name="基础" hp="310" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="0" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="18" height="0" cost="金子:3" max_level="100" producee="木头:0.5;金子:0.5" put_cost="木头:5" rewarde="金子:0.25f" rarity="2" recover_span="0.f" render_key="七恶魔拉玛什图" desc="常规的肉搏战士，对轻甲单位造成大量伤害。">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="70" max_damage="80" deliver_class="physical" damage_distance="nearby" range="24" fields="1">
@@ -228,7 +237,7 @@
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
     </unit>
     <!-- 骑士 -->
-    <unit name="骑士" class="warrior" race="辉月狼人" talent_name="基础" upgrade_talents="骑士_践踏;骑士_重装" hp="600" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="600" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:5" max_level="100" producee="木头:0.6;金子:0.6" put_cost="木头:4|木头:6|木头:8|木头:10" rewarde="金子:0.3f" rarity="2" recover_span="0.f" render_key="吸血鬼骑士" desc="部队冲锋在最前的战士，有着最出色的生存能力。">
+    <unit name="骑士_" class="warrior" race="辉月狼人" talent_name="基础" upgrade_talents="骑士_践踏;骑士_重装" hp="600" mp="0" hpregen="0" mpregen="0" field="0" armor_type="重甲" armor="600" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:5" max_level="100" producee="木头:0.6;金子:0.6" put_cost="木头:4|木头:6|木头:8|木头:10" rewarde="金子:0.3f" rarity="2" recover_span="0.f" render_key="吸血鬼骑士" desc="部队冲锋在最前的战士，有着最出色的生存能力。">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="20" max_damage="28" deliver_class="physical" damage_distance="nearby" range="48" fields="1">
@@ -974,6 +983,8 @@
         <spell alias="快速治疗" spell_name="快速治疗" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="750" cast_type="unit" immediate_elements="0,快速治疗_快速治疗施法效果,1" preperform="0.5" perform="0.0" cd="6.0" class="cast" desc="回复目标少量生命值"/>
         <!-- 顺风之力 -->
         <spell alias="顺风之力" spell_name="顺风之力" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="750" cast_type="unit_but_self" immediate_elements="0,顺风之力_顺风之力施法效果,1" preperform="0.5" perform="0.0" cd="30.0" class="cast" desc="增加其他友军攻击速度，并获得一层激流效果"/>
+        <!-- 顺风之力加强版 -->
+        <spell alias="顺风之力加强版" spell_name="顺风之力加强版" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="750" cast_type="position" immediate_elements="0,顺风之力加强版_顺风之力加强版施法效果,1" preperform="0.5" perform="0.0" cd="30.0" class="cast" desc="增加其他友军攻击速度，并获得一层激流效果"/>
         <!-- 枷锁 -->
         <spell alias="枷锁" spell_name="枷锁" level="1" deliver_class="magical" deliver_nature="enemy" cast_distance="750" cast_type="unit" immediate_elements="0,枷锁_枷锁施法效果,1" preperform="0.5" perform="0.0" cd="12.0" class="cast" desc="使目标6秒内不能移动"/>
         <!-- 月神能量 -->
@@ -1031,6 +1042,18 @@
                         </feature_item>
                         <feature_item effect_timing="heal">
                             <feature type="add_buff" buff_type_name="激流" overlay="1" is_to_self="0"/>
+                        </feature_item>
+                    </feature_group>
+                </damage>
+            </spell_content>
+        </spell_pattern>
+        <!-- 顺风之力加强版 -->
+        <spell_pattern name="顺风之力加强版_顺风之力加强版施法效果" class="target">
+            <spell_content name="顺风之力加强版_顺风之力加强版施法效果_内容" spell_content_class="damage">
+                <damage damage_nature="heal" deliver_class="magical" damage_value="0.f">
+                    <feature_group determine_timing="attack">
+                        <feature_item effect_timing="heal">
+                            <feature type="add_buff" buff_type_name="顺风之力_攻速提高增益效果_等级1" overlay="1" is_to_self="0"/>
                         </feature_item>
                     </feature_group>
                 </damage>
