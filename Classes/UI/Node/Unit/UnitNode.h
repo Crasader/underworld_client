@@ -46,9 +46,6 @@ public:
     void registerObserver(UnitNodeObserver *observer);
     void update();
     
-    void addSpellRing(int range);
-    void removeSpellRing();
-    
     // --------------- callbacks ---------------
     void onHurt(const std::string& trigger);
     void onDead();
@@ -110,7 +107,6 @@ private:
     Scheduler *_speedScheduler;
     ActionManager *_actionManager;
     Node *_shadow;
-    Node *_spellRing;
     std::set<std::string> _bufNames;
     std::map<std::string, Node*> _bufs;
     DisplayBar* _hpBar;

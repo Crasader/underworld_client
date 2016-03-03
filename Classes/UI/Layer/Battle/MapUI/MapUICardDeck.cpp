@@ -7,7 +7,7 @@
 //
 
 #include "MapUICardDeck.h"
-#include "Camp.h"
+#include "Deck.h"
 #include "CocosUtils.h"
 
 using namespace std;
@@ -16,10 +16,10 @@ using namespace UnderWorld::Core;
 static const unsigned int resourceMaxCount(10);
 static const int topZOrder(1);
 
-MapUICardDeck* MapUICardDeck::create(const vector<const Camp*>& camps)
+MapUICardDeck* MapUICardDeck::create()
 {
     MapUICardDeck *ret = new (nothrow) MapUICardDeck();
-    if (ret && ret->init(camps))
+    if (ret && ret->init())
     {
         ret->autorelease();
         return ret;
@@ -43,12 +43,10 @@ MapUICardDeck::~MapUICardDeck()
     removeAllChildren();
 }
 
-bool MapUICardDeck::init(const vector<const Camp*>& camps)
+bool MapUICardDeck::init()
 {
     if (Node::init())
     {
-        _camps = camps;
-        
         static const float x1(10.0f);
         static const float x2(20.0f);
         static const float x3(8.0f);
@@ -56,7 +54,7 @@ bool MapUICardDeck::init(const vector<const Camp*>& camps)
         static const float y1(5.0f);
         static const float y2(50.0f);
         
-        const Size& nodeSize = MapUIUnitNode::create(nullptr)->getContentSize();
+        const Size& nodeSize = CardNode::create()->getContentSize();
         const Size size(x1 * 2 + x2 + (CARD_DECKS_COUNT + 1) * nodeSize.width + (CARD_DECKS_COUNT - 1) * x3, y1 + y2 + nodeSize.height);
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         setContentSize(size);
@@ -130,12 +128,12 @@ void MapUICardDeck::registerObserver(MapUICardDeckObserver *observer)
     _observer = observer;
 }
 
-void MapUICardDeck::select(const Camp* selectedCamp)
+void MapUICardDeck::select(const Card* card)
 {
     for (int i = 0; i < _unitNodes.size(); ++i) {
-        MapUIUnitNode* node = _unitNodes.at(i);
+        CardNode* node = _unitNodes.at(i);
         if (node) {
-            node->setSelected(selectedCamp == node->getCamp());
+            node->setSelected(card == node->getCard());
         }
     }
 }
@@ -170,32 +168,17 @@ void MapUICardDeck::updateResource(float count)
     }
 }
 
-void MapUICardDeck::initial(const vector<const Camp*>& camps)
+void MapUICardDeck::insert(const Card* card)
 {
-    for (int i = 0; i < _unitNodes.size(); ++i) {
-        _unitNodes.at(i)->removeFromParent();
-    }
-    _unitNodes.clear();
-    
-    const size_t cnt(_unitPositions.size());
-    for (int i = 0; i < camps.size(); ++i) {
-        if (i < cnt) {
-            createUnitNode(camps.at(i), i);
-        }
-    }
+    createUnitNode(card, _unitNodes.size());
 }
 
-void MapUICardDeck::insert(const Camp* camp)
+void MapUICardDeck::remove(const Card* card)
 {
-    createUnitNode(camp, _unitNodes.size());
-}
-
-void MapUICardDeck::remove(const Camp* camp)
-{
-    if (camp) {
+    if (card) {
         bool update(false);
         for (auto iter = begin(_unitNodes); iter != end(_unitNodes); ++iter) {
-            if ((*iter)->getCamp() == camp) {
+            if ((*iter)->getCard() == card) {
                 _unitNodes.erase(iter);
                 update = true;
                 break;
@@ -208,26 +191,27 @@ void MapUICardDeck::remove(const Camp* camp)
     }
 }
 
-#pragma mark - MapUIUnitNodeObserver
-void MapUICardDeck::onMapUIUnitNodeTouchedBegan(const Camp* camp)
+#pragma mark - CardNodeObserver
+void MapUICardDeck::onCardNodeTouchedBegan(CardNode* node)
 {
     if (_observer) {
-        _observer->onMapUICardDeckUnitTouchedBegan(camp);
+        _observer->onMapUICardDeckUnitTouchedBegan(node->getCard());
     }
 }
 
-void MapUICardDeck::onMapUIUnitNodeTouchedEnded(const Camp* camp, bool isValid)
+void MapUICardDeck::onCardNodeTouchedEnded(CardNode* node, bool isValid)
 {
     if (isValid && _observer) {
-        _observer->onMapUICardDeckUnitTouchedEnded(camp);
+        _observer->onMapUICardDeckUnitTouchedEnded(node->getCard());
     }
 }
 
-void MapUICardDeck::createUnitNode(const Camp* camp, size_t idx)
+void MapUICardDeck::createUnitNode(const Card* card, size_t idx)
 {
     const size_t cnt(_unitPositions.size());
     if (idx < cnt && _unitNodes.size() < cnt) {
-        MapUIUnitNode* node = MapUIUnitNode::create(camp);
+        CardNode* node = CardNode::create();
+        node->update(card, 10);
         node->registerObserver(this);
         node->setPosition(_unitPositions.at(idx));
         addChild(node);
@@ -240,7 +224,7 @@ void MapUICardDeck::reload()
     const size_t cnt(_unitPositions.size());
     for (int i = 0; i < _unitNodes.size(); ++i) {
         if (i < cnt) {
-            MapUIUnitNode* node = _unitNodes.at(i);
+            CardNode* node = _unitNodes.at(i);
             const Point& position = _unitPositions.at(i);
             node->setPosition(position);
         }

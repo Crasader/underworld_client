@@ -11,7 +11,7 @@
 #include "2d/CCFastTMXLayer.h"
 #include "2d/CCFastTMXTiledMap.h"
 #include "Coordinate.h"
-#include "Camp.h"
+#include "UnitType.h"
 #include "Map.h"
 #include "cocostudio/CocoStudio.h"
 #include "tinyxml2/tinyxml2.h"
@@ -30,15 +30,15 @@ static const int TILEDMAP_ZORDER = 2;
 static const string TILEDMAP_LAYER_LOGIC = "logic";
 static const string TILEDMAP_LAYER_FOREGROUND = "fg";
 
-static Node* createUnitMask(const UnderWorld::Core::Camp* camp)
+static Node* createUnitMask(const UnderWorld::Core::UnitType* ut)
 {
-    if (camp) {
+    if (ut) {
         string file;
-        const string& name = camp->getBaseUnitType()->getRenderKey();
+        const string& name = ut->getRenderKey();
         const URConfigData* data = DataManager::getInstance()->getURConfigData(name);
         if (data) {
             static const int resourceId(2);
-            UnderWorld::Core::UnitClass uc = camp->getBaseUnitType()->getUnitClass();
+            UnderWorld::Core::UnitClass uc = ut->getUnitClass();
             if (UnderWorld::Core::kUnitClass_Core == uc || UnderWorld::Core::kUnitClass_Building == uc) {
                 file = StringUtils::format(data->getBNormal().c_str(), resourceId);
             } else {
@@ -326,20 +326,26 @@ void MapLayer::repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& co
     reorderChild(unit, zOrder);
 }
 
-void MapLayer::updateUnitMask(const UnderWorld::Core::Camp* camp, const Point& layerPoint)
+void MapLayer::updateUnitMask(const UnderWorld::Core::UnitType* unitType, const Point& layerPoint)
 {
-    const string& name = camp->getBaseUnitType()->getRenderKey();
-    if (_selectedUnitName != name) {
+    if (unitType) {
+        const string& name = unitType->getRenderKey();
+        if (_selectedUnitName != name) {
+            removeUnitMask();
+        }
+        
+        if (!_selectedUnitMask) {
+            _selectedUnitName = name;
+            _selectedUnitMask = createUnitMask(unitType);
+            _scrollView->addChild(_selectedUnitMask);
+        }
+        
+        if (_selectedUnitMask) {
+            _selectedUnitMask->setPosition(convertToScrollViewPoint(layerPoint));
+        }
+    } else {
         removeUnitMask();
     }
-    
-    if (!_selectedUnitMask) {
-        _selectedUnitName = name;
-        _selectedUnitMask = createUnitMask(camp);
-        _scrollView->addChild(_selectedUnitMask);
-    }
-    
-    _selectedUnitMask->setPosition(convertToScrollViewPoint(layerPoint));
 }
 
 void MapLayer::removeUnitMask()
@@ -459,10 +465,7 @@ bool MapLayer::onTouchBegan(Touch *touch, Event *unused_event)
 
 void MapLayer::onTouchMoved(Touch *touch, Event *unused_event)
 {
-    if (_observer) {
-        const Point& point = touch->getLocation();
-        _observer->onMapLayerTouchMoved(point);
-    }
+    
 }
 
 void MapLayer::onTouchEnded(Touch *touch, Event *unused_event)

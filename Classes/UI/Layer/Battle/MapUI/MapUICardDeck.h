@@ -10,45 +10,44 @@
 #define MapUICardDeck_h
 
 #include "cocos2d.h"
-#include "MapUIUnitNode.h"
+#include "CardNode.h"
 
 USING_NS_CC;
 
 namespace UnderWorld { namespace Core {
-    class Camp;
+    class Card;
 }}
 
 class MapUICardDeckObserver
 {
 public:
     virtual ~MapUICardDeckObserver() {}
-    virtual void onMapUICardDeckUnitTouchedBegan(const UnderWorld::Core::Camp* camp) = 0;
-    virtual void onMapUICardDeckUnitTouchedEnded(const UnderWorld::Core::Camp* camp) = 0;
+    virtual void onMapUICardDeckUnitTouchedBegan(const UnderWorld::Core::Card* card) = 0;
+    virtual void onMapUICardDeckUnitTouchedEnded(const UnderWorld::Core::Card* card) = 0;
 };
 
-class MapUICardDeck: public Node, public MapUIUnitNodeObserver
+class MapUICardDeck: public Node, public CardNodeObserver
 {
 public:
-    static MapUICardDeck* create(const std::vector<const UnderWorld::Core::Camp*>& camps);
+    static MapUICardDeck* create();
     virtual ~MapUICardDeck();
     void registerObserver(MapUICardDeckObserver *observer);
     
-    void select(const UnderWorld::Core::Camp* selectedCamp);
+    void select(const UnderWorld::Core::Card* card);
     void updateTimer(float time);
     void updateResource(float count);
-    void initial(const std::vector<const UnderWorld::Core::Camp*>& camps);
-    void insert(const UnderWorld::Core::Camp* camp);
-    void remove(const UnderWorld::Core::Camp* camp);
+    void insert(const UnderWorld::Core::Card* card);
+    void remove(const UnderWorld::Core::Card* card);
     
 protected:
     MapUICardDeck();
-    bool init(const std::vector<const UnderWorld::Core::Camp*>& camps);
+    virtual bool init() override;
     
-    // MapUIUnitNodeObserver
-    virtual void onMapUIUnitNodeTouchedBegan(const UnderWorld::Core::Camp* camp) override;
-    virtual void onMapUIUnitNodeTouchedEnded(const UnderWorld::Core::Camp* camp, bool isValid) override;
+    // CardNodeObserver
+    virtual void onCardNodeTouchedBegan(CardNode* node) override;
+    virtual void onCardNodeTouchedEnded(CardNode* node, bool isValid) override;
     
-    void createUnitNode(const UnderWorld::Core::Camp* camp, size_t idx);
+    void createUnitNode(const UnderWorld::Core::Card* card, size_t idx);
     void reload();
     
 private:
@@ -56,9 +55,8 @@ private:
     Sprite* _candidateSprite;
     Label* _nextLabel;
     Label* _countLabel;
-    std::vector<const UnderWorld::Core::Camp*> _camps;
     std::vector<Point> _unitPositions;
-    std::vector<MapUIUnitNode*> _unitNodes;
+    std::vector<CardNode*> _unitNodes;
     std::vector<ProgressTimer*> _resources;
 };
 

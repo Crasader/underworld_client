@@ -30,7 +30,6 @@ using namespace UnderWorld::Core;
 
 static const string tickSelectorKey("tickSelectorKey");
 static const int battleTotalTime(600);
-static const int cardDeckTotalTime(10);
 
 GameRender::GameRender(Scene* scene, int mapId, const string& mapData, const string& opponentsAccount)
 :_observer(nullptr)
@@ -40,14 +39,11 @@ GameRender::GameRender(Scene* scene, int mapId, const string& mapData, const str
 ,_mapUILayer(nullptr)
 ,_game(nullptr)
 ,_commander(nullptr)
-,_selectedCamp(nullptr)
+,_deck(nullptr)
+,_selectedCard(nullptr)
 ,_paused(false)
 ,_isGameOver(false)
 ,_remainingTime(battleTotalTime)
-,_cardDeckTime(cardDeckTotalTime)
-,_goldCount(INVALID_VALUE)
-,_woodCount(INVALID_VALUE)
-,_hasUpdatedBattleCampInfos(false)
 {
     _mapLayer = MapLayer::create(mapId, mapData);
     _mapLayer->registerObserver(this);
@@ -89,30 +85,19 @@ void GameRender::init(const Game* game, Commander* commander)
             const Faction* faction = world->getFaction(i);
             _cores.insert(make_pair(faction->getFactionIndex(), faction->findFirstUnitByClass(kUnitClass_Core)));
         }
-        
-        const int factionIndex = world->getThisFactionIndex();
-        const int campsCount = game->getCampCount(factionIndex);
-        for (int i = 0; i < campsCount; ++i) {
-            const Camp* camp = game->getCamp(factionIndex, i);
-            _myCamps.push_back(camp);
+    }
+    
+    const int factionIndex = world->getThisFactionIndex();
+    _deck = game->getDeck(factionIndex);
+    
+    if (_mapUILayer) {
+        for (int i = 0; i < _deck->getInitHandCount(); ++i) {
+            const Card* card = _deck->getHandCard(i);
+            _mapUILayer->insertCard(card);
         }
     }
     
     updateAll();
-    
-    // card deck
-    for (int i = 0; i < 3; ++i) {
-        const Camp* camp = generateRandomCamp();
-        if (camp) {
-            _pickedCamps.insert(camp);
-        }
-    }
-    
-    if (_mapUILayer) {
-        _mapUILayer->createCardDeck(_myCamps);
-        _mapUILayer->initCardDeck(_pickedCamps);
-        _mapUILayer->updateCardDeckCountDown(cardDeckTotalTime);
-    }
     
     // tick
     Scheduler* scheduler = Director::getInstance()->getScheduler();
@@ -281,90 +266,37 @@ void GameRender::updateUILayer()
     }
     
     _mapUILayer->updateRemainingTime(_remainingTime);
-}
-
-bool GameRender::isCampFull(const Camp* camp) const
-{
-    if (camp) {
-        const int production = camp->getProduction();
-        if (production >= camp->getMaxProduction()) {
-            return true;
-        } else {
-            if (kUnitClass_Hero == camp->getCurrentUnitType()->getUnitClass() && production >= 1) {
-                return true;
-            }
-        }
-    }
     
-    return false;
-}
-
-bool GameRender::isValidAoeSpell(const Spell* spell) const
-{
-    if (spell) {
-        const SpellType* spellType = spell->getSpellType();
-        if (spellType) {
-            SpellCastType castType = spellType->getCastType();
-            if (kSpellCastType_Position == castType || kSpellCastType_PositionOrUnit == castType) {
-                if (spell->getCDProgress() <= 0) {
-                    return true;
-                }
-            }
-        }
-    }
-    
-    return false;
-}
-
-bool GameRender::isProducibleCamp(const Camp* camp) const
-{
-    const int production = camp->getProduction();
-    const float cd = camp->getColdDown();
-    if (production > 0 && cd <= 0) {
-        if (onMapUILayerIsHeroAlive(camp)) {
-            return false;
-        }
+    if (_deck) {
+        const int counter = _deck->getCounter();
+        const int total = _deck->getDrawSpanFrames();
+        const float time = (float)counter / (float)total * total / GameConstants::FRAME_PER_SEC;
+        _mapUILayer->updateCardDeckCountDown(time);
         
-        return true;
+        const vector<Deck::DeckLog>& logs = _deck->getLogs();
+        for (int i = 0; i < logs.size(); ++i) {
+            const auto& log = logs.at(i);
+            Deck::DeckEvent event = log._event;
+            const Card* card = log._card;
+            if (Deck::kDeckEvent_Use == event) {
+                _mapUILayer->removeCard(card);
+            } else if (Deck::kDeckEvent_Draw == event) {
+                _mapUILayer->insertCard(card);
+            }
+        }
+    }
+}
+
+bool GameRender::isValidAoeSpell(const SpellType* spellType) const
+{
+    if (spellType) {
+        const SpellCastType castType = spellType->getCastType();
+        if (kSpellCastType_Position == castType || kSpellCastType_PositionOrUnit == castType) {
+            return true;
+        }
     }
     
     return false;
-}
-
-const Spell* GameRender::getSpell(const Camp* camp, int idx) const
-{
-    if (camp) {
-        const Unit* hero = camp->getHero();
-        if (hero && hero->getSpellCount() > idx) {
-            return hero->getSpellByIndex(idx);
-        }
-    }
-    
-    return nullptr;
-}
-
-CommandResult GameRender::castSpell(const Spell* spell, const Unit* trigger, const Coordinate& coordinate, const Unit* target)
-{
-    if (spell && trigger) {
-        const string& spellAlias = spell->getSpellType()->getAlias();
-        return _commander->tryGiveUnitCommand(trigger, kCommandClass_Cast, &coordinate, target, spellAlias);
-    }
-    
-    return kCommandResult_failed;
-}
-
-UnitNode* GameRender::getHeroUnitNode(const Camp* camp)
-{
-    const Unit* trigger = camp->getHero();
-    if (trigger) {
-        const int unitId = trigger->getUnitId();
-        if (_allUnitNodes.find(unitId) != _allUnitNodes.end()) {
-            UnitNode* node = _allUnitNodes.at(unitId);
-            return node;
-        }
-    }
-    
-    return nullptr;
 }
 
 void GameRender::hurtUnit(const Unit* target, const string& trigger)
@@ -424,19 +356,10 @@ void GameRender::onBulletNodeExploded(BulletNode* node)
 }
 
 #pragma mark - MapLayerObserver
-void GameRender::onMapLayerTouchMoved(const Point& point)
-{
-#if false
-    if (_selectedCamp) {
-        onMapUILayerTouchMoved(_selectedCamp, point);
-    }
-#endif
-}
-
 void GameRender::onMapLayerTouchEnded(const Point& point)
 {
-    if (_selectedCamp) {
-        onMapUILayerTouchEnded(_selectedCamp, convertToUILayer(point));
+    if (_selectedCard) {
+        onMapUILayerTouchEnded(_selectedCard, convertToUILayer(point));
     }
 }
 
@@ -456,97 +379,54 @@ void GameRender::onMapUILayerClickedPauseButton()
     }
 }
 
-bool GameRender::onMapUILayerIsHeroAlive(const Camp* camp) const
+void GameRender::onMapUILayerCardSelected(const Card* card)
 {
-    const UnitClass uc = camp->getCurrentUnitType()->getUnitClass();
-    if (kUnitClass_Hero == uc) {
-        const Unit* hero = camp->getHero();
-        if (hero && hero->isAlive()) {
-            return true;
-        }
-    }
-    
-    return false;
+    _selectedCard = card;
 }
 
-void GameRender::onMapUILayerUnitSelected(const Camp* camp)
+void GameRender::onMapUILayerTouchMoved(const Card* card, const Point& point, bool inDeck)
 {
-    _selectedCamp = camp;
-}
-
-void GameRender::onMapUILayerUnitTouched(const Camp* camp)
-{
-    const Spell* spell = getSpell(camp, 0);
-    if (spell) {
-        SpellCastType castType = spell->getSpellType()->getCastType();
-        if (kSpellCastType_Self == castType) {
-            castSpell(spell, camp->getHero(), Coordinate::ZERO, nullptr);
-        }
-    }
-}
-
-void GameRender::onMapUILayerTouchCancelled(const Camp* camp)
-{
-    UnitNode* node = getHeroUnitNode(camp);
-    if (node) {
-        node->removeSpellRing();
-    }
-    
     if (_mapLayer) {
-        _mapLayer->removeSpellRangeRing();
-    }
-}
-
-void GameRender::onMapUILayerTouchMoved(const Camp* camp, const Point& point)
-{
-    const Point& realPos = convertToMapLayer(point);
-    const Spell* spell = getSpell(camp, 0);
-    if (isValidAoeSpell(spell)) {
-        UnitNode* node = getHeroUnitNode(camp);
-        if (node) {
-            node->addSpellRing(spell->getSpellType()->getCastDistance());
-        }
-        
-        if (_mapLayer) {
-            _mapLayer->updateSpellRangeRing(realPos, 400);
-        }
-    } else if (isProducibleCamp(camp)) {
-        if (_mapLayer) {
-            _mapLayer->updateUnitMask(camp, realPos);
+        if (inDeck) {
+            _mapLayer->removeSpellRangeRing();
+            _mapLayer->removeUnitMask();
+        } else {
+            const Point& realPos = convertToMapLayer(point);
+            const UnitType* ut = card->getUnitType();
+            if (ut) {
+                _mapLayer->updateUnitMask(ut, realPos);
+            } else if (isValidAoeSpell(card->getSpellType())) {
+                _mapLayer->updateSpellRangeRing(realPos, 400);
+            }
         }
     }
 }
 
-void GameRender::onMapUILayerTouchEnded(const Camp* camp, const Point& point)
+void GameRender::onMapUILayerTouchEnded(const Card* card, const Point& point)
 {
-    const Point& realPos = convertToMapLayer(point);
-    const Spell* spell = getSpell(camp, 0);
-    if (isValidAoeSpell(spell)) {
+    if (_mapLayer) {
+        const Point& realPos = convertToMapLayer(point);
         const Coordinate& coordinate = _mapLayer->convertPoint(realPos);
-        CommandResult result = castSpell(spell, camp->getHero(), coordinate, nullptr);
-        if (kCommandResult_suc == result) {
-            if (spell->getSpellName().find("火球术") != string::npos) {
-                if (_mapLayer) {
-                    _mapLayer->addFireballSpellEffect();
+        // command
+        if (_commander) {
+            // TODO: set index
+            CommandResult result = _commander->tryGiveDeckUseCommand(_deck, 1, coordinate);
+            if (kCommandResult_suc == result) {
+                const UnitType* ut = card->getUnitType();
+                if (ut) {
+                    _mapUILayer->clearHighlightedCard();
+                } else {
+                    const SpellType* st = card->getSpellType();
+                    if (isValidAoeSpell(st)) {
+                        const string& name = st->getSpellName();
+                        if (name.find("火球术") != string::npos) {
+                            _mapLayer->addFireballSpellEffect();
+                        }
+                    }
                 }
             }
         }
-    } else if (isProducibleCamp(camp)) {
-        if (_mapLayer) {
-            const Coordinate& coordinate = _mapLayer->convertPoint(point);
-            CommandResult result = _commander->tryGiveCampGenerateCommand(camp, coordinate);
-            if (kCommandResult_suc == result) {
-                _mapUILayer->clearHighlightedCamp();
-            }
-        }
-    }
-    
-    UnitNode* node = getHeroUnitNode(camp);
-    if (node) {
-        node->removeSpellRing();
-    }
-    
-    if (_mapLayer) {
+        
         _mapLayer->removeSpellRangeRing();
         _mapLayer->removeUnitMask();
     }
@@ -636,51 +516,33 @@ void GameRender::tick(float dt)
     if (_remainingTime <= 0) {
         _remainingTime = 0;
     }
-    
-    -- _cardDeckTime;
-    if (_cardDeckTime <= 0) {
-        _cardDeckTime = cardDeckTotalTime;
-    }
-    
-    if (_mapUILayer) {
-        _mapUILayer->updateCardDeckCountDown(_cardDeckTime);
-    }
-    
-    if (cardDeckTotalTime == _cardDeckTime) {
-        if (_pickedCamps.size() < CARD_DECKS_COUNT) {
-            const Camp* camp = generateRandomCamp();
-            _pickedCamps.insert(camp);
-            if (_mapUILayer) {
-                _mapUILayer->insertCamp(camp);
-            }
-        }
-    }
 }
 
 void GameRender::updateResources()
 {
     const World* world = _game->getWorld();
-    if (world && _mapUILayer) {
+    if (world) {
         const TechTree* techTree = world->getTechTree();
         const Faction* faction = world->getThisFaction();
         const int count = techTree->getResourceTypeCount();
         for (int i = 0; i < count; ++i) {
             const UnderWorld::Core::ResourceType* resourceType = techTree->getResourceTypeByIndex(i);
             const Resource* resource = faction->getResource(resourceType);
-            if (kResourceClass_holdable == resourceType->_class) {
-                CCASSERT(false, "There is no population any more.");
-            } else {
+            if (kResourceClass_consumable == resourceType->_class) {
                 const string& name = resourceType->_name;
-                const float decimalCnt = resource->getBalanceFloat();
-                if (name == RES_NAME_GOLD) {
-                    if (_goldCount != decimalCnt) {
-                        _goldCount = decimalCnt;
-                    }
-                } else if (name == RES_NAME_WOOD) {
-                    if (_woodCount != decimalCnt) {
-                        _woodCount = decimalCnt;
-                    }
+                const float value = resource->getBalanceFloat();
+                if (_resources.find(name) != end(_resources)) {
+                    _resources.at(name) = value;
+                } else {
+                    _resources.insert(make_pair(name, value));
                 }
+            }
+        }
+        
+        if (_mapUILayer) {
+            static const string& name = RES_NAME_GOLD;
+            if (_resources.find(name) != end(_resources)) {
+                _mapUILayer->updateCardDeckResource(_resources.at(name));
             }
         }
     }
@@ -754,21 +616,4 @@ Point GameRender::convertToMapLayer(const Point& uiLayerPoint) const
 Point GameRender::convertToUILayer(const Point& mapLayerPoint) const
 {
     return _mapUILayer->convertToNodeSpace(_mapLayer->convertToWorldSpace(mapLayerPoint));
-}
-
-#pragma mark - random
-const Camp* GameRender::generateRandomCamp() const
-{
-    if (_pickedCamps.size() < CARD_DECKS_COUNT) {
-        const size_t cnt = _myCamps.size();
-        const int idx = cocos2d::random() % cnt;
-        const Camp* camp = _myCamps.at(idx);
-        if (cnt < CARD_DECKS_COUNT || (_pickedCamps.find(camp) == _pickedCamps.end())) {
-            return camp;
-        }
-        
-        return generateRandomCamp();
-    }
-    
-    return nullptr;
 }

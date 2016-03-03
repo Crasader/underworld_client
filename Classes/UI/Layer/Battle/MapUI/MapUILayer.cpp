@@ -11,7 +11,7 @@
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
-#include "Camp.h"
+#include "Deck.h"
 #include "BattleResourceNode.h"
 #include "SoundManager.h"
 
@@ -46,8 +46,8 @@ MapUILayer* MapUILayer::create(const string& myAccount, const string& opponentsA
 MapUILayer::MapUILayer()
 :_observer(nullptr)
 ,_isTouchingTableView(false)
-,_highlightedCamp(nullptr)
-,_selectedCamp(nullptr)
+,_highlightedCard(nullptr)
+,_selectedCard(nullptr)
 ,_timeLabel(nullptr)
 ,_myHpProgress(nullptr)
 ,_myHpPercentageLabel(nullptr)
@@ -56,7 +56,7 @@ MapUILayer::MapUILayer()
 ,_pauseMenuItem(nullptr)
 ,_cardDeck(nullptr)
 {
-    setHighlightedCamp(nullptr);
+    setHighlightedCard(nullptr);
 }
 
 MapUILayer::~MapUILayer()
@@ -121,57 +121,34 @@ void MapUILayer::resumeGame()
     
 }
 
-bool MapUILayer::isPointInTableView(const Point& point)
+void MapUILayer::clearHighlightedCard()
 {
-    if (_cardDeck && _cardDeck->getBoundingBox().containsPoint(point)) {
-        return true;
-    }
-    
-    return false;
-}
-
-void MapUILayer::clearHighlightedCamp()
-{
-    setHighlightedCamp(nullptr);
+    setHighlightedCard(nullptr);
 }
 
 #pragma mark - card deck
-void MapUILayer::createCardDeck(const vector<const Camp*>& camps)
+void MapUILayer::createCardDeck()
 {
-    if (camps.size() > 0) {
-        _cardDeck = MapUICardDeck::create(camps);
-        _cardDeck->registerObserver(this);
-        addChild(_cardDeck);
-        
-        const Size& winSize = Director::getInstance()->getWinSize();
-        const Size& size = _cardDeck->getContentSize();
-        _cardDeck->setPosition(winSize.width / 2, size.height / 2);
+    _cardDeck = MapUICardDeck::create();
+    _cardDeck->registerObserver(this);
+    addChild(_cardDeck);
+    
+    const Size& winSize = Director::getInstance()->getWinSize();
+    const Size& size = _cardDeck->getContentSize();
+    _cardDeck->setPosition(winSize.width / 2, size.height / 2);
+}
+
+void MapUILayer::insertCard(const Card* card)
+{
+    if (_cardDeck) {
+        _cardDeck->insert(card);
     }
 }
 
-void MapUILayer::initCardDeck(const set<const Camp*>& camps)
+void MapUILayer::removeCard(const Card* card)
 {
     if (_cardDeck) {
-        vector<const Camp*> vec;
-        for (auto iter = begin(camps); iter != end(camps); ++iter) {
-            vec.push_back(*iter);
-        }
-        
-        _cardDeck->initial(vec);
-    }
-}
-
-void MapUILayer::insertCamp(const Camp* camp)
-{
-    if (_cardDeck) {
-        _cardDeck->insert(camp);
-    }
-}
-
-void MapUILayer::removeCamp(const Camp* camp)
-{
-    if (_cardDeck) {
-        _cardDeck->remove(camp);
+        _cardDeck->remove(card);
     }
 }
 
@@ -280,6 +257,8 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             menu->setPosition(Point::ZERO);
             root->addChild(menu);
         }
+        
+        createCardDeck();
 #endif
         
         auto eventListener = EventListenerTouchOneByOne::create();
@@ -308,41 +287,48 @@ bool MapUILayer::onTouchBegan(Touch *touch, Event *unused_event)
 
 void MapUILayer::onTouchMoved(Touch *touch, Event *unused_event)
 {
-    if (_isTouchingTableView && _selectedCamp && _observer) {
-        const Point& point = touch->getLocation();
-        if (_highlightedCamp != _selectedCamp && !isPointInTableView(point)) {
-            setHighlightedCamp(_selectedCamp);
+    if (_isTouchingTableView && _selectedCard) {
+        if (_observer) {
+            const Point& point = touch->getLocation();
+            const bool inDeck = isPointInTableView(point);
+            _observer->onMapUILayerTouchMoved(_selectedCard, point, inDeck);
         }
         
-        _observer->onMapUILayerTouchMoved(_selectedCamp, point);
+        if (_highlightedCard != _selectedCard) {
+            setHighlightedCard(_selectedCard);
+        }
     }
 }
 
 void MapUILayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
-    if (_isTouchingTableView && _selectedCamp) {
+    if (_isTouchingTableView && _selectedCard) {
         if (_observer) {
             const Point& point = touch->getLocation();
-            if (!isPointInTableView(point)) {
-                _observer->onMapUILayerTouchEnded(_selectedCamp, point);
+            const bool inDeck = isPointInTableView(point);
+            if (inDeck) {
+                
+            } else {
+                _observer->onMapUILayerTouchEnded(_selectedCard, point);
             }
         }
         
-        _selectedCamp = nullptr;
+        _selectedCard = nullptr;
         _isTouchingTableView = false;
     }
 }
 
 #pragma mark - MapUICardDeckObserver
-void MapUILayer::onMapUICardDeckUnitTouchedBegan(const Camp* camp)
+void MapUILayer::onMapUICardDeckUnitTouchedBegan(const Card* card)
 {
-    _selectedCamp = (camp->getProduction() > 0) ? camp : nullptr;
+    // TODO
+    _selectedCard = card;
 }
 
-void MapUILayer::onMapUICardDeckUnitTouchedEnded(const Camp* camp)
+void MapUILayer::onMapUICardDeckUnitTouchedEnded(const Card* card)
 {
     if (!isGameOver()) {
-        onUnitTouched(camp);
+        onUnitTouched(card);
     }
 }
 
@@ -412,48 +398,38 @@ bool MapUILayer::isGameOver() const
     return false;
 }
 
-void MapUILayer::onUnitTouched(const Camp* camp)
+bool MapUILayer::isPointInTableView(const Point& point)
 {
-    setHighlightedCamp(camp, true);
+    if (_cardDeck && _cardDeck->getBoundingBox().containsPoint(point)) {
+        return true;
+    }
+    
+    return false;
+}
+
+void MapUILayer::onUnitTouched(const Card* card)
+{
+    setHighlightedCard(card);
     SoundManager::getInstance()->playButtonSelectUnitSound();
 }
 
-void MapUILayer::setHighlightedCamp(const Camp* camp, bool callback, bool ignoreProduction, bool check)
+void MapUILayer::setHighlightedCard(const Card* card)
 {
-    const Camp* lastCamp = _highlightedCamp;
-    
-    bool tryToSpell(false);
-    if (_observer && camp) {
-        tryToSpell = _observer->onMapUILayerIsHeroAlive(camp);
-    }
-    const bool isNew = (lastCamp != camp);
+    const Card* lastCard = _highlightedCard;
+    const bool isNew = (lastCard != card);
     
     if (isNew) {
-        if (!tryToSpell) {
-            if (!camp || ((ignoreProduction || camp->getProduction() > 0) && camp->getColdDown() <= 0)) {
-                _highlightedCamp = camp;
-            }
-        }
+        _highlightedCard = card;
     } else {
-        if (check) {
-            _highlightedCamp = nullptr;
-        }
+        _highlightedCard = nullptr;
     }
     
     if (_cardDeck) {
-        _cardDeck->select(_highlightedCamp);
+        _cardDeck->select(_highlightedCard);
     }
     
     // callback
     if (_observer) {
-        _observer->onMapUILayerUnitSelected(_highlightedCamp);
-        
-        if (callback) {
-            if (tryToSpell) {
-                _observer->onMapUILayerUnitTouched(camp);
-            } else {
-                _observer->onMapUILayerUnitTouched(_highlightedCamp);
-            }
-        }
+        _observer->onMapUILayerCardSelected(_highlightedCard);
     }
 }

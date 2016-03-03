@@ -18,7 +18,7 @@
 USING_NS_CC;
 
 namespace UnderWorld { namespace Core {
-    class Camp;
+    class UnitType;
 }}
 
 class MapParticleConfigData;
@@ -27,7 +27,6 @@ class MapLayerObserver
 {
 public:
     virtual ~MapLayerObserver() {}
-    virtual void onMapLayerTouchMoved(const Point& point) = 0;
     virtual void onMapLayerTouchEnded(const Point& point) = 0;
 };
 
@@ -41,7 +40,7 @@ public:
     void addUnit(Node* unit, const UnderWorld::Core::Coordinate& coreCoordinate);
     void repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& coreCoordinate);
     
-    void updateUnitMask(const UnderWorld::Core::Camp* camp, const Point& layerPoint);
+    void updateUnitMask(const UnderWorld::Core::UnitType* unitType, const Point& layerPoint);
     void removeUnitMask();
     
     void updateSpellRangeRing(const Point& layerPoint, int range);

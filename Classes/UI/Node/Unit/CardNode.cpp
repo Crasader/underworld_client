@@ -1,17 +1,18 @@
 //
-//  UnitCardNode.cpp
+//  CardNode.cpp
 //  Underworld_Client
 //
 //  Created by Andy on 16/2/22.
 //  Copyright (c) 2015 Mofish Studio. All rights reserved.
 //
 
-#include "UnitCardNode.h"
+#include "CardNode.h"
 #include "cocostudio/CocoStudio.h"
 #include "CocosUtils.h"
 #include "BattleSmallResourceNode.h"
 #include "DataManager.h"
 #include "URConfigData.h"
+#include "Deck.h"
 #include "SoundManager.h"
 
 using namespace std;
@@ -21,10 +22,10 @@ using namespace UnderWorld::Core;
 static const int topZOrder(1);
 static const Point iconTouchOffset(0, -6.0f);
 
-UnitCardNode* UnitCardNode::create(const string& name, const string& renderKey, int rarity)
+CardNode* CardNode::create()
 {
-    UnitCardNode *ret = new (nothrow) UnitCardNode();
-    if (ret && ret->init(name, renderKey, rarity)) {
+    CardNode *ret = new (nothrow) CardNode();
+    if (ret && ret->init()) {
         ret->autorelease();
         return ret;
     }
@@ -33,25 +34,26 @@ UnitCardNode* UnitCardNode::create(const string& name, const string& renderKey, 
     return nullptr;
 }
 
-UnitCardNode::UnitCardNode()
+CardNode::CardNode()
 :_observer(nullptr)
 ,_cardWidget(nullptr)
-,_addButton(nullptr)
 ,_iconSprite(nullptr)
 ,_qualitySprite(nullptr)
-,_goldNode(nullptr)
+,_resourceNode(nullptr)
 ,_shiningSprite(nullptr)
+,_coldDownProgress(nullptr)
+,_card(nullptr)
 ,_touchInvalid(false)
 {
     
 }
 
-UnitCardNode::~UnitCardNode()
+CardNode::~CardNode()
 {
     removeAllChildren();
 }
 
-bool UnitCardNode::init(const string& name, const string& renderKey, int rarity)
+bool CardNode::init()
 {
     if (Node::init())
     {
@@ -101,7 +103,7 @@ bool UnitCardNode::init(const string& name, const string& renderKey, int rarity)
                     }
                         break;
                     case 58: {
-                        _goldNode = readdResourceNode(child, kResourceType_Gold, 0);
+                        _resourceNode = readdResourceNode(child, kResourceType_Gold, 0);
                     }
                         break;
                     default:
@@ -120,7 +122,7 @@ bool UnitCardNode::init(const string& name, const string& renderKey, int rarity)
             if (type == Widget::TouchEventType::BEGAN) {
                 _touchInvalid = false;
                 if(_observer) {
-                    _observer->onUnitCardNodeTouchedBegan(this);
+                    _observer->onCardNodeTouchedBegan(this);
                 }
             } else if (type == Widget::TouchEventType::MOVED) {
                 if (!_touchInvalid) {
@@ -136,10 +138,22 @@ bool UnitCardNode::init(const string& name, const string& renderKey, int rarity)
                 }
                 
                 if(_observer) {
-                    _observer->onUnitCardNodeTouchedEnded(this, !_touchInvalid);
+                    _observer->onCardNodeTouchedEnded(this, !_touchInvalid);
                 }
             }
         });
+        
+        // spell CD
+        {
+            _coldDownProgress = ProgressTimer::create(Sprite::create("GameImages/test/ui_iconzhezhao_white.png"));
+            _coldDownProgress->setType(ProgressTimer::Type::RADIAL);
+            _coldDownProgress->setReverseDirection(true);
+            _coldDownProgress->setMidpoint(Point::ANCHOR_MIDDLE);
+            _iconSprite->addChild(_coldDownProgress, topZOrder);
+            
+            const Size& size = _iconSprite->getContentSize();
+            _coldDownProgress->setPosition(Point(size.width / 2, size.height / 2));
+        }
         
         // spell activated sprite
         {
@@ -151,38 +165,59 @@ bool UnitCardNode::init(const string& name, const string& renderKey, int rarity)
             _shiningSprite->setPosition(Point(size.width / 2, size.height / 2));
         }
         
-        update(name, renderKey, rarity);
-        
         return true;
     }
     
     return false;
 }
 
-void UnitCardNode::registerObserver(UnitCardNodeObserver *observer)
+void CardNode::registerObserver(CardNodeObserver *observer)
 {
     _observer = observer;
 }
 
-void UnitCardNode::update(const string& name, const string& renderKey, int rarity)
+void CardNode::update(const Card* card, float resource)
 {
-    _unitName = name;
+    _card = card;
+    
+    if (card) {
+        int cost(0);
+        static const string resourceName = RES_NAME_GOLD;
+        const auto& costs = _card->getCardType()->getCost();
+        if (costs.find(resourceName) != costs.end()) {
+            cost = costs.at(resourceName);
+        }
+        
+        const UnitType* ut = card->getUnitType();
+        if (ut) {
+            update(ut->getName(), ut->getRenderKey(), ut->getRarity(), cost, resource);
+        } else {
+            const SpellType* st = card->getSpellType();
+            if (st) {
+                update(st->getSpellName(), st->getSpellName(), 0, cost, resource);
+            }
+        }
+    }
+}
+
+void CardNode::update(const string& name, const string& renderKey, int rarity, int cost, float resource)
+{
+    _cardName = name;
+    _renderKey = renderKey;
     
     // update mutable data
-    const string& iconFile = getIconFile(renderKey, true);
-    if (iconFile.length() > 0) {
-        _iconSprite->setTexture(iconFile);
-    }
+    updateIcon(resource >= cost);
     
     if (_qualitySprite) {
         _qualitySprite->setTexture(StringUtils::format("GameImages/test/ui_kuang_%d.png", rarity + 1));
     }
     
     // !!!if we didn't re-add the resource nodes, the animation would be stopped(It may caused by the table's refreshing)
-    _goldNode = readdResourceNode(_goldNode, kResourceType_Gold, 0);
+    _resourceNode = readdResourceNode(_resourceNode, kResourceType_Gold, cost);
+    checkResource(resource);
 }
 
-void UnitCardNode::setSelected(bool selected)
+void CardNode::setSelected(bool selected)
 {
     if (_shiningSprite) {
         _shiningSprite->setVisible(selected);
@@ -202,12 +237,35 @@ void UnitCardNode::setSelected(bool selected)
     }
 }
 
-const string& UnitCardNode::getUnitName() const
+void CardNode::checkResource(float count)
 {
-    return _unitName;
+    if (_resourceNode) {
+        _resourceNode->check(count);
+        
+        const int cost = _resourceNode->getCount();
+        bool disabled(cost > count);
+        updateIcon(!disabled);
+        
+        if (_coldDownProgress) {
+            _coldDownProgress->setVisible(disabled);
+            if (disabled) {
+                _coldDownProgress->setPercentage(100.0f * count / cost);
+            }
+        }
+    }
 }
 
-string UnitCardNode::getIconFile(const string& name, bool enable) const
+const Card* CardNode::getCard() const
+{
+    return _card;
+}
+
+const string& CardNode::getCardName() const
+{
+    return _cardName;
+}
+
+string CardNode::getIconFile(const string& name, bool enable) const
 {
     const URConfigData* configData = DataManager::getInstance()->getURConfigData(name);
     string iconFile;
@@ -221,7 +279,7 @@ string UnitCardNode::getIconFile(const string& name, bool enable) const
     return iconFile;
 }
 
-BattleSmallResourceNode* UnitCardNode::readdResourceNode(Node* currentNode, ::ResourceType type, int count)
+BattleSmallResourceNode* CardNode::readdResourceNode(Node* currentNode, ::ResourceType type, int count)
 {
     if (currentNode) {
         auto node = BattleSmallResourceNode::create(type, count);
@@ -232,4 +290,12 @@ BattleSmallResourceNode* UnitCardNode::readdResourceNode(Node* currentNode, ::Re
     }
     
     return nullptr;
+}
+
+void CardNode::updateIcon(bool colorful)
+{
+    const string& iconFile = getIconFile(_renderKey, colorful);
+    if (_iconSprite && iconFile.length() > 0) {
+        _iconSprite->setTexture(iconFile);
+    }
 }

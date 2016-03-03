@@ -11,7 +11,7 @@
 
 #include "AbstractUILayer.h"
 #include "cocos-ext.h"
-#include "UnitCardNode.h"
+#include "CardNode.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -27,7 +27,7 @@ public:
     virtual ~BattleDeckLayerObserver() {}
 };
 
-class BattleDeckLayer : public AbstractUILayer, public TableViewDelegate, public TableViewDataSource, public UnitCardNodeObserver
+class BattleDeckLayer : public AbstractUILayer, public TableViewDelegate, public TableViewDataSource, public CardNodeObserver
 {
 public:
     static BattleDeckLayer* create();
@@ -52,9 +52,9 @@ protected:
     virtual TableViewCell* tableCellAtIndex(TableView *table, ssize_t idx) override;
     virtual ssize_t numberOfCellsInTableView(TableView *table) override;
     
-    // UnitCardNodeObserver
-    virtual void onUnitCardNodeTouchedBegan(UnitCardNode* node) override;
-    virtual void onUnitCardNodeTouchedEnded(UnitCardNode* node, bool isValid) override;
+    // CardNodeObserver
+    virtual void onCardNodeTouchedBegan(CardNode* node) override;
+    virtual void onCardNodeTouchedEnded(CardNode* node, bool isValid) override;
     
     Node* createTableView(const Size& size);
     ssize_t getCellsCount() const;

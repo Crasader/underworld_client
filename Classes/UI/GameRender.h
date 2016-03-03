@@ -24,7 +24,8 @@ namespace UnderWorld { namespace Core {
     class Game;
     class Commander;
     class Unit;
-    class Camp;
+    class Deck;
+    class Card;
 }}
 
 class GameRenderObserver
@@ -64,18 +65,14 @@ protected:
     virtual void onBulletNodeExploded(BulletNode* node) override;
     
     // MapLayerObserver
-    virtual void onMapLayerTouchMoved(const Point& point) override;
     virtual void onMapLayerTouchEnded(const Point& point) override;
     
     // MapUILayerObserver
     virtual bool onMapUILayerIsGameOver() const override;
     virtual void onMapUILayerClickedPauseButton() override;
-    virtual bool onMapUILayerIsHeroAlive(const UnderWorld::Core::Camp* camp) const override;
-    virtual void onMapUILayerUnitSelected(const UnderWorld::Core::Camp* camp) override;
-    virtual void onMapUILayerUnitTouched(const UnderWorld::Core::Camp* camp) override;
-    virtual void onMapUILayerTouchMoved(const UnderWorld::Core::Camp* camp, const Point& point) override;
-    virtual void onMapUILayerTouchCancelled(const UnderWorld::Core::Camp* camp) override;
-    virtual void onMapUILayerTouchEnded(const UnderWorld::Core::Camp* camp, const Point& point) override;
+    virtual void onMapUILayerCardSelected(const UnderWorld::Core::Card* card) override;
+    virtual void onMapUILayerTouchMoved(const UnderWorld::Core::Card* card, const Point& point, bool inDeck) override;
+    virtual void onMapUILayerTouchEnded(const UnderWorld::Core::Card* card, const Point& point) override;
     
     // VictoryLayerObserver
     virtual void onVictoryLayerClosed(Layer* pSender) override;
@@ -90,12 +87,7 @@ private:
     void updateUnits(const UnderWorld::Core::Game* game, int index);
     void updateBullets(const UnderWorld::Core::Game* game);
     void updateUILayer();
-    bool isCampFull(const UnderWorld::Core::Camp* camp) const;
-    bool isValidAoeSpell(const UnderWorld::Core::Spell* spell) const;
-    bool isProducibleCamp(const UnderWorld::Core::Camp* camp) const;
-    const UnderWorld::Core::Spell* getSpell(const UnderWorld::Core::Camp* camp, int idx) const;
-    UnderWorld::Core::CommandResult castSpell(const UnderWorld::Core::Spell* spell, const UnderWorld::Core::Unit* trigger, const UnderWorld::Core::Coordinate& coordinate, const UnderWorld::Core::Unit* target);
-    UnitNode* getHeroUnitNode(const UnderWorld::Core::Camp* camp);
+    bool isValidAoeSpell(const UnderWorld::Core::SpellType* spellType) const;
     void hurtUnit(const UnderWorld::Core::Unit* target, const std::string& trigger);
     void removeUnit(int unitId);
     void removeAllBullets();
@@ -111,9 +103,6 @@ private:
     Point convertToMapLayer(const Point& uiLayerPoint) const;
     Point convertToUILayer(const Point& mapLayerPoint) const;
     
-    // random
-    const UnderWorld::Core::Camp* generateRandomCamp() const;
-    
 private:
     GameRenderObserver *_observer;
     Scene* _scene;
@@ -125,18 +114,14 @@ private:
     std::map<int, UnitNode*> _allUnitNodes;
     std::map<int64_t, std::pair<UnderWorld::Core::Coordinate, float>> _bulletParams;
     std::map<int64_t, BulletNode*> _allBulletNodes;
-    std::vector<const UnderWorld::Core::Camp*> _myCamps;
     std::map<int, const UnderWorld::Core::Unit*> _cores;
-    const UnderWorld::Core::Camp* _selectedCamp;
-    std::set<const UnderWorld::Core::Camp*> _pickedCamps;
+    const UnderWorld::Core::Deck* _deck;
+    const UnderWorld::Core::Card* _selectedCard;
     
     bool _paused;
     bool _isGameOver;
     int _remainingTime;
-    int _cardDeckTime;
-    float _goldCount;
-    float _woodCount;
-    bool _hasUpdatedBattleCampInfos;
+    std::map<std::string, float> _resources;
 };
 
 #endif /* GameRender_h */

@@ -134,7 +134,6 @@
 		A18524D91C1AF3BB00BE261D /* QuestCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A18524D71C1AF3BB00BE261D /* QuestCell.cpp */; };
 		A18524DC1C1AF49800BE261D /* BagCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A18524DA1C1AF49800BE261D /* BagCell.cpp */; };
 		A18524E01C1AF66900BE261D /* MapUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A18524DE1C1AF66900BE261D /* MapUILayer.cpp */; };
-		A18524E31C1AF67800BE261D /* MapUIUnitNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A18524E11C1AF67800BE261D /* MapUIUnitNode.cpp */; };
 		A18885671C43843800C9586F /* SoldierManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A18885651C43843800C9586F /* SoldierManager.cpp */; };
 		A188856A1C438F1800C9586F /* ResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A18885681C438F1800C9586F /* ResourceManager.cpp */; };
 		A188856F1C43921700C9586F /* PieceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A188856D1C43921700C9586F /* PieceManager.cpp */; };
@@ -209,7 +208,7 @@
 		A1F5BFA21C1FD519007C08CB /* AchievementData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BFA01C1FD519007C08CB /* AchievementData.cpp */; };
 		A1F5BFA81C1FDFBE007C08CB /* ResourceNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BFA61C1FDFBE007C08CB /* ResourceNode.cpp */; };
 		A1F6A1171C4506A3005DC0CC /* HeroSpellHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F6A1151C4506A3005DC0CC /* HeroSpellHandler.cpp */; };
-		A1F96B101C86E805009D8B7C /* UnitCardNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F96B0E1C86E805009D8B7C /* UnitCardNode.cpp */; };
+		A1F96B101C86E805009D8B7C /* CardNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F96B0E1C86E805009D8B7C /* CardNode.cpp */; };
 		A1F9B0791C76C3A0007BC409 /* BattleDeckLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F9B0771C76C3A0007BC409 /* BattleDeckLayer.cpp */; };
 		A1F9B0861C76CBAD007BC409 /* AbstractUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F9B0841C76CBAD007BC409 /* AbstractUILayer.cpp */; };
 		A1F9B0891C76F54D007BC409 /* BattleDeckUnitInfoNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F9B0871C76F54D007BC409 /* BattleDeckUnitInfoNode.cpp */; };
@@ -508,8 +507,6 @@
 		A18524DB1C1AF49800BE261D /* BagCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BagCell.h; sourceTree = "<group>"; };
 		A18524DE1C1AF66900BE261D /* MapUILayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapUILayer.cpp; sourceTree = "<group>"; };
 		A18524DF1C1AF66900BE261D /* MapUILayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapUILayer.h; sourceTree = "<group>"; };
-		A18524E11C1AF67800BE261D /* MapUIUnitNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapUIUnitNode.cpp; sourceTree = "<group>"; };
-		A18524E21C1AF67800BE261D /* MapUIUnitNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapUIUnitNode.h; sourceTree = "<group>"; };
 		A18885651C43843800C9586F /* SoldierManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoldierManager.cpp; sourceTree = "<group>"; };
 		A18885661C43843800C9586F /* SoldierManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoldierManager.h; sourceTree = "<group>"; };
 		A18885681C438F1800C9586F /* ResourceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResourceManager.cpp; sourceTree = "<group>"; };
@@ -656,8 +653,8 @@
 		A1F5BFA71C1FDFBE007C08CB /* ResourceNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceNode.h; sourceTree = "<group>"; };
 		A1F6A1151C4506A3005DC0CC /* HeroSpellHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HeroSpellHandler.cpp; sourceTree = "<group>"; };
 		A1F6A1161C4506A3005DC0CC /* HeroSpellHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroSpellHandler.h; sourceTree = "<group>"; };
-		A1F96B0E1C86E805009D8B7C /* UnitCardNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UnitCardNode.cpp; sourceTree = "<group>"; };
-		A1F96B0F1C86E805009D8B7C /* UnitCardNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitCardNode.h; sourceTree = "<group>"; };
+		A1F96B0E1C86E805009D8B7C /* CardNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardNode.cpp; sourceTree = "<group>"; };
+		A1F96B0F1C86E805009D8B7C /* CardNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardNode.h; sourceTree = "<group>"; };
 		A1F9B0771C76C3A0007BC409 /* BattleDeckLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattleDeckLayer.cpp; sourceTree = "<group>"; };
 		A1F9B0781C76C3A0007BC409 /* BattleDeckLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BattleDeckLayer.h; sourceTree = "<group>"; };
 		A1F9B0841C76CBAD007BC409 /* AbstractUILayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AbstractUILayer.cpp; sourceTree = "<group>"; };
@@ -1097,8 +1094,8 @@
 			children = (
 				A103F4571BE37E2A007F9A83 /* BulletNode.cpp */,
 				A103F4581BE37E2A007F9A83 /* BulletNode.h */,
-				A1F96B0E1C86E805009D8B7C /* UnitCardNode.cpp */,
-				A1F96B0F1C86E805009D8B7C /* UnitCardNode.h */,
+				A1F96B0E1C86E805009D8B7C /* CardNode.cpp */,
+				A1F96B0F1C86E805009D8B7C /* CardNode.h */,
 				A103F4591BE37E2A007F9A83 /* UnitNode.cpp */,
 				A103F45A1BE37E2A007F9A83 /* UnitNode.h */,
 			);
@@ -1414,8 +1411,6 @@
 				A1D25C2E1C8588A100A84EB6 /* MapUICardDeck.h */,
 				A18524DE1C1AF66900BE261D /* MapUILayer.cpp */,
 				A18524DF1C1AF66900BE261D /* MapUILayer.h */,
-				A18524E11C1AF67800BE261D /* MapUIUnitNode.cpp */,
-				A18524E21C1AF67800BE261D /* MapUIUnitNode.h */,
 			);
 			path = MapUI;
 			sourceTree = "<group>";
@@ -1867,7 +1862,6 @@
 				A1720E8C1BCCE19300217E98 /* aes_ctr.c in Sources */,
 				A1720E8E1BCCE19300217E98 /* AESEncryptor.cpp in Sources */,
 				A18885671C43843800C9586F /* SoldierManager.cpp in Sources */,
-				A18524E31C1AF67800BE261D /* MapUIUnitNode.cpp in Sources */,
 				A1E5BED01C3B7CF4005BC78B /* TowerData.cpp in Sources */,
 				A1E5BED61C3B7D2C005BC78B /* HeroData.cpp in Sources */,
 				045116E41BCFBA39002AA721 /* World.cpp in Sources */,
@@ -1937,7 +1931,7 @@
 				045116F91BCFBA44002AA721 /* UnitType.cpp in Sources */,
 				A1E830691C1EA50200FE01B8 /* QuestLocalData.cpp in Sources */,
 				A1F5BF9B1C1FC724007C08CB /* QuestData.cpp in Sources */,
-				A1F96B101C86E805009D8B7C /* UnitCardNode.cpp in Sources */,
+				A1F96B101C86E805009D8B7C /* CardNode.cpp in Sources */,
 				301F63FC1BE3680600DA6D70 /* GameLooper.cpp in Sources */,
 				A1F5BF951C1FC381007C08CB /* GearData.cpp in Sources */,
 				30C6C3921C52183500DD1C8F /* AStarNode.cpp in Sources */,

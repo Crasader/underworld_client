@@ -109,7 +109,6 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
 ,_speedScheduler(nullptr)
 ,_actionManager(nullptr)
 ,_shadow(nullptr)
-,_spellRing(nullptr)
 ,_hpBar(nullptr)
 ,_sprite(nullptr)
 ,_idLabel(nullptr)
@@ -245,38 +244,6 @@ void UnitNode::update()
     }
 }
 
-void UnitNode::addSpellRing(int range)
-{
-    removeSpellRing();
-    
-    if (!_spellRing) {
-        static const string file("quan-2.csb");
-        const Point& pos = _sprite->getPosition();
-        _spellRing = CSLoader::createNode(file);
-        _spellRing->setPosition(pos + _configData->getFootEffectPosition());
-        addChild(_spellRing, bottomZOrder);
-        
-        // calculate scale
-        static const float defaultRange(218);
-        if (range != SpellType::CAST_DISTANCE_INFINITE) {
-            const float scale = range / defaultRange;
-            node_setScale(_spellRing, scale);
-        }
-        
-        cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
-        _spellRing->runAction(action);
-        action->gotoFrameAndPlay(0, true);
-    }
-}
-
-void UnitNode::removeSpellRing()
-{
-    if (_spellRing) {
-        _spellRing->removeFromParent();
-        _spellRing = nullptr;
-    }
-}
-
 void UnitNode::onHurt(const string& trigger)
 {
     const URConfigData* data = DataManager::getInstance()->getURConfigData(trigger);
@@ -295,7 +262,6 @@ void UnitNode::onDead()
     removeShadow();
     removeAllBufs();
     removeHPBar();
-    removeSpellRing();
     
     const string file = _configData->getDieSound();
     if (file.length() > 0) {

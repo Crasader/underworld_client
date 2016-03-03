@@ -57,7 +57,6 @@ typedef std::function<void(long errorCode)> httpErrorCallback;
 // TODO: remove temp code
 #define RES_NAME_GOLD       ("金子")
 #define RES_NAME_WOOD       ("木头")
-#define RES_NAME_POPULATION ("人口")
 
 typedef enum
 {
