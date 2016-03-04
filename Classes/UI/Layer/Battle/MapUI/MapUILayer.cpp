@@ -289,13 +289,14 @@ bool MapUILayer::onTouchBegan(Touch *touch, Event *unused_event)
 void MapUILayer::onTouchMoved(Touch *touch, Event *unused_event)
 {
     if (_isTouchingTableView && _selectedCard.first) {
+        const Point& point = touch->getLocation();
+        const bool inDeck = isPointInTableView(point);
+        
         if (_observer) {
-            const Point& point = touch->getLocation();
-            const bool inDeck = isPointInTableView(point);
             _observer->onMapUILayerTouchMoved(_selectedCard.first, point, inDeck);
         }
         
-        if (_highlightedCard != _selectedCard.second) {
+        if (!inDeck && _highlightedCard != _selectedCard.second) {
             setHighlightedCard(_selectedCard.second);
         }
     }
