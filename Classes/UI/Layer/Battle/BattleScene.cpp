@@ -10,7 +10,6 @@
 #include "CocosUtils.h"
 #include "GameSettings.h"
 #include "DataManager.h"
-#include "UserDefaultsDataManager.h"
 #include "SoundManager.h"
 #include "MapUnitConfigData.h"
 #include "TechTree.h"
@@ -155,37 +154,37 @@ void BattleScene::start()
         }
         
         // set camps
-        {
-            set<string> cards;
-            UserDefaultsDataManager::getInstance()->getSelectedCards(cards);
-            
-            vector<UnderWorld::Core::CampSetting> cs;
-            cs.resize(cards.size());
-            
-            int i = 0;
-            for (auto iter = begin(cards); iter != end(cards); ++iter, ++i) {
-                UnderWorld::Core::UnitSetting us;
-                const string& name = *iter;
-                createUnitSetting(name, us);
-                cs[i].setUnitSetting(us);
-                
-                const UnderWorld::Core::UnitType* ut = getUnitType(name);
-                if (ut) {
-                    const int production = static_cast<int>(ut->getPutCost().size());
-                    cs[i].setMaxProduction(production);
-                    
-                    const std::vector<std::string>& upgradeNames = ut->getUpgradeNames();
-                    for (const auto& string : upgradeNames) {
-                        if (string.length() > 0) {
-                            createUnitSetting(string, us);
-                            cs[i].addUpgradeUnitSetting(us);
-                        }
-                    }
-                }
-            }
-            
-            setting.setCamps(0, cs);
-        }
+//        {
+//            set<string> cards;
+//            UserDefaultsDataManager::getInstance()->getSelectedCards(cards);
+//            
+//            vector<UnderWorld::Core::CampSetting> cs;
+//            cs.resize(cards.size());
+//            
+//            int i = 0;
+//            for (auto iter = begin(cards); iter != end(cards); ++iter, ++i) {
+//                UnderWorld::Core::UnitSetting us;
+//                const string& name = *iter;
+//                createUnitSetting(name, us);
+//                cs[i].setUnitSetting(us);
+//                
+//                const UnderWorld::Core::UnitType* ut = getUnitType(name);
+//                if (ut) {
+//                    const int production = static_cast<int>(ut->getPutCost().size());
+//                    cs[i].setMaxProduction(production);
+//                    
+//                    const std::vector<std::string>& upgradeNames = ut->getUpgradeNames();
+//                    for (const auto& string : upgradeNames) {
+//                        if (string.length() > 0) {
+//                            createUnitSetting(string, us);
+//                            cs[i].addUpgradeUnitSetting(us);
+//                        }
+//                    }
+//                }
+//            }
+//            
+//            setting.setCamps(0, cs);
+//        }
     }
     
     _looper = new (nothrow) UnderWorld::Core::GameLooper(_render, _sch);

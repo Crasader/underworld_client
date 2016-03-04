@@ -29,7 +29,7 @@ URConfigData::URConfigData(tinyxml2::XMLElement *xmlElement)
 ,_hpBarPosY(0.0f)
 {
     if (xmlElement) {
-        _name = xmlElement->Attribute("unit_name");
+        _name = xmlElement->Attribute("render_key");
         {
             const char *data = xmlElement->Attribute("is_short_range");
             if (data && strlen(data) > 0) {
@@ -44,24 +44,6 @@ URConfigData::URConfigData(tinyxml2::XMLElement *xmlElement)
                 _isFaceRight = (atoi(data) != 0);
             } else {
                 _isFaceRight = false;
-            }
-        }
-        {
-            const char *data = xmlElement->Attribute("icon_name");
-            if (data && strlen(data) > 0) {
-                static const string suffix(".png");
-                {
-                    static const string prefix("GameImages/icons/unit/big/normal/");
-                    _icon = prefix + data + suffix;
-                }
-                {
-                    static const string prefix("GameImages/icons/unit/small/");
-                    _smallIcon = prefix + data + "_1" + suffix;
-                }
-                {
-                    static const string prefix("GameImages/icons/unit/big/disabled/");
-                    _disabledIcon = prefix + data + "_2" + suffix;
-                }
             }
         }
         {
@@ -205,21 +187,6 @@ bool URConfigData::isShortRange() const
 bool URConfigData::isFaceRight() const
 {
     return _isFaceRight;
-}
-
-const string& URConfigData::getIcon() const
-{
-    return _icon;
-}
-
-const string& URConfigData::getSmallIcon() const
-{
-    return _smallIcon;
-}
-
-const string& URConfigData::getDisabledIcon() const
-{
-    return _disabledIcon;
 }
 
 const string& URConfigData::getPrefix() const

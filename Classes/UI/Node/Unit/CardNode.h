@@ -37,7 +37,7 @@ public:
     virtual ~CardNode();
     void registerObserver(CardNodeObserver *observer);
     void update(const UnderWorld::Core::Card* card, float resource);
-    void update(const std::string& name, const std::string& renderKey, int rarity, int cost, float resource);
+    void update(const std::string& name, int rarity, int cost, float resource);
     void setSelected(bool selected);
     void checkResource(float count);
     
@@ -64,7 +64,6 @@ private:
     ProgressTimer* _coldDownProgress;
     const UnderWorld::Core::Card* _card;
     std::string _cardName;
-    std::string _renderKey;
     bool _touchInvalid;
 };
 

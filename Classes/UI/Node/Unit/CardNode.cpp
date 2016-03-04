@@ -11,7 +11,7 @@
 #include "CocosUtils.h"
 #include "BattleSmallResourceNode.h"
 #include "DataManager.h"
-#include "URConfigData.h"
+#include "CardConfigData.h"
 #include "Deck.h"
 #include "SoundManager.h"
 
@@ -190,20 +190,19 @@ void CardNode::update(const Card* card, float resource)
         
         const UnitType* ut = card->getUnitType();
         if (ut) {
-            update(ut->getName(), ut->getRenderKey(), ut->getRarity(), cost, resource);
+            update(ut->getName(), ut->getRarity(), cost, resource);
         } else {
             const SpellType* st = card->getSpellType();
             if (st) {
-                update(st->getSpellName(), st->getSpellName(), 0, cost, resource);
+                update(st->getSpellName(), 0, cost, resource);
             }
         }
     }
 }
 
-void CardNode::update(const string& name, const string& renderKey, int rarity, int cost, float resource)
+void CardNode::update(const string& name, int rarity, int cost, float resource)
 {
     _cardName = name;
-    _renderKey = renderKey;
     
     // update mutable data
     updateIcon(resource >= cost);
@@ -267,7 +266,7 @@ const string& CardNode::getCardName() const
 
 string CardNode::getIconFile(const string& name, bool enable) const
 {
-    const URConfigData* configData = DataManager::getInstance()->getURConfigData(name);
+    const CardConfigData* configData = DataManager::getInstance()->getCardConfigData(name);
     string iconFile;
     static const string defaultFile("GameImages/icons/unit/big/normal/icon_w_langdun.png");
     if (enable) {
@@ -294,7 +293,7 @@ BattleSmallResourceNode* CardNode::readdResourceNode(Node* currentNode, ::Resour
 
 void CardNode::updateIcon(bool colorful)
 {
-    const string& iconFile = getIconFile(_renderKey, colorful);
+    const string& iconFile = getIconFile(_cardName, colorful);
     if (_iconSprite && iconFile.length() > 0) {
         _iconSprite->setTexture(iconFile);
     }

@@ -34,9 +34,9 @@ static const unsigned int columnCount(6);
 
 static const set<string> allCards {
     // spell
-    "火球术",
-    "治愈",
-    "顺风之力",
+//    "火球术",
+//    "治愈",
+//    "顺风之力",
     // warriors
     "巨人",
     "法师",
@@ -46,7 +46,7 @@ static const set<string> allCards {
     "迷你皮卡",
     "炸弹人",
     "王子",
-    "守卫",
+//    "守卫",
     "狗",
     "加血法师",
     "狼人步兵",
@@ -304,7 +304,6 @@ TableViewCell* BattleDeckLayer::tableCellAtIndex(TableView *table, ssize_t idx)
         CardNode* unitNode = dynamic_cast<CardNode*>(cell->getNode(i));
         if (index < cnt) {
             const string& name = _candidateCards.at(index);
-            const string& renderKey = getRenderKey(name);
             const UnitType* ut = _techTree->findUnitTypeByName(name);
             const int rarity = ut ? ut->getRarity() : 0;
             if (!unitNode) {
@@ -314,7 +313,7 @@ TableViewCell* BattleDeckLayer::tableCellAtIndex(TableView *table, ssize_t idx)
                 cell->setNode(unitNode, i);
             }
             
-            unitNode->update(name, renderKey, rarity, 0, 10);
+            unitNode->update(name, rarity, 0, 10);
             unitNode->setSelected(name == _touchedCard);
             
             const Point point(_cellSize.width * (i + 0.5f) - unitNodeOffsetX / 2, unitNode->getContentSize().height * 0.5f);
@@ -509,7 +508,7 @@ void BattleDeckLayer::createDragNode(const string& name)
 {
     if (!_dragNode && name.length() > 0) {
         auto node = CardNode::create();
-        node->update(name, getRenderKey(name), _techTree->findUnitTypeByName(name)->getRarity(), 0, 10);
+        node->update(name, _techTree->findUnitTypeByName(name)->getRarity(), 0, 10);
         node->setVisible(false);
         _background->addChild(node, topZOrder);
         _dragNode = node;
@@ -544,9 +543,8 @@ void BattleDeckLayer::reloadCardDecks()
         if (cnt > i) {
             Sprite* deck = _cardDecks.at(i);
             const string& name = *iter;
-            const string& renderKey = getRenderKey(name);
             auto node = CardNode::create();
-            node->update(name, renderKey, _techTree->findUnitTypeByName(name)->getRarity(), 0, 10);
+            node->update(name, _techTree->findUnitTypeByName(name)->getRarity(), 0, 10);
             node->registerObserver(this);
             node->setTag(cardTagOnDeck);
             node->setSelected(name == _touchedCard);
@@ -609,19 +607,6 @@ template<typename T> static void eraseFromVector(vector<T>& vec, const T& elemen
 static bool sortByName(const string& first, const string& second)
 {
     return (first > second);
-}
-
-string BattleDeckLayer::getRenderKey(const string& name) const
-{
-    if (_techTree) {
-        const UnitType* unitType = _techTree->findUnitTypeByName(name);
-        if (unitType) {
-            return unitType->getRenderKey();
-        }
-    }
-    
-    assert(false);
-    return "";
 }
 
 const set<string>& BattleDeckLayer::getPickedCards() const

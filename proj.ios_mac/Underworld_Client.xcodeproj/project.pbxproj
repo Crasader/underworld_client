@@ -160,6 +160,7 @@
 		A1B4AE311C200521005906A6 /* UserManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B4AE2A1C200521005906A6 /* UserManager.cpp */; };
 		A1B5588F1BCB65A100D30D6A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B5588E1BCB65A100D30D6A /* StoreKit.framework */; };
 		A1C124DC1BF58AF700F3FDD2 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = A1C124DB1BF58AF700F3FDD2 /* sounds */; };
+		A1CA78001C892D4E0060F71A /* CardConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1CA77FE1C892D4E0060F71A /* CardConfigData.cpp */; };
 		A1CE89DE1C44AB2900B60704 /* SpellConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1CE89DC1C44AB2900B60704 /* SpellConfigData.cpp */; };
 		A1D25C2F1C8588A100A84EB6 /* MapUICardDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D25C2D1C8588A100A84EB6 /* MapUICardDeck.cpp */; };
 		A1D25C331C85BA5600A84EB6 /* BattleDeckCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D25C311C85BA5600A84EB6 /* BattleDeckCell.cpp */; };
@@ -559,6 +560,8 @@
 		A1B4AE2B1C200521005906A6 /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserManager.h; sourceTree = "<group>"; };
 		A1B5588E1BCB65A100D30D6A /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		A1C124DB1BF58AF700F3FDD2 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sounds; sourceTree = "<group>"; };
+		A1CA77FE1C892D4E0060F71A /* CardConfigData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardConfigData.cpp; sourceTree = "<group>"; };
+		A1CA77FF1C892D4E0060F71A /* CardConfigData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardConfigData.h; sourceTree = "<group>"; };
 		A1CE89DC1C44AB2900B60704 /* SpellConfigData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpellConfigData.cpp; sourceTree = "<group>"; };
 		A1CE89DD1C44AB2900B60704 /* SpellConfigData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpellConfigData.h; sourceTree = "<group>"; };
 		A1D25C2D1C8588A100A84EB6 /* MapUICardDeck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapUICardDeck.cpp; sourceTree = "<group>"; };
@@ -1514,6 +1517,8 @@
 		A1D461581C3E251000E8E60B /* AnimationConfig */ = {
 			isa = PBXGroup;
 			children = (
+				A1CA77FE1C892D4E0060F71A /* CardConfigData.cpp */,
+				A1CA77FF1C892D4E0060F71A /* CardConfigData.h */,
 				A1D461591C3E251000E8E60B /* MapParticleConfigData.cpp */,
 				A1D4615A1C3E251000E8E60B /* MapParticleConfigData.h */,
 				A1CE89DC1C44AB2900B60704 /* SpellConfigData.cpp */,
@@ -2013,6 +2018,7 @@
 				045116E21BCFBA39002AA721 /* Clock.cpp in Sources */,
 				A1720E931BCCE1D900217E98 /* LocalHelper.cpp in Sources */,
 				A1E8306A1C1EA50200FE01B8 /* RewardData.cpp in Sources */,
+				A1CA78001C892D4E0060F71A /* CardConfigData.cpp in Sources */,
 				A1E5BED31C3B7D08005BC78B /* SoldierData.cpp in Sources */,
 				045117091BCFBA53002AA721 /* Faction.cpp in Sources */,
 				A1E8306D1C1EA55D00FE01B8 /* ContentData.cpp in Sources */,

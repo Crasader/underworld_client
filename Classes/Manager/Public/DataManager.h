@@ -23,6 +23,7 @@ class GearLocalData;
 class GearUpgradeData;
 class GearAttributeData;
 class GearSetLocalData;
+class CardConfigData;
 class URConfigData;
 class MapParticleConfigData;
 class SpellConfigData;
@@ -65,6 +66,7 @@ public:
     
     // ---------- animations ----------
     const AnimationParameters& getAnimationParameters(const std::string& name, UnderWorld::Core::SkillClass skillClass, UnderWorld::Core::Unit::Direction direction) const;
+    const CardConfigData* getCardConfigData(const std::string& name) const;
     const URConfigData* getURConfigData(const std::string& name) const;
     const std::vector<MapParticleConfigData*>& getMapParticleConfigData(int mapId) const;
     const SpellConfigData* getSpellConfigData(const std::string& name) const;
@@ -111,6 +113,7 @@ protected:
     void parseGearAttributeData();
     void parseGearSetData();
     void parseAnimationConfigData();
+    void parseCardConfigData();
     void parseURConfigData();
     void parseMapParticleConfigData();
     void parseSpellConfigData();
@@ -140,6 +143,7 @@ private:
     std::map<std::string, GearAttributeData*> _gearAttributeDatas;
     std::map<int, GearSetLocalData*> _gearSets;
     std::map<std::string, UAConfigData*> _animationParameters;
+    std::map<std::string, CardConfigData*> _cardConfigData;
     std::map<std::string, URConfigData*> _unitResourceConfigData;
     std::map<int, std::vector<MapParticleConfigData*>> _mapParticleConfigData;
     std::map<std::string, SpellConfigData*> _spellConfigData;

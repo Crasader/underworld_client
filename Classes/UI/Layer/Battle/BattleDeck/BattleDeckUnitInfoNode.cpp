@@ -12,7 +12,7 @@
 #include "CocosUtils.h"
 #include "Unit.h"
 #include "DataManager.h"
-#include "URConfigData.h"
+#include "CardConfigData.h"
 #include "SoundManager.h"
 
 using namespace std;
@@ -218,7 +218,7 @@ void BattleDeckUnitInfoNode::registerObserver(BattleDeckUnitInfoNodeObserver *ob
 void BattleDeckUnitInfoNode::update(const UnitBase* unit)
 {
     if (unit) {
-        const string& file = DataManager::getInstance()->getURConfigData(unit->getUnitType()->getRenderKey())->getSmallIcon();
+        const string& file = DataManager::getInstance()->getCardConfigData(unit->getUnitType()->getName())->getSmallIcon();
         if (file.length() > 0 && FileUtils::getInstance()->isFileExist(file)) {
             _unitIcon->setTexture(file);
         }
@@ -272,7 +272,7 @@ void BattleDeckUnitInfoNode::update(const string& name, TechTree* techTree)
 {
     const UnitType* unit = techTree->findUnitTypeByName(name);
     if (unit) {
-        const string& file = DataManager::getInstance()->getURConfigData(unit->getRenderKey())->getSmallIcon();
+        const string& file = DataManager::getInstance()->getCardConfigData(unit->getName())->getSmallIcon();
         if (file.length() > 0 && FileUtils::getInstance()->isFileExist(file)) {
             _unitIcon->setTexture(file);
         }

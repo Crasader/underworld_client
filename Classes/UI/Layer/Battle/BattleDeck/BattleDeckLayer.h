@@ -69,7 +69,6 @@ protected:
     void cardBackToTable();
     int getIntersectedCardDeckIdx(const Rect& rect) const;
     
-    std::string getRenderKey(const std::string& name) const;
     const std::set<std::string>& getPickedCards() const;
     void loadData();
     void saveData();
