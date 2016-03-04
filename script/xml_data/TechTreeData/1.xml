@@ -20,17 +20,17 @@
     <card name="治愈" class="spell" cost="木头:4" spell_name="治愈" />
     <card name="顺风之力" class="spell" cost="木头:4" spell_name="顺风之力加强版" />
     <!-- ==========单位&势力配置========== -->
-    <unit name="狼人基地" class="core" hp="4000" mp="0" hpregen="0" mpregen="0" field="0" armor_type="城甲" armor="600" attacksight="600" size="300" height="100" render_key="狼人基地">
+    <unit name="狼人基地" class="core" hp="2568" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="600" attacksight="600" size="300" height="100" render_key="狼人基地">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0.0" perform="10.0" cd="0.0" occupy="0"/>
-        <skill class="attack" preperform="0.5" perform="0.0" cd="2.0" min_damage="8" max_damage="12" deliver_class="physical" damage_distance="faraway" range="600" fields="3">
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="50" max_damage="56" deliver_class="physical" damage_distance="faraway" range="192" fields="3">
             <bullet speed="600" size="0"/>
         </skill>
     </unit>
-    <unit name="狼人箭塔" class="building" hp="2000" mp="0" hpregen="0" mpregen="0" field="0" armor_type="城甲" armor="0" attacksight="600" size="100" height="50" render_key="狼人箭塔" put_cost="木头:2|木头:3|木头:4|木头:5|木头:6" rewarde="金子:10;木头:5">
+    <unit name="狼人箭塔" class="building" hp="1512" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="0" attacksight="600" size="100" height="50" render_key="狼人箭塔" put_cost="木头:2|木头:3|木头:4|木头:5|木头:6" rewarde="金子:10;木头:5">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0.0" perform="10.0" cd="0.0"/>
-        <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="8" max_damage="12" deliver_class="physical" damage_distance="faraway" range="600" fields="3">
+        <skill class="attack" preperform="0.5" perform="0.0" cd="0.8" min_damage="50" max_damage="58" deliver_class="physical" damage_distance="faraway" range="204" fields="3">
             <bullet speed="800" size="0"/>
         </skill>
     </unit>
@@ -696,17 +696,17 @@
         </skill>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
     </unit>
-    <unit name="吸血鬼基地" class="core" hp="4000" mp="0" hpregen="0" mpregen="0" field="0" armor_type="城甲" armor="600" attacksight="600" size="300" height="0" render_key="吸血鬼核心">
+    <unit name="吸血鬼基地" class="core" hp="2568" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="600" attacksight="600" size="300" height="0" render_key="吸血鬼核心">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0.0" perform="10.0" cd="0.0" occupy="0"/>
-        <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="8" max_damage="12" deliver_class="physical" damage_distance="faraway" range="600" fields="3">
+        <skill class="attack" preperform="0.5" perform="0.0" cd="1.0" min_damage="50" max_damage="56" deliver_class="physical" damage_distance="faraway" range="192" fields="3">
             <bullet speed="600" size="0"/>
         </skill>
     </unit>
-    <unit name="吸血鬼箭塔" class="building" hp="2000" mp="0" hpregen="0" mpregen="0" field="0" armor_type="城甲" armor="400" attacksight="600" size="100" height="70" render_key="吸血鬼箭塔" put_cost="木头:2|木头:3|木头:4|木头:5|木头:6" rewarde="金子:100;木头:20">
+    <unit name="吸血鬼箭塔" class="building" hp="1512" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="400" attacksight="600" size="100" height="70" render_key="吸血鬼箭塔" put_cost="木头:2|木头:3|木头:4|木头:5|木头:6" rewarde="金子:100;木头:20">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0.0" perform="10.0" cd="0.0"/>
-        <skill class="attack" preperform="0.3" perform="0.0" cd="1.0" min_damage="8" max_damage="12" deliver_class="physical" damage_distance="faraway" range="600" fields="3">
+        <skill class="attack" preperform="0.3" perform="0.0" cd="0.8" min_damage="50" max_damage="58" deliver_class="physical" damage_distance="faraway" range="204" fields="3">
             <bullet speed="800" size="0"/>
         </skill>
     </unit>
@@ -974,9 +974,9 @@
         <passive alias="身经百战" name="身经百战" buff_types="身经百战_持有者增益效果_等级1" level="1" desc="减少受到的物理伤害"/>
         <!-- ==========主动技能配置========== -->
         <!-- 火球术 -->
-        <spell alias="火球术" spell_name="火球术" level="1" deliver_class="magical" deliver_nature="enemy" cast_distance="10000" cast_type="position" immediate_elements="0,火球术_等级1_火球术效果,1" preperform="0.5" perform="0.0" cd="10.0" class="cast" desc="向目标区域施放一个火球，对区域内的所有敌方单位造成500点伤害。"/>
+        <spell alias="火球术" spell_name="火球术" level="1" deliver_class="magical" deliver_nature="enemy" cast_distance="-1" cast_type="position" immediate_elements="0,火球术_等级1_火球术效果,1" preperform="0.5" perform="0.0" cd="10.0" class="cast" desc="向目标区域施放一个火球，对区域内的所有敌方单位造成500点伤害。"/>
         <!-- 治愈 -->
-        <spell alias="治愈" spell_name="治愈" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="400" cast_type="unit_but_self" immediate_elements="0,治愈_治愈效果,1" preperform="0.5" perform="0.0" cd="3.0" class="cast" desc="按照自身生命值上限的比例对目标进行治疗"/>
+        <spell alias="治愈" spell_name="治愈" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="-1" cast_type="position" immediate_elements="0,治愈_治愈效果,1" preperform="0.5" perform="0.0" cd="3.0" class="cast" desc="按照自身生命值上限的比例对目标进行治疗"/>
         <!-- 基础治疗术 -->
         <spell alias="基础治疗术" spell_name="基础治疗术" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="750" cast_type="unit" immediate_elements="0,基础治疗术_基础治疗术施法效果,1" preperform="0.5" perform="0.0" cd="10.0" class="cast" desc="按照自身生命值上限的比例对目标进行治疗"/>
         <!-- 快速治疗 -->
@@ -984,7 +984,7 @@
         <!-- 顺风之力 -->
         <spell alias="顺风之力" spell_name="顺风之力" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="750" cast_type="unit_but_self" immediate_elements="0,顺风之力_顺风之力施法效果,1" preperform="0.5" perform="0.0" cd="30.0" class="cast" desc="增加其他友军攻击速度，并获得一层激流效果"/>
         <!-- 顺风之力加强版 -->
-        <spell alias="顺风之力加强版" spell_name="顺风之力加强版" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="750" cast_type="position" immediate_elements="0,顺风之力加强版_顺风之力加强版施法效果,1" preperform="0.5" perform="0.0" cd="30.0" class="cast" desc="增加其他友军攻击速度，并获得一层激流效果"/>
+        <spell alias="顺风之力加强版" spell_name="顺风之力加强版" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="-1" cast_type="position" immediate_elements="0,顺风之力加强版_顺风之力加强版施法效果,1" preperform="0.5" perform="0.0" cd="30.0" class="cast" desc="增加其他友军攻击速度，并获得一层激流效果"/>
         <!-- 枷锁 -->
         <spell alias="枷锁" spell_name="枷锁" level="1" deliver_class="magical" deliver_nature="enemy" cast_distance="750" cast_type="unit" immediate_elements="0,枷锁_枷锁施法效果,1" preperform="0.5" perform="0.0" cd="12.0" class="cast" desc="使目标6秒内不能移动"/>
         <!-- 月神能量 -->
