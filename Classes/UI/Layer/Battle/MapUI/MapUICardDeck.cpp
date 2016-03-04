@@ -154,8 +154,14 @@ void MapUICardDeck::updateTimer(float time)
     }
 }
 
-void MapUICardDeck::updateResource(float count)
+void MapUICardDeck::updateResource(const map<string, float>& resources)
 {
+    float count(0);
+    static const string& resourceName(RES_NAME_WOOD);
+    if (resources.find(resourceName) != resources.end()) {
+        count = resources.at(resourceName);
+    }
+    
     const size_t cnt(_resources.size());
     count = MIN(MAX(0, count), cnt);
     

@@ -36,7 +36,7 @@ public:
     const UnderWorld::Core::Card* getCard(int idx) const;
     void select(int idx);
     void updateTimer(float time);
-    void updateResource(float count);
+    void updateResource(const std::map<std::string, float>& resources);
     void insert(const UnderWorld::Core::Card* card);
     void remove(const UnderWorld::Core::Card* card);
     

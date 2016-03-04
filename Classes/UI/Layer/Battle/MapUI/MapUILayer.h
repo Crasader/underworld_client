@@ -21,10 +21,10 @@ public:
     virtual bool onMapUILayerIsGameOver() const = 0;
     virtual void onMapUILayerClickedPauseButton() = 0;
     
-    virtual void onMapUILayerCardSelected(const UnderWorld::Core::Card* card) = 0;
+    virtual void onMapUILayerCardSelected(const UnderWorld::Core::Card* card, int idx) = 0;
     
     virtual void onMapUILayerTouchMoved(const UnderWorld::Core::Card* card, const Point& position, bool inDeck) = 0;
-    virtual void onMapUILayerTouchEnded(const UnderWorld::Core::Card* card, const Point& position) = 0;
+    virtual void onMapUILayerTouchEnded(const UnderWorld::Core::Card* card, int idx, const Point& position) = 0;
 };
 
 class MapUILayer
@@ -48,7 +48,7 @@ public:
     void insertCard(const UnderWorld::Core::Card* card);
     void removeCard(const UnderWorld::Core::Card* card);
     void updateCardDeckCountDown(float time);
-    void updateCardDeckResource(float count);
+    void updateCardDeckResource(const std::map<std::string, float>& resources);
     
 protected:
     MapUILayer();

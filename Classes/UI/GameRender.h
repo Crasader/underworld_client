@@ -70,9 +70,9 @@ protected:
     // MapUILayerObserver
     virtual bool onMapUILayerIsGameOver() const override;
     virtual void onMapUILayerClickedPauseButton() override;
-    virtual void onMapUILayerCardSelected(const UnderWorld::Core::Card* card) override;
+    virtual void onMapUILayerCardSelected(const UnderWorld::Core::Card* card, int idx) override;
     virtual void onMapUILayerTouchMoved(const UnderWorld::Core::Card* card, const Point& point, bool inDeck) override;
-    virtual void onMapUILayerTouchEnded(const UnderWorld::Core::Card* card, const Point& point) override;
+    virtual void onMapUILayerTouchEnded(const UnderWorld::Core::Card* card, int idx, const Point& position) override;
     
     // VictoryLayerObserver
     virtual void onVictoryLayerClosed(Layer* pSender) override;
@@ -116,7 +116,7 @@ private:
     std::map<int64_t, BulletNode*> _allBulletNodes;
     std::map<int, const UnderWorld::Core::Unit*> _cores;
     const UnderWorld::Core::Deck* _deck;
-    const UnderWorld::Core::Card* _selectedCard;
+    std::pair<const UnderWorld::Core::Card* ,int> _selectedCard;
     
     bool _paused;
     bool _isGameOver;

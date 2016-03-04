@@ -162,10 +162,10 @@ void MapUILayer::updateCardDeckCountDown(float time)
     }
 }
 
-void MapUILayer::updateCardDeckResource(float count)
+void MapUILayer::updateCardDeckResource(const map<string, float>& resources)
 {
     if (_cardDeck) {
-        _cardDeck->updateResource(count);
+        _cardDeck->updateResource(resources);
     }
 }
 
@@ -310,7 +310,7 @@ void MapUILayer::onTouchEnded(Touch *touch, Event *unused_event)
             if (inDeck) {
                 
             } else {
-                _observer->onMapUILayerTouchEnded(_selectedCard.first, point);
+                _observer->onMapUILayerTouchEnded(_selectedCard.first, _selectedCard.second, point);
             }
         }
         
@@ -428,7 +428,7 @@ void MapUILayer::setHighlightedCard(int idx)
         // callback
         if (_observer) {
             const Card* card = _cardDeck->getCard(_highlightedCard);
-            _observer->onMapUILayerCardSelected(card);
+            _observer->onMapUILayerCardSelected(card, _highlightedCard);
         }
     }
 }

@@ -40,7 +40,6 @@ GameRender::GameRender(Scene* scene, int mapId, const string& mapData, const str
 ,_game(nullptr)
 ,_commander(nullptr)
 ,_deck(nullptr)
-,_selectedCard(nullptr)
 ,_paused(false)
 ,_isGameOver(false)
 ,_remainingTime(battleTotalTime)
@@ -52,6 +51,9 @@ GameRender::GameRender(Scene* scene, int mapId, const string& mapData, const str
     _mapUILayer = MapUILayer::create("Warewolf", opponentsAccount);
     _mapUILayer->registerObserver(this);
     scene->addChild(_mapUILayer);
+    
+    _selectedCard.first = nullptr;
+    _selectedCard.second = INVALID_VALUE;
 }
 
 GameRender::~GameRender()
@@ -358,8 +360,8 @@ void GameRender::onBulletNodeExploded(BulletNode* node)
 #pragma mark - MapLayerObserver
 void GameRender::onMapLayerTouchEnded(const Point& point)
 {
-    if (_selectedCard) {
-        onMapUILayerTouchEnded(_selectedCard, convertToUILayer(point));
+    if (_selectedCard.first) {
+        onMapUILayerTouchEnded(_selectedCard.first, _selectedCard.second, convertToUILayer(point));
     }
 }
 
@@ -379,9 +381,10 @@ void GameRender::onMapUILayerClickedPauseButton()
     }
 }
 
-void GameRender::onMapUILayerCardSelected(const Card* card)
+void GameRender::onMapUILayerCardSelected(const Card* card, int idx)
 {
-    _selectedCard = card;
+    _selectedCard.first = card;
+    _selectedCard.second = idx;
 }
 
 void GameRender::onMapUILayerTouchMoved(const Card* card, const Point& point, bool inDeck)
@@ -402,7 +405,7 @@ void GameRender::onMapUILayerTouchMoved(const Card* card, const Point& point, bo
     }
 }
 
-void GameRender::onMapUILayerTouchEnded(const Card* card, const Point& point)
+void GameRender::onMapUILayerTouchEnded(const Card* card, int idx, const Point& point)
 {
     if (_mapLayer) {
         const Point& realPos = convertToMapLayer(point);
@@ -410,7 +413,7 @@ void GameRender::onMapUILayerTouchEnded(const Card* card, const Point& point)
         // command
         if (_commander) {
             // TODO: set index
-            CommandResult result = _commander->tryGiveDeckUseCommand(_deck, 1, coordinate);
+            CommandResult result = _commander->tryGiveDeckUseCommand(_deck, idx, coordinate);
             if (kCommandResult_suc == result) {
                 const UnitType* ut = card->getUnitType();
                 if (ut) {
@@ -540,10 +543,7 @@ void GameRender::updateResources()
         }
         
         if (_mapUILayer) {
-            static const string& name = RES_NAME_WOOD;
-            if (_resources.find(name) != end(_resources)) {
-                _mapUILayer->updateCardDeckResource(_resources.at(name));
-            }
+            _mapUILayer->updateCardDeckResource(_resources);
         }
     }
 }
