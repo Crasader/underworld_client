@@ -34,9 +34,9 @@ static const unsigned int columnCount(6);
 
 static const set<string> allCards {
     // spell
-//    "火球术",
-//    "治愈",
-//    "顺风之力",
+    "火球术",
+    "治愈",
+    "顺风之力",
     // warriors
     "巨人",
     "法师",
@@ -303,9 +303,6 @@ TableViewCell* BattleDeckLayer::tableCellAtIndex(TableView *table, ssize_t idx)
         const ssize_t index = idx * columnCount + i;
         CardNode* unitNode = dynamic_cast<CardNode*>(cell->getNode(i));
         if (index < cnt) {
-            const string& name = _candidateCards.at(index);
-            const UnitType* ut = _techTree->findUnitTypeByName(name);
-            const int rarity = ut ? ut->getRarity() : 0;
             if (!unitNode) {
                 unitNode = CardNode::create();
                 unitNode->registerObserver(this);
@@ -313,7 +310,11 @@ TableViewCell* BattleDeckLayer::tableCellAtIndex(TableView *table, ssize_t idx)
                 cell->setNode(unitNode, i);
             }
             
-            unitNode->update(name, rarity, 0, 10);
+            const string& name = _candidateCards.at(index);
+            int rarity(0);
+            int cost(0);
+            getRarityAndCost(name, rarity, cost);
+            unitNode->update(name, rarity, cost, BATTLE_RESOURCE_MAX_COUNT);
             unitNode->setSelected(name == _touchedCard);
             
             const Point point(_cellSize.width * (i + 0.5f) - unitNodeOffsetX / 2, unitNode->getContentSize().height * 0.5f);
@@ -504,11 +505,20 @@ void BattleDeckLayer::configTable(bool reload)
     }
 }
 
+CardNode* BattleDeckLayer::createCardNode(const string& name)
+{
+    auto node = CardNode::create();
+    int rarity(0);
+    int cost(0);
+    getRarityAndCost(name, rarity, cost);
+    node->update(name, rarity, cost, BATTLE_RESOURCE_MAX_COUNT);
+    return node;
+}
+
 void BattleDeckLayer::createDragNode(const string& name)
 {
     if (!_dragNode && name.length() > 0) {
-        auto node = CardNode::create();
-        node->update(name, _techTree->findUnitTypeByName(name)->getRarity(), 0, 10);
+        auto node = createCardNode(name);
         node->setVisible(false);
         _background->addChild(node, topZOrder);
         _dragNode = node;
@@ -543,8 +553,7 @@ void BattleDeckLayer::reloadCardDecks()
         if (cnt > i) {
             Sprite* deck = _cardDecks.at(i);
             const string& name = *iter;
-            auto node = CardNode::create();
-            node->update(name, _techTree->findUnitTypeByName(name)->getRarity(), 0, 10);
+            auto node = createCardNode(name);
             node->registerObserver(this);
             node->setTag(cardTagOnDeck);
             node->setSelected(name == _touchedCard);
@@ -591,6 +600,25 @@ int BattleDeckLayer::getIntersectedCardDeckIdx(const cocos2d::Rect& rect) const
     }
     
     return idx;
+}
+
+void BattleDeckLayer::getRarityAndCost(const string& name, int& rarity, int& cost) const
+{
+    if (_techTree) {
+        const UnitType* ut = _techTree->findUnitTypeByName(name);
+        if (ut) {
+            rarity = ut->getRarity();
+        }
+        
+        const CardType* ct = _techTree->findCardTypeByName(name);
+        if (ct) {
+            const auto& costs = ct->getCost();
+            static const string& name = RES_NAME_WOOD;
+            if (costs.find(name) != costs.end()) {
+                cost = costs.at(name);
+            }
+        }
+    }
 }
 
 #pragma mark - Logic

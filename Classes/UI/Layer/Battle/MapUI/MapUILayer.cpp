@@ -46,8 +46,7 @@ MapUILayer* MapUILayer::create(const string& myAccount, const string& opponentsA
 MapUILayer::MapUILayer()
 :_observer(nullptr)
 ,_isTouchingTableView(false)
-,_highlightedCard(nullptr)
-,_selectedCard(nullptr)
+,_highlightedCard(INVALID_VALUE)
 ,_timeLabel(nullptr)
 ,_myHpProgress(nullptr)
 ,_myHpPercentageLabel(nullptr)
@@ -56,7 +55,9 @@ MapUILayer::MapUILayer()
 ,_pauseMenuItem(nullptr)
 ,_cardDeck(nullptr)
 {
-    setHighlightedCard(nullptr);
+    setHighlightedCard(INVALID_VALUE);
+    _selectedCard.first = nullptr;
+    _selectedCard.second = INVALID_VALUE;
 }
 
 MapUILayer::~MapUILayer()
@@ -123,19 +124,21 @@ void MapUILayer::resumeGame()
 
 void MapUILayer::clearHighlightedCard()
 {
-    setHighlightedCard(nullptr);
+    setHighlightedCard(INVALID_VALUE);
 }
 
 #pragma mark - card deck
-void MapUILayer::createCardDeck()
+void MapUILayer::createCardDeck(int count)
 {
-    _cardDeck = MapUICardDeck::create();
-    _cardDeck->registerObserver(this);
-    addChild(_cardDeck);
-    
-    const Size& winSize = Director::getInstance()->getWinSize();
-    const Size& size = _cardDeck->getContentSize();
-    _cardDeck->setPosition(winSize.width / 2, size.height / 2);
+    if (count > 0) {
+        _cardDeck = MapUICardDeck::create(count);
+        _cardDeck->registerObserver(this);
+        addChild(_cardDeck);
+        
+        const Size& winSize = Director::getInstance()->getWinSize();
+        const Size& size = _cardDeck->getContentSize();
+        _cardDeck->setPosition(winSize.width / 2, size.height / 2);
+    }
 }
 
 void MapUILayer::insertCard(const Card* card)
@@ -257,8 +260,6 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             menu->setPosition(Point::ZERO);
             root->addChild(menu);
         }
-        
-        createCardDeck();
 #endif
         
         auto eventListener = EventListenerTouchOneByOne::create();
@@ -287,48 +288,51 @@ bool MapUILayer::onTouchBegan(Touch *touch, Event *unused_event)
 
 void MapUILayer::onTouchMoved(Touch *touch, Event *unused_event)
 {
-    if (_isTouchingTableView && _selectedCard) {
+    if (_isTouchingTableView && _selectedCard.first) {
         if (_observer) {
             const Point& point = touch->getLocation();
             const bool inDeck = isPointInTableView(point);
-            _observer->onMapUILayerTouchMoved(_selectedCard, point, inDeck);
+            _observer->onMapUILayerTouchMoved(_selectedCard.first, point, inDeck);
         }
         
-        if (_highlightedCard != _selectedCard) {
-            setHighlightedCard(_selectedCard);
+        if (_highlightedCard != _selectedCard.second) {
+            setHighlightedCard(_selectedCard.second);
         }
     }
 }
 
 void MapUILayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
-    if (_isTouchingTableView && _selectedCard) {
+    if (_isTouchingTableView && _selectedCard.first) {
         if (_observer) {
             const Point& point = touch->getLocation();
             const bool inDeck = isPointInTableView(point);
             if (inDeck) {
                 
             } else {
-                _observer->onMapUILayerTouchEnded(_selectedCard, point);
+                _observer->onMapUILayerTouchEnded(_selectedCard.first, point);
             }
         }
         
-        _selectedCard = nullptr;
+        _selectedCard.first = nullptr;
+        _selectedCard.second = INVALID_VALUE;
         _isTouchingTableView = false;
     }
 }
 
 #pragma mark - MapUICardDeckObserver
-void MapUILayer::onMapUICardDeckUnitTouchedBegan(const Card* card)
+void MapUILayer::onMapUICardDeckUnitTouchedBegan(const Card* card, int idx)
 {
     // TODO
-    _selectedCard = card;
+    _selectedCard.first = card;
+    _selectedCard.second = idx;
 }
 
-void MapUILayer::onMapUICardDeckUnitTouchedEnded(const Card* card)
+void MapUILayer::onMapUICardDeckUnitTouchedEnded(const Card* card, int idx)
 {
     if (!isGameOver()) {
-        onUnitTouched(card);
+        setHighlightedCard(idx);
+        SoundManager::getInstance()->playButtonSelectUnitSound();
     }
 }
 
@@ -407,29 +411,24 @@ bool MapUILayer::isPointInTableView(const Point& point)
     return false;
 }
 
-void MapUILayer::onUnitTouched(const Card* card)
+void MapUILayer::setHighlightedCard(int idx)
 {
-    setHighlightedCard(card);
-    SoundManager::getInstance()->playButtonSelectUnitSound();
-}
-
-void MapUILayer::setHighlightedCard(const Card* card)
-{
-    const Card* lastCard = _highlightedCard;
-    const bool isNew = (lastCard != card);
+    const int lastCard = _highlightedCard;
+    const bool isNew = (lastCard != idx);
     
     if (isNew) {
-        _highlightedCard = card;
+        _highlightedCard = idx;
     } else {
-        _highlightedCard = nullptr;
+        _highlightedCard = INVALID_VALUE;
     }
     
     if (_cardDeck) {
         _cardDeck->select(_highlightedCard);
-    }
-    
-    // callback
-    if (_observer) {
-        _observer->onMapUILayerCardSelected(_highlightedCard);
+        
+        // callback
+        if (_observer) {
+            const Card* card = _cardDeck->getCard(_highlightedCard);
+            _observer->onMapUILayerCardSelected(card);
+        }
     }
 }

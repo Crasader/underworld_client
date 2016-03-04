@@ -13,13 +13,12 @@
 using namespace std;
 using namespace UnderWorld::Core;
 
-static const unsigned int resourceMaxCount(10);
 static const int topZOrder(1);
 
-MapUICardDeck* MapUICardDeck::create()
+MapUICardDeck* MapUICardDeck::create(int count)
 {
     MapUICardDeck *ret = new (nothrow) MapUICardDeck();
-    if (ret && ret->init())
+    if (ret && ret->init(count))
     {
         ret->autorelease();
         return ret;
@@ -43,7 +42,7 @@ MapUICardDeck::~MapUICardDeck()
     removeAllChildren();
 }
 
-bool MapUICardDeck::init()
+bool MapUICardDeck::init(int count)
 {
     if (Node::init())
     {
@@ -55,7 +54,7 @@ bool MapUICardDeck::init()
         static const float y2(50.0f);
         
         const Size& nodeSize = CardNode::create()->getContentSize();
-        const Size size(x1 * 2 + x2 + (CARD_DECKS_COUNT + 1) * nodeSize.width + (CARD_DECKS_COUNT - 1) * x3, y1 + y2 + nodeSize.height);
+        const Size size(x1 * 2 + x2 + (count + 1) * nodeSize.width + (count - 1) * x3, y1 + y2 + nodeSize.height);
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         setContentSize(size);
         
@@ -70,7 +69,7 @@ bool MapUICardDeck::init()
         
         // children
         const float y = y2 + nodeSize.height / 2;
-        for (int i = CARD_DECKS_COUNT - 1; i >= 0; --i) {
+        for (int i = count - 1; i >= 0; --i) {
             const float x = x1 + x2 + nodeSize.width * (i + 1.5f) + x3 * i;
             _unitPositions.push_back(Point(x, y));
         }
@@ -86,11 +85,11 @@ bool MapUICardDeck::init()
         _countLabel = CocosUtils::createLabel("0", BIG_FONT_SIZE, DEFAULT_NUMBER_FONT);
         background->addChild(_countLabel, topZOrder);
         
-        Label* maxCountLabel = CocosUtils::createLabel(StringUtils::format("Max:%d", resourceMaxCount), BIG_FONT_SIZE, DEFAULT_NUMBER_FONT);
+        Label* maxCountLabel = CocosUtils::createLabel(StringUtils::format("Max:%d", BATTLE_RESOURCE_MAX_COUNT), BIG_FONT_SIZE, DEFAULT_NUMBER_FONT);
         background->addChild(maxCountLabel, topZOrder);
         
         Size progressSize(Size::ZERO);
-        for (int i = 0; i < resourceMaxCount; ++i) {
+        for (int i = 0; i < BATTLE_RESOURCE_MAX_COUNT; ++i) {
             Sprite* s = Sprite::create("GameImages/test/ui_blood_8.png");
             ProgressTimer* pt = ProgressTimer::create(s);
             pt->setType(ProgressTimer::Type::BAR);
@@ -106,8 +105,8 @@ bool MapUICardDeck::init()
         }
         
         static const float offsetX(1.0f);
-        const float midX = x1 + x2 + nodeSize.width + (CARD_DECKS_COUNT * (nodeSize.width + x3) - x3) / 2;
-        const float startX = midX - ((progressSize.width + offsetX) * resourceMaxCount - offsetX)  / 2;
+        const float midX = x1 + x2 + nodeSize.width + (count * (nodeSize.width + x3) - x3) / 2;
+        const float startX = midX - ((progressSize.width + offsetX) * BATTLE_RESOURCE_MAX_COUNT - offsetX)  / 2;
         for (int i = 0; i < _resources.size(); ++i) {
             ProgressTimer* pt = _resources.at(i);
             const Point pos(startX + progressSize.width / 2 + (progressSize.width + offsetX) * i, y2 / 2);
@@ -128,12 +127,22 @@ void MapUICardDeck::registerObserver(MapUICardDeckObserver *observer)
     _observer = observer;
 }
 
-void MapUICardDeck::select(const Card* card)
+const Card* MapUICardDeck::getCard(int idx) const
+{
+    if (_unitNodes.size() > idx && idx >= 0) {
+        CardNode* node = _unitNodes.at(idx);
+        return node->getCard();
+    }
+    
+    return nullptr;
+}
+
+void MapUICardDeck::select(int idx)
 {
     for (int i = 0; i < _unitNodes.size(); ++i) {
         CardNode* node = _unitNodes.at(i);
         if (node) {
-            node->setSelected(card == node->getCard());
+            node->setSelected(idx == i);
         }
     }
 }
@@ -195,14 +204,14 @@ void MapUICardDeck::remove(const Card* card)
 void MapUICardDeck::onCardNodeTouchedBegan(CardNode* node)
 {
     if (_observer) {
-        _observer->onMapUICardDeckUnitTouchedBegan(node->getCard());
+        _observer->onMapUICardDeckUnitTouchedBegan(node->getCard(), node->getTag());
     }
 }
 
 void MapUICardDeck::onCardNodeTouchedEnded(CardNode* node, bool isValid)
 {
     if (isValid && _observer) {
-        _observer->onMapUICardDeckUnitTouchedEnded(node->getCard());
+        _observer->onMapUICardDeckUnitTouchedEnded(node->getCard(), node->getTag());
     }
 }
 
@@ -214,6 +223,7 @@ void MapUICardDeck::createUnitNode(const Card* card, size_t idx)
         node->update(card, 10);
         node->registerObserver(this);
         node->setPosition(_unitPositions.at(idx));
+        node->setTag((int)idx);
         addChild(node);
         _unitNodes.push_back(node);
     }
@@ -227,6 +237,7 @@ void MapUICardDeck::reload()
             CardNode* node = _unitNodes.at(i);
             const Point& position = _unitPositions.at(i);
             node->setPosition(position);
+            node->setTag(i);
         }
     }
 }

@@ -62,12 +62,14 @@ protected:
     Rect getRealBoundingBox(Node* node) const;
     void reloadTable();
     void configTable(bool reload);
+    CardNode* createCardNode(const std::string& name);
     void createDragNode(const std::string& name);
     void removeDragNode();
     void reloadCardDecks();
     void selectCardOnDecks(const std::string& name);
     void cardBackToTable();
     int getIntersectedCardDeckIdx(const Rect& rect) const;
+    void getRarityAndCost(const std::string& name, int& rarity, int& cost) const;
     
     const std::set<std::string>& getPickedCards() const;
     void loadData();

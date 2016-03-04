@@ -27,4 +27,7 @@
 	<item name="时光神殿守卫" icon="icon_v_gongchengche"/>
 	<item name="威克拉姆国王" icon="icon_v_guowang"/>
 	<item name="吸血鬼骑士" icon="icon_v_kuloubing"/>
+	<item name="火球术" icon="icon_v_huoqiushu"/>
+	<item name="治愈" icon="icon_v_jiaxuefashu"/>
+	<item name="顺风之力" icon="icon_v_jiasufashu"/>
 </root>

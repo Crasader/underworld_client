@@ -91,10 +91,8 @@ void GameRender::init(const Game* game, Commander* commander)
     _deck = game->getDeck(factionIndex);
     
     if (_mapUILayer) {
-        for (int i = 0; i < _deck->getInitHandCount(); ++i) {
-            const Card* card = _deck->getHandCard(i);
-            _mapUILayer->insertCard(card);
-        }
+        const int count = _deck ? _deck->getHandCapacity() : 0;
+        _mapUILayer->createCardDeck(count);
     }
     
     updateAll();
@@ -270,8 +268,8 @@ void GameRender::updateUILayer()
     if (_deck) {
         const int counter = _deck->getCounter();
         const int total = _deck->getDrawSpanFrames();
-        const float time = (float)counter / (float)total * total / GameConstants::FRAME_PER_SEC;
-        _mapUILayer->updateCardDeckCountDown(time);
+        const float time = (1.0 - (float)(counter % total) / (float)total) * total / GameConstants::FRAME_PER_SEC;
+        _mapUILayer->updateCardDeckCountDown(ceil(time));
         
         const vector<Deck::DeckLog>& logs = _deck->getLogs();
         for (int i = 0; i < logs.size(); ++i) {
@@ -284,6 +282,8 @@ void GameRender::updateUILayer()
                 _mapUILayer->insertCard(card);
             }
         }
+        
+        _deck->clearEventLog();
     }
 }
 
@@ -540,7 +540,7 @@ void GameRender::updateResources()
         }
         
         if (_mapUILayer) {
-            static const string& name = RES_NAME_GOLD;
+            static const string& name = RES_NAME_WOOD;
             if (_resources.find(name) != end(_resources)) {
                 _mapUILayer->updateCardDeckResource(_resources.at(name));
             }

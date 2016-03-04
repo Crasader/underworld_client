@@ -38,6 +38,7 @@
 
 #define CANDIDATE_CARD_DECKS_COUNT  (8)
 #define CARD_DECKS_COUNT            (6)
+#define BATTLE_RESOURCE_MAX_COUNT   (10)
 
 #define ONLINE_UPDATE_SEARCH_PATH       (FileUtils::getInstance()->getWritablePath() + "Resource/")
 #define DEFAULT_RESOURCE_FOLDER         ("res")

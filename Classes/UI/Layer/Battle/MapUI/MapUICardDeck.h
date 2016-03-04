@@ -22,18 +22,19 @@ class MapUICardDeckObserver
 {
 public:
     virtual ~MapUICardDeckObserver() {}
-    virtual void onMapUICardDeckUnitTouchedBegan(const UnderWorld::Core::Card* card) = 0;
-    virtual void onMapUICardDeckUnitTouchedEnded(const UnderWorld::Core::Card* card) = 0;
+    virtual void onMapUICardDeckUnitTouchedBegan(const UnderWorld::Core::Card* card, int idx) = 0;
+    virtual void onMapUICardDeckUnitTouchedEnded(const UnderWorld::Core::Card* card, int idx) = 0;
 };
 
 class MapUICardDeck: public Node, public CardNodeObserver
 {
 public:
-    static MapUICardDeck* create();
+    static MapUICardDeck* create(int count);
     virtual ~MapUICardDeck();
     void registerObserver(MapUICardDeckObserver *observer);
     
-    void select(const UnderWorld::Core::Card* card);
+    const UnderWorld::Core::Card* getCard(int idx) const;
+    void select(int idx);
     void updateTimer(float time);
     void updateResource(float count);
     void insert(const UnderWorld::Core::Card* card);
@@ -41,7 +42,7 @@ public:
     
 protected:
     MapUICardDeck();
-    virtual bool init() override;
+    bool init(int count);
     
     // CardNodeObserver
     virtual void onCardNodeTouchedBegan(CardNode* node) override;

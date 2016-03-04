@@ -44,7 +44,7 @@ public:
     void clearHighlightedCard();
     
     // card deck
-    void createCardDeck();
+    void createCardDeck(int count);
     void insertCard(const UnderWorld::Core::Card* card);
     void removeCard(const UnderWorld::Core::Card* card);
     void updateCardDeckCountDown(float time);
@@ -60,20 +60,19 @@ protected:
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
     // MapUICardDeckObserver
-    virtual void onMapUICardDeckUnitTouchedBegan(const UnderWorld::Core::Card* card) override;
-    virtual void onMapUICardDeckUnitTouchedEnded(const UnderWorld::Core::Card* card) override;
+    virtual void onMapUICardDeckUnitTouchedBegan(const UnderWorld::Core::Card* card, int idx) override;
+    virtual void onMapUICardDeckUnitTouchedEnded(const UnderWorld::Core::Card* card, int idx) override;
     
     void createUserInfo(bool left, const std::string& account);
     bool isGameOver() const;
     bool isPointInTableView(const Point& point);
-    void onUnitTouched(const UnderWorld::Core::Card* card);
-    void setHighlightedCard(const UnderWorld::Core::Card* card);
+    void setHighlightedCard(int idx);
     
 private:
     MapUILayerObserver *_observer;
     bool _isTouchingTableView;
-    const UnderWorld::Core::Card* _highlightedCard;
-    const UnderWorld::Core::Card* _selectedCard;
+    int _highlightedCard;
+    std::pair<const UnderWorld::Core::Card*, int> _selectedCard;
     // ======================== UI =============================
     Label *_timeLabel;
     ProgressTimer *_myHpProgress;
