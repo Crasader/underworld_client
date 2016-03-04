@@ -189,7 +189,7 @@ void MapUICardDeck::updateResource(const map<string, float>& resources)
 
 void MapUICardDeck::insert(const Card* card)
 {
-    createUnitNode(card, _cardNodes.size());
+    createUnitNode(card);
 }
 
 void MapUICardDeck::remove(const Card* card)
@@ -197,7 +197,9 @@ void MapUICardDeck::remove(const Card* card)
     if (card) {
         bool update(false);
         for (auto iter = begin(_cardNodes); iter != end(_cardNodes); ++iter) {
-            if ((*iter)->getCard() == card) {
+            auto node = *iter;
+            if (node->getCard() == card) {
+                node->removeFromParent();
                 _cardNodes.erase(iter);
                 update = true;
                 break;
@@ -225,29 +227,45 @@ void MapUICardDeck::onCardNodeTouchedEnded(CardNode* node, bool isValid)
     }
 }
 
-void MapUICardDeck::createUnitNode(const Card* card, size_t idx)
+void MapUICardDeck::createUnitNode(const Card* card)
 {
+    const size_t idx(_cardNodes.size());
     const size_t cnt(_unitPositions.size());
-    if (idx < cnt && _cardNodes.size() < cnt) {
-        CardNode* node = CardNode::create();
-        node->update(card, BATTLE_RESOURCE_MAX_COUNT);
-        node->registerObserver(this);
+    CardNode* node = CardNode::create();
+    node->update(card, BATTLE_RESOURCE_MAX_COUNT);
+    node->registerObserver(this);
+    node->setTag((int)idx);
+    if (idx < cnt) {
         node->setPosition(_unitPositions.at(idx));
-        node->setTag((int)idx);
-        addChild(node);
-        _cardNodes.push_back(node);
+    } else {
+        node->setVisible(false);
+        _buffers.push(node);
     }
+    addChild(node);
+    _cardNodes.push_back(node);
 }
 
 void MapUICardDeck::reload()
 {
-    const size_t cnt(_unitPositions.size());
-    for (int i = 0; i < _cardNodes.size(); ++i) {
-        if (i < cnt) {
-            CardNode* node = _cardNodes.at(i);
+    const size_t maxCnt(_unitPositions.size());
+    const size_t cnt(_cardNodes.size());
+    for (int i = 0; i < cnt; ++i) {
+        auto node = _cardNodes.at(i);
+        if (i < maxCnt) {
             const Point& position = _unitPositions.at(i);
             node->setPosition(position);
             node->setTag(i);
+        } else {
+            node->removeFromParent();
         }
+    }
+    
+    size_t i = cnt;
+    while (_buffers.size() > 0 && i < maxCnt) {
+        auto node = _buffers.front();
+        node->setVisible(true);
+        node->setPosition(_unitPositions[i++]);
+        _cardNodes.push_back(node);
+        _buffers.pop();
     }
 }

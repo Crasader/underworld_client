@@ -5,10 +5,7 @@
  </tileset>
  <layer name="logic" width="71" height="40">
   <data encoding="base64" compression="zlib">
-   eJzt2TEOgDAMA8D2/59mZAEBIVWCuJO8IdV4bOcYY4ok50h1py6xzf1d7GOb6C5dN1rVLcPq/432rt5lRcfqHl107AQAAAAAgLvbM53v3Ct96W1itc7vWpGzsrpVv4dmnRXpdvZtxiZvt8ns8LRn1bldt6nM1f//dRcR2bMBtNcD4g==
+   eJztmcsOgCAMBOH/f9qjF+qjFHeJM8nejF3mIER6a60TUpwR6k4uwc1zL/jBTdaLq6NV3SpYvd5sb7WXFR3VPVxw7uYAfmJwE4OXGLwAAGjhGzyG/SmGc801uInBDQAAOLPTPvVlz53Ofsp//s58fTfh7MbhXit6X2ZWVbcZLxUdqmZlukXPVjiZdVPZ4W1P1VxXN8rcrf+vXgghZw4EogQV
   </data>
  </layer>
- <imagelayer name="图像图层 1" opacity="0.46">
-  <image source="640x1136.png"/>
- </imagelayer>
 </map>

@@ -48,7 +48,7 @@ protected:
     virtual void onCardNodeTouchedBegan(CardNode* node) override;
     virtual void onCardNodeTouchedEnded(CardNode* node, bool isValid) override;
     
-    void createUnitNode(const UnderWorld::Core::Card* card, size_t idx);
+    void createUnitNode(const UnderWorld::Core::Card* card);
     void reload();
     
 private:
@@ -59,6 +59,7 @@ private:
     std::vector<Point> _unitPositions;
     std::vector<CardNode*> _cardNodes;
     std::vector<ProgressTimer*> _resources;
+    std::queue<CardNode*> _buffers;
 };
 
 #endif /* MapUICardDeck_h */
