@@ -151,7 +151,7 @@ bool CardNode::init()
             _coldDownProgress->setReverseDirection(true);
             _coldDownProgress->setMidpoint(Point::ANCHOR_MIDDLE);
             _coldDownProgress->setPosition(mid);
-            _cardWidget->addChild(_coldDownProgress, topZOrder);
+            _cardWidget->addChild(_coldDownProgress);
         }
         
         // spell activated sprite
@@ -159,7 +159,7 @@ bool CardNode::init()
             _shiningSprite = Sprite::create("GameImages/test/ui_xuanzhong.png");
             _shiningSprite->setVisible(false);
             _shiningSprite->setPosition(mid);
-            _cardWidget->addChild(_shiningSprite, topZOrder);
+            _cardWidget->addChild(_shiningSprite);
         }
         
         return true;
@@ -178,20 +178,22 @@ void CardNode::update(const Card* card, float resource)
     _card = card;
     
     if (card) {
-        int cost(0);
-        static const string resourceName = RES_NAME_WOOD;
-        const auto& costs = _card->getCardType()->getCost();
-        if (costs.find(resourceName) != costs.end()) {
-            cost = costs.at(resourceName);
-        }
-        
-        const UnitType* ut = card->getUnitType();
-        if (ut) {
-            update(ut->getName(), ut->getRarity(), cost, resource);
-        } else {
-            const SpellType* st = card->getSpellType();
-            if (st) {
-                update(st->getSpellName(), 0, cost, resource);
+        const CardType* ct = card->getCardType();
+        if (ct) {
+            const string& name = ct->getName();
+            
+            int cost(0);
+            static const string resourceName = RES_NAME_WOOD;
+            const auto& costs = ct->getCost();
+            if (costs.find(resourceName) != costs.end()) {
+                cost = costs.at(resourceName);
+            }
+            
+            const UnitType* ut = card->getUnitType();
+            if (ut) {
+                update(name, ut->getRarity(), cost, resource);
+            } else {
+                update(name, 0, cost, resource);
             }
         }
     }
@@ -280,6 +282,7 @@ BattleSmallResourceNode* CardNode::readdResourceNode(Node* currentNode, ::Resour
     if (currentNode) {
         auto node = BattleSmallResourceNode::create(type, count);
         node->setPosition(currentNode->getPosition());
+        node->setLocalZOrder(topZOrder);
         currentNode->getParent()->addChild(node);
         currentNode->removeFromParent();
         return node;
