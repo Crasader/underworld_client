@@ -113,9 +113,10 @@ bool CardNode::init()
         }
         
         const Size size(_cardWidget->getContentSize());
+        const Point mid(size.width / 2, size.height / 2);
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         setContentSize(size);
-        mainNode->setPosition(Point(size.width / 2, size.height / 2));
+        mainNode->setPosition(mid);
         
         _cardWidget->addTouchEventListener([=](Ref *pSender, Widget::TouchEventType type) {
             Widget* button = dynamic_cast<Widget*>(pSender);
@@ -149,20 +150,16 @@ bool CardNode::init()
             _coldDownProgress->setType(ProgressTimer::Type::RADIAL);
             _coldDownProgress->setReverseDirection(true);
             _coldDownProgress->setMidpoint(Point::ANCHOR_MIDDLE);
-            _iconSprite->addChild(_coldDownProgress, topZOrder);
-            
-            const Size& size = _iconSprite->getContentSize();
-            _coldDownProgress->setPosition(Point(size.width / 2, size.height / 2));
+            _coldDownProgress->setPosition(mid);
+            _cardWidget->addChild(_coldDownProgress, topZOrder);
         }
         
         // spell activated sprite
         {
             _shiningSprite = Sprite::create("GameImages/test/ui_xuanzhong.png");
             _shiningSprite->setVisible(false);
-            _cardWidget->addChild(_shiningSprite);
-            
-            const Size& size = _cardWidget->getContentSize();
-            _shiningSprite->setPosition(Point(size.width / 2, size.height / 2));
+            _shiningSprite->setPosition(mid);
+            _cardWidget->addChild(_shiningSprite, topZOrder);
         }
         
         return true;
@@ -248,7 +245,7 @@ void CardNode::checkResource(float count)
         if (_coldDownProgress) {
             _coldDownProgress->setVisible(disabled);
             if (disabled) {
-                _coldDownProgress->setPercentage(100.0f * count / cost);
+                _coldDownProgress->setPercentage(100.0f * (1.0f - count / cost));
             }
         }
     }

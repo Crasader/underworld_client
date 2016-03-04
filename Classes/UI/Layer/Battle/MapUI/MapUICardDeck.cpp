@@ -129,8 +129,8 @@ void MapUICardDeck::registerObserver(MapUICardDeckObserver *observer)
 
 const Card* MapUICardDeck::getCard(int idx) const
 {
-    if (_unitNodes.size() > idx && idx >= 0) {
-        CardNode* node = _unitNodes.at(idx);
+    if (_cardNodes.size() > idx && idx >= 0) {
+        CardNode* node = _cardNodes.at(idx);
         return node->getCard();
     }
     
@@ -139,8 +139,8 @@ const Card* MapUICardDeck::getCard(int idx) const
 
 void MapUICardDeck::select(int idx)
 {
-    for (int i = 0; i < _unitNodes.size(); ++i) {
-        CardNode* node = _unitNodes.at(i);
+    for (int i = 0; i < _cardNodes.size(); ++i) {
+        CardNode* node = _cardNodes.at(i);
         if (node) {
             node->setSelected(idx == i);
         }
@@ -181,20 +181,24 @@ void MapUICardDeck::updateResource(const map<string, float>& resources)
     if (_countLabel) {
         _countLabel->setString(StringUtils::format("%d", static_cast<int>(count)));
     }
+    
+    for (auto& node : _cardNodes) {
+        node->checkResource(count);
+    }
 }
 
 void MapUICardDeck::insert(const Card* card)
 {
-    createUnitNode(card, _unitNodes.size());
+    createUnitNode(card, _cardNodes.size());
 }
 
 void MapUICardDeck::remove(const Card* card)
 {
     if (card) {
         bool update(false);
-        for (auto iter = begin(_unitNodes); iter != end(_unitNodes); ++iter) {
+        for (auto iter = begin(_cardNodes); iter != end(_cardNodes); ++iter) {
             if ((*iter)->getCard() == card) {
-                _unitNodes.erase(iter);
+                _cardNodes.erase(iter);
                 update = true;
                 break;
             }
@@ -224,23 +228,23 @@ void MapUICardDeck::onCardNodeTouchedEnded(CardNode* node, bool isValid)
 void MapUICardDeck::createUnitNode(const Card* card, size_t idx)
 {
     const size_t cnt(_unitPositions.size());
-    if (idx < cnt && _unitNodes.size() < cnt) {
+    if (idx < cnt && _cardNodes.size() < cnt) {
         CardNode* node = CardNode::create();
-        node->update(card, 10);
+        node->update(card, BATTLE_RESOURCE_MAX_COUNT);
         node->registerObserver(this);
         node->setPosition(_unitPositions.at(idx));
         node->setTag((int)idx);
         addChild(node);
-        _unitNodes.push_back(node);
+        _cardNodes.push_back(node);
     }
 }
 
 void MapUICardDeck::reload()
 {
     const size_t cnt(_unitPositions.size());
-    for (int i = 0; i < _unitNodes.size(); ++i) {
+    for (int i = 0; i < _cardNodes.size(); ++i) {
         if (i < cnt) {
-            CardNode* node = _unitNodes.at(i);
+            CardNode* node = _cardNodes.at(i);
             const Point& position = _unitPositions.at(i);
             node->setPosition(position);
             node->setTag(i);

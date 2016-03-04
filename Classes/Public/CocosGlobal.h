@@ -37,7 +37,6 @@
 #define TOUCH_CANCEL_BY_MOVING_DISTANCE (10.0f)
 
 #define CANDIDATE_CARD_DECKS_COUNT  (8)
-#define CARD_DECKS_COUNT            (6)
 #define BATTLE_RESOURCE_MAX_COUNT   (10)
 
 #define ONLINE_UPDATE_SEARCH_PATH       (FileUtils::getInstance()->getWritablePath() + "Resource/")

@@ -311,10 +311,7 @@ TableViewCell* BattleDeckLayer::tableCellAtIndex(TableView *table, ssize_t idx)
             }
             
             const string& name = _candidateCards.at(index);
-            int rarity(0);
-            int cost(0);
-            getRarityAndCost(name, rarity, cost);
-            unitNode->update(name, rarity, cost, BATTLE_RESOURCE_MAX_COUNT);
+            updateCardNode(unitNode, name);
             unitNode->setSelected(name == _touchedCard);
             
             const Point point(_cellSize.width * (i + 0.5f) - unitNodeOffsetX / 2, unitNode->getContentSize().height * 0.5f);
@@ -508,11 +505,33 @@ void BattleDeckLayer::configTable(bool reload)
 CardNode* BattleDeckLayer::createCardNode(const string& name)
 {
     auto node = CardNode::create();
-    int rarity(0);
-    int cost(0);
-    getRarityAndCost(name, rarity, cost);
-    node->update(name, rarity, cost, BATTLE_RESOURCE_MAX_COUNT);
+    updateCardNode(node, name);
     return node;
+}
+
+void BattleDeckLayer::updateCardNode(CardNode* node, const string& name)
+{
+    if (node && name.length() > 0) {
+        int rarity(0);
+        int cost(0);
+        if (_techTree) {
+            const UnitType* ut = _techTree->findUnitTypeByName(name);
+            if (ut) {
+                rarity = ut->getRarity();
+            }
+            
+            const CardType* ct = _techTree->findCardTypeByName(name);
+            if (ct) {
+                const auto& costs = ct->getCost();
+                static const string& name = RES_NAME_WOOD;
+                if (costs.find(name) != costs.end()) {
+                    cost = costs.at(name);
+                }
+            }
+        }
+        
+        node->update(name, rarity, cost, BATTLE_RESOURCE_MAX_COUNT);
+    }
 }
 
 void BattleDeckLayer::createDragNode(const string& name)
@@ -600,25 +619,6 @@ int BattleDeckLayer::getIntersectedCardDeckIdx(const cocos2d::Rect& rect) const
     }
     
     return idx;
-}
-
-void BattleDeckLayer::getRarityAndCost(const string& name, int& rarity, int& cost) const
-{
-    if (_techTree) {
-        const UnitType* ut = _techTree->findUnitTypeByName(name);
-        if (ut) {
-            rarity = ut->getRarity();
-        }
-        
-        const CardType* ct = _techTree->findCardTypeByName(name);
-        if (ct) {
-            const auto& costs = ct->getCost();
-            static const string& name = RES_NAME_WOOD;
-            if (costs.find(name) != costs.end()) {
-                cost = costs.at(name);
-            }
-        }
-    }
 }
 
 #pragma mark - Logic

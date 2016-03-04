@@ -412,7 +412,6 @@ void GameRender::onMapUILayerTouchEnded(const Card* card, int idx, const Point& 
         const Coordinate& coordinate = _mapLayer->convertPoint(realPos);
         // command
         if (_commander) {
-            // TODO: set index
             CommandResult result = _commander->tryGiveDeckUseCommand(_deck, idx, coordinate);
             if (kCommandResult_suc == result) {
                 const UnitType* ut = card->getUnitType();
