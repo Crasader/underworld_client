@@ -288,7 +288,8 @@ bool MapUILayer::onTouchBegan(Touch *touch, Event *unused_event)
 
 void MapUILayer::onTouchMoved(Touch *touch, Event *unused_event)
 {
-    if (_isTouchingTableView && _selectedCard.first) {
+    const bool gameOver = isGameOver();
+    if (!gameOver && _isTouchingTableView && _selectedCard.first) {
         const Point& point = touch->getLocation();
         const bool inDeck = isPointInTableView(point);
         
@@ -304,12 +305,13 @@ void MapUILayer::onTouchMoved(Touch *touch, Event *unused_event)
 
 void MapUILayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
-    if (_isTouchingTableView && _selectedCard.first) {
+    const bool gameOver = isGameOver();
+    if (!gameOver && _isTouchingTableView && _selectedCard.first) {
         if (_observer) {
             const Point& point = touch->getLocation();
             const bool inDeck = isPointInTableView(point);
             if (inDeck) {
-                
+                // TODO:
             } else {
                 _observer->onMapUILayerTouchEnded(_selectedCard.first, _selectedCard.second, point);
             }
@@ -324,7 +326,6 @@ void MapUILayer::onTouchEnded(Touch *touch, Event *unused_event)
 #pragma mark - MapUICardDeckObserver
 void MapUILayer::onMapUICardDeckUnitTouchedBegan(const Card* card, int idx)
 {
-    // TODO
     _selectedCard.first = card;
     _selectedCard.second = idx;
 }

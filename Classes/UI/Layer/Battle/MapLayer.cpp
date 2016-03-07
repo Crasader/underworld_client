@@ -129,7 +129,8 @@ bool MapLayer::init(int mapId, const string& mapData)
         }
         //--------- foreground ---------- //
         // TODO: change "_mapId"
-        _tiledMap = cocos2d::experimental::TMXTiledMap::create(StringUtils::format("map/%d.tmx", (2 - _mapId % 2)));
+        static const int mapsCount(3);
+        _tiledMap = cocos2d::experimental::TMXTiledMap::create(StringUtils::format("map/%d.tmx", (0 == _mapId % mapsCount) ? mapsCount : _mapId % mapsCount));
         _scrollView->addChild(_tiledMap, TILEDMAP_ZORDER, TILEDMAP_TAG);
         _mainLayer = _tiledMap->getLayer(TILEDMAP_LAYER_FOREGROUND);
         const Size &mapSize = _tiledMap->getMapSize();
@@ -247,7 +248,7 @@ bool MapLayer::init(int mapId, const string& mapData)
                 action->gotoFrameAndPlay(0, true);
             }
         } else {
-            const vector<MapParticleConfigData*>& particles = DataManager::getInstance()->getMapParticleConfigData(mapId);
+            const vector<MapParticleConfigData*>& particles = DataManager::getInstance()->getMapParticleConfigData(_mapId);
             for (int i = 0; i < particles.size(); ++i) {
                 addParticle(particles.at(i));
             }

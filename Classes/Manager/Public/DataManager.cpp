@@ -10,7 +10,6 @@
 #include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
 #include "LocalHelper.h"
-#include "MapUnitConfigData.h"
 #include "LevelLocalData.h"
 #include "QuestLocalData.h"
 #include "AchievementLocalData.h"
@@ -110,7 +109,7 @@ DataManager::~DataManager()
 void DataManager::init()
 {
     parseLevelData();
-    parseMapUnitConfigData();
+    parseCardDecks();
     parseQuestData(kQuestType_Daily);
     parseQuestData(kQuestType_Life);
     parseAchievementData();
@@ -180,13 +179,9 @@ const LevelLocalData* DataManager::getLevelData(int levelId) const
     return nullptr;
 }
 
-const MapUnitConfigData* DataManager::getMapUnitConfigData(int mapId) const
+const set<string>& DataManager::getCardDecks() const
 {
-    if (_mapUnitData.find(mapId) != _mapUnitData.end()) {
-        return _mapUnitData.at(mapId);
-    }
-    
-    return nullptr;
+    return _cardDecks;
 }
 
 const QuestLocalData* DataManager::getQuestData(QuestType type, int questId) const
@@ -470,9 +465,9 @@ void DataManager::parseLevelData()
     }
 }
 
-void DataManager::parseMapUnitConfigData()
+void DataManager::parseCardDecks()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath("MapUnitConfig.xml");
+    string fileName = LocalHelper::getLocalizedConfigFilePath("CardDecks.xml");
     if (FileUtils::getInstance()->isFileExist(fileName))
     {
         tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
@@ -485,13 +480,7 @@ void DataManager::parseMapUnitConfigData()
                  item;
                  item = item->NextSiblingElement())
             {
-                MapUnitConfigData* data = new (nothrow) MapUnitConfigData(item);
-                const int mapId = data->getMapId();
-                if (_mapUnitData.find(mapId) != _mapUnitData.end()) {
-                    assert(false);
-                } else {
-                    _mapUnitData.insert(make_pair(mapId, data));
-                }
+                _cardDecks.insert(item->Attribute("name"));
             }
             
             CC_SAFE_DELETE(xmlDoc);

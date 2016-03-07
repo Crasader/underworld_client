@@ -32,30 +32,6 @@ static const int topZOrder(1);
 static const int cardTagOnDeck(100);
 static const unsigned int columnCount(6);
 
-static const set<string> allCards {
-    // spell
-    "火球术",
-    "治愈",
-    "顺风之力",
-    // warriors
-    "巨人",
-    "法师",
-    "骑士",
-    "弓箭手",
-    "火枪手",
-    "迷你皮卡",
-    "炸弹人",
-    "王子",
-//    "守卫",
-    "狗",
-    "加血法师",
-    "狼人步兵",
-    "战士",
-    "眩晕战士",
-    "高攻击战士",
-    "三个弓箭手"
-};
-
 BattleDeckLayer* BattleDeckLayer::create()
 {
     BattleDeckLayer *ret = new (nothrow) BattleDeckLayer();
@@ -650,7 +626,8 @@ void BattleDeckLayer::loadData()
     
     _candidateCards.clear();
     
-    set_difference(begin(allCards), end(allCards), begin(_pickedCards), end(_pickedCards), inserter(_candidateCards, begin(_candidateCards)));
+    const set<string>& cardDecks = DataManager::getInstance()->getCardDecks();
+    set_difference(begin(cardDecks), end(cardDecks), begin(_pickedCards), end(_pickedCards), inserter(_candidateCards, begin(_candidateCards)));
     sort(begin(_candidateCards), end(_candidateCards), sortByName);
 }
 

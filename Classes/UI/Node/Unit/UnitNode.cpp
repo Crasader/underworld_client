@@ -412,6 +412,8 @@ void UnitNode::getAttackCsbFiles(vector<string>& output, Unit::Direction directi
             const string& attack = prefix + StringUtils::format("-attack-%d.csb", getResourceId(direction));
             output.push_back(attack);
         }
+        // TODO: handle the unit
+        if (_unitName != "巨龙哨兵")
         {
             const string& backSing = prefix + StringUtils::format("-attack-%d-1.csb", getResourceId(direction));
             output.push_back(backSing);

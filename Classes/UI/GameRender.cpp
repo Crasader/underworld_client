@@ -143,14 +143,13 @@ void GameRender::updateAll()
 void GameRender::updateUnits(const Game* game, int index)
 {
     const World* world = game->getWorld();
-
     const Faction* f = world->getFaction(index);
+    
     for (int i = 0; i < f->getUnitCount(); ++i) {
         const Unit* unit = f->getUnitByIndex(i);
         const int key = unit->getUnitId();
         const Coordinate& pos = unit->getCenterPos();
         const Skill* skill = unit->getCurrentSkill();
-        // TODO: remove test code
         if (skill) {
             SkillClass sc = skill->getSkillType()->getSkillClass();
             if (_allUnitNodes.find(key) != _allUnitNodes.end()) {
@@ -166,7 +165,7 @@ void GameRender::updateUnits(const Game* game, int index)
                 }
             } else {
                 if (kSkillClass_Die != sc) {
-                    const int factionIndex = unit->getBelongFaction()->getFactionIndex();
+                    const int factionIndex = f->getFactionIndex();
                     // TODO: check if the unit is on the right
                     UnitNode* node = UnitNode::create(unit, factionIndex != 0);
                     node->registerObserver(this);
@@ -421,8 +420,12 @@ void GameRender::onMapUILayerTouchEnded(const Card* card, int idx, const Point& 
                     const SpellType* st = card->getSpellType();
                     if (isValidAoeSpell(st)) {
                         const string& name = st->getSpellName();
-                        if (name.find("火球术") != string::npos) {
+                        if (name.find(SPELL_NAME_FIREBALL) != string::npos) {
                             _mapLayer->addFireballSpellEffect();
+                        } else if (name.find(SPELL_NAME_CURE) != string::npos) {
+                            
+                        } else if (name.find(SPELL_NAME_SPEEDUP) != string::npos) {
+                            
                         }
                     }
                 }

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<root>
-	<item mapId="1" is_werewolf="1" cpu_units=""/>
-	<item mapId="4" is_werewolf="0" cpu_units=""/>
-    <item mapId="3" is_werewolf="1" cpu_units=""/>
-    <item mapId="2" is_werewolf="1" cpu_units=""/>
-</root>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<root>
+    <!-- 技能 -->
+    <item name="火球术"/>
+    <item name="治愈"/>
+    <item name="顺风之力"/>
+    <!-- 士兵 -->
+    <item name="巨人"/>
+    <item name="法师"/>
+    <item name="骑士"/>
+    <item name="弓箭手"/>
+    <item name="火枪手"/>
+    <item name="迷你皮卡"/>
+    <item name="炸弹人"/>
+    <item name="王子"/>
+    <item name="守卫"/>
+    <item name="狗"/>
+    <item name="加血法师"/>
+    <item name="狼人步兵"/>
+    <item name="战士"/>
+    <item name="眩晕战士"/>
+    <item name="高攻击战士"/>
+    <item name="三个弓箭手"/>
+</root>

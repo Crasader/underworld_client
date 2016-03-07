@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <root>
-	<item name="守卫" icon="icon_w_langdun"/>
 	<item name="狼人步兵" icon="icon_w_langdun"/>
 	<item name="弓箭手" icon="icon_w_langgongjian"/>
 	<item name="法师" icon="icon_w_langfashi"/>
@@ -22,7 +21,7 @@
 	<item name="迷你皮卡" icon="icon_v_gongchengche"/>
 	<item name="狗" icon="icon_v_gongchengche"/>
 	<item name="高攻击战士" icon="icon_v_gongchengche"/>
-	<item name="巨龙哨兵" icon="icon_v_julongshaobing"/>
+	<item name="守卫" icon="icon_v_julongshaobing"/>
 	<item name="精灵守护者" icon="icon_z_shengqishi"/>
 	<item name="时光神殿守卫" icon="icon_v_gongchengche"/>
 	<item name="威克拉姆国王" icon="icon_v_guowang"/>

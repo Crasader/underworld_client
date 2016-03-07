@@ -50,10 +50,11 @@ public:
     void registerObserver(GameRenderObserver *observer);
     const UnderWorld::Core::MapSetting& getMapSetting() const;
     
+protected:
+    // AbstractRender
     virtual void init(const UnderWorld::Core::Game* game, UnderWorld::Core::Commander* commander) override;
     virtual void render(const UnderWorld::Core::Game* game) override;
     
-protected:
     // UnitNodeObserver
     virtual void onUnitNodeUpdatedFeatures(int unitId) override;
     virtual void onUnitNodePlayDeadAnimationFinished(int unitId) override;

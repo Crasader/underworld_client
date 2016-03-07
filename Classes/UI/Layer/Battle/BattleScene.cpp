@@ -11,7 +11,6 @@
 #include "GameSettings.h"
 #include "DataManager.h"
 #include "SoundManager.h"
-#include "MapUnitConfigData.h"
 #include "TechTree.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "ApiBridge.h"
@@ -115,9 +114,8 @@ void BattleScene::start()
     setting.setFactionCount(2);
     setting.setThisFactionIndex(0);
     
-    const MapUnitConfigData* mapUnitData = DataManager::getInstance()->getMapUnitConfigData(_mapId);
-    if (mapUnitData) {
-        const bool isWerewolf = mapUnitData->isWerewolf();
+    if (true) {
+        const bool isWerewolf = true;
         
         {
             static const string wereWolf("狼人族");
@@ -153,38 +151,10 @@ void BattleScene::start()
             setting.setTower(1, tower1);
         }
         
-        // set camps
-//        {
-//            set<string> cards;
-//            UserDefaultsDataManager::getInstance()->getSelectedCards(cards);
-//            
-//            vector<UnderWorld::Core::CampSetting> cs;
-//            cs.resize(cards.size());
-//            
-//            int i = 0;
-//            for (auto iter = begin(cards); iter != end(cards); ++iter, ++i) {
-//                UnderWorld::Core::UnitSetting us;
-//                const string& name = *iter;
-//                createUnitSetting(name, us);
-//                cs[i].setUnitSetting(us);
-//                
-//                const UnderWorld::Core::UnitType* ut = getUnitType(name);
-//                if (ut) {
-//                    const int production = static_cast<int>(ut->getPutCost().size());
-//                    cs[i].setMaxProduction(production);
-//                    
-//                    const std::vector<std::string>& upgradeNames = ut->getUpgradeNames();
-//                    for (const auto& string : upgradeNames) {
-//                        if (string.length() > 0) {
-//                            createUnitSetting(string, us);
-//                            cs[i].addUpgradeUnitSetting(us);
-//                        }
-//                    }
-//                }
-//            }
-//            
-//            setting.setCamps(0, cs);
-//        }
+        // TODO: set deck
+        {
+            
+        }
     }
     
     _looper = new (nothrow) UnderWorld::Core::GameLooper(_render, _sch);
@@ -202,22 +172,4 @@ void BattleScene::clear()
     CC_SAFE_DELETE(_render);
     CC_SAFE_DELETE(_techTree);
     removeAllChildren();
-}
-
-const UnderWorld::Core::UnitType* BattleScene::getUnitType(const std::string& name) const
-{
-    if (_techTree) {
-        const UnderWorld::Core::UnitType* ut = _techTree->findUnitTypeByName(name);
-        return ut;
-    }
-    
-    return nullptr;
-}
-
-void BattleScene::createUnitSetting(const std::string& name, UnderWorld::Core::UnitSetting& output)
-{
-    output.setUnitTypeName(name);
-    output.setLevel(0);
-    output.setQuality(0);
-    output.setTalentLevel(0);
 }

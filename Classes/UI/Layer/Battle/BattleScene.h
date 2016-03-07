@@ -18,7 +18,6 @@ USING_NS_CC;
 
 namespace UnderWorld { namespace Core {
     class TechTree;
-    class UnitType;
 }}
 
 class MapLayer;
@@ -40,9 +39,6 @@ private:
     
     void start();
     void clear();
-    
-    const UnderWorld::Core::UnitType* getUnitType(const std::string& name) const;
-    void createUnitSetting(const std::string& name, UnderWorld::Core::UnitSetting& output);
     
 private:
     int _mapId;

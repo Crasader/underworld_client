@@ -15,7 +15,6 @@
 #include "SkllType.h"
 
 class LevelLocalData;
-class MapUnitConfigData;
 class QuestLocalData;
 class AchievementLocalData;
 class ObjectLocalData;
@@ -53,7 +52,7 @@ public:
     std::string getTechTreeData(int mapId) const;
     
     const LevelLocalData* getLevelData(int levelId) const;
-    const MapUnitConfigData* getMapUnitConfigData(int mapId) const;
+    const std::set<std::string>& getCardDecks() const;
     const QuestLocalData* getQuestData(QuestType type, int questId) const;
     const AchievementLocalData* getAchievementData(int achievementId) const;
     const ObjectLocalData* getObjectData(int objectId) const;
@@ -104,7 +103,7 @@ protected:
     
 protected:
     void parseLevelData();
-    void parseMapUnitConfigData();
+    void parseCardDecks();
     void parseQuestData(QuestType type);
     void parseAchievementData();
     void parseObjectData();
@@ -134,7 +133,7 @@ protected:
     
 private:
     std::map<int, LevelLocalData*> _levels;
-    std::map<int, MapUnitConfigData*> _mapUnitData;
+    std::set<std::string> _cardDecks;
     std::map<QuestType, std::map<int, QuestLocalData*>> _quests;
     std::map<int, AchievementLocalData*> _achievements;
     std::map<int, ObjectLocalData*> _objects;
