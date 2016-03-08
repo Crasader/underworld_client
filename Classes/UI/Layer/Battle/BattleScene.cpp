@@ -18,7 +18,7 @@
 
 BattleScene* BattleScene::create(int mapId)
 {
-    BattleScene *ret = new (std::nothrow) BattleScene();
+    BattleScene *ret = new (nothrow) BattleScene();
     if (ret && ret->init(mapId))
     {
         ret->autorelease();
@@ -103,10 +103,10 @@ void BattleScene::start()
     setting.setMap(_render->getMapSetting());
     
     // 3.2. set techTree;
-    std::string techTreeData = DataManager::getInstance()->getTechTreeData(1);
+    string techTreeData = DataManager::getInstance()->getTechTreeData(1);
     setting.setTechTree(techTreeData);
     if (!_techTree) {
-        _techTree = new (std::nothrow) UnderWorld::Core::TechTree();
+        _techTree = new (nothrow) UnderWorld::Core::TechTree();
         _techTree->init(techTreeData);
     }
     

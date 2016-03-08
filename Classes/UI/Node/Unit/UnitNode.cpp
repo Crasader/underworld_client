@@ -508,10 +508,10 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
         if (play) {
             // 1. add scheduler
             if (!_speedScheduler) {
-                _speedScheduler = new Scheduler();
+                _speedScheduler = new (nothrow) Scheduler();
                 Director::getInstance()->getScheduler()->scheduleUpdate(_speedScheduler, 0, false);
                 if (!_actionManager) {
-                    _actionManager = new ActionManager();
+                    _actionManager = new (nothrow) ActionManager();
                     _speedScheduler->scheduleUpdate(_actionManager, 0, false);
                 }
             }

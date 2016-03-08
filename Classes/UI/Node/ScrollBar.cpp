@@ -38,7 +38,7 @@ ScrollBar * ScrollBar::create(const char * bar_bgFile, const char * bar_sliderFi
 
 ScrollBar * ScrollBar::create(ui::Scale9Sprite * bar_bg, ui::Scale9Sprite * bar_slider, extension::TableView * tableView, extension::ScrollView::Direction dir)
 {
-    ScrollBar * pRet = new ScrollBar();
+    ScrollBar * pRet = new (std::nothrow) ScrollBar();
     if (pRet && pRet->init(bar_bg, bar_slider, tableView, dir))
     {
         pRet->autorelease();

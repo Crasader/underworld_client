@@ -36,7 +36,7 @@ ResourceButton::~ResourceButton()
 
 ResourceButton* ResourceButton::create(bool isBigSize, bool animated, bool needResize, ResourceType type, int count, const Color4B& color, const Button::ccWidgetClickCallback& callback)
 {
-    ResourceButton *p = new (std::nothrow)ResourceButton();
+    ResourceButton *p = new (std::nothrow) ResourceButton();
     if(p && p->init(isBigSize, animated, needResize, type, count, color, callback))
     {
         p->autorelease();
