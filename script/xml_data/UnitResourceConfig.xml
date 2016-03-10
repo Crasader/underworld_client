@@ -30,4 +30,6 @@
 	<item render_key="时光神殿守卫" is_short_range="1" prefix="Time-temple-guard" strike_point="Strike point-6" crit_strike_point="Strike point-6" attck_sound="sound_vsl" die_sound="sound_vsd" foot_pos_x="0" foot_pos_y="0" foot_scale_x="1" foot_scale_y="1" hp_bar_pos_y="-100"/>
 	<item render_key="威克拉姆国王" is_short_range="1" prefix="Witkey-King" strike_point="Strike point-6" crit_strike_point="Strike point-6" attck_sound="sound_vsl" die_sound="sound_vsd" foot_pos_x="0" foot_pos_y="0" foot_scale_x="1" foot_scale_y="1" hp_bar_pos_y="-100"/>
 	<item render_key="吸血鬼骑士" is_short_range="1" prefix="Vampire-knight" strike_point="Strike point-6" crit_strike_point="Strike point-6" attck_sound="sound_vsl" die_sound="sound_vsd" foot_pos_x="0" foot_pos_y="0" foot_scale_x="1" foot_scale_y="1" hp_bar_pos_y="-100"/>
+	<item render_key="石像鬼" is_short_range="1" prefix="gargoyle" strike_point="Strike point-6" crit_strike_point="Strike point-6" attck_sound="sound_vsl" die_sound="sound_vsd" foot_pos_x="0" foot_pos_y="0" foot_scale_x="1" foot_scale_y="1" hp_bar_pos_y="-100"/>
+	<item render_key="飞鹰" is_short_range="1" prefix="Eagle" strike_point="Strike point-6" crit_strike_point="Strike point-6" attck_sound="sound_vsl" die_sound="sound_vsd" foot_pos_x="0" foot_pos_y="0" foot_scale_x="1" foot_scale_y="1" hp_bar_pos_y="-100"/>
 </root>
