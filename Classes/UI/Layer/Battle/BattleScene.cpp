@@ -12,6 +12,7 @@
 #include "DataManager.h"
 #include "SoundManager.h"
 #include "TechTree.h"
+#include "UserDefaultsDataManager.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "ApiBridge.h"
 #endif
@@ -32,9 +33,8 @@ BattleScene* BattleScene::create(int mapId)
 BattleScene::BattleScene()
 :_mapId(0)
 ,_render(nullptr)
-,_looper(nullptr)
+,_client(nullptr)
 ,_sch(nullptr)
-,_techTree(nullptr)
 {
     
 }
@@ -97,79 +97,42 @@ void BattleScene::start()
     _sch = new (nothrow) GameScheduler();
     
     // 3. game setting
-    UnderWorld::Core::GameSettings setting;
+    UnderWorld::Core::GameContentSetting contentSetting;
     
-    // 3.1. set map setting
-    setting.setMap(_render->getMapSetting());
+    contentSetting.setFactionTypeKey("狼人族");
+
+    UnderWorld::Core::UnitSetting core;
+    core.setUnitTypeName("狼人基地");
+    contentSetting.setCore(core);
     
-    // 3.2. set techTree;
-    string techTreeData = DataManager::getInstance()->getTechTreeData(1);
-    setting.setTechTree(techTreeData);
-    if (!_techTree) {
-        _techTree = new (nothrow) UnderWorld::Core::TechTree();
-        _techTree->init(techTreeData);
+    UnderWorld::Core::UnitSetting tower;
+    tower.setUnitTypeName("狼人箭塔");
+    contentSetting.setTower(tower);
+    
+    set<string> cards;
+    std::vector<UnderWorld::Core::CardSetting> cardSettings;
+    UserDefaultsDataManager::getInstance()->getSelectedCards(cards);
+    
+    int i = 0;
+    for (auto iter = begin(cards); iter != end(cards); ++iter, ++i) {
+        UnderWorld::Core::CardSetting cs;
+        cs.setCardTypeName(*iter);
+        cardSettings.push_back(cs);
     }
+    contentSetting.setCards(cardSettings);
     
-    // 3.3. set faction data
-    setting.setFactionCount(2);
-    setting.setThisFactionIndex(0);
     
-    if (true) {
-        const bool isWerewolf = true;
-        
-        {
-            static const string wereWolf("狼人族");
-            static const string vampire("吸血鬼族");
-            setting.setFactionTypeKey(0, isWerewolf ? wereWolf : vampire);
-            setting.setFactionControlType(0, UnderWorld::Core::kFactionControlType_Human);
-            setting.setTeam(0, 0);
-            setting.setMapIndex(0, 0);
-            
-            setting.setFactionTypeKey(1, isWerewolf ? vampire : wereWolf);
-            setting.setFactionControlType(1, UnderWorld::Core::kFactionControlType_Cpu);
-            setting.setTeam(1, 1);
-            setting.setMapIndex(1, 1);
-        }
-        
-        {
-            static const string wereWolfCore("狼人基地");
-            static const string wereWolfTower("狼人箭塔");
-            static const string vampireCore("吸血鬼基地");
-            static const string vampireTower("吸血鬼箭塔");
-            // 3.4. set core & tower
-            UnderWorld::Core::UnitSetting core0;
-            core0.setUnitTypeName(isWerewolf ? wereWolfCore : vampireCore);
-            setting.setCore(0, core0);
-            UnderWorld::Core::UnitSetting core1;
-            core1.setUnitTypeName(isWerewolf ? vampireCore : wereWolfCore);
-            setting.setCore(1, core1);
-            UnderWorld::Core::UnitSetting tower0;
-            tower0.setUnitTypeName(isWerewolf ? wereWolfTower : vampireTower);
-            setting.setTower(0, tower0);
-            UnderWorld::Core::UnitSetting tower1;
-            tower1.setUnitTypeName(isWerewolf ? vampireTower : wereWolfTower);
-            setting.setTower(1, tower1);
-        }
-        
-        // TODO: set deck
-        {
-            
-        }
-    }
-    
-    _looper = new (nothrow) UnderWorld::Core::GameLooper(_render, _sch);
-    _looper->init(setting);
-    _looper->start();
+    _client = new (nothrow) UnderWorld::Core::GameClient(_render, _sch, nullptr);
+    _client->launchPve(_render->getMapSetting(), contentSetting);
 }
 
 void BattleScene::clear()
 {
-    if (_looper) {
-        _looper->end();
+    if (_client) {
+        _client->quit();
     }
-    CC_SAFE_DELETE(_looper);
+    CC_SAFE_DELETE(_client);
     CC_SAFE_DELETE(_sch);
     CC_SAFE_DELETE(_render);
-    CC_SAFE_DELETE(_techTree);
     removeAllChildren();
 }

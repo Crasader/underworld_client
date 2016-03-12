@@ -13,6 +13,7 @@
 #include "GameLooper.h"
 #include "GameScheduler.h"
 #include "GameRender.h"
+#include "GameClient.h"
 
 USING_NS_CC;
 
@@ -43,9 +44,8 @@ private:
 private:
     int _mapId;
     GameRender* _render;
-    UnderWorld::Core::GameLooper* _looper;
+    UnderWorld::Core::GameClient * _client;
     GameScheduler* _sch;
-    UnderWorld::Core::TechTree* _techTree;
 };
 
 #endif /* BattleScene_h */

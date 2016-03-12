@@ -185,20 +185,6 @@ bool MapLayer::init(int mapId, const string& mapData)
         }
         _mapSetting.init(mapData);
         
-        {
-            set<string> cards;
-            UserDefaultsDataManager::getInstance()->getSelectedCards(cards);
-            
-            int i = 0;
-            for (auto iter = begin(cards); iter != end(cards); ++iter, ++i) {
-                UnderWorld::Core::CardSetting cs;
-                cs.setCardTypeName(*iter);
-                _mapSetting.getDeckSetting(0).addCardSetting(cs);
-                _mapSetting.getDeckSetting(1).addCardSetting(cs);
-            }
-        }
-        
-        
         CCLOG("%zd logicLayer", _mapSetting.getUnWalkableArea().size());
         logicLayer->removeFromParent();
         

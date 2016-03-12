@@ -43,6 +43,10 @@
 		30236FF71C5B6AFA00FB1802 /* PathFinderInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30236FF61C5B6AFA00FB1802 /* PathFinderInterface.cpp */; };
 		3028EBC31BFF0CBD00511C51 /* DynamicValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3028EBC11BFF0CBD00511C51 /* DynamicValue.cpp */; };
 		3028EBC61BFF0D4800511C51 /* Condition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3028EBC41BFF0D4700511C51 /* Condition.cpp */; };
+		306048AA1C94694D0053054F /* GameClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 306048A81C94694D0053054F /* GameClient.cpp */; };
+		306048AE1C9568E90053054F /* NetworkSerivce.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 306048AC1C9568E90053054F /* NetworkSerivce.cpp */; };
+		306048B11C9575550053054F /* NetworkMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 306048AF1C9575550053054F /* NetworkMessage.cpp */; };
+		306048B41C9579750053054F /* NetworkServiceImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 306048B21C9579750053054F /* NetworkServiceImpl.cpp */; };
 		306802431C87CB13000990F9 /* Deck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 306802411C87CB13000990F9 /* Deck.cpp */; };
 		306802461C87CB2A000990F9 /* CardType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 306802441C87CB2A000990F9 /* CardType.cpp */; };
 		306802491C881ABA000990F9 /* Camp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 306802471C881ABA000990F9 /* Camp.cpp */; };
@@ -336,6 +340,14 @@
 		3028EBC21BFF0CBD00511C51 /* DynamicValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DynamicValue.h; path = Core/Unit/Element/DynamicValue.h; sourceTree = "<group>"; };
 		3028EBC41BFF0D4700511C51 /* Condition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Condition.cpp; path = Core/Unit/Element/Condition.cpp; sourceTree = "<group>"; };
 		3028EBC51BFF0D4700511C51 /* Condition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Condition.h; path = Core/Unit/Element/Condition.h; sourceTree = "<group>"; };
+		306048A81C94694D0053054F /* GameClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameClient.cpp; path = Client/GameClient.cpp; sourceTree = "<group>"; };
+		306048A91C94694D0053054F /* GameClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameClient.h; path = Client/GameClient.h; sourceTree = "<group>"; };
+		306048AC1C9568E90053054F /* NetworkSerivce.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NetworkSerivce.cpp; path = Core/Network/NetworkSerivce.cpp; sourceTree = "<group>"; };
+		306048AD1C9568E90053054F /* NetworkSerivce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkSerivce.h; path = Core/Network/NetworkSerivce.h; sourceTree = "<group>"; };
+		306048AF1C9575550053054F /* NetworkMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NetworkMessage.cpp; path = Core/Network/NetworkMessage.cpp; sourceTree = "<group>"; };
+		306048B01C9575550053054F /* NetworkMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkMessage.h; path = Core/Network/NetworkMessage.h; sourceTree = "<group>"; };
+		306048B21C9579750053054F /* NetworkServiceImpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NetworkServiceImpl.cpp; path = Core/Network/NetworkServiceImpl.cpp; sourceTree = "<group>"; };
+		306048B31C9579750053054F /* NetworkServiceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkServiceImpl.h; path = Core/Network/NetworkServiceImpl.h; sourceTree = "<group>"; };
 		306802411C87CB13000990F9 /* Deck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Deck.cpp; path = Core/Game/Deck/Deck.cpp; sourceTree = "<group>"; };
 		306802421C87CB13000990F9 /* Deck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Deck.h; path = Core/Game/Deck/Deck.h; sourceTree = "<group>"; };
 		306802441C87CB2A000990F9 /* CardType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CardType.cpp; path = Core/Game/Deck/CardType.cpp; sourceTree = "<group>"; };
@@ -741,6 +753,7 @@
 		045116D51BCFB9E7002AA721 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				306048AB1C95689D0053054F /* Network */,
 				3075346E1BF33DEE0057DCED /* Test */,
 				300098CA1BD0A90F00B6E284 /* Utils */,
 				045116D91BCFBA09002AA721 /* World */,
@@ -1011,6 +1024,28 @@
 			name = Element;
 			sourceTree = "<group>";
 		};
+		3060489D1C9468D80053054F /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				306048A81C94694D0053054F /* GameClient.cpp */,
+				306048A91C94694D0053054F /* GameClient.h */,
+			);
+			name = Client;
+			sourceTree = "<group>";
+		};
+		306048AB1C95689D0053054F /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				306048AC1C9568E90053054F /* NetworkSerivce.cpp */,
+				306048AD1C9568E90053054F /* NetworkSerivce.h */,
+				306048AF1C9575550053054F /* NetworkMessage.cpp */,
+				306048B01C9575550053054F /* NetworkMessage.h */,
+				306048B21C9579750053054F /* NetworkServiceImpl.cpp */,
+				306048B31C9579750053054F /* NetworkServiceImpl.h */,
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
 		3068023F1C87CA2C000990F9 /* Deck */ = {
 			isa = PBXGroup;
 			children = (
@@ -1059,6 +1094,7 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				3060489D1C9468D80053054F /* Client */,
 				045116D51BCFB9E7002AA721 /* Core */,
 				A12D2F571BFDE88A00389DAC /* Data */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
@@ -1840,6 +1876,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				306048B41C9579750053054F /* NetworkServiceImpl.cpp in Sources */,
 				300B1E581C50C4D800F8D6ED /* GameSettings.cpp in Sources */,
 				A1B4AE0B1C2004AB005906A6 /* User.cpp in Sources */,
 				30E05B2C1C56450700A3A3E9 /* PathService.cpp in Sources */,
@@ -1862,6 +1899,7 @@
 				A1F58D591C32465900C8A2DD /* SoldierTalentData.cpp in Sources */,
 				A1D461601C3E251000E8E60B /* UAConfigData.cpp in Sources */,
 				A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */,
+				306048B11C9575550053054F /* NetworkMessage.cpp in Sources */,
 				300B1E5C1C50CCED00F8D6ED /* PathFinderImpl.cpp in Sources */,
 				A1720E8C1BCCE19300217E98 /* aes_ctr.c in Sources */,
 				A1720E8E1BCCE19300217E98 /* AESEncryptor.cpp in Sources */,
@@ -1891,6 +1929,7 @@
 				A16BF2821C313E1300E91458 /* AttributeLocalData.cpp in Sources */,
 				307534711BF33ECF0057DCED /* Logger.cpp in Sources */,
 				A16BF2A71C3156A100E91458 /* GearUpgradeData.cpp in Sources */,
+				306048AA1C94694D0053054F /* GameClient.cpp in Sources */,
 				A1720E971BCCE41A00217E98 /* ScrollBar.cpp in Sources */,
 				A18524D01C1AE42000BE261D /* BagLayer.cpp in Sources */,
 				A1E7BAE21C2149E800CE2A85 /* Constants.cpp in Sources */,
@@ -1900,6 +1939,7 @@
 				A1720EB91BCD2D2E00217E98 /* KeychainItemWrapper.m in Sources */,
 				A16BF2A11C314DA000E91458 /* GearSetLocalData.cpp in Sources */,
 				A1720E8B1BCCE19300217E98 /* aes_core.c in Sources */,
+				306048AE1C9568E90053054F /* NetworkSerivce.cpp in Sources */,
 				045117101BCFBA5F002AA721 /* Game.cpp in Sources */,
 				3028EBC31BFF0CBD00511C51 /* DynamicValue.cpp in Sources */,
 				CB3EC89A1C4E4DA600447FE3 /* ChatMark.cpp in Sources */,
