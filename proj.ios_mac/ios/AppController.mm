@@ -28,6 +28,8 @@
 #import "AppDelegate.h"
 #import "RootViewController.h"
 #import "CrashHelper.h"
+#import "DDLog.h"
+#import "DDTTYLogger.h"
 
 @implementation AppController
 
@@ -36,6 +38,14 @@
 
 // cocos2d application instance
 static AppDelegate s_sharedApplication;
+
+- (id)init {
+    if ((self = [super init])) {
+        // Setup logging framework
+        [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    }
+    return self;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
 

@@ -144,6 +144,10 @@
 		A18885771C43ACFB00C9586F /* ArtifactData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A18885751C43ACFB00C9586F /* ArtifactData.cpp */; };
 		A188857A1C43BA1C00C9586F /* TowerManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A18885781C43BA1C00C9586F /* TowerManager.cpp */; };
 		A19EE96D1C1C0F1300E46D77 /* LevelLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19EE96B1C1C0F1300E46D77 /* LevelLocalData.cpp */; };
+		A1A05B3C1C9668FB006FE03B /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A05B3B1C9668FB006FE03B /* GCDAsyncSocket.m */; };
+		A1A05B3F1C967DAC006FE03B /* TCPClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = A1A05B3D1C967DAC006FE03B /* TCPClient.mm */; };
+		A1A05B6C1C96B6A0006FE03B /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A05B5C1C96B6A0006FE03B /* DDLog.m */; };
+		A1A05B731C96C113006FE03B /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A05B721C96C113006FE03B /* DDTTYLogger.m */; };
 		A1A4BA381BCDF81500175E8A /* IapObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A4BA361BCDF81500175E8A /* IapObject.cpp */; };
 		A1A4BA3B1BCE043100175E8A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A1A4BA391BCE043100175E8A /* InfoPlist.strings */; };
 		A1A4BA3E1BCE043800175E8A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A1A4BA3C1BCE043800175E8A /* Localizable.strings */; };
@@ -532,6 +536,14 @@
 		A18885791C43BA1C00C9586F /* TowerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TowerManager.h; sourceTree = "<group>"; };
 		A19EE96B1C1C0F1300E46D77 /* LevelLocalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelLocalData.cpp; sourceTree = "<group>"; };
 		A19EE96C1C1C0F1300E46D77 /* LevelLocalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelLocalData.h; sourceTree = "<group>"; };
+		A1A05B3A1C9668FB006FE03B /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
+		A1A05B3B1C9668FB006FE03B /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
+		A1A05B3D1C967DAC006FE03B /* TCPClient.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TCPClient.mm; sourceTree = "<group>"; };
+		A1A05B3E1C967DAC006FE03B /* TCPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPClient.h; sourceTree = "<group>"; };
+		A1A05B5B1C96B6A0006FE03B /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLog.h; sourceTree = "<group>"; };
+		A1A05B5C1C96B6A0006FE03B /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLog.m; sourceTree = "<group>"; };
+		A1A05B711C96C113006FE03B /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
+		A1A05B721C96C113006FE03B /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTTYLogger.m; sourceTree = "<group>"; };
 		A1A4BA361BCDF81500175E8A /* IapObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IapObject.cpp; sourceTree = "<group>"; };
 		A1A4BA371BCDF81500175E8A /* IapObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IapObject.h; sourceTree = "<group>"; };
 		A1A4BA3A1BCE043100175E8A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = ios/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
@@ -1349,6 +1361,8 @@
 				A1720EAC1BCD2A8400217E98 /* NetworkApi.h */,
 				A1720EBB1BCD309A00217E98 /* NetworkController.cpp */,
 				A1720EBC1BCD309A00217E98 /* NetworkController.h */,
+				A1A05B3D1C967DAC006FE03B /* TCPClient.mm */,
+				A1A05B3E1C967DAC006FE03B /* TCPClient.h */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1366,8 +1380,10 @@
 		A1720EB11BCD2D2E00217E98 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				A1A05B391C9668FB006FE03B /* CocoaAsyncSocket */,
 				A1DE80371BD669BA004DEED1 /* CrashReporter */,
 				A1720EB21BCD2D2E00217E98 /* KeyChain */,
+				A1A05B4D1C96B6A0006FE03B /* Lumberjack */,
 				A1720EB51BCD2D2E00217E98 /* RMStore */,
 			);
 			name = ThirdParty;
@@ -1451,6 +1467,26 @@
 				A18524DF1C1AF66900BE261D /* MapUILayer.h */,
 			);
 			path = MapUI;
+			sourceTree = "<group>";
+		};
+		A1A05B391C9668FB006FE03B /* CocoaAsyncSocket */ = {
+			isa = PBXGroup;
+			children = (
+				A1A05B3A1C9668FB006FE03B /* GCDAsyncSocket.h */,
+				A1A05B3B1C9668FB006FE03B /* GCDAsyncSocket.m */,
+			);
+			path = CocoaAsyncSocket;
+			sourceTree = "<group>";
+		};
+		A1A05B4D1C96B6A0006FE03B /* Lumberjack */ = {
+			isa = PBXGroup;
+			children = (
+				A1A05B5B1C96B6A0006FE03B /* DDLog.h */,
+				A1A05B5C1C96B6A0006FE03B /* DDLog.m */,
+				A1A05B711C96C113006FE03B /* DDTTYLogger.h */,
+				A1A05B721C96C113006FE03B /* DDTTYLogger.m */,
+			);
+			path = Lumberjack;
 			sourceTree = "<group>";
 		};
 		A1A4BA351BCDF7F600175E8A /* Shop */ = {
@@ -1888,6 +1924,7 @@
 				309F76A01BEA3ABA00B2791F /* CoreUtils.cpp in Sources */,
 				A1B4ADFF1C200480005906A6 /* DataManager.cpp in Sources */,
 				A1D461561C3E1C9200E8E60B /* AbstractUpgradeData.cpp in Sources */,
+				A1A05B731C96C113006FE03B /* DDTTYLogger.m in Sources */,
 				A1A4BA491BCE096300175E8A /* Utils.cpp in Sources */,
 				A18885741C43A7A800C9586F /* HeroManager.cpp in Sources */,
 				A1D745C61C1AB9F60020BC1C /* BattleScene.cpp in Sources */,
@@ -1918,6 +1955,7 @@
 				A1720E8F1BCCE19300217E98 /* md5.cpp in Sources */,
 				A1D45C4A1BEB3B1400D1E921 /* ResourceButton.cpp in Sources */,
 				30FD556C1C322FBF0078EC3C /* SpellType.cpp in Sources */,
+				A1A05B3C1C9668FB006FE03B /* GCDAsyncSocket.m in Sources */,
 				30FD55641C2CFDE80078EC3C /* Passive.cpp in Sources */,
 				A1E7B1E91C81513100CE65B4 /* BattleSmallResourceNode.cpp in Sources */,
 				A188856A1C438F1800C9586F /* ResourceManager.cpp in Sources */,
@@ -2011,9 +2049,11 @@
 				A1720E7B1BCCE0F000217E98 /* NumberJump.cpp in Sources */,
 				A1F5BFA81C1FDFBE007C08CB /* ResourceNode.cpp in Sources */,
 				A1E830591C1E75B200FE01B8 /* ChatCell.cpp in Sources */,
+				A1A05B3F1C967DAC006FE03B /* TCPClient.mm in Sources */,
 				A1D25C2F1C8588A100A84EB6 /* MapUICardDeck.cpp in Sources */,
 				A1D745C31C1AB7C40020BC1C /* VictoryLayer.cpp in Sources */,
 				A1F58D561C32444B00C8A2DD /* SoldierQualityData.cpp in Sources */,
+				A1A05B6C1C96B6A0006FE03B /* DDLog.m in Sources */,
 				A1B4AE001C200480005906A6 /* OnlineUpdater.cpp in Sources */,
 				300F25331BFC67550080765C /* FeatureType.cpp in Sources */,
 				A1A74CA81C17DFE800648671 /* MainLayer.cpp in Sources */,
