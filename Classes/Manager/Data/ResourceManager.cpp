@@ -41,7 +41,7 @@ void ResourceManager::updateGemInfo(const rapidjson::Value& jsonDict)
 {
     if (DICTOOL->checkObjectExist_json(jsonDict, "gemCount"))
     {
-        _resources[kResourceType_Gem] = DICTOOL->getIntValue_json(jsonDict, "gemCount");
+        _resources[ResourceType::Gem] = DICTOOL->getIntValue_json(jsonDict, "gemCount");
     }
 }
 
@@ -50,7 +50,7 @@ void ResourceManager::updateResources(const rapidjson::Value& jsonDict, const ch
     if (DICTOOL->checkObjectExist_json(jsonDict, key))
     {
         const rapidjson::Value& resource = DICTOOL->getSubDictionary_json(jsonDict, key);
-        for (int type = kResourceType_Gem; type < kResourceType_MAX; ++type)
+        for (int type = static_cast<int>(ResourceType::Gem); type < static_cast<int>(ResourceType::MAX); ++type)
         {
             const char *key = Utils::format("%d", type).c_str();
             if (DICTOOL->checkObjectExist_json(resource, key))

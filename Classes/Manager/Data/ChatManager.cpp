@@ -62,10 +62,10 @@ void ChatManager::parse(const rapidjson::Value& jsonDict)
     if(DICTOOL->checkObjectExist_json(jsonDict, "messages"))
     {
         const rapidjson::Value& messages = DICTOOL->getSubDictionary_json(jsonDict, "messages");
-        parseChannel(ChatType::kChatType_World, messages, "world");
-        parseChannel(ChatType::kChatType_Private, messages, "personal");
-        parseChannel(ChatType::kChatType_Guild, messages, "guild");
-        parseChannel(ChatType::kChatType_Group, messages, "team");
+        parseChannel(ChatType::World, messages, "world");
+        parseChannel(ChatType::Private, messages, "personal");
+        parseChannel(ChatType::Guild, messages, "guild");
+        parseChannel(ChatType::Group, messages, "team");
         
     }
     if(DICTOOL->checkObjectExist_json(jsonDict, "mark"))

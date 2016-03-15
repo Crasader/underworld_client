@@ -952,7 +952,7 @@ void UnitNode::updateFeatures()
 void UnitNode::addHPBar()
 {
     if (!_hpBar && _unit && _sprite) {
-        _hpBar = DisplayBar::create(kHP, _unit->getBelongFaction()->getFactionIndex(), _unit->getUnitBase().getUnitClass());
+        _hpBar = DisplayBar::create(DisplayBarType::HP, _unit->getBelongFaction()->getFactionIndex(), _unit->getUnitBase().getUnitClass());
         _hpBar->setPosition(getHPBarPosition());
         addChild(_hpBar, topZOrder);
     }
@@ -1110,9 +1110,9 @@ void UnitNode::rollHintResource(const std::string &resource, float amount, float
     Node* hintNode = Node::create();
     Node* iconNode = nullptr;
     if (resource == RES_NAME_GOLD) {
-        iconNode = Sprite::create(StringUtils::format("GameImages/resources/icon_%dB.png", kResourceType_Gold));
+        iconNode = Sprite::create(StringUtils::format("GameImages/resources/icon_%dB.png", ::ResourceType::Gold));
     } else if (resource == RES_NAME_WOOD) {
-        iconNode = Sprite::create(StringUtils::format("GameImages/resources/icon_%dB.png", kResourceType_Wood));
+        iconNode = Sprite::create(StringUtils::format("GameImages/resources/icon_%dB.png", ::ResourceType::Wood));
     }
     assert(iconNode);
     iconNode->setAnchorPoint(Vec2(1.f, 0.5f));

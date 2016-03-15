@@ -14,7 +14,7 @@
 using namespace std;
 
 MessageBoxLayer::MessageBoxLayer()
-:_type(kMessageBoxOnlyYes)
+:_type(MessageBoxType::OnlyYes)
 ,_autoHide(true)
 ,_confirmCallback(nullptr)
 ,_cancelCallback(nullptr)
@@ -84,7 +84,7 @@ bool MessageBoxLayer::init()
 void MessageBoxLayer::show(const std::string& message, int fontZie)
 {
     resetMessageLabel(fontZie);
-    _type = kMessageBoxNoYes;
+    _type = MessageBoxType::NoYes;
     _autoHide = true;
     _confirmCallback = nullptr;
     _cancelCallback = nullptr;
@@ -132,20 +132,20 @@ void MessageBoxLayer::show(const std::string& message, MessageBoxType type, cons
         _messageLabel->setString(message);
     }
     
-    if (type == kMessageBoxOnlyYes)
+    if (type == MessageBoxType::OnlyYes)
     {
         _cancelButton->setVisible(false);
         _confirmButton->setVisible(true);
         _confirmButton->setPosition(_confirmButtonPosition.getMidpoint(_cancelButtonPosition));
     }
-    else if (type == kMessageBoxYesNo)
+    else if (type == MessageBoxType::YesNo)
     {
         _cancelButton->setVisible(true);
         _cancelButton->setPosition(_cancelButtonPosition);
         _confirmButton->setVisible(true);
         _confirmButton->setPosition(_confirmButtonPosition);
     }
-    else if (type == kMessageBoxNoYes)
+    else if (type == MessageBoxType::NoYes)
     {
         _cancelButton->setVisible(true);
         _cancelButton->setPosition(_confirmButtonPosition);
@@ -182,7 +182,7 @@ void MessageBoxLayer::onTouchEnded(Touch *touch, Event *unused_event)
     }
     else if (_autoHide && false == rs.containsPoint(point))
     {
-        if (_type == kMessageBoxOnlyYes)
+        if (_type == MessageBoxType::OnlyYes)
         {
             SoundManager::getInstance()->playButtonSound();
             _confirmCallback(nullptr);

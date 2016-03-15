@@ -14,7 +14,7 @@ using namespace std;
 using namespace cocostudio;
 
 BattleSmallResourceNode::BattleSmallResourceNode()
-:_type(kResourceType_Gold)
+:_type(ResourceType::Gold)
 ,_count(0)
 ,_icon(nullptr)
 ,_countLabel(nullptr)
@@ -48,9 +48,9 @@ bool BattleSmallResourceNode::init(ResourceType type, int count)
         _count = count;
         
         string file;
-        if (kResourceType_Gold == type) {
+        if (ResourceType::Gold == type) {
             file = "UI-quan-2.csb";
-        } else if (kResourceType_Wood == type) {
+        } else if (ResourceType::Wood == type) {
             file = "UI-quan-1.csb";
         }
         Node *effect = CSLoader::createNode(file);

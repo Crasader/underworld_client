@@ -3,12 +3,13 @@
 //  Underworld_Client
 //
 //  Created by Andy on 16/3/14.
-//  Copyright (c) 2015 Mofish Studio. All rights reserved.
+//  Copyright (c) 2016 Mofish Studio. All rights reserved.
 //
 
 #include "TCPClient.h"
 
 #import "GCDAsyncSocket.h"
+#import "NSString+Extended.h"
 
 @class TCPClient_iOS;
 
@@ -17,28 +18,13 @@ using namespace std;
 static TCPClientObserver* _observer = nullptr;
 static TCPClient_iOS* _tcpClient = nil;
 
-@interface NSString (Extended)
-
-- (string)stdString;
-
-@end
-
-@implementation NSString (Extended)
-
-- (string)stdString
-{
-    return self.UTF8String ? string(self.UTF8String) : "";
-}
-
-@end
-
+#pragma mark - TCPClient_iOS
 @interface TCPClient_iOS : NSObject <GCDAsyncSocketDelegate>
 
 - (GCDAsyncSocket*)getSocket;
 
 @end
 
-#pragma mark - TCPClient_iOS
 @implementation TCPClient_iOS
 {
     GCDAsyncSocket* _asyncSocket;
@@ -52,6 +38,11 @@ static TCPClient_iOS* _tcpClient = nil;
     }
     
     return self;
+}
+
+- (void)dealloc
+{
+    _asyncSocket = nil;
 }
 
 - (GCDAsyncSocket*)getSocket
@@ -105,6 +96,15 @@ void TCPClient::init(TCPClientObserver* observer)
     }
 }
 
+void TCPClient::purge()
+{
+    _observer = nullptr;
+    
+    if (_tcpClient) {
+        _tcpClient = nil;
+    }
+}
+
 void TCPClient::connect(const string& url, uint16_t port)
 {
     if (_tcpClient) {
@@ -119,7 +119,7 @@ void TCPClient::connect(const string& url, uint16_t port)
     }
 }
 
-void TCPClient::close()
+void TCPClient::disconnect()
 {
     if (_tcpClient) {
         GCDAsyncSocket* sock = [_tcpClient getSocket];
@@ -129,19 +129,15 @@ void TCPClient::close()
 
 void TCPClient::writeData(const string& data, long tag)
 {
-    if (_tcpClient) {
-        GCDAsyncSocket* sock = [_tcpClient getSocket];
-        NSData* requestData = [[NSData alloc] initWithBytes:data.c_str() length:data.length()];
-        [sock writeData:requestData withTimeout:-1 tag:tag];
-    }
+    writeData(data.c_str(), data.length(), tag);
 }
 
-void TCPClient::writeData(const unsigned char* data, unsigned int len, long tag)
+void TCPClient::writeData(const char* data, unsigned long len, long tag)
 {
     if (_tcpClient) {
         GCDAsyncSocket* sock = [_tcpClient getSocket];
         NSData* requestData = [[NSData alloc] initWithBytes:data length:len];
-        [sock writeData:requestData withTimeout:-1 tag:tag];
+        [sock writeData:requestData withTimeout:-1.0f tag:tag];
     }
 }
 

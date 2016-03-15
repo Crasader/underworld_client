@@ -103,7 +103,7 @@ bool CardNode::init()
                     }
                         break;
                     case 58: {
-                        _resourceNode = readdResourceNode(child, kResourceType_Gold, 0);
+                        _resourceNode = readdResourceNode(child, ::ResourceType::Gold, 0);
                     }
                         break;
                     default:
@@ -211,7 +211,7 @@ void CardNode::update(const string& name, int rarity, int cost, float resource)
     }
     
     // !!!if we didn't re-add the resource nodes, the animation would be stopped(It may caused by the table's refreshing)
-    _resourceNode = readdResourceNode(_resourceNode, kResourceType_Gold, cost);
+    _resourceNode = readdResourceNode(_resourceNode, ::ResourceType::Gold, cost);
     checkResource(resource);
 }
 
@@ -267,7 +267,7 @@ string CardNode::getIconFile(const string& name, bool enable) const
 {
     const CardConfigData* configData = DataManager::getInstance()->getCardConfigData(name);
     string iconFile;
-    static const string defaultFile("GameImages/icons/unit/big/normal/icon_w_langdun.png");
+    static const string defaultFile("GameImages/icons/unit/icon_w_langdun.png");
     if (enable) {
         iconFile = configData ? configData->getIcon() : defaultFile;
     } else {

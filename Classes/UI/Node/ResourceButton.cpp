@@ -18,7 +18,7 @@ ResourceButton::ResourceButton()
 :_animated(false)
 ,_needResize(false)
 ,_enabled(true)
-,_type(kResourceType_Gold)
+,_type(ResourceType::Gold)
 ,_count(INVALID_VALUE)
 ,_color(Color4B::WHITE)
 ,_icon(nullptr)
@@ -193,7 +193,7 @@ void ResourceButton::setClickEventListener(const Button::ccWidgetClickCallback& 
 
 void ResourceButton::addIconNode(ResourceType type)
 {
-    if (type == kResourceType_MAX) {
+    if (type == ResourceType::MAX) {
         return;
     }
     

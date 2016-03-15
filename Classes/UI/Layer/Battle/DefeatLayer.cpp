@@ -164,19 +164,19 @@ bool DefeatLayer::init(int levelId)
                             break;
                         case 15:
                         {
-                            ResourceNode* rn = ResourceNode::create(kResourceType_Jade, 100);
+                            ResourceNode* rn = ResourceNode::create(ResourceType::Jade, 100);
                             child->addChild(rn);
                         }
                             break;
                         case 14:
                         {
-                            ResourceNode* rn = ResourceNode::create(kResourceType_Gold, 100);
+                            ResourceNode* rn = ResourceNode::create(ResourceType::Gold, 100);
                             child->addChild(rn);
                         }
                             break;
                         case 16:
                         {
-                            ResourceNode* rn = ResourceNode::create(kResourceType_Gem, 100);
+                            ResourceNode* rn = ResourceNode::create(ResourceType::Gem, 100);
                             child->addChild(rn);
                         }
                             break;

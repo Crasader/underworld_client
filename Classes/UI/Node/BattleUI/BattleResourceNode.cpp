@@ -15,9 +15,9 @@ using namespace cocostudio;
 
 static string getProgressTimerSprite(ResourceType type)
 {
-    if (kResourceType_Gold == type) {
+    if (ResourceType::Gold == type) {
         return "GameImages/test/button_5_2.png";
-    } else if (kResourceType_Wood == type) {
+    } else if (ResourceType::Wood == type) {
         return "GameImages/test/button_5_1.png";
     }
     
@@ -25,7 +25,7 @@ static string getProgressTimerSprite(ResourceType type)
 }
 
 BattleResourceNode::BattleResourceNode()
-:_type(kResourceType_Gold)
+:_type(ResourceType::Gold)
 ,_count(0)
 ,_subCount(0)
 ,_icon(nullptr)
@@ -78,9 +78,9 @@ bool BattleResourceNode::init(ResourceType type)
         addChild(_subCountLabel);
         
         string file;
-        if (kResourceType_Gold == type) {
+        if (ResourceType::Gold == type) {
             file = "UI-number-hong.csb";
-        } else if (kResourceType_Wood == type) {
+        } else if (ResourceType::Wood == type) {
             file = "UI-number-lan.csb";
         }
         Node *effect = CSLoader::createNode(file);

@@ -354,7 +354,7 @@ void GameData::onNetworkResponseFailed(long code, const string& jsonPath) const
 
 void GameData::onVersionError()
 {
-    MessageBoxLayer::getInstance()->show(LocalHelper::getString("networkResponse_oldVersion"), kMessageBoxOnlyYes, [this](Ref *) {
+    MessageBoxLayer::getInstance()->show(LocalHelper::getString("networkResponse_oldVersion"), MessageBoxType::OnlyYes, [this](Ref *) {
         reloadGame();
     });
 }
@@ -366,7 +366,7 @@ void GameData::onUserIsOnline()
 
 void GameData::onUserIsOffline()
 {
-    MessageBoxLayer::getInstance()->show(LocalHelper::getString("networkResponse_isOffline"), kMessageBoxOnlyYes, [this](Ref *) {
+    MessageBoxLayer::getInstance()->show(LocalHelper::getString("networkResponse_isOffline"), MessageBoxType::OnlyYes, [this](Ref *) {
         reloadGame();
     });
 }

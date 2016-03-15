@@ -7,8 +7,6 @@
 //
 //
 
-#import "RMStore.h"
-#import "KeychainItemWrapper.h"
 #include "ApiBridge.h"
 #include "GameData.h"
 #include "CocosUtils.h"
@@ -18,65 +16,15 @@
 #import "AppController.h"
 #import "RootViewController.h"
 #import "platform/ios/CCEAGLView-ios.h"
-
-#import <CommonCrypto/CommonCrypto.h>
+#import "RMStore.h"
+#import "KeychainItemWrapper.h"
+#import "NSString+Extended.h"
 
 using namespace std;
 
 // alert view
 static AlertViewClickedButtonCallback alertViewClickedButtonCallback = nullptr;
 long const IapVerificationFailedCode = RMStoreErrorCodeUnableToCompleteVerification;
-
-#pragma mark - Extended NSString
-@interface NSString (Extended)
-
-- (string)stdString;
-- (NSString *)toAppleProductId;
-- (NSString *)hashedValueForAccount;
-
-@end
-
-@implementation NSString (Extended)
-
-- (string)stdString
-{
-    return self.UTF8String ? string(self.UTF8String) : "";
-}
-
-- (NSString *)toAppleProductId
-{
-    NSString * productIdPrefix = [NSString stringWithFormat:@"%@.gem.", [NSBundle mainBundle].bundleIdentifier];
-    return [NSString stringWithFormat:@"%@%@", productIdPrefix, self];
-}
-
-- (NSString *)hashedValueForAccount
-{
-    const int HASH_SIZE = 32;
-    unsigned char hashedChars[HASH_SIZE];
-    const char *accountName = [self UTF8String];
-    size_t accountNameLen = strlen(accountName);
-    
-    // Confirm that the length of the user name is small enough
-    // to be recast when calling the hash function.
-    if (accountNameLen > UINT32_MAX) {
-        return nil;
-    }
-    CC_SHA256(accountName, (CC_LONG)accountNameLen, hashedChars);
-    
-    // Convert the array of bytes into a string showing its hex representation.
-    NSMutableString *userAccountHash = [[NSMutableString alloc] init];
-    for (int i = 0; i < HASH_SIZE; i++) {
-        // Add a dash every four bytes, for readability.
-        if (i != 0 && i%4 == 0) {
-            [userAccountHash appendString:@"-"];
-        }
-        [userAccountHash appendFormat:@"%02x", hashedChars[i]];
-    }
-    
-    return userAccountHash;
-}
-
-@end
 
 #pragma mark - Private Class that handle objc callbacks
 @interface Api : NSObject <UIAlertViewDelegate, RMStoreReceiptVerifier, SKPaymentTransactionObserver>
@@ -136,19 +84,16 @@ long const IapVerificationFailedCode = RMStoreErrorCodeUnableToCompleteVerificat
 #endif
     string receiptData = [[NSString alloc] initWithData:receipt encoding:NSUTF8StringEncoding].stdString;
     NetworkApi::iap(sandbox, receiptData, [=](cocos2d::network::HttpClient* client, cocos2d::network::HttpResponse* response) {
-        if (NetworkApi::isSuccessfulResponse(response))
-        {
+        if (NetworkApi::isSuccessfulResponse(response)) {
             rapidjson::Document jsonDict;
             NetworkApi::parseResponseData(response->getResponseData(), jsonDict);
             GameData::getInstance()->currentUser()->parseResources(jsonDict, "resources");
             
-            if (successBlock)
-            {
+            if (successBlock) {
                 successBlock();
             }
         }
-        else if (failureBlock)
-        {
+        else if (failureBlock) {
             NSString *domain = [NSBundle mainBundle].bundleIdentifier;
             NSError *error = [NSError errorWithDomain:domain code:RMStoreErrorCodeUnableToCompleteVerification userInfo:nil];
             failureBlock(error);
@@ -161,17 +106,14 @@ long const IapVerificationFailedCode = RMStoreErrorCodeUnableToCompleteVerificat
 {
     // in case when the user hasn't finished transaction before
     bool isPurchasing = false;
-    for (SKPaymentTransaction *transaction in transactions)
-    {
-        if (transaction.transactionState == SKPaymentTransactionStatePurchasing)
-        {
+    for (SKPaymentTransaction *transaction in transactions) {
+        if (transaction.transactionState == SKPaymentTransactionStatePurchasing) {
             isPurchasing = true;
             break;
         }
     }
     
-    if (isPurchasing)
-    {
+    if (isPurchasing) {
         GameData::getInstance()->beginTransaction();
     }
 }
@@ -196,8 +138,7 @@ void iOSApi::resetKeychain()
 void iOSApi::loadAnonymousUser(rapidjson::Document& document)
 {
     NSData *data = [_keychain objectForKey:(__bridge id)(kSecValueData)];
-    if (data.length > 0)
-    {
+    if (data.length > 0) {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:0];
         document.SetObject();
         rapidjson::Document::AllocatorType& allocator = document.GetAllocator();

@@ -15,15 +15,15 @@ using namespace std;
 USING_NS_CC;
 
 static const string LOCAL_KEY_BASE = "base";
-static LocalType local = kLocalType_Chinese;
+static LocalType local = LocalType::Chinese;
 static map<string, map<string, string> > stringsMap;
 
 static string getLocalKey(LocalType type)
 {
     switch (type) {
-        case kLocalType_Chinese:
+        case LocalType::Chinese:
             return "zh";
-        case kLocalType_English:
+        case LocalType::English:
             return "en";
         default:
             return "";
@@ -73,13 +73,13 @@ void LocalHelper::init() {
     LanguageType lt = Application::getInstance()->getCurrentLanguage();
     
     if (lt == LanguageType::CHINESE) {
-        local = kLocalType_Chinese;
+        local = LocalType::Chinese;
     } else {
-        local = kLocalType_English;
+        local = LocalType::English;
     }
     
     // test
-    local = kLocalType_Chinese;
+    local = LocalType::Chinese;
     
     parseStrings(LOCAL_KEY_BASE);
 //    parseStrings(getLocalKey(local));

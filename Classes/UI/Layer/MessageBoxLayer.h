@@ -15,12 +15,11 @@
 
 #define MESSAGEBOX_DEFAULT_FONT_SIZE (BIG_FONT_SIZE)
 
-typedef enum
-{
-    kMessageBoxOnlyYes = 0,
-    kMessageBoxYesNo,
-    kMessageBoxNoYes
-}MessageBoxType;
+enum class MessageBoxType {
+    OnlyYes = 0,
+    YesNo,
+    NoYes
+};
 
 class MessageBoxLayer : public MessageBoxBaseLayer
 {

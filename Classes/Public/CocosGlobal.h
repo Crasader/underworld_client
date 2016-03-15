@@ -62,40 +62,39 @@ typedef std::function<void(long errorCode)> httpErrorCallback;
 #define SPELL_NAME_CURE     ("治愈")
 #define SPELL_NAME_SPEEDUP  ("顺风之力")
 
-typedef enum
-{
-    kResourceType_Gem = 100,
-    kResourceType_Gold = 101,
-    kResourceType_Wood = 102,
-    kResourceType_Jade = 103,
+enum class ResourceType {
+    Gem = 100,
+    Gold = 101,
+    Wood = 102,
+    Jade = 103,
     
-    kResourceType_MAX,          // Used to network parsing
-}ResourceType;
+    MAX,          // Used to network parsing
+};
 
-typedef enum {
-    kQuestType_Daily = 0,
-    kQuestType_Life,
-    kQuestType_TimeLimited,
-}QuestType;
+enum class QuestType {
+    Daily = 0,
+    Life,
+    TimeLimited,
+};
 
-typedef enum {
-    kChatType_World = 0,
-    kChatType_Private,
-    kChatType_Guild,
-    kChatType_Group,
-}ChatType;
+enum class ChatType {
+    World = 0,
+    Private,
+    Guild,
+    Group,
+};
 
-typedef enum {
-    kGearType_Weapon = 1,
-    kGearType_Armor,
-    kGearType_Accessory,
-}GearType;
+enum class GearType {
+    Weapon = 1,
+    Armor,
+    Accessory,
+};
 
-typedef enum {
-    kGearQuality_White = 0,
-    kGearQuality_Blue,
-    kGearQuality_Purple,
-    kGearQuality_Orange,
-}GearQuality;
+enum class GearQuality {
+    White = 0,
+    Blue,
+    Purple,
+    Orange,
+};
 
 #endif /* CocosGlobal_h */

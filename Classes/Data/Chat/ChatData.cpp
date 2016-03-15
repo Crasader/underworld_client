@@ -20,7 +20,7 @@ using namespace cocostudio;
 
 ChatData::ChatData(ChatType type, const rapidjson::Value& jsonDict)
 :_id(0)
-,_type(kChatType_World)
+,_type(ChatType::World)
 ,_fromUserId(0)
 ,_toUserId(0)
 ,_timeStamp(0)

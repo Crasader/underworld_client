@@ -39,7 +39,7 @@ GearData::~GearData()
 
 GearQuality GearData::getQuality() const
 {
-    return kGearQuality_White;
+    return GearQuality::White;
 }
 
 const map<int, AttributeData *>& GearData::getAttributes() const

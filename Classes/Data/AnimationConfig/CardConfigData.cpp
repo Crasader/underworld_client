@@ -20,18 +20,10 @@ CardConfigData::CardConfigData(tinyxml2::XMLElement *xmlElement)
         const char *data = xmlElement->Attribute("icon");
         if (data && strlen(data) > 0) {
             static const string suffix(".png");
-            {
-                static const string prefix("GameImages/icons/unit/big/normal/");
-                _icon = prefix + data + suffix;
-            }
-            {
-                static const string prefix("GameImages/icons/unit/small/");
-                _smallIcon = prefix + data + "_1" + suffix;
-            }
-            {
-                static const string prefix("GameImages/icons/unit/big/disabled/");
-                _disabledIcon = prefix + data + "_2" + suffix;
-            }
+            static const string prefix("GameImages/icons/unit/");
+            _icon = prefix + data + suffix;
+            _smallIcon = prefix + data + "_1" + suffix;
+            _disabledIcon = prefix + data + "_2" + suffix;
         }
     }
 }

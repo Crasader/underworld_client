@@ -14,11 +14,10 @@
 
 USING_NS_CC;
 
-typedef enum
-{
-    kHP,
-    kMP
-}DisplayBarType;
+enum class DisplayBarType {
+    HP,
+    MP
+};
 
 class DisplayBar : public Node
 {

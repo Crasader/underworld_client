@@ -495,7 +495,7 @@ void GameRender::removeAllUnits()
 
 void GameRender::pauseGame()
 {
-    MessageBoxLayer::getInstance()->show(LocalHelper::getString("hint_exitPve"), kMessageBoxYesNo, [](Ref*) {
+    MessageBoxLayer::getInstance()->show(LocalHelper::getString("hint_exitPve"), MessageBoxType::YesNo, [](Ref*) {
         CocosUtils::replaceScene(MainLayer::createScene());
     });
 }

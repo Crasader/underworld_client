@@ -25,7 +25,7 @@ DisplayBar* DisplayBar::create(DisplayBarType type, int factionIndex, UnderWorld
 
 DisplayBar::DisplayBar()
 :_pt(nullptr)
-,_type(kHP)
+,_type(DisplayBarType::HP)
 ,_factionIndex(-1)
 ,_unitClass(static_cast<UnderWorld::Core::UnitClass>(-1))
 {

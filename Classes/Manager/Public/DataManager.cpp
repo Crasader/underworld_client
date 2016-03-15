@@ -110,8 +110,8 @@ void DataManager::init()
 {
     parseLevelData();
     parseCardDecks();
-    parseQuestData(kQuestType_Daily);
-    parseQuestData(kQuestType_Life);
+    parseQuestData(QuestType::Daily);
+    parseQuestData(QuestType::Life);
     parseAchievementData();
     parseObjectData();
     parseGearData();
@@ -492,9 +492,9 @@ void DataManager::parseQuestData(QuestType type)
 {
     string fileName;
     
-    if (kQuestType_Daily == type) {
+    if (QuestType::Daily == type) {
         fileName = LocalHelper::getLocalizedConfigFilePath("DailyQuestProperty.xml");
-    } else if (kQuestType_Life == type) {
+    } else if (QuestType::Life == type) {
         fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
     }
     

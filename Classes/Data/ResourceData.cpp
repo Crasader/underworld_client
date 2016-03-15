@@ -12,7 +12,7 @@
 using namespace std;
 
 ResourceData::ResourceData(const string& content)
-:_id(kResourceType_Gem)
+:_id(ResourceType::Gem)
 ,_count(0)
 {
     vector<string> result;

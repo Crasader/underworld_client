@@ -221,6 +221,7 @@
 		A1F9B0791C76C3A0007BC409 /* BattleDeckLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F9B0771C76C3A0007BC409 /* BattleDeckLayer.cpp */; };
 		A1F9B0861C76CBAD007BC409 /* AbstractUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F9B0841C76CBAD007BC409 /* AbstractUILayer.cpp */; };
 		A1F9B0891C76F54D007BC409 /* BattleDeckUnitInfoNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F9B0871C76F54D007BC409 /* BattleDeckUnitInfoNode.cpp */; };
+		A1FC1A091C97C2AE00270B50 /* NSString+Extended.mm in Sources */ = {isa = PBXBuildFile; fileRef = A1FC1A081C97C2AE00270B50 /* NSString+Extended.mm */; };
 		A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A1FC49B31BD8C249005C1B2E /* CrashHelper.m */; };
 		A1FC49B61BD8DBCF005C1B2E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1FC49B51BD8DBCF005C1B2E /* MessageUI.framework */; };
 		A1FF6E881C16B9890017CAD2 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = A1FF6E871C16B9890017CAD2 /* configs */; };
@@ -687,6 +688,8 @@
 		A1F9B0851C76CBAD007BC409 /* AbstractUILayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractUILayer.h; sourceTree = "<group>"; };
 		A1F9B0871C76F54D007BC409 /* BattleDeckUnitInfoNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattleDeckUnitInfoNode.cpp; sourceTree = "<group>"; };
 		A1F9B0881C76F54D007BC409 /* BattleDeckUnitInfoNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BattleDeckUnitInfoNode.h; sourceTree = "<group>"; };
+		A1FC1A071C97C2AE00270B50 /* NSString+Extended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extended.h"; sourceTree = "<group>"; };
+		A1FC1A081C97C2AE00270B50 /* NSString+Extended.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSString+Extended.mm"; sourceTree = "<group>"; };
 		A1FC49B21BD8C249005C1B2E /* CrashHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashHelper.h; sourceTree = "<group>"; };
 		A1FC49B31BD8C249005C1B2E /* CrashHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrashHelper.m; sourceTree = "<group>"; };
 		A1FC49B51BD8DBCF005C1B2E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = DEVELOPER_DIR; };
@@ -1372,6 +1375,7 @@
 			children = (
 				A1720EAF1BCD2D2E00217E98 /* Api.mm */,
 				A1720EB01BCD2D2E00217E98 /* ApiBridge.h */,
+				A1FC1A031C97C1FD00270B50 /* Extensions */,
 			);
 			name = API;
 			path = ios/API;
@@ -1742,6 +1746,15 @@
 			path = BattleDeck;
 			sourceTree = "<group>";
 		};
+		A1FC1A031C97C1FD00270B50 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A1FC1A071C97C2AE00270B50 /* NSString+Extended.h */,
+				A1FC1A081C97C2AE00270B50 /* NSString+Extended.mm */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		CB3EC8941C4E4CBC00447FE3 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
@@ -2078,6 +2091,7 @@
 				A16BF29C1C31434500E91458 /* SkillLocalData.cpp in Sources */,
 				A10612021C3D22260065070F /* HeroPieceData.cpp in Sources */,
 				300098CD1BD0A94B00B6E284 /* Coordinate.cpp in Sources */,
+				A1FC1A091C97C2AE00270B50 /* NSString+Extended.mm in Sources */,
 				045116F41BCFBA44002AA721 /* BulletType.cpp in Sources */,
 				0451170A1BCFBA53002AA721 /* Skill.cpp in Sources */,
 				A16BF2891C313E5900E91458 /* HeroUpgradeData.cpp in Sources */,

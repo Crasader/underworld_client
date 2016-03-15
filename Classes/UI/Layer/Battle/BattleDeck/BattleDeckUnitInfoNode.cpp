@@ -98,7 +98,7 @@ bool BattleDeckUnitInfoNode::init(int rarity)
                 switch (tag) {
                     case 80:
                     {
-                        static const string file("GameImages/icons/unit/small/icon_v_nvgongjianshou_1.png");
+                        static const string file("GameImages/icons/unit/icon_w_langdun_1.png");
                         _unitIcon = Sprite::create(file);
                         child->addChild(_unitIcon);
                     }

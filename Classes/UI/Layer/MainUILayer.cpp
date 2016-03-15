@@ -208,7 +208,7 @@ bool MainUILayer::init()
         
         // 4. right top
         {
-            ResourceNode* node = ResourceNode::create(kResourceType_Gem, 100);
+            ResourceNode* node = ResourceNode::create(ResourceType::Gem, 100);
             const Size& size = node->getContentSize();
             static float offsetX(20);
             static float offsetY(20);
@@ -219,12 +219,12 @@ bool MainUILayer::init()
             addChild(node);
             _gemResourceNode = node;
             
-            node = ResourceNode::create(kResourceType_Gold, 100);
+            node = ResourceNode::create(ResourceType::Gold, 100);
             node->setPosition(Point(x - (offsetX + size.width), y));
             addChild(node);
             _goldResourceNode = node;
             
-            node = ResourceNode::create(kResourceType_Jade, 100);
+            node = ResourceNode::create(ResourceType::Jade, 100);
             node->setPosition(Point(x - (offsetX + size.width) * 2, y));
             addChild(node);
             _jadeResourceNode = node;

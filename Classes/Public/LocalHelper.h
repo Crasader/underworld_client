@@ -11,11 +11,10 @@
 
 #include <string>
 
-typedef enum
-{
-    kLocalType_Chinese = 0,
-    kLocalType_English,
-}LocalType;
+enum class LocalType {
+    Chinese = 0,
+    English,
+};
 
 namespace LocalHelper
 {    

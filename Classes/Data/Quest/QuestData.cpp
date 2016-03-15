@@ -14,7 +14,7 @@
 using namespace cocostudio;
 
 QuestData::QuestData(const rapidjson::Value& jsonDict)
-:_type(kQuestType_Daily)
+:_type(QuestType::Daily)
 ,_id(0)
 ,_progress(0)
 ,_status(0)

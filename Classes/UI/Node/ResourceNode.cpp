@@ -14,7 +14,7 @@ using namespace std;
 using namespace cocostudio;
 
 ResourceNode::ResourceNode()
-:_type(kResourceType_Gold)
+:_type(ResourceType::Gold)
 ,_count(INVALID_VALUE)
 ,_icon(nullptr)
 ,_countLabel(nullptr)
