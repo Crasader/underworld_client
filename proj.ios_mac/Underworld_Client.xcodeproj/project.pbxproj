@@ -83,6 +83,7 @@
 		521A8EA919F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
 		521A8EAA19F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
 		52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A461A53D09B004E4C60 /* Security.framework */; };
+		631A861E1C9845D90036404A /* TCPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 631A861C1C9845D90036404A /* TCPClient.cpp */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
 		A103F45B1BE37E2A007F9A83 /* BulletNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F4571BE37E2A007F9A83 /* BulletNode.cpp */; };
 		A103F45C1BE37E2A007F9A83 /* UnitNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F4591BE37E2A007F9A83 /* UnitNode.cpp */; };
@@ -414,6 +415,8 @@
 		5087E78A17EB975400C73F5D /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		521A8EA819F11F5000D177D7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		52B47A461A53D09B004E4C60 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		631A861C1C9845D90036404A /* TCPClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TCPClient.cpp; sourceTree = "<group>"; };
+		631A861D1C9845D90036404A /* TCPClient.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TCPClient.hpp; sourceTree = "<group>"; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		A103F4571BE37E2A007F9A83 /* BulletNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BulletNode.cpp; sourceTree = "<group>"; };
 		A103F4581BE37E2A007F9A83 /* BulletNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BulletNode.h; sourceTree = "<group>"; };
@@ -1366,6 +1369,8 @@
 				A1720EBC1BCD309A00217E98 /* NetworkController.h */,
 				A1A05B3D1C967DAC006FE03B /* TCPClient.mm */,
 				A1A05B3E1C967DAC006FE03B /* TCPClient.h */,
+				631A861C1C9845D90036404A /* TCPClient.cpp */,
+				631A861D1C9845D90036404A /* TCPClient.hpp */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -2045,6 +2050,7 @@
 				A1720EBA1BCD2D2E00217E98 /* RMStore.m in Sources */,
 				047228B01C193A4D00E7F71B /* Geometry.cpp in Sources */,
 				3075346D1BF324340057DCED /* EventTriggers.cpp in Sources */,
+				631A861E1C9845D90036404A /* TCPClient.cpp in Sources */,
 				A1B4AE011C200480005906A6 /* SoundManager.cpp in Sources */,
 				A1B4AE2D1C200521005906A6 /* ChatManager.cpp in Sources */,
 				307534691BF1B2F20057DCED /* Commander.cpp in Sources */,
