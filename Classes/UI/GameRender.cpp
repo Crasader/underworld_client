@@ -161,7 +161,7 @@ void GameRender::updateUnits(const Game* game, int index)
                         _mapLayer->repositionUnit(node, pos);
                     }
                     
-                    _mapLayer->checkUnitInSpellRangeRing(node);
+                    _mapLayer->checkUnitInSpellRing(node);
                 }
             } else {
                 if (kSkillClass_Die != sc) {
@@ -357,10 +357,31 @@ void GameRender::onBulletNodeExploded(BulletNode* node)
 }
 
 #pragma mark - MapLayerObserver
+void GameRender::onMapLayerTouchBegan(const Point& point)
+{
+    const Card* card = _selectedCard.first;
+    if (card) {
+        updateCardMask(card, point, 400);
+    }
+}
+
+void GameRender::onMapLayerTouchMoved(const Point& point, bool isValid)
+{
+    if (isValid) {
+        const Card* card = _selectedCard.first;
+        if (card) {
+            updateCardMask(card, point, 400);
+        }
+    } else {
+        removeCardMask();
+    }
+}
+
 void GameRender::onMapLayerTouchEnded(const Point& point)
 {
-    if (_selectedCard.first) {
-        onMapUILayerTouchEnded(_selectedCard.first, _selectedCard.second, convertToUILayer(point));
+    const Card* card = _selectedCard.first;
+    if (card) {
+        tryToUseCard(card, _selectedCard.second, point);
     }
 }
 
@@ -386,55 +407,14 @@ void GameRender::onMapUILayerCardSelected(const Card* card, int idx)
     _selectedCard.second = idx;
 }
 
-void GameRender::onMapUILayerTouchMoved(const Card* card, const Point& point, bool inDeck)
+void GameRender::onMapUILayerTouchMoved(const Card* card, const Point& point)
 {
-    if (_mapLayer) {
-        if (inDeck) {
-            _mapLayer->removeSpellRangeRing();
-            _mapLayer->removeUnitMask();
-        } else {
-            const Point& realPos = convertToMapLayer(point);
-            const UnitType* ut = card->getUnitType();
-            if (ut) {
-                _mapLayer->updateUnitMask(ut, realPos);
-            } else if (isValidAoeSpell(card->getSpellType())) {
-                _mapLayer->updateSpellRangeRing(realPos, 400);
-            }
-        }
-    }
+    updateCardMask(card, convertToMapLayer(point), 400);
 }
 
 void GameRender::onMapUILayerTouchEnded(const Card* card, int idx, const Point& point)
 {
-    if (_mapLayer) {
-        const Point& realPos = convertToMapLayer(point);
-        const Coordinate& coordinate = _mapLayer->convertPoint(realPos);
-        // command
-        if (_commander) {
-            CommandResult result = _commander->tryGiveDeckUseCommand(_deck, idx, coordinate);
-            if (kCommandResult_suc == result) {
-                const UnitType* ut = card->getUnitType();
-                if (ut) {
-                    _mapUILayer->clearHighlightedCard();
-                } else {
-                    const SpellType* st = card->getSpellType();
-                    if (isValidAoeSpell(st)) {
-                        const string& name = st->getSpellName();
-                        if (name.find(SPELL_NAME_FIREBALL) != string::npos) {
-                            _mapLayer->addFireballSpellEffect();
-                        } else if (name.find(SPELL_NAME_CURE) != string::npos) {
-                            
-                        } else if (name.find(SPELL_NAME_SPEEDUP) != string::npos) {
-                            
-                        }
-                    }
-                }
-            }
-        }
-        
-        _mapLayer->removeSpellRangeRing();
-        _mapLayer->removeUnitMask();
-    }
+    tryToUseCard(card, idx, convertToMapLayer(point));
 }
 
 #pragma mark - VictoryLayerObserver
@@ -618,4 +598,60 @@ Point GameRender::convertToMapLayer(const Point& uiLayerPoint) const
 Point GameRender::convertToUILayer(const Point& mapLayerPoint) const
 {
     return _mapUILayer->convertToNodeSpace(_mapLayer->convertToWorldSpace(mapLayerPoint));
+}
+
+void GameRender::updateCardMask(const UnderWorld::Core::Card* card, const Point& point, float range)
+{
+    if (_mapLayer && _mapUILayer) {
+        const bool inDeck = _mapUILayer->isPointInTableView(convertToUILayer(point));
+        if (inDeck) {
+            removeCardMask();
+        } else {
+            const UnitType* ut = card->getUnitType();
+            if (ut) {
+                _mapLayer->updateUnitMask(ut, point);
+            } else if (isValidAoeSpell(card->getSpellType())) {
+                _mapLayer->updateSpellRing(point, range);
+            }
+        }
+    }
+}
+
+void GameRender::removeCardMask()
+{
+    if (_mapLayer) {
+        _mapLayer->removeSpellRing();
+        _mapLayer->removeUnitMask();
+    }
+}
+
+void GameRender::tryToUseCard(const UnderWorld::Core::Card* card, int idx, const Point& point)
+{
+    if (_mapLayer) {
+        const bool inDeck = _mapUILayer->isPointInTableView(convertToUILayer(point));
+        if (inDeck) {
+            // TODO:
+        } else if (_commander) {
+            const Coordinate& coordinate = _mapLayer->convertPoint(point);
+            CommandResult result = _commander->tryGiveDeckUseCommand(_deck, idx, coordinate);
+            if (kCommandResult_suc == result) {
+                const SpellType* st = card->getSpellType();
+                if (isValidAoeSpell(st)) {
+                    const string& name = st->getSpellName();
+                    if (name.find(SPELL_NAME_FIREBALL) != string::npos) {
+                        _mapLayer->addFireballSpellEffect();
+                    } else if (name.find(SPELL_NAME_CURE) != string::npos) {
+                        
+                    } else if (name.find(SPELL_NAME_SPEEDUP) != string::npos) {
+                        
+                    }
+                }
+                
+                _mapUILayer->clearHighlightedCard();
+            }
+        }
+        
+        _mapLayer->removeSpellRing();
+        _mapLayer->removeUnitMask();
+    }
 }

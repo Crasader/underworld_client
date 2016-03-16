@@ -127,6 +127,15 @@ void MapUILayer::clearHighlightedCard()
     setHighlightedCard(INVALID_VALUE);
 }
 
+bool MapUILayer::isPointInTableView(const Point& point)
+{
+    if (_cardDeck && _cardDeck->getBoundingBox().containsPoint(point)) {
+        return true;
+    }
+    
+    return false;
+}
+
 #pragma mark - card deck
 void MapUILayer::createCardDeck(int count)
 {
@@ -153,8 +162,6 @@ void MapUILayer::removeCard(const Card* card)
     if (_cardDeck) {
         _cardDeck->remove(card);
     }
-    
-    clearHighlightedCard();
 }
 
 void MapUILayer::updateCardDeckCountDown(float time)
@@ -296,7 +303,7 @@ void MapUILayer::onTouchMoved(Touch *touch, Event *unused_event)
         const bool inDeck = isPointInTableView(point);
         
         if (_observer) {
-            _observer->onMapUILayerTouchMoved(_selectedCard.first, point, inDeck);
+            _observer->onMapUILayerTouchMoved(_selectedCard.first, point);
         }
         
         if (!inDeck && _highlightedCard != _selectedCard.second) {
@@ -311,12 +318,7 @@ void MapUILayer::onTouchEnded(Touch *touch, Event *unused_event)
     if (!gameOver && _isTouchingTableView && _selectedCard.first) {
         if (_observer) {
             const Point& point = touch->getLocation();
-            const bool inDeck = isPointInTableView(point);
-            if (inDeck) {
-                // TODO:
-            } else {
-                _observer->onMapUILayerTouchEnded(_selectedCard.first, _selectedCard.second, point);
-            }
+            _observer->onMapUILayerTouchEnded(_selectedCard.first, _selectedCard.second, point);
         }
         
         _selectedCard.first = nullptr;
@@ -401,15 +403,6 @@ bool MapUILayer::isGameOver() const
 {
     if (_observer) {
         return _observer->onMapUILayerIsGameOver();
-    }
-    
-    return false;
-}
-
-bool MapUILayer::isPointInTableView(const Point& point)
-{
-    if (_cardDeck && _cardDeck->getBoundingBox().containsPoint(point)) {
-        return true;
     }
     
     return false;

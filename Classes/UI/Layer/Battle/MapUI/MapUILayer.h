@@ -23,7 +23,7 @@ public:
     
     virtual void onMapUILayerCardSelected(const UnderWorld::Core::Card* card, int idx) = 0;
     
-    virtual void onMapUILayerTouchMoved(const UnderWorld::Core::Card* card, const Point& position, bool inDeck) = 0;
+    virtual void onMapUILayerTouchMoved(const UnderWorld::Core::Card* card, const Point& position) = 0;
     virtual void onMapUILayerTouchEnded(const UnderWorld::Core::Card* card, int idx, const Point& position) = 0;
 };
 
@@ -42,6 +42,7 @@ public:
     void pauseGame();
     void resumeGame();
     void clearHighlightedCard();
+    bool isPointInTableView(const Point& point);
     
     // card deck
     void createCardDeck(int count);
@@ -65,7 +66,6 @@ protected:
     
     void createUserInfo(bool left, const std::string& account);
     bool isGameOver() const;
-    bool isPointInTableView(const Point& point);
     void setHighlightedCard(int idx);
     
 private:

@@ -72,6 +72,7 @@ MapLayer::MapLayer()
 ,_mainLayer(nullptr)
 ,_spellRing(nullptr)
 ,_butterfly(nullptr)
+,_touchMoved(false)
 ,_isScrolling(false)
 ,_selectedUnitMask(nullptr)
 {
@@ -360,15 +361,13 @@ void MapLayer::removeUnitMask()
     }
 }
 
-void MapLayer::updateSpellRangeRing(const Point& layerPoint, int range)
+void MapLayer::updateSpellRing(const Point& layerPoint, int range)
 {
+    const Point& point = convertToScrollViewPoint(layerPoint);
     if (!_spellRing) {
-        static const string name("quan-1.csb");
-        _spellRing = CSLoader::createNode(name);
-        timeline::ActionTimeline *action = CSLoader::createTimeline(name);
-        _spellRing->runAction(action);
-        action->gotoFrameAndPlay(0, true);
-        _scrollView->addChild(_spellRing);
+        _spellRing = createSpellRing(point);
+    } else {
+        _spellRing->setPosition(point);
     }
     
     // calculate scale
@@ -377,11 +376,9 @@ void MapLayer::updateSpellRangeRing(const Point& layerPoint, int range)
         const float scale = range / defaultRange;
         _spellRing->setScale(scale);
     }
-    
-    _spellRing->setPosition(convertToScrollViewPoint(layerPoint));
 }
 
-void MapLayer::removeSpellRangeRing()
+void MapLayer::removeSpellRing()
 {
     if (_spellRing) {
         _spellRing->stopAllActions();
@@ -390,12 +387,12 @@ void MapLayer::removeSpellRangeRing()
     }
 }
 
-void MapLayer::checkUnitInSpellRangeRing(Node* unit)
+void MapLayer::checkUnitInSpellRing(Node* unit)
 {
     static GLubyte selectedOpacity(180);
     static GLubyte normalOpacity(255);
     bool selected(false);
-    if (_spellRing && getSpellRangeRingBoundingBox().containsPoint(unit->getPosition())) {
+    if (_spellRing && getSpellRingBoundingBox().containsPoint(unit->getPosition())) {
         selected = true;
     }
     
@@ -429,7 +426,22 @@ void MapLayer::addFireballSpellEffect()
             removeSpellEffect(skyEffect);
             static string groundFile("jinenghuoqiukuosan-1.csb");
             addSpellEffect(groundFile, false, targetPos);
+            
+            // remove static spell ring
+            if (_staticSpellRings.find(targetPos) != _staticSpellRings.end()) {
+                Node* ring = _staticSpellRings.at(targetPos);
+                if (ring) {
+                    ring->removeFromParent();
+                }
+                
+                _staticSpellRings.erase(targetPos);
+            }
         }), nullptr));
+        
+        // add a spell ring which will be removed when animation finished
+        Node* ring = createSpellRing(targetPos);
+        ring->setScale(_spellRing->getScale());
+        _staticSpellRings.insert(make_pair(targetPos, ring));
     }
 }
 
@@ -462,22 +474,32 @@ void MapLayer::addPlaceUnitEffect(const UnderWorld::Core::Coordinate& point)
 
 bool MapLayer::onTouchBegan(Touch *touch, Event *unused_event)
 {
+    if (_observer) {
+        _observer->onMapLayerTouchBegan(touch->getLocation());
+    }
+    
     return true;
 }
 
 void MapLayer::onTouchMoved(Touch *touch, Event *unused_event)
 {
+    const Point& point = touch->getLocation();
+    const Point& startPoint = touch->getStartLocation();
+    if (!_touchMoved && startPoint.distance(point) > TOUCH_CANCEL_BY_MOVING_DISTANCE) {
+        _touchMoved = true;
+    }
     
+    if (_observer) {
+        _observer->onMapLayerTouchMoved(point, !_touchMoved);
+    }
 }
 
 void MapLayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
-    if (_observer) {
-        const Point& point = touch->getLocation();
-        const Point& startPoint = touch->getStartLocation();
-        if (startPoint.distance(point) < TOUCH_CANCEL_BY_MOVING_DISTANCE) {
-            _observer->onMapLayerTouchEnded(point);
-        }
+    if (_touchMoved) {
+        _touchMoved = false;
+    } else if (_observer) {
+        _observer->onMapLayerTouchEnded(touch->getLocation());
     }
 }
 
@@ -618,7 +640,19 @@ void MapLayer::scrollChecking(float dt)
     }
 }
 
-Rect MapLayer::getSpellRangeRingBoundingBox() const
+Node* MapLayer::createSpellRing(const Point& point)
+{
+    static const string name("quan-1.csb");
+    Node* ring = CSLoader::createNode(name);
+    timeline::ActionTimeline *action = CSLoader::createTimeline(name);
+    ring->runAction(action);
+    action->gotoFrameAndPlay(0, true);
+    ring->setPosition(point);
+    _scrollView->addChild(ring);
+    return ring;
+}
+
+Rect MapLayer::getSpellRingBoundingBox() const
 {
     if (_spellRing) {
         const Vector<Node*>& children = _spellRing->getChildren();

@@ -27,6 +27,8 @@ class MapLayerObserver
 {
 public:
     virtual ~MapLayerObserver() {}
+    virtual void onMapLayerTouchBegan(const Point& point) = 0;
+    virtual void onMapLayerTouchMoved(const Point& point, bool isValid) = 0;
     virtual void onMapLayerTouchEnded(const Point& point) = 0;
 };
 
@@ -43,9 +45,9 @@ public:
     void updateUnitMask(const UnderWorld::Core::UnitType* unitType, const Point& layerPoint);
     void removeUnitMask();
     
-    void updateSpellRangeRing(const Point& layerPoint, int range);
-    void removeSpellRangeRing();
-    void checkUnitInSpellRangeRing(Node* unit);
+    void updateSpellRing(const Point& layerPoint, int range);
+    void removeSpellRing();
+    void checkUnitInSpellRing(Node* unit);
     
     const UnderWorld::Core::MapSetting& getMapSetting() const;
     
@@ -80,7 +82,8 @@ protected:
     void removeSpellEffect(Node* effect);
     void scrollChecking(float dt);
     
-    Rect getSpellRangeRingBoundingBox() const;
+    Node* createSpellRing(const Point& point);
+    Rect getSpellRingBoundingBox() const;
 private:
     MapLayerObserver *_observer;
     int _mapId;
@@ -93,8 +96,10 @@ private:
     UnderWorld::Core::MapSetting _mapSetting;
     Node* _mainLayer;
     Node* _spellRing;
+    std::map<Point, Node*> _staticSpellRings;
     Node* _butterfly;
     Vec2 _scrollViewOffset;
+    bool _touchMoved;
     bool _isScrolling;
     std::set<ParticleSystemQuad*> _particles;
     std::set<Node*> _nodesInTheRing;

@@ -66,13 +66,15 @@ protected:
     virtual void onBulletNodeExploded(BulletNode* node) override;
     
     // MapLayerObserver
+    virtual void onMapLayerTouchBegan(const Point& point) override;
+    virtual void onMapLayerTouchMoved(const Point& point, bool isValid) override;
     virtual void onMapLayerTouchEnded(const Point& point) override;
     
     // MapUILayerObserver
     virtual bool onMapUILayerIsGameOver() const override;
     virtual void onMapUILayerClickedPauseButton() override;
     virtual void onMapUILayerCardSelected(const UnderWorld::Core::Card* card, int idx) override;
-    virtual void onMapUILayerTouchMoved(const UnderWorld::Core::Card* card, const Point& point, bool inDeck) override;
+    virtual void onMapUILayerTouchMoved(const UnderWorld::Core::Card* card, const Point& point) override;
     virtual void onMapUILayerTouchEnded(const UnderWorld::Core::Card* card, int idx, const Point& position) override;
     
     // VictoryLayerObserver
@@ -103,6 +105,11 @@ private:
     
     Point convertToMapLayer(const Point& uiLayerPoint) const;
     Point convertToUILayer(const Point& mapLayerPoint) const;
+    
+    //
+    void updateCardMask(const UnderWorld::Core::Card* card, const Point& point, float range);
+    void removeCardMask();
+    void tryToUseCard(const UnderWorld::Core::Card* card, int idx, const Point& point);
     
 private:
     GameRenderObserver *_observer;
