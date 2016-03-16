@@ -17,19 +17,19 @@
         <event>
             <event_trigger class="schedule" time="5" start_time="5" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="轻装武士"/>
+                <unit_setting name="骑士"/>
             </event_effect>
         </event>
         <event>
             <event_trigger class="schedule" time="5" start_time="5" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="轻装武士"/>
+                <unit_setting name="骑士"/>
                 </event_effect>
         </event>
         <event>
                 <event_trigger class="schedule" time="25" start_time="5" end_time="300"/>
                 <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="疾风弓手"/>
+                <unit_setting name="弓箭手"/>
                 </event_effect>
         </event>
     </schedule_events>
@@ -53,37 +53,37 @@
         <event>
             <event_trigger class="loop" time="35" start_time="30" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="疾风弓手"/>
+                <unit_setting name="弓箭手"/>
             </event_effect>
         </event>
         <event>
             <event_trigger class="loop" time="35" start_time="55" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="疾风弓手"/>
+                <unit_setting name="弓箭手"/>
             </event_effect>
         </event>
         <event>
             <event_trigger class="loop" time="35" start_time="105" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="疾风弓手"/>
+                <unit_setting name="弓箭手"/>
             </event_effect>
         </event>
         <event>
             <event_trigger class="loop" time="35" start_time="5" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="轻装武士"/>
+                <unit_setting name="骑士"/>
             </event_effect>
         </event>
         <event>
             <event_trigger class="loop" time="35" start_time="80" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="轻装武士"/>
+                <unit_setting name="骑士"/>
             </event_effect>
         </event>
         <event>
             <event_trigger class="loop" time="35" start_time="130" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="轻装武士"/>
+                <unit_setting name="骑士"/>
             </event_effect>
         </event>
         <event>
@@ -96,24 +96,6 @@
             <event_trigger class="loop" time="65" start_time="155" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="1700,550">
                 <unit_setting name="骑士"/>
-            </event_effect>
-        </event>
-        <event>
-            <event_trigger class="loop" time="35" start_time="180" end_time="300"/>
-            <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="辉月侍僧"/>
-            </event_effect>
-        </event>
-        <event>
-            <event_trigger class="loop" time="35" start_time="205" end_time="300"/>
-            <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="天使"/>
-            </event_effect>
-        </event>
-        <event>
-            <event_trigger class="loop" time="35" start_time="240" end_time="300"/>
-            <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="伊利丹"/>
             </event_effect>
         </event>
     </loop_events>
