@@ -8,7 +8,7 @@
 	<item name="炸弹人" icon="icon_v_nvwushi"/>
 	<item name="吸血鬼蜘蛛" icon="icon_v_zhizhu"/>
 	<item name="王子" icon="icon_w_dujiaoshou"/>
-	<item name="战士" icon="icon_w_jixielang"/>
+	<item name="战士" icon="icon_v_cike"/>
 	<item name="加血法师" icon="icon_w_senlinyouhun"/>
 	<item name="巨人" icon="icon_v_qiemo"/>
 	<item name="火枪手" icon="icon_v_shenvlilisi"/>
@@ -16,14 +16,13 @@
 	<item name="时光女神" icon="icon_z_shiguangnvshen"/>
 	<item name="特斯拉" icon="icon_v_tesila"/>
 	<item name="天空女神" icon="icon_z_tiankongnvshen"/>
-	<item name="眩晕战士" icon="icon_v_chongzinanjue"/>
+	<item name="高攻击战士" icon="icon_v_chongzinanjue"/>
 	<item name="机械甲虫" icon="icon_v_gongchengche"/>
-	<item name="迷你皮卡" icon="icon_v_gongchengche"/>
-	<item name="狗" icon="icon_v_gongchengche"/>
-	<item name="高攻击战士" icon="icon_v_gongchengche"/>
+	<item name="迷你皮卡" icon="icon_v_fuhualangren"/>
+	<item name="狗" icon="icon_w_jixielang"/>
 	<item name="守卫" icon="icon_v_julongshaobing"/>
 	<item name="精灵守护者" icon="icon_z_shengqishi"/>
-	<item name="时光神殿守卫" icon="icon_v_gongchengche"/>
+	<item name="时光神殿守卫" icon="icon_v_shiguangshendianshouweizhe"/>
 	<item name="威克拉姆国王" icon="icon_v_guowang"/>
 	<item name="吸血鬼骑士" icon="icon_v_kuloubing"/>
 	<item name="火球术" icon="icon_v_huoqiushu"/>

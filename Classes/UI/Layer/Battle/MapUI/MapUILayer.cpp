@@ -153,6 +153,8 @@ void MapUILayer::removeCard(const Card* card)
     if (_cardDeck) {
         _cardDeck->remove(card);
     }
+    
+    clearHighlightedCard();
 }
 
 void MapUILayer::updateCardDeckCountDown(float time)
