@@ -105,15 +105,18 @@ void TCPClient::purge()
     }
 }
 
-void TCPClient::connect(const string& url, uint16_t port)
+void TCPClient::connect(const string& url, uint16_t port, double timeOut)
 {
     if (_tcpClient) {
         GCDAsyncSocket* sock = [_tcpClient getSocket];
         NSError *error = nil;
-        BOOL ret = [sock connectToHost:[NSString stringWithUTF8String:url.c_str()] onPort:port error:&error];
+        BOOL ret = [sock connectToHost:[NSString stringWithUTF8String:url.c_str()]
+                                onPort:port
+                           withTimeout:timeOut
+                                 error:&error];
         if (!ret) {
             if (_observer) {
-                _observer->onError(TcpErrorCode::ConnectionFailure);
+                _observer->onDisconnect(TcpErrorCode::ConnectionFailure);
             }
         }
     }
@@ -127,24 +130,24 @@ void TCPClient::disconnect()
     }
 }
 
-void TCPClient::writeData(const string& data, long tag)
+void TCPClient::writeData(const string& data, double timeOut, long tag)
 {
-    writeData(data.c_str(), data.length(), tag);
+    writeData(data.c_str(), data.length(), timeOut, tag);
 }
 
-void TCPClient::writeData(const char* data, unsigned long len, long tag)
+void TCPClient::writeData(const char* data, unsigned long len, double timeOut, long tag)
 {
     if (_tcpClient) {
         GCDAsyncSocket* sock = [_tcpClient getSocket];
         NSData* requestData = [[NSData alloc] initWithBytes:data length:len];
-        [sock writeData:requestData withTimeout:-1.0f tag:tag];
+        [sock writeData:requestData withTimeout:timeOut tag:tag];
     }
 }
 
-void TCPClient::readData(long tag)
+void TCPClient::readData(double timeOut, long tag)
 {
     if (_tcpClient) {
         GCDAsyncSocket* sock = [_tcpClient getSocket];
-        [sock readDataToData:[GCDAsyncSocket LFData] withTimeout:-1.0f tag:tag];
+        [sock readDataToData:[GCDAsyncSocket LFData] withTimeout:timeOut tag:tag];
     }
 }

@@ -132,13 +132,13 @@ int TCPClient::connect(const string& host, int port, int timeout) {
 	return s;
 }
 
-int TCPClient::write(int fd, const char* data, int count) {
+long TCPClient::write(int fd, const char* data, long count) {
 
 	if (fd == -1 || data == 0 || count <= 0) {
 		//TODO:log invalid args
 		return -1;
 	}
-	int nwritten, totlen = 0;
+	long nwritten, totlen = 0;
 	while (totlen != count) {
 		nwritten = ::write(fd, data, count - totlen);
 		if (nwritten == 0)
@@ -151,17 +151,17 @@ int TCPClient::write(int fd, const char* data, int count) {
 	return totlen;
 }
 
-int TCPClient::write(int fd, const string& data) {
+long TCPClient::write(int fd, const string& data) {
 	return TCPClient::write(fd, data.data(), data.size());
 }
 
-int TCPClient::read(int fd, char *data, int count) {
+long TCPClient::read(int fd, char *data, long count) {
 	if (fd == -1 || data == 0 || count <= 0) {
 		//TODO:log invalid args
 		return -1;
 	}
 
-	int nread, totlen = 0;
+	long nread, totlen = 0;
 	while (totlen != count) {
 		nread = ::read(fd, data, count - totlen);
 		if (nread == 0)
@@ -175,14 +175,14 @@ int TCPClient::read(int fd, char *data, int count) {
 	return totlen;
 }
 
-int TCPClient::read(int fd, string& data, int count) {
+long TCPClient::read(int fd, string& data, long count) {
 
 	if (fd == -1 || count <= 0) {
 		//TODO:log invalid args
 		return -1;
 	}
 	char* buf = new char[count];
-	int ret = TCPClient::read(fd, buf, count);
+	long ret = TCPClient::read(fd, buf, count);
 	if (ret > 0)
 		data.assign(buf, ret);
 	delete[] buf;

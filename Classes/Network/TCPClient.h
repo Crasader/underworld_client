@@ -26,19 +26,18 @@ public:
     virtual void onDisconnect(TcpErrorCode code) {}
     virtual void onWriteData(long tag) {}
     virtual void onReadData(const std::string& data, long tag) {}
-    virtual void onError(TcpErrorCode code) {}
 };
 
 namespace TCPClient {
     void init(TCPClientObserver* observer);
     void purge();
     
-    void connect(const std::string& url, uint16_t port);
+    void connect(const std::string& url, uint16_t port, double timeOut);
     void disconnect();
     
-    void writeData(const std::string& data, long tag);
-    void writeData(const char* data, unsigned long len, long tag);
-    void readData(long tag);
+    void writeData(const std::string& data, double timeOut, long tag);
+    void writeData(const char* data, unsigned long len, double timeOut, long tag);
+    void readData(double timeOut, long tag);
 }
 
 #endif /* TCPClient_h */

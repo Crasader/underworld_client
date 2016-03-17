@@ -46,6 +46,9 @@ MainLayer::MainLayer()
 ,_mainNode(nullptr)
 ,_scrollView(nullptr)
 ,_touchInvalid(false)
+#if TCP_CLIENT_TEST_CPP
+,_fd(-1)
+#endif
 {
     
 }
@@ -102,6 +105,24 @@ bool MainLayer::init()
         eventListener->onTouchEnded = CC_CALLBACK_2(MainLayer::onTouchEnded, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
         
+#if TCP_CLIENT_TEST_CPP || TCP_CLIENT_TEST_OC
+        static const string host("192.168.31.139");
+        static const uint16_t port(18567);
+#endif
+        
+#if TCP_CLIENT_TEST_CPP
+        _fd = TCPClient::connect(host, port, 1000);
+        TCPClient::write(_fd, "Hello World\n");
+        string data;
+        TCPClient::read(_fd, data, 20);
+        CCLOG("");
+#endif
+        
+#if TCP_CLIENT_TEST_OC
+        TCPClient::init(this);
+        TCPClient::connect(host, port, -1);
+#endif
+        
         return true;
     }
     
@@ -128,6 +149,34 @@ void MainLayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
     
 }
+
+#if TCP_CLIENT_TEST_OC
+#pragma mark - TCPClientObserver
+void MainLayer::onConnect(const std::string& url, uint16_t port)
+{
+    CCLOG("onConnect");
+    static const long tag(0);
+    TCPClient::writeData("Hello World\n", tag, -1);
+    TCPClient::readData(tag, -1);
+}
+
+void MainLayer::onWriteData(long tag)
+{
+    CCLOG("onWriteData : %ld", tag);
+//    TCPClient::writeData("Hello World", tag);
+}
+
+void MainLayer::onReadData(const std::string& data, long tag)
+{
+    CCLOG("onReadData : %s, %ld", data.c_str(), tag);
+    TCPClient::disconnect();
+}
+
+void MainLayer::onDisconnect(TcpErrorCode code)
+{
+    CCLOG("onClose");
+}
+#endif
 
 void MainLayer::addLevelButtons()
 {

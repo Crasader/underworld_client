@@ -41,10 +41,10 @@ int set_block(int fd);
  *
  */
 int connect(const std::string& host, int port, int timeout);
-int write(int fd, const std::string& data);
-int write(int fd, const char* data, int count);
-int read(int fd, std::string& data, int count);
-int read(int fd, char *data, int count);
+long write(int fd, const std::string& data);
+long write(int fd, const char* data, long count);
+long read(int fd, std::string& data, long count);
+long read(int fd, char *data, long count);
 void close(int fd);
 }
 
