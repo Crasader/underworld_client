@@ -68,7 +68,7 @@ BattleDeckUnitInfoNode::BattleDeckUnitInfoNode()
 ,_skillIcon(nullptr)
 ,_skillLevelLabel(nullptr)
 ,_skillNameLabel(nullptr)
-,_skillDescriptionLabel(nullptr)
+,_descriptionLabel(nullptr)
 {
     
 }
@@ -189,9 +189,9 @@ bool BattleDeckUnitInfoNode::init(int rarity)
                         break;
                     case 79:
                     {
-                        _skillDescriptionLabel = CocosUtils::createLabel("skill description", DEFAULT_FONT_SIZE, DEFAULT_FONT, Size(130, 130));
-                        _skillDescriptionLabel->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
-                        child->addChild(_skillDescriptionLabel);
+                        _descriptionLabel = CocosUtils::createLabel("description", DEFAULT_FONT_SIZE, DEFAULT_FONT, Size(130, 130));
+                        _descriptionLabel->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
+                        child->addChild(_descriptionLabel);
                     }
                         break;
                     default:
@@ -247,7 +247,7 @@ void BattleDeckUnitInfoNode::update(const UnitBase* unit)
                     if (_skillNameLabel) {
                         _skillNameLabel->setString(pt->getAlias());
                     }
-                    _skillDescriptionLabel->setString(pt->getDesc());
+                    _descriptionLabel->setString(pt->getDesc());
                 }
             } else {
                 const int spellTypeCount = unit->getSpellTypeCount();
@@ -260,7 +260,7 @@ void BattleDeckUnitInfoNode::update(const UnitBase* unit)
                         if (_skillNameLabel) {
                             _skillNameLabel->setString(st->getAlias());
                         }
-                        _skillDescriptionLabel->setString(st->getDesc());
+                        _descriptionLabel->setString(st->getDesc());
                     }
                 }
             }
@@ -325,9 +325,6 @@ void BattleDeckUnitInfoNode::update(const string& name, TechTree* techTree)
                 if (_skillNameLabel) {
                     _skillNameLabel->setString(name);
                 }
-                if (_skillDescriptionLabel) {
-                    _skillDescriptionLabel->setString(spellType ? spellType->getDesc() : "");
-                }
             } else {
                 if (_skillLevelLabel) {
                     _skillLevelLabel->setString("");
@@ -335,10 +332,12 @@ void BattleDeckUnitInfoNode::update(const string& name, TechTree* techTree)
                 if (_skillNameLabel) {
                     _skillNameLabel->setString("");
                 }
-                if (_skillDescriptionLabel) {
-                    _skillDescriptionLabel->setString("");
-                }
             }
+        }
+        
+        if (_descriptionLabel) {
+            const CardType* ct = techTree->findCardTypeByName(name);
+            _descriptionLabel->setString(ct ? ct->getDesc() : "");
         }
     }
 }

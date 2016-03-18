@@ -185,6 +185,7 @@
 		A1D461601C3E251000E8E60B /* UAConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D4615B1C3E251000E8E60B /* UAConfigData.cpp */; };
 		A1D461611C3E251000E8E60B /* URConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D4615D1C3E251000E8E60B /* URConfigData.cpp */; };
 		A1D461651C3E478F00E8E60B /* AbstractData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D461631C3E478E00E8E60B /* AbstractData.cpp */; };
+		A1D592271C9ABE7E009B9E8C /* Scheduler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D592251C9ABE7E009B9E8C /* Scheduler.cpp */; };
 		A1D745C01C1AB7C40020BC1C /* DefeatLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D745B71C1AB7C40020BC1C /* DefeatLayer.cpp */; };
 		A1D745C11C1AB7C40020BC1C /* MapLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D745B91C1AB7C40020BC1C /* MapLayer.cpp */; };
 		A1D745C31C1AB7C40020BC1C /* VictoryLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D745BD1C1AB7C40020BC1C /* VictoryLayer.cpp */; };
@@ -516,6 +517,7 @@
 		A1720ECA1BCD37FC00217E98 /* MessageBoxLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageBoxLayer.h; sourceTree = "<group>"; };
 		A1720ECC1BCD382700217E98 /* MessageBoxBaseLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageBoxBaseLayer.cpp; sourceTree = "<group>"; };
 		A1720ECD1BCD382700217E98 /* MessageBoxBaseLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageBoxBaseLayer.h; sourceTree = "<group>"; };
+		A178A5031C9BBB63006FD4B0 /* uthash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uthash.h; sourceTree = "<group>"; };
 		A18524CA1C1AE3E800BE261D /* QuestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuestLayer.cpp; sourceTree = "<group>"; };
 		A18524CB1C1AE3E800BE261D /* QuestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestLayer.h; sourceTree = "<group>"; };
 		A18524CE1C1AE42000BE261D /* BagLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BagLayer.cpp; sourceTree = "<group>"; };
@@ -619,6 +621,8 @@
 		A1D4615E1C3E251000E8E60B /* URConfigData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URConfigData.h; sourceTree = "<group>"; };
 		A1D461631C3E478E00E8E60B /* AbstractData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AbstractData.cpp; sourceTree = "<group>"; };
 		A1D461641C3E478E00E8E60B /* AbstractData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractData.h; sourceTree = "<group>"; };
+		A1D592251C9ABE7E009B9E8C /* Scheduler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scheduler.cpp; sourceTree = "<group>"; };
+		A1D592261C9ABE7E009B9E8C /* Scheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scheduler.h; sourceTree = "<group>"; };
 		A1D745B71C1AB7C40020BC1C /* DefeatLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DefeatLayer.cpp; sourceTree = "<group>"; };
 		A1D745B81C1AB7C40020BC1C /* DefeatLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefeatLayer.h; sourceTree = "<group>"; };
 		A1D745B91C1AB7C40020BC1C /* MapLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapLayer.cpp; sourceTree = "<group>"; };
@@ -1516,6 +1520,7 @@
 		A1AAE5491BCCC4C20090D917 /* Public */ = {
 			isa = PBXGroup;
 			children = (
+				A1D592241C9ABE7E009B9E8C /* Scheduler */,
 				A1720E7C1BCCE19300217E98 /* Security */,
 				A1720EC71BCD321600217E98 /* CocosGlobal.h */,
 				A1720E6D1BCCDF9100217E98 /* CocosUtils.cpp */,
@@ -1615,6 +1620,16 @@
 				A1D4615E1C3E251000E8E60B /* URConfigData.h */,
 			);
 			path = AnimationConfig;
+			sourceTree = "<group>";
+		};
+		A1D592241C9ABE7E009B9E8C /* Scheduler */ = {
+			isa = PBXGroup;
+			children = (
+				A1D592251C9ABE7E009B9E8C /* Scheduler.cpp */,
+				A1D592261C9ABE7E009B9E8C /* Scheduler.h */,
+				A178A5031C9BBB63006FD4B0 /* uthash.h */,
+			);
+			path = Scheduler;
 			sourceTree = "<group>";
 		};
 		A1D745B41C1AB7C40020BC1C /* Battle */ = {
@@ -2095,6 +2110,7 @@
 				A1F58D601C32526E00C8A2DD /* ArtifactUpgradeData.cpp in Sources */,
 				A1720EBD1BCD309A00217E98 /* NetworkController.cpp in Sources */,
 				A1D4615F1C3E251000E8E60B /* MapParticleConfigData.cpp in Sources */,
+				A1D592271C9ABE7E009B9E8C /* Scheduler.cpp in Sources */,
 				A1A74CAB1C17DFFA00648671 /* MainUILayer.cpp in Sources */,
 				A1720EA41BCD29FF00217E98 /* GameData.cpp in Sources */,
 				A18524E01C1AF66900BE261D /* MapUILayer.cpp in Sources */,

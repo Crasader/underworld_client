@@ -57,7 +57,7 @@ private:
     Sprite* _skillIcon;
     Label* _skillLevelLabel;
     Label* _skillNameLabel;
-    Label* _skillDescriptionLabel;
+    Label* _descriptionLabel;
 };
 
 #endif /* BattleDeckBattleDeckUnitInfoNode_h */
