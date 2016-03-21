@@ -86,7 +86,7 @@
 		521A8EA919F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
 		521A8EAA19F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
 		52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A461A53D09B004E4C60 /* Security.framework */; };
-		631A861E1C9845D90036404A /* TCPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 631A861C1C9845D90036404A /* TCPClient.cpp */; };
+		6308F93B1CA02098009D2BFC /* TCPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6308F9371CA02098009D2BFC /* TCPClient.cpp */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
 		A103F45B1BE37E2A007F9A83 /* BulletNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F4571BE37E2A007F9A83 /* BulletNode.cpp */; };
 		A103F45C1BE37E2A007F9A83 /* UnitNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F4591BE37E2A007F9A83 /* UnitNode.cpp */; };
@@ -427,8 +427,10 @@
 		5087E78A17EB975400C73F5D /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		521A8EA819F11F5000D177D7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		52B47A461A53D09B004E4C60 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
-		631A861C1C9845D90036404A /* TCPClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TCPClient.cpp; sourceTree = "<group>"; };
-		631A861D1C9845D90036404A /* TCPClient.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TCPClient.hpp; sourceTree = "<group>"; };
+		6308F9371CA02098009D2BFC /* TCPClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TCPClient.cpp; sourceTree = "<group>"; };
+		6308F9381CA02098009D2BFC /* TCPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPClient.h; sourceTree = "<group>"; };
+		6308F9391CA02098009D2BFC /* TCPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPRequest.h; sourceTree = "<group>"; };
+		6308F93A1CA02098009D2BFC /* TCPResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPResponse.h; sourceTree = "<group>"; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		A103F4571BE37E2A007F9A83 /* BulletNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BulletNode.cpp; sourceTree = "<group>"; };
 		A103F4581BE37E2A007F9A83 /* BulletNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BulletNode.h; sourceTree = "<group>"; };
@@ -1202,6 +1204,17 @@
 			name = mac;
 			sourceTree = "<group>";
 		};
+		6308F9361CA02098009D2BFC /* base */ = {
+			isa = PBXGroup;
+			children = (
+				6308F9371CA02098009D2BFC /* TCPClient.cpp */,
+				6308F9381CA02098009D2BFC /* TCPClient.h */,
+				6308F9391CA02098009D2BFC /* TCPRequest.h */,
+				6308F93A1CA02098009D2BFC /* TCPResponse.h */,
+			);
+			path = base;
+			sourceTree = "<group>";
+		};
 		A103F4561BE37E2A007F9A83 /* Unit */ = {
 			isa = PBXGroup;
 			children = (
@@ -1484,14 +1497,13 @@
 		A1720EAA1BCD2A6A00217E98 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				6308F9361CA02098009D2BFC /* base */,
 				A1720EAB1BCD2A8400217E98 /* NetworkApi.cpp */,
 				A1720EAC1BCD2A8400217E98 /* NetworkApi.h */,
 				A1720EBB1BCD309A00217E98 /* NetworkController.cpp */,
 				A1720EBC1BCD309A00217E98 /* NetworkController.h */,
 				A1A05B3D1C967DAC006FE03B /* TCPClient.mm */,
 				A1A05B3E1C967DAC006FE03B /* TCPClient.h */,
-				631A861C1C9845D90036404A /* TCPClient.cpp */,
-				631A861D1C9845D90036404A /* TCPClient.hpp */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -2183,7 +2195,6 @@
 				A1720EBA1BCD2D2E00217E98 /* RMStore.m in Sources */,
 				047228B01C193A4D00E7F71B /* Geometry.cpp in Sources */,
 				3075346D1BF324340057DCED /* EventTriggers.cpp in Sources */,
-				631A861E1C9845D90036404A /* TCPClient.cpp in Sources */,
 				A1B4AE011C200480005906A6 /* SoundManager.cpp in Sources */,
 				A1B4AE2D1C200521005906A6 /* ChatManager.cpp in Sources */,
 				307534691BF1B2F20057DCED /* Commander.cpp in Sources */,
@@ -2198,6 +2209,7 @@
 				A1720EC21BCD316000217E98 /* ProgressLayer.cpp in Sources */,
 				A1F9B0891C76F54D007BC409 /* BattleDeckUnitInfoNode.cpp in Sources */,
 				A1211B271C0BF5CC00C27CCC /* RandomCreator.cpp in Sources */,
+				6308F93B1CA02098009D2BFC /* TCPClient.cpp in Sources */,
 				308B84691BE3856F00377802 /* AIBrain.cpp in Sources */,
 				A1720E7B1BCCE0F000217E98 /* NumberJump.cpp in Sources */,
 				A1F5BFA81C1FDFBE007C08CB /* ResourceNode.cpp in Sources */,
