@@ -90,14 +90,18 @@ bool MapUICardDeck::init(int count)
         
         Size progressSize(Size::ZERO);
         for (int i = 0; i < BATTLE_RESOURCE_MAX_COUNT; ++i) {
-            Sprite* s = Sprite::create("GameImages/test/ui_blood_8.png");
+            Sprite* s = Sprite::create("GameImages/test/ui_blood_9.png");
             ProgressTimer* pt = ProgressTimer::create(s);
             pt->setType(ProgressTimer::Type::BAR);
             pt->setBarChangeRate(Vec2(1.0f, 0.0f));
             pt->setMidpoint(Point::ANCHOR_BOTTOM_LEFT);
             pt->setPercentage(100);
             background->addChild(pt);
-            _resources.push_back(pt);
+            
+            s = Sprite::create("GameImages/test/ui_blood_8.png");
+            background->addChild(s);
+            
+            _resources.push_back(make_pair(s, pt));
             
             if (progressSize.width == 0) {
                 progressSize = pt->getContentSize();
@@ -108,9 +112,9 @@ bool MapUICardDeck::init(int count)
         const float midX = x1 + x2 + nodeSize.width + (count * (nodeSize.width + x3) - x3) / 2;
         const float startX = midX - ((progressSize.width + offsetX) * BATTLE_RESOURCE_MAX_COUNT - offsetX)  / 2;
         for (int i = 0; i < _resources.size(); ++i) {
-            ProgressTimer* pt = _resources.at(i);
             const Point pos(startX + progressSize.width / 2 + (progressSize.width + offsetX) * i, y2 / 2);
-            pt->setPosition(pos);
+            _resources.at(i).first->setPosition(pos);
+            _resources.at(i).second->setPosition(pos);
         }
         
         _countLabel->setPosition(startX, y2 / 2);
@@ -166,13 +170,18 @@ void MapUICardDeck::updateResource(const map<string, float>& resources)
     count = MIN(MAX(0, count), cnt);
     
     for (int i = 0; i < cnt; ++i) {
-        ProgressTimer* pt = _resources.at(i);
+        Sprite* s = _resources.at(i).first;
+        ProgressTimer* pt = _resources.at(i).second;
         if (pt) {
             if (i <= count - 1) {
+                s->setVisible(true);
                 pt->setPercentage(100.0f);
             } else if (i < count) {
-                pt->setPercentage(100.0f * (count - i));
+                const float percentage(count - i);
+                s->setVisible(percentage >= 1);
+                pt->setPercentage(100.0f * percentage);
             } else {
+                s->setVisible(false);
                 pt->setPercentage(0);
             }
         }

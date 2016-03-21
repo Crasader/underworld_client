@@ -86,7 +86,7 @@ bool BattleDeckLayer::init()
         static const float marginY(5.0f);
         
         // unit info node
-        _infoNode = BattleDeckUnitInfoNode::create(nullptr, 0);
+        _infoNode = BattleDeckUnitInfoNode::create();
         parent->addChild(_infoNode);
         const Size& infoNodeSize = _infoNode->getContentSize();
         _infoNode->setPosition(Point(infoNodeSize.width / 2 + marginX, ceilY - (infoNodeSize.height / 2 + marginY)));
@@ -153,6 +153,23 @@ bool BattleDeckLayer::init()
     }
     
     return false;
+}
+
+void BattleDeckLayer::onEnter()
+{
+    AbstractUILayer::onEnter();
+    
+    if (_pickedCards.size() > 0) {
+        _touchedCard = *(begin(_pickedCards));
+        selectCardOnDecks(_touchedCard);
+    } else if (_candidateCards.size() > 0) {
+        _touchedCard = *(begin(_candidateCards));
+        _tableViewNode.table->updateCellAtIndex(0);
+    }
+    
+    if (_touchedCard.length() > 0) {
+        _infoNode->update(_touchedCard, _techTree);
+    }
 }
 
 bool BattleDeckLayer::onTouchBegan(Touch *pTouch, Event *pEvent)

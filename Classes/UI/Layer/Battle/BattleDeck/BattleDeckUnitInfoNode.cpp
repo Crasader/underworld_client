@@ -20,6 +20,8 @@ using namespace ui;
 using namespace cocostudio;
 using namespace UnderWorld::Core;
 
+static const string default_value("0");
+
 static Label* createLabel(Node* parent, const string& message)
 {
     Label* label = CocosUtils::createLabel(message, DEFAULT_FONT_SIZE);
@@ -28,23 +30,11 @@ static Label* createLabel(Node* parent, const string& message)
     return label;
 }
 
-static float getUnitAttributeValue(const UnitBase* unitBase, UnitAttributeType type)
-{
-    const int cnt = unitBase->getAttributeCount(type);
-    if (cnt > 0) {
-        const UnitAttribute& attribute = unitBase->getUnitAttribute(type, 0);
-        return attribute._baseValue;
-    }
-    
-    return .0f;
-}
-
-BattleDeckUnitInfoNode* BattleDeckUnitInfoNode::create(const UnitBase* unit, int rarity)
+BattleDeckUnitInfoNode* BattleDeckUnitInfoNode::create()
 {
     BattleDeckUnitInfoNode *ret = new (nothrow) BattleDeckUnitInfoNode();
-    if (ret && ret->init(rarity))
+    if (ret && ret->init())
     {
-        ret->update(unit);
         ret->autorelease();
         return ret;
     }
@@ -66,8 +56,6 @@ BattleDeckUnitInfoNode::BattleDeckUnitInfoNode()
 ,_atkSpeedLabel(nullptr)
 ,_atkRangeLabel(nullptr)
 ,_skillIcon(nullptr)
-,_skillLevelLabel(nullptr)
-,_skillNameLabel(nullptr)
 ,_descriptionLabel(nullptr)
 {
     
@@ -78,7 +66,7 @@ BattleDeckUnitInfoNode::~BattleDeckUnitInfoNode()
     removeAllChildren();
 }
 
-bool BattleDeckUnitInfoNode::init(int rarity)
+bool BattleDeckUnitInfoNode::init()
 {
     if (Node::init()) {
         static const string csbFile("UI_CardInfo.csb");
@@ -98,35 +86,32 @@ bool BattleDeckUnitInfoNode::init(int rarity)
                 switch (tag) {
                     case 80:
                     {
-                        static const string file("GameImages/icons/unit/icon_w_langdun_1.png");
-                        _unitIcon = Sprite::create(file);
+                        _unitIcon = Sprite::create();
                         child->addChild(_unitIcon);
                     }
                         break;
                     case 81:
                     {
-                        static const string file(StringUtils::format("GameImages/test/ui_kuang_%d.png", rarity + 4));
-                        _qualityIcon = Sprite::create(file);
+                        _qualityIcon = Sprite::create();
                         child->addChild(_qualityIcon);
                     }
                         break;
                     case 63:
                     {
-                        static const string file("GameImages/icons/race/icon_langzu.png");
-                        _raceIcon = Sprite::create(file);
+                        _raceIcon = Sprite::create();
                         child->addChild(_raceIcon);
                     }
                         break;
                     case 62:
                     {
-                        _nameLabel = createLabel(child, "vampire");
+                        _nameLabel = createLabel(child, "");
                     }
                         break;
                     case 65:
                     {
                         Node* node = child->getChildByTag(66);
                         if (node) {
-                            _hpLabel = createLabel(node, "0");
+                            _hpLabel = createLabel(node, default_value);
                         }
                     }
                         break;
@@ -134,7 +119,7 @@ bool BattleDeckUnitInfoNode::init(int rarity)
                     {
                         Node* node = child->getChildByTag(68);
                         if (node) {
-                            _armorLabel = createLabel(node, "0");
+                            _armorLabel = createLabel(node, default_value);
                         }
                     }
                         break;
@@ -142,7 +127,7 @@ bool BattleDeckUnitInfoNode::init(int rarity)
                     {
                         Node* node = child->getChildByTag(70);
                         if (node) {
-                            _armorPreferLabel = createLabel(node, "0");
+                            _armorPreferLabel = createLabel(node, default_value);
                         }
                     }
                         break;
@@ -150,7 +135,7 @@ bool BattleDeckUnitInfoNode::init(int rarity)
                     {
                         Node* node = child->getChildByTag(72);
                         if (node) {
-                            _dmgLabel = createLabel(node, "0");
+                            _dmgLabel = createLabel(node, default_value);
                         }
                     }
                         break;
@@ -158,7 +143,7 @@ bool BattleDeckUnitInfoNode::init(int rarity)
                     {
                         Node* node = child->getChildByTag(74);
                         if (node) {
-                            _atkSpeedLabel = createLabel(node, "0");
+                            _atkSpeedLabel = createLabel(node, default_value);
                         }
                     }
                         break;
@@ -166,13 +151,8 @@ bool BattleDeckUnitInfoNode::init(int rarity)
                     {
                         Node* node = child->getChildByTag(76);
                         if (node) {
-                            _atkRangeLabel = createLabel(node, "0");
+                            _atkRangeLabel = createLabel(node, default_value);
                         }
-                    }
-                        break;
-                    case 21:
-                    {
-                        _skillLevelLabel = createLabel(child, "0");
                     }
                         break;
                     case 78:
@@ -182,14 +162,9 @@ bool BattleDeckUnitInfoNode::init(int rarity)
                         child->addChild(_skillIcon);
                     }
                         break;
-                    case 23:
-                    {
-                        _skillNameLabel = createLabel(child, "skill");
-                    }
-                        break;
                     case 79:
                     {
-                        _descriptionLabel = CocosUtils::createLabel("description", DEFAULT_FONT_SIZE, DEFAULT_FONT, Size(130, 130));
+                        _descriptionLabel = CocosUtils::createLabel("", DEFAULT_FONT_SIZE, DEFAULT_FONT, Size(130, 130));
                         _descriptionLabel->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
                         child->addChild(_descriptionLabel);
                     }
@@ -215,129 +190,89 @@ void BattleDeckUnitInfoNode::registerObserver(BattleDeckUnitInfoNodeObserver *ob
     _observer = observer;
 }
 
-void BattleDeckUnitInfoNode::update(const UnitBase* unit)
-{
-    if (unit) {
-        const string& file = DataManager::getInstance()->getCardConfigData(unit->getUnitType()->getName())->getSmallIcon();
-        if (file.length() > 0 && FileUtils::getInstance()->isFileExist(file)) {
-            _unitIcon->setTexture(file);
-        }
-        
-        _nameLabel->setString(unit->getUnitName());
-        _hpLabel->setString(StringUtils::format("%.0f", getUnitAttributeValue(unit, kUnitAttribute_MaxHp)));
-        _armorLabel->setString(StringUtils::format("%.0f", getUnitAttributeValue(unit, kUnitAttribute_Armor)));
-        _dmgLabel->setString(StringUtils::format("%.0f", getUnitAttributeValue(unit, kUnitAttribute_AttackDamage)));
-        _atkSpeedLabel->setString(StringUtils::format("%.1f", getUnitAttributeValue(unit, kUnitAttribute_AttackSpeed)));
-        _atkRangeLabel->setString(StringUtils::format("%.1f", getUnitAttributeValue(unit, kUnitAttribute_AttackRange)));
-        
-        const ArmorType* at = unit->getArmorPreference();
-        if (at) {
-            _armorPreferLabel->setString(StringUtils::format("%.1f", unit->getArmorPreferencFactor()));
-        }
-        
-        // skill
-        {
-            const int passiveTypeCount = unit->getPassiveTypeCount();
-            if (passiveTypeCount > 0) {
-                const PassiveType* pt = unit->getPassiveType(0);
-                if (pt) {
-                    if (_skillLevelLabel) {
-                        _skillLevelLabel->setString(StringUtils::format("LV%d", pt->getLevel()));
-                    }
-                    if (_skillNameLabel) {
-                        _skillNameLabel->setString(pt->getAlias());
-                    }
-                    _descriptionLabel->setString(pt->getDesc());
-                }
-            } else {
-                const int spellTypeCount = unit->getSpellTypeCount();
-                if (spellTypeCount > 0) {
-                    const SpellType* st = unit->getSpellType(0);
-                    if (st) {
-                        if (_skillLevelLabel) {
-                            _skillLevelLabel->setString(StringUtils::format("LV%d", st->getLevel()));
-                        }
-                        if (_skillNameLabel) {
-                            _skillNameLabel->setString(st->getAlias());
-                        }
-                        _descriptionLabel->setString(st->getDesc());
-                    }
-                }
-            }
-        }
-    }
-}
-
 void BattleDeckUnitInfoNode::update(const string& name, TechTree* techTree)
 {
-    const UnitType* unit = techTree->findUnitTypeByName(name);
-    if (unit) {
-        const string& file = DataManager::getInstance()->getCardConfigData(unit->getName())->getSmallIcon();
+    const CardType* ct = techTree->findCardTypeByName(name);
+    if (ct) {
+        const string& file = DataManager::getInstance()->getCardConfigData(name)->getSmallIcon();
         if (file.length() > 0 && FileUtils::getInstance()->isFileExist(file)) {
+            _unitIcon->setVisible(true);
             _unitIcon->setTexture(file);
-        }
-        
-        _nameLabel->setString(unit->getName());
-        _hpLabel->setString(StringUtils::format("%d", unit->getMaxHp()));
-        _armorLabel->setString(StringUtils::format("%d", unit->getAmror()));
-        
-        const AttackSkillType* type = dynamic_cast<const AttackSkillType*>(unit->getDefaultAttackSkillType(kFieldType_Land));
-        if (!type) {
-            type = dynamic_cast<const AttackSkillType*>(unit->getDefaultAttackSkillType(kFieldType_Air));
-        }
-        
-        if (type) {
-            _dmgLabel->setString(StringUtils::format("%d", (type->getMinDamage() + type->getMaxDamage()) / 2));
-            _atkSpeedLabel->setString(StringUtils::format("%.1f", GameConstants::frame2Second(type->getPrePerformFrames() + type->getCDFrames())));
-            _atkRangeLabel->setString(StringUtils::format("%d", type->getRange()));
         } else {
-            _dmgLabel->setString("");
-            _atkSpeedLabel->setString("");
-            _atkRangeLabel->setString("");
+            _unitIcon->setVisible(false);
         }
         
-        const string& at = unit->getArmorPreference();
-        if (at.length() > 0) {
-            _armorPreferLabel->setString(StringUtils::format("%.1f", unit->getArmorPreferenceFactor()));
-        } else {
-            _armorPreferLabel->setString("");
-        }
+        _raceIcon->setTexture("GameImages/icons/race/icon_langzu.png");
+        _nameLabel->setString(name);
+        _descriptionLabel->setString(ct->getDesc());
         
-        // skill
-        {
-            string name;
-            const size_t passiveTypeCount = unit->getPassiveNames().size();
-            if (passiveTypeCount > 0) {
-                name = unit->getPassiveNames().at(0);
-                
-            } else {
-                const size_t spellTypeCount = unit->getSpellNames().size();
-                if (spellTypeCount > 0) {
-                    name = unit->getSpellNames().at(0);
-                }
+        const UnitType* unit = techTree->findUnitTypeByName(name);
+        _qualityIcon->setVisible(unit);
+        if (unit) {
+            _qualityIcon->setTexture(StringUtils::format("GameImages/test/ui_kuang_%d.png", unit->getRarity() + 4));
+            _hpLabel->setString(StringUtils::format("%d", unit->getMaxHp()));
+            _armorLabel->setString(StringUtils::format("%d", unit->getAmror()));
+            
+            const AttackSkillType* type = dynamic_cast<const AttackSkillType*>(unit->getDefaultAttackSkillType(kFieldType_Land));
+            if (!type) {
+                type = dynamic_cast<const AttackSkillType*>(unit->getDefaultAttackSkillType(kFieldType_Air));
             }
             
-            if (name.length() > 0) {
-                const SpellType* spellType = techTree->findSpellTypeByName(name);
-                if (_skillLevelLabel) {
-                    _skillLevelLabel->setString(StringUtils::format("LV%d", spellType ? spellType->getLevel() : 0));
-                }
-                if (_skillNameLabel) {
-                    _skillNameLabel->setString(name);
-                }
+            if (type) {
+                _dmgLabel->setString(StringUtils::format("%d", (type->getMinDamage() + type->getMaxDamage()) / 2));
+                _atkSpeedLabel->setString(StringUtils::format("%.1f", GameConstants::frame2Second(type->getPrePerformFrames() + type->getCDFrames())));
+                _atkRangeLabel->setString(StringUtils::format("%d", type->getRange()));
             } else {
-                if (_skillLevelLabel) {
-                    _skillLevelLabel->setString("");
+                _dmgLabel->setString(default_value);
+                _atkSpeedLabel->setString(default_value);
+                _atkRangeLabel->setString(default_value);
+            }
+            
+            const string& at = unit->getArmorPreference();
+            if (at.length() > 0) {
+                _armorPreferLabel->setString(StringUtils::format("%.1f", unit->getArmorPreferenceFactor()));
+            } else {
+                _armorPreferLabel->setString(default_value);
+            }
+            
+            // skill
+            {
+                string name;
+                const size_t passiveTypeCount = unit->getPassiveNames().size();
+                if (passiveTypeCount > 0) {
+                    name = unit->getPassiveNames().at(0);
+                    
+                } else {
+                    const size_t spellTypeCount = unit->getSpellNames().size();
+                    if (spellTypeCount > 0) {
+                        name = unit->getSpellNames().at(0);
+                    }
                 }
-                if (_skillNameLabel) {
-                    _skillNameLabel->setString("");
+                
+                if (name.length() > 0) {
+                    
+                } else {
+                    
                 }
             }
+        } else {
+            _hpLabel->setString(default_value);
+            _armorLabel->setString(default_value);
+            _armorPreferLabel->setString(default_value);
+            _dmgLabel->setString(default_value);
+            _atkSpeedLabel->setString(default_value);
+            _atkRangeLabel->setString(default_value);
         }
-        
-        if (_descriptionLabel) {
-            const CardType* ct = techTree->findCardTypeByName(name);
-            _descriptionLabel->setString(ct ? ct->getDesc() : "");
-        }
+    } else {
+        _unitIcon->setVisible(false);
+        _qualityIcon->setVisible(false);
+        _nameLabel->setString(name);
+        _descriptionLabel->setString("");
+        _hpLabel->setString(default_value);
+        _armorLabel->setString(default_value);
+        _armorPreferLabel->setString(default_value);
+        _dmgLabel->setString(default_value);
+        _atkSpeedLabel->setString(default_value);
+        _atkRangeLabel->setString(default_value);
     }
 }

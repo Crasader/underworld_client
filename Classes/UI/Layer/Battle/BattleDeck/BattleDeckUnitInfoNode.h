@@ -28,16 +28,15 @@ public:
 class BattleDeckUnitInfoNode : public Node
 {
 public:
-    static BattleDeckUnitInfoNode* create(const UnderWorld::Core::UnitBase* unit, int rarity);
+    static BattleDeckUnitInfoNode* create();
     virtual ~BattleDeckUnitInfoNode();
     
     void registerObserver(BattleDeckUnitInfoNodeObserver *observer);
-    void update(const UnderWorld::Core::UnitBase* unit);
     void update(const std::string& name, UnderWorld::Core::TechTree* techTree);
     
 protected:
     BattleDeckUnitInfoNode();
-    bool init(int rarity);
+    virtual bool init() override;
     
 private:
     BattleDeckUnitInfoNodeObserver *_observer;
@@ -55,8 +54,6 @@ private:
     Label* _atkRangeLabel;
     // bottom
     Sprite* _skillIcon;
-    Label* _skillLevelLabel;
-    Label* _skillNameLabel;
     Label* _descriptionLabel;
 };
 

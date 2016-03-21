@@ -266,15 +266,15 @@ const string& CardNode::getCardName() const
 string CardNode::getIconFile(const string& name, bool enable) const
 {
     const CardConfigData* configData = DataManager::getInstance()->getCardConfigData(name);
-    string iconFile;
-    static const string defaultFile("GameImages/icons/unit/icon_w_langdun.png");
-    if (enable) {
-        iconFile = configData ? configData->getIcon() : defaultFile;
-    } else {
-        iconFile = configData ? configData->getDisabledIcon() : defaultFile;
+    if (configData) {
+        if (enable) {
+            return configData->getIcon();
+        } else {
+            return configData->getDisabledIcon();
+        }
     }
     
-    return iconFile;
+    return "";
 }
 
 BattleSmallResourceNode* CardNode::readdResourceNode(Node* currentNode, ::ResourceType type, int count)
@@ -294,7 +294,11 @@ BattleSmallResourceNode* CardNode::readdResourceNode(Node* currentNode, ::Resour
 void CardNode::updateIcon(bool colorful)
 {
     const string& iconFile = getIconFile(_cardName, colorful);
-    if (_iconSprite && iconFile.length() > 0) {
-        _iconSprite->setTexture(iconFile);
+    const bool show(_iconSprite && iconFile.length() > 0);
+    if (_iconSprite) {
+        _iconSprite->setVisible(show);
+        if (show) {
+            _iconSprite->setTexture(iconFile);
+        }
     }
 }

@@ -39,6 +39,7 @@ protected:
     virtual bool init() override;
     
     // LayerColor
+    virtual void onEnter() override;
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchMoved(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;

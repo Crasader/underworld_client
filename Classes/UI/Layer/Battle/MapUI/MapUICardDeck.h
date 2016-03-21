@@ -58,7 +58,7 @@ private:
     Label* _countLabel;
     std::vector<Point> _unitPositions;
     std::vector<CardNode*> _cardNodes;
-    std::vector<ProgressTimer*> _resources;
+    std::vector<std::pair<Sprite*, ProgressTimer*>> _resources;
     std::queue<CardNode*> _buffers;
 };
 
