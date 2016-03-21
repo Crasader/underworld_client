@@ -94,6 +94,11 @@
 		A10611FF1C3D20A40065070F /* SoldierPieceData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10611FD1C3D20A40065070F /* SoldierPieceData.cpp */; };
 		A10612021C3D22260065070F /* HeroPieceData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10612001C3D22260065070F /* HeroPieceData.cpp */; };
 		A1098E9C1C758C3500B2E044 /* BattleResourceNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1098E9A1C758C3500B2E044 /* BattleResourceNode.cpp */; };
+		A11469FE1C9FE9EC00E64125 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A11469F91C9FE9EC00E64125 /* libevent.a */; };
+		A11469FF1C9FE9EC00E64125 /* libevent_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A11469FA1C9FE9EC00E64125 /* libevent_core.a */; };
+		A1146A001C9FE9EC00E64125 /* libevent_extra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A11469FB1C9FE9EC00E64125 /* libevent_extra.a */; };
+		A1146A011C9FE9EC00E64125 /* libevent_openssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A11469FC1C9FE9EC00E64125 /* libevent_openssl.a */; };
+		A1146A021C9FE9EC00E64125 /* libevent_pthreads.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A11469FD1C9FE9EC00E64125 /* libevent_pthreads.a */; };
 		A1211B231C0BF55200C27CCC /* LiteralValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B211C0BF55200C27CCC /* LiteralValue.cpp */; };
 		A1211B271C0BF5CC00C27CCC /* RandomCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B251C0BF5CC00C27CCC /* RandomCreator.cpp */; };
 		A1211B291C0BF68E00C27CCC /* GameConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B281C0BF68E00C27CCC /* GameConstants.cpp */; };
@@ -437,6 +442,41 @@
 		A10612011C3D22260065070F /* HeroPieceData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroPieceData.h; sourceTree = "<group>"; };
 		A1098E9A1C758C3500B2E044 /* BattleResourceNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattleResourceNode.cpp; sourceTree = "<group>"; };
 		A1098E9B1C758C3500B2E044 /* BattleResourceNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BattleResourceNode.h; sourceTree = "<group>"; };
+		A11469D91C9FE9EC00E64125 /* evdns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = evdns.h; sourceTree = "<group>"; };
+		A11469DA1C9FE9EC00E64125 /* event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = event.h; sourceTree = "<group>"; };
+		A11469DC1C9FE9EC00E64125 /* buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buffer.h; sourceTree = "<group>"; };
+		A11469DD1C9FE9EC00E64125 /* buffer_compat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buffer_compat.h; sourceTree = "<group>"; };
+		A11469DE1C9FE9EC00E64125 /* bufferevent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bufferevent.h; sourceTree = "<group>"; };
+		A11469DF1C9FE9EC00E64125 /* bufferevent_compat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bufferevent_compat.h; sourceTree = "<group>"; };
+		A11469E01C9FE9EC00E64125 /* bufferevent_ssl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bufferevent_ssl.h; sourceTree = "<group>"; };
+		A11469E11C9FE9EC00E64125 /* bufferevent_struct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bufferevent_struct.h; sourceTree = "<group>"; };
+		A11469E21C9FE9EC00E64125 /* dns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dns.h; sourceTree = "<group>"; };
+		A11469E31C9FE9EC00E64125 /* dns_compat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dns_compat.h; sourceTree = "<group>"; };
+		A11469E41C9FE9EC00E64125 /* dns_struct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dns_struct.h; sourceTree = "<group>"; };
+		A11469E51C9FE9EC00E64125 /* event-config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "event-config.h"; sourceTree = "<group>"; };
+		A11469E61C9FE9EC00E64125 /* event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = event.h; sourceTree = "<group>"; };
+		A11469E71C9FE9EC00E64125 /* event_compat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = event_compat.h; sourceTree = "<group>"; };
+		A11469E81C9FE9EC00E64125 /* event_struct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = event_struct.h; sourceTree = "<group>"; };
+		A11469E91C9FE9EC00E64125 /* http.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = http.h; sourceTree = "<group>"; };
+		A11469EA1C9FE9EC00E64125 /* http_compat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = http_compat.h; sourceTree = "<group>"; };
+		A11469EB1C9FE9EC00E64125 /* http_struct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = http_struct.h; sourceTree = "<group>"; };
+		A11469EC1C9FE9EC00E64125 /* keyvalq_struct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keyvalq_struct.h; sourceTree = "<group>"; };
+		A11469ED1C9FE9EC00E64125 /* listener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = listener.h; sourceTree = "<group>"; };
+		A11469EE1C9FE9EC00E64125 /* rpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rpc.h; sourceTree = "<group>"; };
+		A11469EF1C9FE9EC00E64125 /* rpc_compat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rpc_compat.h; sourceTree = "<group>"; };
+		A11469F01C9FE9EC00E64125 /* rpc_struct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rpc_struct.h; sourceTree = "<group>"; };
+		A11469F11C9FE9EC00E64125 /* tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tag.h; sourceTree = "<group>"; };
+		A11469F21C9FE9EC00E64125 /* tag_compat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tag_compat.h; sourceTree = "<group>"; };
+		A11469F31C9FE9EC00E64125 /* thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = thread.h; sourceTree = "<group>"; };
+		A11469F41C9FE9EC00E64125 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
+		A11469F51C9FE9EC00E64125 /* evhttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = evhttp.h; sourceTree = "<group>"; };
+		A11469F61C9FE9EC00E64125 /* evrpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = evrpc.h; sourceTree = "<group>"; };
+		A11469F71C9FE9EC00E64125 /* evutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = evutil.h; sourceTree = "<group>"; };
+		A11469F91C9FE9EC00E64125 /* libevent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libevent.a; sourceTree = "<group>"; };
+		A11469FA1C9FE9EC00E64125 /* libevent_core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libevent_core.a; sourceTree = "<group>"; };
+		A11469FB1C9FE9EC00E64125 /* libevent_extra.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libevent_extra.a; sourceTree = "<group>"; };
+		A11469FC1C9FE9EC00E64125 /* libevent_openssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libevent_openssl.a; sourceTree = "<group>"; };
+		A11469FD1C9FE9EC00E64125 /* libevent_pthreads.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libevent_pthreads.a; sourceTree = "<group>"; };
 		A1211B211C0BF55200C27CCC /* LiteralValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LiteralValue.cpp; path = Core/Unit/Element/LiteralValue.cpp; sourceTree = "<group>"; };
 		A1211B221C0BF55200C27CCC /* LiteralValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LiteralValue.h; path = Core/Unit/Element/LiteralValue.h; sourceTree = "<group>"; };
 		A1211B241C0BF5CC00C27CCC /* EnumParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EnumParser.h; path = Core/Utils/EnumParser.h; sourceTree = "<group>"; };
@@ -739,6 +779,7 @@
 				ED545A7C1B68A1F400C3958E /* libiconv.dylib in Frameworks */,
 				A1B5588F1BCB65A100D30D6A /* StoreKit.framework in Frameworks */,
 				52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */,
+				A1146A011C9FE9EC00E64125 /* libevent_openssl.a in Frameworks */,
 				1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */,
 				D6B0611B1803AB670077942B /* CoreMotion.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
@@ -748,9 +789,13 @@
 				BF1712471292920000B8313A /* libz.dylib in Frameworks */,
 				A1DE80391BD669BB004DEED1 /* CrashReporter.framework in Frameworks */,
 				BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */,
+				A11469FE1C9FE9EC00E64125 /* libevent.a in Frameworks */,
 				D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */,
 				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
 				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
+				A11469FF1C9FE9EC00E64125 /* libevent_core.a in Frameworks */,
+				A1146A001C9FE9EC00E64125 /* libevent_extra.a in Frameworks */,
+				A1146A021C9FE9EC00E64125 /* libevent_pthreads.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1170,6 +1215,72 @@
 			path = Unit;
 			sourceTree = "<group>";
 		};
+		A11469D71C9FE9EC00E64125 /* Libevent */ = {
+			isa = PBXGroup;
+			children = (
+				A11469D81C9FE9EC00E64125 /* include */,
+				A11469F81C9FE9EC00E64125 /* lib */,
+			);
+			path = Libevent;
+			sourceTree = "<group>";
+		};
+		A11469D81C9FE9EC00E64125 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				A11469D91C9FE9EC00E64125 /* evdns.h */,
+				A11469DA1C9FE9EC00E64125 /* event.h */,
+				A11469DB1C9FE9EC00E64125 /* event2 */,
+				A11469F51C9FE9EC00E64125 /* evhttp.h */,
+				A11469F61C9FE9EC00E64125 /* evrpc.h */,
+				A11469F71C9FE9EC00E64125 /* evutil.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		A11469DB1C9FE9EC00E64125 /* event2 */ = {
+			isa = PBXGroup;
+			children = (
+				A11469DC1C9FE9EC00E64125 /* buffer.h */,
+				A11469DD1C9FE9EC00E64125 /* buffer_compat.h */,
+				A11469DE1C9FE9EC00E64125 /* bufferevent.h */,
+				A11469DF1C9FE9EC00E64125 /* bufferevent_compat.h */,
+				A11469E01C9FE9EC00E64125 /* bufferevent_ssl.h */,
+				A11469E11C9FE9EC00E64125 /* bufferevent_struct.h */,
+				A11469E21C9FE9EC00E64125 /* dns.h */,
+				A11469E31C9FE9EC00E64125 /* dns_compat.h */,
+				A11469E41C9FE9EC00E64125 /* dns_struct.h */,
+				A11469E51C9FE9EC00E64125 /* event-config.h */,
+				A11469E61C9FE9EC00E64125 /* event.h */,
+				A11469E71C9FE9EC00E64125 /* event_compat.h */,
+				A11469E81C9FE9EC00E64125 /* event_struct.h */,
+				A11469E91C9FE9EC00E64125 /* http.h */,
+				A11469EA1C9FE9EC00E64125 /* http_compat.h */,
+				A11469EB1C9FE9EC00E64125 /* http_struct.h */,
+				A11469EC1C9FE9EC00E64125 /* keyvalq_struct.h */,
+				A11469ED1C9FE9EC00E64125 /* listener.h */,
+				A11469EE1C9FE9EC00E64125 /* rpc.h */,
+				A11469EF1C9FE9EC00E64125 /* rpc_compat.h */,
+				A11469F01C9FE9EC00E64125 /* rpc_struct.h */,
+				A11469F11C9FE9EC00E64125 /* tag.h */,
+				A11469F21C9FE9EC00E64125 /* tag_compat.h */,
+				A11469F31C9FE9EC00E64125 /* thread.h */,
+				A11469F41C9FE9EC00E64125 /* util.h */,
+			);
+			path = event2;
+			sourceTree = "<group>";
+		};
+		A11469F81C9FE9EC00E64125 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				A11469F91C9FE9EC00E64125 /* libevent.a */,
+				A11469FA1C9FE9EC00E64125 /* libevent_core.a */,
+				A11469FB1C9FE9EC00E64125 /* libevent_extra.a */,
+				A11469FC1C9FE9EC00E64125 /* libevent_openssl.a */,
+				A11469FD1C9FE9EC00E64125 /* libevent_pthreads.a */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
 		A12D2F571BFDE88A00389DAC /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -1402,6 +1513,7 @@
 				A1A05B391C9668FB006FE03B /* CocoaAsyncSocket */,
 				A1DE80371BD669BA004DEED1 /* CrashReporter */,
 				A1720EB21BCD2D2E00217E98 /* KeyChain */,
+				A11469D71C9FE9EC00E64125 /* Libevent */,
 				A1A05B4D1C96B6A0006FE03B /* Lumberjack */,
 				A1720EB51BCD2D2E00217E98 /* RMStore */,
 			);
@@ -2232,7 +2344,7 @@
 				);
 				INFOPLIST_FILE = ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/ios/ThirdParty/Libevent/lib";
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
@@ -2279,7 +2391,7 @@
 				);
 				INFOPLIST_FILE = ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/ios/ThirdParty/Libevent/lib";
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
