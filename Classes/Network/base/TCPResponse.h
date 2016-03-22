@@ -63,6 +63,17 @@ public:
         _errorBuffer.clear();
         _responseDataString = "";
     }
+	
+     TCPResponse()
+    {
+        _pTCPRequest = 0;
+
+        _succeed = false;
+        _responseData.clear();
+        _errorBuffer.clear();
+        _responseDataString = "";
+    }
+
     
     /** 
      * Destructor, it will be called in TCPClient internal.

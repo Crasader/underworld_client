@@ -93,7 +93,7 @@ public:
         //_tag.clear();
         //_pTarget = nullptr;
         //_pSelector = nullptr;
-        _pCallback = nullptr;
+        //_pCallback = nullptr;
         //_pUserData = nullptr;
     };
     
@@ -285,10 +285,10 @@ public:
      *
      * @param callback the ccTCPRequestCallback function.
      */
-    inline void setResponseCallback(const ccTCPRequestCallback& callback)
+    /*inline void setResponseCallback(const ccTCPRequestCallback& callback)
     {
         _pCallback = callback;
-    }
+    }*/
     
     /** 
      * Get the target of callback selector function, mainly used by TCPClient.
@@ -335,10 +335,10 @@ public:
      *
      * @return const ccTCPRequestCallback& ccTCPRequestCallback callback function.
      */
-    inline const ccTCPRequestCallback& getCallback()
+    /*inline const ccTCPRequestCallback& getCallback()
     {
         return _pCallback;
-    }
+    }*/
     
     /** 
      * Set custom-defined headers.
@@ -387,7 +387,7 @@ protected:
     //std::string                 _tag;            /// user defined tag, to identify different requests in response callback
     //Ref*                        _pTarget;        /// callback target of pSelector function
     //SEL_TCPResponse            _pSelector;      /// callback function, e.g. MyLayer::onTCPResponse(TCPClient *sender, TCPResponse * response)
-    ccTCPRequestCallback       _pCallback;      /// C++11 style callbacks
+    //ccTCPRequestCallback       _pCallback;      /// C++11 style callbacks
     //void*                       _pUserData;      /// You can add your customed data here 
    // std::vector<std::string>    _headers;
     //int _port;

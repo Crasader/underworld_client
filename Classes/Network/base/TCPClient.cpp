@@ -48,7 +48,7 @@
 #include <cstdarg>
 #include <cstdio>
 #include <cstring>
-//#include <event.h>
+#include <event.h>
 
 
 NS_CC_BEGIN
@@ -60,7 +60,7 @@ typedef int int32_t;
 #endif
 
 static TCPClient* _tcpClient = nullptr; // pointer to singleton
-
+static struct event notify_event,server_event;
 #if 0
 typedef size_t (*write_callback)(void *ptr, size_t size, size_t nmemb, void *stream);
 
@@ -228,7 +228,7 @@ int _write(int fd, const char* data, int count) {
         return totlen;
 }
 
-/*int _create_pipe() {
+int TCPClient::_create_pipe() {
         int options;
         int pipe_fd[2];
 
@@ -246,7 +246,7 @@ int _write(int fd, const char* data, int count) {
         }
 
         return 0;
-}*/
+}
 
 
 
@@ -293,92 +293,29 @@ static void _close(int fd) {
         ::close(fd);
 }
 
-/*
+
+
 void on_notify(evutil_socket_t sock, short flags, void * args)  
 {  
     struct TCPClient *tc = (TCPClient *)args;   
-    int flag=-1;  
-    int ret = _read(tc->getFd(), (char*)&flag, sizeof(int));  
-      
-    printf("read_cb, read %d bytes\n", ret);  
-    if(flag==1)  
-    {
-        TCPRequest *request;
-
-        // step 1: send tcp request if the requestQueue isn't empty
-        {
-            std::lock_guard<std::mutex> lock(_requestQueueMutex);
-            while (_requestQueue.empty())
-                        {
-                _sleepCondition.wait(_requestQueueMutex);
-            }
-            request = _requestQueue.at(0);
-            _requestQueue.erase(0);
-        }
-
-        if (request == _requestSentinel) {
-            break;
-        }
-
-        // step 2: libcurl sync access
-        
-        // Create a TCPResponse object, the default setting is tcp access failed
-        TCPResponse *response = new (std::nothrow) TCPResponse(request);
-        
-                processResponse(response, _responseMessage);
-        
-
-        // add response packet into queue
-        _responseQueueMutex.lock();
-        _responseQueue.pushBack(response);
-        _responseQueueMutex.unlock();
-        
-                _schedulerMutex.lock();
-                if (nullptr != _scheduler)
-                {
-                        _scheduler->performFunctionInCocosThread(CC_CALLBACK_0(TCPClient::dispatchResponseCallbacks, this));
-                }
-                _schedulerMutex.unlock();    
-    }  
+    tc->processRequest(""); 
 }  
 
 
 void on_server(evutil_socket_t sock, short flags, void * args)
 {
-    struct echo_context *ec = (struct echo_context *)args;
-    char buf[128];
-    int ret = recv(sock, buf, 128, 0);
+    //struct echo_context *ec = (struct echo_context *)args;
+    struct TCPClient *tc = (TCPClient *)args;
+    tc->processResponse("");
 
-    printf("read_cb, read %d bytes\n", ret);
-
-
-    int retVal=_read(_fd,(char*)(&responseLen),4);
-        string reponseData;
-        if(retVal==4){
-                string reponseData;
-                retVal=_read(_fd,reponseData,responseLen);
-        }
-
-        // write data to TCPResponse
-        response->setResponseCode(retVal);
-        if (retVal <= 0)
-        {
-            response->setSucceed(false);
-            response->setErrorBuffer(responseMessage);
-        }
-        else
-        {       
-            response->setResponseDataString(reponseData.data(),reponseData.size());
-            response->setSucceed(true);
-        }
 }
-*/
 
 // Worker thread
 void TCPClient::networkThread()
 {   
 	increaseThreadCount();
-    
+   
+#if 0
     while (true) 
     {
         TCPRequest *request;
@@ -401,17 +338,19 @@ void TCPClient::networkThread()
         processResponse(request,_responseMessage);
 
     }
-/*
+
+#endif
+
     struct event_base* base;
     base = event_base_new();
-    struct event notify_event,server_event;
+    //struct event notify_event,server_event;
     event_set(&notify_event, _pipeRead, EV_READ|EV_PERSIST, on_notify, this);
     event_set(&server_event, _fd, EV_READ|EV_PERSIST, on_server, this);
     event_add(&notify_event, NULL);
     event_add(&server_event, NULL);
     event_base_dispatch(base);
     event_base_free(base);   
-*/   
+  
     // cleanup: if worker thread received quit signal, clean up un-completed request queue
     _requestQueueMutex.lock();
     _requestQueue.clear();
@@ -430,7 +369,7 @@ void TCPClient::networkThreadAlone(TCPRequest* request)
 	increaseThreadCount();
 
 	char responseMessage[RESPONSE_BUFFER_SIZE] = { 0 };
-	processResponse(request, _responseMessage);
+	//processResponse(request, _responseMessage);
 
 
 	decreaseThreadCountAndMayDeleteThis();
@@ -608,12 +547,12 @@ void TCPClient::send(TCPRequest* request)
 	_requestQueueMutex.unlock();
 
 	// Notify thread start to work
-	_sleepCondition.notify_one();
-	//int flag=1;
-	//_write(_pipeWrite,(char*)&flag,sizeof(int));
+	//_sleepCondition.notify_one();
+	int flag=1;
+	_write(_pipeWrite,(char*)&flag,sizeof(int));
 }
 
-void TCPClient::sendImmediate(TCPRequest* request)
+/*void TCPClient::sendImmediate(TCPRequest* request)
 {
     if(!request)
     {
@@ -626,7 +565,7 @@ void TCPClient::sendImmediate(TCPRequest* request)
 
     auto t = std::thread(&TCPClient::networkThreadAlone, this, request);
     t.detach();
-}
+}*/
 
 // Poll and notify main thread if responses exists in queue
 void TCPClient::dispatchResponseCallbacks()
@@ -645,8 +584,8 @@ void TCPClient::dispatchResponseCallbacks()
     
     if (response)
     {
-        TCPRequest *request = response->getTCPRequest();
-        const ccTCPRequestCallback& callback = request->getCallback();
+        //TCPRequest *request = response->getTCPRequest();
+        const ccTCPRequestCallback& callback = _pCallback;
         //Ref* pTarget = request->getTarget();
         //SEL_TCPResponse pSelector = request->getSelector();
 
@@ -661,12 +600,12 @@ void TCPClient::dispatchResponseCallbacks()
         
         response->release();
         // do not release in other thread
-        request->release();
+        //request->release();
     }
 }
 
 // Process Response
-void TCPClient::processResponse(TCPRequest* request,char* responseMessage)
+void TCPClient::processResponse(char* responseMessage)
 {
 #if 0
 	// Process the request -> get response packet
@@ -717,7 +656,7 @@ void TCPClient::processResponse(TCPRequest* request,char* responseMessage)
 		break;
 	}
 #endif
-
+#if 0
 	 long writeSuccess = -1;
  
         // write data to server
@@ -730,6 +669,7 @@ void TCPClient::processResponse(TCPRequest* request,char* responseMessage)
 	    _fd=_connect(_url,_port,_timeoutForConnect);
             writeSuccess=_write(_fd,request->getRequestData(),request->getRequestDataSize());    
 	}
+#endif
 #if 1
         int responseLen=-1;
 
@@ -743,7 +683,7 @@ void TCPClient::processResponse(TCPRequest* request,char* responseMessage)
             retVal=-1;
             retVal=_read(_fd,(char*)(&responseLen),4);
             string reponseData;
-            if(writeSuccess!=-1&&responseLen!=0){//handle full package
+            if(responseLen>0){//handle full package
                 string reponseData;
                 retVal=_read(_fd,reponseData,responseLen);
         #if 0        
@@ -774,13 +714,13 @@ void TCPClient::processResponse(TCPRequest* request,char* responseMessage)
                 _schedulerMutex.unlock();
         #endif
 
-            }else if(writeSuccess!=-1&&responseLen==0){
+            }/*else if(writeSuccess!=-1&&responseLen==0){
                 break;
-            }
+            }*/
 
 
            // write data to TCPResponse
-           TCPResponse *response = new (std::nothrow) TCPResponse(request);
+           TCPResponse *response = new (std::nothrow) TCPResponse();
                 response->setResponseCode(retVal);
                 if (retVal <= 0)
                 {
@@ -804,12 +744,86 @@ void TCPClient::processResponse(TCPRequest* request,char* responseMessage)
                 }
                 _schedulerMutex.unlock();
 
-        }while(retVal>0);
+        }while(0);
 
 #endif
 
 
 }
+
+void TCPClient::processRequest(char* responseMessage){
+   int flag=-1;  
+   int ret = _read(_pipeRead, (char*)&flag, sizeof(int));  
+      
+    printf("read_cb, read %d bytes\n", ret);  
+    if(flag==1)  
+    {
+   TCPRequest *request;
+
+        // step 1: send tcp request if the requestQueue isn't empty
+        {
+            std::lock_guard<std::mutex> lock(_requestQueueMutex);
+           /* while (_requestQueue.empty())
+                        {
+                _sleepCondition.wait(_requestQueueMutex);
+            }*/
+            request = _requestQueue.at(0);
+            _requestQueue.erase(0);
+        }
+
+        if (request == _requestSentinel) {
+            return;
+        }
+
+        // step 2: libcurl sync access
+
+        // Create a TCPResponse object, the default setting is tcp access failed
+       // TCPResponse *response = new (std::nothrow) TCPResponse(request);
+
+         //       processResponse(response, _responseMessage);
+
+
+         long writeSuccess = -1;
+
+        // write data to server
+
+        writeSuccess=_write(_fd,request->getRequestData(),request->getRequestDataSize());
+
+        //reconnect once
+        if(writeSuccess==-1){
+            _close(_fd);
+	    event_del(&server_event);
+            _fd=_connect(_url,_port,_timeoutForConnect);
+	    if(_fd!=-1){
+		event_set(&server_event, _fd, EV_READ|EV_PERSIST, on_server, this);
+		event_add(&server_event, NULL);
+            	writeSuccess=_write(_fd,request->getRequestData(),request->getRequestDataSize());
+	    }
+        }
+
+                if (writeSuccess <= 0)
+                {
+
+                    TCPResponse *response = new (std::nothrow) TCPResponse();
+                    response->setSucceed(false);
+                    response->setErrorBuffer(responseMessage);
+                 // add response packet into queue
+         _responseQueueMutex.lock();
+                _responseQueue.pushBack(response);
+                _responseQueueMutex.unlock();
+
+                _schedulerMutex.lock();
+                if (nullptr != _scheduler)
+                {
+                        _scheduler->performFunctionInCocosThread(CC_CALLBACK_0(TCPClient::dispatchResponseCallbacks, this));
+                }
+                _schedulerMutex.unlock();
+
+        }
+	request->release();
+    }
+}
+
 
 void TCPClient::increaseThreadCount()
 {
@@ -863,9 +877,11 @@ bool TCPClient::init(const std::string& host,int port){
     _url=host;
     _port=port;
      _fd=_connect(_url,_port,_timeoutForConnect);
+    
     if(_fd<0)
 	return false;
-    return true;
+    int ret=_create_pipe();
+    return ret==0?true:false;
 }
 
 #if 0

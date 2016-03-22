@@ -114,7 +114,7 @@ public:
      * @param request a TCPRequest object, which includes url, response callback etc.
                       please make sure request->_requestData is clear before calling "sendImmediate" here.
      */
-    void sendImmediate(TCPRequest* request);
+    //void sendImmediate(TCPRequest* request);
     
     /**
      * Set the timeout value for connecting.
@@ -151,9 +151,30 @@ public:
     //std::mutex& getSSLCaFileMutex() {return _sslCaFileMutex;}
     //
      bool init(const std::string& host,int port);
+
+
+     inline void setResponseCallback(const ccTCPRequestCallback& callback)
+     {
+              _pCallback = callback;
+     }
+
+      /**
+ *      * Get ccTCPRequestCallback callback function.
+ *           *
+ *                * @return const ccTCPRequestCallback& ccTCPRequestCallback callback function.
+ *                     */
+    inline const ccTCPRequestCallback& getCallback()
+    {
+              return _pCallback;
+    }
+
+    void processResponse(char* responseMessage);
+    void processRequest(char* responseMessage);
+
 private:
     TCPClient();
     virtual ~TCPClient();
+    int _create_pipe();
     
     /**
      * Init pthread mutex, semaphore, and create new thread for http requests
@@ -165,7 +186,6 @@ private:
     /** Poll function called from main thread to dispatch callbacks when http requests finished **/
     void dispatchResponseCallbacks();
     
-    void processResponse(TCPRequest* request,char* responseMessage);
     void increaseThreadCount();
     void decreaseThreadCountAndMayDeleteThis();
     
@@ -209,6 +229,7 @@ private:
     char _responseMessage[RESPONSE_BUFFER_SIZE];
     
     TCPRequest* _requestSentinel;
+    ccTCPRequestCallback       _pCallback;      /// C++11 style callbacks    
 };
 
 } // namespace network
