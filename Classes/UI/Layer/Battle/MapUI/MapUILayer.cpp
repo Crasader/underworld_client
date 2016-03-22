@@ -153,21 +153,21 @@ void MapUILayer::createCardDeck(int count)
 void MapUILayer::insertCard(const Card* card)
 {
     if (_cardDeck) {
-        _cardDeck->insert(card);
+        _cardDeck->insert(card, true);
     }
 }
 
 void MapUILayer::removeCard(const Card* card)
 {
     if (_cardDeck) {
-        _cardDeck->remove(card);
+        _cardDeck->remove(card, true);
     }
 }
 
-void MapUILayer::updateCardDeckCountDown(float time)
+void MapUILayer::updateCardDeckCountDown(float time, float duration)
 {
     if (_cardDeck) {
-        _cardDeck->updateTimer(time);
+        _cardDeck->updateTimer(time, duration);
     }
 }
 

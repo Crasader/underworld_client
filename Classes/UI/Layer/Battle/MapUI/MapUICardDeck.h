@@ -35,10 +35,10 @@ public:
     
     const UnderWorld::Core::Card* getCard(int idx) const;
     void select(int idx);
-    void updateTimer(float time);
+    void updateTimer(float time, float duration);
     void updateResource(const std::map<std::string, float>& resources);
-    void insert(const UnderWorld::Core::Card* card);
-    void remove(const UnderWorld::Core::Card* card);
+    void insert(const UnderWorld::Core::Card* card, bool animated);
+    void remove(const UnderWorld::Core::Card* card, bool animated);
     
 protected:
     MapUICardDeck();
@@ -48,12 +48,12 @@ protected:
     virtual void onCardNodeTouchedBegan(CardNode* node) override;
     virtual void onCardNodeTouchedEnded(CardNode* node, bool isValid) override;
     
-    void createUnitNode(const UnderWorld::Core::Card* card);
     void reload();
     
 private:
     MapUICardDeckObserver *_observer;
     Sprite* _candidateSprite;
+    ProgressTimer* _candidateProgress;
     Label* _nextLabel;
     Label* _countLabel;
     std::vector<Point> _unitPositions;

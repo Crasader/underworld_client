@@ -48,7 +48,7 @@ public:
     void createCardDeck(int count);
     void insertCard(const UnderWorld::Core::Card* card);
     void removeCard(const UnderWorld::Core::Card* card);
-    void updateCardDeckCountDown(float time);
+    void updateCardDeckCountDown(float time, float duration);
     void updateCardDeckResource(const std::map<std::string, float>& resources);
     
 protected:
