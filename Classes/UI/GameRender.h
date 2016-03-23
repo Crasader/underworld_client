@@ -10,7 +10,7 @@
 #define GameRender_h
 
 #include "cocos2d.h"
-#include "GameInterface.h"
+#include "ExternalInterface.h"
 #include "UnitNode.h"
 #include "BulletNode.h"
 #include "MapLayer.h"

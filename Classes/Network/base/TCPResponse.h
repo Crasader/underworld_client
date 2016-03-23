@@ -126,7 +126,7 @@ public:
      * Get the http response data.
      * @return std::vector<char>* the pointer that point to the _responseData.
      */
-    inline std::vector<char>* getResponseData()
+    inline const std::vector<char>* getResponseData() const
     {
         return &_responseData;
     }
@@ -229,7 +229,7 @@ public:
      * Get the string pointer that point to the response data.
      * @return const char* the string pointer that point to the response data.
      */
-    inline const char* getResponseDataString()
+    inline const char* getResponseDataString() const
     {
         return _responseDataString.c_str();
     }

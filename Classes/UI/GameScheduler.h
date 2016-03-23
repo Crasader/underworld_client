@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 #include "cocos2d.h"
-#include "GameInterface.h"
+#include "ExternalInterface.h"
 
 USING_NS_CC;
 

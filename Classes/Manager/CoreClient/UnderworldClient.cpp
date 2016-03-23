@@ -1,65 +1,21 @@
 //
-//  GameClient.cpp
+//  UnderworldClient.cpp
 //  Underworld_Client
 //
 //  Created by wenchengye on 16/3/12.
 //
 //
 
-#include "GameClient.h"
-#include "NetworkMessage.h"
+#include "UnderworldClient.h"
 #include "DataManager.h"
 
-namespace UnderWorld{ namespace Core{
-    
-class NetworkMessageLaunch2S : public NetworkMessage {
-private:
-    GameContentSetting _setting;
-    
-public:
-    virtual std::string toString() const override {return "";};
-    virtual void fromString(const std::string& s) override {};
-    
-    const GameContentSetting& getGameContentSetting() const              {return _setting;}
-    
-    void setGameContentSetting(const GameContentSetting& setting)        {_setting = setting;}
-};
+using namespace UnderWorld::Core;
 
-class NetworkMessageLaunch2C : public NetworkMessage {
-private:
-    FactionSetting _factionSetting;
-    int _mapId;
+const std::string UnderworldClient::SCHEDULE_KEY_CLIENT_LAUNCHING("schedule_key_client_launching");
     
-public:
-    virtual std::string toString() const override {return "";};
-    virtual void fromString(const std::string& s) override {};
-    
-    const FactionSetting& getFactionSetting() const        {return _factionSetting;}
-    int getMapId() const                                   {return _mapId;}
-    
-    void setFactionSetting(const FactionSetting& fs)       {_factionSetting = fs;}
-    void setMapId(int mapId)                               {_mapId = mapId;}
-};
-
-class NetworkMessageCancel2S : public NetworkMessage {
-public:
-    virtual std::string toString() const override {return "";};
-    virtual void fromString(const std::string& s) override {};
-    
-};
-
-class NetworkMessageCancel2C : public NetworkMessage {
-public:
-    virtual std::string toString() const override {return "";};
-    virtual void fromString(const std::string& s) override {};
-    
-};
-
-const std::string GameClient::SCHEDULE_KEY_CLIENT_LAUNCHING("schedule_key_client_launching");
-    
-GameClient::GameClient(AbstractRender* render,
+UnderworldClient::UnderworldClient(AbstractRender* render,
     AbstractScheduler* scheduler, AbstractNetworkProxy* proxy)
-: _looper(render, scheduler)
+: _terminal(render, scheduler)
 , _net(proxy)
 , _mode(GAME_MODE_COUNT)
 , _state(kIdle)
@@ -67,7 +23,7 @@ GameClient::GameClient(AbstractRender* render,
 , _proxy(proxy) {
 }
     
-void GameClient::launchPvp(const GameContentSetting& setting) {
+void UnderworldClient::launchPvp(const GameContentSetting& setting) {
     if (_state != kIdle) return;
     
     loadTechTree();
@@ -80,12 +36,12 @@ void GameClient::launchPvp(const GameContentSetting& setting) {
     msg->setGameContentSetting(setting);
     _proxy->send(msg);
     _schduler->schedule(CLIENT_LAUNCHING_FPS,
-        std::bind(&GameClient::updateLaunching, this),
+        std::bind(&UnderworldClient::updateLaunching, this),
         SCHEDULE_KEY_CLIENT_LAUNCHING);
     _state = kLaunching;
 }
     
-void GameClient::launchPve(int map, const GameContentSetting& setting) {
+void UnderworldClient::launchPve(int map, const GameContentSetting& setting) {
     if (_state != kIdle) return;
     
     loadTechTree();
@@ -94,14 +50,14 @@ void GameClient::launchPve(int map, const GameContentSetting& setting) {
     _settings.getFactionSetting().setContentSetting(setting, mapIndex);
     
     _mode = kPve;
-    _looper.init(_settings, nullptr);
+    _terminal.init(_settings, nullptr);
     
-    _looper.start();
+    _terminal.start();
     
     _state = kPlaying;
 }
     
-void GameClient::launchPve(const MapSetting& mapSetting, const GameContentSetting& setting) {
+void UnderworldClient::launchPve(const MapSetting& mapSetting, const GameContentSetting& setting) {
     if (_state != kIdle) return;
     
     loadTechTree();
@@ -110,29 +66,29 @@ void GameClient::launchPve(const MapSetting& mapSetting, const GameContentSettin
     _settings.getFactionSetting().setContentSetting(setting, mapIndex);
     
     _mode = kPve;
-    _looper.init(_settings, nullptr);
+    _terminal.init(_settings, nullptr);
     
-    _looper.start();
+    _terminal.start();
     
     _state = kPlaying;
 }
 
     
-void GameClient::cancelLaunch() {
+void UnderworldClient::cancelLaunch() {
     if (_state != kLaunching) return;
     
     NetworkMessageCancel2S* msg = new NetworkMessageCancel2S();
     _proxy->send(msg);
 }
     
-void GameClient::quit() {
+void UnderworldClient::quit() {
     if (_state != kPlaying) return;
     
-    _looper.end();
+    _terminal.end();
     _state = kIdle;;
 }
     
-void GameClient::updateLaunching() {
+void UnderworldClient::updateLaunching() {
     if (_state != kLaunching) return;
     
     NetworkMessage* msg = nullptr;
@@ -141,8 +97,8 @@ void GameClient::updateLaunching() {
             NetworkMessageLaunch2C* l2c = dynamic_cast<NetworkMessageLaunch2C*>(msg);
             loadMap(l2c->getMapId());
             _settings.setFactionSetting(l2c->getFactionSetting());
-            _looper.init(_settings, &_net);
-            _looper.start();
+            _terminal.init(_settings, &_net);
+            _terminal.start();
             _state = kPlaying;
         } else if (dynamic_cast<NetworkMessageCancel2C*>(msg)) {
             _proxy->disconnect();
@@ -156,24 +112,18 @@ void GameClient::updateLaunching() {
     }
 }
     
-void GameClient::loadTechTree() {
+void UnderworldClient::loadTechTree() {
     _settings.setTechTree(DataManager::getInstance()->getTechTreeData(1));
 }
 
-void GameClient::loadMap(int mapId) {
+void UnderworldClient::loadMap(int mapId) {
     _settings.setMapId(mapId);
     MapSetting ms;
     ms.init(DataManager::getInstance()->getMapData(mapId));
     loadMap(ms);
 }
     
-void GameClient::loadMap(const MapSetting& mapSetting) {
+void UnderworldClient::loadMap(const MapSetting& mapSetting) {
     _settings.setMapSetting(mapSetting);
     _settings.setFactionSetting(mapSetting.getFactionSetting());
 }
-
-
-
-
-
-}}

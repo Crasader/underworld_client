@@ -122,7 +122,7 @@ void BattleScene::start()
     contentSetting.setCards(cardSettings);
     
     
-    _client = new (nothrow) UnderWorld::Core::GameClient(_render, _sch, nullptr);
+    _client = new (nothrow) UnderworldClient(_render, _sch, nullptr);
     _client->launchPve(_render->getMapSetting(), contentSetting);
 }
 

@@ -6,7 +6,7 @@
 //  Copyright (c) 2016 Mofish Studio. All rights reserved.
 //
 
-#include "TCPClient.h"
+#include "TCPClient.hpp"
 
 #import "GCDAsyncSocket.h"
 #import "NSString+Extended.h"

@@ -10,10 +10,9 @@
 #define BattleScene_h
 
 #include "cocos2d.h"
-#include "GameLooper.h"
 #include "GameScheduler.h"
 #include "GameRender.h"
-#include "GameClient.h"
+#include "UnderworldClient.h"
 
 USING_NS_CC;
 
@@ -44,7 +43,7 @@ private:
 private:
     int _mapId;
     GameRender* _render;
-    UnderWorld::Core::GameClient * _client;
+    UnderworldClient * _client;
     GameScheduler* _sch;
 };
 
