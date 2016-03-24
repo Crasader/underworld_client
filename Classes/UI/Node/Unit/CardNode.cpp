@@ -13,6 +13,7 @@
 #include "DataManager.h"
 #include "CardConfigData.h"
 #include "Deck.h"
+#include "CCShake.h"
 #include "SoundManager.h"
 
 using namespace std;
@@ -22,10 +23,10 @@ using namespace UnderWorld::Core;
 static const int topZOrder(1);
 static const Point iconTouchOffset(0, -6.0f);
 
-CardNode* CardNode::create()
+CardNode* CardNode::create(bool canShake)
 {
     CardNode *ret = new (nothrow) CardNode();
-    if (ret && ret->init()) {
+    if (ret && ret->init(canShake)) {
         ret->autorelease();
         return ret;
     }
@@ -44,6 +45,9 @@ CardNode::CardNode()
 ,_coldDownProgress(nullptr)
 ,_card(nullptr)
 ,_touchInvalid(false)
+,_selected(false)
+,_isShaking(false)
+,_basePoint(Point::ZERO)
 {
     
 }
@@ -53,10 +57,12 @@ CardNode::~CardNode()
     removeAllChildren();
 }
 
-bool CardNode::init()
+bool CardNode::init(bool canShake)
 {
     if (Node::init())
     {
+        _canShake = canShake;
+        
         static const string csbFile("UI_Card.csb");
         Node *mainNode = CSLoader::createNode(csbFile);
         addChild(mainNode);
@@ -173,6 +179,43 @@ void CardNode::registerObserver(CardNodeObserver *observer)
     _observer = observer;
 }
 
+void CardNode::setPosition(const Point& point)
+{
+    Node::setPosition(point);
+    
+    if (_isShaking) {
+        // TODO:
+    } else {
+        _basePoint = point;
+        resetPosition();
+    }
+}
+
+void CardNode::setOpacity(GLubyte opacity)
+{
+    Node::setOpacity(opacity);
+    
+    if (_iconSprite) {
+        _iconSprite->setOpacity(opacity);
+    }
+    
+    if (_qualitySprite) {
+        _qualitySprite->setOpacity(opacity);
+    }
+    
+    if (_shiningSprite) {
+        _shiningSprite->setOpacity(opacity);
+    }
+    
+    if (_resourceNode) {
+        _resourceNode->setOpacity(opacity);
+    }
+    
+    for (auto iter = begin(_starSprites); iter != end(_starSprites); ++iter) {
+        (*iter).second->setOpacity(opacity);
+    }
+}
+
 void CardNode::update(const Card* card, float resource)
 {
     _card = card;
@@ -217,6 +260,8 @@ void CardNode::update(const string& name, int rarity, int cost, float resource)
 
 void CardNode::setSelected(bool selected)
 {
+    _selected = selected;
+    
     if (_shiningSprite) {
         _shiningSprite->setVisible(selected);
     }
@@ -227,12 +272,16 @@ void CardNode::setSelected(bool selected)
     if (selected) {
         if (scale != maxScale) {
             _cardWidget->setScale(maxScale);
+            shake();
         }
     } else {
         if (scale != minScale) {
             _cardWidget->setScale(minScale);
+            stopShake();
         }
     }
+    
+    resetPosition();
 }
 
 void CardNode::checkResource(float count)
@@ -299,6 +348,48 @@ void CardNode::updateIcon(bool colorful)
         _iconSprite->setVisible(show);
         if (show) {
             _iconSprite->setTexture(iconFile);
+        }
+    }
+}
+
+void CardNode::resetPosition()
+{
+    if (_basePoint.x != 0) {
+        const Point& point = getPosition();
+        const Point& pos = _basePoint + Point(0, _selected ? 5.0f : 0.0f);
+        if (point != pos) {
+            Node::setPosition(pos);
+        }
+    }
+}
+
+#pragma mark shake
+static float shake_action_tag = 2016;
+void CardNode::shake()
+{
+    if (_canShake && !_isShaking) {
+        stopShake();
+        _isShaking = true;
+        
+        static float shake_duration = 0.4f;
+        static float shake_strength = 2.0f;
+        
+        auto action = RepeatForever::create(CCShake::actionWithDuration(shake_duration, shake_strength, getPosition()));
+        action->setTag(shake_action_tag);
+        runAction(action);
+    }
+}
+
+void CardNode::stopShake()
+{
+    if (_canShake) {
+        if (_isShaking) {
+            _isShaking = false;
+        }
+        
+        if (getActionByTag(shake_action_tag)) {
+            stopActionByTag(shake_action_tag);
+            resetPosition();
         }
     }
 }

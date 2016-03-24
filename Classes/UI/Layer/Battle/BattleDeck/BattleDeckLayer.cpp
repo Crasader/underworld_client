@@ -53,7 +53,7 @@ BattleDeckLayer::BattleDeckLayer()
 ,_selectedCardsLabel(nullptr)
 ,_dragNode(nullptr)
 {
-    static const Size unitNodeSize = CardNode::create()->getContentSize();
+    static const Size unitNodeSize = CardNode::create(false)->getContentSize();
     _cellSize.height = unitNodeSize.height + unitNodeOffsetY;
     _cellSize.width = unitNodeSize.width + unitNodeOffsetX;
     
@@ -297,18 +297,18 @@ TableViewCell* BattleDeckLayer::tableCellAtIndex(TableView *table, ssize_t idx)
         CardNode* unitNode = dynamic_cast<CardNode*>(cell->getNode(i));
         if (index < cnt) {
             if (!unitNode) {
-                unitNode = CardNode::create();
+                unitNode = CardNode::create(false);
                 unitNode->registerObserver(this);
                 cell->addChild(unitNode);
                 cell->setNode(unitNode, i);
+                
+                const Point point(_cellSize.width * (i + 0.5f) - unitNodeOffsetX / 2, unitNode->getContentSize().height * 0.5f);
+                unitNode->setPosition(point + Point(0, (idx == maxCnt - 1) ? unitNodeOffsetY : 0));
             }
             
             const string& name = _candidateCards.at(index);
             updateCardNode(unitNode, name);
             unitNode->setSelected(name == _touchedCard);
-            
-            const Point point(_cellSize.width * (i + 0.5f) - unitNodeOffsetX / 2, unitNode->getContentSize().height * 0.5f);
-            unitNode->setPosition(point + Point(0, (idx == maxCnt - 1) ? unitNodeOffsetY : 0));
         } else if (unitNode) {
             unitNode->removeFromParent();
             cell->resetNode(i);
@@ -497,7 +497,7 @@ void BattleDeckLayer::configTable(bool reload)
 
 CardNode* BattleDeckLayer::createCardNode(const string& name)
 {
-    auto node = CardNode::create();
+    auto node = CardNode::create(false);
     updateCardNode(node, name);
     return node;
 }

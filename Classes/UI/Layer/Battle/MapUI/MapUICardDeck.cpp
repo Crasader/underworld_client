@@ -9,6 +9,7 @@
 #include "MapUICardDeck.h"
 #include "Deck.h"
 #include "CocosUtils.h"
+#include "CCShake.h"
 
 using namespace std;
 using namespace UnderWorld::Core;
@@ -34,6 +35,8 @@ MapUICardDeck::MapUICardDeck()
 ,_candidateProgress(nullptr)
 ,_nextLabel(nullptr)
 ,_countLabel(nullptr)
+,_isShaking(false)
+,_candidateSpritePosition(Point::ZERO)
 {
     
 }
@@ -54,7 +57,7 @@ bool MapUICardDeck::init(int count)
         static const float y1(5.0f);
         static const float y2(50.0f);
         
-        const Size& nodeSize = CardNode::create()->getContentSize();
+        const Size& nodeSize = CardNode::create(false)->getContentSize();
         const Size size(x1 * 2 + x2 + (count + 1) * nodeSize.width + (count - 1) * x3, y1 + y2 + nodeSize.height);
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         setContentSize(size);
@@ -78,17 +81,19 @@ bool MapUICardDeck::init(int count)
         // candidate
         {
             _candidateSprite = Sprite::create("GameImages/test/ui_kapaibeiian.png");
-            _candidateSprite->setPosition(x1 + nodeSize.width / 2, y);
+            _candidateSpritePosition = Point(x1 + nodeSize.width / 2, y);
+            _candidateSprite->setPosition(_candidateSpritePosition);
             background->addChild(_candidateSprite);
             
+            const Size& size = _candidateSprite->getContentSize();
             Sprite* s = Sprite::create("GameImages/test/ui_iconzhezhao_white.png");
             ProgressTimer* pt = ProgressTimer::create(s);
             pt->setType(ProgressTimer::Type::RADIAL);
             pt->setReverseDirection(true);
             pt->setMidpoint(Point::ANCHOR_MIDDLE);
             pt->setPercentage(100);
-            pt->setPosition(_candidateSprite->getPosition());
-            background->addChild(pt);
+            pt->setPosition(Point(size.width / 2, size.height / 2));
+            _candidateSprite->addChild(pt);
             
             _candidateProgress = pt;
         }
@@ -169,11 +174,17 @@ void MapUICardDeck::select(int idx)
 void MapUICardDeck::updateTimer(float time, float duration)
 {
     if (_nextLabel) {
-        _nextLabel->setString(StringUtils::format("Next:%d", static_cast<int>(time)));
+        _nextLabel->setString(StringUtils::format("Next:%d", static_cast<int>(ceil(time))));
     }
     
     if (_candidateProgress) {
         _candidateProgress->setPercentage(time / duration * 100.0f);
+    }
+    
+    if (time >= duration) {
+        shake();
+    } else {
+        stopShake();
     }
 }
 
@@ -219,7 +230,7 @@ void MapUICardDeck::insert(const Card* card, bool animated)
 {
     const size_t idx(_cardNodes.size());
     const size_t cnt(_unitPositions.size());
-    CardNode* node = CardNode::create();
+    CardNode* node = CardNode::create(true);
     node->update(card, BATTLE_RESOURCE_MAX_COUNT);
     node->registerObserver(this);
     node->setTag((int)idx);
@@ -236,19 +247,27 @@ void MapUICardDeck::insert(const Card* card, bool animated)
 void MapUICardDeck::remove(const Card* card, bool animated)
 {
     if (card) {
-        bool update(false);
+        function<void(vector<CardNode*>::iterator)> callback = [this](vector<CardNode*>::iterator iter) {
+            auto node = *iter;
+            node->removeFromParent();
+            _cardNodes.erase(iter);
+            reload();
+        };
+        
+        static const float duration(0.3f);
         for (auto iter = begin(_cardNodes); iter != end(_cardNodes); ++iter) {
             auto node = *iter;
             if (node->getCard() == card) {
-                node->removeFromParent();
-                _cardNodes.erase(iter);
-                update = true;
+                if (animated) {
+                    node->runAction(Sequence::create(FadeOut::create(duration), CallFunc::create([=] {
+                        callback(iter);
+                    }), nullptr));
+                } else {
+                    callback(iter);
+                }
+                
                 break;
             }
-        }
-        
-        if (update) {
-            reload();
         }
     }
 }
@@ -290,5 +309,34 @@ void MapUICardDeck::reload()
         node->setPosition(_unitPositions[i++]);
         _cardNodes.push_back(node);
         _buffers.pop();
+    }
+}
+
+#pragma mark shake
+static float shake_action_tag = 2016;
+void MapUICardDeck::shake()
+{
+    if (!_isShaking) {
+        stopShake();
+        _isShaking = true;
+        
+        static float shake_duration = 0.4f;
+        static float shake_strength = 2.0f;
+        
+        auto action = RepeatForever::create(CCShake::actionWithDuration(shake_duration, shake_strength, _candidateSpritePosition));
+        action->setTag(shake_action_tag);
+        _candidateSprite->runAction(action);
+    }
+}
+
+void MapUICardDeck::stopShake()
+{
+    if (_isShaking) {
+        _isShaking = false;
+    }
+    
+    if (_candidateSprite->getActionByTag(shake_action_tag)) {
+        _candidateSprite->stopActionByTag(shake_action_tag);
+        _candidateSprite->setPosition(_candidateSpritePosition);
     }
 }

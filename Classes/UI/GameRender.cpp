@@ -269,15 +269,15 @@ void GameRender::updateUILayer()
     if (_deck) {
         const int counter = _deck->getCounter();
         const int total = _deck->getDrawSpanFrames();
-        const float duration = total / GameConstants::FRAME_PER_SEC;
+        const float duration = (float)total / (float)GameConstants::FRAME_PER_SEC;
         const float time = (1.0 - (float)(counter % total) / (float)total) * duration;
-        _mapUILayer->updateCardDeckCountDown(ceil(time), duration);
+        _mapUILayer->updateCardDeckCountDown(time, duration);
         
-        const vector<Deck::DeckLog>& logs = _deck->getLogs();
+        const auto& logs = _deck->getLogs();
         for (int i = 0; i < logs.size(); ++i) {
             const auto& log = logs.at(i);
-            Deck::DeckEvent event = log._event;
-            const Card* card = log._card;
+            const auto event = log._event;
+            const auto card = log._card;
             if (Deck::kDeckEvent_Use == event) {
                 _mapUILayer->removeCard(card);
             } else if (Deck::kDeckEvent_Draw == event) {

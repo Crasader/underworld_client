@@ -11,6 +11,7 @@
 
 #include "NetworkService.h"
 #include "TCPClient.h"
+#include <list>
 
 namespace UnderWorld { namespace Core {
     class NetworkMessage;

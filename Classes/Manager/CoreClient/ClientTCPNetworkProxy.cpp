@@ -12,12 +12,12 @@
 #include "ClientTCPNetworkProxy.h"
 #include "NetworkMessage.h"
 #include "UnderworldClient.h"
+#include "cocos2d.h"
 #include "json/document.h"
 #include "json/stringbuffer.h"
 #include "json/writer.h"
 #include "cocostudio/DictionaryHelper.h"
 #include "Utils.h"
-
 
 #define MESSAGE_CODE_LAUNCH_2_S (2)
 #define MESSAGE_CODE_LAUNCH_2_C (3)

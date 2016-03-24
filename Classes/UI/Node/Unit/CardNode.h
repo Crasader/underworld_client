@@ -33,9 +33,11 @@ public:
 class CardNode: public Node
 {
 public:
-    static CardNode* create();
+    static CardNode* create(bool canShake);
     virtual ~CardNode();
     void registerObserver(CardNodeObserver *observer);
+    virtual void setPosition(const Point& point) override;
+    virtual void setOpacity(GLubyte opacity) override;
     void update(const UnderWorld::Core::Card* card, float resource);
     void update(const std::string& name, int rarity, int cost, float resource);
     void setSelected(bool selected);
@@ -47,10 +49,13 @@ public:
     
 protected:
     CardNode();
-    virtual bool init() override;
+    bool init(bool canShake);
     std::string getIconFile(const std::string& name, bool enable) const;
     BattleSmallResourceNode* readdResourceNode(Node* currentNode, ResourceType type, int count);
     void updateIcon(bool colorful);
+    void resetPosition();
+    void shake();
+    void stopShake();
     
 private:
     CardNodeObserver *_observer;
@@ -65,6 +70,10 @@ private:
     const UnderWorld::Core::Card* _card;
     std::string _cardName;
     bool _touchInvalid;
+    bool _selected;
+    bool _canShake;
+    bool _isShaking;
+    Point _basePoint;
 };
 
 #endif /* CardNode_h */

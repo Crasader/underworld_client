@@ -76,6 +76,25 @@ bool BattleSmallResourceNode::init(ResourceType type, int count)
     return false;
 }
 
+void BattleSmallResourceNode::setOpacity(GLubyte opacity)
+{
+    Node::setOpacity(opacity);
+    
+    if (_icon) {
+        Vector<Node*>& children = _icon->getChildren();
+        if (children.size() > 0) {
+            Sprite* sprite = dynamic_cast<Sprite*>(children.front());
+            if (sprite) {
+                sprite->setOpacity(opacity);
+            }
+        }
+    }
+    
+    if (_countLabel) {
+        _countLabel->setOpacity(opacity);
+    }
+}
+
 void BattleSmallResourceNode::check(float count)
 {
     if (_countLabel) {

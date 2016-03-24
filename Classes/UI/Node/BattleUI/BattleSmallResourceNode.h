@@ -20,6 +20,7 @@ public:
     static BattleSmallResourceNode* create(ResourceType type, int count);
     virtual ~BattleSmallResourceNode();
     
+    virtual void setOpacity(GLubyte opacity) override;
     void check(float count);
     void setCount(int count);
     

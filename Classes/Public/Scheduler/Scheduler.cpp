@@ -11,6 +11,7 @@
 #include <thread>
 #include <vector>
 #include <cassert>
+#include <unistd.h>
 #include "uthash.h"
 
 // Hash Element used for "selectors with interval"

@@ -49,6 +49,8 @@ protected:
     virtual void onCardNodeTouchedEnded(CardNode* node, bool isValid) override;
     
     void reload();
+    void shake();
+    void stopShake();
     
 private:
     MapUICardDeckObserver *_observer;
@@ -60,6 +62,8 @@ private:
     std::vector<CardNode*> _cardNodes;
     std::vector<std::pair<Sprite*, ProgressTimer*>> _resources;
     std::queue<CardNode*> _buffers;
+    bool _isShaking;
+    Point _candidateSpritePosition;
 };
 
 #endif /* MapUICardDeck_h */
