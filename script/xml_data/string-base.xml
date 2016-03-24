@@ -37,6 +37,7 @@
 	 <!-- 提示 -->
 	<item key="hint_exitPve" value="您确定结束战斗并退出该关卡吗？"/>
 	<item key="hint_confirm" value="确定"/>
-	<item key="hint_cancel" value="取消"/>
+    <item key="hint_cancel" value="取消"/>
+    <item key="hint_level" value="%d级"/>
 	 
 </root>

@@ -15,6 +15,8 @@
 #include "Map.h"
 #include "cocostudio/CocoStudio.h"
 #include "tinyxml2/tinyxml2.h"
+#include "CocosUtils.h"
+#include "LocalHelper.h"
 #include "CoreUtils.h"
 #include "Constants.h"
 #include "DataManager.h"
@@ -51,6 +53,21 @@ static Node* createUnitMask(const UnderWorld::Core::UnitType* ut)
                 Sprite* sprite = dynamic_cast<Sprite*>(actionNode->getChildren().front());
                 if (sprite) {
                     sprite->setOpacity(180);
+                    
+                    {
+                        const Point& point = sprite->getPosition() + Point(0, sprite->getContentSize().height / 2 + data->getHpBarPosY());
+                        
+                        Node* node = Node::create();
+                        actionNode->addChild(node);
+                        
+                        Label* levelLabel = CocosUtils::createLabel(StringUtils::format(LocalHelper::getString("hint_level").c_str(), 1), BIG_FONT_SIZE);
+                        levelLabel->setPosition(point + Point(0, 10));
+                        node->addChild(levelLabel);
+                        
+                        Label* nameLabel = CocosUtils::createLabel(ut->getName(), BIG_FONT_SIZE);
+                        nameLabel->setPosition(point + Point(0, 35));
+                        node->addChild(nameLabel);
+                    }
                 }
                 return actionNode;
             }

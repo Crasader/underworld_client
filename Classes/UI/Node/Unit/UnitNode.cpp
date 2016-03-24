@@ -985,7 +985,7 @@ Point UnitNode::getHPBarPosition() const
             offsetY = _configData->getHpBarPosY();
         }
         
-        Point position(pos + Point(0, size.height / 2 + 10.0f + offsetY));
+        Point position(pos + Point(0, size.height / 2 + offsetY));
         position = convertToNodeSpace(_actionNode->convertToWorldSpace(position));
         return position;
     }
