@@ -27,6 +27,7 @@
 #ifndef __CCTCPCLIENT_H__
 #define __CCTCPCLIENT_H__
 
+#include <event.h>
 #include <thread>
 #include <condition_variable>
 #include "base/CCVector.h"
@@ -65,12 +66,12 @@ public:
      *
      * @return the instance of TCPClient.
      */
-    static TCPClient *getInstance();
+    //static TCPClient *getInstance();
     
     /** 
      * Release the instance of TCPClient. 
      */
-    static void destroyInstance();
+    //static void destroyInstance();
 
     /** 
      * Enable cookie support.
@@ -171,9 +172,9 @@ public:
     void processResponse(char* responseMessage);
     void processRequest(char* responseMessage);
 
-private:
     TCPClient();
     virtual ~TCPClient();
+private:
     int _create_pipe();
     
     /**
@@ -229,7 +230,11 @@ private:
     char _responseMessage[RESPONSE_BUFFER_SIZE];
     
     TCPRequest* _requestSentinel;
-    ccTCPRequestCallback       _pCallback;      /// C++11 style callbacks    
+    ccTCPRequestCallback       _pCallback;      /// C++11 style callbacks   
+
+    struct event notify_event;
+    struct event server_event;
+    struct event_base* base; 
 };
 
 } // namespace network

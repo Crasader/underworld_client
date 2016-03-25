@@ -59,8 +59,8 @@ namespace network {
 typedef int int32_t;
 #endif
 
-static TCPClient* _tcpClient = nullptr; // pointer to singleton
-static struct event notify_event,server_event;
+//static TCPClient* _tcpClient = nullptr; // pointer to singleton
+//static struct event notify_event,server_event;
 #if 0
 typedef size_t (*write_callback)(void *ptr, size_t size, size_t nmemb, void *stream);
 
@@ -341,7 +341,7 @@ void TCPClient::networkThread()
 
 #endif
 
-    struct event_base* base;
+    //struct event_base* base;
     base = event_base_new();
     //struct event notify_event,server_event;
     event_set(&notify_event, _pipeRead, EV_READ|EV_PERSIST, on_notify, this);
@@ -424,6 +424,7 @@ static int processDeleteTask(TCPClient* client, TCPRequest* request, write_callb
 }
 #endif
 
+#if 0
 // TCPClient implementation
 TCPClient* TCPClient::getInstance()
 {
@@ -461,7 +462,7 @@ void TCPClient::destroyInstance()
 
 	CCLOG("TCPClient::destroyInstance() finished!");
 }
-#if 0
+
 void TCPClient::enableCookies(const char* cookieFile)
 {
     std::lock_guard<std::mutex> lock(_cookieFileMutex);
@@ -506,7 +507,27 @@ TCPClient::~TCPClient()
 	CC_SAFE_DELETE(_requestSentinel);
 	if(_fd!=-1)
              _close(_fd);
+		
 	CCLOG("TCPClient destructor");
+	
+        _scheduler->unscheduleAllForTarget(this);
+        _schedulerMutex.lock();
+        _scheduler = nullptr;
+        _schedulerMutex.unlock();
+
+        _requestQueueMutex.lock();
+        _requestQueue.pushBack(_requestSentinel);
+        _requestQueueMutex.unlock();
+	 int flag=1;
+        _write(_pipeWrite,(char*)&flag,sizeof(int));
+
+        //_sleepCondition.notify_one();
+         if(_pipeRead!=-1)
+             _close(_pipeRead);
+        if(_pipeWrite!=-1)
+             _close(_pipeWrite);
+        decreaseThreadCountAndMayDeleteThis();
+
 }
 
 //Lazy create semaphore & mutex & thread
@@ -772,6 +793,7 @@ void TCPClient::processRequest(char* responseMessage){
         }
 
         if (request == _requestSentinel) {
+	    event_base_loopbreak(base);
             return;
         }
 
