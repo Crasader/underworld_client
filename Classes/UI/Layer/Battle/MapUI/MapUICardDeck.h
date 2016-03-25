@@ -38,7 +38,7 @@ public:
     void updateTimer(float time, float duration);
     void updateResource(const std::map<std::string, float>& resources);
     void insert(const UnderWorld::Core::Card* card, bool animated);
-    void remove(const UnderWorld::Core::Card* card, bool animated);
+    void remove(const UnderWorld::Core::Card* card, int index, bool animated);
     
 protected:
     MapUICardDeck();

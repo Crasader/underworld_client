@@ -45,13 +45,13 @@ public:
     void updateUnitMask(const UnderWorld::Core::UnitType* unitType, const Point& layerPoint);
     void removeUnitMask();
     
-    void updateSpellRing(const Point& layerPoint, int range);
+    void updateSpellRing(const std::string& name, const Point& layerPoint, int range);
     void removeSpellRing();
     void checkUnitInSpellRing(Node* unit);
     
     const UnderWorld::Core::MapSetting& getMapSetting() const;
     
-    void addFireballSpellEffect();
+    void addSpell(const std::string& name, float duration);
     void removeAllSpellEffects();
     
     void addPlaceUnitEffect(const UnderWorld::Core::Coordinate& point);
@@ -82,7 +82,9 @@ protected:
     void removeSpellEffect(Node* effect);
     void scrollChecking(float dt);
     
-    Node* createSpellRing(const Point& point);
+    void clearRingInfo();
+    Node* createRing(const std::string& name, const Point& point);
+    void removeStaticRing(const Point& point);
     Rect getSpellRingBoundingBox() const;
 private:
     MapLayerObserver *_observer;
@@ -95,7 +97,7 @@ private:
     cocos2d::extension::ScrollView *_scrollView;
     UnderWorld::Core::MapSetting _mapSetting;
     Node* _mainLayer;
-    Node* _spellRing;
+    std::pair<std::string, Node*> _spellRing;
     std::map<Point, Node*> _staticSpellRings;
     Node* _butterfly;
     Vec2 _scrollViewOffset;

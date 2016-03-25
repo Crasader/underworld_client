@@ -36,7 +36,8 @@ public:
     static CardNode* create(bool canShake);
     virtual ~CardNode();
     void registerObserver(CardNodeObserver *observer);
-    virtual void setPosition(const Point& point) override;
+    virtual void setPosition(const Vec2& position) override;
+    virtual void setPosition(float x, float y) override;
     virtual void setOpacity(GLubyte opacity) override;
     void update(const UnderWorld::Core::Card* card, float resource);
     void update(const std::string& name, int rarity, int cost, float resource);

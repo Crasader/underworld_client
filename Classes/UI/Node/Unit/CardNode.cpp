@@ -194,14 +194,20 @@ void CardNode::registerObserver(CardNodeObserver *observer)
     _observer = observer;
 }
 
-void CardNode::setPosition(const Point& point)
+void CardNode::setPosition(const Vec2& position)
 {
-    Node::setPosition(point);
+    setPosition(position.x, position.y);
+}
+
+void CardNode::setPosition(float x, float y)
+{
+    Node::setPosition(x, y);
     
     if (_isShaking) {
         // TODO:
     } else {
-        _basePoint = point;
+        _basePoint.x = x;
+        _basePoint.y = y;
         resetPosition();
     }
 }
@@ -287,13 +293,13 @@ void CardNode::setSelected(bool selected)
     if (selected) {
         if (scale != maxScale) {
             _cardWidget->setScale(maxScale);
-            shake();
         }
+        shake();
     } else {
         if (scale != minScale) {
             _cardWidget->setScale(minScale);
-            stopShake();
         }
+        stopShake();
     }
     
     resetPosition();
@@ -373,7 +379,7 @@ void CardNode::resetPosition()
         const Point& point = getPosition();
         const Point& pos = _basePoint + Point(0, _selected ? 5.0f : 0.0f);
         if (point != pos) {
-            Node::setPosition(pos);
+            Node::setPosition(pos.x, pos.y);
         }
     }
 }

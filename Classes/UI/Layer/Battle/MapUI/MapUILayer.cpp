@@ -157,10 +157,10 @@ void MapUILayer::insertCard(const Card* card)
     }
 }
 
-void MapUILayer::removeCard(const Card* card)
+void MapUILayer::removeCard(const Card* card, int index)
 {
     if (_cardDeck) {
-        _cardDeck->remove(card, true);
+        _cardDeck->remove(card, index, true);
     }
 }
 

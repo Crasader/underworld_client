@@ -279,7 +279,7 @@ void GameRender::updateUILayer()
             const auto event = log._event;
             const auto card = log._card;
             if (Deck::kDeckEvent_Use == event) {
-                _mapUILayer->removeCard(card);
+                _mapUILayer->removeCard(card, log._extra);
             } else if (Deck::kDeckEvent_Draw == event) {
                 _mapUILayer->insertCard(card);
             }
@@ -611,8 +611,11 @@ void GameRender::updateCardMask(const UnderWorld::Core::Card* card, const Point&
             const UnitType* ut = card->getUnitType();
             if (ut) {
                 _mapLayer->updateUnitMask(ut, point);
-            } else if (isValidAoeSpell(card->getSpellType())) {
-                _mapLayer->updateSpellRing(point, range);
+            } else {
+                const SpellType* st = card->getSpellType();
+                if (isValidAoeSpell(st)) {
+                    _mapLayer->updateSpellRing(st->getSpellName(), point, range);
+                }
             }
         }
     }
@@ -638,14 +641,7 @@ void GameRender::tryToUseCard(const UnderWorld::Core::Card* card, int idx, const
             if (kCommandResult_suc == result) {
                 const SpellType* st = card->getSpellType();
                 if (isValidAoeSpell(st)) {
-                    const string& name = st->getSpellName();
-                    if (name.find(SPELL_NAME_FIREBALL) != string::npos) {
-                        _mapLayer->addFireballSpellEffect();
-                    } else if (name.find(SPELL_NAME_CURE) != string::npos) {
-                        
-                    } else if (name.find(SPELL_NAME_SPEEDUP) != string::npos) {
-                        
-                    }
+                    _mapLayer->addSpell(st->getSpellName(), 12.0f);
                 }
                 
                 _mapUILayer->clearHighlightedCard();

@@ -15,6 +15,7 @@ using namespace std;
 using namespace UnderWorld::Core;
 
 static const int topZOrder(1);
+static const float animationDuration(0.3f);
 
 MapUICardDeck* MapUICardDeck::create(int count)
 {
@@ -235,7 +236,13 @@ void MapUICardDeck::insert(const Card* card, bool animated)
     node->registerObserver(this);
     node->setTag((int)idx);
     if (idx < cnt) {
-        node->setPosition(_unitPositions.at(idx));
+        const Point& point = _unitPositions.at(idx);
+        if (animated) {
+            node->setPosition(_candidateSpritePosition);
+            node->runAction(MoveTo::create(animationDuration, point));
+        } else {
+            node->setPosition(point);
+        }
     } else {
         node->setVisible(false);
         _buffers.push(node);
@@ -244,29 +251,25 @@ void MapUICardDeck::insert(const Card* card, bool animated)
     _cardNodes.push_back(node);
 }
 
-void MapUICardDeck::remove(const Card* card, bool animated)
+void MapUICardDeck::remove(const Card* card, int index, bool animated)
 {
     if (card) {
-        function<void(vector<CardNode*>::iterator)> callback = [this](vector<CardNode*>::iterator iter) {
-            auto node = *iter;
-            node->removeFromParent();
-            _cardNodes.erase(iter);
+        function<void(int)> callback = [this](int index) {
+            _cardNodes.at(index)->removeFromParent();
+            _cardNodes.erase(_cardNodes.begin() + index);
             reload();
         };
         
-        static const float duration(0.3f);
-        for (auto iter = begin(_cardNodes); iter != end(_cardNodes); ++iter) {
-            auto node = *iter;
+        if (_cardNodes.size() > index) {
+            auto node = _cardNodes.at(index);
             if (node->getCard() == card) {
                 if (animated) {
-                    node->runAction(Sequence::create(FadeOut::create(duration), CallFunc::create([=] {
-                        callback(iter);
+                    node->runAction(Sequence::create(FadeOut::create(animationDuration), CallFunc::create([=] {
+                        callback(index);
                     }), nullptr));
                 } else {
-                    callback(iter);
+                    callback(index);
                 }
-                
-                break;
             }
         }
     }

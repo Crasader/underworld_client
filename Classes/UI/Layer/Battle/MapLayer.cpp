@@ -87,13 +87,12 @@ MapLayer::MapLayer()
 ,_tiledMap(nullptr)
 ,_scrollView(nullptr)
 ,_mainLayer(nullptr)
-,_spellRing(nullptr)
 ,_butterfly(nullptr)
 ,_touchMoved(false)
 ,_isScrolling(false)
 ,_selectedUnitMask(nullptr)
 {
-    
+    clearRingInfo();
 }
 
 MapLayer::~MapLayer()
@@ -378,30 +377,47 @@ void MapLayer::removeUnitMask()
     }
 }
 
-void MapLayer::updateSpellRing(const Point& layerPoint, int range)
+void MapLayer::updateSpellRing(const string& name, const Point& layerPoint, int range)
 {
     const Point& point = convertToScrollViewPoint(layerPoint);
-    if (!_spellRing) {
-        _spellRing = createSpellRing(point);
+    Node* ring = _spellRing.second;
+    if (!ring) {
+        ring = createRing(name, point);
     } else {
-        _spellRing->setPosition(point);
+        if (name != _spellRing.first) {
+            removeSpellRing();
+            ring = createRing(name, point);
+        } else {
+            ring->setPosition(point);
+        }
     }
     
-    // calculate scale
-    static const float defaultRange(218);
-    if (range != UnderWorld::Core::SpellType::CAST_DISTANCE_INFINITE) {
-        const float scale = range / defaultRange;
-        _spellRing->setScale(scale);
+    if (ring) {
+        if (name != _spellRing.first || ring != _spellRing.second) {
+            _spellRing.first = name;
+            _spellRing.second = ring;
+        }
+        
+        // calculate scale
+        static const float defaultRange(218);
+        if (range != UnderWorld::Core::SpellType::CAST_DISTANCE_INFINITE) {
+            const float scale = range / defaultRange;
+            ring->setScale(scale);
+        }
+    } else {
+        clearRingInfo();
     }
 }
 
 void MapLayer::removeSpellRing()
 {
-    if (_spellRing) {
-        _spellRing->stopAllActions();
-        _spellRing->removeFromParent();
-        _spellRing = nullptr;
+    Node* ring = _spellRing.second;
+    if (ring) {
+        ring->stopAllActions();
+        ring->removeFromParent();
     }
+    
+    clearRingInfo();
 }
 
 void MapLayer::checkUnitInSpellRing(Node* unit)
@@ -409,7 +425,8 @@ void MapLayer::checkUnitInSpellRing(Node* unit)
     static GLubyte selectedOpacity(180);
     static GLubyte normalOpacity(255);
     bool selected(false);
-    if (_spellRing && getSpellRingBoundingBox().containsPoint(unit->getPosition())) {
+    Node* ring = _spellRing.second;
+    if (ring && getSpellRingBoundingBox().containsPoint(unit->getPosition())) {
         selected = true;
     }
     
@@ -425,40 +442,47 @@ void MapLayer::checkUnitInSpellRing(Node* unit)
     }
 }
 
-void MapLayer::addFireballSpellEffect()
+void MapLayer::addSpell(const string& name, float duration)
 {
-    if (_spellRing) {
-        static string skyFile("jinenghuoqiu.csb");
-        const Point& targetPos = _spellRing->getPosition();
+    Node* ring = _spellRing.second;
+    if (ring) {
+        const Point& targetPos = ring->getPosition();
         const Size& winSize = Director::getInstance()->getWinSize();
-        Node* skyEffect = addSpellEffect(skyFile, true, Point::ZERO);
-        float offsetY(0.0f);
-        if (skyEffect->getChildren().size() > 0) {
-            Node* sprite = skyEffect->getChildren().at(0);
-            offsetY = sprite->getContentSize().height / 2;
-        }
-        const Point startPos = targetPos + Point(0, _scrollView->convertToNodeSpace(Point(0, winSize.height + offsetY)).y);
-        skyEffect->setPosition(startPos);
-        skyEffect->runAction(Sequence::create(MoveTo::create(1.0f, targetPos + Point(0, offsetY)), CallFunc::create([=] {
-            removeSpellEffect(skyEffect);
-            static string groundFile("jinenghuoqiukuosan-1.csb");
-            addSpellEffect(groundFile, false, targetPos);
-            
-            // remove static spell ring
-            if (_staticSpellRings.find(targetPos) != _staticSpellRings.end()) {
-                Node* ring = _staticSpellRings.at(targetPos);
-                if (ring) {
-                    ring->removeFromParent();
-                }
-                
-                _staticSpellRings.erase(targetPos);
+        
+        if (name.find(SPELL_NAME_FIREBALL) != string::npos) {
+            static string skyFile("jinenghuoqiu.csb");
+            Node* skyEffect = addSpellEffect(skyFile, true, Point::ZERO);
+            float offsetY(0.0f);
+            if (skyEffect->getChildren().size() > 0) {
+                Node* sprite = skyEffect->getChildren().at(0);
+                offsetY = sprite->getContentSize().height / 2;
             }
-        }), nullptr));
+            const Point startPos = targetPos + Point(0, _scrollView->convertToNodeSpace(Point(0, winSize.height + offsetY)).y);
+            skyEffect->setPosition(startPos);
+            skyEffect->runAction(Sequence::create(MoveTo::create(1.0f, targetPos + Point(0, offsetY)), CallFunc::create([=] {
+                removeSpellEffect(skyEffect);
+                static string groundFile("jinenghuoqiukuosan-1.csb");
+                addSpellEffect(groundFile, false, targetPos);
+                removeStaticRing(targetPos);
+            }), nullptr));
+        } else {
+            static const string key("RemoveSpellRing");
+            Scheduler* scheduler = Director::getInstance()->getScheduler();
+            scheduler->schedule([=](float) {
+                scheduler->unschedule(key, this);
+                removeStaticRing(targetPos);
+            }, this, duration, false, key);
+        }
         
         // add a spell ring which will be removed when animation finished
-        Node* ring = createSpellRing(targetPos);
-        ring->setScale(_spellRing->getScale());
-        _staticSpellRings.insert(make_pair(targetPos, ring));
+        const float scale(ring->getScale());
+        Node* ring = createRing(name, targetPos);
+        ring->setScale(scale);
+        if (_staticSpellRings.find(targetPos) == _staticSpellRings.end()) {
+            _staticSpellRings.insert(make_pair(targetPos, ring));
+        } else {
+            assert(false);
+        }
     }
 }
 
@@ -657,26 +681,57 @@ void MapLayer::scrollChecking(float dt)
     }
 }
 
-Node* MapLayer::createSpellRing(const Point& point)
+void MapLayer::clearRingInfo()
 {
-    static const string name("quan-1.csb");
-    Node* ring = CSLoader::createNode(name);
-    timeline::ActionTimeline *action = CSLoader::createTimeline(name);
-    ring->runAction(action);
-    action->gotoFrameAndPlay(0, true);
-    ring->setPosition(point);
-    _scrollView->addChild(ring);
-    return ring;
+    _spellRing.first = "";
+    _spellRing.second = nullptr;
+}
+
+Node* MapLayer::createRing(const string& name, const Point& point)
+{
+    string fileName;
+    if (name.find(SPELL_NAME_FIREBALL) != string::npos) {
+        fileName.assign("quan-1.csb");
+    } else if (name.find(SPELL_NAME_CURE) != string::npos) {
+        fileName.assign("huixue-xin.csb");
+    } else if (name.find(SPELL_NAME_SPEEDUP) != string::npos) {
+        fileName.assign("jiasu-xin.csb");
+    }
+    
+    if (fileName.length() > 0) {
+        Node* ring = CSLoader::createNode(fileName);
+        timeline::ActionTimeline *action = CSLoader::createTimeline(fileName);
+        ring->runAction(action);
+        action->gotoFrameAndPlay(0, true);
+        ring->setPosition(point);
+        _scrollView->addChild(ring);
+        return ring;
+    }
+    
+    return nullptr;
+}
+
+void MapLayer::removeStaticRing(const Point& point)
+{
+    if (_staticSpellRings.find(point) != _staticSpellRings.end()) {
+        Node* ring = _staticSpellRings.at(point);
+        if (ring) {
+            ring->removeFromParent();
+        }
+        
+        _staticSpellRings.erase(point);
+    }
 }
 
 Rect MapLayer::getSpellRingBoundingBox() const
 {
-    if (_spellRing) {
-        const Vector<Node*>& children = _spellRing->getChildren();
+    Node* ring = _spellRing.second;
+    if (ring) {
+        const Vector<Node*>& children = ring->getChildren();
         if (children.size() > 0) {
             Sprite* sprite = dynamic_cast<Sprite*>(children.at(0));
             if (sprite) {
-                Point origin(_spellRing->getPosition());
+                Point origin(ring->getPosition());
                 const Size& size = sprite->getContentSize();
                 origin.x = origin.x - size.width / 2;
                 origin.y = origin.y - size.height / 2;
