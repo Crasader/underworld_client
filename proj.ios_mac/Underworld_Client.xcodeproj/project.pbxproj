@@ -42,7 +42,6 @@
 		3019BABD1C9BF3D9003258DB /* Spell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD556D1C328B020078EC3C /* Spell.cpp */; };
 		3019BABE1C9BF666003258DB /* SpellType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD556A1C322FBF0078EC3C /* SpellType.cpp */; };
 		301C1B7A1C0EA67200B378A6 /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 301C1B781C0EA67200B378A6 /* Effect.cpp */; };
-		301F63F21BE0C56D00DA6D70 /* Damage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 301F63F01BE0C56D00DA6D70 /* Damage.cpp */; };
 		30236FF71C5B6AFA00FB1802 /* PathFinderInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30236FF61C5B6AFA00FB1802 /* PathFinderInterface.cpp */; };
 		3028EBC31BFF0CBD00511C51 /* DynamicValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3028EBC11BFF0CBD00511C51 /* DynamicValue.cpp */; };
 		3028EBC61BFF0D4800511C51 /* Condition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3028EBC41BFF0D4700511C51 /* Condition.cpp */; };
@@ -62,6 +61,7 @@
 		3087FF2A1CA2BAE4004E31F6 /* ServerNetworkService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3087FF281CA2BAE4004E31F6 /* ServerNetworkService.cpp */; };
 		3087FF311CA2BF5A004E31F6 /* ClientTCPNetworkProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3087FF2D1CA2BF5A004E31F6 /* ClientTCPNetworkProxy.cpp */; };
 		3087FF321CA2BF5A004E31F6 /* UnderworldClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3087FF2F1CA2BF5A004E31F6 /* UnderworldClient.cpp */; };
+		3087FF361CA825CD004E31F6 /* Damage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3087FF341CA825CD004E31F6 /* Damage.cpp */; };
 		308B84661BE3853C00377802 /* AIBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84641BE3853C00377802 /* AIBody.cpp */; };
 		308B84691BE3856F00377802 /* AIBrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84671BE3856F00377802 /* AIBrain.cpp */; };
 		309F76A01BEA3ABA00B2791F /* CoreUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F769E1BEA3AB900B2791F /* CoreUtils.cpp */; };
@@ -351,8 +351,6 @@
 		3019BABB1C99668E003258DB /* Aura.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Aura.h; path = Core/Unit/Instance/Aura.h; sourceTree = "<group>"; };
 		301C1B781C0EA67200B378A6 /* Effect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Effect.cpp; path = Core/Unit/Instance/Effect.cpp; sourceTree = "<group>"; };
 		301C1B791C0EA67200B378A6 /* Effect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Effect.h; path = Core/Unit/Instance/Effect.h; sourceTree = "<group>"; };
-		301F63F01BE0C56D00DA6D70 /* Damage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Damage.cpp; path = Core/Unit/Type/Damage.cpp; sourceTree = "<group>"; };
-		301F63F11BE0C56D00DA6D70 /* Damage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Damage.h; path = Core/Unit/Type/Damage.h; sourceTree = "<group>"; };
 		30236FF41C5B5E3100FB1802 /* PathScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PathScheduler.h; path = Core/AI/Path/PathScheduler.h; sourceTree = "<group>"; };
 		30236FF61C5B6AFA00FB1802 /* PathFinderInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PathFinderInterface.cpp; path = Core/AI/Path/PathFinderInterface.cpp; sourceTree = "<group>"; };
 		3028EBC11BFF0CBD00511C51 /* DynamicValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DynamicValue.cpp; path = Core/Unit/Element/DynamicValue.cpp; sourceTree = "<group>"; };
@@ -392,6 +390,8 @@
 		3087FF2E1CA2BF5A004E31F6 /* ClientTCPNetworkProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClientTCPNetworkProxy.h; path = CoreClient/ClientTCPNetworkProxy.h; sourceTree = "<group>"; };
 		3087FF2F1CA2BF5A004E31F6 /* UnderworldClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UnderworldClient.cpp; path = CoreClient/UnderworldClient.cpp; sourceTree = "<group>"; };
 		3087FF301CA2BF5A004E31F6 /* UnderworldClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnderworldClient.h; path = CoreClient/UnderworldClient.h; sourceTree = "<group>"; };
+		3087FF341CA825CD004E31F6 /* Damage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Damage.cpp; path = Core/Unit/Instance/Damage.cpp; sourceTree = "<group>"; };
+		3087FF351CA825CD004E31F6 /* Damage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Damage.h; path = Core/Unit/Instance/Damage.h; sourceTree = "<group>"; };
 		308B84641BE3853C00377802 /* AIBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AIBody.cpp; path = Core/AI/AIBody.cpp; sourceTree = "<group>"; };
 		308B84651BE3853C00377802 /* AIBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AIBody.h; path = Core/AI/AIBody.h; sourceTree = "<group>"; };
 		308B84671BE3856F00377802 /* AIBrain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AIBrain.cpp; path = Core/AI/AIBrain.cpp; sourceTree = "<group>"; };
@@ -908,6 +908,8 @@
 		045116DA1BCFBA15002AA721 /* Instance */ = {
 			isa = PBXGroup;
 			children = (
+				3087FF341CA825CD004E31F6 /* Damage.cpp */,
+				3087FF351CA825CD004E31F6 /* Damage.h */,
 				301C1B781C0EA67200B378A6 /* Effect.cpp */,
 				301C1B791C0EA67200B378A6 /* Effect.h */,
 				045116FA1BCFBA53002AA721 /* Buff.cpp */,
@@ -924,8 +926,6 @@
 				300098CF1BD0CD5900B6E284 /* Resource.h */,
 				045117041BCFBA53002AA721 /* Unit.cpp */,
 				045117051BCFBA53002AA721 /* Unit.h */,
-				301F63F01BE0C56D00DA6D70 /* Damage.cpp */,
-				301F63F11BE0C56D00DA6D70 /* Damage.h */,
 				30FD55621C2CFDE80078EC3C /* Passive.cpp */,
 				30FD55631C2CFDE80078EC3C /* Passive.h */,
 				30FD556D1C328B020078EC3C /* Spell.cpp */,
@@ -2207,7 +2207,6 @@
 				A1B4AE021C200480005906A6 /* UserDefaultsDataManager.cpp in Sources */,
 				A1D461521C3E166900E8E60B /* AbstractLocalData.cpp in Sources */,
 				A1E830561C1E75A700FE01B8 /* ChatNode.cpp in Sources */,
-				301F63F21BE0C56D00DA6D70 /* Damage.cpp in Sources */,
 				A1F5BFA21C1FD519007C08CB /* AchievementData.cpp in Sources */,
 				3087FF2A1CA2BAE4004E31F6 /* ServerNetworkService.cpp in Sources */,
 				A1720E6F1BCCDF9100217E98 /* CocosUtils.cpp in Sources */,
@@ -2322,6 +2321,7 @@
 				A1CA78001C892D4E0060F71A /* CardConfigData.cpp in Sources */,
 				A1E5BED31C3B7D08005BC78B /* SoldierData.cpp in Sources */,
 				045117091BCFBA53002AA721 /* Faction.cpp in Sources */,
+				3087FF361CA825CD004E31F6 /* Damage.cpp in Sources */,
 				A1E8306D1C1EA55D00FE01B8 /* ContentData.cpp in Sources */,
 				045116F31BCFBA44002AA721 /* BuffType.cpp in Sources */,
 				3087FF051C9F9D92004E31F6 /* MagicType.cpp in Sources */,
