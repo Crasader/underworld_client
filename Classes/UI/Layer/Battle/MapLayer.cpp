@@ -23,6 +23,7 @@
 #include "MapParticleConfigData.h"
 #include "GameConstants.h"
 #include "URConfigData.h"
+#include "CCParabola.h"
 
 using namespace cocostudio;
 using namespace std;
@@ -31,6 +32,7 @@ static const int TILEDMAP_TAG = 2;
 static const int TILEDMAP_ZORDER = 2;
 static const string TILEDMAP_LAYER_LOGIC = "logic";
 static const string TILEDMAP_LAYER_FOREGROUND = "fg";
+static const int topZOrder(1);
 
 static Node* createUnitMask(const UnderWorld::Core::UnitType* ut)
 {
@@ -442,14 +444,46 @@ void MapLayer::checkUnitInSpellRing(Node* unit)
     }
 }
 
-void MapLayer::addSpell(const string& name, float duration)
+void MapLayer::addAoeSpell(const Point& startPoint, const std::string& name, float duration)
 {
     Node* ring = _spellRing.second;
     if (ring) {
         const Point& targetPos = ring->getPosition();
-        const Size& winSize = Director::getInstance()->getWinSize();
         
         if (name.find(SPELL_NAME_FIREBALL) != string::npos) {
+#if true
+            const Point realStartPos = convertToScrollViewPoint(convertToNodeSpace(_mainLayer->convertToWorldSpace(startPoint)));
+            
+            Node* node = Node::create();
+            node->setPosition(realStartPos);
+            _scrollView->addChild(node, topZOrder);
+            
+            // effects
+            {
+                static const string file("huoqiu.csb");
+                Node *effect = CSLoader::createNode(file);
+                node->addChild(effect);
+                cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
+                effect->runAction(action);
+                action->gotoFrameAndPlay(0, true);
+            }
+            {
+                ParticleSystemQuad *effect = ParticleSystemQuad::create("particle/yan.plist");
+                node->addChild(effect);
+            }
+            {
+                ParticleSystemQuad *effect = ParticleSystemQuad::create("particle/huo.plist");
+                node->addChild(effect);
+            }
+            
+            node->runAction(Sequence::create(Parabola::create(3, realStartPos, targetPos, 100), CallFunc::create([=] {
+                node->removeFromParent();
+                static string groundFile("jinenghuoqiukuosan-1.csb");
+                addSpellEffect(groundFile, false, targetPos);
+                removeStaticRing(targetPos);
+            }), nullptr));
+#else
+            const Size& winSize = Director::getInstance()->getWinSize();
             static string skyFile("jinenghuoqiu.csb");
             Node* skyEffect = addSpellEffect(skyFile, true, Point::ZERO);
             float offsetY(0.0f);
@@ -465,14 +499,32 @@ void MapLayer::addSpell(const string& name, float duration)
                 addSpellEffect(groundFile, false, targetPos);
                 removeStaticRing(targetPos);
             }), nullptr));
-        } else {
-            static const string key("RemoveSpellRing");
-            Scheduler* scheduler = Director::getInstance()->getScheduler();
-            scheduler->schedule([=](float) {
-                scheduler->unschedule(key, this);
-                removeStaticRing(targetPos);
-            }, this, duration, false, key);
+#endif
         }
+        
+        // add a spell ring which will be removed when animation finished
+        const float scale(ring->getScale());
+        Node* ring = createRing(name, targetPos);
+        ring->setScale(scale);
+        if (_staticSpellRings.find(targetPos) == _staticSpellRings.end()) {
+            _staticSpellRings.insert(make_pair(targetPos, ring));
+        } else {
+            assert(false);
+        }
+    }
+}
+
+void MapLayer::addSpell(const string& name, float duration)
+{
+    Node* ring = _spellRing.second;
+    if (ring) {
+        const Point& targetPos = ring->getPosition();
+        static const string key("RemoveSpellRing");
+        Scheduler* scheduler = Director::getInstance()->getScheduler();
+        scheduler->schedule([=](float) {
+            scheduler->unschedule(key, this);
+            removeStaticRing(targetPos);
+        }, this, duration, false, key);
         
         // add a spell ring which will be removed when animation finished
         const float scale(ring->getScale());

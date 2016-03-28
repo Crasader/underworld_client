@@ -122,6 +122,7 @@
 		A16BF2A11C314DA000E91458 /* GearSetLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF29F1C314DA000E91458 /* GearSetLocalData.cpp */; };
 		A16BF2A41C314E5100E91458 /* AttributeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF2A21C314E5100E91458 /* AttributeData.cpp */; };
 		A16BF2A71C3156A100E91458 /* GearUpgradeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF2A51C3156A100E91458 /* GearUpgradeData.cpp */; };
+		A16BFBB21CA905E90089C4F2 /* CCParabola.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BFBB01CA905E90089C4F2 /* CCParabola.cpp */; };
 		A1720E6F1BCCDF9100217E98 /* CocosUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720E6D1BCCDF9100217E98 /* CocosUtils.cpp */; };
 		A1720E741BCCE0A200217E98 /* FixedLabelAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720E721BCCE0A200217E98 /* FixedLabelAtlas.cpp */; };
 		A1720E7A1BCCE0F000217E98 /* CCShake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720E761BCCE0F000217E98 /* CCShake.cpp */; };
@@ -530,6 +531,8 @@
 		A16BF2A31C314E5100E91458 /* AttributeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttributeData.h; sourceTree = "<group>"; };
 		A16BF2A51C3156A100E91458 /* GearUpgradeData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GearUpgradeData.cpp; sourceTree = "<group>"; };
 		A16BF2A61C3156A100E91458 /* GearUpgradeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GearUpgradeData.h; sourceTree = "<group>"; };
+		A16BFBB01CA905E90089C4F2 /* CCParabola.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCParabola.cpp; sourceTree = "<group>"; };
+		A16BFBB11CA905E90089C4F2 /* CCParabola.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParabola.h; sourceTree = "<group>"; };
 		A1720E6D1BCCDF9100217E98 /* CocosUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosUtils.cpp; sourceTree = "<group>"; };
 		A1720E6E1BCCDF9100217E98 /* CocosUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosUtils.h; sourceTree = "<group>"; };
 		A1720E721BCCE0A200217E98 /* FixedLabelAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FixedLabelAtlas.cpp; sourceTree = "<group>"; };
@@ -1503,6 +1506,8 @@
 		A1720E751BCCE0F000217E98 /* Action */ = {
 			isa = PBXGroup;
 			children = (
+				A16BFBB01CA905E90089C4F2 /* CCParabola.cpp */,
+				A16BFBB11CA905E90089C4F2 /* CCParabola.h */,
 				A1720E761BCCE0F000217E98 /* CCShake.cpp */,
 				A1720E771BCCE0F000217E98 /* CCShake.h */,
 				A1720E781BCCE0F000217E98 /* NumberJump.cpp */,
@@ -2268,6 +2273,7 @@
 				A1E830591C1E75B200FE01B8 /* ChatCell.cpp in Sources */,
 				A1D25C2F1C8588A100A84EB6 /* MapUICardDeck.cpp in Sources */,
 				A1D745C31C1AB7C40020BC1C /* VictoryLayer.cpp in Sources */,
+				A16BFBB21CA905E90089C4F2 /* CCParabola.cpp in Sources */,
 				A1F58D561C32444B00C8A2DD /* SoldierQualityData.cpp in Sources */,
 				A1A05B6C1C96B6A0006FE03B /* DDLog.m in Sources */,
 				A1B4AE001C200480005906A6 /* OnlineUpdater.cpp in Sources */,

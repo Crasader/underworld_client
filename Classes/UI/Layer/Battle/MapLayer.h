@@ -51,6 +51,7 @@ public:
     
     const UnderWorld::Core::MapSetting& getMapSetting() const;
     
+    void addAoeSpell(const Point& startPoint, const std::string& name, float duration);
     void addSpell(const std::string& name, float duration);
     void removeAllSpellEffects();
     

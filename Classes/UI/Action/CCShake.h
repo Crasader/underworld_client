@@ -9,7 +9,6 @@
 #ifndef CCShake__
 #define CCShake__
 
-#include <iostream>
 #include "cocos2d.h"
 
 USING_NS_CC;

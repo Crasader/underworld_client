@@ -641,7 +641,25 @@ void GameRender::tryToUseCard(const UnderWorld::Core::Card* card, int idx, const
             if (kCommandResult_suc == result) {
                 const SpellType* st = card->getSpellType();
                 if (isValidAoeSpell(st)) {
-                    _mapLayer->addSpell(st->getSpellName(), 12.0f);
+                    const string& name = st->getSpellName();
+                    // AOEs
+                    if (name.find(SPELL_NAME_FIREBALL) != string::npos) {
+                        const int factionIndex = _game->getWorld()->getThisFactionIndex();
+                        if (_cores.find(factionIndex) != end(_cores)) {
+                            const Unit* core = _cores.at(factionIndex);
+                            if (core) {
+                                const int unitId = core->getUnitId();
+                                if (_allUnitNodes.find(unitId) != end(_allUnitNodes)) {
+                                    UnitNode* node = _allUnitNodes.at(unitId);
+                                    if (node) {
+                                        _mapLayer->addAoeSpell(node->getPosition(), name, 2.0f);
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        _mapLayer->addSpell(name, 12.0f);
+                    }
                 }
                 
                 _mapUILayer->clearHighlightedCard();
