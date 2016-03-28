@@ -213,9 +213,16 @@ void BattleDeckUnitInfoNode::update(const string& name, TechTree* techTree)
             _hpLabel->setString(StringUtils::format("%d", unit->getMaxHp()));
             _armorLabel->setString(StringUtils::format("%d", unit->getAmror()));
             
-            const AttackSkillType* type = dynamic_cast<const AttackSkillType*>(unit->getDefaultAttackSkillType(kFieldType_Land));
-            if (!type) {
-                type = dynamic_cast<const AttackSkillType*>(unit->getDefaultAttackSkillType(kFieldType_Air));
+            const AttackSkillType* type = nullptr;
+            for (int i = 0; i < FIELD_TYPE_COUNT; ++i) {
+                for (int j = 0; j < UNIT_CLASS_COUNT; ++j) {
+                    if (unit->getDefaultAttackSkillType((FieldType)i, (UnitClass)j)) {
+                        type = dynamic_cast<const AttackSkillType*>(
+                            unit->getDefaultAttackSkillType((FieldType)i,
+                                (UnitClass)j));
+                        break;
+                    }
+                }
             }
             
             if (type) {
