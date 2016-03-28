@@ -23,6 +23,7 @@ private:
     std::list<UnderWorld::Core::NetworkMessage*> _incomeMessage;
     std::string _host;
     int _port;
+    cocos2d::network::TCPClient* _tcpClient;
     
 public:
     ClientTCPNetworkProxy(const std::string& host, int port)
@@ -39,7 +40,8 @@ public:
 private:
     
     /** TCP Interface */
-    void onReceiveTCPResponse(cocos2d::network::TCPResponse* response);
+    void onReceiveTCPResponse(cocos2d::network::TCPClient* client,
+        cocos2d::network::TCPResponse* response);
     
     /** parse */
     cocos2d::network::TCPRequest* parseMsg2Request(const UnderWorld::Core::NetworkMessage* msg);

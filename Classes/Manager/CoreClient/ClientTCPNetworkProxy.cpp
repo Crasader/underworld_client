@@ -268,10 +268,18 @@ ClientTCPNetworkProxy::~ClientTCPNetworkProxy() {
         delete *iter;
     }
     _incomeMessage.clear();
+    M_SAFE_DELETE(_tcpClient);
 }
 
 void ClientTCPNetworkProxy::connect() {
-    cocos2d::network::TCPClient::getInstance()->init(_host, _port);
+    M_SAFE_DELETE(_tcpClient);
+    _tcpClient = new cocos2d::network::TCPClient();
+    _tcpClient->init(_host, _port);
+    _tcpClient->setResponseCallback(std::bind(
+        &ClientTCPNetworkProxy::onReceiveTCPResponse,
+        this,
+        std::placeholders::_1,
+        std::placeholders::_2));
 }
 
 void ClientTCPNetworkProxy::disconnect() {
@@ -285,7 +293,7 @@ bool ClientTCPNetworkProxy::isConnected() {
 void ClientTCPNetworkProxy::send(UnderWorld::Core::NetworkMessage* msg) {
     cocos2d::network::TCPRequest* req = parseMsg2Request(msg);
     if (req) {
-        cocos2d::network::TCPClient::getInstance()->send(req);
+        _tcpClient->send(req);
     }
     CC_SAFE_DELETE(msg);
 }
@@ -300,7 +308,7 @@ UnderWorld::Core::NetworkMessage* ClientTCPNetworkProxy::pop() {
     return ret;
 }
 
-void ClientTCPNetworkProxy::onReceiveTCPResponse(cocos2d::network::TCPResponse* response) {
+void ClientTCPNetworkProxy::onReceiveTCPResponse(cocos2d::network::TCPClient* client, cocos2d::network::TCPResponse* response) {
     response->retain();
     std::function<void ()> call = [response, this](){
         std::vector<UnderWorld::Core::NetworkMessage*> msgs;
