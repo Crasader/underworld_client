@@ -28,15 +28,11 @@ class AnimationParameters
 public:
     AnimationParameters()
     :scale(1.0f)
-    ,speed(1.0f)
-    ,effect_pos(0.0f, 0.0f)
-    ,effect_scale(1.0f) {}
+    ,speed(1.0f) {}
     
 public:
     float scale;
     float speed;
-    Point effect_pos;
-    float effect_scale;
 };
 
 // =====================================================

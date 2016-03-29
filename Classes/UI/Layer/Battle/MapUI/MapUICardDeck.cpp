@@ -16,6 +16,7 @@ using namespace UnderWorld::Core;
 
 static const int topZOrder(1);
 static const float animationDuration(0.3f);
+static const int cardActionTag(329);
 
 MapUICardDeck* MapUICardDeck::create(int count)
 {
@@ -239,16 +240,19 @@ void MapUICardDeck::insert(const Card* card, bool animated)
         const Point& point = _unitPositions.at(idx);
         if (animated) {
             node->setPosition(_candidateSpritePosition);
-            node->runAction(MoveTo::create(animationDuration, point));
+            Action* action = MoveTo::create(animationDuration, point);
+            action->setTag(cardActionTag);
+            node->runAction(action);
         } else {
             node->setPosition(point);
         }
+        
+        _cardNodes.push_back(node);
     } else {
         node->setVisible(false);
         _buffers.push(node);
     }
     addChild(node);
-    _cardNodes.push_back(node);
 }
 
 void MapUICardDeck::remove(const Card* card, int index, bool animated)
@@ -298,6 +302,9 @@ void MapUICardDeck::reload()
         auto node = _cardNodes.at(i);
         if (i < maxCnt) {
             const Point& position = _unitPositions.at(i);
+            if (node->getActionByTag(cardActionTag)) {
+                node->stopActionByTag(cardActionTag);
+            }
             node->setPosition(position);
             node->setTag(i);
         } else {

@@ -36,31 +36,7 @@ UAConfigData::UAConfigData(tinyxml2::XMLElement *xmlElement)
                 Utils::split(v2, speed, "_");
             }
             
-            Point effect_pos(0, 0);
-            {
-                const char* data = xmlElement->Attribute("effect_pos");
-                if (data) {
-                    vector<string> v;
-                    Utils::split(v, data, "_");
-                    if (v.size() >= 2) {
-                        effect_pos.x = atof(v.at(0).c_str());
-                        effect_pos.y = atof(v.at(1).c_str());
-                    }
-                }
-            }
-            
-            float effect_scale(1.0f);
-            {
-                const char* data = xmlElement->Attribute("effect_scale");
-                if (data) {
-                    effect_scale = atof(data);
-                }
-            }
-            
             AnimationParameters params;
-            params.effect_pos = effect_pos;
-            params.effect_scale = effect_scale;
-            
             const size_t size(v.size());
             if (1 == v.size()) {
                 parse(params, v, v1, v2, 0);
