@@ -28,9 +28,9 @@ ChatManager::~ChatManager()
 void ChatManager::clear()
 {
 //    M_SAFE_DELETE(_mark);
-    for(std::map<ChatType, std::vector<const ChatData*>>::iterator iter = _chatData.begin(); iter != _chatData.end(); ++iter){
+    for(auto iter = _chatData.begin(); iter != _chatData.end(); ++iter){
         vector<const ChatData*> vec = iter->second;
-        for(vector<const ChatData*>::iterator i = vec.begin(); i != vec.end(); ++i) {
+        for(auto i = vec.begin(); i != vec.end(); ++i) {
             const ChatData* data = *i;
             M_SAFE_DELETE(data);
         }

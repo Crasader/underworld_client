@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <unordered_map>
 #include "Coordinate.h"
 #include "json/document.h"
 
@@ -26,6 +27,7 @@ namespace Utils
     /** template operations */
     template<typename _Type> void clearVector(std::vector<_Type> &vec);
     template<typename _Key, typename _Value> void clearMap(std::map<_Key, _Value> &m);
+    template<typename _Key, typename _Value> void clearMap(std::unordered_map<_Key, _Value> &m);
     
     /** for rapidjson */
     int   getIntValue_json(const rapidjson::Value& root, const char* key, int def = 0);
@@ -44,7 +46,7 @@ namespace Utils
 #pragma mark - template operations
 template<typename _Type> void Utils::clearVector(std::vector<_Type> &vec)
 {
-    for(typename std::vector<_Type>::iterator iter = vec.begin(); iter != vec.end(); ++iter)
+    for(auto iter = vec.begin(); iter != vec.end(); ++iter)
     {
         _Type p = *iter;
         if (p) { delete p; }
@@ -54,7 +56,17 @@ template<typename _Type> void Utils::clearVector(std::vector<_Type> &vec)
 
 template<typename _Key, typename _Value> void Utils::clearMap(std::map<_Key, _Value> &m)
 {
-    for(typename std::map<_Key, _Value>::iterator iter = m.begin(); iter != m.end(); ++iter)
+    for(auto iter = m.begin(); iter != m.end(); ++iter)
+    {
+        _Value p = iter->second;
+        if (p) { delete p; }
+    }
+    m.clear();
+}
+
+template<typename _Key, typename _Value> void Utils::clearMap(std::unordered_map<_Key, _Value> &m)
+{
+    for(auto iter = m.begin(); iter != m.end(); ++iter)
     {
         _Value p = iter->second;
         if (p) { delete p; }

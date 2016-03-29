@@ -37,7 +37,7 @@ SoldierData::~SoldierData()
 }
 
 #pragma mark - getters
-const map<int, AttributeData *>& SoldierData::getAttributes() const
+const unordered_map<int, AttributeData *>& SoldierData::getAttributes() const
 {
     return _attributes;
 }
@@ -128,15 +128,15 @@ void SoldierData::calculateTotalAttributes()
         Utils::clearMap(_attributes);
     }
     
-    map<int, int> attrs;
+    unordered_map<int, int> attrs;
     AttributeData::calculateAttributes(getLocalData()->getAttributes(), attrs);
     AttributeData::calculateAttributes(getUpgradeData()->getAttributes(), attrs);
     AttributeData::calculateAttributes(getQualityData()->getAttributes(), attrs);
     AttributeData::calculateAttributes(getTalentData()->getAttributes(), attrs);
-    for (map<int, GearData*>::const_iterator iter = _gears.begin(); iter != _gears.end(); ++iter) {
+    for (auto iter = _gears.begin(); iter != _gears.end(); ++iter) {
         AttributeData::calculateAttributes(iter->second->getAttributes(), attrs);
     }
-    for (map<int, int>::const_iterator iter = attrs.begin(); iter != attrs.end(); ++iter) {
+    for (auto iter = attrs.begin(); iter != attrs.end(); ++iter) {
         const int attrId = iter->first;
         AttributeData* attr = new (nothrow) AttributeData(attrId, iter->second);
         _attributes.insert(make_pair(attrId, attr));

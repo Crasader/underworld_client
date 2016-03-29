@@ -10,7 +10,7 @@
 #define HeroManager_h
 
 #include "json/document.h"
-#include <map>
+#include <unordered_map>
 #include "CocosGlobal.h"
 
 class HeroData;
@@ -33,7 +33,7 @@ protected:
     M_DISALLOW_COPY_AND_ASSIGN(HeroManager);
     
 private:
-    std::map<int, HeroData*> _heroes;
+    std::unordered_map<int, HeroData*> _heroes;
 };
 
 #endif /* HeroManager_h */

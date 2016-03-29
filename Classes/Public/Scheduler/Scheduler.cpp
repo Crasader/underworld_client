@@ -386,14 +386,14 @@ bool Scheduler::isTargetPaused(void *target)
     return false;  // should never get here
 }
 
-std::set<void*> Scheduler::pauseAllTargets()
+std::unordered_set<void*> Scheduler::pauseAllTargets()
 {
     return pauseAllTargetsWithMinPriority(PRIORITY_SYSTEM);
 }
 
-std::set<void*> Scheduler::pauseAllTargetsWithMinPriority(int minPriority)
+std::unordered_set<void*> Scheduler::pauseAllTargetsWithMinPriority(int minPriority)
 {
-    std::set<void*> idsWithSelectors;
+    std::unordered_set<void*> idsWithSelectors;
     
     // Custom Selectors
     for(tHashTimerEntry *element = _hashForTimers; element != nullptr;
@@ -405,7 +405,7 @@ std::set<void*> Scheduler::pauseAllTargetsWithMinPriority(int minPriority)
     return idsWithSelectors;
 }
 
-void Scheduler::resumeTargets(const std::set<void*>& targetsToResume)
+void Scheduler::resumeTargets(const std::unordered_set<void*>& targetsToResume)
 {
     for(const auto &obj : targetsToResume) {
         resumeTarget(obj);

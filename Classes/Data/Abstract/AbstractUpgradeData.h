@@ -11,6 +11,7 @@
 
 #include "CocosGlobal.h"
 #include <map>
+#include <unordered_map>
 
 namespace tinyxml2 { class XMLElement; }
 

@@ -10,7 +10,7 @@
 #define SoldierManager_h
 
 #include "json/document.h"
-#include <map>
+#include <unordered_map>
 #include "CocosGlobal.h"
 
 class SoldierData;
@@ -36,7 +36,7 @@ protected:
     M_DISALLOW_COPY_AND_ASSIGN(SoldierManager);
     
 private:
-    std::map<int, SoldierData*> _soldiers;
+    std::unordered_map<int, SoldierData*> _soldiers;
 };
 
 #endif /* SoldierManager_h */

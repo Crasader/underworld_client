@@ -46,7 +46,7 @@ void NetworkController::pushRequest(cocos2d::network::HttpRequest* request)
 
 cocos2d::network::HttpRequest* NetworkController::popRequest()
 {
-    std::vector<cocos2d::network::HttpRequest*>::iterator first = _httpRequests.begin();
+    auto first = _httpRequests.begin();
     _httpRequests.erase(first);
     return *first;
 }

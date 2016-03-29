@@ -14,6 +14,7 @@
 #include "ui/CocosGUI.h"
 #include "Coordinate.h"
 #include "GameSettings.h"
+#include <unordered_set>
 
 USING_NS_CC;
 
@@ -104,9 +105,9 @@ private:
     Vec2 _scrollViewOffset;
     bool _touchMoved;
     bool _isScrolling;
-    std::set<ParticleSystemQuad*> _particles;
-    std::set<Node*> _nodesInTheRing;
-    std::set<Node*> _spellEffects;
+    std::unordered_set<ParticleSystemQuad*> _particles;
+    std::unordered_set<Node*> _nodesInTheRing;
+    std::unordered_set<Node*> _spellEffects;
     std::string _selectedUnitName;
     Node* _selectedUnitMask;
 };

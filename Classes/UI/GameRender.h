@@ -119,17 +119,17 @@ private:
     MapUILayer* _mapUILayer;
     const UnderWorld::Core::Game* _game;
     UnderWorld::Core::Commander* _commander;
-    std::map<int, UnitNode*> _allUnitNodes;
-    std::map<int64_t, std::pair<UnderWorld::Core::Coordinate, float>> _bulletParams;
-    std::map<int64_t, BulletNode*> _allBulletNodes;
-    std::map<int, const UnderWorld::Core::Unit*> _cores;
+    std::unordered_map<int, UnitNode*> _allUnitNodes;
+    std::unordered_map<int64_t, std::pair<UnderWorld::Core::Coordinate, float>> _bulletParams;
+    std::unordered_map<int64_t, BulletNode*> _allBulletNodes;
+    std::unordered_map<int, const UnderWorld::Core::Unit*> _cores;
     const UnderWorld::Core::Deck* _deck;
     std::pair<const UnderWorld::Core::Card* ,int> _selectedCard;
     
     bool _paused;
     bool _isGameOver;
     int _remainingTime;
-    std::map<std::string, float> _resources;
+    std::unordered_map<std::string, float> _resources;
 };
 
 #endif /* GameRender_h */

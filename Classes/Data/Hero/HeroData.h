@@ -10,7 +10,7 @@
 #define HeroData_h
 
 #include "AbstractData.h"
-#include <map>
+#include <unordered_map>
 
 class AttributeData;
 class HeroLocalData;
@@ -36,8 +36,8 @@ private:
     void calculateTotalAttributes();    
     
 private:
-    std::map<int, AttributeData*> _attributes;
-    std::map<int, ArtifactData*> _artifacts;
+    std::unordered_map<int, AttributeData*> _attributes;
+    std::unordered_map<int, ArtifactData*> _artifacts;
 };
 
 #endif /* HeroData_h */

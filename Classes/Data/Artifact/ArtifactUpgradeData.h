@@ -10,7 +10,6 @@
 #define ArtifactUpgradeData_h
 
 #include "AbstractUpgradeData.h"
-#include <map>
 
 class AttributeData;
 class RewardData;
@@ -21,13 +20,13 @@ public:
     ArtifactUpgradeData(tinyxml2::XMLElement *xmlElement);
     virtual ~ArtifactUpgradeData();
     
-    const std::map<int, AttributeData *>& getAttributes() const;
+    const std::unordered_map<int, AttributeData *>& getAttributes() const;
     const AttributeData* getAttribute(int id) const;
     const RewardData* getSoldReward(int type) const;
     
 private:
-    std::map<int, AttributeData *> _attributes;
-    std::map<int, RewardData*> _soldRewards;
+    std::unordered_map<int, AttributeData *> _attributes;
+    std::unordered_map<int, RewardData*> _soldRewards;
 };
 
 #endif /* ArtifactUpgradeData_h */

@@ -81,11 +81,11 @@ static string headerString(const string& key, const string& value)
     return StringUtils::format("%s:%s", key.c_str(), value.c_str());
 }
 
-static string queryString(const map<string, string>& params, const string& key)
+static string queryString(const unordered_map<string, string>& params, const string& key)
 {
     string result;
     string digestData;
-    for (map<string, string>::const_iterator iter = params.begin(); iter != params.end(); ++iter)
+    for (auto iter = params.begin(); iter != params.end(); ++iter)
     {
         if (result.length() == 0)
         {
@@ -114,7 +114,7 @@ static string responseDataToString(const vector<char>* data)
 
 static void request(const string& path,
                     const ccHttpRequestCallback& callback,
-                    const map<string, string> * params = nullptr,
+                    const unordered_map<string, string> * params = nullptr,
                     HttpRequest::Type type = HttpRequest::Type::POST,
                     bool isLocalTest = false,
                     bool showLoadingView = true,
@@ -175,7 +175,7 @@ static void request(const string& path,
         request->setHeaders(headers);
         
         // Data
-        map<string, string> fullParams;
+        unordered_map<string, string> fullParams;
         // 1. device
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         fullParams.insert(make_pair("device", "1"));
@@ -193,7 +193,7 @@ static void request(const string& path,
         
         // 3. other data
         if (nullptr != params) {
-            for (map<string, string>::const_iterator iter = params->begin(); iter != params->end(); ++iter) {
+            for (auto iter = params->begin(); iter != params->end(); ++iter) {
                 fullParams.insert(make_pair(iter->first, iter->second));
             }
         }
@@ -293,7 +293,7 @@ void NetworkApi::login(const ccHttpRequestCallback& callback)
 
 void NetworkApi::loadUserInfo(const string& deviceToken, const ccHttpRequestCallback& callback)
 {
-    map<string, string> params;
+    unordered_map<string, string> params;
     params.insert(make_pair("iostoken", deviceToken));
     request(kUserInfo, callback, &params);
 }
@@ -316,7 +316,7 @@ void NetworkApi::getLifeQuestProgress(const ccHttpRequestCallback& callback)
 
 void NetworkApi::finishQuest(QuestType type, int questId, const ccHttpRequestCallback& callback)
 {
-    map<string, string> params;
+    unordered_map<string, string> params;
     params.insert(make_pair("type", StringUtils::format("%d", type)));
     params.insert(make_pair("qid", StringUtils::format("%d", questId)));
     request(kFinishQuest, callback, &params);
@@ -333,21 +333,21 @@ void NetworkApi::getHeroesList(const cocos2d::network::ccHttpRequestCallback& ca
 
 void NetworkApi::getHeroDetail(int id, const cocos2d::network::ccHttpRequestCallback& callback)
 {
-    map<string, string> params;
+    unordered_map<string, string> params;
     params.insert(make_pair("id", StringUtils::format("%d", id)));
     request(kGetHeroDetail, callback, &params);
 }
 
 void NetworkApi::upgradeHero(int id, const cocos2d::network::ccHttpRequestCallback& callback)
 {
-    map<string, string> params;
+    unordered_map<string, string> params;
     params.insert(make_pair("id", StringUtils::format("%d", id)));
     request(kUpgradeHero, callback, &params);
 }
 
 void NetworkApi::setArtifact(int heroId, int artifactId, const cocos2d::network::ccHttpRequestCallback& callback)
 {
-    map<string, string> params;
+    unordered_map<string, string> params;
     params.insert(make_pair("suid", StringUtils::format("%d", heroId)));
     params.insert(make_pair("euid", StringUtils::format("%d", artifactId)));
     request(kSetArtifact, callback, &params);
@@ -355,7 +355,7 @@ void NetworkApi::setArtifact(int heroId, int artifactId, const cocos2d::network:
 
 void NetworkApi::upgradeArtifact(int heroId, int artifactId, const cocos2d::network::ccHttpRequestCallback& callback)
 {
-    map<string, string> params;
+    unordered_map<string, string> params;
     params.insert(make_pair("id", StringUtils::format("%d", heroId)));
     params.insert(make_pair("index", StringUtils::format("%d", artifactId)));
     request(kUpgradeArtifact, callback, &params);
@@ -363,21 +363,21 @@ void NetworkApi::upgradeArtifact(int heroId, int artifactId, const cocos2d::netw
 
 void NetworkApi::sellArtifact(int artifactId, const cocos2d::network::ccHttpRequestCallback& callback)
 {
-    map<string, string> params;
+    unordered_map<string, string> params;
     params.insert(make_pair("euid", StringUtils::format("%d", artifactId)));
     request(kSellArtifact, callback, &params);
 }
 
 void NetworkApi::composeHero(int id, const cocos2d::network::ccHttpRequestCallback& callback)
 {
-    map<string, string> params;
+    unordered_map<string, string> params;
     params.insert(make_pair("puid", StringUtils::format("%d", id)));
     request(kComposeHero, callback, &params);
 }
 
 void NetworkApi::sellHeroPiece(int id, int count, const cocos2d::network::ccHttpRequestCallback& callback)
 {
-    map<string, string> params;
+    unordered_map<string, string> params;
     params.insert(make_pair("puid", StringUtils::format("%d", id)));
     params.insert(make_pair("amount", StringUtils::format("%d", count)));
     request(kSellHeroPiece, callback, &params);
@@ -391,28 +391,28 @@ void NetworkApi::getSoldiersList(const cocos2d::network::ccHttpRequestCallback& 
 
 void NetworkApi::getSoldierDetail(int id, const cocos2d::network::ccHttpRequestCallback& callback)
 {
-    map<string, string> params;
+    unordered_map<string, string> params;
     params.insert(make_pair("id", StringUtils::format("%d", id)));
     request(kGetSoldierDetail, callback, &params);
 }
 
 void NetworkApi::upgradeSoldier(int id, const cocos2d::network::ccHttpRequestCallback& callback)
 {
-    map<string, string> params;
+    unordered_map<string, string> params;
     params.insert(make_pair("id", StringUtils::format("%d", id)));
     request(kUpgradeSoldier, callback, &params);
 }
 
 void NetworkApi::recastSoldier(int id, const cocos2d::network::ccHttpRequestCallback& callback)
 {
-    map<string, string> params;
+    unordered_map<string, string> params;
     params.insert(make_pair("id", StringUtils::format("%d", id)));
     request(kRecastSoldier, callback, &params);
 }
 
 void NetworkApi::switchSoldierTalent(int soldierId, int talentId, const cocos2d::network::ccHttpRequestCallback& callback)
 {
-    map<string, string> params;
+    unordered_map<string, string> params;
     params.insert(make_pair("id", StringUtils::format("%d", soldierId)));
     params.insert(make_pair("index", StringUtils::format("%d", talentId)));
     request(kSwitchSoldierTalent, callback, &params);
@@ -420,7 +420,7 @@ void NetworkApi::switchSoldierTalent(int soldierId, int talentId, const cocos2d:
 
 void NetworkApi::setGear(int soldierId, int gearId, const cocos2d::network::ccHttpRequestCallback& callback)
 {
-    map<string, string> params;
+    unordered_map<string, string> params;
     params.insert(make_pair("suid", StringUtils::format("%d", soldierId)));
     params.insert(make_pair("euid", StringUtils::format("%d", gearId)));
     request(kSetGear, callback, &params);
@@ -428,28 +428,28 @@ void NetworkApi::setGear(int soldierId, int gearId, const cocos2d::network::ccHt
 
 void NetworkApi::upgradeGear(int gearId, const cocos2d::network::ccHttpRequestCallback& callback)
 {
-    map<string, string> params;
+    unordered_map<string, string> params;
     params.insert(make_pair("euid", StringUtils::format("%d", gearId)));
     request(kUpgradeGear, callback, &params);
 }
 
 void NetworkApi::sellGear(int gearId, const cocos2d::network::ccHttpRequestCallback& callback)
 {
-    map<string, string> params;
+    unordered_map<string, string> params;
     params.insert(make_pair("euid", StringUtils::format("%d", gearId)));
     request(kSellGear, callback, &params);
 }
 
 void NetworkApi::composeSoldier(int id, const cocos2d::network::ccHttpRequestCallback& callback)
 {
-    map<string, string> params;
+    unordered_map<string, string> params;
     params.insert(make_pair("puid", StringUtils::format("%d", id)));
     request(kComposeSoldier, callback, &params);
 }
 
 void NetworkApi::sellSoldierPiece(int id, int count, const cocos2d::network::ccHttpRequestCallback& callback)
 {
-    map<string, string> params;
+    unordered_map<string, string> params;
     params.insert(make_pair("puid", StringUtils::format("%d", id)));
     params.insert(make_pair("amount", StringUtils::format("%d", count)));
     request(kSellSoldierPiece, callback, &params);
@@ -463,14 +463,14 @@ void NetworkApi::getTowersList(const cocos2d::network::ccHttpRequestCallback& ca
 
 void NetworkApi::getTowerDetail(int id, const cocos2d::network::ccHttpRequestCallback& callback)
 {
-    map<string, string> params;
+    unordered_map<string, string> params;
     params.insert(make_pair("id", StringUtils::format("%d", id)));
     request(kGetTowerDetail, callback, &params);
 }
 
 void NetworkApi::upgradeTower(int id, const cocos2d::network::ccHttpRequestCallback& callback)
 {
-    map<string, string> params;
+    unordered_map<string, string> params;
     params.insert(make_pair("id", StringUtils::format("%d", id)));
     request(kUpgradeTower, callback, &params);
 }
@@ -478,7 +478,7 @@ void NetworkApi::upgradeTower(int id, const cocos2d::network::ccHttpRequestCallb
 #pragma mark - Chat
 void NetworkApi::sendMessage(const ChatMark* mark, ChatType type, int contactor, const std::string& message, const cocos2d::network::ccHttpRequestCallback& callback)
 {
-    map<string, string> params;
+    unordered_map<string, string> params;
     mark->toMap(params);
     params.insert(make_pair("channel", StringUtils::format("%d", type)));
     params.insert(make_pair("to", StringUtils::format("%d", contactor)));
@@ -488,7 +488,7 @@ void NetworkApi::sendMessage(const ChatMark* mark, ChatType type, int contactor,
 
 void NetworkApi::recieveMessages(const ChatMark* mark, const cocos2d::network::ccHttpRequestCallback& callback)
 {
-    map<string, string> params;
+    unordered_map<string, string> params;
     mark->toMap(params);
     request(kChatRecieve, callback, &params);
 }
@@ -496,7 +496,7 @@ void NetworkApi::recieveMessages(const ChatMark* mark, const cocos2d::network::c
 #pragma mark - IAP
 void NetworkApi::iap(bool isSandBox, const string& receiptData, const ccHttpRequestCallback& callback)
 {
-    map<string, string> params;
+    unordered_map<string, string> params;
     params.insert(make_pair("receiptData", receiptData));
     params.insert(make_pair("sandbox", isSandBox ? "1" : "0"));
     request(kiOSIAP, callback, &params, HttpRequest::Type::POST, false, false, true, 900);

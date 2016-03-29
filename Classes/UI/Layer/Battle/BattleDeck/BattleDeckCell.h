@@ -24,7 +24,7 @@ public:
     void resetNode(int idx);
     
 private:
-    std::map<int, Node*> _nodes;
+    std::unordered_map<int, Node*> _nodes;
 };
 
 #endif /* BattleDeckCell_h */

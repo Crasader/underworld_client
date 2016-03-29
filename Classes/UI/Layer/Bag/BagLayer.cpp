@@ -236,7 +236,7 @@ void BagLayer::switchTable(int index)
 {
     if (_tabIndex != index) {
         _tabIndex = index;
-        for (map<int, TabInfo>::iterator iter = _tabInfos.begin(); iter != _tabInfos.end(); ++iter) {
+        for (auto iter = _tabInfos.begin(); iter != _tabInfos.end(); ++iter) {
             const TabInfo& info = iter->second;
             bool isThisIndex = (index == iter->first) ? true : false;
             if (info.tableView) {

@@ -84,13 +84,13 @@ void HeroData::calculateTotalAttributes()
         Utils::clearMap(_attributes);
     }
     
-    map<int, int> attrs;
+    unordered_map<int, int> attrs;
     AttributeData::calculateAttributes(getLocalData()->getAttributes(), attrs);
     AttributeData::calculateAttributes(getUpgradeData()->getAttributes(), attrs);
-    for (map<int, ArtifactData*>::const_iterator iter = _artifacts.begin(); iter != _artifacts.end(); ++iter) {
+    for (auto iter = _artifacts.begin(); iter != _artifacts.end(); ++iter) {
         AttributeData::calculateAttributes(iter->second->getAttributes(), attrs);
     }
-    for (map<int, int>::const_iterator iter = attrs.begin(); iter != attrs.end(); ++iter) {
+    for (auto iter = attrs.begin(); iter != attrs.end(); ++iter) {
         const int attrId = iter->first;
         AttributeData* attr = new (nothrow) AttributeData(attrId, iter->second);
         _attributes.insert(make_pair(attrId, attr));

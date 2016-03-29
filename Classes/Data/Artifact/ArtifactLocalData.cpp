@@ -24,7 +24,7 @@ ArtifactLocalData::ArtifactLocalData(tinyxml2::XMLElement *xmlElement)
             if (data) {
                 vector<string> result;
                 Utils::split(result, data, ",", "");
-                for (vector<string>::const_iterator iter = result.begin(); iter != result.end(); ++iter)
+                for (auto iter = result.begin(); iter != result.end(); ++iter)
                 {
                     AttributeData* attr = new (nothrow) AttributeData(*iter);
                     _attributes.insert(make_pair(attr->getId(), attr));
@@ -45,7 +45,7 @@ ArtifactLocalData::~ArtifactLocalData()
     Utils::clearMap(_attributes);
 }
 
-const map<int, AttributeData *>& ArtifactLocalData::getAttributes() const
+const unordered_map<int, AttributeData *>& ArtifactLocalData::getAttributes() const
 {
     return _attributes;
 }

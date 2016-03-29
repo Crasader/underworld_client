@@ -24,7 +24,7 @@ ArtifactUpgradeData::ArtifactUpgradeData(tinyxml2::XMLElement *xmlElement)
             if (data) {
                 vector<string> result;
                 Utils::split(result, data, ",", "");
-                for (vector<string>::const_iterator iter = result.begin(); iter != result.end(); ++iter)
+                for (auto iter = result.begin(); iter != result.end(); ++iter)
                 {
                     AttributeData* attr = new (nothrow) AttributeData(*iter);
                     _attributes.insert(make_pair(attr->getId(), attr));
@@ -36,7 +36,7 @@ ArtifactUpgradeData::ArtifactUpgradeData(tinyxml2::XMLElement *xmlElement)
             if (data) {
                 vector<string> result;
                 Utils::split(result, data, ",", "");
-                for (vector<string>::const_iterator iter = result.begin(); iter != result.end(); ++iter)
+                for (auto iter = result.begin(); iter != result.end(); ++iter)
                 {
                     RewardData* reward = new (nothrow) RewardData(*iter);
                     _soldRewards.insert(make_pair(reward->getId(), reward));
@@ -52,7 +52,7 @@ ArtifactUpgradeData::~ArtifactUpgradeData()
     Utils::clearMap(_soldRewards);
 }
 
-const map<int, AttributeData *>& ArtifactUpgradeData::getAttributes() const
+const unordered_map<int, AttributeData *>& ArtifactUpgradeData::getAttributes() const
 {
     return _attributes;
 }

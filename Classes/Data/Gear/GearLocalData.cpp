@@ -84,12 +84,12 @@ int GearLocalData::getMaxCount() const
     return _maxCount;
 }
 
-const std::set<int>& GearLocalData::getAttributes() const
+const std::unordered_set<int>& GearLocalData::getAttributes() const
 {
     return _attributes;
 }
 
-const std::set<int>& GearLocalData::getSubAttributes() const
+const std::unordered_set<int>& GearLocalData::getSubAttributes() const
 {
     return _subAttributes;
 }

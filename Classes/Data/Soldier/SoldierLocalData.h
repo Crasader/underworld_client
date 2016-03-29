@@ -10,7 +10,7 @@
 #define SoldierLocalData_h
 
 #include "AbstractLocalData.h"
-#include <map>
+#include <unordered_map>
 
 class AttributeData;
 
@@ -20,11 +20,11 @@ public:
     SoldierLocalData(tinyxml2::XMLElement *xmlElement);
     virtual ~SoldierLocalData();
     
-    const std::map<int, AttributeData *>& getAttributes() const;
+    const std::unordered_map<int, AttributeData *>& getAttributes() const;
     const AttributeData* getAttribute(int id) const;
     
 private:
-    std::map<int, AttributeData *> _attributes;
+    std::unordered_map<int, AttributeData *> _attributes;
 };
 
 #endif /* SoldierLocalData_h */

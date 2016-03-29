@@ -64,7 +64,7 @@ private:
     Sprite *_iconSprite;
     Sprite *_qualitySprite;
     BattleSmallResourceNode *_resourceNode;
-    std::map<int, Sprite*> _starSprites;
+    std::unordered_map<int, Sprite*> _starSprites;
     
     Sprite *_shiningSprite;
     ProgressTimer* _coldDownProgress;

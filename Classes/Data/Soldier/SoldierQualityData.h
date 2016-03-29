@@ -19,12 +19,12 @@ public:
     SoldierQualityData(tinyxml2::XMLElement *xmlElement);
     virtual ~SoldierQualityData();
     
-    const std::map<int, AttributeData *>& getAttributes() const;
+    const std::unordered_map<int, AttributeData *>& getAttributes() const;
     const AttributeData* getAttribute(int id) const;
     int getOutput() const;
     
 private:
-    std::map<int, AttributeData *> _attributes;
+    std::unordered_map<int, AttributeData *> _attributes;
     int _output;
 };
 

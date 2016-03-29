@@ -35,7 +35,7 @@ AbstractUpgradeData::AbstractUpgradeData(tinyxml2::XMLElement *xmlElement)
             {
                 vector<string> result;
                 Utils::split(result, data, ",", "");
-                for (vector<string>::const_iterator iter = result.begin(); iter != result.end(); ++iter)
+                for (auto iter = result.begin(); iter != result.end(); ++iter)
                 {
                     ResourceData* data = new (nothrow) ResourceData(*iter);
                     _cost.insert(make_pair(data->getId(), data));

@@ -10,7 +10,7 @@
 #define PieceManager_h
 
 #include "json/document.h"
-#include <map>
+#include <unordered_map>
 #include "CocosGlobal.h"
 
 class PieceManager
@@ -29,8 +29,8 @@ protected:
     M_DISALLOW_COPY_AND_ASSIGN(PieceManager);
     
 private:
-    std::map<int, int> _soldierPieces;
-    std::map<int, int> _heroPieces;
+    std::unordered_map<int, int> _soldierPieces;
+    std::unordered_map<int, int> _heroPieces;
 };
 
 #endif /* PieceManager_h */

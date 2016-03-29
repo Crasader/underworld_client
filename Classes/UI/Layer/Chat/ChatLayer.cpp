@@ -15,6 +15,7 @@
 #include "SoundManager.h"
 #include "ChatCell.h"
 #include "ChatNode.h"
+#include <unordered_set>
 
 using namespace std;
 using namespace ui;
@@ -162,7 +163,7 @@ void ChatLayer::setButtonSelected(int index)
     static string selectedFile = "GameImages/world/ui_fenye_3.png";
     
     Button *selectedButton = _tabButtons.at(index);
-    set<Button *> otherButtons;
+    unordered_set<Button *> otherButtons;
     for (int i = 0; i < _tabButtons.size(); ++i) {
         otherButtons.insert(_tabButtons.at(i));
     }
@@ -177,7 +178,7 @@ void ChatLayer::setButtonSelected(int index)
     selectedButton->loadTextures(selectedFile, selectedFile);
     selectedButton->setLocalZOrder(2);
     // 3. make sure the other buttons are on the bottom
-    for (set<Button *>::iterator iter = otherButtons.begin(); iter != otherButtons.end(); ++iter)
+    for (auto iter = otherButtons.begin(); iter != otherButtons.end(); ++iter)
     {
         (*iter)->loadTextures(normalFile, normalFile);
         (*iter)->setLocalZOrder(0);

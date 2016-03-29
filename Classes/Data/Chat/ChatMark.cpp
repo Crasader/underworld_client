@@ -27,7 +27,7 @@ ChatMark::~ChatMark()
     
 }
 
-void ChatMark::toMap(std::map<std::string, std::string> &params) const
+void ChatMark::toMap(std::unordered_map<std::string, std::string> &params) const
 {
     params.insert(make_pair("group", StringUtils::format("%d", _groupId)));
     params.insert(make_pair("w", StringUtils::format("%d", _wid)));

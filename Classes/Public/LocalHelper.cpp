@@ -16,7 +16,7 @@ USING_NS_CC;
 
 static const string LOCAL_KEY_BASE = "base";
 static LocalType local = LocalType::Chinese;
-static map<string, map<string, string> > stringsMap;
+static unordered_map<string, unordered_map<string, string> > stringsMap;
 
 static string getLocalKey(LocalType type)
 {
@@ -34,9 +34,9 @@ static void parseStrings(string local) {
     string file = StringUtils::format("configs/string-%s.xml", local.c_str());
     if (LocalHelper::isFileExists(file)) {
         if (stringsMap.find(local) == stringsMap.end()) {
-            stringsMap.insert(make_pair(local, map<string, string>()));
+            stringsMap.insert(make_pair(local, unordered_map<string, string>()));
         }
-        map<string, string>& localMap = stringsMap.at(local);
+        auto& localMap = stringsMap.at(local);
         tinyxml2::XMLDocument* xmlDoc = new tinyxml2::XMLDocument();
         if (xmlDoc) {
             string content = LocalHelper::loadFileContentString(file);

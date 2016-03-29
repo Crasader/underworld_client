@@ -10,7 +10,7 @@
 #define SoldierData_h
 
 #include "AbstractData.h"
-#include <map>
+#include <unordered_map>
 
 class AttributeData;
 class SoldierLocalData;
@@ -26,7 +26,7 @@ public:
     virtual ~SoldierData();
     
     // getters
-    const std::map<int, AttributeData *>& getAttributes() const;
+    const std::unordered_map<int, AttributeData *>& getAttributes() const;
     const AttributeData* getAttribute(int id) const;
     
     const SoldierLocalData* getLocalData() const;
@@ -46,10 +46,10 @@ private:
     void calculateTotalAttributes();
     
 private:
-    std::map<int, AttributeData*> _attributes;
+    std::unordered_map<int, AttributeData*> _attributes;
     int _quality;
     int _talent;
-    std::map<int, GearData*> _gears;
+    std::unordered_map<int, GearData*> _gears;
 };
 
 #endif /* SoldierData_h */

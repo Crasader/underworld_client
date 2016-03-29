@@ -19,11 +19,11 @@ public:
     SoldierUpgradeData(tinyxml2::XMLElement *xmlElement);
     virtual ~SoldierUpgradeData();
     
-    const std::map<int, AttributeData *>& getAttributes() const;
+    const std::unordered_map<int, AttributeData *>& getAttributes() const;
     const AttributeData* getAttribute(int id) const;
     
 private:
-    std::map<int, AttributeData *> _attributes;
+    std::unordered_map<int, AttributeData *> _attributes;
 };
 
 #endif /* SoldierUpgradeData_h */

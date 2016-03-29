@@ -54,7 +54,7 @@ private:
     
 private:
     MainUILayerObserver *_observer;
-    std::map<ui::Button*, ButtonIconInfo> _buttonIconInfos;
+    std::unordered_map<ui::Button*, ButtonIconInfo> _buttonIconInfos;
     ui::Button* _iconButton;
     Label* _nameLabel;
     Label* _levelLabel;

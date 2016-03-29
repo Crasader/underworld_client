@@ -25,8 +25,8 @@ ArtifactData::ArtifactData(const rapidjson::Value& jsonDict)
 ArtifactData::ArtifactData(const ArtifactData& instance)
 :AbstractData(instance)
 {
-    const map<int, AttributeData *>& attrs = instance.getAttributes();
-    for (map<int, AttributeData *>::const_iterator iter = attrs.begin(); iter != attrs.end(); ++iter) {
+    const auto& attrs = instance.getAttributes();
+    for (auto iter = attrs.begin(); iter != attrs.end(); ++iter) {
         const AttributeData* data = iter->second;
         _attributes.insert(make_pair(iter->first, new (nothrow) AttributeData(*data)));
     }
@@ -37,7 +37,7 @@ ArtifactData::~ArtifactData()
     Utils::clearMap(_attributes);
 }
 
-const map<int, AttributeData *>& ArtifactData::getAttributes() const
+const unordered_map<int, AttributeData *>& ArtifactData::getAttributes() const
 {
     return _attributes;
 }

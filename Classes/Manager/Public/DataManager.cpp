@@ -70,7 +70,7 @@ DataManager::~DataManager()
 {
     Utils::clearMap(_levels);
     
-    for (map<QuestType, map<int, QuestLocalData*>>::iterator iter = _quests.begin(); iter != _quests.end(); ++iter) {
+    for (auto iter = _quests.begin(); iter != _quests.end(); ++iter) {
         Utils::clearMap(iter->second);
     }
     _quests.clear();
@@ -84,7 +84,7 @@ DataManager::~DataManager()
     Utils::clearMap(_cardConfigData);
     Utils::clearMap(_unitResourceConfigData);
     
-    for (map<int, vector<MapParticleConfigData*>>::iterator iter = _mapParticleConfigData.begin(); iter != _mapParticleConfigData.end(); ++iter) {
+    for (auto iter = _mapParticleConfigData.begin(); iter != _mapParticleConfigData.end(); ++iter) {
         Utils::clearVector(iter->second);
     }
     _mapParticleConfigData.clear();
@@ -177,7 +177,7 @@ const set<string>& DataManager::getCardDecks() const
 const QuestLocalData* DataManager::getQuestData(QuestType type, int questId) const
 {
     if (_quests.find(type) != _quests.end()) {
-        const map<int, QuestLocalData*>& quests = _quests.at(type);
+        const auto& quests = _quests.at(type);
         if (quests.find(questId) != quests.end()) {
             return quests.at(questId);
         }
@@ -486,7 +486,7 @@ void DataManager::parseQuestData(QuestType type)
     if (_quests.find(type) != _quests.end()) {
         Utils::clearMap(_quests.at(type));
     } else {
-        _quests.insert(make_pair(type, map<int, QuestLocalData*>()));
+        _quests.insert(make_pair(type, unordered_map<int, QuestLocalData*>()));
     }
     
     if (FileUtils::getInstance()->isFileExist(fileName)) {
@@ -495,7 +495,7 @@ void DataManager::parseQuestData(QuestType type)
             string content = LocalHelper::loadFileContentString(fileName);
             xmlDoc->Parse(content.c_str());
             
-            map<int, QuestLocalData*>& quests = _quests.at(type);
+            auto& quests = _quests.at(type);
             
             for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
                  item;

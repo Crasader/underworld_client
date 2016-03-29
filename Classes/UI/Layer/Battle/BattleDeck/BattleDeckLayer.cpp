@@ -549,7 +549,7 @@ void BattleDeckLayer::removeDragNode()
 
 void BattleDeckLayer::reloadCardDecks()
 {
-    const set<string>& cards = getPickedCards();
+    const auto& cards = getPickedCards();
     const size_t cnt = _cardDecks.size();
     // remove all
     for (int i = 0; i < cnt; ++i) {
@@ -643,7 +643,7 @@ void BattleDeckLayer::loadData()
     
     _candidateCards.clear();
     
-    const set<string>& cardDecks = DataManager::getInstance()->getCardDecks();
+    const auto& cardDecks = DataManager::getInstance()->getCardDecks();
     set_difference(begin(cardDecks), end(cardDecks), begin(_pickedCards), end(_pickedCards), inserter(_candidateCards, begin(_candidateCards)));
     sort(begin(_candidateCards), end(_candidateCards), sortByName);
 }

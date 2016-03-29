@@ -23,7 +23,7 @@ GearUpgradeData::GearUpgradeData(tinyxml2::XMLElement *xmlElement)
             if (data) {
                 vector<string> result;
                 Utils::split(result, data, ",", "");
-                for (vector<string>::const_iterator iter = result.begin(); iter != result.end(); ++iter)
+                for (auto iter = result.begin(); iter != result.end(); ++iter)
                 {
                     RewardData* reward = new (nothrow) RewardData(*iter);
                     _soldRewards.insert(make_pair(reward->getId(), reward));

@@ -10,7 +10,7 @@
 #define ArtifactLocalData_h
 
 #include "AbstractLocalData.h"
-#include <map>
+#include <unordered_map>
 
 class AttributeData;
 class SkillLocalData;
@@ -21,12 +21,12 @@ public:
     ArtifactLocalData(tinyxml2::XMLElement *xmlElement);
     virtual ~ArtifactLocalData();
     
-    const std::map<int, AttributeData *>& getAttributes() const;
+    const std::unordered_map<int, AttributeData *>& getAttributes() const;
     const AttributeData* getAttribute(int id) const;
     const SkillLocalData* getSkillData() const;
     
 private:
-    std::map<int, AttributeData *> _attributes;
+    std::unordered_map<int, AttributeData *> _attributes;
     int _skillId;
 };
 

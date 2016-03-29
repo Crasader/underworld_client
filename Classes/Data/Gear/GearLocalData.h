@@ -10,7 +10,7 @@
 #define GearLocalData_h
 
 #include "AbstractLocalData.h"
-#include <set>
+#include <unordered_set>
 #include "CocosGlobal.h"
 
 class GearLocalData : public AbstractLocalData
@@ -23,16 +23,16 @@ public:
     GearType getType() const;
     GearQuality getQuality() const;
     int getMaxCount() const;
-    const std::set<int>& getAttributes() const;
-    const std::set<int>& getSubAttributes() const;
+    const std::unordered_set<int>& getAttributes() const;
+    const std::unordered_set<int>& getSubAttributes() const;
     
 private:
     int _setId;
     GearType _type;
     GearQuality _quality;
     int _maxCount;
-    std::set<int> _attributes;
-    std::set<int> _subAttributes;
+    std::unordered_set<int> _attributes;
+    std::unordered_set<int> _subAttributes;
 };
 
 #endif /* GearLocalData_h */

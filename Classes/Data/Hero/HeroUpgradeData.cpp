@@ -23,7 +23,7 @@ HeroUpgradeData::HeroUpgradeData(tinyxml2::XMLElement *xmlElement)
             if (data) {
                 vector<string> result;
                 Utils::split(result, data, ",", "");
-                for (vector<string>::const_iterator iter = result.begin(); iter != result.end(); ++iter)
+                for (auto iter = result.begin(); iter != result.end(); ++iter)
                 {
                     AttributeData* attr = new (nothrow) AttributeData(*iter);
                     _attributes.insert(make_pair(attr->getId(), attr));
@@ -47,7 +47,7 @@ const AttributeData* HeroUpgradeData::getAttribute(int id) const
     return nullptr;
 }
 
-const map<int, AttributeData *>& HeroUpgradeData::getAttributes() const
+const unordered_map<int, AttributeData *>& HeroUpgradeData::getAttributes() const
 {
     return _attributes;
 }

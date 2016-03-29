@@ -10,7 +10,7 @@
 #define TowerManager_h
 
 #include "json/document.h"
-#include <map>
+#include <unordered_map>
 #include "CocosGlobal.h"
 
 class TowerData;
@@ -30,7 +30,7 @@ protected:
     M_DISALLOW_COPY_AND_ASSIGN(TowerManager);
     
 private:
-    std::map<int, TowerData*> _towers;
+    std::unordered_map<int, TowerData*> _towers;
 };
 
 #endif /* TowerManager_h */

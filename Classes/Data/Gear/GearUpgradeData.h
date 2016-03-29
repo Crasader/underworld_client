@@ -22,7 +22,7 @@ public:
     const RewardData* getSoldReward(int type) const;
     
 private:
-    std::map<int, RewardData*> _soldRewards;
+    std::unordered_map<int, RewardData*> _soldRewards;
 };
 
 #endif /* GearUpgradeData_h */

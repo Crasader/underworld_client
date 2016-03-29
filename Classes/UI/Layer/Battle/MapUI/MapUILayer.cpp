@@ -171,7 +171,7 @@ void MapUILayer::updateCardDeckCountDown(float time, float duration)
     }
 }
 
-void MapUILayer::updateCardDeckResource(const map<string, float>& resources)
+void MapUILayer::updateCardDeckResource(const unordered_map<string, float>& resources)
 {
     if (_cardDeck) {
         _cardDeck->updateResource(resources);

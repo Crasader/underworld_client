@@ -22,7 +22,7 @@ QuestManager::QuestManager()
 
 QuestManager::~QuestManager()
 {
-    for (map<QuestType, vector<QuestData*>>::iterator iter = _quests.begin(); iter != _quests.end(); ++iter) {
+    for (auto iter = _quests.begin(); iter != _quests.end(); ++iter) {
         Utils::clearVector(iter->second);
     }
 }

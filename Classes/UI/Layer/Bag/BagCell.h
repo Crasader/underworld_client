@@ -26,7 +26,7 @@ public:
     void resetNode(int idx);
     
 private:
-    std::map<int, BagNode*> _nodes;
+    std::unordered_map<int, BagNode*> _nodes;
 };
 
 #endif /* BagCell_h */

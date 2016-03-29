@@ -10,7 +10,7 @@
 #define ArtifactData_h
 
 #include "AbstractData.h"
-#include <map>
+#include <unordered_map>
 #include "CocosGlobal.h"
 
 class AttributeData;
@@ -24,14 +24,14 @@ public:
     ArtifactData(const ArtifactData& instance);
     virtual ~ArtifactData();
     
-    const std::map<int, AttributeData *>& getAttributes() const;
+    const std::unordered_map<int, AttributeData *>& getAttributes() const;
     const AttributeData* getAttribute(int id) const;
     
     const ArtifactLocalData* getLocalData() const;
     const ArtifactUpgradeData* getUpgradeData() const;
     
 private:
-    std::map<int, AttributeData *> _attributes;
+    std::unordered_map<int, AttributeData *> _attributes;
 };
 
 #endif /* ArtifactData_h */

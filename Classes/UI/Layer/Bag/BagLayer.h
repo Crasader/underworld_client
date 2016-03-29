@@ -62,7 +62,7 @@ private:
     Size _tableViewMaxSize;
     Size _cellSize;
     ssize_t _cellsCount;
-    std::map<int, TabInfo> _tabInfos;
+    std::unordered_map<int, TabInfo> _tabInfos;
     ScrollBar *_scrollBar;
     int _tabIndex;
 };

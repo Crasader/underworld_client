@@ -59,7 +59,7 @@ private:
     ssize_t _cellsCount;
     Sprite* _editBoxBg;
     ui::EditBox* _editBox;
-    std::map<int, TableView*> _tableViews;
+    std::unordered_map<int, TableView*> _tableViews;
     std::vector<ui::Button*> _tabButtons;
     ScrollBar *_scrollBar;
     int _tabIndex;

@@ -9,7 +9,7 @@
 #ifndef Scheduler_h
 #define Scheduler_h
 
-#include <set>
+#include <unordered_set>
 #include <string>
 
 class Scheduler;
@@ -75,10 +75,10 @@ public:
     void resumeTarget(void *target);
     bool isTargetPaused(void *target);
     
-    std::set<void*> pauseAllTargets();
-    std::set<void*> pauseAllTargetsWithMinPriority(int minPriority);
+    std::unordered_set<void*> pauseAllTargets();
+    std::unordered_set<void*> pauseAllTargetsWithMinPriority(int minPriority);
     
-    void resumeTargets(const std::set<void*>& targetsToResume);
+    void resumeTargets(const std::unordered_set<void*>& targetsToResume);
     
 protected:
     Scheduler();

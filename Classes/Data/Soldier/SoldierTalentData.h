@@ -20,12 +20,12 @@ public:
     SoldierTalentData(tinyxml2::XMLElement *xmlElement);
     virtual ~SoldierTalentData();
     
-    const std::map<int, AttributeData *>& getAttributes() const;
+    const std::unordered_map<int, AttributeData *>& getAttributes() const;
     const AttributeData* getAttribute(int id) const;
     const SkillLocalData* getSkillData() const;
     
 private:
-    std::map<int, AttributeData *> _attributes;
+    std::unordered_map<int, AttributeData *> _attributes;
     int _skillId;
 };
 

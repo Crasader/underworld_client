@@ -108,7 +108,7 @@ private:
     ActionManager *_actionManager;
     Node *_shadow;
     std::set<std::string> _bufNames;
-    std::map<std::string, Node*> _bufs;
+    std::unordered_map<std::string, Node*> _bufs;
     DisplayBar* _hpBar;
     Sprite *_sprite;
     Label *_idLabel;

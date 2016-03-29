@@ -12,7 +12,7 @@
 #include "AbstractLocalData.h"
 #include "CocosGlobal.h"
 #include <vector>
-#include <map>
+#include <unordered_map>
 
 class ConditionData;
 class RewardData;
@@ -28,7 +28,7 @@ public:
     
 private:
     std::vector<ConditionData*> _conditions;
-    std::map<int, RewardData*> _rewards;
+    std::unordered_map<int, RewardData*> _rewards;
 };
 
 #endif /* LevelLocalData_h */

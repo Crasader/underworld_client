@@ -10,7 +10,7 @@
 #define GearData_h
 
 #include "AbstractData.h"
-#include <map>
+#include <unordered_map>
 #include "CocosGlobal.h"
 
 class AttributeData;
@@ -25,14 +25,14 @@ public:
     virtual ~GearData();
     
     GearQuality getQuality() const;
-    const std::map<int, AttributeData *>& getAttributes() const;
+    const std::unordered_map<int, AttributeData *>& getAttributes() const;
     const AttributeData* getAttribute(int id) const;
     
     const GearLocalData* getLocalData() const;
     const GearUpgradeData* getUpgradeData() const;
     
 private:
-    std::map<int, AttributeData *> _attributes;
+    std::unordered_map<int, AttributeData *> _attributes;
 };
 
 #endif /* GearData_h */

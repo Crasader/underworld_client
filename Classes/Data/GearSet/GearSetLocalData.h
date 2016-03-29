@@ -10,7 +10,7 @@
 #define GearSetLocalData_h
 
 #include "AbstractLocalData.h"
-#include <map>
+#include <unordered_map>
 
 class AttributeData;
 
@@ -23,7 +23,7 @@ public:
     const AttributeData* getAttribute(int gearCount) const;
     
 private:
-    std::map<int, AttributeData*> _attributes;
+    std::unordered_map<int, AttributeData*> _attributes;
 };
 
 #endif /* GearSetLocalData_h */

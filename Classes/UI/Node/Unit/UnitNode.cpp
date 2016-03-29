@@ -774,7 +774,7 @@ void UnitNode::scaleActionNode()
 #pragma mark - effects
 void UnitNode::updateBufs()
 {
-    set<string> last = _bufNames;
+    auto last = _bufNames;
     
     _bufNames.clear();
     for (Unit::BuffIter iter = _unit->getBuffsBegin(); iter != _unit->getBuffsEnd(); ++iter)
@@ -794,20 +794,20 @@ void UnitNode::updateBufs()
     set<string> removed;
     set_difference(last.begin(), last.end(), intersections.begin(), intersections.end(), inserter(removed, removed.begin()));
     
-    for (set<string>::const_iterator iter = removed.begin(); iter != removed.end(); ++iter) {
+    for (auto iter = removed.begin(); iter != removed.end(); ++iter) {
         removeBuf(*iter);
     }
     
     ssize_t cnt = added.size();
     if (cnt > 0) {
         // re-calculate the buf scale
-        for (set<string>::const_iterator iter = added.begin(); iter != added.end(); ++iter) {
+        for (auto iter = added.begin(); iter != added.end(); ++iter) {
             const string& name = *iter;
             const SpellConfigData* data = DataManager::getInstance()->getSpellConfigData(name);
             if (data) {
                 {
-                    const map<SkillClass, float>& rates = data->getReceiverSpeedRates();
-                    for (map<SkillClass, float>::const_iterator iter = rates.begin(); iter != rates.end(); ++iter) {
+                    const auto& rates = data->getReceiverSpeedRates();
+                    for (auto iter = rates.begin(); iter != rates.end(); ++iter) {
                         const SkillClass sc = iter->first;
                         const float rate = iter->second;
                         if (_extraBufSpeeds.find(sc) != _extraBufSpeeds.end()) {
@@ -820,8 +820,8 @@ void UnitNode::updateBufs()
                 }
                 
                 {
-                    const map<SkillClass, float>& rates = data->getReceiverVolumeRates();
-                    for (map<SkillClass, float>::const_iterator iter = rates.begin(); iter != rates.end(); ++iter) {
+                    const auto& rates = data->getReceiverVolumeRates();
+                    for (auto iter = rates.begin(); iter != rates.end(); ++iter) {
                         const SkillClass sc = iter->first;
                         const float rate = iter->second;
                         if (_extraBufScales.find(sc) != _extraBufScales.end()) {
@@ -839,14 +839,14 @@ void UnitNode::updateBufs()
         
         // calculate average
         {
-            for (map<SkillClass, float>::iterator iter = _extraBufSpeeds.begin(); iter != _extraBufSpeeds.end(); ++iter) {
+            for (auto iter = _extraBufSpeeds.begin(); iter != _extraBufSpeeds.end(); ++iter) {
                 const float sum = iter->second;
                 iter->second = sum / cnt;
             }
         }
         
         {
-            for (map<SkillClass, float>::iterator iter = _extraBufScales.begin(); iter != _extraBufScales.end(); ++iter) {
+            for (auto iter = _extraBufScales.begin(); iter != _extraBufScales.end(); ++iter) {
                 const float sum = iter->second;
                 iter->second = sum / cnt;
             }
@@ -888,7 +888,7 @@ void UnitNode::removeBuf(const string& name)
 
 void UnitNode::removeAllBufs()
 {
-    for (map<string, Node*>::iterator iter = _bufs.begin(); iter != _bufs.end(); ++iter) {
+    for (auto iter = _bufs.begin(); iter != _bufs.end(); ++iter) {
         Node* buf = iter->second;
         if (buf) {
             buf->removeFromParent();
@@ -901,7 +901,7 @@ void UnitNode::removeAllBufs()
 void UnitNode::updateFeatures()
 {
     const list<Unit::EventLog>& eventLogs = _unit->getEventLogs();
-    for (list<Unit::EventLog>::const_iterator iter = eventLogs.begin(); iter != eventLogs.end(); ++iter) {
+    for (auto iter = eventLogs.begin(); iter != eventLogs.end(); ++iter) {
         const Unit::EventLog& log = *iter;
         Unit::EventLogType type = log._type;
         if (type == Unit::kEventLogType_DamageOutput ||
@@ -930,7 +930,7 @@ void UnitNode::updateFeatures()
             if (log._factionIndex == _unit->getWorld()->getThisFactionIndex()) {
                 float delay = 0.3f;
                 int index = 0;
-                for (std::map<string, float>::const_iterator iter = log._resources.begin();
+                for (auto iter = log._resources.begin();
                      iter != log._resources.end();
                      ++iter) {
                     string resource = iter->first;

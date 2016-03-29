@@ -189,7 +189,7 @@ void MapUICardDeck::updateTimer(float time, float duration)
     }
 }
 
-void MapUICardDeck::updateResource(const map<string, float>& resources)
+void MapUICardDeck::updateResource(const unordered_map<string, float>& resources)
 {
     float count(0);
     static const string& resourceName(RES_NAME_WOOD);

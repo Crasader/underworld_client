@@ -11,7 +11,7 @@
 
 #include "AbstractLocalData.h"
 #include <vector>
-#include <map>
+#include <unordered_map>
 
 class AttributeData;
 class SkillLocalData;
@@ -23,14 +23,14 @@ public:
     HeroLocalData(tinyxml2::XMLElement *xmlElement);
     virtual ~HeroLocalData();
     
-    const std::map<int, AttributeData *>& getAttributes() const;
+    const std::unordered_map<int, AttributeData *>& getAttributes() const;
     const AttributeData* getAttribute(int id) const;
     const SkillLocalData* getSkillData() const;
     const std::vector<int>& getArtifacts() const;
     const ArtifactLocalData* getUnlockedArtifactData(int index) const;
     
 private:
-    std::map<int, AttributeData *> _attributes;
+    std::unordered_map<int, AttributeData *> _attributes;
     int _skillId;
     std::vector<int> _artifactIds;
 };

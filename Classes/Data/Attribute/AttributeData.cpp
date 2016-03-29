@@ -13,9 +13,9 @@
 
 using namespace std;
 
-void AttributeData::calculateAttributes(const map<int, AttributeData *>& attributes, map<int, int>& output)
+void AttributeData::calculateAttributes(const unordered_map<int, AttributeData *>& attributes, unordered_map<int, int>& output)
 {
-    for (map<int, AttributeData *>::const_iterator iter = attributes.begin(); iter != attributes.end(); ++iter) {
+    for (auto iter = attributes.begin(); iter != attributes.end(); ++iter) {
         const int attrId = iter->first;
         const int count = iter->second->getCount();
         if (output.find(attrId) != output.end()) {

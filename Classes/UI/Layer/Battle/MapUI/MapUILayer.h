@@ -49,7 +49,7 @@ public:
     void insertCard(const UnderWorld::Core::Card* card);
     void removeCard(const UnderWorld::Core::Card* card, int index);
     void updateCardDeckCountDown(float time, float duration);
-    void updateCardDeckResource(const std::map<std::string, float>& resources);
+    void updateCardDeckResource(const std::unordered_map<std::string, float>& resources);
     
 protected:
     MapUILayer();
