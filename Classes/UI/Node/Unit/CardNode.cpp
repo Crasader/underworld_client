@@ -281,6 +281,8 @@ void CardNode::update(const string& name, int rarity, int cost, float resource)
 
 void CardNode::setSelected(bool selected)
 {
+    const bool needShake(selected || _selected);
+    
     _selected = selected;
     
     if (_shiningSprite) {
@@ -294,15 +296,22 @@ void CardNode::setSelected(bool selected)
         if (scale != maxScale) {
             _cardWidget->setScale(maxScale);
         }
-        shake();
     } else {
         if (scale != minScale) {
             _cardWidget->setScale(minScale);
         }
-        stopShake();
     }
     
+    // Follow this steps:
+    // 1. set position
     resetPosition();
+    
+    // 2. play animation
+    if (needShake) {
+        shake();
+    } else {
+        stopShake();
+    }
 }
 
 void CardNode::checkResource(float count)
@@ -377,7 +386,7 @@ void CardNode::resetPosition()
 {
     if (_basePoint.x != 0) {
         const Point& point = getPosition();
-        const Point& pos = _basePoint + Point(0, _selected ? 5.0f : 0.0f);
+        const Point& pos = _basePoint + Point(0, _selected ? 10.0f : 0.0f);
         if (point != pos) {
             Node::setPosition(pos.x, pos.y);
         }
@@ -390,12 +399,15 @@ void CardNode::shake()
 {
     if (_canShake && !_isShaking) {
         stopShake();
+        
+        static float shake_duration = 0.2f;
+        static float shake_strength = 1.0f;
+        
         _isShaking = true;
+        auto action = (Sequence::create(CCShake::actionWithDuration(shake_duration, shake_strength, getPosition()), CallFunc::create([=] {
+            _isShaking = false;
+        }), nullptr));
         
-        static float shake_duration = 0.4f;
-        static float shake_strength = 2.0f;
-        
-        auto action = RepeatForever::create(CCShake::actionWithDuration(shake_duration, shake_strength, getPosition()));
         action->setTag(shake_action_tag);
         runAction(action);
     }
@@ -410,7 +422,6 @@ void CardNode::stopShake()
         
         if (getActionByTag(shake_action_tag)) {
             stopActionByTag(shake_action_tag);
-            resetPosition();
         }
     }
 }

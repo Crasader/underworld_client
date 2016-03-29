@@ -460,6 +460,15 @@ void MapLayer::addAoeSpell(const Point& startPoint, const std::string& name, flo
             
             // effects
             {
+                ParticleSystemQuad *effect = ParticleSystemQuad::create("particle/yan.plist");
+                effect->setPosition(-40, 0);
+                node->addChild(effect);
+            }
+            {
+                ParticleSystemQuad *effect = ParticleSystemQuad::create("particle/huo.plist");
+                node->addChild(effect);
+            }
+            {
                 static const string file("huoqiu.csb");
                 Node *effect = CSLoader::createNode(file);
                 node->addChild(effect);
@@ -467,16 +476,8 @@ void MapLayer::addAoeSpell(const Point& startPoint, const std::string& name, flo
                 effect->runAction(action);
                 action->gotoFrameAndPlay(0, true);
             }
-            {
-                ParticleSystemQuad *effect = ParticleSystemQuad::create("particle/yan.plist");
-                node->addChild(effect);
-            }
-            {
-                ParticleSystemQuad *effect = ParticleSystemQuad::create("particle/huo.plist");
-                node->addChild(effect);
-            }
             
-            node->runAction(Sequence::create(Parabola::create(3, realStartPos, targetPos, 100), CallFunc::create([=] {
+            node->runAction(Sequence::create(Parabola::create(3, realStartPos, targetPos, 300), CallFunc::create([=] {
                 node->removeFromParent();
                 static string groundFile("jinenghuoqiukuosan-1.csb");
                 addSpellEffect(groundFile, false, targetPos);
@@ -565,6 +566,45 @@ void MapLayer::addPlaceUnitEffect(const UnderWorld::Core::Coordinate& point)
     });
 }
 
+void MapLayer::setPlacedArea(float x1, float x2)
+{
+    clearUnplacedAreas();
+    
+    if (fabs(x1 - x2) > 0) {
+        int unused;
+        Point point;
+        
+        coordinateConvert(UnderWorld::Core::Coordinate(x1, 0), point, unused);
+        x1 = point.x;
+        
+        coordinateConvert(UnderWorld::Core::Coordinate(x2, 0), point, unused);
+        x2 = point.x;
+        
+        const float width = _scrollView->getContentSize().width;
+        const float min = MAX(0, MIN(x1, x2));
+        const float max = MIN(width, MAX(x1, x2));
+        if (min > 0) {
+            addUnplacedArea(0, min);
+        }
+        
+        if (max < width) {
+            addUnplacedArea(max, width);
+        }
+    }
+}
+
+void MapLayer::clearUnplacedAreas()
+{
+    if (_unplacedAreas.size() > 0) {
+        for (auto node : _unplacedAreas) {
+            node->removeFromParent();
+        }
+        
+        _unplacedAreas.clear();
+    }
+}
+
+#pragma mark - protected
 bool MapLayer::onTouchBegan(Touch *touch, Event *unused_event)
 {
     if (_observer) {
@@ -793,4 +833,22 @@ Rect MapLayer::getSpellRingBoundingBox() const
     }
     
     return Rect::ZERO;
+}
+
+void MapLayer::addUnplacedArea(float x1, float x2)
+{
+    const float width = fabs(x1 - x2);
+    if (width > 0) {
+        static string file("GameImages/test/ui_hongse.png");
+        static const Rect rect(0, 0, 326, 326);
+        static const Rect capInsets(160, 160, 6, 6);
+        ui::Scale9Sprite* sprite = ui::Scale9Sprite::create(file, rect, capInsets);
+        _scrollView->addChild(sprite);
+        
+        const float height = _scrollView->getContentSize().height;
+        sprite->setContentSize(Size(width, height));
+        sprite->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+        sprite->setPosition(MIN(x1, x2), 0);
+        _unplacedAreas.push_back(sprite);
+    }
 }

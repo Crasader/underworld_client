@@ -52,8 +52,7 @@ GameRender::GameRender(Scene* scene, int mapId, const string& mapData, const str
     _mapUILayer->registerObserver(this);
     scene->addChild(_mapUILayer);
     
-    _selectedCard.first = nullptr;
-    _selectedCard.second = INVALID_VALUE;
+    onMapUILayerCardSelected(nullptr, INVALID_VALUE);
 }
 
 GameRender::~GameRender()
@@ -406,6 +405,24 @@ void GameRender::onMapUILayerCardSelected(const Card* card, int idx)
 {
     _selectedCard.first = card;
     _selectedCard.second = idx;
+    
+    if (_mapLayer) {
+        // clear first
+        _mapLayer->clearUnplacedAreas();
+        
+        if (card) {
+            const CardType* ct = card->getCardType();
+            if (ct && kCardClass_Unit == ct->getCardClass()) {
+                const Faction* faction = _game->getWorld()->getThisFaction();
+                if (faction) {
+                    const UnderWorld::Core::Rect& rect = faction->getPuttingArea();
+                    const int c1 = rect._origin.x;
+                    const int c2 = c1 + rect._width;
+                    _mapLayer->setPlacedArea(c1, c2);
+                }
+            }
+        }
+    }
 }
 
 void GameRender::onMapUILayerTouchMoved(const Card* card, const Point& point)

@@ -57,6 +57,8 @@ public:
     void removeAllSpellEffects();
     
     void addPlaceUnitEffect(const UnderWorld::Core::Coordinate& point);
+    void setPlacedArea(float x1, float x2);
+    void clearUnplacedAreas();
     
 protected:
     virtual ~MapLayer();
@@ -88,6 +90,8 @@ protected:
     Node* createRing(const std::string& name, const Point& point);
     void removeStaticRing(const Point& point);
     Rect getSpellRingBoundingBox() const;
+    
+    void addUnplacedArea(float x1, float x2);
 private:
     MapLayerObserver *_observer;
     int _mapId;
@@ -108,6 +112,7 @@ private:
     std::unordered_set<ParticleSystemQuad*> _particles;
     std::unordered_set<Node*> _nodesInTheRing;
     std::unordered_set<Node*> _spellEffects;
+    std::vector<Node*> _unplacedAreas;
     std::string _selectedUnitName;
     Node* _selectedUnitMask;
 };
