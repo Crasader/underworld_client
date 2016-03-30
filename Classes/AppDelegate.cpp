@@ -9,7 +9,11 @@
 #include "ApiBridge.h"
 #endif
 
+#include "Network/base/TCPClient.h"
+
 USING_NS_CC;
+
+using namespace cocos2d::network;
 
 //static cocos2d::Size designResolutionSize = cocos2d::Size(480, 320);
 
@@ -112,6 +116,17 @@ bool AppDelegate::applicationDidFinishLaunching() {
     iOSApi::init();
 #endif
 
+    //test tcpclient
+    TCPClient* _fd = new TCPClient();
+    _fd->init("192.168.31.139", 8080);
+    TCPRequest* request = new TCPRequest();
+    std::string data = "{\"code\":2,\"uid\":2,\"name\":\"p2\",\"cards\":\"王子|守卫|狗\"}";
+    request->setRequestData(data.c_str(), data.size());
+    _fd->send(request);
+    CCLOG("");
+    //end
+    
+    
     // create a scene. it's an autorelease object
     auto scene = MainLayer::createScene();
 

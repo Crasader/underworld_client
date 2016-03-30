@@ -340,7 +340,9 @@ void TCPClient::networkThread()
     base = event_base_new();
     //struct event notify_event,server_event;
     event_set(&notify_event, _pipeRead, EV_READ|EV_PERSIST, on_notify, this);
+    event_base_set(base,&notify_event);
     event_set(&server_event, _fd, EV_READ|EV_PERSIST, on_server, this);
+    event_base_set(base,&server_event);
     event_add(&notify_event, NULL);
     event_add(&server_event, NULL);
     event_base_dispatch(base);
@@ -698,10 +700,12 @@ void TCPClient::processResponse(char* responseMessage)
             responseLen=-1;
             retVal=-1;
             retVal=_read(_fd,(char*)(&responseLen),4);
+	    CCLOG("processResponse,responseLen=%d",responseLen);
             string reponseData;
             if(responseLen>0){//handle full package
                 string reponseData;
                 retVal=_read(_fd,reponseData,responseLen);
+		 CCLOG("processResponse,read response data=%d",retVal);
         #if 0        
          // write data to TCPResponse
                 TCPResponse *response = new (std::nothrow) TCPResponse(request);
@@ -771,7 +775,7 @@ void TCPClient::processRequest(char* responseMessage){
    int flag=-1;  
    int ret = _read(_pipeRead, (char*)&flag, sizeof(int));  
       
-    printf("read_cb, read %d bytes\n", ret);  
+    CCLOG("read_cb, read %d bytes,flag=%d", ret,flag);  
     if(flag==1)  
     {
    TCPRequest *request;
@@ -788,6 +792,10 @@ void TCPClient::processRequest(char* responseMessage){
         }
 
         if (request == _requestSentinel) {
+<<<<<<< HEAD
+=======
+	    CCLOG("event_base_loopbreak");
+>>>>>>> tcpclient test
 	    event_base_loopbreak(base);
             return;
         }
@@ -812,11 +820,14 @@ void TCPClient::processRequest(char* responseMessage){
 	    event_del(&server_event);
             _fd=_connect(_url,_port,_timeoutForConnect);
 	    if(_fd!=-1){
+		CCLOG("processRequest,reconnect once");
 		event_set(&server_event, _fd, EV_READ|EV_PERSIST, on_server, this);
+		event_base_set(base,&server_event);
 		event_add(&server_event, NULL);
             	writeSuccess=_write(_fd,request->getRequestData(),request->getRequestDataSize());
 	    }
         }
+	CCLOG("processRequest,writeSuccess=%d",writeSuccess);
 
                 if (writeSuccess <= 0)
                 {
@@ -895,8 +906,10 @@ bool TCPClient::init(const std::string& host,int port){
     _port=port;
      _fd=_connect(_url,_port,_timeoutForConnect);
     
-    if(_fd<0)
+    if(_fd<0){
+	CCLOG("TCPClient::init error,host=%s,port=%d",host.c_str(),port);
 	return false;
+    }
     int ret=_create_pipe();
     return ret==0?true:false;
 }
