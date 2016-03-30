@@ -15,8 +15,6 @@
 
 USING_NS_CC;
 
-using namespace cocos2d::network;
-
 //static cocos2d::Size designResolutionSize = cocos2d::Size(480, 320);
 
 static cocos2d::Size designResolutionSize = cocos2d::Size(RESOLUTION_WIDTH, RESOLUTION_HEIGHT);
