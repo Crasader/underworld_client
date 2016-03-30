@@ -10,6 +10,8 @@
 #endif
 
 #include "Network/base/TCPClient.h"
+#include "Network/base/TCPRequest.h"
+#include "Network/base/TCPResponse.h"
 
 USING_NS_CC;
 
@@ -117,13 +119,20 @@ bool AppDelegate::applicationDidFinishLaunching() {
 #endif
 
     //test tcpclient
-    TCPClient* _fd = new TCPClient();
-    _fd->init("192.168.31.139", 8080);
-    TCPRequest* request = new TCPRequest();
-    std::string data = "{\"code\":2,\"uid\":2,\"name\":\"p2\",\"cards\":\"王子|守卫|狗\"}";
-    request->setRequestData(data.c_str(), data.size());
-    _fd->send(request);
-    CCLOG("");
+//    TCPClient* _fd = new TCPClient();
+//    _fd->setTimeoutForConnect(30000);
+//    _fd->setTimeoutForRead(30000);
+//    _fd->init("192.168.31.139", 8080);
+//    _fd->setResponseCallback([](TCPClient* client, TCPResponse* response){
+//        CCLOG("[response][%p]%d,%s", response, response->isSucceed(), response->getResponseDataString());
+//    });
+//    TCPRequest* request = new TCPRequest();
+//    std::string data = "{\"code\":2,\"uid\":1,\"name\":\"p1\",\"cards\":\"骑士|弓箭手|炸弹人\"}";
+////    size_t len = data.size();
+////    data.insert(0, (char*)&len, 4);
+//    request->setRequestData(data.c_str(), data.size());
+//    _fd->send(request);
+//    CCLOG("");
     //end
     
     

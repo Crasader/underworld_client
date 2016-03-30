@@ -165,8 +165,20 @@ public:
               return _pCallback;
     }
 
+    /*
+ *set the interval of timer
+*timeout seconds
+ */
+   void setTimerInterval(int timeout);
+
+    /*
+ *get the interval of timer
+ */
+    int getTimerInterval();
+
     void processResponse(char* responseMessage);
     void processRequest(char* responseMessage);
+    void processTimer();
 
     TCPClient();
     virtual ~TCPClient();
@@ -185,6 +197,7 @@ private:
     
     void increaseThreadCount();
     void decreaseThreadCountAndMayDeleteThis();
+    int reconnect2Server();
     
 private:
     bool _isInited;
@@ -195,6 +208,8 @@ private:
 
     int _pipeRead;
     int _pipeWrite;
+
+    int _timerInterval;
  
     int _timeoutForConnect;
     std::mutex _timeoutForConnectMutex;
@@ -230,6 +245,7 @@ private:
 
     struct event notify_event;
     struct event server_event;
+    struct event timer_event;
     struct event_base* base; 
 };
 

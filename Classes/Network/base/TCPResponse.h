@@ -23,8 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __HTTP_RESPONSE__
-#define __HTTP_RESPONSE__
+#ifndef __TCP_RESPONSE__
+#define __TCP_RESPONSE__
 
 #include "TCPRequest.h"
 
