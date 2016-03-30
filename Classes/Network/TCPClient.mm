@@ -18,6 +18,14 @@ using namespace std;
 static TCPClientObserver* _observer = nullptr;
 static TCPClient_iOS* _tcpClient = nil;
 
+static int32_t EndianConvertLToB(int32_t value)
+{
+    return ((value & 0x000000FF) << 24) |
+    ((value & 0x0000FF00) << 8) |
+    ((value & 0x00FF0000) >> 8) |
+    ((value & 0xFF000000) >> 24) ;
+}
+
 #pragma mark - TCPClient_iOS
 @interface TCPClient_iOS : NSObject <GCDAsyncSocketDelegate>
 
@@ -68,8 +76,18 @@ static TCPClient_iOS* _tcpClient = nil;
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
     if (_observer) {
+#if false
         string msg = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] stdString];
         _observer->onReadData(msg, tag);
+#else
+        NSUInteger len = [data length];
+        char* bytes = (char*)calloc(len, sizeof(char));
+        if (bytes) {
+            [data getBytes:bytes length:len];
+            _observer->onReadData(bytes, len, tag);
+            free(bytes);
+        }
+#endif
     }
 }
 
@@ -139,8 +157,24 @@ void TCPClient::writeData(const char* data, unsigned long len, double timeOut, l
 {
     if (_tcpClient) {
         GCDAsyncSocket* sock = [_tcpClient getSocket];
+#if true
+        // first 4 bytes means the length of the data
+        // eg: if the data is "12345", the full data is "000512345" (length == 9)
+        static const int32_t lenBytes(4);
+        const unsigned long totalLen = len + lenBytes;
+        char *formattedData = (char *)calloc(totalLen, sizeof(char));
+        if (formattedData) {
+            const int32_t intLen = EndianConvertLToB(static_cast<int32_t>(len));
+            memcpy(formattedData, &intLen, lenBytes);
+            memcpy(formattedData + lenBytes, data, len);
+            NSData* requestData = [[NSData alloc] initWithBytes:formattedData length:totalLen];
+            [sock writeData:requestData withTimeout:timeOut tag:tag];
+            free(formattedData);
+        }
+#else
         NSData* requestData = [[NSData alloc] initWithBytes:data length:len];
         [sock writeData:requestData withTimeout:timeOut tag:tag];
+#endif
     }
 }
 
@@ -148,6 +182,6 @@ void TCPClient::readData(double timeOut, long tag)
 {
     if (_tcpClient) {
         GCDAsyncSocket* sock = [_tcpClient getSocket];
-        [sock readDataToData:[GCDAsyncSocket LFData] withTimeout:timeOut tag:tag];
+        [sock readDataWithTimeout:timeOut tag:tag];
     }
 }

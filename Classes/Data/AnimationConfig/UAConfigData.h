@@ -10,12 +10,9 @@
 #define UAConfigData_h
 
 #include "CocosGlobal.h"
-#include "cocos2d.h"
 #include "Unit.h"
 #include <map>
 #include <vector>
-
-USING_NS_CC;
 
 namespace tinyxml2 { class XMLElement; }
 

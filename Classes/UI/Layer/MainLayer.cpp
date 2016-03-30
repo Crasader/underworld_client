@@ -107,7 +107,7 @@ bool MainLayer::init()
         
 #if TCP_CLIENT_TEST_CPP || TCP_CLIENT_TEST_OC
         static const string host("192.168.31.139");
-        static const uint16_t port(18567);
+        static const uint16_t port(8080);
 #endif
         
 #if TCP_CLIENT_TEST_CPP
@@ -156,8 +156,8 @@ void MainLayer::onConnect(const std::string& url, uint16_t port)
 {
     CCLOG("onConnect");
     static const long tag(0);
-    TCPClient::writeData("Hello World\n", tag, -1);
-    TCPClient::readData(tag, -1);
+    TCPClient::writeData("{\"code\":2,\"uid\":1,\"name\":\"p1\",\"cards\":\"骑士|弓箭手|炸弹人\"}", -1, tag);
+    TCPClient::readData(-1, tag);
 }
 
 void MainLayer::onWriteData(long tag)
@@ -166,9 +166,9 @@ void MainLayer::onWriteData(long tag)
 //    TCPClient::writeData("Hello World", tag);
 }
 
-void MainLayer::onReadData(const std::string& data, long tag)
+void MainLayer::onReadData(const char* data, unsigned long len, long tag)
 {
-    CCLOG("onReadData : %s, %ld", data.c_str(), tag);
+    CCLOG("onReadData : %s, %ld", data, tag);
     TCPClient::disconnect();
 }
 

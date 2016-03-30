@@ -25,7 +25,7 @@ public:
     virtual void onConnect(const std::string& url, uint16_t port) {}
     virtual void onDisconnect(TcpErrorCode code) {}
     virtual void onWriteData(long tag) {}
-    virtual void onReadData(const std::string& data, long tag) {}
+    virtual void onReadData(const char* data, unsigned long len, long tag) {}
 };
 
 namespace TCPClient {

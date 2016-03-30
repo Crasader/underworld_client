@@ -23,11 +23,11 @@
 #include "ui/CocosGUI.h"
 
 #if TCP_CLIENT_TEST_CPP
-#include "TCPClient.hpp"
+#include "TCPClient.h"
 #endif
 
 #if TCP_CLIENT_TEST_OC
-#include "TCPClient.h"
+#include "TCPClient.hpp"
 #endif
 
 USING_NS_CC;
@@ -63,7 +63,7 @@ protected:
     // TCPClientObserver
     virtual void onConnect(const std::string& url, uint16_t port) override;
     virtual void onWriteData(long tag) override;
-    virtual void onReadData(const std::string& data, long tag) override;
+    virtual void onReadData(const char* data, unsigned long len, long tag) override;
     virtual void onDisconnect(TcpErrorCode code) override;
 #endif
     

@@ -13,6 +13,7 @@
 #include "Unit.h"
 #include "UAConfigData.h"
 #include "SkllType.h"
+#include <unordered_map>
 
 class LevelLocalData;
 class QuestLocalData;
