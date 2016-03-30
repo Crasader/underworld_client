@@ -7,11 +7,13 @@
 //
 
 #include "MapUICardDeck.h"
+#include "cocostudio/CocoStudio.h"
 #include "Deck.h"
 #include "CocosUtils.h"
 #include "CCShake.h"
 
 using namespace std;
+using namespace cocostudio;
 using namespace UnderWorld::Core;
 
 static const int topZOrder(1);
@@ -104,6 +106,14 @@ bool MapUICardDeck::init(int count)
         _nextLabel->setPosition(_candidateSprite->getPosition().x, y2 / 2);
         background->addChild(_nextLabel, topZOrder);
         
+        // effect below "max 10"
+        static const string file("UI-beijingguang.csb");
+        Node* effect = CSLoader::createNode(file);
+        addChild(effect);
+        timeline::ActionTimeline *action = CSLoader::createTimeline(file);
+        effect->runAction(action);
+        action->gotoFrameAndPlay(0, true);
+        
         _countLabel = CocosUtils::createLabel("0", BIG_FONT_SIZE, DEFAULT_NUMBER_FONT);
         background->addChild(_countLabel, topZOrder);
         
@@ -120,10 +130,7 @@ bool MapUICardDeck::init(int count)
             pt->setPercentage(100);
             background->addChild(pt);
             
-            s = Sprite::create("GameImages/test/ui_blood_8.png");
-            background->addChild(s);
-            
-            _resources.push_back(make_pair(s, pt));
+            _resources.push_back(make_pair(nullptr, pt));
             
             if (progressSize.width == 0) {
                 progressSize = pt->getContentSize();
@@ -135,12 +142,12 @@ bool MapUICardDeck::init(int count)
         const float startX = midX - ((progressSize.width + offsetX) * BATTLE_RESOURCE_MAX_COUNT - offsetX)  / 2;
         for (int i = 0; i < _resources.size(); ++i) {
             const Point pos(startX + progressSize.width / 2 + (progressSize.width + offsetX) * i, y2 / 2);
-            _resources.at(i).first->setPosition(pos);
             _resources.at(i).second->setPosition(pos);
         }
         
         _countLabel->setPosition(startX, y2 / 2);
         maxCountLabel->setPosition(midX, (y2 - progressSize.height) / 2);
+        effect->setPosition(_countLabel->getPosition());
         
         return true;
     }
@@ -202,20 +209,35 @@ void MapUICardDeck::updateResource(const unordered_map<string, float>& resources
     count = MIN(MAX(0, count), cnt);
     
     for (int i = 0; i < cnt; ++i) {
-        Sprite* s = _resources.at(i).first;
+        Node* s = _resources.at(i).first;
         ProgressTimer* pt = _resources.at(i).second;
+        bool show(false);
         if (pt) {
             if (i <= count - 1) {
-                s->setVisible(true);
+                show = (s == nullptr);
                 pt->setPercentage(100.0f);
             } else if (i < count) {
                 const float percentage(count - i);
-                s->setVisible(percentage >= 1);
+                show = (percentage >= 1);
                 pt->setPercentage(100.0f * percentage);
             } else {
-                s->setVisible(false);
+                if (s) {
+                    s->removeFromParent();
+                    _resources.at(i).first = nullptr;
+                }
                 pt->setPercentage(0);
             }
+        }
+        
+        if (show) {
+            static const string file("ui-tiao.csb");
+            Node* effect = CSLoader::createNode(file);
+            effect->setPosition(pt->getPosition());
+            pt->getParent()->addChild(effect);
+            timeline::ActionTimeline *action = CSLoader::createTimeline(file);
+            effect->runAction(action);
+            action->gotoFrameAndPlay(0, false);
+            _resources.at(i).first = effect;
         }
     }
     

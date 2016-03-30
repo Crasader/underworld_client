@@ -43,6 +43,8 @@ GameRender::GameRender(Scene* scene, int mapId, const string& mapData, const str
 ,_paused(false)
 ,_isGameOver(false)
 ,_remainingTime(battleTotalTime)
+,_minPuttingX(0)
+,_maxPuttingX(0)
 {
     _mapLayer = MapLayer::create(mapId, mapData);
     _mapLayer->registerObserver(this);
@@ -79,7 +81,6 @@ void GameRender::init(const Game* game, Commander* commander)
     
     // get cores
     const World* world = game->getWorld();
-    world = game->getWorld();
     if (world) {
         const int factionsCount = world->getFactionCount();
         for (int i = 0; i < factionsCount; ++i) {
@@ -95,6 +96,15 @@ void GameRender::init(const Game* game, Commander* commander)
         const int count = _deck ? _deck->getHandCapacity() : 0;
         _mapUILayer->createCardDeck(count);
     }
+    
+    const Faction* faction = world->getThisFaction();
+    if (faction) {
+        const UnderWorld::Core::Rect& rect = faction->getPuttingArea();
+        _minPuttingX = rect._origin.x;
+        _maxPuttingX = _minPuttingX + rect._width;
+    }
+    
+    assert(_maxPuttingX > 0 && _minPuttingX < _maxPuttingX);
     
     updateAll();
     
@@ -413,13 +423,7 @@ void GameRender::onMapUILayerCardSelected(const Card* card, int idx)
         if (card) {
             const CardType* ct = card->getCardType();
             if (ct && kCardClass_Unit == ct->getCardClass()) {
-                const Faction* faction = _game->getWorld()->getThisFaction();
-                if (faction) {
-                    const UnderWorld::Core::Rect& rect = faction->getPuttingArea();
-                    const int c1 = rect._origin.x;
-                    const int c2 = c1 + rect._width;
-                    _mapLayer->setPlacedArea(c1, c2);
-                }
+                _mapLayer->setPlacedArea(_minPuttingX, _maxPuttingX);
             }
         }
     }
@@ -626,12 +630,13 @@ void GameRender::updateCardMask(const UnderWorld::Core::Card* card, const Point&
             removeCardMask();
         } else {
             const UnitType* ut = card->getUnitType();
+            Coordinate coordinate = getValidPuttingCoordinate(point, ut);
             if (ut) {
-                _mapLayer->updateUnitMask(ut, point);
+                _mapLayer->updateUnitMask(ut, coordinate);
             } else {
                 const SpellType* st = card->getSpellType();
                 if (isValidAoeSpell(st)) {
-                    _mapLayer->updateSpellRing(st->getSpellName(), point, range);
+                    _mapLayer->updateSpellRing(st->getSpellName(), coordinate, range);
                 }
             }
         }
@@ -653,10 +658,10 @@ void GameRender::tryToUseCard(const UnderWorld::Core::Card* card, int idx, const
         if (inDeck) {
             // TODO:
         } else if (_commander) {
-            const Coordinate& coordinate = _mapLayer->convertPoint(point);
+            const SpellType* st = card->getSpellType();
+            Coordinate coordinate = getValidPuttingCoordinate(point, (nullptr == st));
             CommandResult result = _commander->tryGiveDeckUseCommand(_deck, idx, coordinate);
             if (kCommandResult_suc == result) {
-                const SpellType* st = card->getSpellType();
                 if (isValidAoeSpell(st)) {
                     const string& name = st->getSpellName();
                     // AOEs
@@ -686,4 +691,24 @@ void GameRender::tryToUseCard(const UnderWorld::Core::Card* card, int idx, const
         _mapLayer->removeSpellRing();
         _mapLayer->removeUnitMask();
     }
+}
+
+Coordinate GameRender::getValidPuttingCoordinate(const Point& point, bool check) const
+{
+    if (_mapLayer) {
+        Coordinate coordinate = _mapLayer->convertPoint(point);
+        if (check) {
+            const int x = coordinate.x;
+            const int y = coordinate.y;
+            if (x < _minPuttingX) {
+                return Coordinate(_minPuttingX, y);
+            } else if (x >= _maxPuttingX) {
+                return Coordinate(_maxPuttingX - 1, y);
+            }
+        }
+        
+        return coordinate;
+    }
+    
+    return Coordinate(-1, -1);
 }

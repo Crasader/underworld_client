@@ -60,7 +60,7 @@ private:
     Label* _countLabel;
     std::vector<Point> _unitPositions;
     std::vector<CardNode*> _cardNodes;
-    std::vector<std::pair<Sprite*, ProgressTimer*>> _resources;
+    std::vector<std::pair<Node*, ProgressTimer*>> _resources;
     std::queue<CardNode*> _buffers;
     bool _isShaking;
     Point _candidateSpritePosition;

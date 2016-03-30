@@ -111,6 +111,8 @@ private:
     void removeCardMask();
     void tryToUseCard(const UnderWorld::Core::Card* card, int idx, const Point& point);
     
+    UnderWorld::Core::Coordinate getValidPuttingCoordinate(const Point& point, bool check) const;
+    
 private:
     GameRenderObserver *_observer;
     Scene* _scene;
@@ -130,6 +132,9 @@ private:
     bool _isGameOver;
     int _remainingTime;
     std::unordered_map<std::string, float> _resources;
+    
+    int _minPuttingX;
+    int _maxPuttingX;
 };
 
 #endif /* GameRender_h */

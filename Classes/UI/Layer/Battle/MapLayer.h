@@ -40,13 +40,13 @@ public:
     void registerObserver(MapLayerObserver *observer);
     
     UnderWorld::Core::Coordinate convertPoint(const Point& layerPoint);
-    void addUnit(Node* unit, const UnderWorld::Core::Coordinate& coreCoordinate);
-    void repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& coreCoordinate);
+    void addUnit(Node* unit, const UnderWorld::Core::Coordinate& coordinate);
+    void repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& coordinate);
     
-    void updateUnitMask(const UnderWorld::Core::UnitType* unitType, const Point& layerPoint);
+    void updateUnitMask(const UnderWorld::Core::UnitType* unitType, const UnderWorld::Core::Coordinate& coordinate);
     void removeUnitMask();
     
-    void updateSpellRing(const std::string& name, const Point& layerPoint, int range);
+    void updateSpellRing(const std::string& name, const UnderWorld::Core::Coordinate& coordinate, int range);
     void removeSpellRing();
     void checkUnitInSpellRing(Node* unit);
     
@@ -56,7 +56,7 @@ public:
     void addSpell(const std::string& name, float duration);
     void removeAllSpellEffects();
     
-    void addPlaceUnitEffect(const UnderWorld::Core::Coordinate& point);
+    void addPlaceUnitEffect(const UnderWorld::Core::Coordinate& coordinate);
     void setPlacedArea(float x1, float x2);
     void clearUnplacedAreas();
     
@@ -73,8 +73,9 @@ protected:
     virtual void scrollViewDidZoom(cocos2d::extension::ScrollView* view) override;
     
     //-------- coordinates --------//
-    inline UnderWorld::Core::Coordinate mapCoordinate2coreCoordinate(int x, int y);
-    inline void coordinateConvert(const UnderWorld::Core::Coordinate& coreCoordinate, Point& mapPosition, int& zOrder);
+    UnderWorld::Core::Coordinate mapCoordinate2coreCoordinate(int x, int y);
+    Point coordinate2Point(const UnderWorld::Core::Coordinate& coordinate);
+    void coordinateConvert(const UnderWorld::Core::Coordinate& coordinate, Point& mapPosition, int& zOrder);
     inline int calcZOrder(int coreCoordinateY);
     Point convertToScrollViewPoint(const Point& layerPoint);
     

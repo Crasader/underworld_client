@@ -301,12 +301,17 @@ UnderWorld::Core::Coordinate MapLayer::mapCoordinate2coreCoordinate(int x, int y
     return UnderWorld::Core::Coordinate(x, (_height - 1) - y);
 }
 
-void MapLayer::coordinateConvert(const UnderWorld::Core::Coordinate& coreCoordinate, Point& mapPosition, int& zOrder)
+Point MapLayer::coordinate2Point(const UnderWorld::Core::Coordinate& coordinate)
 {
-    
-    mapPosition.x = _tileWidth / UnderWorld::Core::Map::TILE_2_ELEMENT_SCALE * coreCoordinate.x;
-    mapPosition.y = _tileHeight / UnderWorld::Core::Map::TILE_2_ELEMENT_SCALE * coreCoordinate.y;
-    zOrder = 2 * (_height - coreCoordinate.y + 1);
+    const float x = _tileWidth / UnderWorld::Core::Map::TILE_2_ELEMENT_SCALE * coordinate.x;
+    const float y = _tileHeight / UnderWorld::Core::Map::TILE_2_ELEMENT_SCALE * coordinate.y;
+    return Point(x, y);
+}
+
+void MapLayer::coordinateConvert(const UnderWorld::Core::Coordinate& coordinate, Point& mapPosition, int& zOrder)
+{
+    mapPosition = coordinate2Point(coordinate);
+    zOrder = 2 * (_height - coordinate.y + 1);
 }
 
 Point MapLayer::convertToScrollViewPoint(const Point& layerPoint)
@@ -326,20 +331,20 @@ UnderWorld::Core::Coordinate MapLayer::convertPoint(const Point& layerPoint)
     return coordinate;
 }
 
-void MapLayer::addUnit(Node* unit, const UnderWorld::Core::Coordinate& coreCoordinate)
+void MapLayer::addUnit(Node* unit, const UnderWorld::Core::Coordinate& coordinate)
 {
     Point pos;
     int zOrder;
-    coordinateConvert(coreCoordinate, pos, zOrder);
+    coordinateConvert(coordinate, pos, zOrder);
     unit->setPosition(pos);
     _mainLayer->addChild(unit, zOrder);
 }
 
-void MapLayer::repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& coreCoordinate)
+void MapLayer::repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& coordinate)
 {
     Point pos;
     int zOrder;
-    coordinateConvert(coreCoordinate, pos, zOrder);
+    coordinateConvert(coordinate, pos, zOrder);
     if (pos == unit->getPosition()) {
         return;
     }
@@ -347,7 +352,7 @@ void MapLayer::repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& co
     reorderChild(unit, zOrder);
 }
 
-void MapLayer::updateUnitMask(const UnderWorld::Core::UnitType* unitType, const Point& layerPoint)
+void MapLayer::updateUnitMask(const UnderWorld::Core::UnitType* unitType, const UnderWorld::Core::Coordinate& coordinate)
 {
     if (unitType) {
         const string& name = unitType->getRenderKey();
@@ -358,11 +363,12 @@ void MapLayer::updateUnitMask(const UnderWorld::Core::UnitType* unitType, const 
         if (!_selectedUnitMask) {
             _selectedUnitName = name;
             _selectedUnitMask = createUnitMask(unitType);
-            _scrollView->addChild(_selectedUnitMask);
+            _mainLayer->addChild(_selectedUnitMask);
         }
         
         if (_selectedUnitMask) {
-            _selectedUnitMask->setPosition(convertToScrollViewPoint(layerPoint));
+            const Point& point = coordinate2Point(coordinate);
+            _selectedUnitMask->setPosition(point);
         }
     } else {
         removeUnitMask();
@@ -379,9 +385,9 @@ void MapLayer::removeUnitMask()
     }
 }
 
-void MapLayer::updateSpellRing(const string& name, const Point& layerPoint, int range)
+void MapLayer::updateSpellRing(const string& name, const UnderWorld::Core::Coordinate& coordinate, int range)
 {
-    const Point& point = convertToScrollViewPoint(layerPoint);
+    const Point& point = coordinate2Point(coordinate);
     Node* ring = _spellRing.second;
     if (!ring) {
         ring = createRing(name, point);
@@ -449,14 +455,11 @@ void MapLayer::addAoeSpell(const Point& startPoint, const std::string& name, flo
     Node* ring = _spellRing.second;
     if (ring) {
         const Point& targetPos = ring->getPosition();
-        
         if (name.find(SPELL_NAME_FIREBALL) != string::npos) {
 #if true
-            const Point realStartPos = convertToScrollViewPoint(convertToNodeSpace(_mainLayer->convertToWorldSpace(startPoint)));
-            
             Node* node = Node::create();
-            node->setPosition(realStartPos);
-            _scrollView->addChild(node, topZOrder);
+            node->setPosition(startPoint);
+            _mainLayer->addChild(node, topZOrder);
             
             // effects
             {
@@ -477,7 +480,7 @@ void MapLayer::addAoeSpell(const Point& startPoint, const std::string& name, flo
                 action->gotoFrameAndPlay(0, true);
             }
             
-            node->runAction(Sequence::create(Parabola::create(3, realStartPos, targetPos, 300), CallFunc::create([=] {
+            node->runAction(Sequence::create(Parabola::create(3, startPoint, targetPos, 300), CallFunc::create([=] {
                 node->removeFromParent();
                 static string groundFile("jinenghuoqiukuosan-1.csb");
                 addSpellEffect(groundFile, false, targetPos);
@@ -547,17 +550,13 @@ void MapLayer::removeAllSpellEffects()
     }
 }
 
-void MapLayer::addPlaceUnitEffect(const UnderWorld::Core::Coordinate& point)
+void MapLayer::addPlaceUnitEffect(const UnderWorld::Core::Coordinate& coordinate)
 {
-    Point pos;
-    int zOrder;
-    coordinateConvert(point, pos, zOrder);
-    pos = convertToNodeSpace(_mainLayer->convertToWorldSpace(pos));
-    
+    const Point& pos = coordinate2Point(coordinate);
     static string file("chuchang-fazhen.csb");
     Node *effect = CSLoader::createNode(file);
-    effect->setPosition(convertToScrollViewPoint(pos));
-    _scrollView->addChild(effect);
+    effect->setPosition(pos);
+    _mainLayer->addChild(effect);
     cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
     effect->runAction(action);
     action->gotoFrameAndPlay(0, false);
@@ -571,13 +570,10 @@ void MapLayer::setPlacedArea(float x1, float x2)
     clearUnplacedAreas();
     
     if (fabs(x1 - x2) > 0) {
-        int unused;
-        Point point;
-        
-        coordinateConvert(UnderWorld::Core::Coordinate(x1, 0), point, unused);
+        Point point = coordinate2Point(UnderWorld::Core::Coordinate(x1, 0));
         x1 = point.x;
         
-        coordinateConvert(UnderWorld::Core::Coordinate(x2, 0), point, unused);
+        point = coordinate2Point(UnderWorld::Core::Coordinate(x2, 0));
         x2 = point.x;
         
         const float width = _scrollView->getContentSize().width;
@@ -796,7 +792,7 @@ Node* MapLayer::createRing(const string& name, const Point& point)
         ring->runAction(action);
         action->gotoFrameAndPlay(0, true);
         ring->setPosition(point);
-        _scrollView->addChild(ring);
+        _mainLayer->addChild(ring);
         return ring;
     }
     
