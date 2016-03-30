@@ -10,17 +10,17 @@
 #include "DataManager.h"
 
 using namespace UnderWorld::Core;
-
-const std::string UnderworldClient::SCHEDULE_KEY_CLIENT_LAUNCHING("schedule_key_client_launching");
     
-UnderworldClient::UnderworldClient(AbstractRender* render,
-    AbstractScheduler* scheduler, AbstractNetworkProxy* proxy)
-: _terminal(render, scheduler)
-, _net(proxy)
-, _mode(GAME_MODE_COUNT)
+UnderworldClient::UnderworldClient(
+    UnderWorld::Core::AbstractNetworkProxy* proxy,
+    UnderWorld::Core::AbstractScheduler*  scheduler,
+    UnderWorld::Core::AbstractRender* render)
+: _mode(GAME_MODE_COUNT)
 , _state(kIdle)
-, _schduler(scheduler)
-, _proxy(proxy) {
+, _proxy(proxy)
+, _scheduler(scheduler)
+, _render(render) {
+
 }
     
 void UnderworldClient::launchPvp(const GameContentSetting& setting) {
@@ -29,16 +29,14 @@ void UnderworldClient::launchPvp(const GameContentSetting& setting) {
     loadTechTree();
     
     _mode = kPvp;
+    _state = kLaunching;
     
     _proxy->connect();
-    NetworkMessageLaunch2S* msg =
-    new NetworkMessageLaunch2S();
+    _proxy->registerListener(this);
+    NetworkMessageLaunch2S* msg = new NetworkMessageLaunch2S();
     msg->setGameContentSetting(setting);
     _proxy->send(msg);
-    _schduler->schedule(CLIENT_LAUNCHING_FPS,
-        std::bind(&UnderworldClient::updateLaunching, this),
-        SCHEDULE_KEY_CLIENT_LAUNCHING);
-    _state = kLaunching;
+    
 }
     
 void UnderworldClient::launchPve(int map, const GameContentSetting& setting) {
@@ -50,7 +48,7 @@ void UnderworldClient::launchPve(int map, const GameContentSetting& setting) {
     _settings.getFactionSetting().setContentSetting(setting, mapIndex);
     
     _mode = kPve;
-    _terminal.init(_settings, nullptr);
+    _terminal.init(_settings, _scheduler, _render, nullptr);
     
     _terminal.start();
     
@@ -66,7 +64,7 @@ void UnderworldClient::launchPve(const MapSetting& mapSetting, const GameContent
     _settings.getFactionSetting().setContentSetting(setting, mapIndex);
     
     _mode = kPve;
-    _terminal.init(_settings, nullptr);
+    _terminal.init(_settings, _scheduler, _render, nullptr);
     
     _terminal.start();
     
@@ -87,31 +85,31 @@ void UnderworldClient::quit() {
     _terminal.end();
     _state = kIdle;;
 }
-    
-void UnderworldClient::updateLaunching() {
+
+void UnderworldClient::onReceive(
+    const std::vector<UnderWorld::Core::NetworkMessage*>& msgs) {
     if (_state != kLaunching) return;
-    
-    NetworkMessage* msg = nullptr;
-    for (msg = _proxy->pop(); msg; msg = _proxy->pop()) {
+    for (int i = 0; i < msgs.size(); ++i) {
+        NetworkMessage* msg = msgs[i];
         if (dynamic_cast<NetworkMessageLaunch2C*>(msg)) {
             NetworkMessageLaunch2C* l2c = dynamic_cast<NetworkMessageLaunch2C*>(msg);
             loadMap(l2c->getMapId());
             _settings.setFactionSetting(l2c->getFactionSetting());
-            _terminal.init(_settings, &_net);
+            _terminal.init(_settings, _scheduler, _render, _proxy);
             _terminal.start();
             _state = kPlaying;
         } else if (dynamic_cast<NetworkMessageCancel2C*>(msg)) {
-            _proxy->disconnect();
             _state = kIdle;
         }
-        delete msg;
+        
         if (_state != kLaunching) {
-            _schduler->unSchedule(SCHEDULE_KEY_CLIENT_LAUNCHING);
+            _proxy->unregisterListener(this);
             break;
         }
+
     }
 }
-    
+
 void UnderworldClient::loadTechTree() {
     _settings.setTechTree(DataManager::getInstance()->getTechTreeData(1));
 }

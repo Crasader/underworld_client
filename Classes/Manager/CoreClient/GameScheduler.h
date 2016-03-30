@@ -27,6 +27,11 @@ public:
     
     /** unSchedule a function call */
     virtual void unSchedule(const std::string& key);
+    
+    /** run a function , delay in seconds */
+    virtual void run(const std::function<void ()>& call,
+        float delay = 0.f);
+
 private:
     Scheduler* _cocosScheduler;
     

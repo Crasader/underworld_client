@@ -33,10 +33,6 @@
  * @{
  */
 
-NS_CC_BEGIN
-
-namespace network {
-
 /** 
  * @brief defines the object which users will receive at onTCPCompleted(sender, TCPResponse) callback.
  * Please refer to samples/TestCpp/Classes/ExtensionTest/NetworkTest/TCPClientTest.cpp as a sample.
@@ -247,10 +243,6 @@ protected:
     std::string         _responseDataString; // the returned raw data. You can also dump it as a string
     
 };
-
-}
-
-NS_CC_END
 
 // end group
 /// @}

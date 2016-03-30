@@ -34,3 +34,8 @@ void GameScheduler::unSchedule(const std::string &key)
 {
     _cocosScheduler->unschedule(key, this);
 }
+
+void GameScheduler::run(const std::function<void ()>& call,
+    float delay) {
+    _cocosScheduler->performFunctionInCocosThread(call);
+}

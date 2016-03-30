@@ -10,9 +10,13 @@
 #define GameClient_h
 
 #include "ClientTerminal.h"
-#include "ClientNetworkService.h"
+#include "ClientTCPNetworkProxy.h"
+#include "GameScheduler.h"
 #include "NetworkMessage.h"
 #include "GameSettings.h"
+
+#define UNDER_WORLD_HOST ("")
+#define UNDER_WORLE_PORT (8080)
     
 enum GameMode {
     kPvp,
@@ -27,24 +31,21 @@ enum GameState {
     GAME_STATE_COUNT
 };
     
-class UnderworldClient {
-private:
-    static const std::string SCHEDULE_KEY_CLIENT_LAUNCHING;
-    static const int CLIENT_LAUNCHING_FPS = 10;
+class UnderworldClient : public UnderWorld::Core::AbstractNetworkProxy::NetworkProxyListener {
 private:
     UnderWorld::Core::ClientTerminal _terminal;
-    UnderWorld::Core::ClientNetworkSerivce _net;
     UnderWorld::Core::GameSettings _settings;
     GameMode _mode;
     GameState _state;
     
-    UnderWorld::Core::AbstractScheduler* _schduler;
     UnderWorld::Core::AbstractNetworkProxy* _proxy;
+    UnderWorld::Core::AbstractScheduler*  _scheduler;
+    UnderWorld::Core::AbstractRender* _render;
     
 public:
-    UnderworldClient(UnderWorld::Core::AbstractRender* render,
-        UnderWorld::Core::AbstractScheduler* scheduler,
-        UnderWorld::Core::AbstractNetworkProxy* proxy);
+    UnderworldClient(UnderWorld::Core::AbstractNetworkProxy* proxy,
+        UnderWorld::Core::AbstractScheduler*  scheduler,
+        UnderWorld::Core::AbstractRender* render);
     
     /** interface */
     void launchPvp(const UnderWorld::Core::GameContentSetting& setting);
@@ -54,9 +55,10 @@ public:
     void cancelLaunch();
     void quit();
     
-private:
-    void updateLaunching();
+    /** override */
+    virtual void onReceive(const std::vector<UnderWorld::Core::NetworkMessage*>& msgs);
     
+private:
     void loadTechTree();
     void loadMap(int mapId);
     void loadMap(const UnderWorld::Core::MapSetting& mapSetting);
@@ -65,32 +67,41 @@ private:
     
 class NetworkMessageLaunch2S : public UnderWorld::Core::NetworkMessage {
 private:
-    UnderWorld::Core::GameContentSetting _setting;
+    typedef UnderWorld::Core::GameContentSetting ContentSetting;
+    
+private:
+    ContentSetting _setting;
     
 public:
-    const UnderWorld::Core::GameContentSetting& getGameContentSetting() const              {return _setting;}
-    
-    void setGameContentSetting(const UnderWorld::Core::GameContentSetting& setting)        {_setting = setting;}
+    NetworkMessage* clone() const override                     {return new NetworkMessageLaunch2S(*this);}
+    const ContentSetting& getGameContentSetting() const        {return _setting;}
+    void setGameContentSetting(const ContentSetting& setting)  {_setting = setting;}
 };
 
 class NetworkMessageLaunch2C : public UnderWorld::Core::NetworkMessage {
 private:
-    UnderWorld::Core::FactionSetting _factionSetting;
+    typedef UnderWorld::Core::FactionSetting FactionSetting;
+private:
+    FactionSetting _factionSetting;
     int _mapId;
     
 public:
-    const UnderWorld::Core::FactionSetting& getFactionSetting() const        {return _factionSetting;}
+    NetworkMessage* clone() const override                 {return new NetworkMessageLaunch2C(*this);}
+    const FactionSetting& getFactionSetting() const        {return _factionSetting;}
     int getMapId() const                                   {return _mapId;}
-    
-    void setFactionSetting(const UnderWorld::Core::FactionSetting& fs)       {_factionSetting = fs;}
+    void setFactionSetting(const FactionSetting& fs)       {_factionSetting = fs;}
     void setMapId(int mapId)                               {_mapId = mapId;}
 };
 
 class NetworkMessageCancel2S : public UnderWorld::Core::NetworkMessage {
+public:
+    NetworkMessage* clone() const override    {return new NetworkMessageCancel2S(*this);}
+
 };
 
 class NetworkMessageCancel2C : public UnderWorld::Core::NetworkMessage {
-    
+public:
+    NetworkMessage* clone() const override    {return new NetworkMessageCancel2C(*this);}
 };
 
 

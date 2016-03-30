@@ -26,7 +26,7 @@ class ChatMark;
 namespace NetworkApi
 {
     // basic    
-    inline bool isSuccessfulResponse(cocos2d::network::HttpResponse* response) { return (response->isSucceed() && response->getResponseCode() == HttpSuccessCode); }
+    bool isSuccessfulResponse(cocos2d::network::HttpResponse* response);
     
     void parseResponseData(const std::vector<char>* responseData, rapidjson::Document& jsonDict);
     
@@ -78,5 +78,6 @@ namespace NetworkApi
     // ======================= IAP =======================
     void iap(bool isSandBox, const std::string& receiptData, const cocos2d::network::ccHttpRequestCallback& callback);
 }
+
 
 #endif /* NetworkApi_h */

@@ -50,11 +50,6 @@
 #include <cstring>
 #include <event.h>
 
-
-NS_CC_BEGIN
-
-namespace network {
-
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 typedef int int32_t;
 #endif
@@ -919,7 +914,5 @@ const std::string& TCPClient::getSSLVerification()
     return _sslCaFilename;
 }
 #endif
-}
-NS_CC_END
 
 

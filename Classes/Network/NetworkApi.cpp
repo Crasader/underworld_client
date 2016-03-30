@@ -276,6 +276,9 @@ static void request(const string& path,
     }
 }
 
+bool NetworkApi::isSuccessfulResponse(cocos2d::network::HttpResponse* response) { return (response->isSucceed() && response->getResponseCode() == HttpSuccessCode);
+}
+
 void NetworkApi::parseResponseData(const vector<char>* responseData, rapidjson::Document& jsonDict)
 {
     string data = responseDataToString(responseData);

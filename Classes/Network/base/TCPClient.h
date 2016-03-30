@@ -41,11 +41,7 @@
  * @{
  */
 
-NS_CC_BEGIN
-
-namespace network {
-    
-
+using namespace cocos2d;
 
 /** Singleton that handles asynchronous http requests.
  *
@@ -53,7 +49,7 @@ namespace network {
  *
  * @lua NA
  */
-class CC_DLL TCPClient
+class TCPClient
 {
 public:
 	/**
@@ -236,10 +232,6 @@ private:
     struct event server_event;
     struct event_base* base; 
 };
-
-} // namespace network
-
-NS_CC_END
 
 // end group
 /// @}

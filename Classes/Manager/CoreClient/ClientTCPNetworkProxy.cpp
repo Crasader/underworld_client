@@ -90,11 +90,12 @@ static std::string parseSync2SMsg(
     
     rapidjson::Value commands(rapidjson::kArrayType);
     for (int i = 0; i < msg->getCommandCount(); ++i) {
-        const UnderWorld::Core::OutsideCommand* cmd = msg->getCommand(i);
+        const UnderWorld::Core::OutsideCommand* cmd = msg->getCommand(i).first;
+        int frame = msg->getCommand(i).second;
         rapidjson::Value command(rapidjson::kObjectType);
         
         rapidjson::Value commandFrame(rapidjson::kNumberType);
-        commandFrame.SetInt(cmd->getFrame());
+        commandFrame.SetInt(frame);
         command.AddMember(MESSAGE_KEY_FRAME, commandFrame, allocator);
         
         if (dynamic_cast<const UnderWorld::Core::OutsideDeckCommand*>(cmd)) {
@@ -179,10 +180,10 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
     
     /** 6. players */
     if (DICTOOL->checkObjectExist_json(root, MESSAGE_KEY_PLAYERS)) {
-        const Value& players =
+        const rapidjson::Value& players =
             DICTOOL->getSubDictionary_json(root, MESSAGE_KEY_PLAYERS);
         for (int i = 0; i < players.Size(); ++i) {
-            const Value& player = players[i];
+            const rapidjson::Value& player = players[i];
             GameContentSetting gcs;
             
             /** 6.1 player's cards */
@@ -236,7 +237,7 @@ static void parseSync2CMsg(const rapidjson::Value& root,
     }
     
     if (DICTOOL->checkObjectExist_json(root, MESSAGE_KEY_COMMANDS)) {
-        const Value& commands = DICTOOL->getSubDictionary_json(root, MESSAGE_KEY_COMMANDS);
+        const rapidjson::Value& commands = DICTOOL->getSubDictionary_json(root, MESSAGE_KEY_COMMANDS);
         for (int i = 0; i < commands.Size(); ++i) {
             int frame = DICTOOL->getIntValue_json(commands[i], MESSAGE_KEY_FRAME);
             int type = DICTOOL->getIntValue_json(commands[i], MESSAGE_KEY_TYPE);
@@ -253,7 +254,7 @@ static void parseSync2CMsg(const rapidjson::Value& root,
             }
             OutsideDeckCommand* cmd = new OutsideDeckCommand(handIndex,
                 factionIndex, pos);
-            syncMsgs[(frame - startFrame) / GameConstants::NETWORK_KEY_FRAME_RATE]->addCommand(cmd);
+            syncMsgs[(frame - startFrame) / GameConstants::NETWORK_KEY_FRAME_RATE]->addCommand(cmd, frame);
         }
     }
     
@@ -263,17 +264,12 @@ static void parseSync2CMsg(const rapidjson::Value& root,
 }
 
 ClientTCPNetworkProxy::~ClientTCPNetworkProxy() {
-    std::list<NetworkMessage*>::iterator iter = _incomeMessage.begin();
-    for (; iter != _incomeMessage.end(); ++iter) {
-        delete *iter;
-    }
-    _incomeMessage.clear();
     M_SAFE_DELETE(_tcpClient);
 }
 
 void ClientTCPNetworkProxy::connect() {
     M_SAFE_DELETE(_tcpClient);
-    _tcpClient = new cocos2d::network::TCPClient();
+    _tcpClient = new TCPClient();
     _tcpClient->init(_host, _port);
     _tcpClient->setResponseCallback(std::bind(
         &ClientTCPNetworkProxy::onReceiveTCPResponse,
@@ -282,46 +278,43 @@ void ClientTCPNetworkProxy::connect() {
         std::placeholders::_2));
 }
 
-void ClientTCPNetworkProxy::disconnect() {
-    
-}
-
-bool ClientTCPNetworkProxy::isConnected() {
-    return true;
-}
-
 void ClientTCPNetworkProxy::send(UnderWorld::Core::NetworkMessage* msg) {
-    cocos2d::network::TCPRequest* req = parseMsg2Request(msg);
+    TCPRequest* req = parseMsg2Request(msg);
     if (req) {
         _tcpClient->send(req);
     }
     CC_SAFE_DELETE(msg);
 }
 
-UnderWorld::Core::NetworkMessage* ClientTCPNetworkProxy::pop() {
-    //TODO: check thread
-    UnderWorld::Core::NetworkMessage* ret = nullptr;
-    if (!_incomeMessage.empty()) {
-        ret = _incomeMessage.front();
-        _incomeMessage.pop_front();
+void ClientTCPNetworkProxy::registerListener(ProxyListener *listener) {
+    if (_listeners.find(listener) == _listeners.end()) {
+        _listeners.insert(listener);
     }
-    return ret;
 }
 
-void ClientTCPNetworkProxy::onReceiveTCPResponse(cocos2d::network::TCPClient* client, cocos2d::network::TCPResponse* response) {
-    response->retain();
-    std::function<void ()> call = [response, this](){
-        std::vector<UnderWorld::Core::NetworkMessage*> msgs;
-        parseResponse2Msg(response, msgs);
-        for (int i = 0; i < msgs.size(); ++i) {
-            _incomeMessage.push_back(msgs[i]);
+void ClientTCPNetworkProxy::unregisterListener(ProxyListener *listener) {
+    std::unordered_set<ProxyListener*>::iterator iter = _listeners.find(listener);
+    if (iter != _listeners.end()) {
+        _listeners.erase(iter);
+    }
+}
+
+void ClientTCPNetworkProxy::onReceiveTCPResponse(TCPClient* client, TCPResponse* response) {
+    std::vector<UnderWorld::Core::NetworkMessage*> msgs;
+    parseResponse2Msg(response, msgs);
+    if (!msgs.empty()) {
+        for (std::unordered_set<ProxyListener*>::iterator iter = _listeners.begin();
+             iter != _listeners.end();
+             ++iter) {
+            (*iter)->onReceive(msgs);
         }
-        response->release();
-    };
-    cocos2d::Director::getInstance()->getScheduler()->performFunctionInCocosThread(call);
+        for (int i = 0; i < msgs.size(); ++i) {
+            delete msgs[i];
+        }
+    }
 }
 
-cocos2d::network::TCPRequest* ClientTCPNetworkProxy::parseMsg2Request(
+TCPRequest* ClientTCPNetworkProxy::parseMsg2Request(
     const UnderWorld::Core::NetworkMessage* msg) {
     std::string reqContent = "";
     if (dynamic_cast<const NetworkMessageLaunch2S*>(msg)) {
@@ -334,9 +327,9 @@ cocos2d::network::TCPRequest* ClientTCPNetworkProxy::parseMsg2Request(
         reqContent = parseSync2SMsg(sync);
     }
     
-    cocos2d::network::TCPRequest* ret = nullptr;
+    TCPRequest* ret = nullptr;
     if (!reqContent.empty()) {
-        ret = new cocos2d::network::TCPRequest();
+        ret = new TCPRequest();
         std::string data;
         int32_t contentLen = (int32_t)reqContent.size();
         data.assign((char*)(&contentLen), PROTOCOL_HEAD_LENGTH);
@@ -347,7 +340,7 @@ cocos2d::network::TCPRequest* ClientTCPNetworkProxy::parseMsg2Request(
 }
 
 void ClientTCPNetworkProxy::parseResponse2Msg(
-    const cocos2d::network::TCPResponse* response,
+    const TCPResponse* response,
     std::vector<UnderWorld::Core::NetworkMessage *> &output) {
     if (response->getResponseData()->size() <= 4) return;
     

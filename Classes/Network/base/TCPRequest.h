@@ -31,14 +31,12 @@
 #include "base/CCRef.h"
 #include "base/ccMacros.h"
 
+USING_NS_CC;
+
 /**
  * @addtogroup network
  * @{
  */
-
-NS_CC_BEGIN
-
-namespace network {
 
 class TCPClient;
 class TCPResponse;
@@ -393,9 +391,6 @@ protected:
     //int _port;
 };
 
-}
-
-NS_CC_END
 
 // end group
 /// @}

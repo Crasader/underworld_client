@@ -9,45 +9,50 @@
 #ifndef ClientTCPNetworkProxy_h
 #define ClientTCPNetworkProxy_h
 
-#include "NetworkService.h"
-#include "TCPClient.h"
 #include <list>
+#include <unordered_set>
+
+#include "TCPClient.h"
+#include "ExternalInterface.h"
 
 namespace UnderWorld { namespace Core {
     class NetworkMessage;
 }}
 
 class ClientTCPNetworkProxy : public UnderWorld::Core::AbstractNetworkProxy {
+private:
+    typedef UnderWorld::Core::AbstractNetworkProxy::NetworkProxyListener
+        ProxyListener;
     
 private:
-    std::list<UnderWorld::Core::NetworkMessage*> _incomeMessage;
+    std::unordered_set<ProxyListener*> _listeners;
     std::string _host;
     int _port;
-    cocos2d::network::TCPClient* _tcpClient;
+    TCPClient* _tcpClient;
     
 public:
     ClientTCPNetworkProxy(const std::string& host, int port)
-        : _host(host), _port(port) {}
+        : _host(host), _port(port), _tcpClient(nullptr) {}
     virtual ~ClientTCPNetworkProxy();
     
+    /** interface */
+    
     /** override AbstractNetworkProxy*/
-    virtual void connect();
-    virtual void disconnect();
-    virtual bool isConnected() = 0;
-    virtual void send(UnderWorld::Core::NetworkMessage* msg) = 0;
-    virtual UnderWorld::Core::NetworkMessage* pop() = 0;
+    virtual void connect() override;
+    virtual void send(UnderWorld::Core::NetworkMessage* msg) override;
+    virtual void registerListener(ProxyListener* listener) override;
+    virtual void unregisterListener(ProxyListener* listener) override;
     
 private:
     
     /** TCP Interface */
-    void onReceiveTCPResponse(cocos2d::network::TCPClient* client,
-        cocos2d::network::TCPResponse* response);
+    void onReceiveTCPResponse(TCPClient* client, TCPResponse* response);
     
     /** parse */
-    cocos2d::network::TCPRequest* parseMsg2Request(const UnderWorld::Core::NetworkMessage* msg);
+    TCPRequest* parseMsg2Request(const UnderWorld::Core::NetworkMessage* msg);
     
     void parseResponse2Msg(
-        const cocos2d::network::TCPResponse* response,
+        const TCPResponse* response,
         std::vector<UnderWorld::Core::NetworkMessage*>& output);
     
     
