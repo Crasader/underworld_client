@@ -528,11 +528,9 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
             _currentAction->setCurrentFrame(frameIndex);
             _currentAction->setLastFrameCallFunc(lastFrameCallFunc);
             
-            const SkillClass skillClass(unit_getSkillClass(_unit));
-
-            const AnimationParameters& params = DataManager::getInstance()->getAnimationParameters(_unitName, skillClass, _lastDirection);
-            float scale = params.scale;
-            float speed = params.speed;
+            float scale(1.0f);
+            float speed(1.0f);
+            DataManager::getInstance()->getAnimationParameters(_unitName, unit_getSkillClass(_unit), _lastDirection, scale, speed);
             
             // set scale
             if (scale != 1.0f && scale > 0) {

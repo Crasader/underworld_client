@@ -247,7 +247,7 @@ void CardNode::update(const Card* card, float resource)
             const string& name = ct->getName();
             
             int cost(0);
-            static const string resourceName = RES_NAME_WOOD;
+            static const string& resourceName(RESOURCE_NAME);
             const auto& costs = ct->getCost();
             if (costs.find(resourceName) != costs.end()) {
                 cost = costs.at(resourceName);

@@ -12,10 +12,6 @@
 
 using namespace std;
 
-#pragma mark =====================================================
-#pragma mark Animation Config Data
-#pragma mark =====================================================
-
 UAConfigData::UAConfigData(tinyxml2::XMLElement *xmlElement)
 {
     if (xmlElement) {
@@ -40,7 +36,7 @@ UAConfigData::UAConfigData(tinyxml2::XMLElement *xmlElement)
             const size_t size(v.size());
             if (1 == v.size()) {
                 parse(params, v, v1, v2, 0);
-                if (params.scale != 1.0f || params.speed != 1.0f) {
+                if (params.first != 1.0f || params.second != 1.0f) {
                     for (int i = 0; i < UnderWorld::Core::Unit::DIRECTION_COUNT; ++i) {
                         UnderWorld::Core::Unit::Direction ud = static_cast<UnderWorld::Core::Unit::Direction>(i);
                         _data.insert(make_pair(ud, params));
@@ -50,7 +46,7 @@ UAConfigData::UAConfigData(tinyxml2::XMLElement *xmlElement)
                 const size_t cnt((size > UnderWorld::Core::Unit::DIRECTION_COUNT) ? UnderWorld::Core::Unit::DIRECTION_COUNT : size);
                 for (int i = 0; i < cnt; ++i) {
                     parse(params, v, v1, v2, i);
-                    if (params.scale != 1.0f || params.speed != 1.0f) {
+                    if (params.first != 1.0f || params.second != 1.0f) {
                         UnderWorld::Core::Unit::Direction ud = static_cast<UnderWorld::Core::Unit::Direction>(i);
                         _data.insert(make_pair(ud, params));
                     }
@@ -65,14 +61,15 @@ UAConfigData::~UAConfigData()
     
 }
 
-const AnimationParameters& UAConfigData::getAnimationParameters(UnderWorld::Core::Unit::Direction direction)
+void UAConfigData::getAnimationParameters(UnderWorld::Core::Unit::Direction direction, float& scale, float& speed)
 {
-    if (_data.find(direction) != _data.end()) {
-        return _data.at(direction);
-    }
+    scale = speed = 1.0f;
     
-    static AnimationParameters ret;
-    return ret;
+    if (_data.find(direction) != _data.end()) {
+        const AnimationParameters& data = _data.at(direction);
+        scale = data.first;
+        speed = data.second;
+    }
 }
 
 void UAConfigData::parse(AnimationParameters& params, const vector<string>& directions, const vector<string>& scales, const vector<string>& speeds, int index)
@@ -84,16 +81,16 @@ void UAConfigData::parse(AnimationParameters& params, const vector<string>& dire
             if (has) {
                 if (scales.size() > index) {
                     const float scale = atof(scales.at(index).c_str());
-                    params.scale = (scale > 0) ? scale : 1.0f;
+                    params.first = (scale > 0) ? scale : 1.0f;
                 } else {
-                    params.scale = 1.0f;
+                    params.first = 1.0f;
                 }
                 
                 if (speeds.size() > index) {
                     const float speed = atof(speeds.at(index).c_str());
-                    params.speed = (speed > 0) ? speed : 1.0f;
+                    params.second = (speed > 0) ? speed : 1.0f;
                 } else {
-                    params.speed = 1.0f;
+                    params.second = 1.0f;
                 }
             }
         } else {

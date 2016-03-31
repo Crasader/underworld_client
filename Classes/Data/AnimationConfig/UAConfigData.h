@@ -16,25 +16,8 @@
 
 namespace tinyxml2 { class XMLElement; }
 
-// =====================================================
-// Animation Parameters
-// =====================================================
-
-class AnimationParameters
-{
-public:
-    AnimationParameters()
-    :scale(1.0f)
-    ,speed(1.0f) {}
-    
-public:
-    float scale;
-    float speed;
-};
-
-// =====================================================
-// Unit Animation Config Data
-// =====================================================
+// first: scale, second: speed
+typedef std::pair<float, float> AnimationParameters;
 
 class UAConfigData
 {
@@ -42,7 +25,7 @@ public:
     UAConfigData(tinyxml2::XMLElement *xmlElement);
     virtual ~UAConfigData();
     
-    const AnimationParameters& getAnimationParameters(UnderWorld::Core::Unit::Direction direction);
+    void getAnimationParameters(UnderWorld::Core::Unit::Direction direction, float& scale, float& speed);
     
 protected:
     void parse(AnimationParameters& params, const std::vector<std::string>& directions, const std::vector<std::string>& scales, const std::vector<std::string>& speeds, int index);

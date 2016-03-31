@@ -18,6 +18,7 @@
 #include "GearUpgradeData.h"
 #include "GearAttributeData.h"
 #include "GearSetLocalData.h"
+#include "UAConfigData.h"
 #include "CardConfigData.h"
 #include "URConfigData.h"
 #include "MapParticleConfigData.h"
@@ -242,18 +243,17 @@ const GearSetLocalData* DataManager::getGearSetData(int id) const
     return nullptr;
 }
 
-const AnimationParameters& DataManager::getAnimationParameters(const string& name, UnderWorld::Core::SkillClass skillClass, UnderWorld::Core::Unit::Direction direction) const
+void DataManager::getAnimationParameters(const std::string& name, UnderWorld::Core::SkillClass skillClass, UnderWorld::Core::Unit::Direction direction, float& scale, float& speed) const
 {
+    scale = speed = 1.0f;
+    
     string key = name + StringUtils::format("_%d", skillClass);
     if (_animationParameters.find(key) != _animationParameters.end()) {
         UAConfigData* data = _animationParameters.at(key);
         if (data) {
-            return data->getAnimationParameters(direction);
+            data->getAnimationParameters(direction, scale, speed);
         }
     }
-    
-    static AnimationParameters ret;
-    return ret;
 }
 
 const CardConfigData* DataManager::getCardConfigData(const string& name) const

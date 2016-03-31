@@ -516,7 +516,7 @@ void BattleDeckLayer::updateCardNode(CardNode* node, const string& name)
             const CardType* ct = _techTree->findCardTypeByName(name);
             if (ct) {
                 const auto& costs = ct->getCost();
-                static const string& name = RES_NAME_WOOD;
+                static const string& name(RESOURCE_NAME);
                 if (costs.find(name) != costs.end()) {
                     cost = costs.at(name);
                 }

@@ -57,6 +57,7 @@ typedef std::function<void(long errorCode)> httpErrorCallback;
 // TODO: remove temp code
 #define RES_NAME_GOLD       ("金子")
 #define RES_NAME_WOOD       ("木头")
+#define RESOURCE_NAME       RES_NAME_WOOD
 
 #define SPELL_NAME_FIREBALL ("火球术")
 #define SPELL_NAME_CURE     ("治愈")

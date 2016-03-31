@@ -51,18 +51,23 @@ protected:
     void reload();
     void shake();
     void stopShake();
+    void addCostHint(int cost);
+    void removeCostHint();
     
 private:
     MapUICardDeckObserver *_observer;
-    Sprite* _candidateSprite;
+    Node* _background;
+    Node* _candidateSprite;
     ProgressTimer* _candidateProgress;
     Label* _nextLabel;
     Label* _countLabel;
+    Node* _costHint;
     std::vector<Point> _unitPositions;
     std::vector<CardNode*> _cardNodes;
     std::vector<std::pair<Node*, ProgressTimer*>> _resources;
     std::queue<CardNode*> _buffers;
     bool _isShaking;
+    Point _costStartPosition;
     Point _candidateSpritePosition;
 };
 

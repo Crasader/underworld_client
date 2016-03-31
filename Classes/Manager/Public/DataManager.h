@@ -11,7 +11,6 @@
 
 #include "CocosGlobal.h"
 #include "Unit.h"
-#include "UAConfigData.h"
 #include "SkllType.h"
 #include <unordered_map>
 
@@ -23,6 +22,7 @@ class GearLocalData;
 class GearUpgradeData;
 class GearAttributeData;
 class GearSetLocalData;
+class UAConfigData;
 class CardConfigData;
 class URConfigData;
 class MapParticleConfigData;
@@ -65,7 +65,7 @@ public:
     const GearSetLocalData* getGearSetData(int id) const;
     
     // ---------- animations ----------
-    const AnimationParameters& getAnimationParameters(const std::string& name, UnderWorld::Core::SkillClass skillClass, UnderWorld::Core::Unit::Direction direction) const;
+    void getAnimationParameters(const std::string& name, UnderWorld::Core::SkillClass skillClass, UnderWorld::Core::Unit::Direction direction, float& scale, float& speed) const;
     const CardConfigData* getCardConfigData(const std::string& name) const;
     const URConfigData* getURConfigData(const std::string& name) const;
     const std::vector<MapParticleConfigData*>& getMapParticleConfigData(int mapId) const;

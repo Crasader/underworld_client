@@ -9,6 +9,7 @@
 #include "MapUICardDeck.h"
 #include "cocostudio/CocoStudio.h"
 #include "Deck.h"
+#include "CardType.h"
 #include "CocosUtils.h"
 #include "CCShake.h"
 
@@ -17,6 +18,7 @@ using namespace cocostudio;
 using namespace UnderWorld::Core;
 
 static const int topZOrder(1);
+static const float costOffsetX(1.0f);
 static const float animationDuration(0.3f);
 static const int cardActionTag(329);
 
@@ -35,11 +37,14 @@ MapUICardDeck* MapUICardDeck::create(int count)
 
 MapUICardDeck::MapUICardDeck()
 :_observer(nullptr)
+,_background(nullptr)
 ,_candidateSprite(nullptr)
 ,_candidateProgress(nullptr)
 ,_nextLabel(nullptr)
 ,_countLabel(nullptr)
+,_costHint(nullptr)
 ,_isShaking(false)
+,_costStartPosition(Point::ZERO)
 ,_candidateSpritePosition(Point::ZERO)
 {
     
@@ -70,10 +75,10 @@ bool MapUICardDeck::init(int count)
         Rect rect(0, 0, 91, 157);
         static const float capInsets(18.0f);
         Rect capInsetsRect(capInsets, capInsets, rect.size.width - capInsets * 2, rect.size.height - capInsets * 2);
-        Scale9Sprite* background = Scale9Sprite::create("GameImages/test/ui_black_13.png", rect, capInsetsRect);
-        background->setContentSize(size);
-        background->setPosition(Point(size.width / 2, size.height / 2));
-        addChild(background);
+        _background = Scale9Sprite::create("GameImages/test/ui_black_13.png", rect, capInsetsRect);
+        _background->setContentSize(size);
+        _background->setPosition(Point(size.width / 2, size.height / 2));
+        addChild(_background);
         
         // children
         const float y = y2 + nodeSize.height / 2;
@@ -87,7 +92,7 @@ bool MapUICardDeck::init(int count)
             _candidateSprite = Sprite::create("GameImages/test/ui_kapaibeiian.png");
             _candidateSpritePosition = Point(x1 + nodeSize.width / 2, y);
             _candidateSprite->setPosition(_candidateSpritePosition);
-            background->addChild(_candidateSprite);
+            _background->addChild(_candidateSprite);
             
             const Size& size = _candidateSprite->getContentSize();
             Sprite* s = Sprite::create("GameImages/test/ui_iconzhezhao_white.png");
@@ -104,7 +109,7 @@ bool MapUICardDeck::init(int count)
         
         _nextLabel = CocosUtils::createLabel("Next:0", BIG_FONT_SIZE, DEFAULT_NUMBER_FONT);
         _nextLabel->setPosition(_candidateSprite->getPosition().x, y2 / 2);
-        background->addChild(_nextLabel, topZOrder);
+        _background->addChild(_nextLabel, topZOrder);
         
         // effect below "max 10"
         static const string file("UI-beijingguang.csb");
@@ -115,10 +120,10 @@ bool MapUICardDeck::init(int count)
         action->gotoFrameAndPlay(0, true);
         
         _countLabel = CocosUtils::createLabel("0", BIG_FONT_SIZE, DEFAULT_NUMBER_FONT);
-        background->addChild(_countLabel, topZOrder);
+        _background->addChild(_countLabel, topZOrder);
         
         Label* maxCountLabel = CocosUtils::createLabel(StringUtils::format("Max:%d", BATTLE_RESOURCE_MAX_COUNT), BIG_FONT_SIZE, DEFAULT_NUMBER_FONT);
-        background->addChild(maxCountLabel, topZOrder);
+        _background->addChild(maxCountLabel, topZOrder);
         
         Size progressSize(Size::ZERO);
         for (int i = 0; i < BATTLE_RESOURCE_MAX_COUNT; ++i) {
@@ -128,7 +133,7 @@ bool MapUICardDeck::init(int count)
             pt->setBarChangeRate(Vec2(1.0f, 0.0f));
             pt->setMidpoint(Point::ANCHOR_BOTTOM_LEFT);
             pt->setPercentage(100);
-            background->addChild(pt);
+            _background->addChild(pt);
             
             _resources.push_back(make_pair(nullptr, pt));
             
@@ -137,15 +142,18 @@ bool MapUICardDeck::init(int count)
             }
         }
         
-        static const float offsetX(1.0f);
         const float midX = x1 + x2 + nodeSize.width + (count * (nodeSize.width + x3) - x3) / 2;
-        const float startX = midX - ((progressSize.width + offsetX) * BATTLE_RESOURCE_MAX_COUNT - offsetX)  / 2;
+        _costStartPosition.x = midX - ((progressSize.width + costOffsetX) * BATTLE_RESOURCE_MAX_COUNT - costOffsetX)  / 2;
+        _costStartPosition.y = y2 / 2;
         for (int i = 0; i < _resources.size(); ++i) {
-            const Point pos(startX + progressSize.width / 2 + (progressSize.width + offsetX) * i, y2 / 2);
-            _resources.at(i).second->setPosition(pos);
+            auto pt = _resources.at(i).second;
+            if (pt) {
+                const float offsetX = progressSize.width / 2 + (progressSize.width + costOffsetX) * i;
+                pt->setPosition(_costStartPosition + Point(offsetX, 0));
+            }
         }
         
-        _countLabel->setPosition(startX, y2 / 2);
+        _countLabel->setPosition(_costStartPosition);
         maxCountLabel->setPosition(midX, (y2 - progressSize.height) / 2);
         effect->setPosition(_countLabel->getPosition());
         
@@ -172,12 +180,31 @@ const Card* MapUICardDeck::getCard(int idx) const
 
 void MapUICardDeck::select(int idx)
 {
+    int cost(0);
     for (int i = 0; i < _cardNodes.size(); ++i) {
         CardNode* node = _cardNodes.at(i);
         if (node) {
-            node->setSelected(idx == i);
+            const bool selected(idx == i);
+            node->setSelected(selected);
+            
+            // add hint
+            if (selected) {
+                const Card* card = node->getCard();
+                if (card) {
+                    const CardType* ct = card->getCardType();
+                    if (ct) {
+                        auto costs = ct->getCost();
+                        static const string& name(RESOURCE_NAME);
+                        if (costs.find(name) != costs.end()) {
+                            cost = costs.at(name);
+                        }
+                    }
+                }
+            }
         }
     }
+    
+    addCostHint(cost);
 }
 
 void MapUICardDeck::updateTimer(float time, float duration)
@@ -200,7 +227,7 @@ void MapUICardDeck::updateTimer(float time, float duration)
 void MapUICardDeck::updateResource(const unordered_map<string, float>& resources)
 {
     float count(0);
-    static const string& resourceName(RES_NAME_WOOD);
+    static const string& resourceName(RESOURCE_NAME);
     if (resources.find(resourceName) != resources.end()) {
         count = resources.at(resourceName);
     }
@@ -370,5 +397,39 @@ void MapUICardDeck::stopShake()
     if (_candidateSprite->getActionByTag(shake_action_tag)) {
         _candidateSprite->stopActionByTag(shake_action_tag);
         _candidateSprite->setPosition(_candidateSpritePosition);
+    }
+}
+
+void MapUICardDeck::addCostHint(int cost)
+{
+    if (cost > 0) {
+        if (!_costHint) {
+            static string file("GameImages/test/ui_blood_10.png");
+            static const Rect rect(0, 0, 63, 17);
+            static const Rect capInsets(2, 2, 59, 13);
+            _costHint = Scale9Sprite::create(file, rect, capInsets);
+            _costHint->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+            _costHint->setPosition(_costStartPosition);
+            _background->addChild(_costHint);
+        }
+        
+        if (_resources.size() > 0) {
+            auto pt = _resources.at(0).second;
+            if (pt) {
+                auto ptSize(pt->getContentSize());
+                auto size(Size(cost * (ptSize.width + costOffsetX), ptSize.height));
+                _costHint->setContentSize(size);
+            }
+        }
+    } else {
+        removeCostHint();
+    }
+}
+
+void MapUICardDeck::removeCostHint()
+{
+    if (_costHint) {
+        _costHint->removeFromParent();
+        _costHint = nullptr;
     }
 }

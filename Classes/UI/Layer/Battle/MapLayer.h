@@ -75,9 +75,8 @@ protected:
     //-------- coordinates --------//
     UnderWorld::Core::Coordinate mapCoordinate2coreCoordinate(int x, int y);
     Point coordinate2Point(const UnderWorld::Core::Coordinate& coordinate);
-    void coordinateConvert(const UnderWorld::Core::Coordinate& coordinate, Point& mapPosition, int& zOrder);
     inline int calcZOrder(int coreCoordinateY);
-    Point convertToScrollViewPoint(const Point& layerPoint);
+    void coordinateConvert(const UnderWorld::Core::Coordinate& coordinate, Point& mapPosition, int& zOrder);
     
     //-------- effects --------//
     void addParticle(const MapParticleConfigData* data);

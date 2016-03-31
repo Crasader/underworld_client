@@ -289,12 +289,6 @@ const UnderWorld::Core::MapSetting& MapLayer::getMapSetting() const
     return _mapSetting;
 }
 
-int MapLayer::calcZOrder(int coreCoordinateY)
-{
-    return 2 * (_height - coreCoordinateY + 1);
-}
-
-
 UnderWorld::Core::Coordinate MapLayer::mapCoordinate2coreCoordinate(int x, int y)
 {
     //fix:y is [0 - (_height - 1)]
@@ -308,18 +302,15 @@ Point MapLayer::coordinate2Point(const UnderWorld::Core::Coordinate& coordinate)
     return Point(x, y);
 }
 
+int MapLayer::calcZOrder(int coreCoordinateY)
+{
+    return 2 * (_height - coreCoordinateY + 1);
+}
+
 void MapLayer::coordinateConvert(const UnderWorld::Core::Coordinate& coordinate, Point& mapPosition, int& zOrder)
 {
     mapPosition = coordinate2Point(coordinate);
-    zOrder = 2 * (_height - coordinate.y + 1);
-}
-
-Point MapLayer::convertToScrollViewPoint(const Point& layerPoint)
-{
-    Node* container = _scrollView->getContainer();
-    const Point pos = _scrollView->convertToNodeSpace(convertToWorldSpace(layerPoint)) - container->getPosition();
-    const Point realPos = Point(pos.x / container->getScaleX(), pos.y / container->getScaleY());
-    return realPos;
+    zOrder = calcZOrder(coordinate.y);
 }
 
 UnderWorld::Core::Coordinate MapLayer::convertPoint(const Point& layerPoint)
