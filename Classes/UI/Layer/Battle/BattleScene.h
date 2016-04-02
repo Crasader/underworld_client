@@ -14,6 +14,7 @@
 #include "GameRender.h"
 #include "UnderworldClient.h"
 #include "UnderworldTestPvpClient.h"
+#include "ClientTCPNetworkProxy.h"
 
 USING_NS_CC;
 
@@ -48,6 +49,7 @@ private:
     GameRender* _render;
     UnderworldClient * _client;
     GameScheduler* _sch;
+    ClientTCPNetworkProxy* _proxy;
     
     UnderworldTestPvpClient* _test;
 };

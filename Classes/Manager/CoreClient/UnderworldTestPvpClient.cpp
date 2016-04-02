@@ -40,17 +40,17 @@ void UnderworldTestPvpClient::startTest(const UnderWorld::Core::GameContentSetti
         _playerB->launchPvp(setting);
     }, this, 0.f, 0, 1.f, false, "under_world_test_launch");
     
-    Director::getInstance()->getScheduler()->schedule([this](float f) {
-        UnderWorld::Core::Game& game = _playerB->getTerminal().getGame();
-        int thisFactionIndex = game.getWorld()->getThisFactionIndex();
-        UnderWorld::Core::Faction* thisFaction = game.getWorld()->getFaction(thisFactionIndex);
-        UnderWorld::Core::Coordinate pos = thisFaction->getPuttingArea()._origin +
-            UnderWorld::Core::Coordinate(thisFaction->getPuttingArea()._width / 4,
-                thisFaction->getPuttingArea()._height / 4);
-        UnderWorld::Core::OutsideDeckCommand* deckCommand =
-            new UnderWorld::Core::OutsideDeckCommand(0, thisFactionIndex, pos);
-        game.getCommander()->addCommandFromLocal(deckCommand);
-    }, this, 10.f, CC_REPEAT_FOREVER, 10.f, false, "under_world_test_put");
+//    Director::getInstance()->getScheduler()->schedule([this](float f) {
+//        UnderWorld::Core::Game& game = _playerB->getTerminal().getGame();
+//        int thisFactionIndex = game.getWorld()->getThisFactionIndex();
+//        UnderWorld::Core::Faction* thisFaction = game.getWorld()->getFaction(thisFactionIndex);
+//        UnderWorld::Core::Coordinate pos = thisFaction->getPuttingArea()._origin +
+//            UnderWorld::Core::Coordinate(thisFaction->getPuttingArea()._width / 4,
+//                thisFaction->getPuttingArea()._height / 4);
+//        UnderWorld::Core::OutsideDeckCommand* deckCommand =
+//            new UnderWorld::Core::OutsideDeckCommand(0, thisFactionIndex, pos);
+//        game.getCommander()->addCommandFromLocal(deckCommand);
+//    }, this, 10.f, CC_REPEAT_FOREVER, 10.f, false, "under_world_test_put");
 }
 
 void UnderworldTestPvpClient::endTest() {

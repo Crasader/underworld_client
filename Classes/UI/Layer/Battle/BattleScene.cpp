@@ -35,6 +35,7 @@ BattleScene::BattleScene()
 ,_render(nullptr)
 ,_client(nullptr)
 ,_sch(nullptr)
+, _proxy(nullptr)
 {
     
 }
@@ -95,6 +96,7 @@ void BattleScene::start()
     _render->registerObserver(this);
     
     _sch = new (nothrow) GameScheduler();
+    _proxy = new (nothrow) ClientTCPNetworkProxy("192.168.31.139", 8080, "playerA", 1);
     
     // 3. game setting
     UnderWorld::Core::GameContentSetting contentSetting;
@@ -122,7 +124,7 @@ void BattleScene::start()
     contentSetting.setCards(cardSettings);
     
     
-    _client = new (nothrow) UnderworldClient("mofish", nullptr, _sch, _render);
+    _client = new (nothrow) UnderworldClient("mofish", _proxy, _sch, _render);
     _client->launchPvp(contentSetting);
 }
 
@@ -176,5 +178,6 @@ void BattleScene::clear()
     CC_SAFE_DELETE(_client);
     CC_SAFE_DELETE(_sch);
     CC_SAFE_DELETE(_render);
+    CC_SAFE_DELETE(_proxy);
     removeAllChildren();
 }
