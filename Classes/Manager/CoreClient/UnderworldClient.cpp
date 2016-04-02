@@ -9,9 +9,10 @@
 #include "UnderworldClient.h"
 #include "DataManager.h"
 
+
 using namespace UnderWorld::Core;
     
-UnderworldClient::UnderworldClient(
+UnderworldClient::UnderworldClient(const std::string& name,
     UnderWorld::Core::AbstractNetworkProxy* proxy,
     UnderWorld::Core::AbstractScheduler*  scheduler,
     UnderWorld::Core::AbstractRender* render)
@@ -19,7 +20,8 @@ UnderworldClient::UnderworldClient(
 , _state(kIdle)
 , _proxy(proxy)
 , _scheduler(scheduler)
-, _render(render) {
+, _render(render)
+, _name(name) {
 
 }
     
@@ -48,7 +50,7 @@ void UnderworldClient::launchPve(int map, const GameContentSetting& setting) {
     _settings.getFactionSetting().setContentSetting(setting, mapIndex);
     
     _mode = kPve;
-    _terminal.init(_settings, _scheduler, _render, nullptr);
+    _terminal.init(_name, _settings, _scheduler, _render, nullptr);
     
     _terminal.start();
     
@@ -64,7 +66,7 @@ void UnderworldClient::launchPve(const MapSetting& mapSetting, const GameContent
     _settings.getFactionSetting().setContentSetting(setting, mapIndex);
     
     _mode = kPve;
-    _terminal.init(_settings, _scheduler, _render, nullptr);
+    _terminal.init(_name, _settings, _scheduler, _render, nullptr);
     
     _terminal.start();
     
@@ -95,7 +97,7 @@ void UnderworldClient::onReceive(
             NetworkMessageLaunch2C* l2c = dynamic_cast<NetworkMessageLaunch2C*>(msg);
             loadMap(l2c->getMapId());
             _settings.setFactionSetting(l2c->getFactionSetting());
-            _terminal.init(_settings, _scheduler, _render, _proxy);
+            _terminal.init(_name, _settings, _scheduler, _render, _proxy);
             _terminal.start();
             _state = kPlaying;
         } else if (dynamic_cast<NetworkMessageCancel2C*>(msg)) {
@@ -118,6 +120,8 @@ void UnderworldClient::loadMap(int mapId) {
     _settings.setMapId(mapId);
     MapSetting ms;
     ms.init(DataManager::getInstance()->getMapData(mapId));
+    ms.setHeight(75);
+    ms.setWidth(300);
     loadMap(ms);
 }
     

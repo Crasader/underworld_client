@@ -28,11 +28,14 @@ private:
     std::unordered_set<ProxyListener*> _listeners;
     std::string _host;
     int _port;
+    std::string _name;
+    int _uid;
     TCPClient* _tcpClient;
     
 public:
-    ClientTCPNetworkProxy(const std::string& host, int port)
-        : _host(host), _port(port), _tcpClient(nullptr) {}
+    ClientTCPNetworkProxy(const std::string& host, int port,
+        const std::string& name, int uid)
+        : _host(host), _port(port), _name(name), _uid(uid), _tcpClient(nullptr) {}
     virtual ~ClientTCPNetworkProxy();
     
     /** interface */

@@ -37,13 +37,15 @@ private:
     UnderWorld::Core::GameSettings _settings;
     GameMode _mode;
     GameState _state;
+    std::string _name;
     
     UnderWorld::Core::AbstractNetworkProxy* _proxy;
     UnderWorld::Core::AbstractScheduler*  _scheduler;
     UnderWorld::Core::AbstractRender* _render;
     
 public:
-    UnderworldClient(UnderWorld::Core::AbstractNetworkProxy* proxy,
+    UnderworldClient(const std::string& name,
+        UnderWorld::Core::AbstractNetworkProxy* proxy,
         UnderWorld::Core::AbstractScheduler*  scheduler,
         UnderWorld::Core::AbstractRender* render);
     

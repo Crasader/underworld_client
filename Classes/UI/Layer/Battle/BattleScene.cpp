@@ -122,8 +122,50 @@ void BattleScene::start()
     contentSetting.setCards(cardSettings);
     
     
-    _client = new (nothrow) UnderworldClient(nullptr, _sch, _render);
-    _client->launchPve(_render->getMapSetting(), contentSetting);
+    _client = new (nothrow) UnderworldClient("mofish", nullptr, _sch, _render);
+    _client->launchPvp(contentSetting);
+}
+
+void BattleScene::startTest() {
+    if (_render) {
+        clear();
+    }
+    
+    // 1. add map layer
+    string mapSettingXml = DataManager::getInstance()->getMapData(_mapId);
+    
+    // 2. add map ui layer
+    _render = new (nothrow) GameRender(this, _mapId, mapSettingXml, "Vampire");
+    _render->registerObserver(this);
+    
+    // 3. game setting
+    UnderWorld::Core::GameContentSetting contentSetting;
+    
+    contentSetting.setFactionTypeKey("狼人族");
+    
+    UnderWorld::Core::UnitSetting core;
+    core.setUnitTypeName("狼人基地");
+    contentSetting.setCore(core);
+    
+    UnderWorld::Core::UnitSetting tower;
+    tower.setUnitTypeName("狼人箭塔");
+    contentSetting.setTower(tower);
+    
+    set<string> cards;
+    std::vector<UnderWorld::Core::CardSetting> cardSettings;
+    UserDefaultsDataManager::getInstance()->getSelectedCards(cards);
+    
+    int i = 0;
+    for (auto iter = begin(cards); iter != end(cards); ++iter, ++i) {
+        UnderWorld::Core::CardSetting cs;
+        cs.setCardTypeName(*iter);
+        cardSettings.push_back(cs);
+    }
+    contentSetting.setCards(cardSettings);
+    
+    _test = new UnderworldTestPvpClient();
+    _test->init(_render);
+    _test->startTest(contentSetting);
 }
 
 void BattleScene::clear()

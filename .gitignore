@@ -4,6 +4,7 @@ proj.android/libs/armeabi
 proj.android/obj
 proj.android/bin
 proj.android/gen
+proj.android/.settings
 bin
 gen
 
@@ -25,7 +26,6 @@ out/
 #cocos project
 cocos2d/
 
-proj.android/.settings
 bingu.xccheckout
 UserInterfaceState.xcuserstate
 WorkspaceSettings.xcsettings
@@ -46,4 +46,3 @@ proj.ios_mac/Underworld_Client.xcodeproj/xcuserdata
 proj.ios_mac/build
 
 #backup
-Classes/UI/Layer/Island/Backup

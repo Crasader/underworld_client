@@ -39,6 +39,8 @@
 #define MESSAGE_KEY_MAP_ID       ("mapId")
 #define MESSAGE_KEY_START_FRAME  ("startFrame")
 #define MESSAGE_KEY_END_FRAME    ("endFrame")
+#define MESSAGE_KEY_NAME         ("name")
+#define MESSAGE_KEY_UID          ("uid")
 
 #define PROTOCOL_HEAD_LENGTH  (4)
 
@@ -47,10 +49,16 @@ using namespace rapidjson;
 using namespace cocostudio;
 
 static std::string parseLaunch2SMsg(
-    const NetworkMessageLaunch2S* msg) {
+    const NetworkMessageLaunch2S* msg, std::string name, int uid) {
     rapidjson::Document document;
     rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
     rapidjson::Value root(rapidjson::kObjectType);
+    
+    rapidjson::Value nameJson(rapidjson::kStringType);
+    nameJson.SetString(name.c_str(), (int)name.size(), allocator);
+    
+    rapidjson::Value uidJson(rapidjson::kNumberType);
+    uidJson.SetInt(uid);
     
     rapidjson::Value reqCode(rapidjson::kNumberType);
     reqCode.SetInt(MESSAGE_CODE_LAUNCH_2_S);
@@ -61,7 +69,7 @@ static std::string parseLaunch2SMsg(
         msg->getGameContentSetting().geCardSetting();
     for (int i = 0; i < cardSettings.size(); ++i) {
         cardString.append(cardSettings[i].getCardTypeName());
-        if (i != cardString.size() - 1) {
+        if (i != cardSettings.size() - 1) {
             cardString.append("|");
         }
     }
@@ -69,6 +77,8 @@ static std::string parseLaunch2SMsg(
     
     root.AddMember(MESSAGE_KEY_CODE, reqCode, allocator);
     root.AddMember(MESSAGE_KEY_CARDS, cards, allocator);
+    root.AddMember(MESSAGE_KEY_NAME, nameJson, allocator);
+    root.AddMember(MESSAGE_KEY_UID, uidJson, allocator);
     
     rapidjson::StringBuffer buffer;
     rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
@@ -77,10 +87,13 @@ static std::string parseLaunch2SMsg(
 }
 
 static std::string parseSync2SMsg(
-    const UnderWorld::Core::NetworkMessageSync* msg) {
+    const UnderWorld::Core::NetworkMessageSync* msg, int uid) {
     rapidjson::Document document;
     rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
     rapidjson::Value root(rapidjson::kObjectType);
+    
+    rapidjson::Value uidJson(rapidjson::kNumberType);
+    uidJson.SetInt(uid);
     
     rapidjson::Value reqCode(rapidjson::kNumberType);
     reqCode.SetInt(MESSAGE_CODE_SYNC_2_S);
@@ -119,6 +132,7 @@ static std::string parseSync2SMsg(
         commands.PushBack(command, allocator);
     }
     
+    root.AddMember(MESSAGE_KEY_UID, uidJson, allocator);
     root.AddMember(MESSAGE_KEY_CODE, reqCode, allocator);
     root.AddMember(MESSAGE_KEY_FRAME, msgFrame, allocator);
     root.AddMember(MESSAGE_KEY_COMMANDS, commands, allocator);
@@ -207,6 +221,17 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
                 }
             }
             
+            gcs.setFactionTypeKey("狼人族");
+            UnitSetting core;
+            core.setUnitTypeName("狼人基地");
+            core.setLevel(0);core.setQuality(0);core.setTalentLevel(0);
+            gcs.setCore(core);
+            
+            UnitSetting tower;
+            tower.setUnitTypeName("狼人箭塔");
+            core.setLevel(0);core.setQuality(0);core.setTalentLevel(0);
+            gcs.setTower(tower);
+            
             fs.setContentSetting(gcs, i);
         }
     }
@@ -225,9 +250,9 @@ static void parseSync2CMsg(const rapidjson::Value& root,
     int startFrame = DICTOOL->getIntValue_json(root, MESSAGE_KEY_START_FRAME, 0);
     int endFrame = DICTOOL->getIntValue_json(root, MESSAGE_KEY_END_FRAME, 0);
     
-    assert(startFrame % GameConstants::NETWORK_KEY_FRAME_RATE == 0
-        && endFrame % GameConstants::NETWORK_KEY_FRAME_RATE == 0
-        && startFrame < endFrame);
+    assert(GameConstants::isKeyFrame(startFrame)
+        && GameConstants::isKeyFrame(endFrame)
+        && startFrame <= endFrame);
     
     std::vector<NetworkMessageSync*> syncMsgs;
     for (int i = startFrame;
@@ -247,8 +272,8 @@ static void parseSync2CMsg(const rapidjson::Value& root,
             int handIndex = DICTOOL->getIntValue_json(commands[i], MESSAGE_KEY_HAND_INDEX, 0);
             int factionIndex = DICTOOL->getIntValue_json(commands[i], MESSAGE_KEY_FAC_INDEX, 0);
             Coordinate pos;
-            if (DICTOOL->checkObjectExist_json(root, MESSAGE_KEY_POS)) {
-                std::string posString = DICTOOL->getStringValue_json(root, MESSAGE_KEY_POS);
+            if (DICTOOL->checkObjectExist_json(commands[i], MESSAGE_KEY_POS)) {
+                std::string posString = DICTOOL->getStringValue_json(commands[i], MESSAGE_KEY_POS);
                 pos.x = atoi(posString.substr(0, posString.find("_")).c_str());
                 pos.y = atoi(posString.substr(posString.find("_") + 1).c_str());
             }
@@ -270,6 +295,7 @@ ClientTCPNetworkProxy::~ClientTCPNetworkProxy() {
 void ClientTCPNetworkProxy::connect() {
     M_SAFE_DELETE(_tcpClient);
     _tcpClient = new TCPClient();
+    _tcpClient->setTimeoutForConnect(300);
     _tcpClient->init(_host, _port);
     _tcpClient->setResponseCallback(std::bind(
         &ClientTCPNetworkProxy::onReceiveTCPResponse,
@@ -320,21 +346,17 @@ TCPRequest* ClientTCPNetworkProxy::parseMsg2Request(
     if (dynamic_cast<const NetworkMessageLaunch2S*>(msg)) {
         const NetworkMessageLaunch2S* l2s =
             dynamic_cast<const NetworkMessageLaunch2S*>(msg);
-        reqContent = parseLaunch2SMsg(l2s);
+        reqContent = parseLaunch2SMsg(l2s, _name, _uid);
     } else if (dynamic_cast<const UnderWorld::Core::NetworkMessageSync*>(msg)) {
         const UnderWorld::Core::NetworkMessageSync* sync =
             dynamic_cast<const UnderWorld::Core::NetworkMessageSync*>(msg);
-        reqContent = parseSync2SMsg(sync);
+        reqContent = parseSync2SMsg(sync, _uid);
     }
     
     TCPRequest* ret = nullptr;
     if (!reqContent.empty()) {
         ret = new TCPRequest();
-        std::string data;
-        int32_t contentLen = (int32_t)reqContent.size();
-        data.assign((char*)(&contentLen), PROTOCOL_HEAD_LENGTH);
-        data.append(reqContent);
-        ret->setRequestData(data.c_str(), data.size());
+        ret->setRequestData(reqContent.c_str(), reqContent.size());
     }
     return ret;
 }
@@ -342,12 +364,8 @@ TCPRequest* ClientTCPNetworkProxy::parseMsg2Request(
 void ClientTCPNetworkProxy::parseResponse2Msg(
     const TCPResponse* response,
     std::vector<UnderWorld::Core::NetworkMessage *> &output) {
-    if (response->getResponseData()->size() <= 4) return;
-    
-    int32_t* dataLen = (int32_t*)response->getResponseDataString();
-    const char* data = response->getResponseDataString() + PROTOCOL_HEAD_LENGTH;
-    
-    assert(strlen(data) == (size_t)dataLen);
+    ;
+    const char* data = response->getResponseDataString();
     
     rapidjson::Document document;
     document.Parse<rapidjson::kParseNoFlags>(data);

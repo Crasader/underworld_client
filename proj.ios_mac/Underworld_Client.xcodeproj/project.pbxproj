@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		044006471CAA8028003CA87E /* UnderworldTestPvpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 044006451CAA8028003CA87E /* UnderworldTestPvpClient.cpp */; };
 		045116E21BCFBA39002AA721 /* Clock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116DC1BCFBA39002AA721 /* Clock.cpp */; };
 		045116E31BCFBA39002AA721 /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116DE1BCFBA39002AA721 /* Map.cpp */; };
 		045116E41BCFBA39002AA721 /* World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116E01BCFBA39002AA721 /* World.cpp */; };
@@ -287,6 +288,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		044006451CAA8028003CA87E /* UnderworldTestPvpClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UnderworldTestPvpClient.cpp; path = CoreClient/UnderworldTestPvpClient.cpp; sourceTree = "<group>"; };
+		044006461CAA8028003CA87E /* UnderworldTestPvpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnderworldTestPvpClient.h; path = CoreClient/UnderworldTestPvpClient.h; sourceTree = "<group>"; };
 		045116DC1BCFBA39002AA721 /* Clock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Clock.cpp; path = Core/World/Clock.cpp; sourceTree = "<group>"; };
 		045116DD1BCFBA39002AA721 /* Clock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Clock.h; path = Core/World/Clock.h; sourceTree = "<group>"; };
 		045116DE1BCFBA39002AA721 /* Map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Map.cpp; path = Core/World/Map.cpp; sourceTree = "<group>"; };
@@ -1177,6 +1180,8 @@
 				3087FF2E1CA2BF5A004E31F6 /* ClientTCPNetworkProxy.h */,
 				3087FF2F1CA2BF5A004E31F6 /* UnderworldClient.cpp */,
 				3087FF301CA2BF5A004E31F6 /* UnderworldClient.h */,
+				044006451CAA8028003CA87E /* UnderworldTestPvpClient.cpp */,
+				044006461CAA8028003CA87E /* UnderworldTestPvpClient.h */,
 			);
 			name = CoreClient;
 			sourceTree = "<group>";
@@ -2144,6 +2149,7 @@
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				CB3EC8A31C523D6700447FE3 /* FriendData.cpp in Sources */,
 				A16BF28C1C313E7D00E91458 /* SoldierLocalData.cpp in Sources */,
+				044006471CAA8028003CA87E /* UnderworldTestPvpClient.cpp in Sources */,
 				A103F45F1BE38112007F9A83 /* GameRender.cpp in Sources */,
 				A1F9B0861C76CBAD007BC409 /* AbstractUILayer.cpp in Sources */,
 				A1720EB81BCD2D2E00217E98 /* Api.mm in Sources */,

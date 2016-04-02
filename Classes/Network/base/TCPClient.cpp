@@ -455,11 +455,11 @@
     {
         if (nullptr == _tcpClient)
         {
-            CCLOG("TCPClient singleton is nullptr");
+            //CCLOG("TCPClient singleton is nullptr");
             return;
         }
         
-        CCLOG("TCPClient::destroyInstance begin");
+        //CCLOG("TCPClient::destroyInstance begin");
         auto thiz = _tcpClient;
         _tcpClient = nullptr;
         
@@ -475,7 +475,7 @@
         thiz->_sleepCondition.notify_one();
         thiz->decreaseThreadCountAndMayDeleteThis();
         
-        CCLOG("TCPClient::destroyInstance() finished!");
+        //CCLOG("TCPClient::destroyInstance() finished!");
     }
     
     void TCPClient::enableCookies(const char* cookieFile)
@@ -512,7 +512,7 @@
     ,base(0)
     //, _cookie(nullptr)
     {
-        CCLOG("In the constructor of TCPClient!");
+        //CCLOG("In the constructor of TCPClient!");
         memset(_responseMessage, 0, RESPONSE_BUFFER_SIZE * sizeof(char));
         _scheduler = Director::getInstance()->getScheduler();
         increaseThreadCount();
@@ -525,7 +525,7 @@
         if(_fd!=-1)
             _close(_fd);
         
-        CCLOG("TCPClient destructor");
+        //CCLOG("TCPClient destructor");
         
         _scheduler->unscheduleAllForTarget(this);
         _schedulerMutex.lock();
@@ -743,7 +743,7 @@
                 response->setSucceed(true);
             }
             
-            CCLOG("[%p]processResponse,read response data=%d", response, retVal);
+            //CCLOG("[%p]processResponse,read response data=%d", response, retVal);
             // add response packet into queue
             _responseQueueMutex.lock();
             _responseQueue.pushBack(response);
@@ -767,7 +767,7 @@
         int flag=-1;
         int ret = _read(_pipeRead, (char*)&flag, sizeof(int));
         
-        CCLOG("read_cb, read %d bytes,flag=%d", ret,flag);
+        //CCLOG("read_cb, read %d bytes,flag=%d", ret,flag);
         if(flag==1)
         {
             TCPRequest *request;
@@ -784,7 +784,7 @@
             }
             
             if (request == _requestSentinel) {
-                CCLOG("event_base_loopbreak");
+                //CCLOG("event_base_loopbreak");
                 event_base_loopbreak(base);
                 return;
             }
@@ -811,7 +811,7 @@
                 reconnect2Server();
                 writeSuccess=_write(_fd,data.data(),data.size());
             }
-            CCLOG("processRequest,writeSuccess=%d",writeSuccess);
+            //CCLOG("processRequest,writeSuccess=%d",writeSuccess);
             
             if (writeSuccess <= 0)
             {
@@ -838,19 +838,19 @@
     
     
     void TCPClient::processTimer(){
-        CCLOG("TCPClient::processTimer()");
+        //CCLOG("TCPClient::processTimer()");
         //check _fd
         int error = 0;
         socklen_t len = sizeof (error);
         int ret_val = getsockopt (_fd, SOL_SOCKET, SO_ERROR, &error, &len);
         if (ret_val != 0) {
             /* there was a problem getting the error code */
-            CCLOG("error getting socket error code: %s\n", strerror(ret_val));
+            //CCLOG("error getting socket error code: %s\n", strerror(ret_val));
         }
         
         if (error != 0) {
             /* socket has a non zero error status */
-            CCLOG( "socket error: %s\n", strerror(error));
+            //CCLOG( "socket error: %s\n", strerror(error));
         }
         
         if(error!=0||ret_val!=0){
@@ -923,7 +923,7 @@
         
         
         if(_fd<0){
-            CCLOG("TCPClient::reconnect2Server error,host=%s,port=%d",_url.c_str(),_port);
+            //CCLOG("TCPClient::reconnect2Server error,host=%s,port=%d",_url.c_str(),_port);
             return -1;
         }
         
@@ -946,7 +946,7 @@
         _port=port;
         base = event_base_new();
         if(base==0){
-            CCLOG("event_base_new is null");
+            //CCLOG("event_base_new is null");
             return false;
         }
         reconnect2Server();   

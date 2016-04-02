@@ -13,6 +13,7 @@
 #include "GameScheduler.h"
 #include "GameRender.h"
 #include "UnderworldClient.h"
+#include "UnderworldTestPvpClient.h"
 
 USING_NS_CC;
 
@@ -40,11 +41,15 @@ private:
     void start();
     void clear();
     
+    void startTest();
+    
 private:
     int _mapId;
     GameRender* _render;
     UnderworldClient * _client;
     GameScheduler* _sch;
+    
+    UnderworldTestPvpClient* _test;
 };
 
 #endif /* BattleScene_h */
