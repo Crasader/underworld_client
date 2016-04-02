@@ -33,6 +33,75 @@ void UnderworldClient::launchPvp(const GameContentSetting& setting) {
     _mode = kPvp;
     _state = kLaunching;
     
+//    //test code
+//    {
+//        loadMap(1);
+//        FactionSetting fs;
+//        fs.setThisFactionIndex(0);
+//        fs.setFactionCount(2);
+//        fs.setTeam(0, 0);
+//        fs.setTeam(1, 1);
+//        fs.setMapIndex(0, 0);
+//        fs.setMapIndex(1, 1);
+//        fs.setFactionControlType(0, kFactionControlType_Human);
+//        fs.setFactionControlType(1, kFactionControlType_Human);
+//        GameContentSetting gcs0;
+//        GameContentSetting gcs1;
+//        gcs0.setFactionTypeKey("狼人族");
+//        gcs1.setFactionTypeKey("狼人族");
+//        UnitSetting core;
+//        core.setUnitTypeName("狼人基地");
+//        gcs0.setCore(core);
+//        gcs1.setCore(core);
+//        UnitSetting tower;
+//        tower.setUnitTypeName("狼人箭塔");
+//        gcs0.setTower(tower);
+//        gcs1.setTower(tower);
+//        std::vector<std::string> cards0 = {
+//            "巨人", "狼人步兵", "王子", "迷你皮卡", "高攻击战士"
+//        };
+//        vector<CardSetting> cs0;
+//        for (int i = 0; i < cards0.size(); ++i) {
+//            CardSetting cs;
+//            cs.setCardTypeName(cards0[i]);
+//            cs0.push_back(cs);
+//        }
+//        gcs0.setCards(cs0);
+//        std::vector<std::string> cards1 = {
+//            "巨人","战士","法师","火枪手","王子","迷你皮卡","骑士","高攻击战士"
+//        };
+//        vector<CardSetting> cs1;
+//        for (int i = 0; i < cards1.size(); ++i) {
+//            CardSetting cs;
+//            cs.setCardTypeName(cards1[i]);
+//            cs1.push_back(cs);
+//        }
+//        gcs1.setCards(cs1);
+//        fs.setContentSetting(gcs0, 0);
+//        fs.setContentSetting(gcs1, 1);
+//        _settings.setFactionSetting(fs);
+//        
+//        _terminal.getGame().init(_settings);
+//        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(2, 0, Coordinate(1361, 584)), 138);
+//        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(2, 1, Coordinate(3275, 641)), 732);
+//        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(1, 0, Coordinate(1547, 667)), 786);
+//        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(2, 1, Coordinate(3200, 572)), 1320);
+//        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(1, 0, Coordinate(1599, 627)), 1410);
+//        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(2, 0, Coordinate(1599, 592)), 1968);
+//        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(3, 1, Coordinate(3323, 582)), 1992);
+//        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(0, 1, Coordinate(3200, 572)), 2328);
+//        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(2, 1, Coordinate(3296, 453)), 2640);
+//        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(1, 1, Coordinate(3784, 401)), 3162);
+//        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(3, 0, Coordinate(1599, 699)), 3168);
+//        for (int i = 1; i <= 3200; ++i) {
+//            _terminal.getGame().update();
+//            std::string s;
+//            _terminal.getGame().getSnapShot(s);
+//            cout << "[update]" << i << s << endl;
+//        }
+//
+//    }
+    
     _proxy->connect();
     _proxy->registerListener(this);
     NetworkMessageLaunch2S* msg = new NetworkMessageLaunch2S();
@@ -120,8 +189,11 @@ void UnderworldClient::loadMap(int mapId) {
     _settings.setMapId(mapId);
     MapSetting ms;
     ms.init(DataManager::getInstance()->getMapData(mapId));
+    
+    //TODO:temp code
     ms.setHeight(75);
     ms.setWidth(300);
+    
     loadMap(ms);
 }
     

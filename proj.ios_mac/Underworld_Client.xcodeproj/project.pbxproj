@@ -26,6 +26,7 @@
 		0451170B1BCFBA53002AA721 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045117041BCFBA53002AA721 /* Unit.cpp */; };
 		045117101BCFBA5F002AA721 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0451170C1BCFBA5F002AA721 /* Game.cpp */; };
 		047228B01C193A4D00E7F71B /* Geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047228AE1C193A4D00E7F71B /* Geometry.cpp */; };
+		047CBF8A1CAFE6AB0035DAF9 /* InstanceHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047CBF881CAFE6AB0035DAF9 /* InstanceHelper.cpp */; };
 		1AC6FB21180E996B004C840B /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FAF9180E9839004C840B /* libcocos2d Mac.a */; };
 		1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FB07180E9839004C840B /* libcocos2d iOS.a */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -328,6 +329,8 @@
 		0451170F1BCFBA5F002AA721 /* GameSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameSettings.h; path = Core/Game/GameSettings.h; sourceTree = "<group>"; };
 		047228AE1C193A4D00E7F71B /* Geometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Geometry.cpp; path = Core/Utils/Geometry.cpp; sourceTree = "<group>"; };
 		047228AF1C193A4D00E7F71B /* Geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Geometry.h; path = Core/Utils/Geometry.h; sourceTree = "<group>"; };
+		047CBF881CAFE6AB0035DAF9 /* InstanceHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InstanceHelper.cpp; path = Core/Unit/Instance/InstanceHelper.cpp; sourceTree = "<group>"; };
+		047CBF891CAFE6AB0035DAF9 /* InstanceHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstanceHelper.h; path = Core/Unit/Instance/InstanceHelper.h; sourceTree = "<group>"; };
 		04FF24601C4A497100A66D71 /* GameSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameSettings.cpp; path = Core/Game/GameSettings.cpp; sourceTree = "<group>"; };
 		1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
@@ -888,6 +891,8 @@
 				045116DA1BCFBA15002AA721 /* Instance */,
 				300098D41BD5E81700B6E284 /* InstanceFactory.cpp */,
 				300098D51BD5E81700B6E284 /* InstanceFactory.h */,
+				047CBF881CAFE6AB0035DAF9 /* InstanceHelper.cpp */,
+				047CBF891CAFE6AB0035DAF9 /* InstanceHelper.h */,
 			);
 			name = Unit;
 			sourceTree = "<group>";
@@ -2226,6 +2231,7 @@
 				306802491C881ABA000990F9 /* Camp.cpp in Sources */,
 				A14B5EFB1C311908006FB0DB /* Addon.cpp in Sources */,
 				A1720E901BCCE19300217E98 /* MD5Verifier.cpp in Sources */,
+				047CBF8A1CAFE6AB0035DAF9 /* InstanceHelper.cpp in Sources */,
 				306802461C87CB2A000990F9 /* CardType.cpp in Sources */,
 				A1720EBA1BCD2D2E00217E98 /* RMStore.m in Sources */,
 				047228B01C193A4D00E7F71B /* Geometry.cpp in Sources */,
