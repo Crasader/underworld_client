@@ -93,11 +93,18 @@ void UnderworldClient::launchPvp(const GameContentSetting& setting) {
 //        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(2, 1, Coordinate(3296, 453)), 2640);
 //        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(1, 1, Coordinate(3784, 401)), 3162);
 //        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(3, 0, Coordinate(1599, 699)), 3168);
-//        for (int i = 1; i <= 3200; ++i) {
+//        for (int i = 1; i <= 10000; ++i) {
 //            _terminal.getGame().update();
-//            std::string s;
-//            _terminal.getGame().getSnapShot(s);
-//            cout << "[update]" << i << s << endl;
+//            if (_terminal.getGame().isGameOver()) {
+//                cout << "[gameover]" << i << endl;
+//                break;
+//            }
+//            
+//            if (i >= 1000 && i <= 3300) {
+//                std::string s;
+//                _terminal.getGame().getSnapShot(s);
+//                cout << "[update]" << i << s << endl;
+//            }
 //        }
 //
 //    }
