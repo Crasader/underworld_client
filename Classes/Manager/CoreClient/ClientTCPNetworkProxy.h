@@ -58,6 +58,8 @@ private:
         const TCPResponse* response,
         std::vector<UnderWorld::Core::NetworkMessage*>& output);
     
+    /** destroy TCPClient **/
+    void destroyTCPClient();
     
     
 };

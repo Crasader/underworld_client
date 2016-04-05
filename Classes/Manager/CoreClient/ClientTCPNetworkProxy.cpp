@@ -289,11 +289,18 @@ static void parseSync2CMsg(const rapidjson::Value& root,
 }
 
 ClientTCPNetworkProxy::~ClientTCPNetworkProxy() {
-    M_SAFE_DELETE(_tcpClient);
+    destroyTCPClient();
+}
+
+void ClientTCPNetworkProxy::destroyTCPClient() {
+    if (_tcpClient) {
+        _tcpClient->destroy();
+        _tcpClient = nullptr;
+    }
 }
 
 void ClientTCPNetworkProxy::connect() {
-    M_SAFE_DELETE(_tcpClient);
+    destroyTCPClient();
     _tcpClient = new TCPClient();
     _tcpClient->setTimeoutForConnect(300);
     _tcpClient->init(_host, _port);

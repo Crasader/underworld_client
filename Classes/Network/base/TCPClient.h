@@ -41,7 +41,6 @@
  * @{
  */
 
-using namespace cocos2d;
 
 /** Singleton that handles asynchronous http requests.
  *
@@ -49,14 +48,14 @@ using namespace cocos2d;
  *
  * @lua NA
  */
-class TCPClient
+class CC_DLL TCPClient
 {
 public:
-	/**
-	* The buffer size of _responseMessage
-	*/
-	static const int RESPONSE_BUFFER_SIZE = 256;
-
+    /**
+     * The buffer size of _responseMessage
+     */
+    static const int RESPONSE_BUFFER_SIZE = 256;
+    
     /**
      * Get instance of TCPClient.
      *
@@ -64,12 +63,12 @@ public:
      */
     //static TCPClient *getInstance();
     
-    /** 
-     * Release the instance of TCPClient. 
+    /**
+     * Release the instance of TCPClient.
      */
     //static void destroyInstance();
-
-    /** 
+    
+    /**
      * Enable cookie support.
      *
      * @param cookieFile the filepath of cookie file.
@@ -78,7 +77,7 @@ public:
     
     /**
      * Get the cookie filename
-     * 
+     *
      * @return the cookie filename
      */
     //const std::string& getCookieFilename();
@@ -92,24 +91,24 @@ public:
     
     /**
      * Get the ssl CA filename
-     * 
+     *
      * @return the ssl CA filename
      */
     //const std::string& getSSLVerification();
-        
+    
     /**
      * Add a get request to task queue
      *
      * @param request a TCPRequest object, which includes url, response callback etc.
-                      please make sure request->_requestData is clear before calling "send" here.
+     please make sure request->_requestData is clear before calling "send" here.
      */
     void send(TCPRequest* request);
-
+    
     /**
      * Immediate send a request
      *
      * @param request a TCPRequest object, which includes url, response callback etc.
-                      please make sure request->_requestData is clear before calling "sendImmediate" here.
+     please make sure request->_requestData is clear before calling "sendImmediate" here.
      */
     //void sendImmediate(TCPRequest* request);
     
@@ -133,7 +132,7 @@ public:
      * @param value the timeout value for reading.
      */
     void setTimeoutForRead(int value);
-
+    
     /**
      * Get the timeout value for reading.
      *
@@ -147,44 +146,45 @@ public:
     
     //std::mutex& getSSLCaFileMutex() {return _sslCaFileMutex;}
     //
-     bool init(const std::string& host,int port);
-
-
-     inline void setResponseCallback(const ccTCPRequestCallback& callback)
-     {
-              _pCallback = callback;
-     }
-
-      /**
- *      * Get ccTCPRequestCallback callback function.
- *           *
- *                * @return const ccTCPRequestCallback& ccTCPRequestCallback callback function.
- *                     */
+    bool init(const std::string& host,int port);
+    
+    
+    inline void setResponseCallback(const ccTCPRequestCallback& callback)
+    {
+        _pCallback = callback;
+    }
+    
+    /**
+     *      * Get ccTCPRequestCallback callback function.
+     *           *
+     *                * @return const ccTCPRequestCallback& ccTCPRequestCallback callback function.
+     *                     */
     inline const ccTCPRequestCallback& getCallback()
     {
-              return _pCallback;
+        return _pCallback;
     }
-
+    
+    void destroy();
+    
     /*
- *set the interval of timer
-*timeout seconds
- */
-   void setTimerInterval(int timeout);
-
+     *set the interval of timer
+     *timeout seconds
+     */
+    void setTimerInterval(int timeout);
+    
     /*
- *get the interval of timer
- */
+     *get the interval of timer
+     */
     int getTimerInterval();
-
+    
     void processResponse(char* responseMessage);
     void processRequest(char* responseMessage);
     void processTimer();
-
+    
     TCPClient();
-    virtual ~TCPClient();
 private:
     int _create_pipe();
-    
+    virtual ~TCPClient();
     /**
      * Init pthread mutex, semaphore, and create new thread for http requests
      * @return bool
@@ -201,16 +201,16 @@ private:
     
 private:
     bool _isInited;
-   
-    std::string                 _url;  
-    int _port; 
+    
+    std::string                 _url;
+    int _port;
     int _fd;
-
+    
     int _pipeRead;
     int _pipeWrite;
-
+    
     int _timerInterval;
- 
+    
     int _timeoutForConnect;
     std::mutex _timeoutForConnectMutex;
     
@@ -241,12 +241,12 @@ private:
     char _responseMessage[RESPONSE_BUFFER_SIZE];
     
     TCPRequest* _requestSentinel;
-    ccTCPRequestCallback       _pCallback;      /// C++11 style callbacks   
-
+    ccTCPRequestCallback       _pCallback;      /// C++11 style callbacks
+    
     struct event notify_event;
     struct event server_event;
     struct event timer_event;
-    struct event_base* base; 
+    struct event_base* base;
 };
 
 // end group
