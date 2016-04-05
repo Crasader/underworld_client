@@ -271,7 +271,7 @@ static void parseSync2CMsg(const rapidjson::Value& root,
             //Temp code
             int handIndex = DICTOOL->getIntValue_json(commands[i], MESSAGE_KEY_HAND_INDEX, 0);
             int factionIndex = DICTOOL->getIntValue_json(commands[i], MESSAGE_KEY_FAC_INDEX, 0);
-            Coordinate pos;
+            Coordinate32 pos;
             if (DICTOOL->checkObjectExist_json(commands[i], MESSAGE_KEY_POS)) {
                 std::string posString = DICTOOL->getStringValue_json(commands[i], MESSAGE_KEY_POS);
                 pos.x = atoi(posString.substr(0, posString.find("_")).c_str());

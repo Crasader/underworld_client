@@ -244,7 +244,7 @@ void CardNode::update(const Card* card, float resource)
             static const string& resourceName(RESOURCE_NAME);
             const auto& costs = ct->getCost();
             if (costs.find(resourceName) != costs.end()) {
-                cost = costs.at(resourceName);
+                cost = costs.at(resourceName) / GameConstants::MICRORES_PER_RES;
             }
             
             const UnitType* ut = card->getUnitType();

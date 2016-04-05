@@ -74,17 +74,17 @@ void Utils::split2int(vector<int> &v, const string& src, const string& delimit, 
     }
 }
 
-string Utils::convertCoordinateToString(const UnderWorld::Core::Coordinate& coordinate)
+string Utils::convertCoordinateToString(const UnderWorld::Core::Coordinate32& coordinate)
 {
     return format("%d_%d", coordinate.x, coordinate.y);
 }
 
-UnderWorld::Core::Coordinate Utils::convertStringToCoordinate(const string& text)
+UnderWorld::Core::Coordinate32 Utils::convertStringToCoordinate(const string& text)
 {
     vector<string> result;
     split(result, text, "_", "");
     assert(result.size() == 2);
-    return UnderWorld::Core::Coordinate(atoi(result.at(0).c_str()), atoi(result.at(1).c_str()));
+    return UnderWorld::Core::Coordinate32(atoi(result.at(0).c_str()), atoi(result.at(1).c_str()));
 }
 
 #pragma mark - rapidjson

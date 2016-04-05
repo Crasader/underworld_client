@@ -42,7 +42,6 @@
 		3019BAB91C9953FB003258DB /* AuraType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3019BAB71C9953FB003258DB /* AuraType.cpp */; };
 		3019BABC1C99668E003258DB /* Aura.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3019BABA1C99668E003258DB /* Aura.cpp */; };
 		3019BABD1C9BF3D9003258DB /* Spell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD556D1C328B020078EC3C /* Spell.cpp */; };
-		3019BABE1C9BF666003258DB /* SpellType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD556A1C322FBF0078EC3C /* SpellType.cpp */; };
 		301C1B7A1C0EA67200B378A6 /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 301C1B781C0EA67200B378A6 /* Effect.cpp */; };
 		30236FF71C5B6AFA00FB1802 /* PathFinderInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30236FF61C5B6AFA00FB1802 /* PathFinderInterface.cpp */; };
 		3028EBC31BFF0CBD00511C51 /* DynamicValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3028EBC11BFF0CBD00511C51 /* DynamicValue.cpp */; };
@@ -66,6 +65,7 @@
 		308B84661BE3853C00377802 /* AIBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84641BE3853C00377802 /* AIBody.cpp */; };
 		308B84691BE3856F00377802 /* AIBrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84671BE3856F00377802 /* AIBrain.cpp */; };
 		309F76A01BEA3ABA00B2791F /* CoreUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F769E1BEA3AB900B2791F /* CoreUtils.cpp */; };
+		30AA1D591CB3EF7700D099D1 /* SpellType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A15698D31C3A95B300B94345 /* SpellType.cpp */; };
 		30C6C3921C52183500DD1C8F /* AStarNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30C6C3901C52183500DD1C8F /* AStarNode.cpp */; };
 		30DF03C41C0D898E00A1C6EB /* EffectType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DF03C21C0D898E00A1C6EB /* EffectType.cpp */; };
 		30E05B2C1C56450700A3A3E9 /* PathService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30E05B2A1C56450700A3A3E9 /* PathService.cpp */; };
@@ -406,8 +406,6 @@
 		30C6C3911C52183500DD1C8F /* AStarNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AStarNode.h; path = Core/AI/Path/AStarNode.h; sourceTree = "<group>"; };
 		30C6C3931C52186B00DD1C8F /* PathFinderInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PathFinderInterface.h; path = Core/AI/Path/PathFinderInterface.h; sourceTree = "<group>"; };
 		30DF03B21C06C14600A1C6EB /* EnumParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EnumParser.h; path = Core/Utils/EnumParser.h; sourceTree = "<group>"; };
-		30DF03BA1C085C2400A1C6EB /* RandomCreator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RandomCreator.cpp; path = Core/Utils/RandomCreator.cpp; sourceTree = "<group>"; };
-		30DF03BB1C085C2400A1C6EB /* RandomCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RandomCreator.h; path = Core/Utils/RandomCreator.h; sourceTree = "<group>"; };
 		30DF03C21C0D898E00A1C6EB /* EffectType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EffectType.cpp; path = Core/Unit/Type/EffectType.cpp; sourceTree = "<group>"; };
 		30DF03C31C0D898E00A1C6EB /* EffectType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectType.h; path = Core/Unit/Type/EffectType.h; sourceTree = "<group>"; };
 		30E05B2A1C56450700A3A3E9 /* PathService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PathService.cpp; path = Core/AI/Path/PathService.cpp; sourceTree = "<group>"; };
@@ -416,14 +414,8 @@
 		30FD55601C2BF57F0078EC3C /* PassiveType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PassiveType.h; path = Core/Unit/Type/PassiveType.h; sourceTree = "<group>"; };
 		30FD55621C2CFDE80078EC3C /* Passive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Passive.cpp; path = Core/Unit/Instance/Passive.cpp; sourceTree = "<group>"; };
 		30FD55631C2CFDE80078EC3C /* Passive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Passive.h; path = Core/Unit/Instance/Passive.h; sourceTree = "<group>"; };
-		30FD55671C2FD2920078EC3C /* Addon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Addon.cpp; path = Core/Unit/Type/Addon.cpp; sourceTree = "<group>"; };
-		30FD55681C2FD2920078EC3C /* Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Addon.h; path = Core/Unit/Type/Addon.h; sourceTree = "<group>"; };
-		30FD556A1C322FBF0078EC3C /* SpellType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SpellType.cpp; path = Core/Unit/Type/SpellType.cpp; sourceTree = "<group>"; };
-		30FD556B1C322FBF0078EC3C /* SpellType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpellType.h; path = Core/Unit/Type/SpellType.h; sourceTree = "<group>"; };
 		30FD556D1C328B020078EC3C /* Spell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Spell.cpp; path = Core/Unit/Instance/Spell.cpp; sourceTree = "<group>"; };
 		30FD556E1C328B020078EC3C /* Spell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Spell.h; path = Core/Unit/Instance/Spell.h; sourceTree = "<group>"; };
-		30FD55701C34E0530078EC3C /* DamageType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DamageType.cpp; path = Core/Unit/Type/DamageType.cpp; sourceTree = "<group>"; };
-		30FD55711C34E0530078EC3C /* DamageType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DamageType.h; path = Core/Unit/Type/DamageType.h; sourceTree = "<group>"; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		46880B8519C43A87006E1F66 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -869,7 +861,6 @@
 			children = (
 				306802401C87CA34000990F9 /* Camp */,
 				3068023F1C87CA2C000990F9 /* Deck */,
-				04FF24601C4A497100A66D71 /* GameSettings.cpp */,
 				307534671BF1B2F20057DCED /* Commander.cpp */,
 				307534681BF1B2F20057DCED /* Commander.h */,
 				3075346B1BF324340057DCED /* EventTriggers.cpp */,
@@ -879,6 +870,7 @@
 				A1211B281C0BF68E00C27CCC /* GameConstants.cpp */,
 				0451170E1BCFBA5F002AA721 /* GameConstants.h */,
 				0451170F1BCFBA5F002AA721 /* GameSettings.h */,
+				04FF24601C4A497100A66D71 /* GameSettings.cpp */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -974,12 +966,6 @@
 				30DF03C31C0D898E00A1C6EB /* EffectType.h */,
 				30FD555F1C2BF57F0078EC3C /* PassiveType.cpp */,
 				30FD55601C2BF57F0078EC3C /* PassiveType.h */,
-				30FD55671C2FD2920078EC3C /* Addon.cpp */,
-				30FD55681C2FD2920078EC3C /* Addon.h */,
-				30FD556A1C322FBF0078EC3C /* SpellType.cpp */,
-				30FD556B1C322FBF0078EC3C /* SpellType.h */,
-				30FD55701C34E0530078EC3C /* DamageType.cpp */,
-				30FD55711C34E0530078EC3C /* DamageType.h */,
 				3019BAB71C9953FB003258DB /* AuraType.cpp */,
 				3019BAB81C9953FB003258DB /* AuraType.h */,
 				3087FF031C9F9D92004E31F6 /* MagicType.cpp */,
@@ -1080,8 +1066,6 @@
 				A1211B251C0BF5CC00C27CCC /* RandomCreator.cpp */,
 				A1211B261C0BF5CC00C27CCC /* RandomCreator.h */,
 				30DF03B21C06C14600A1C6EB /* EnumParser.h */,
-				30DF03BA1C085C2400A1C6EB /* RandomCreator.cpp */,
-				30DF03BB1C085C2400A1C6EB /* RandomCreator.h */,
 				047228AE1C193A4D00E7F71B /* Geometry.cpp */,
 				047228AF1C193A4D00E7F71B /* Geometry.h */,
 			);
@@ -2116,7 +2100,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3019BABE1C9BF666003258DB /* SpellType.cpp in Sources */,
+				30AA1D591CB3EF7700D099D1 /* SpellType.cpp in Sources */,
 				3019BABD1C9BF3D9003258DB /* Spell.cpp in Sources */,
 				3087FF3B1CABAD70004E31F6 /* ClientTerminal.cpp in Sources */,
 				3087FF1B1CA2A6B6004E31F6 /* ClientNetwork.cpp in Sources */,

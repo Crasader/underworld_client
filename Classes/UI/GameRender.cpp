@@ -99,7 +99,7 @@ void GameRender::init(const Game* game, Commander* commander)
     
     const Faction* faction = world->getThisFaction();
     if (faction) {
-        const UnderWorld::Core::Rect& rect = faction->getPuttingArea();
+        const UnderWorld::Core::Rect32& rect = faction->getPuttingArea();
         _minPuttingX = rect._origin.x;
         _maxPuttingX = _minPuttingX + rect._width;
     }
@@ -157,7 +157,7 @@ void GameRender::updateUnits(const Game* game, int index)
     for (int i = 0; i < f->getUnitCount(); ++i) {
         const Unit* unit = f->getUnitByIndex(i);
         const int key = unit->getUnitId();
-        const Coordinate& pos = unit->getCenterPos();
+        const Coordinate32& pos = unit->getCenterPos();
         const Skill* skill = unit->getCurrentSkill();
         if (skill) {
             SkillClass sc = skill->getSkillType()->getSkillClass();
@@ -207,8 +207,8 @@ void GameRender::updateBullets(const Game* game)
     const World* world = game->getWorld();
     for (int i = 0; i < world->getBulletCount(); ++i) {
         const Bullet* bullet = world->getBullet(i);
-        const Coordinate& pos = bullet->getPos();
-        const Coordinate& targetPos = bullet->targetPos();
+        const Coordinate32& pos = bullet->getPos();
+        const Coordinate32& targetPos = bullet->targetPos();
         const int64_t key = reinterpret_cast<int64_t>(bullet);
         const bool isExploded(bullet->isExploded());
         if (_allBulletNodes.find(key) != _allBulletNodes.end()) {
@@ -220,8 +220,8 @@ void GameRender::updateBullets(const Game* game)
                 _allBulletNodes.erase(key);
                 _bulletParams.erase(key);
             } else {
-                const pair<Coordinate, float>& params = _bulletParams.at(key);
-                const Coordinate& opos = params.first;
+                const pair<Coordinate32, float>& params = _bulletParams.at(key);
+                const Coordinate32& opos = params.first;
                 const float h = params.second;
                 const float d = sqrt(pow(abs(opos.x- targetPos.x), 2) + pow(abs(opos.y - targetPos.y), 2));
                 const float distance = sqrt(pow(abs(pos.x- opos.x), 2) + pow(abs(pos.y - opos.y), 2));
@@ -232,14 +232,14 @@ void GameRender::updateBullets(const Game* game)
                     const float b = 2.0f * (d * bulletMaxHeightFactor + sqrt(pow(d * bulletMaxHeightFactor, 2) + d * h * bulletMaxHeightFactor)) / d;
                     height = a * pow(distance, 2) + b * distance + h;
                 }
-                _mapLayer->repositionUnit(node, pos + Coordinate(0, height));
+                _mapLayer->repositionUnit(node, pos + Coordinate32(0, height));
             }
         } else {
             if (!isExploded) {
                 BulletNode* node = BulletNode::create(bullet);
                 node->registerObserver(this);
                 const float height = bullet->getHeight();
-                _mapLayer->addUnit(node, pos + Coordinate(0, height));
+                _mapLayer->addUnit(node, pos + Coordinate32(0, height));
                 _allBulletNodes.insert(make_pair(key, node));
                 _bulletParams.insert(make_pair(key, make_pair(pos, height)));
             }
@@ -537,7 +537,7 @@ void GameRender::updateResources()
             const Resource* resource = faction->getResource(resourceType);
             if (kResourceClass_consumable == resourceType->_class) {
                 const string& name = resourceType->_name;
-                const float value = resource->getBalanceFloat();
+                const float value = ((float)resource->getBalanceMicro()) / GameConstants::MICRORES_PER_RES;
                 if (_resources.find(name) != end(_resources)) {
                     _resources.at(name) = value;
                 } else {
@@ -630,7 +630,7 @@ void GameRender::updateCardMask(const UnderWorld::Core::Card* card, const Point&
             removeCardMask();
         } else {
             const UnitType* ut = card->getUnitType();
-            Coordinate coordinate = getValidPuttingCoordinate(point, ut);
+            Coordinate32 coordinate = getValidPuttingCoordinate(point, ut);
             if (ut) {
                 _mapLayer->updateUnitMask(ut, coordinate);
             } else {
@@ -659,7 +659,7 @@ void GameRender::tryToUseCard(const UnderWorld::Core::Card* card, int idx, const
             // TODO:
         } else if (_commander) {
             const SpellType* st = card->getSpellType();
-            Coordinate coordinate = getValidPuttingCoordinate(point, (nullptr == st));
+            Coordinate32 coordinate = getValidPuttingCoordinate(point, (nullptr == st));
             CommandResult result = _commander->tryGiveDeckUseCommand(_deck, idx, coordinate);
             if (kCommandResult_suc == result) {
                 if (isValidAoeSpell(st)) {
@@ -693,22 +693,22 @@ void GameRender::tryToUseCard(const UnderWorld::Core::Card* card, int idx, const
     }
 }
 
-Coordinate GameRender::getValidPuttingCoordinate(const Point& point, bool check) const
+Coordinate32 GameRender::getValidPuttingCoordinate(const Point& point, bool check) const
 {
     if (_mapLayer) {
-        Coordinate coordinate = _mapLayer->convertPoint(point);
+        Coordinate32 coordinate = _mapLayer->convertPoint(point);
         if (check) {
             const int x = coordinate.x;
             const int y = coordinate.y;
             if (x < _minPuttingX) {
-                return Coordinate(_minPuttingX, y);
+                return Coordinate32(_minPuttingX, y);
             } else if (x >= _maxPuttingX) {
-                return Coordinate(_maxPuttingX - 1, y);
+                return Coordinate32(_maxPuttingX - 1, y);
             }
         }
         
         return coordinate;
     }
     
-    return Coordinate(-1, -1);
+    return Coordinate32(-1, -1);
 }
