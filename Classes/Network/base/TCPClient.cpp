@@ -521,7 +521,6 @@
     
     TCPClient::~TCPClient()
     {
-        CC_SAFE_DELETE(_requestSentinel);
         if(_fd!=-1)
             _close(_fd);
         
@@ -543,8 +542,8 @@
             _close(_pipeRead);
         if(_pipeWrite!=-1)
             _close(_pipeWrite);
+        CC_SAFE_DELETE(_requestSentinel);
         decreaseThreadCountAndMayDeleteThis();
-        
     }
     
     //Lazy create semaphore & mutex & thread
