@@ -96,9 +96,9 @@ void BattleScene::start()
     _render->registerObserver(this);
     
     _sch = new (nothrow) GameScheduler();
-    _proxy = new (nothrow) ClientTCPNetworkProxy("192.168.31.139", 8888, "playerB", 2);
-    //_proxy = new (nothrow) ClientTCPNetworkProxy("123.57.221.242", 8888, "playerA", 1);
-    
+    _proxy = new (nothrow) ClientTCPNetworkProxy("192.168.31.139", 8888, "playerB", 1);
+    //_proxy = new (nothrow) ClientTCPNetworkProxy("123.57.221.242", 8888, "playerB", 1);
+
     // 3. game setting
     UnderWorld::Core::GameContentSetting contentSetting;
     
@@ -126,6 +126,7 @@ void BattleScene::start()
     
     
     _client = new (nothrow) UnderworldClient("mofish", _proxy, _sch, _render);
+    //_client->launchPve(_render->getMapSetting(), contentSetting);
     _client->launchPvp(contentSetting);
 }
 
