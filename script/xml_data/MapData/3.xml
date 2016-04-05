@@ -1,82 +1,114 @@
 <?xml version="1.0"?>
 <root>
     <map map_name="1"/>
-    <location_setting index="0" core_location="200,550" putting_start_location="0,0" putting_end_location="1600,1200"/>
-    <location_setting index="1" core_location="2000,550" building_location="1400,550" putting_start_location="3200,0" putting_end_location="4800,1200"/>
+    <location_setting index="0" core_location="250,480" putting_start_location="0,0" building_location="750,800;750,400" putting_end_location="1150,1200"/>
+    <location_setting index="1" core_location="2000,525" putting_start_location="1250,0" building_location="1600,800;1600,400" putting_end_location="2400,1200"/>
+    <deck_setting index="0" hand_size="6" init_hand_count="3" draw_span="10.f"/>
+    <deck_setting index="1" hand_size="6" init_hand_count="3" draw_span="10.f"/>
     <schedule_events>
         <event>
             <event_trigger class="schedule" time="0"/>
-            <event_effect class="alter_resource" map_index="0" resource_name="金子" amount="9.0f"/>
-        </event>
-    </schedule_events>
-    <loop_events>
-        <event>
-            <event_trigger class="loop" time="1" start_time="1" end_time="300"/>
-            <event_effect class="alter_resource" map_index="0" resource_name="金子" amount="0.1f"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="金子" amount="5.0f"/>
         </event>
         <event>
-            <event_trigger class="loop" time="1" start_time="1" end_time="300"/>
-            <event_effect class="alter_resource" map_index="1" resource_name="金子" amount="0.0f"/>
+            <event_trigger class="schedule" time="0"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="5.0f"/>
         </event>
         <event>
-            <event_trigger class="loop" time="30" start_time="25" end_time="300"/>
-            <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="疾风弓手"/>
-            </event_effect>
-        </event>
-        <event>
-            <event_trigger class="loop" time="30" start_time="55" end_time="300"/>
-            <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="疾风弓手"/>
-            </event_effect>
-        </event>
-        <event>
-            <event_trigger class="loop" time="30" start_time="145" end_time="300"/>
-            <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="疾风弓手"/>
-            </event_effect>
-        </event>
-        <event>
-            <event_trigger class="loop" time="30" start_time="5" end_time="300"/>
-            <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="轻装武士"/>
-            </event_effect>
-        </event>
-        <event>
-            <event_trigger class="loop" time="30" start_time="65" end_time="300"/>
-            <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="轻装武士"/>
-            </event_effect>
-        </event>
-        <event>
-            <event_trigger class="loop" time="30" start_time="125" end_time="300"/>
-            <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="轻装武士"/>
-            </event_effect>
-        </event>
-        <event>
-            <event_trigger class="loop" time="30" start_time="85" end_time="300"/>
+            <event_trigger class="schedule" time="5" start_time="5" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="1700,550">
                 <unit_setting name="骑士"/>
             </event_effect>
         </event>
         <event>
-            <event_trigger class="loop" time="30" start_time="75" end_time="300"/>
+            <event_trigger class="schedule" time="5" start_time="5" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="辉月侍僧"/>
+                <unit_setting name="骑士"/>
             </event_effect>
         </event>
         <event>
-            <event_trigger class="loop" time="30" start_time="180" end_time="300"/>
+            <event_trigger class="schedule" time="25" start_time="5" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="天使"/>
+                <unit_setting name="弓箭手"/>
+            </event_effect>
+        </event>
+    </schedule_events>
+    <loop_events>
+        <event>
+            <event_trigger class="loop" time="1" start_time="0" end_time="300"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="金子" amount="0.2f"/>
+        </event>
+        <event>
+            <event_trigger class="loop" time="1" start_time="0" end_time="300"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="0.5f"/>
+        </event>
+        <event>
+            <event_trigger class="loop" time="1" start_time="60" end_time="300"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="0.5f"/>
+        </event>
+        <event>
+            <event_trigger class="loop" time="1" start_time="120" end_time="300"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="0.5f"/>
+        </event>
+        <event>
+            <event_trigger class="loop" time="35" start_time="30" end_time="300"/>
+            <event_effect class="add_unit" map_index="1" position="1700,550">
+                <unit_setting name="弓箭手"/>
             </event_effect>
         </event>
         <event>
-            <event_trigger class="loop" time="30" start_time="240" end_time="300"/>
+            <event_trigger class="loop" time="35" start_time="55" end_time="300"/>
             <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="伊利丹"/>
+                <unit_setting name="弓箭手"/>
+            </event_effect>
+        </event>
+        <event>
+            <event_trigger class="loop" time="35" start_time="105" end_time="300"/>
+            <event_effect class="add_unit" map_index="1" position="1700,550">
+                <unit_setting name="弓箭手"/>
+            </event_effect>
+        </event>
+        <event>
+            <event_trigger class="loop" time="35" start_time="5" end_time="300"/>
+            <event_effect class="add_unit" map_index="1" position="1700,550">
+                <unit_setting name="骑士"/>
+            </event_effect>
+        </event>
+        <event>
+            <event_trigger class="loop" time="35" start_time="80" end_time="300"/>
+            <event_effect class="add_unit" map_index="1" position="1700,550">
+                <unit_setting name="骑士"/>
+            </event_effect>
+        </event>
+        <event>
+            <event_trigger class="loop" time="35" start_time="130" end_time="300"/>
+            <event_effect class="add_unit" map_index="1" position="1700,550">
+                <unit_setting name="骑士"/>
+            </event_effect>
+        </event>
+        <event>
+            <event_trigger class="loop" time="35" start_time="155" end_time="300"/>
+            <event_effect class="add_unit" map_index="1" position="1700,550">
+                <unit_setting name="骑士"/>
+            </event_effect>
+        </event>
+        <event>
+            <event_trigger class="loop" time="65" start_time="155" end_time="300"/>
+            <event_effect class="add_unit" map_index="1" position="1700,550">
+                <unit_setting name="骑士"/>
             </event_effect>
         </event>
     </loop_events>
+    <faction_setting faction_count="2" this_faction="0">
+        <faction_setting_item faction_index="0" faction_control_type="human" map_index="0" team_index="0"/>
+        <faction_setting_item faction_index="1" faction_control_type="cpu" map_index="1" team_index="1"/>
+        <game_content_setting map_index="0" faction_type="狼人族">
+            <core_setting name="狼人基地"/>
+            <tower_setting name="狼人箭塔"/>
+        </game_content_setting>
+        <game_content_setting map_index="1" faction_type="吸血鬼族">
+            <core_setting name="吸血鬼基地"/>
+            <tower_setting name="吸血鬼箭塔"/>
+        </game_content_setting>
+    </faction_setting>
 </root>

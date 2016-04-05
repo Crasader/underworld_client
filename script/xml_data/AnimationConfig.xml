@@ -23,6 +23,18 @@
     <item name="时光女神" skill="3" direction="1" scale="1.0" speed="0.9" effect_pos="0.0_0.0" effect_scale="1.0f"/>
     <item name="时光女神" skill="4" direction="1" scale="1.0" speed="1.5" effect_pos="0.0_0.0" effect_scale="1.0f"/>
     
+    <item name="腐化狼人" skill="0" direction="1" scale="0.9" speed="0.9" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="腐化狼人" skill="1" direction="1" scale="0.9" speed="0.9" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="腐化狼人" skill="2" direction="1" scale="0.9" speed="0.9" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="腐化狼人" skill="3" direction="1" scale="0.9" speed="0.9" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="腐化狼人" skill="4" direction="1" scale="0.9" speed="1.5" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    
+    <item name="七恶魔拉玛什图" skill="0" direction="1" scale="1.2" speed="0.9" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="七恶魔拉玛什图" skill="1" direction="1" scale="1.2" speed="0.9" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="七恶魔拉玛什图" skill="2" direction="1" scale="1.2" speed="0.9" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="七恶魔拉玛什图" skill="3" direction="1" scale="1.2" speed="0.9" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="七恶魔拉玛什图" skill="4" direction="1" scale="1.2" speed="1.5" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    
     <item name="狼人森林之魂" skill="0" direction="1" scale="1.0" speed="0.9" effect_pos="0.0_0.0" effect_scale="1.0f"/>
     <item name="狼人森林之魂" skill="1" direction="1" scale="1.0" speed="0.9" effect_pos="0.0_0.0" effect_scale="1.0f"/>
     <item name="狼人森林之魂" skill="2" direction="1" scale="1.0" speed="0.9" effect_pos="0.0_0.0" effect_scale="1.0f"/>
@@ -35,11 +47,11 @@
     <item name="天空女神" skill="3" direction="1" scale="1.0" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
     <item name="天空女神" skill="4" direction="1" scale="1.0" speed="1.5" effect_pos="0.0_0.0" effect_scale="1.0f"/>
     
-    <item name="狼人步兵" skill="0" direction="1" scale="0.95" speed="0.8" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="狼人步兵" skill="1" direction="1" scale="0.95" speed="0.8" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="狼人步兵" skill="2" direction="1" scale="0.95" speed="0.8" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="狼人步兵" skill="3" direction="1" scale="0.95" speed="0.8" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="狼人步兵" skill="4" direction="1" scale="0.95" speed="1.5" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="狼人步兵" skill="0" direction="1" scale="0.7" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="狼人步兵" skill="1" direction="1" scale="0.7" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="狼人步兵" skill="2" direction="1" scale="0.7" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="狼人步兵" skill="3" direction="1" scale="0.7" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="狼人步兵" skill="4" direction="1" scale="0.7" speed="1.5" effect_pos="0.0_0.0" effect_scale="1.0f"/>
     
     <item name="狼人射手" skill="0" direction="1" scale="0.7" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
     <item name="狼人射手" skill="1" direction="1" scale="0.7" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
@@ -59,10 +71,10 @@
     <item name="机械甲虫" skill="3" direction="1" scale="1.5" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
     <item name="机械甲虫" skill="4" direction="1" scale="1.5" speed="1.5" effect_pos="0.0_0.0" effect_scale="1.0f"/>
     
-    <item name="吸血鬼战士" skill="0" direction="1" scale="0.9" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="吸血鬼战士" skill="1" direction="1" scale="0.9" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="吸血鬼战士" skill="2" direction="1" scale="0.9" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="吸血鬼战士" skill="3" direction="1" scale="0.9" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="吸血鬼战士" skill="0" direction="1" scale="0.9" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="吸血鬼战士" skill="1" direction="1" scale="0.9" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="吸血鬼战士" skill="2" direction="1" scale="0.9" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
+    <item name="吸血鬼战士" skill="3" direction="1" scale="0.9" speed="1.2" effect_pos="0.0_0.0" effect_scale="1.0f"/>
     <item name="吸血鬼战士" skill="4" direction="1" scale="0.9" speed="1.5" effect_pos="0.0_0.0" effect_scale="1.0f"/>
     
     <item name="吸血鬼弓兵" skill="0" direction="1" scale="1.2" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
@@ -83,11 +95,6 @@
     <item name="莉莉丝" skill="3" direction="1" scale="0.8" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
     <item name="莉莉丝" skill="4" direction="1" scale="0.8" speed="1.5" effect_pos="0.0_0.0" effect_scale="1.0f"/>
     
-    <item name="七恶魔拉玛什图" skill="0" direction="1" scale="1.0" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="七恶魔拉玛什图" skill="1" direction="1" scale="1.0" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="七恶魔拉玛什图" skill="2" direction="1" scale="1.0" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="七恶魔拉玛什图" skill="3" direction="1" scale="1.0" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
-    <item name="七恶魔拉玛什图" skill="4" direction="1" scale="1.0" speed="1.5" effect_pos="0.0_0.0" effect_scale="1.0f"/>
     
     <item name="吸血鬼巫师" skill="0" direction="1" scale="1.2" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
     <item name="吸血鬼巫师" skill="1" direction="1" scale="1.2" speed="1.0" effect_pos="0.0_0.0" effect_scale="1.0f"/>
