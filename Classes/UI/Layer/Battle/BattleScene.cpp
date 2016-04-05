@@ -126,8 +126,8 @@ void BattleScene::start()
     
     
     _client = new (nothrow) UnderworldClient("mofish", _proxy, _sch, _render);
-    //_client->launchPve(_render->getMapSetting(), contentSetting);
-    _client->launchPvp(contentSetting);
+    _client->launchPve(_render->getMapSetting(), contentSetting);
+    //_client->launchPvp(contentSetting);
 }
 
 void BattleScene::startTest() {

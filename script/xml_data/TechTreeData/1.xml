@@ -15,7 +15,7 @@
     <!--
     <card name="重锤武士" class="unit" cost="木头:4" unit_name="眩晕战士" unit_count="1" desc="被重锤武士攻击到的敌人会被眩晕3秒。"/>
     -->
-    <card name="高攻击战士" class="unit" cost="木头:5" unit_name="高攻击战士" unit_count="1" desc="这是攻击力非常高的战士。"/>
+    <card name="高攻击战士" class="unit" cost="木头:5" unit_name="高攻击战士" unit_count="1" desc="大皮卡，攻击高，移动速度慢。"/>
     <card name="三个弓箭手" class="unit" cost="木头:3" unit_name="三个弓箭手" unit_count="3" desc="一次召唤三个弓箭手。"/>
     <card name="火球术" class="spell" cost="木头:4" spell_name="火球术" desc="火球术可以对范围内的敌人造成大量伤害。"/>
     <card name="治愈" class="spell" cost="木头:4" spell_name="治愈" desc="可以治疗范围内的友军。"/>
@@ -136,7 +136,7 @@
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="70"/>
     </unit> -->
     <!-- 狼人步兵-->
-    <unit name="狼人步兵" class="warrior" race="辉月狼人" talent_name="基础" hp="2200" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="0" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:3" max_level="100" producee="木头:0.5;金子:0.5" put_cost="木头:3" rewarde="金子:0.25f" rarity="2" recover_span="0.f" render_key="狼人步兵" desc="常规的肉搏战士，对轻甲单位造成大量伤害。">
+    <unit name="狼人步兵" class="warrior" race="辉月狼人" talent_name="基础" hp="550" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="0" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:3" max_level="100" producee="木头:0.5;金子:0.5" put_cost="木头:3" rewarde="金子:0.25f" rarity="2" recover_span="0.f" render_key="狼人步兵" desc="常规的肉搏战士，对轻甲单位造成大量伤害。">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="0.5" perform="0.0" cd="1.6" min_damage="120" max_damage="140" deliver_class="physical" damage_distance="nearby" range="24" fields="1">
@@ -169,7 +169,7 @@
         <skill class="attack" preperform="0.5" perform="0.0" cd="2.4" min_damage="200" max_damage="240" deliver_class="physical" damage_distance="nearby" range="24" fields="1">
             <bullet speed="800" size="0"/>
         </skill>
-        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="100"/>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="70"/>
     </unit>
     <!-- 三个弓箭手 -->
     <unit name="三个弓箭手" class="warrior" race="辉月狼人" talent_name="基础" hp="52" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="0" armor_preference="轻甲" armor_preference_factor="1.8f" magical_defense="0.f" attacksight="400" size="18" height="0" cost="金子:5" max_level="100" producee="木头:0.5;金子:0.5" put_cost="木头:3" rewarde="金子:0.25f" rarity="2" recover_span="0.f" render_key="吸血鬼弓兵" desc="常规的肉搏战士，对轻甲单位造成大量伤害。">
