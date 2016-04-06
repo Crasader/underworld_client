@@ -12,6 +12,18 @@
 using namespace std;
 using namespace UnderWorld::Core;
 
+unsigned int Utils::bkdrHash(const char *str)
+{
+    static const unsigned int seed(131); // 31 131 1313 13131 131313 etc..
+    unsigned int hash(0);
+    
+    while (*str) {
+        hash = hash * seed + (*str++);
+    }
+    
+    return (hash & 0x7FFFFFFF);
+}
+
 string Utils::format(const char *format, ...)
 {
     static const unsigned int MAX_TEXT_LENGTH = 1024 * 100;

@@ -41,6 +41,7 @@ namespace iOSApi {
     void buyGemApple(const std::string& account, int gemNumber, const IAPPaymentSuccessCallback& success, const IAPPaymentFailedCallback& failed);
     
     // utils
+    std::string getUUID();
     std::string getVersionId();
     std::string getBuildId();
     void setMultipleTouchEnabled(bool enabled);

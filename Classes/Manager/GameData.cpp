@@ -12,6 +12,7 @@
 #include "ApiBridge.h"
 #include "TargetConditionals.h"
 #endif
+#include "Utils.h"
 #include "LocalHelper.h"
 #include "IapObject.h"
 #include "ProgressLayer.h"
@@ -33,8 +34,10 @@ static bool sort_by_price(const IapObject *a, const IapObject *b)
 
 GameData::GameData()
 :_user(nullptr)
+,_uuid(0)
 ,_isTransacting(nullptr)
 {
+    generateUUID();
     fetchIAPInfo(nullptr, nullptr, true);
 }
 
@@ -83,6 +86,11 @@ User* GameData::currentUser() const
 void GameData::setDeviceToken(const string& token)
 {
     _deviceToken.assign(token);
+}
+
+unsigned int GameData::getUUID() const
+{
+    return _uuid;
 }
 
 const string& GameData::getVersionId() const
@@ -240,6 +248,22 @@ void GameData::saveAnonymousUser(const User* user)
 }
 
 #endif  // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
+void GameData::generateUUID()
+{
+    static const char* key("uuid_key");
+    UserDefault *ud = UserDefault::getInstance();
+    _uuid = ud->getIntegerForKey(key, 0);
+    if (0 == _uuid) {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        const string& uuid = iOSApi::getUUID();
+        _uuid = Utils::bkdrHash(uuid.c_str());
+#else
+        _uuid = rand();
+#endif
+        ud->setIntegerForKey(key, _uuid);
+    }
+}
 
 void GameData::requestLogin(const httpRequestCallback& success, const httpErrorCallback& failed)
 {
