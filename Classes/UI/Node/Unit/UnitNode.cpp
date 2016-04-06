@@ -953,6 +953,9 @@ void UnitNode::addHPBar()
         _hpBar = DisplayBar::create(DisplayBarType::HP, _unit->getBelongFaction()->getFactionIndex(), _unit->getUnitBase().getUnitClass());
         _hpBar->setPosition(getHPBarPosition());
         addChild(_hpBar, topZOrder);
+        if (_configData) {
+            node_setScale(_hpBar, _configData->getHpBarScaleX(), 1.0f);
+        }
     }
 }
 
@@ -978,12 +981,14 @@ Point UnitNode::getHPBarPosition() const
     } else if (_sprite) {
         const Size& size = _sprite->getContentSize();
         const Point& pos = _sprite->getPosition();
+        float offsetX(0);
         float offsetY(0);
         if (_configData) {
+            offsetX = _configData->getHpBarPosX();
             offsetY = _configData->getHpBarPosY();
         }
         
-        Point position(pos + Point(0, size.height / 2 + offsetY));
+        Point position(pos + Point(offsetX, size.height / 2 + offsetY));
         position = convertToNodeSpace(_actionNode->convertToWorldSpace(position));
         return position;
     }

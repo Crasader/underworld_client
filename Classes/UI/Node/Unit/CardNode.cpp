@@ -22,6 +22,8 @@ using namespace UnderWorld::Core;
 
 static const int topZOrder(1);
 static const Point iconTouchOffset(0, -6.0f);
+static const float normalScale(1.0f);
+static const float selectedScale(1.1f);
 
 CardNode* CardNode::create(bool canShake)
 {
@@ -125,16 +127,12 @@ bool CardNode::init(bool canShake)
         mainNode->setPosition(mid);
         
         _cardWidget->addTouchEventListener([=](Ref *pSender, Widget::TouchEventType type) {
-            static const float maxScale(1.0f);
-            static const float minScale(0.9f);
-            const float scale = _cardWidget->getScale();
-            
             Widget* button = dynamic_cast<Widget*>(pSender);
             if (type == Widget::TouchEventType::BEGAN) {
                 _touchInvalid = false;
-                if (scale != minScale) {
-                    _cardWidget->setScale(minScale);
-                }
+                
+                _cardWidget->setScale(_selected ? 1.05f : 0.95f);
+                
                 if(_observer) {
                     _observer->onCardNodeTouchedBegan(this);
                 }
@@ -151,17 +149,13 @@ bool CardNode::init(bool canShake)
                     SoundManager::getInstance()->playButtonSound();
                 }
                 
-                if (scale != maxScale) {
-                    _cardWidget->setScale(maxScale);
-                }
+                _cardWidget->setScale(_selected ? selectedScale : normalScale);
                 
                 if(_observer) {
                     _observer->onCardNodeTouchedEnded(this, !_touchInvalid);
                 }
             } else if (type == Widget::TouchEventType::CANCELED) {
-                if (scale != maxScale) {
-                    _cardWidget->setScale(maxScale);
-                }
+                _cardWidget->setScale(_selected ? selectedScale : normalScale);
             }
         });
         
@@ -281,26 +275,17 @@ void CardNode::update(const string& name, int rarity, int cost, float resource)
 
 void CardNode::setSelected(bool selected)
 {
+    // 1. check if need shake
     const bool needShake(selected || _selected);
     
+    // 2. save
     _selected = selected;
     
     if (_shiningSprite) {
         _shiningSprite->setVisible(selected);
     }
     
-    static const float maxScale(1.1f);
-    static const float minScale(1.0f);
-    const float scale = _cardWidget->getScale();
-    if (selected) {
-        if (scale != maxScale) {
-            _cardWidget->setScale(maxScale);
-        }
-    } else {
-        if (scale != minScale) {
-            _cardWidget->setScale(minScale);
-        }
-    }
+    _cardWidget->setScale(selected ? selectedScale : normalScale);
     
     // Follow this steps:
     // 1. set position

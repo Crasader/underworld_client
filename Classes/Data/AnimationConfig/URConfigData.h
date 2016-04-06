@@ -49,7 +49,9 @@ public:
     float getFootEffectScaleX() const;
     float getFootEffectScaleY() const;
     
+    float getHpBarPosX() const;
     float getHpBarPosY() const;
+    float getHpBarScaleX() const;
     
 private:
     std::string _name;
@@ -75,7 +77,9 @@ private:
     float _footEffectScaleX;
     float _footEffectScaleY;
     
+    float _hpBarPosX;
     float _hpBarPosY;
+    float _hpBarScaleX;
 };
 
 #endif /* URConfigData_h */

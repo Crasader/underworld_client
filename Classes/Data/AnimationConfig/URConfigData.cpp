@@ -26,7 +26,9 @@ URConfigData::URConfigData(tinyxml2::XMLElement *xmlElement)
 ,_footEffectPosition(Point::ZERO)
 ,_footEffectScaleX(1.0f)
 ,_footEffectScaleY(1.0f)
+,_hpBarPosX(0.0f)
 ,_hpBarPosY(0.0f)
+,_hpBarScaleX(1.0f)
 {
     if (xmlElement) {
         _name = xmlElement->Attribute("render_key");
@@ -161,9 +163,21 @@ URConfigData::URConfigData(tinyxml2::XMLElement *xmlElement)
             }
         }
         {
+            const char *data = xmlElement->Attribute("hp_bar_pos_x");
+            if (data) {
+                _hpBarPosX = atof(data);
+            }
+        }
+        {
             const char *data = xmlElement->Attribute("hp_bar_pos_y");
             if (data) {
                 _hpBarPosY = atof(data);
+            }
+        }
+        {
+            const char *data = xmlElement->Attribute("hp_bar_scale_x");
+            if (data) {
+                _hpBarScaleX = atof(data);
             }
         }
     }
@@ -279,7 +293,17 @@ float URConfigData::getFootEffectScaleY() const
     return _footEffectScaleY;
 }
 
+float URConfigData::getHpBarPosX() const
+{
+    return _hpBarPosX;
+}
+
 float URConfigData::getHpBarPosY() const
 {
     return _hpBarPosY;
+}
+
+float URConfigData::getHpBarScaleX() const
+{
+    return _hpBarScaleX;
 }

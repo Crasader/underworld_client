@@ -57,7 +57,7 @@ static Node* createUnitMask(const UnderWorld::Core::UnitType* ut)
                     sprite->setOpacity(180);
                     
                     {
-                        const Point& point = sprite->getPosition() + Point(0, sprite->getContentSize().height / 2 + data->getHpBarPosY());
+                        const Point& point = sprite->getPosition() + Point(data->getHpBarPosX(), sprite->getContentSize().height / 2 + data->getHpBarPosY());
                         
                         Node* node = Node::create();
                         actionNode->addChild(node);

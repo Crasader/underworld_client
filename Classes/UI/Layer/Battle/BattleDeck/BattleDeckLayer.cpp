@@ -301,10 +301,11 @@ TableViewCell* BattleDeckLayer::tableCellAtIndex(TableView *table, ssize_t idx)
                 unitNode->registerObserver(this);
                 cell->addChild(unitNode);
                 cell->setNode(unitNode, i);
-                
-                const Point point(_cellSize.width * (i + 0.5f) - unitNodeOffsetX / 2, unitNode->getContentSize().height * 0.5f);
-                unitNode->setPosition(point + Point(0, (idx == maxCnt - 1) ? unitNodeOffsetY : 0));
             }
+            
+            // we must update the position when the table was reloaded
+            const Point point(_cellSize.width * (i + 0.5f) - unitNodeOffsetX / 2, unitNode->getContentSize().height * 0.5f);
+            unitNode->setPosition(point + Point(0, (idx == maxCnt - 1) ? unitNodeOffsetY : 0));
             
             const string& name = _candidateCards.at(index);
             updateCardNode(unitNode, name);
@@ -329,7 +330,9 @@ void BattleDeckLayer::onCardNodeTouchedBegan(CardNode* node)
     _selectedCard = node->getCardName();
     createDragNode(_selectedCard);
     _dragNode->setPosition(_background->convertToNodeSpace(node->getParent()->convertToWorldSpace(node->getPosition())));
-    _dragNode->setVisible(true);
+    if (_pickedCards.find(_selectedCard) != _pickedCards.end()) {
+        _dragNode->setVisible(true);
+    }
 }
 
 void BattleDeckLayer::onCardNodeTouchedEnded(CardNode* node, bool isValid)
