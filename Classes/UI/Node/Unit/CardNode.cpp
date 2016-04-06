@@ -302,6 +302,11 @@ void CardNode::setSelected(bool selected)
 void CardNode::checkResource(float count)
 {
     if (_resourceNode) {
+        // if it is used
+        if (getOpacity() < 255) {
+            count = BATTLE_RESOURCE_MAX_COUNT;
+        }
+        
         _resourceNode->check(count);
         
         const int cost = _resourceNode->getCount();
@@ -391,6 +396,7 @@ void CardNode::shake()
         _isShaking = true;
         auto action = (Sequence::create(CCShake::actionWithDuration(shake_duration, shake_strength, getPosition()), CallFunc::create([=] {
             _isShaking = false;
+            resetPosition();
         }), nullptr));
         
         action->setTag(shake_action_tag);
