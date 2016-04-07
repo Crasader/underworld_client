@@ -280,7 +280,7 @@ void GameRender::updateUILayer()
         const int total = _deck->getDrawSpanFrames();
         const float duration = (float)total / (float)GameConstants::FRAME_PER_SEC;
         const float time = (1.0 - (float)(counter % total) / (float)total) * duration;
-        _mapUILayer->updateCardDeckCountDown(time, duration);
+        _mapUILayer->updateCountDown(time, duration);
         
         const auto& logs = _deck->getLogs();
         for (int i = 0; i < logs.size(); ++i) {
@@ -547,7 +547,7 @@ void GameRender::updateResources()
         }
         
         if (_mapUILayer) {
-            _mapUILayer->updateCardDeckResource(_resources);
+            _mapUILayer->updateResource(_resources);
         }
     }
 }
