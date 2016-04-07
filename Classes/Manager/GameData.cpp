@@ -262,6 +262,7 @@ void GameData::generateUUID()
         _uuid = rand();
 #endif
         ud->setIntegerForKey(key, _uuid);
+        ud->flush();
     }
 }
 
