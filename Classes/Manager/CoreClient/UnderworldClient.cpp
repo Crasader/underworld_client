@@ -8,7 +8,7 @@
 
 #include "UnderworldClient.h"
 #include "DataManager.h"
-
+#include "CoreUtils.h"
 
 using namespace UnderWorld::Core;
     
@@ -33,7 +33,7 @@ void UnderworldClient::launchPvp(const GameContentSetting& setting) {
     _mode = kPvp;
     _state = kLaunching;
     
-//    //test code
+    //test code
 //    {
 //        loadMap(1);
 //        FactionSetting fs;
@@ -58,7 +58,7 @@ void UnderworldClient::launchPvp(const GameContentSetting& setting) {
 //        gcs0.setTower(tower);
 //        gcs1.setTower(tower);
 //        std::vector<std::string> cards0 = {
-//            "巨人", "狼人步兵", "王子", "迷你皮卡", "高攻击战士"
+//            "巨人","狼人步兵","王子","迷你皮卡","高攻击战士"
 //        };
 //        vector<CardSetting> cs0;
 //        for (int i = 0; i < cards0.size(); ++i) {
@@ -68,7 +68,7 @@ void UnderworldClient::launchPvp(const GameContentSetting& setting) {
 //        }
 //        gcs0.setCards(cs0);
 //        std::vector<std::string> cards1 = {
-//            "巨人","战士","法师","火枪手","王子","迷你皮卡","骑士","高攻击战士"
+//            "火枪手","狗"
 //        };
 //        vector<CardSetting> cs1;
 //        for (int i = 0; i < cards1.size(); ++i) {
@@ -82,25 +82,59 @@ void UnderworldClient::launchPvp(const GameContentSetting& setting) {
 //        _settings.setFactionSetting(fs);
 //        
 //        _terminal.getGame().init(_settings);
-//        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(2, 0, Coordinate(1361, 584)), 138);
-//        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(2, 1, Coordinate(3275, 641)), 732);
-//        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(1, 0, Coordinate(1547, 667)), 786);
-//        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(2, 1, Coordinate(3200, 572)), 1320);
-//        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(1, 0, Coordinate(1599, 627)), 1410);
-//        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(2, 0, Coordinate(1599, 592)), 1968);
-//        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(3, 1, Coordinate(3323, 582)), 1992);
-//        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(0, 1, Coordinate(3200, 572)), 2328);
-//        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(2, 1, Coordinate(3296, 453)), 2640);
-//        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(1, 1, Coordinate(3784, 401)), 3162);
-//        _terminal.getGame().getCommander()->addCommandFromRemote(new OutsideDeckCommand(3, 0, Coordinate(1599, 699)), 3168);
-//        for (int i = 1; i <= 10000; ++i) {
+//        std::vector<std::string> vec = {
+//            "594-0-2-1-3200_432",
+//            "804-0-3-0-1575_845",
+//            "1026-0-2-1-3200_649",
+//            "1380-0-3-0-1555_711",
+//            "1638-0-2-1-3200_534",
+//            "1956-0-2-0-1599_732",
+//            "2016-0-1-1-3356_508",
+//            "2328-0-0-1-3709_355",
+//            "2616-0-3-0-1599_639",
+//            "2754-0-0-1-3574_673",
+//            "3252-0-0-1-3543_628",
+//            "3330-0-3-0-1585_580",
+//            "3576-0-0-1-3425_512",
+//            "3900-0-1-0-1599_529",
+//            "4110-0-0-1-3537_465",
+//            "4278-0-2-0-1599_660",
+//            "4356-0-0-1-3417_443",
+//            "4974-0-3-0-1465_614",
+//            "4992-0-0-1-3350_422",
+//            "5604-0-3-0-1599_627",
+//            "6000-0-0-1-3594_425",
+//            "6282-0-0-1-3615_598",
+//            "6744-0-0-1-3463_534",
+//            "7356-0-0-1-3513_558",
+//            "7590-0-2-0-1400_615",
+//            "7920-0-5-0-1523_547",
+//            "7944-0-0-1-3415_445",
+//            "8382-0-4-0-1599_889",
+//            "8730-0-4-0-1599_911",
+//            "9192-0-0-1-4516_465",
+//            "9396-0-0-1-4455_421",
+//            "9444-0-1-0-1599_492"
+//        };
+//        for (int i = 0; i< vec.size(); ++i) {
+//            std::vector<std::string> split;
+//            Utils::split(split, vec[i], "-");
+//            int frame = std::atoi(split[0].c_str());
+//            int handindex = std::atoi(split[2].c_str());
+//            int factionindex = std::atoi(split[3].c_str());
+//            int x = atoi(split[4].substr(0, split[4].find("_")).c_str());
+//            int y = atoi(split[4].substr(split[4].find("_") + 1).c_str());
+//            OutsideDeckCommand* cmd = new OutsideDeckCommand(handindex, factionindex, Coordinate32(x, y));
+//            _terminal.getGame().getCommander()->addCommandFromRemote(cmd, frame);
+//        }
+//        for (int i = 1; i <= 24000; ++i) {
 //            _terminal.getGame().update();
 //            if (_terminal.getGame().isGameOver()) {
 //                cout << "[gameover]" << i << endl;
 //                break;
 //            }
 //            
-//            if (i >= 1000 && i <= 3300) {
+//            if (i == 24000) {
 //                std::string s;
 //                _terminal.getGame().getSnapShot(s);
 //                cout << "[update]" << i << s << endl;
@@ -196,7 +230,7 @@ void UnderworldClient::loadMap(int mapId) {
     
     //TODO:temp code
     ms.setHeight(75);
-    ms.setWidth(300);
+    ms.setWidth(150);
     
     loadMap(ms);
 }
