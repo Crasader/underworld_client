@@ -284,7 +284,6 @@ void MapUICardDeck::insert(const Card* card, bool animated)
     CardNode* node = CardNode::create(true);
     node->update(card, BATTLE_RESOURCE_MAX_COUNT);
     node->registerObserver(this);
-    node->setTag((int)idx);
     if (idx < cnt) {
         const Point& point = _unitPositions.at(idx);
         if (animated) {
@@ -295,6 +294,7 @@ void MapUICardDeck::insert(const Card* card, bool animated)
         } else {
             node->setPosition(point);
         }
+        node->setTag((int)idx);
         
         _cardNodes.push_back(node);
     } else {
@@ -365,9 +365,11 @@ void MapUICardDeck::reload()
     while (_buffers.size() > 0 && i < maxCnt) {
         auto node = _buffers.front();
         node->setVisible(true);
-        node->setPosition(_unitPositions[i++]);
+        node->setPosition(_unitPositions[i]);
+        node->setTag((int)i);
         _cardNodes.push_back(node);
         _buffers.pop();
+        ++ i;
     }
 }
 

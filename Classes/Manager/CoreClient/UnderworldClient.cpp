@@ -22,7 +22,7 @@ UnderworldClient::UnderworldClient(const std::string& name,
 , _scheduler(scheduler)
 , _render(render)
 , _name(name) {
-
+    _proxy->registerListener(this);
 }
     
 void UnderworldClient::launchPvp(const GameContentSetting& setting) {
@@ -110,7 +110,6 @@ void UnderworldClient::launchPvp(const GameContentSetting& setting) {
 //    }
     
     _proxy->connect();
-    _proxy->registerListener(this);
     NetworkMessageLaunch2S* msg = new NetworkMessageLaunch2S();
     msg->setGameContentSetting(setting);
     _proxy->send(msg);
@@ -127,7 +126,6 @@ void UnderworldClient::launchPve(int map, const GameContentSetting& setting) {
     
     _mode = kPve;
     _terminal.init(_name, _settings, _scheduler, _render, nullptr);
-    
     _terminal.start();
     
     _state = kPlaying;
@@ -143,7 +141,6 @@ void UnderworldClient::launchPve(const MapSetting& mapSetting, const GameContent
     
     _mode = kPve;
     _terminal.init(_name, _settings, _scheduler, _render, nullptr);
-    
     _terminal.start();
     
     _state = kPlaying;

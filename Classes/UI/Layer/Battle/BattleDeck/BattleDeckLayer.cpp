@@ -521,7 +521,7 @@ void BattleDeckLayer::updateCardNode(CardNode* node, const string& name)
                 const auto& costs = ct->getCost();
                 static const string& name(RESOURCE_NAME);
                 if (costs.find(name) != costs.end()) {
-                    cost = costs.at(name);
+                    cost = costs.at(name) / GameConstants::MICRORES_PER_RES;
                 }
             }
         }

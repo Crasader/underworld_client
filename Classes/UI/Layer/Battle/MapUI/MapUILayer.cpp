@@ -164,14 +164,14 @@ void MapUILayer::removeCard(const Card* card, int index)
     }
 }
 
-void MapUILayer::updateCardDeckCountDown(float time, float duration)
+void MapUILayer::updateCountDown(float time, float duration)
 {
     if (_cardDeck) {
         _cardDeck->updateTimer(time, duration);
     }
 }
 
-void MapUILayer::updateCardDeckResource(const unordered_map<string, float>& resources)
+void MapUILayer::updateResource(const unordered_map<string, float>& resources)
 {
     if (_cardDeck) {
         _cardDeck->updateResource(resources);

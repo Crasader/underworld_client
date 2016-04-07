@@ -237,7 +237,7 @@ void BattleDeckUnitInfoNode::update(const string& name, TechTree* techTree)
             
             const string& at = unit->getArmorPreference();
             if (at.length() > 0) {
-                _armorPreferLabel->setString(StringUtils::format("%.1f", unit->getArmorPreferenceFactor()));
+                _armorPreferLabel->setString(StringUtils::format("%.1f", unit->getArmorPreferenceFactor().getLiteralValue()));
             } else {
                 _armorPreferLabel->setString(default_value);
             }

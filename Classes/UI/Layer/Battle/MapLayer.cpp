@@ -289,13 +289,13 @@ const UnderWorld::Core::MapSetting& MapLayer::getMapSetting() const
     return _mapSetting;
 }
 
-UnderWorld::Core::Coordinate MapLayer::mapCoordinate2coreCoordinate(int x, int y)
+UnderWorld::Core::Coordinate32 MapLayer::mapCoordinate2coreCoordinate(int x, int y)
 {
     //fix:y is [0 - (_height - 1)]
-    return UnderWorld::Core::Coordinate(x, (_height - 1) - y);
+    return UnderWorld::Core::Coordinate32(x, (_height - 1) - y);
 }
 
-Point MapLayer::coordinate2Point(const UnderWorld::Core::Coordinate& coordinate)
+Point MapLayer::coordinate2Point(const UnderWorld::Core::Coordinate32& coordinate)
 {
     const float x = _tileWidth / UnderWorld::Core::Map::TILE_2_ELEMENT_SCALE * coordinate.x;
     const float y = _tileHeight / UnderWorld::Core::Map::TILE_2_ELEMENT_SCALE * coordinate.y;
@@ -307,22 +307,22 @@ int MapLayer::calcZOrder(int coreCoordinateY)
     return 2 * (_height - coreCoordinateY + 1);
 }
 
-void MapLayer::coordinateConvert(const UnderWorld::Core::Coordinate& coordinate, Point& mapPosition, int& zOrder)
+void MapLayer::coordinateConvert(const UnderWorld::Core::Coordinate32& coordinate, Point& mapPosition, int& zOrder)
 {
     mapPosition = coordinate2Point(coordinate);
     zOrder = calcZOrder(coordinate.y);
 }
 
-UnderWorld::Core::Coordinate MapLayer::convertPoint(const Point& layerPoint)
+UnderWorld::Core::Coordinate32 MapLayer::convertPoint(const Point& layerPoint)
 {
     Point realPoint = _mainLayer->convertToNodeSpace(convertToWorldSpace(layerPoint));
-    UnderWorld::Core::Coordinate coordinate;
+    UnderWorld::Core::Coordinate32 coordinate;
     coordinate.x = realPoint.x * UnderWorld::Core::Map::TILE_2_ELEMENT_SCALE / _tileWidth;
     coordinate.y = realPoint.y * UnderWorld::Core::Map::TILE_2_ELEMENT_SCALE / _tileHeight;
     return coordinate;
 }
 
-void MapLayer::addUnit(Node* unit, const UnderWorld::Core::Coordinate& coordinate)
+void MapLayer::addUnit(Node* unit, const UnderWorld::Core::Coordinate32& coordinate)
 {
     Point pos;
     int zOrder;
@@ -331,7 +331,7 @@ void MapLayer::addUnit(Node* unit, const UnderWorld::Core::Coordinate& coordinat
     _mainLayer->addChild(unit, zOrder);
 }
 
-void MapLayer::repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& coordinate)
+void MapLayer::repositionUnit(Node* unit, const UnderWorld::Core::Coordinate32& coordinate)
 {
     Point pos;
     int zOrder;
@@ -343,7 +343,7 @@ void MapLayer::repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& co
     reorderChild(unit, zOrder);
 }
 
-void MapLayer::updateUnitMask(const UnderWorld::Core::UnitType* unitType, const UnderWorld::Core::Coordinate& coordinate)
+void MapLayer::updateUnitMask(const UnderWorld::Core::UnitType* unitType, const UnderWorld::Core::Coordinate32& coordinate)
 {
     if (unitType) {
         const string& name = unitType->getRenderKey();
@@ -376,7 +376,7 @@ void MapLayer::removeUnitMask()
     }
 }
 
-void MapLayer::updateSpellRing(const string& name, const UnderWorld::Core::Coordinate& coordinate, int range)
+void MapLayer::updateSpellRing(const string& name, const UnderWorld::Core::Coordinate32& coordinate, int range)
 {
     const Point& point = coordinate2Point(coordinate);
     Node* ring = _spellRing.second;
@@ -541,7 +541,7 @@ void MapLayer::removeAllSpellEffects()
     }
 }
 
-void MapLayer::addPlaceUnitEffect(const UnderWorld::Core::Coordinate& coordinate)
+void MapLayer::addPlaceUnitEffect(const UnderWorld::Core::Coordinate32& coordinate)
 {
     const Point& pos = coordinate2Point(coordinate);
     static string file("chuchang-fazhen.csb");
@@ -561,10 +561,10 @@ void MapLayer::setPlacedArea(float x1, float x2)
     clearUnplacedAreas();
     
     if (fabs(x1 - x2) > 0) {
-        Point point = coordinate2Point(UnderWorld::Core::Coordinate(x1, 0));
+        Point point = coordinate2Point(UnderWorld::Core::Coordinate32(x1, 0));
         x1 = point.x;
         
-        point = coordinate2Point(UnderWorld::Core::Coordinate(x2, 0));
+        point = coordinate2Point(UnderWorld::Core::Coordinate32(x2, 0));
         x2 = point.x;
         
         const float width = _scrollView->getContentSize().width;

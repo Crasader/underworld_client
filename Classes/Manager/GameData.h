@@ -27,6 +27,7 @@ public:
     User* currentUser() const;
     
     void setDeviceToken(const std::string& token);
+    unsigned int getUUID() const;
     const std::string& getVersionId() const;
     
     // auto login (if a token is exist in local)
@@ -62,6 +63,7 @@ private:
     GameData();
     virtual ~GameData();
     
+    void generateUUID();
     // login
     void requestLogin(const httpRequestCallback& success, const httpErrorCallback& failed);
     void handleLoginResponse(cocos2d::network::HttpResponse* response, const httpRequestCallback& success, const httpErrorCallback& failed);
@@ -69,6 +71,7 @@ private:
     
 private:
     User *_user;
+    unsigned int _uuid;
     std::string _versionId;
     std::string _deviceToken;
     bool _isTransacting;

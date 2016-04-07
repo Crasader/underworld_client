@@ -39,14 +39,14 @@ public:
     static MapLayer* create(int mapId, const std::string& mapData);
     void registerObserver(MapLayerObserver *observer);
     
-    UnderWorld::Core::Coordinate convertPoint(const Point& layerPoint);
-    void addUnit(Node* unit, const UnderWorld::Core::Coordinate& coordinate);
-    void repositionUnit(Node* unit, const UnderWorld::Core::Coordinate& coordinate);
+    UnderWorld::Core::Coordinate32 convertPoint(const Point& layerPoint);
+    void addUnit(Node* unit, const UnderWorld::Core::Coordinate32& coordinate);
+    void repositionUnit(Node* unit, const UnderWorld::Core::Coordinate32& coordinate);
     
-    void updateUnitMask(const UnderWorld::Core::UnitType* unitType, const UnderWorld::Core::Coordinate& coordinate);
+    void updateUnitMask(const UnderWorld::Core::UnitType* unitType, const UnderWorld::Core::Coordinate32& coordinate);
     void removeUnitMask();
     
-    void updateSpellRing(const std::string& name, const UnderWorld::Core::Coordinate& coordinate, int range);
+    void updateSpellRing(const std::string& name, const UnderWorld::Core::Coordinate32& coordinate, int range);
     void removeSpellRing();
     void checkUnitInSpellRing(Node* unit);
     
@@ -56,7 +56,7 @@ public:
     void addSpell(const std::string& name, float duration);
     void removeAllSpellEffects();
     
-    void addPlaceUnitEffect(const UnderWorld::Core::Coordinate& coordinate);
+    void addPlaceUnitEffect(const UnderWorld::Core::Coordinate32& coordinate);
     void setPlacedArea(float x1, float x2);
     void clearUnplacedAreas();
     
@@ -73,10 +73,10 @@ protected:
     virtual void scrollViewDidZoom(cocos2d::extension::ScrollView* view) override;
     
     //-------- coordinates --------//
-    UnderWorld::Core::Coordinate mapCoordinate2coreCoordinate(int x, int y);
-    Point coordinate2Point(const UnderWorld::Core::Coordinate& coordinate);
+    UnderWorld::Core::Coordinate32 mapCoordinate2coreCoordinate(int x, int y);
+    Point coordinate2Point(const UnderWorld::Core::Coordinate32& coordinate);
     inline int calcZOrder(int coreCoordinateY);
-    void coordinateConvert(const UnderWorld::Core::Coordinate& coordinate, Point& mapPosition, int& zOrder);
+    void coordinateConvert(const UnderWorld::Core::Coordinate32& coordinate, Point& mapPosition, int& zOrder);
     
     //-------- effects --------//
     void addParticle(const MapParticleConfigData* data);

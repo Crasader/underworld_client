@@ -259,6 +259,18 @@ void iOSApi::buyGemApple(const string& account, int gemNumber, const IAPPaymentS
     }];
 }
 
+string iOSApi::getUUID()
+{
+    CFUUIDRef uuidRef = CFUUIDCreate(nil);
+    CFStringRef uuidStringRef = CFUUIDCreateString(nil, uuidRef);
+    CFRelease(uuidRef);
+    
+    NSString *uuidValue = (__bridge_transfer NSString *)uuidStringRef;
+    uuidValue = [uuidValue lowercaseString];
+    uuidValue = [uuidValue stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    return [uuidValue stdString];
+}
+
 string iOSApi::getVersionId()
 {
     NSDictionary *info = [[NSBundle mainBundle] infoDictionary];

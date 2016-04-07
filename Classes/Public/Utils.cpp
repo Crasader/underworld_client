@@ -12,6 +12,18 @@
 using namespace std;
 using namespace UnderWorld::Core;
 
+unsigned int Utils::bkdrHash(const char *str)
+{
+    static const unsigned int seed(131); // 31 131 1313 13131 131313 etc..
+    unsigned int hash(0);
+    
+    while (*str) {
+        hash = hash * seed + (*str++);
+    }
+    
+    return (hash & 0x7FFFFFFF);
+}
+
 string Utils::format(const char *format, ...)
 {
     static const unsigned int MAX_TEXT_LENGTH = 1024 * 100;
@@ -62,17 +74,17 @@ void Utils::split2int(vector<int> &v, const string& src, const string& delimit, 
     }
 }
 
-string Utils::convertCoordinateToString(const UnderWorld::Core::Coordinate& coordinate)
+string Utils::convertCoordinateToString(const UnderWorld::Core::Coordinate32& coordinate)
 {
     return format("%d_%d", coordinate.x, coordinate.y);
 }
 
-UnderWorld::Core::Coordinate Utils::convertStringToCoordinate(const string& text)
+UnderWorld::Core::Coordinate32 Utils::convertStringToCoordinate(const string& text)
 {
     vector<string> result;
     split(result, text, "_", "");
     assert(result.size() == 2);
-    return UnderWorld::Core::Coordinate(atoi(result.at(0).c_str()), atoi(result.at(1).c_str()));
+    return UnderWorld::Core::Coordinate32(atoi(result.at(0).c_str()), atoi(result.at(1).c_str()));
 }
 
 #pragma mark - rapidjson

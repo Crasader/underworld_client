@@ -111,7 +111,7 @@ private:
     void removeCardMask();
     void tryToUseCard(const UnderWorld::Core::Card* card, int idx, const Point& point);
     
-    UnderWorld::Core::Coordinate getValidPuttingCoordinate(const Point& point, bool check) const;
+    UnderWorld::Core::Coordinate32 getValidPuttingCoordinate(const Point& point, bool check) const;
     
 private:
     GameRenderObserver *_observer;
@@ -122,7 +122,7 @@ private:
     const UnderWorld::Core::Game* _game;
     UnderWorld::Core::Commander* _commander;
     std::unordered_map<int, UnitNode*> _allUnitNodes;
-    std::unordered_map<int64_t, std::pair<UnderWorld::Core::Coordinate, float>> _bulletParams;
+    std::unordered_map<int64_t, std::pair<UnderWorld::Core::Coordinate32, float>> _bulletParams;
     std::unordered_map<int64_t, BulletNode*> _allBulletNodes;
     std::unordered_map<int, const UnderWorld::Core::Unit*> _cores;
     const UnderWorld::Core::Deck* _deck;
