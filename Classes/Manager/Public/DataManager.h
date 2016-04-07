@@ -25,6 +25,7 @@ class GearSetLocalData;
 class UAConfigData;
 class CardConfigData;
 class URConfigData;
+class BRConfigData;
 class MapParticleConfigData;
 class SpellConfigData;
 class ArtifactLocalData;
@@ -68,6 +69,7 @@ public:
     void getAnimationParameters(const std::string& name, UnderWorld::Core::SkillClass skillClass, UnderWorld::Core::Unit::Direction direction, float& scale, float& speed) const;
     const CardConfigData* getCardConfigData(const std::string& name) const;
     const URConfigData* getURConfigData(const std::string& name) const;
+    const BRConfigData* getBRConfigData(const std::string& name) const;
     const std::vector<MapParticleConfigData*>& getMapParticleConfigData(int mapId) const;
     const SpellConfigData* getSpellConfigData(const std::string& name) const;
     
@@ -115,6 +117,7 @@ protected:
     void parseAnimationConfigData();
     void parseCardConfigData();
     void parseURConfigData();
+    void parseBRConfigData();
     void parseMapParticleConfigData();
     void parseSpellConfigData();
     void parseArtifactData();
@@ -144,7 +147,8 @@ private:
     std::unordered_map<int, GearSetLocalData*> _gearSets;
     std::unordered_map<std::string, UAConfigData*> _animationParameters;
     std::unordered_map<std::string, CardConfigData*> _cardConfigData;
-    std::unordered_map<std::string, URConfigData*> _unitResourceConfigData;
+    std::unordered_map<std::string, URConfigData*> _urConfigData;
+    std::unordered_map<std::string, BRConfigData*> _brConfigData;
     std::unordered_map<int, std::vector<MapParticleConfigData*>> _mapParticleConfigData;
     std::unordered_map<std::string, SpellConfigData*> _spellConfigData;
     std::unordered_map<int, ArtifactLocalData*> _artifacts;

@@ -191,7 +191,7 @@ bool MainUILayer::init()
                                     setButtonIcons(button, 25, "icon_pvp_1", "icon_pvp_2");
                                     button->addClickEventListener([this](Ref *pSender){
                                         SoundManager::getInstance()->playButtonSound();
-                                        CocosUtils::replaceScene(BattleScene::create(1));
+                                        CocosUtils::replaceScene(BattleScene::create(2));
                                     });
                                 }
                                 

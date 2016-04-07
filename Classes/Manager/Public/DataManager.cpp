@@ -21,6 +21,7 @@
 #include "UAConfigData.h"
 #include "CardConfigData.h"
 #include "URConfigData.h"
+#include "BRConfigData.h"
 #include "MapParticleConfigData.h"
 #include "SpellConfigData.h"
 #include "ArtifactLocalData.h"
@@ -83,7 +84,8 @@ DataManager::~DataManager()
     Utils::clearMap(_gearSets);
     Utils::clearMap(_animationParameters);
     Utils::clearMap(_cardConfigData);
-    Utils::clearMap(_unitResourceConfigData);
+    Utils::clearMap(_urConfigData);
+    Utils::clearMap(_brConfigData);
     
     for (auto iter = _mapParticleConfigData.begin(); iter != _mapParticleConfigData.end(); ++iter) {
         Utils::clearVector(iter->second);
@@ -122,6 +124,7 @@ void DataManager::init()
     parseAnimationConfigData();
     parseCardConfigData();
     parseURConfigData();
+    parseBRConfigData();
     parseMapParticleConfigData();
     parseSpellConfigData();
     parseArtifactData();
@@ -267,8 +270,17 @@ const CardConfigData* DataManager::getCardConfigData(const string& name) const
 
 const URConfigData* DataManager::getURConfigData(const string& name) const
 {
-    if (_unitResourceConfigData.find(name) != _unitResourceConfigData.end()) {
-        return _unitResourceConfigData.at(name);
+    if (_urConfigData.find(name) != _urConfigData.end()) {
+        return _urConfigData.at(name);
+    }
+    
+    return nullptr;
+}
+
+const BRConfigData* DataManager::getBRConfigData(const string& name) const
+{
+    if (_brConfigData.find(name) != _brConfigData.end()) {
+        return _brConfigData.at(name);
     }
     
     return nullptr;
@@ -740,10 +752,36 @@ void DataManager::parseURConfigData()
                  item = item->NextSiblingElement()) {
                 URConfigData* data = new (nothrow) URConfigData(item);
                 const string& key = data->getName();
-                if (_unitResourceConfigData.find(key) != _unitResourceConfigData.end()) {
+                if (_urConfigData.find(key) != _urConfigData.end()) {
                     assert(false);
                 } else {
-                    _unitResourceConfigData.insert(make_pair(key, data));
+                    _urConfigData.insert(make_pair(key, data));
+                }
+            }
+            
+            CC_SAFE_DELETE(xmlDoc);
+        }
+    }
+}
+
+void DataManager::parseBRConfigData()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath("BulletResourceConfig.xml");
+    if (FileUtils::getInstance()->isFileExist(fileName)) {
+        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
+        if (xmlDoc) {
+            string content = LocalHelper::loadFileContentString(fileName);
+            xmlDoc->Parse(content.c_str());
+            
+            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+                 item;
+                 item = item->NextSiblingElement()) {
+                BRConfigData* data = new (nothrow) BRConfigData(item);
+                const string& key = data->getName();
+                if (_brConfigData.find(key) != _brConfigData.end()) {
+                    assert(false);
+                } else {
+                    _brConfigData.insert(make_pair(key, data));
                 }
             }
             

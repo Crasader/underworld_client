@@ -201,6 +201,7 @@
 		A1D745C11C1AB7C40020BC1C /* MapLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D745B91C1AB7C40020BC1C /* MapLayer.cpp */; };
 		A1D745C31C1AB7C40020BC1C /* VictoryLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D745BD1C1AB7C40020BC1C /* VictoryLayer.cpp */; };
 		A1D745C61C1AB9F60020BC1C /* BattleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D745C41C1AB9F60020BC1C /* BattleScene.cpp */; };
+		A1DA08CC1CB61CEA00846300 /* BRConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1DA08CA1CB61CEA00846300 /* BRConfigData.cpp */; };
 		A1DE80391BD669BB004DEED1 /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1DE80381BD669BA004DEED1 /* CrashReporter.framework */; };
 		A1DEF5E91C59DFB3002F3531 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1DEF5E81C59DFB3002F3531 /* Images.xcassets */; };
 		A1DF4BEC1C05902C000F2FDA /* DisplayBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1DF4BEA1C05902C000F2FDA /* DisplayBar.cpp */; };
@@ -682,6 +683,8 @@
 		A1D745BE1C1AB7C40020BC1C /* VictoryLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VictoryLayer.h; sourceTree = "<group>"; };
 		A1D745C41C1AB9F60020BC1C /* BattleScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattleScene.cpp; sourceTree = "<group>"; };
 		A1D745C51C1AB9F60020BC1C /* BattleScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BattleScene.h; sourceTree = "<group>"; };
+		A1DA08CA1CB61CEA00846300 /* BRConfigData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BRConfigData.cpp; sourceTree = "<group>"; };
+		A1DA08CB1CB61CEA00846300 /* BRConfigData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRConfigData.h; sourceTree = "<group>"; };
 		A1DE80381BD669BA004DEED1 /* CrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CrashReporter.framework; sourceTree = "<group>"; };
 		A1DEF5E81C59DFB3002F3531 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Underworld_Client-mobile/Images.xcassets"; sourceTree = SOURCE_ROOT; };
 		A1DEF5EB1C59E983002F3531 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ios/Info.plist; sourceTree = SOURCE_ROOT; };
@@ -1757,6 +1760,8 @@
 		A1D461581C3E251000E8E60B /* AnimationConfig */ = {
 			isa = PBXGroup;
 			children = (
+				A1DA08CA1CB61CEA00846300 /* BRConfigData.cpp */,
+				A1DA08CB1CB61CEA00846300 /* BRConfigData.h */,
 				A1CA77FE1C892D4E0060F71A /* CardConfigData.cpp */,
 				A1CA77FF1C892D4E0060F71A /* CardConfigData.h */,
 				A1D461591C3E251000E8E60B /* MapParticleConfigData.cpp */,
@@ -2217,6 +2222,7 @@
 				A1720E901BCCE19300217E98 /* MD5Verifier.cpp in Sources */,
 				047CBF8A1CAFE6AB0035DAF9 /* InstanceHelper.cpp in Sources */,
 				306802461C87CB2A000990F9 /* CardType.cpp in Sources */,
+				A1DA08CC1CB61CEA00846300 /* BRConfigData.cpp in Sources */,
 				A1720EBA1BCD2D2E00217E98 /* RMStore.m in Sources */,
 				047228B01C193A4D00E7F71B /* Geometry.cpp in Sources */,
 				3075346D1BF324340057DCED /* EventTriggers.cpp in Sources */,
