@@ -3,102 +3,27 @@
     <map map_name="1"/>
     <location_setting index="0" core_location="250,480" putting_start_location="0,0" building_location="750,800;750,400" putting_end_location="1150,1200"/>
     <location_setting index="1" core_location="2000,525" putting_start_location="1250,0" building_location="1600,800;1600,400" putting_end_location="2400,1200"/>
-    <deck_setting index="0" hand_size="6" init_hand_count="3" draw_span="10.f"/>
-    <deck_setting index="1" hand_size="6" init_hand_count="3" draw_span="10.f"/>
+    <deck_setting index="0" hand_size="6" init_hand_count="3" draw_span="600"/>
+    <deck_setting index="1" hand_size="6" init_hand_count="3" draw_span="600"/>
     <schedule_events>
         <event>
             <event_trigger class="schedule" time="0"/>
-            <event_effect class="alter_resource" map_index="0" resource_name="金子" amount="5.0f"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="50"/>
         </event>
         <event>
             <event_trigger class="schedule" time="0"/>
-            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="5.0f"/>
-        </event>
-        <event>
-            <event_trigger class="schedule" time="5" start_time="5" end_time="300"/>
-            <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="骑士"/>
-            </event_effect>
-        </event>
-        <event>
-            <event_trigger class="schedule" time="5" start_time="5" end_time="300"/>
-            <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="骑士"/>
-                </event_effect>
-        </event>
-        <event>
-                <event_trigger class="schedule" time="25" start_time="5" end_time="300"/>
-                <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="弓箭手"/>
-                </event_effect>
+            <event_effect class="alter_resource" map_index="1" resource_name="木头" amount="50"/>
         </event>
     </schedule_events>
     <loop_events>
         <event>
-            <event_trigger class="loop" time="1" start_time="0" end_time="300"/>
-            <event_effect class="alter_resource" map_index="0" resource_name="金子" amount="0.2f"/>
+            <event_trigger class="loop" time="60" start_time="60" end_time="36000"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="5"/>
         </event>
         <event>
-            <event_trigger class="loop" time="1" start_time="0" end_time="300"/>
-            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="0.5f"/>
-        </event>
-        <event>
-            <event_trigger class="loop" time="1" start_time="60" end_time="300"/>
-            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="0.5f"/>
-        </event>
-        <event>
-            <event_trigger class="loop" time="1" start_time="120" end_time="300"/>
-            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="0.5f"/>
-        </event>
-        <event>
-            <event_trigger class="loop" time="35" start_time="30" end_time="300"/>
-            <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="弓箭手"/>
-            </event_effect>
-        </event>
-        <event>
-            <event_trigger class="loop" time="35" start_time="55" end_time="300"/>
-            <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="弓箭手"/>
-            </event_effect>
-        </event>
-        <event>
-            <event_trigger class="loop" time="35" start_time="105" end_time="300"/>
-            <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="弓箭手"/>
-            </event_effect>
-        </event>
-        <event>
-            <event_trigger class="loop" time="35" start_time="5" end_time="300"/>
-            <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="骑士"/>
-            </event_effect>
-        </event>
-        <event>
-            <event_trigger class="loop" time="35" start_time="80" end_time="300"/>
-            <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="骑士"/>
-            </event_effect>
-        </event>
-        <event>
-            <event_trigger class="loop" time="35" start_time="130" end_time="300"/>
-            <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="骑士"/>
-            </event_effect>
-        </event>
-        <event>
-            <event_trigger class="loop" time="35" start_time="155" end_time="300"/>
-            <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="骑士"/>
-            </event_effect>
-        </event>
-        <event>
-            <event_trigger class="loop" time="65" start_time="155" end_time="300"/>
-            <event_effect class="add_unit" map_index="1" position="1700,550">
-                <unit_setting name="骑士"/>
-            </event_effect>
-        </event>
-    </loop_events>
+            <event_trigger class="loop" time="60" start_time="60" end_time="36000"/>
+            <event_effect class="alter_resource" map_index="1" resource_name="木头" amount="5"/>
+        </event>    </loop_events>
     <faction_setting faction_count="2" this_faction="0">
         <faction_setting_item faction_index="0" faction_control_type="human" map_index="0" team_index="0"/>
         <faction_setting_item faction_index="1" faction_control_type="cpu" map_index="1" team_index="1"/>
