@@ -16,10 +16,6 @@ static const string suffix(".csb");
 static const string audioPrefix("sounds/effect/");
 static const string audioSuffix(".mp3");
 
-#pragma mark =====================================================
-#pragma mark Unit Resource Config Data
-#pragma mark =====================================================
-
 URConfigData::URConfigData(tinyxml2::XMLElement *xmlElement)
 :_isShortRange(false)
 ,_isFaceRight(false)
@@ -94,12 +90,6 @@ URConfigData::URConfigData(tinyxml2::XMLElement *xmlElement)
             const char *data = xmlElement->Attribute("bullet");
             if (data && strlen(data) > 0) {
                 _bullet = data + suffix;
-            }
-        }
-        {
-            const char *data = xmlElement->Attribute("crit_bullet");
-            if (data && strlen(data) > 0) {
-                _critBullet = data + suffix;
             }
         }
         {
@@ -241,11 +231,6 @@ const string& URConfigData::getBAttackEnd() const
 const string& URConfigData::getBullet() const
 {
     return _bullet;
-}
-
-const string& URConfigData::getCritBullet() const
-{
-    return _critBullet;
 }
 
 const string& URConfigData::getSwordEffect() const
