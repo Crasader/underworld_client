@@ -941,10 +941,10 @@
             <addon>
                 <feature_group determine_timing="settle_attack_damage_r1">
                     <feature_item effect_timing="settle_attack_damage_r1">
-                        <feature type="damage_enhance" value="d:target:owner;type:armor;v:0.002f;template:p:0.f"/>
+                        <feature type="damage_enhance" value="d:target:owner;type:armor;v:p:1;template:p:0.f"/>
                     </feature_item>
                     <feature_item effect_timing="settle_attack_damage_r1">
-                        <feature type="damage_reduce" value="d:target:opposite;type:armor;v:0.002f;template:p:0.f"/>
+                        <feature type="damage_reduce" value="d:target:opposite;type:armor;v:p:1;template:p:0.f"/>
                     </feature_item>
                 </feature_group>
             </addon>
@@ -953,12 +953,12 @@
             <addon>
                 <feature_group determine_timing="settle_attack_damage_r1">
                     <feature_item effect_timing="settle_attack_damage_r1">
-                        <feature type="damage_enhance" value="d:target:opposite;type:attack_range;v:0.001f;template:p:0.f"/>
+                        <feature type="damage_enhance" value="d:target:opposite;type:attack_range;v:p:1;template:p:0.f"/>
                     </feature_item>
                 </feature_group>
                 <feature_group determine_timing="settle_attack_damage_r1">
                     <feature_item effect_timing="settle_attack_damage_r1">
-                        <feature type="damage_reduce" value="d:target:opposite;type:attack_range;v:0.0005f;template:p:0.f"/>
+                        <feature type="damage_reduce" value="d:target:opposite;type:attack_range;v:p:1;template:p:0.f"/>
                     </feature_item>
                 </feature_group>
             </addon>
@@ -967,7 +967,7 @@
             <addon>
                 <feature_group determine_timing="attack">
                     <feature_item effect_timing="hit">
-                        <feature type="extra_damage" value="d:target:owner;type:max_hp;v:0.05f;template:0.f" deliver_class="physical"/>
+                        <feature type="extra_damage" value="d:target:owner;type:max_hp;v:p:5;template:0.f" deliver_class="physical"/>
                     </feature_item>
                 </feature_group>
             </addon>
@@ -1019,7 +1019,7 @@
         <!-- 基础治疗术 -->
         <spell_pattern name="基础治疗术_基础治疗术施法效果" class="target">
             <spell_content name="基础治疗术_基础治疗术施法效果_内容" spell_content_class="damage">
-                <damage damage_value="d:target:owner;type:max_hp;v:0.25f;template:0.f" damage_nature="heal" deliver_class="magical"/>
+                <damage damage_value="d:target:owner;type:max_hp;v:p:25;template:0.f" damage_nature="heal" deliver_class="magical"/>
             </spell_content>
         </spell_pattern>
         <!-- 快速治疗 -->
@@ -1031,7 +1031,7 @@
         <!-- 治愈 -->
         <spell_pattern name="治愈_治愈效果" class="target_position_circle" radius="100" deliver_nature="ally">
             <spell_content name="治愈_治愈效果_内容" spell_content_class="damage">
-                <damage damage_value="d:target:opposite;type:max_hp;v:0.1f;template:0.f" damage_nature="heal" deliver_class="magical">
+                <damage damage_value="d:target:opposite;type:max_hp;v:p:50;template:0.f" damage_nature="heal" deliver_class="magical">
                 </damage>
             </spell_content>
         </spell_pattern>
@@ -1051,7 +1051,7 @@
             </spell_content>
         </spell_pattern>
         <!-- 顺风之力加强版 -->
-        <spell_pattern name="顺风之力加强版_顺风之力加强版施法效果" class="target">
+        <spell_pattern name="顺风之力加强版_顺风之力加强版施法效果" class="target_position_circle" radius="200" deliver_nature="ally">
             <spell_content name="顺风之力加强版_顺风之力加强版施法效果_内容" spell_content_class="damage">
                 <damage damage_nature="heal" deliver_class="magical" damage_value="0.f">
                     <feature_group determine_timing="attack">
@@ -1193,7 +1193,7 @@
                 <effect class="add_feature" alias_name="增加攻击_百分比_可叠加" ref_value="0.1f">
                     <feature_group determine_timing="settle_attack_damage_r1">
                         <feature_item effect_timing="settle_attack_damage_r1">
-                            <feature type="damage_enhance" value="d:target:owner;type:attack_speed;v:0.01f;template:p:0.f"/>
+                            <feature type="damage_enhance" value="d:target:owner;type:attack_speed;v:p:1;template:p:0"/>
                         </feature_item>
                     </feature_group>
                 </effect>
@@ -1323,10 +1323,10 @@
             </buff_effect>
         </buff>
         <!-- 顺风之力 -->
-        <buff alias="顺风之力_攻速提高增益效果" name="顺风之力_攻速提高增益效果_等级1" level="1" deliver_nature="ally" deliver_class="magical" span_type="limited" span="6.0f" max_overlay="1" render_key="" unique_on_unit="1" dispelable="1">
+        <buff alias="顺风之力_攻速提高增益效果" name="顺风之力_攻速提高增益效果_等级1" level="1" deliver_nature="ally" deliver_class="magical" span_type="limited" span="600" max_overlay="1" render_key="" unique_on_unit="1" dispelable="1">
             <buff_effect>
                 <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
-                <effect class="alter_attr" alias_name="增加攻速_可叠加" attr_name="attack_speed" value="0.3f" ref_value="0.3f"/>
+                <effect class="alter_attr" alias_name="增加攻速_可叠加" attr_name="attack_speed" value="50" ref_value="100"/>
             </buff_effect>
         </buff>
         <!-- 荒野祈福 -->
