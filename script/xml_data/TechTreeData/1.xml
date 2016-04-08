@@ -26,14 +26,14 @@
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0.0" perform="10.0" cd="0.0" occupy="0"/>
         <skill class="attack" preperform="30" perform="0.0" cd="60" min_damage="50" max_damage="56" deliver_class="physical" damage_distance="faraway" range="192" fields="3">
-            <bullet speed="600" size="0"/>
+            <bullet speed="600" size="0" render_key="狼人基地子弹" />
         </skill>
     </unit>
     <unit name="狼人箭塔" class="building" hp="1512" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="0" attacksight="600" size="100" height="50" render_key="狼人箭塔" put_cost="木头:2|木头:3|木头:4|木头:5|木头:6" rewarde="金子:10;木头:5">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0.0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="30" perform="0.0" cd="48" min_damage="50" max_damage="58" deliver_class="physical" damage_distance="faraway" range="204" fields="3">
-            <bullet speed="800" size="0"/>
+            <bullet speed="800" size="0" render_key="箭"/>
         </skill>
     </unit>
     <!-- 狮子  骑士 -->
@@ -59,7 +59,7 @@
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="30" perform="0.0" cd="102" min_damage="135" max_damage="145" deliver_class="physical" damage_distance="faraway" range="132" fields="1">
-            <bullet speed="800" size="0"/>
+            <bullet speed="800" size="0" render_key="法师子弹1"/>
         </skill>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="70"/>
     </unit>
@@ -70,7 +70,7 @@
         <skill class="attack" preperform="30" perform="0.0" cd="96" min_damage="35" max_damage="45" deliver_class="physical" damage_distance="faraway" range="132" fields="1">
             <bullet speed="800" size="0"/>
         </skill>
-        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="100"/>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="100" render_key="箭"/>
     </unit>
     <!--火枪手-->
     <unit name="火枪手" class="warrior" race="辉月狼人" talent_name="基础" hp="340" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="0" armor_preference="轻甲" armor_preference_factor="p:1.8f" magical_defense="0.f" attacksight="400" size="48" height="0" cost="金子:5" max_level="100" producee="木头:0.5;金子:0.5" put_cost="木头:5" rewarde="金子:0.25f" rarity="2" recover_span="0.f" render_key="莉莉丝" desc="常规的肉搏战士，对轻甲单位造成大量伤害。">
@@ -79,7 +79,7 @@
         <skill class="attack" preperform="30" perform="0.0" cd="66" min_damage="115" max_damage="125" deliver_class="physical" damage_distance="faraway" range="156" fields="1">
             <bullet speed="800" size="0"/>
         </skill>
-        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="100"/>
+        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="100" render_key="箭"/>
     </unit>
     <!-- 皮卡超人-->
     <unit name="迷你皮卡" class="warrior" race="辉月狼人" talent_name="基础" hp="580" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="0" armor_preference="轻甲" armor_preference_factor="p:1.8f" magical_defense="0.f" attacksight="400" size="30" height="0" cost="金子:3" max_level="100" producee="木头:0.5;金子:0.5" put_cost="木头:4" rewarde="金子:0.25f" rarity="2" recover_span="0.f" render_key="腐化狼人" desc="常规的肉搏战士，对轻甲单位造成大量伤害。">
@@ -95,7 +95,7 @@
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="30" perform="0.0" cd="120" min_damage="95" max_damage="105" deliver_class="physical" damage_distance="faraway" range="120" fields="1">
-            <bullet speed="800" size="0"/>
+            <bullet speed="800" size="0" render_key="法师子弹2"/>
         </skill>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="100"/>
     </unit>
@@ -176,7 +176,7 @@
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="30" perform="0.0" cd="78" min_damage="20" max_damage="28" deliver_class="physical" damage_distance="faraway" range="132" fields="1">
-            <bullet speed="800" size="0"/>
+            <bullet speed="800" size="0" render_key="箭"/>
         </skill>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="100"/>
     </unit>
@@ -350,7 +350,7 @@
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="30" max_damage="50" deliver_class="physical" damage_distance="faraway" range="900" fields="2">
-            <bullet speed="800" size="0"/>
+            <bullet speed="800" size="0" render_key="箭"/>
         </skill>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
     </unit>
@@ -543,7 +543,7 @@
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="0.5" perform="0.0" cd="1.5" min_damage="10" max_damage="20" deliver_class="physical" damage_distance="faraway" range="390" fields="1">
-            <bullet speed="800" size="0"/>
+            <bullet speed="800" size="0" render_key="时光女神子弹"/>
         </skill>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
     </unit>
@@ -702,14 +702,14 @@
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0.0" perform="10.0" cd="0.0" occupy="0"/>
         <skill class="attack" preperform="30" perform="0.0" cd="60" min_damage="50" max_damage="56" deliver_class="physical" damage_distance="faraway" range="192" fields="3">
-            <bullet speed="600" size="0"/>
+            <bullet speed="600" size="0" render_key="吸血鬼核心子弹"/>
         </skill>
     </unit>
     <unit name="吸血鬼箭塔" class="building" hp="1512" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="400" attacksight="600" size="100" height="70" render_key="吸血鬼箭塔" put_cost="木头:2|木头:3|木头:4|木头:5|木头:6" rewarde="金子:100;木头:20">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0.0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="30" perform="0.0" cd="48" min_damage="50" max_damage="58" deliver_class="physical" damage_distance="faraway" range="204" fields="3">
-            <bullet speed="800" size="0"/>
+            <bullet speed="800" size="0" render_key="炮塔子弹"/>
         </skill>
     </unit>
     <faction name="狼人族"/>
