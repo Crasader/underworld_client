@@ -209,18 +209,21 @@ void GameRender::updateBullets(const Game* game)
         const Bullet* bullet = world->getBullet(i);
         const Coordinate32& pos = bullet->getPos();
         const Coordinate32& targetPos = bullet->targetPos();
-        const int64_t key = reinterpret_cast<int64_t>(bullet);
         const bool isExploded(bullet->isExploded());
-        if (_allBulletNodes.find(key) != _allBulletNodes.end()) {
+        if (_allBulletNodes.find(bullet) != _allBulletNodes.end()) {
             // already exist, update it
-            BulletNode* node = _allBulletNodes.at(key);
+            BulletNode* node = _allBulletNodes.at(bullet);
             node->update();
             if (isExploded) {
+                const BulletType* bt = bullet->getBulletType();
+                if (bt && _mapLayer) {
+                    _mapLayer->addBulletExplosionEffect(bt->getRenderKey(), pos);
+                }
                 node->removeFromParent();
-                _allBulletNodes.erase(key);
-                _bulletParams.erase(key);
+                _allBulletNodes.erase(bullet);
+                _bulletParams.erase(bullet);
             } else {
-                const pair<Coordinate32, float>& params = _bulletParams.at(key);
+                const pair<Coordinate32, float>& params = _bulletParams.at(bullet);
                 const Coordinate32& opos = params.first;
                 const float h = params.second;
                 const float d = sqrt(pow(abs(opos.x- targetPos.x), 2) + pow(abs(opos.y - targetPos.y), 2));
@@ -240,8 +243,8 @@ void GameRender::updateBullets(const Game* game)
                 node->registerObserver(this);
                 const float height = bullet->getHeight();
                 _mapLayer->addUnit(node, pos + Coordinate32(0, height));
-                _allBulletNodes.insert(make_pair(key, node));
-                _bulletParams.insert(make_pair(key, make_pair(pos, height)));
+                _allBulletNodes.insert(make_pair(bullet, node));
+                _bulletParams.insert(make_pair(bullet, make_pair(pos, height)));
             }
         }
     }

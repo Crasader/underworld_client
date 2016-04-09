@@ -31,7 +31,6 @@ public:
     const std::string& getBAttackBegin() const;
     const std::string& getBAttack() const;
     const std::string& getBAttackEnd() const;
-    CC_DEPRECATED_ATTRIBUTE const std::string& getBullet() const;
     const std::string& getSwordEffect() const;
     const std::string& getHurtEffect() const;
     const std::string& getCritHurtEffect() const;
@@ -58,7 +57,6 @@ private:
     std::string _bAttackBegin;
     std::string _bAttack;
     std::string _bAttackEnd;
-    std::string _bullet;
     std::string _swordEffect;
     std::string _hurtEffect;
     std::string _critHurtEffect;

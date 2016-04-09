@@ -42,6 +42,7 @@ public:
     UnderWorld::Core::Coordinate32 convertPoint(const Point& layerPoint);
     void addUnit(Node* unit, const UnderWorld::Core::Coordinate32& coordinate);
     void repositionUnit(Node* unit, const UnderWorld::Core::Coordinate32& coordinate);
+    void addBulletExplosionEffect(const std::string& name, const UnderWorld::Core::Coordinate32& coordinate);
     
     void updateUnitMask(const UnderWorld::Core::UnitType* unitType, const UnderWorld::Core::Coordinate32& coordinate);
     void removeUnitMask();

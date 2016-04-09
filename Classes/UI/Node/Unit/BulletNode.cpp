@@ -9,11 +9,10 @@
 #include "BulletNode.h"
 #include "cocostudio/CocoStudio.h"
 #include "CocosGlobal.h"
-#include "Unit.h"
-#include "UnitType.h"
 #include "Bullet.h"
+#include "BulletType.h"
 #include "DataManager.h"
-#include "URConfigData.h"
+#include "BRConfigData.h"
 
 using namespace std;
 using namespace UnderWorld::Core;
@@ -26,16 +25,13 @@ BulletNode* BulletNode::create(const Bullet* Bullet)
         ret->autorelease();
         return ret;
     }
-    else
-    {
-        CC_SAFE_DELETE(ret);
-        return nullptr;
-    }
+    
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 BulletNode::BulletNode()
 :_observer(nullptr)
-,_actionNode(nullptr)
 ,_bullet(nullptr)
 ,_angel(-1.0f)
 {
@@ -68,22 +64,29 @@ bool BulletNode::init(const Bullet* bullet)
     {
         _bullet = bullet;
         
-        const Unit* trigger = bullet->getTrigger();
-        if (trigger) {
-            const string& name = trigger->getUnitBase().getRenderKey();
-            const string& file = DataManager::getInstance()->getURConfigData(name)->getBullet();
-            if (file.length() > 0) {
-                _actionNode = CSLoader::createNode(file);
-                addChild(_actionNode);
-                cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
-                _actionNode->runAction(action);
-                action->gotoFrameAndPlay(0, false);
+        const BulletType* type = bullet->getBulletType();
+        if (type) {
+            const string& name = type->getRenderKey();
+            const BRConfigData* data = DataManager::getInstance()->getBRConfigData(name);
+            if (data) {
+                const string& file = data->getResource();
+                if (file.length() > 0) {
+                    addActionNode(file, false);
+                } else {
+                    if (name.find(SPELL_NAME_FIREBALL) != string::npos) {
+                        Node* yan = addParticle("particle/yan.plist");
+                        yan->setPosition(-40, 0);
+                        addParticle("particle/huo.plist");
+                        addActionNode("huoqiu.csb", true);
+                    } else {
+                        onBulletDisabled();
+                    }
+                }
             } else {
-                _actionNode = Sprite::create("GameImages/test/jian.png");
-                addChild(_actionNode);
+                onBulletDisabled();
             }
         } else {
-            assert(false);
+            onBulletDisabled();
         }
         
         update(true);
@@ -119,7 +122,9 @@ void BulletNode::update(bool newCreated)
             }
         }
         
-//        CCLOG("========= %d - %d - %d - %d - %.1f", currentPos.x, currentPos.y, targetPos.x, targetPos.y, _angel);
+#if false
+        CCLOG("========= %d - %d - %d - %d - %.1f", currentPos.x, currentPos.y, targetPos.x, targetPos.y, _angel);
+#endif
         
         if (_bullet->isExploded()) {
             if (_observer) {
@@ -129,4 +134,27 @@ void BulletNode::update(bool newCreated)
     } else {
         assert(false);
     }
+}
+
+Node* BulletNode::addActionNode(const string& file, bool loop)
+{
+    const string path = file + ".csb";
+    Node* node = CSLoader::createNode(path);
+    addChild(node);
+    cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(path);
+    node->runAction(action);
+    action->gotoFrameAndPlay(0, loop);
+    return node;
+}
+
+Node* BulletNode::addParticle(const string& file)
+{
+    ParticleSystemQuad *node = ParticleSystemQuad::create(file);
+    addChild(node);
+    return node;
+}
+
+void BulletNode::onBulletDisabled()
+{
+    addActionNode("effect-jian", false);
 }

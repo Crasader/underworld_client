@@ -39,11 +39,13 @@ public:
 protected:
     BulletNode();
     bool init(const UnderWorld::Core::Bullet* bullet);
+    Node* addActionNode(const std::string& file, bool loop);
+    Node* addParticle(const std::string& file);
+    void onBulletDisabled();
     void update(bool newCreated);
     
 private:
     BulletNodeObserver *_observer;
-    Node *_actionNode;
     const UnderWorld::Core::Bullet* _bullet;
     float _angel;
 };

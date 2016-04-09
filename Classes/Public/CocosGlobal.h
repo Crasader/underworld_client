@@ -36,6 +36,7 @@
 
 #define TOUCH_CANCEL_BY_MOVING_DISTANCE (10.0f)
 
+#define DEFAULT_MAP_ID              (2)
 #define CANDIDATE_CARD_DECKS_COUNT  (8)
 #define BATTLE_RESOURCE_MAX_COUNT   (10)
 

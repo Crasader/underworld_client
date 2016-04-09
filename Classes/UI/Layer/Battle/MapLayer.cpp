@@ -343,6 +343,18 @@ void MapLayer::repositionUnit(Node* unit, const UnderWorld::Core::Coordinate32& 
     reorderChild(unit, zOrder);
 }
 
+void MapLayer::addBulletExplosionEffect(const string& name, const UnderWorld::Core::Coordinate32& coordinate)
+{
+    string file;
+    if (name.find(SPELL_NAME_FIREBALL) != string::npos) {
+        file = "jinenghuoqiukuosan-1.csb";
+    }
+    
+    const Point& point = coordinate2Point(coordinate);
+    addSpellEffect(file, false, point);
+    removeStaticRing(point);
+}
+
 void MapLayer::updateUnitMask(const UnderWorld::Core::UnitType* unitType, const UnderWorld::Core::Coordinate32& coordinate)
 {
     if (unitType) {
@@ -441,13 +453,13 @@ void MapLayer::checkUnitInSpellRing(Node* unit)
     }
 }
 
-void MapLayer::addAoeSpell(const Point& startPoint, const std::string& name, float duration)
+void MapLayer::addAoeSpell(const Point& startPoint, const string& name, float duration)
 {
     Node* ring = _spellRing.second;
     if (ring) {
         const Point& targetPos = ring->getPosition();
         if (name.find(SPELL_NAME_FIREBALL) != string::npos) {
-#if true
+#if false
             Node* node = Node::create();
             node->setPosition(startPoint);
             _mainLayer->addChild(node, topZOrder);
@@ -477,7 +489,7 @@ void MapLayer::addAoeSpell(const Point& startPoint, const std::string& name, flo
                 addSpellEffect(groundFile, false, targetPos);
                 removeStaticRing(targetPos);
             }), nullptr));
-#else
+#elif false
             const Size& winSize = Director::getInstance()->getWinSize();
             static string skyFile("jinenghuoqiu.csb");
             Node* skyEffect = addSpellEffect(skyFile, true, Point::ZERO);

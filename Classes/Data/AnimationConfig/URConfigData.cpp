@@ -87,12 +87,6 @@ URConfigData::URConfigData(tinyxml2::XMLElement *xmlElement)
             }
         }
         {
-            const char *data = xmlElement->Attribute("bullet");
-            if (data && strlen(data) > 0) {
-                _bullet = data + suffix;
-            }
-        }
-        {
             const char *data = xmlElement->Attribute("sword_effect");
             if (data && strlen(data) > 0) {
                 _swordEffect = data + suffix;
@@ -226,11 +220,6 @@ const string& URConfigData::getBAttack() const
 const string& URConfigData::getBAttackEnd() const
 {
     return _bAttackEnd;
-}
-
-const string& URConfigData::getBullet() const
-{
-    return _bullet;
 }
 
 const string& URConfigData::getSwordEffect() const
