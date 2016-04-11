@@ -29,6 +29,7 @@ using namespace std;
 using namespace UnderWorld::Core;
 
 static const string tickSelectorKey("tickSelectorKey");
+static const float spellRingRange(400);
 static const int battleTotalTime(600);
 
 GameRender::GameRender(Scene* scene, int mapId, const string& mapData, const string& opponentsAccount)
@@ -374,7 +375,7 @@ void GameRender::onMapLayerTouchBegan(const Point& point)
 {
     const Card* card = _selectedCard.first;
     if (card) {
-        updateCardMask(card, point, 400);
+        updateCardMask(card, point, spellRingRange);
     }
 }
 
@@ -383,7 +384,7 @@ void GameRender::onMapLayerTouchMoved(const Point& point, bool isValid)
     if (isValid) {
         const Card* card = _selectedCard.first;
         if (card) {
-            updateCardMask(card, point, 400);
+            updateCardMask(card, point, spellRingRange);
         }
     } else {
         removeCardMask();
@@ -394,6 +395,7 @@ void GameRender::onMapLayerTouchEnded(const Point& point)
 {
     const Card* card = _selectedCard.first;
     if (card) {
+        updateCardMask(card, point, spellRingRange);
         tryToUseCard(card, _selectedCard.second, point);
     }
 }
@@ -434,12 +436,14 @@ void GameRender::onMapUILayerCardSelected(const Card* card, int idx)
 
 void GameRender::onMapUILayerTouchMoved(const Card* card, const Point& point)
 {
-    updateCardMask(card, convertToMapLayer(point), 400);
+    updateCardMask(card, convertToMapLayer(point), spellRingRange);
 }
 
 void GameRender::onMapUILayerTouchEnded(const Card* card, int idx, const Point& point)
 {
-    tryToUseCard(card, idx, convertToMapLayer(point));
+    const Point& p = convertToMapLayer(point);
+    updateCardMask(card, p, spellRingRange);
+    tryToUseCard(card, idx, p);
 }
 
 #pragma mark - VictoryLayerObserver
