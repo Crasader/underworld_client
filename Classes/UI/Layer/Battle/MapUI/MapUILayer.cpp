@@ -12,6 +12,7 @@
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "Deck.h"
+#include "UnitCardDeck.h"
 #include "BattleResourceNode.h"
 #include "SoundManager.h"
 
@@ -46,18 +47,16 @@ MapUILayer* MapUILayer::create(const string& myAccount, const string& opponentsA
 MapUILayer::MapUILayer()
 :_observer(nullptr)
 ,_isTouchingTableView(false)
-,_highlightedCard(INVALID_VALUE)
+,_decksTotalWidth(0)
 ,_timeLabel(nullptr)
 ,_myHpProgress(nullptr)
 ,_myHpPercentageLabel(nullptr)
 ,_opponentsHpProgress(nullptr)
 ,_opponentsHpPercentageLabel(nullptr)
 ,_pauseMenuItem(nullptr)
-,_cardDeck(nullptr)
 {
-    setHighlightedCard(INVALID_VALUE);
-    _selectedCard.first = nullptr;
-    _selectedCard.second = INVALID_VALUE;
+    clearCardInfo(_highlightedCardInfo);
+    clearCardInfo(_selectedCardInfo);
 }
 
 MapUILayer::~MapUILayer()
@@ -124,57 +123,84 @@ void MapUILayer::resumeGame()
 
 void MapUILayer::clearHighlightedCard()
 {
-    setHighlightedCard(INVALID_VALUE);
+    setHighlightedCard(nullptr, INVALID_VALUE);
 }
 
-bool MapUILayer::isPointInTableView(const Point& point)
+bool MapUILayer::isPointInDeck(const Point& point) const
 {
-    if (_cardDeck && _cardDeck->getBoundingBox().containsPoint(point)) {
-        return true;
+    for (auto iter = begin(_decks); iter != end(_decks); ++iter) {
+        auto deck = iter->second;
+        if (deck && deck->getBoundingBox().containsPoint(point)) {
+            return true;
+        }
     }
     
     return false;
 }
 
 #pragma mark - card deck
-void MapUILayer::createCardDeck(int count)
+void MapUILayer::createCardDeck(CardDeckType type, int count)
 {
-    if (count > 0) {
-        _cardDeck = MapUICardDeck::create(count);
-        _cardDeck->registerObserver(this);
-        addChild(_cardDeck);
+    if (count > 0 && (_decks.find(type) == end(_decks))) {
+        CardDeck* deck(nullptr);
+        if (CardDeckType::Unit == type) {
+            deck = UnitCardDeck::create(count);
+        } else {
+            deck = CardDeck::create(count);
+        }
         
-        const Size& winSize = Director::getInstance()->getWinSize();
-        const Size& size = _cardDeck->getContentSize();
-        _cardDeck->setPosition(winSize.width / 2, size.height / 2);
+        if (deck) {
+            deck->registerObserver(this);
+            addChild(deck);
+            _decks.insert(make_pair(type, deck));
+            
+            // reset positions
+            _decksTotalWidth += deck->getContentSize().width;
+            reorderDecks();
+        }
     }
 }
 
-void MapUILayer::insertCard(const Card* card)
+void MapUILayer::insertCard(CardDeckType type, const Card* card)
 {
-    if (_cardDeck) {
-        _cardDeck->insert(card, true);
+    auto deck = getDeck(type);
+    if (deck) {
+        deck->insert(card, true);
     }
 }
 
-void MapUILayer::removeCard(const Card* card, int index)
+void MapUILayer::removeCard(CardDeckType type, const Card* card, int index)
 {
-    if (_cardDeck) {
-        _cardDeck->remove(card, index, true);
+    auto deck = getDeck(type);
+    if (deck) {
+        deck->remove(card, index, true);
+    }
+}
+
+void MapUILayer::updateNextCard(const Card* card)
+{
+    static CardDeckType type(CardDeckType::Unit);
+    auto deck = dynamic_cast<UnitCardDeck*>(getDeck(type));
+    if (deck) {
+        deck->updateNextCard(card);
     }
 }
 
 void MapUILayer::updateCountDown(float time, float duration)
 {
-    if (_cardDeck) {
-        _cardDeck->updateTimer(time, duration);
+    static CardDeckType type(CardDeckType::Unit);
+    auto deck = dynamic_cast<UnitCardDeck*>(getDeck(type));
+    if (deck) {
+        deck->updateTimer(time, duration);
     }
 }
 
 void MapUILayer::updateResource(const unordered_map<string, float>& resources)
 {
-    if (_cardDeck) {
-        _cardDeck->updateResource(resources);
+    static CardDeckType type(CardDeckType::Unit);
+    auto deck = dynamic_cast<UnitCardDeck*>(getDeck(type));
+    if (deck) {
+        deck->updateResource(resources);
     }
 }
 
@@ -287,7 +313,7 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
 bool MapUILayer::onTouchBegan(Touch *touch, Event *unused_event)
 {
     const Point& point = touch->getLocation();
-    if (isPointInTableView(point)) {
+    if (isPointInDeck(point)) {
         _isTouchingTableView = true;
         return true;
     }
@@ -298,16 +324,16 @@ bool MapUILayer::onTouchBegan(Touch *touch, Event *unused_event)
 void MapUILayer::onTouchMoved(Touch *touch, Event *unused_event)
 {
     const bool gameOver = isGameOver();
-    if (!gameOver && _isTouchingTableView && _selectedCard.first) {
+    if (!gameOver && _isTouchingTableView && _selectedCard) {
         const Point& point = touch->getLocation();
-        const bool inDeck = isPointInTableView(point);
+        const bool inDeck = isPointInDeck(point);
         
         if (_observer) {
-            _observer->onMapUILayerTouchMoved(_selectedCard.first, point);
+            _observer->onMapUILayerTouchMoved(_selectedCard, point);
         }
         
-        if (!inDeck && _highlightedCard != _selectedCard.second) {
-            setHighlightedCard(_selectedCard.second);
+        if (!inDeck && _highlightedCardInfo != _selectedCardInfo) {
+            setHighlightedCard(_selectedCardInfo.first, _selectedCardInfo.second);
         }
     }
 }
@@ -315,29 +341,29 @@ void MapUILayer::onTouchMoved(Touch *touch, Event *unused_event)
 void MapUILayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
     const bool gameOver = isGameOver();
-    if (!gameOver && _isTouchingTableView && _selectedCard.first) {
+    if (!gameOver && _isTouchingTableView && _selectedCard) {
         if (_observer) {
             const Point& point = touch->getLocation();
-            _observer->onMapUILayerTouchEnded(_selectedCard.first, _selectedCard.second, point);
+            _observer->onMapUILayerTouchEnded(_selectedCard, _selectedCardInfo.second, point);
         }
         
-        _selectedCard.first = nullptr;
-        _selectedCard.second = INVALID_VALUE;
+        clearCardInfo(_selectedCardInfo);
+        _selectedCard = nullptr;
         _isTouchingTableView = false;
     }
 }
 
-#pragma mark - MapUICardDeckObserver
-void MapUILayer::onMapUICardDeckUnitTouchedBegan(const Card* card, int idx)
+#pragma mark - UnitCardDeckObserver
+void MapUILayer::onCardDeckTouchedBegan(CardDeck* node, const Card* card, int idx)
 {
-    _selectedCard.first = card;
-    _selectedCard.second = idx;
+    setCardInfo(_selectedCardInfo, node, idx);
+    _selectedCard = card;
 }
 
-void MapUILayer::onMapUICardDeckUnitTouchedEnded(const Card* card, int idx)
+void MapUILayer::onCardDeckTouchedEnded(CardDeck* node, const Card* card, int idx)
 {
     if (!isGameOver()) {
-        setHighlightedCard(idx);
+        setHighlightedCard(node, idx);
         SoundManager::getInstance()->playButtonSelectUnitSound();
     }
 }
@@ -408,24 +434,78 @@ bool MapUILayer::isGameOver() const
     return false;
 }
 
-void MapUILayer::setHighlightedCard(int idx)
+void MapUILayer::reorderDecks()
 {
-    const int lastCard = _highlightedCard;
-    const bool isNew = (lastCard != idx);
+    const float winWidth = Director::getInstance()->getWinSize().width;
+    const size_t cnt(_decks.size());
+    if (winWidth >= _decksTotalWidth) {
+        const float offsetX = (winWidth - _decksTotalWidth) / (cnt + 1);
+        float x(0);
+        for (auto iter = begin(_decks); iter != end(_decks); ++iter) {
+            auto deck = iter->second;
+            if (deck) {
+                const Size& size = deck->getContentSize();
+                x += offsetX + size.width;
+                deck->setPosition(x - size.width / 2, size.height / 2);
+            }
+        }
+    } else {
+        // TODO
+    }
+}
+
+CardDeck* MapUILayer::getDeck(CardDeckType type) const
+{
+    if (_decks.find(type) != end(_decks)) {
+        return _decks.at(type);
+    }
+    
+    return nullptr;
+}
+
+const Card* MapUILayer::getCard(CardDeckType type, int idx) const
+{
+    auto deck = getDeck(type);
+    if (deck) {
+        return deck->getCard(idx);
+    }
+    
+    return nullptr;
+}
+
+void MapUILayer::setHighlightedCard(CardDeck* deck, int idx)
+{
+    const bool isNew = (_highlightedCardInfo.first != deck || _highlightedCardInfo.second != idx);
     
     if (isNew) {
-        _highlightedCard = idx;
+        setCardInfo(_highlightedCardInfo, deck, idx);
     } else {
-        _highlightedCard = INVALID_VALUE;
+        clearCardInfo(_highlightedCardInfo);
     }
     
-    if (_cardDeck) {
-        _cardDeck->select(_highlightedCard);
-        
-        // callback
-        if (_observer) {
-            const Card* card = _cardDeck->getCard(_highlightedCard);
-            _observer->onMapUILayerCardSelected(card, _highlightedCard);
+    for (auto iter = begin(_decks); iter != end(_decks); ++iter) {
+        auto d = iter->second;
+        d->select((deck == d) ? _highlightedCardInfo.second : INVALID_VALUE);
+    }
+    
+    if (_observer) {
+        if (deck) {
+            const int highlightedIdx(_highlightedCardInfo.second);
+            const Card* card = deck->getCard(highlightedIdx);
+            _observer->onMapUILayerCardSelected(card, highlightedIdx);
+        } else {
+            _observer->onMapUILayerCardSelected(nullptr, INVALID_VALUE);
         }
     }
+}
+
+void MapUILayer::setCardInfo(pair<CardDeck*, int>& data, CardDeck* deck, int idx) const
+{
+    data.first = deck;
+    data.second = idx;
+}
+
+void MapUILayer::clearCardInfo(pair<CardDeck*, int>& data) const
+{
+    setCardInfo(data, nullptr, INVALID_VALUE);
 }

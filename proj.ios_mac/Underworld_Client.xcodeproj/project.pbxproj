@@ -183,7 +183,8 @@
 		A1C124DC1BF58AF700F3FDD2 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = A1C124DB1BF58AF700F3FDD2 /* sounds */; };
 		A1CA78001C892D4E0060F71A /* CardConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1CA77FE1C892D4E0060F71A /* CardConfigData.cpp */; };
 		A1CE89DE1C44AB2900B60704 /* SpellConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1CE89DC1C44AB2900B60704 /* SpellConfigData.cpp */; };
-		A1D25C2F1C8588A100A84EB6 /* MapUICardDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D25C2D1C8588A100A84EB6 /* MapUICardDeck.cpp */; };
+		A1D11BC91CBE0C840060584A /* CardDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D11BC71CBE0C840060584A /* CardDeck.cpp */; };
+		A1D25C2F1C8588A100A84EB6 /* UnitCardDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D25C2D1C8588A100A84EB6 /* UnitCardDeck.cpp */; };
 		A1D25C331C85BA5600A84EB6 /* BattleDeckCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D25C311C85BA5600A84EB6 /* BattleDeckCell.cpp */; };
 		A1D45C4A1BEB3B1400D1E921 /* ResourceButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D45C481BEB3B1400D1E921 /* ResourceButton.cpp */; };
 		A1D45C4C1BEB594800D1E921 /* GameImages in Resources */ = {isa = PBXBuildFile; fileRef = A1D45C4B1BEB594800D1E921 /* GameImages */; };
@@ -648,8 +649,10 @@
 		A1CA77FF1C892D4E0060F71A /* CardConfigData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardConfigData.h; sourceTree = "<group>"; };
 		A1CE89DC1C44AB2900B60704 /* SpellConfigData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpellConfigData.cpp; sourceTree = "<group>"; };
 		A1CE89DD1C44AB2900B60704 /* SpellConfigData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpellConfigData.h; sourceTree = "<group>"; };
-		A1D25C2D1C8588A100A84EB6 /* MapUICardDeck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapUICardDeck.cpp; sourceTree = "<group>"; };
-		A1D25C2E1C8588A100A84EB6 /* MapUICardDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapUICardDeck.h; sourceTree = "<group>"; };
+		A1D11BC71CBE0C840060584A /* CardDeck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardDeck.cpp; sourceTree = "<group>"; };
+		A1D11BC81CBE0C840060584A /* CardDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardDeck.h; sourceTree = "<group>"; };
+		A1D25C2D1C8588A100A84EB6 /* UnitCardDeck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UnitCardDeck.cpp; sourceTree = "<group>"; };
+		A1D25C2E1C8588A100A84EB6 /* UnitCardDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitCardDeck.h; sourceTree = "<group>"; };
 		A1D25C311C85BA5600A84EB6 /* BattleDeckCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattleDeckCell.cpp; sourceTree = "<group>"; };
 		A1D25C321C85BA5600A84EB6 /* BattleDeckCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BattleDeckCell.h; sourceTree = "<group>"; };
 		A1D45C481BEB3B1400D1E921 /* ResourceButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResourceButton.cpp; sourceTree = "<group>"; };
@@ -1632,10 +1635,12 @@
 		A18524DD1C1AF66900BE261D /* MapUI */ = {
 			isa = PBXGroup;
 			children = (
-				A1D25C2D1C8588A100A84EB6 /* MapUICardDeck.cpp */,
-				A1D25C2E1C8588A100A84EB6 /* MapUICardDeck.h */,
+				A1D11BC71CBE0C840060584A /* CardDeck.cpp */,
+				A1D11BC81CBE0C840060584A /* CardDeck.h */,
 				A18524DE1C1AF66900BE261D /* MapUILayer.cpp */,
 				A18524DF1C1AF66900BE261D /* MapUILayer.h */,
+				A1D25C2D1C8588A100A84EB6 /* UnitCardDeck.cpp */,
+				A1D25C2E1C8588A100A84EB6 /* UnitCardDeck.h */,
 			);
 			path = MapUI;
 			sourceTree = "<group>";
@@ -2231,6 +2236,7 @@
 				307534691BF1B2F20057DCED /* Commander.cpp in Sources */,
 				A1A4BA381BCDF81500175E8A /* IapObject.cpp in Sources */,
 				3019BABC1C99668E003258DB /* Aura.cpp in Sources */,
+				A1D11BC91CBE0C840060584A /* CardDeck.cpp in Sources */,
 				A103F45B1BE37E2A007F9A83 /* BulletNode.cpp in Sources */,
 				A16BF2951C313EAF00E91458 /* TowerUpgradeData.cpp in Sources */,
 				A1D461611C3E251000E8E60B /* URConfigData.cpp in Sources */,
@@ -2246,7 +2252,7 @@
 				A1F5BFA81C1FDFBE007C08CB /* ResourceNode.cpp in Sources */,
 				3087FF311CA2BF5A004E31F6 /* ClientTCPNetworkProxy.cpp in Sources */,
 				A1E830591C1E75B200FE01B8 /* ChatCell.cpp in Sources */,
-				A1D25C2F1C8588A100A84EB6 /* MapUICardDeck.cpp in Sources */,
+				A1D25C2F1C8588A100A84EB6 /* UnitCardDeck.cpp in Sources */,
 				A1D745C31C1AB7C40020BC1C /* VictoryLayer.cpp in Sources */,
 				A16BFBB21CA905E90089C4F2 /* CCParabola.cpp in Sources */,
 				A1F58D561C32444B00C8A2DD /* SoldierQualityData.cpp in Sources */,

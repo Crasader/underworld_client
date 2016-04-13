@@ -10,9 +10,16 @@
 #define MapUILayer_h
 
 #include "cocos2d.h"
-#include "MapUICardDeck.h"
+#include "CardDeck.h"
 
 USING_NS_CC;
+
+typedef std::pair<CardDeck*, int> CardInfo;
+
+enum class CardDeckType {
+    Unit,
+    Skill
+};
 
 class MapUILayerObserver
 {
@@ -29,7 +36,7 @@ public:
 
 class MapUILayer
 : public LayerColor
-, public MapUICardDeckObserver
+, public CardDeckObserver
 {
 public:
     static MapUILayer* create(const std::string& myAccount, const std::string& opponentsAccount);
@@ -42,12 +49,13 @@ public:
     void pauseGame();
     void resumeGame();
     void clearHighlightedCard();
-    bool isPointInTableView(const Point& point);
+    bool isPointInDeck(const Point& point) const;
     
     // card deck
-    void createCardDeck(int count);
-    void insertCard(const UnderWorld::Core::Card* card);
-    void removeCard(const UnderWorld::Core::Card* card, int index);
+    void createCardDeck(CardDeckType type, int count);
+    void insertCard(CardDeckType type, const UnderWorld::Core::Card* card);
+    void removeCard(CardDeckType type, const UnderWorld::Core::Card* card, int index);
+    void updateNextCard(const UnderWorld::Core::Card* card);
     void updateCountDown(float time, float duration);
     void updateResource(const std::unordered_map<std::string, float>& resources);
     
@@ -60,19 +68,26 @@ protected:
     virtual void onTouchMoved(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
-    // MapUICardDeckObserver
-    virtual void onMapUICardDeckUnitTouchedBegan(const UnderWorld::Core::Card* card, int idx) override;
-    virtual void onMapUICardDeckUnitTouchedEnded(const UnderWorld::Core::Card* card, int idx) override;
+    // CardDeckObserver
+    virtual void onCardDeckTouchedBegan(CardDeck* node, const UnderWorld::Core::Card* card, int idx) override;
+    virtual void onCardDeckTouchedEnded(CardDeck* node, const UnderWorld::Core::Card* card, int idx) override;
     
     void createUserInfo(bool left, const std::string& account);
     bool isGameOver() const;
-    void setHighlightedCard(int idx);
+    void reorderDecks();
+    CardDeck* getDeck(CardDeckType type) const;
+    const UnderWorld::Core::Card* getCard(CardDeckType type, int idx) const;
+    void setHighlightedCard(CardDeck* deck, int idx);
+    void setCardInfo(std::pair<CardDeck*, int>& data, CardDeck* deck, int idx) const;
+    void clearCardInfo(std::pair<CardDeck*, int>& data) const;
     
 private:
     MapUILayerObserver *_observer;
     bool _isTouchingTableView;
-    int _highlightedCard;
-    std::pair<const UnderWorld::Core::Card*, int> _selectedCard;
+    float _decksTotalWidth;
+    CardInfo _highlightedCardInfo;
+    CardInfo _selectedCardInfo;
+    const UnderWorld::Core::Card* _selectedCard;
     // ======================== UI =============================
     Label *_timeLabel;
     ProgressTimer *_myHpProgress;
@@ -80,7 +95,7 @@ private:
     ProgressTimer *_opponentsHpProgress;
     Label *_opponentsHpPercentageLabel;
     MenuItem *_pauseMenuItem;
-    MapUICardDeck* _cardDeck;
+    std::map<CardDeckType, CardDeck*> _decks;
 };
 
 #endif /* MapUILayer_h */

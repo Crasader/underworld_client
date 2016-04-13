@@ -95,7 +95,8 @@ void GameRender::init(const Game* game, Commander* commander)
     
     if (_mapUILayer) {
         const int count = _deck ? _deck->getHandCapacity() : 0;
-        _mapUILayer->createCardDeck(count);
+        _mapUILayer->createCardDeck(CardDeckType::Unit, count);
+        _mapUILayer->createCardDeck(CardDeckType::Skill, 2);
     }
     
     const Faction* faction = world->getThisFaction();
@@ -292,12 +293,13 @@ void GameRender::updateUILayer()
             const auto event = log._event;
             const auto card = log._card;
             if (Deck::kDeckEvent_Use == event) {
-                _mapUILayer->removeCard(card, log._extra);
+                _mapUILayer->removeCard(CardDeckType::Unit, card, log._extra);
             } else if (Deck::kDeckEvent_Draw == event) {
-                _mapUILayer->insertCard(card);
+                _mapUILayer->insertCard(CardDeckType::Unit, card);
             }
         }
         
+        _mapUILayer->updateNextCard(_deck->getNextDrawCard());        
         _deck->clearEventLog();
     }
 }
@@ -632,7 +634,7 @@ Point GameRender::convertToUILayer(const Point& mapLayerPoint) const
 void GameRender::updateCardMask(const UnderWorld::Core::Card* card, const Point& point, float range)
 {
     if (_mapLayer && _mapUILayer) {
-        const bool inDeck = _mapUILayer->isPointInTableView(convertToUILayer(point));
+        const bool inDeck = _mapUILayer->isPointInDeck(convertToUILayer(point));
         if (inDeck) {
             removeCardMask();
         } else {
@@ -656,7 +658,7 @@ void GameRender::removeCardMask()
 void GameRender::tryToUseCard(const UnderWorld::Core::Card* card, int idx, const Point& point)
 {
     if (_mapLayer) {
-        const bool inDeck = _mapUILayer->isPointInTableView(convertToUILayer(point));
+        const bool inDeck = _mapUILayer->isPointInDeck(convertToUILayer(point));
         if (inDeck) {
             // TODO:
         } else if (_commander) {

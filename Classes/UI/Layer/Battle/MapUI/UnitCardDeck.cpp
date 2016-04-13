@@ -1,12 +1,12 @@
 //
-//  MapUICardDeck.cpp
+//  UnitCardDeck.cpp
 //  Underworld_Client
 //
 //  Created by Andy on 16/3/1.
-//  Copyright (c) 2015 Mofish Studio. All rights reserved.
+//  Copyright (c) 2016 Mofish Studio. All rights reserved.
 //
 
-#include "MapUICardDeck.h"
+#include "UnitCardDeck.h"
 #include "cocostudio/CocoStudio.h"
 #include "Deck.h"
 #include "CardType.h"
@@ -19,12 +19,10 @@ using namespace UnderWorld::Core;
 
 static const int topZOrder(1);
 static const float costOffsetX(1.0f);
-static const float animationDuration(0.3f);
-static const int cardActionTag(329);
 
-MapUICardDeck* MapUICardDeck::create(int count)
+UnitCardDeck* UnitCardDeck::create(int count)
 {
-    MapUICardDeck *ret = new (nothrow) MapUICardDeck();
+    UnitCardDeck *ret = new (nothrow) UnitCardDeck();
     if (ret && ret->init(count))
     {
         ret->autorelease();
@@ -35,27 +33,25 @@ MapUICardDeck* MapUICardDeck::create(int count)
     return nullptr;
 }
 
-MapUICardDeck::MapUICardDeck()
-:_observer(nullptr)
-,_background(nullptr)
-,_candidateSprite(nullptr)
+UnitCardDeck::UnitCardDeck()
+:_candidateSprite(nullptr)
 ,_candidateProgress(nullptr)
 ,_nextLabel(nullptr)
 ,_countLabel(nullptr)
 ,_costHint(nullptr)
+,_nextCard(nullptr)
 ,_isShaking(false)
 ,_costStartPosition(Point::ZERO)
-,_candidateSpritePosition(Point::ZERO)
 {
     
 }
 
-MapUICardDeck::~MapUICardDeck()
+UnitCardDeck::~UnitCardDeck()
 {
     removeAllChildren();
 }
 
-bool MapUICardDeck::init(int count)
+bool UnitCardDeck::init(int count)
 {
     if (Node::init())
     {
@@ -84,14 +80,14 @@ bool MapUICardDeck::init(int count)
         const float y = y2 + nodeSize.height / 2;
         for (int i = count - 1; i >= 0; --i) {
             const float x = x1 + x2 + nodeSize.width * (i + 1.5f) + x3 * i;
-            _unitPositions.push_back(Point(x, y));
+            _positions.push_back(Point(x, y));
         }
         
         // candidate
         {
             _candidateSprite = Sprite::create("GameImages/test/ui_kapaibeiian.png");
-            _candidateSpritePosition = Point(x1 + nodeSize.width / 2, y);
-            _candidateSprite->setPosition(_candidateSpritePosition);
+            _insertActionStartPosition = Point(x1 + nodeSize.width / 2, y);
+            _candidateSprite->setPosition(_insertActionStartPosition);
             _background->addChild(_candidateSprite);
             
             const Size& size = _candidateSprite->getContentSize();
@@ -163,51 +159,29 @@ bool MapUICardDeck::init(int count)
     return false;
 }
 
-void MapUICardDeck::registerObserver(MapUICardDeckObserver *observer)
+void UnitCardDeck::updateNextCard(const Card* card)
 {
-    _observer = observer;
-}
-
-const Card* MapUICardDeck::getCard(int idx) const
-{
-    if (_cardNodes.size() > idx && idx >= 0) {
-        CardNode* node = _cardNodes.at(idx);
-        return node->getCard();
-    }
-    
-    return nullptr;
-}
-
-void MapUICardDeck::select(int idx)
-{
-    int cost(0);
-    for (int i = 0; i < _cardNodes.size(); ++i) {
-        CardNode* node = _cardNodes.at(i);
-        if (node) {
-            const bool selected(idx == i);
-            node->setSelected(selected);
-            
-            // add hint
-            if (selected) {
-                const Card* card = node->getCard();
-                if (card) {
-                    const CardType* ct = card->getCardType();
-                    if (ct) {
-                        auto costs = ct->getCost();
-                        static const string& name(RESOURCE_NAME);
-                        if (costs.find(name) != costs.end()) {
-                            cost = costs.at(name) / GameConstants::MICRORES_PER_RES;
-                        }
-                    }
-                }
-            }
+    bool same(_nextCard == card);
+    if (!same && card && _nextCard) {
+        const CardType* nextCt = _nextCard->getCardType();
+        const CardType* ct = card->getCardType();
+        if (nextCt && ct && nextCt->getName() == ct->getName()) {
+            same = true;
         }
     }
     
-    addCostHint(cost);
+    if (!same) {
+        if (card) {
+            
+        } else {
+            // TODO
+        }
+        
+        _nextCard = card;
+    }
 }
 
-void MapUICardDeck::updateTimer(float time, float duration)
+void UnitCardDeck::updateTimer(float time, float duration)
 {
     if (_nextLabel) {
         _nextLabel->setString(StringUtils::format("Next:%d", static_cast<int>(ceil(time))));
@@ -224,7 +198,7 @@ void MapUICardDeck::updateTimer(float time, float duration)
     }
 }
 
-void MapUICardDeck::updateResource(const unordered_map<string, float>& resources)
+void UnitCardDeck::updateResource(const unordered_map<string, float>& resources)
 {
     float count(0);
     static const string& resourceName(RESOURCE_NAME);
@@ -272,110 +246,14 @@ void MapUICardDeck::updateResource(const unordered_map<string, float>& resources
         _countLabel->setString(StringUtils::format("%d", static_cast<int>(count)));
     }
     
-    for (auto& node : _cardNodes) {
+    for (auto& node : _nodes) {
         node->checkResource(count);
-    }
-}
-
-void MapUICardDeck::insert(const Card* card, bool animated)
-{
-    const size_t idx(_cardNodes.size());
-    const size_t cnt(_unitPositions.size());
-    CardNode* node = CardNode::create(true);
-    node->update(card, BATTLE_RESOURCE_MAX_COUNT);
-    node->registerObserver(this);
-    if (idx < cnt) {
-        const Point& point = _unitPositions.at(idx);
-        if (animated) {
-            node->setPosition(_candidateSpritePosition);
-            Action* action = MoveTo::create(animationDuration, point);
-            action->setTag(cardActionTag);
-            node->runAction(action);
-        } else {
-            node->setPosition(point);
-        }
-        node->setTag((int)idx);
-        
-        _cardNodes.push_back(node);
-    } else {
-        node->setVisible(false);
-        _buffers.push(node);
-    }
-    addChild(node);
-}
-
-void MapUICardDeck::remove(const Card* card, int index, bool animated)
-{
-    if (card) {
-        function<void(int)> callback = [this](int index) {
-            _cardNodes.at(index)->removeFromParent();
-            _cardNodes.erase(_cardNodes.begin() + index);
-            reload();
-        };
-        
-        if (_cardNodes.size() > index) {
-            auto node = _cardNodes.at(index);
-            if (node->getCard() == card) {
-                if (animated) {
-                    node->runAction(Sequence::create(FadeOut::create(animationDuration), CallFunc::create([=] {
-                        callback(index);
-                    }), nullptr));
-                } else {
-                    callback(index);
-                }
-            }
-        }
-    }
-}
-
-#pragma mark - CardNodeObserver
-void MapUICardDeck::onCardNodeTouchedBegan(CardNode* node)
-{
-    if (_observer) {
-        _observer->onMapUICardDeckUnitTouchedBegan(node->getCard(), node->getTag());
-    }
-}
-
-void MapUICardDeck::onCardNodeTouchedEnded(CardNode* node, bool isValid)
-{
-    if (isValid && _observer) {
-        _observer->onMapUICardDeckUnitTouchedEnded(node->getCard(), node->getTag());
-    }
-}
-
-void MapUICardDeck::reload()
-{
-    const size_t maxCnt(_unitPositions.size());
-    const size_t cnt(_cardNodes.size());
-    for (int i = 0; i < cnt; ++i) {
-        auto node = _cardNodes.at(i);
-        if (i < maxCnt) {
-            const Point& position = _unitPositions.at(i);
-            if (node->getActionByTag(cardActionTag)) {
-                node->stopActionByTag(cardActionTag);
-            }
-            node->setPosition(position);
-            node->setTag(i);
-        } else {
-            node->removeFromParent();
-        }
-    }
-    
-    size_t i = cnt;
-    while (_buffers.size() > 0 && i < maxCnt) {
-        auto node = _buffers.front();
-        node->setVisible(true);
-        node->setPosition(_unitPositions[i]);
-        node->setTag((int)i);
-        _cardNodes.push_back(node);
-        _buffers.pop();
-        ++ i;
     }
 }
 
 #pragma mark shake
 static float shake_action_tag = 2016;
-void MapUICardDeck::shake()
+void UnitCardDeck::shake()
 {
     if (!_isShaking) {
         stopShake();
@@ -384,13 +262,13 @@ void MapUICardDeck::shake()
         static float shake_duration = 0.4f;
         static float shake_strength = 2.0f;
         
-        auto action = RepeatForever::create(CCShake::actionWithDuration(shake_duration, shake_strength, _candidateSpritePosition));
+        auto action = RepeatForever::create(CCShake::actionWithDuration(shake_duration, shake_strength, _insertActionStartPosition));
         action->setTag(shake_action_tag);
         _candidateSprite->runAction(action);
     }
 }
 
-void MapUICardDeck::stopShake()
+void UnitCardDeck::stopShake()
 {
     if (_isShaking) {
         _isShaking = false;
@@ -398,11 +276,11 @@ void MapUICardDeck::stopShake()
     
     if (_candidateSprite->getActionByTag(shake_action_tag)) {
         _candidateSprite->stopActionByTag(shake_action_tag);
-        _candidateSprite->setPosition(_candidateSpritePosition);
+        _candidateSprite->setPosition(_insertActionStartPosition);
     }
 }
 
-void MapUICardDeck::addCostHint(int cost)
+void UnitCardDeck::addCostHint(int cost)
 {
     if (cost > 0) {
         if (!_costHint) {
@@ -428,7 +306,7 @@ void MapUICardDeck::addCostHint(int cost)
     }
 }
 
-void MapUICardDeck::removeCostHint()
+void UnitCardDeck::removeCostHint()
 {
     if (_costHint) {
         _costHint->removeFromParent();
