@@ -640,11 +640,6 @@ void GameRender::updateCardMask(const UnderWorld::Core::Card* card, const Point&
             Coordinate32 coordinate = getValidPuttingCoordinate(point, ut);
             if (ut) {
                 _mapLayer->updateUnitMask(ut, coordinate);
-            } else {
-                const SpellType* st = card->getSpellType();
-                if (isValidAoeSpell(st)) {
-                    _mapLayer->updateSpellRing(st->getSpellName(), coordinate, range);
-                }
             }
         }
     }
@@ -665,32 +660,9 @@ void GameRender::tryToUseCard(const UnderWorld::Core::Card* card, int idx, const
         if (inDeck) {
             // TODO:
         } else if (_commander) {
-            const SpellType* st = card->getSpellType();
-            Coordinate32 coordinate = getValidPuttingCoordinate(point, (nullptr == st));
+            Coordinate32 coordinate = getValidPuttingCoordinate(point, true);
             CommandResult result = _commander->tryGiveDeckUseCommand(_deck, idx, coordinate);
             if (kCommandResult_suc == result) {
-                if (isValidAoeSpell(st)) {
-                    const string& name = st->getSpellName();
-                    // AOEs
-                    if (name.find(SPELL_NAME_FIREBALL) != string::npos) {
-                        const int factionIndex = _game->getWorld()->getThisFactionIndex();
-                        if (_cores.find(factionIndex) != end(_cores)) {
-                            const Unit* core = _cores.at(factionIndex);
-                            if (core) {
-                                const int unitId = core->getUnitId();
-                                if (_allUnitNodes.find(unitId) != end(_allUnitNodes)) {
-                                    UnitNode* node = _allUnitNodes.at(unitId);
-                                    if (node) {
-                                        _mapLayer->addAoeSpell(node->getPosition(), name, 2.0f);
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        _mapLayer->addSpell(name, 12.0f);
-                    }
-                }
-                
                 _mapUILayer->clearHighlightedCard();
             }
         }

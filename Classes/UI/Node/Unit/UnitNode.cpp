@@ -128,6 +128,7 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
     
     UnitClass uc = unit->getUnitBase().getUnitClass();
     _isBuilding = (kUnitClass_Core == uc || kUnitClass_Building == uc);
+    //Temp code
     _configData = DataManager::getInstance()->getURConfigData(_unitName);
     _needToFlip = (rightSide == _configData->isFaceRight());
 }
