@@ -231,6 +231,23 @@ void CardNode::setOpacity(GLubyte opacity)
     }
 }
 
+void CardNode::update(const std::string& name, float cd)
+{
+    _cardName = name;
+    
+    updateIcon(true);
+    
+    if (_resourceNode) {
+        _resourceNode->removeFromParent();
+        _resourceNode = nullptr;
+    }
+    
+    for (auto iter = begin(_starSprites); iter != end(_starSprites); ++iter) {
+        iter->second->getParent()->getParent()->setVisible(false);
+        break;
+    }
+}
+
 void CardNode::update(const Card* card, float resource)
 {
     _card = card;
@@ -271,6 +288,11 @@ void CardNode::update(const string& name, int rarity, int cost, float resource)
     // !!!if we didn't re-add the resource nodes, the animation would be stopped(It may caused by the table's refreshing)
     _resourceNode = readdResourceNode(_resourceNode, ::ResourceType::Gold, cost);
     checkResource(resource);
+    
+    for (auto iter = begin(_starSprites); iter != end(_starSprites); ++iter) {
+        iter->second->getParent()->getParent()->setVisible(true);
+        break;
+    }
 }
 
 void CardNode::setSelected(bool selected)

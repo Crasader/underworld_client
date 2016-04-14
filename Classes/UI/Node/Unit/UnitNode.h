@@ -31,7 +31,6 @@ class UnitNodeObserver
 {
 public:
     virtual ~UnitNodeObserver() {}
-    virtual void onUnitNodeUpdatedFeatures(int unitId) = 0;
     virtual void onUnitNodePlayDeadAnimationFinished(int unitId) = 0;
     virtual void onUnitNodeHurtTheTarget(UnitNode* node) = 0;
     virtual void onUnitNodeShakeScreen(UnitNode* node) = 0;

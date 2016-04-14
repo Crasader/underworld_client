@@ -28,10 +28,10 @@ public:
     virtual bool onMapUILayerIsGameOver() const = 0;
     virtual void onMapUILayerClickedPauseButton() = 0;
     
-    virtual void onMapUILayerCardSelected(const UnderWorld::Core::Card* card, int idx) = 0;
+    virtual void onMapUILayerCardSelected(const std::string& card, int idx) = 0;
     
-    virtual void onMapUILayerTouchMoved(const UnderWorld::Core::Card* card, const Point& position) = 0;
-    virtual void onMapUILayerTouchEnded(const UnderWorld::Core::Card* card, int idx, const Point& position) = 0;
+    virtual void onMapUILayerTouchMoved(const std::string& card, const Point& position) = 0;
+    virtual void onMapUILayerTouchEnded(const std::string& card, int idx, const Point& position) = 0;
 };
 
 class MapUILayer
@@ -53,6 +53,7 @@ public:
     
     // card deck
     void createCardDeck(CardDeckType type, int count);
+    void insertCard(CardDeckType type, const std::string& name);
     void insertCard(CardDeckType type, const UnderWorld::Core::Card* card);
     void removeCard(CardDeckType type, const UnderWorld::Core::Card* card, int index);
     void updateNextCard(const UnderWorld::Core::Card* card);
@@ -69,14 +70,13 @@ protected:
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
     // CardDeckObserver
-    virtual void onCardDeckTouchedBegan(CardDeck* node, const UnderWorld::Core::Card* card, int idx) override;
-    virtual void onCardDeckTouchedEnded(CardDeck* node, const UnderWorld::Core::Card* card, int idx) override;
+    virtual void onCardDeckTouchedBegan(CardDeck* node, const std::string& card, int idx) override;
+    virtual void onCardDeckTouchedEnded(CardDeck* node, const std::string& card, int idx) override;
     
     void createUserInfo(bool left, const std::string& account);
     bool isGameOver() const;
     void reorderDecks();
     CardDeck* getDeck(CardDeckType type) const;
-    const UnderWorld::Core::Card* getCard(CardDeckType type, int idx) const;
     void setHighlightedCard(CardDeck* deck, int idx);
     void setCardInfo(std::pair<CardDeck*, int>& data, CardDeck* deck, int idx) const;
     void clearCardInfo(std::pair<CardDeck*, int>& data) const;
@@ -87,7 +87,7 @@ private:
     float _decksTotalWidth;
     CardInfo _highlightedCardInfo;
     CardInfo _selectedCardInfo;
-    const UnderWorld::Core::Card* _selectedCard;
+    std::string _selectedCard;
     // ======================== UI =============================
     Label *_timeLabel;
     ProgressTimer *_myHpProgress;

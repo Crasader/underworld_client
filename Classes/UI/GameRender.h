@@ -22,10 +22,13 @@ USING_NS_CC;
 
 namespace UnderWorld { namespace Core {
     class Game;
+    class TechTree;
     class Commander;
     class Unit;
+    class UnitType;
     class Deck;
-    class Card;
+    class CardType;
+    class SpellType;
 }}
 
 class GameRenderObserver
@@ -56,7 +59,6 @@ protected:
     virtual void render(const UnderWorld::Core::Game* game) override;
     
     // UnitNodeObserver
-    virtual void onUnitNodeUpdatedFeatures(int unitId) override;
     virtual void onUnitNodePlayDeadAnimationFinished(int unitId) override;
     virtual void onUnitNodeHurtTheTarget(UnitNode* node) override;
     virtual void onUnitNodeShakeScreen(UnitNode* node) override;
@@ -73,9 +75,9 @@ protected:
     // MapUILayerObserver
     virtual bool onMapUILayerIsGameOver() const override;
     virtual void onMapUILayerClickedPauseButton() override;
-    virtual void onMapUILayerCardSelected(const UnderWorld::Core::Card* card, int idx) override;
-    virtual void onMapUILayerTouchMoved(const UnderWorld::Core::Card* card, const Point& point) override;
-    virtual void onMapUILayerTouchEnded(const UnderWorld::Core::Card* card, int idx, const Point& position) override;
+    virtual void onMapUILayerCardSelected(const std::string& card, int idx) override;
+    virtual void onMapUILayerTouchMoved(const std::string& card, const Point& point) override;
+    virtual void onMapUILayerTouchEnded(const std::string& card, int idx, const Point& position) override;
     
     // VictoryLayerObserver
     virtual void onVictoryLayerClosed(Layer* pSender) override;
@@ -107,10 +109,14 @@ private:
     Point convertToUILayer(const Point& mapLayerPoint) const;
     
     //
-    void updateCardMask(const UnderWorld::Core::Card* card, const Point& point, float range);
+    void updateCardMask(const std::string& card, const Point& point, float range);
     void removeCardMask();
-    void tryToUseCard(const UnderWorld::Core::Card* card, int idx, const Point& point);
+    void tryToUseCard(const std::string& card, int idx, const Point& point);
     
+    const UnderWorld::Core::TechTree* getTechTree() const;
+    const UnderWorld::Core::CardType* getCardType(const std::string& name) const;
+    const UnderWorld::Core::UnitType* getUnitType(const std::string& name) const;
+    const UnderWorld::Core::SpellType* getSpellType(const std::string& name) const;
     UnderWorld::Core::Coordinate32 getValidPuttingCoordinate(const Point& point, bool check) const;
     
 private:
@@ -126,7 +132,7 @@ private:
     std::unordered_map<const void*, BulletNode*> _allBulletNodes;
     std::unordered_map<int, const UnderWorld::Core::Unit*> _cores;
     const UnderWorld::Core::Deck* _deck;
-    std::pair<const UnderWorld::Core::Card* ,int> _selectedCard;
+    std::pair<std::string ,int> _selectedCard;
     
     bool _paused;
     bool _isGameOver;

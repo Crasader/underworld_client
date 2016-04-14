@@ -24,8 +24,8 @@ class CardDeckObserver
 {
 public:
     virtual ~CardDeckObserver() {}
-    virtual void onCardDeckTouchedBegan(CardDeck* node, const UnderWorld::Core::Card* card, int idx) = 0;
-    virtual void onCardDeckTouchedEnded(CardDeck* node, const UnderWorld::Core::Card* card, int idx) = 0;
+    virtual void onCardDeckTouchedBegan(CardDeck* node, const std::string& card, int idx) = 0;
+    virtual void onCardDeckTouchedEnded(CardDeck* node, const std::string& card, int idx) = 0;
 };
 
 class CardDeck: public Node, public CardNodeObserver
@@ -35,8 +35,9 @@ public:
     virtual ~CardDeck();
     void registerObserver(CardDeckObserver *observer);
     
-    const UnderWorld::Core::Card* getCard(int idx) const;
+    std::string getCard(int idx) const;
     void select(int idx);
+    void insert(const std::string& name, bool animated);
     void insert(const UnderWorld::Core::Card* card, bool animated);
     void remove(const UnderWorld::Core::Card* card, int index, bool animated);
     
@@ -44,6 +45,7 @@ protected:
     CardDeck();
     bool init(int count);
     
+    CardNode* insert(bool animated);
     void reload();
     virtual void addCostHint(int cost);
     

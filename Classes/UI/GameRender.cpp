@@ -55,7 +55,7 @@ GameRender::GameRender(Scene* scene, int mapId, const string& mapData, const str
     _mapUILayer->registerObserver(this);
     scene->addChild(_mapUILayer);
     
-    onMapUILayerCardSelected(nullptr, INVALID_VALUE);
+    onMapUILayerCardSelected("", INVALID_VALUE);
 }
 
 GameRender::~GameRender()
@@ -96,7 +96,24 @@ void GameRender::init(const Game* game, Commander* commander)
     if (_mapUILayer) {
         const int count = _deck ? _deck->getHandCapacity() : 0;
         _mapUILayer->createCardDeck(CardDeckType::Unit, count);
-        _mapUILayer->createCardDeck(CardDeckType::Skill, 2);
+        
+        // spell cards
+        if (_cores.find(factionIndex) != end(_cores)) {
+            const auto core = _cores.at(factionIndex);
+            if (core) {
+                auto ut = core->getUnitBase().getUnitType();
+                if (ut) {
+                    const auto& names = ut->getSpellNames();
+                    const auto cnt = names.size();
+                    if (cnt > 0) {
+                        _mapUILayer->createCardDeck(CardDeckType::Skill, (int)cnt);
+                        for (int i = 0; i < cnt; ++i) {
+                            _mapUILayer->insertCard(CardDeckType::Skill, names.at(i));
+                        }
+                    }
+                }
+            }
+        }
     }
     
     const Faction* faction = world->getThisFaction();
@@ -330,11 +347,6 @@ void GameRender::hurtUnit(const Unit* target, const string& trigger)
 }
 
 #pragma mark - UnitNodeObserver
-void GameRender::onUnitNodeUpdatedFeatures(int unitId)
-{
-    
-}
-
 void GameRender::onUnitNodePlayDeadAnimationFinished(int unitId)
 {
     removeUnit(unitId);
@@ -375,19 +387,13 @@ void GameRender::onBulletNodeExploded(BulletNode* node)
 #pragma mark - MapLayerObserver
 void GameRender::onMapLayerTouchBegan(const Point& point)
 {
-    const Card* card = _selectedCard.first;
-    if (card) {
-        updateCardMask(card, point, spellRingRange);
-    }
+    updateCardMask(_selectedCard.first, point, spellRingRange);
 }
 
 void GameRender::onMapLayerTouchMoved(const Point& point, bool isValid)
 {
     if (isValid) {
-        const Card* card = _selectedCard.first;
-        if (card) {
-            updateCardMask(card, point, spellRingRange);
-        }
+        updateCardMask(_selectedCard.first, point, spellRingRange);
     } else {
         removeCardMask();
     }
@@ -395,11 +401,9 @@ void GameRender::onMapLayerTouchMoved(const Point& point, bool isValid)
 
 void GameRender::onMapLayerTouchEnded(const Point& point)
 {
-    const Card* card = _selectedCard.first;
-    if (card) {
-        updateCardMask(card, point, spellRingRange);
-        tryToUseCard(card, _selectedCard.second, point);
-    }
+    const string& card = _selectedCard.first;
+    updateCardMask(card, point, spellRingRange);
+    tryToUseCard(card, _selectedCard.second, point);
 }
 
 #pragma mark - MapUILayerObserver
@@ -418,7 +422,7 @@ void GameRender::onMapUILayerClickedPauseButton()
     }
 }
 
-void GameRender::onMapUILayerCardSelected(const Card* card, int idx)
+void GameRender::onMapUILayerCardSelected(const string& card, int idx)
 {
     _selectedCard.first = card;
     _selectedCard.second = idx;
@@ -427,8 +431,8 @@ void GameRender::onMapUILayerCardSelected(const Card* card, int idx)
         // clear first
         _mapLayer->clearUnplacedAreas();
         
-        if (card) {
-            const CardType* ct = card->getCardType();
+        if (card.length() > 0) {
+            const CardType* ct = getCardType(card);
             if (ct && kCardClass_Unit == ct->getCardClass()) {
                 _mapLayer->setPlacedArea(_minPuttingX, _maxPuttingX);
             }
@@ -436,12 +440,12 @@ void GameRender::onMapUILayerCardSelected(const Card* card, int idx)
     }
 }
 
-void GameRender::onMapUILayerTouchMoved(const Card* card, const Point& point)
+void GameRender::onMapUILayerTouchMoved(const string& card, const Point& point)
 {
     updateCardMask(card, convertToMapLayer(point), spellRingRange);
 }
 
-void GameRender::onMapUILayerTouchEnded(const Card* card, int idx, const Point& point)
+void GameRender::onMapUILayerTouchEnded(const string& card, int idx, const Point& point)
 {
     const Point& p = convertToMapLayer(point);
     updateCardMask(card, p, spellRingRange);
@@ -538,7 +542,7 @@ void GameRender::updateResources()
 {
     const World* world = _game->getWorld();
     if (world) {
-        const TechTree* techTree = world->getTechTree();
+        const TechTree* techTree = getTechTree();
         const Faction* faction = world->getThisFaction();
         const int count = techTree->getResourceTypeCount();
         for (int i = 0; i < count; ++i) {
@@ -631,17 +635,22 @@ Point GameRender::convertToUILayer(const Point& mapLayerPoint) const
     return _mapUILayer->convertToNodeSpace(_mapLayer->convertToWorldSpace(mapLayerPoint));
 }
 
-void GameRender::updateCardMask(const UnderWorld::Core::Card* card, const Point& point, float range)
+void GameRender::updateCardMask(const string& card, const Point& point, float range)
 {
-    if (_mapLayer && _mapUILayer) {
+    if (_mapLayer && _mapUILayer && card.length() > 0) {
         const bool inDeck = _mapUILayer->isPointInDeck(convertToUILayer(point));
         if (inDeck) {
             removeCardMask();
         } else {
-            const UnitType* ut = card->getUnitType();
+            const UnitType* ut = getUnitType(card);
             Coordinate32 coordinate = getValidPuttingCoordinate(point, ut);
             if (ut) {
                 _mapLayer->updateUnitMask(ut, coordinate);
+            } else {
+                const SpellType* st = getSpellType(card);
+                if (isValidAoeSpell(st)) {
+                    _mapLayer->updateSpellRing(st->getSpellName(), coordinate, range);
+                }
             }
         }
     }
@@ -655,16 +664,50 @@ void GameRender::removeCardMask()
     }
 }
 
-void GameRender::tryToUseCard(const UnderWorld::Core::Card* card, int idx, const Point& point)
+void GameRender::tryToUseCard(const string& card, int idx, const Point& point)
 {
-    if (_mapLayer) {
+    if (_mapLayer && card.length() > 0) {
         const bool inDeck = _mapUILayer->isPointInDeck(convertToUILayer(point));
         if (inDeck) {
             // TODO:
         } else if (_commander) {
-            Coordinate32 coordinate = getValidPuttingCoordinate(point, true);
-            CommandResult result = _commander->tryGiveDeckUseCommand(_deck, idx, coordinate);
+            CommandResult result(kCommandResult_undefine);
+            const SpellType* st = getSpellType(card);
+            const bool isSpell(isValidAoeSpell(st));
+            Coordinate32 coordinate = getValidPuttingCoordinate(point, !st);
+            const Unit* core(nullptr);
+            if (isSpell) {
+                const int fi = _game->getWorld()->getThisFactionIndex();
+                if (_cores.find(fi) != end(_cores)) {
+                    core = _cores.at(fi);
+                }
+                
+                if (core) {
+                    result = _commander->tryGiveUnitCommand(core, kCommandClass_Cast, &coordinate, nullptr, card);
+                }
+            } else {
+                result = _commander->tryGiveDeckUseCommand(_deck, idx, coordinate);
+            }
+            
             if (kCommandResult_suc == result) {
+                if (isSpell) {
+                    const string& name = st->getSpellName();
+                    // AOEs
+                    if (name.find(SPELL_NAME_FIREBALL) != string::npos) {
+                        if (core) {
+                            const int unitId = core->getUnitId();
+                            if (_allUnitNodes.find(unitId) != end(_allUnitNodes)) {
+                                UnitNode* node = _allUnitNodes.at(unitId);
+                                if (node) {
+                                    _mapLayer->addAoeSpell(node->getPosition(), name, 2.0f);
+                                }
+                            }
+                        }
+                    } else {
+                        _mapLayer->addSpell(name, 12.0f);
+                    }
+                }
+                
                 _mapUILayer->clearHighlightedCard();
             }
         }
@@ -672,6 +715,50 @@ void GameRender::tryToUseCard(const UnderWorld::Core::Card* card, int idx, const
         _mapLayer->removeSpellRing();
         _mapLayer->removeUnitMask();
     }
+}
+
+const TechTree* GameRender::getTechTree() const
+{
+    if (_game) {
+        const World* w = _game->getWorld();
+        if (w) {
+            return w->getTechTree();
+        }
+    }
+    
+    return nullptr;
+}
+
+const CardType* GameRender::getCardType(const string& name) const
+{
+    const TechTree* tt = getTechTree();
+    if (tt) {
+        const CardType* ct = tt->findCardTypeByName(name);
+        return ct;
+    }
+    
+    return nullptr;
+}
+
+const UnitType* GameRender::getUnitType(const string& name) const
+{
+    const CardType* ct = getCardType(name);
+    if (ct && kCardClass_Unit == ct->getCardClass()) {
+        const string& unitName = ct->getUnitName();
+        return getTechTree()->findUnitTypeByName(unitName);
+    }
+    
+    return nullptr;
+}
+
+const SpellType* GameRender::getSpellType(const string& name) const
+{
+    const TechTree* tt = getTechTree();
+    if (tt) {
+        return tt->findSpellTypeByName(name);
+    }
+    
+    return nullptr;
 }
 
 Coordinate32 GameRender::getValidPuttingCoordinate(const Point& point, bool check) const

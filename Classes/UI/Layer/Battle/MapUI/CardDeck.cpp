@@ -70,7 +70,7 @@ bool CardDeck::init(int count)
         // children
         const float y = y2 + nodeSize.height / 2;
         for (int i = count - 1; i >= 0; --i) {
-            const float x = x1 + nodeSize.width * (i + 1.5f) + x3 * i;
+            const float x = x1 + nodeSize.width * (i + 0.5f) + x3 * i;
             _positions.push_back(Point(x, y));
         }
         
@@ -85,14 +85,14 @@ void CardDeck::registerObserver(CardDeckObserver *observer)
     _observer = observer;
 }
 
-const Card* CardDeck::getCard(int idx) const
+string CardDeck::getCard(int idx) const
 {
     if (_nodes.size() > idx && idx >= 0) {
         CardNode* node = _nodes.at(idx);
-        return node->getCard();
+        return node->getCardName();
     }
     
-    return nullptr;
+    return "";
 }
 
 void CardDeck::select(int idx)
@@ -124,31 +124,16 @@ void CardDeck::select(int idx)
     addCostHint(cost);
 }
 
+void CardDeck::insert(const string& name, bool animated)
+{
+    auto node = insert(animated);
+    node->update(name, 1);
+}
+
 void CardDeck::insert(const Card* card, bool animated)
 {
-    const size_t idx(_nodes.size());
-    const size_t cnt(_positions.size());
-    CardNode* node = CardNode::create(true);
+    auto node = insert(animated);
     node->update(card, BATTLE_RESOURCE_MAX_COUNT);
-    node->registerObserver(this);
-    if (idx < cnt) {
-        const Point& point = _positions.at(idx);
-        if (animated) {
-            node->setPosition(_insertActionStartPosition);
-            Action* action = MoveTo::create(animationDuration, point);
-            action->setTag(cardActionTag);
-            node->runAction(action);
-        } else {
-            node->setPosition(point);
-        }
-        node->setTag((int)idx);
-        
-        _nodes.push_back(node);
-    } else {
-        node->setVisible(false);
-        _buffers.push(node);
-    }
-    addChild(node);
 }
 
 void CardDeck::remove(const Card* card, int index, bool animated)
@@ -173,6 +158,35 @@ void CardDeck::remove(const Card* card, int index, bool animated)
             }
         }
     }
+}
+
+#pragma mark - private
+CardNode* CardDeck::insert(bool animated)
+{
+    const size_t idx(_nodes.size());
+    const size_t cnt(_positions.size());
+    CardNode* node = CardNode::create(true);
+    node->registerObserver(this);
+    if (idx < cnt) {
+        const Point& point = _positions.at(idx);
+        if (animated) {
+            node->setPosition(_insertActionStartPosition);
+            Action* action = MoveTo::create(animationDuration, point);
+            action->setTag(cardActionTag);
+            node->runAction(action);
+        } else {
+            node->setPosition(point);
+        }
+        node->setTag((int)idx);
+        
+        _nodes.push_back(node);
+    } else {
+        node->setVisible(false);
+        _buffers.push(node);
+    }
+    addChild(node);
+    
+    return node;
 }
 
 void CardDeck::reload()
@@ -211,13 +225,13 @@ void CardDeck::addCostHint(int cost) {}
 void CardDeck::onCardNodeTouchedBegan(CardNode* node)
 {
     if (_observer) {
-        _observer->onCardDeckTouchedBegan(this, node->getCard(), node->getTag());
+        _observer->onCardDeckTouchedBegan(this, node->getCardName(), node->getTag());
     }
 }
 
 void CardDeck::onCardNodeTouchedEnded(CardNode* node, bool isValid)
 {
     if (isValid && _observer) {
-        _observer->onCardDeckTouchedEnded(this, node->getCard(), node->getTag());
+        _observer->onCardDeckTouchedEnded(this, node->getCardName(), node->getTag());
     }
 }

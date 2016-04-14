@@ -29,10 +29,13 @@ protected:
     void stopShake();
     virtual void addCostHint(int cost) override;
     void removeCostHint();
+    void createNextCardNode(const UnderWorld::Core::Card* card);
+    void createBlankNextCardNode();
+    void createNextCardProgress(Node* parent);
     
 private:
-    Node* _candidateSprite;
-    ProgressTimer* _candidateProgress;
+    Node* _nextCardNode;
+    ProgressTimer* _nextCardProgress;
     Label* _nextLabel;
     Label* _countLabel;
     Node* _costHint;

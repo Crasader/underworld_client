@@ -34,8 +34,8 @@ UnitCardDeck* UnitCardDeck::create(int count)
 }
 
 UnitCardDeck::UnitCardDeck()
-:_candidateSprite(nullptr)
-,_candidateProgress(nullptr)
+:_nextCardNode(nullptr)
+,_nextCardProgress(nullptr)
 ,_nextLabel(nullptr)
 ,_countLabel(nullptr)
 ,_costHint(nullptr)
@@ -85,26 +85,13 @@ bool UnitCardDeck::init(int count)
         
         // candidate
         {
-            _candidateSprite = Sprite::create("GameImages/test/ui_kapaibeiian.png");
             _insertActionStartPosition = Point(x1 + nodeSize.width / 2, y);
-            _candidateSprite->setPosition(_insertActionStartPosition);
-            _background->addChild(_candidateSprite);
             
-            const Size& size = _candidateSprite->getContentSize();
-            Sprite* s = Sprite::create("GameImages/test/ui_iconzhezhao_white.png");
-            ProgressTimer* pt = ProgressTimer::create(s);
-            pt->setType(ProgressTimer::Type::RADIAL);
-            pt->setReverseDirection(true);
-            pt->setMidpoint(Point::ANCHOR_MIDDLE);
-            pt->setPercentage(100);
-            pt->setPosition(Point(size.width / 2, size.height / 2));
-            _candidateSprite->addChild(pt);
             
-            _candidateProgress = pt;
         }
         
         _nextLabel = CocosUtils::createLabel("Next:0", BIG_FONT_SIZE, DEFAULT_NUMBER_FONT);
-        _nextLabel->setPosition(_candidateSprite->getPosition().x, y2 / 2);
+        _nextLabel->setPosition(_insertActionStartPosition.x, y2 / 2);
         _background->addChild(_nextLabel, topZOrder);
         
         // effect below "max 10"
@@ -172,12 +159,14 @@ void UnitCardDeck::updateNextCard(const Card* card)
     
     if (!same) {
         if (card) {
-            
+            createNextCardNode(card);
         } else {
-            // TODO
+            createBlankNextCardNode();
         }
         
         _nextCard = card;
+    } else if (!_nextCard) {
+        createBlankNextCardNode();
     }
 }
 
@@ -187,8 +176,8 @@ void UnitCardDeck::updateTimer(float time, float duration)
         _nextLabel->setString(StringUtils::format("Next:%d", static_cast<int>(ceil(time))));
     }
     
-    if (_candidateProgress) {
-        _candidateProgress->setPercentage(time / duration * 100.0f);
+    if (_nextCardProgress) {
+        _nextCardProgress->setPercentage(time / duration * 100.0f);
     }
     
     if (time >= duration) {
@@ -259,12 +248,14 @@ void UnitCardDeck::shake()
         stopShake();
         _isShaking = true;
         
-        static float shake_duration = 0.4f;
-        static float shake_strength = 2.0f;
-        
-        auto action = RepeatForever::create(CCShake::actionWithDuration(shake_duration, shake_strength, _insertActionStartPosition));
-        action->setTag(shake_action_tag);
-        _candidateSprite->runAction(action);
+        if (_nextCardNode) {
+            static float shake_duration = 0.4f;
+            static float shake_strength = 2.0f;
+            
+            auto action = RepeatForever::create(CCShake::actionWithDuration(shake_duration, shake_strength, _insertActionStartPosition));
+            action->setTag(shake_action_tag);
+            _nextCardNode->runAction(action);
+        }
     }
 }
 
@@ -274,9 +265,9 @@ void UnitCardDeck::stopShake()
         _isShaking = false;
     }
     
-    if (_candidateSprite->getActionByTag(shake_action_tag)) {
-        _candidateSprite->stopActionByTag(shake_action_tag);
-        _candidateSprite->setPosition(_insertActionStartPosition);
+    if (_nextCardNode && _nextCardNode->getActionByTag(shake_action_tag)) {
+        _nextCardNode->stopActionByTag(shake_action_tag);
+        _nextCardNode->setPosition(_insertActionStartPosition);
     }
 }
 
@@ -311,5 +302,63 @@ void UnitCardDeck::removeCostHint()
     if (_costHint) {
         _costHint->removeFromParent();
         _costHint = nullptr;
+    }
+}
+
+void UnitCardDeck::createNextCardNode(const Card* card)
+{
+    if (_nextCardNode) {
+        auto cardNode = dynamic_cast<CardNode*>(_nextCardNode);
+        if (cardNode) {
+            cardNode->update(card, BATTLE_RESOURCE_MAX_COUNT);
+        } else {
+            _nextCardNode->removeFromParent();
+            _nextCardNode = nullptr;
+        }
+    }
+    
+    if (!_nextCardNode) {
+        auto node = CardNode::create(true);
+        node->update(card, BATTLE_RESOURCE_MAX_COUNT);
+        node->setPosition(_insertActionStartPosition);
+        _background->addChild(node);
+        createNextCardProgress(node);
+        _nextCardNode = node;
+    }
+}
+
+void UnitCardDeck::createBlankNextCardNode()
+{
+    if (_nextCardNode && !dynamic_cast<Sprite*>(_nextCardNode)) {
+        _nextCardNode->removeFromParent();
+        _nextCardNode = nullptr;
+    }
+    
+    if (!_nextCardNode) {
+        auto node = Sprite::create("GameImages/test/ui_kapaibeiian.png");
+        node->setPosition(_insertActionStartPosition);
+        _background->addChild(node);
+        createNextCardProgress(node);
+        _nextCardNode = node;
+    }
+}
+
+void UnitCardDeck::createNextCardProgress(Node* parent)
+{
+    if (parent) {
+        static int tag(100);
+        if (!parent->getChildByTag(tag)) {
+            const Size& size = parent->getContentSize();
+            auto s = Sprite::create("GameImages/test/ui_iconzhezhao_white.png");
+            auto pt = ProgressTimer::create(s);
+            pt->setType(ProgressTimer::Type::RADIAL);
+            pt->setReverseDirection(true);
+            pt->setMidpoint(Point::ANCHOR_MIDDLE);
+            pt->setPercentage(100);
+            pt->setPosition(Point(size.width / 2, size.height / 2));
+            pt->setTag(tag);
+            parent->addChild(pt);
+            _nextCardProgress = pt;
+        }
     }
 }

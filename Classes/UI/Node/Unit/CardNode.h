@@ -39,6 +39,7 @@ public:
     virtual void setPosition(const Vec2& position) override;
     virtual void setPosition(float x, float y) override;
     virtual void setOpacity(GLubyte opacity) override;
+    void update(const std::string& name, float cd);
     void update(const UnderWorld::Core::Card* card, float resource);
     void update(const std::string& name, int rarity, int cost, float resource);
     void setSelected(bool selected);
