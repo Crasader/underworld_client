@@ -40,6 +40,7 @@ public:
     void insert(const std::string& name, bool animated);
     void insert(const UnderWorld::Core::Card* card, bool animated);
     void remove(const UnderWorld::Core::Card* card, int index, bool animated);
+    void updateCD(int idx, float percentage);
     
 protected:
     CardDeck();

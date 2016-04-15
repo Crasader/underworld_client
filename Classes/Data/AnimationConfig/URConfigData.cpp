@@ -69,24 +69,6 @@ URConfigData::URConfigData(tinyxml2::XMLElement *xmlElement)
             }
         }
         {
-            const char *data = xmlElement->Attribute("b_attack_begin");
-            if (data && strlen(data) > 0) {
-                _bAttackBegin = data + suffix;
-            }
-        }
-        {
-            const char *data = xmlElement->Attribute("b_attack");
-            if (data && strlen(data) > 0) {
-                _bAttack = data + suffix;
-            }
-        }
-        {
-            const char *data = xmlElement->Attribute("b_attack_end");
-            if (data && strlen(data) > 0) {
-                _bAttackEnd = data + suffix;
-            }
-        }
-        {
             const char *data = xmlElement->Attribute("sword_effect");
             if (data && strlen(data) > 0) {
                 _swordEffect = data + suffix;
@@ -205,21 +187,6 @@ const string& URConfigData::getBDamaged() const
 const string& URConfigData::getBDestroyed() const
 {
     return _bDestroyed;
-}
-
-const string& URConfigData::getBAttackBegin() const
-{
-    return _bAttackBegin;
-}
-
-const string& URConfigData::getBAttack() const
-{
-    return _bAttack;
-}
-
-const string& URConfigData::getBAttackEnd() const
-{
-    return _bAttackEnd;
 }
 
 const string& URConfigData::getSwordEffect() const

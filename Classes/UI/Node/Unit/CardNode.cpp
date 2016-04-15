@@ -231,7 +231,7 @@ void CardNode::setOpacity(GLubyte opacity)
     }
 }
 
-void CardNode::update(const std::string& name, float cd)
+void CardNode::update(const std::string& name)
 {
     _cardName = name;
     
@@ -245,6 +245,19 @@ void CardNode::update(const std::string& name, float cd)
     for (auto iter = begin(_starSprites); iter != end(_starSprites); ++iter) {
         iter->second->getParent()->getParent()->setVisible(false);
         break;
+    }
+}
+
+void CardNode::updateCD(float percentage)
+{
+    bool disabled(percentage > 0);
+    updateIcon(!disabled);
+    
+    if (_coldDownProgress) {
+        _coldDownProgress->setVisible(disabled);
+        if (disabled) {
+            _coldDownProgress->setPercentage(100.0f * percentage);
+        }
     }
 }
 

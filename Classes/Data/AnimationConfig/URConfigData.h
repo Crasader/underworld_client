@@ -28,9 +28,6 @@ public:
     const std::string& getBNormal() const;
     const std::string& getBDamaged() const;
     const std::string& getBDestroyed() const;
-    const std::string& getBAttackBegin() const;
-    const std::string& getBAttack() const;
-    const std::string& getBAttackEnd() const;
     const std::string& getSwordEffect() const;
     const std::string& getHurtEffect() const;
     const std::string& getCritHurtEffect() const;
@@ -54,9 +51,6 @@ private:
     std::string _bNormal;
     std::string _bDamaged;
     std::string _bDestroyed;
-    std::string _bAttackBegin;
-    std::string _bAttack;
-    std::string _bAttackEnd;
     std::string _swordEffect;
     std::string _hurtEffect;
     std::string _critHurtEffect;

@@ -194,6 +194,14 @@ void MapUILayer::updateNextCard(const Card* card)
     }
 }
 
+void MapUILayer::updateCardCD(CardDeckType type, int idx, float percentage)
+{
+    auto deck = getDeck(type);
+    if (deck) {
+        deck->updateCD(idx, percentage);
+    }
+}
+
 void MapUILayer::updateCountDown(float time, float duration)
 {
     static CardDeckType type(CardDeckType::Unit);

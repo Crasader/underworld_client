@@ -113,6 +113,8 @@ private:
     void removeCardMask();
     void tryToUseCard(const std::string& card, int idx, const Point& point);
     
+    const UnderWorld::Core::Unit* getCore() const;
+    const std::vector<std::string>& getSpells() const;
     const UnderWorld::Core::TechTree* getTechTree() const;
     const UnderWorld::Core::CardType* getCardType(const std::string& name) const;
     const UnderWorld::Core::UnitType* getUnitType(const std::string& name) const;

@@ -98,20 +98,12 @@ void GameRender::init(const Game* game, Commander* commander)
         _mapUILayer->createCardDeck(CardDeckType::Unit, count);
         
         // spell cards
-        if (_cores.find(factionIndex) != end(_cores)) {
-            const auto core = _cores.at(factionIndex);
-            if (core) {
-                auto ut = core->getUnitBase().getUnitType();
-                if (ut) {
-                    const auto& names = ut->getSpellNames();
-                    const auto cnt = names.size();
-                    if (cnt > 0) {
-                        _mapUILayer->createCardDeck(CardDeckType::Skill, (int)cnt);
-                        for (int i = 0; i < cnt; ++i) {
-                            _mapUILayer->insertCard(CardDeckType::Skill, names.at(i));
-                        }
-                    }
-                }
+        const auto& names = getSpells();
+        const auto cnt = names.size();
+        if (cnt > 0) {
+            _mapUILayer->createCardDeck(CardDeckType::Spell, (int)cnt);
+            for (int i = 0; i < cnt; ++i) {
+                _mapUILayer->insertCard(CardDeckType::Spell, names.at(i));
             }
         }
     }
@@ -318,6 +310,16 @@ void GameRender::updateUILayer()
         
         _mapUILayer->updateNextCard(_deck->getNextDrawCard());        
         _deck->clearEventLog();
+    }
+    
+    auto core = getCore();
+    const auto& names = getSpells();
+    for (int i = 0; i < names.size(); ++i) {
+        auto spell = core->getSpellByIndex(i);
+        if (spell) {
+            const float percentage = (float)spell->getCDProgress() / (float)spell->getTotalCDFrames();
+            _mapUILayer->updateCardCD(CardDeckType::Spell, i, percentage);
+        }
     }
 }
 
@@ -677,11 +679,7 @@ void GameRender::tryToUseCard(const string& card, int idx, const Point& point)
             Coordinate32 coordinate = getValidPuttingCoordinate(point, !st);
             const Unit* core(nullptr);
             if (isSpell) {
-                const int fi = _game->getWorld()->getThisFactionIndex();
-                if (_cores.find(fi) != end(_cores)) {
-                    core = _cores.at(fi);
-                }
-                
+                core = getCore();
                 if (core) {
                     result = _commander->tryGiveUnitCommand(core, kCommandClass_Cast, &coordinate, nullptr, card);
                 }
@@ -715,6 +713,35 @@ void GameRender::tryToUseCard(const string& card, int idx, const Point& point)
         _mapLayer->removeSpellRing();
         _mapLayer->removeUnitMask();
     }
+}
+
+const Unit* GameRender::getCore() const
+{
+    if (_game) {
+        const World* w = _game->getWorld();
+        if (w) {
+            const int fi = w->getThisFactionIndex();
+            if (_cores.find(fi) != end(_cores)) {
+                return _cores.at(fi);
+            }
+        }
+    }
+    
+    return nullptr;
+}
+
+const vector<string>& GameRender::getSpells() const
+{
+    const auto core = getCore();
+    if (core) {
+        auto ut = core->getUnitBase().getUnitType();
+        if (ut) {
+            return ut->getSpellNames();
+        }
+    }
+    
+    static auto v = vector<string>();
+    return v;
 }
 
 const TechTree* GameRender::getTechTree() const

@@ -18,7 +18,7 @@ typedef std::pair<CardDeck*, int> CardInfo;
 
 enum class CardDeckType {
     Unit,
-    Skill
+    Spell
 };
 
 class MapUILayerObserver
@@ -57,6 +57,7 @@ public:
     void insertCard(CardDeckType type, const UnderWorld::Core::Card* card);
     void removeCard(CardDeckType type, const UnderWorld::Core::Card* card, int index);
     void updateNextCard(const UnderWorld::Core::Card* card);
+    void updateCardCD(CardDeckType type, int idx, float percentage);
     void updateCountDown(float time, float duration);
     void updateResource(const std::unordered_map<std::string, float>& resources);
     

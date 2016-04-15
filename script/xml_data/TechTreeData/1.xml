@@ -22,7 +22,7 @@
     <card name="顺风之力" class="spell" cost="木头:30" spell_name="顺风之力加强版" desc="可以提升范围内友军的攻击速度。"/> -->
     <!-- ==========单位&势力配置========== -->
     
-    <unit name="狼人基地" class="core" hp="2568" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="600" attacksight="600" size="300" height="100" spell_names="火球术;治愈" render_key="狼人基地">
+    <unit name="狼人基地" class="core" hp="2568" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="600" attacksight="600" size="300" height="100" spell_names="火球术;治愈" render_key="时光女神">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0.0" perform="10.0" cd="0.0" occupy="0"/>
         <skill class="attack" preperform="30" perform="0.0" cd="60" min_damage="50" max_damage="56" deliver_class="physical" damage_distance="faraway" range="192" fields="3">
@@ -698,7 +698,7 @@
         </skill>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="130"/>
     </unit>
-    <unit name="吸血鬼基地" class="core" hp="2568" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="600" attacksight="600" size="300" height="0" render_key="吸血鬼核心">
+    <unit name="吸血鬼基地" class="core" hp="2568" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="600" attacksight="600" size="300" height="0" render_key="时光法师">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0.0" perform="10.0" cd="0.0" occupy="0"/>
         <skill class="attack" preperform="30" perform="0.0" cd="60" min_damage="50" max_damage="56" deliver_class="physical" damage_distance="faraway" range="192" fields="3">

@@ -356,7 +356,9 @@ void UnitNode::getCsbFiles(vector<string>& output, Unit::Direction direction, bo
         {
             if (_isBuilding) {
                 csbFile = _configData->getBDestroyed();
-            } else {
+            }
+            
+            if (0 == csbFile.length() || !FileUtils::getInstance()->isFileExist(csbFile)) {
                 csbFile = prefix + StringUtils::format("-dead-%d.csb", getResourceId(direction));
             }
         }
@@ -378,7 +380,9 @@ const string UnitNode::getStandbyCsbFile(Unit::Direction direction, bool isHealt
         const string& normal = StringUtils::format(_configData->getBNormal().c_str(), getResourceId(direction));
         const string& damaged = StringUtils::format(_configData->getBDamaged().c_str(), getResourceId(direction));
         csbFile = isHealthy ? normal : (damaged.length() > 0 ? damaged : normal);
-    } else {
+    }
+    
+    if (0 == csbFile.length() || !FileUtils::getInstance()->isFileExist(csbFile)) {
         const string& prefix = _configData->getPrefix();
         csbFile = prefix + StringUtils::format("-standby-%d.csb", getResourceId(direction));
     }
@@ -389,36 +393,31 @@ const string UnitNode::getStandbyCsbFile(Unit::Direction direction, bool isHealt
 void UnitNode::getAttackCsbFiles(vector<string>& output, Unit::Direction direction, bool isHealthy)
 {
     output.clear();
-    if (_isBuilding) {
-        // 1. attack begin
-        const string& attackBegin = _configData->getBAttackBegin();
-        if (attackBegin.length() > 0) {
-            output.push_back(attackBegin);
+    
+    const string& prefix = _configData->getPrefix();
+    {
+        const string& attack = prefix + StringUtils::format("-attack-%d.csb", getResourceId(direction));
+        output.push_back(attack);
+    }
+    // TODO: handle the unit
+    if (_unitName != "巨龙哨兵")
+    {
+        const string& backSing = prefix + StringUtils::format("-attack-%d-1.csb", getResourceId(direction));
+        output.push_back(backSing);
+    }
+    
+    bool isExist(true);
+    for (auto iter = begin(output); iter != end(output); ++iter) {
+        const string& csbFile = *iter;
+        if (0 == csbFile.length() || !FileUtils::getInstance()->isFileExist(csbFile)) {
+            isExist = false;
+            break;
         }
-        // 2. attack
-        const string& attack = StringUtils::format(_configData->getBAttack().c_str(), getResourceId(direction));
-        if (attack.length() > 0) {
-            output.push_back(attack);
-        } else {
-            output.push_back(getStandbyCsbFile(direction, isHealthy));
-        }
-        // 3. attack end
-        const string& attackEnd = _configData->getBAttackEnd();
-        if (attackEnd.length() > 0) {
-            output.push_back(attackEnd);
-        }
-    } else {
-        const string& prefix = _configData->getPrefix();
-        {
-            const string& attack = prefix + StringUtils::format("-attack-%d.csb", getResourceId(direction));
-            output.push_back(attack);
-        }
-        // TODO: handle the unit
-        if (_unitName != "巨龙哨兵")
-        {
-            const string& backSing = prefix + StringUtils::format("-attack-%d-1.csb", getResourceId(direction));
-            output.push_back(backSing);
-        }
+    }
+    
+    if (!isExist) {
+        output.clear();
+        output.push_back(getStandbyCsbFile(direction, isHealthy));
     }
 }
 

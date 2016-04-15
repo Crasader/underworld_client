@@ -127,7 +127,7 @@ void CardDeck::select(int idx)
 void CardDeck::insert(const string& name, bool animated)
 {
     auto node = insert(animated);
-    node->update(name, 1);
+    node->update(name);
 }
 
 void CardDeck::insert(const Card* card, bool animated)
@@ -157,6 +157,14 @@ void CardDeck::remove(const Card* card, int index, bool animated)
                 }
             }
         }
+    }
+}
+
+void CardDeck::updateCD(int idx, float percentage)
+{
+    if (idx < _nodes.size()) {
+        auto node = _nodes.at(idx);
+        node->updateCD(percentage);
     }
 }
 
