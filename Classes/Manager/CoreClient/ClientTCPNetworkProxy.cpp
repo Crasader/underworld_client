@@ -92,11 +92,11 @@ static std::string parseSync2SMsg(
     rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
     rapidjson::Value root(rapidjson::kObjectType);
     
-    rapidjson::Value uidJson(rapidjson::kNumberType);
-    uidJson.SetInt(uid);
-    
     rapidjson::Value reqCode(rapidjson::kNumberType);
     reqCode.SetInt(MESSAGE_CODE_SYNC_2_S);
+    
+    rapidjson::Value uidJson(rapidjson::kNumberType);
+    uidJson.SetInt(uid);
     
     rapidjson::Value msgFrame(rapidjson::kNumberType);
     msgFrame.SetInt(msg->getFrame());
