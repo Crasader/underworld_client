@@ -18,6 +18,8 @@
 #include "json/writer.h"
 #include "cocostudio/DictionaryHelper.h"
 #include "Utils.h"
+#include "DataManager.h"
+#include "BinaryJsonTool.h"
 
 #define MESSAGE_CODE_LAUNCH_2_S (2)
 #define MESSAGE_CODE_LAUNCH_2_C (3)
@@ -80,10 +82,11 @@ static std::string parseLaunch2SMsg(
     root.AddMember(MESSAGE_KEY_NAME, nameJson, allocator);
     root.AddMember(MESSAGE_KEY_UID, uidJson, allocator);
     
-    rapidjson::StringBuffer buffer;
-    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-    root.Accept(writer);
-    return buffer.GetString();
+//    rapidjson::StringBuffer buffer;
+//    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+//    root.Accept(writer);
+//    return buffer.GetString();
+    return DataManager::getInstance()->getBinaryJsonTool()->encode(root);
 }
 
 static std::string parseSync2SMsg(
@@ -137,10 +140,11 @@ static std::string parseSync2SMsg(
     root.AddMember(MESSAGE_KEY_FRAME, msgFrame, allocator);
     root.AddMember(MESSAGE_KEY_COMMANDS, commands, allocator);
     
-    rapidjson::StringBuffer buffer;
-    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-    root.Accept(writer);
-    return buffer.GetString();
+//    rapidjson::StringBuffer buffer;
+//    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+//    root.Accept(writer);
+//    return buffer.GetString();
+    return DataManager::getInstance()->getBinaryJsonTool()->encode(root);
 }
 
 static void parseLaunch2CMsg(const rapidjson::Value& root,
@@ -375,7 +379,7 @@ void ClientTCPNetworkProxy::parseResponse2Msg(
     const char* data = response->getResponseDataString();
     
     rapidjson::Document document;
-    document.Parse<rapidjson::kParseNoFlags>(data);
+    DataManager::getInstance()->getBinaryJsonTool()->decode(data, document);
     
     if (!cocostudio::DICTOOL->checkObjectExist_json(document, MESSAGE_KEY_CODE)) {
         return;

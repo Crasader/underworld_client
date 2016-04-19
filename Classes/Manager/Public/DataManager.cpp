@@ -38,6 +38,7 @@
 #include "SoldierTalentData.h"
 #include "TowerLocalData.h"
 #include "TowerUpgradeData.h"
+#include "BinaryJsonTool.h"
 
 USING_NS_CC;
 using namespace std;
@@ -65,6 +66,7 @@ void DataManager::purge()
 }
 
 DataManager::DataManager()
+:_binaryJsonTool(new BinaryJsonTool())
 {
 }
 
@@ -107,6 +109,8 @@ DataManager::~DataManager()
     Utils::clearMap(_soldierTalentDatas);
     Utils::clearMap(_towers);
     Utils::clearMap(_towerUpgradeDatas);
+    
+    CC_SAFE_DELETE(_binaryJsonTool);
 }
 
 void DataManager::init()
@@ -141,6 +145,7 @@ void DataManager::init()
     parseSoldierTalentData();
     parseTowerData();
     parseTowerUpgradeData();
+    parseBinaryjsonTemplates();
 }
 
 string DataManager::getMapData(int mapId) const
@@ -1214,4 +1219,17 @@ void DataManager::parseTowerUpgradeData()
             CC_SAFE_DELETE(xmlDoc);
         }
     }
+}
+
+void DataManager::parseBinaryjsonTemplates()
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath("JsonTemplates.xml");
+    if (FileUtils::getInstance()->isFileExist(fileName)) {
+        _binaryJsonTool->initTemplates(LocalHelper::loadFileContentString(fileName), JSON_KEY);
+    }
+}
+
+const BinaryJsonTool* DataManager::getBinaryJsonTool() const
+{
+    return _binaryJsonTool;
 }

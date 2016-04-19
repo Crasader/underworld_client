@@ -97,8 +97,8 @@ void BattleScene::start()
     _render->registerObserver(this);
     
     _sch = new (nothrow) GameScheduler();
-    //_proxy = new (nothrow) ClientTCPNetworkProxy("192.168.31.139", 8888, "playerB", 2);
-    _proxy = new (nothrow) ClientTCPNetworkProxy("123.57.221.242", 8888, "demoplayer", GameData::getInstance()->getUUID());
+    _proxy = new (nothrow) ClientTCPNetworkProxy("192.168.31.100", 9999, "playerB", 2);
+//    _proxy = new (nothrow) ClientTCPNetworkProxy("123.57.221.242", 8888, "demoplayer", GameData::getInstance()->getUUID());
 
     // 3. game setting
     UnderWorld::Core::GameContentSetting contentSetting;

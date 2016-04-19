@@ -93,6 +93,7 @@
 		521A8EAA19F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
 		52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A461A53D09B004E4C60 /* Security.framework */; };
 		6308F93B1CA02098009D2BFC /* TCPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6308F9371CA02098009D2BFC /* TCPClient.cpp */; };
+		63CCBFDA1CC5BA1B00590513 /* BinaryJsonTool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63CCBFD81CC5BA1B00590513 /* BinaryJsonTool.cpp */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
 		A103F45B1BE37E2A007F9A83 /* BulletNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F4571BE37E2A007F9A83 /* BulletNode.cpp */; };
 		A103F45C1BE37E2A007F9A83 /* UnitNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F4591BE37E2A007F9A83 /* UnitNode.cpp */; };
@@ -442,6 +443,8 @@
 		6308F9381CA02098009D2BFC /* TCPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPClient.h; sourceTree = "<group>"; };
 		6308F9391CA02098009D2BFC /* TCPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPRequest.h; sourceTree = "<group>"; };
 		6308F93A1CA02098009D2BFC /* TCPResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPResponse.h; sourceTree = "<group>"; };
+		63CCBFD81CC5BA1B00590513 /* BinaryJsonTool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BinaryJsonTool.cpp; sourceTree = "<group>"; };
+		63CCBFD91CC5BA1B00590513 /* BinaryJsonTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BinaryJsonTool.h; sourceTree = "<group>"; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		A103F4571BE37E2A007F9A83 /* BulletNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BulletNode.cpp; sourceTree = "<group>"; };
 		A103F4581BE37E2A007F9A83 /* BulletNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BulletNode.h; sourceTree = "<group>"; };
@@ -1245,6 +1248,15 @@
 			path = base;
 			sourceTree = "<group>";
 		};
+		63CCBFD71CC5BA1B00590513 /* BinaryJson */ = {
+			isa = PBXGroup;
+			children = (
+				63CCBFD81CC5BA1B00590513 /* BinaryJsonTool.cpp */,
+				63CCBFD91CC5BA1B00590513 /* BinaryJsonTool.h */,
+			);
+			path = BinaryJson;
+			sourceTree = "<group>";
+		};
 		A103F4561BE37E2A007F9A83 /* Unit */ = {
 			isa = PBXGroup;
 			children = (
@@ -1677,6 +1689,7 @@
 		A1AAE5491BCCC4C20090D917 /* Public */ = {
 			isa = PBXGroup;
 			children = (
+				63CCBFD71CC5BA1B00590513 /* BinaryJson */,
 				A1D592241C9ABE7E009B9E8C /* Scheduler */,
 				A1720E7C1BCCE19300217E98 /* Security */,
 				A1720EC71BCD321600217E98 /* CocosGlobal.h */,
@@ -2134,6 +2147,7 @@
 				A1098E9C1C758C3500B2E044 /* BattleResourceNode.cpp in Sources */,
 				30FD55611C2BF57F0078EC3C /* PassiveType.cpp in Sources */,
 				A1F58D591C32465900C8A2DD /* SoldierTalentData.cpp in Sources */,
+				63CCBFDA1CC5BA1B00590513 /* BinaryJsonTool.cpp in Sources */,
 				A1D461601C3E251000E8E60B /* UAConfigData.cpp in Sources */,
 				A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */,
 				300B1E5C1C50CCED00F8D6ED /* PathFinderImpl.cpp in Sources */,

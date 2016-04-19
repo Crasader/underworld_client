@@ -64,6 +64,8 @@ typedef std::function<void(long errorCode)> httpErrorCallback;
 #define SPELL_NAME_CURE     ("治愈")
 #define SPELL_NAME_SPEEDUP  ("顺风之力")
 
+#define JSON_KEY ("code")
+
 enum class ResourceType {
     Gem = 100,
     Gold = 101,

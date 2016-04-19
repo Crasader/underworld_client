@@ -1,0 +1,4 @@
+{"code":2,"cards":"三个弓箭手|战士|火枪手|狗|狼人步兵|王子|迷你皮卡|骑士","name":"demoplayer","uid":1464181253}
+{"code":3,"battleid":260441,"players":[{"name":"demoplayer","uid":944945370,"cards":"守卫|巨人|战士|治愈|法师|狗|王子|高攻击战士"},{"name":"demoplayer","uid":1464181253,"cards":"三个弓箭手|战士|火枪手|狗|狼人步兵|王子|迷你皮卡|骑士"}],"factionCount":2,"mapId":2,"mapIndexs":"0_1","teams":"0_1","factionIndex":0}
+{"code":4,"uid":944945370,"frame":3534,"commands":[{"frame":3534,"handIndex":1,"factionIndex":1,"pos":"1843_623"}]}
+{"code":5,"startFrame":2,"endFrame":2,"commands":[{"frame":2,"type":1,"handIndex":1,"factionIndex":1,"pos":""}],"finished":false}

@@ -42,6 +42,7 @@ class SoldierQualityData;
 class SoldierTalentData;
 class TowerLocalData;
 class TowerUpgradeData;
+class BinaryJsonTool;
 
 class DataManager
 {
@@ -99,6 +100,9 @@ public:
     const TowerLocalData* getTowerData(int id) const;
     const TowerUpgradeData* getTowerUpgradeData(int id, int level) const;
     
+    // ---------- binaryjson ----------
+    const BinaryJsonTool* getBinaryJsonTool() const;
+    
 protected:
     DataManager();
     virtual ~DataManager();
@@ -135,6 +139,8 @@ protected:
     void parseTowerData();
     void parseTowerUpgradeData();
     
+    // ---------- binaryjson ----------
+    void parseBinaryjsonTemplates();
 private:
     std::unordered_map<int, LevelLocalData*> _levels;
     std::set<std::string> _cardDecks;
@@ -165,6 +171,7 @@ private:
     std::unordered_map<std::string, SoldierTalentData*> _soldierTalentDatas;
     std::unordered_map<int, TowerLocalData*> _towers;
     std::unordered_map<std::string, TowerUpgradeData*> _towerUpgradeDatas;
+    BinaryJsonTool* _binaryJsonTool;
 };
 
 #endif /* DataManager_h */
