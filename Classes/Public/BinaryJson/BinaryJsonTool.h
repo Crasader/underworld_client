@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include "json/document.h"
 #include <string>
+#include <map>
 
 class BinaryJsonTool {
 public:

@@ -243,6 +243,9 @@ string BinaryJsonTool::encode(const rapidjson::Value &root) const
 
 void BinaryJsonTool::decode(const std::string &src, rapidjson::Document& document) const
 {
+    if (src.empty()) {
+        return;
+    }
     rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
     document.SetObject();
     stream out(src);

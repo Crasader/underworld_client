@@ -230,6 +230,15 @@ public:
         return _responseDataString.c_str();
     }
     
+    /**
+     * Get the string pointer that point to the response data.
+     * @return const char* the string pointer that point to the response data.
+     */
+    inline void getResponseDataString(std::string& data) const
+    {
+        data.assign(_responseDataString, 0, _responseDataString.size());
+    }
+    
 protected:
     bool initWithRequest(TCPRequest* request);
     

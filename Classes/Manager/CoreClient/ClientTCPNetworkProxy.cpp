@@ -135,8 +135,8 @@ static std::string parseSync2SMsg(
         commands.PushBack(command, allocator);
     }
     
-    root.AddMember(MESSAGE_KEY_UID, uidJson, allocator);
     root.AddMember(MESSAGE_KEY_CODE, reqCode, allocator);
+    root.AddMember(MESSAGE_KEY_UID, uidJson, allocator);
     root.AddMember(MESSAGE_KEY_FRAME, msgFrame, allocator);
     root.AddMember(MESSAGE_KEY_COMMANDS, commands, allocator);
     
@@ -376,8 +376,11 @@ void ClientTCPNetworkProxy::parseResponse2Msg(
     const TCPResponse* response,
     std::vector<UnderWorld::Core::NetworkMessage *> &output) {
     ;
-    const char* data = response->getResponseDataString();
     
+    string data;
+    response->getResponseDataString(data);
+    
+    int len = data.size();
     rapidjson::Document document;
     DataManager::getInstance()->getBinaryJsonTool()->decode(data, document);
     
