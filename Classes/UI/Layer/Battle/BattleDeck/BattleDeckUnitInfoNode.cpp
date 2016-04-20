@@ -227,7 +227,7 @@ void BattleDeckUnitInfoNode::update(const string& name, TechTree* techTree)
             
             if (type) {
                 _dmgLabel->setString(StringUtils::format("%d", (type->getMinDamage() + type->getMaxDamage()) / 2));
-                _atkSpeedLabel->setString(StringUtils::format("%.1f", GameConstants::frame2Second(type->getPrePerformFrames() + type->getCDFrames())));
+                _atkSpeedLabel->setString(StringUtils::format("%d", GameConstants::frame2Second(type->getPrePerformFrames() + type->getCDFrames())));
                 _atkRangeLabel->setString(StringUtils::format("%d", type->getRange()));
             } else {
                 _dmgLabel->setString(default_value);
@@ -237,7 +237,7 @@ void BattleDeckUnitInfoNode::update(const string& name, TechTree* techTree)
             
             const string& at = unit->getArmorPreference();
             if (at.length() > 0) {
-                _armorPreferLabel->setString(StringUtils::format("%.1f", unit->getArmorPreferenceFactor().getLiteralValue()));
+                _armorPreferLabel->setString(StringUtils::format("%d", unit->getArmorPreferenceFactor().getLiteralValue()));
             } else {
                 _armorPreferLabel->setString(default_value);
             }
