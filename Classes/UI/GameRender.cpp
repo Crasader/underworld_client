@@ -90,7 +90,7 @@ void GameRender::init(const Game* game, Commander* commander)
         }
     }
     
-    const int factionIndex = world->getThisFactionIndex();
+    const int factionIndex = game->getThisFactionIndex();
     _deck = game->getDeck(factionIndex);
     
     if (_mapUILayer) {
@@ -108,7 +108,7 @@ void GameRender::init(const Game* game, Commander* commander)
         }
     }
     
-    const Faction* faction = world->getThisFaction();
+    const Faction* faction = world->getFaction(factionIndex);
     if (faction) {
         const UnderWorld::Core::Rect32& rect = faction->getPuttingArea();
         _minPuttingX = rect._origin.x;
@@ -175,7 +175,7 @@ void GameRender::updateUnits(const Game* game, int index)
             if (_allUnitNodes.find(key) != _allUnitNodes.end()) {
                 // already exist, update it
                 UnitNode* node = _allUnitNodes.at(key);
-                node->update();
+                node->update(game);
                 if (_mapLayer) {
                     if (kSkillClass_Move == sc) {
                         _mapLayer->repositionUnit(node, pos);
@@ -192,7 +192,7 @@ void GameRender::updateUnits(const Game* game, int index)
                     _mapLayer->addUnit(node, pos);
                     _allUnitNodes.insert(make_pair(key, node));
                     
-                    if (factionIndex == world->getThisFactionIndex()) {
+                    if (factionIndex == game->getThisFactionIndex()) {
                         // add existent hero
                         const UnitType* unitType = unit->getUnitBase().getUnitType();
                         const UnitClass unitClass = unitType->getUnitClass();
@@ -278,7 +278,7 @@ void GameRender::updateUILayer()
                 const int maxHp = core->getUnitBase().getMaxHp();
                 const int hp = core->getHp();
                 const float percentage = 100 * (float)hp / (float)maxHp;
-                if (iter->first == world->getThisFactionIndex()) {
+                if (iter->first == _game->getThisFactionIndex()) {
                     _mapUILayer->updateMyHpProgress(percentage);
                 } else {
                     _mapUILayer->updateOpponentsHpProgress(percentage);
@@ -545,7 +545,7 @@ void GameRender::updateResources()
     const World* world = _game->getWorld();
     if (world) {
         const TechTree* techTree = getTechTree();
-        const Faction* faction = world->getThisFaction();
+        const Faction* faction = world->getFaction(_game->getThisFactionIndex());
         const int count = techTree->getResourceTypeCount();
         for (int i = 0; i < count; ++i) {
             const UnderWorld::Core::ResourceType* resourceType = techTree->getResourceTypeByIndex(i);
@@ -579,7 +579,7 @@ void GameRender::onGameOver()
     removeAllBullets();
     
     bool win(false);
-    const Unit* myCore = _cores.at(_game->getWorld()->getThisFactionIndex());
+    const Unit* myCore = _cores.at(_game->getThisFactionIndex());
     if (myCore && myCore->isAlive()) {
         win = true;
     }
@@ -587,7 +587,7 @@ void GameRender::onGameOver()
     for (auto iter = begin(_allUnitNodes); iter != end(_allUnitNodes); ++iter) {
         UnitNode* node = iter->second;
         const int factionIndex = node->getUnit()->getBelongFaction()->getFactionIndex();
-        if (factionIndex == _game->getWorld()->getThisFactionIndex()) {
+        if (factionIndex == _game->getThisFactionIndex()) {
             if (win) {
                 node->onWin();
             } else {
@@ -720,7 +720,7 @@ const Unit* GameRender::getCore() const
     if (_game) {
         const World* w = _game->getWorld();
         if (w) {
-            const int fi = w->getThisFactionIndex();
+            const int fi = _game->getThisFactionIndex();
             if (_cores.find(fi) != end(_cores)) {
                 return _cores.at(fi);
             }

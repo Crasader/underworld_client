@@ -21,6 +21,7 @@
 #include "SoundManager.h"
 #include "CocosUtils.h"
 #include "CocosGlobal.h"
+#include "Game.h"
 
 using namespace std;
 using namespace UnderWorld::Core;
@@ -160,7 +161,7 @@ void UnitNode::registerObserver(UnitNodeObserver *observer)
     _observer = observer;
 }
 
-void UnitNode::update()
+void UnitNode::update(const UnderWorld::Core::Game* game)
 {
     if (_unit) {
         const Skill* currentSkill = _unit->getCurrentSkill();
@@ -229,13 +230,13 @@ void UnitNode::update()
                 reset();
                 
                 getCsbFiles(_animationFiles, direction, isHealthy);
-                updateActionNode(currentSkill, currentFrame, flip);
+                updateActionNode(currentSkill, currentFrame, flip, game);
             }
         }
         
         updateHPBar();
         updateBufs();
-        updateFeatures();
+        updateFeatures(game);
         if (!_idLabel) {
 //            _idLabel = CocosUtils::createLabel(StringUtils::format("%d", _unit->getUnitId()), 40.f);
 //            _idLabel->setPosition(0.f, 50.f);
@@ -614,7 +615,7 @@ void UnitNode::reset()
     _animationFiles.clear();
 }
 
-void UnitNode::updateActionNode(const Skill* skill, int frameIndex, bool flip)
+void UnitNode::updateActionNode(const Skill* skill, int frameIndex, bool flip, const UnderWorld::Core::Game* game)
 {
     const ssize_t cnt = _animationFiles.size();
     if (_unit && cnt > 0) {
@@ -701,7 +702,7 @@ void UnitNode::updateActionNode(const Skill* skill, int frameIndex, bool flip)
         }
         
         if (isNewCreated && !_isBuilding) {
-            const bool isThisFaction(_unit->getWorld()->getThisFactionIndex() == _unit->getBelongFaction()->getFactionIndex());
+            const bool isThisFaction(game->getThisFactionIndex() == _unit->getBelongFaction()->getFactionIndex());
             if (isThisFaction) {
                 addEffect("chuchang-huanrao.csb");
             }
@@ -896,7 +897,7 @@ void UnitNode::removeAllBufs()
     _bufs.clear();
 }
 
-void UnitNode::updateFeatures()
+void UnitNode::updateFeatures(const UnderWorld::Core::Game* game)
 {
     const list<Unit::EventLog>& eventLogs = _unit->getEventLogs();
     for (auto iter = eventLogs.begin(); iter != eventLogs.end(); ++iter) {
@@ -925,7 +926,7 @@ void UnitNode::updateFeatures()
                 }
             }
         } else if (type == Unit::kEventLogType_ResourceOutput) {
-            if (log._factionIndex == _unit->getWorld()->getThisFactionIndex()) {
+            if (log._factionIndex == game->getThisFactionIndex()) {
                 float delay = 0.3f;
                 int index = 0;
                 for (auto iter = log._resources.begin();

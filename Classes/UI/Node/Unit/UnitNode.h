@@ -20,12 +20,14 @@ USING_NS_CC;
 using namespace ui;
 
 namespace UnderWorld { namespace Core {
+    class Game;
     class Skill;
 } }
 
 class UnitNode;
 class DisplayBar;
 class URConfigData;
+
 
 class UnitNodeObserver
 {
@@ -43,7 +45,7 @@ public:
     virtual ~UnitNode();
     const UnderWorld::Core::Unit* getUnit() const;
     void registerObserver(UnitNodeObserver *observer);
-    void update();
+    void update(const UnderWorld::Core::Game* game);
     
     // --------------- callbacks ---------------
     void onHurt(const std::string& trigger);
@@ -70,7 +72,7 @@ protected:
     void onAttackAnimationFinished();
     void reset();
     // public
-    void updateActionNode(const UnderWorld::Core::Skill* skill, int frameIndex, bool flip);
+    void updateActionNode(const UnderWorld::Core::Skill* skill, int frameIndex, bool flip, const UnderWorld::Core::Game* game);
     void removeActionNode();
     void scheduleSpeed();
     void scaleActionNode();
@@ -79,7 +81,7 @@ protected:
     void addBuf(const std::string& name);
     void removeBuf(const std::string& name);
     void removeAllBufs();
-    void updateFeatures();
+    void updateFeatures(const UnderWorld::Core::Game* game);
     void addHPBar();
     void updateHPBar();
     void removeHPBar();
