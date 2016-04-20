@@ -9,7 +9,6 @@
 #include "GameRender.h"
 #include "Game.h"
 #include "Map.h"
-#include "Camp.h"
 #include "Unit.h"
 #include "UnitType.h"
 #include "Spell.h"
