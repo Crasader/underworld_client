@@ -48,6 +48,7 @@ public:
         UnderWorld::Core::AbstractNetworkProxy* proxy,
         UnderWorld::Core::AbstractScheduler*  scheduler,
         UnderWorld::Core::AbstractRender* render);
+    virtual ~UnderworldClient();
     
     /** interface */
     void launchPvp(const UnderWorld::Core::GameContentSetting& setting);

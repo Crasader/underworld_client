@@ -115,7 +115,6 @@
         <skill class="attack" preperform="30" perform="0.0" cd="24" min_damage="50" max_damage="1000" deliver_class="physical" damage_distance="faraway" range="156" fields="1">
             <bullet speed="800" size="0"/>
         </skill>
-        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="0"/>
     </unit>
     <!-- 狗-->
     <unit name="狗" class="warrior" race="辉月狼人" talent_name="基础" hp="43" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="0" armor_preference="轻甲" armor_preference_factor="p:1.8f" magical_defense="0.f" attacksight="400" size="24" height="0" cost="金子:3" max_level="100" producee="木头:0.5;金子:0.5" put_cost="木头:4" rewarde="金子:0.25f" rarity="2" recover_span="0.f" render_key="狼人机械狼" desc="常规的肉搏战士，对轻甲单位造成大量伤害。">

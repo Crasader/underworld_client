@@ -22,11 +22,17 @@ UnderworldClient::UnderworldClient(const std::string& name,
 , _scheduler(scheduler)
 , _render(render)
 , _name(name) {
-    _proxy->registerListener(this);
+
+}
+
+UnderworldClient::~UnderworldClient() {
+    if (_proxy) {
+        _proxy->unregisterListener(this);
+    }
 }
     
 void UnderworldClient::launchPvp(const GameContentSetting& setting) {
-    if (_state != kIdle) return;
+    if (_state != kIdle || !_proxy) return;
     
     loadTechTree();
     
@@ -142,7 +148,7 @@ void UnderworldClient::launchPvp(const GameContentSetting& setting) {
 //        }
 //
 //    }
-    
+    _proxy->registerListener(this);
     _proxy->connect();
     NetworkMessageLaunch2S* msg = new NetworkMessageLaunch2S();
     msg->setGameContentSetting(setting);

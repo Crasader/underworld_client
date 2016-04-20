@@ -775,12 +775,12 @@ void UnitNode::updateBufs()
     auto last = _bufNames;
     
     _bufNames.clear();
-    for (Unit::BuffIter iter = _unit->getBuffsBegin(); iter != _unit->getBuffsEnd(); ++iter)
-    {
-        const string& bufName = iter->second->getBuffType()->getRenderKey();
+    for (int i = 0; i < _unit->getBuffCount(); ++i) {
+        const string& bufName = _unit->getBuff(i)->getBuffType()->getRenderKey();
         if (bufName.length() > 0) {
             _bufNames.insert(bufName);
         }
+
     }
     
     set<string> intersections;
