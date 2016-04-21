@@ -81,6 +81,7 @@ protected:
     void setHighlightedCard(CardDeck* deck, int idx);
     void setCardInfo(std::pair<CardDeck*, int>& data, CardDeck* deck, int idx) const;
     void clearCardInfo(std::pair<CardDeck*, int>& data) const;
+    void addResourceNode();
     
 private:
     MapUILayerObserver *_observer;
@@ -96,6 +97,7 @@ private:
     ProgressTimer *_opponentsHpProgress;
     Label *_opponentsHpPercentageLabel;
     MenuItem *_pauseMenuItem;
+    std::unordered_map<std::string, Label*> _resourceLabels;
     std::map<CardDeckType, CardDeck*> _decks;
 };
 

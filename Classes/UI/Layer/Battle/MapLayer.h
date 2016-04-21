@@ -59,7 +59,6 @@ public:
     
     void addPlaceUnitEffect(const UnderWorld::Core::Coordinate32& coordinate);
     void setPlacedArea(float x1, float x2);
-    void clearUnplacedAreas();
     
 protected:
     virtual ~MapLayer();
@@ -93,6 +92,12 @@ protected:
     Rect getSpellRingBoundingBox() const;
     
     void addUnplacedArea(float x1, float x2);
+    void removeUnplacedAreas();
+    void addBuildingPlacedAreas();
+    void removeBuildingPlacedAreas();
+    
+    void addMapTiles();
+    void removeMapTiles();
 private:
     MapLayerObserver *_observer;
     int _mapId;
@@ -116,6 +121,8 @@ private:
     std::vector<Node*> _unplacedAreas;
     std::string _selectedUnitName;
     Node* _selectedUnitMask;
+    std::vector<Sprite*> _buildingPlacedAreas;
+    std::vector<SpriteBatchNode*> _tilesBatchNodes;
 };
 
 #endif /* MapLayer_h */

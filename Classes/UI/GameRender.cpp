@@ -96,6 +96,7 @@ void GameRender::init(const Game* game, Commander* commander)
         const int count = _deck ? _deck->getHandCapacity() : 0;
         _mapUILayer->createCardDeck(CardDeckType::Unit, count);
         
+#if false
         // spell cards
         const auto& names = getSpells();
         const auto cnt = names.size();
@@ -105,6 +106,7 @@ void GameRender::init(const Game* game, Commander* commander)
                 _mapUILayer->insertCard(CardDeckType::Spell, names.at(i));
             }
         }
+#endif
     }
     
     const Faction* faction = world->getFaction(factionIndex);
@@ -429,14 +431,13 @@ void GameRender::onMapUILayerCardSelected(const string& card, int idx)
     _selectedCard.second = idx;
     
     if (_mapLayer) {
-        // clear first
-        _mapLayer->clearUnplacedAreas();
-        
         if (card.length() > 0) {
             const CardType* ct = getCardType(card);
             if (ct && kCardClass_Unit == ct->getCardClass()) {
                 _mapLayer->setPlacedArea(_minPuttingX, _maxPuttingX);
             }
+        } else {
+            _mapLayer->setPlacedArea(INVALID_VALUE, INVALID_VALUE);
         }
     }
 }

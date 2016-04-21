@@ -32,7 +32,6 @@ static const int TILEDMAP_TAG = 2;
 static const int TILEDMAP_ZORDER = 2;
 static const string TILEDMAP_LAYER_LOGIC = "logic";
 static const string TILEDMAP_LAYER_FOREGROUND = "fg";
-static const int topZOrder(1);
 
 static Node* createUnitMask(const UnderWorld::Core::UnitType* ut)
 {
@@ -146,9 +145,7 @@ bool MapLayer::init(int mapId, const string& mapData)
             i++;
         }
         //--------- foreground ---------- //
-        // TODO: change "_mapId"
-        static const int mapsCount(3);
-        _tiledMap = cocos2d::experimental::TMXTiledMap::create(StringUtils::format("map/%d.tmx", (0 == _mapId % mapsCount) ? mapsCount : _mapId % mapsCount));
+        _tiledMap = cocos2d::experimental::TMXTiledMap::create(StringUtils::format("map/%d.tmx", _mapId));
         _scrollView->addChild(_tiledMap, TILEDMAP_ZORDER, TILEDMAP_TAG);
         _mainLayer = _tiledMap->getLayer(TILEDMAP_LAYER_FOREGROUND);
         const Size &mapSize = _tiledMap->getMapSize();
@@ -266,6 +263,8 @@ bool MapLayer::init(int mapId, const string& mapData)
         _scrollView->setMinScale(scale);
         _scrollView->setZoomScale(scale);
         _scrollViewOffset = _scrollView->getContentOffset();
+        addMapTiles();
+        addBuildingPlacedAreas();
         
         //--------- event ---------//
         auto eventListener = EventListenerTouchOneByOne::create();
@@ -570,7 +569,7 @@ void MapLayer::addPlaceUnitEffect(const UnderWorld::Core::Coordinate32& coordina
 
 void MapLayer::setPlacedArea(float x1, float x2)
 {
-    clearUnplacedAreas();
+    removeUnplacedAreas();
     
     if (fabs(x1 - x2) > 0) {
         Point point = coordinate2Point(UnderWorld::Core::Coordinate32(x1, 0));
@@ -589,17 +588,6 @@ void MapLayer::setPlacedArea(float x1, float x2)
         if (max < width) {
             addUnplacedArea(max, width);
         }
-    }
-}
-
-void MapLayer::clearUnplacedAreas()
-{
-    if (_unplacedAreas.size() > 0) {
-        for (auto node : _unplacedAreas) {
-            node->removeFromParent();
-        }
-        
-        _unplacedAreas.clear();
     }
 }
 
@@ -850,4 +838,81 @@ void MapLayer::addUnplacedArea(float x1, float x2)
         sprite->setPosition(MIN(x1, x2), 0);
         _unplacedAreas.push_back(sprite);
     }
+}
+
+void MapLayer::removeUnplacedAreas()
+{
+    if (_unplacedAreas.size() > 0) {
+        for (auto node : _unplacedAreas) {
+            node->removeFromParent();
+        }
+        
+        _unplacedAreas.clear();
+    }
+}
+
+void MapLayer::addBuildingPlacedAreas()
+{
+    if (0 == _buildingPlacedAreas.size()) {
+        static const string file("GameImages/test/ui_quyu.png");
+        Sprite* s = Sprite::create(file);
+        s->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+        _mainLayer->addChild(s);
+        _buildingPlacedAreas.push_back(s);
+    }
+}
+
+void MapLayer::removeBuildingPlacedAreas()
+{
+    for (auto s : _buildingPlacedAreas) {
+        s->removeFromParent();
+    }
+    
+    _buildingPlacedAreas.clear();
+}
+
+void MapLayer::addMapTiles()
+{
+    if (0 == _tilesBatchNodes.size()) {
+        static const unsigned int cnt(250);
+        static const string bFile("GameImages/test/ui_gezi.png");
+        static const string wFile("GameImages/test/ui_gezi_1.png");
+        
+        auto bbn = SpriteBatchNode::create(bFile, cnt);
+        _mainLayer->addChild(bbn);
+        _tilesBatchNodes.push_back(bbn);
+        
+        auto wbn = SpriteBatchNode::create(wFile, cnt);
+        _mainLayer->addChild(wbn);
+        _tilesBatchNodes.push_back(wbn);
+        
+        const Size& size = Sprite::create(bFile)->getContentSize();
+        const float width = _width * _tileWidth;
+        const float height = _height * _tileHeight;
+        for (int i = 0; i < ceil(width / size.width); ++i) {
+            for (int j = 0; j < ceil(height / size.height); ++j) {
+                const float x = (i + 0.5f) * size.width;
+                const float y = (j + 0.5f) * size.height;
+                if ((i + j) % 2 == 0) {
+                    Sprite* s = Sprite::create(wFile);
+                    s->setPosition(x, y);
+                    wbn->addChild(s);
+                } else {
+                    Sprite* s = Sprite::create(bFile);
+                    s->setPosition(x, y);
+                    bbn->addChild(s);
+                }
+            }
+        }
+    }
+}
+
+void MapLayer::removeMapTiles()
+{
+    for (auto bn : _tilesBatchNodes) {
+        bn->removeAllChildren();
+        bn->removeFromParent();
+    }
+    
+    _tilesBatchNodes.clear();
 }

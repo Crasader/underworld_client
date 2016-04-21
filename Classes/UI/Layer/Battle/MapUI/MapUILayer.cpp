@@ -218,6 +218,13 @@ void MapUILayer::updateResource(const unordered_map<string, float>& resources)
     if (deck) {
         deck->updateResource(resources);
     }
+    
+    for (auto iter = begin(resources); iter != end(resources); ++iter) {
+        const string& key = iter->first;
+        if (_resourceLabels.find(key) != end(_resourceLabels)) {
+            _resourceLabels.at(key)->setString(StringUtils::format("%.0f", iter->second));
+        }
+    }
 }
 
 #pragma mark -
@@ -312,6 +319,8 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
             root->addChild(menu);
         }
 #endif
+        
+        addResourceNode();
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -514,4 +523,33 @@ void MapUILayer::setCardInfo(pair<CardDeck*, int>& data, CardDeck* deck, int idx
 void MapUILayer::clearCardInfo(pair<CardDeck*, int>& data) const
 {
     setCardInfo(data, nullptr, INVALID_VALUE);
+}
+
+void MapUILayer::addResourceNode()
+{
+    auto node = Node::create();
+    addChild(node);
+    node->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    static const Size size(99, MAP_OFFSET_Y);
+    node->setContentSize(size);
+    node->setPosition(size.width / 2, size.height / 2);
+    
+    auto line = Sprite::create("GameImages/test/ui_line.png");
+    line->setScaleX(size.width / 2);
+    line->setPosition(size.width / 2, size.height / 2);
+    node->addChild(line);
+    
+    {
+        auto label = CocosUtils::createLabel("0", 36, DEFAULT_NUMBER_FONT);
+        label->setPosition(size.width / 2, size.height * 3 / 4);
+        node->addChild(label);
+        _resourceLabels.insert(make_pair(RES_NAME_GOLD, label));
+    }
+    
+    {
+        auto label = CocosUtils::createLabel("0", 36, DEFAULT_NUMBER_FONT);
+        label->setPosition(size.width / 2, size.height / 4);
+        node->addChild(label);
+        _resourceLabels.insert(make_pair(RES_NAME_WOOD, label));
+    }
 }
