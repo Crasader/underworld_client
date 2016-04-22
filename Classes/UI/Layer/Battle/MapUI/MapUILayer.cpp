@@ -11,7 +11,6 @@
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
-#include "Deck.h"
 #include "UnitCardDeck.h"
 #include "BattleResourceNode.h"
 #include "SoundManager.h"

@@ -8,8 +8,6 @@
 
 #include "UnitCardDeck.h"
 #include "cocostudio/CocoStudio.h"
-#include "Deck.h"
-#include "CardType.h"
 #include "CocosUtils.h"
 #include "CCShake.h"
 
@@ -150,11 +148,11 @@ void UnitCardDeck::updateNextCard(const Card* card)
 {
     bool same(_nextCard == card);
     if (!same && card && _nextCard) {
-        const CardType* nextCt = _nextCard->getCardType();
-        const CardType* ct = card->getCardType();
-        if (nextCt && ct && nextCt->getName() == ct->getName()) {
-            same = true;
-        }
+//        const CardType* nextCt = _nextCard->getCardType();
+//        const CardType* ct = card->getCardType();
+//        if (nextCt && ct && nextCt->getName() == ct->getName()) {
+//            same = true;
+//        }
     }
     
     if (!same) {

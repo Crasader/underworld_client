@@ -14,10 +14,11 @@
 #include "GameScheduler.h"
 #include "NetworkMessage.h"
 #include "GameSettings.h"
+#include "GameModeHMM.h"
 
 #define UNDER_WORLD_HOST ("")
 #define UNDER_WORLE_PORT (8080)
-    
+
 enum GameMode {
     kPvp,
     kPve,
@@ -35,6 +36,7 @@ class UnderworldClient : public UnderWorld::Core::AbstractNetworkProxy::NetworkP
 private:
     UnderWorld::Core::ClientTerminal _terminal;
     UnderWorld::Core::GameSettings _settings;
+    UnderWorld::Core::GameModeHMMSetting _hmmSetting;
     GameMode _mode;
     GameState _state;
     std::string _name;
@@ -51,10 +53,10 @@ public:
     virtual ~UnderworldClient();
     
     /** interface */
-    void launchPvp(const UnderWorld::Core::GameContentSetting& setting);
-    void launchPve(int map, const UnderWorld::Core::GameContentSetting& setting);
-    void launchPve(const UnderWorld::Core::MapSetting& mapSetting,
-        const UnderWorld::Core::GameContentSetting& setting);
+    void launchPvp(const UnderWorld::Core::GameContentSetting& setting,
+        const std::vector<std::string>& cards);
+    void launchPve(int map, const UnderWorld::Core::GameContentSetting& setting,
+        const std::vector<std::string>& cards);
     void cancelLaunch();
     void quit();
     
@@ -64,7 +66,6 @@ public:
 private:
     void loadTechTree();
     void loadMap(int mapId);
-    void loadMap(const UnderWorld::Core::MapSetting& mapSetting);
     
 };
     
@@ -74,25 +75,32 @@ private:
     
 private:
     ContentSetting _setting;
+    std::vector<std::string> _cards;
     
 public:
     NetworkMessage* clone() const override                     {return new NetworkMessageLaunch2S(*this);}
     const ContentSetting& getGameContentSetting() const        {return _setting;}
     void setGameContentSetting(const ContentSetting& setting)  {_setting = setting;}
+    const std::vector<std::string>& getCards() const           {return _cards;}
+    void setCards(const std::vector<std::string>& cards)       {_cards = cards;}
 };
 
 class NetworkMessageLaunch2C : public UnderWorld::Core::NetworkMessage {
 private:
     typedef UnderWorld::Core::FactionSetting FactionSetting;
+    typedef std::vector<std::vector<std::string> > Cards;
 private:
     FactionSetting _factionSetting;
+    Cards _cards;
     int _mapId;
     
 public:
     NetworkMessage* clone() const override                 {return new NetworkMessageLaunch2C(*this);}
     const FactionSetting& getFactionSetting() const        {return _factionSetting;}
+    const Cards& getCards() const                          {return _cards;}
     int getMapId() const                                   {return _mapId;}
     void setFactionSetting(const FactionSetting& fs)       {_factionSetting = fs;}
+    void setCards(const Cards& cards)                      {_cards = cards;}
     void setMapId(int mapId)                               {_mapId = mapId;}
 };
 

@@ -52,7 +52,9 @@ public:
     
     void init();
     std::string getMapData(int mapId) const;
-    std::string getTechTreeData(int mapId) const;
+    std::string getMapDataHMM(int mapId) const;
+    std::string getTechTreeData() const;
+    std::string getHMMTechTreeData() const;
     
     const LevelLocalData* getLevelData(int levelId) const;
     const std::set<std::string>& getCardDecks() const;

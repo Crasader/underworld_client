@@ -11,6 +11,7 @@
 #include "GameSettings.h"
 #include "ClientTCPNetworkProxy.h"
 #include "NetworkMessage.h"
+#include "GameModeHMM.h"
 #include "UnderworldClient.h"
 #include "cocos2d.h"
 #include "json/document.h"
@@ -67,11 +68,10 @@ static std::string parseLaunch2SMsg(
     
     rapidjson::Value cards(rapidjson::kStringType);
     std::string cardString = "";
-    const vector<UnderWorld::Core::CardSetting>& cardSettings =
-        msg->getGameContentSetting().geCardSetting();
-    for (int i = 0; i < cardSettings.size(); ++i) {
-        cardString.append(cardSettings[i].getCardTypeName());
-        if (i != cardSettings.size() - 1) {
+    const vector<std::string>& cardNames = msg->getCards();
+    for (int i = 0; i < cardNames.size(); ++i) {
+        cardString.append(cardNames[i]);
+        if (i != cardNames.size() - 1) {
             cardString.append("|");
         }
     }
@@ -114,9 +114,9 @@ static std::string parseSync2SMsg(
         commandFrame.SetInt(frame);
         command.AddMember(MESSAGE_KEY_FRAME, commandFrame, allocator);
         
-        if (dynamic_cast<const UnderWorld::Core::OutsideDeckCommand*>(cmd)) {
-            const UnderWorld::Core::OutsideDeckCommand* deckCmd =
-                dynamic_cast<const UnderWorld::Core::OutsideDeckCommand*>(cmd);
+        if (dynamic_cast<const UnderWorld::Core::OutsideHMMCommand*>(cmd)) {
+            const UnderWorld::Core::OutsideHMMCommand* deckCmd =
+                dynamic_cast<const UnderWorld::Core::OutsideHMMCommand*>(cmd);
             rapidjson::Value handIndex(rapidjson::kNumberType);
             handIndex.SetInt(deckCmd->getHandIndex());
             command.AddMember(MESSAGE_KEY_HAND_INDEX, handIndex, allocator);
@@ -197,9 +197,11 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
     }
     
     /** 6. players */
+    std::vector<std::vector<std::string> > cardNames;
     if (DICTOOL->checkObjectExist_json(root, MESSAGE_KEY_PLAYERS)) {
         const rapidjson::Value& players =
             DICTOOL->getSubDictionary_json(root, MESSAGE_KEY_PLAYERS);
+        cardNames.resize(players.Size());
         for (int i = 0; i < players.Size(); ++i) {
             const rapidjson::Value& player = players[i];
             GameContentSetting gcs;
@@ -208,20 +210,7 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
             if (DICTOOL->checkObjectExist_json(player, MESSAGE_KEY_CARDS)) {
                 std::string cards = DICTOOL->getStringValue_json(player, MESSAGE_KEY_CARDS);
                 if (!cards.empty()) {
-                    std::vector<CardSetting> cardSettings;
-                    std::vector<string> cardsVec;
-                    Utils::split(cardsVec, cards, "|");
-                    for (int j = 0; j < cardsVec.size(); ++j) {
-                        CardSetting cs;
-                        cs.setCardTypeName(cardsVec[j]);
-                        
-                        //Temp code
-                        cs.setLevel(0);
-                        cs.setQuality(0);
-                        cs.setTalentLevel(0);
-                        cardSettings.push_back(cs);
-                    }
-                    gcs.setCards(cardSettings);
+                    Utils::split(cardNames[i], cards, "|");
                 }
             }
             
@@ -241,6 +230,7 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
     }
     
     msg->setFactionSetting(fs);
+    msg->setCards(cardNames);
     output.push_back(msg);
 }
 
@@ -281,7 +271,7 @@ static void parseSync2CMsg(const rapidjson::Value& root,
                 pos.x = atoi(posString.substr(0, posString.find("_")).c_str());
                 pos.y = atoi(posString.substr(posString.find("_") + 1).c_str());
             }
-            OutsideDeckCommand* cmd = new OutsideDeckCommand(handIndex,
+            OutsideHMMCommand* cmd = new OutsideHMMCommand(handIndex,
                 factionIndex, pos);
             syncMsgs[(frame - startFrame) / GameConstants::NETWORK_KEY_FRAME_RATE]->addCommand(cmd, frame);
         }
@@ -380,7 +370,6 @@ void ClientTCPNetworkProxy::parseResponse2Msg(
     string data;
     response->getResponseDataString(data);
     
-    int len = data.size();
     rapidjson::Document document;
     DataManager::getInstance()->getBinaryJsonTool()->decode(data, document);
     

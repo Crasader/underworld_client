@@ -34,10 +34,10 @@ void UnderworldTestPvpClient::init(UnderWorld::Core::AbstractRender* render) {
     _playerB = new UnderworldClient("PlayerB", proxyB, _sch, nullptr);
 }
 
-void UnderworldTestPvpClient::startTest(const UnderWorld::Core::GameContentSetting &setting) {
-    _playerA->launchPvp(setting);
-    Director::getInstance()->getScheduler()->schedule([this, setting](float f) {
-        _playerB->launchPvp(setting);
+void UnderworldTestPvpClient::startTest(const UnderWorld::Core::GameContentSetting &setting, const std::vector<std::string>& cards) {
+    _playerA->launchPvp(setting, cards);
+    Director::getInstance()->getScheduler()->schedule([this, setting, cards](float f) {
+        _playerB->launchPvp(setting, cards);
     }, this, 0.f, 0, 1.f, false, "under_world_test_launch");
     
 //    Director::getInstance()->getScheduler()->schedule([this](float f) {

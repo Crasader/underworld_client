@@ -36,7 +36,7 @@ public:
 class MapLayer : public LayerColor, public cocos2d::extension::ScrollViewDelegate
 {
 public:
-    static MapLayer* create(int mapId, const std::string& mapData);
+    static MapLayer* create(int mapId);
     void registerObserver(MapLayerObserver *observer);
     
     UnderWorld::Core::Coordinate32 convertPoint(const Point& layerPoint);
@@ -51,8 +51,6 @@ public:
     void removeSpellRing();
     void checkUnitInSpellRing(Node* unit);
     
-    const UnderWorld::Core::MapSetting& getMapSetting() const;
-    
     void addAoeSpell(const Point& startPoint, const std::string& name, float duration);
     void addSpell(const std::string& name, float duration);
     void removeAllSpellEffects();
@@ -63,7 +61,7 @@ public:
 protected:
     virtual ~MapLayer();
     MapLayer();
-    bool init(int mapId, const std::string& mapData);
+    bool init(int mapId);
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchMoved(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
@@ -107,7 +105,6 @@ private:
     int _tileHeight;
     cocos2d::experimental::TMXTiledMap* _tiledMap;
     cocos2d::extension::ScrollView *_scrollView;
-    UnderWorld::Core::MapSetting _mapSetting;
     Node* _mainLayer;
     std::pair<std::string, Node*> _spellRing;
     std::map<Point, Node*> _staticSpellRings;

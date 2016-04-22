@@ -23,7 +23,7 @@ public:
     UnderworldTestPvpClient();
     
     void init(UnderWorld::Core::AbstractRender* render);
-    void startTest(const UnderWorld::Core::GameContentSetting& setting);
+    void startTest(const UnderWorld::Core::GameContentSetting& setting, const std::vector<std::string>& cards);
     void endTest();
     
 };

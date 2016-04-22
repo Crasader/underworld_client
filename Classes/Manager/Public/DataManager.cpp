@@ -158,15 +158,37 @@ string DataManager::getMapData(int mapId) const
     return "";
 }
 
-string DataManager::getTechTreeData(int mapId) const
+string DataManager::getMapDataHMM(int mapId) const
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath(StringUtils::format("TechTreeData/%d.xml", mapId));
+    string fileName = LocalHelper::getLocalizedConfigFilePath(StringUtils::format("MapData/%d_hmm.xml", mapId));
     if (FileUtils::getInstance()->isFileExist(fileName)) {
         return LocalHelper::loadFileContentString(fileName);
     }
     
     return "";
 }
+
+
+string DataManager::getTechTreeData() const
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath("TechTreeData/techtree.xml");
+    if (FileUtils::getInstance()->isFileExist(fileName)) {
+        return LocalHelper::loadFileContentString(fileName);
+    }
+    
+    return "";
+}
+
+string DataManager::getHMMTechTreeData() const
+{
+    string fileName = LocalHelper::getLocalizedConfigFilePath("TechTreeData/techtree_hmm.xml");
+    if (FileUtils::getInstance()->isFileExist(fileName)) {
+        return LocalHelper::loadFileContentString(fileName);
+    }
+    
+    return "";
+}
+
 
 #pragma mark - getters
 const LevelLocalData* DataManager::getLevelData(int levelId) const

@@ -1,25 +1,5 @@
 <root>
-    <!-- ==========卡牌配置========== -->
-    <card name="骑士" class="unit" cost="木头:30" unit_name="骑士" unit_count="1" draw_span="360" density="3" desc="一位强悍的近战勇士，有着出众的生命值和攻击力，移动速度中等。"/>
-    <card name="巨人" class="unit" cost="木头:50" unit_name="巨人" unit_count="1" draw_span="600" density="3" desc="这个大块头虽然行动迟缓，但防御力极高，只会攻击建筑物，对建筑物造成大量伤害。"/>
-    <card name="法师" class="unit" cost="木头:50" unit_name="法师" unit_count="1" draw_span="600" density="3" desc="法师强大的法术攻击可以从远处毁灭一切敌人。"/>
-    <card name="弓箭手" class="unit" cost="木头:30" unit_name="弓箭手" unit_count="2" draw_span="360" density="3" desc="训练有素的弓箭手，可以攻击空中和地面的敌人。"/>
-    <card name="火枪手" class="unit" cost="木头:40" unit_name="火枪手" unit_count="1" draw_span="480" density="3" desc="射程非常远的射手，且攻击力很高。"/>
-    <card name="迷你皮卡" class="unit" cost="木头:40" unit_name="迷你皮卡" unit_count="1" draw_span="480" density="3" desc="攻击力非常高的战士，同时也有着出色的防御力。"/>
-    <card name="炸弹人" class="unit" cost="木头:30" unit_name="炸弹人" unit_count="1" draw_span="360" density="3" desc="远程攻击可以造成范围伤害。"/>
-    <card name="王子" class="unit" cost="木头:50" unit_name="王子" unit_count="1" draw_span="600" density="3" desc="勇猛的战士，移动速度非常快。"/>
-    <card name="守卫" class="unit" cost="木头:50" unit_name="守卫" unit_count="1" draw_span="600" density="3" desc="无法移动，但是可以防守周围的区域，让敌人无法靠近。"/>
-    <card name="狗" class="unit" cost="木头:30" unit_name="狗" unit_count="3" draw_span="360" density="3" desc="小型近战单位一次可以召唤3个，移动速度很快。"/>
-    <card name="狼人步兵" class="unit" cost="木头:50" unit_name="狼人步兵" unit_count="4" draw_span="600" density="3" desc="勇猛的战士，攻击力和移动速度都非常出色。" />
-    <card name="战士" class="unit" cost="木头:40" unit_name="战士" unit_count="1" draw_span="480" density="3" desc="攻击力非常高的战士。"/>
-    <!--
-    <card name="重锤武士" class="unit" cost="木头:4" unit_name="眩晕战士" unit_count="1" desc="被重锤武士攻击到的敌人会被眩晕3秒。"/>
-    -->
-    <card name="高攻击战士" class="unit" cost="木头:50" unit_name="高攻击战士" unit_count="1" draw_span="600" density="3" desc="大皮卡，攻击高，移动速度慢。"/>
-    <card name="三个弓箭手" class="unit" cost="木头:30" unit_name="三个弓箭手" unit_count="3" draw_span="360" density="3" desc="一次召唤三个弓箭手。"/>
-   <!-- <card name="火球术" class="spell" cost="木头:40" spell_name="火球术" desc="火球术可以对范围内的敌人造成大量伤害。"/>
-    <card name="治愈" class="spell" cost="木头:40" spell_name="治愈" desc="可以治疗范围内的友军。"/>
-    <card name="顺风之力" class="spell" cost="木头:30" spell_name="顺风之力加强版" desc="可以提升范围内友军的攻击速度。"/> -->
+
     <!-- ==========单位&势力配置========== -->
     
     <unit name="狼人基地" class="core" hp="2568" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="600" attacksight="600" size="300" height="100" spell_names="火球术;治愈" render_key="时光女神">

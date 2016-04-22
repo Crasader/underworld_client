@@ -26,9 +26,9 @@ namespace UnderWorld { namespace Core {
     class Commander;
     class Unit;
     class UnitType;
-    class Deck;
     class CardType;
     class SpellType;
+    class HMMDeck;
 }}
 
 class GameRenderObserver
@@ -48,10 +48,9 @@ class GameRender
 , public DefeatLayerObserver
 {
 public:
-    GameRender(Scene* scene, int mapId, const std::string& mapData, const std::string& opponentsAccount);
+    GameRender(Scene* scene, const std::string& opponentsAccount);
     virtual ~GameRender();
     void registerObserver(GameRenderObserver *observer);
-    const UnderWorld::Core::MapSetting& getMapSetting() const;
     
 protected:
     // AbstractRender
@@ -125,6 +124,7 @@ private:
     GameRenderObserver *_observer;
     Scene* _scene;
     int _mapId;
+    std::string _opponentsAccount;
     MapLayer* _mapLayer;
     MapUILayer* _mapUILayer;
     const UnderWorld::Core::Game* _game;
@@ -133,7 +133,7 @@ private:
     std::unordered_map<const void*, std::pair<UnderWorld::Core::Coordinate32, float>> _bulletParams;
     std::unordered_map<const void*, BulletNode*> _allBulletNodes;
     std::unordered_map<int, const UnderWorld::Core::Unit*> _cores;
-    const UnderWorld::Core::Deck* _deck;
+    const UnderWorld::Core::HMMDeck* _deck;
     std::pair<std::string ,int> _selectedCard;
     
     bool _paused;

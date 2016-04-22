@@ -6,9 +6,13 @@
 //
 //
 
+#include "cocos2d.h"
+
 #include "UnderworldClient.h"
 #include "DataManager.h"
 #include "CoreUtils.h"
+#include "GameRender.h"
+#include "MapLayer.h"
 
 using namespace UnderWorld::Core;
     
@@ -31,7 +35,8 @@ UnderworldClient::~UnderworldClient() {
     }
 }
     
-void UnderworldClient::launchPvp(const GameContentSetting& setting) {
+void UnderworldClient::launchPvp(const GameContentSetting& setting,
+    const std::vector<std::string>& cards) {
     if (_state != kIdle || !_proxy) return;
     
     loadTechTree();
@@ -152,40 +157,28 @@ void UnderworldClient::launchPvp(const GameContentSetting& setting) {
     _proxy->connect();
     NetworkMessageLaunch2S* msg = new NetworkMessageLaunch2S();
     msg->setGameContentSetting(setting);
+    msg->setCards(cards);
     _proxy->send(msg);
     
 }
     
-void UnderworldClient::launchPve(int map, const GameContentSetting& setting) {
+void UnderworldClient::launchPve(int map, const GameContentSetting& setting,
+    const std::vector<std::string>& cards) {
     if (_state != kIdle) return;
     
     loadTechTree();
     loadMap(map);
     int mapIndex = _settings.getFactionSetting().getMapIndex(_settings.getFactionSetting().getThisFactionIndex());
     _settings.getFactionSetting().setContentSetting(setting, mapIndex);
+    _hmmSetting._cards[mapIndex] = cards;
     
     _mode = kPve;
-    _terminal.init(_name, _settings, _scheduler, _render, nullptr);
+    _terminal.init(_name, _settings, new GameModeHMM(), &_hmmSetting,
+        _scheduler, _render, nullptr);
     _terminal.start();
     
     _state = kPlaying;
 }
-    
-void UnderworldClient::launchPve(const MapSetting& mapSetting, const GameContentSetting& setting) {
-    if (_state != kIdle) return;
-    
-    loadTechTree();
-    loadMap(mapSetting);
-    int mapIndex = _settings.getFactionSetting().getMapIndex(_settings.getFactionSetting().getThisFactionIndex());
-    _settings.getFactionSetting().setContentSetting(setting, mapIndex);
-    
-    _mode = kPve;
-    _terminal.init(_name, _settings, _scheduler, _render, nullptr);
-    _terminal.start();
-    
-    _state = kPlaying;
-}
-
     
 void UnderworldClient::cancelLaunch() {
     if (_state != kLaunching) return;
@@ -210,7 +203,11 @@ void UnderworldClient::onReceive(
             NetworkMessageLaunch2C* l2c = dynamic_cast<NetworkMessageLaunch2C*>(msg);
             loadMap(l2c->getMapId());
             _settings.setFactionSetting(l2c->getFactionSetting());
-            _terminal.init(_name, _settings, _scheduler, _render, _proxy);
+            for (int i = 0; i < l2c->getCards().size(); ++i) {
+                _hmmSetting._cards[i] = l2c->getCards()[i];
+            }
+            _terminal.init(_name, _settings, new GameModeHMM(),
+                &_hmmSetting, _scheduler, _render, _proxy);
             _terminal.start();
             _state = kPlaying;
         } else if (dynamic_cast<NetworkMessageCancel2C*>(msg)) {
@@ -226,22 +223,39 @@ void UnderworldClient::onReceive(
 }
 
 void UnderworldClient::loadTechTree() {
-    _settings.setTechTree(DataManager::getInstance()->getTechTreeData(1));
+    _settings.setTechTree(DataManager::getInstance()->getTechTreeData());
+    _hmmSetting._hmmTechTree = DataManager::getInstance()->getHMMTechTreeData();
 }
 
 void UnderworldClient::loadMap(int mapId) {
     _settings.setMapId(mapId);
+    
     MapSetting ms;
+    ms.setMapId(mapId);
+    const cocos2d::experimental::TMXTiledMap* tiledMap = cocos2d::experimental::TMXTiledMap::create(StringUtils::format("map/%d.tmx", mapId));
+    cocos2d::experimental::TMXLayer *logicLayer = tiledMap->getLayer("logic");
+    logicLayer->setVisible(false);
+    const Size &logicSize = logicLayer->getLayerSize();
+    ms.setWidth(logicSize.width);
+    ms.setHeight(logicSize.height);
+    for (unsigned int x = 0; x < logicSize.width; x++)
+    {
+        for (unsigned int y = 0; y < logicSize.height; y++)
+        {
+            int gid = logicLayer->getTileGIDAt(Vec2(x, y));
+            if (gid == 0) {
+                //can walk
+            } else {
+                //can not walk
+                //TODO: land can't walk & air can't walk
+                ms.addUnWalkableArea(UnderWorld::Core::Coordinate32(x, (logicSize.height - 1) - y), UnderWorld::Core::kFieldType_Land);
+            }
+        }
+    }
     ms.init(DataManager::getInstance()->getMapData(mapId));
     
-    //TODO:temp code
-    ms.setHeight(75);
-    ms.setWidth(150);
+    _settings.setMapSetting(ms);
+    _settings.setFactionSetting(ms.getFactionSetting());
     
-    loadMap(ms);
-}
-    
-void UnderworldClient::loadMap(const MapSetting& mapSetting) {
-    _settings.setMapSetting(mapSetting);
-    _settings.setFactionSetting(mapSetting.getFactionSetting());
+    _hmmSetting.init(DataManager::getInstance()->getMapDataHMM(mapId));
 }

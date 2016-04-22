@@ -60,7 +60,7 @@ BattleDeckLayer::BattleDeckLayer()
     loadData();
     
     _techTree = new (nothrow) TechTree();
-    _techTree->init(DataManager::getInstance()->getTechTreeData(1));
+    _techTree->init(DataManager::getInstance()->getTechTreeData());
 }
 
 BattleDeckLayer::~BattleDeckLayer()
@@ -516,14 +516,14 @@ void BattleDeckLayer::updateCardNode(CardNode* node, const string& name)
                 rarity = ut->getRarity();
             }
             
-            const CardType* ct = _techTree->findCardTypeByName(name);
-            if (ct) {
-                const auto& costs = ct->getCost();
-                static const string& name(RESOURCE_NAME);
-                if (costs.find(name) != costs.end()) {
-                    cost = costs.at(name) / GameConstants::MICRORES_PER_RES;
-                }
-            }
+//            const CardType* ct = _techTree->findCardTypeByName(name);
+//            if (ct) {
+//                const auto& costs = ct->getCost();
+//                static const string& name(RESOURCE_NAME);
+//                if (costs.find(name) != costs.end()) {
+//                    cost = costs.at(name) / GameConstants::MICRORES_PER_RES;
+//                }
+//            }
         }
         
         node->update(name, rarity, cost, BATTLE_RESOURCE_MAX_COUNT);

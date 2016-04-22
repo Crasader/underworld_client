@@ -90,10 +90,9 @@ void BattleScene::start()
     }
     
     // 1. add map layer
-    string mapSettingXml = DataManager::getInstance()->getMapData(_mapId);
     
     // 2. add map ui layer
-    _render = new (nothrow) GameRender(this, _mapId, mapSettingXml, "Vampire");
+    _render = new (nothrow) GameRender(this, "Vampire");
     _render->registerObserver(this);
     
     _sch = new (nothrow) GameScheduler();
@@ -113,21 +112,15 @@ void BattleScene::start()
     tower.setUnitTypeName("狼人箭塔");
     contentSetting.setTower(tower);
     
-    set<string> cards;
-    std::vector<UnderWorld::Core::CardSetting> cardSettings;
-    UserDefaultsDataManager::getInstance()->getSelectedCards(cards);
-    
-    int i = 0;
-    for (auto iter = begin(cards); iter != end(cards); ++iter, ++i) {
-        UnderWorld::Core::CardSetting cs;
-        cs.setCardTypeName(*iter);
-        cardSettings.push_back(cs);
+    set<string> cardSet;
+    std::vector<string> cards;
+    UserDefaultsDataManager::getInstance()->getSelectedCards(cardSet);
+    for (auto iter = cardSet.begin(); iter != cardSet.end(); ++iter) {
+        cards.push_back(*iter);
     }
-    contentSetting.setCards(cardSettings);
-    
     
     _client = new (nothrow) UnderworldClient("mofish", _proxy, _sch, _render);
-    _client->launchPve(_render->getMapSetting(), contentSetting);
+    _client->launchPve(_mapId, contentSetting, cards);
 //    _client->launchPvp(contentSetting);
 }
 
@@ -137,10 +130,10 @@ void BattleScene::startTest() {
     }
     
     // 1. add map layer
-    string mapSettingXml = DataManager::getInstance()->getMapData(_mapId);
+
     
     // 2. add map ui layer
-    _render = new (nothrow) GameRender(this, _mapId, mapSettingXml, "Vampire");
+    _render = new (nothrow) GameRender(this, "Vampire");
     _render->registerObserver(this);
     
     // 3. game setting
@@ -156,21 +149,17 @@ void BattleScene::startTest() {
     tower.setUnitTypeName("狼人箭塔");
     contentSetting.setTower(tower);
     
-    set<string> cards;
-    std::vector<UnderWorld::Core::CardSetting> cardSettings;
-    UserDefaultsDataManager::getInstance()->getSelectedCards(cards);
-    
-    int i = 0;
-    for (auto iter = begin(cards); iter != end(cards); ++iter, ++i) {
-        UnderWorld::Core::CardSetting cs;
-        cs.setCardTypeName(*iter);
-        cardSettings.push_back(cs);
+    set<string> cardSet;
+    std::vector<string> cards;
+    UserDefaultsDataManager::getInstance()->getSelectedCards(cardSet);
+    for (auto iter = cardSet.begin(); iter != cardSet.end(); ++iter) {
+        cards.push_back(*iter);
     }
-    contentSetting.setCards(cardSettings);
+
     
     _test = new UnderworldTestPvpClient();
     _test->init(_render);
-    _test->startTest(contentSetting);
+    _test->startTest(contentSetting, cards);
 }
 
 void BattleScene::clear()

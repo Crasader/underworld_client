@@ -101,10 +101,10 @@ MapLayer::~MapLayer()
     
 }
 
-MapLayer* MapLayer::create(int mapId, const string& mapData)
+MapLayer* MapLayer::create(int mapId)
 {
     MapLayer* pRet = new (nothrow)MapLayer();
-    if(pRet && pRet->init(mapId, mapData)) {
+    if(pRet && pRet->init(mapId)) {
         pRet->autorelease();
         return pRet;
     }
@@ -112,7 +112,7 @@ MapLayer* MapLayer::create(int mapId, const string& mapData)
     return nullptr;
 }
 
-bool MapLayer::init(int mapId, const string& mapData)
+bool MapLayer::init(int mapId)
 {
     if (LayerColor::init()) {
         _mapId = mapId;
@@ -181,26 +181,6 @@ bool MapLayer::init(int mapId, const string& mapData)
 //        //--------- logic ---------//
         cocos2d::experimental::TMXLayer *logicLayer = _tiledMap->getLayer(TILEDMAP_LAYER_LOGIC);
         logicLayer->setVisible(false);
-        const Size &logicSize = logicLayer->getLayerSize();
-        _mapSetting.setWidth(logicSize.width);
-        _mapSetting.setHeight(logicSize.height);
-        for (unsigned int x = 0; x < logicSize.width; x++)
-        {
-            for (unsigned int y = 0; y < logicSize.height; y++)
-            {
-                int gid = logicLayer->getTileGIDAt(Vec2(x, y));
-                if (gid == 0) {
-                    //can walk
-                } else {
-                    //can not walk
-                    //TODO: land can't walk & air can't walk
-                    _mapSetting.addUnWalkableArea(mapCoordinate2coreCoordinate(x, y), UnderWorld::Core::kFieldType_Land);
-                }
-            }
-        }
-        _mapSetting.init(mapData);
-        
-        CCLOG("%zd logicLayer", _mapSetting.getUnWalkableArea().size());
         logicLayer->removeFromParent();
         
         //--------- effect ---------//
@@ -281,11 +261,6 @@ bool MapLayer::init(int mapId, const string& mapData)
 void MapLayer::registerObserver(MapLayerObserver *observer)
 {
     _observer = observer;
-}
-
-const UnderWorld::Core::MapSetting& MapLayer::getMapSetting() const
-{
-    return _mapSetting;
 }
 
 UnderWorld::Core::Coordinate32 MapLayer::mapCoordinate2coreCoordinate(int x, int y)

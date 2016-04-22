@@ -23,6 +23,7 @@
 #include "MessageBoxLayer.h"
 #include "CCShake.h"
 #include "BulletType.h"
+#include "GameModeHMM.h"
 
 using namespace std;
 using namespace UnderWorld::Core;
@@ -31,10 +32,11 @@ static const string tickSelectorKey("tickSelectorKey");
 static const float spellRingRange(400);
 static const int battleTotalTime(600);
 
-GameRender::GameRender(Scene* scene, int mapId, const string& mapData, const string& opponentsAccount)
+GameRender::GameRender(Scene* scene, const string& opponentsAccount)
 :_observer(nullptr)
 ,_scene(scene)
-,_mapId(mapId)
+,_mapId(0)
+, _opponentsAccount(opponentsAccount)
 ,_mapLayer(nullptr)
 ,_mapUILayer(nullptr)
 ,_game(nullptr)
@@ -46,15 +48,6 @@ GameRender::GameRender(Scene* scene, int mapId, const string& mapData, const str
 ,_minPuttingX(0)
 ,_maxPuttingX(0)
 {
-    _mapLayer = MapLayer::create(mapId, mapData);
-    _mapLayer->registerObserver(this);
-    scene->addChild(_mapLayer);
-    
-    _mapUILayer = MapUILayer::create("Warewolf", opponentsAccount);
-    _mapUILayer->registerObserver(this);
-    scene->addChild(_mapUILayer);
-    
-    onMapUILayerCardSelected("", INVALID_VALUE);
 }
 
 GameRender::~GameRender()
@@ -69,13 +62,20 @@ void GameRender::registerObserver(GameRenderObserver *observer)
     _observer = observer;
 }
 
-const MapSetting& GameRender::getMapSetting() const
-{
-    return _mapLayer->getMapSetting();
-}
-
 void GameRender::init(const Game* game, Commander* commander)
 {
+    _mapId = game->getWorld()->getMap()->getMapId();
+    
+    _mapLayer = MapLayer::create(_mapId);
+    _mapLayer->registerObserver(this);
+    _scene->addChild(_mapLayer);
+    
+    _mapUILayer = MapUILayer::create("Warewolf", _opponentsAccount);
+    _mapUILayer->registerObserver(this);
+    _scene->addChild(_mapUILayer);
+    
+    onMapUILayerCardSelected("", INVALID_VALUE);
+
     _game = game;
     _commander = commander;
     
@@ -90,28 +90,28 @@ void GameRender::init(const Game* game, Commander* commander)
     }
     
     const int factionIndex = game->getThisFactionIndex();
-    _deck = game->getDeck(factionIndex);
+    _deck = dynamic_cast<const GameModeHMM*>(game->getGameMode())->getDeck(factionIndex);
     
     if (_mapUILayer) {
-        const int count = _deck ? _deck->getHandCapacity() : 0;
-        _mapUILayer->createCardDeck(CardDeckType::Unit, count);
-        
-#if false
-        // spell cards
-        const auto& names = getSpells();
-        const auto cnt = names.size();
-        if (cnt > 0) {
-            _mapUILayer->createCardDeck(CardDeckType::Spell, (int)cnt);
-            for (int i = 0; i < cnt; ++i) {
-                _mapUILayer->insertCard(CardDeckType::Spell, names.at(i));
-            }
-        }
-#endif
+//        const int count = _deck ? _deck->getHandCapacity() : 0;
+//        _mapUILayer->createCardDeck(CardDeckType::Unit, count);
+//        
+//#if false
+//        // spell cards
+//        const auto& names = getSpells();
+//        const auto cnt = names.size();
+//        if (cnt > 0) {
+//            _mapUILayer->createCardDeck(CardDeckType::Spell, (int)cnt);
+//            for (int i = 0; i < cnt; ++i) {
+//                _mapUILayer->insertCard(CardDeckType::Spell, names.at(i));
+//            }
+//        }
+//#endif
     }
     
     const Faction* faction = world->getFaction(factionIndex);
     if (faction) {
-        const UnderWorld::Core::Rect32& rect = faction->getPuttingArea();
+        const UnderWorld::Core::Rect32& rect = _deck->getPuttingRegion();
         _minPuttingX = rect._origin.x;
         _maxPuttingX = _minPuttingX + rect._width;
     }
@@ -291,26 +291,26 @@ void GameRender::updateUILayer()
     _mapUILayer->updateRemainingTime(_remainingTime);
     
     if (_deck) {
-        const int counter = _deck->getCounter();
-        const int total = _deck->getDrawSpanFrames();
-        const float duration = (float)total / (float)GameConstants::FRAME_PER_SEC;
-        const float time = (1.0 - (float)(counter % total) / (float)total) * duration;
-        _mapUILayer->updateCountDown(time, duration);
-        
-        const auto& logs = _deck->getLogs();
-        for (int i = 0; i < logs.size(); ++i) {
-            const auto& log = logs.at(i);
-            const auto event = log._event;
-            const auto card = log._card;
-            if (Deck::kDeckEvent_Use == event) {
-                _mapUILayer->removeCard(CardDeckType::Unit, card, log._extra);
-            } else if (Deck::kDeckEvent_Draw == event) {
-                _mapUILayer->insertCard(CardDeckType::Unit, card);
-            }
-        }
-        
-        _mapUILayer->updateNextCard(_deck->getNextDrawCard());        
-        _deck->clearEventLog();
+//        const int counter = _deck->getCounter();
+//        const int total = _deck->getDrawSpanFrames();
+//        const float duration = (float)total / (float)GameConstants::FRAME_PER_SEC;
+//        const float time = (1.0 - (float)(counter % total) / (float)total) * duration;
+//        _mapUILayer->updateCountDown(time, duration);
+//        
+//        const auto& logs = _deck->getLogs();
+//        for (int i = 0; i < logs.size(); ++i) {
+//            const auto& log = logs.at(i);
+//            const auto event = log._event;
+//            const auto card = log._card;
+//            if (Deck::kDeckEvent_Use == event) {
+//                _mapUILayer->removeCard(CardDeckType::Unit, card, log._extra);
+//            } else if (Deck::kDeckEvent_Draw == event) {
+//                _mapUILayer->insertCard(CardDeckType::Unit, card);
+//            }
+//        }
+//        
+//        _mapUILayer->updateNextCard(_deck->getNextDrawCard());        
+//        _deck->clearEventLog();
     }
     
     auto core = getCore();
@@ -431,14 +431,14 @@ void GameRender::onMapUILayerCardSelected(const string& card, int idx)
     _selectedCard.second = idx;
     
     if (_mapLayer) {
-        if (card.length() > 0) {
-            const CardType* ct = getCardType(card);
-            if (ct && kCardClass_Unit == ct->getCardClass()) {
-                _mapLayer->setPlacedArea(_minPuttingX, _maxPuttingX);
-            }
-        } else {
-            _mapLayer->setPlacedArea(INVALID_VALUE, INVALID_VALUE);
-        }
+//        if (card.length() > 0) {
+//            const CardType* ct = getCardType(card);
+//            if (ct && kCardClass_Unit == ct->getCardClass()) {
+//                _mapLayer->setPlacedArea(_minPuttingX, _maxPuttingX);
+//            }
+//        } else {
+//            _mapLayer->setPlacedArea(INVALID_VALUE, INVALID_VALUE);
+//        }
     }
 }
 
@@ -684,7 +684,8 @@ void GameRender::tryToUseCard(const string& card, int idx, const Point& point)
                     result = _commander->tryGiveUnitCommand(core, kCommandClass_Cast, &coordinate, nullptr, card);
                 }
             } else {
-                result = _commander->tryGiveDeckUseCommand(_deck, idx, coordinate);
+                OutsideHMMCommand* cmd = new OutsideHMMCommand(_deck->getFactionIndex(), idx, coordinate);
+                result = _commander->addCommandFromLocal(cmd);
             }
             
             if (kCommandResult_suc == result) {
@@ -758,22 +759,22 @@ const TechTree* GameRender::getTechTree() const
 
 const CardType* GameRender::getCardType(const string& name) const
 {
-    const TechTree* tt = getTechTree();
-    if (tt) {
-        const CardType* ct = tt->findCardTypeByName(name);
-        return ct;
-    }
+//    const TechTree* tt = getTechTree();
+//    if (tt) {
+//        const CardType* ct = tt->findCardTypeByName(name);
+//        return ct;
+//    }
     
     return nullptr;
 }
 
 const UnitType* GameRender::getUnitType(const string& name) const
 {
-    const CardType* ct = getCardType(name);
-    if (ct && kCardClass_Unit == ct->getCardClass()) {
-        const string& unitName = ct->getUnitName();
-        return getTechTree()->findUnitTypeByName(unitName);
-    }
+//    const CardType* ct = getCardType(name);
+//    if (ct && kCardClass_Unit == ct->getCardClass()) {
+//        const string& unitName = ct->getUnitName();
+//        return getTechTree()->findUnitTypeByName(unitName);
+//    }
     
     return nullptr;
 }
