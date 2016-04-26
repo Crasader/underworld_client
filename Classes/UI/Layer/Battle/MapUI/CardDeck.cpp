@@ -8,6 +8,7 @@
 
 #include "CardDeck.h"
 #include "cocostudio/CocoStudio.h"
+#include "GameModeHMM.h"
 
 using namespace std;
 using namespace cocostudio;
@@ -104,17 +105,17 @@ void CardDeck::select(int idx)
             
             // add hint
             if (selected) {
-//                const Card* card = node->getCard();
-//                if (card) {
-//                    const CardType* ct = card->getCardType();
-//                    if (ct) {
-//                        auto costs = ct->getCost();
-//                        static const string& name(RESOURCE_NAME);
-//                        if (costs.find(name) != costs.end()) {
-//                            cost = costs.at(name) / GameConstants::MICRORES_PER_RES;
-//                        }
-//                    }
-//                }
+                const HMMCard* card = node->getCard();
+                if (card) {
+                    const HMMCardType* ct = card->getCardType();
+                    if (ct) {
+                        auto costs = ct->getCost();
+                        static const string& name(RESOURCE_NAME);
+                        if (costs.find(name) != costs.end()) {
+                            cost = costs.at(name) / GameConstants::MICRORES_PER_RES;
+                        }
+                    }
+                }
             }
         }
     }
@@ -128,13 +129,13 @@ void CardDeck::insert(const string& name, bool animated)
     node->update(name);
 }
 
-void CardDeck::insert(const Card* card, bool animated)
+void CardDeck::insert(const HMMCard* card, bool animated)
 {
     auto node = insert(animated);
     node->update(card, BATTLE_RESOURCE_MAX_COUNT);
 }
 
-void CardDeck::remove(const Card* card, int index, bool animated)
+void CardDeck::remove(const HMMCard* card, int index, bool animated)
 {
     if (card) {
         function<void(int)> callback = [this](int index) {

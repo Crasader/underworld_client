@@ -17,7 +17,7 @@ public:
     static UnitCardDeck* create(int count);
     virtual ~UnitCardDeck();
     
-    void updateNextCard(const UnderWorld::Core::Card* card);
+    void updateNextCard(const UnderWorld::Core::HMMCard* card);
     void updateTimer(float time, float duration);
     void updateResource(const std::unordered_map<std::string, float>& resources);
     
@@ -29,7 +29,7 @@ protected:
     void stopShake();
     virtual void addCostHint(int cost) override;
     void removeCostHint();
-    void createNextCardNode(const UnderWorld::Core::Card* card);
+    void createNextCardNode(const UnderWorld::Core::HMMCard* card);
     void createBlankNextCardNode();
     void createNextCardProgress(Node* parent);
     
@@ -39,7 +39,7 @@ private:
     Label* _nextLabel;
     Label* _countLabel;
     Node* _costHint;
-    const UnderWorld::Core::Card* _nextCard;
+    const UnderWorld::Core::HMMCard* _nextCard;
     std::vector<std::pair<Node*, ProgressTimer*>> _resources;
     bool _isShaking;
     Point _costStartPosition;

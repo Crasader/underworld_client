@@ -22,11 +22,13 @@ USING_NS_CC;
 
 namespace UnderWorld { namespace Core {
     class Game;
+    class World;
     class TechTree;
+    class GameModeHMM;
     class Commander;
     class Unit;
     class UnitType;
-    class CardType;
+    class HMMCardType;
     class SpellType;
     class HMMDeck;
 }}
@@ -114,8 +116,7 @@ private:
     
     const UnderWorld::Core::Unit* getCore() const;
     const std::vector<std::string>& getSpells() const;
-    const UnderWorld::Core::TechTree* getTechTree() const;
-    const UnderWorld::Core::CardType* getCardType(const std::string& name) const;
+    const UnderWorld::Core::HMMCardType* getCardType(const std::string& name) const;
     const UnderWorld::Core::UnitType* getUnitType(const std::string& name) const;
     const UnderWorld::Core::SpellType* getSpellType(const std::string& name) const;
     UnderWorld::Core::Coordinate32 getValidPuttingCoordinate(const Point& point, bool check) const;
@@ -127,7 +128,11 @@ private:
     std::string _opponentsAccount;
     MapLayer* _mapLayer;
     MapUILayer* _mapUILayer;
+    
     const UnderWorld::Core::Game* _game;
+    const UnderWorld::Core::World* _world;
+    const UnderWorld::Core::TechTree* _techTree;
+    const UnderWorld::Core::GameModeHMM* _gameModeHMM;
     UnderWorld::Core::Commander* _commander;
     std::unordered_map<int, UnitNode*> _allUnitNodes;
     std::unordered_map<const void*, std::pair<UnderWorld::Core::Coordinate32, float>> _bulletParams;

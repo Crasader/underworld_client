@@ -8,6 +8,7 @@
 
 #include "UnitCardDeck.h"
 #include "cocostudio/CocoStudio.h"
+#include "GameModeHMM.h"
 #include "CocosUtils.h"
 #include "CCShake.h"
 
@@ -144,15 +145,15 @@ bool UnitCardDeck::init(int count)
     return false;
 }
 
-void UnitCardDeck::updateNextCard(const Card* card)
+void UnitCardDeck::updateNextCard(const HMMCard* card)
 {
     bool same(_nextCard == card);
     if (!same && card && _nextCard) {
-//        const CardType* nextCt = _nextCard->getCardType();
-//        const CardType* ct = card->getCardType();
-//        if (nextCt && ct && nextCt->getName() == ct->getName()) {
-//            same = true;
-//        }
+        const HMMCardType* nextCt = _nextCard->getCardType();
+        const HMMCardType* ct = card->getCardType();
+        if (nextCt && ct && nextCt->getName() == ct->getName()) {
+            same = true;
+        }
     }
     
     if (!same) {
@@ -303,7 +304,7 @@ void UnitCardDeck::removeCostHint()
     }
 }
 
-void UnitCardDeck::createNextCardNode(const Card* card)
+void UnitCardDeck::createNextCardNode(const HMMCard* card)
 {
     if (_nextCardNode) {
         auto cardNode = dynamic_cast<CardNode*>(_nextCardNode);

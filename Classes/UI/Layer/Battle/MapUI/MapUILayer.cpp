@@ -168,7 +168,7 @@ void MapUILayer::insertCard(CardDeckType type, const string& name)
     }
 }
 
-void MapUILayer::insertCard(CardDeckType type, const Card* card)
+void MapUILayer::insertCard(CardDeckType type, const HMMCard* card)
 {
     auto deck = getDeck(type);
     if (deck) {
@@ -176,7 +176,7 @@ void MapUILayer::insertCard(CardDeckType type, const Card* card)
     }
 }
 
-void MapUILayer::removeCard(CardDeckType type, const Card* card, int index)
+void MapUILayer::removeCard(CardDeckType type, const HMMCard* card, int index)
 {
     auto deck = getDeck(type);
     if (deck) {
@@ -184,7 +184,7 @@ void MapUILayer::removeCard(CardDeckType type, const Card* card, int index)
     }
 }
 
-void MapUILayer::updateNextCard(const Card* card)
+void MapUILayer::updateNextCard(const HMMCard* card)
 {
     static CardDeckType type(CardDeckType::Unit);
     auto deck = dynamic_cast<UnitCardDeck*>(getDeck(type));

@@ -123,7 +123,7 @@ bool MapLayer::init(int mapId)
         _scrollView->setTouchEnabled(true);
         _scrollView->setBounceable(false);
         _scrollView->setViewSize(winSize);
-        _scrollView->setPosition(Point::ZERO);
+        _scrollView->setPosition(Point(0, MAP_OFFSET_Y));
         _scrollView->setDelegate(this);
         addChild(_scrollView);
 //        mRoot = Node::create();
@@ -235,14 +235,6 @@ bool MapLayer::init(int mapId)
             }
         }
         
-        //--------- scale ---------//
-        const Size &mapPSize = _tiledMap->getContentSize();
-        float scale = RESOLUTION_HEIGHT / mapPSize.height;
-        _scrollView->setContentSize(mapPSize);
-        _scrollView->setMaxScale(Constants::TILEDMAP_MAX_SCALE);
-        _scrollView->setMinScale(scale);
-        _scrollView->setZoomScale(scale);
-        _scrollViewOffset = _scrollView->getContentOffset();
         addMapTiles();
         addBuildingPlacedAreas();
         

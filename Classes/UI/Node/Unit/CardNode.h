@@ -19,7 +19,7 @@ using namespace ui;
 class BattleSmallResourceNode;
 class CardNode;
 namespace UnderWorld { namespace Core {
-    class Card;
+    class HMMCard;
 }}
 
 class CardNodeObserver
@@ -45,13 +45,13 @@ public:
     void updateCD(float percentage);
     
     // unit cards
-    void update(const UnderWorld::Core::Card* card, float resource);
+    void update(const UnderWorld::Core::HMMCard* card, float resource);
     void update(const std::string& name, int rarity, int cost, float resource);
     void setSelected(bool selected);
     void checkResource(float count);
     
     // getters
-    const UnderWorld::Core::Card* getCard() const;
+    const UnderWorld::Core::HMMCard* getCard() const;
     const std::string& getCardName() const;
     
 protected:
@@ -74,7 +74,7 @@ private:
     
     Sprite *_shiningSprite;
     ProgressTimer* _coldDownProgress;
-    const UnderWorld::Core::Card* _card;
+    const UnderWorld::Core::HMMCard* _card;
     std::string _cardName;
     bool _touchInvalid;
     bool _selected;

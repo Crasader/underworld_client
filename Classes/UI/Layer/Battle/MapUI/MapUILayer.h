@@ -54,9 +54,9 @@ public:
     // card deck
     void createCardDeck(CardDeckType type, int count);
     void insertCard(CardDeckType type, const std::string& name);
-    void insertCard(CardDeckType type, const UnderWorld::Core::Card* card);
-    void removeCard(CardDeckType type, const UnderWorld::Core::Card* card, int index);
-    void updateNextCard(const UnderWorld::Core::Card* card);
+    void insertCard(CardDeckType type, const UnderWorld::Core::HMMCard* card);
+    void removeCard(CardDeckType type, const UnderWorld::Core::HMMCard* card, int index);
+    void updateNextCard(const UnderWorld::Core::HMMCard* card);
     void updateCardCD(CardDeckType type, int idx, float percentage);
     void updateCountDown(float time, float duration);
     void updateResource(const std::unordered_map<std::string, float>& resources);

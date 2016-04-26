@@ -36,10 +36,13 @@ GameRender::GameRender(Scene* scene, const string& opponentsAccount)
 :_observer(nullptr)
 ,_scene(scene)
 ,_mapId(0)
-, _opponentsAccount(opponentsAccount)
+,_opponentsAccount(opponentsAccount)
 ,_mapLayer(nullptr)
 ,_mapUILayer(nullptr)
 ,_game(nullptr)
+,_world(nullptr)
+,_techTree(nullptr)
+,_gameModeHMM(nullptr)
 ,_commander(nullptr)
 ,_deck(nullptr)
 ,_paused(false)
@@ -64,7 +67,32 @@ void GameRender::registerObserver(GameRenderObserver *observer)
 
 void GameRender::init(const Game* game, Commander* commander)
 {
-    _mapId = game->getWorld()->getMap()->getMapId();
+    _game = game;
+    _world = game->getWorld();
+    _techTree = _world->getTechTree();
+    _gameModeHMM = dynamic_cast<const GameModeHMM*>(game->getGameMode());
+    _commander = commander;
+    
+    // deck
+    const int thisFi = game->getThisFactionIndex();
+    _deck = _gameModeHMM->getDeck(thisFi);
+    
+    const UnderWorld::Core::Rect32& rect = _deck->getPuttingRegion();
+    _minPuttingX = rect._origin.x;
+    _maxPuttingX = _minPuttingX + rect._width;
+    assert(_maxPuttingX > 0 && _minPuttingX < _maxPuttingX);
+    
+    // cores
+    for (int i = 0; i < _world->getFactionCount(); ++i) {
+        const Faction* faction = _world->getFaction(i);
+        if (faction) {
+            const int fi = faction->getFactionIndex();
+            _cores.insert(make_pair(fi, faction->findFirstUnitByClass(kUnitClass_Core)));
+        }
+    }
+    
+    // UI
+    _mapId = _world->getMap()->getMapId();
     
     _mapLayer = MapLayer::create(_mapId);
     _mapLayer->registerObserver(this);
@@ -75,22 +103,6 @@ void GameRender::init(const Game* game, Commander* commander)
     _scene->addChild(_mapUILayer);
     
     onMapUILayerCardSelected("", INVALID_VALUE);
-
-    _game = game;
-    _commander = commander;
-    
-    // get cores
-    const World* world = game->getWorld();
-    if (world) {
-        const int factionsCount = world->getFactionCount();
-        for (int i = 0; i < factionsCount; ++i) {
-            const Faction* faction = world->getFaction(i);
-            _cores.insert(make_pair(faction->getFactionIndex(), faction->findFirstUnitByClass(kUnitClass_Core)));
-        }
-    }
-    
-    const int factionIndex = game->getThisFactionIndex();
-    _deck = dynamic_cast<const GameModeHMM*>(game->getGameMode())->getDeck(factionIndex);
     
     if (_mapUILayer) {
 //        const int count = _deck ? _deck->getHandCapacity() : 0;
@@ -108,15 +120,6 @@ void GameRender::init(const Game* game, Commander* commander)
 //        }
 //#endif
     }
-    
-    const Faction* faction = world->getFaction(factionIndex);
-    if (faction) {
-        const UnderWorld::Core::Rect32& rect = _deck->getPuttingRegion();
-        _minPuttingX = rect._origin.x;
-        _maxPuttingX = _minPuttingX + rect._width;
-    }
-    
-    assert(_maxPuttingX > 0 && _minPuttingX < _maxPuttingX);
     
     updateAll();
     
@@ -150,7 +153,7 @@ void GameRender::render(const Game* game)
 void GameRender::updateAll()
 {
     // update units
-    for (int i = 0; i < _game->getWorld()->getFactionCount(); ++i) {
+    for (int i = 0; i < _world->getFactionCount(); ++i) {
         updateUnits(_game, i);
     }
     
@@ -163,8 +166,7 @@ void GameRender::updateAll()
 
 void GameRender::updateUnits(const Game* game, int index)
 {
-    const World* world = game->getWorld();
-    const Faction* f = world->getFaction(index);
+    const Faction* f = _world->getFaction(index);
     
     for (int i = 0; i < f->getUnitCount(); ++i) {
         const Unit* unit = f->getUnitByIndex(i);
@@ -216,9 +218,8 @@ void GameRender::updateUnits(const Game* game, int index)
 
 void GameRender::updateBullets(const Game* game)
 {
-    const World* world = game->getWorld();
-    for (int i = 0; i < world->getBulletCount(); ++i) {
-        const Bullet* bullet = world->getBullet(i);
+    for (int i = 0; i < _world->getBulletCount(); ++i) {
+        const Bullet* bullet = _world->getBullet(i);
         const Coordinate32& pos = bullet->getPos();
         const Coordinate32& targetPos = bullet->targetPos();
         const bool isExploded(bullet->isExploded());
@@ -271,8 +272,7 @@ void GameRender::updateUILayer()
     
     updateResources();
     
-    const World* world = _game->getWorld();
-    if (world) {
+    if (_world) {
         for (auto iter = begin(_cores); iter != end(_cores); ++iter) {
             const Unit* core(iter->second);
             if (core) {
@@ -431,14 +431,14 @@ void GameRender::onMapUILayerCardSelected(const string& card, int idx)
     _selectedCard.second = idx;
     
     if (_mapLayer) {
-//        if (card.length() > 0) {
-//            const CardType* ct = getCardType(card);
-//            if (ct && kCardClass_Unit == ct->getCardClass()) {
-//                _mapLayer->setPlacedArea(_minPuttingX, _maxPuttingX);
-//            }
-//        } else {
-//            _mapLayer->setPlacedArea(INVALID_VALUE, INVALID_VALUE);
-//        }
+        if (card.length() > 0) {
+            const HMMCardType* ct = getCardType(card);
+            if (ct && kHMMCardClass_Spell != ct->getCardClass()) {
+                _mapLayer->setPlacedArea(_minPuttingX, _maxPuttingX);
+            }
+        } else {
+            _mapLayer->setPlacedArea(INVALID_VALUE, INVALID_VALUE);
+        }
     }
 }
 
@@ -542,13 +542,11 @@ void GameRender::tick(float dt)
 
 void GameRender::updateResources()
 {
-    const World* world = _game->getWorld();
-    if (world) {
-        const TechTree* techTree = getTechTree();
-        const Faction* faction = world->getFaction(_game->getThisFactionIndex());
-        const int count = techTree->getResourceTypeCount();
+    if (_world) {
+        const Faction* faction = _world->getFaction(_game->getThisFactionIndex());
+        const int count = _techTree->getResourceTypeCount();
         for (int i = 0; i < count; ++i) {
-            const UnderWorld::Core::ResourceType* resourceType = techTree->getResourceTypeByIndex(i);
+            const UnderWorld::Core::ResourceType* resourceType = _techTree->getResourceTypeByIndex(i);
             const Resource* resource = faction->getResource(resourceType);
             if (kResourceClass_consumable == resourceType->_class) {
                 const string& name = resourceType->_name;
@@ -718,14 +716,9 @@ void GameRender::tryToUseCard(const string& card, int idx, const Point& point)
 
 const Unit* GameRender::getCore() const
 {
-    if (_game) {
-        const World* w = _game->getWorld();
-        if (w) {
-            const int fi = _game->getThisFactionIndex();
-            if (_cores.find(fi) != end(_cores)) {
-                return _cores.at(fi);
-            }
-        }
+    const int fi = _game->getThisFactionIndex();
+    if (_cores.find(fi) != end(_cores)) {
+        return _cores.at(fi);
     }
     
     return nullptr;
@@ -745,45 +738,30 @@ const vector<string>& GameRender::getSpells() const
     return v;
 }
 
-const TechTree* GameRender::getTechTree() const
+const HMMCardType* GameRender::getCardType(const string& name) const
 {
-    if (_game) {
-        const World* w = _game->getWorld();
-        if (w) {
-            return w->getTechTree();
-        }
+    if (_gameModeHMM) {
+        return _gameModeHMM->findCardTypeByName(name);
     }
-    
-    return nullptr;
-}
-
-const CardType* GameRender::getCardType(const string& name) const
-{
-//    const TechTree* tt = getTechTree();
-//    if (tt) {
-//        const CardType* ct = tt->findCardTypeByName(name);
-//        return ct;
-//    }
     
     return nullptr;
 }
 
 const UnitType* GameRender::getUnitType(const string& name) const
 {
-//    const CardType* ct = getCardType(name);
-//    if (ct && kCardClass_Unit == ct->getCardClass()) {
-//        const string& unitName = ct->getUnitName();
-//        return getTechTree()->findUnitTypeByName(unitName);
-//    }
+    const HMMCardType* ct = getCardType(name);
+    if (ct) {
+        const UnitSetting& us = ct->getUnitSetting();
+        return _techTree->findUnitTypeByName(us.getUnitTypeName());
+    }
     
     return nullptr;
 }
 
 const SpellType* GameRender::getSpellType(const string& name) const
 {
-    const TechTree* tt = getTechTree();
-    if (tt) {
-        return tt->findSpellTypeByName(name);
+    if (_techTree) {
+        return _techTree->findSpellTypeByName(name);
     }
     
     return nullptr;

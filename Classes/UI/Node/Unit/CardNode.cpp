@@ -12,6 +12,7 @@
 #include "BattleSmallResourceNode.h"
 #include "DataManager.h"
 #include "CardConfigData.h"
+#include "GameModeHMM.h"
 #include "CCShake.h"
 #include "SoundManager.h"
 
@@ -260,29 +261,30 @@ void CardNode::updateCD(float percentage)
     }
 }
 
-void CardNode::update(const Card* card, float resource)
+void CardNode::update(const HMMCard* card, float resource)
 {
     _card = card;
     
     if (card) {
-//        const CardType* ct = card->getCardType();
-//        if (ct) {
-//            const string& name = ct->getName();
-//            
-//            int cost(0);
-//            static const string& resourceName(RESOURCE_NAME);
-//            const auto& costs = ct->getCost();
-//            if (costs.find(resourceName) != costs.end()) {
-//                cost = costs.at(resourceName) / GameConstants::MICRORES_PER_RES;
-//            }
-//            
-//            const UnitType* ut = card->getUnitType();
-//            if (ut) {
-//                update(name, ut->getRarity(), cost, resource);
-//            } else {
-//                update(name, 0, cost, resource);
-//            }
-//        }
+        const HMMCardType* ct = card->getCardType();
+        if (ct) {
+            const string& name = ct->getName();
+            
+            int cost(0);
+            static const string& resourceName(RESOURCE_NAME);
+            const auto& costs = ct->getCost();
+            if (costs.find(resourceName) != costs.end()) {
+                cost = costs.at(resourceName) / GameConstants::MICRORES_PER_RES;
+            }
+            
+            // TODO:
+            const UnitType* ut = nullptr;
+            if (ut) {
+                update(name, ut->getRarity(), cost, resource);
+            } else {
+                update(name, 0, cost, resource);
+            }
+        }
     }
 }
 
@@ -356,7 +358,7 @@ void CardNode::checkResource(float count)
     }
 }
 
-const Card* CardNode::getCard() const
+const HMMCard* CardNode::getCard() const
 {
     return _card;
 }

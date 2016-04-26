@@ -15,7 +15,7 @@
 USING_NS_CC;
 
 namespace UnderWorld { namespace Core {
-    class Card;
+    class HMMCard;
 }}
 
 class CardDeck;
@@ -38,8 +38,8 @@ public:
     std::string getCard(int idx) const;
     void select(int idx);
     void insert(const std::string& name, bool animated);
-    void insert(const UnderWorld::Core::Card* card, bool animated);
-    void remove(const UnderWorld::Core::Card* card, int index, bool animated);
+    void insert(const UnderWorld::Core::HMMCard* card, bool animated);
+    void remove(const UnderWorld::Core::HMMCard* card, int index, bool animated);
     void updateCD(int idx, float percentage);
     
 protected:
