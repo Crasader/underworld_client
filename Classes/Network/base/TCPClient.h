@@ -164,6 +164,21 @@ public:
         return _pCallback;
     }
     
+    inline void setReconnectCallback(const ccTCPReconnectCallback& callback)
+    {
+        _rCallback = callback;
+    }
+    
+    /**
+     *      * Get ccTCPRequestCallback callback function.
+     *           *
+     *                * @return const ccTCPRequestCallback& ccTCPRequestCallback callback function.
+     *                     */
+    inline const ccTCPReconnectCallback& getReconnectCallback()
+    {
+        return _rCallback;
+    }
+    
     void destroy();
     
     /*
@@ -242,6 +257,7 @@ private:
     
     TCPRequest* _requestSentinel;
     ccTCPRequestCallback       _pCallback;      /// C++11 style callbacks
+    ccTCPReconnectCallback      _rCallback;      /// C++11 style callbacks
     
     struct event notify_event;
     struct event server_event;

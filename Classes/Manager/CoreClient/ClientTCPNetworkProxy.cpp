@@ -26,6 +26,7 @@
 #define MESSAGE_CODE_LAUNCH_2_C (3)
 #define MESSAGE_CODE_SYNC_2_S   (4)
 #define MESSAGE_CODE_SYNE_2_C   (5)
+#define MESSAGE_CODE_RECONNECT_2_S   (6)
 
 #define MESSAGE_KEY_CODE         ("code")
 #define MESSAGE_KEY_CARDS        ("cards")
@@ -44,6 +45,7 @@
 #define MESSAGE_KEY_END_FRAME    ("endFrame")
 #define MESSAGE_KEY_NAME         ("name")
 #define MESSAGE_KEY_UID          ("uid")
+#define MESSAGE_KEY_BATTLE_ID    ("battleid")
 
 #define PROTOCOL_HEAD_LENGTH  (4)
 
@@ -147,9 +149,39 @@ static std::string parseSync2SMsg(
     return DataManager::getInstance()->getBinaryJsonTool()->encode(root);
 }
 
+static std::string parseReconnect2SMsg(int uid, int battleid) {
+    rapidjson::Document document;
+    rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+    rapidjson::Value root(rapidjson::kObjectType);
+    
+    rapidjson::Value reqCode(rapidjson::kNumberType);
+    reqCode.SetInt(MESSAGE_CODE_RECONNECT_2_S);
+    
+    rapidjson::Value uidJson(rapidjson::kNumberType);
+    uidJson.SetInt(uid);
+    
+    rapidjson::Value battleidJson(rapidjson::kNumberType);
+    battleidJson.SetInt(battleid);
+    
+    rapidjson::Value msgFrame(rapidjson::kNumberType);
+#pragma core frame
+    msgFrame.SetInt(0);
+    
+    root.AddMember(MESSAGE_KEY_CODE, reqCode, allocator);
+    root.AddMember(MESSAGE_KEY_UID, uidJson, allocator);
+    root.AddMember(MESSAGE_KEY_BATTLE_ID, battleidJson, allocator);
+    root.AddMember(MESSAGE_KEY_FRAME, msgFrame, allocator);
+    
+    return DataManager::getInstance()->getBinaryJsonTool()->encode(root);
+}
+
+
 static void parseLaunch2CMsg(const rapidjson::Value& root,
-        std::vector<UnderWorld::Core::NetworkMessage *> &output) {
+        std::vector<UnderWorld::Core::NetworkMessage *> &output, int& battleid) {
     NetworkMessageLaunch2C* msg = new NetworkMessageLaunch2C();
+    
+    /** 0. battle Id */
+    battleid = cocostudio::DICTOOL->getIntValue_json(root, MESSAGE_KEY_BATTLE_ID, INVALID_VALUE);
     
     /** 0. map Id */
     int mapId = cocostudio::DICTOOL->getIntValue_json(root, MESSAGE_KEY_MAP_ID, 0);
@@ -291,6 +323,7 @@ void ClientTCPNetworkProxy::destroyTCPClient() {
         _tcpClient->destroy();
         _tcpClient = nullptr;
     }
+    _battleid = INVALID_VALUE;
 }
 
 void ClientTCPNetworkProxy::connect() {
@@ -298,11 +331,8 @@ void ClientTCPNetworkProxy::connect() {
     _tcpClient = new TCPClient();
     _tcpClient->setTimeoutForConnect(300);
     _tcpClient->init(_host, _port);
-    _tcpClient->setResponseCallback(std::bind(
-        &ClientTCPNetworkProxy::onReceiveTCPResponse,
-        this,
-        std::placeholders::_1,
-        std::placeholders::_2));
+    _tcpClient->setResponseCallback(std::bind(&ClientTCPNetworkProxy::onReceiveTCPResponse, this, std::placeholders::_1, std::placeholders::_2));
+    _tcpClient->setReconnectCallback(std::bind(&ClientTCPNetworkProxy::onReconncected, this, std::placeholders::_1));
 }
 
 void ClientTCPNetworkProxy::send(UnderWorld::Core::NetworkMessage* msg) {
@@ -338,6 +368,20 @@ void ClientTCPNetworkProxy::onReceiveTCPResponse(TCPClient* client, TCPResponse*
         for (int i = 0; i < msgs.size(); ++i) {
             delete msgs[i];
         }
+    }
+}
+
+
+void ClientTCPNetworkProxy::onReconncected(TCPClient* client) {
+    if (_battleid < 0) {
+        return;
+    }
+    std::string reqContent = parseReconnect2SMsg(_uid, _battleid);
+    TCPRequest* ret = nullptr;
+    if (!reqContent.empty()) {
+        ret = new TCPRequest();
+        ret->setRequestData(reqContent.c_str(), reqContent.size());
+        _tcpClient->send(ret);
     }
 }
 
@@ -380,7 +424,7 @@ void ClientTCPNetworkProxy::parseResponse2Msg(
     int respCode = cocostudio::DICTOOL->getIntValue_json(document, MESSAGE_KEY_CODE);
     
     if (respCode == MESSAGE_CODE_LAUNCH_2_C) {
-        parseLaunch2CMsg(document, output);
+        parseLaunch2CMsg(document, output, _battleid);
     } else if (respCode == MESSAGE_CODE_SYNE_2_C) {
         parseSync2CMsg(document, output);
     }

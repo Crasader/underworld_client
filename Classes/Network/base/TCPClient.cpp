@@ -863,6 +863,15 @@ int TCPClient::reconnect2Server()
     event_set(&server_event, _fd, EV_READ | EV_PERSIST, on_server, this);
     event_base_set(base, &server_event);
     event_add(&server_event, NULL);
+    
+    
+    const ccTCPReconnectCallback &callback = _rCallback;
+    // Ref* pTarget = request->getTarget();
+    // SEL_TCPResponse pSelector = request->getSelector();
+    if (callback != nullptr) {
+        callback(this, nullptr);
+    }
+    
     return 0;
 }
 

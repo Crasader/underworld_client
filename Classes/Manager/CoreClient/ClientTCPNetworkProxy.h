@@ -14,6 +14,7 @@
 
 #include "TCPClient.h"
 #include "ExternalInterface.h"
+#include "Global.h"
 
 namespace UnderWorld { namespace Core {
     class NetworkMessage;
@@ -31,11 +32,12 @@ private:
     std::string _name;
     int _uid;
     TCPClient* _tcpClient;
+    int _battleid;
     
 public:
     ClientTCPNetworkProxy(const std::string& host, int port,
         const std::string& name, int uid)
-        : _host(host), _port(port), _name(name), _uid(uid), _tcpClient(nullptr) {}
+        : _host(host), _port(port), _name(name), _uid(uid), _tcpClient(nullptr), _battleid(INVALID_VALUE) {}
     virtual ~ClientTCPNetworkProxy();
     
     /** interface */
@@ -50,6 +52,7 @@ private:
     
     /** TCP Interface */
     void onReceiveTCPResponse(TCPClient* client, TCPResponse* response);
+    void onReconncected(TCPClient* client);
     
     /** parse */
     TCPRequest* parseMsg2Request(const UnderWorld::Core::NetworkMessage* msg);

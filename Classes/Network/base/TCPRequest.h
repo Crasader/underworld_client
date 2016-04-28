@@ -42,6 +42,7 @@ class TCPClient;
 class TCPResponse;
 
 typedef std::function<void(TCPClient* client, TCPResponse* response)> ccTCPRequestCallback;
+typedef std::function<void(TCPClient* client, TCPResponse* response)> ccTCPReconnectCallback;
 typedef void (cocos2d::Ref::*SEL_TCPResponse)(TCPClient* client, TCPResponse* response);
 #define tcpresponse_selector(_SELECTOR) (cocos2d::network::SEL_TCPResponse)(&_SELECTOR)
 
