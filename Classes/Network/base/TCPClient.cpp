@@ -855,8 +855,11 @@ int TCPClient::reconnect2Server()
     }
 
     int value = 5;
-    //    setsockopt(_fd, IPPROTO_TCP, TCP_KEEPIDLE,
-    //                           (const void *) &value, sizeof(int));
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    setsockopt(_fd, IPPROTO_TCP, TCP_KEEPALIVE, (const void *) &value, sizeof(int));
+#else
+    setsockopt(_fd, IPPROTO_TCP, TCP_KEEPIDLE, (const void *) &value, sizeof(int));
+#endif
     setsockopt(_fd, IPPROTO_TCP, TCP_KEEPINTVL, (const void *)&value, sizeof(int));
     setsockopt(_fd, IPPROTO_TCP, TCP_KEEPCNT, (const void *)&value, sizeof(int));
 
