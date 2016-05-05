@@ -320,7 +320,7 @@ void UnitNode::getCsbFiles(vector<string>& output, Unit::Direction direction, bo
     string csbFile;
     const SkillClass skillClass(unit_getSkillClass(_unit));
     switch (skillClass) {
-        case kSkillClass_Stop:
+        case kSkillClass_Stop:case kSkillClass_Produce:
         {
             csbFile = getStandbyCsbFile(direction, isHealthy);
         }

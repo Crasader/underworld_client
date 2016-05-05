@@ -48,6 +48,8 @@
 		30236FF71C5B6AFA00FB1802 /* PathFinderInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30236FF61C5B6AFA00FB1802 /* PathFinderInterface.cpp */; };
 		3028EBC31BFF0CBD00511C51 /* DynamicValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3028EBC11BFF0CBD00511C51 /* DynamicValue.cpp */; };
 		3028EBC61BFF0D4800511C51 /* Condition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3028EBC41BFF0D4700511C51 /* Condition.cpp */; };
+		3070302B1CD1E6D70077D357 /* ProduceType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 307030291CD1E6D60077D357 /* ProduceType.cpp */; };
+		3070302E1CD3253B0077D357 /* Produce.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3070302C1CD3253B0077D357 /* Produce.cpp */; };
 		307534691BF1B2F20057DCED /* Commander.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 307534671BF1B2F20057DCED /* Commander.cpp */; };
 		3075346D1BF324340057DCED /* EventTriggers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3075346B1BF324340057DCED /* EventTriggers.cpp */; };
 		307534711BF33ECF0057DCED /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3075346F1BF33ECF0057DCED /* Logger.cpp */; };
@@ -368,6 +370,10 @@
 		3028EBC21BFF0CBD00511C51 /* DynamicValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DynamicValue.h; path = Core/Unit/Element/DynamicValue.h; sourceTree = "<group>"; };
 		3028EBC41BFF0D4700511C51 /* Condition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Condition.cpp; path = Core/Unit/Element/Condition.cpp; sourceTree = "<group>"; };
 		3028EBC51BFF0D4700511C51 /* Condition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Condition.h; path = Core/Unit/Element/Condition.h; sourceTree = "<group>"; };
+		307030291CD1E6D60077D357 /* ProduceType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ProduceType.cpp; path = Core/Unit/Type/ProduceType.cpp; sourceTree = "<group>"; };
+		3070302A1CD1E6D60077D357 /* ProduceType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProduceType.h; path = Core/Unit/Type/ProduceType.h; sourceTree = "<group>"; };
+		3070302C1CD3253B0077D357 /* Produce.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Produce.cpp; path = Core/Unit/Instance/Produce.cpp; sourceTree = "<group>"; };
+		3070302D1CD3253B0077D357 /* Produce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Produce.h; path = Core/Unit/Instance/Produce.h; sourceTree = "<group>"; };
 		307534671BF1B2F20057DCED /* Commander.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Commander.cpp; path = Core/Game/Commander.cpp; sourceTree = "<group>"; };
 		307534681BF1B2F20057DCED /* Commander.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Commander.h; path = Core/Game/Commander.h; sourceTree = "<group>"; };
 		3075346B1BF324340057DCED /* EventTriggers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EventTriggers.cpp; path = Core/Game/EventTriggers.cpp; sourceTree = "<group>"; };
@@ -938,6 +944,8 @@
 				3019BABB1C99668E003258DB /* Aura.h */,
 				3087FF061C9FD0CB004E31F6 /* Magic.cpp */,
 				3087FF071C9FD0CB004E31F6 /* Magic.h */,
+				3070302C1CD3253B0077D357 /* Produce.cpp */,
+				3070302D1CD3253B0077D357 /* Produce.h */,
 			);
 			name = Instance;
 			sourceTree = "<group>";
@@ -977,6 +985,8 @@
 				3019BAB81C9953FB003258DB /* AuraType.h */,
 				3087FF031C9F9D92004E31F6 /* MagicType.cpp */,
 				3087FF041C9F9D92004E31F6 /* MagicType.h */,
+				307030291CD1E6D60077D357 /* ProduceType.cpp */,
+				3070302A1CD1E6D60077D357 /* ProduceType.h */,
 			);
 			name = Type;
 			sourceTree = "<group>";
@@ -2196,6 +2206,7 @@
 				A1720E6F1BCCDF9100217E98 /* CocosUtils.cpp in Sources */,
 				A1D461531C3E166900E8E60B /* AbstractPieceLocalData.cpp in Sources */,
 				A18524D31C1AE46400BE261D /* QuestNode.cpp in Sources */,
+				3070302E1CD3253B0077D357 /* Produce.cpp in Sources */,
 				300098D61BD5E81700B6E284 /* InstanceFactory.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				A18524DC1C1AF49800BE261D /* BagCell.cpp in Sources */,
@@ -2264,6 +2275,7 @@
 				A1D745C01C1AB7C40020BC1C /* DefeatLayer.cpp in Sources */,
 				A1D745C11C1AB7C40020BC1C /* MapLayer.cpp in Sources */,
 				045116F51BCFBA44002AA721 /* CommandType.cpp in Sources */,
+				3070302B1CD1E6D70077D357 /* ProduceType.cpp in Sources */,
 				A1720ECB1BCD37FC00217E98 /* MessageBoxLayer.cpp in Sources */,
 				308B84661BE3853C00377802 /* AIBody.cpp in Sources */,
 				300098D01BD0CD5900B6E284 /* Resource.cpp in Sources */,

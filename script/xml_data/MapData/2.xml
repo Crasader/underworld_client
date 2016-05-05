@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <root>
     <map map_name="1" building_pace="5"/>
-    <location_setting index="0" core_location="250,480"  building_location="750,800;750,400" />
-    <location_setting index="1" core_location="2000,525" building_location="1600,800;1600,400"/>
+    <location_setting index="0" core_location="160,480" />
+    <location_setting index="1" core_location="2000,480"/>
     <schedule_events>
         <event>
             <event_trigger class="schedule" time="0"/>
@@ -11,6 +11,31 @@
         <event>
             <event_trigger class="schedule" time="0"/>
             <event_effect class="alter_resource" map_index="1" resource_name="木头" amount="50"/>
+        </event>
+        <!-- <event>
+            <event_trigger class="schedule" time="0"/>
+            <event_effect class="add_unit" map_index="0" position="600,600">
+                <unit_setting name="测试工厂"/>
+            </event_effect>
+        </event> -->
+        <event>
+            <event_trigger class="schedule" time="0"/>
+            <event_effect class="add_unit" map_index="0" position="600,600">
+                <unit_setting name="流星投枪者_入侵"/>
+            </event_effect>
+        </event>
+        <!-- <event>
+            <event_trigger class="schedule" time="0"/>
+            <event_effect class="add_unit" map_index="0" position="600,600">
+                <unit_setting name="疾风弓手_作战"/>
+            </event_effect>
+        </event> -->
+
+        <event>
+            <event_trigger class="schedule" time="0"/>
+            <event_effect class="add_unit" map_index="1" position="1200,600">
+                <unit_setting name="轻装武士_作战"/>
+            </event_effect>
         </event>
     </schedule_events>
     <loop_events>
@@ -22,12 +47,12 @@
             <event_trigger class="loop" time="60" start_time="60" end_time="36000"/>
             <event_effect class="alter_resource" map_index="1" resource_name="木头" amount="5"/>
         </event>
-        <event>
-            <event_trigger class="loop" time="180" start_time="60" end_time="18000"/>
+        <!-- <event>
+            <event_trigger class="loop" time="600" start_time="0" end_time="18000"/>
             <event_effect class="add_unit" map_index="1" position="1200,600">
-                <unit_setting name="王子"/>
+                <unit_setting name="轻装武士_入侵"/>
             </event_effect>
-        </event>
+        </event> -->
     </loop_events>
     <faction_setting faction_count="2" this_faction="0">
         <faction_setting_item faction_index="0" faction_control_type="human" map_index="0" team_index="0"/>
