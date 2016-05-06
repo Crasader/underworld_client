@@ -234,9 +234,11 @@ bool MapLayer::init(int mapId)
                 addParticle(particles.at(i));
             }
         }
-        
+
+#if false
         addMapTiles();
         addBuildingPlacedAreas();
+#endif
         
         //--------- event ---------//
         auto eventListener = EventListenerTouchOneByOne::create();

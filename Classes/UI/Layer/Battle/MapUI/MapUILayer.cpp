@@ -53,6 +53,7 @@ MapUILayer::MapUILayer()
 ,_opponentsHpProgress(nullptr)
 ,_opponentsHpPercentageLabel(nullptr)
 ,_pauseMenuItem(nullptr)
+,_resourceNode(nullptr)
 {
     clearCardInfo(_highlightedCardInfo);
     clearCardInfo(_selectedCardInfo);
@@ -460,6 +461,21 @@ bool MapUILayer::isGameOver() const
 
 void MapUILayer::reorderDecks()
 {
+#if true
+    if (_resourceNode) {
+        static const float offsetX(10.0f);
+        float x(_resourceNode->getPosition().x + _resourceNode->getContentSize().width / 2);
+        
+        for (auto iter = begin(_decks); iter != end(_decks); ++iter) {
+            auto deck = iter->second;
+            if (deck) {
+                const Size& size = deck->getContentSize();
+                x += offsetX + size.width;
+                deck->setPosition(x - size.width / 2, size.height / 2);
+            }
+        }
+    }
+#else
     const float winWidth = Director::getInstance()->getWinSize().width;
     const size_t cnt(_decks.size());
     if (winWidth >= _decksTotalWidth) {
@@ -476,6 +492,7 @@ void MapUILayer::reorderDecks()
     } else {
         // TODO
     }
+#endif
 }
 
 CardDeck* MapUILayer::getDeck(CardDeckType type) const
@@ -526,6 +543,10 @@ void MapUILayer::clearCardInfo(pair<CardDeck*, int>& data) const
 
 void MapUILayer::addResourceNode()
 {
+    if (_resourceNode) {
+        return;
+    }
+    
     auto node = Node::create();
     addChild(node);
     node->setAnchorPoint(Point::ANCHOR_MIDDLE);
@@ -551,4 +572,6 @@ void MapUILayer::addResourceNode()
         node->addChild(label);
         _resourceLabels.insert(make_pair(RES_NAME_WOOD, label));
     }
+    
+    _resourceNode = node;
 }

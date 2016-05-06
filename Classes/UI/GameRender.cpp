@@ -104,21 +104,31 @@ void GameRender::init(const Game* game, Commander* commander)
     
     onMapUILayerCardSelected("", INVALID_VALUE);
     
-    if (_mapUILayer) {
-//        const int count = _deck ? _deck->getHandCapacity() : 0;
-//        _mapUILayer->createCardDeck(CardDeckType::Unit, count);
-//        
-//#if false
-//        // spell cards
-//        const auto& names = getSpells();
-//        const auto cnt = names.size();
-//        if (cnt > 0) {
-//            _mapUILayer->createCardDeck(CardDeckType::Spell, (int)cnt);
-//            for (int i = 0; i < cnt; ++i) {
-//                _mapUILayer->insertCard(CardDeckType::Spell, names.at(i));
-//            }
-//        }
-//#endif
+    if (_mapUILayer && _deck) {
+        static const CardDeckType type(CardDeckType::Spell);
+        const int count = _deck->getCardCount();
+        _mapUILayer->createCardDeck(type, count);
+        
+        for (int i = 0; i < count; ++i) {
+            const HMMCard* card = _deck->getCard(i);
+            if (card) {
+                const HMMCardType* ct = card->getCardType();
+                if (ct) {
+                    _mapUILayer->insertCard(type, ct->getName());
+                }
+            }
+        }
+#if false
+        // spell cards
+        const auto& names = getSpells();
+        const auto cnt = names.size();
+        if (cnt > 0) {
+            _mapUILayer->createCardDeck(CardDeckType::Spell, (int)cnt);
+            for (int i = 0; i < cnt; ++i) {
+                _mapUILayer->insertCard(CardDeckType::Spell, names.at(i));
+            }
+        }
+#endif
     }
     
     updateAll();
@@ -682,7 +692,7 @@ void GameRender::tryToUseCard(const string& card, int idx, const Point& point)
                     result = _commander->tryGiveUnitCommand(core, kCommandClass_Cast, &coordinate, nullptr, card);
                 }
             } else {
-                OutsideHMMCommand* cmd = new OutsideHMMCommand(_deck->getFactionIndex(), idx, coordinate);
+                OutsideHMMCommand* cmd = new OutsideHMMCommand(idx, _deck->getFactionIndex(), coordinate);
                 result = _commander->addCommandFromLocal(cmd);
             }
             

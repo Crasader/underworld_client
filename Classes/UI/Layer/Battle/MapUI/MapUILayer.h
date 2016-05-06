@@ -97,6 +97,7 @@ private:
     ProgressTimer *_opponentsHpProgress;
     Label *_opponentsHpPercentageLabel;
     MenuItem *_pauseMenuItem;
+    Node *_resourceNode;
     std::unordered_map<std::string, Label*> _resourceLabels;
     std::map<CardDeckType, CardDeck*> _decks;
 };

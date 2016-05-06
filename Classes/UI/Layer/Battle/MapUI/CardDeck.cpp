@@ -50,7 +50,7 @@ bool CardDeck::init(int count)
         static const float x3(8.0f);
         
         static const float y1(5.0f);
-        static const float y2(50.0f);
+        static const float y2(y1/*50.0f*/);
         
         const Size& nodeSize = CardNode::create(false)->getContentSize();
         const Size size(x1 * 2 + count * nodeSize.width + (count - 1) * x3, y1 + y2 + nodeSize.height);
