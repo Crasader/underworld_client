@@ -16,6 +16,7 @@ using namespace UnderWorld::Core;
 
 static const float animationDuration(0.3f);
 static const int cardActionTag(329);
+const float deckCostOffsetX(1.0f);
 
 CardDeck* CardDeck::create(int count)
 {
@@ -32,7 +33,10 @@ CardDeck* CardDeck::create(int count)
 CardDeck::CardDeck()
 :_observer(nullptr)
 ,_background(nullptr)
+,_countLabel(nullptr)
+,_costHint(nullptr)
 ,_insertActionStartPosition(Point::ZERO)
+,_costStartPosition(Point::ZERO)
 {
     
 }
@@ -50,7 +54,7 @@ bool CardDeck::init(int count)
         static const float x3(8.0f);
         
         static const float y1(5.0f);
-        static const float y2(y1/*50.0f*/);
+        static const float y2(50.0f);
         
         const Size& nodeSize = CardNode::create(false)->getContentSize();
         const Size size(x1 * 2 + count * nodeSize.width + (count - 1) * x3, y1 + y2 + nodeSize.height);
@@ -71,6 +75,34 @@ bool CardDeck::init(int count)
         for (int i = count - 1; i >= 0; --i) {
             const float x = x1 + nodeSize.width * (i + 0.5f) + x3 * i;
             _positions.push_back(Point(x, y));
+        }
+        
+        Size progressSize(Size::ZERO);
+        for (int i = 0; i < BATTLE_RESOURCE_MAX_COUNT; ++i) {
+            Sprite* s = Sprite::create("GameImages/test/ui_blood_9.png");
+            ProgressTimer* pt = ProgressTimer::create(s);
+            pt->setType(ProgressTimer::Type::BAR);
+            pt->setBarChangeRate(Vec2(1.0f, 0.0f));
+            pt->setMidpoint(Point::ANCHOR_BOTTOM_LEFT);
+            pt->setPercentage(100);
+            _background->addChild(pt);
+            
+            _resources.push_back(make_pair(nullptr, pt));
+            
+            if (progressSize.width == 0) {
+                progressSize = pt->getContentSize();
+            }
+        }
+        
+        const float midX = size.width / 2;
+        _costStartPosition.x = midX - ((progressSize.width + deckCostOffsetX) * BATTLE_RESOURCE_MAX_COUNT - deckCostOffsetX)  / 2;
+        _costStartPosition.y = y2 / 2;
+        for (int i = 0; i < _resources.size(); ++i) {
+            auto pt = _resources.at(i).second;
+            if (pt) {
+                const float offsetX = progressSize.width / 2 + (progressSize.width + deckCostOffsetX) * i;
+                pt->setPosition(_costStartPosition + Point(offsetX, 0));
+            }
         }
         
         return true;
@@ -167,6 +199,59 @@ void CardDeck::updateCD(int idx, float percentage)
     }
 }
 
+void CardDeck::updateResource(const unordered_map<string, float>& resources)
+{
+    float count(0);
+    static const string& resourceName(RESOURCE_NAME);
+    if (resources.find(resourceName) != resources.end()) {
+        count = resources.at(resourceName);
+    }
+    
+    const size_t cnt(_resources.size());
+    count = MIN(MAX(0, count), cnt);
+    
+    for (int i = 0; i < cnt; ++i) {
+        Node* s = _resources.at(i).first;
+        ProgressTimer* pt = _resources.at(i).second;
+        bool show(false);
+        if (pt) {
+            if (i <= count - 1) {
+                show = (s == nullptr);
+                pt->setPercentage(100.0f);
+            } else if (i < count) {
+                const float percentage(count - i);
+                show = (percentage >= 1);
+                pt->setPercentage(100.0f * percentage);
+            } else {
+                if (s) {
+                    s->removeFromParent();
+                    _resources.at(i).first = nullptr;
+                }
+                pt->setPercentage(0);
+            }
+        }
+        
+        if (show) {
+            static const string file("ui-tiao.csb");
+            Node* effect = CSLoader::createNode(file);
+            effect->setPosition(pt->getPosition());
+            pt->getParent()->addChild(effect);
+            timeline::ActionTimeline *action = CSLoader::createTimeline(file);
+            effect->runAction(action);
+            action->gotoFrameAndPlay(0, false);
+            _resources.at(i).first = effect;
+        }
+    }
+    
+    if (_countLabel) {
+        _countLabel->setString(StringUtils::format("%d", static_cast<int>(count)));
+    }
+    
+    for (auto& node : _nodes) {
+        node->checkResource(count);
+    }
+}
+
 #pragma mark - private
 CardNode* CardDeck::insert(bool animated)
 {
@@ -226,7 +311,39 @@ void CardDeck::reload()
     }
 }
 
-void CardDeck::addCostHint(int cost) {}
+void CardDeck::addCostHint(int cost)
+{
+    if (cost > 0) {
+        if (!_costHint) {
+            static string file("GameImages/test/ui_blood_10.png");
+            static const Rect rect(0, 0, 63, 17);
+            static const Rect capInsets(2, 2, 59, 13);
+            _costHint = Scale9Sprite::create(file, rect, capInsets);
+            _costHint->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+            _costHint->setPosition(_costStartPosition);
+            _background->addChild(_costHint);
+        }
+        
+        if (_resources.size() > 0) {
+            auto pt = _resources.at(0).second;
+            if (pt) {
+                auto ptSize(pt->getContentSize());
+                auto size(Size(cost * (ptSize.width + deckCostOffsetX), ptSize.height));
+                _costHint->setContentSize(size);
+            }
+        }
+    } else {
+        removeCostHint();
+    }
+}
+
+void CardDeck::removeCostHint()
+{
+    if (_costHint) {
+        _costHint->removeFromParent();
+        _costHint = nullptr;
+    }
+}
 
 #pragma mark - CardNodeObserver
 void CardDeck::onCardNodeTouchedBegan(CardNode* node)

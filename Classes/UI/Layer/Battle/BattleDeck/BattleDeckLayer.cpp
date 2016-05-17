@@ -18,6 +18,7 @@
 #include "SoundManager.h"
 #include "Utils.h"
 #include "TechTree.h"
+#include "GameModeHMM.h"
 #include "BattleDeckCell.h"
 #include "BattleScene.h"
 
@@ -49,6 +50,7 @@ BattleDeckLayer::BattleDeckLayer()
 :_observer(nullptr)
 ,_isExtracting(false)
 ,_techTree(nullptr)
+,_gameModeHMM(nullptr)
 ,_infoNode(nullptr)
 ,_selectedCardsLabel(nullptr)
 ,_dragNode(nullptr)
@@ -61,12 +63,15 @@ BattleDeckLayer::BattleDeckLayer()
     
     _techTree = new (nothrow) TechTree();
     _techTree->init(DataManager::getInstance()->getTechTreeData());
+    
+    _gameModeHMM = new (nothrow) GameModeHMM();
 }
 
 BattleDeckLayer::~BattleDeckLayer()
 {
     removeAllChildren();
     CC_SAFE_DELETE(_techTree);
+    CC_SAFE_DELETE(_gameModeHMM);
 }
 
 void BattleDeckLayer::registerObserver(BattleDeckLayerObserver *observer)
@@ -168,7 +173,7 @@ void BattleDeckLayer::onEnter()
     }
     
     if (_touchedCard.length() > 0) {
-        _infoNode->update(_touchedCard, _techTree);
+        _infoNode->update(_touchedCard, _techTree, _gameModeHMM);
     }
 }
 
@@ -378,7 +383,7 @@ void BattleDeckLayer::onCardNodeTouchedEnded(CardNode* node, bool isValid)
             }
         }
         
-        _infoNode->update(currentName, _techTree);
+        _infoNode->update(currentName, _techTree, _gameModeHMM);
     }
 }
 
@@ -516,14 +521,14 @@ void BattleDeckLayer::updateCardNode(CardNode* node, const string& name)
                 rarity = ut->getRarity();
             }
             
-//            const CardType* ct = _techTree->findCardTypeByName(name);
-//            if (ct) {
-//                const auto& costs = ct->getCost();
-//                static const string& name(RESOURCE_NAME);
-//                if (costs.find(name) != costs.end()) {
-//                    cost = costs.at(name) / GameConstants::MICRORES_PER_RES;
-//                }
-//            }
+            const HMMCardType* ct = _gameModeHMM->findCardTypeByName(name);
+            if (ct) {
+                const auto& costs = ct->getCost();
+                static const string& name(RESOURCE_NAME);
+                if (costs.find(name) != costs.end()) {
+                    cost = costs.at(name) / GameConstants::MICRORES_PER_RES;
+                }
+            }
         }
         
         node->update(name, rarity, cost, BATTLE_RESOURCE_MAX_COUNT);

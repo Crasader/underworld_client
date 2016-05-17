@@ -11,6 +11,7 @@
 #include "cocostudio/CocoStudio.h"
 #include "CocosUtils.h"
 #include "Unit.h"
+#include "GameModeHMM.h"
 #include "DataManager.h"
 #include "CardConfigData.h"
 #include "SoundManager.h"
@@ -190,96 +191,96 @@ void BattleDeckUnitInfoNode::registerObserver(BattleDeckUnitInfoNodeObserver *ob
     _observer = observer;
 }
 
-void BattleDeckUnitInfoNode::update(const string& name, TechTree* techTree)
+void BattleDeckUnitInfoNode::update(const string& name, TechTree* techTree, GameModeHMM* gameModeHMM)
 {
-//    const CardType* ct = techTree->findCardTypeByName(name);
-//    if (ct) {
-//        const string& file = DataManager::getInstance()->getCardConfigData(name)->getSmallIcon();
-//        if (file.length() > 0 && FileUtils::getInstance()->isFileExist(file)) {
-//            _unitIcon->setVisible(true);
-//            _unitIcon->setTexture(file);
-//        } else {
-//            _unitIcon->setVisible(false);
-//        }
-//        
-//        _raceIcon->setTexture("GameImages/icons/race/icon_langzu.png");
-//        _nameLabel->setString(name);
+    const HMMCardType* ct = gameModeHMM->findCardTypeByName(name);
+    if (ct) {
+        const string& file = DataManager::getInstance()->getCardConfigData(name)->getSmallIcon();
+        if (file.length() > 0 && FileUtils::getInstance()->isFileExist(file)) {
+            _unitIcon->setVisible(true);
+            _unitIcon->setTexture(file);
+        } else {
+            _unitIcon->setVisible(false);
+        }
+        
+        _raceIcon->setTexture("GameImages/icons/race/icon_langzu.png");
+        _nameLabel->setString(name);
 //        _descriptionLabel->setString(ct->getDesc());
-//        
-//        const UnitType* unit = techTree->findUnitTypeByName(name);
-//        _qualityIcon->setVisible(unit);
-//        if (unit) {
-//            _qualityIcon->setTexture(StringUtils::format("GameImages/test/ui_kuang_%d.png", unit->getRarity() + 4));
-//            _hpLabel->setString(StringUtils::format("%d", unit->getMaxHp()));
-//            _armorLabel->setString(StringUtils::format("%d", unit->getAmror()));
-//            
-//            const AttackSkillType* type = nullptr;
-//            for (int i = 0; i < FIELD_TYPE_COUNT; ++i) {
-//                for (int j = 0; j < UNIT_CLASS_COUNT; ++j) {
-//                    if (unit->getDefaultAttackSkillType((FieldType)i, (UnitClass)j)) {
-//                        type = dynamic_cast<const AttackSkillType*>(
-//                            unit->getDefaultAttackSkillType((FieldType)i,
-//                                (UnitClass)j));
-//                        break;
-//                    }
-//                }
-//            }
-//            
-//            if (type) {
-//                _dmgLabel->setString(StringUtils::format("%d", (type->getMinDamage() + type->getMaxDamage()) / 2));
-//                _atkSpeedLabel->setString(StringUtils::format("%d", GameConstants::frame2Second(type->getPrePerformFrames() + type->getCDFrames())));
-//                _atkRangeLabel->setString(StringUtils::format("%d", type->getRange()));
-//            } else {
-//                _dmgLabel->setString(default_value);
-//                _atkSpeedLabel->setString(default_value);
-//                _atkRangeLabel->setString(default_value);
-//            }
-//            
-//            const string& at = unit->getArmorPreference();
-//            if (at.length() > 0) {
-//                _armorPreferLabel->setString(StringUtils::format("%d", unit->getArmorPreferenceFactor().getLiteralValue()));
-//            } else {
-//                _armorPreferLabel->setString(default_value);
-//            }
-//            
-//            // skill
-//            {
-//                string name;
-//                const size_t passiveTypeCount = unit->getPassiveNames().size();
-//                if (passiveTypeCount > 0) {
-//                    name = unit->getPassiveNames().at(0);
-//                    
-//                } else {
-//                    const size_t spellTypeCount = unit->getSpellNames().size();
-//                    if (spellTypeCount > 0) {
-//                        name = unit->getSpellNames().at(0);
-//                    }
-//                }
-//                
-//                if (name.length() > 0) {
-//                    
-//                } else {
-//                    
-//                }
-//            }
-//        } else {
-//            _hpLabel->setString(default_value);
-//            _armorLabel->setString(default_value);
-//            _armorPreferLabel->setString(default_value);
-//            _dmgLabel->setString(default_value);
-//            _atkSpeedLabel->setString(default_value);
-//            _atkRangeLabel->setString(default_value);
-//        }
-//    } else {
-//        _unitIcon->setVisible(false);
-//        _qualityIcon->setVisible(false);
-//        _nameLabel->setString(name);
-//        _descriptionLabel->setString("");
-//        _hpLabel->setString(default_value);
-//        _armorLabel->setString(default_value);
-//        _armorPreferLabel->setString(default_value);
-//        _dmgLabel->setString(default_value);
-//        _atkSpeedLabel->setString(default_value);
-//        _atkRangeLabel->setString(default_value);
-//    }
+        
+        const UnitType* unit = techTree->findUnitTypeByName(name);
+        _qualityIcon->setVisible(unit);
+        if (unit) {
+            _qualityIcon->setTexture(StringUtils::format("GameImages/test/ui_kuang_%d.png", unit->getRarity() + 4));
+            _hpLabel->setString(StringUtils::format("%d", unit->getMaxHp()));
+            _armorLabel->setString(StringUtils::format("%d", unit->getAmror()));
+            
+            const AttackSkillType* type = nullptr;
+            for (int i = 0; i < FIELD_TYPE_COUNT; ++i) {
+                for (int j = 0; j < UNIT_CLASS_COUNT; ++j) {
+                    if (unit->getDefaultAttackSkillType((FieldType)i, (UnitClass)j)) {
+                        type = dynamic_cast<const AttackSkillType*>(
+                            unit->getDefaultAttackSkillType((FieldType)i,
+                                (UnitClass)j));
+                        break;
+                    }
+                }
+            }
+            
+            if (type) {
+                _dmgLabel->setString(StringUtils::format("%d", (type->getMinDamage() + type->getMaxDamage()) / 2));
+                _atkSpeedLabel->setString(StringUtils::format("%d", GameConstants::frame2Second(type->getPrePerformFrames() + type->getCDFrames())));
+                _atkRangeLabel->setString(StringUtils::format("%d", type->getRange()));
+            } else {
+                _dmgLabel->setString(default_value);
+                _atkSpeedLabel->setString(default_value);
+                _atkRangeLabel->setString(default_value);
+            }
+            
+            const string& at = unit->getArmorPreference();
+            if (at.length() > 0) {
+                _armorPreferLabel->setString(StringUtils::format("%d", unit->getArmorPreferenceFactor().getLiteralValue()));
+            } else {
+                _armorPreferLabel->setString(default_value);
+            }
+            
+            // skill
+            {
+                string name;
+                const size_t passiveTypeCount = unit->getPassiveNames().size();
+                if (passiveTypeCount > 0) {
+                    name = unit->getPassiveNames().at(0);
+                    
+                } else {
+                    const size_t spellTypeCount = unit->getSpellNames().size();
+                    if (spellTypeCount > 0) {
+                        name = unit->getSpellNames().at(0);
+                    }
+                }
+                
+                if (name.length() > 0) {
+                    
+                } else {
+                    
+                }
+            }
+        } else {
+            _hpLabel->setString(default_value);
+            _armorLabel->setString(default_value);
+            _armorPreferLabel->setString(default_value);
+            _dmgLabel->setString(default_value);
+            _atkSpeedLabel->setString(default_value);
+            _atkRangeLabel->setString(default_value);
+        }
+    } else {
+        _unitIcon->setVisible(false);
+        _qualityIcon->setVisible(false);
+        _nameLabel->setString(name);
+        _descriptionLabel->setString("");
+        _hpLabel->setString(default_value);
+        _armorLabel->setString(default_value);
+        _armorPreferLabel->setString(default_value);
+        _dmgLabel->setString(default_value);
+        _atkSpeedLabel->setString(default_value);
+        _atkRangeLabel->setString(default_value);
+    }
 }

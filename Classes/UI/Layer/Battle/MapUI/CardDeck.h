@@ -18,6 +18,8 @@ namespace UnderWorld { namespace Core {
     class HMMCard;
 }}
 
+extern const float deckCostOffsetX;
+
 class CardDeck;
 
 class CardDeckObserver
@@ -41,6 +43,7 @@ public:
     void insert(const UnderWorld::Core::HMMCard* card, bool animated);
     void remove(const UnderWorld::Core::HMMCard* card, int index, bool animated);
     void updateCD(int idx, float percentage);
+    void updateResource(const std::unordered_map<std::string, float>& resources);
     
 protected:
     CardDeck();
@@ -48,19 +51,24 @@ protected:
     
     CardNode* insert(bool animated);
     void reload();
-    virtual void addCostHint(int cost);
+    void addCostHint(int cost);
+    void removeCostHint();
     
     // CardNodeObserver
-    virtual void onCardNodeTouchedBegan(CardNode* node) override final;
-    virtual void onCardNodeTouchedEnded(CardNode* node, bool isValid) override final;
+    virtual void onCardNodeTouchedBegan(CardNode* node) final;
+    virtual void onCardNodeTouchedEnded(CardNode* node, bool isValid) final;
     
 protected:
     CardDeckObserver *_observer;
     Node* _background;
+    Label* _countLabel;
     std::vector<Point> _positions;
     std::vector<CardNode*> _nodes;
     std::queue<CardNode*> _buffers;
+    std::vector<std::pair<Node*, ProgressTimer*>> _resources;
+    Node* _costHint;
     Point _insertActionStartPosition;
+    Point _costStartPosition;
 };
 
 #endif /* CardDeck_h */

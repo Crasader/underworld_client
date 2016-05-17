@@ -17,7 +17,6 @@ using namespace cocostudio;
 using namespace UnderWorld::Core;
 
 static const int topZOrder(1);
-static const float costOffsetX(1.0f);
 
 UnitCardDeck* UnitCardDeck::create(int count)
 {
@@ -36,11 +35,8 @@ UnitCardDeck::UnitCardDeck()
 :_nextCardNode(nullptr)
 ,_nextCardProgress(nullptr)
 ,_nextLabel(nullptr)
-,_countLabel(nullptr)
-,_costHint(nullptr)
 ,_nextCard(nullptr)
 ,_isShaking(false)
-,_costStartPosition(Point::ZERO)
 {
     
 }
@@ -125,12 +121,12 @@ bool UnitCardDeck::init(int count)
         }
         
         const float midX = x1 + x2 + nodeSize.width + (count * (nodeSize.width + x3) - x3) / 2;
-        _costStartPosition.x = midX - ((progressSize.width + costOffsetX) * BATTLE_RESOURCE_MAX_COUNT - costOffsetX)  / 2;
+        _costStartPosition.x = midX - ((progressSize.width + deckCostOffsetX) * BATTLE_RESOURCE_MAX_COUNT - deckCostOffsetX)  / 2;
         _costStartPosition.y = y2 / 2;
         for (int i = 0; i < _resources.size(); ++i) {
             auto pt = _resources.at(i).second;
             if (pt) {
-                const float offsetX = progressSize.width / 2 + (progressSize.width + costOffsetX) * i;
+                const float offsetX = progressSize.width / 2 + (progressSize.width + deckCostOffsetX) * i;
                 pt->setPosition(_costStartPosition + Point(offsetX, 0));
             }
         }
@@ -186,59 +182,6 @@ void UnitCardDeck::updateTimer(float time, float duration)
     }
 }
 
-void UnitCardDeck::updateResource(const unordered_map<string, float>& resources)
-{
-    float count(0);
-    static const string& resourceName(RESOURCE_NAME);
-    if (resources.find(resourceName) != resources.end()) {
-        count = resources.at(resourceName);
-    }
-    
-    const size_t cnt(_resources.size());
-    count = MIN(MAX(0, count), cnt);
-    
-    for (int i = 0; i < cnt; ++i) {
-        Node* s = _resources.at(i).first;
-        ProgressTimer* pt = _resources.at(i).second;
-        bool show(false);
-        if (pt) {
-            if (i <= count - 1) {
-                show = (s == nullptr);
-                pt->setPercentage(100.0f);
-            } else if (i < count) {
-                const float percentage(count - i);
-                show = (percentage >= 1);
-                pt->setPercentage(100.0f * percentage);
-            } else {
-                if (s) {
-                    s->removeFromParent();
-                    _resources.at(i).first = nullptr;
-                }
-                pt->setPercentage(0);
-            }
-        }
-        
-        if (show) {
-            static const string file("ui-tiao.csb");
-            Node* effect = CSLoader::createNode(file);
-            effect->setPosition(pt->getPosition());
-            pt->getParent()->addChild(effect);
-            timeline::ActionTimeline *action = CSLoader::createTimeline(file);
-            effect->runAction(action);
-            action->gotoFrameAndPlay(0, false);
-            _resources.at(i).first = effect;
-        }
-    }
-    
-    if (_countLabel) {
-        _countLabel->setString(StringUtils::format("%d", static_cast<int>(count)));
-    }
-    
-    for (auto& node : _nodes) {
-        node->checkResource(count);
-    }
-}
-
 #pragma mark shake
 static float shake_action_tag = 2016;
 void UnitCardDeck::shake()
@@ -267,40 +210,6 @@ void UnitCardDeck::stopShake()
     if (_nextCardNode && _nextCardNode->getActionByTag(shake_action_tag)) {
         _nextCardNode->stopActionByTag(shake_action_tag);
         _nextCardNode->setPosition(_insertActionStartPosition);
-    }
-}
-
-void UnitCardDeck::addCostHint(int cost)
-{
-    if (cost > 0) {
-        if (!_costHint) {
-            static string file("GameImages/test/ui_blood_10.png");
-            static const Rect rect(0, 0, 63, 17);
-            static const Rect capInsets(2, 2, 59, 13);
-            _costHint = Scale9Sprite::create(file, rect, capInsets);
-            _costHint->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
-            _costHint->setPosition(_costStartPosition);
-            _background->addChild(_costHint);
-        }
-        
-        if (_resources.size() > 0) {
-            auto pt = _resources.at(0).second;
-            if (pt) {
-                auto ptSize(pt->getContentSize());
-                auto size(Size(cost * (ptSize.width + costOffsetX), ptSize.height));
-                _costHint->setContentSize(size);
-            }
-        }
-    } else {
-        removeCostHint();
-    }
-}
-
-void UnitCardDeck::removeCostHint()
-{
-    if (_costHint) {
-        _costHint->removeFromParent();
-        _costHint = nullptr;
     }
 }
 

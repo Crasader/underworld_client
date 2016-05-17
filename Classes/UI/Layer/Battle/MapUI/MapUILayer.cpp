@@ -320,7 +320,9 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
         }
 #endif
         
+#if false
         addResourceNode();
+#endif
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -461,7 +463,7 @@ bool MapUILayer::isGameOver() const
 
 void MapUILayer::reorderDecks()
 {
-#if true
+#if false
     if (_resourceNode) {
         static const float offsetX(10.0f);
         float x(_resourceNode->getPosition().x + _resourceNode->getContentSize().width / 2);
@@ -543,35 +545,33 @@ void MapUILayer::clearCardInfo(pair<CardDeck*, int>& data) const
 
 void MapUILayer::addResourceNode()
 {
-    if (_resourceNode) {
-        return;
+    if (!_resourceNode) {
+        auto node = Node::create();
+        addChild(node);
+        node->setAnchorPoint(Point::ANCHOR_MIDDLE);
+        static const Size size(99, MAP_OFFSET_Y);
+        node->setContentSize(size);
+        node->setPosition(size.width / 2, size.height / 2);
+        
+        auto line = Sprite::create("GameImages/test/ui_line.png");
+        line->setScaleX(size.width / 2);
+        line->setPosition(size.width / 2, size.height / 2);
+        node->addChild(line);
+        
+        {
+            auto label = CocosUtils::createLabel("0", 36, DEFAULT_NUMBER_FONT);
+            label->setPosition(size.width / 2, size.height * 3 / 4);
+            node->addChild(label);
+            _resourceLabels.insert(make_pair(RES_NAME_GOLD, label));
+        }
+        
+        {
+            auto label = CocosUtils::createLabel("0", 36, DEFAULT_NUMBER_FONT);
+            label->setPosition(size.width / 2, size.height / 4);
+            node->addChild(label);
+            _resourceLabels.insert(make_pair(RES_NAME_WOOD, label));
+        }
+        
+        _resourceNode = node;
     }
-    
-    auto node = Node::create();
-    addChild(node);
-    node->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    static const Size size(99, MAP_OFFSET_Y);
-    node->setContentSize(size);
-    node->setPosition(size.width / 2, size.height / 2);
-    
-    auto line = Sprite::create("GameImages/test/ui_line.png");
-    line->setScaleX(size.width / 2);
-    line->setPosition(size.width / 2, size.height / 2);
-    node->addChild(line);
-    
-    {
-        auto label = CocosUtils::createLabel("0", 36, DEFAULT_NUMBER_FONT);
-        label->setPosition(size.width / 2, size.height * 3 / 4);
-        node->addChild(label);
-        _resourceLabels.insert(make_pair(RES_NAME_GOLD, label));
-    }
-    
-    {
-        auto label = CocosUtils::createLabel("0", 36, DEFAULT_NUMBER_FONT);
-        label->setPosition(size.width / 2, size.height / 4);
-        node->addChild(label);
-        _resourceLabels.insert(make_pair(RES_NAME_WOOD, label));
-    }
-    
-    _resourceNode = node;
 }
