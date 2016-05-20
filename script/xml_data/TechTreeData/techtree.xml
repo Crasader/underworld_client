@@ -93,7 +93,7 @@
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="120"/>
     </unit>
     <!-- TODO 驱散 -->
-    <unit name="流星投枪者_入侵" class="warrior" race="辉月狼人" hp="330" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="无甲" armor_preference_factor="p:180" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:5" max_level="100" rewarde="金子:0.3f" passive_names="抗魔学识;淬毒标枪;等级上升" render_key="狼人射手">
+    <unit name="流星投枪者_入侵" class="warrior" race="辉月狼人" hp="330" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="无甲" armor_preference_factor="p:180" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:5" max_level="100" rewarde="金子:0.3f" spell_names="进攻驱散术" passive_names="抗魔学识;淬毒标枪;等级上升" render_key="狼人射手">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0" perform="600" cd="0.0"/>
         <skill class="attack" preperform="30" perform="0.0" cd="120" min_damage="30" max_damage="60" deliver_class="physical" damage_distance="faraway" range="300" fields="3">
@@ -1209,6 +1209,8 @@
     <spell alias="迷失咒术" spell_name="迷失咒术" level="1" deliver_class="magical" deliver_nature="enemy" cast_distance="400" cast_type="unit" immediate_elements="0,迷失咒术_施法效果,1" preperform="30" perform="0" cd="1200" class="cast" desc="降低敌人的攻击力和攻击速度"/>
     <!-- 灵魂拷问 -->
     <spell alias="灵魂拷问" spell_name="灵魂拷问" level="1" deliver_class="magical" deliver_nature="enemy" cast_distance="-1" cast_type="unit" immediate_elements="0,灵魂拷问_灵魂拷问施法效果,1" preperform="30" perform="0.0" cd="240" class="cast" desc="对目标造成少量魔法伤害"/>
+    <!-- 进攻驱散术 -->
+    <spell alias="进攻驱散术" spell_name="进攻驱散术" level="1" deliver_class="magical" deliver_nature="enemy" cast_distance="400" cast_type="unit" immediate_elements="0,进攻驱散术_进攻驱散术施法效果,1" preperform="30" perform="0.0" cd="240" class="cast" desc="驱散对方单位身上的增溢效果"/>
 
     <!-- 场外法术 -->
     <!-- 治愈 -->
@@ -1556,6 +1558,18 @@
             <damage damage_nature="hurt" deliver_class="magical" damage_value="100"/>
         </spell_content>
     </spell_pattern>
+    <!-- 进攻驱散术 -->
+    <spell_pattern name="进攻驱散术_进攻驱散术施法效果" class="target" deliver_nature="enemy">
+        <spell_content name="进攻驱散术_进攻驱散术施法效果_内容" spell_content_class="damage">
+            <damage damage_nature="hurt" deliver_class="magical" damage_value="0">
+                <feature_group determine_timing="attack">
+                    <feature_item effect_timing="hit">
+                        <feature type="dispel" deliver_nature="ally"/>
+                    </feature_item>
+                </feature_group>
+            </damage>
+        </spell_content>
+    </spell_pattern>
 
     <!-- ==========增益减益效果配置========== -->
     <!-- 激流 -->
@@ -1702,7 +1716,7 @@
         </buff_effect>
     </buff>
     <!-- 易伤 -->
-    <buff alias="易伤_物理和魔法" name="易伤_物理和魔法" level="1" deliver_nature="ally" deliver_class="magical" span_type="limited" span="480" max_overlay="1" render_key="" unique_on_unit="1" dispelable="1">
+    <buff alias="易伤_物理和魔法" name="易伤_物理和魔法" level="1" deliver_nature="enemy" deliver_class="magical" span_type="limited" span="480" max_overlay="1" render_key="" unique_on_unit="1" dispelable="1">
         <buff_effect>
             <buff_effect_description buff_effect_condition="immediate" is_damage="0"/>
             <effect class="add_feature" alias_name="增加伤害_百分比_可叠加" ref_value="50">

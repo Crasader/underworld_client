@@ -124,44 +124,6 @@ void BattleScene::start()
 //    _client->launchPvp(contentSetting);
 }
 
-void BattleScene::startTest() {
-    if (_render) {
-        clear();
-    }
-    
-    // 1. add map layer
-
-    
-    // 2. add map ui layer
-    _render = new (nothrow) GameRender(this, "Vampire");
-    _render->registerObserver(this);
-    
-    // 3. game setting
-    UnderWorld::Core::GameContentSetting contentSetting;
-    
-    contentSetting.setFactionTypeKey("狼人族");
-    
-    UnderWorld::Core::UnitSetting core;
-    core.setUnitTypeName("狼人基地");
-    contentSetting.setCore(core);
-    
-    UnderWorld::Core::UnitSetting tower;
-    tower.setUnitTypeName("狼人箭塔");
-    contentSetting.setTower(tower);
-    
-    set<string> cardSet;
-    std::vector<string> cards;
-    UserDefaultsDataManager::getInstance()->getSelectedCards(cardSet);
-    for (auto iter = cardSet.begin(); iter != cardSet.end(); ++iter) {
-        cards.push_back(*iter);
-    }
-
-    
-    _test = new UnderworldTestPvpClient();
-    _test->init(_render);
-    _test->startTest(contentSetting, cards);
-}
-
 void BattleScene::clear()
 {
     if (_client) {

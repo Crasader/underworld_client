@@ -223,21 +223,35 @@ void UnderworldClient::onReceive(
 }
 
 void UnderworldClient::loadTechTree() {
-    _settings.setTechTree(DataManager::getInstance()->getTechTreeData());
-    _hmmSetting._hmmTechTree = DataManager::getInstance()->getHMMTechTreeData();
+    std::string commonTechTree;
+    loadCommonTechTree(commonTechTree);
+    _settings.setTechTree(commonTechTree);
+    
+    std::string hmmTechTree;
+    loadHMMMTechTree(_hmmSetting._hmmTechTree);
 }
 
 void UnderworldClient::loadMap(int mapId) {
     _settings.setMapId(mapId);
     
     MapSetting ms;
-    ms.setMapId(mapId);
+    loadCommonMapSetting(mapId, ms);
+    _settings.setMapSetting(ms);
+    _settings.setFactionSetting(ms.getFactionSetting());
+    
+    std::string hmms;
+    loadHMMMapSetting(mapId, hmms);
+    _hmmSetting.init(hmms);
+}
+
+void UnderworldClient::loadCommonMapSetting(int mapId, MapSetting& output) {
+    output.setMapId(mapId);
     const cocos2d::experimental::TMXTiledMap* tiledMap = cocos2d::experimental::TMXTiledMap::create(StringUtils::format("map/%d.tmx", mapId));
     cocos2d::experimental::TMXLayer *logicLayer = tiledMap->getLayer("logic");
     logicLayer->setVisible(false);
     const Size &logicSize = logicLayer->getLayerSize();
-    ms.setWidth(logicSize.width);
-    ms.setHeight(logicSize.height);
+    output.setWidth(logicSize.width);
+    output.setHeight(logicSize.height);
     for (unsigned int x = 0; x < logicSize.width; x++)
     {
         for (unsigned int y = 0; y < logicSize.height; y++)
@@ -248,14 +262,24 @@ void UnderworldClient::loadMap(int mapId) {
             } else {
                 //can not walk
                 //TODO: land can't walk & air can't walk
-                ms.addUnWalkableArea(UnderWorld::Core::Coordinate32(x, (logicSize.height - 1) - y), UnderWorld::Core::kFieldType_Land);
+                output.addUnWalkableArea(UnderWorld::Core::Coordinate32(x, (logicSize.height - 1) - y), UnderWorld::Core::kFieldType_Land);
             }
         }
     }
-    ms.init(DataManager::getInstance()->getMapData(mapId));
-    
-    _settings.setMapSetting(ms);
-    _settings.setFactionSetting(ms.getFactionSetting());
-    
-    _hmmSetting.init(DataManager::getInstance()->getMapDataHMM(mapId));
+    output.init(DataManager::getInstance()->getMapData(mapId));
 }
+
+void UnderworldClient::loadHMMMapSetting(int mapId, std::string& output) {
+    output = DataManager::getInstance()->getMapDataHMM(mapId);
+}
+
+void UnderworldClient::loadCommonTechTree(std::string &output) {
+    output = DataManager::getInstance()->getTechTreeData();
+}
+
+void UnderworldClient::loadHMMMTechTree(std::string &output) {
+    output = DataManager::getInstance()->getHMMTechTreeData();
+}
+
+
+

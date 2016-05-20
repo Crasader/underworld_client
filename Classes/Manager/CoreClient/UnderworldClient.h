@@ -67,6 +67,12 @@ private:
     void loadTechTree();
     void loadMap(int mapId);
     
+public:
+    static void loadCommonMapSetting(int mapId, UnderWorld::Core::MapSetting& output);
+    static void loadHMMMapSetting(int mapId, std::string& output);
+    static void loadCommonTechTree(std::string& output);
+    static void loadHMMMTechTree(std::string& output);
+    
 };
     
 class NetworkMessageLaunch2S : public UnderWorld::Core::NetworkMessage {
