@@ -36,10 +36,10 @@
 
 #define TOUCH_CANCEL_BY_MOVING_DISTANCE (10.0f)
 
-#define DEFAULT_MAP_ID              (2)
+#define DEFAULT_MAP_ID              (1)
 #define CANDIDATE_CARD_DECKS_COUNT  (8)
 #define BATTLE_RESOURCE_MAX_COUNT   (10)
-#define MAP_OFFSET_Y                (119)
+#define MAP_OFFSET_Y                (0)
 
 #define ONLINE_UPDATE_SEARCH_PATH       (FileUtils::getInstance()->getWritablePath() + "Resource/")
 #define DEFAULT_RESOURCE_FOLDER         ("res")

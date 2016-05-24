@@ -234,6 +234,17 @@ bool MapLayer::init(int mapId)
                 addParticle(particles.at(i));
             }
         }
+        
+        // TODO: remove test code
+        if (1 == mapId) {
+            const Size &mapPSize = _tiledMap->getContentSize();
+            float scale = RESOLUTION_HEIGHT / mapPSize.height;
+            _scrollView->setContentSize(mapPSize);
+            _scrollView->setMaxScale(Constants::TILEDMAP_MAX_SCALE);
+            _scrollView->setMinScale(scale);
+            _scrollView->setZoomScale(scale);
+            _scrollViewOffset = _scrollView->getContentOffset();
+        }
 
 #if false
         addMapTiles();
