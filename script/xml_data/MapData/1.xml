@@ -16,8 +16,8 @@
         </event>
         <event>
             <event_trigger class="loop" time="180" start_time="60" end_time="18000"/>
-            <event_effect class="add_unit" map_index="1" position="1200,1200">
-                <unit_setting name="王子"/>
+            <event_effect class="add_unit" map_index="1" position="2400,600">
+                <unit_setting name="疾风弓手_作战"/>
             </event_effect>
         </event>
     </loop_events>

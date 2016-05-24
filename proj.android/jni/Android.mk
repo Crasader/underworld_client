@@ -10,11 +10,15 @@ LOCAL_MODULE := cocos2dcpp_shared
 
 LOCAL_MODULE_FILENAME := libcocos2dcpp
 
-LOCAL_SRC_FILES := hellocpp/main.cpp \
-                   ../../Classes/AppDelegate.cpp \
-                   ../../Classes/HelloWorldScene.cpp
+define all-cpp-files
+$(patsubst jni/%,%, $(shell find $(LOCAL_PATH)/../../Classes $(LOCAL_PATH)/underworld_client -name "*.cpp" -or -name "*.c"))  
+endef
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
+LOCAL_SRC_FILES := $(call all-cpp-files)
+LOCAL_SRC_FILES := $(LOCAL_SRC_FILES)
+
+FILE_INCLUDES := $(shell find $(LOCAL_PATH)/../../Classes -type d)
+LOCAL_C_INCLUDES := $(FILE_INCLUDES) 
 
 # _COCOS_HEADER_ANDROID_BEGIN
 # _COCOS_HEADER_ANDROID_END
