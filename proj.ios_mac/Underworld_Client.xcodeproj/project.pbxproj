@@ -67,6 +67,7 @@
 		309F76A01BEA3ABA00B2791F /* CoreUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309F769E1BEA3AB900B2791F /* CoreUtils.cpp */; };
 		30AA1D591CB3EF7700D099D1 /* SpellType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A15698D31C3A95B300B94345 /* SpellType.cpp */; };
 		30B83D5E1CEEC25500195004 /* WorldTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30B83D5C1CEEC25500195004 /* WorldTest.cpp */; };
+		30B83D621CEF100B00195004 /* AIRule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30B83D601CEF100B00195004 /* AIRule.cpp */; };
 		30C6C3921C52183500DD1C8F /* AStarNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30C6C3901C52183500DD1C8F /* AStarNode.cpp */; };
 		30DF03C41C0D898E00A1C6EB /* EffectType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DF03C21C0D898E00A1C6EB /* EffectType.cpp */; };
 		30E05B2C1C56450700A3A3E9 /* PathService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30E05B2A1C56450700A3A3E9 /* PathService.cpp */; };
@@ -408,6 +409,8 @@
 		309F769F1BEA3AB900B2791F /* CoreUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CoreUtils.h; path = Core/Utils/CoreUtils.h; sourceTree = "<group>"; };
 		30B83D5C1CEEC25500195004 /* WorldTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WorldTest.cpp; path = Test/WorldTest.cpp; sourceTree = "<group>"; };
 		30B83D5D1CEEC25500195004 /* WorldTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorldTest.h; path = Test/WorldTest.h; sourceTree = "<group>"; };
+		30B83D601CEF100B00195004 /* AIRule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AIRule.cpp; path = Core/AI/AIRule.cpp; sourceTree = "<group>"; };
+		30B83D611CEF100B00195004 /* AIRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AIRule.h; path = Core/AI/AIRule.h; sourceTree = "<group>"; };
 		30C6C3901C52183500DD1C8F /* AStarNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AStarNode.cpp; path = Core/AI/Path/AStarNode.cpp; sourceTree = "<group>"; };
 		30C6C3911C52183500DD1C8F /* AStarNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AStarNode.h; path = Core/AI/Path/AStarNode.h; sourceTree = "<group>"; };
 		30C6C3931C52186B00DD1C8F /* PathFinderInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PathFinderInterface.h; path = Core/AI/Path/PathFinderInterface.h; sourceTree = "<group>"; };
@@ -864,6 +867,8 @@
 				308B84651BE3853C00377802 /* AIBody.h */,
 				308B84671BE3856F00377802 /* AIBrain.cpp */,
 				308B84681BE3856F00377802 /* AIBrain.h */,
+				30B83D601CEF100B00195004 /* AIRule.cpp */,
+				30B83D611CEF100B00195004 /* AIRule.h */,
 			);
 			name = AI;
 			sourceTree = "<group>";
@@ -2161,6 +2166,7 @@
 				A1720E8E1BCCE19300217E98 /* AESEncryptor.cpp in Sources */,
 				A18885671C43843800C9586F /* SoldierManager.cpp in Sources */,
 				A1E5BED01C3B7CF4005BC78B /* TowerData.cpp in Sources */,
+				30B83D621CEF100B00195004 /* AIRule.cpp in Sources */,
 				A1E5BED61C3B7D2C005BC78B /* HeroData.cpp in Sources */,
 				045116E41BCFBA39002AA721 /* World.cpp in Sources */,
 				A15698E11C3A96E500B94345 /* DamageType.cpp in Sources */,
