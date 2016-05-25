@@ -20,6 +20,7 @@
 #include "MainLayer.h"
 #include "Constants.h"
 #include "DataManager.h"
+#include "NetworkApi.h"
 
 using namespace std;
 using namespace cocostudio;
@@ -226,25 +227,25 @@ const vector<IapObject *>& GameData::getIapObjects() const
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 void GameData::loadAnonymousUser(rapidjson::Document& document)
 {
-    UserDefault *ud = UserDefault::getInstance();
-    document.SetObject();
-    rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
-    // MUST alloc a new string, otherwise it will cause some bug
-    static string kAuthString;
-    kAuthString.assign(ud->getStringForKey(kAuth));
-    
-    document.AddMember(kUID, ud->getIntegerForKey(kUID), allocator);
-    document.AddMember(kAuth, rapidjson::Value(kAuthString.c_str(), allocator), allocator);
-    document.AddMember(kNew, ud->getBoolForKey(kNew), allocator);
+//    UserDefault *ud = UserDefault::getInstance();
+//    document.SetObject();
+//    rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+//    // MUST alloc a new string, otherwise it will cause some bug
+//    static string kAuthString;
+//    kAuthString.assign(ud->getStringForKey(kAuth));
+//    
+//    document.AddMember(kUID, ud->getIntegerForKey(kUID), allocator);
+//    document.AddMember(kAuth, rapidjson::Value(kAuthString.c_str(), allocator), allocator);
+//    document.AddMember(kNew, ud->getBoolForKey(kNew), allocator);
 }
 
 void GameData::saveAnonymousUser(const User* user)
 {
-    UserDefault *ud = UserDefault::getInstance();
-    ud->setIntegerForKey(kUID, user->uid());
-    ud->setStringForKey(kAuth, user->token());
-    ud->setBoolForKey(kNew, false);
-    ud->flush();
+//    UserDefault *ud = UserDefault::getInstance();
+//    ud->setIntegerForKey(kUID, user->uid());
+//    ud->setStringForKey(kAuth, user->token());
+//    ud->setBoolForKey(kNew, false);
+//    ud->flush();
 }
 
 #endif  // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID

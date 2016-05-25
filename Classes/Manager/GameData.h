@@ -44,6 +44,12 @@ public:
     void fetchIAPInfo(const httpRequestCallback& success, const httpRequestCallback& failed, bool showLoadingLayer);
     const std::vector<IapObject *>& getIapObjects() const;
     
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    void loadAnonymousUser(rapidjson::Document& document);
+    void saveAnonymousUser(const User* user);
+    
+#endif  // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    
     // heartbeat
     void startHeartBeatSynchronously();
     void scheduleHeartBeat();
