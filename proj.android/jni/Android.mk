@@ -11,7 +11,7 @@ LOCAL_MODULE := cocos2dcpp_shared
 LOCAL_MODULE_FILENAME := libcocos2dcpp
 
 define all-cpp-files
-$(patsubst jni/%,%, $(shell find $(LOCAL_PATH)/../../Classes $(LOCAL_PATH)/underworld_client -name "*.cpp" -or -name "*.c"))  
+$(patsubst jni/%,%, $(shell find $(LOCAL_PATH)/../../Classes $(LOCAL_PATH)/underworld -name "*.cpp" -or -name "*.c"))
 endef
 
 LOCAL_SRC_FILES := $(call all-cpp-files)
