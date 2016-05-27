@@ -4,22 +4,258 @@
     <location_setting index="0" core_location="200,550" building_location="1000,550" />
     <location_setting index="1" core_location="4400,550" building_location="3600,550"/>
     <schedule_events>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="1856,488">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="1856,536">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="1856,584">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="1856,632">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="1856,680">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
+		
+		
+		
+		
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="1904,488">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="1904,536">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="1904,584">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="1904,632">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="1904,680">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
+		
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="1952,488">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="1952,536">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="1952,584">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="1952,632">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="1952,680">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
+
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="1992,480">
+                <unit_setting name="白板_坦克"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="1992,528">
+                <unit_setting name="白板_坦克"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="1992,576">
+                <unit_setting name="白板_坦克"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="1992,624">
+                <unit_setting name="白板_坦克"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="1992,672">
+                <unit_setting name="白板_坦克"/>
+            </event_effect>
+		</event>
+		
+	    <event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="1" position="2696,480">
+                <unit_setting name="白板_坦克"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="1" position="2696,528">
+                <unit_setting name="白板_坦克"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="1" position="2696,576">
+                <unit_setting name="白板_坦克"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="1" position="2696,624">
+                <unit_setting name="白板_坦克"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="1" position="2696,672">
+                <unit_setting name="白板_坦克"/>
+            </event_effect>
+		</event>
+		
+	    <event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="1" position="2744,480">
+                <unit_setting name="白板_坦克"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="1" position="2744,528">
+                <unit_setting name="白板_坦克"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="1" position="2744,576">
+                <unit_setting name="白板_坦克"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="1" position="2744,624">
+                <unit_setting name="白板_坦克"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="1" position="2744,672">
+                <unit_setting name="白板_坦克"/>
+            </event_effect>
+		</event>
+
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="1" position="2800,488">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="1" position="2800,536">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="1" position="2800,584">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="1" position="2800,632">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="1" position="2800,680">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
+		
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="1" position="2848,488">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="1" position="2848,536">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="1" position="2848,584">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="1" position="2848,632">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="1" position="2848,680">
+                <unit_setting name="白板_射手"/>
+            </event_effect>
+		</event>
     </schedule_events>
     <loop_events>
-        <event>
-            <event_trigger class="loop" time="60" start_time="60" end_time="18000"/>
-            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="5"/>
-        </event>
-        <event>
-            <event_trigger class="loop" time="60" start_time="60" end_time="18000"/>
-            <event_effect class="alter_resource" map_index="1" resource_name="木头" amount="5"/>
-        </event>
-        <event>
-            <event_trigger class="loop" time="180" start_time="60" end_time="18000"/>
-            <event_effect class="add_unit" map_index="1" position="2400,600">
-                <unit_setting name="疾风弓手_作战"/>
-            </event_effect>
-        </event>
     </loop_events>
     <faction_setting faction_count="2" this_faction="0">
     	<faction_setting_item faction_index="0" faction_control_type="human" map_index="0" team_index="0"/>
