@@ -22,7 +22,7 @@ ChatManager::ChatManager()
 ChatManager::~ChatManager()
 {
     clear();
-    M_SAFE_DELETE(_mark);
+    CC_SAFE_DELETE(_mark);
 }
 
 void ChatManager::clear()
@@ -32,7 +32,7 @@ void ChatManager::clear()
         vector<const ChatData*> vec = iter->second;
         for(auto i = vec.begin(); i != vec.end(); ++i) {
             const ChatData* data = *i;
-            M_SAFE_DELETE(data);
+            CC_SAFE_DELETE(data);
         }
         vec.clear();
     }

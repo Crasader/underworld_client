@@ -236,7 +236,7 @@ bool MapLayer::init(int mapId)
         }
         
         // TODO: remove test code
-        if (1 == mapId) {
+        if (mapId < 4) {
             const Size &mapPSize = _tiledMap->getContentSize();
             float scale = RESOLUTION_HEIGHT / mapPSize.height;
             _scrollView->setContentSize(mapPSize);

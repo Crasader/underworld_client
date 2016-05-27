@@ -9,8 +9,9 @@
 #ifndef CocosGlobal_h
 #define CocosGlobal_h
 
-#include "Global.h"
 #include <iostream>
+
+#define INVALID_VALUE   (-1)
 
 #define USER_TOKEN_LENGTH   (64)
 

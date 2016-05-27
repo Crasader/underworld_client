@@ -120,8 +120,8 @@ void BattleScene::start()
     }
     
     _client = new (nothrow) UnderworldClient("mofish", _proxy, _sch, _render);
-//    _client->launchPve(_mapId, contentSetting, cards);
-    _client->launchPvp(contentSetting, cards);
+    _client->launchPve(_mapId, contentSetting, cards);
+//    _client->launchPvp(contentSetting, cards);
 }
 
 void BattleScene::clear()
