@@ -10,6 +10,7 @@
 #define CocosGlobal_h
 
 #include <iostream>
+#include <functional>
 
 #define INVALID_VALUE   (-1)
 
