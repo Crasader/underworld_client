@@ -1,0 +1,23 @@
+diff a/Classes/UI/Layer/Battle/BattleScene.cpp b/Classes/UI/Layer/Battle/BattleScene.cpp	(rejected hunks)
+@@ -96,8 +96,8 @@ void BattleScene::start()
+     _render->registerObserver(this);
+     
+     _sch = new (nothrow) GameScheduler();
+-    _proxy = new (nothrow) ClientTCPNetworkProxy("192.168.31.100", 9999, "demoplayer", GameData::getInstance()->getUUID());
+-//    _proxy = new (nothrow) ClientTCPNetworkProxy("123.57.221.242", 8888, "demoplayer", GameData::getInstance()->getUUID());
++//    _proxy = new (nothrow) ClientTCPNetworkProxy("192.168.31.100", 9999, "demoplayer", GameData::getInstance()->getUUID());
++    _proxy = new (nothrow) ClientTCPNetworkProxy("123.57.221.242", 8888, "demoplayer", GameData::getInstance()->getUUID());
+ 
+     // 3. game setting
+     UnderWorld::Core::GameContentSetting contentSetting;
+@@ -120,8 +120,8 @@ void BattleScene::start()
+     }
+     
+     _client = new (nothrow) UnderworldClient("mofish", _proxy, _sch, _render);
+-    _client->launchPve(_mapId, contentSetting, cards);
+-//    _client->launchPvp(contentSetting);
++//    _client->launchPve(_mapId, contentSetting, cards);
++    _client->launchPvp(contentSetting, cards);
+ }
+ 
+ void BattleScene::clear()

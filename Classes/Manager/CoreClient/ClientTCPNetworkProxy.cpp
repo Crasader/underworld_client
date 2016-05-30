@@ -18,6 +18,7 @@
 #include "json/writer.h"
 #include "cocostudio/DictionaryHelper.h"
 #include "Utils.h"
+#include "CoreUtils.h"
 
 #define MESSAGE_CODE_LAUNCH_2_S (2)
 #define MESSAGE_CODE_LAUNCH_2_C (3)
@@ -123,8 +124,8 @@ static std::string parseSync2SMsg(
             command.AddMember(MESSAGE_KEY_FAC_INDEX, factionIndex, allocator);
             
             rapidjson::Value pos(rapidjson::kStringType);
-            std::string posString = std::to_string(deckCmd->getPos().x) + "_"
-                + std::to_string(deckCmd->getPos().y);
+            std::string posString = UnderWorld::Core::Utils::to_string(deckCmd->getPos().x) + "_"
+                + UnderWorld::Core::Utils::to_string(deckCmd->getPos().y);
             pos.SetString(posString.c_str(), (int)posString.size(), allocator);
             command.AddMember(MESSAGE_KEY_POS, pos, allocator);
         }
@@ -172,7 +173,7 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
             cocostudio::DICTOOL->getStringValue_json(root, MESSAGE_KEY_TEAMS);
         if (!teamString.empty()) {
             std::vector<string> teamVec;
-            Utils::split(teamVec, teamString, "_");
+            ::Utils::split(teamVec, teamString, "_");
             for (int i = 0; i < teamVec.size(); ++i) {
                 fs.setTeam(i, atoi(teamVec[i].c_str()));
             }
@@ -185,7 +186,7 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
             cocostudio::DICTOOL->getStringValue_json(root, MESSAGE_KEY_MAP_INDEXS);
         if (!mapIndexs.empty()) {
             std::vector<string> mapIndexsVec;
-            Utils::split(mapIndexsVec, mapIndexs, "_");
+            ::Utils::split(mapIndexsVec, mapIndexs, "_");
             for (int i = 0; i < mapIndexsVec.size(); ++i) {
                 fs.setMapIndex(i, atoi(mapIndexsVec[i].c_str()));
             }
@@ -206,7 +207,7 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
                 if (!cards.empty()) {
                     std::vector<CardSetting> cardSettings;
                     std::vector<string> cardsVec;
-                    Utils::split(cardsVec, cards, "|");
+                    ::Utils::split(cardsVec, cards, "|");
                     for (int j = 0; j < cardsVec.size(); ++j) {
                         CardSetting cs;
                         cs.setCardTypeName(cardsVec[j]);
@@ -326,7 +327,7 @@ void ClientTCPNetworkProxy::registerListener(ProxyListener *listener) {
 }
 
 void ClientTCPNetworkProxy::unregisterListener(ProxyListener *listener) {
-    std::unordered_set<ProxyListener*>::iterator iter = _listeners.find(listener);
+    auto iter = _listeners.find(listener);
     if (iter != _listeners.end()) {
         _listeners.erase(iter);
     }
@@ -336,10 +337,9 @@ void ClientTCPNetworkProxy::onReceiveTCPResponse(TCPClient* client, TCPResponse*
     std::vector<UnderWorld::Core::NetworkMessage*> msgs;
     parseResponse2Msg(response, msgs);
     if (!msgs.empty()) {
-        for (std::unordered_set<ProxyListener*>::iterator iter = _listeners.begin();
-             iter != _listeners.end();
-             ++iter) {
-            (*iter)->onReceive(msgs);
+        auto listeners = _listeners;
+        for (auto &p : listeners) {
+            p->onReceive(msgs);
         }
         for (int i = 0; i < msgs.size(); ++i) {
             delete msgs[i];

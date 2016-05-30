@@ -21,6 +21,7 @@
 #include "SoundManager.h"
 #include "CocosUtils.h"
 #include "CocosGlobal.h"
+#include "CoreUtils.h"
 
 using namespace std;
 using namespace UnderWorld::Core;
@@ -934,9 +935,9 @@ void UnitNode::updateFeatures()
                     string resource = iter->first;
                     float amount = iter->second;
                     string scheduleKey = rollHintScheduleKeyPrefix
-                        + to_string(_unit->getUnitId())
+                    + UnderWorld::Core::Utils::to_string(_unit->getUnitId())
                         + rollHintScheduleKeySplitor
-                        + to_string(++_rollHintCounter);
+                        + UnderWorld::Core::Utils::to_string(++_rollHintCounter);
                     rollHintResource(resource, amount, delay * index);
                     ++index;
                 }
@@ -1121,7 +1122,7 @@ void UnitNode::rollHintResource(const std::string &resource, float amount, float
     iconNode->setAnchorPoint(Vec2(1.f, 0.5f));
     iconNode->setScale(0.5f);
     
-    auto amountNode = CocosUtils::create10x25Number("+" + to_string(amount));
+    auto amountNode = CocosUtils::create10x25Number("+" + UnderWorld::Core::Utils::to_string(amount));
     amountNode->setAnchorPoint(Vec2(0.f, 0.5f));
     
     hintNode->addChild(iconNode);
