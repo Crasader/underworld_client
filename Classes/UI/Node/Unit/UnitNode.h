@@ -16,6 +16,8 @@
 #include "Unit.h"
 #include "SpellConfigData.h"
 
+#define USING_PVR   (0)
+
 USING_NS_CC;
 using namespace ui;
 
@@ -58,13 +60,21 @@ protected:
     virtual bool init() override;
     virtual void setOpacity(GLubyte opacity) override;
     virtual GLubyte getOpacity() const override;
+#if USING_PVR
+    void getPVRFiles(std::vector<std::vector<std::string>>& output, UnderWorld::Core::SkillClass sc, UnderWorld::Core::Unit::Direction direction, bool isHealthy);
+#else
     void getCsbFiles(std::vector<std::string>& output, UnderWorld::Core::Unit::Direction direction, bool isHealthy);
     const std::string getStandbyCsbFile(UnderWorld::Core::Unit::Direction direction, bool isHealthy);
     void getAttackCsbFiles(std::vector<std::string>& output, UnderWorld::Core::Unit::Direction direction, bool isHealthy);
+#endif
     bool needToChangeStandbyStatus();
     bool needToFlip(UnderWorld::Core::Unit::Direction direction);
     float calculateHpPercentage();
+#if USING_PVR
+    void playAnimation(const std::vector<std::string>& files, bool play, bool loop, float playTime, int frameIndex, bool flip, const std::function<void()>& lastFrameCallFunc);
+#else
     void addActionNode(const std::string& file, bool play, bool loop, float playTime, int frameIndex, bool flip, const std::function<void()>& lastFrameCallFunc);
+#endif
     // standby
     void addStandbyActionNode();
     // attack
@@ -104,7 +114,11 @@ private:
     bool _needToFlip;
     // --------------- animation ---------------
     Node *_actionNode;
+#if USING_PVR
+    Animate* _currentAction;
+#else
     cocostudio::timeline::ActionTimeline *_currentAction;
+#endif
     Scheduler *_speedScheduler;
     ActionManager *_actionManager;
     Node *_shadow;
@@ -119,7 +133,11 @@ private:
     bool _isLastHealthy;
     bool _isLastFlipped;
     bool _isStandby;
+#if USING_PVR
+    std::vector<std::vector<std::string>> _animationFiles;
+#else
     std::vector<std::string> _animationFiles;
+#endif
     // only used for attack animations
     bool _isPlayingAttackAnimation;
     int _animationCounter;

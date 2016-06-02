@@ -22,7 +22,7 @@ using namespace ui;
 using namespace std;
 
 #pragma mark - labels
-Label *CocosUtils::createLabel(const string& text, float fontSize, const std::string& fontName, const Size& dimensions, TextHAlignment hAlignment, TextVAlignment vAlignment)
+Label *CocosUtils::createLabel(const string& text, float fontSize, const string& fontName, const Size& dimensions, TextHAlignment hAlignment, TextVAlignment vAlignment)
 {
 #if true
     Label *ret = Label::createWithSystemFont(text, fontName, fontSize, dimensions, hAlignment, vAlignment);
@@ -56,7 +56,7 @@ LabelAtlas *CocosUtils::create42x52Number(const string& text)
  $ % L V v ￥ x + s - . / 0 1 2 3 4 5 6 7 8 9 0 :
  $ % & ' ( ) * + s - . / 0 1 2 3 4 5 6 7 8 9 0 :
  */
-LabelAtlas *CocosUtils::create10x25Number(const std::string& text) {
+LabelAtlas *CocosUtils::create10x25Number(const string& text) {
     static const char *charMapFile = "fonts/10X25.png";
     static const int charMapWidth = 10;
     static const int charMapHeight = 25;
@@ -67,7 +67,7 @@ LabelAtlas *CocosUtils::create10x25Number(const std::string& text) {
     return labelAtlas;
 }
 
-LabelAtlas *CocosUtils::create10x25Number_Green(const std::string& text) {
+LabelAtlas *CocosUtils::create10x25Number_Green(const string& text) {
     static const char *charMapFile = "fonts/10X25_green.png";
     static const int charMapWidth = 10;
     static const int charMapHeight = 25;
@@ -78,7 +78,7 @@ LabelAtlas *CocosUtils::create10x25Number_Green(const std::string& text) {
     return labelAtlas;
 }
 
-LabelAtlas *CocosUtils::create10x25Number_Red(const std::string& text) {
+LabelAtlas *CocosUtils::create10x25Number_Red(const string& text) {
     static const char *charMapFile = "fonts/10X25_red.png";
     static const int charMapWidth = 10;
     static const int charMapHeight = 25;
@@ -90,7 +90,7 @@ LabelAtlas *CocosUtils::create10x25Number_Red(const std::string& text) {
 }
 
 
-LabelAtlas *CocosUtils::create12x30Number(const std::string& text) {
+LabelAtlas *CocosUtils::create12x30Number(const string& text) {
     static const char *charMapFile = "fonts/12X30.png";
     static const int charMapWidth = 12;
     static const int charMapHeight = 30;
@@ -101,7 +101,7 @@ LabelAtlas *CocosUtils::create12x30Number(const std::string& text) {
     return labelAtlas;
 }
 
-LabelAtlas *CocosUtils::create12x30Number_Green(const std::string& text) {
+LabelAtlas *CocosUtils::create12x30Number_Green(const string& text) {
     static const char *charMapFile = "fonts/12X30_green.png";
     static const int charMapWidth = 12;
     static const int charMapHeight = 30;
@@ -112,7 +112,7 @@ LabelAtlas *CocosUtils::create12x30Number_Green(const std::string& text) {
     return labelAtlas;
 }
 
-LabelAtlas *CocosUtils::create12x30Number_Red(const std::string& text) {
+LabelAtlas *CocosUtils::create12x30Number_Red(const string& text) {
     static const char *charMapFile = "fonts/12X30_red.png";
     static const int charMapWidth = 12;
     static const int charMapHeight = 30;
@@ -124,7 +124,7 @@ LabelAtlas *CocosUtils::create12x30Number_Red(const std::string& text) {
 }
 
 
-LabelAtlas *CocosUtils::create16x40Number(const std::string& text) {
+LabelAtlas *CocosUtils::create16x40Number(const string& text) {
     static const char *charMapFile = "fonts/16X40.png";
     static const int charMapWidth = 16;
     static const int charMapHeight = 40;
@@ -135,7 +135,7 @@ LabelAtlas *CocosUtils::create16x40Number(const std::string& text) {
     return labelAtlas;
 }
 
-LabelAtlas *CocosUtils::create16x40Number_Green(const std::string& text) {
+LabelAtlas *CocosUtils::create16x40Number_Green(const string& text) {
     static const char *charMapFile = "fonts/16X40_green.png";
     static const int charMapWidth = 16;
     static const int charMapHeight = 40;
@@ -146,7 +146,7 @@ LabelAtlas *CocosUtils::create16x40Number_Green(const std::string& text) {
     return labelAtlas;
 }
 
-LabelAtlas *CocosUtils::create16x40Number_Red(const std::string& text) {
+LabelAtlas *CocosUtils::create16x40Number_Red(const string& text) {
     static const char *charMapFile = "fonts/16X40_red.png";
     static const int charMapWidth = 16;
     static const int charMapHeight = 40;
@@ -157,7 +157,7 @@ LabelAtlas *CocosUtils::create16x40Number_Red(const std::string& text) {
     return labelAtlas;
 }
 
-LabelAtlas *CocosUtils::create28x44Number(const std::string& text){
+LabelAtlas *CocosUtils::create28x44Number(const string& text){
     static const char *charMapFile = "fonts/28X44.png";
     static const int charMapWidth = 28;
     static const int charMapHeight = 44;
@@ -287,7 +287,7 @@ Sprite* CocosUtils::createPureColorSprite(const Size& size, const Color4B& color
     return newSprite;
 }
 
-Sprite* CocosUtils::createTitle(const std::string& title, float fontSize)
+Sprite* CocosUtils::createTitle(const string& title, float fontSize)
 {
     Sprite* titleBg = Sprite::create("GameImages/test/ui_black_6.png");
     Label* titleLabel = CocosUtils::createLabel(title, fontSize);
@@ -295,6 +295,16 @@ Sprite* CocosUtils::createTitle(const std::string& title, float fontSize)
     const Size& titleSize = titleBg->getContentSize();
     titleLabel->setPosition(Point(titleSize.width / 2, titleSize.height / 2));
     return titleBg;
+}
+
+void CocosUtils::loadPVR(const string& file)
+{
+    static const string root("pvr/");
+    const string plist = root + file + ".plist";
+    const string pvr = root + file + ".pvr.ccz";
+    if (FileUtils::getInstance()->isFileExist(plist)) {
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(plist, pvr);
+    }
 }
 
 #pragma mark - notifications

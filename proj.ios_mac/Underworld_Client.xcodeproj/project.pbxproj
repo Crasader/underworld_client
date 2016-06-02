@@ -108,6 +108,7 @@
 		A1146A001C9FE9EC00E64125 /* libevent_extra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A11469FB1C9FE9EC00E64125 /* libevent_extra.a */; };
 		A1146A011C9FE9EC00E64125 /* libevent_openssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A11469FC1C9FE9EC00E64125 /* libevent_openssl.a */; };
 		A1146A021C9FE9EC00E64125 /* libevent_pthreads.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A11469FD1C9FE9EC00E64125 /* libevent_pthreads.a */; };
+		A1208BA51CFFFE34007B25DC /* pvr in Resources */ = {isa = PBXBuildFile; fileRef = A1208BA41CFFFE33007B25DC /* pvr */; };
 		A1211B231C0BF55200C27CCC /* LiteralValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B211C0BF55200C27CCC /* LiteralValue.cpp */; };
 		A1211B271C0BF5CC00C27CCC /* RandomCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B251C0BF5CC00C27CCC /* RandomCreator.cpp */; };
 		A1211B291C0BF68E00C27CCC /* GameConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B281C0BF68E00C27CCC /* GameConstants.cpp */; };
@@ -499,6 +500,7 @@
 		A11469FB1C9FE9EC00E64125 /* libevent_extra.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libevent_extra.a; sourceTree = "<group>"; };
 		A11469FC1C9FE9EC00E64125 /* libevent_openssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libevent_openssl.a; sourceTree = "<group>"; };
 		A11469FD1C9FE9EC00E64125 /* libevent_pthreads.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libevent_pthreads.a; sourceTree = "<group>"; };
+		A1208BA41CFFFE33007B25DC /* pvr */ = {isa = PBXFileReference; lastKnownFileType = folder; path = pvr; sourceTree = "<group>"; };
 		A1211B211C0BF55200C27CCC /* LiteralValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LiteralValue.cpp; path = Core/Unit/Element/LiteralValue.cpp; sourceTree = "<group>"; };
 		A1211B221C0BF55200C27CCC /* LiteralValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LiteralValue.h; path = Core/Unit/Element/LiteralValue.h; sourceTree = "<group>"; };
 		A1211B241C0BF5CC00C27CCC /* EnumParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EnumParser.h; path = Core/Utils/EnumParser.h; sourceTree = "<group>"; };
@@ -1196,12 +1198,13 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A1DEF5E81C59DFB3002F3531 /* Images.xcassets */,
 				A1FF6E871C16B9890017CAD2 /* configs */,
 				521A8EA819F11F5000D177D7 /* fonts */,
 				A1D45C4B1BEB594800D1E921 /* GameImages */,
+				A1DEF5E81C59DFB3002F3531 /* Images.xcassets */,
 				CBDBD2121BD7B3B9004706A8 /* map */,
 				A13108A41C046BF900EAAD90 /* particle */,
+				A1208BA41CFFFE33007B25DC /* pvr */,
 				3EACC98E19EE6D4300EB3C5E /* res */,
 				A1C124DB1BF58AF700F3FDD2 /* sounds */,
 			);
@@ -2111,6 +2114,7 @@
 				A1A4BA3E1BCE043800175E8A /* Localizable.strings in Resources */,
 				A13108A51C046BF900EAAD90 /* particle in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
+				A1208BA51CFFFE34007B25DC /* pvr in Resources */,
 				CBDBD2131BD7B3B9004706A8 /* map in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
 			);

@@ -128,6 +128,10 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
 {
     _unitName = unit->getUnitBase().getRenderKey();
     
+#if USING_PVR
+    CocosUtils::loadPVR("pangzi");
+#endif
+    
     UnitClass uc = unit->getUnitBase().getUnitClass();
     _isBuilding = (kUnitClass_Core == uc || kUnitClass_Building == uc);
     //Temp code
@@ -206,9 +210,15 @@ void UnitNode::update(const UnderWorld::Core::Game* game)
                         }
                         
                         needToUpdateUI = true;
+#if USING_PVR
+                        if (_currentAction) {
+                            currentFrame = _currentAction->getCurrentFrameIndex();
+                        }
+#else
                         if (_currentAction) {
                             currentFrame = _currentAction->getCurrentFrame();
                         }
+#endif
                     } else {
                         // check if the unit is standby
                         if (needToChangeStandbyStatus()) {
@@ -229,8 +239,11 @@ void UnitNode::update(const UnderWorld::Core::Game* game)
                 _isLastFlipped = flip;
                 
                 reset();
-                
+#if USING_PVR
+                getPVRFiles(_animationFiles, unit_getSkillClass(_unit), direction, isHealthy);
+#else
                 getCsbFiles(_animationFiles, direction, isHealthy);
+#endif
                 updateActionNode(currentSkill, currentFrame, flip, game);
             }
         }
@@ -313,6 +326,61 @@ GLubyte UnitNode::getOpacity() const
 }
 
 #pragma mark - getters
+#if USING_PVR
+void UnitNode::getPVRFiles(vector<vector<string>>& output, SkillClass sc, Unit::Direction direction, bool isHealthy)
+{
+    output.clear();
+    
+    vector<string> data;
+    const string prefix("fatso");
+    string suffix("");
+    int cnt(0);
+    switch (sc) {
+        case kSkillClass_Stop:
+        case kSkillClass_Produce:
+        {
+            suffix = "stand";
+            cnt = 10;
+        }
+            break;
+        case kSkillClass_Move:
+        {
+            suffix = "run";
+            cnt = 8;
+        }
+            break;
+        case kSkillClass_Attack:
+        {
+            suffix = "attack";
+            cnt = 10;
+        }
+            break;
+        case kSkillClass_Cast:
+        {
+            suffix = "skill";
+            cnt = 8;
+        }
+            break;
+        case kSkillClass_Die:
+        {
+            suffix = "stand";
+            cnt = 10;
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    for (int i = 0; i < cnt; ++i) {
+        const string folder = prefix + "-" + suffix;
+        const string file = folder + "/" + folder + "-" + StringUtils::format("%d/%03d.png", static_cast<int>(direction), i);
+        data.push_back(file);
+    }
+    
+    output.push_back(data);
+}
+#else
 void UnitNode::getCsbFiles(vector<string>& output, Unit::Direction direction, bool isHealthy)
 {
     output.clear();
@@ -422,6 +490,7 @@ void UnitNode::getAttackCsbFiles(vector<string>& output, Unit::Direction directi
         output.push_back(getStandbyCsbFile(direction, isHealthy));
     }
 }
+#endif
 
 bool UnitNode::needToChangeStandbyStatus()
 {
@@ -478,6 +547,45 @@ float UnitNode::calculateHpPercentage()
 }
 
 #pragma mark - add animation
+#if USING_PVR
+void UnitNode::playAnimation(const vector<string>& files, bool play, bool loop, float playTime, int frameIndex, bool flip, const function<void()>& lastFrameCallFunc)
+{
+    removeActionNode();
+    
+    const auto cnt = files.size();
+    if (cnt > 0) {
+        _sprite = Sprite::createWithSpriteFrameName(files.at(0));
+        if (flip) {
+            node_flipX(_sprite);
+        }
+        addChild(_sprite);
+        
+        // compatibility 
+        _actionNode = _sprite;
+        
+        if (play) {
+            Vector<SpriteFrame*> frames;
+            for (int i = 0; i < cnt; ++i) {
+                const string& file = files.at(i);
+                frames.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName(file));
+            }
+            
+            auto animation = Animation::createWithSpriteFrames(frames);
+            animation->setDelayPerUnit(1.0f / 12.0f);
+            animation->setRestoreOriginalFrame(true);
+            
+            Action* action(nullptr);
+            if (loop) {
+                action = RepeatForever::create(Animate::create(animation));
+            } else {
+                action = Sequence::create(Animate::create(animation), CallFunc::create(lastFrameCallFunc), nullptr) ;
+            }
+            
+            _sprite->runAction(action);
+        }
+    }
+}
+#else
 void UnitNode::addActionNode(const string& file, bool play, bool loop, float playTime, int frameIndex, bool flip, const function<void()>& lastFrameCallFunc)
 {
     removeActionNode();
@@ -554,13 +662,22 @@ void UnitNode::addActionNode(const string& file, bool play, bool loop, float pla
         }
     }
 }
+#endif
 
 void UnitNode::addStandbyActionNode()
 {
     Unit::Direction direction = _unit->getDirection();
     bool flip = needToFlip(direction);
+#if USING_PVR
+    vector<vector<string>> output;
+    getPVRFiles(output, kSkillClass_Stop, direction, calculateHpPercentage() > hpPercentageThreshold);
+    if (output.size() > 0) {
+        playAnimation(output.at(0), true, true, 0.0f, 0, flip, nullptr);
+    }
+#else
     const string& file = getStandbyCsbFile(direction, calculateHpPercentage() > hpPercentageThreshold);
     addActionNode(file, true, true, 0.0f, 0, flip, nullptr);
+#endif
 }
 
 void UnitNode::addNextAttackActionNode(float playTime, int frameIndex)
@@ -569,8 +686,12 @@ void UnitNode::addNextAttackActionNode(float playTime, int frameIndex)
         _isPlayingAttackAnimation = false;
         addStandbyActionNode();
     } else {
-        const string& file = _animationFiles.front();
+        const auto& file = _animationFiles.front();
+#if USING_PVR
+        playAnimation(file, true, false, playTime, frameIndex, _isLastFlipped, CC_CALLBACK_0(UnitNode::onAttackAnimationFinished, this));
+#else
         addActionNode(file, true, false, playTime, frameIndex, _isLastFlipped, CC_CALLBACK_0(UnitNode::onAttackAnimationFinished, this));
+#endif
     }
 }
 
@@ -642,18 +763,26 @@ void UnitNode::updateActionNode(const Skill* skill, int frameIndex, bool flip, c
                 const float playTime = skill->getTotalPrePerformFrames() / (float)GameConstants::FRAME_PER_SEC;
                 addNextAttackActionNode(playTime, frameIndex);
             } else {
-                const string& file = _animationFiles.front();
+                const auto& file = _animationFiles.front();
                 // die
                 const bool isBuilding(kUnitClass_Building == uc);
                 if (isDead) {
                     // the unit might has been destroyed when animation finished,
                     // so save the unitId before playing the animation
                     const int unitId = _unit->getUnitId();
+#if USING_PVR
+                    playAnimation(file, true, false, 0.0f, frameIndex, flip, [=]() {
+                        if (_observer) {
+                            _observer->onUnitNodePlayDeadAnimationFinished(unitId);
+                        }
+                    });
+#else
                     addActionNode(file, true, false, 0.0f, frameIndex, flip, [=]() {
                         if (_observer) {
                             _observer->onUnitNodePlayDeadAnimationFinished(unitId);
                         }
                     });
+#endif
                     
                     if (isBuilding) {
                         if (_observer) {
@@ -662,7 +791,11 @@ void UnitNode::updateActionNode(const Skill* skill, int frameIndex, bool flip, c
                     }
                 } else {
                     // run / standby / cast
+#if USING_PVR
+                    playAnimation(file, !isBuilding, true, 0.0f, frameIndex, flip, nullptr);
+#else
                     addActionNode(file, !isBuilding, true, 0.0f, frameIndex, flip, nullptr);
+#endif
                     
                     if (kSkillClass_Cast == skillClass) {
                         const Spell* spell = dynamic_cast<const Spell*>(_unit->getCurrentSkill());
@@ -1111,7 +1244,7 @@ Node* UnitNode::addEffect(const string& file,
     return nullptr;
 }
 
-void UnitNode::rollHintResource(const std::string &resource, float amount, float delay) {
+void UnitNode::rollHintResource(const string &resource, float amount, float delay) {
     Node* hintNode = Node::create();
     Node* iconNode = nullptr;
     if (resource == RES_NAME_GOLD) {
