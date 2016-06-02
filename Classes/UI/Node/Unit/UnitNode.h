@@ -58,6 +58,7 @@ public:
 protected:
     UnitNode(const UnderWorld::Core::Unit* unit, bool rightSide);
     virtual bool init() override;
+    virtual void update(float dt) override;
     virtual void setOpacity(GLubyte opacity) override;
     virtual GLubyte getOpacity() const override;
 #if USING_PVR

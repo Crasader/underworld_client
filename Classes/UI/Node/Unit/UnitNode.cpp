@@ -300,12 +300,26 @@ void UnitNode::onLose()
 
 bool UnitNode::init()
 {
-    if (Node::init())
-    {
+    if (Node::init()) {
+#if USING_PVR
+        scheduleUpdate();
+#endif
         return true;
     }
     
     return false;
+}
+
+void UnitNode::update(float dt)
+{
+#if USING_PVR
+    if (_currentAction) {
+        if (unit_getSkillClass(_unit) == kSkillClass_Attack) {
+            const int currentIndex = _currentAction->getCurrentFrameIndex();
+            CCLOG("%d", currentIndex);
+        }
+    }
+#endif
 }
 
 void UnitNode::setOpacity(GLubyte opacity)
@@ -345,14 +359,23 @@ void UnitNode::getPVRFiles(vector<vector<string>>& output, SkillClass sc, Unit::
             break;
         case kSkillClass_Move:
         {
-            suffix = "run";
-            cnt = 8;
+            if (_isBuilding) {
+                assert(false);
+            } else {
+                suffix = "run";
+                cnt = 8;
+            }
         }
             break;
         case kSkillClass_Attack:
         {
-            suffix = "attack";
-            cnt = 10;
+            if (_isStandby) {
+                suffix = "stand";
+                cnt = 10;
+            } else {
+                suffix = "attack";
+                cnt = 10;
+            }
         }
             break;
         case kSkillClass_Cast:
@@ -372,13 +395,15 @@ void UnitNode::getPVRFiles(vector<vector<string>>& output, SkillClass sc, Unit::
             break;
     }
     
-    for (int i = 0; i < cnt; ++i) {
-        const string folder = prefix + "-" + suffix;
-        const string file = folder + "/" + folder + "-" + StringUtils::format("%d/%03d.png", static_cast<int>(direction), i);
-        data.push_back(file);
+    if (cnt > 0) {
+        for (int i = 0; i < cnt; ++i) {
+            const string folder = prefix + "-" + suffix;
+            const string file = folder + "/" + folder + "-" + StringUtils::format("%d/%03d.png", static_cast<int>(direction), i);
+            data.push_back(file);
+        }
+        
+        output.push_back(data);
     }
-    
-    output.push_back(data);
 }
 #else
 void UnitNode::getCsbFiles(vector<string>& output, Unit::Direction direction, bool isHealthy)
@@ -564,6 +589,21 @@ void UnitNode::playAnimation(const vector<string>& files, bool play, bool loop, 
         _actionNode = _sprite;
         
         if (play) {
+            // 1. add scheduler
+            if (!_speedScheduler) {
+                _speedScheduler = new (nothrow) Scheduler();
+                Director::getInstance()->getScheduler()->scheduleUpdate(_speedScheduler, 0, false);
+                if (!_actionManager) {
+                    _actionManager = new (nothrow) ActionManager();
+                    _speedScheduler->scheduleUpdate(_actionManager, 0, false);
+                }
+            }
+            
+            // 2. set actionManager every time before play animation
+            if (_actionManager) {
+                _actionNode->setActionManager(_actionManager);
+            }
+            
             Vector<SpriteFrame*> frames;
             for (int i = 0; i < cnt; ++i) {
                 const string& file = files.at(i);
@@ -575,13 +615,37 @@ void UnitNode::playAnimation(const vector<string>& files, bool play, bool loop, 
             animation->setRestoreOriginalFrame(true);
             
             Action* action(nullptr);
+            _currentAction = Animate::create(animation);
             if (loop) {
-                action = RepeatForever::create(Animate::create(animation));
+                action = RepeatForever::create(_currentAction);
             } else {
-                action = Sequence::create(Animate::create(animation), CallFunc::create(lastFrameCallFunc), nullptr) ;
+                action = Sequence::create(_currentAction, CallFunc::create(lastFrameCallFunc), nullptr) ;
             }
             
             _sprite->runAction(action);
+            
+            //
+            float scale(1.0f);
+            float speed(1.0f);
+            DataManager::getInstance()->getAnimationParameters(_unitName, unit_getSkillClass(_unit), _lastDirection, scale, speed);
+            
+            // set scale
+            if (scale != 1.0f && scale > 0) {
+                _baseScale = scale;
+                scaleActionNode();
+            }
+            
+            // the attack animation should be fit for preperforming time
+            if (speed == 1.0f && playTime > 0.0f) {
+                const float animationDuration(_currentAction->getDuration());
+                speed = animationDuration / playTime;
+            }
+            
+            if (speed != 1.0f && speed > 0) {
+                _baseSpeed = speed;
+            }
+            
+            scheduleSpeed();
         }
     }
 }
