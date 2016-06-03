@@ -58,7 +58,7 @@ protected:
     CardNode();
     bool init(bool canShake);
     std::string getIconFile(const std::string& name, bool enable) const;
-    BattleSmallResourceNode* readdResourceNode(Node* currentNode, ResourceType type, int count);
+    BattleSmallResourceNode* readdResourceNode(Node* currentNode, ::ResourceType type, int count);
     void updateIcon(bool colorful);
     void resetPosition();
     void shake();

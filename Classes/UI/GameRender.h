@@ -60,7 +60,7 @@ protected:
     virtual void render(const UnderWorld::Core::Game* game) override;
     
     // UnitNodeObserver
-    virtual void onUnitNodePlayDeadAnimationFinished(int unitId) override;
+    virtual void onUnitNodePlayedDeadAnimation(int unitId) override;
     virtual void onUnitNodeHurtTheTarget(UnitNode* node) override;
     virtual void onUnitNodeShakeScreen(UnitNode* node) override;
     

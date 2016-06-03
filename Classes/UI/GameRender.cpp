@@ -360,7 +360,7 @@ void GameRender::hurtUnit(const Unit* target, const string& trigger)
 }
 
 #pragma mark - UnitNodeObserver
-void GameRender::onUnitNodePlayDeadAnimationFinished(int unitId)
+void GameRender::onUnitNodePlayedDeadAnimation(int unitId)
 {
     removeUnit(unitId);
 }
