@@ -15,9 +15,9 @@
                 <key>spriteSourceSize</key>
                 <string>{300,300}</string>
                 <key>textureRect</key>
-                <string>{{1,397},{112,124}}</string>
+                <string>{{257,257},{112,124}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>baodian-1/001.png</key>
             <dict>
@@ -30,9 +30,9 @@
                 <key>spriteSourceSize</key>
                 <string>{300,300}</string>
                 <key>textureRect</key>
-                <string>{{1,1},{108,130}}</string>
+                <string>{{885,1},{108,130}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>baodian-1/002.png</key>
             <dict>
@@ -45,9 +45,9 @@
                 <key>spriteSourceSize</key>
                 <string>{300,300}</string>
                 <key>textureRect</key>
-                <string>{{1,133},{104,130}}</string>
+                <string>{{885,111},{104,130}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>baodian-1/003.png</key>
             <dict>
@@ -60,9 +60,9 @@
                 <key>spriteSourceSize</key>
                 <string>{300,300}</string>
                 <key>textureRect</key>
-                <string>{{1,265},{104,130}}</string>
+                <string>{{885,217},{104,130}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>baodian-1/004.png</key>
             <dict>
@@ -75,9 +75,354 @@
                 <key>spriteSourceSize</key>
                 <string>{300,300}</string>
                 <key>textureRect</key>
-                <string>{{107,133},{102,128}}</string>
+                <string>{{131,895},{102,128}}</string>
                 <key>textureRotated</key>
                 <false/>
+            </dict>
+            <key>fazhen-1/000.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,-8}</string>
+                <key>spriteSize</key>
+                <string>{140,126}</string>
+                <key>spriteSourceSize</key>
+                <string>{150,150}</string>
+                <key>textureRect</key>
+                <string>{{129,611},{140,126}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>fazhen-1/001.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,-8}</string>
+                <key>spriteSize</key>
+                <string>{140,126}</string>
+                <key>spriteSourceSize</key>
+                <string>{150,150}</string>
+                <key>textureRect</key>
+                <string>{{129,753},{140,126}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>fazhen-1/002.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,-8}</string>
+                <key>spriteSize</key>
+                <string>{140,126}</string>
+                <key>spriteSourceSize</key>
+                <string>{150,150}</string>
+                <key>textureRect</key>
+                <string>{{235,895},{140,126}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>fazhen-1/003.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,-8}</string>
+                <key>spriteSize</key>
+                <string>{140,126}</string>
+                <key>spriteSourceSize</key>
+                <string>{150,150}</string>
+                <key>textureRect</key>
+                <string>{{377,257},{140,126}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>fazhen-1/004.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,-8}</string>
+                <key>spriteSize</key>
+                <string>{142,126}</string>
+                <key>spriteSourceSize</key>
+                <string>{150,150}</string>
+                <key>textureRect</key>
+                <string>{{1,801},{142,126}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>fazhen-1/005.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,-8}</string>
+                <key>spriteSize</key>
+                <string>{142,126}</string>
+                <key>spriteSourceSize</key>
+                <string>{150,150}</string>
+                <key>textureRect</key>
+                <string>{{165,129},{142,126}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>fazhen-1/006.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,-8}</string>
+                <key>spriteSize</key>
+                <string>{142,126}</string>
+                <key>spriteSourceSize</key>
+                <string>{150,150}</string>
+                <key>textureRect</key>
+                <string>{{309,129},{142,126}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>fazhen-1/007.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,-8}</string>
+                <key>spriteSize</key>
+                <string>{142,126}</string>
+                <key>spriteSourceSize</key>
+                <string>{150,150}</string>
+                <key>textureRect</key>
+                <string>{{453,129},{142,126}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>fazhen-1/008.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-1,-8}</string>
+                <key>spriteSize</key>
+                <string>{144,126}</string>
+                <key>spriteSourceSize</key>
+                <string>{150,150}</string>
+                <key>textureRect</key>
+                <string>{{593,1},{144,126}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>fazhen-1/009.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-1,-8}</string>
+                <key>spriteSize</key>
+                <string>{144,126}</string>
+                <key>spriteSourceSize</key>
+                <string>{150,150}</string>
+                <key>textureRect</key>
+                <string>{{739,1},{144,126}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>fazhen-1/010.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-1,-8}</string>
+                <key>spriteSize</key>
+                <string>{144,126}</string>
+                <key>spriteSourceSize</key>
+                <string>{150,150}</string>
+                <key>textureRect</key>
+                <string>{{1,217},{144,126}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>fazhen-1/011.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-1,-8}</string>
+                <key>spriteSize</key>
+                <string>{146,126}</string>
+                <key>spriteSourceSize</key>
+                <string>{150,150}</string>
+                <key>textureRect</key>
+                <string>{{1,1},{146,126}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>fazhen-1/012.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-1,-8}</string>
+                <key>spriteSize</key>
+                <string>{146,126}</string>
+                <key>spriteSourceSize</key>
+                <string>{150,150}</string>
+                <key>textureRect</key>
+                <string>{{149,1},{146,126}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>fazhen-1/013.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-1,-8}</string>
+                <key>spriteSize</key>
+                <string>{146,126}</string>
+                <key>spriteSourceSize</key>
+                <string>{150,150}</string>
+                <key>textureRect</key>
+                <string>{{297,1},{146,126}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>fazhen-1/014.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-1,-8}</string>
+                <key>spriteSize</key>
+                <string>{146,126}</string>
+                <key>spriteSourceSize</key>
+                <string>{150,150}</string>
+                <key>textureRect</key>
+                <string>{{445,1},{146,126}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>fazhen-1/015.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-1,-8}</string>
+                <key>spriteSize</key>
+                <string>{144,126}</string>
+                <key>spriteSourceSize</key>
+                <string>{150,150}</string>
+                <key>textureRect</key>
+                <string>{{1,363},{144,126}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>fazhen-1/016.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-1,-8}</string>
+                <key>spriteSize</key>
+                <string>{144,126}</string>
+                <key>spriteSourceSize</key>
+                <string>{150,150}</string>
+                <key>textureRect</key>
+                <string>{{1,509},{144,126}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>fazhen-1/017.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-1,-8}</string>
+                <key>spriteSize</key>
+                <string>{144,126}</string>
+                <key>spriteSourceSize</key>
+                <string>{150,150}</string>
+                <key>textureRect</key>
+                <string>{{1,655},{144,126}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>fazhen-1/018.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,-8}</string>
+                <key>spriteSize</key>
+                <string>{142,126}</string>
+                <key>spriteSourceSize</key>
+                <string>{150,150}</string>
+                <key>textureRect</key>
+                <string>{{597,129},{142,126}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>fazhen-1/019.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,-8}</string>
+                <key>spriteSize</key>
+                <string>{142,126}</string>
+                <key>spriteSourceSize</key>
+                <string>{150,150}</string>
+                <key>textureRect</key>
+                <string>{{741,129},{142,126}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>fazhen-1/020.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,-8}</string>
+                <key>spriteSize</key>
+                <string>{142,126}</string>
+                <key>spriteSourceSize</key>
+                <string>{150,150}</string>
+                <key>textureRect</key>
+                <string>{{129,323},{142,126}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>fazhen-1/021.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,-8}</string>
+                <key>spriteSize</key>
+                <string>{142,126}</string>
+                <key>spriteSourceSize</key>
+                <string>{150,150}</string>
+                <key>textureRect</key>
+                <string>{{129,467},{142,126}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>fazhen-1/022.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,-8}</string>
+                <key>spriteSize</key>
+                <string>{140,126}</string>
+                <key>spriteSourceSize</key>
+                <string>{150,150}</string>
+                <key>textureRect</key>
+                <string>{{129,611},{140,126}}</string>
+                <key>textureRotated</key>
+                <true/>
             </dict>
             <key>xuanyun/000.png</key>
             <dict>
@@ -90,7 +435,7 @@
                 <key>spriteSourceSize</key>
                 <string>{300,300}</string>
                 <key>textureRect</key>
-                <string>{{151,1},{46,40}}</string>
+                <string>{{81,129},{46,40}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -105,7 +450,7 @@
                 <key>spriteSourceSize</key>
                 <string>{300,300}</string>
                 <key>textureRect</key>
-                <string>{{193,49},{44,42}}</string>
+                <string>{{43,945},{44,42}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -120,7 +465,7 @@
                 <key>spriteSourceSize</key>
                 <string>{300,300}</string>
                 <key>textureRect</key>
-                <string>{{107,263},{44,40}}</string>
+                <string>{{129,257},{44,40}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -135,7 +480,7 @@
                 <key>spriteSourceSize</key>
                 <string>{300,300}</string>
                 <key>textureRect</key>
-                <string>{{111,1},{48,38}}</string>
+                <string>{{1,129},{48,38}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -150,7 +495,7 @@
                 <key>spriteSourceSize</key>
                 <string>{300,300}</string>
                 <key>textureRect</key>
-                <string>{{151,49},{46,40}}</string>
+                <string>{{123,129},{46,40}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -165,7 +510,7 @@
                 <key>spriteSourceSize</key>
                 <string>{300,300}</string>
                 <key>textureRect</key>
-                <string>{{107,309},{44,40}}</string>
+                <string>{{171,257},{44,40}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -180,7 +525,7 @@
                 <key>spriteSourceSize</key>
                 <string>{300,300}</string>
                 <key>textureRect</key>
-                <string>{{235,1},{44,42}}</string>
+                <string>{{87,945},{44,42}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -195,9 +540,9 @@
                 <key>spriteSourceSize</key>
                 <string>{300,300}</string>
                 <key>textureRect</key>
-                <string>{{107,355},{44,40}}</string>
+                <string>{{213,257},{44,40}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>xuanyun/008.png</key>
             <dict>
@@ -210,7 +555,7 @@
                 <key>spriteSourceSize</key>
                 <string>{300,300}</string>
                 <key>textureRect</key>
-                <string>{{111,51},{48,38}}</string>
+                <string>{{41,129},{48,38}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -225,7 +570,7 @@
                 <key>spriteSourceSize</key>
                 <string>{300,300}</string>
                 <key>textureRect</key>
-                <string>{{193,1},{46,40}}</string>
+                <string>{{1,945},{46,40}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -239,9 +584,9 @@
             <key>realTextureFileName</key>
             <string>xeffect-1.pvr.ccz</string>
             <key>size</key>
-            <string>{512,512}</string>
+            <string>{1024,1024}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:dc1d1b2d7f50f74f0f312365092ce9e6:7386832c490bfc6608221942fb425bd3:19088158befd5525cf8f003a8bcb63c9$</string>
+            <string>$TexturePacker:SmartUpdate:08c97e41efef8de1033c5b8e2e6ff9c2:faa023040ea262207cd8d6940a7925ef:19088158befd5525cf8f003a8bcb63c9$</string>
             <key>textureFileName</key>
             <string>xeffect-1.pvr.ccz</string>
         </dict>

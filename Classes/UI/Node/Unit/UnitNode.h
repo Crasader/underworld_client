@@ -130,12 +130,27 @@ protected:
     
     // effects
     Node* addEffect(const std::string& file);
-    Node* addEffect(const std::string& file,
-                    const SpellConfigData::Direction& direction,
-                    const SpellConfigData::Position& position,
-                    bool scale,
-                    bool loop,
-                    const std::function<void()>& callback);
+    Node* addCSBAnimation(const std::string& file,
+                          bool loop,
+                          const std::function<void()>& callback,
+                          bool scale,
+                          const SpellConfigData::Direction& direction,
+                          const SpellConfigData::Position& position);
+#if USING_PVR
+    Node* addEffect(const std::string& folder, int framesCount);
+    Node* addPVRAnimation(const std::string& folder,
+                          int framesCount,
+                          bool loop,
+                          float frameDelay,
+                          const std::function<void()>& callback,
+                          bool scale,
+                          const SpellConfigData::Direction& direction,
+                          const SpellConfigData::Position& position);
+#endif
+    void adjustEffect(Node* effect,
+                      bool scale,
+                      const SpellConfigData::Direction& direction,
+                      const SpellConfigData::Position& position);
     void addSwordEffect();
     
     // bufs

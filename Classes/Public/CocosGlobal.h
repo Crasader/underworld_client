@@ -42,6 +42,7 @@
 #define CANDIDATE_CARD_DECKS_COUNT  (8)
 #define BATTLE_RESOURCE_MAX_COUNT   (10)
 #define MAP_OFFSET_Y                (0)
+#define DEFAULT_FRAME_DELAY         (1.0f/12.0f)
 
 #define ONLINE_UPDATE_SEARCH_PATH       (FileUtils::getInstance()->getWritablePath() + "Resource/")
 #define DEFAULT_RESOURCE_FOLDER         ("res")

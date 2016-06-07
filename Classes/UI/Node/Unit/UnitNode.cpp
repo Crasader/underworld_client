@@ -674,7 +674,7 @@ void UnitNode::playAnimation(const AnimationFileType& files,
             
             // 3. play animation
 #if USING_PVR
-            CocosUtils::playAnimation(_sprite, files, loop, 1.0f / 12.0f, lastFrameCallFunc);
+            CocosUtils::playAnimation(_sprite, files, loop, DEFAULT_FRAME_DELAY, lastFrameCallFunc);
 #else
             _animation = CSLoader::createTimeline(files);
             _node->runAction(_animation);
@@ -774,7 +774,7 @@ void UnitNode::updateAnimation(const Skill* skill,
                                 addEffect(resources.at(0));
                                 
                                 if (cnt > 1) {
-                                    addEffect(resources.at(1), data->getReceiverSpellDirection(), SpellConfigData::kFoot, false, false, nullptr);
+                                    addCSBAnimation(resources.at(1), false, nullptr, false, data->getReceiverSpellDirection(), SpellConfigData::kFoot);
                                     
                                     if (cnt > 2) {
                                         Node* node = addEffect(resources.at(2));
@@ -935,20 +935,15 @@ void UnitNode::scaleNode()
 #pragma mark - effects
 Node* UnitNode::addEffect(const string& file)
 {
-    if (_sprite) {
-        Node* effect = addEffect(file, SpellConfigData::kNone, SpellConfigData::kBody, false, false, nullptr);
-        return effect;
-    }
-    
-    return nullptr;
+    return addCSBAnimation(file, false, nullptr, false, SpellConfigData::kNone, SpellConfigData::kBody);
 }
 
-Node* UnitNode::addEffect(const string& file,
-                          const SpellConfigData::Direction& direction,
-                          const SpellConfigData::Position& position,
-                          bool scale,
-                          bool loop,
-                          const function<void()>& callback)
+Node* UnitNode::addCSBAnimation(const std::string& file,
+                                bool loop,
+                                const std::function<void()>& callback,
+                                bool scale,
+                                const SpellConfigData::Direction& direction,
+                                const SpellConfigData::Position& position)
 {
     if (!_sprite || file.empty()) {
         return nullptr;
@@ -975,6 +970,8 @@ Node* UnitNode::addEffect(const string& file,
             } else {
                 assert(!callback);
             }
+            
+            adjustEffect(effect, scale, direction, position);
         } else if ("plist" == suffix) {
             ParticleSystemQuad *particle = ParticleSystemQuad::create(file);
             if (!loop) {
@@ -983,13 +980,38 @@ Node* UnitNode::addEffect(const string& file,
             addChild(particle, zOrder_top);
             effect = particle;
         }
-    } else {
-        // frame animation
-        Sprite* sprite = CocosUtils::playAnimation(file, 10, loop, 1.0f / 12.0f, callback);
-        addChild(sprite, zOrder_top);
-        effect = sprite;
     }
     
+    return effect;
+}
+
+#if USING_PVR
+Node* UnitNode::addEffect(const std::string& folder, int framesCount)
+{
+    return addPVRAnimation(folder, framesCount, false, DEFAULT_FRAME_DELAY, nullptr, false, SpellConfigData::kNone, SpellConfigData::kBody);
+}
+
+Node* UnitNode::addPVRAnimation(const std::string& folder,
+                                int framesCount,
+                                bool loop,
+                                float frameDelay,
+                                const std::function<void()>& callback,
+                                bool scale,
+                                const SpellConfigData::Direction& direction,
+                                const SpellConfigData::Position& position)
+{
+    Sprite* sprite = CocosUtils::playAnimation(folder, framesCount, loop, frameDelay, callback);
+    addChild(sprite, zOrder_top);
+    adjustEffect(sprite, scale, direction, position);
+    return sprite;
+}
+#endif
+
+void UnitNode::adjustEffect(Node* effect,
+                            bool scale,
+                            const SpellConfigData::Direction& direction,
+                            const SpellConfigData::Position& position)
+{
     if (effect) {
         bool flip(false);
         if (SpellConfigData::kNone != direction) {
@@ -1022,8 +1044,6 @@ Node* UnitNode::addEffect(const string& file,
             }
         }
     }
-    
-    return effect;
 }
 
 void UnitNode::addSwordEffect()
@@ -1038,13 +1058,13 @@ void UnitNode::addSwordEffect()
 void UnitNode::addBuf(const string& name)
 {
     if (_sprite && _bufs.find(name) == _bufs.end()) {
-        DataManager* dm = DataManager::getInstance();
+        auto dm = DataManager::getInstance();
         const SpellConfigData* data = dm->getSpellConfigData(name);
         if (data) {
             const vector<string>& files = data->getReceiverResourceNames();
             if (files.size() > 0) {
                 const string& file = files.at(0);
-                Node* buf = addEffect(file, data->getReceiverSpellDirection(), data->getReceiverSpellPosition(), true, true, nullptr);
+                Node* buf = addCSBAnimation(file, true, nullptr, true, data->getReceiverSpellDirection(), data->getReceiverSpellPosition());
                 if (buf) {
                     _bufs.insert(make_pair(name, buf));
                 }
@@ -1185,7 +1205,7 @@ void UnitNode::updateFeatures(const Game* game)
                     const vector<string>& files = data->getReceiverResourceNames();
                     if (files.size() > 0) {
                         const string& file = files.at(0);
-                        addEffect(file, data->getReceiverSpellDirection(), SpellConfigData::kBody, true, false, nullptr);
+                        addCSBAnimation(file, false, nullptr, true, data->getReceiverSpellDirection(), SpellConfigData::kBody);
                     }
                 }
             }
