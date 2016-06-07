@@ -194,7 +194,7 @@ void GameRender::updateUnits(const Game* game, int index)
                         _mapLayer->repositionUnit(node, pos);
                     }
                     
-                    _mapLayer->checkUnitInSpellRing(node);
+                    _mapLayer->checkUnitWithSpellRing(node);
                 }
             } else {
                 if (kSkillClass_Die != sc) {
@@ -210,7 +210,7 @@ void GameRender::updateUnits(const Game* game, int index)
                         const UnitType* unitType = unit->getUnitBase().getUnitType();
                         const UnitClass unitClass = unitType->getUnitClass();
                         if (kUnitClass_Building != unitClass && kUnitClass_Core != unitClass) {
-                            _mapLayer->addPlaceUnitEffect(pos);
+                            _mapLayer->addUnitPlacementEffect(pos);
                         }
                     }
                 } else {
@@ -780,7 +780,7 @@ const SpellType* GameRender::getSpellType(const string& name) const
 Coordinate32 GameRender::getValidPuttingCoordinate(const Point& point, bool check) const
 {
     if (_mapLayer) {
-        Coordinate32 coordinate = _mapLayer->convertPoint(point);
+        Coordinate32 coordinate = _mapLayer->point2Coordinate(point);
         if (check) {
             const int x = coordinate.x;
             const int y = coordinate.y;

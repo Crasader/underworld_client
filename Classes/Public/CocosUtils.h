@@ -47,6 +47,9 @@ namespace CocosUtils
     cocos2d::Sprite* createPureColorSprite(const cocos2d::Size& size, const cocos2d::Color4B& color);
     cocos2d::Sprite* createTitle(const std::string& title, float fontSize);
     void loadPVR(const std::string& file);
+    void playAnimation(cocos2d::Node* node, const std::vector<std::string>& files, bool loop, float frameDelay, const std::function<void()>& callback);
+    cocos2d::Sprite* playAnimation(const std::vector<std::string>& files, bool loop, float frameDelay, const std::function<void()>& callback);
+    cocos2d::Sprite* playAnimation(const std::string& folder, int framesCount, bool loop, float frameDelay, const std::function<void()>& callback);
     
 #pragma mark - notifications
     void postNotification(const std::string& notification);

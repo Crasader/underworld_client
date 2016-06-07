@@ -44,7 +44,7 @@ SpellConfigData::SpellConfigData(tinyxml2::XMLElement *xmlElement)
         {
             const char *data = xmlElement->Attribute("caster_spell_pos");
             if (data && strlen(data) > 0) {
-                _casterSpellPosition = static_cast<SpellPosition>(atoi(data));
+                _casterSpellPosition = static_cast<Position>(atoi(data));
             }
         }
         {
@@ -72,13 +72,13 @@ SpellConfigData::SpellConfigData(tinyxml2::XMLElement *xmlElement)
         {
             const char *data = xmlElement->Attribute("receiver_spell_direction");
             if (data && strlen(data) > 0) {
-                _receiverSpellDirection = static_cast<SpellDirection>(atoi(data));
+                _receiverSpellDirection = static_cast<Direction>(atoi(data));
             }
         }
         {
             const char *data = xmlElement->Attribute("receiver_spell_pos");
             if (data && strlen(data) > 0) {
-                _receiverSpellPosition = static_cast<SpellPosition>(atoi(data));
+                _receiverSpellPosition = static_cast<Position>(atoi(data));
             }
         }
         {
@@ -113,7 +113,7 @@ SpellConfigData::~SpellConfigData()
     
 }
 
-const string& SpellConfigData::getSpellName() const
+const string& SpellConfigData::getName() const
 {
     return _spellName;
 }
@@ -123,7 +123,7 @@ const vector<string>& SpellConfigData::getCasterResourceNames() const
     return _casterResourceNames;
 }
 
-SpellConfigData::SpellPosition SpellConfigData::getCasterSpellPosition() const
+SpellConfigData::Position SpellConfigData::getCasterSpellPosition() const
 {
     return _casterSpellPosition;
 }
@@ -138,12 +138,12 @@ const vector<string>& SpellConfigData::getReceiverResourceNames() const
     return _receiverResourceNames;
 }
 
-SpellConfigData::SpellDirection SpellConfigData::getReceiverSpellDirection() const
+SpellConfigData::Direction SpellConfigData::getReceiverSpellDirection() const
 {
     return _receiverSpellDirection;
 }
 
-SpellConfigData::SpellPosition SpellConfigData::getReceiverSpellPosition() const
+SpellConfigData::Position SpellConfigData::getReceiverSpellPosition() const
 {
     return _receiverSpellPosition;
 }

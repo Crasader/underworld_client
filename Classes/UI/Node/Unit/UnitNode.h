@@ -78,6 +78,7 @@ protected:
     void flipX(Node* node) const;
     void scale(Node* node, float scale) const;
     void scale(Node* node, float scaleX, float scaleY) const;
+    void playSound(const std::string& file) const;
     
     // getters
     int getResourceId(Unit::Direction direction) const;
@@ -130,8 +131,8 @@ protected:
     // effects
     Node* addEffect(const std::string& file);
     Node* addEffect(const std::string& file,
-                    const SpellConfigData::SpellDirection& direction,
-                    const SpellConfigData::SpellPosition& position,
+                    const SpellConfigData::Direction& direction,
+                    const SpellConfigData::Position& position,
                     bool scale,
                     bool loop,
                     const std::function<void()>& callback);

@@ -862,7 +862,7 @@ void DataManager::parseSpellConfigData()
                  item;
                  item = item->NextSiblingElement()) {
                 SpellConfigData* data = new (nothrow) SpellConfigData(item);
-                const string& key = data->getSpellName();
+                const string& key = data->getName();
                 if (_spellConfigData.find(key) != _spellConfigData.end()) {
                     assert(false);
                 } else {

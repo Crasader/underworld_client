@@ -307,6 +307,64 @@ void CocosUtils::loadPVR(const string& file)
     }
 }
 
+void CocosUtils::playAnimation(cocos2d::Node* node, const std::vector<std::string>& files, bool loop, float frameDelay, const std::function<void()>& callback)
+{
+    if (node) {
+        const size_t cnt(files.size());
+        if (cnt > 0) {
+            Vector<SpriteFrame*> frames;
+            for (int i = 0; i < cnt; ++i) {
+                const auto& file = files.at(i);
+                auto frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(file);
+                frames.pushBack(frame);
+            }
+            
+            auto animation = Animation::createWithSpriteFrames(frames);
+            animation->setDelayPerUnit(frameDelay);
+            animation->setRestoreOriginalFrame(true);
+            
+            Action* action(nullptr);
+            auto animate = Animate::create(animation);
+            if (loop) {
+                action = RepeatForever::create(animate);
+            } else {
+                action = Sequence::create(animate, CallFunc::create(callback), nullptr) ;
+            }
+            
+            node->runAction(action);
+        }
+    }
+}
+
+Sprite* CocosUtils::playAnimation(const vector<string>& files, bool loop, float frameDelay, const function<void()>& callback)
+{
+    if (files.size() > 0) {
+        auto sprite = Sprite::createWithSpriteFrameName(files.at(0));
+        if (sprite) {
+            playAnimation(sprite, files, loop, frameDelay, callback);
+        }
+        
+        return sprite;
+    }
+    
+    return nullptr;
+}
+
+Sprite* CocosUtils::playAnimation(const string& folder, int framesCount, bool loop, float frameDelay, const function<void()>& callback)
+{
+    if (framesCount > 0) {
+        vector<string> files;
+        for (int i = 0; i < framesCount; ++i) {
+            const string file = folder + "/" + StringUtils::format("%03d.png", i);
+            files.push_back(file);
+        }
+        
+        return playAnimation(files, loop, frameDelay, callback);
+    }
+    
+    return nullptr;
+}
+
 #pragma mark - notifications
 void CocosUtils::postNotification(const string& notification)
 {

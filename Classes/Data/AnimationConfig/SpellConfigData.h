@@ -24,31 +24,31 @@ public:
         kNone = 0,
         kLeft = 1,
         kRight = 2,
-    }SpellDirection;
+    }Direction;
     
     typedef enum
     {
         kFoot = 0,
         kBody = 1,
         kHead = 2,
-    }SpellPosition;
+    }Position;
     
 public:
     SpellConfigData(tinyxml2::XMLElement *xmlElement);
     virtual ~SpellConfigData();
     
     // key
-    const std::string& getSpellName() const;
+    const std::string& getName() const;
     
     // caster params
     const std::vector<std::string>& getCasterResourceNames() const;
-    SpellPosition getCasterSpellPosition() const;
+    Position getCasterSpellPosition() const;
     bool isCasterShakeScreen() const;
     
     // receiver params
     const std::vector<std::string>& getReceiverResourceNames() const;
-    SpellDirection getReceiverSpellDirection() const;
-    SpellPosition getReceiverSpellPosition() const;
+    Direction getReceiverSpellDirection() const;
+    Position getReceiverSpellPosition() const;
     const std::map<UnderWorld::Core::SkillClass, float>& getReceiverSpeedRates() const;
     float getReceiverSpeedRate(UnderWorld::Core::SkillClass sc) const;
     const std::map<UnderWorld::Core::SkillClass, float>& getReceiverVolumeRates() const;
@@ -58,12 +58,12 @@ private:
     std::string _spellName;
     
     std::vector<std::string> _casterResourceNames;
-    SpellPosition _casterSpellPosition;
+    Position _casterSpellPosition;
     bool _isCasterShakeScreen;
     
     std::vector<std::string> _receiverResourceNames;
-    SpellDirection _receiverSpellDirection;
-    SpellPosition _receiverSpellPosition;
+    Direction _receiverSpellDirection;
+    Position _receiverSpellPosition;
     std::map<UnderWorld::Core::SkillClass, float> _receiverSpeedRates;
     std::map<UnderWorld::Core::SkillClass, float> _receiverVolumeRates;
 };

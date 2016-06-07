@@ -67,6 +67,7 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
     
 #if USING_PVR
     CocosUtils::loadPVR("pangzi");
+    CocosUtils::loadPVR("effect/xeffect-1");
 #endif
 }
 
@@ -228,11 +229,7 @@ void UnitNode::onHurt(const string& trigger)
 {
     const URConfigData* data = DataManager::getInstance()->getURConfigData(trigger);
     if (data) {
-        const string file = data->getHurtSound();
-        if (file.length() > 0) {
-            SoundManager::getInstance()->playSound(file);
-        }
-        
+        playSound(data->getHurtSound());
         addEffect(data->getHurtEffect());
     }
 }
@@ -242,11 +239,7 @@ void UnitNode::onDead()
     removeShadow();
     removeAllBufs();
     removeHPBar();
-    
-    const string file = _configData->getDieSound();
-    if (file.length() > 0) {
-        SoundManager::getInstance()->playSound(file);
-    }
+    playSound(_configData->getDieSound());
     
     // TODO: remove irregular code
     setLocalZOrder(-1000);
@@ -284,6 +277,13 @@ void UnitNode::scale(Node* node, float scaleX, float scaleY) const
     node->setScale(scaleX, scaleY);
     if ((x > 0) ^ (scaleX > 0)) {
         flipX(node);
+    }
+}
+
+void UnitNode::playSound(const string& file) const
+{
+    if (file.length() > 0) {
+        SoundManager::getInstance()->playSound(file);
     }
 }
 
@@ -674,25 +674,7 @@ void UnitNode::playAnimation(const AnimationFileType& files,
             
             // 3. play animation
 #if USING_PVR
-            Vector<SpriteFrame*> frames;
-            for (int i = 0; i < cnt; ++i) {
-                const string& file = files.at(i);
-                frames.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName(file));
-            }
-            
-            auto animation = Animation::createWithSpriteFrames(frames);
-            animation->setDelayPerUnit(1.0f / 12.0f);
-            animation->setRestoreOriginalFrame(true);
-            
-            Action* action(nullptr);
-            _animation = Animate::create(animation);
-            if (loop) {
-                action = RepeatForever::create(_animation);
-            } else {
-                action = Sequence::create(_animation, CallFunc::create(lastFrameCallFunc), nullptr) ;
-            }
-            
-            _sprite->runAction(action);
+            CocosUtils::playAnimation(_sprite, files, loop, 1.0f / 12.0f, lastFrameCallFunc);
 #else
             _animation = CSLoader::createTimeline(files);
             _node->runAction(_animation);
@@ -756,9 +738,10 @@ void UnitNode::updateAnimation(const Skill* skill,
                 playNextAttackAnimation(playTime, frameIndex);
             } else {
                 const auto& file = _animationFiles.front();
-                // die
                 const bool isBuilding(kUnitClass_Building == uc);
                 if (isDead) {
+                    // die
+                    
                     // the unit might has been destroyed when animation finished,
                     // so save the unitId before playing the animation
                     const int unitId = _unit->getUnitId();
@@ -773,38 +756,42 @@ void UnitNode::updateAnimation(const Skill* skill,
                             _observer->onUnitNodeShakeScreen(this);
                         }
                     }
-                } else {
-                    // run / standby / cast
-                    playAnimation(file, !isBuilding, true, 0.0f, frameIndex, flip, nullptr);
+                } else if (kSkillClass_Cast == skillClass) {
+                    // cast
+                    const float playTime = skill->getTotalPrePerformFrames() / (float)GameConstants::FRAME_PER_SEC;
+                    playAnimation(file, !isBuilding, false, playTime, frameIndex, flip, [this]() {
+                        playStandbyAnimation();
+                    });
                     
-                    if (kSkillClass_Cast == skillClass) {
-                        const Spell* spell = dynamic_cast<const Spell*>(_unit->getCurrentSkill());
-                        if (spell) {
-                            const string& spellName = spell->getSpellType()->getAlias();
-                            const SpellConfigData* data = DataManager::getInstance()->getSpellConfigData(spellName);
-                            if (data) {
-                                const vector<string>& resources = data->getCasterResourceNames();
-                                const size_t cnt = resources.size();
-                                if (cnt > 0) {
-                                    addEffect(resources.at(0));
+                    const Spell* spell = dynamic_cast<const Spell*>(_unit->getCurrentSkill());
+                    if (spell) {
+                        const string& spellName = spell->getSpellType()->getAlias();
+                        const SpellConfigData* data = DataManager::getInstance()->getSpellConfigData(spellName);
+                        if (data) {
+                            const vector<string>& resources = data->getCasterResourceNames();
+                            const size_t cnt = resources.size();
+                            if (cnt > 0) {
+                                addEffect(resources.at(0));
+                                
+                                if (cnt > 1) {
+                                    addEffect(resources.at(1), data->getReceiverSpellDirection(), SpellConfigData::kFoot, false, false, nullptr);
                                     
-                                    if (cnt > 1) {
-                                        addEffect(resources.at(1), data->getReceiverSpellDirection(), SpellConfigData::kFoot, false, false, nullptr);
-                                        
-                                        if (cnt > 2) {
-                                            Node* node = addEffect(resources.at(2));
-                                            node->setPosition(node->getPosition() + Point(0, 87));
-                                        }
+                                    if (cnt > 2) {
+                                        Node* node = addEffect(resources.at(2));
+                                        node->setPosition(node->getPosition() + Point(0, 87));
                                     }
                                 }
-                                
-                                const bool shakeScreen = data->isCasterShakeScreen();
-                                if (shakeScreen && _observer) {
-                                    _observer->onUnitNodeShakeScreen(this);
-                                }
+                            }
+                            
+                            const bool shakeScreen = data->isCasterShakeScreen();
+                            if (shakeScreen && _observer) {
+                                _observer->onUnitNodeShakeScreen(this);
                             }
                         }
                     }
+                } else {
+                    // run / standby
+                    playAnimation(file, !isBuilding, true, 0.0f, frameIndex, flip, nullptr);
                 }
             }
         }
@@ -870,10 +857,7 @@ void UnitNode::onAttackAnimationFinished()
     // 1. execute callback
     if (_attackAnimationsCounter == functionalIndex) {
         // play sound
-        const string file = _configData->getAttackSound();
-        if (file.length() > 0) {
-            SoundManager::getInstance()->playSound(file);
-        }
+        playSound(_configData->getAttackSound());
         
         // if it is footman
         if (_configData->isShortRange()) {
@@ -925,7 +909,7 @@ void UnitNode::scheduleSpeed()
             extraSpeed = _extraBufSpeeds.at(skillClass);
         }
         
-        const float speed = _baseSpeed * extraSpeed;
+        auto speed = _baseSpeed * extraSpeed;
         
         if (speed != 1.0f) {
             _speedScheduler->setTimeScale(speed);
@@ -960,8 +944,8 @@ Node* UnitNode::addEffect(const string& file)
 }
 
 Node* UnitNode::addEffect(const string& file,
-                          const SpellConfigData::SpellDirection& direction,
-                          const SpellConfigData::SpellPosition& position,
+                          const SpellConfigData::Direction& direction,
+                          const SpellConfigData::Position& position,
                           bool scale,
                           bool loop,
                           const function<void()>& callback)
@@ -971,22 +955,14 @@ Node* UnitNode::addEffect(const string& file,
     }
     
     const size_t found = file.find_last_of(".");
+    Node* effect(nullptr);
     if (found != string::npos) {
         const string& suffix = file.substr(found + 1);
         if ("csb" == suffix) {
-            Node *effect = CSLoader::createNode(file);
-            bool flip(false);
-            if (SpellConfigData::kNone != direction) {
-                const bool isFaceRight = _needToFlip ^ _configData->isFaceRight();
-                flip = (isFaceRight ^ (SpellConfigData::kRight == direction));
-            }
-            
-            if (flip ^ (_needToFlip != _isFlipped)) {
-                flipX(effect);
-            }
-            
+            effect = CSLoader::createNode(file);
             addChild(effect, zOrder_top);
-            cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
+            
+            auto action = CSLoader::createTimeline(file);
             effect->runAction(action);
             action->gotoFrameAndPlay(0, loop);
             if (!loop) {
@@ -999,40 +975,55 @@ Node* UnitNode::addEffect(const string& file,
             } else {
                 assert(!callback);
             }
-            
-            // set position
-            if (SpellConfigData::kFoot == position) {
-                effect->setPosition(_configData->getFootEffectPosition());
-                if (scale) {
-                    this->scale(effect, _configData->getFootEffectScaleX() * _baseScale, _configData->getFootEffectScaleY() * _baseScale);
-                } else {
-                    this->scale(effect, _configData->getFootEffectScaleX(), _configData->getFootEffectScaleY());
-                }
-                effect->setLocalZOrder(zOrder_bottom);
-            } else if (SpellConfigData::kBody == position) {
-                effect->setPosition(_sprite->getPosition());
-                if (scale) {
-                    this->scale(effect, _baseScale);
-                }
-            } else if (SpellConfigData::kHead == position) {
-                effect->setPosition(getHPBarPosition());
-                if (scale) {
-                    this->scale(effect, _baseScale);
-                }
-            }
-            
-            return effect;
         } else if ("plist" == suffix) {
-            ParticleSystemQuad *effect = ParticleSystemQuad::create(file);
+            ParticleSystemQuad *particle = ParticleSystemQuad::create(file);
             if (!loop) {
-                effect->setAutoRemoveOnFinish(true);
+                particle->setAutoRemoveOnFinish(true);
             }
-            addChild(effect, zOrder_top);
-            return effect;
+            addChild(particle, zOrder_top);
+            effect = particle;
+        }
+    } else {
+        // frame animation
+        Sprite* sprite = CocosUtils::playAnimation(file, 10, loop, 1.0f / 12.0f, callback);
+        addChild(sprite, zOrder_top);
+        effect = sprite;
+    }
+    
+    if (effect) {
+        bool flip(false);
+        if (SpellConfigData::kNone != direction) {
+            const bool isFaceRight = _needToFlip ^ _configData->isFaceRight();
+            flip = (isFaceRight ^ (SpellConfigData::kRight == direction));
+        }
+        
+        if (flip ^ (_needToFlip != _isFlipped)) {
+            flipX(effect);
+        }
+        
+        // set position
+        if (SpellConfigData::kFoot == position) {
+            effect->setPosition(_configData->getFootEffectPosition());
+            if (scale) {
+                this->scale(effect, _configData->getFootEffectScaleX() * _baseScale, _configData->getFootEffectScaleY() * _baseScale);
+            } else {
+                this->scale(effect, _configData->getFootEffectScaleX(), _configData->getFootEffectScaleY());
+            }
+            effect->setLocalZOrder(zOrder_bottom);
+        } else if (SpellConfigData::kBody == position) {
+            effect->setPosition(_sprite->getPosition());
+            if (scale) {
+                this->scale(effect, _baseScale);
+            }
+        } else if (SpellConfigData::kHead == position) {
+            effect->setPosition(getHPBarPosition());
+            if (scale) {
+                this->scale(effect, _baseScale);
+            }
         }
     }
     
-    return nullptr;
+    return effect;
 }
 
 void UnitNode::addSwordEffect()
@@ -1307,11 +1298,11 @@ void UnitNode::rollHintResource(const string& resource,
         iconNode = Sprite::create(StringUtils::format("GameImages/resources/icon_%dB.png", ::ResourceType::Wood));
     }
     assert(iconNode);
-    iconNode->setAnchorPoint(Vec2(1.f, 0.5f));
+    iconNode->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
     iconNode->setScale(0.5f);
     
     auto amountNode = CocosUtils::create10x25Number("+" + Utils::to_string(amount));
-    amountNode->setAnchorPoint(Vec2(0.f, 0.5f));
+    amountNode->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
     
     hintNode->addChild(iconNode);
     hintNode->addChild(amountNode);
@@ -1322,12 +1313,12 @@ void UnitNode::rollHintNode(Node* hintNode, float delay)
 {
     if (!hintNode) return;
     hintNode->setCascadeOpacityEnabled(true);
-    hintNode->setPosition(this->getPosition());
+    hintNode->setPosition(getPosition());
     hintNode->setVisible(false);
-    this->getParent()->addChild(hintNode);
-    float duration = 2.0f;
+    getParent()->addChild(hintNode);
+    static float duration(2.0f);
     Sequence* fadeTo = Sequence::create(DelayTime::create(1.5f), FadeTo::create(duration - 1.5f, 0), NULL);
-    MoveBy* moveBy = MoveBy::create(duration, Vec2(0.f, 100.f));
+    MoveBy* moveBy = MoveBy::create(duration, Point(0.f, 100.f));
     hintNode->runAction(Sequence::create(DelayTime::create(delay),
                                          CallFunc::create([hintNode](){ hintNode->setVisible(true); }),
                                          Spawn::create(fadeTo, moveBy, NULL),
