@@ -22,8 +22,6 @@ endef
 LOCAL_SRC_FILES := $(call all-cpp-files)
 LOCAL_SRC_FILES := $(LOCAL_SRC_FILES)
 
-$(waring $(LOCAL_SRC_FILES))
-
 FILE_INCLUDES := $(shell find $(LOCAL_PATH)/../../Classes -type d)
 LOCAL_C_INCLUDES := $(FILE_INCLUDES) \
     $(LOCAL_PATH)/third/libeventh \
