@@ -92,6 +92,7 @@
         </skill>
         <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="120"/>
     </unit>
+    <!-- TODO 驱散 -->
     <unit name="流星投枪者_入侵" class="warrior" race="辉月狼人" hp="330" mp="0" hpregen="0" mpregen="0" field="0" armor_type="无甲" armor="0" armor_preference="无甲" armor_preference_factor="p:180" magical_defense="0.f" attacksight="600" size="48" height="0" cost="金子:5" max_level="100" rewarde="金子:0.3f" spell_names="进攻驱散术" passive_names="抗魔学识;淬毒标枪;等级上升" render_key="狼人射手">
         <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
         <skill class="die" preperform="0" perform="600" cd="0.0"/>
@@ -1903,118 +1904,4 @@
         <skill class="stop" preperform="0" perform="0" cd="0"/>
         <skill class="die" preperform="0" perform="600" cd="0" occupy="0"/>
     </unit>
-	
-	<!-- ==========测试配置========== -->
-	<!-- 白板_坦克 -->
-    <unit name="白板_坦克" class="warrior" race="辉月狼人" hp="8000" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="0" armor_preference="null" armor_preference_factor="p:100" magical_defense="0" attacksight="400" size="48" height="0" max_level="100" passive_names="基础格挡_等级1;基础招架_等级1"  render_key="狼人步兵" desc="战士，输出承受者。">
-        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-        <skill class="die" preperform="0" perform="600" cd="0.0"/>
-        <skill class="attack" preperform="30" perform="0.0" cd="30" min_damage="190" max_damage="210" deliver_class="physical" damage_distance="nearby" range="48" fields="1">
-            <bullet speed="800" size="0"/>
-        </skill>
-        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="120"/>
-    </unit>    
-	
-
-	<!-- 白板_刺客 -->
-    <unit name="白板_刺客" class="warrior" race="辉月狼人" hp="5000" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="0" armor_preference="null" armor_preference_factor="p:100" magical_defense="0" attacksight="400" size="48" height="0" max_level="100" passive_names="基础闪避_等级1"  render_key="狼人步兵"  desc="战士or刺客，有一定输出一定肉度，后排杀手。">
-        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-        <skill class="die" preperform="0" perform="600" cd="0.0"/>
-        <skill class="attack" preperform="24" perform="0.0" cd="24" min_damage="380" max_damage="420" deliver_class="physical" damage_distance="nearby" range="48" fields="1">
-            <bullet speed="800" size="0"/>
-        </skill>
-        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="120"/>
-    </unit>   
-
-	<!-- 白板_射手 -->
-    <unit name="白板_射手" class="warrior" race="辉月狼人" hp="2000" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="0" armor_preference="null" armor_preference_factor="p:100" magical_defense="0" attacksight="400" size="32" height="0" max_level="100" render_key="吸血鬼弓兵" desc="射手，输出制造者。">
-        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-        <skill class="die" preperform="0" perform="600" cd="0.0"/>
-        <skill class="attack" preperform="30" perform="0.0" cd="30" min_damage="760" max_damage="840" deliver_class="physical" damage_distance="faraway" range="240" fields="3">
-            <bullet speed="800" size="0"/>
-        </skill>
-        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="100"/>
-    </unit>   
-
-   <!-- 白板_法师 -->
-    <unit name="白板_法师" class="warrior" race="辉月狼人" hp="2000" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="0" armor_preference="null" armor_preference_factor="p:100" magical_defense="0" attacksight="400" size="32" height="0" max_level="100" spell_names="基础爆发技能_等级1" render_key="吸血鬼弓兵" desc="法师，爆发型输出">
-        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-        <skill class="die" preperform="0" perform="600" cd="0.0"/>
-        <skill class="attack" preperform="30" perform="0.0" cd="90" min_damage="760" max_damage="840" deliver_class="physical" damage_distance="faraway" range="200" fields="3">
-            <bullet speed="800" size="0"/>
-        </skill>
-        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="100"/>
-    </unit>   
-
-	<!-- 白板_治疗 -->
-    <unit name="白板_治疗" class="warrior" race="辉月狼人" hp="3000" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="0" armor_preference="null" armor_preference_factor="p:100" magical_defense="0" attacksight="400" size="32" height="0" max_level="100"  spell_names="基础治疗技能_等级1" render_key="吸血鬼弓兵" desc="辅助治疗，坦克后勤保障，输出buff提供者">
-        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
-        <skill class="die" preperform="0" perform="600" cd="0.0"/>
-        <skill class="attack" preperform="30" perform="0.0" cd="90" min_damage="480" max_damage="520" deliver_class="physical" damage_distance="faraway" range="120" fields="3">
-            <bullet speed="800" size="0"/>
-        </skill>
-        <skill class="move" preperform="0.0" perform="0.0" cd="0.0" speed="100"/>
-    </unit>   
-
-
-
-
-	<!-- 基础格挡 -->
-    <passive alias="基础格挡" name="基础格挡_等级1" level="1" desc="伤害第一轮结算前计算格挡值，降低伤害">
-        <addon>
-            <feature_group determine_timing="settle_hurt_damage_r1">
-                <feature_item effect_timing="settle_hurt_damage_r1">
-                    <feature type="damage_reduce" value="100"/>
-                </feature_item>
-            </feature_group>
-        </addon>
-    </passive>
-	
-	<!-- 基础招架 -->
-    <passive alias="基础招架" name="基础招架_等级1" level="1" desc="伤害第二轮结算前计算百分比减免，降低伤害">
-        <addon>
-            <feature_group determine_timing="settle_hurt_damage_r2">
-                <feature_item effect_timing="settle_hurt_damage_r2">
-                    <feature type="damage_reduce" value="p:40"/>
-                </feature_item>
-            </feature_group>
-        </addon>
-    </passive>
-
-
-	<!-- 基础闪避 -->
-    <passive alias="基础闪避" name="基础闪避_等级1" level="1" desc="被攻击时，判定是否击中">
-        <addon>
-            <feature_group determine_timing="be_attack" probability="20">
-                <feature_item effect_timing="be_attack">
-                    <feature type="miss" />
-                </feature_item>
-            </feature_group>
-        </addon>
-    </passive>
-
-
-	<!-- 基础爆发 -->
-	<spell alias="基础爆发" spell_name="基础爆发技能_等级1" level="1" deliver_class="magical" deliver_nature="enemy" cast_distance="200" cast_type="unit" immediate_elements="0,基础爆发技能_等级1_施法效果,1" preperform="30" perform="0" cd="360" class="cast" desc="对某个敌方单位造成一次魔法伤害"/>
-
-
-
-    <!-- 基础爆发技能_等级1_施法效果 -->
-    <spell_pattern name="基础爆发技能_等级1_施法效果" class="target"  deliver_nature="enemy">
-        <spell_content name="基础爆发技能_等级1_施法效果" spell_content_class="damage">
-            <damage damage_nature="hurt" deliver_class="magical" damage_value="d:target:owner;type:attack_damage;v:p:150;template:0"/>
-        </spell_content>
-    </spell_pattern>
-
-
-	<!-- 基础治疗 -->
-	<spell alias="基础治疗" spell_name="基础治疗技能_等级1" level="1" deliver_class="magical" deliver_nature="ally" cast_distance="150" cast_type="unit" immediate_elements="0,基础治疗技能_等级1_施法效果,1" preperform="30" perform="0" cd="90" class="cast" desc="对某个友方单位造成一次治疗"/>
-
-
-	<!-- 基础治疗技能_等级1_施法效果 -->
-    <spell_pattern name="基础治疗技能_等级1_施法效果" class="target" deliver_nature="ally">
-        <spell_content name="基础治疗技能_等级1_施法效果" spell_content_class="damage">
-            <damage damage_nature="heal" deliver_class="magical" damage_value="d:target:owner;type:attack_damage;v:p:144;template:0"/>
-        </spell_content>
-    </spell_pattern>
 </root>
