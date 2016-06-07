@@ -360,9 +360,10 @@ void ClientTCPNetworkProxy::unregisterListener(ProxyListener *listener) {
 void ClientTCPNetworkProxy::onReceiveTCPResponse(TCPClient* client, TCPResponse* response) {
     std::vector<UnderWorld::Core::NetworkMessage*> msgs;
     parseResponse2Msg(response, msgs);
+    auto listeners = _listeners;
     if (!msgs.empty()) {
-        for (std::unordered_set<ProxyListener*>::iterator iter = _listeners.begin();
-             iter != _listeners.end();
+        for (std::unordered_set<ProxyListener*>::iterator iter = listeners.begin();
+             iter != listeners.end();
              ++iter) {
             (*iter)->onReceive(msgs);
         }
