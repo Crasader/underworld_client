@@ -8,6 +8,7 @@
 
 #include "CocosUtils.h"
 #include "ui/CocosGUI.h"
+#include "cocostudio/CocoStudio.h"
 #include "Global.h"
 #include <iomanip>
 #include "FixedLabelAtlas.h"
@@ -307,21 +308,42 @@ void CocosUtils::loadPVR(const string& file)
     }
 }
 
-void CocosUtils::playAnimation(cocos2d::Node* node, const std::vector<std::string>& files, bool loop, float frameDelay, const std::function<void()>& callback)
+void CocosUtils::playAnimation(cocos2d::Node* node,
+                               const vector<string>& files,
+                               bool loop,
+                               int frameIndex,
+                               float frameDelay,
+                               const function<void()>& callback)
 {
     if (node) {
+        node->stopAllActions();
+        
         const size_t cnt(files.size());
         if (cnt > 0) {
+            if (frameIndex < 0 || frameIndex >= cnt) {
+                assert(false);
+                frameIndex = 0;
+            }
+            
             Vector<SpriteFrame*> frames;
-            for (int i = 0; i < cnt; ++i) {
+            for (int i = frameIndex; i < cnt; ++i) {
                 const auto& file = files.at(i);
                 auto frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(file);
                 frames.pushBack(frame);
             }
             
+            // if loop, play the first frames
+            if (loop) {
+                for (int i = 0; i < frameIndex; ++i) {
+                    const auto& file = files.at(i);
+                    auto frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(file);
+                    frames.pushBack(frame);
+                }
+            }
+            
             auto animation = Animation::createWithSpriteFrames(frames);
             animation->setDelayPerUnit(frameDelay);
-            animation->setRestoreOriginalFrame(true);
+            animation->setRestoreOriginalFrame(false);
             
             Action* action(nullptr);
             auto animate = Animate::create(animation);
@@ -332,16 +354,22 @@ void CocosUtils::playAnimation(cocos2d::Node* node, const std::vector<std::strin
             }
             
             node->runAction(action);
+        } else {
+            assert(false);
         }
     }
 }
 
-Sprite* CocosUtils::playAnimation(const vector<string>& files, bool loop, float frameDelay, const function<void()>& callback)
+Sprite* CocosUtils::playAnimation(const vector<string>& files,
+                                  bool loop,
+                                  int frameIndex,
+                                  float frameDelay,
+                                  const function<void()>& callback)
 {
     if (files.size() > 0) {
         auto sprite = Sprite::createWithSpriteFrameName(files.at(0));
         if (sprite) {
-            playAnimation(sprite, files, loop, frameDelay, callback);
+            playAnimation(sprite, files, loop, frameIndex, frameDelay, callback);
         }
         
         return sprite;
@@ -350,7 +378,12 @@ Sprite* CocosUtils::playAnimation(const vector<string>& files, bool loop, float 
     return nullptr;
 }
 
-Sprite* CocosUtils::playAnimation(const string& folder, int framesCount, bool loop, float frameDelay, const function<void()>& callback)
+Sprite* CocosUtils::playAnimation(const string& folder,
+                                  int framesCount,
+                                  bool loop,
+                                  int frameIndex,
+                                  float frameDelay,
+                                  const function<void()>& callback)
 {
     if (framesCount > 0) {
         vector<string> files;
@@ -359,10 +392,32 @@ Sprite* CocosUtils::playAnimation(const string& folder, int framesCount, bool lo
             files.push_back(file);
         }
         
-        return playAnimation(files, loop, frameDelay, callback);
+        return playAnimation(files, loop, frameIndex, frameDelay, callback);
     }
     
     return nullptr;
+}
+
+Node* CocosUtils::playCSBAnimation(const string& file,
+                                   bool loop,
+                                   int frameIndex,
+                                   const function<void(Node*)>& callback)
+{
+    auto node = CSLoader::createNode(file);
+    auto action = CSLoader::createTimeline(file);
+    node->runAction(action);
+    action->gotoFrameAndPlay(frameIndex, loop);
+    if (!loop) {
+        action->setLastFrameCallFunc([=]() {
+            if (callback) {
+                callback(node);
+            }
+        });
+    } else {
+        assert(!callback);
+    }
+    
+    return node;
 }
 
 #pragma mark - notifications

@@ -66,12 +66,8 @@ bool CardNode::init(bool canShake)
         _canShake = canShake;
         
         static const string csbFile("UI_Card.csb");
-        Node *mainNode = CSLoader::createNode(csbFile);
+        Node *mainNode = CocosUtils::playCSBAnimation(csbFile, false, 0, nullptr);
         addChild(mainNode);
-        
-        timeline::ActionTimeline *action = CSLoader::createTimeline(csbFile);
-        mainNode->runAction(action);
-        action->gotoFrameAndPlay(0, false);
         
         _cardWidget = dynamic_cast<Widget *>(mainNode->getChildByTag(42));
         _cardWidget->setSwallowTouches(false);

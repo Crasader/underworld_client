@@ -53,13 +53,9 @@ bool BattleSmallResourceNode::init(ResourceType type, int count)
         } else if (ResourceType::Wood == type) {
             file = "UI-quan-1.csb";
         }
-        Node *effect = CSLoader::createNode(file);
+        Node *effect = CocosUtils::playCSBAnimation(file, true, 0, nullptr);
         addChild(effect);
         _icon = effect;
-        
-        timeline::ActionTimeline *action = CSLoader::createTimeline(file);
-        effect->runAction(action);
-        action->gotoFrameAndPlay(0, true);
         
         const Size size(effect->getChildren().front()->getContentSize());
         setAnchorPoint(Point::ANCHOR_MIDDLE);

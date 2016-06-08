@@ -141,12 +141,9 @@ bool MapLayer::init(int mapId)
             // 2. campfire
             {
                 static const string file("effect-place-1.csb");
-                auto effect = CSLoader::createNode(file);
+                auto effect = CocosUtils::playCSBAnimation(file, true, 0, nullptr);
                 effect->setPosition(Point(875, 80));
                 _tiledMap->addChild(effect);
-                auto action = CSLoader::createTimeline(file);
-                effect->runAction(action);
-                action->gotoFrameAndPlay(0, true);
             }
             
             // 3. smoke
@@ -169,14 +166,11 @@ bool MapLayer::init(int mapId)
             // 5. fire
             {
                 static const string file("effect-fire-1.csb");
-                auto effect = CSLoader::createNode(file);
+                auto effect = CocosUtils::playCSBAnimation(file, true, 0, nullptr);
                 effect->setPosition(Point(285, 245));
                 _tiledMap->addChild(effect);
-                auto action = CSLoader::createTimeline(file);
                 effect->setScaleX(0.6f);
                 effect->setScaleY(1.3f);
-                effect->runAction(action);
-                action->gotoFrameAndPlay(0, true);
             }
         } else {
             const auto& particles = DataManager::getInstance()->getMapParticleConfigData(_mapId);
@@ -270,15 +264,11 @@ void MapLayer::addUnitPlacementEffect(const Coordinate32& coordinate)
 {
     const Point& pos = coordinate2Point(coordinate);
     static string file("chuchang-fazhen.csb");
-    auto effect = CSLoader::createNode(file);
+    Node* effect = CocosUtils::playCSBAnimation(file, false, 0, [](Node* sender) {
+        sender->removeFromParent();
+    });
     effect->setPosition(pos);
     _mainLayer->addChild(effect);
-    auto action = CSLoader::createTimeline(file);
-    effect->runAction(action);
-    action->gotoFrameAndPlay(0, false);
-    action->setLastFrameCallFunc([effect]() {
-        effect->removeFromParent();
-    });
 }
 
 #pragma mark spells
@@ -329,11 +319,8 @@ void MapLayer::addAoeSpell(const Point& startPoint, const std::string& name, flo
             }
             {
                 static const string file("huoqiu.csb");
-                Node *effect = CSLoader::createNode(file);
+                auto effect = CocosUtils::playCSBAnimation(file, true, 0, nullptr);
                 node->addChild(effect);
-                cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(file);
-                effect->runAction(action);
-                action->gotoFrameAndPlay(0, true);
             }
             
             node->runAction(Sequence::create(Parabola::create(3, startPoint, targetPos, 300), CallFunc::create([=] {
@@ -602,10 +589,7 @@ void MapLayer::addParticle(const MapParticleConfigData* data)
     const string& name = data->getName();
     Node* effect = nullptr;
     if (name.find(".csb") != string::npos) {
-        effect = CSLoader::createNode(name);
-        auto action = CSLoader::createTimeline(name);
-        effect->runAction(action);
-        action->gotoFrameAndPlay(0, true);
+        effect = CocosUtils::playCSBAnimation(name, true, 0, nullptr);
     } else {
         auto particle = ParticleSystemQuad::create(data->getName());
         _particles.insert(particle);
@@ -634,19 +618,12 @@ void MapLayer::removeParticle(ParticleSystemQuad* effect)
 Node* MapLayer::addSpellEffect(const std::string& file, bool loop, const Point& position)
 {
     if (file.length() > 0) {
-        auto effect = CSLoader::createNode(file);
+        Node* effect = CocosUtils::playCSBAnimation(file, loop, 0, [this](Node* sender) {
+            sender->removeFromParent();
+            removeSpellEffect(sender);
+        });
         effect->setPosition(position);
         _scrollView->addChild(effect);
-        auto action = CSLoader::createTimeline(file);
-        effect->runAction(action);
-        action->gotoFrameAndPlay(0, loop);
-        if (!loop) {
-            action->setLastFrameCallFunc([=]() {
-                effect->removeFromParent();
-                removeSpellEffect(effect);
-            });
-        }
-        
         _spellEffects.insert(effect);
         
         return effect;
@@ -673,14 +650,10 @@ void MapLayer::addButterfly()
     }
     
     static const string file("effect-place-2.csb");
-    _butterfly = CSLoader::createNode(file);
-    _tiledMap->addChild(_butterfly);
-    auto action = CSLoader::createTimeline(file);
-    _butterfly->runAction(action);
-    action->gotoFrameAndPlay(0, false);
-    action->setLastFrameCallFunc([this]() {
+    _butterfly = CocosUtils::playCSBAnimation(file, false, 0, [this](Node* sender) {
         addButterfly();
     });
+    _tiledMap->addChild(_butterfly);
     
     // generate a random position
     static const float max_x = _width * _tileWidth;
@@ -720,7 +693,7 @@ Node* MapLayer::createUnitMask(const UnitType* ut) const
             }
             
             if (FileUtils::getInstance()->isFileExist(file)) {
-                auto actionNode = CSLoader::createNode(file);
+                auto actionNode = CocosUtils::playCSBAnimation(file, false, 0, nullptr);
                 auto sprite = dynamic_cast<Sprite*>(actionNode->getChildren().front());
                 if (sprite) {
                     sprite->setOpacity(180);
@@ -762,10 +735,7 @@ Node* MapLayer::createRing(const std::string& name, const Point& point)
     }
     
     if (fileName.length() > 0) {
-        auto ring = CSLoader::createNode(fileName);
-        auto action = CSLoader::createTimeline(fileName);
-        ring->runAction(action);
-        action->gotoFrameAndPlay(0, true);
+        auto ring = CocosUtils::playCSBAnimation(fileName, true, 0, nullptr);
         ring->setPosition(point);
         _mainLayer->addChild(ring);
         return ring;

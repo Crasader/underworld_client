@@ -58,12 +58,8 @@ bool ResourceButton::init(bool isBigSize, bool animated, bool needResize, Resour
         
 #if false
         const string csbFile = isBigSize ? "LevelupButton_UI.csb" : "formationButton_UI.csb";
-        Node *bn = CSLoader::createNode(csbFile);
+        Node *bn = CocosUtils::playCSBAnimation(csbFile, true, 0, nullptr);
         addChild(bn);
-        
-        cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(csbFile);
-        bn->runAction(action);
-        action->gotoFrameAndPlay(0, true);
         
         _button = dynamic_cast<Button*>(bn->getChildByTag(121));
         _button->setSwallowTouches(false);
@@ -207,11 +203,8 @@ void ResourceButton::addIconNode(ResourceType type)
         }
         
         const string& file(StringUtils::format("%d.csb", type));
-        _iconNode = CSLoader::createNode(file);
+        _iconNode = CocosUtils::playCSBAnimation(file, true, 0, nullptr);
         addChild(_iconNode);
-        timeline::ActionTimeline *action = CSLoader::createTimeline(file);
-        _iconNode->runAction(action);
-        action->gotoFrameAndPlay(0, true);
         
         if (pos.x > 0) {
             _iconNode->setPosition(pos);

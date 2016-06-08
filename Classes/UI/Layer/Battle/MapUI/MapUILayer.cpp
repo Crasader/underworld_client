@@ -263,12 +263,9 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
         
 #if false
         static const string CsbFile("rankInfo_UI.csb");
-        Node *mainNode = CSLoader::createNode(CsbFile);
+        Node *mainNode = CocosUtils::playCSBAnimation(CsbFile, false, 0, nullptr);
         mainNode->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(mainNode);
-        timeline::ActionTimeline *action = CSLoader::createTimeline(CsbFile);
-        mainNode->runAction(action);
-        action->gotoFrameAndPlay(0, false);
         Widget* root = dynamic_cast<Widget *>(mainNode->getChildByTag(777));
         const Vector<Node*>& children = root->getChildren();
         for (int i = 0; i < children.size(); ++i)

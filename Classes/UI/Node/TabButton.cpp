@@ -49,7 +49,7 @@ bool TabButton::init(const string& title, const Button::ccWidgetClickCallback& c
     {
         const Size& winSize = Director::getInstance()->getWinSize();
         static const string csbFile(".csb");
-        Node *mainNode = CSLoader::createNode(csbFile);
+        Node *mainNode = CocosUtils::playCSBAnimation(csbFile, false, 0, nullptr);
         mainNode->setPosition(Point(0, winSize.height / 2));
         addChild(mainNode);
         

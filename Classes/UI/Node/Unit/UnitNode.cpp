@@ -674,7 +674,7 @@ void UnitNode::playAnimation(const AnimationFileType& files,
             
             // 3. play animation
 #if USING_PVR
-            CocosUtils::playAnimation(_sprite, files, loop, DEFAULT_FRAME_DELAY, lastFrameCallFunc);
+            CocosUtils::playAnimation(_sprite, files, loop, frameIndex, DEFAULT_FRAME_DELAY, lastFrameCallFunc);
 #else
             _animation = CSLoader::createTimeline(files);
             _node->runAction(_animation);
@@ -950,39 +950,29 @@ Node* UnitNode::addCSBAnimation(const std::string& file,
     }
     
     const size_t found = file.find_last_of(".");
-    Node* effect(nullptr);
     if (found != string::npos) {
         const string& suffix = file.substr(found + 1);
         if ("csb" == suffix) {
-            effect = CSLoader::createNode(file);
+            Node* effect = CocosUtils::playCSBAnimation(file, loop, 0, [callback](Node* sender) {
+                sender->removeFromParent();
+                if (callback) {
+                    callback();
+                }
+            });
             addChild(effect, zOrder_top);
-            
-            auto action = CSLoader::createTimeline(file);
-            effect->runAction(action);
-            action->gotoFrameAndPlay(0, loop);
-            if (!loop) {
-                action->setLastFrameCallFunc([effect, callback]() {
-                    effect->removeFromParent();
-                    if (callback) {
-                        callback();
-                    }
-                });
-            } else {
-                assert(!callback);
-            }
-            
             adjustEffect(effect, scale, direction, position);
+            return effect;
         } else if ("plist" == suffix) {
             ParticleSystemQuad *particle = ParticleSystemQuad::create(file);
             if (!loop) {
                 particle->setAutoRemoveOnFinish(true);
             }
             addChild(particle, zOrder_top);
-            effect = particle;
+            return particle;
         }
     }
     
-    return effect;
+    return nullptr;
 }
 
 #if USING_PVR
@@ -1000,7 +990,7 @@ Node* UnitNode::addPVRAnimation(const std::string& folder,
                                 const SpellConfigData::Direction& direction,
                                 const SpellConfigData::Position& position)
 {
-    Sprite* sprite = CocosUtils::playAnimation(folder, framesCount, loop, frameDelay, callback);
+    Sprite* sprite = CocosUtils::playAnimation(folder, framesCount, loop, 0, frameDelay, callback);
     addChild(sprite, zOrder_top);
     adjustEffect(sprite, scale, direction, position);
     return sprite;

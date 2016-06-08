@@ -73,7 +73,7 @@ bool MainUILayer::init()
         {
             static const float margin(10.0f);
             static const string csbFile("UI_CharInfo.csb");
-            Node *mainNode = CSLoader::createNode(csbFile);
+            Node *mainNode = CocosUtils::playCSBAnimation(csbFile, false, 0, nullptr);
             mainNode->setPosition(Point(margin, winSize.height - margin));
             addChild(mainNode);
             
@@ -133,7 +133,7 @@ bool MainUILayer::init()
         // 2. left
         {
             static const string csbFile("UI_ChatIcon.csb");
-            Node *mainNode = CSLoader::createNode(csbFile);
+            Node *mainNode = CocosUtils::playCSBAnimation(csbFile, false, 0, nullptr);
             mainNode->setPosition(Point(0, winSize.height / 2));
             addChild(mainNode);
             
@@ -170,7 +170,7 @@ bool MainUILayer::init()
         {
             static const float margin(5.0f);
             static const string csbFile("UI_PVPICON.csb");
-            Node *mainNode = CSLoader::createNode(csbFile);
+            Node *mainNode = CocosUtils::playCSBAnimation(csbFile, false, 0, nullptr);
             mainNode->setPosition(Point(margin, margin));
             addChild(mainNode);
             
@@ -296,7 +296,7 @@ void MainUILayer::onTouchEnded(Touch *touch, Event *unused_event)
 Button* MainUILayer::addFunctionButton(const string& normal, const string& touched, const string& disabled, const Point& position)
 {
     static const string csbFile("UI_FunctionIcon.csb");
-    Node *mainNode = CSLoader::createNode(csbFile);
+    Node *mainNode = CocosUtils::playCSBAnimation(csbFile, false, 0, nullptr);
     mainNode->setPosition(position);
     addChild(mainNode);
     

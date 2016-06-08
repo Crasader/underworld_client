@@ -14,8 +14,6 @@
 #include "Unit.h"
 #include "SpellConfigData.h"
 
-#define USING_PVR   (0)
-
 // UnderWorld::Core
 namespace UnderWorld { namespace Core {
     class Game;

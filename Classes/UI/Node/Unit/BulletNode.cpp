@@ -9,13 +9,13 @@
 #include "BulletNode.h"
 #include "cocostudio/CocoStudio.h"
 #include "CocosGlobal.h"
+#include "CocosUtils.h"
 #include "Bullet.h"
 #include "BulletType.h"
 #include "DataManager.h"
 #include "BRConfigData.h"
 
 using namespace std;
-using namespace UnderWorld::Core;
 
 BulletNode* BulletNode::create(const Bullet* Bullet)
 {
@@ -43,25 +43,9 @@ BulletNode::~BulletNode()
     removeAllChildren();
 }
 
-const Bullet* BulletNode::getBullet() const
-{
-    return _bullet;
-}
-
-void BulletNode::registerObserver(BulletNodeObserver *observer)
-{
-    _observer = observer;
-}
-
-void BulletNode::update()
-{
-    update(false);
-}
-
 bool BulletNode::init(const Bullet* bullet)
 {
-    if (Node::init())
-    {
+    if (Node::init()) {
         _bullet = bullet;
         
         const BulletType* type = bullet->getBulletType();
@@ -97,6 +81,23 @@ bool BulletNode::init(const Bullet* bullet)
     return false;
 }
 
+#pragma mark - public
+void BulletNode::registerObserver(BulletNodeObserver *observer)
+{
+    _observer = observer;
+}
+
+const Bullet* BulletNode::getBullet() const
+{
+    return _bullet;
+}
+
+void BulletNode::update()
+{
+    update(false);
+}
+
+#pragma mark - protected
 void BulletNode::update(bool newCreated)
 {
     if (_bullet) {
@@ -139,11 +140,8 @@ void BulletNode::update(bool newCreated)
 Node* BulletNode::addActionNode(const string& file, bool loop)
 {
     const string path = file + ".csb";
-    Node* node = CSLoader::createNode(path);
+    Node* node = CocosUtils::playCSBAnimation(path, loop, 0, nullptr);
     addChild(node);
-    cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(path);
-    node->runAction(action);
-    action->gotoFrameAndPlay(0, loop);
     return node;
 }
 

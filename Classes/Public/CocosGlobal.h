@@ -12,6 +12,8 @@
 #include <iostream>
 #include <functional>
 
+#define USING_PVR   (0)
+
 #define INVALID_VALUE   (-1)
 
 #define USER_TOKEN_LENGTH   (64)

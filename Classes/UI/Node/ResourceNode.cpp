@@ -45,12 +45,8 @@ bool ResourceNode::init(ResourceType type, int count)
     if(Node::init())
     {
         static const string csbFile("UI_Res.csb");
-        Node *mainNode = CSLoader::createNode(csbFile);
+        Node *mainNode = CocosUtils::playCSBAnimation(csbFile, true, 0, nullptr);
         addChild(mainNode);
-        
-        cocostudio::timeline::ActionTimeline *action = CSLoader::createTimeline(csbFile);
-        mainNode->runAction(action);
-        action->gotoFrameAndPlay(0, true);
         
         Node* root = mainNode->getChildByTag(20);
         const Vector<Node*>& children = root->getChildren();

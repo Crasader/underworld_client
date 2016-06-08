@@ -10,15 +10,16 @@
 #define BulletNode_h
 
 #include "cocos2d.h"
-#include "ui/CocosGUI.h"
 
 USING_NS_CC;
-using namespace ui;
 
+// UnderWorld::Core
 namespace UnderWorld { namespace Core { class Bullet; } }
 
-class BulletNode;
+using namespace UnderWorld::Core;
 
+// Observer
+class BulletNode;
 class BulletNodeObserver
 {
 public:
@@ -30,23 +31,25 @@ public:
 class BulletNode : public Node
 {
 public:
-    static BulletNode* create(const UnderWorld::Core::Bullet* bullet);
+    static BulletNode* create(const Bullet* bullet);
     virtual ~BulletNode();
-    const UnderWorld::Core::Bullet* getBullet() const;
+    
     void registerObserver(BulletNodeObserver *observer);
+    const Bullet* getBullet() const;
     void update();
     
 protected:
     BulletNode();
-    bool init(const UnderWorld::Core::Bullet* bullet);
+    
+    bool init(const Bullet* bullet);
+    void update(bool newCreated);
     Node* addActionNode(const std::string& file, bool loop);
     Node* addParticle(const std::string& file);
     void onBulletDisabled();
-    void update(bool newCreated);
     
-private:
+protected:
     BulletNodeObserver *_observer;
-    const UnderWorld::Core::Bullet* _bullet;
+    const Bullet* _bullet;
     float _angel;
 };
 

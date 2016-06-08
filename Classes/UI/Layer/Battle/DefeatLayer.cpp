@@ -55,13 +55,9 @@ bool DefeatLayer::init(int levelId)
         const Size& winSize = Director::getInstance()->getWinSize();
         
         static const string CsbFile("UI_Win.csb");
-        Node* mainNode = CSLoader::createNode(CsbFile);
+        Node* mainNode = CocosUtils::playCSBAnimation(CsbFile, false, 0, nullptr);
         mainNode->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(mainNode);
-        
-        timeline::ActionTimeline *action = CSLoader::createTimeline(CsbFile);
-        mainNode->runAction(action);
-        action->gotoFrameAndPlay(0, false);
         
         Node* root = mainNode->getChildByTag(6);
         const Vector<Node*>& children = root->getChildren();

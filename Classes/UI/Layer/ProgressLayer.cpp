@@ -8,6 +8,7 @@
 
 #include "ProgressLayer.h"
 #include "CocosGlobal.h"
+#include "CocosUtils.h"
 #include "cocostudio/CocoStudio.h"
 
 static const std::string resourceFile("loading5.csb");
@@ -69,12 +70,8 @@ bool ProgressLayer::init()
     if (LayerColor::initWithColor(LAYER_MASK_COLOR))
     {
         const Size& winSize = Director::getInstance()->getWinSize();
-        Node* loadingNode = CSLoader::createNode(resourceFile);
+        Node* loadingNode = CocosUtils::playCSBAnimation(resourceFile, true, 0, nullptr);
         loadingNode->setPosition(winSize.width / 2, winSize.height / 2);
-        cocostudio::timeline::ActionTimeline* action = CSLoader::createTimeline(resourceFile);
-        loadingNode->runAction(action);
-        action->gotoFrameAndPlay(0, true);
-        
         addChild(loadingNode);
         
         auto eventListener = EventListenerTouchOneByOne::create();

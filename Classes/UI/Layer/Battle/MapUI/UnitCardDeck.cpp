@@ -91,11 +91,8 @@ bool UnitCardDeck::init(int count)
         
         // effect below "max 10"
         static const string file("UI-beijingguang.csb");
-        Node* effect = CSLoader::createNode(file);
+        Node* effect = CocosUtils::playCSBAnimation(file, true, 0, nullptr);
         addChild(effect);
-        timeline::ActionTimeline *action = CSLoader::createTimeline(file);
-        effect->runAction(action);
-        action->gotoFrameAndPlay(0, true);
         
         _countLabel = CocosUtils::createLabel("0", BIG_FONT_SIZE, DEFAULT_NUMBER_FONT);
         _background->addChild(_countLabel, topZOrder);

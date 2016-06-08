@@ -71,11 +71,8 @@ bool BattleDeckUnitInfoNode::init()
 {
     if (Node::init()) {
         static const string csbFile("UI_CardInfo.csb");
-        Node *mainNode = CSLoader::createNode(csbFile);
+        auto mainNode = CocosUtils::playCSBAnimation(csbFile, false, 0, nullptr);
         addChild(mainNode);
-        timeline::ActionTimeline *action = CSLoader::createTimeline(csbFile);
-        mainNode->runAction(action);
-        action->gotoFrameAndPlay(0, false);
         Widget* root = dynamic_cast<Widget *>(mainNode->getChildByTag(60));
         root->setSwallowTouches(false);
         const Vector<Node*>& children = root->getChildren();

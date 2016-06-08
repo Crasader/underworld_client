@@ -8,6 +8,7 @@
 
 #include "CardDeck.h"
 #include "cocostudio/CocoStudio.h"
+#include "CocosUtils.h"
 #include "GameModeHMM.h"
 
 using namespace std;
@@ -233,12 +234,9 @@ void CardDeck::updateResource(const unordered_map<string, float>& resources)
         
         if (show) {
             static const string file("ui-tiao.csb");
-            Node* effect = CSLoader::createNode(file);
+            Node* effect = CocosUtils::playCSBAnimation(file, false, 0, nullptr);
             effect->setPosition(pt->getPosition());
             pt->getParent()->addChild(effect);
-            timeline::ActionTimeline *action = CSLoader::createTimeline(file);
-            effect->runAction(action);
-            action->gotoFrameAndPlay(0, false);
             _resources.at(i).first = effect;
         }
     }

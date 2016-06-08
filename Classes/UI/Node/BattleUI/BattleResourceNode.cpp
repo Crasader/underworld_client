@@ -83,11 +83,8 @@ bool BattleResourceNode::init(ResourceType type)
         } else if (ResourceType::Wood == type) {
             file = "UI-number-lan.csb";
         }
-        Node *effect = CSLoader::createNode(file);
+        Node *effect = CocosUtils::playCSBAnimation(file, true, 0, nullptr);
         addChild(effect);
-        timeline::ActionTimeline *action = CSLoader::createTimeline(file);
-        effect->runAction(action);
-        action->gotoFrameAndPlay(0, true);
         
         // set content size
         const Size& pSize = _progressTimer->getContentSize();
