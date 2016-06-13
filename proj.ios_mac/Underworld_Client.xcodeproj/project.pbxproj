@@ -1151,6 +1151,7 @@
 		3087FF101CA2A02A004E31F6 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				30F9982A1D06DE5200D56172 /* Render */,
 				3087FF121CA2A1A4004E31F6 /* ExternalInterface.h */,
 				3087FF131CA2A658004E31F6 /* Network */,
 				3087FF111CA2A0ED004E31F6 /* Terminal */,
@@ -1198,6 +1199,13 @@
 				30B83D5D1CEEC25500195004 /* WorldTest.h */,
 			);
 			name = Test;
+			sourceTree = "<group>";
+		};
+		30F9982A1D06DE5200D56172 /* Render */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Render;
 			sourceTree = "<group>";
 		};
 		46880B7519C43A67006E1F66 /* Resources */ = {

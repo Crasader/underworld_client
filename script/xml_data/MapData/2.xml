@@ -21,7 +21,7 @@
         <event>
             <event_trigger class="schedule" time="0"/>
             <event_effect class="add_unit" map_index="0" position="600,600">
-                <unit_setting name="辉月侍僧_月神"/>
+                <unit_setting name="巨鹰_月神"/>
             </event_effect>
         </event>
         <!-- <event>
@@ -34,7 +34,7 @@
         <event>
             <event_trigger class="schedule" time="0"/>
             <event_effect class="add_unit" map_index="1" position="1200,600">
-                <unit_setting name="辉月侍僧_月神"/>
+                <unit_setting name="巨鹰_月神"/>
             </event_effect>
         </event>
     </schedule_events>
