@@ -1,4 +1,4 @@
 <root>
-	<region index="0" left_down="0,0" width="1600" height="1200"/>
-	<region index="0" left_down="3200,0" width="1600" height="1200"/>
+	<region index="0" tower_region="0,0;1600;1200" summon_region="0,0;1600;1200"/>
+	<region index="1" tower_region="3200,0;1600;1200" summon_region="3200,0;1600;1200"/>
 </root>
