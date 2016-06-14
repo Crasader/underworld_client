@@ -105,7 +105,7 @@ void GameRender::init(const Game* game, Commander* commander)
     onMapUILayerCardSelected("", INVALID_VALUE);
     
     if (_mapUILayer && _deck) {
-        static const CardDeckType type(CardDeckType::Spell);
+        static const CardDeckType type(CardDeckType::Unit);
         const int count = _deck->getHandCount();
         _mapUILayer->createCardDeck(type, count);
         
@@ -319,7 +319,7 @@ void GameRender::updateUILayer()
 //            }
 //        }
 //        
-//        _mapUILayer->updateNextCard(_deck->getNextDrawCard());        
+        _mapUILayer->updateNextCard(_deck->getNextDraw());
 //        _deck->clearEventLog();
     }
     

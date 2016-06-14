@@ -49,11 +49,11 @@ bool UnitCardDeck::init(int count)
     if (Node::init())
     {
         static const float x1(10.0f);
-        static const float x2(20.0f);
+        static const float x2(80.0f);
         static const float x3(8.0f);
         
-        static const float y1(5.0f);
-        static const float y2(50.0f);
+        static const float y1(50.0f);
+        static const float y2(5.0f);
         
         const Size& nodeSize = CardNode::create(false)->getContentSize();
         const Size size(x1 * 2 + x2 + (count + 1) * nodeSize.width + (count - 1) * x3, y1 + y2 + nodeSize.height);
@@ -72,20 +72,20 @@ bool UnitCardDeck::init(int count)
         // children
         const float y = y2 + nodeSize.height / 2;
         for (int i = count - 1; i >= 0; --i) {
-            const float x = x1 + x2 + nodeSize.width * (i + 1.5f) + x3 * i;
+            const float x = x1 /*+ x2 */+ nodeSize.width * (i + 0.5f) + x3 * i;
             _positions.push_back(Point(x, y));
         }
         
         // candidate
         {
-            _insertActionStartPosition = Point(x1 + nodeSize.width / 2, y);
-            
-            
+            _insertActionStartPosition = Point(size.width - (x1 + nodeSize.width / 2), y);
         }
         
+#if false
         _nextLabel = CocosUtils::createLabel("Next:0", BIG_FONT_SIZE, DEFAULT_NUMBER_FONT);
         _nextLabel->setPosition(_insertActionStartPosition.x, y2 / 2);
         _background->addChild(_nextLabel, topZOrder);
+#endif
         
         // effect below "max 10"
         static const string file("UI-beijingguang.csb");
@@ -95,8 +95,10 @@ bool UnitCardDeck::init(int count)
         _countLabel = CocosUtils::createLabel("0", BIG_FONT_SIZE, DEFAULT_NUMBER_FONT);
         _background->addChild(_countLabel, topZOrder);
         
+#if false
         Label* maxCountLabel = CocosUtils::createLabel(StringUtils::format("Max:%d", BATTLE_RESOURCE_MAX_COUNT), BIG_FONT_SIZE, DEFAULT_NUMBER_FONT);
         _background->addChild(maxCountLabel, topZOrder);
+#endif
         
         Size progressSize(Size::ZERO);
         for (int i = 0; i < BATTLE_RESOURCE_MAX_COUNT; ++i) {
@@ -115,9 +117,9 @@ bool UnitCardDeck::init(int count)
             }
         }
         
-        const float midX = x1 + x2 + nodeSize.width + (count * (nodeSize.width + x3) - x3) / 2;
+        const float midX = size.width / 2/*x1 + x2 + nodeSize.width + (count * (nodeSize.width + x3) - x3) / 2*/;
         _costStartPosition.x = midX - ((progressSize.width + deckCostOffsetX) * BATTLE_RESOURCE_MAX_COUNT - deckCostOffsetX)  / 2;
-        _costStartPosition.y = y2 / 2;
+        _costStartPosition.y = size.height - y1 / 2;
         for (int i = 0; i < _resources.size(); ++i) {
             auto pt = _resources.at(i).second;
             if (pt) {
@@ -127,7 +129,9 @@ bool UnitCardDeck::init(int count)
         }
         
         _countLabel->setPosition(_costStartPosition);
+#if false
         maxCountLabel->setPosition(midX, (y2 - progressSize.height) / 2);
+#endif
         effect->setPosition(_countLabel->getPosition());
         
         return true;
