@@ -8,7 +8,6 @@
 
 #include "BagNode.h"
 #include "ui/CocosGUI.h"
-#include "cocostudio/CocoStudio.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
@@ -18,7 +17,6 @@
 
 using namespace std;
 using namespace ui;
-using namespace cocostudio;
 
 BagNode* BagNode::create(const ObjectData* data, ssize_t idx, int column)
 {

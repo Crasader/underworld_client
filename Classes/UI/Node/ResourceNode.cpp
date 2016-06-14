@@ -7,11 +7,9 @@
 //
 
 #include "ResourceNode.h"
-#include "cocostudio/CocoStudio.h"
 #include "CocosUtils.h"
 
 using namespace std;
-using namespace cocostudio;
 
 ResourceNode::ResourceNode()
 :_type(ResourceType::Gold)

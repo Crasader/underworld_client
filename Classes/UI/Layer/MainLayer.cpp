@@ -8,7 +8,6 @@
 
 #include "MainLayer.h"
 #include "ui/CocosGUI.h"
-#include "cocostudio/CocoStudio.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "SoundManager.h"
@@ -17,7 +16,6 @@
 
 using namespace std;
 using namespace ui;
-using namespace cocostudio;
 
 Scene* MainLayer::createScene()
 {

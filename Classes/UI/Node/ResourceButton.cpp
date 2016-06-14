@@ -7,12 +7,10 @@
 //
 
 #include "ResourceButton.h"
-#include "cocostudio/CocoStudio.h"
 #include "CocosUtils.h"
 #include "SoundManager.h"
 
 using namespace std;
-using namespace cocostudio;
 
 ResourceButton::ResourceButton()
 :_animated(false)

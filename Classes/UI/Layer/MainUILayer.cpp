@@ -8,7 +8,6 @@
 
 #include "MainUILayer.h"
 #include "ui/CocosGUI.h"
-#include "cocostudio/CocoStudio.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "SoundManager.h"

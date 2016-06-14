@@ -8,7 +8,6 @@
 
 #include "BattleDeckUnitInfoNode.h"
 #include "ui/CocosGUI.h"
-#include "cocostudio/CocoStudio.h"
 #include "CocosUtils.h"
 #include "Unit.h"
 #include "GameModeHMM.h"
@@ -18,7 +17,6 @@
 
 using namespace std;
 using namespace ui;
-using namespace cocostudio;
 using namespace UnderWorld::Core;
 
 static const string default_value("0");

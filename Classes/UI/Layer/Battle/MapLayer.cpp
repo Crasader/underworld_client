@@ -7,7 +7,6 @@
 //
 
 #include "MapLayer.h"
-#include "cocostudio/CocoStudio.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "Constants.h"

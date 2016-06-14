@@ -7,7 +7,6 @@
 //
 
 #include "MapUILayer.h"
-#include "cocostudio/CocoStudio.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
@@ -16,7 +15,6 @@
 #include "SoundManager.h"
 
 using namespace std;
-using namespace cocostudio;
 using namespace UnderWorld::Core;
 
 static ProgressTimer* createProgressTimer(const string& file)

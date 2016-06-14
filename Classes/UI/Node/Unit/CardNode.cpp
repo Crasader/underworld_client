@@ -7,7 +7,6 @@
 //
 
 #include "CardNode.h"
-#include "cocostudio/CocoStudio.h"
 #include "CocosUtils.h"
 #include "BattleSmallResourceNode.h"
 #include "DataManager.h"
@@ -17,7 +16,6 @@
 #include "SoundManager.h"
 
 using namespace std;
-using namespace cocostudio;
 using namespace UnderWorld::Core;
 
 static const int topZOrder(1);

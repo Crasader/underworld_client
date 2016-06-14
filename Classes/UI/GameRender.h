@@ -18,8 +18,7 @@
 #include "VictoryLayer.h"
 #include "DefeatLayer.h"
 
-USING_NS_CC;
-
+// UnderWorld::Core
 namespace UnderWorld { namespace Core {
     class Game;
     class World;
@@ -33,6 +32,9 @@ namespace UnderWorld { namespace Core {
     class HMMDeck;
 }}
 
+USING_NS_CC;
+using namespace UnderWorld::Core;
+
 class GameRenderObserver
 {
 public:
@@ -41,7 +43,7 @@ public:
 };
 
 class GameRender
-: public UnderWorld::Core::AbstractRender
+: public AbstractRender
 , public UnitNodeObserver
 , public BulletNodeObserver
 , public MapLayerObserver
@@ -56,8 +58,8 @@ public:
     
 protected:
     // AbstractRender
-    virtual void init(const UnderWorld::Core::Game* game, UnderWorld::Core::Commander* commander) override;
-    virtual void render(const UnderWorld::Core::Game* game) override;
+    virtual void init(const Game* game, Commander* commander) override;
+    virtual void render(const Game* game) override;
     
     // UnitNodeObserver
     virtual void onUnitNodePlayedDeadAnimation(int unitId) override;
@@ -90,11 +92,11 @@ protected:
     
 private:
     void updateAll();
-    void updateUnits(const UnderWorld::Core::Game* game, int index);
-    void updateBullets(const UnderWorld::Core::Game* game);
+    void updateUnits(const Game* game, int index);
+    void updateBullets(const Game* game);
     void updateUILayer();
-    bool isValidAoeSpell(const UnderWorld::Core::SpellType* spellType) const;
-    void hurtUnit(const UnderWorld::Core::Unit* target, const std::string& trigger);
+    bool isValidAoeSpell(const SpellType* spellType) const;
+    void hurtUnit(const Unit* target, const std::string& trigger);
     void removeUnit(int unitId);
     void removeAllBullets();
     void removeAllUnits();
@@ -114,12 +116,12 @@ private:
     void removeCardMask();
     void tryToUseCard(const std::string& card, int idx, const Point& point);
     
-    const UnderWorld::Core::Unit* getCore() const;
+    const Unit* getCore() const;
     const std::vector<std::string>& getSpells() const;
-    const UnderWorld::Core::HMMCardType* getCardType(const std::string& name) const;
-    const UnderWorld::Core::UnitType* getUnitType(const std::string& name) const;
-    const UnderWorld::Core::SpellType* getSpellType(const std::string& name) const;
-    UnderWorld::Core::Coordinate32 getValidPuttingCoordinate(const Point& point, bool check) const;
+    const HMMCardType* getCardType(const std::string& name) const;
+    const UnitType* getUnitType(const std::string& name) const;
+    const SpellType* getSpellType(const std::string& name) const;
+    Coordinate32 getValidPuttingCoordinate(const Point& point, bool check) const;
     
 private:
     GameRenderObserver *_observer;
@@ -129,16 +131,16 @@ private:
     MapLayer* _mapLayer;
     MapUILayer* _mapUILayer;
     
-    const UnderWorld::Core::Game* _game;
-    const UnderWorld::Core::World* _world;
-    const UnderWorld::Core::TechTree* _techTree;
-    const UnderWorld::Core::GameModeHMM* _gameModeHMM;
-    UnderWorld::Core::Commander* _commander;
+    const Game* _game;
+    const World* _world;
+    const TechTree* _techTree;
+    const GameModeHMM* _gameModeHMM;
+    Commander* _commander;
     std::unordered_map<int, UnitNode*> _allUnitNodes;
-    std::unordered_map<const void*, std::pair<UnderWorld::Core::Coordinate32, float>> _bulletParams;
+    std::unordered_map<const void*, std::pair<Coordinate32, float>> _bulletParams;
     std::unordered_map<const void*, BulletNode*> _allBulletNodes;
-    std::unordered_map<int, const UnderWorld::Core::Unit*> _cores;
-    const UnderWorld::Core::HMMDeck* _deck;
+    std::unordered_map<int, const Unit*> _cores;
+    const HMMDeck* _deck;
     std::pair<std::string ,int> _selectedCard;
     
     bool _paused;

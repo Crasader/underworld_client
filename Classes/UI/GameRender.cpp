@@ -77,7 +77,7 @@ void GameRender::init(const Game* game, Commander* commander)
     const int thisFi = game->getThisFactionIndex();
     _deck = _gameModeHMM->getDeck(thisFi);
     
-    const UnderWorld::Core::Rect32& rect = _deck->getPuttingRegion();
+    const Rect32& rect = _deck->getSummonRegion();
     _minPuttingX = rect._origin.x;
     _maxPuttingX = _minPuttingX + rect._width;
     assert(_maxPuttingX > 0 && _minPuttingX < _maxPuttingX);
@@ -106,11 +106,11 @@ void GameRender::init(const Game* game, Commander* commander)
     
     if (_mapUILayer && _deck) {
         static const CardDeckType type(CardDeckType::Spell);
-        const int count = _deck->getCardCount();
+        const int count = _deck->getHandCount();
         _mapUILayer->createCardDeck(type, count);
         
         for (int i = 0; i < count; ++i) {
-            const HMMCard* card = _deck->getCard(i);
+            const HMMCard* card = _deck->getHandCard(i);
             if (card) {
                 const HMMCardType* ct = card->getCardType();
                 if (ct) {
@@ -761,7 +761,7 @@ const UnitType* GameRender::getUnitType(const string& name) const
 {
     const HMMCardType* ct = getCardType(name);
     if (ct) {
-        const UnitSetting& us = ct->getUnitSetting();
+        const UnitSetting& us = ct->getCustomUnitSetting();
         return _techTree->findUnitTypeByName(us.getUnitTypeName());
     }
     

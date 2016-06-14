@@ -9,7 +9,6 @@
 #include "ProgressLayer.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
-#include "cocostudio/CocoStudio.h"
 
 static const std::string resourceFile("loading5.csb");
 static const int ProgressLayerTag = 20150;

@@ -7,12 +7,10 @@
 //
 
 #include "CardDeck.h"
-#include "cocostudio/CocoStudio.h"
 #include "CocosUtils.h"
 #include "GameModeHMM.h"
 
 using namespace std;
-using namespace cocostudio;
 using namespace UnderWorld::Core;
 
 static const float animationDuration(0.3f);

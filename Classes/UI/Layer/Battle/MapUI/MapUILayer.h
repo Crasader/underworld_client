@@ -9,10 +9,7 @@
 #ifndef MapUILayer_h
 #define MapUILayer_h
 
-#include "cocos2d.h"
 #include "CardDeck.h"
-
-USING_NS_CC;
 
 typedef std::pair<CardDeck*, int> CardInfo;
 
@@ -41,7 +38,9 @@ class MapUILayer
 public:
     static MapUILayer* create(const std::string& myAccount, const std::string& opponentsAccount);
     virtual ~MapUILayer();
+    
     void registerObserver(MapUILayerObserver *observer);
+    
     void reload();
     void updateMyHpProgress(int progress);
     void updateOpponentsHpProgress(int progress);
@@ -54,9 +53,9 @@ public:
     // card deck
     void createCardDeck(CardDeckType type, int count);
     void insertCard(CardDeckType type, const std::string& name);
-    void insertCard(CardDeckType type, const UnderWorld::Core::HMMCard* card);
-    void removeCard(CardDeckType type, const UnderWorld::Core::HMMCard* card, int index);
-    void updateNextCard(const UnderWorld::Core::HMMCard* card);
+    void insertCard(CardDeckType type, const HMMCard* card);
+    void removeCard(CardDeckType type, const HMMCard* card, int index);
+    void updateNextCard(const HMMCard* card);
     void updateCardCD(CardDeckType type, int idx, float percentage);
     void updateCountDown(float time, float duration);
     void updateResource(const std::unordered_map<std::string, float>& resources);
@@ -90,7 +89,8 @@ private:
     CardInfo _highlightedCardInfo;
     CardInfo _selectedCardInfo;
     std::string _selectedCard;
-    // ======================== UI =============================
+    
+    // cocos2d
     Label *_timeLabel;
     ProgressTimer *_myHpProgress;
     Label *_myHpPercentageLabel;

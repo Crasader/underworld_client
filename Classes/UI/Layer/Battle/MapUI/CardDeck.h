@@ -9,19 +9,11 @@
 #ifndef CardDeck_h
 #define CardDeck_h
 
-#include "cocos2d.h"
 #include "CardNode.h"
-
-USING_NS_CC;
-
-namespace UnderWorld { namespace Core {
-    class HMMCard;
-}}
 
 extern const float deckCostOffsetX;
 
 class CardDeck;
-
 class CardDeckObserver
 {
 public:
@@ -40,8 +32,8 @@ public:
     std::string getCard(int idx) const;
     void select(int idx);
     void insert(const std::string& name, bool animated);
-    void insert(const UnderWorld::Core::HMMCard* card, bool animated);
-    void remove(const UnderWorld::Core::HMMCard* card, int index, bool animated);
+    void insert(const HMMCard* card, bool animated);
+    void remove(const HMMCard* card, int index, bool animated);
     void updateCD(int idx, float percentage);
     void updateResource(const std::unordered_map<std::string, float>& resources);
     
@@ -60,6 +52,8 @@ protected:
     
 protected:
     CardDeckObserver *_observer;
+    
+    // cocos2d
     Node* _background;
     Label* _countLabel;
     std::vector<Point> _positions;

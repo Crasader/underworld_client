@@ -7,13 +7,11 @@
 //
 
 #include "TabButton.h"
-#include "cocostudio/CocoStudio.h"
 #include "CocosUtils.h"
 #include "SoundManager.h"
 
 using namespace std;
 using namespace ui;
-using namespace cocostudio;
 
 static Color4B normalTextColor(Color4B::WHITE);
 static Color4B touchedTextColor(Color4B::ORANGE);

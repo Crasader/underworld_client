@@ -8,7 +8,6 @@
 
 #include "BattleDeckLayer.h"
 #include "ui/CocosGUI.h"
-#include "cocostudio/CocoStudio.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
@@ -24,7 +23,6 @@
 
 using namespace std;
 using namespace ui;
-using namespace cocostudio;
 using namespace UnderWorld::Core;
 
 static const float unitNodeOffsetX(5.0f);

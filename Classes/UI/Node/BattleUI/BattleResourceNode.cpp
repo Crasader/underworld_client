@@ -8,10 +8,8 @@
 
 #include "BattleResourceNode.h"
 #include "CocosUtils.h"
-#include "cocostudio/CocoStudio.h"
 
 using namespace std;
-using namespace cocostudio;
 
 static string getProgressTimerSprite(ResourceType type)
 {

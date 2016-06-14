@@ -7,13 +7,11 @@
 //
 
 #include "UnitCardDeck.h"
-#include "cocostudio/CocoStudio.h"
 #include "GameModeHMM.h"
 #include "CocosUtils.h"
 #include "CCShake.h"
 
 using namespace std;
-using namespace cocostudio;
 using namespace UnderWorld::Core;
 
 static const int topZOrder(1);

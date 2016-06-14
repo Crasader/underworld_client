@@ -7,7 +7,6 @@
 //
 
 #include "UnitNode.h"
-#include "cocostudio/CocoStudio.h"
 #include "DataManager.h"
 #include "URConfigData.h"
 #include "SoundManager.h"

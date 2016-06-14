@@ -8,10 +8,8 @@
 
 #include "BattleSmallResourceNode.h"
 #include "CocosUtils.h"
-#include "cocostudio/CocoStudio.h"
 
 using namespace std;
-using namespace cocostudio;
 
 BattleSmallResourceNode::BattleSmallResourceNode()
 :_type(ResourceType::Gold)

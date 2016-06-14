@@ -9,11 +9,9 @@
 #include "FriendCell.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
-#include "cocostudio/CocoStudio.h"
 #include "FriendData.h"
 
 using namespace std;
-using namespace cocostudio;
 using namespace ui;
 
 FriendCell::FriendCell()

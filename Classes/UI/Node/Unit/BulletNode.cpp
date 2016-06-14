@@ -7,7 +7,6 @@
 //
 
 #include "BulletNode.h"
-#include "cocostudio/CocoStudio.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "Bullet.h"

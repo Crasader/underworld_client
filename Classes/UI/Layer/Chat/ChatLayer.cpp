@@ -8,7 +8,6 @@
 
 #include "ChatLayer.h"
 #include "ui/CocosGUI.h"
-#include "cocostudio/CocoStudio.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
@@ -19,7 +18,6 @@
 
 using namespace std;
 using namespace ui;
-using namespace cocostudio;
 
 static const float nodeOffsetX(17.0f);
 static const float nodeOffsetY(17.0f);
