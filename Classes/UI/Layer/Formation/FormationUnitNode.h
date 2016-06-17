@@ -11,19 +11,20 @@
 
 #include "ui/CocosGUI.h"
 
-using namespace cocos2d::ui;
+USING_NS_CC;
+using namespace ui;
 
 class FormationUnitNode : public Widget
 {
 public:
-    static FormationUnitNode* create(const std::string& name);
+    static FormationUnitNode* create(const std::string& name, const Size& size);
     virtual ~FormationUnitNode();
     
     const std::string& getUnitName() const;
     
 protected:
     FormationUnitNode();
-    bool init(const std::string& name);
+    bool init(const std::string& name, const Size& size);
     
 protected:
     std::string _name;

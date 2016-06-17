@@ -40,6 +40,23 @@ class FormationLayer
 , public TableViewDataSource
 , public CardNodeObserver
 {
+protected:
+    class TileInfo {
+    public:
+        int idx;
+        Node* node;
+        Point midPoint;
+        TileInfo():idx(-1), node(nullptr), midPoint(Point::ZERO) {}
+    };
+    
+    class FormationInfo {
+    public:
+        FormationUnitNode* node;
+        std::string cardName;
+        FormationInfo():node(nullptr) {}
+        FormationInfo(const FormationInfo& instance):node(instance.node),cardName(instance.cardName) {}
+    };
+    
 public:
     static FormationLayer* create();
     virtual ~FormationLayer();
@@ -83,7 +100,8 @@ protected:
     void createSetDefaultFormationButton(const Point& position);
     
     // labels
-    void updateResourceCount(int count);
+    void updatePopulationCount(int count);
+    void updateSpellsCount(int count);
     
     // card
     CardNode* createCardNode(const std::string& name) const;
@@ -92,24 +110,21 @@ protected:
     void removeDraggingNode();
     void unitBackToTable();
     void unitBackToFormation();
-    void replace(FormationUnitNode* node);
+    FormationUnitNode* createUnitNode(const std::string& name);
     
     // functions
     void saveFormation();
     void loadFormation(int idx);
     void setDefaultFormation();
-    void onPlaceEnded(const std::string& name, const Point& point);
+    void placeUnit(FormationUnitNode* node, const Point& point);
+    void onPlacedEnded(const std::string& name, const Point& point);
     void onUnitTouchedBegan(FormationUnitNode* node);
     void onUnitTouchedMoved(FormationUnitNode* node);
     void onUnitTouchedEnded(FormationUnitNode* node);
+    const TileInfo& getTileInfo(const Point& point) const;
     int getUnitZOrder(const Point& point) const;
     
 protected:
-    struct FormationInfo {
-        FormationUnitNode* node;
-        std::string cardName;
-    };
-    
     FormationLayerObserver *_observer;
     
     // cocos
@@ -117,10 +132,12 @@ protected:
     Size _cardSize;
     Size _tableMaxSize;
     Point _tableBasePosition;
-    std::vector<Node*> _tiles;
+    std::vector<TileInfo> _tiles;
     Size _tileSize;
+    Point _tileBasePosition;
     Node* _draggingNode;
-    Label* _resourceLabel;
+    Label* _populationLabel;
+    Label* _spellCountLabel;
     
     // data
     UnderWorld::Core::TechTree* _techTree;

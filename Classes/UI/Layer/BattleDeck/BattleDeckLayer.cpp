@@ -113,7 +113,7 @@ bool BattleDeckLayer::init()
         static const float offsetX(12.0f);
         static const float offsetY(8.0f);
         Point firstCardPos(Point::ZERO);
-        for (int i = 0; i < CANDIDATE_CARD_DECKS_COUNT; ++i) {
+        for (int i = 0; i < FORMATION_SPELLS_COUNT; ++i) {
             Sprite* sprite = Sprite::create("GameImages/test/ui_jiabing.png");
             const Size& size = sprite->getContentSize();
             if (firstCardPos.x == 0) {
@@ -215,7 +215,7 @@ void BattleDeckLayer::onTouchEnded(Touch *touch, Event *unused_event)
                 cardBackToTable();
             } else {
                 const size_t cnt = getPickedCards().size();
-                if (cnt < CANDIDATE_CARD_DECKS_COUNT) {
+                if (cnt < FORMATION_SPELLS_COUNT) {
                     extract(_selectedCard);
                     refreshUI = true;
                 } else {
@@ -581,7 +581,7 @@ void BattleDeckLayer::reloadCardDecks()
         }
     }
     
-    _selectedCardsLabel->setString(StringUtils::format("Troops:%d/%d", i, CANDIDATE_CARD_DECKS_COUNT));
+    _selectedCardsLabel->setString(StringUtils::format("Troops:%d/%d", i, FORMATION_SPELLS_COUNT));
 }
 
 void BattleDeckLayer::selectCardOnDecks(const string& name)

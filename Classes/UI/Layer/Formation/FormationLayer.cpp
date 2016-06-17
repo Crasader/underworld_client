@@ -18,7 +18,6 @@
 using namespace std;
 using namespace ui;
 
-static const Vec2 formationAreaEdge(60, 80);
 static const unsigned int columnCount(4);
 static const Vec2 cardNodeOffset(5, 14);
 static const int topZOrder(1);
@@ -42,21 +41,31 @@ FormationLayer::FormationLayer()
 :_observer(nullptr)
 ,_table(nullptr)
 ,_tileSize(Size::ZERO)
+,_tileBasePosition(Size::ZERO)
 ,_draggingNode(nullptr)
-,_resourceLabel(nullptr)
+,_populationLabel(nullptr)
+,_spellCountLabel(nullptr)
 {
     auto cardSize = CardNode::create(false)->getContentSize();
     _cardSize = cardSize + Size(cardNodeOffset.x, cardNodeOffset.y);
     
     // table parameters
+    const auto& winSize = getWinSize();
     {
         static const float edgeX(50.0f);
         static const float edgeY(50.0f);
-        const auto& winSize = getWinSize();
         _tableMaxSize.width = _cardSize.width * columnCount + cardNodeOffset.x;
         _tableMaxSize.height = winSize.height - edgeY * 2;
         _tableBasePosition.x = winSize.width - edgeX - getCellSize().width;
         _tableBasePosition.y = winSize.height - edgeY;
+    }
+    
+    // tile parameters
+    {
+        static const float edgeX(170.0f);
+        static const float edgeY(80.0f);
+        _tileBasePosition.x = edgeX;
+        _tileBasePosition.y = winSize.height - edgeY;
     }
     
     _techTree = new (nothrow) TechTree();
@@ -96,14 +105,13 @@ bool FormationLayer::init()
         createExitButton();
         createSwitchFormationButton();
         
-        const auto& winSize = getWinSize();
         static const float edgeX(60);
-        const float y = (winSize.height - (formationAreaEdge.y + FORMATION_HEIGHT * _tileSize.height)) / 2;
-        createSaveFormationButton(Point(formationAreaEdge.x + edgeX, y));
-        createSetDefaultFormationButton(Point(formationAreaEdge.x + FORMATION_WIDTH * _tileSize.width - edgeX, y));
+        const float y = (_tileBasePosition.y - FORMATION_HEIGHT * _tileSize.height) / 2;
+        createSaveFormationButton(Point(_tileBasePosition.x + edgeX, y));
+        createSetDefaultFormationButton(Point(_tileBasePosition.x + FORMATION_WIDTH * _tileSize.width - edgeX, y));
         
         // labels
-        updateResourceCount(10);
+        updatePopulationCount(10);
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -153,7 +161,7 @@ void FormationLayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
     if (_selectedCard.size() > 0) {
         const auto& point = touch->getLocation();
-        onPlaceEnded(_selectedCard, point);
+        onPlacedEnded(_selectedCard, point);
         _selectedCard = "";
     }
     
@@ -245,17 +253,19 @@ void FormationLayer::onCardNodeTouchedEnded(CardNode* node, bool isValid)
 #pragma mark tiles
 void FormationLayer::createTiles()
 {
-    const auto& winSize = getWinSize();
     for (int j = 0; j < FORMATION_HEIGHT; ++j) {
         for (int i = 0; i < FORMATION_WIDTH; ++i) {
             auto node = Sprite::create("GameImages/public/test/f_1.png");
             addChild(node);
-            _tiles.push_back(node);
             
             const auto& size = node->getContentSize();
-            node->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
-            node->setPosition(Point(formationAreaEdge.x + size.width * i,
-                                    winSize.height - formationAreaEdge.y - size.height * j));
+            node->setPosition(_tileBasePosition + Point(size.width * (i + 0.5f), -(size.height * (j + 0.5f))));
+            
+            TileInfo info;
+            info.idx = j * FORMATION_WIDTH + i;
+            info.node = node;
+            info.midPoint = node->getPosition();
+            _tiles.push_back(info);
             
             if (0 == _tileSize.width) {
                 _tileSize = node->getContentSize();
@@ -340,8 +350,7 @@ void FormationLayer::createExitButton()
 
 void FormationLayer::createSwitchFormationButton()
 {
-    const Size& winSize = getWinSize();
-    const auto basePosition = Point(formationAreaEdge.x + _tileSize.width * FORMATION_WIDTH, winSize.height - formationAreaEdge.y);
+    const auto basePosition = _tileBasePosition + Point(_tileSize.width * FORMATION_WIDTH, 0);
     for (int i = FORMATION_MAX_COUNT - 1; i >= 0; --i) {
         const int formationId = i + 1;
         const string file = StringUtils::format("GameImages/public/test/f_b_%d.png", formationId);
@@ -385,32 +394,57 @@ void FormationLayer::createSetDefaultFormationButton(const Point& position)
 }
 
 #pragma mark labels
-void FormationLayer::updateResourceCount(int count)
+void FormationLayer::updatePopulationCount(int count)
 {
-    const string msg = StringUtils::format("%d/%d", count, FORMATION_RESOURCE_COUNT);
-    if (!_resourceLabel) {
+    const string msg = StringUtils::format("%d/%d", count, FORMATION_POPULATION_COUNT);
+    if (!_populationLabel) {
         auto hintLabel = CocosUtils::createLabel("人口资源", DEFAULT_FONT_SIZE);
         addChild(hintLabel);
         
-        _resourceLabel = CocosUtils::createLabel(msg, DEFAULT_FONT_SIZE);
-        addChild(_resourceLabel);
+        _populationLabel = CocosUtils::createLabel(msg, DEFAULT_FONT_SIZE);
+        addChild(_populationLabel);
         
         // set positions
         const auto& hintSize = hintLabel->getContentSize();
         {
-            const auto& winSize = getWinSize();
             static const Point offset(0, 5.0f);
-            const auto basePosition = Point(formationAreaEdge.x, winSize.height - formationAreaEdge.y);
-            hintLabel->setPosition(basePosition + Point(hintSize.width / 2, hintSize.height / 2) + offset);
+            hintLabel->setPosition(_tileBasePosition + Point(hintSize.width / 2, hintSize.height / 2) + offset);
         }
         
         {
-            const auto& resourceSize = _resourceLabel->getContentSize();
+            const auto& resourceSize = _populationLabel->getContentSize();
             static const Point offset(5.0, 0);
-            _resourceLabel->setPosition(hintLabel->getPosition() + Point((hintSize.width + resourceSize.width) / 2, 0) + offset);
+            _populationLabel->setPosition(hintLabel->getPosition() + Point((hintSize.width + resourceSize.width) / 2, 0) + offset);
         }
     } else {
-        _resourceLabel->setString(msg);
+        _populationLabel->setString(msg);
+    }
+}
+
+void FormationLayer::updateSpellsCount(int count)
+{
+    const string msg = StringUtils::format("%d/%d", count, FORMATION_POPULATION_COUNT);
+    if (!_spellCountLabel) {
+        auto hintLabel = CocosUtils::createLabel("人口资源", DEFAULT_FONT_SIZE);
+        addChild(hintLabel);
+        
+        _spellCountLabel = CocosUtils::createLabel(msg, DEFAULT_FONT_SIZE);
+        addChild(_spellCountLabel);
+        
+        // set positions
+        const auto& hintSize = hintLabel->getContentSize();
+        {
+            static const Point offset(0, 5.0f);
+            hintLabel->setPosition(_tileBasePosition + Point(hintSize.width / 2, hintSize.height / 2) + offset);
+        }
+        
+        {
+            const auto& resourceSize = _spellCountLabel->getContentSize();
+            static const Point offset(5.0, 0);
+            _spellCountLabel->setPosition(hintLabel->getPosition() + Point((hintSize.width + resourceSize.width) / 2, 0) + offset);
+        }
+    } else {
+        _spellCountLabel->setString(msg);
     }
 }
 
@@ -477,9 +511,25 @@ void FormationLayer::unitBackToFormation()
     
 }
 
-void FormationLayer::replace(FormationUnitNode* node)
+FormationUnitNode* FormationLayer::createUnitNode(const string& name)
 {
+    auto node = FormationUnitNode::create(name, _tileSize);
+    addChild(node);
+    node->setTouchEnabled(true);
+    node->setSwallowTouches(true);
+    node->addTouchEventListener([this](Ref* ref, Widget::TouchEventType type) {
+        auto node = dynamic_cast<FormationUnitNode*>(ref);
+        if (Widget::TouchEventType::BEGAN == type) {
+            onUnitTouchedBegan(node);
+        } else if (Widget::TouchEventType::MOVED == type) {
+            onUnitTouchedMoved(node);
+        } else if (Widget::TouchEventType::ENDED == type ||
+                   Widget::TouchEventType::CANCELED == type) {
+            onUnitTouchedEnded(node);
+        }
+    });
     
+    return node;
 }
 
 #pragma mark functions
@@ -498,24 +548,37 @@ void FormationLayer::setDefaultFormation()
     
 }
 
-void FormationLayer::onPlaceEnded(const string& name, const Point& point)
+void FormationLayer::placeUnit(FormationUnitNode* node, const Point& point)
 {
-    const bool placeable(true);
-    if (placeable) {
-        auto node = FormationUnitNode::create(name);
-        addChild(node);
-        node->setTouchEnabled(true);
-        node->setSwallowTouches(true);
-        node->addTouchEventListener([this](Ref* ref, Widget::TouchEventType type) {
-            auto node = dynamic_cast<FormationUnitNode*>(ref);
-            if (Widget::TouchEventType::BEGAN == type) {
-                onUnitTouchedBegan(node);
-            } else if (Widget::TouchEventType::MOVED == type) {
-                onUnitTouchedMoved(node);
-            } else if (Widget::TouchEventType::ENDED == type) {
-                onUnitTouchedEnded(node);
-            }
-        });
+    if (node) {
+        node->setPosition(point);
+        node->setLocalZOrder(getUnitZOrder(point));
+    }
+}
+
+void FormationLayer::onPlacedEnded(const string& name, const Point& point)
+{
+    const auto& tileInfoB = getTileInfo(point);
+    int idxB(tileInfoB.idx);
+    if (idxB >= 0) {
+        // create node
+        auto nodeA = createUnitNode(name);
+        
+        // save info
+        FormationInfo infoA;
+        infoA.node = nodeA;
+        infoA.cardName = nodeA->getUnitName();
+        
+        // if the position is occupied
+        if (_formation.find(idxB) != end(_formation)) {
+            _formation.at(idxB).node->removeFromParent();
+            _formation.at(idxB) = infoA;
+        } else {
+            _formation.insert(make_pair(idxB, infoA));
+        }
+        
+        // place
+        placeUnit(nodeA, tileInfoB.midPoint);
     }
 }
 
@@ -535,19 +598,63 @@ void FormationLayer::onUnitTouchedMoved(FormationUnitNode* node)
     }
 }
 
-void FormationLayer::onUnitTouchedEnded(FormationUnitNode* node)
+void FormationLayer::onUnitTouchedEnded(FormationUnitNode* nodeA)
 {
-    if (node) {
-        const bool placeable(true);
-        if (placeable) {
-            const auto& point = node->getTouchEndPosition();
-            node->setPosition(point);
-            node->setLocalZOrder(getUnitZOrder(point));
-            
+    if (nodeA) {
+        const auto& tileInfoA = getTileInfo(nodeA->getTouchBeganPosition());
+        const int idxA(tileInfoA.idx);
+        if (idxA >= 0 && _formation.find(idxA) != end(_formation)) {
+            const auto& tileInfoB = getTileInfo(nodeA->getTouchEndPosition());
+            int idxB(tileInfoB.idx);
+            if (idxB >= 0) {
+                const auto& pointB = tileInfoB.midPoint;
+                // if the position is occupied
+                if (_formation.find(idxB) != end(_formation)) {
+                    const auto& infoB(_formation.at(idxB));
+                    auto nodeB = infoB.node;
+                    
+                    // exchange
+                    if (nodeB != nodeA) {
+                        const auto& pointA = tileInfoA.midPoint;
+                        placeUnit(nodeA, pointB);
+                        placeUnit(nodeB, pointA);
+                        
+                        const auto& infoA(_formation.at(idxA));
+                        _formation.at(idxA) = infoB;
+                        _formation.at(idxB) = infoA;
+                    }
+                } else {
+                    placeUnit(nodeA, pointB);
+                    
+                    const auto& infoA(_formation.at(idxA));
+                    _formation.insert(make_pair(idxB, infoA));
+                    _formation.erase(idxA);
+                }
+            } else {
+                nodeA->removeFromParent();
+                _formation.erase(idxA);
+            }
         } else {
-            unitBackToFormation();
+            assert(false);
+        }
+        
+        removeDraggingNode();
+    }
+}
+
+const FormationLayer::TileInfo& FormationLayer::getTileInfo(const Point& point) const
+{
+    int x = (point.x - _tileBasePosition.x) / _tileSize.width;
+    int y = (_tileBasePosition.y - point.y) / _tileSize.height;
+    if (x < FORMATION_WIDTH && y < FORMATION_HEIGHT) {
+        const int idx = y * FORMATION_WIDTH + x;
+        if (idx < _tiles.size()) {
+            return _tiles.at(idx);
         }
     }
+    
+    static TileInfo nullInfo;
+    return nullInfo;
 }
 
 int FormationLayer::getUnitZOrder(const Point& point) const

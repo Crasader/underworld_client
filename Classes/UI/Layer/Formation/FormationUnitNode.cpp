@@ -11,10 +11,10 @@
 
 using namespace std;
 
-FormationUnitNode* FormationUnitNode::create(const string& name)
+FormationUnitNode* FormationUnitNode::create(const string& name, const Size& size)
 {
     FormationUnitNode *ret = new (nothrow) FormationUnitNode();
-    if (ret && ret->init(name))
+    if (ret && ret->init(name, size))
     {
         ret->autorelease();
         return ret;
@@ -31,13 +31,15 @@ FormationUnitNode::~FormationUnitNode()
     removeAllChildren();
 }
 
-bool FormationUnitNode::init(const string& name)
+bool FormationUnitNode::init(const string& name, const Size& size)
 {
     if (Widget::init())
     {
         _name = name;
         
+        setContentSize(size);
         auto sprite = CocosUtils::playAnimation("fatso-stand/fatso-stand-3", 10, true, 0, DEFAULT_FRAME_DELAY, nullptr);
+        sprite->setPosition(Point(size.width / 2, size.height / 2));
         addChild(sprite);
         
         return true;

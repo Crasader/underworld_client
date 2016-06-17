@@ -41,13 +41,13 @@
 #define TOUCH_CANCEL_BY_MOVING_DISTANCE (10.0f)
 
 #define DEFAULT_MAP_ID              (2)
-#define CANDIDATE_CARD_DECKS_COUNT  (8)
 #define BATTLE_RESOURCE_MAX_COUNT   (10)
 #define MAP_OFFSET_Y                (0)
 #define DEFAULT_FRAME_DELAY         (1.0f/12.0f)
 
 #define FORMATION_MAX_COUNT         (3)
-#define FORMATION_RESOURCE_COUNT    (80)
+#define FORMATION_POPULATION_COUNT  (80)
+#define FORMATION_SPELLS_COUNT      (12)
 #define FORMATION_WIDTH             (5)
 #define FORMATION_HEIGHT            (5)
 
