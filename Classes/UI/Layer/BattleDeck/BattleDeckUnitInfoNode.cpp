@@ -241,14 +241,14 @@ void BattleDeckUnitInfoNode::update(const string& name, TechTree* techTree, Game
             // skill
             {
                 string name;
-                const size_t passiveTypeCount = unit->getPassiveNames().size();
+                const size_t passiveTypeCount = unit->getPassiveTypeCount();
                 if (passiveTypeCount > 0) {
-                    name = unit->getPassiveNames().at(0);
+                    name = unit->getPassiveTypeByIndex(0)->getName();
                     
                 } else {
-                    const size_t spellTypeCount = unit->getSpellNames().size();
+                    const size_t spellTypeCount = unit->getSpellTypeCount();
                     if (spellTypeCount > 0) {
-                        name = unit->getSpellNames().at(0);
+                        name = unit->getSpellTypeByIndex(0)->getSpellName();
                     }
                 }
                 

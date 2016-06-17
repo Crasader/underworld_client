@@ -1211,9 +1211,9 @@ void UnitNode::updateFeatures(const Game* game)
                     string resource = iter->first;
                     float amount = iter->second;
                     string scheduleKey = rollHintScheduleKeyPrefix
-                    + UnderWorld::Core::Utils::to_string(_unit->getUnitId())
+                    + UnderWorld::Core::UnderWorldCoreUtils::to_string(_unit->getUnitId())
                     + rollHintScheduleKeySplitor
-                    + UnderWorld::Core::Utils::to_string(++_rollHintCounter);
+                    + UnderWorld::Core::UnderWorldCoreUtils::to_string(++_rollHintCounter);
                     rollHintResource(resource, amount, delay * index);
                     ++index;
                 }
@@ -1310,7 +1310,7 @@ void UnitNode::rollHintResource(const string& resource,
     iconNode->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
     iconNode->setScale(0.5f);
     
-    auto amountNode = CocosUtils::create10x25Number("+" + Utils::to_string(amount));
+    auto amountNode = CocosUtils::create10x25Number("+" + UnderWorldCoreUtils::to_string(amount));
     amountNode->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
     
     hintNode->addChild(iconNode);

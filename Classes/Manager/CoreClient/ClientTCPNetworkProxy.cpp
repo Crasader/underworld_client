@@ -129,8 +129,8 @@ static std::string parseSync2SMsg(
             command.AddMember(MESSAGE_KEY_FAC_INDEX, factionIndex, allocator);
             
             rapidjson::Value pos(rapidjson::kStringType);
-            std::string posString = UnderWorld::Core::Utils::to_string(deckCmd->getPos().x) + "_"
-                + UnderWorld::Core::Utils::to_string(deckCmd->getPos().y);
+            std::string posString = UnderWorld::Core::UnderWorldCoreUtils::to_string(deckCmd->getPos().x) + "_"
+                + UnderWorld::Core::UnderWorldCoreUtils::to_string(deckCmd->getPos().y);
             pos.SetString(posString.c_str(), (int)posString.size(), allocator);
             command.AddMember(MESSAGE_KEY_POS, pos, allocator);
         }

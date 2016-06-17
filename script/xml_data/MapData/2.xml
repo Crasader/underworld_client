@@ -21,7 +21,7 @@
         <event>
             <event_trigger class="schedule" time="0"/>
             <event_effect class="add_unit" map_index="0" position="600,600">
-                <unit_setting name="巨鹰_月神"/>
+                <unit_setting unit_setting_name="人族剑士"/>
             </event_effect>
         </event>
         <!-- <event>
@@ -34,7 +34,7 @@
         <event>
             <event_trigger class="schedule" time="0"/>
             <event_effect class="add_unit" map_index="1" position="1200,600">
-                <unit_setting name="巨鹰_月神"/>
+                <unit_setting unit_setting_name="人族剑士"/>
             </event_effect>
         </event>
     </schedule_events>
@@ -58,12 +58,12 @@
         <faction_setting_item faction_index="0" faction_control_type="human" map_index="0" team_index="0"/>
         <faction_setting_item faction_index="1" faction_control_type="cpu" map_index="1" team_index="1"/>
         <game_content_setting map_index="0" faction_type="狼人族">
-            <core_setting name="狼人基地"/>
-            <tower_setting name="狼人箭塔"/>
+            <core_setting unit_setting_name="狼人基地"/>
+            <tower_setting unit_setting_name="狼人箭塔"/>
         </game_content_setting>
         <game_content_setting map_index="1" faction_type="吸血鬼族">
-            <core_setting name="吸血鬼基地"/>
-            <tower_setting name="吸血鬼箭塔"/>
+            <core_setting unit_setting_name="吸血鬼基地"/>
+            <tower_setting unit_setting_name="吸血鬼箭塔"/>
         </game_content_setting>
     </faction_setting>
 </root>

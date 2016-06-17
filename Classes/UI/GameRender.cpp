@@ -758,7 +758,8 @@ const vector<string>& GameRender::getSpells() const
     if (core) {
         auto ut = core->getUnitBase().getUnitType();
         if (ut) {
-            return ut->getSpellNames();
+            return vector<string>();
+            //return ut->getSpellNames();
         }
     }
     
