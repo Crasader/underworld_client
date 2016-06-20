@@ -164,6 +164,7 @@
 		A18885741C43A7A800C9586F /* HeroManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A18885721C43A7A800C9586F /* HeroManager.cpp */; };
 		A18885771C43ACFB00C9586F /* ArtifactData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A18885751C43ACFB00C9586F /* ArtifactData.cpp */; };
 		A188857A1C43BA1C00C9586F /* TowerManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A18885781C43BA1C00C9586F /* TowerManager.cpp */; };
+		A19D6B0C1D1802170088AF23 /* FormationData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19D6B0A1D1802170088AF23 /* FormationData.cpp */; };
 		A19EE96D1C1C0F1300E46D77 /* LevelLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19EE96B1C1C0F1300E46D77 /* LevelLocalData.cpp */; };
 		A1A05B3C1C9668FB006FE03B /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A05B3B1C9668FB006FE03B /* GCDAsyncSocket.m */; };
 		A1A05B6C1C96B6A0006FE03B /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A05B5C1C96B6A0006FE03B /* DDLog.m */; };
@@ -618,6 +619,8 @@
 		A18885761C43ACFB00C9586F /* ArtifactData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtifactData.h; sourceTree = "<group>"; };
 		A18885781C43BA1C00C9586F /* TowerManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TowerManager.cpp; sourceTree = "<group>"; };
 		A18885791C43BA1C00C9586F /* TowerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TowerManager.h; sourceTree = "<group>"; };
+		A19D6B0A1D1802170088AF23 /* FormationData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FormationData.cpp; sourceTree = "<group>"; };
+		A19D6B0B1D1802170088AF23 /* FormationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormationData.h; sourceTree = "<group>"; };
 		A19EE96B1C1C0F1300E46D77 /* LevelLocalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelLocalData.cpp; sourceTree = "<group>"; };
 		A19EE96C1C1C0F1300E46D77 /* LevelLocalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelLocalData.h; sourceTree = "<group>"; };
 		A1A05B3A1C9668FB006FE03B /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
@@ -1374,13 +1377,14 @@
 		A12D2F571BFDE88A00389DAC /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				CB3EC8A01C523D4E00447FE3 /* Friend */,
-				CB3EC8941C4E4CBC00447FE3 /* Chat */,
 				A1D4614D1C3E166900E8E60B /* Abstract */,
 				A1F5BF9C1C1FD508007C08CB /* Achievement */,
 				A1D461581C3E251000E8E60B /* AnimationConfig */,
 				A1F58D5A1C3248EA00C8A2DD /* Artifact */,
 				A16BF27C1C313D6D00E91458 /* Attribute */,
+				CB3EC8941C4E4CBC00447FE3 /* Chat */,
+				A19D6B091D1802170088AF23 /* Formation */,
+				CB3EC8A01C523D4E00447FE3 /* Friend */,
 				A1F5BF8F1C1FC36C007C08CB /* Gear */,
 				A16BF29D1C314CE500E91458 /* GearSet */,
 				A16BF27D1C313D6D00E91458 /* Hero */,
@@ -1692,6 +1696,15 @@
 				A1D25C2E1C8588A100A84EB6 /* UnitCardDeck.h */,
 			);
 			path = MapUI;
+			sourceTree = "<group>";
+		};
+		A19D6B091D1802170088AF23 /* Formation */ = {
+			isa = PBXGroup;
+			children = (
+				A19D6B0A1D1802170088AF23 /* FormationData.cpp */,
+				A19D6B0B1D1802170088AF23 /* FormationData.h */,
+			);
+			path = Formation;
 			sourceTree = "<group>";
 		};
 		A1A05B391C9668FB006FE03B /* CocoaAsyncSocket */ = {
@@ -2331,6 +2344,7 @@
 				3019BAB91C9953FB003258DB /* AuraType.cpp in Sources */,
 				A1D745C01C1AB7C40020BC1C /* DefeatLayer.cpp in Sources */,
 				A1D745C11C1AB7C40020BC1C /* MapLayer.cpp in Sources */,
+				A19D6B0C1D1802170088AF23 /* FormationData.cpp in Sources */,
 				045116F51BCFBA44002AA721 /* CommandType.cpp in Sources */,
 				3070302B1CD1E6D70077D357 /* ProduceType.cpp in Sources */,
 				A1720ECB1BCD37FC00217E98 /* MessageBoxLayer.cpp in Sources */,

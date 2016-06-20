@@ -23,6 +23,7 @@ namespace UnderWorld { namespace Core {
 }}
 
 class FormationUnitNode;
+class FormationData;
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -32,6 +33,11 @@ class FormationLayerObserver
 {
 public:
     virtual ~FormationLayerObserver() {}
+};
+
+enum class FormationTableType {
+    Hero,
+    Spell,
 };
 
 class FormationLayer
@@ -85,17 +91,20 @@ protected:
     virtual void onCardNodeTouchedBegan(CardNode* node) override;
     virtual void onCardNodeTouchedEnded(CardNode* node, bool isValid) override;
     
-    // table
     void createTiles();
-    void createTableView();
-    void refreshTable(bool reload);
-    ssize_t getCellsCount() const;
+    void createDeck();
+    
+    // table
+    void createTableView(FormationTableType type);
+    void refreshTable(TableView* table, bool reload);
+    ssize_t getCellsCount(TableView *table) const;
     Size getCellSize() const;
     Rect getBoundingBox(Node* node) const;
     
     // buttons
     void createExitButton();
-    void createSwitchFormationButton();
+    void createSwitchFormationButton(const Point& position);
+    void createSwitchTableButton(const Point& position);
     void createSaveFormationButton(const Point& position);
     void createSetDefaultFormationButton(const Point& position);
     
@@ -112,7 +121,19 @@ protected:
     void unitBackToFormation();
     FormationUnitNode* createUnitNode(const std::string& name);
     
+    // decks
+    ssize_t getIntersectedDeckIdx(const Rect& rect) const;
+    void pickSpellCard(const std::string& name);
+    void cancelSpellCard(const std::string& name);
+    void exchangeSpellCards(const std::string& picked, const std::string& candidate);
+    void reloadDecks();
+    void selectCardOnDecks(const std::string& name);
+    
     // functions
+    void insertCandidateCard(FormationTableType type, const std::string& name);
+    FormationTableType getTableType(TableView* table) const;
+    void setTableType(FormationTableType type);
+    std::string getTableName(FormationTableType type) const;
     void saveFormation();
     void loadFormation(int idx);
     void setDefaultFormation();
@@ -127,24 +148,39 @@ protected:
 protected:
     FormationLayerObserver *_observer;
     
-    // cocos
-    TableView* _table;
+    // table
+    std::map<FormationTableType, TableView*> _tables;
+    TableView* _thisTable;
     Size _cardSize;
     Size _tableMaxSize;
     Point _tableBasePosition;
+    
+    // deck
+    std::vector<Sprite*> _decks;
+    Size _deckSize;
+    Point _deckBasePosition;
+    
+    // tile
     std::vector<TileInfo> _tiles;
     Size _tileSize;
     Point _tileBasePosition;
+    
     Node* _draggingNode;
+    std::vector<Button*> _switchFormationButtons;
     Label* _populationLabel;
     Label* _spellCountLabel;
     
     // data
+    FormationTableType _thisTableType;
     UnderWorld::Core::TechTree* _techTree;
     UnderWorld::Core::GameModeHMM* _gameModeHMM;
+    bool _isPickingSpell;
+    std::string _touchedCard;
     std::string _selectedCard;
-    std::vector<std::string> _candidateCards;
-    std::unordered_set<std::string> _pickedCards;
+    std::map<FormationTableType, std::vector<std::string>> _candidateCards;
+    std::vector<FormationData*> _formations;
+    std::unordered_set<std::string> _pickedSpells;
+    int _thisFormationIdx;
     std::unordered_map<int, FormationInfo> _formation;
 };
 

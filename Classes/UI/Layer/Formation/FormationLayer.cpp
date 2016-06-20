@@ -12,15 +12,23 @@
 #include "TechTree.h"
 #include "GameModeHMM.h"
 #include "DataManager.h"
+#include "FormationData.h"
 #include "FormationCell.h"
 #include "FormationUnitNode.h"
 
 using namespace std;
 using namespace ui;
 
-static const unsigned int columnCount(4);
-static const Vec2 cardNodeOffset(5, 14);
 static const int topZOrder(1);
+static const unsigned int deckRowCount(2);
+static const unsigned int tableColumnCount(4);
+static const Vec2 cardOffsetOnTable(5, 14);
+static const int cardTagOnDeck(100);
+static const FormationTableType tableTypes[] = {
+    FormationTableType::Hero,
+    FormationTableType::Spell
+};
+static const unsigned int tablesCount = sizeof(tableTypes) / sizeof(FormationTableType);
 
 static inline const Size& getWinSize() { return Director::getInstance()->getWinSize(); }
 
@@ -39,33 +47,44 @@ FormationLayer* FormationLayer::create()
 
 FormationLayer::FormationLayer()
 :_observer(nullptr)
-,_table(nullptr)
+,_thisTable(nullptr)
+,_cardSize(Size::ZERO)
+,_tableMaxSize(Size::ZERO)
+,_tableBasePosition(Point::ZERO)
+,_deckBasePosition(Point::ZERO)
 ,_tileSize(Size::ZERO)
-,_tileBasePosition(Size::ZERO)
+,_tileBasePosition(Point::ZERO)
 ,_draggingNode(nullptr)
 ,_populationLabel(nullptr)
 ,_spellCountLabel(nullptr)
+,_thisTableType(static_cast<FormationTableType>(-1))
+,_isPickingSpell(false)
+,_thisFormationIdx(-1)
 {
     auto cardSize = CardNode::create(false)->getContentSize();
-    _cardSize = cardSize + Size(cardNodeOffset.x, cardNodeOffset.y);
+    _cardSize = cardSize + Size(cardOffsetOnTable.x, cardOffsetOnTable.y);
     
     // table parameters
     const auto& winSize = getWinSize();
     {
-        static const float edgeX(50.0f);
-        static const float edgeY(50.0f);
-        _tableMaxSize.width = _cardSize.width * columnCount + cardNodeOffset.x;
-        _tableMaxSize.height = winSize.height - edgeY * 2;
-        _tableBasePosition.x = winSize.width - edgeX - getCellSize().width;
-        _tableBasePosition.y = winSize.height - edgeY;
+        static const Vec2 edge(50, 70);
+        _tableMaxSize.width = _cardSize.width * tableColumnCount + cardOffsetOnTable.x;
+        _tableMaxSize.height = winSize.height - edge.y * 2;
+        _tableBasePosition.x = winSize.width - edge.x - getCellSize().width;
+        _tableBasePosition.y = winSize.height - edge.y;
+    }
+    
+    // deck parameters
+    {
+        static const Vec2 edge(60, 24);
+        _deckBasePosition = edge;
     }
     
     // tile parameters
     {
-        static const float edgeX(170.0f);
-        static const float edgeY(80.0f);
-        _tileBasePosition.x = edgeX;
-        _tileBasePosition.y = winSize.height - edgeY;
+        static const Vec2 edge(170, 80);
+        _tileBasePosition.x = edge.x;
+        _tileBasePosition.y = winSize.height - edge.y;
     }
     
     _techTree = new (nothrow) TechTree();
@@ -75,7 +94,9 @@ FormationLayer::FormationLayer()
     
     const auto& cards = DataManager::getInstance()->getCardDecks();
     for (auto iter = begin(cards); iter != end(cards); ++iter) {
-        _candidateCards.push_back(*iter);
+        const auto& name = *iter;
+        insertCandidateCard(FormationTableType::Hero, name);
+        insertCandidateCard(FormationTableType::Spell, name);
     }
     
     CocosUtils::loadPVR("pangzi");
@@ -99,19 +120,36 @@ bool FormationLayer::init()
     {
         // tiles
         createTiles();
-        createTableView();
+        
+        // deck
+        createDeck();
+        
+        // tables
+        for (int i = 0; i < tablesCount; ++i)
+        {
+            auto type = tableTypes[i];
+            createTableView(type);
+        }
+        
+        setTableType(FormationTableType::Hero);
         
         // buttons
         createExitButton();
-        createSwitchFormationButton();
-        
-        static const float edgeX(60);
-        const float y = (_tileBasePosition.y - FORMATION_HEIGHT * _tileSize.height) / 2;
-        createSaveFormationButton(Point(_tileBasePosition.x + edgeX, y));
-        createSetDefaultFormationButton(Point(_tileBasePosition.x + FORMATION_WIDTH * _tileSize.width - edgeX, y));
+        {
+            static const float offsetX(10.0f);
+            static const Point basePoint(345, getWinSize().height - 15);
+            createSwitchFormationButton(basePoint);
+            createSwitchTableButton(Point(_tableBasePosition.x + offsetX, basePoint.y));
+            
+            createSaveFormationButton(Point(_tableBasePosition.x + offsetX, _deckBasePosition.y));
+            createSetDefaultFormationButton(Point(_tableBasePosition.x + _tableMaxSize.width - offsetX, _deckBasePosition.y));
+        }
         
         // labels
-        updatePopulationCount(10);
+        updatePopulationCount(0);
+        updateSpellsCount(0);
+        
+        loadFormation(0);
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -140,10 +178,10 @@ void FormationLayer::onTouchMoved(Touch *touch, Event *unused_event)
 {
     if (_selectedCard.size() > 0) {
         const auto& point = touch->getLocation();
-        const auto& rect = getBoundingBox(_table);
+        const auto& rect = getBoundingBox(_thisTable);
         const bool isInTableView(rect.containsPoint(point));
         if (!isInTableView) {
-            _table->onTouchEnded(touch, unused_event);
+            _thisTable->onTouchEnded(touch, unused_event);
         }
         
         if (!_draggingNode) {
@@ -159,10 +197,52 @@ void FormationLayer::onTouchMoved(Touch *touch, Event *unused_event)
 
 void FormationLayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
-    if (_selectedCard.size() > 0) {
+    if (_selectedCard.size() > 0 && _draggingNode) {
         const auto& point = touch->getLocation();
-        onPlacedEnded(_selectedCard, point);
-        _selectedCard = "";
+        if (FormationTableType::Hero == _thisTableType) {
+            onPlacedEnded(_selectedCard, point);
+        } else {
+            const ssize_t idx = getIntersectedDeckIdx(_draggingNode->getBoundingBox());
+            bool refreshUI(false);
+            if (_isPickingSpell) {
+                if (CC_INVALID_INDEX != idx) {
+                    auto cnt = _pickedSpells.size();
+                    if (cnt < FORMATION_SPELLS_COUNT) {
+                        pickSpellCard(_selectedCard);
+                        refreshUI = true;
+                    } else if (_decks.size() > idx) {
+                        auto node = dynamic_cast<CardNode*>(_decks.at(idx)->getChildByTag(cardTagOnDeck));
+                        if (node) {
+                            exchangeSpellCards(node->getCardName(), _selectedCard);
+                            refreshUI = true;
+                        }
+                    }
+                }
+                
+                _isPickingSpell = false;
+            } else {
+                if (CC_INVALID_INDEX == idx) {
+                    cancelSpellCard(_selectedCard);
+                    refreshUI = true;
+                } else {
+                    string exchanged("");
+                    const auto& rect = getBoundingBox(_thisTable);
+                    if (rect.containsPoint(point)) {
+                        exchanged = "";
+                    }
+                    
+                    if (exchanged.size() > 0) {
+                        exchangeSpellCards(_selectedCard, exchanged);
+                        refreshUI = true;
+                    }
+                }
+            }
+            
+            if (refreshUI) {
+                refreshTable(_thisTable, true);
+                reloadDecks();
+            }
+        }
     }
     
     // clear
@@ -177,16 +257,20 @@ void FormationLayer::tableCellTouched(TableView* table, TableViewCell* cell)
 
 void FormationLayer::tableCellHighlight(TableView* table, TableViewCell* cell)
 {
-    
+    if (FormationTableType::Hero == _thisTableType) {
+        
+    } else {
+        _isPickingSpell = true;
+    }
 }
 
 #pragma mark - TableViewDataSource
 Size FormationLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
 {
     const Size size = getCellSize();
-    const ssize_t cnt = getCellsCount();
+    const ssize_t cnt = getCellsCount(table);
     if (idx == cnt - 1) {
-        return size + Size(0, cardNodeOffset.y);
+        return size + Size(0, cardOffsetOnTable.y);
     }
     
     return size;
@@ -200,10 +284,11 @@ TableViewCell* FormationLayer::tableCellAtIndex(TableView *table, ssize_t idx)
         cell = FormationCell::create();
     }
     
-    const ssize_t maxCnt = getCellsCount();
-    const size_t cnt = _candidateCards.size();
-    for (int i = 0; i < columnCount; ++i) {
-        const ssize_t index = idx * columnCount + i;
+    const ssize_t maxCnt = getCellsCount(table);
+    const auto& cards = _candidateCards.at(getTableType(table));
+    const size_t cnt = cards.size();
+    for (int i = 0; i < tableColumnCount; ++i) {
+        const ssize_t index = idx * tableColumnCount + i;
         auto cardNode = dynamic_cast<CardNode*>(cell->getNode(i));
         if (index < cnt) {
             if (!cardNode) {
@@ -214,10 +299,10 @@ TableViewCell* FormationLayer::tableCellAtIndex(TableView *table, ssize_t idx)
             }
             
             // we must update the position when the table was reloaded
-            const Point point(_cardSize.width * (i + 0.5f) - cardNodeOffset.x / 2, cardNode->getContentSize().height * 0.5f);
-            cardNode->setPosition(point + Point(0, (idx == maxCnt - 1) ? cardNodeOffset.y : 0));
+            const Point point(_cardSize.width * (i + 0.5f) - cardOffsetOnTable.x / 2, cardNode->getContentSize().height * 0.5f);
+            cardNode->setPosition(point + Point(0, (idx == maxCnt - 1) ? cardOffsetOnTable.y : 0));
             
-            const string& name = _candidateCards.at(index);
+            const string& name = cards.at(index);
             updateCardNode(cardNode, name);
         } else if (cardNode) {
             cardNode->removeFromParent();
@@ -230,7 +315,7 @@ TableViewCell* FormationLayer::tableCellAtIndex(TableView *table, ssize_t idx)
 
 ssize_t FormationLayer::numberOfCellsInTableView(TableView *table)
 {
-    return getCellsCount();
+    return getCellsCount(table);
 }
 
 #pragma mark - CardNodeObserver
@@ -239,7 +324,7 @@ void FormationLayer::onCardNodeTouchedBegan(CardNode* node)
     _selectedCard = node->getCardName();
     const auto& point = convertToNodeSpace(node->getParent()->convertToWorldSpace(node->getPosition()));
     createDraggingNode(_selectedCard, point);
-    if (_pickedCards.find(_selectedCard) != _pickedCards.end()) {
+    if (_pickedSpells.find(_selectedCard) != _pickedSpells.end()) {
         _draggingNode->setVisible(true);
     }
 }
@@ -255,14 +340,16 @@ void FormationLayer::createTiles()
 {
     for (int j = 0; j < FORMATION_HEIGHT; ++j) {
         for (int i = 0; i < FORMATION_WIDTH; ++i) {
-            auto node = Sprite::create("GameImages/public/test/f_1.png");
+            const auto idx = j * FORMATION_WIDTH + i;
+            const auto file = (0 == idx % 2) ? "GameImages/formation/ui_gezi48x48.png" : "GameImages/formation/ui_gezi48x48_1.png";
+            auto node = Sprite::create(file);
             addChild(node);
             
             const auto& size = node->getContentSize();
             node->setPosition(_tileBasePosition + Point(size.width * (i + 0.5f), -(size.height * (j + 0.5f))));
             
             TileInfo info;
-            info.idx = j * FORMATION_WIDTH + i;
+            info.idx = idx;
             info.node = node;
             info.midPoint = node->getPosition();
             _tiles.push_back(info);
@@ -274,42 +361,71 @@ void FormationLayer::createTiles()
     }
 }
 
-#pragma mark table
-void FormationLayer::createTableView()
+#pragma mark deck
+void FormationLayer::createDeck()
 {
-    TableView* tableView = TableView::create(this, _tableMaxSize);
-    tableView->setDelegate(this);
-    tableView->setDirection(extension::ScrollView::Direction::VERTICAL);
-    tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
-    tableView->setBounceable(false);
-    addChild(tableView);
-    
-    _table = tableView;
-    
-    refreshTable(false);
-}
-
-void FormationLayer::refreshTable(bool reload)
-{
-    if (_table) {
-        auto totalHeight = _cardSize.height * getCellsCount() + cardNodeOffset.y;
-        auto size = Size(_tableMaxSize.width, MIN(totalHeight, _tableMaxSize.height));
-        _table->setViewSize(size);
-        _table->setPosition(_tableBasePosition - Point(0, size.height));
-        
-        if (reload) {
-            const Point& offset = _table->getContentOffset();
-            _table->reloadData();
-            _table->setContentOffset(offset);
+    const unsigned int column(FORMATION_SPELLS_COUNT / deckRowCount);
+    for (int j = 0; j < deckRowCount; ++j) {
+        for (int i = 0; i < column; ++i) {
+            auto sprite = Sprite::create("GameImages/test/ui_jiabing.png");
+            addChild(sprite);
+            _decks.push_back(sprite);
+            
+            const auto& size = sprite->getContentSize();
+            static const Vec2 offset(9, 17);
+            sprite->setPosition(_deckBasePosition + Point((i + 0.5) * size.width + i * offset.x, (j + 0.5) * size.height + j * offset.y));
         }
     }
 }
 
-ssize_t FormationLayer::getCellsCount() const
+#pragma mark table
+void FormationLayer::createTableView(FormationTableType type)
 {
-    const size_t cnt(_candidateCards.size());
-    if (cnt > 0) {
-        return (cnt - 1) / columnCount + 1;
+    auto tableView = TableView::create(this, _tableMaxSize);
+    tableView->setDelegate(this);
+    tableView->setDirection(extension::ScrollView::Direction::VERTICAL);
+    tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
+    tableView->setBounceable(false);
+    tableView->setVisible(false);
+    tableView->setTag(static_cast<int>(type));
+    addChild(tableView);
+    
+    // 1. insert table
+    if (_tables.find(type) == end(_tables)) {
+        _tables.insert(make_pair(type, tableView));
+    } else {
+        assert(false);
+    }
+    
+    // 2. refresh table
+    refreshTable(tableView, false);
+}
+
+void FormationLayer::refreshTable(TableView* table, bool reload)
+{
+    if (table) {
+        auto totalHeight = _cardSize.height * getCellsCount(table) + cardOffsetOnTable.y;
+        auto size = Size(_tableMaxSize.width, MIN(totalHeight, _tableMaxSize.height));
+        table->setViewSize(size);
+        table->setPosition(_tableBasePosition - Point(0, size.height));
+        
+        if (reload) {
+            const auto& offset = table->getContentOffset();
+            table->reloadData();
+            table->setContentOffset(offset);
+        }
+    }
+}
+
+ssize_t FormationLayer::getCellsCount(TableView* table) const
+{
+    auto type = getTableType(table);
+    if (_candidateCards.find(type) != end(_candidateCards)) {
+        const auto& cards = _candidateCards.at(type);
+        const size_t cnt(cards.size());
+        if (cnt > 0) {
+            return (cnt - 1) / tableColumnCount + 1;
+        }
     }
     
     return 0;
@@ -348,28 +464,48 @@ void FormationLayer::createExitButton()
     button->setPosition(Point(winSize.width - size.width / 2, winSize.height - size.height / 2) - offset);
 }
 
-void FormationLayer::createSwitchFormationButton()
+void FormationLayer::createSwitchFormationButton(const Point& position)
 {
-    const auto basePosition = _tileBasePosition + Point(_tileSize.width * FORMATION_WIDTH, 0);
-    for (int i = FORMATION_MAX_COUNT - 1; i >= 0; --i) {
-        const int formationId = i + 1;
-        const string file = StringUtils::format("GameImages/public/test/f_b_%d.png", formationId);
-        auto button = Button::create(file, file);
-        button->addClickEventListener([this, formationId](Ref*) {
-            loadFormation(formationId);
+    for (int i = 0; i < FORMATION_MAX_COUNT; ++i) {
+        const auto normal("GameImages/formation/button_yellow_1.png");
+        const auto selected("GameImages/formation/button_blue.png");
+        auto button = Button::create(normal, selected, selected);
+        button->addClickEventListener([this, i](Ref*) {
+            loadFormation(i);
+        });
+        addChild(button);
+        _switchFormationButtons.push_back(button);
+        
+        static const Vec2 offset(10.0f, 0);
+        const auto& size = button->getContentSize();
+        button->setPosition(position + Point((size.width + offset.x) * i + size.width / 2, - (offset.y + size.height / 2)));
+    }
+}
+
+void FormationLayer::createSwitchTableButton(const Point& position)
+{
+    for (int i = 0; i < tablesCount; ++i) {
+        const auto normal("GameImages/formation/button_yellow_1.png");
+        const auto selected("GameImages/formation/button_blue.png");
+        auto button = Button::create(normal, selected);
+        button->addClickEventListener([this, i](Ref*) {
+            if (0 == i) {
+                setTableType(FormationTableType::Hero);
+            } else if (1 == i) {
+                setTableType(FormationTableType::Spell);
+            }
         });
         addChild(button);
         
-        static const Vec2 offset(10.0f, 5.0f);
-        const Size& size = button->getContentSize();
-        const int idx = FORMATION_MAX_COUNT - i - 1;
-        button->setPosition(basePosition - Point((size.width + offset.x) * idx + size.width / 2, - (offset.y + size.height / 2)));
+        static const Vec2 offset(40.0f, 0);
+        const auto& size = button->getContentSize();
+        button->setPosition(position + Point((size.width + offset.x) * i + size.width / 2, -(offset.y + size.height / 2)));
     }
 }
 
 void FormationLayer::createSaveFormationButton(const Point& position)
 {
-    static const string file("GameImages/public/test/f_b_save.png");
+    static const string file("GameImages/formation/f_b_save.png");
     auto button = Button::create(file, file);
     button->addClickEventListener([this](Ref*) {
         saveFormation();
@@ -377,12 +513,12 @@ void FormationLayer::createSaveFormationButton(const Point& position)
     addChild(button);
     
     const auto& size = button->getContentSize();
-    button->setPosition(position + Point(size.width / 2, 0));
+    button->setPosition(position + Point(size.width / 2, size.height / 2));
 }
 
 void FormationLayer::createSetDefaultFormationButton(const Point& position)
 {
-    static const string file("GameImages/public/test/f_b_default.png");
+    static const string file("GameImages/formation/f_b_default.png");
     auto button = Button::create(file, file);
     button->addClickEventListener([this](Ref*) {
         setDefaultFormation();
@@ -390,7 +526,7 @@ void FormationLayer::createSetDefaultFormationButton(const Point& position)
     addChild(button);
     
     const auto& size = button->getContentSize();
-    button->setPosition(position - Point(size.width / 2, 0));
+    button->setPosition(position + Point(-size.width / 2, size.height / 2));
 }
 
 #pragma mark labels
@@ -470,7 +606,7 @@ void FormationLayer::updateCardNode(CardNode* node, const string& name) const
             auto ct = _gameModeHMM->findCardTypeByName(name);
             if (ct) {
                 const auto& costs = ct->getCost();
-                static const string& name(RESOURCE_NAME);
+                static const auto& name(RESOURCE_NAME);
                 if (costs.find(name) != costs.end()) {
                     cost = costs.at(name) / GameConstants::MICRORES_PER_RES;
                 }
@@ -484,7 +620,12 @@ void FormationLayer::updateCardNode(CardNode* node, const string& name) const
 void FormationLayer::createDraggingNode(const string& name, const Point& point)
 {
     if (!_draggingNode && name.length() > 0) {
-        auto node = Sprite::create("GameImages/effects/backcircle_bule.png");
+        Node* node(nullptr);
+        if (FormationTableType::Hero == _thisTableType) {
+            node = Sprite::create("GameImages/effects/backcircle_bule.png");
+        } else {
+            node = createCardNode(name);
+        }
         node->setVisible(false);
         node->setPosition(point);
         addChild(node, topZOrder);
@@ -532,7 +673,155 @@ FormationUnitNode* FormationLayer::createUnitNode(const string& name)
     return node;
 }
 
+#pragma mark deck
+ssize_t FormationLayer::getIntersectedDeckIdx(const Rect& rect) const
+{
+    float intersectedArea(0);
+    ssize_t idx(CC_INVALID_INDEX);
+    for (int i = 0; i < _decks.size(); ++i) {
+        const cocos2d::Rect& bd = _decks.at(i)->getBoundingBox();
+        if (bd.intersectsRect(rect)) {
+            const Size& size = bd.unionWithRect(rect).size;
+            float area = size.width * size.height;
+            if (0 == intersectedArea || intersectedArea > area) {
+                intersectedArea = area;
+                idx = i;
+            }
+        }
+    }
+    
+    return idx;
+}
+
+void FormationLayer::pickSpellCard(const string& name)
+{
+    static const auto type = FormationTableType::Spell;
+    if (_candidateCards.find(type) != end(_candidateCards)) {
+        auto& cards = _candidateCards.at(type);
+        for (auto iter = begin(cards); iter != end(cards); ++iter) {
+            if (name == *iter) {
+                cards.erase(iter);
+                break;
+            }
+        }
+    }
+    
+    _pickedSpells.insert(name);
+}
+
+void FormationLayer::cancelSpellCard(const string& name)
+{
+    static const auto type = FormationTableType::Spell;
+    _pickedSpells.erase(name);
+    insertCandidateCard(type, name);
+    auto& cards = _candidateCards.at(type);
+    sort(begin(cards), end(cards), [](const string& first, const string& second){
+        return (first > second);
+    });
+}
+
+void FormationLayer::exchangeSpellCards(const string& picked, const string& candidate)
+{
+    pickSpellCard(candidate);
+    cancelSpellCard(picked);
+}
+
+void FormationLayer::reloadDecks()
+{
+    const size_t cnt = _decks.size();
+    // remove all
+    for (int i = 0; i < cnt; ++i) {
+        auto deck = _decks.at(i);
+        auto node = deck->getChildByTag(cardTagOnDeck);
+        if (node) {
+            deck->removeChild(node, true);
+        }
+    }
+    // add
+    int i = 0;
+    for (auto iter = begin(_pickedSpells); iter != end(_pickedSpells); ++iter, ++i) {
+        if (cnt > i) {
+            auto deck = _decks.at(i);
+            const auto& name = *iter;
+            auto node = createCardNode(name);
+            node->registerObserver(this);
+            node->setTag(cardTagOnDeck);
+            node->setSelected(name == _touchedCard);
+            deck->addChild(node);
+            const Size& size = deck->getContentSize();
+            node->setPosition(Size(size.width / 2, size.height / 2));
+        }
+    }
+    
+    updateSpellsCount(i);
+}
+
+void FormationLayer::selectCardOnDecks(const string& name)
+{
+    for (int i = 0; i < _decks.size(); ++i) {
+        Sprite* deck = _decks.at(i);
+        CardNode* node = dynamic_cast<CardNode*>(deck->getChildByTag(cardTagOnDeck));
+        if (node) {
+            const string& unitName = node->getCardName();
+            node->setSelected(unitName == name);
+        }
+    }
+}
+
 #pragma mark functions
+void FormationLayer::insertCandidateCard(FormationTableType type, const string& name)
+{
+    if (_candidateCards.find(type) == end(_candidateCards)) {
+        _candidateCards.insert(make_pair(type, vector<string>()));
+    }
+    
+    auto& cards = _candidateCards.at(type);
+    cards.push_back(name);
+}
+
+FormationTableType FormationLayer::getTableType(TableView* table) const
+{
+    if (table) {
+        const size_t cnt = _tables.size();
+        if (cnt < tablesCount) {
+            return tableTypes[cnt];
+        }
+        
+        return static_cast<FormationTableType>(table->getTag());
+    }
+    
+    return static_cast<FormationTableType>(-1);
+}
+
+void FormationLayer::setTableType(FormationTableType type)
+{
+    if (_thisTableType != type) {
+        _thisTableType = type;
+        
+        for (auto iter = begin(_tables); iter != end(_tables); ++iter) {
+            const bool isThisTable(iter->first == type);
+            auto table = iter->second;
+            table->setVisible(isThisTable);
+            
+            if (isThisTable) {
+                _thisTable = table;
+            }
+        }
+    }
+}
+
+string FormationLayer::getTableName(FormationTableType type) const
+{
+    switch (type) {
+        case FormationTableType::Hero:
+            return "英雄";
+        case FormationTableType::Spell:
+            return "法术";
+        default:
+            return "";
+    }
+}
+
 void FormationLayer::saveFormation()
 {
     
@@ -540,7 +829,13 @@ void FormationLayer::saveFormation()
 
 void FormationLayer::loadFormation(int idx)
 {
-    
+    _thisFormationIdx = idx;
+    for (int i = 0; i < _switchFormationButtons.size(); ++i) {
+        auto button = _switchFormationButtons.at(i);
+        if (button) {
+            button->setEnabled(idx != i);
+        }
+    }
 }
 
 void FormationLayer::setDefaultFormation()
