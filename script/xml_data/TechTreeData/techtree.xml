@@ -8,11 +8,11 @@
             <bullet speed="800" size="0" render_key="狼人基地子弹" />
         </skill>
     </unit>
-    <unit name="狼人箭塔" class="building" hp="1512" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="0" attacksight="600" size="100" height="50" render_key="狼人箭塔" put_cost="木头:2|木头:3|木头:4|木头:5|木头:6" rewarde="金子:10;木头:5">
-        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>    
-        <skill class="die" preperform="0.0" perform="10.0" cd="0.0"/>    
+    <unit name="狼人箭塔" class="building" hp="1512" mp="0" hpregen="0" mpregen="0" field="0" armor_type="null" armor="0" attacksight="600" size="100" height="50" render_key="狼人箭塔" rewarde="金子:10;木头:5">
+        <skill class="stop" preperform="0.0" perform="0.0" cd="0.0"/>
+        <skill class="die" preperform="0.0" perform="10.0" cd="0.0"/>
         <skill class="attack" preperform="30" perform="0.0" cd="48" min_damage="500" max_damage="580" deliver_class="physical" damage_distance="faraway" range="204" fields="3">
-            <bullet speed="800" size="0" render_key="箭"/>    
+            <bullet speed="800" size="0" render_key="箭"/>
         </skill>
     </unit>
     <!-- 辉月狼人族 -->
