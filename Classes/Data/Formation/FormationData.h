@@ -17,25 +17,30 @@ USING_NS_CC;
 
 class FormationData
 {
+protected:
+    typedef std::string FormationUnitType;
+    
 public:
-    FormationData();
+    FormationData(const std::string& serializedString);
     virtual ~FormationData();
     
-    const std::map<Point, std::string>& getHeroes() const;
-    const std::vector<std::string>& getSpells() const;
+    const std::map<Point, FormationUnitType>& getHeroes() const;
+    const std::vector<FormationUnitType>& getSpells() const;
     
-    void insertHero(const Point& point, const std::string& name);
+    void insertHero(const Point& point, const FormationUnitType& name);
     void removeHero(const Point& point);
     void exchangeHero(const Point& p1, const Point& p2);
     
-    void insertSpell(size_t idx, const std::string& name);
-    void removeSpell(const std::string& name);
+    void insertSpell(const FormationUnitType& name);
+    void removeSpell(const FormationUnitType& name);
     void removeSpell(size_t idx);
     void exchangeSpell(size_t idx1, size_t idx2);
     
+    void serialize(std::string& output);
+    
 private:
-    std::map<Point, std::string> _heroes;
-    std::vector<std::string> _spells;
+    std::map<Point, FormationUnitType> _heroes;
+    std::vector<FormationUnitType> _spells;
 };
 
 #endif /* FormationData_h */

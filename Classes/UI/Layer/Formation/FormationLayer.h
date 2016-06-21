@@ -13,7 +13,6 @@
 #include "cocos-ext.h"
 #include <vector>
 #include <map>
-#include <unordered_set>
 #include <unordered_map>
 #include "CardNode.h"
 
@@ -53,14 +52,6 @@ protected:
         Node* node;
         Point midPoint;
         TileInfo():idx(-1), node(nullptr), midPoint(Point::ZERO) {}
-    };
-    
-    class FormationInfo {
-    public:
-        FormationUnitNode* node;
-        std::string cardName;
-        FormationInfo():node(nullptr) {}
-        FormationInfo(const FormationInfo& instance):node(instance.node),cardName(instance.cardName) {}
     };
     
 public:
@@ -110,7 +101,7 @@ protected:
     
     // labels
     void updatePopulationCount(int count);
-    void updateSpellsCount(int count);
+    void updateSpellsCount(size_t count);
     
     // card
     CardNode* createCardNode(const std::string& name) const;
@@ -130,11 +121,16 @@ protected:
     void selectCardOnDecks(const std::string& name);
     
     // functions
+    void reloadAllCandidateCards();
+    void reloadCandidateCards(FormationTableType type);
     void insertCandidateCard(FormationTableType type, const std::string& name);
+    void removeCandidateCard(FormationTableType type, const std::string& name);
     FormationTableType getTableType(TableView* table) const;
     void setTableType(FormationTableType type);
     std::string getTableName(FormationTableType type) const;
-    void saveFormation();
+    Point formationIdx2Point(int idx) const;
+    int formationPoint2Idx(const Point& point) const;
+    void saveFormation(int idx);
     void loadFormation(int idx);
     void setDefaultFormation();
     void placeUnit(FormationUnitNode* node, const Point& point);
@@ -164,9 +160,11 @@ protected:
     std::vector<TileInfo> _tiles;
     Size _tileSize;
     Point _tileBasePosition;
+    std::unordered_map<int, FormationUnitNode*> _formationNodes;
     
     Node* _draggingNode;
     std::vector<Button*> _switchFormationButtons;
+    std::map<FormationTableType, Button*> _switchTableButtons;
     Label* _populationLabel;
     Label* _spellCountLabel;
     
@@ -178,10 +176,10 @@ protected:
     std::string _touchedCard;
     std::string _selectedCard;
     std::map<FormationTableType, std::vector<std::string>> _candidateCards;
-    std::vector<FormationData*> _formations;
-    std::unordered_set<std::string> _pickedSpells;
+    std::unordered_map<int, FormationData*> _formations;
+
     int _thisFormationIdx;
-    std::unordered_map<int, FormationInfo> _formation;
+    FormationData* _thisFormationData;
 };
 
 #endif /* FormationLayer_h */
