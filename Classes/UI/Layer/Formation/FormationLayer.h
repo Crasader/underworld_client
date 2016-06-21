@@ -176,7 +176,6 @@ protected:
     std::string _touchedCard;
     std::string _selectedCard;
     std::map<FormationTableType, std::vector<std::string>> _candidateCards;
-    std::unordered_map<int, FormationData*> _formations;
 
     int _thisFormationIdx;
     FormationData* _thisFormationData;

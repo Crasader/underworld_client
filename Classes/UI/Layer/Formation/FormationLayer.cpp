@@ -11,8 +11,8 @@
 #include "CocosUtils.h"
 #include "TechTree.h"
 #include "GameModeHMM.h"
+#include "GameData.h"
 #include "DataManager.h"
-#include "UserDefaultsDataManager.h"
 #include "FormationData.h"
 #include "FormationCell.h"
 #include "FormationUnitNode.h"
@@ -32,8 +32,6 @@ static const FormationTableType tableTypes[] = {
 static const unsigned int tablesCount = sizeof(tableTypes) / sizeof(FormationTableType);
 
 static inline const Size& getWinSize() { return Director::getInstance()->getWinSize(); }
-static inline string getFormationKey(int idx) { return StringUtils::format("formation_ket_%d", idx).c_str(); }
-static inline string getDefaultFormationKey() { return "default_formation"; }
 
 FormationLayer* FormationLayer::create()
 {
@@ -106,9 +104,6 @@ FormationLayer::~FormationLayer()
     removeAllChildren();
     CC_SAFE_DELETE(_techTree);
     CC_SAFE_DELETE(_gameModeHMM);
-    for (int i = 0; i < _formations.size(); ++i) {
-        CC_SAFE_DELETE(_formations.at(i));
-    }
 }
 
 void FormationLayer::registerObserver(FormationLayerObserver *observer)
@@ -151,7 +146,7 @@ bool FormationLayer::init()
         
         setTableType(FormationTableType::Hero);
         
-        const int defaultFormation = UserDefaultsDataManager::getInstance()->getIntegerForKey(getDefaultFormationKey().c_str(), 0);
+        const int defaultFormation = GameData::getInstance()->currentUser()->getDefaultFormationId();
         loadFormation(defaultFormation);
         
         auto eventListener = EventListenerTouchOneByOne::create();
@@ -575,7 +570,7 @@ void FormationLayer::updatePopulationCount(int count)
 
 void FormationLayer::updateSpellsCount(size_t count)
 {
-    const string msg = StringUtils::format("%ld/%d", count, FORMATION_POPULATION_COUNT);
+    const string msg = StringUtils::format("%ld/%d", count, FORMATION_SPELLS_COUNT);
     if (!_spellCountLabel) {
         auto hintLabel = CocosUtils::createLabel("法术资源", DEFAULT_FONT_SIZE);
         addChild(hintLabel);
@@ -670,7 +665,15 @@ void FormationLayer::unitBackToFormation()
 
 FormationUnitNode* FormationLayer::createUnitNode(const string& name)
 {
-    auto node = FormationUnitNode::create(name, _tileSize);
+    string renderKey(name);
+    if (_techTree) {
+        auto ut = _techTree->findUnitTypeByName(name);
+        if (ut) {
+            renderKey = ut->getRenderKey();
+        }
+    }
+    
+    auto node = FormationUnitNode::create(renderKey, _tileSize);
     addChild(node);
     node->setTouchEnabled(true);
     node->setSwallowTouches(true);
@@ -883,12 +886,7 @@ int FormationLayer::formationPoint2Idx(const Point& point) const
 
 void FormationLayer::saveFormation(int idx)
 {
-    if (_formations.find(idx) != end(_formations)) {
-        string output;
-        auto data = _formations.at(idx);
-        data->serialize(output);
-        UserDefaultsDataManager::getInstance()->setStringForKey(getFormationKey(idx).c_str(), output);
-    }
+    GameData::getInstance()->currentUser()->saveFormationData(idx);
 }
 
 void FormationLayer::loadFormation(int idx)
@@ -903,13 +901,7 @@ void FormationLayer::loadFormation(int idx)
             }
         }
         
-        if (_formations.find(idx) == end(_formations)) {
-            const auto& string = UserDefaultsDataManager::getInstance()->getStringForKey(getFormationKey(idx).c_str(), "");
-            auto data = new FormationData(string);
-            _formations.insert(make_pair(idx, data));
-        }
-        
-        _thisFormationData = _formations.at(idx);
+        _thisFormationData = GameData::getInstance()->currentUser()->getFormationData(idx);
         
         // 1. heroes
         for (auto iter = begin(_formationNodes); iter != end(_formationNodes); ++iter) {
@@ -946,7 +938,7 @@ void FormationLayer::loadFormation(int idx)
 
 void FormationLayer::setDefaultFormation()
 {
-    UserDefaultsDataManager::getInstance()->setIntegerForKey(getDefaultFormationKey().c_str(), _thisFormationIdx);
+    GameData::getInstance()->currentUser()->setDefaultFormationId(_thisFormationIdx);
 }
 
 void FormationLayer::placeUnit(FormationUnitNode* node, const Point& point)

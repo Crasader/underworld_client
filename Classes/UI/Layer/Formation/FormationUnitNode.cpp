@@ -7,7 +7,13 @@
 //
 
 #include "FormationUnitNode.h"
+#include "CocosGlobal.h"
 #include "CocosUtils.h"
+
+#if !USING_PVR
+#include "DataManager.h"
+#include "URConfigData.h"
+#endif
 
 using namespace std;
 
@@ -38,9 +44,22 @@ bool FormationUnitNode::init(const string& name, const Size& size)
         _name = name;
         
         setContentSize(size);
+//# if USING_PVR
+#if true
         auto sprite = CocosUtils::playAnimation("fatso-stand/fatso-stand-3", 10, true, 0, DEFAULT_FRAME_DELAY, nullptr);
         sprite->setPosition(Point(size.width / 2, size.height / 2));
         addChild(sprite);
+#else
+        auto data = DataManager::getInstance()->getURConfigData(name);
+        if (data) {
+            auto file = data->getPrefix() + StringUtils::format("-standby-%d.csb", 3);
+            auto node = CocosUtils::playCSBAnimation(file, true, 0, nullptr);
+            if (!data->isFaceRight()) {
+                node->setScaleX(-1 * node->getScaleX());
+            }
+            addChild(node);
+        }
+#endif
         
         return true;
     }

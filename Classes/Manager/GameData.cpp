@@ -40,6 +40,21 @@ GameData::GameData()
 {
     generateUUID();
     fetchIAPInfo(nullptr, nullptr, true);
+    
+    // TODO: remove test code
+    {
+        rapidjson::Document document;
+        document.SetObject();
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        // MUST alloc a new string, otherwise it will cause some bug
+        static string kAuthString;
+        kAuthString.assign("asdf");
+        document.AddMember(kUID, 1, allocator);
+        document.AddMember(kAuth, rapidjson::Value(kAuthString.c_str(), allocator), allocator);
+        document.AddMember(kNew, false, allocator);
+        
+        _user = new User(document);
+    }
 }
 
 GameData::~GameData()
