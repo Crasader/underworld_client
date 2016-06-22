@@ -56,7 +56,9 @@ public:
     void launchPvp(const UnderWorld::Core::GameContentSetting& setting,
         const std::vector<std::string>& cards);
     void launchPve(int map, const UnderWorld::Core::GameContentSetting& setting,
-        const std::vector<std::string>& cards);
+        const std::vector<std::string>& cards,
+        const UnderWorld::Core::GameModeHMMSetting::InitUnitList& initList,
+        const std::vector<UnderWorld::Core::UnitSetting>& unitPool);
     void cancelLaunch();
     void quit();
     

@@ -163,7 +163,9 @@ void UnderworldClient::launchPvp(const GameContentSetting& setting,
 }
     
 void UnderworldClient::launchPve(int map, const GameContentSetting& setting,
-    const std::vector<std::string>& cards) {
+    const std::vector<std::string>& cards,
+    const UnderWorld::Core::GameModeHMMSetting::InitUnitList& initList,
+    const std::vector<UnderWorld::Core::UnitSetting>& unitPool) {
     if (_state != kIdle) return;
     
     loadTechTree();
@@ -171,6 +173,8 @@ void UnderworldClient::launchPve(int map, const GameContentSetting& setting,
     int mapIndex = _settings.getFactionSetting().getMapIndex(_settings.getFactionSetting().getThisFactionIndex());
     _settings.getFactionSetting().setContentSetting(setting, mapIndex);
     _hmmSetting._cards[mapIndex] = cards;
+    _hmmSetting._initUnits[mapIndex] = initList;
+    _hmmSetting._unitPools[mapIndex] = unitPool;
     
     _mode = kPve;
     _terminal.init(_name, _settings, new GameModeHMM(), &_hmmSetting,
