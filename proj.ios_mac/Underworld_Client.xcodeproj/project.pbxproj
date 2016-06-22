@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0404BE661D1A7FE500B46BAA /* UWRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0404BE641D1A7FE500B46BAA /* UWRender.cpp */; };
+		0404BE711D1B970000B46BAA /* Gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0404BE6F1D1B970000B46BAA /* Gui.cpp */; };
+		0404BE741D1B988A00B46BAA /* WorldRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0404BE721D1B988A00B46BAA /* WorldRender.cpp */; };
+		0404BE771D1BC7A300B46BAA /* WorldObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0404BE751D1BC7A300B46BAA /* WorldObject.cpp */; };
 		045116E21BCFBA39002AA721 /* Clock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116DC1BCFBA39002AA721 /* Clock.cpp */; };
 		045116E31BCFBA39002AA721 /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116DE1BCFBA39002AA721 /* Map.cpp */; };
 		045116E41BCFBA39002AA721 /* World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116E01BCFBA39002AA721 /* World.cpp */; };
@@ -28,6 +32,7 @@
 		047CBF8A1CAFE6AB0035DAF9 /* InstanceHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047CBF881CAFE6AB0035DAF9 /* InstanceHelper.cpp */; };
 		0487A6671CC897F9005FE8D0 /* GameMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0487A6651CC897F9005FE8D0 /* GameMode.cpp */; };
 		0487A66C1CC8A90D005FE8D0 /* GameModeHMM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0487A66A1CC8A90D005FE8D0 /* GameModeHMM.cpp */; };
+		04E846951D1D02E60041FAC3 /* WorldObjectRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04E846931D1D02E60041FAC3 /* WorldObjectRender.cpp */; };
 		1AC6FB21180E996B004C840B /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FAF9180E9839004C840B /* libcocos2d Mac.a */; };
 		1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FB07180E9839004C840B /* libcocos2d iOS.a */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -308,6 +313,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0404BE641D1A7FE500B46BAA /* UWRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UWRender.cpp; path = Core/External/Render/UWRender.cpp; sourceTree = "<group>"; };
+		0404BE651D1A7FE500B46BAA /* UWRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UWRender.h; path = Core/External/Render/UWRender.h; sourceTree = "<group>"; };
+		0404BE6F1D1B970000B46BAA /* Gui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gui.cpp; path = Core/External/Render/Gui/Gui.cpp; sourceTree = "<group>"; };
+		0404BE701D1B970000B46BAA /* Gui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui.h; path = Core/External/Render/Gui/Gui.h; sourceTree = "<group>"; };
+		0404BE721D1B988A00B46BAA /* WorldRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WorldRender.cpp; path = Core/External/Render/WorldRender.cpp; sourceTree = "<group>"; };
+		0404BE731D1B988A00B46BAA /* WorldRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorldRender.h; path = Core/External/Render/WorldRender.h; sourceTree = "<group>"; };
+		0404BE751D1BC7A300B46BAA /* WorldObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WorldObject.cpp; path = Core/Unit/Instance/WorldObject.cpp; sourceTree = "<group>"; };
+		0404BE761D1BC7A300B46BAA /* WorldObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorldObject.h; path = Core/Unit/Instance/WorldObject.h; sourceTree = "<group>"; };
 		045116DC1BCFBA39002AA721 /* Clock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Clock.cpp; path = Core/World/Clock.cpp; sourceTree = "<group>"; };
 		045116DD1BCFBA39002AA721 /* Clock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Clock.h; path = Core/World/Clock.h; sourceTree = "<group>"; };
 		045116DE1BCFBA39002AA721 /* Map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Map.cpp; path = Core/World/Map.cpp; sourceTree = "<group>"; };
@@ -352,6 +365,8 @@
 		0487A6661CC897F9005FE8D0 /* GameMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameMode.h; path = Core/Game/GameMode.h; sourceTree = "<group>"; };
 		0487A66A1CC8A90D005FE8D0 /* GameModeHMM.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameModeHMM.cpp; path = Core/Game/GameModes/GameModeHMM.cpp; sourceTree = "<group>"; };
 		0487A66B1CC8A90D005FE8D0 /* GameModeHMM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameModeHMM.h; path = Core/Game/GameModes/GameModeHMM.h; sourceTree = "<group>"; };
+		04E846931D1D02E60041FAC3 /* WorldObjectRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WorldObjectRender.cpp; path = Core/External/Render/WorldObjectRender.cpp; sourceTree = "<group>"; };
+		04E846941D1D02E60041FAC3 /* WorldObjectRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorldObjectRender.h; path = Core/External/Render/WorldObjectRender.h; sourceTree = "<group>"; };
 		04FF24601C4A497100A66D71 /* GameSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameSettings.cpp; path = Core/Game/GameSettings.cpp; sourceTree = "<group>"; };
 		1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
@@ -886,6 +901,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0404BE6E1D1B96C300B46BAA /* Gui */ = {
+			isa = PBXGroup;
+			children = (
+				0404BE6F1D1B970000B46BAA /* Gui.cpp */,
+				0404BE701D1B970000B46BAA /* Gui.h */,
+			);
+			name = Gui;
+			sourceTree = "<group>";
+		};
 		045116D51BCFB9E7002AA721 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -992,6 +1016,8 @@
 				3087FF071C9FD0CB004E31F6 /* Magic.h */,
 				3070302C1CD3253B0077D357 /* Produce.cpp */,
 				3070302D1CD3253B0077D357 /* Produce.h */,
+				0404BE751D1BC7A300B46BAA /* WorldObject.cpp */,
+				0404BE761D1BC7A300B46BAA /* WorldObject.h */,
 			);
 			name = Instance;
 			sourceTree = "<group>";
@@ -1240,6 +1266,13 @@
 		30F9982A1D06DE5200D56172 /* Render */ = {
 			isa = PBXGroup;
 			children = (
+				0404BE6E1D1B96C300B46BAA /* Gui */,
+				0404BE641D1A7FE500B46BAA /* UWRender.cpp */,
+				0404BE651D1A7FE500B46BAA /* UWRender.h */,
+				0404BE721D1B988A00B46BAA /* WorldRender.cpp */,
+				0404BE731D1B988A00B46BAA /* WorldRender.h */,
+				04E846931D1D02E60041FAC3 /* WorldObjectRender.cpp */,
+				04E846941D1D02E60041FAC3 /* WorldObjectRender.h */,
 			);
 			name = Render;
 			sourceTree = "<group>";
@@ -2374,6 +2407,7 @@
 				A1D461431C3E111B00E8E60B /* UserData.cpp in Sources */,
 				A1F3D2351D1D05CD00EB5C17 /* AbstractUILayer.cpp in Sources */,
 				A14B5EFB1C311908006FB0DB /* Addon.cpp in Sources */,
+				0404BE771D1BC7A300B46BAA /* WorldObject.cpp in Sources */,
 				A1720E901BCCE19300217E98 /* MD5Verifier.cpp in Sources */,
 				047CBF8A1CAFE6AB0035DAF9 /* InstanceHelper.cpp in Sources */,
 				A1DA08CC1CB61CEA00846300 /* BRConfigData.cpp in Sources */,
@@ -2397,6 +2431,7 @@
 				6308F93B1CA02098009D2BFC /* TCPClient.cpp in Sources */,
 				3031641A1CFD99AF00DBAB04 /* Heuristic.cpp in Sources */,
 				308B84691BE3856F00377802 /* AIBrain.cpp in Sources */,
+				04E846951D1D02E60041FAC3 /* WorldObjectRender.cpp in Sources */,
 				A1720E7B1BCCE0F000217E98 /* NumberJump.cpp in Sources */,
 				A108A7B31D25253700987658 /* AchievementNode.cpp in Sources */,
 				A1F5BFA81C1FDFBE007C08CB /* ResourceNode.cpp in Sources */,
@@ -2413,8 +2448,10 @@
 				3028EBC61BFF0D4800511C51 /* Condition.cpp in Sources */,
 				3019BAB91C9953FB003258DB /* AuraType.cpp in Sources */,
 				A1D745C01C1AB7C40020BC1C /* DefeatLayer.cpp in Sources */,
+				0404BE661D1A7FE500B46BAA /* UWRender.cpp in Sources */,
 				A1D745C11C1AB7C40020BC1C /* MapLayer.cpp in Sources */,
 				A19D6B0C1D1802170088AF23 /* FormationData.cpp in Sources */,
+				0404BE741D1B988A00B46BAA /* WorldRender.cpp in Sources */,
 				045116F51BCFBA44002AA721 /* CommandType.cpp in Sources */,
 				3070302B1CD1E6D70077D357 /* ProduceType.cpp in Sources */,
 				308B84661BE3853C00377802 /* AIBody.cpp in Sources */,
@@ -2438,6 +2475,7 @@
 				A10612021C3D22260065070F /* HeroPieceData.cpp in Sources */,
 				A1F1B6DF1D23772F00E4CDEE /* TalentInfoNode.cpp in Sources */,
 				300098CD1BD0A94B00B6E284 /* Coordinate.cpp in Sources */,
+				0404BE711D1B970000B46BAA /* Gui.cpp in Sources */,
 				A1FC1A091C97C2AE00270B50 /* NSString+Extended.mm in Sources */,
 				045116F41BCFBA44002AA721 /* BulletType.cpp in Sources */,
 				0451170A1BCFBA53002AA721 /* Skill.cpp in Sources */,

@@ -198,7 +198,7 @@ void GameRender::updateUnits(const Game* game, int index)
     
     for (int i = 0; i < f->getUnitCount(); ++i) {
         const Unit* unit = f->getUnitByIndex(i);
-        const int key = unit->getUnitId();
+        const int key = unit->getId();
         const Coordinate32& pos = unit->getCenterPos();
         const Skill* skill = unit->getCurrentSkill();
         if (skill) {
@@ -246,49 +246,49 @@ void GameRender::updateUnits(const Game* game, int index)
 
 void GameRender::updateBullets(const Game* game)
 {
-    for (int i = 0; i < _world->getBulletCount(); ++i) {
-        const Bullet* bullet = _world->getBullet(i);
-        const Coordinate32& pos = bullet->getPos();
-        const Coordinate32& targetPos = bullet->targetPos();
-        const bool isExploded(bullet->isExploded());
-        if (_allBulletNodes.find(bullet) != _allBulletNodes.end()) {
-            // already exist, update it
-            BulletNode* node = _allBulletNodes.at(bullet);
-            node->update();
-            if (isExploded) {
-                const BulletType* bt = bullet->getBulletType();
-                if (bt && _mapLayer) {
-                    _mapLayer->addBulletExplosionEffect(bt->getRenderKey(), pos);
-                }
-                node->removeFromParent();
-                _allBulletNodes.erase(bullet);
-                _bulletParams.erase(bullet);
-            } else {
-                const pair<Coordinate32, float>& params = _bulletParams.at(bullet);
-                const Coordinate32& opos = params.first;
-                const float h = params.second;
-                const float d = sqrt(pow(abs(opos.x- targetPos.x), 2) + pow(abs(opos.y - targetPos.y), 2));
-                const float distance = sqrt(pow(abs(pos.x- opos.x), 2) + pow(abs(pos.y - opos.y), 2));
-                float height = 0;
-                const float bulletMaxHeightFactor = bullet->getBulletType()->getHeight();
-                if (d > 0) {
-                    const float a = - (2.0f * d * bulletMaxHeightFactor + h + 2.0f * sqrt(pow(d * bulletMaxHeightFactor, 2) + d * h * bulletMaxHeightFactor)) / pow(d, 2);
-                    const float b = 2.0f * (d * bulletMaxHeightFactor + sqrt(pow(d * bulletMaxHeightFactor, 2) + d * h * bulletMaxHeightFactor)) / d;
-                    height = a * pow(distance, 2) + b * distance + h;
-                }
-                _mapLayer->repositionUnit(node, pos + Coordinate32(0, height));
-            }
-        } else {
-            if (!isExploded) {
-                BulletNode* node = BulletNode::create(bullet);
-                node->registerObserver(this);
-                const float height = bullet->getHeight();
-                _mapLayer->addUnit(node, pos + Coordinate32(0, height));
-                _allBulletNodes.insert(make_pair(bullet, node));
-                _bulletParams.insert(make_pair(bullet, make_pair(pos, height)));
-            }
-        }
-    }
+//    for (int i = 0; i < _world->getBulletCount(); ++i) {
+//        const Bullet* bullet = _world->getBullet(i);
+//        const Coordinate32& pos = bullet->getPos();
+//        const Coordinate32& targetPos = bullet->targetPos();
+//        const bool isExploded(bullet->isExploded());
+//        if (_allBulletNodes.find(bullet) != _allBulletNodes.end()) {
+//            // already exist, update it
+//            BulletNode* node = _allBulletNodes.at(bullet);
+//            node->update();
+//            if (isExploded) {
+//                const BulletType* bt = bullet->getBulletType();
+//                if (bt && _mapLayer) {
+//                    _mapLayer->addBulletExplosionEffect(bt->getRenderKey(), pos);
+//                }
+//                node->removeFromParent();
+//                _allBulletNodes.erase(bullet);
+//                _bulletParams.erase(bullet);
+//            } else {
+//                const pair<Coordinate32, float>& params = _bulletParams.at(bullet);
+//                const Coordinate32& opos = params.first;
+//                const float h = params.second;
+//                const float d = sqrt(pow(abs(opos.x- targetPos.x), 2) + pow(abs(opos.y - targetPos.y), 2));
+//                const float distance = sqrt(pow(abs(pos.x- opos.x), 2) + pow(abs(pos.y - opos.y), 2));
+//                float height = 0;
+//                const float bulletMaxHeightFactor = bullet->getBulletType()->getHeight();
+//                if (d > 0) {
+//                    const float a = - (2.0f * d * bulletMaxHeightFactor + h + 2.0f * sqrt(pow(d * bulletMaxHeightFactor, 2) + d * h * bulletMaxHeightFactor)) / pow(d, 2);
+//                    const float b = 2.0f * (d * bulletMaxHeightFactor + sqrt(pow(d * bulletMaxHeightFactor, 2) + d * h * bulletMaxHeightFactor)) / d;
+//                    height = a * pow(distance, 2) + b * distance + h;
+//                }
+//                _mapLayer->repositionUnit(node, pos + Coordinate32(0, height));
+//            }
+//        } else {
+//            if (!isExploded) {
+//                BulletNode* node = BulletNode::create(bullet);
+//                node->registerObserver(this);
+//                const float height = bullet->getHeight();
+//                _mapLayer->addUnit(node, pos + Coordinate32(0, height));
+//                _allBulletNodes.insert(make_pair(bullet, node));
+//                _bulletParams.insert(make_pair(bullet, make_pair(pos, height)));
+//            }
+//        }
+//    }
 }
 
 void GameRender::updateUILayer()
@@ -395,7 +395,7 @@ bool GameRender::isValidAoeSpell(const SpellType* spellType) const
 void GameRender::hurtUnit(const Unit* target, const string& trigger)
 {
     if (target && kSkillClass_Die != target->getCurrentSkill()->getSkillType()->getSkillClass()) {
-        const int key = target->getUnitId();
+        const int key = target->getId();
         if (_allUnitNodes.find(key) != _allUnitNodes.end()) {
             UnitNode* node = _allUnitNodes.at(key);
             if (node) {
@@ -748,7 +748,7 @@ void GameRender::tryToUseCard(const string& card, int idx, const Point& point)
                         if (spellName.find(SPELL_NAME_FIREBALL) != string::npos) {
                             auto core = getCore();
                             if (core) {
-                                const int unitId = core->getUnitId();
+                                const int unitId = core->getId();
                                 if (_allUnitNodes.find(unitId) != end(_allUnitNodes)) {
                                     auto node = _allUnitNodes.at(unitId);
                                     if (node) {

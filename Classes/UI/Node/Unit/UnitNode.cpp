@@ -762,7 +762,7 @@ void UnitNode::updateAnimation(const Skill* skill,
                     
                     // the unit might has been destroyed when animation finished,
                     // so save the unitId before playing the animation
-                    const int unitId = _unit->getUnitId();
+                    const int unitId = _unit->getId();
                     playAnimation(file, true, false, 0.0f, frameIndex, flip, [=]() {
                         if (_observer) {
                             _observer->onUnitNodePlayedDeadAnimation(unitId);
@@ -1233,7 +1233,7 @@ void UnitNode::updateFeatures(const Game* game)
                     string resource = iter->first;
                     float amount = iter->second;
                     string scheduleKey = rollHintScheduleKeyPrefix
-                    + UnderWorldCoreUtils::to_string(_unit->getUnitId())
+                    + UnderWorld::Core::UnderWorldCoreUtils::to_string(_unit->getId())
                     + rollHintScheduleKeySplitor
                     + UnderWorldCoreUtils::to_string(++_rollHintCounter);
                     rollHintResource(resource, amount, delay * index);
