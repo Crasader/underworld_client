@@ -123,11 +123,10 @@ void BattleScene::start()
             for (auto iter = begin(heroes); iter != end(heroes); ++iter) {
                 static const Point basePosition(240, 120);
                 const auto& coordinate = iter->first;
-                Point point = basePosition + Point(FORMATION_TILE_WIDTH * (coordinate.x + 0.5f), FORMATION_TILE_HEIGHT * (coordinate.y + 0.5f));
                 
-                pair<string, UnderWorld::Core::Coordinate32> pair;
+                pair<string, int> pair;
                 pair.first = iter->second;
-                pair.second = _render->point2Coordinate(point);
+                pair.second = coordinate.y + FORMATION_WIDTH + coordinate.x;
                 
                 unitList.push_back(pair);
             }
