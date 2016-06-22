@@ -38,16 +38,16 @@ void SoundManager::purge()
 }
 
 SoundManager::SoundManager()
-{
-}
+:_isMusicOn(true)
+,_isSoundOn(true)
+,_isPaused(false)
+{}
 
 SoundManager::~SoundManager()
-{
-    
-}
+{}
 
 #pragma mark - config
-const string& SoundManager::getCurrentMusic()
+const string& SoundManager::getCurrentMusic() const
 {
     return _playingMusic;
 }
@@ -57,7 +57,7 @@ void SoundManager::setMusicOn(bool on)
     if (on != _isMusicOn)
     {
         _isMusicOn = on;
-        UserDefaultsDataManager::getInstance()->setMusicOn(on);
+        UserDefaultsDataManager::setMusicOn(on);
         
         if (on)
         {
@@ -70,7 +70,7 @@ void SoundManager::setMusicOn(bool on)
     }
 }
 
-bool SoundManager::isMusicOn()
+bool SoundManager::isMusicOn() const
 {
     return _isMusicOn;
 }
@@ -80,7 +80,7 @@ void SoundManager::setSoundOn(bool on)
     if (on != _isSoundOn)
     {
         _isSoundOn = on;
-        UserDefaultsDataManager::getInstance()->setSoundOn(on);
+        UserDefaultsDataManager::setSoundOn(on);
         
         if (false == on)
         {
@@ -89,7 +89,7 @@ void SoundManager::setSoundOn(bool on)
     }
 }
 
-bool SoundManager::isSoundOn()
+bool SoundManager::isSoundOn() const
 {
     return _isSoundOn;
 }

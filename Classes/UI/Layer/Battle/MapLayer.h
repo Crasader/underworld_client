@@ -40,6 +40,7 @@ public:
     virtual ~MapLayer();
     
     void registerObserver(MapLayerObserver *observer);
+    const Size& getMapSize() const;
     Coordinate32 point2Coordinate(const Point& point) const;
     
     // unit

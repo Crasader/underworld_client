@@ -10,43 +10,25 @@
 #define UserDefaultsDataManager_h
 
 #include <iostream>
-#include <set>
-#include "CocosGlobal.h"
 
-class UserDefaultsDataManager
+namespace UserDefaultsDataManager
 {
-public:
-    static UserDefaultsDataManager* getInstance();
-    static void purge();
+    int getIntegerForKey(const char* pKey, int defaultValue);
+    void setIntegerForKey(const char* pKey, int value);
+    std::string getStringForKey(const char* pKey, const std::string & defaultValue);
+    void setStringForKey(const char* pKey, const std::string & value);
+    std::string getStringForKeyWithAES(const char* pKey, const std::string & defaultValue);
+    void setStringForKeyWithAES(const char* pKey, const std::string & value);
+    bool getBoolForKey(const char* pKey, bool defaultValue);
+    void setBoolForKey(const char* pKey, bool value);
     
-    int getIntegerForKey(const char* pKey, int defaultValue) const;
-    void setIntegerForKey(const char* pKey, int value) const;
-    std::string getStringForKey(const char* pKey, const std::string & defaultValue) const;
-    void setStringForKey(const char* pKey, const std::string & value) const;
-    std::string getStringForKeyWithAES(const char* pKey, const std::string & defaultValue) const;
-    void setStringForKeyWithAES(const char* pKey, const std::string & value) const;
-    bool getBoolForKey(const char* pKey, bool defaultValue) const;
-    void setBoolForKey(const char* pKey, bool value) const;
+    void flush();
     
-    void getSelectedCards(std::set<std::string>& output) const;
-    void setSelectedCards(const std::set<std::string>& output) const;
+    void setSoundOn(bool on);
+    bool getSoundOn();
     
-protected:
-    UserDefaultsDataManager();
-    virtual ~UserDefaultsDataManager();
-    M_DISALLOW_COPY_AND_ASSIGN(UserDefaultsDataManager);
-    
-public:
-    void flush() const;
-    
-    void setFinishTutorialTag(int index) const;
-    bool hasFinishedTutorial(int index) const;
-    
-    void setSoundOn(bool on) const;
-    bool getSoundOn() const;
-    
-    void setMusicOn(bool on) const;
-    bool getMusicOn() const;
+    void setMusicOn(bool on);
+    bool getMusicOn();
 };
 
 #endif /* UserDefaultsDataManager_h */

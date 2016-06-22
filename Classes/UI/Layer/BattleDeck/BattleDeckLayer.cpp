@@ -13,8 +13,9 @@
 #include "LocalHelper.h"
 #include "BattleDeckUnitInfoNode.h"
 #include "DataManager.h"
-#include "UserDefaultsDataManager.h"
+#include "GameData.h"
 #include "SoundManager.h"
+#include "FormationData.h"
 #include "Utils.h"
 #include "TechTree.h"
 #include "GameModeHMM.h"
@@ -49,6 +50,7 @@ BattleDeckLayer::BattleDeckLayer()
 ,_isExtracting(false)
 ,_techTree(nullptr)
 ,_gameModeHMM(nullptr)
+,_defaultFormationData(nullptr)
 ,_infoNode(nullptr)
 ,_selectedCardsLabel(nullptr)
 ,_dragNode(nullptr)
@@ -162,8 +164,9 @@ void BattleDeckLayer::onEnter()
 {
     AbstractUILayer::onEnter();
     
-    if (_pickedCards.size() > 0) {
-        _touchedCard = *(begin(_pickedCards));
+    const auto& pickedCards = getPickedCards();
+    if (pickedCards.size() > 0) {
+        _touchedCard = pickedCards.front();
         selectCardOnDecks(_touchedCard);
     } else if (_candidateCards.size() > 0) {
         _touchedCard = *(begin(_candidateCards));
@@ -333,8 +336,14 @@ void BattleDeckLayer::onCardNodeTouchedBegan(CardNode* node)
     _selectedCard = node->getCardName();
     createDragNode(_selectedCard);
     _dragNode->setPosition(_background->convertToNodeSpace(node->getParent()->convertToWorldSpace(node->getPosition())));
-    if (_pickedCards.find(_selectedCard) != _pickedCards.end()) {
-        _dragNode->setVisible(true);
+    
+    const auto& pickedCards = getPickedCards();
+    for (int i = 0; i < pickedCards.size(); ++i) {
+        const auto& name = pickedCards.at(i);
+        if (name == _selectedCard) {
+            _dragNode->setVisible(true);
+            break;
+        }
     }
 }
 
@@ -347,8 +356,23 @@ void BattleDeckLayer::onCardNodeTouchedEnded(CardNode* node, bool isValid)
     if (lastName != currentName) {
         _touchedCard = currentName;
         
-        const bool lastInDeck(_pickedCards.find(lastName) != end(_pickedCards));
-        const bool currentInDeck(_pickedCards.find(currentName) != end(_pickedCards));
+        bool lastInDeck(false);
+        bool currentInDeck(false);
+        const auto& pickedCards = getPickedCards();
+        for (int i = 0; i < pickedCards.size(); ++i) {
+            const auto& name = pickedCards.at(i);
+            if (name == lastName) {
+                lastInDeck = true;
+            }
+            
+            if (name == currentName) {
+                currentInDeck = true;
+            }
+            
+            if (lastInDeck && currentInDeck) {
+                break;
+            }
+        }
         
         if (lastInDeck || currentInDeck) {
             selectCardOnDecks(currentName);
@@ -636,27 +660,34 @@ static bool sortByName(const string& first, const string& second)
     return (first > second);
 }
 
-const set<string>& BattleDeckLayer::getPickedCards() const
+const vector<string>& BattleDeckLayer::getPickedCards() const
 {
-    return _pickedCards;
+    return _defaultFormationData->getSpells();
 }
 
 void BattleDeckLayer::loadData()
 {
-    if (0 == _pickedCards.size()) {
-        UserDefaultsDataManager::getInstance()->getSelectedCards(_pickedCards);
-    }
+    _defaultFormationData = GameData::getInstance()->currentUser()->getDefaultFormationData();
     
     _candidateCards.clear();
     
     const auto& cardDecks = DataManager::getInstance()->getCardDecks();
-    set_difference(begin(cardDecks), end(cardDecks), begin(_pickedCards), end(_pickedCards), inserter(_candidateCards, begin(_candidateCards)));
+    
+    for (auto iter = begin(cardDecks); iter != end(cardDecks); ++iter) {
+        _candidateCards.push_back(*iter);
+    }
+    
+    const auto& pickedCard = getPickedCards();
+    for (auto iter = begin(pickedCard); iter != end(pickedCard); ++iter) {
+        eraseFromVector(_candidateCards, *iter);
+    }
+    
     sort(begin(_candidateCards), end(_candidateCards), sortByName);
 }
 
 void BattleDeckLayer::saveData()
 {
-    UserDefaultsDataManager::getInstance()->setSelectedCards(_pickedCards);
+    GameData::getInstance()->currentUser()->saveDefaultFormationData();
 }
 
 void BattleDeckLayer::extract(const string& name)
@@ -665,13 +696,13 @@ void BattleDeckLayer::extract(const string& name)
     eraseFromVector(_candidateCards, name);
     
     // 2. insert
-    _pickedCards.insert(name);
+    _defaultFormationData->insertSpell(name);
 }
 
 void BattleDeckLayer::insert(const string& name)
 {
     // 1. erase
-    _pickedCards.erase(name);
+    _defaultFormationData->removeSpell(name);
     
     // 2. insert
     _candidateCards.push_back(name);

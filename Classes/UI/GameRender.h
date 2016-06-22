@@ -56,6 +56,9 @@ public:
     virtual ~GameRender();
     void registerObserver(GameRenderObserver *observer);
     
+    const Size& getMapSize() const;
+    Coordinate32 point2Coordinate(const Point& point) const;
+    
 protected:
     // AbstractRender
     virtual void init(const Game* game, Commander* commander) override;

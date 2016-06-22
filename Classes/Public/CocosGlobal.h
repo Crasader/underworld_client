@@ -50,6 +50,8 @@
 #define FORMATION_SPELLS_COUNT      (12)
 #define FORMATION_WIDTH             (5)
 #define FORMATION_HEIGHT            (5)
+#define FORMATION_TILE_WIDTH        (48)
+#define FORMATION_TILE_HEIGHT       (48)
 
 #define ONLINE_UPDATE_SEARCH_PATH       (FileUtils::getInstance()->getWritablePath() + "Resource/")
 #define DEFAULT_RESOURCE_FOLDER         ("res")

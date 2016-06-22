@@ -15,6 +15,7 @@
 #include <map>
 #include <unordered_map>
 #include "CardNode.h"
+#include "Coordinate.h"
 
 namespace UnderWorld { namespace Core {
     class TechTree;
@@ -128,8 +129,8 @@ protected:
     FormationTableType getTableType(TableView* table) const;
     void setTableType(FormationTableType type);
     std::string getTableName(FormationTableType type) const;
-    Point formationIdx2Point(int idx) const;
-    int formationPoint2Idx(const Point& point) const;
+    Coordinate32 formationIdx2Coordinate(int idx) const;
+    int formationCoordinate2Idx(const Coordinate32& coordinate) const;
     void saveFormation(int idx);
     void loadFormation(int idx);
     void setDefaultFormation();

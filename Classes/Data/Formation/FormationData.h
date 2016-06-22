@@ -9,11 +9,11 @@
 #ifndef FormationData_h
 #define FormationData_h
 
-#include "cocos2d.h"
 #include <map>
 #include <vector>
+#include "Coordinate.h"
 
-USING_NS_CC;
+using namespace UnderWorld::Core;
 
 class FormationData
 {
@@ -24,12 +24,12 @@ public:
     FormationData(const std::string& serializedString);
     virtual ~FormationData();
     
-    const std::map<Point, FormationUnitType>& getHeroes() const;
+    const std::map<Coordinate32, FormationUnitType>& getHeroes() const;
     const std::vector<FormationUnitType>& getSpells() const;
     
-    void insertHero(const Point& point, const FormationUnitType& name);
-    void removeHero(const Point& point);
-    void exchangeHero(const Point& p1, const Point& p2);
+    void insertHero(const Coordinate32& coordinate, const FormationUnitType& name);
+    void removeHero(const Coordinate32& coordinate);
+    void exchangeHero(const Coordinate32& c1, const Coordinate32& c2);
     
     void insertSpell(const FormationUnitType& name);
     void removeSpell(const FormationUnitType& name);
@@ -39,7 +39,7 @@ public:
     void serialize(std::string& output);
     
 private:
-    std::map<Point, FormationUnitType> _heroes;
+    std::map<Coordinate32, FormationUnitType> _heroes;
     std::vector<FormationUnitType> _spells;
 };
 

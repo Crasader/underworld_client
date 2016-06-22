@@ -12,7 +12,8 @@
 #include "DataManager.h"
 #include "SoundManager.h"
 #include "TechTree.h"
-#include "UserDefaultsDataManager.h"
+#include "GameData.h"
+#include "FormationData.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "ApiBridge.h"
 #endif
@@ -112,16 +113,49 @@ void BattleScene::start()
     tower.setUnitTypeName("狼人箭塔");
     contentSetting.setTower(tower);
     
-    set<string> cardSet;
-    std::vector<string> cards;
-    UserDefaultsDataManager::getInstance()->getSelectedCards(cardSet);
-    for (auto iter = cardSet.begin(); iter != cardSet.end(); ++iter) {
-        cards.push_back(*iter);
+    auto formationData = GameData::getInstance()->currentUser()->getDefaultFormationData();
+    if (formationData) {
+        _client = new (nothrow) UnderworldClient("mofish", _proxy, _sch, _render);
+        const auto& spells = formationData->getSpells();
+        const auto& heroes = formationData->getHeroes();
+        GameModeHMMSetting::InitUnitList unitList;
+        {
+            for (auto iter = begin(heroes); iter != end(heroes); ++iter) {
+                static const Point basePosition(240, 120);
+                const auto& coordinate = iter->first;
+                Point point = basePosition + Point(FORMATION_TILE_WIDTH * (coordinate.x + 0.5f), FORMATION_TILE_HEIGHT * (coordinate.y + 0.5f));
+                
+                pair<string, UnderWorld::Core::Coordinate32> pair;
+                pair.first = iter->second;
+                pair.second = _render->point2Coordinate(point);
+                
+                unitList.push_back(pair);
+            }
+        }
+        vector<UnderWorld::Core::UnitSetting> unitPool;
+        {
+            auto dm = DataManager::getInstance();
+            const auto& cards = dm->getCardDecks();
+            
+            auto techTree = new (nothrow) TechTree();
+            techTree->init(dm->getTechTreeData());
+            for (auto iter = begin(cards); iter != end(cards); ++iter) {
+                const auto& cardType = techTree->findUnitTypeByName(*iter);
+                if (cardType) {
+                    UnderWorld::Core::UnitSetting us;
+                    us.setUnitTypeName(cardType->getName());
+                    us.setLevel(0);
+                    us.setQuality(0);
+                    us.setTalentLevel(0);
+                    unitPool.push_back(us);
+                }
+            }
+            
+            CC_SAFE_DELETE(techTree);
+        }
+        _client->launchPve(_mapId, contentSetting, spells, unitList, unitPool);
+//        _client->launchPvp(contentSetting, cards);
     }
-    
-    _client = new (nothrow) UnderworldClient("mofish", _proxy, _sch, _render);
-    _client->launchPve(_mapId, contentSetting, cards);
-//    _client->launchPvp(contentSetting, cards);
 }
 
 void BattleScene::clear()

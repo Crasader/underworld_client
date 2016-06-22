@@ -75,9 +75,8 @@ bool MapLayer::init(int mapId)
         addChild(_scrollView);
         
         //--------- background ---------//
-        int i(1);
         float offsetX(0.0f);
-        while (true) {
+        for (int i = 1; ; ++i) {
             string fileName = StringUtils::format("map/bg%d_%d.png", _mapId, i);
             if(FileUtils::getInstance()->isFileExist(fileName)){
                 auto bg = Sprite::create(fileName);
@@ -97,7 +96,7 @@ bool MapLayer::init(int mapId)
         _scrollView->addChild(_tiledMap, TILEDMAP_ZORDER, TILEDMAP_TAG);
         _mainLayer = _tiledMap->getLayer(TILEDMAP_LAYER_FOREGROUND);
         
-        const Size &mapSize(_tiledMap->getMapSize());
+        const Size &mapSize(getMapSize());
         _width = mapSize.width;
         _height = mapSize.height;
         
@@ -214,6 +213,15 @@ void MapLayer::registerObserver(MapLayerObserver *observer)
 }
 
 #pragma mark getters
+const Size& MapLayer::getMapSize() const
+{
+    if (_tiledMap) {
+        return _tiledMap->getMapSize();
+    }
+    
+    return Size::ZERO;
+}
+
 Coordinate32 MapLayer::point2Coordinate(const Point& point) const
 {
     Point realPoint = _mainLayer->convertToNodeSpace(convertToWorldSpace(point));

@@ -26,7 +26,7 @@ FormationData::FormationData(const string& serializedString)
                 vector<string> splits;
                 Utils::split(splits, individual, ",");
                 if (3 == splits.size()) {
-                    Point point;
+                    Coordinate32 point;
                     point.x = atoi(splits.at(0).c_str());
                     point.y = atoi(splits.at(1).c_str());
                     _heroes.insert(make_pair(point, splits.at(2)));
@@ -48,7 +48,7 @@ FormationData::~FormationData()
     
 }
 
-const map<Point, FormationData::FormationUnitType>& FormationData::getHeroes() const
+const map<Coordinate32, FormationData::FormationUnitType>& FormationData::getHeroes() const
 {
     return _heroes;
 }
@@ -58,29 +58,29 @@ const vector<FormationData::FormationUnitType>& FormationData::getSpells() const
     return _spells;
 }
 
-void FormationData::insertHero(const Point& point, const FormationUnitType& name)
+void FormationData::insertHero(const Coordinate32& coordinate, const FormationUnitType& name)
 {
-    if (_heroes.find(point) != end(_heroes)) {
+    if (_heroes.find(coordinate) != end(_heroes)) {
         assert(false);
     } else {
-        _heroes.insert(make_pair(point, name));
+        _heroes.insert(make_pair(coordinate, name));
     }
 }
 
-void FormationData::removeHero(const Point& point)
+void FormationData::removeHero(const Coordinate32& coordinate)
 {
-    if (_heroes.find(point) != end(_heroes)) {
-        _heroes.erase(point);
+    if (_heroes.find(coordinate) != end(_heroes)) {
+        _heroes.erase(coordinate);
     }
 }
 
-void FormationData::exchangeHero(const Point& p1, const Point& p2)
+void FormationData::exchangeHero(const Coordinate32& c1, const Coordinate32& c2)
 {
-    if (_heroes.find(p1) != end(_heroes) &&
-        _heroes.find(p2) != end(_heroes)) {
-        const auto name1 = _heroes.at(p1);
-        _heroes.at(p1) = _heroes.at(p2);
-        _heroes.at(p2) = name1;
+    if (_heroes.find(c1) != end(_heroes) &&
+        _heroes.find(c2) != end(_heroes)) {
+        const auto name1 = _heroes.at(c1);
+        _heroes.at(c1) = _heroes.at(c2);
+        _heroes.at(c2) = name1;
     }
 }
 
@@ -127,9 +127,9 @@ void FormationData::serialize(string& output)
     // serialized string like this:
     // x1,y1,hero1;x2,y2,hero2;...xN,yN,heroN|spell1,spell2,...spellN
     for (auto iter = begin(_heroes); iter != end(_heroes); ++iter) {
-        const auto& point = iter->first;
-        output += StringUtils::format("%d,", (int)point.x);
-        output += StringUtils::format("%d,", (int)point.y);
+        const auto& coordinate = iter->first;
+        output += Utils::format("%d,", coordinate.x);
+        output += Utils::format("%d,", coordinate.y);
         output += iter->second + ";";
     }
     

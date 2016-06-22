@@ -65,6 +65,24 @@ void GameRender::registerObserver(GameRenderObserver *observer)
     _observer = observer;
 }
 
+const Size& GameRender::getMapSize() const
+{
+    if (_mapLayer) {
+        return _mapLayer->getMapSize();
+    }
+    
+    return Size::ZERO;
+}
+
+Coordinate32 GameRender::point2Coordinate(const Point& point) const
+{
+    if (_mapLayer) {
+        return _mapLayer->point2Coordinate(point);
+    }
+    
+    return Coordinate32::ZERO;
+}
+
 void GameRender::init(const Game* game, Commander* commander)
 {
     _game = game;

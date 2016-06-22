@@ -19,11 +19,11 @@ public:
     static void purge();
     
     // public
-    const std::string& getCurrentMusic();
+    const std::string& getCurrentMusic() const;
     void setMusicOn(bool on);
-    bool isMusicOn();
+    bool isMusicOn() const;
     void setSoundOn(bool on);
-    bool isSoundOn();
+    bool isSoundOn() const;
     void playBackgroundMusic(const std::string& url, bool loop = true);
     void stopBackgroundMusic();
     void resumeBackgroundMusic();

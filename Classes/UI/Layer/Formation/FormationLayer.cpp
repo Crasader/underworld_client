@@ -874,12 +874,12 @@ string FormationLayer::getTableName(FormationTableType type) const
     }
 }
 
-Point FormationLayer::formationIdx2Point(int idx) const
+Coordinate32 FormationLayer::formationIdx2Coordinate(int idx) const
 {
-    return Point(idx % FORMATION_WIDTH, FORMATION_HEIGHT - idx / FORMATION_WIDTH - 1);
+    return Coordinate32(idx % FORMATION_WIDTH, FORMATION_HEIGHT - idx / FORMATION_WIDTH - 1);
 }
 
-int FormationLayer::formationPoint2Idx(const Point& point) const
+int FormationLayer::formationCoordinate2Idx(const Coordinate32& point) const
 {
     return FORMATION_WIDTH * (FORMATION_HEIGHT - point.y - 1) + point.x;
 }
@@ -911,12 +911,12 @@ void FormationLayer::loadFormation(int idx)
         
         const auto& heroes = _thisFormationData->getHeroes();
         for (auto iter = begin(heroes); iter != end(heroes); ++iter) {
-            const int idx = formationPoint2Idx(iter->first);
+            const int idx = formationCoordinate2Idx(iter->first);
             if (idx >= 0 && idx < FORMATION_WIDTH * FORMATION_HEIGHT) {
                 auto node = createUnitNode(iter->second);
                 _formationNodes.insert(make_pair(idx, node));
                 const auto& tileInfo = _tiles.at(idx);
-                node->setPosition(tileInfo.midPoint);
+                placeUnit(node, tileInfo.midPoint);
             }
         }
         
@@ -965,9 +965,9 @@ void FormationLayer::onPlacedEnded(const string& name, const Point& point)
             _formationNodes.insert(make_pair(idxB, nodeA));
         }
         
-        const auto& point = formationIdx2Point(idxB);
-        _thisFormationData->removeHero(point);
-        _thisFormationData->insertHero(point, name);
+        const auto& coordinate = formationIdx2Coordinate(idxB);
+        _thisFormationData->removeHero(coordinate);
+        _thisFormationData->insertHero(coordinate, name);
         
         // place
         placeUnit(nodeA, tileInfoB.midPoint);
@@ -996,16 +996,16 @@ void FormationLayer::onUnitTouchedEnded(FormationUnitNode* nodeA)
         const auto& tileInfoA = getTileInfo(nodeA->getTouchBeganPosition());
         const int idxA(tileInfoA.idx);
         if (idxA >= 0 && _formationNodes.find(idxA) != end(_formationNodes)) {
-            const auto fpA = formationIdx2Point(idxA);
+            const auto fcA = formationIdx2Coordinate(idxA);
             const auto& tileInfoB = getTileInfo(nodeA->getTouchEndPosition());
             int idxB(tileInfoB.idx);
             if (idxB < 0) {
                 nodeA->removeFromParent();
                 _formationNodes.erase(idxA);
                 
-                _thisFormationData->removeHero(fpA);
+                _thisFormationData->removeHero(fcA);
             } else if (idxA != idxB) {
-                const auto fpB = formationIdx2Point(idxB);
+                const auto fcB = formationIdx2Coordinate(idxB);
                 const auto& pointB = tileInfoB.midPoint;
                 // if the position is occupied
                 if (_formationNodes.find(idxB) != end(_formationNodes)) {
@@ -1020,7 +1020,7 @@ void FormationLayer::onUnitTouchedEnded(FormationUnitNode* nodeA)
                         _formationNodes.at(idxA) = nodeB;
                         _formationNodes.at(idxB) = nodeA;
                         
-                        _thisFormationData->exchangeHero(fpA, fpB);
+                        _thisFormationData->exchangeHero(fcA, fcB);
                     }
                 } else {
                     placeUnit(nodeA, pointB);
@@ -1028,8 +1028,8 @@ void FormationLayer::onUnitTouchedEnded(FormationUnitNode* nodeA)
                     _formationNodes.insert(make_pair(idxB, nodeA));
                     _formationNodes.erase(idxA);
                     
-                    _thisFormationData->removeHero(fpA);
-                    _thisFormationData->insertHero(fpB, nodeA->getUnitName());
+                    _thisFormationData->removeHero(fcA);
+                    _thisFormationData->insertHero(fcB, nodeA->getUnitName());
                 }
             }
         } else {
@@ -1058,7 +1058,8 @@ const FormationLayer::TileInfo& FormationLayer::getTileInfo(const Point& point) 
 int FormationLayer::getUnitZOrder(const Point& point) const
 {
     static const int zorder_min(1000);
-    static const int zorder_max(zorder_min + FORMATION_WIDTH * FORMATION_HEIGHT);
+    const Point firstMidPos = _tileBasePosition + Point(_tileSize.width / 2, -_tileSize.height / 2);
+    const int idx = (firstMidPos.y - point.y) / _tileSize.height * FORMATION_WIDTH + (point.x - firstMidPos.x) / _tileSize.width;
     
-    return fmax(zorder_max - point.y, zorder_min);
+    return zorder_min + idx;
 }

@@ -21,6 +21,7 @@ namespace UnderWorld { namespace Core {
     class GameModeHMM;
 }}
 class BattleDeckUnitInfoNode;
+class FormationData;
 
 class BattleDeckLayerObserver
 {
@@ -73,7 +74,7 @@ protected:
     void cardBackToTable();
     int getIntersectedCardDeckIdx(const Rect& rect) const;
     
-    const std::set<std::string>& getPickedCards() const;
+    const std::vector<std::string>& getPickedCards() const;
     void loadData();
     void saveData();
     void extract(const std::string& name);
@@ -99,7 +100,7 @@ private:
     UnderWorld::Core::TechTree* _techTree;
     UnderWorld::Core::GameModeHMM* _gameModeHMM;
     std::vector<std::string> _candidateCards;
-    std::set<std::string> _pickedCards;
+    FormationData* _defaultFormationData;
     
     BattleDeckUnitInfoNode* _infoNode;
     TableViewNode _tableViewNode;

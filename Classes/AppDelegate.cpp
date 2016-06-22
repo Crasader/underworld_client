@@ -106,9 +106,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     // set default music and sound, must set here instead of "Utils" (android may crash)
     SoundManager* sm = SoundManager::getInstance();
-    UserDefaultsDataManager* um = UserDefaultsDataManager::getInstance();
-    sm->setMusicOn(um->getMusicOn());
-    sm->setSoundOn(um->getSoundOn());
+    sm->setMusicOn(UserDefaultsDataManager::getMusicOn());
+    sm->setSoundOn(UserDefaultsDataManager::getSoundOn());
     
     // game initialization
     GameData::getInstance()->init();
