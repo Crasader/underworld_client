@@ -1194,7 +1194,7 @@ void UnitNode::updateBufs()
 
 void UnitNode::updateFeatures(const Game* game)
 {
-    const list<Unit::EventLog>& eventLogs = _unit->getEventLogs();
+    list<Unit::EventLog> eventLogs;
     for (auto iter = eventLogs.begin(); iter != eventLogs.end(); ++iter) {
         const Unit::EventLog& log = *iter;
         Unit::EventLogType type = log._type;
@@ -1242,8 +1242,6 @@ void UnitNode::updateFeatures(const Game* game)
             }
         }
     }
-    
-    _unit->clearEventLogs();
 }
 
 #pragma mark hp bar
