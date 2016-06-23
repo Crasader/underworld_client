@@ -16,7 +16,6 @@
 #include "SoundManager.h"
 
 using namespace std;
-using namespace UnderWorld::Core;
 
 static const int topZOrder(1);
 static const Point iconTouchOffset(0, -6.0f);

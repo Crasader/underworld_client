@@ -17,7 +17,7 @@ public:
     static UnitCardDeck* create(int count);
     virtual ~UnitCardDeck();
     
-    void updateNextCard(const UnderWorld::Core::HMMCard* card);
+    void updateNextCard(const HMMCard* card);
     void updateTimer(float time, float duration);
     
 protected:
@@ -26,7 +26,7 @@ protected:
     
     void shake();
     void stopShake();
-    void createNextCardNode(const UnderWorld::Core::HMMCard* card);
+    void createNextCardNode(const HMMCard* card);
     void createBlankNextCardNode();
     void createNextCardProgress(Node* parent);
     
@@ -34,7 +34,7 @@ private:
     Node* _nextCardNode;
     ProgressTimer* _nextCardProgress;
     Label* _nextLabel;
-    const UnderWorld::Core::HMMCard* _nextCard;
+    const HMMCard* _nextCard;
     bool _isShaking;
 };
 

@@ -24,7 +24,6 @@
 
 using namespace std;
 using namespace ui;
-using namespace UnderWorld::Core;
 
 static const float unitNodeOffsetX(5.0f);
 static const float unitNodeOffsetY(14.0f);
@@ -48,8 +47,6 @@ BattleDeckLayer* BattleDeckLayer::create()
 BattleDeckLayer::BattleDeckLayer()
 :_observer(nullptr)
 ,_isExtracting(false)
-,_techTree(nullptr)
-,_gameModeHMM(nullptr)
 ,_defaultFormationData(nullptr)
 ,_infoNode(nullptr)
 ,_selectedCardsLabel(nullptr)
@@ -60,18 +57,11 @@ BattleDeckLayer::BattleDeckLayer()
     _cellSize.width = unitNodeSize.width + unitNodeOffsetX;
     
     loadData();
-    
-    _techTree = new (nothrow) TechTree();
-    _techTree->init(DataManager::getInstance()->getTechTreeData());
-    
-    _gameModeHMM = new (nothrow) GameModeHMM();
 }
 
 BattleDeckLayer::~BattleDeckLayer()
 {
     removeAllChildren();
-    CC_SAFE_DELETE(_techTree);
-    CC_SAFE_DELETE(_gameModeHMM);
 }
 
 void BattleDeckLayer::registerObserver(BattleDeckLayerObserver *observer)
@@ -174,7 +164,7 @@ void BattleDeckLayer::onEnter()
     }
     
     if (_touchedCard.length() > 0) {
-        _infoNode->update(_touchedCard, _techTree, _gameModeHMM);
+        _infoNode->update(_touchedCard);
     }
 }
 
@@ -405,7 +395,7 @@ void BattleDeckLayer::onCardNodeTouchedEnded(CardNode* node, bool isValid)
             }
         }
         
-        _infoNode->update(currentName, _techTree, _gameModeHMM);
+        _infoNode->update(currentName);
     }
 }
 
@@ -537,19 +527,17 @@ void BattleDeckLayer::updateCardNode(CardNode* node, const string& name)
     if (node && name.length() > 0) {
         int rarity(0);
         int cost(0);
-        if (_techTree) {
-            const UnitType* ut = _techTree->findUnitTypeByName(name);
-            if (ut) {
-                rarity = ut->getRarity();
-            }
-            
-            const HMMCardType* ct = _gameModeHMM->findCardTypeByName(name);
-            if (ct) {
-                const auto& costs = ct->getCost();
-                static const string& name(RESOURCE_NAME);
-                if (costs.find(name) != costs.end()) {
-                    cost = costs.at(name) / GameConstants::MICRORES_PER_RES;
-                }
+        const UnitType* ut = DataManager::getInstance()->getTechTree()->findUnitTypeByName(name);
+        if (ut) {
+            rarity = ut->getRarity();
+        }
+        
+        const HMMCardType* ct = DataManager::getInstance()->getGameModeHMM()->findCardTypeByName(name);
+        if (ct) {
+            const auto& costs = ct->getCost();
+            static const string& name(RESOURCE_NAME);
+            if (costs.find(name) != costs.end()) {
+                cost = costs.at(name) / GameConstants::MICRORES_PER_RES;
             }
         }
         

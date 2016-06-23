@@ -39,6 +39,8 @@
 #include "TowerLocalData.h"
 #include "TowerUpgradeData.h"
 #include "BinaryJsonTool.h"
+#include "TechTree.h"
+#include "GameModeHMM.h"
 
 USING_NS_CC;
 using namespace std;
@@ -66,8 +68,14 @@ void DataManager::purge()
 }
 
 DataManager::DataManager()
-:_binaryJsonTool(new BinaryJsonTool())
+:_binaryJsonTool(new (nothrow) BinaryJsonTool())
 {
+    // tech tree
+    _techTree = new (nothrow) UnderWorld::Core::TechTree();
+    _techTree->init(getTechTreeData());
+    
+    // game mode
+    _gameModeHMM = new (nothrow) UnderWorld::Core::GameModeHMM();
 }
 
 DataManager::~DataManager()
@@ -111,6 +119,8 @@ DataManager::~DataManager()
     Utils::clearMap(_towerUpgradeDatas);
     
     CC_SAFE_DELETE(_binaryJsonTool);
+    CC_SAFE_DELETE(_techTree);
+    CC_SAFE_DELETE(_gameModeHMM);
 }
 
 void DataManager::init()
@@ -1254,4 +1264,14 @@ void DataManager::parseBinaryjsonTemplates()
 const BinaryJsonTool* DataManager::getBinaryJsonTool() const
 {
     return _binaryJsonTool;
+}
+
+UnderWorld::Core::TechTree* DataManager::getTechTree() const
+{
+    return _techTree;
+}
+
+UnderWorld::Core::GameModeHMM* DataManager::getGameModeHMM() const
+{
+    return _gameModeHMM;
 }

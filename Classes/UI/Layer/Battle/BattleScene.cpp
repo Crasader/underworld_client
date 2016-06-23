@@ -136,10 +136,8 @@ void BattleScene::start()
             auto dm = DataManager::getInstance();
             const auto& cards = dm->getCardDecks();
             
-            auto techTree = new (nothrow) TechTree();
-            techTree->init(dm->getTechTreeData());
             for (auto iter = begin(cards); iter != end(cards); ++iter) {
-                const auto& cardType = techTree->findUnitTypeByName(*iter);
+                const auto& cardType = dm->getTechTree()->findUnitTypeByName(*iter);
                 if (cardType) {
                     UnderWorld::Core::UnitSetting us;
                     us.setUnitTypeName(cardType->getName());
@@ -149,8 +147,6 @@ void BattleScene::start()
                     unitPool.push_back(us);
                 }
             }
-            
-            CC_SAFE_DELETE(techTree);
         }
         _client->launchPve(_mapId, contentSetting, spells, unitList, unitPool);
 //        _client->launchPvp(contentSetting, cards);

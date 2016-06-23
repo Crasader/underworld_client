@@ -12,7 +12,6 @@
 #include "CCShake.h"
 
 using namespace std;
-using namespace UnderWorld::Core;
 
 static const int topZOrder(1);
 

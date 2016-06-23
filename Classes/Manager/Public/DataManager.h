@@ -14,6 +14,11 @@
 #include "SkllType.h"
 #include <unordered_map>
 
+namespace UnderWorld { namespace Core {
+    class TechTree;
+    class GameModeHMM;
+}}
+
 class LevelLocalData;
 class QuestLocalData;
 class AchievementLocalData;
@@ -104,6 +109,8 @@ public:
     
     // ---------- binaryjson ----------
     const BinaryJsonTool* getBinaryJsonTool() const;
+    UnderWorld::Core::TechTree* getTechTree() const;
+    UnderWorld::Core::GameModeHMM* getGameModeHMM() const;
     
 protected:
     DataManager();
@@ -174,6 +181,8 @@ private:
     std::unordered_map<int, TowerLocalData*> _towers;
     std::unordered_map<std::string, TowerUpgradeData*> _towerUpgradeDatas;
     BinaryJsonTool* _binaryJsonTool;
+    UnderWorld::Core::TechTree* _techTree;
+    UnderWorld::Core::GameModeHMM* _gameModeHMM;
 };
 
 #endif /* DataManager_h */

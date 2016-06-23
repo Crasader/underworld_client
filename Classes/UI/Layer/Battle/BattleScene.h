@@ -17,10 +17,6 @@
 
 USING_NS_CC;
 
-namespace UnderWorld { namespace Core {
-    class TechTree;
-}}
-
 class MapLayer;
 
 class BattleScene : public Scene, public GameRenderObserver

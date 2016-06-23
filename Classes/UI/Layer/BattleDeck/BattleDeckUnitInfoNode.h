@@ -16,8 +16,6 @@ USING_NS_CC;
 
 namespace UnderWorld { namespace Core {
     class UnitBase;
-    class TechTree;
-    class GameModeHMM;
 } }
 
 class BattleDeckUnitInfoNodeObserver
@@ -33,7 +31,7 @@ public:
     virtual ~BattleDeckUnitInfoNode();
     
     void registerObserver(BattleDeckUnitInfoNodeObserver *observer);
-    void update(const std::string& name, UnderWorld::Core::TechTree* techTree, UnderWorld::Core::GameModeHMM* gameModeHMM);
+    void update(const std::string& name);
     
 protected:
     BattleDeckUnitInfoNode();

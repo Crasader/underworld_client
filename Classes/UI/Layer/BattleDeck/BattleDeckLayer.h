@@ -16,10 +16,6 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-namespace UnderWorld { namespace Core {
-    class TechTree;
-    class GameModeHMM;
-}}
 class BattleDeckUnitInfoNode;
 class FormationData;
 
@@ -97,8 +93,6 @@ private:
     std::string _selectedCard;
     bool _isExtracting;
     
-    UnderWorld::Core::TechTree* _techTree;
-    UnderWorld::Core::GameModeHMM* _gameModeHMM;
     std::vector<std::string> _candidateCards;
     FormationData* _defaultFormationData;
     

@@ -1211,9 +1211,9 @@ void UnitNode::updateFeatures(const Game* game)
                     string resource = iter->first;
                     float amount = iter->second;
                     string scheduleKey = rollHintScheduleKeyPrefix
-                    + UnderWorld::Core::UnderWorldCoreUtils::to_string(_unit->getUnitId())
+                    + UnderWorldCoreUtils::to_string(_unit->getUnitId())
                     + rollHintScheduleKeySplitor
-                    + UnderWorld::Core::UnderWorldCoreUtils::to_string(++_rollHintCounter);
+                    + UnderWorldCoreUtils::to_string(++_rollHintCounter);
                     rollHintResource(resource, amount, delay * index);
                     ++index;
                 }

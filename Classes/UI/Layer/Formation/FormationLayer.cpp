@@ -19,6 +19,7 @@
 
 using namespace std;
 using namespace ui;
+using namespace UnderWorld::Core;
 
 static const int topZOrder(1);
 static const unsigned int deckRowCount(2);
@@ -89,11 +90,6 @@ FormationLayer::FormationLayer()
         _tileBasePosition.y = winSize.height - edge.y;
     }
     
-    _techTree = new (nothrow) TechTree();
-    _techTree->init(DataManager::getInstance()->getTechTreeData());
-    
-    _gameModeHMM = new (nothrow) GameModeHMM();
-    
     reloadAllCandidateCards();
     
     CocosUtils::loadPVR("pangzi");
@@ -102,8 +98,6 @@ FormationLayer::FormationLayer()
 FormationLayer::~FormationLayer()
 {
     removeAllChildren();
-    CC_SAFE_DELETE(_techTree);
-    CC_SAFE_DELETE(_gameModeHMM);
 }
 
 void FormationLayer::registerObserver(FormationLayerObserver *observer)
@@ -442,13 +436,13 @@ Size FormationLayer::getCellSize() const
 Rect FormationLayer::getBoundingBox(Node* node) const
 {
     if (node) {
-        cocos2d::Rect rect = node->getBoundingBox();
+        Rect rect = node->getBoundingBox();
         Point origin = rect.origin;
         rect.origin = convertToNodeSpace(node->getParent()->convertToWorldSpace(origin));
         return rect;
     }
     
-    return cocos2d::Rect::ZERO;
+    return Rect::ZERO;
 }
 
 #pragma mark buttons
@@ -492,11 +486,7 @@ void FormationLayer::createSwitchTableButton(const Point& position)
         const auto selected("GameImages/formation/button_blue.png");
         auto button = Button::create(normal, selected, selected);
         button->addClickEventListener([this, i](Ref*) {
-            if (0 == i) {
-                setTableType(FormationTableType::Hero);
-            } else if (1 == i) {
-                setTableType(FormationTableType::Spell);
-            }
+            setTableType(tableTypes[i]);
         });
         addChild(button);
         
@@ -519,7 +509,7 @@ void FormationLayer::createSaveFormationButton(const Point& position)
     static const string file("GameImages/formation/f_b_save.png");
     auto button = Button::create(file, file);
     button->addClickEventListener([this](Ref*) {
-        saveFormation(_thisFormationIdx);
+        saveThisFormation();
     });
     addChild(button);
     
@@ -608,19 +598,18 @@ void FormationLayer::updateCardNode(CardNode* node, const string& name) const
     if (node && name.length() > 0) {
         int rarity(0);
         int cost(0);
-        if (_techTree) {
-            auto ut = _techTree->findUnitTypeByName(name);
-            if (ut) {
-                rarity = ut->getRarity();
-            }
-            
-            auto ct = _gameModeHMM->findCardTypeByName(name);
-            if (ct) {
-                const auto& costs = ct->getCost();
-                static const auto& name(RESOURCE_NAME);
-                if (costs.find(name) != costs.end()) {
-                    cost = costs.at(name) / GameConstants::MICRORES_PER_RES;
-                }
+        
+        auto ut = DataManager::getInstance()->getTechTree()->findUnitTypeByName(name);
+        if (ut) {
+            rarity = ut->getRarity();
+        }
+        
+        auto ct = DataManager::getInstance()->getGameModeHMM()->findCardTypeByName(name);
+        if (ct) {
+            const auto& costs = ct->getCost();
+            static const auto& name(RESOURCE_NAME);
+            if (costs.find(name) != costs.end()) {
+                cost = costs.at(name) / GameConstants::MICRORES_PER_RES;
             }
         }
         
@@ -666,11 +655,9 @@ void FormationLayer::unitBackToFormation()
 FormationUnitNode* FormationLayer::createUnitNode(const string& name)
 {
     string renderKey(name);
-    if (_techTree) {
-        auto ut = _techTree->findUnitTypeByName(name);
-        if (ut) {
-            renderKey = ut->getRenderKey();
-        }
+    auto ut = DataManager::getInstance()->getTechTree()->findUnitTypeByName(name);
+    if (ut) {
+        renderKey = ut->getRenderKey();
     }
     
     auto node = FormationUnitNode::create(renderKey, _tileSize);
@@ -698,7 +685,7 @@ ssize_t FormationLayer::getIntersectedDeckIdx(const Rect& rect) const
     float intersectedArea(0);
     ssize_t idx(CC_INVALID_INDEX);
     for (int i = 0; i < _decks.size(); ++i) {
-        const cocos2d::Rect& bd = _decks.at(i)->getBoundingBox();
+        const Rect& bd = _decks.at(i)->getBoundingBox();
         if (bd.intersectsRect(rect)) {
             const Size& size = bd.unionWithRect(rect).size;
             float area = size.width * size.height;
@@ -782,11 +769,18 @@ void FormationLayer::selectCardOnDecks(const string& name)
 void FormationLayer::reloadAllCandidateCards()
 {
     _candidateCards.clear();
-    const auto& cards = DataManager::getInstance()->getCardDecks();
+    auto dm = DataManager::getInstance();
+    const auto& cards = dm->getCardDecks();
     for (auto iter = begin(cards); iter != end(cards); ++iter) {
         const auto& name = *iter;
-        insertCandidateCard(FormationTableType::Hero, name);
-        insertCandidateCard(FormationTableType::Spell, name);
+        auto ct = dm->getGameModeHMM()->findCardTypeByName(name);
+        if (ct) {
+            if (kHMMCardClass_Spell == ct->getCardClass()) {
+                insertCandidateCard(FormationTableType::Spell, name);
+            } else {
+                insertCandidateCard(FormationTableType::Hero, name);
+            }
+        }
     }
 }
 
@@ -796,10 +790,18 @@ void FormationLayer::reloadCandidateCards(FormationTableType type)
         _candidateCards.at(type).clear();
     }
     
-    const auto& cards = DataManager::getInstance()->getCardDecks();
+    auto dm = DataManager::getInstance();
+    const auto& cards = dm->getCardDecks();
     for (auto iter = begin(cards); iter != end(cards); ++iter) {
         const auto& name = *iter;
-        insertCandidateCard(type, name);
+        auto ct = dm->getGameModeHMM()->findCardTypeByName(name);
+        if (kHMMCardClass_Spell == ct->getCardClass()) {
+            if (FormationTableType::Spell == type) {
+                insertCandidateCard(type, name);
+            }
+        } else if (FormationTableType::Hero == type) {
+            insertCandidateCard(type, name);
+        }
     }
 }
 
@@ -884,9 +886,9 @@ int FormationLayer::formationCoordinate2Idx(const Coordinate32& point) const
     return FORMATION_WIDTH * (FORMATION_HEIGHT - point.y - 1) + point.x;
 }
 
-void FormationLayer::saveFormation(int idx)
+void FormationLayer::saveThisFormation()
 {
-    GameData::getInstance()->currentUser()->saveFormationData(idx);
+    GameData::getInstance()->currentUser()->saveFormationData(_thisFormationIdx);
 }
 
 void FormationLayer::loadFormation(int idx)

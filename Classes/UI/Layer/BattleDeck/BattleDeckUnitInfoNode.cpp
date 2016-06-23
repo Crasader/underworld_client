@@ -186,11 +186,12 @@ void BattleDeckUnitInfoNode::registerObserver(BattleDeckUnitInfoNodeObserver *ob
     _observer = observer;
 }
 
-void BattleDeckUnitInfoNode::update(const string& name, TechTree* techTree, GameModeHMM* gameModeHMM)
+void BattleDeckUnitInfoNode::update(const string& name)
 {
-    const HMMCardType* ct = gameModeHMM->findCardTypeByName(name);
+    auto dm = DataManager::getInstance();
+    const HMMCardType* ct = dm->getGameModeHMM()->findCardTypeByName(name);
     if (ct) {
-        const string& file = DataManager::getInstance()->getCardConfigData(name)->getSmallIcon();
+        const string& file = dm->getCardConfigData(name)->getSmallIcon();
         if (file.length() > 0 && FileUtils::getInstance()->isFileExist(file)) {
             _unitIcon->setVisible(true);
             _unitIcon->setTexture(file);
@@ -202,7 +203,7 @@ void BattleDeckUnitInfoNode::update(const string& name, TechTree* techTree, Game
         _nameLabel->setString(name);
 //        _descriptionLabel->setString(ct->getDesc());
         
-        const UnitType* unit = techTree->findUnitTypeByName(name);
+        const UnitType* unit = dm->getTechTree()->findUnitTypeByName(name);
         _qualityIcon->setVisible(unit);
         if (unit) {
             _qualityIcon->setTexture(StringUtils::format("GameImages/test/ui_kuang_%d.png", unit->getRarity() + 4));

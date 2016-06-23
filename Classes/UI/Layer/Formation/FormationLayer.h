@@ -17,17 +17,11 @@
 #include "CardNode.h"
 #include "Coordinate.h"
 
-namespace UnderWorld { namespace Core {
-    class TechTree;
-    class GameModeHMM;
-}}
-
 class FormationUnitNode;
 class FormationData;
 
 USING_NS_CC;
 USING_NS_CC_EXT;
-using namespace UnderWorld::Core;
 
 class FormationLayerObserver
 {
@@ -131,7 +125,7 @@ protected:
     std::string getTableName(FormationTableType type) const;
     Coordinate32 formationIdx2Coordinate(int idx) const;
     int formationCoordinate2Idx(const Coordinate32& coordinate) const;
-    void saveFormation(int idx);
+    void saveThisFormation();
     void loadFormation(int idx);
     void setDefaultFormation();
     void placeUnit(FormationUnitNode* node, const Point& point);
@@ -171,8 +165,6 @@ protected:
     
     // data
     FormationTableType _thisTableType;
-    UnderWorld::Core::TechTree* _techTree;
-    UnderWorld::Core::GameModeHMM* _gameModeHMM;
     bool _isPickingSpell;
     std::string _touchedCard;
     std::string _selectedCard;
