@@ -765,6 +765,10 @@ void FormationLayer::reloadAllCandidateCards()
             } else {
                 insertCandidateCard(FormationTableType::Hero, name);
             }
+        } else {
+            // TODO: remove code
+            insertCandidateCard(FormationTableType::Hero, name);
+            insertCandidateCard(FormationTableType::Spell, name);
         }
     }
 }
@@ -780,11 +784,16 @@ void FormationLayer::reloadCandidateCards(FormationTableType type)
     for (auto iter = begin(cards); iter != end(cards); ++iter) {
         const auto& name = *iter;
         auto ct = dm->getGameModeHMM()->findCardTypeByName(name);
-        if (kHMMCardClass_Spell == ct->getCardClass()) {
-            if (FormationTableType::Spell == type) {
+        if (ct) {
+            if (kHMMCardClass_Spell == ct->getCardClass()) {
+                if (FormationTableType::Spell == type) {
+                    insertCandidateCard(type, name);
+                }
+            } else if (FormationTableType::Hero == type) {
                 insertCandidateCard(type, name);
             }
-        } else if (FormationTableType::Hero == type) {
+        } else {
+            // TODO: remove code
             insertCandidateCard(type, name);
         }
     }
