@@ -34,6 +34,7 @@ public:
     void insert(const std::string& name, bool animated);
     void insert(const HMMCard* card, bool animated);
     void remove(const HMMCard* card, int index, bool animated);
+    void clear();
     void updateCD(int idx, float percentage);
     void updateResource(const std::unordered_map<std::string, float>& resources);
     

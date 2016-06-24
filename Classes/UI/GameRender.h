@@ -144,6 +144,7 @@ private:
     std::unordered_map<const void*, BulletNode*> _allBulletNodes;
     std::unordered_map<int, const Unit*> _cores;
     const HMMDeck* _deck;
+    std::vector<std::string> _handCards;
     std::pair<std::string ,int> _selectedCard;
     
     bool _paused;

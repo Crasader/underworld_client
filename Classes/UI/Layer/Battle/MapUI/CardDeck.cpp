@@ -190,6 +190,15 @@ void CardDeck::remove(const HMMCard* card, int index, bool animated)
     }
 }
 
+void CardDeck::clear()
+{
+    for (int i = 0; i < _nodes.size(); ++i) {
+        _nodes.at(i)->removeFromParent();
+    }
+    
+    _nodes.clear();
+}
+
 void CardDeck::updateCD(int idx, float percentage)
 {
     if (idx < _nodes.size()) {

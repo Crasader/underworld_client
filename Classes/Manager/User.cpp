@@ -108,6 +108,7 @@ void User::setDefaultFormationId(int value)
 {
     _defaultFormationId = value;
     UserDefaultsDataManager::setIntegerForKey(getDefaultFormationKey(), value);
+    UserDefaultsDataManager::flush();
 }
 
 FormationData* User::getFormationData(int idx) const
@@ -126,6 +127,7 @@ void User::saveFormationData(int idx)
         auto data = _formations.at(idx);
         data->serialize(output);
         UserDefaultsDataManager::setStringForKey(getFormationKey(idx).c_str(), output);
+        UserDefaultsDataManager::flush();
     }
 }
 

@@ -133,6 +133,7 @@ void GameRender::init(const Game* game, Commander* commander)
                 const HMMCardType* ct = card->getCardType();
                 if (ct) {
                     _mapUILayer->insertCard(type, ct->getName());
+                    _handCards.push_back(ct->getName());
                 }
             }
         }
@@ -338,6 +339,31 @@ void GameRender::updateUILayer()
 //        }
 //        
         _mapUILayer->updateNextCard(_deck->getNextDraw());
+        
+        // TODO:
+        bool needReload(false);
+        const int cnt = _deck->getHandCount();
+        if (cnt != _handCards.size()) {
+            needReload = true;
+        } else {
+            for (int i = 0; i < cnt; ++i) {
+                if (_deck->getHandCard(i)->getCardType()->getName() != _handCards.at(i)) {
+                    needReload = true;
+                    break;
+                }
+            }
+        }
+        
+        if (needReload) {
+            static const auto type(CardDeckType::Unit);
+            _mapUILayer->clear(type);
+            _handCards.clear();
+            for (int i = 0; i < cnt; ++i) {
+                const string& name = _deck->getHandCard(i)->getCardType()->getName();
+                _mapUILayer->insertCard(type, name);
+                _handCards.push_back(name);
+            }
+        }
 //        _deck->clearEventLog();
     }
     

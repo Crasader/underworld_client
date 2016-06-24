@@ -183,6 +183,14 @@ void MapUILayer::removeCard(CardDeckType type, const HMMCard* card, int index)
     }
 }
 
+void MapUILayer::clear(CardDeckType type)
+{
+    auto deck = getDeck(type);
+    if (deck) {
+        deck->clear();
+    }
+}
+
 void MapUILayer::updateNextCard(const HMMCard* card)
 {
     static CardDeckType type(CardDeckType::Unit);

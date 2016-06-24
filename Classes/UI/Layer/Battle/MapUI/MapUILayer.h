@@ -55,6 +55,7 @@ public:
     void insertCard(CardDeckType type, const std::string& name);
     void insertCard(CardDeckType type, const HMMCard* card);
     void removeCard(CardDeckType type, const HMMCard* card, int index);
+    void clear(CardDeckType type);
     void updateNextCard(const HMMCard* card);
     void updateCardCD(CardDeckType type, int idx, float percentage);
     void updateCountDown(float time, float duration);
