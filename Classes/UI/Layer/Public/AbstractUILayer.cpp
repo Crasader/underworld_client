@@ -42,12 +42,7 @@ bool AbstractUILayer::init(const string& title)
         line->setScaleX(870 / 2);
         _background->addChild(line);
         
-        static const string file("GameImages/test/ui_guanbi.png");
-        _closeButton = Button::create(file, file);
-        _closeButton->addClickEventListener([this](Ref*) {
-            removeFromParent();
-        });
-        _background->addChild(_closeButton);
+        _closeButton = dynamic_cast<Button*>(CocosUtils::createExitButton(_background, [this](){ removeFromParent(); }));
         
         const Size& size = _background->getContentSize();
         
@@ -55,10 +50,6 @@ bool AbstractUILayer::init(const string& title)
         static const float offsetY(12.0f);
         titleSprite->setPosition(Point(size.width / 2, size.height - (titleSize.height / 2 + offsetY)));
         line->setPosition(titleSprite->getPosition() - Point(0, titleSize.height / 2 + offsetY));
-        
-        const Size& buttonSize = _closeButton->getContentSize();
-        static const float offset(5.0f);
-        _closeButton->setPosition(Point(size.width - buttonSize.width / 2 - offset, size.height - buttonSize.height / 2 - offset));
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);

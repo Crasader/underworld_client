@@ -19,7 +19,7 @@
 #include "Utils.h"
 #include "TechTree.h"
 #include "GameModeHMM.h"
-#include "BattleDeckCell.h"
+#include "XTableViewCell.h"
 #include "BattleScene.h"
 
 using namespace std;
@@ -280,17 +280,17 @@ Size BattleDeckLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
 
 TableViewCell* BattleDeckLayer::tableCellAtIndex(TableView *table, ssize_t idx)
 {
-    BattleDeckCell *cell = static_cast<BattleDeckCell*>(table->dequeueCell());
+    auto cell = static_cast<XTableViewCell*>(table->dequeueCell());
     
     if (!cell) {
-        cell = BattleDeckCell::create();
+        cell = XTableViewCell::create();
     }
     
     const ssize_t maxCnt = getCellsCount();
     const size_t cnt = _candidateCards.size();
     for (int i = 0; i < columnCount; ++i) {
         const ssize_t index = idx * columnCount + i;
-        CardNode* unitNode = dynamic_cast<CardNode*>(cell->getNode(i));
+        auto unitNode = dynamic_cast<CardNode*>(cell->getNode(i));
         if (index < cnt) {
             if (!unitNode) {
                 unitNode = CardNode::create(false);

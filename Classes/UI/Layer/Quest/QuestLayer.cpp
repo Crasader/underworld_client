@@ -12,7 +12,7 @@
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "SoundManager.h"
-#include "QuestCell.h"
+#include "XTableViewCell.h"
 #include "TabButton.h"
 
 using namespace std;
@@ -162,13 +162,13 @@ Size QuestLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
 
 TableViewCell* QuestLayer::tableCellAtIndex(TableView *table, ssize_t idx)
 {
-    QuestCell *cell = static_cast<QuestCell*>(table->dequeueCell());
+    auto cell = static_cast<XTableViewCell*>(table->dequeueCell());
     
     if (!cell) {
-        cell = QuestCell::create();
+        cell = XTableViewCell::create();
     }
     
-    QuestNode* node = cell->getNode();
+    auto node = dynamic_cast<QuestNode*>(cell->getNode(0));
     if (node) {
         node->update(nullptr, idx);
     } else {
@@ -176,7 +176,7 @@ TableViewCell* QuestLayer::tableCellAtIndex(TableView *table, ssize_t idx)
         node->setPosition(Point::ZERO);
         node->registerObserver(this);
         cell->addChild(node);
-        cell->setNode(node);
+        cell->setNode(node, 0);
     }
     
     return cell;

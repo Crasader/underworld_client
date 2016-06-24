@@ -9,7 +9,6 @@
 #ifndef FormationLayer_h
 #define FormationLayer_h
 
-#include "cocos2d.h"
 #include "cocos-ext.h"
 #include <vector>
 #include <map>
@@ -20,7 +19,6 @@
 class FormationUnitNode;
 class FormationData;
 
-USING_NS_CC;
 USING_NS_CC_EXT;
 
 class FormationLayerObserver
@@ -88,7 +86,6 @@ protected:
     Rect getBoundingBox(Node* node) const;
     
     // buttons
-    void createExitButton();
     void createSwitchFormationButton(const Point& position);
     void createSwitchTableButton(const Point& position);
     void createSaveFormationButton(const Point& position);

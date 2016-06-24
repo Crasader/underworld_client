@@ -1,14 +1,14 @@
 //
-//  FormationCell.cpp
+//  XTableViewCell.cpp
 //  Underworld_Client
 //
-//  Created by Andy on 16/6/14.
+//  Created by Andy on 16/3/1.
 //  Copyright (c) 2016 Mofish Studio. All rights reserved.
 //
 
-#include "FormationCell.h"
+#include "XTableViewCell.h"
 
-Node* FormationCell::getNode(int idx) const
+Node* XTableViewCell::getNode(int idx) const
 {
     if (_nodes.find(idx) != _nodes.end()) {
         return _nodes.at(idx);
@@ -17,7 +17,7 @@ Node* FormationCell::getNode(int idx) const
     return nullptr;
 }
 
-void FormationCell::setNode(Node* node, int idx)
+void XTableViewCell::setNode(Node* node, int idx)
 {
     if (node) {
         if (_nodes.find(idx) != _nodes.end()) {
@@ -28,7 +28,7 @@ void FormationCell::setNode(Node* node, int idx)
     }
 }
 
-void FormationCell::resetNode(int idx)
+void XTableViewCell::resetNode(int idx)
 {
     if (_nodes.find(idx) != _nodes.end()) {
         _nodes.erase(idx);

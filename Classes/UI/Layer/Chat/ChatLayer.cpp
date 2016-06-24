@@ -12,7 +12,7 @@
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "SoundManager.h"
-#include "ChatCell.h"
+#include "XTableViewCell.h"
 #include "ChatNode.h"
 #include <unordered_set>
 
@@ -97,13 +97,13 @@ Size ChatLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
 
 TableViewCell* ChatLayer::tableCellAtIndex(TableView *table, ssize_t idx)
 {
-    ChatCell *cell = static_cast<ChatCell*>(table->dequeueCell());
+    auto cell = static_cast<XTableViewCell*>(table->dequeueCell());
     
     if (!cell) {
-        cell = ChatCell::create();
+        cell = XTableViewCell::create();
     }
     
-    ChatNode* node = cell->getNode();
+    auto node = dynamic_cast<ChatNode*>(cell->getNode(0));
     if (node) {
         
     } else {

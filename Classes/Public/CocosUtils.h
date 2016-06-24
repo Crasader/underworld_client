@@ -56,6 +56,9 @@ namespace CocosUtils
     // csb animation
     cocos2d::Node* playCSBAnimation(const std::string& file, bool loop, int frameIndex, const std::function<void(cocos2d::Node*)>& callback);
     
+    // buttons
+    cocos2d::Node* createExitButton(cocos2d::Node* parent, const std::function<void()>& callback);
+    
 #pragma mark - notifications
     void postNotification(const std::string& notification);
     

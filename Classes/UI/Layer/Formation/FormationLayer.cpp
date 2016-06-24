@@ -14,7 +14,7 @@
 #include "GameData.h"
 #include "DataManager.h"
 #include "FormationData.h"
-#include "FormationCell.h"
+#include "XTableViewCell.h"
 #include "FormationUnitNode.h"
 
 using namespace std;
@@ -123,7 +123,7 @@ bool FormationLayer::init()
         }
         
         // buttons
-        createExitButton();
+        CocosUtils::createExitButton(this, [this]() { removeFromParent(); });
         {
             static const float offsetX(10.0f);
             static const Point basePoint(345, getWinSize().height - 15);
@@ -270,10 +270,10 @@ Size FormationLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
 
 TableViewCell* FormationLayer::tableCellAtIndex(TableView *table, ssize_t idx)
 {
-    auto cell = static_cast<FormationCell*>(table->dequeueCell());
+    auto cell = static_cast<XTableViewCell*>(table->dequeueCell());
     
     if (!cell) {
-        cell = FormationCell::create();
+        cell = XTableViewCell::create();
     }
     
     const ssize_t maxCnt = getCellsCount(table);
@@ -446,21 +446,6 @@ Rect FormationLayer::getBoundingBox(Node* node) const
 }
 
 #pragma mark buttons
-void FormationLayer::createExitButton()
-{
-    const Size& winSize = getWinSize();
-    static const string file("GameImages/test/ui_guanbi.png");
-    auto button = Button::create(file, file);
-    button->addClickEventListener([this](Ref*) {
-        removeFromParent();
-    });
-    addChild(button);
-    
-    static const Vec2 offset(5.0f, 5.0f);
-    const Size& size = button->getContentSize();
-    button->setPosition(Point(winSize.width - size.width / 2, winSize.height - size.height / 2) - offset);
-}
-
 void FormationLayer::createSwitchFormationButton(const Point& position)
 {
     for (int i = 0; i < FORMATION_MAX_COUNT; ++i) {

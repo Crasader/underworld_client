@@ -12,7 +12,7 @@
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "SoundManager.h"
-#include "BagCell.h"
+#include "XTableViewCell.h"
 #include "TabButton.h"
 
 using namespace std;
@@ -163,15 +163,15 @@ Size BagLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
 
 TableViewCell* BagLayer::tableCellAtIndex(TableView *table, ssize_t idx)
 {
-    BagCell *cell = static_cast<BagCell*>(table->dequeueCell());
+    auto cell = static_cast<XTableViewCell*>(table->dequeueCell());
     
     if (!cell) {
-        cell = BagCell::create();
+        cell = XTableViewCell::create();
     }
     
     for (int i = 0; i < columnCount; ++i) {
-        ssize_t index = idx * columnCount + i;
-        BagNode* node = cell->getNode(i);
+        const ssize_t index = idx * columnCount + i;
+        auto node = dynamic_cast<BagNode*>(cell->getNode(i));
         if (index < 100 /* objects.count */) {
             const ObjectData* data = nullptr;
             if (node) {
@@ -184,11 +184,9 @@ TableViewCell* BagLayer::tableCellAtIndex(TableView *table, ssize_t idx)
                 cell->addChild(node);
                 cell->setNode(node, i);
             }
-        } else {
-            if (node) {
-                node->removeFromParent();
-                cell->resetNode(i);
-            }
+        } else if (node) {
+            node->removeFromParent();
+            cell->resetNode(i);
         }
     }
     
