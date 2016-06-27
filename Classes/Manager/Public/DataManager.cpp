@@ -283,7 +283,7 @@ const GearSetLocalData* DataManager::getGearSetData(int id) const
     return nullptr;
 }
 
-void DataManager::getAnimationParameters(const std::string& name, UnderWorld::Core::SkillClass skillClass, UnderWorld::Core::Unit::Direction direction, float& scale, float& speed) const
+void DataManager::getAnimationParameters(const string& name, UnderWorld::Core::SkillClass skillClass, UnderWorld::Core::Unit::Direction direction, float& scale, float& speed) const
 {
     scale = speed = 1.0f;
     

@@ -157,7 +157,7 @@ void CardDeck::select(int idx)
 void CardDeck::insert(const string& name, bool animated)
 {
     auto node = insert(animated);
-    node->update(name);
+    node->updateWithoutInfo(name);
 }
 
 void CardDeck::insert(const HMMCard* card, bool animated)

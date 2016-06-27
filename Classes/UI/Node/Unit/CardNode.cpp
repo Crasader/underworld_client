@@ -224,7 +224,7 @@ void CardNode::setOpacity(GLubyte opacity)
     }
 }
 
-void CardNode::update(const std::string& name)
+void CardNode::updateWithoutInfo(const string& name)
 {
     _cardName = name;
     
@@ -257,49 +257,19 @@ void CardNode::updateCD(float percentage)
 void CardNode::update(const HMMCard* card, float resource)
 {
     _card = card;
-    
     if (card) {
-        const HMMCardType* ct = card->getCardType();
+        auto ct = card->getCardType();
         if (ct) {
-            const string& name = ct->getName();
-            
-            int cost(0);
-            static const string& resourceName(RESOURCE_NAME);
-            const auto& costs = ct->getCost();
-            if (costs.find(resourceName) != costs.end()) {
-                cost = costs.at(resourceName) / GameConstants::MICRORES_PER_RES;
-            }
-            
-            // TODO:
-            const UnitType* ut = nullptr;
-            if (ut) {
-                update(name, ut->getRarity(), cost, resource);
-            } else {
-                update(name, 0, cost, resource);
-            }
+            update(ct->getName(), ct, resource);
         }
     }
 }
 
-void CardNode::update(const string& name, int rarity, int cost, float resource)
+void CardNode::update(const string& name, float resource)
 {
-    _cardName = name;
-    
-    // update mutable data
-    updateIcon(resource >= cost);
-    
-    if (_qualitySprite) {
-        _qualitySprite->setTexture(StringUtils::format("GameImages/test/ui_kuang_%d.png", rarity + 1));
-    }
-    
-    // !!!if we didn't re-add the resource nodes, the animation would be stopped(It may caused by the table's refreshing)
-    _resourceNode = readdResourceNode(_resourceNode, ::ResourceType::Gold, cost);
-    checkResource(resource);
-    
-    for (auto iter = begin(_starSprites); iter != end(_starSprites); ++iter) {
-        iter->second->getParent()->getParent()->setVisible(true);
-        break;
-    }
+    _card = nullptr;
+    auto ct = DataManager::getInstance()->getGameModeHMM()->findCardTypeByName(name);
+    update(name, ct, resource);
 }
 
 void CardNode::setSelected(bool selected)
@@ -359,6 +329,54 @@ const HMMCard* CardNode::getCard() const
 const string& CardNode::getCardName() const
 {
     return _cardName;
+}
+
+#pragma mark - protected
+void CardNode::update(const string& name, const HMMCardType* ct, float resource)
+{
+    _cardName = name;
+    
+    // rarity
+    auto dm = DataManager::getInstance();
+    int rarity(0);
+    auto ut = dm->getTechTree()->findUnitTypeByName(name);
+    if (ut) {
+        rarity = ut->getRarity();
+    }
+    
+    // resource type & cost
+    ::ResourceType type(::ResourceType::Gold);
+    int cost(0);
+    if (ct) {
+        static const map<string, ::ResourceType> resources = {
+            {RES_NAME_GOLD, ::ResourceType::Gold},
+            {RES_NAME_WOOD, ::ResourceType::Wood}};
+        const auto& costs = ct->getCost();
+        for (auto iter = begin(resources); iter != end(resources); ++iter) {
+            const string& resourceName = iter->first;
+            if (costs.find(resourceName) != end(costs)) {
+                type = iter->second;
+                cost = costs.at(resourceName) / UnderWorld::Core::GameConstants::MICRORES_PER_RES;
+                break;
+            }
+        }
+    }
+    
+    // update mutable data
+    updateIcon(resource >= cost);
+    
+    if (_qualitySprite) {
+        _qualitySprite->setTexture(StringUtils::format("GameImages/test/ui_kuang_%d.png", rarity + 1));
+    }
+    
+    // !!!if we didn't re-add the resource nodes, the animation would be stopped(It may caused by the table's refreshing)
+    _resourceNode = readdResourceNode(_resourceNode, type, cost);
+    checkResource(resource);
+    
+    for (auto iter = begin(_starSprites); iter != end(_starSprites); ++iter) {
+        iter->second->getParent()->getParent()->setVisible(true);
+        break;
+    }
 }
 
 string CardNode::getIconFile(const string& name, bool enable) const

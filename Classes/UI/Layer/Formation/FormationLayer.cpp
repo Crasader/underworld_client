@@ -59,8 +59,8 @@ FormationLayer::FormationLayer()
 ,_draggingNode(nullptr)
 ,_populationLabel(nullptr)
 ,_spellCountLabel(nullptr)
-,_thisTableType(static_cast<FormationTableType>(-1))
-,_isPickingSpell(false)
+,_thisTableType(FormationTableType::None)
+,_isPickingCard(false)
 ,_thisFormationIdx(-1)
 ,_thisFormationData(nullptr)
 {
@@ -177,7 +177,7 @@ void FormationLayer::onTouchMoved(Touch *touch, Event *unused_event)
         }
         
         if (!_draggingNode) {
-            createDraggingNode(_selectedCard, point);
+            createDraggingNode(_isPickingCard ? _thisTableType : FormationTableType::Spell, _selectedCard, point);
         }
         
         if (_draggingNode) {
@@ -191,12 +191,15 @@ void FormationLayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
     if (_selectedCard.size() > 0 && _draggingNode) {
         const auto& point = touch->getLocation();
-        if (FormationTableType::Hero == _thisTableType) {
+        static const auto spellTableType(FormationTableType::Spell);
+        FormationTableType type = _isPickingCard ? _thisTableType : spellTableType;
+        if (FormationTableType::Hero == type) {
             onPlacedEnded(_selectedCard, point);
-        } else {
+        } else if (spellTableType == type) {
             const ssize_t idx = getIntersectedDeckIdx(_draggingNode->getBoundingBox());
             bool refreshUI(false);
-            if (_isPickingSpell) {
+            auto spellTable = _tables.at(spellTableType);
+            if (_isPickingCard) {
                 if (CC_INVALID_INDEX != idx) {
                     auto cnt = _thisFormationData->getSpells().size();
                     if (cnt < FORMATION_SPELLS_COUNT) {
@@ -211,14 +214,15 @@ void FormationLayer::onTouchEnded(Touch *touch, Event *unused_event)
                     }
                 }
                 
-                _isPickingSpell = false;
+                _isPickingCard = false;
             } else {
+                // pick card from spell deck to table
                 if (CC_INVALID_INDEX == idx) {
                     cancelSpellCard(_selectedCard);
                     refreshUI = true;
                 } else {
                     string exchanged("");
-                    const auto& rect = getBoundingBox(_thisTable);
+                    const auto& rect = getBoundingBox(spellTable);
                     if (rect.containsPoint(point)) {
                         exchanged = "";
                     }
@@ -231,7 +235,7 @@ void FormationLayer::onTouchEnded(Touch *touch, Event *unused_event)
             }
             
             if (refreshUI) {
-                refreshTable(_thisTable, true);
+                refreshTable(spellTable, true);
                 reloadDecks();
             }
         }
@@ -249,11 +253,7 @@ void FormationLayer::tableCellTouched(TableView* table, TableViewCell* cell)
 
 void FormationLayer::tableCellHighlight(TableView* table, TableViewCell* cell)
 {
-    if (FormationTableType::Hero == _thisTableType) {
-        
-    } else {
-        _isPickingSpell = true;
-    }
+    _isPickingCard = true;
 }
 
 #pragma mark - TableViewDataSource
@@ -315,7 +315,7 @@ void FormationLayer::onCardNodeTouchedBegan(CardNode* node)
 {
     _selectedCard = node->getCardName();
     const auto& point = convertToNodeSpace(node->getParent()->convertToWorldSpace(node->getPosition()));
-    createDraggingNode(_selectedCard, point);
+    createDraggingNode(isContainedByTableView(point) ? _thisTableType : FormationTableType::Spell, _selectedCard, point);
     const auto& spells = _thisFormationData->getSpells();
     for (int i = 0; i < spells.size(); ++i) {
         const auto& name = spells.at(i);
@@ -431,6 +431,19 @@ ssize_t FormationLayer::getCellsCount(TableView* table) const
 Size FormationLayer::getCellSize() const
 {
     return Size(_tableMaxSize.width, _cardSize.height);
+}
+
+bool FormationLayer::isContainedByTableView(const Point& point)
+{
+    if (_tables.size() > 0) {
+        auto table = _tables.begin()->second;
+        if (table) {
+            const auto& size = getBoundingBox(table);
+            return size.containsPoint(point);
+        }
+    }
+    
+    return false;
 }
 
 Rect FormationLayer::getBoundingBox(Node* node) const
@@ -581,32 +594,15 @@ CardNode* FormationLayer::createCardNode(const string& name) const
 void FormationLayer::updateCardNode(CardNode* node, const string& name) const
 {
     if (node && name.length() > 0) {
-        int rarity(0);
-        int cost(0);
-        
-        auto ut = DataManager::getInstance()->getTechTree()->findUnitTypeByName(name);
-        if (ut) {
-            rarity = ut->getRarity();
-        }
-        
-        auto ct = DataManager::getInstance()->getGameModeHMM()->findCardTypeByName(name);
-        if (ct) {
-            const auto& costs = ct->getCost();
-            static const auto& name(RESOURCE_NAME);
-            if (costs.find(name) != costs.end()) {
-                cost = costs.at(name) / GameConstants::MICRORES_PER_RES;
-            }
-        }
-        
-        node->update(name, rarity, cost, BATTLE_RESOURCE_MAX_COUNT);
+        node->update(name, BATTLE_RESOURCE_MAX_COUNT);
     }
 }
 
-void FormationLayer::createDraggingNode(const string& name, const Point& point)
+void FormationLayer::createDraggingNode(FormationTableType type, const string& name, const Point& point)
 {
     if (!_draggingNode && name.length() > 0) {
         Node* node(nullptr);
-        if (FormationTableType::Hero == _thisTableType) {
+        if (FormationTableType::Hero == type) {
             node = Sprite::create("GameImages/effects/backcircle_bule.png");
         } else {
             node = createCardNode(name);
@@ -645,7 +641,7 @@ FormationUnitNode* FormationLayer::createUnitNode(const string& name)
         renderKey = ut->getRenderKey();
     }
     
-    auto node = FormationUnitNode::create(renderKey, _tileSize);
+    auto node = FormationUnitNode::create(name, renderKey, _tileSize);
     addChild(node);
     node->setTouchEnabled(true);
     node->setSwallowTouches(true);
@@ -833,7 +829,7 @@ FormationTableType FormationLayer::getTableType(TableView* table) const
         return static_cast<FormationTableType>(table->getTag());
     }
     
-    return static_cast<FormationTableType>(-1);
+    return FormationTableType::None;
 }
 
 void FormationLayer::setTableType(FormationTableType type)
@@ -974,7 +970,7 @@ void FormationLayer::onUnitTouchedBegan(FormationUnitNode* node)
 {
     if (node) {
         const auto& point = node->getTouchBeganPosition();
-        createDraggingNode(node->getUnitName(), point);
+        createDraggingNode(FormationTableType::Hero, node->getUnitName(), point);
     }
 }
 

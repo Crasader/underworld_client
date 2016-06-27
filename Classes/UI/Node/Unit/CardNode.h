@@ -16,6 +16,7 @@
 // UnderWorld::Core
 namespace UnderWorld { namespace Core {
     class HMMCard;
+    class HMMCardType;
 }}
 
 // Global
@@ -49,12 +50,12 @@ public:
     virtual void setOpacity(GLubyte opacity) override;
     
     // spell cards
-    void update(const std::string& name);
+    void updateWithoutInfo(const std::string& name);
     void updateCD(float percentage);
     
     // unit cards
     void update(const HMMCard* card, float resource);
-    void update(const std::string& name, int rarity, int cost, float resource);
+    void update(const std::string& name, float resource);
     void setSelected(bool selected);
     void checkResource(float count);
     
@@ -66,6 +67,7 @@ protected:
     CardNode();
     
     bool init(bool canShake);
+    void update(const std::string& name, const HMMCardType* ct, float resource);
     std::string getIconFile(const std::string& name, bool enable) const;
     BattleSmallResourceNode* readdResourceNode(Node* currentNode, ::ResourceType type, int count);
     void updateIcon(bool colorful);

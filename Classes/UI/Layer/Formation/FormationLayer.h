@@ -28,6 +28,7 @@ public:
 };
 
 enum class FormationTableType {
+    None,
     Hero,
     Spell,
 };
@@ -83,6 +84,7 @@ protected:
     void refreshTable(TableView* table, bool reload);
     ssize_t getCellsCount(TableView *table) const;
     Size getCellSize() const;
+    bool isContainedByTableView(const Point& point);
     Rect getBoundingBox(Node* node) const;
     
     // buttons
@@ -98,7 +100,7 @@ protected:
     // card
     CardNode* createCardNode(const std::string& name) const;
     void updateCardNode(CardNode* node, const std::string& name) const;
-    void createDraggingNode(const std::string& name, const Point& point);
+    void createDraggingNode(FormationTableType type, const std::string& name, const Point& point);
     void removeDraggingNode();
     void unitBackToTable();
     void unitBackToFormation();
@@ -162,7 +164,7 @@ protected:
     
     // data
     FormationTableType _thisTableType;
-    bool _isPickingSpell;
+    bool _isPickingCard;
     std::string _touchedCard;
     std::string _selectedCard;
     std::map<FormationTableType, std::vector<std::string>> _candidateCards;

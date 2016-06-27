@@ -309,24 +309,7 @@ CardNode* CardLayer::createCardNode(const string& name) const
 void CardLayer::updateCardNode(CardNode* node, const string& name) const
 {
     if (node && name.length() > 0) {
-        int rarity(0);
-        int cost(0);
-        
-        auto ut = DataManager::getInstance()->getTechTree()->findUnitTypeByName(name);
-        if (ut) {
-            rarity = ut->getRarity();
-        }
-        
-        auto ct = DataManager::getInstance()->getGameModeHMM()->findCardTypeByName(name);
-        if (ct) {
-            const auto& costs = ct->getCost();
-            static const auto& name(RESOURCE_NAME);
-            if (costs.find(name) != costs.end()) {
-                cost = costs.at(name) / GameConstants::MICRORES_PER_RES;
-            }
-        }
-        
-        node->update(name, rarity, cost, BATTLE_RESOURCE_MAX_COUNT);
+        node->update(name, BATTLE_RESOURCE_MAX_COUNT);
     }
 }
 

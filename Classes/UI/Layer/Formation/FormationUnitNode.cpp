@@ -17,10 +17,10 @@
 
 using namespace std;
 
-FormationUnitNode* FormationUnitNode::create(const string& name, const Size& size)
+FormationUnitNode* FormationUnitNode::create(const string& name, const string& renderKey, const Size& size)
 {
     FormationUnitNode *ret = new (nothrow) FormationUnitNode();
-    if (ret && ret->init(name, size))
+    if (ret && ret->init(name, renderKey, size))
     {
         ret->autorelease();
         return ret;
@@ -37,26 +37,36 @@ FormationUnitNode::~FormationUnitNode()
     removeAllChildren();
 }
 
-bool FormationUnitNode::init(const string& name, const Size& size)
+bool FormationUnitNode::init(const string& name, const string& renderKey, const Size& size)
 {
     if (Widget::init())
     {
         _name = name;
         
         setContentSize(size);
-//# if USING_PVR
-#if true
+        
+# if USING_PVR
         auto sprite = CocosUtils::playAnimation("fatso-stand/fatso-stand-3", 10, true, 0, DEFAULT_FRAME_DELAY, nullptr);
         sprite->setPosition(Point(size.width / 2, size.height / 2));
         addChild(sprite);
 #else
-        auto data = DataManager::getInstance()->getURConfigData(name);
+        auto data = DataManager::getInstance()->getURConfigData(renderKey);
         if (data) {
             auto file = data->getPrefix() + StringUtils::format("-standby-%d.csb", 3);
             auto node = CocosUtils::playCSBAnimation(file, true, 0, nullptr);
+            /*
+            Sprite* sprite = dynamic_cast<Sprite*>(node->getChildren().front());
+            if (sprite) {
+                const auto& spriteSize = sprite->getContentSize();
+                if (spriteSize.width > size.width || spriteSize.height > size.height) {
+                    setScale(MIN(size.width / spriteSize.width, size.height / spriteSize.height));
+                }
+            }
+             */
             if (!data->isFaceRight()) {
                 node->setScaleX(-1 * node->getScaleX());
             }
+            node->setPosition(Point(size.width / 2, size.height / 2));
             addChild(node);
         }
 #endif

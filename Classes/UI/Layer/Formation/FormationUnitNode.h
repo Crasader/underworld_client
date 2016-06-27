@@ -17,14 +17,14 @@ using namespace ui;
 class FormationUnitNode : public Widget
 {
 public:
-    static FormationUnitNode* create(const std::string& name, const Size& size);
+    static FormationUnitNode* create(const std::string& name, const std::string& renderKey, const Size& size);
     virtual ~FormationUnitNode();
     
     const std::string& getUnitName() const;
     
 protected:
     FormationUnitNode();
-    bool init(const std::string& name, const Size& size);
+    bool init(const std::string& name, const std::string& renderKey, const Size& size);
     
 protected:
     std::string _name;
