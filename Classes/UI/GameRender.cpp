@@ -132,7 +132,7 @@ void GameRender::init(const Game* game, Commander* commander)
             if (card) {
                 const HMMCardType* ct = card->getCardType();
                 if (ct) {
-                    _mapUILayer->insertCard(type, ct->getName());
+                    _mapUILayer->insertCard(type, card /*ct->getName()*/, false);
                     _handCards.push_back(ct->getName());
                 }
             }
@@ -359,9 +359,12 @@ void GameRender::updateUILayer()
             _mapUILayer->clear(type);
             _handCards.clear();
             for (int i = 0; i < cnt; ++i) {
-                const string& name = _deck->getHandCard(i)->getCardType()->getName();
-                _mapUILayer->insertCard(type, name);
-                _handCards.push_back(name);
+                auto card = _deck->getHandCard(i);
+                if (card) {
+                    const string& name = card->getCardType()->getName();
+                    _mapUILayer->insertCard(type, card /*name*/, false);
+                    _handCards.push_back(name);
+                }
             }
         }
 //        _deck->clearEventLog();

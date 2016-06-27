@@ -159,19 +159,19 @@ void MapUILayer::createCardDeck(CardDeckType type, int count)
     }
 }
 
-void MapUILayer::insertCard(CardDeckType type, const string& name)
+void MapUILayer::insertCard(CardDeckType type, const string& name, bool animated)
 {
     auto deck = getDeck(type);
     if (deck) {
-        deck->insert(name, false);
+        deck->insert(name, animated);
     }
 }
 
-void MapUILayer::insertCard(CardDeckType type, const HMMCard* card)
+void MapUILayer::insertCard(CardDeckType type, const HMMCard* card, bool animated)
 {
     auto deck = getDeck(type);
     if (deck) {
-        deck->insert(card, true);
+        deck->insert(card, animated);
     }
 }
 

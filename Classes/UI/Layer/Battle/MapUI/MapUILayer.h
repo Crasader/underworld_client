@@ -52,8 +52,8 @@ public:
     
     // card deck
     void createCardDeck(CardDeckType type, int count);
-    void insertCard(CardDeckType type, const std::string& name);
-    void insertCard(CardDeckType type, const HMMCard* card);
+    void insertCard(CardDeckType type, const std::string& name, bool animated);
+    void insertCard(CardDeckType type, const HMMCard* card, bool animated);
     void removeCard(CardDeckType type, const HMMCard* card, int index);
     void clear(CardDeckType type);
     void updateNextCard(const HMMCard* card);

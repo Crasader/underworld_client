@@ -11,34 +11,23 @@
 
 using namespace std;
 
+static const string TypeSeparator("|");
+static const string ElementSeparator(";");
+static const string ParameterSeparator(",");
+
 FormationData::FormationData(const string& serializedString)
 {
     if (serializedString.size() > 0) {
         vector<string> formations;
-        Utils::split(formations, serializedString, "|");
+        Utils::split(formations, serializedString, TypeSeparator);
         if (2 <= formations.size()) {
             vector<string> outputs;
             
             // heroes
-            Utils::split(outputs, formations.at(0), ";");
-            for (int i = 0; i < outputs.size(); ++i) {
-                const auto& individual = outputs.at(i);
-                vector<string> splits;
-                Utils::split(splits, individual, ",");
-                if (3 == splits.size()) {
-                    Coordinate32 point;
-                    point.x = atoi(splits.at(0).c_str());
-                    point.y = atoi(splits.at(1).c_str());
-                    _heroes.insert(make_pair(point, splits.at(2)));
-                }
-            }
+            parseHeroes(formations.at(0));
             
             // spells
-            outputs.clear();
-            Utils::split(outputs, formations.at(1), ";");
-            for (int i = 0; i < outputs.size(); ++i) {
-                _spells.push_back(outputs.at(i));
-            }
+            parseSpells(formations.at(1));
         }
     }
 }
@@ -128,20 +117,50 @@ void FormationData::serialize(string& output)
     // x1,y1,hero1;x2,y2,hero2;...xN,yN,heroN|spell1,spell2,...spellN
     for (auto iter = begin(_heroes); iter != end(_heroes); ++iter) {
         const auto& coordinate = iter->first;
-        output += Utils::format("%d,", coordinate.x);
-        output += Utils::format("%d,", coordinate.y);
-        output += iter->second + ";";
+        output += Utils::format("%d", coordinate.x) + ParameterSeparator;
+        output += Utils::format("%d", coordinate.y) + ParameterSeparator;
+        output += iter->second + ElementSeparator;
     }
     
     output = output.substr(0, output.size() - 1);
     
-    if (output.size() > 0) {
-        output += "|";
-    }
+    output += TypeSeparator;
     
     for (int i = 0; i < _spells.size(); ++i) {
-        output += _spells.at(i) + ";";
+        output += _spells.at(i) + ElementSeparator;
     }
     
-    output = output.substr(0, output.size() - 1);
+    if (TypeSeparator != &output.back() || 1 == output.size()) {
+        output = output.substr(0, output.size() - 1);
+    }
+}
+
+void FormationData::parseHeroes(const string& input)
+{
+    if (input.size() > 0) {
+        vector<string> outputs;
+        Utils::split(outputs, input, ElementSeparator);
+        for (int i = 0; i < outputs.size(); ++i) {
+            const auto& individual = outputs.at(i);
+            vector<string> splits;
+            Utils::split(splits, individual, ParameterSeparator);
+            if (3 == splits.size()) {
+                Coordinate32 point;
+                point.x = atoi(splits.at(0).c_str());
+                point.y = atoi(splits.at(1).c_str());
+                _heroes.insert(make_pair(point, splits.at(2)));
+            }
+        }
+    }
+}
+
+void FormationData::parseSpells(const string& input)
+{
+    if (input.size() > 0) {
+        vector<string> outputs;
+        Utils::split(outputs, input, ElementSeparator);
+        for (int i = 0; i < outputs.size(); ++i) {
+            _spells.push_back(outputs.at(i));
+        }
+    }
 }
