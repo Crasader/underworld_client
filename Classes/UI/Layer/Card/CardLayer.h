@@ -12,9 +12,11 @@
 #include "cocos-ext.h"
 #include <vector>
 #include <unordered_map>
-#include "CardNode.h"
+#include "XCardNode.h"
 
 USING_NS_CC_EXT;
+
+class TabButton;
 
 class CardLayerObserver
 {
@@ -63,14 +65,14 @@ protected:
     Rect getBoundingBox(Node* node) const;
     
     // buttons
-    void createSwitchTableButtons(const Point& position);
+    void createTabButtons(const Point& position);
     
     // labels
     void updateCardsCount(int count);
     
     // card
-    CardNode* createCardNode(const std::string& name) const;
-    void updateCardNode(CardNode* node, const std::string& name) const;
+    XCardNode* createXCardNode(const std::string& name) const;
+    void updateXCardNode(XCardNode* node, const std::string& name) const;
     
     // functions
     void reloadAllCandidateCards();
@@ -94,7 +96,7 @@ private:
     
     // labels
     Label* _cardsCountLabel;
-    std::map<CardTableType, Button*> _switchTableButtons;
+    std::map<CardTableType, TabButton*> _tabButtons;
     
     // data
     std::string _touchedCard;

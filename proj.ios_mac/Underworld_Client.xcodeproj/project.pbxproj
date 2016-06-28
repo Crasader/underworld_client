@@ -114,6 +114,7 @@
 		A1211B231C0BF55200C27CCC /* LiteralValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B211C0BF55200C27CCC /* LiteralValue.cpp */; };
 		A1211B271C0BF5CC00C27CCC /* RandomCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B251C0BF5CC00C27CCC /* RandomCreator.cpp */; };
 		A1211B291C0BF68E00C27CCC /* GameConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B281C0BF68E00C27CCC /* GameConstants.cpp */; };
+		A12BF9431D22278100D2E5CD /* XCardNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12BF9411D22278100D2E5CD /* XCardNode.cpp */; };
 		A13108A51C046BF900EAAD90 /* particle in Resources */ = {isa = PBXBuildFile; fileRef = A13108A41C046BF900EAAD90 /* particle */; };
 		A14B5EFB1C311908006FB0DB /* Addon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14B5EF91C311908006FB0DB /* Addon.cpp */; };
 		A15698E11C3A96E500B94345 /* DamageType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A15698DF1C3A96E500B94345 /* DamageType.cpp */; };
@@ -514,6 +515,8 @@
 		A1211B251C0BF5CC00C27CCC /* RandomCreator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RandomCreator.cpp; path = Core/Utils/RandomCreator.cpp; sourceTree = "<group>"; };
 		A1211B261C0BF5CC00C27CCC /* RandomCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RandomCreator.h; path = Core/Utils/RandomCreator.h; sourceTree = "<group>"; };
 		A1211B281C0BF68E00C27CCC /* GameConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameConstants.cpp; path = Core/Game/GameConstants.cpp; sourceTree = "<group>"; };
+		A12BF9411D22278100D2E5CD /* XCardNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XCardNode.cpp; sourceTree = "<group>"; };
+		A12BF9421D22278100D2E5CD /* XCardNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCardNode.h; sourceTree = "<group>"; };
 		A13108A41C046BF900EAAD90 /* particle */ = {isa = PBXFileReference; lastKnownFileType = folder; path = particle; sourceTree = "<group>"; };
 		A14B5EF91C311908006FB0DB /* Addon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Addon.cpp; path = Core/Unit/Type/Addon.cpp; sourceTree = "<group>"; };
 		A14B5EFA1C311908006FB0DB /* Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Addon.h; path = Core/Unit/Type/Addon.h; sourceTree = "<group>"; };
@@ -1943,6 +1946,8 @@
 				A1F3D2271D1D044100EB5C17 /* CardInfoNode.h */,
 				A1F3D2231D1D042800EB5C17 /* CardLayer.cpp */,
 				A1F3D2241D1D042800EB5C17 /* CardLayer.h */,
+				A12BF9411D22278100D2E5CD /* XCardNode.cpp */,
+				A12BF9421D22278100D2E5CD /* XCardNode.h */,
 			);
 			path = Card;
 			sourceTree = "<group>";
@@ -2358,6 +2363,7 @@
 				30B83D5E1CEEC25500195004 /* WorldTest.cpp in Sources */,
 				A1720EBD1BCD309A00217E98 /* NetworkController.cpp in Sources */,
 				A1D4615F1C3E251000E8E60B /* MapParticleConfigData.cpp in Sources */,
+				A12BF9431D22278100D2E5CD /* XCardNode.cpp in Sources */,
 				A1D592271C9ABE7E009B9E8C /* Scheduler.cpp in Sources */,
 				A1A74CAB1C17DFFA00648671 /* MainUILayer.cpp in Sources */,
 				A1720EA41BCD29FF00217E98 /* GameData.cpp in Sources */,

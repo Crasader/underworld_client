@@ -89,7 +89,7 @@ protected:
     
     // buttons
     void createSwitchFormationButton(const Point& position);
-    void createSwitchTableButton(const Point& position);
+    void createTabButtons(const Point& position);
     void createSaveFormationButton(const Point& position);
     void createSetDefaultFormationButton(const Point& position);
     
@@ -158,7 +158,7 @@ protected:
     
     Node* _draggingNode;
     std::vector<Button*> _switchFormationButtons;
-    std::map<FormationTableType, Button*> _switchTableButtons;
+    std::map<FormationTableType, Button*> _tabButtons;
     Label* _populationLabel;
     Label* _spellCountLabel;
     

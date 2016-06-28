@@ -13,6 +13,7 @@
 #include "GameModeHMM.h"
 #include "DataManager.h"
 #include "XTableViewCell.h"
+#include "TabButton.h"
 
 using namespace std;
 using namespace ui;
@@ -87,6 +88,7 @@ bool CardLayer::init()
         
         // buttons
         CocosUtils::createExitButton(this, [this]() { removeFromParent(); });
+        createTabButtons(Point(100, 100));
         
         // labels
         updateCardsCount(0);
@@ -135,11 +137,11 @@ TableViewCell* CardLayer::tableCellAtIndex(TableView *table, ssize_t idx)
     const size_t cnt = cards.size();
     for (int i = 0; i < tableColumnCount; ++i) {
         const ssize_t index = idx * tableColumnCount + i;
-        auto cardNode = dynamic_cast<CardNode*>(cell->getNode(i));
+        auto cardNode = dynamic_cast<XCardNode*>(cell->getNode(i));
         if (index < cnt) {
             if (!cardNode) {
-                cardNode = CardNode::create(false);
-                cardNode->registerObserver(this);
+                cardNode = XCardNode::create();
+                cardNode->getCardNode()->registerObserver(this);
                 cell->addChild(cardNode);
                 cell->setNode(cardNode, i);
             }
@@ -149,7 +151,7 @@ TableViewCell* CardLayer::tableCellAtIndex(TableView *table, ssize_t idx)
             cardNode->setPosition(point + Point(0, (idx == maxCnt - 1) ? cardOffsetOnTable.y : 0));
             
             const string& name = cards.at(index);
-            updateCardNode(cardNode, name);
+            updateXCardNode(cardNode, name);
         } else if (cardNode) {
             cardNode->removeFromParent();
             cell->resetNode(i);
@@ -245,13 +247,12 @@ Rect CardLayer::getBoundingBox(Node* node) const
 }
 
 #pragma mark buttons
-void CardLayer::createSwitchTableButtons(const Point& position)
+void CardLayer::createTabButtons(const Point& position)
 {
     for (int i = 0; i < tablesCount; ++i) {
-        const auto normal("GameImages/formation/button_yellow_1.png");
-        const auto selected("GameImages/formation/button_blue.png");
-        auto button = Button::create(normal, selected, selected);
-        button->addClickEventListener([this, i](Ref*) {
+        const auto type = tableTypes[i];
+        const string title = getTableName(type);
+        auto button = TabButton::create(title, [this, i](Ref*) {
             setTableType(tableTypes[i]);
         });
         addChild(button);
@@ -260,12 +261,11 @@ void CardLayer::createSwitchTableButtons(const Point& position)
         const auto& size = button->getContentSize();
         button->setPosition(position + Point((size.width + offset.x) * i + size.width / 2, -(offset.y + size.height / 2)));
         
-        const auto type = tableTypes[i];
-        if (_switchTableButtons.find(type) != end(_switchTableButtons)) {
+        if (_tabButtons.find(type) != end(_tabButtons)) {
             assert(false);
-            _switchTableButtons.at(type) = button;
+            _tabButtons.at(type) = button;
         } else {
-            _switchTableButtons.insert(make_pair(type, button));
+            _tabButtons.insert(make_pair(type, button));
         }
     }
 }
@@ -299,17 +299,17 @@ void CardLayer::updateCardsCount(int count)
 }
 
 #pragma mark card
-CardNode* CardLayer::createCardNode(const string& name) const
+XCardNode* CardLayer::createXCardNode(const string& name) const
 {
-    auto node = CardNode::create(false);
-    updateCardNode(node, name);
+    auto node = XCardNode::create();
+    updateXCardNode(node, name);
     return node;
 }
 
-void CardLayer::updateCardNode(CardNode* node, const string& name) const
+void CardLayer::updateXCardNode(XCardNode* node, const string& name) const
 {
     if (node && name.length() > 0) {
-        node->update(name, BATTLE_RESOURCE_MAX_COUNT);
+        node->getCardNode()->update(name, BATTLE_RESOURCE_MAX_COUNT);
     }
 }
 
@@ -406,7 +406,7 @@ void CardLayer::setTableType(CardTableType type)
             }
         }
         
-        for (auto iter = begin(_switchTableButtons); iter != end(_switchTableButtons); ++iter) {
+        for (auto iter = begin(_tabButtons); iter != end(_tabButtons); ++iter) {
             const bool isThisTable(iter->first == type);
             iter->second->setEnabled(!isThisTable);
         }

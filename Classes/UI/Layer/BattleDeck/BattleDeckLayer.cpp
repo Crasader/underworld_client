@@ -127,7 +127,7 @@ bool BattleDeckLayer::init()
         button->addClickEventListener([this](Ref*) {
             saveData();
             // TODO
-            CocosUtils::replaceScene(BattleScene::create(DEFAULT_MAP_ID));
+            CocosUtils::replaceScene(BattleScene::create(DEFAULT_MAP_ID), true);
         });
         
         _closeButton->addClickEventListener([this](Ref*) {

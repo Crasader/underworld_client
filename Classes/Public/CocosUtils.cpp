@@ -231,22 +231,18 @@ float CocosUtils::getFitScreenScale(Node *root)
     return ((scaleX < 1.0f || scaleY < 1.0f) ? MIN(scaleX, scaleY) : 1.0f);
 }
 
-void CocosUtils::replaceScene(Scene* scene)
+void CocosUtils::replaceScene(Scene* scene, bool animated)
 {
-    if (scene)
-    {
-        Director *director = Director::getInstance();
-        
-        if (director->getRunningScene())
-        {
-            Scene* pScene = TransitionFade::create(1.2f, scene);
-            if (pScene)
-            {
+    if (scene) {
+        auto director = Director::getInstance();
+        if (animated && director->getRunningScene()) {
+            auto pScene = TransitionFade::create(1.2f, scene);
+            if (pScene) {
                 director->replaceScene(pScene);
+            } else {
+                director->runWithScene(scene);
             }
-        }
-        else
-        {
+        } else {
             director->runWithScene(scene);
         }
     }
@@ -308,7 +304,7 @@ void CocosUtils::loadPVR(const string& file)
     }
 }
 
-void CocosUtils::playAnimation(cocos2d::Node* node,
+void CocosUtils::playAnimation(Node* node,
                                const vector<string>& files,
                                bool loop,
                                int frameIndex,
@@ -423,7 +419,7 @@ Node* CocosUtils::playCSBAnimation(const string& file,
 Node* CocosUtils::createExitButton(Node* parent, const function<void()>& callback)
 {
     const Size& winSize = parent->getContentSize();
-    static const string file("GameImages/test/ui_guanbi.png");
+    static const string file("GameImages/public/ui_guanbi.png");
     auto button = Button::create(file, file);
     button->addClickEventListener([callback](Ref*) {
         if (callback) {

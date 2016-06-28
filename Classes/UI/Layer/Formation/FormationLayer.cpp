@@ -128,7 +128,7 @@ bool FormationLayer::init()
             static const float offsetX(10.0f);
             static const Point basePoint(345, getWinSize().height - 15);
             createSwitchFormationButton(basePoint);
-            createSwitchTableButton(Point(_tableBasePosition.x + offsetX, basePoint.y));
+            createTabButtons(Point(_tableBasePosition.x + offsetX, basePoint.y));
             
             createSaveFormationButton(Point(_tableBasePosition.x + offsetX, _deckBasePosition.y));
             createSetDefaultFormationButton(Point(_tableBasePosition.x + _tableMaxSize.width - offsetX, _deckBasePosition.y));
@@ -477,7 +477,7 @@ void FormationLayer::createSwitchFormationButton(const Point& position)
     }
 }
 
-void FormationLayer::createSwitchTableButton(const Point& position)
+void FormationLayer::createTabButtons(const Point& position)
 {
     for (int i = 0; i < tablesCount; ++i) {
         const auto normal("GameImages/formation/button_yellow_1.png");
@@ -493,11 +493,11 @@ void FormationLayer::createSwitchTableButton(const Point& position)
         button->setPosition(position + Point((size.width + offset.x) * i + size.width / 2, -(offset.y + size.height / 2)));
         
         const auto type = tableTypes[i];
-        if (_switchTableButtons.find(type) != end(_switchTableButtons)) {
+        if (_tabButtons.find(type) != end(_tabButtons)) {
             assert(false);
-            _switchTableButtons.at(type) = button;
+            _tabButtons.at(type) = button;
         } else {
-            _switchTableButtons.insert(make_pair(type, button));
+            _tabButtons.insert(make_pair(type, button));
         }
     }
 }
@@ -847,7 +847,7 @@ void FormationLayer::setTableType(FormationTableType type)
             }
         }
         
-        for (auto iter = begin(_switchTableButtons); iter != end(_switchTableButtons); ++iter) {
+        for (auto iter = begin(_tabButtons); iter != end(_tabButtons); ++iter) {
             const bool isThisTable(iter->first == type);
             iter->second->setEnabled(!isThisTable);
         }

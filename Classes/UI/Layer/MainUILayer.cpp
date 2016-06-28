@@ -14,6 +14,8 @@
 #include "ResourceNode.h"
 #include "BattleScene.h"
 #include "FormationLayer.h"
+#include "BattleDeckLayer.h"
+#include "CardLayer.h"
 
 using namespace std;
 using namespace ui;
@@ -190,7 +192,7 @@ bool MainUILayer::init()
                                     setButtonIcons(button, 25, "icon_pvp_1", "icon_pvp_2");
                                     button->addClickEventListener([this](Ref *pSender){
                                         SoundManager::getInstance()->playButtonSound();
-                                        CocosUtils::replaceScene(BattleScene::create(DEFAULT_MAP_ID));
+                                        CocosUtils::replaceScene(BattleScene::create(DEFAULT_MAP_ID), true);
                                     });
                                 }
                                 
@@ -252,12 +254,14 @@ bool MainUILayer::init()
             _optionButton->addClickEventListener([this](Ref *pSender){
                 SoundManager::getInstance()->playButtonSound();
                 // TODO:
+                Director::getInstance()->getRunningScene()->addChild(CardLayer::create());
             });
             
             _guildButton = addFunctionButton("icon_gonghui_1", "icon_gonghui_2", "button_2", basePosition - Point(size.width + offset, 0));
             _guildButton->addClickEventListener([this](Ref *pSender){
                 SoundManager::getInstance()->playButtonSound();
                 // TODO:
+                Director::getInstance()->getRunningScene()->addChild(BattleDeckLayer::create());
             });
             
             _armyButton = addFunctionButton("icon_jundui_1", "icon_jundui_2", "button_2", basePosition - Point((size.width + offset) * 2, 0));

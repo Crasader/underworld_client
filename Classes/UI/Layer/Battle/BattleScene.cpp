@@ -126,7 +126,7 @@ void BattleScene::start()
                 
                 pair<string, int> pair;
                 pair.first = iter->second;
-                pair.second = coordinate.y + FORMATION_WIDTH + coordinate.x;
+                pair.second = coordinate.y * FORMATION_WIDTH + coordinate.x;
                 
                 unitList.push_back(pair);
             }

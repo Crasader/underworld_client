@@ -193,7 +193,7 @@ void MainLayer::addLevelButtons()
                 if (!_touchInvalid) {
                     // TODO:
                     SoundManager::getInstance()->playButtonSound();
-                    CocosUtils::replaceScene(BattleScene::create(button->getTag() + 1));
+                    CocosUtils::replaceScene(BattleScene::create(button->getTag() + 1), true);
                 }
             }
         });

@@ -310,7 +310,8 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
         
         // buttons
         {
-            _pauseMenuItem = MenuItemImage::create("GameImages/test/ui_zt.png", "GameImages/test/ui_zt.png", [this](Ref*) {
+            static const string file("GameImages/public/ui_zt.png");
+            _pauseMenuItem = MenuItemImage::create(file, file, [this](Ref*) {
                 if (_observer) {
                     _observer->onMapUILayerClickedPauseButton();
                 }
@@ -556,7 +557,7 @@ void MapUILayer::addResourceNode()
         node->setContentSize(size);
         node->setPosition(size.width / 2, size.height / 2);
         
-        auto line = Sprite::create("GameImages/test/ui_line.png");
+        auto line = Sprite::create("GameImages/public/ui_line.png");
         line->setScaleX(size.width / 2);
         line->setPosition(size.width / 2, size.height / 2);
         node->addChild(line);

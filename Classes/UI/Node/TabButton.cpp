@@ -30,7 +30,7 @@ TabButton::~TabButton()
 
 TabButton* TabButton::create(const string& title, const Button::ccWidgetClickCallback& callback)
 {
-    TabButton *p = new (nothrow)TabButton();
+    TabButton *p = new (nothrow) TabButton();
     if(p && p->init(title, callback))
     {
         p->autorelease();
@@ -45,46 +45,22 @@ bool TabButton::init(const string& title, const Button::ccWidgetClickCallback& c
 {
     if(Node::init())
     {
-        const Size& winSize = Director::getInstance()->getWinSize();
-        static const string csbFile(".csb");
-        Node *mainNode = CocosUtils::playCSBAnimation(csbFile, false, 0, nullptr);
-        mainNode->setPosition(Point(0, winSize.height / 2));
-        addChild(mainNode);
+        const auto normal("GameImages/public/button_white_1.png");
+        const auto selected("GameImages/public/button_black_1.png");
+        _button = Button::create(normal, selected, selected);
+        _button->addClickEventListener(callback);
+        addChild(_button);
         
-        Node* root = mainNode;
-        const Vector<Node*>& children = root->getChildren();
-        for (int i = 0; i < children.size(); ++i)
-        {
-            Node* child = children.at(i);
-            if (child) {
-                const int tag = child->getTag();
-                if (tag > 0) {
-                    switch (tag) {
-                        case 20:
-                        {
-                            Button* button = dynamic_cast<Button*>(child);
-                            if (button) {
-                                button->addClickEventListener(callback);
-                                
-                                Node* child = button->getChildByTag(100);
-                                if (child) {
-                                    Label* label = CocosUtils::createLabel(title, DEFAULT_FONT_SIZE);
-                                    label->setTextColor(normalTextColor);
-                                    child->addChild(label);
-                                    
-                                    _titleLabel = label;
-                                }
-                            }
-                            
-                            _button = button;
-                        }
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-        }
+        const auto& size = _button->getContentSize();
+        _titleLabel = CocosUtils::createLabel(title, DEFAULT_FONT_SIZE);
+        _titleLabel->setPosition(Point(size.width / 2, size.height / 2));
+        _titleLabel->setTextColor(normalTextColor);
+        _button->addChild(_titleLabel);
+        
+        setAnchorPoint(Point::ANCHOR_MIDDLE);
+        setContentSize(size);
+        
+        _button->setPosition(Point(size.width / 2, size.height / 2));
         
         return true;
     }

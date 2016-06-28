@@ -38,7 +38,7 @@ bool AbstractUILayer::init(const string& title)
         Sprite* titleSprite = CocosUtils::createTitle(title, TITLE_FONT_SIZE);
         _background->addChild(titleSprite);
         
-        Sprite* line = Sprite::create("GameImages/test/ui_line.png");
+        Sprite* line = Sprite::create("GameImages/public/ui_line.png");
         line->setScaleX(870 / 2);
         _background->addChild(line);
         
