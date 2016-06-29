@@ -19,7 +19,7 @@ using namespace std;
 using namespace ui;
 using namespace UnderWorld::Core;
 
-static const unsigned int tableColumnCount(4);
+static const unsigned int tableColumnCount(10);
 static const Vec2 cardOffsetOnTable(5, 14);
 static const CardTableType tableTypes[] = {
     CardTableType::All,
@@ -53,18 +53,20 @@ CardLayer::CardLayer()
 ,_tableBasePosition(Point::ZERO)
 ,_cardsCountLabel(nullptr)
 {
-    auto cardSize = CardNode::create(false)->getContentSize();
+    auto cardSize = XCardNode::create()->getContentSize();
     _cardSize = cardSize + Size(cardOffsetOnTable.x, cardOffsetOnTable.y);
     
     // table parameters
     const auto& winSize = getWinSize();
     {
-        static const Vec2 edge(50, 70);
+        static const Vec2 edge(50, 100);
         _tableMaxSize.width = _cardSize.width * tableColumnCount + cardOffsetOnTable.x;
-        _tableMaxSize.height = winSize.height - edge.y * 2;
+        _tableMaxSize.height = winSize.height - edge.y;
         _tableBasePosition.x = winSize.width - edge.x - getCellSize().width;
         _tableBasePosition.y = winSize.height - edge.y;
     }
+    
+    reloadAllCandidateCards();
 }
 
 CardLayer::~CardLayer()
@@ -88,7 +90,11 @@ bool CardLayer::init()
         
         // buttons
         CocosUtils::createExitButton(this, [this]() { removeFromParent(); });
-        createTabButtons(Point(100, 100));
+        {
+            const auto& winSize = getWinSize();
+            static const Vec2 edge(180, 50);
+            createTabButtons(Point(edge.x, winSize.height - edge.y));
+        }
         
         // labels
         updateCardsCount(0);
@@ -197,6 +203,7 @@ void CardLayer::createTableView(CardTableType type)
     
     // 2. refresh table
     refreshTable(tableView, false);
+    tableView->setContentOffset(Point::ZERO);
 }
 
 void CardLayer::refreshTable(TableView* table, bool reload)
@@ -249,6 +256,9 @@ Rect CardLayer::getBoundingBox(Node* node) const
 #pragma mark buttons
 void CardLayer::createTabButtons(const Point& position)
 {
+    float width(0);
+    float buttonHeight(0);
+    static const Vec2 offset(10.0f, 0);
     for (int i = 0; i < tablesCount; ++i) {
         const auto type = tableTypes[i];
         const string title = getTableName(type);
@@ -257,7 +267,6 @@ void CardLayer::createTabButtons(const Point& position)
         });
         addChild(button);
         
-        static const Vec2 offset(40.0f, 0);
         const auto& size = button->getContentSize();
         button->setPosition(position + Point((size.width + offset.x) * i + size.width / 2, -(offset.y + size.height / 2)));
         
@@ -267,7 +276,27 @@ void CardLayer::createTabButtons(const Point& position)
         } else {
             _tabButtons.insert(make_pair(type, button));
         }
+        
+        width += size.width + offset.x;
+        buttonHeight = MAX(buttonHeight, size.height);
     }
+    
+    width -= offset.x;
+    
+    // add lines
+    vector<Sprite*> lines;
+    for (int i = 0; i < 2; ++i) {
+        auto line = Sprite::create("GameImages/public/ui_line.png");
+        line->setScaleX(width / 2);
+        addChild(line);
+        
+        lines.push_back(line);
+    }
+    
+    const float x = position.x + width / 2;
+    static const float offsetY(5.0f);
+    lines.at(0)->setPosition(Point(x, position.y - buttonHeight - offsetY));
+    lines.at(1)->setPosition(Point(x, position.y + offsetY));
 }
 
 #pragma mark labels
@@ -328,6 +357,12 @@ void CardLayer::reloadAllCandidateCards()
             } else {
                 insertCandidateCard(CardTableType::Heroes, name);
             }
+        } else {
+            // TODO: remove code
+            insertCandidateCard(CardTableType::All, name);
+            insertCandidateCard(CardTableType::Heroes, name);
+            insertCandidateCard(CardTableType::Soldiers, name);
+            insertCandidateCard(CardTableType::Spells, name);
         }
     }
 }

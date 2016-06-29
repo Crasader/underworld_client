@@ -331,6 +331,15 @@ const string& CardNode::getCardName() const
     return _cardName;
 }
 
+int CardNode::getCost() const
+{
+    if (_resourceNode) {
+        return _resourceNode->getCount();
+    }
+    
+    return 0;
+}
+
 #pragma mark - protected
 void CardNode::update(const string& name, const HMMCardType* ct, float resource)
 {

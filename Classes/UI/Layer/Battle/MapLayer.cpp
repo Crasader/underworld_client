@@ -336,7 +336,7 @@ void MapLayer::addAoeSpell(const Point& startPoint, const std::string& name, flo
                 addSpellEffect(groundFile, false, targetPos);
                 removeStaticRing(targetPos);
             }), nullptr));
-#elif false
+#elif true
             const Size& winSize = Director::getInstance()->getWinSize();
             static string skyFile("jinenghuoqiu.csb");
             Node* skyEffect = addSpellEffect(skyFile, true, Point::ZERO);
@@ -625,10 +625,15 @@ void MapLayer::removeParticle(ParticleSystemQuad* effect)
 Node* MapLayer::addSpellEffect(const std::string& file, bool loop, const Point& position)
 {
     if (file.length() > 0) {
-        Node* effect = CocosUtils::playCSBAnimation(file, loop, 0, [this](Node* sender) {
-            sender->removeFromParent();
-            removeSpellEffect(sender);
-        });
+        Node* effect(nullptr);
+        if (loop) {
+            effect = CocosUtils::playCSBAnimation(file, loop, 0, nullptr);
+        } else {
+            effect = CocosUtils::playCSBAnimation(file, loop, 0, [this](Node* sender) {
+                sender->removeFromParent();
+                removeSpellEffect(sender);
+            });
+        }
         effect->setPosition(position);
         _scrollView->addChild(effect);
         _spellEffects.insert(effect);
@@ -739,6 +744,8 @@ Node* MapLayer::createRing(const std::string& name, const Point& point)
         fileName.assign("huixue-xin.csb");
     } else if (name.find(SPELL_NAME_SPEEDUP) != string::npos) {
         fileName.assign("jiasu-xin.csb");
+    } else if (name.find(SPELL_NAME_GLOBAL) != string::npos){
+        fileName.assign("quan-2.csb");
     }
     
     if (fileName.length() > 0) {

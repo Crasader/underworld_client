@@ -62,6 +62,7 @@ public:
     // getters
     const HMMCard* getCard() const;
     const std::string& getCardName() const;
+    int getCost() const;
     
 protected:
     CardNode();

@@ -13,8 +13,8 @@
 using namespace std;
 using namespace ui;
 
-static Color4B normalTextColor(Color4B::WHITE);
-static Color4B touchedTextColor(Color4B::ORANGE);
+static const Color4B& normalTextColor(Color4B::WHITE);
+static const Color4B& touchedTextColor(Color4B::ORANGE);
 
 TabButton::TabButton()
 :_titleLabel(nullptr)

@@ -16,6 +16,7 @@
 #include "FormationData.h"
 #include "XTableViewCell.h"
 #include "FormationUnitNode.h"
+#include "TabButton.h"
 
 using namespace std;
 using namespace ui;
@@ -125,7 +126,7 @@ bool FormationLayer::init()
         // buttons
         CocosUtils::createExitButton(this, [this]() { removeFromParent(); });
         {
-            static const float offsetX(10.0f);
+            static const float offsetX(-40.0f);
             static const Point basePoint(345, getWinSize().height - 15);
             createSwitchFormationButton(basePoint);
             createTabButtons(Point(_tableBasePosition.x + offsetX, basePoint.y));
@@ -396,6 +397,7 @@ void FormationLayer::createTableView(FormationTableType type)
     
     // 2. refresh table
     refreshTable(tableView, false);
+    tableView->setContentOffset(Point::ZERO);
 }
 
 void FormationLayer::refreshTable(TableView* table, bool reload)
@@ -480,19 +482,17 @@ void FormationLayer::createSwitchFormationButton(const Point& position)
 void FormationLayer::createTabButtons(const Point& position)
 {
     for (int i = 0; i < tablesCount; ++i) {
-        const auto normal("GameImages/formation/button_yellow_1.png");
-        const auto selected("GameImages/formation/button_blue.png");
-        auto button = Button::create(normal, selected, selected);
-        button->addClickEventListener([this, i](Ref*) {
+        const auto type = tableTypes[i];
+        const string title = getTableName(type);
+        auto button = TabButton::create(title, [this, i](Ref*) {
             setTableType(tableTypes[i]);
         });
         addChild(button);
         
-        static const Vec2 offset(40.0f, 0);
+        static const Vec2 offset(10.0f, 0);
         const auto& size = button->getContentSize();
         button->setPosition(position + Point((size.width + offset.x) * i + size.width / 2, -(offset.y + size.height / 2)));
         
-        const auto type = tableTypes[i];
         if (_tabButtons.find(type) != end(_tabButtons)) {
             assert(false);
             _tabButtons.at(type) = button;

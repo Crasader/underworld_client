@@ -10,50 +10,50 @@
 #define CardInfoNode_h
 
 #include "cocos2d.h"
-#include "ui/CocosGUI.h"
 
 USING_NS_CC;
+
+class CardNode;
 
 namespace UnderWorld { namespace Core {
     class UnitBase;
 } }
 
-class CardInfoNodeObserver
-{
-public:
-    virtual ~CardInfoNodeObserver() {}
-};
-
 class CardInfoNode : public Node
 {
 public:
-    static CardInfoNode* create();
+    typedef std::function<void(const std::string&, int)> Callback;
+    
+public:
+    static CardInfoNode* create(const Callback& callback);
     virtual ~CardInfoNode();
     
-    void registerObserver(CardInfoNodeObserver *observer);
     void update(const std::string& name);
     
 protected:
     CardInfoNode();
-    virtual bool init() override;
+    bool init(const Callback& callback);
+    void updateCost(int count);
     
 private:
-    CardInfoNodeObserver *_observer;
+    std::string _name;
+    int _cost;
+    Callback _callback;
     const UnderWorld::Core::UnitBase* _unit;
-    // top
-    Sprite* _unitIcon;
-    Sprite* _qualityIcon;
-    Sprite* _raceIcon;
-    Label* _nameLabel;
-    Label* _hpLabel;
-    Label* _armorLabel;
-    Label* _armorPreferLabel;
-    Label* _dmgLabel;
-    Label* _atkSpeedLabel;
-    Label* _atkRangeLabel;
-    // bottom
-    Sprite* _skillIcon;
-    Label* _descriptionLabel;
+    
+    // ui
+    CardNode* _cardNode;
+    Label* _level;
+    Label* _quality;
+    Label* _population;
+    Label* _description;
+    Label* _hp;
+    Label* _armor;
+    Label* _armorPrefer;
+    Label* _dmg;
+    Label* _atkSpeed;
+    Label* _atkRange;
+    Label* _costLabel;
 };
 
 #endif /* CardInfoNode_h */

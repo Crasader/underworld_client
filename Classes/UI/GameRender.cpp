@@ -699,14 +699,21 @@ void GameRender::updateCardMask(const string& card, const Point& point, float ra
         if (inDeck) {
             removeCardMask();
         } else {
-            const UnitType* ut = getUnitType(card);
-            Coordinate32 coordinate = getValidPuttingCoordinate(point, ut);
-            if (ut) {
-                _mapLayer->updateUnitMask(ut, coordinate);
-            } else {
-                const SpellType* st = getSpellType(card);
-                if (isValidAoeSpell(st)) {
-                    _mapLayer->updateSpellRing(st->getSpellName(), coordinate, range);
+            auto ct = getCardType(card);
+            if (ct) {
+                auto type = ct->getCardClass();
+                if (kHMMCardClass_Summon == type) {
+                    auto ut = _techTree->findUnitTypeByName(ct->getCustomUnitSetting().getUnitTypeName());
+                    if (ut) {
+                        Coordinate32 coordinate = getValidPuttingCoordinate(point, true);
+                        _mapLayer->updateUnitMask(ut, coordinate);
+                    }
+                } else if (kHMMCardClass_Spell == type) {
+                    auto st = getSpellType(ct->getSpellName());
+                    if (isValidAoeSpell(st)) {
+                        Coordinate32 coordinate = getValidPuttingCoordinate(point, false);
+                        _mapLayer->updateSpellRing(st->getSpellName(), coordinate, range);
+                    }
                 }
             }
         }
@@ -727,42 +734,39 @@ void GameRender::tryToUseCard(const string& card, int idx, const Point& point)
         const bool inDeck = _mapUILayer->isPointInDeck(convertToUILayer(point));
         if (inDeck) {
             // TODO:
-        } else if (_commander) {
-            CommandResult result(kCommandResult_undefine);
-            const SpellType* st = getSpellType(card);
-            const bool isSpell(isValidAoeSpell(st));
-            Coordinate32 coordinate = getValidPuttingCoordinate(point, !st);
-            const Unit* core(nullptr);
-            if (isSpell) {
-                core = getCore();
-                if (core) {
-                    result = _commander->tryGiveUnitCommand(core, kCommandClass_Cast, &coordinate, nullptr, card);
-                }
-            } else {
-                OutsideHMMCommand* cmd = new OutsideHMMCommand(idx, _deck->getFactionIndex(), coordinate);
-                result = _commander->addCommandFromLocal(cmd);
-            }
+        } else if (_commander && _deck) {
+            auto ct = getCardType(card);
+            auto type = ct->getCardClass();
+            auto coordinate = getValidPuttingCoordinate(point, kHMMCardClass_Summon == type);
+            auto result = _commander->addCommandFromLocal(new OutsideHMMCommand(idx, _deck->getFactionIndex(), coordinate));
             
             if (kCommandResult_suc == result) {
-                if (isSpell) {
-                    const string& name = st->getSpellName();
-                    // AOEs
-                    if (name.find(SPELL_NAME_FIREBALL) != string::npos) {
-                        if (core) {
-                            const int unitId = core->getUnitId();
-                            if (_allUnitNodes.find(unitId) != end(_allUnitNodes)) {
-                                UnitNode* node = _allUnitNodes.at(unitId);
-                                if (node) {
-                                    _mapLayer->addAoeSpell(node->getPosition(), name, 2.0f);
+                if (kHMMCardClass_Spell == type) {
+                    const auto spellName = ct->getSpellName();
+                    const bool isAOE(isValidAoeSpell(getSpellType(spellName)));
+                    if (isAOE) {
+                        if (spellName.find(SPELL_NAME_FIREBALL) != string::npos) {
+                            auto core = getCore();
+                            if (core) {
+                                const int unitId = core->getUnitId();
+                                if (_allUnitNodes.find(unitId) != end(_allUnitNodes)) {
+                                    auto node = _allUnitNodes.at(unitId);
+                                    if (node) {
+                                        _mapLayer->addAoeSpell(node->getPosition(), spellName, 2.0f);
+                                    }
                                 }
                             }
+                        } else if (spellName.find(SPELL_NAME_GLOBAL) != string::npos) {
+                            _mapLayer->addSpell(spellName, 1.0f);
+                        } else {
+                            _mapLayer->addSpell(spellName, 12.0f);
                         }
-                    } else {
-                        _mapLayer->addSpell(name, 12.0f);
                     }
                 }
                 
-                _mapUILayer->clearHighlightedCard();
+                if (_mapUILayer) {
+                    _mapUILayer->clearHighlightedCard();
+                }
             }
         }
         
@@ -800,17 +804,6 @@ const HMMCardType* GameRender::getCardType(const string& name) const
 {
     if (_gameModeHMM) {
         return _gameModeHMM->findCardTypeByName(name);
-    }
-    
-    return nullptr;
-}
-
-const UnitType* GameRender::getUnitType(const string& name) const
-{
-    const HMMCardType* ct = getCardType(name);
-    if (ct) {
-        const UnitSetting& us = ct->getCustomUnitSetting();
-        return _techTree->findUnitTypeByName(us.getUnitTypeName());
     }
     
     return nullptr;

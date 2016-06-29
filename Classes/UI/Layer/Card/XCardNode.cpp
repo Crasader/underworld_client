@@ -46,7 +46,7 @@ bool XCardNode::init()
         const auto& spriteSize(sprite->getContentSize());
         _countLabel->setPosition(Point(spriteSize.width / 2, spriteSize.height / 2));
         
-        static float offsetY(6.0f);
+        static float offsetY(10.0f);
         const auto& cardSize = _cardNode->getContentSize();
         
         Size size(cardSize);

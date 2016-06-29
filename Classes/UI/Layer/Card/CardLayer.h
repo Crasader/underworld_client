@@ -14,9 +14,9 @@
 #include <unordered_map>
 #include "XCardNode.h"
 
-USING_NS_CC_EXT;
-
 class TabButton;
+
+USING_NS_CC_EXT;
 
 class CardLayerObserver
 {

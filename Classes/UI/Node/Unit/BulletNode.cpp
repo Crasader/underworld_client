@@ -51,25 +51,26 @@ bool BulletNode::init(const Bullet* bullet)
         if (type) {
             const string& name = type->getRenderKey();
             const BRConfigData* data = DataManager::getInstance()->getBRConfigData(name);
+            bool enabled(false);
             if (data) {
                 const string& file = data->getResource();
                 if (file.length() > 0) {
                     addActionNode(file, false);
-                } else {
-                    if (name.find(SPELL_NAME_FIREBALL) != string::npos) {
-                        Node* yan = addParticle("particle/yan.plist");
-                        yan->setPosition(-40, 0);
-                        addParticle("particle/huo.plist");
-                        addActionNode("huoqiu.csb", true);
-                    } else {
-                        onBulletDisabled();
-                    }
+                    
+                    enabled = true;
+                } else if (name.find(SPELL_NAME_FIREBALL) != string::npos) {
+                    Node* yan = addParticle("particle/yan.plist");
+                    yan->setPosition(-40, 0);
+                    addParticle("particle/huo.plist");
+                    addActionNode("huoqiu.csb", true);
+                    
+                    enabled = true;
                 }
-            } else {
+            }
+            
+            if (!enabled) {
                 onBulletDisabled();
             }
-        } else {
-            onBulletDisabled();
         }
         
         update(true);

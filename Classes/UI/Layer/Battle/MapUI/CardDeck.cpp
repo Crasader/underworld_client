@@ -136,17 +136,7 @@ void CardDeck::select(int idx)
             
             // add hint
             if (selected) {
-                const HMMCard* card = node->getCard();
-                if (card) {
-                    const HMMCardType* ct = card->getCardType();
-                    if (ct) {
-                        auto costs = ct->getCost();
-                        static const string& name(RESOURCE_NAME);
-                        if (costs.find(name) != costs.end()) {
-                            cost = costs.at(name) / GameConstants::MICRORES_PER_RES;
-                        }
-                    }
-                }
+                cost = node->getCost();
             }
         }
     }
@@ -210,7 +200,7 @@ void CardDeck::updateCD(int idx, float percentage)
 void CardDeck::updateResource(const unordered_map<string, float>& resources)
 {
     float count(0);
-    static const string& resourceName(RESOURCE_NAME);
+    static const string& resourceName(RES_NAME_WOOD);
     if (resources.find(resourceName) != resources.end()) {
         count = resources.at(resourceName);
     }

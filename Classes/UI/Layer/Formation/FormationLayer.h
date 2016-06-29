@@ -18,6 +18,7 @@
 
 class FormationUnitNode;
 class FormationData;
+class TabButton;
 
 USING_NS_CC_EXT;
 
@@ -158,7 +159,7 @@ protected:
     
     Node* _draggingNode;
     std::vector<Button*> _switchFormationButtons;
-    std::map<FormationTableType, Button*> _tabButtons;
+    std::map<FormationTableType, TabButton*> _tabButtons;
     Label* _populationLabel;
     Label* _spellCountLabel;
     
