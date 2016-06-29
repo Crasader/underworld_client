@@ -253,7 +253,7 @@ void MapLayer::repositionUnit(Node* unit, const Coordinate32& coordinate)
 }
 
 #pragma mark effects
-void MapLayer::addBulletExplosionEffect(const std::string& name, const Coordinate32& coordinate)
+void MapLayer::addBulletExplosionEffect(const string& name, const Coordinate32& coordinate)
 {
     string file;
     if (name.find(SPELL_NAME_FIREBALL) != string::npos) {
@@ -279,7 +279,7 @@ void MapLayer::addUnitPlacementEffect(const Coordinate32& coordinate)
 }
 
 #pragma mark spells
-void MapLayer::addSpell(const std::string& name, float duration)
+void MapLayer::addSpell(const string& name, float duration)
 {
     Node* ring = _spellRing.second;
     if (ring) {
@@ -303,7 +303,7 @@ void MapLayer::addSpell(const std::string& name, float duration)
     }
 }
 
-void MapLayer::addAoeSpell(const Point& startPoint, const std::string& name, float duration)
+void MapLayer::addAoeSpell(const Point& startPoint, const string& name, float duration)
 {
     auto ring = _spellRing.second;
     if (ring) {
@@ -411,7 +411,7 @@ void MapLayer::removeUnitMask()
 }
 
 #pragma mark spell ring
-void MapLayer::updateSpellRing(const std::string& name, const Coordinate32& coordinate, int range)
+void MapLayer::updateSpellRing(const string& name, const Coordinate32& coordinate, int range)
 {
     const Point& point = coordinate2Point(coordinate);
     auto ring = _spellRing.second;
@@ -622,7 +622,7 @@ void MapLayer::removeParticle(ParticleSystemQuad* effect)
 }
 
 #pragma mark spells
-Node* MapLayer::addSpellEffect(const std::string& file, bool loop, const Point& position)
+Node* MapLayer::addSpellEffect(const string& file, bool loop, const Point& position)
 {
     if (file.length() > 0) {
         Node* effect(nullptr);
@@ -735,7 +735,7 @@ Node* MapLayer::createUnitMask(const UnitType* ut) const
 }
 
 #pragma mark spell ring
-Node* MapLayer::createRing(const std::string& name, const Point& point)
+Node* MapLayer::createRing(const string& name, const Point& point)
 {
     string fileName;
     if (name.find(SPELL_NAME_FIREBALL) != string::npos) {

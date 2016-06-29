@@ -447,13 +447,13 @@ void GameRender::onBulletNodeExploded(BulletNode* node)
 #pragma mark - MapLayerObserver
 void GameRender::onMapLayerTouchBegan(const Point& point)
 {
-    updateCardMask(_selectedCard.first, point, spellRingRange);
+    updateCardMask(_selectedCard.first, point);
 }
 
 void GameRender::onMapLayerTouchMoved(const Point& point, bool isValid)
 {
     if (isValid) {
-        updateCardMask(_selectedCard.first, point, spellRingRange);
+        updateCardMask(_selectedCard.first, point);
     } else {
         removeCardMask();
     }
@@ -462,7 +462,7 @@ void GameRender::onMapLayerTouchMoved(const Point& point, bool isValid)
 void GameRender::onMapLayerTouchEnded(const Point& point)
 {
     const string& card = _selectedCard.first;
-    updateCardMask(card, point, spellRingRange);
+    updateCardMask(card, point);
     tryToUseCard(card, _selectedCard.second, point);
 }
 
@@ -501,13 +501,13 @@ void GameRender::onMapUILayerCardSelected(const string& card, int idx)
 
 void GameRender::onMapUILayerTouchMoved(const string& card, const Point& point)
 {
-    updateCardMask(card, convertToMapLayer(point), spellRingRange);
+    updateCardMask(card, convertToMapLayer(point));
 }
 
 void GameRender::onMapUILayerTouchEnded(const string& card, int idx, const Point& point)
 {
     const Point& p = convertToMapLayer(point);
-    updateCardMask(card, p, spellRingRange);
+    updateCardMask(card, p);
     tryToUseCard(card, idx, p);
 }
 
@@ -692,7 +692,7 @@ Point GameRender::convertToUILayer(const Point& mapLayerPoint) const
     return _mapUILayer->convertToNodeSpace(_mapLayer->convertToWorldSpace(mapLayerPoint));
 }
 
-void GameRender::updateCardMask(const string& card, const Point& point, float range)
+void GameRender::updateCardMask(const string& card, const Point& point)
 {
     if (_mapLayer && _mapUILayer && card.length() > 0) {
         const bool inDeck = _mapUILayer->isPointInDeck(convertToUILayer(point));
@@ -705,14 +705,21 @@ void GameRender::updateCardMask(const string& card, const Point& point, float ra
                 if (kHMMCardClass_Summon == type) {
                     auto ut = _techTree->findUnitTypeByName(ct->getCustomUnitSetting().getUnitTypeName());
                     if (ut) {
-                        Coordinate32 coordinate = getValidPuttingCoordinate(point, true);
+                        auto coordinate = getValidPuttingCoordinate(point, true);
                         _mapLayer->updateUnitMask(ut, coordinate);
                     }
                 } else if (kHMMCardClass_Spell == type) {
-                    auto st = getSpellType(ct->getSpellName());
+                    const auto& name(ct->getSpellName());
+                    auto st = getSpellType(name);
                     if (isValidAoeSpell(st)) {
-                        Coordinate32 coordinate = getValidPuttingCoordinate(point, false);
-                        _mapLayer->updateSpellRing(st->getSpellName(), coordinate, range);
+                        auto coordinate = getValidPuttingCoordinate(point, false);
+                        float range(spellRingRange);
+                        const auto& elements = st->getImmediateElements();
+                        if (elements.size() > 0) {
+                            const auto& pattern = elements.at(0);
+                            
+                        }
+                        _mapLayer->updateSpellRing(name, coordinate, range);
                     }
                 }
             }

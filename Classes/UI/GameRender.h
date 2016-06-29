@@ -115,7 +115,7 @@ private:
     Point convertToUILayer(const Point& mapLayerPoint) const;
     
     //
-    void updateCardMask(const std::string& card, const Point& point, float range);
+    void updateCardMask(const std::string& card, const Point& point);
     void removeCardMask();
     void tryToUseCard(const std::string& card, int idx, const Point& point);
     

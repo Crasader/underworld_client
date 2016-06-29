@@ -46,11 +46,12 @@ bool TalentBriefNode::init()
         const auto& size = sprite->getContentSize();
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         setContentSize(size);
+        sprite->setPosition(Point(size.width / 2, size.height / 2));
         
-        _name = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
+        _name = CocosUtils::createLabel("name", DEFAULT_FONT_SIZE);
         sprite->addChild(_name);
         
-        _level = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
+        _level = CocosUtils::createLabel("level", DEFAULT_FONT_SIZE);
         sprite->addChild(_level);
         
         const auto& nameSize = _name->getContentSize();
@@ -62,7 +63,7 @@ bool TalentBriefNode::init()
         _level->setPosition(Point(size.width - (edge + levelSize.width / 2), y));
         
         const Size briefSize(size.width, size.height - nameSize.height);
-        _brief = CocosUtils::createLabel("", DEFAULT_FONT_SIZE, DEFAULT_FONT, briefSize, TextHAlignment::CENTER, TextVAlignment::TOP);
+        _brief = CocosUtils::createLabel("brief", DEFAULT_FONT_SIZE, DEFAULT_FONT, briefSize, TextHAlignment::CENTER, TextVAlignment::TOP);
         sprite->addChild(_brief);
         _brief->setPosition(Point(size.width / 2, briefSize.height / 2));
         

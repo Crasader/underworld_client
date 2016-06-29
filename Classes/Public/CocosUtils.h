@@ -51,7 +51,7 @@ namespace CocosUtils
     void loadPVR(const std::string& file);
     void playAnimation(cocos2d::Node* node, const std::vector<std::string>& files, bool loop, int frameIndex, float frameDelay, const std::function<void()>& callback);
     cocos2d::Sprite* playAnimation(const std::vector<std::string>& files, bool loop, int frameIndex, float frameDelay, const std::function<void()>& callback);
-    cocos2d::Sprite* playAnimation(const std::string& folder, int framesCount, bool loop, int frameIndex, float frameDelay, const std::function<void()>& callback);
+    cocos2d::Sprite* playAnimation(const std::string& folder, bool loop, int frameIndex, float frameDelay, const std::function<void()>& callback);
     
     // csb animation
     cocos2d::Node* playCSBAnimation(const std::string& file, bool loop, int frameIndex, const std::function<void(cocos2d::Node*)>& callback);

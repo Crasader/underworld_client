@@ -34,6 +34,7 @@ protected:
     CardInfoNode();
     bool init(const Callback& callback);
     void updateCost(int count);
+    void addLabel(Label** label);
     
 private:
     std::string _name;

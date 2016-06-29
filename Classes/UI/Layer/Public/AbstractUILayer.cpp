@@ -39,7 +39,7 @@ bool AbstractUILayer::init(const string& title)
         _background->addChild(titleSprite);
         
         Sprite* line = Sprite::create("GameImages/public/ui_line.png");
-        line->setScaleX(870 / 2);
+        line->setScaleX(870 / line->getContentSize().width);
         _background->addChild(line);
         
         _closeButton = dynamic_cast<Button*>(CocosUtils::createExitButton(_background, [this](){ removeFromParent(); }));

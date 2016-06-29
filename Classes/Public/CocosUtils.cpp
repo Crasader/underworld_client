@@ -375,19 +375,22 @@ Sprite* CocosUtils::playAnimation(const vector<string>& files,
 }
 
 Sprite* CocosUtils::playAnimation(const string& folder,
-                                  int framesCount,
                                   bool loop,
                                   int frameIndex,
                                   float frameDelay,
                                   const function<void()>& callback)
 {
-    if (framesCount > 0) {
-        vector<string> files;
-        for (int i = 0; i < framesCount; ++i) {
-            const string file = folder + "/" + StringUtils::format("%03d.png", i);
+    vector<string> files;
+    for (int i = 0; ; ++i) {
+        const string file = folder + StringUtils::format("/1%04d.png", i + 1);
+        if (SpriteFrameCache::getInstance()->getSpriteFrameByName(file) != nullptr) {
             files.push_back(file);
+        } else {
+            break;
         }
-        
+    }
+    
+    if (files.size() > 0) {
         return playAnimation(files, loop, frameIndex, frameDelay, callback);
     }
     

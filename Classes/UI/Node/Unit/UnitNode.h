@@ -135,9 +135,8 @@ protected:
                           const SpellConfigData::Direction& direction,
                           const SpellConfigData::Position& position);
 #if USING_PVR
-    Node* addEffect(const std::string& folder, int framesCount);
+    Node* addPVREffect(const std::string& folder);
     Node* addPVRAnimation(const std::string& folder,
-                          int framesCount,
                           bool loop,
                           float frameDelay,
                           const std::function<void()>& callback,

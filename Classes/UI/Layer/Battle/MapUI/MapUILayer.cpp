@@ -558,7 +558,7 @@ void MapUILayer::addResourceNode()
         node->setPosition(size.width / 2, size.height / 2);
         
         auto line = Sprite::create("GameImages/public/ui_line.png");
-        line->setScaleX(size.width / 2);
+        line->setScaleX(size.width / line->getContentSize().width);
         line->setPosition(size.width / 2, size.height / 2);
         node->addChild(line);
         

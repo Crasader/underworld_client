@@ -50,9 +50,10 @@ bool TalentInfoNode::init(const Callback& callback)
         
         static const float edgeY(8.0f);
         for (int i = 0; i < TalentsMaxCount; ++i) {
-            static const float offsetY(5.0f);
+            static const float offsetY(25.0f);
             auto node = TalentBriefNode::create();
-            node->setPosition(Point(size.width / 2, size.height - (edgeY + size.height * (i + 0.5f) + offsetY * i)));
+            const auto& nodeSize(node->getContentSize());
+            node->setPosition(Point(size.width / 2, size.height - (edgeY + nodeSize.height * (i + 0.5f) + offsetY * i)));
             addChild(node);
             _nodes.push_back(node);
         }
@@ -68,9 +69,11 @@ bool TalentInfoNode::init(const Callback& callback)
         button->setPosition(Point(size.width / 2, edgeY + buttonSize.height / 2));
         addChild(button);
         
-        _costLabel = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
+        _costLabel = CocosUtils::createLabel("cost", DEFAULT_FONT_SIZE);
         _costLabel->setPosition(Point(buttonSize.width / 2, buttonSize.height / 2));
         button->addChild(_costLabel);
+        
+        updateCost(0);
         
         return true;
     }
@@ -86,7 +89,7 @@ void TalentInfoNode::update(const string& name)
     int cost = 10;
     updateCost(cost);
     
-    int cnt = 3;
+    int cnt = 4;
     const size_t nodesCnt(_nodes.size());
     for (int i = 0; i < TalentsMaxCount; ++i) {
         if (nodesCnt > i) {

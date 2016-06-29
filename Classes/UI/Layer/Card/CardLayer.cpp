@@ -180,6 +180,46 @@ void CardLayer::onCardNodeTouchedBegan(CardNode* node)
 
 void CardLayer::onCardNodeTouchedEnded(CardNode* node, bool isValid)
 {
+    if (node) {
+        const auto& name(node->getCardName());
+        if (CardTableType::Heroes == _thisTableType) {
+            auto layer = CardXInfoLayer::create();
+            layer->update(name);
+            layer->registerObserver(this);
+            addChild(layer);
+        } else {
+            auto layer = CardInfoLayer::create();
+            layer->update(name);
+            layer->registerObserver(this);
+            addChild(layer);
+        }
+    }
+}
+
+#pragma mark - CardInfoLayerObserver
+void CardLayer::onCardInfoLayerClosed(const string& name)
+{
+    
+}
+
+void CardLayer::onCardInfoLayerUpgradeCard(const string& name)
+{
+    
+}
+
+#pragma mark - CardXInfoLayerObserver
+void CardLayer::onCardXInfoLayerClosed(const string& name)
+{
+    
+}
+
+void CardLayer::onCardXInfoLayerUpgradeCard(const string& name)
+{
+    
+}
+
+void CardLayer::onCardXInfoLayerUpgradeTalent(const string& name)
+{
     
 }
 
@@ -287,7 +327,7 @@ void CardLayer::createTabButtons(const Point& position)
     vector<Sprite*> lines;
     for (int i = 0; i < 2; ++i) {
         auto line = Sprite::create("GameImages/public/ui_line.png");
-        line->setScaleX(width / 2);
+        line->setScaleX(width / line->getContentSize().width);
         addChild(line);
         
         lines.push_back(line);

@@ -93,7 +93,7 @@ FormationLayer::FormationLayer()
     
     reloadAllCandidateCards();
     
-    CocosUtils::loadPVR("pangzi");
+    CocosUtils::loadPVR("soldier-Archer");
 }
 
 FormationLayer::~FormationLayer()

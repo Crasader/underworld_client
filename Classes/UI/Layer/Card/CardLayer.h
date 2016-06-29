@@ -13,6 +13,8 @@
 #include <vector>
 #include <unordered_map>
 #include "XCardNode.h"
+#include "CardInfoLayer.h"
+#include "CardXInfoLayer.h"
 
 class TabButton;
 
@@ -35,6 +37,8 @@ class CardLayer
 : public LayerColor
 , public TableViewDataSource
 , public CardNodeObserver
+, public CardInfoLayerObserver
+, public CardXInfoLayerObserver
 {
 public:
     static CardLayer* create();
@@ -56,6 +60,15 @@ protected:
     // CardNodeObserver
     virtual void onCardNodeTouchedBegan(CardNode* node) override;
     virtual void onCardNodeTouchedEnded(CardNode* node, bool isValid) override;
+    
+    // CardInfoLayerObserver
+    virtual void onCardInfoLayerClosed(const std::string& name) override;
+    virtual void onCardInfoLayerUpgradeCard(const std::string& name) override;
+    
+    // CardXInfoLayerObserver
+    virtual void onCardXInfoLayerClosed(const std::string& name) override;
+    virtual void onCardXInfoLayerUpgradeCard(const std::string& name) override;
+    virtual void onCardXInfoLayerUpgradeTalent(const std::string& name) override;
     
     // table
     void createTableView(CardTableType type);

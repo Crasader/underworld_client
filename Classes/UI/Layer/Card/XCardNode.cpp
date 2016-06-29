@@ -41,7 +41,8 @@ bool XCardNode::init()
         
         auto sprite = Sprite::create("GameImages/public/ui_green_2.png");
         addChild(sprite);
-        _countLabel = CocosUtils::createLabel("", DEFAULT_FONT_SIZE, DEFAULT_NUMBER_FONT );
+        _countLabel = CocosUtils::createLabel("count", DEFAULT_FONT_SIZE, DEFAULT_NUMBER_FONT );
+        _countLabel->setTextColor(Color4B::BLACK);
         sprite->addChild(_countLabel);
         const auto& spriteSize(sprite->getContentSize());
         _countLabel->setPosition(Point(spriteSize.width / 2, spriteSize.height / 2));
@@ -57,6 +58,8 @@ bool XCardNode::init()
         
         _cardNode->setPosition(Point(size.width / 2, size.height - cardSize.height / 2));
         sprite->setPosition(Point(size.width / 2, spriteSize.height / 2));
+        
+        updateCount(0);
         
         return true;
     }

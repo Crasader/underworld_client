@@ -22,6 +22,9 @@ static const int zOrder_bottom(-1);
 static const int zOrder_top(1);
 static const float hpThreshold(50.0f);
 
+// TODO: remove
+static const string resourcePrefix("soldier-Archer");
+
 UnitNode* UnitNode::create(const Unit* unit, bool rightSide)
 {
     UnitNode *ret = new (nothrow) UnitNode(unit, rightSide);
@@ -65,7 +68,7 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
     _isBuilding = (kUnitClass_Core == uc || kUnitClass_Building == uc);
     
 #if USING_PVR
-    CocosUtils::loadPVR("pangzi");
+    CocosUtils::loadPVR(resourcePrefix);
     CocosUtils::loadPVR("effect/xeffect-1");
 #endif
 }
@@ -385,7 +388,7 @@ bool UnitNode::needToFlip(Unit::Direction direction) const
     return flip;
 }
 
-void UnitNode::getAnimationFiles(std::vector<AnimationFileType>& output,
+void UnitNode::getAnimationFiles(vector<AnimationFileType>& output,
                                  SkillClass sc,
                                  Unit::Direction direction,
                                  bool isHealthy) const
@@ -395,9 +398,7 @@ void UnitNode::getAnimationFiles(std::vector<AnimationFileType>& output,
     AnimationFileType data;
     
 #if USING_PVR
-    const string prefix("fatso");
-    string suffix("");
-    int cnt(0);
+    string prefix("");
     switch (sc) {
         case kSkillClass_Stop:
         case kSkillClass_Produce:
@@ -410,8 +411,7 @@ void UnitNode::getAnimationFiles(std::vector<AnimationFileType>& output,
             if (_isBuilding) {
                 assert(false);
             } else {
-                suffix = "run";
-                cnt = 8;
+                prefix = "run";
             }
         }
             break;
@@ -426,14 +426,12 @@ void UnitNode::getAnimationFiles(std::vector<AnimationFileType>& output,
             break;
         case kSkillClass_Cast:
         {
-            suffix = "skill";
-            cnt = 8;
+            prefix = "skill";
         }
             break;
         case kSkillClass_Die:
         {
-            suffix = "stand";
-            cnt = 10;
+            prefix = "stand";
         }
             break;
             
@@ -441,11 +439,14 @@ void UnitNode::getAnimationFiles(std::vector<AnimationFileType>& output,
             break;
     }
     
-    if (cnt > 0) {
-        for (int i = 0; i < cnt; ++i) {
-            const string folder = prefix + "-" + suffix;
-            const string file = folder + "/" + folder + "-" + StringUtils::format("%d/%03d.png", static_cast<int>(direction), i);
-            data.push_back(file);
+    if (0 == data.size()) {
+        for (int i = 0; ; ++i) {
+            const string file = resourcePrefix + "/" + prefix + StringUtils::format("/%d/1%04d.png", static_cast<int>(direction), i + 1);
+            if (SpriteFrameCache::getInstance()->getSpriteFrameByName(file) != nullptr) {
+                data.push_back(file);
+            } else {
+                break;
+            }
         }
     }
 #else
@@ -514,14 +515,15 @@ void UnitNode::getStandbyFiles(AnimationFileType& output,
     output.clear();
     
 #if USING_PVR
-    const string prefix("fatso");
-    static string suffix("stand");
-    static const int cnt(10);
+    static string prefix("stand");
     
-    for (int i = 0; i < cnt; ++i) {
-        const string folder = prefix + "-" + suffix;
-        const string file = folder + "/" + folder + "-" + StringUtils::format("%d/%03d.png", static_cast<int>(direction), i);
-        output.push_back(file);
+    for (int i = 0; ; ++i) {
+        const string file = resourcePrefix + "/" + prefix + StringUtils::format("/%d/1%04d.png", static_cast<int>(direction), i + 1);
+        if (SpriteFrameCache::getInstance()->getSpriteFrameByName(file) != nullptr) {
+            output.push_back(file);
+        } else {
+            break;
+        }
     }
 #else
     if (_isBuilding) {
@@ -537,7 +539,7 @@ void UnitNode::getStandbyFiles(AnimationFileType& output,
 #endif
 }
 
-void UnitNode::getAttackFiles(std::vector<AnimationFileType>& output,
+void UnitNode::getAttackFiles(vector<AnimationFileType>& output,
                               Unit::Direction direction,
                               bool isHealthy) const
 {
@@ -545,14 +547,15 @@ void UnitNode::getAttackFiles(std::vector<AnimationFileType>& output,
     
 #if USING_PVR
     AnimationFileType data;
-    const string prefix("fatso");
-    static string suffix("attack");
-    static const int cnt(10);
+    const string prefix("attack");
     
-    for (int i = 0; i < cnt; ++i) {
-        const string folder = prefix + "-" + suffix;
-        const string file = folder + "/" + folder + "-" + StringUtils::format("%d/%03d.png", static_cast<int>(direction), i);
-        data.push_back(file);
+    for (int i = 0; ; ++i) {
+        const string file = resourcePrefix + "/" + prefix + StringUtils::format("/%d/1%04d.png", static_cast<int>(direction), i + 1);
+        if (SpriteFrameCache::getInstance()->getSpriteFrameByName(file) != nullptr) {
+            data.push_back(file);
+        } else {
+            break;
+        }
     }
     
     output.push_back(data);
@@ -937,9 +940,9 @@ Node* UnitNode::addEffect(const string& file)
     return addCSBAnimation(file, false, nullptr, false, SpellConfigData::kNone, SpellConfigData::kBody);
 }
 
-Node* UnitNode::addCSBAnimation(const std::string& file,
+Node* UnitNode::addCSBAnimation(const string& file,
                                 bool loop,
-                                const std::function<void()>& callback,
+                                const function<void()>& callback,
                                 bool scale,
                                 const SpellConfigData::Direction& direction,
                                 const SpellConfigData::Position& position)
@@ -975,21 +978,20 @@ Node* UnitNode::addCSBAnimation(const std::string& file,
 }
 
 #if USING_PVR
-Node* UnitNode::addEffect(const std::string& folder, int framesCount)
+Node* UnitNode::addPVREffect(const std::string& folder)
 {
-    return addPVRAnimation(folder, framesCount, false, DEFAULT_FRAME_DELAY, nullptr, false, SpellConfigData::kNone, SpellConfigData::kBody);
+    return addPVRAnimation(folder, false, DEFAULT_FRAME_DELAY, nullptr, false, SpellConfigData::kNone, SpellConfigData::kBody);
 }
 
-Node* UnitNode::addPVRAnimation(const std::string& folder,
-                                int framesCount,
+Node* UnitNode::addPVRAnimation(const string& folder,
                                 bool loop,
                                 float frameDelay,
-                                const std::function<void()>& callback,
+                                const function<void()>& callback,
                                 bool scale,
                                 const SpellConfigData::Direction& direction,
                                 const SpellConfigData::Position& position)
 {
-    Sprite* sprite = CocosUtils::playAnimation(folder, framesCount, loop, 0, frameDelay, callback);
+    Sprite* sprite = CocosUtils::playAnimation(folder, loop, 0, frameDelay, callback);
     addChild(sprite, zOrder_top);
     adjustEffect(sprite, scale, direction, position);
     return sprite;

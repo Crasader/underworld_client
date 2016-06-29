@@ -149,6 +149,8 @@
 		A1720EB91BCD2D2E00217E98 /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = A1720EB41BCD2D2E00217E98 /* KeychainItemWrapper.m */; };
 		A1720EBA1BCD2D2E00217E98 /* RMStore.m in Sources */ = {isa = PBXBuildFile; fileRef = A1720EB71BCD2D2E00217E98 /* RMStore.m */; };
 		A1720EBD1BCD309A00217E98 /* NetworkController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720EBB1BCD309A00217E98 /* NetworkController.cpp */; };
+		A178F76A1D23B7FD006E3812 /* CardInfoLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A178F7681D23B7FD006E3812 /* CardInfoLayer.cpp */; };
+		A178F7701D23B83F006E3812 /* CardXInfoLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A178F76E1D23B83E006E3812 /* CardXInfoLayer.cpp */; };
 		A18524CC1C1AE3E800BE261D /* QuestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A18524CA1C1AE3E800BE261D /* QuestLayer.cpp */; };
 		A18524D01C1AE42000BE261D /* BagLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A18524CE1C1AE42000BE261D /* BagLayer.cpp */; };
 		A18524D31C1AE46400BE261D /* QuestNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A18524D11C1AE46400BE261D /* QuestNode.cpp */; };
@@ -590,6 +592,10 @@
 		A1720EBC1BCD309A00217E98 /* NetworkController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkController.h; sourceTree = "<group>"; };
 		A1720EC71BCD321600217E98 /* CocosGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosGlobal.h; sourceTree = "<group>"; };
 		A178A5031C9BBB63006FD4B0 /* uthash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uthash.h; sourceTree = "<group>"; };
+		A178F7681D23B7FD006E3812 /* CardInfoLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardInfoLayer.cpp; sourceTree = "<group>"; };
+		A178F7691D23B7FD006E3812 /* CardInfoLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardInfoLayer.h; sourceTree = "<group>"; };
+		A178F76E1D23B83E006E3812 /* CardXInfoLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardXInfoLayer.cpp; sourceTree = "<group>"; };
+		A178F76F1D23B83E006E3812 /* CardXInfoLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardXInfoLayer.h; sourceTree = "<group>"; };
 		A18524CA1C1AE3E800BE261D /* QuestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuestLayer.cpp; sourceTree = "<group>"; };
 		A18524CB1C1AE3E800BE261D /* QuestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestLayer.h; sourceTree = "<group>"; };
 		A18524CE1C1AE42000BE261D /* BagLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BagLayer.cpp; sourceTree = "<group>"; };
@@ -1948,10 +1954,14 @@
 		A1F3D2221D1D041900EB5C17 /* Card */ = {
 			isa = PBXGroup;
 			children = (
+				A178F7681D23B7FD006E3812 /* CardInfoLayer.cpp */,
+				A178F7691D23B7FD006E3812 /* CardInfoLayer.h */,
 				A1F3D2261D1D044100EB5C17 /* CardInfoNode.cpp */,
 				A1F3D2271D1D044100EB5C17 /* CardInfoNode.h */,
 				A1F3D2231D1D042800EB5C17 /* CardLayer.cpp */,
 				A1F3D2241D1D042800EB5C17 /* CardLayer.h */,
+				A178F76E1D23B83E006E3812 /* CardXInfoLayer.cpp */,
+				A178F76F1D23B83E006E3812 /* CardXInfoLayer.h */,
 				A1D5C9D31D2288DE006B1738 /* TalentBriefNode.cpp */,
 				A1D5C9D41D2288DE006B1738 /* TalentBriefNode.h */,
 				A1F1B6DD1D23772F00E4CDEE /* TalentInfoNode.cpp */,
@@ -2261,6 +2271,7 @@
 				A1720E7A1BCCE0F000217E98 /* CCShake.cpp in Sources */,
 				30DF03C41C0D898E00A1C6EB /* EffectType.cpp in Sources */,
 				A1F58D5D1C3248F700C8A2DD /* ArtifactLocalData.cpp in Sources */,
+				A178F7701D23B83F006E3812 /* CardXInfoLayer.cpp in Sources */,
 				CB3EC89F1C521C7F00447FE3 /* FriendCell.cpp in Sources */,
 				A16BF2821C313E1300E91458 /* AttributeLocalData.cpp in Sources */,
 				307534711BF33ECF0057DCED /* Logger.cpp in Sources */,
@@ -2268,6 +2279,7 @@
 				A1F3D2281D1D044100EB5C17 /* CardInfoNode.cpp in Sources */,
 				A1720E971BCCE41A00217E98 /* ScrollBar.cpp in Sources */,
 				A18524D01C1AE42000BE261D /* BagLayer.cpp in Sources */,
+				A178F76A1D23B7FD006E3812 /* CardInfoLayer.cpp in Sources */,
 				A1E7BAE21C2149E800CE2A85 /* Constants.cpp in Sources */,
 				A16BF2A41C314E5100E91458 /* AttributeData.cpp in Sources */,
 				A1B4AE301C200521005906A6 /* QuestManager.cpp in Sources */,

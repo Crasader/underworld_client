@@ -46,7 +46,7 @@ bool FormationUnitNode::init(const string& name, const string& renderKey, const 
         setContentSize(size);
         
 # if USING_PVR
-        auto sprite = CocosUtils::playAnimation("fatso-stand/fatso-stand-3", 10, true, 0, DEFAULT_FRAME_DELAY, nullptr);
+        auto sprite = CocosUtils::playAnimation("stand/3", true, 0, DEFAULT_FRAME_DELAY, nullptr);
         sprite->setPosition(Point(size.width / 2, size.height / 2));
         addChild(sprite);
 #else

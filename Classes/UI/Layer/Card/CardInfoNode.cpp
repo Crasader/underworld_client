@@ -22,14 +22,6 @@ using namespace UnderWorld::Core;
 
 static const string default_value("0");
 
-static Label* createLabel(Node* parent, const string& message)
-{
-    Label* label = CocosUtils::createLabel(message, DEFAULT_FONT_SIZE);
-    label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
-    parent->addChild(label);
-    return label;
-}
-
 CardInfoNode* CardInfoNode::create(const Callback& callback)
 {
     CardInfoNode *ret = new (nothrow) CardInfoNode();
@@ -74,9 +66,63 @@ bool CardInfoNode::init(const Callback& callback)
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         setContentSize(size);
         
+        // add lines
+        vector<Sprite*> lines;
+        for (int i = 0; i < 2; ++i) {
+            auto line = Sprite::create("GameImages/public/ui_line.png");
+            line->setScaleX(size.width / line->getContentSize().width);
+            addChild(line);
+            
+            lines.push_back(line);
+        }
+        
         static const float edgeX(8.0f);
         static const float edgeY(8.0f);
+        _cardNode = CardNode::create(false);
+        addChild(_cardNode);
         
+        addLabel(&_level);
+        addLabel(&_quality);
+        addLabel(&_population);
+        addLabel(&_description);
+        
+        const auto& cardSize(_cardNode->getContentSize());
+        _cardNode->setPosition(Point(edgeX + cardSize.width / 2, size.height - (edgeY + cardSize.height / 2)));
+        lines.at(0)->setPosition(Point(size.width / 2, _cardNode->getPosition().y - (edgeY + cardSize.height / 2 + 8.0f)));
+        {
+            const auto lh(_level->getContentSize().height);
+            const auto qh(_quality->getContentSize().height);
+            const auto ph(_population->getContentSize().height);
+            const auto dh(_description->getContentSize().height);
+            _level->setPosition(Point(edgeX + cardSize.width + edgeX, size.height - (edgeY + lh / 2)));
+            _quality->setPosition(_level->getPosition() - Point(0, (lh + qh) / 2));
+            _population->setPosition(_quality->getPosition() - Point(0, (qh + ph) / 2));
+            _description->setPosition(_population->getPosition() - Point(0, (ph + dh) / 2));
+        }
+        
+        addLabel(&_hp);
+        addLabel(&_armor);
+        addLabel(&_armorPrefer);
+        
+        {
+            const auto hh(_hp->getContentSize().height);
+            const auto ah(_armor->getContentSize().height);
+            const auto ph(_armorPrefer->getContentSize().height);
+            _hp->setPosition(Point(edgeX, lines.at(0)->getPosition().y - (edgeY + hh) / 2));
+            _armor->setPosition(_hp->getPosition() - Point(0, edgeY + (hh + ah) / 2));
+            _armorPrefer->setPosition(_armor->getPosition() - Point(0, edgeY + (ah + ph) / 2));
+        }
+        
+        addLabel(&_dmg);
+        addLabel(&_atkSpeed);
+        addLabel(&_atkRange);
+        
+        {
+            const float x(size.width * 0.6f);
+            _dmg->setPosition(Point(x, _hp->getPosition().y));
+            _atkSpeed->setPosition(Point(x, _armor->getPosition().y));
+            _atkRange->setPosition(Point(x, _armorPrefer->getPosition().y));
+        }
         
         static const string file("GameImages/public/button_yellow.png");
         auto button = Button::create(file);
@@ -89,9 +135,12 @@ bool CardInfoNode::init(const Callback& callback)
         button->setPosition(Point(size.width / 2, edgeY + buttonSize.height / 2));
         addChild(button);
         
-        _costLabel = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
+        _costLabel = CocosUtils::createLabel("cost", DEFAULT_FONT_SIZE);
         _costLabel->setPosition(Point(buttonSize.width / 2, buttonSize.height / 2));
         button->addChild(_costLabel);
+        
+        lines.at(1)->setPosition(Point(size.width / 2, button->getPosition().y + buttonSize.height / 2 + edgeY));
+        updateCost(0);
         
         return true;
     }
@@ -101,6 +150,10 @@ bool CardInfoNode::init(const Callback& callback)
 
 void CardInfoNode::update(const string& name)
 {
+    if (_cardNode) {
+        _cardNode->update(name, BATTLE_RESOURCE_MAX_COUNT);
+    }
+    
     auto dm = DataManager::getInstance();
     const HMMCardType* ct = dm->getGameModeHMM()->findCardTypeByName(name);
     if (ct) {
@@ -113,9 +166,7 @@ void CardInfoNode::update(const string& name)
             for (int i = 0; i < FIELD_TYPE_COUNT; ++i) {
                 for (int j = 0; j < UNIT_CLASS_COUNT; ++j) {
                     if (unit->getDefaultAttackSkillType((FieldType)i, (UnitClass)j)) {
-                        type = dynamic_cast<const AttackSkillType*>(
-                                                                    unit->getDefaultAttackSkillType((FieldType)i,
-                                                                                                    (UnitClass)j));
+                        type = dynamic_cast<const AttackSkillType*>(unit->getDefaultAttackSkillType((FieldType)i, (UnitClass)j));
                         break;
                     }
                 }
@@ -154,4 +205,19 @@ void CardInfoNode::update(const string& name)
         _atkSpeed->setString(default_value);
         _atkRange->setString(default_value);
     }
+}
+
+void CardInfoNode::updateCost(int count)
+{
+    _cost = count;
+    if (_costLabel) {
+        _costLabel->setString(StringUtils::format("Cost: %d", count));
+    }
+}
+
+void CardInfoNode::addLabel(Label** label)
+{
+    *label = CocosUtils::createLabel("0", BIG_FONT_SIZE);
+    (*label)->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+    addChild(*label);
 }
