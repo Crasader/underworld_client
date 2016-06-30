@@ -89,8 +89,10 @@ enum class ResourceType {
 };
 
 enum class QuestType {
-    Daily = 0,
-    Life,
+    None,
+    Main,
+    Branch,
+    Daily,
     TimeLimited,
 };
 
