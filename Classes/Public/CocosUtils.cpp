@@ -294,6 +294,7 @@ Sprite* CocosUtils::createTitle(const string& title, float fontSize)
     return titleBg;
 }
 
+#pragma mark - animations
 void CocosUtils::loadPVR(const string& file)
 {
     static const string root("pvr/");
@@ -304,39 +305,22 @@ void CocosUtils::loadPVR(const string& file)
     }
 }
 
-void CocosUtils::playAnimation(Node* node,
-                               const vector<string>& files,
-                               bool loop,
-                               int frameIndex,
-                               float frameDelay,
-                               const function<void()>& callback)
+SpriteFrame* CocosUtils::getFrame(const std::string& folder, int frameIndex)
+{
+    auto file = folder + StringUtils::format("/1%04d.png", frameIndex + 1);
+    return SpriteFrameCache::getInstance()->getSpriteFrameByName(file);
+}
+
+static void playAnimation(Node* node,
+                          const Vector<SpriteFrame*>& frames,
+                          bool loop,
+                          float frameDelay,
+                          const function<void()>& callback)
 {
     if (node) {
         node->stopAllActions();
         
-        const size_t cnt(files.size());
-        if (cnt > 0) {
-            if (frameIndex < 0 || frameIndex >= cnt) {
-                assert(false);
-                frameIndex = 0;
-            }
-            
-            Vector<SpriteFrame*> frames;
-            for (int i = frameIndex; i < cnt; ++i) {
-                const auto& file = files.at(i);
-                auto frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(file);
-                frames.pushBack(frame);
-            }
-            
-            // if loop, play the first frames
-            if (loop) {
-                for (int i = 0; i < frameIndex; ++i) {
-                    const auto& file = files.at(i);
-                    auto frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(file);
-                    frames.pushBack(frame);
-                }
-            }
-            
+        if (frames.size() > 0) {
             auto animation = Animation::createWithSpriteFrames(frames);
             animation->setDelayPerUnit(frameDelay);
             animation->setRestoreOriginalFrame(false);
@@ -356,22 +340,37 @@ void CocosUtils::playAnimation(Node* node,
     }
 }
 
-Sprite* CocosUtils::playAnimation(const vector<string>& files,
-                                  bool loop,
-                                  int frameIndex,
-                                  float frameDelay,
-                                  const function<void()>& callback)
+void CocosUtils::playAnimation(Node* node,
+                               const string& folder,
+                               bool loop,
+                               int frameIndex,
+                               float frameDelay,
+                               const function<void()>& callback)
 {
-    if (files.size() > 0) {
-        auto sprite = Sprite::createWithSpriteFrameName(files.at(0));
-        if (sprite) {
-            playAnimation(sprite, files, loop, frameIndex, frameDelay, callback);
+    Vector<SpriteFrame*> frames;
+    for (int i = frameIndex; ; ++i) {
+        auto frame = getFrame(folder, i);
+        if (frame) {
+            frames.pushBack(frame);
         }
-        
-        return sprite;
+        else {
+            break;
+        }
     }
     
-    return nullptr;
+    if (loop) {
+        for (int i = 0; i < frameIndex; ++i) {
+            auto frame = getFrame(folder, i);
+            if (frame) {
+                frames.pushBack(frame);
+            }
+            else {
+                break;
+            }
+        }
+    }
+    
+    ::playAnimation(node, frames, loop, frameDelay, callback);
 }
 
 Sprite* CocosUtils::playAnimation(const string& folder,
@@ -380,18 +379,11 @@ Sprite* CocosUtils::playAnimation(const string& folder,
                                   float frameDelay,
                                   const function<void()>& callback)
 {
-    vector<string> files;
-    for (int i = 0; ; ++i) {
-        const string file = folder + StringUtils::format("/1%04d.png", i + 1);
-        if (SpriteFrameCache::getInstance()->getSpriteFrameByName(file) != nullptr) {
-            files.push_back(file);
-        } else {
-            break;
-        }
-    }
-    
-    if (files.size() > 0) {
-        return playAnimation(files, loop, frameIndex, frameDelay, callback);
+    auto frame = getFrame(folder, 0);
+    if (frame) {
+        auto sprite = Sprite::createWithSpriteFrame(frame);
+        playAnimation(sprite, folder, loop, frameIndex, frameDelay, callback);
+        return sprite;
     }
     
     return nullptr;

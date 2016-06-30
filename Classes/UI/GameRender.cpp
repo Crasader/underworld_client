@@ -29,7 +29,6 @@ using namespace std;
 using namespace UnderWorld::Core;
 
 static const string tickSelectorKey("tickSelectorKey");
-static const float spellRingRange(400);
 static const int battleTotalTime(600);
 
 GameRender::GameRender(Scene* scene, const string& opponentsAccount)
@@ -713,13 +712,7 @@ void GameRender::updateCardMask(const string& card, const Point& point)
                     auto st = getSpellType(name);
                     if (isValidAoeSpell(st)) {
                         auto coordinate = getValidPuttingCoordinate(point, false);
-                        float range(spellRingRange);
-                        const auto& elements = st->getImmediateElements();
-                        if (elements.size() > 0) {
-                            const auto& pattern = elements.at(0);
-                            
-                        }
-                        _mapLayer->updateSpellRing(name, coordinate, range);
+                        _mapLayer->updateSpellRing(name, coordinate, st->getSpellRadius());
                     }
                 }
             }

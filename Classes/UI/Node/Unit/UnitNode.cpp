@@ -23,7 +23,7 @@ static const int zOrder_top(1);
 static const float hpThreshold(50.0f);
 
 // TODO: remove
-static const string resourcePrefix("soldier-Archer");
+static const string resourcePrefix("hero-Fat");
 
 UnitNode* UnitNode::create(const Unit* unit, bool rightSide)
 {
@@ -388,14 +388,14 @@ bool UnitNode::needToFlip(Unit::Direction direction) const
     return flip;
 }
 
-void UnitNode::getAnimationFiles(vector<AnimationFileType>& output,
+void UnitNode::getAnimationFiles(vector<string>& output,
                                  SkillClass sc,
                                  Unit::Direction direction,
                                  bool isHealthy) const
 {
     output.clear();
     
-    AnimationFileType data;
+    string data;
     
 #if USING_PVR
     string prefix("");
@@ -403,7 +403,7 @@ void UnitNode::getAnimationFiles(vector<AnimationFileType>& output,
         case kSkillClass_Stop:
         case kSkillClass_Produce:
         {
-            getStandbyFiles(data, direction, isHealthy);
+            prefix = "stand";
         }
             break;
         case kSkillClass_Move:
@@ -418,9 +418,9 @@ void UnitNode::getAnimationFiles(vector<AnimationFileType>& output,
         case kSkillClass_Attack:
         {
             if (_isStandby) {
-                getStandbyFiles(data, direction, isHealthy);
+                prefix = "stand";
             } else {
-                getAttackFiles(output, direction, isHealthy);
+                prefix = "attack";
             }
         }
             break;
@@ -439,15 +439,8 @@ void UnitNode::getAnimationFiles(vector<AnimationFileType>& output,
             break;
     }
     
-    if (0 == data.size()) {
-        for (int i = 0; ; ++i) {
-            const string file = resourcePrefix + "/" + prefix + StringUtils::format("/%d/1%04d.png", static_cast<int>(direction), i + 1);
-            if (SpriteFrameCache::getInstance()->getSpriteFrameByName(file) != nullptr) {
-                data.push_back(file);
-            } else {
-                break;
-            }
-        }
+    if (prefix.size() > 0) {
+        data.assign(resourcePrefix + "/" + prefix + StringUtils::format("/body/%d", static_cast<int>(direction)));
     }
 #else
     const string& prefix = _configData->getPrefix();
@@ -508,22 +501,17 @@ void UnitNode::getAnimationFiles(vector<AnimationFileType>& output,
     }
 }
 
-void UnitNode::getStandbyFiles(AnimationFileType& output,
+void UnitNode::getStandbyFiles(string& output,
                                Unit::Direction direction,
                                bool isHealthy) const
 {
     output.clear();
     
 #if USING_PVR
-    static string prefix("stand");
-    
-    for (int i = 0; ; ++i) {
-        const string file = resourcePrefix + "/" + prefix + StringUtils::format("/%d/1%04d.png", static_cast<int>(direction), i + 1);
-        if (SpriteFrameCache::getInstance()->getSpriteFrameByName(file) != nullptr) {
-            output.push_back(file);
-        } else {
-            break;
-        }
+    vector<string> vs;
+    getAnimationFiles(vs, kSkillClass_Stop, direction, isHealthy);
+    if (vs.size() > 0) {
+        output.assign(vs.at(0));
     }
 #else
     if (_isBuilding) {
@@ -539,26 +527,14 @@ void UnitNode::getStandbyFiles(AnimationFileType& output,
 #endif
 }
 
-void UnitNode::getAttackFiles(vector<AnimationFileType>& output,
+void UnitNode::getAttackFiles(vector<string>& output,
                               Unit::Direction direction,
                               bool isHealthy) const
 {
     output.clear();
     
 #if USING_PVR
-    AnimationFileType data;
-    const string prefix("attack");
-    
-    for (int i = 0; ; ++i) {
-        const string file = resourcePrefix + "/" + prefix + StringUtils::format("/%d/1%04d.png", static_cast<int>(direction), i + 1);
-        if (SpriteFrameCache::getInstance()->getSpriteFrameByName(file) != nullptr) {
-            data.push_back(file);
-        } else {
-            break;
-        }
-    }
-    
-    output.push_back(data);
+    getAnimationFiles(output, kSkillClass_Attack, direction, isHealthy);
 #else
     const string& prefix = _configData->getPrefix();
     {
@@ -583,7 +559,7 @@ void UnitNode::getAttackFiles(vector<AnimationFileType>& output,
     
     if (!isExist) {
         output.clear();
-        AnimationFileType data;
+        string data;
         getStandbyFiles(data, direction, isHealthy);
         output.push_back(data);
     }
@@ -617,7 +593,7 @@ float UnitNode::getAnimationDuration() const
 }
 
 #pragma mark - animation
-void UnitNode::playAnimation(const AnimationFileType& files,
+void UnitNode::playAnimation(const string& files,
                              bool play,
                              bool loop,
                              float playTime,
@@ -638,7 +614,7 @@ void UnitNode::playAnimation(const AnimationFileType& files,
         }
         
 #if USING_PVR
-        _sprite = Sprite::createWithSpriteFrameName(files.at(0));
+        _sprite = Sprite::createWithSpriteFrame(CocosUtils::getFrame(files, 0));
         addChild(_sprite);
         
         // compatibility
@@ -833,7 +809,7 @@ void UnitNode::playStandbyAnimation()
 {
     Unit::Direction direction = _unit->getDirection();
     bool flip = needToFlip(direction);
-    AnimationFileType files;
+    string files;
     getStandbyFiles(files, direction, getHpPercentage() > hpThreshold);
     playAnimation(files, true, true, 0.0f, 0, flip, nullptr);
 }

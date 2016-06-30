@@ -40,11 +40,9 @@ public:
 
 #if USING_PVR
 typedef Animate* AnimationType;
-typedef std::vector<std::string> AnimationFileType;
 #else
 #include "cocostudio/CocoStudio.h"
 typedef cocostudio::timeline::ActionTimeline* AnimationType;
-typedef std::string AnimationFileType;
 #endif
 
 class UnitNode : public Node
@@ -87,21 +85,21 @@ protected:
     float getHpPercentage() const;
     bool needToChangeStandbyStatus() const;
     bool needToFlip(Unit::Direction direction) const;
-    void getAnimationFiles(std::vector<AnimationFileType>& output,
+    void getAnimationFiles(std::vector<std::string>& output,
                            SkillClass sc,
                            Unit::Direction direction,
                            bool isHealthy) const;
-    void getStandbyFiles(AnimationFileType& output,
+    void getStandbyFiles(std::string& output,
                          Unit::Direction direction,
                          bool isHealthy) const;
-    void getAttackFiles(std::vector<AnimationFileType>& output,
+    void getAttackFiles(std::vector<std::string>& output,
                         Unit::Direction direction,
                         bool isHealthy) const;
     int getCurrentFrameIndex() const;
     float getAnimationDuration() const;
     
     // animations
-    void playAnimation(const AnimationFileType& files,
+    void playAnimation(const std::string& files,
                        bool play,
                        bool loop,
                        float playTime,
@@ -202,7 +200,7 @@ private:
     bool _isStandby;
     
     // animations
-    std::vector<AnimationFileType> _animationFiles;
+    std::vector<std::string> _animationFiles;
     
     // attack animations
     bool _isAttacking;
