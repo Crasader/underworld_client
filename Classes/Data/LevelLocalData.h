@@ -9,26 +9,33 @@
 #ifndef LevelLocalData_h
 #define LevelLocalData_h
 
-#include "AbstractLocalData.h"
-#include "CocosGlobal.h"
+#include <iostream>
 #include <vector>
-#include <unordered_map>
 
-class ConditionData;
-class RewardData;
+namespace tinyxml2 { class XMLElement; }
 
-class LevelLocalData : public AbstractLocalData
+class LevelLocalData
 {
 public:
     LevelLocalData(tinyxml2::XMLElement *xmlElement);
     virtual ~LevelLocalData();
     
-    const std::vector<ConditionData*>& getConditions() const;
-    const RewardData* getReward(int type) const;
+    int getLevel() const;
+    int getExp() const;
+    int getHp() const;
+    int getDefence() const;
+    const std::vector<int>& unlockedStages() const;
+    const std::vector<int>& unlockedIcons() const;
+    const std::vector<int>& unlockedQuests() const;
     
 private:
-    std::vector<ConditionData*> _conditions;
-    std::unordered_map<int, RewardData*> _rewards;
+    int _level;
+    int _exp;
+    int _hp;
+    int _defence;
+    std::vector<int> _stages;
+    std::vector<int> _icons;
+    std::vector<int> _quests;
 };
 
 #endif /* LevelLocalData_h */

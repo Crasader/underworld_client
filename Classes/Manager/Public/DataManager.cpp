@@ -11,6 +11,9 @@
 #include "Utils.h"
 #include "LocalHelper.h"
 #include "LevelLocalData.h"
+#include "CardLocalData.h"
+#include "CardUpgradeData.h"
+#include "TalentUpgradeData.h"
 #include "QuestLocalData.h"
 #include "AchievementLocalData.h"
 #include "ObjectLocalData.h"
@@ -81,6 +84,9 @@ DataManager::DataManager()
 DataManager::~DataManager()
 {
     Utils::clearMap(_levels);
+    Utils::clearMap(_cards);
+    Utils::clearMap(_cardUpgradeDatas);
+    Utils::clearMap(_talentUpgradeDatas);
     
     for (auto iter = _quests.begin(); iter != _quests.end(); ++iter) {
         Utils::clearMap(iter->second);
@@ -88,6 +94,7 @@ DataManager::~DataManager()
     _quests.clear();
     
     Utils::clearMap(_achievements);
+    Utils::clearMap(_objects);
     Utils::clearMap(_gears);
     Utils::clearMap(_gearUpgradeDatas);
     Utils::clearMap(_gearAttributeDatas);
@@ -127,8 +134,11 @@ void DataManager::init()
 {
     parseLevelData();
     parseCardDecks();
+    parseCardData();
+    parseCardUpgradeData();
+    parseTalentUpgradeData();
+    parseQuestData(QuestType::Main);
     parseQuestData(QuestType::Daily);
-    parseQuestData(QuestType::Life);
     parseAchievementData();
     parseObjectData();
     parseGearData();
@@ -160,45 +170,23 @@ void DataManager::init()
 
 string DataManager::getMapData(int mapId) const
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath(StringUtils::format("MapData/%d.xml", mapId));
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        return LocalHelper::loadFileContentString(fileName);
-    }
-    
-    return "";
+    return getFileData(StringUtils::format("MapData/%d.xml", mapId));
 }
 
 string DataManager::getMapDataHMM(int mapId) const
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath(StringUtils::format("MapData/%d_hmm.xml", mapId));
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        return LocalHelper::loadFileContentString(fileName);
-    }
-    
-    return "";
+    return getFileData(StringUtils::format("MapData/%d_hmm.xml", mapId));
 }
-
 
 string DataManager::getTechTreeData() const
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath("TechTreeData/techtree.xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        return LocalHelper::loadFileContentString(fileName);
-    }
-    
-    return "";
+    return getFileData("TechTreeData/techtree.xml");
 }
 
 string DataManager::getHMMTechTreeData() const
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath("TechTreeData/techtree_hmm.xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        return LocalHelper::loadFileContentString(fileName);
-    }
-    
-    return "";
+    return getFileData("TechTreeData/techtree_hmm.xml");
 }
-
 
 #pragma mark - getters
 const LevelLocalData* DataManager::getLevelData(int levelId) const
@@ -213,6 +201,35 @@ const LevelLocalData* DataManager::getLevelData(int levelId) const
 const set<string>& DataManager::getCardDecks() const
 {
     return _cardDecks;
+}
+
+const CardLocalData* DataManager::getCardData(int idx) const
+{
+    if (_cards.find(idx) != end(_cards)) {
+        return _cards.at(idx);
+    }
+    
+    return nullptr;
+}
+
+const CardUpgradeData* DataManager::getCardUpgradeData(int idx, int level) const
+{
+    auto key = StringUtils::format("%d_%d", idx, level);
+    if (_cardUpgradeDatas.find(key) != end(_cardUpgradeDatas)) {
+        return _cardUpgradeDatas.at(key);
+    }
+    
+    return nullptr;
+}
+
+const TalentUpgradeData* DataManager::getTalentUpgradeData(int idx, int level) const
+{
+    auto key = StringUtils::format("%d_%d", idx, level);
+    if (_talentUpgradeDatas.find(key) != end(_talentUpgradeDatas)) {
+        return _talentUpgradeDatas.at(key);
+    }
+    
+    return nullptr;
 }
 
 const QuestLocalData* DataManager::getQuestData(QuestType type, int questId) const
@@ -256,7 +273,7 @@ const GearLocalData* DataManager::getGearData(int gearId) const
 
 const GearUpgradeData* DataManager::getGearUpgradeData(int id, int level) const
 {
-    string key = StringUtils::format("%d_%d", id, level);
+    auto key = StringUtils::format("%d_%d", id, level);
     if (_gearUpgradeDatas.find(key) != _gearUpgradeDatas.end()) {
         return _gearUpgradeDatas.at(key);
     }
@@ -266,7 +283,7 @@ const GearUpgradeData* DataManager::getGearUpgradeData(int id, int level) const
 
 const GearAttributeData* DataManager::getGearAttributeData(int id, int level, int attributeId) const
 {
-    string key = StringUtils::format("%d_%d_%d", id, level, attributeId);
+    auto key = StringUtils::format("%d_%d_%d", id, level, attributeId);
     if (_gearAttributeDatas.find(key) != _gearAttributeDatas.end()) {
         return _gearAttributeDatas.at(key);
     }
@@ -287,7 +304,7 @@ void DataManager::getAnimationParameters(const string& name, UnderWorld::Core::S
 {
     scale = speed = 1.0f;
     
-    string key = name + StringUtils::format("_%d", skillClass);
+    auto key = name + StringUtils::format("_%d", skillClass);
     if (_animationParameters.find(key) != _animationParameters.end()) {
         UAConfigData* data = _animationParameters.at(key);
         if (data) {
@@ -353,7 +370,7 @@ const ArtifactLocalData* DataManager::getArtifactData(int id) const
 
 const ArtifactUpgradeData* DataManager::getArtifactUpgradeData(int id, int level) const
 {
-    string key = StringUtils::format("%d_%d", id, level);
+    auto key = StringUtils::format("%d_%d", id, level);
     if (_artifactUpgradeData.find(key) != _artifactUpgradeData.end()) {
         return _artifactUpgradeData.at(key);
     }
@@ -390,7 +407,7 @@ const HeroPieceData* DataManager::getHeroPieceData(int id) const
 
 const HeroUpgradeData* DataManager::getHeroUpgradeData(int id, int level) const
 {
-    string key = StringUtils::format("%d_%d", id, level);
+    auto key = StringUtils::format("%d_%d", id, level);
     if (_heroUpgradeDatas.find(key) != _heroUpgradeDatas.end()) {
         return _heroUpgradeDatas.at(key);
     }
@@ -427,7 +444,7 @@ const SoldierPieceData* DataManager::getSoldierPieceData(int id) const
 
 const SoldierUpgradeData* DataManager::getSoldierUpgradeData(int id, int level) const
 {
-    string key = StringUtils::format("%d_%d", id, level);
+    auto key = StringUtils::format("%d_%d", id, level);
     if (_soldierUpgradeDatas.find(key) != _soldierUpgradeDatas.end()) {
         return _soldierUpgradeDatas.at(key);
     }
@@ -437,7 +454,7 @@ const SoldierUpgradeData* DataManager::getSoldierUpgradeData(int id, int level) 
 
 const SoldierQualityData* DataManager::getSoldierQualityData(int id, int level) const
 {
-    string key = StringUtils::format("%d_%d", id, level);
+    auto key = StringUtils::format("%d_%d", id, level);
     if (_soldierQualityDatas.find(key) != _soldierQualityDatas.end()) {
         return _soldierQualityDatas.at(key);
     }
@@ -447,7 +464,7 @@ const SoldierQualityData* DataManager::getSoldierQualityData(int id, int level) 
 
 const SoldierTalentData* DataManager::getSoldierTalentData(int id, int level) const
 {
-    string key = StringUtils::format("%d_%d", id, level);
+    auto key = StringUtils::format("%d_%d", id, level);
     if (_soldierTalentDatas.find(key) != _soldierTalentDatas.end()) {
         return _soldierTalentDatas.at(key);
     }
@@ -466,7 +483,7 @@ const TowerLocalData* DataManager::getTowerData(int id) const
 
 const TowerUpgradeData* DataManager::getTowerUpgradeData(int id, int level) const
 {
-    string key = StringUtils::format("%d_%d", id, level);
+    auto key = StringUtils::format("%d_%d", id, level);
     if (_towerUpgradeDatas.find(key) != _towerUpgradeDatas.end()) {
         return _towerUpgradeDatas.at(key);
     }
@@ -475,60 +492,99 @@ const TowerUpgradeData* DataManager::getTowerUpgradeData(int id, int level) cons
 }
 
 #pragma mark - parsers
+string DataManager::getFileData(const std::string& file) const
+{
+    auto fileName = LocalHelper::getLocalizedConfigFilePath(file);
+    if (FileUtils::getInstance()->isFileExist(fileName)) {
+        return LocalHelper::loadFileContentString(fileName);
+    }
+    
+    return "";
+}
+
+void DataManager::parseData(const string& file, const function<void(tinyxml2::XMLElement*)>& parser) const
+{
+    auto content = getFileData(file);
+    if (content.size() > 0) {
+        auto xmlDoc = new (nothrow) tinyxml2::XMLDocument();
+        xmlDoc->Parse(content.c_str());
+        for (auto item = xmlDoc->RootElement()->FirstChildElement(); item; item = item->NextSiblingElement()) {
+            if (parser) {
+                parser(item);
+            }
+        }
+        
+        CC_SAFE_DELETE(xmlDoc);
+    }
+}
+
 void DataManager::parseLevelData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath("LevelData.xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                LevelLocalData* data = new (nothrow) LevelLocalData(item);
-                const int levelId = data->getId();
-                if (_levels.find(levelId) != _levels.end()) {
-                    assert(false);
-                } else {
-                    _levels.insert(make_pair(levelId, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("LevelData.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) LevelLocalData(item);
+        const int levelId = data->getLevel();
+        if (_levels.find(levelId) != _levels.end()) {
+            assert(false);
+        } else {
+            _levels.insert(make_pair(levelId, data));
         }
-    }
+    });
 }
 
 void DataManager::parseCardDecks()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath("CardDecks.xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                _cardDecks.insert(item->Attribute("name"));
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("CardDecks.xml", [this](tinyxml2::XMLElement* item) {
+        _cardDecks.insert(item->Attribute("name"));
+    });
+}
+
+void DataManager::parseCardData()
+{
+    parseData("CardData.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) CardLocalData(item);
+        const int idx = data->getId();
+        if (_cards.find(idx) != _cards.end()) {
+            assert(false);
+        } else {
+            _cards.insert(make_pair(idx, data));
         }
-    }
+    });
+}
+
+void DataManager::parseCardUpgradeData()
+{
+    parseData("CardUpgradeData.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) CardUpgradeData(item);
+        auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
+        if (_cardUpgradeDatas.find(key) != end(_cardUpgradeDatas)) {
+            assert(false);
+        } else {
+            _cardUpgradeDatas.insert(make_pair(key, data));
+        }
+    });
+}
+
+void DataManager::parseTalentUpgradeData()
+{
+    parseData("TalentUpgradeData.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) TalentUpgradeData(item);
+        auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
+        if (_talentUpgradeDatas.find(key) != end(_talentUpgradeDatas)) {
+            assert(false);
+        } else {
+            _talentUpgradeDatas.insert(make_pair(key, data));
+        }
+    });
 }
 
 void DataManager::parseQuestData(QuestType type)
 {
     string fileName;
     
-    if (QuestType::Daily == type) {
-        fileName = LocalHelper::getLocalizedConfigFilePath("DailyQuestProperty.xml");
-    } else if (QuestType::Life == type) {
-        fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
+    if (QuestType::Main == type) {
+        fileName = "MainQuestProperty.xml";
+    } else if (QuestType::Daily == type) {
+        fileName = "DailyQuestProperty.xml";
     }
     
     // clear first
@@ -538,726 +594,375 @@ void DataManager::parseQuestData(QuestType type)
         _quests.insert(make_pair(type, unordered_map<int, QuestLocalData*>()));
     }
     
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            auto& quests = _quests.at(type);
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                QuestLocalData* data = new (nothrow) QuestLocalData(item);
-                const int questId = data->getId();
-                if (quests.find(questId) != quests.end()) {
-                    assert(false);
-                } else {
-                    quests.insert(make_pair(questId, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData(fileName, [this, type](tinyxml2::XMLElement* item) {
+        auto& quests = _quests.at(type);
+        auto data = new (nothrow) QuestLocalData(item);
+        const int questId = data->getId();
+        if (quests.find(questId) != quests.end()) {
+            assert(false);
+        } else {
+            quests.insert(make_pair(questId, data));
         }
-    }
+    });
 }
 
 void DataManager::parseAchievementData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath("EquipProperty.xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                AchievementLocalData* data = new (nothrow) AchievementLocalData(item);
-                const int id = data->getId();
-                if (_achievements.find(id) != _achievements.end()) {
-                    assert(false);
-                } else {
-                    _achievements.insert(make_pair(id, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("EquipProperty.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) AchievementLocalData(item);
+        const int id = data->getId();
+        if (_achievements.find(id) != _achievements.end()) {
+            assert(false);
+        } else {
+            _achievements.insert(make_pair(id, data));
         }
-    }
+    });
 }
 
 void DataManager::parseObjectData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath("ObjectProperty.xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                ObjectLocalData* data = new (nothrow) ObjectLocalData(item);
-                const int id = data->getId();
-                if (_objects.find(id) != _objects.end()) {
-                    assert(false);
-                } else {
-                    _objects.insert(make_pair(id, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("ObjectProperty.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) ObjectLocalData(item);
+        const int id = data->getId();
+        if (_objects.find(id) != _objects.end()) {
+            assert(false);
+        } else {
+            _objects.insert(make_pair(id, data));
         }
-    }
+    });
 }
 
 void DataManager::parseGearData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath("EquipProperty.xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                GearLocalData* data = new (nothrow) GearLocalData(item);
-                const int gearId = data->getId();
-                if (_gears.find(gearId) != _gears.end()) {
-                    assert(false);
-                } else {
-                    _gears.insert(make_pair(gearId, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("EquipProperty.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) GearLocalData(item);
+        const int gearId = data->getId();
+        if (_gears.find(gearId) != _gears.end()) {
+            assert(false);
+        } else {
+            _gears.insert(make_pair(gearId, data));
         }
-    }
+    });
 }
 
 void DataManager::parseGearUpgradeData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                GearUpgradeData* data = new (nothrow) GearUpgradeData(item);
-                string key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-                if (_gearUpgradeDatas.find(key) != _gearUpgradeDatas.end()) {
-                    assert(false);
-                } else {
-                    _gearUpgradeDatas.insert(make_pair(key, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("GearUpgradeData.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) GearUpgradeData(item);
+        auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
+        if (_gearUpgradeDatas.find(key) != _gearUpgradeDatas.end()) {
+            assert(false);
+        } else {
+            _gearUpgradeDatas.insert(make_pair(key, data));
         }
-    }
+    });
 }
 
 void DataManager::parseGearAttributeData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                GearAttributeData* data = new (nothrow) GearAttributeData(item);
-                string key = StringUtils::format("%d_%d_%d", data->getId(), data->getLevel(), data->getAttributeId());
-                if (_gearAttributeDatas.find(key) != _gearAttributeDatas.end()) {
-                    assert(false);
-                } else {
-                    _gearAttributeDatas.insert(make_pair(key, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("GearAttributeData.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) GearAttributeData(item);
+        auto key = StringUtils::format("%d_%d_%d", data->getId(), data->getLevel(), data->getAttributeId());
+        if (_gearAttributeDatas.find(key) != _gearAttributeDatas.end()) {
+            assert(false);
+        } else {
+            _gearAttributeDatas.insert(make_pair(key, data));
         }
-    }
+    });
 }
 
 void DataManager::parseGearSetData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                GearSetLocalData* data = new (nothrow) GearSetLocalData(item);
-                const int key = data->getId();
-                if (_gearSets.find(key) != _gearSets.end()) {
-                    assert(false);
-                } else {
-                    _gearSets.insert(make_pair(key, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("GearSetData.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) GearSetLocalData(item);
+        const int key = data->getId();
+        if (_gearSets.find(key) != _gearSets.end()) {
+            assert(false);
+        } else {
+            _gearSets.insert(make_pair(key, data));
         }
-    }
+    });
 }
 
 void DataManager::parseAnimationConfigData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath("AnimationConfig.xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                const char* name = item->Attribute("name");
-                const char* skill = item->Attribute("skill");
-                if (name && skill) {
-                    UAConfigData* data = new (nothrow) UAConfigData(item);
-                    string key = StringUtils::format("%s_%s", name, skill);
-                    if (_animationParameters.find(key) != _animationParameters.end()) {
-                        assert(false);
-                    } else {
-                        _animationParameters.insert(make_pair(key, data));
-                    }
-                }
+    parseData("AnimationConfig.xml", [this](tinyxml2::XMLElement* item) {
+        const char* name = item->Attribute("name");
+        const char* skill = item->Attribute("skill");
+        if (name && skill) {
+            auto data = new (nothrow) UAConfigData(item);
+            auto key = StringUtils::format("%s_%s", name, skill);
+            if (_animationParameters.find(key) != _animationParameters.end()) {
+                assert(false);
+            } else {
+                _animationParameters.insert(make_pair(key, data));
             }
-            
-            CC_SAFE_DELETE(xmlDoc);
         }
-    }
+    });
 }
 
 void DataManager::parseCardConfigData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath("CardConfig.xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                CardConfigData* data = new (nothrow) CardConfigData(item);
-                const string& key = data->getName();
-                if (_cardConfigData.find(key) != _cardConfigData.end()) {
-                    assert(false);
-                } else {
-                    _cardConfigData.insert(make_pair(key, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("CardConfig.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) CardConfigData(item);
+        const auto& key = data->getName();
+        if (_cardConfigData.find(key) != _cardConfigData.end()) {
+            assert(false);
+        } else {
+            _cardConfigData.insert(make_pair(key, data));
         }
-    }
+    });
 }
 
 void DataManager::parseURConfigData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath("UnitResourceConfig.xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                URConfigData* data = new (nothrow) URConfigData(item);
-                const string& key = data->getName();
-                if (_urConfigData.find(key) != _urConfigData.end()) {
-                    assert(false);
-                } else {
-                    _urConfigData.insert(make_pair(key, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("UnitResourceConfig.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) URConfigData(item);
+        const auto& key = data->getName();
+        if (_urConfigData.find(key) != _urConfigData.end()) {
+            assert(false);
+        } else {
+            _urConfigData.insert(make_pair(key, data));
         }
-    }
+    });
 }
 
 void DataManager::parseBRConfigData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath("BulletResourceConfig.xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                BRConfigData* data = new (nothrow) BRConfigData(item);
-                const string& key = data->getName();
-                if (_brConfigData.find(key) != _brConfigData.end()) {
-                    assert(false);
-                } else {
-                    _brConfigData.insert(make_pair(key, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("BulletResourceConfig.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) BRConfigData(item);
+        const auto& key = data->getName();
+        if (_brConfigData.find(key) != _brConfigData.end()) {
+            assert(false);
+        } else {
+            _brConfigData.insert(make_pair(key, data));
         }
-    }
+    });
 }
 
 void DataManager::parseMapParticleConfigData()
 {
     for (int i = 0; i < 2; ++i) {
-        string fileName = LocalHelper::getLocalizedConfigFilePath(StringUtils::format("MapParticleConfig_%d.xml", i));
-        if (FileUtils::getInstance()->isFileExist(fileName)) {
-            // clear first
-            if (_mapParticleConfigData.find(i) != _mapParticleConfigData.end()) {
-                Utils::clearVector(_mapParticleConfigData.at(i));
-            } else {
-                _mapParticleConfigData.insert(make_pair(i, vector<MapParticleConfigData*>()));
-            }
-            
-            tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-            if (xmlDoc) {
-                string content = LocalHelper::loadFileContentString(fileName);
-                xmlDoc->Parse(content.c_str());
-                
-                vector<MapParticleConfigData*>& configs = _mapParticleConfigData.at(i);
-                
-                for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                     item;
-                     item = item->NextSiblingElement()) {
-                    MapParticleConfigData* data = new (nothrow) MapParticleConfigData(item);
-                    configs.push_back(data);
-                }
-                
-                CC_SAFE_DELETE(xmlDoc);
-            }
+        // clear first
+        if (_mapParticleConfigData.find(i) != _mapParticleConfigData.end()) {
+            Utils::clearVector(_mapParticleConfigData.at(i));
+        } else {
+            _mapParticleConfigData.insert(make_pair(i, vector<MapParticleConfigData*>()));
         }
+        
+        auto file = StringUtils::format("MapParticleConfig_%d.xml", i);
+        parseData(file, [this, i](tinyxml2::XMLElement* item) {
+            auto& configs = _mapParticleConfigData.at(i);
+            auto data = new (nothrow) MapParticleConfigData(item);
+            configs.push_back(data);
+        });
     }
 }
 
 void DataManager::parseSpellConfigData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath("SpellConfig.xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                SpellConfigData* data = new (nothrow) SpellConfigData(item);
-                const string& key = data->getName();
-                if (_spellConfigData.find(key) != _spellConfigData.end()) {
-                    assert(false);
-                } else {
-                    if (key.length() > 0) {
-                        _spellConfigData.insert(make_pair(key, data));
-                    } else {
-                        CC_SAFE_DELETE(data);
-                    }
-                }
+    parseData("SpellConfig.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) SpellConfigData(item);
+        const auto& key = data->getName();
+        if (_spellConfigData.find(key) != _spellConfigData.end()) {
+            assert(false);
+        } else {
+            if (key.length() > 0) {
+                _spellConfigData.insert(make_pair(key, data));
+            } else {
+                CC_SAFE_DELETE(data);
             }
-            
-            CC_SAFE_DELETE(xmlDoc);
         }
-    }
+    });
 }
 
 void DataManager::parseArtifactData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                ArtifactLocalData* data = new (nothrow) ArtifactLocalData(item);
-                const int key = data->getId();
-                if (_artifacts.find(key) != _artifacts.end()) {
-                    assert(false);
-                } else {
-                    _artifacts.insert(make_pair(key, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("ArtifactData.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) ArtifactLocalData(item);
+        const int key = data->getId();
+        if (_artifacts.find(key) != _artifacts.end()) {
+            assert(false);
+        } else {
+            _artifacts.insert(make_pair(key, data));
         }
-    }
+    });
 }
 
 void DataManager::parseArtifactUpgradeData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                ArtifactUpgradeData* data = new (nothrow) ArtifactUpgradeData(item);
-                string key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-                if (_artifactUpgradeData.find(key) != _artifactUpgradeData.end()) {
-                    assert(false);
-                } else {
-                    _artifactUpgradeData.insert(make_pair(key, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("ArtifactUpgradeData.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) ArtifactUpgradeData(item);
+        auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
+        if (_artifactUpgradeData.find(key) != _artifactUpgradeData.end()) {
+            assert(false);
+        } else {
+            _artifactUpgradeData.insert(make_pair(key, data));
         }
-    }
+    });
 }
 
 void DataManager::parseAttributeData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                AttributeLocalData* data = new (nothrow) AttributeLocalData(item);
-                const int key = data->getId();
-                if (_attributes.find(key) != _attributes.end()) {
-                    assert(false);
-                } else {
-                    _attributes.insert(make_pair(key, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("AttributeData.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) AttributeLocalData(item);
+        const int key = data->getId();
+        if (_attributes.find(key) != _attributes.end()) {
+            assert(false);
+        } else {
+            _attributes.insert(make_pair(key, data));
         }
-    }
+    });
 }
 
 void DataManager::parseHeroData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                HeroLocalData* data = new (nothrow) HeroLocalData(item);
-                const int key = data->getId();
-                if (_heroes.find(key) != _heroes.end()) {
-                    assert(false);
-                } else {
-                    _heroes.insert(make_pair(key, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("HeroData.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) HeroLocalData(item);
+        const int key = data->getId();
+        if (_heroes.find(key) != _heroes.end()) {
+            assert(false);
+        } else {
+            _heroes.insert(make_pair(key, data));
         }
-    }
+    });
 }
 
 void DataManager::parseHeroPieceData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                HeroPieceData* data = new (nothrow) HeroPieceData(item);
-                const int key = data->getId();
-                if (_heroPieceDatas.find(key) != _heroPieceDatas.end()) {
-                    assert(false);
-                } else {
-                    _heroPieceDatas.insert(make_pair(key, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("HeroPieceData.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) HeroPieceData(item);
+        const int key = data->getId();
+        if (_heroPieceDatas.find(key) != _heroPieceDatas.end()) {
+            assert(false);
+        } else {
+            _heroPieceDatas.insert(make_pair(key, data));
         }
-    }
+    });
 }
 
 void DataManager::parseHeroUpgradeData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                HeroUpgradeData* data = new (nothrow) HeroUpgradeData(item);
-                string key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-                if (_heroUpgradeDatas.find(key) != _heroUpgradeDatas.end()) {
-                    assert(false);
-                } else {
-                    _heroUpgradeDatas.insert(make_pair(key, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("HeroUpgradeData.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) HeroUpgradeData(item);
+        auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
+        if (_heroUpgradeDatas.find(key) != _heroUpgradeDatas.end()) {
+            assert(false);
+        } else {
+            _heroUpgradeDatas.insert(make_pair(key, data));
         }
-    }
+    });
 }
 
 void DataManager::parseSkillData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                SkillLocalData* data = new (nothrow) SkillLocalData(item);
-                const int key = data->getId();
-                if (_skills.find(key) != _skills.end()) {
-                    assert(false);
-                } else {
-                    _skills.insert(make_pair(key, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("SkillData.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) SkillLocalData(item);
+        const int key = data->getId();
+        if (_skills.find(key) != _skills.end()) {
+            assert(false);
+        } else {
+            _skills.insert(make_pair(key, data));
         }
-    }
+    });
 }
 
 void DataManager::parseSoldierData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                SoldierLocalData* data = new (nothrow) SoldierLocalData(item);
-                const int key = data->getId();
-                if (_soldiers.find(key) != _soldiers.end()) {
-                    assert(false);
-                } else {
-                    _soldiers.insert(make_pair(key, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("SoldierData.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) SoldierLocalData(item);
+        const int key = data->getId();
+        if (_soldiers.find(key) != _soldiers.end()) {
+            assert(false);
+        } else {
+            _soldiers.insert(make_pair(key, data));
         }
-    }
+    });
 }
 
 void DataManager::parseSoldierPieceData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                SoldierPieceData* data = new (nothrow) SoldierPieceData(item);
-                const int key = data->getId();
-                if (_soldierPieceDatas.find(key) != _soldierPieceDatas.end()) {
-                    assert(false);
-                } else {
-                    _soldierPieceDatas.insert(make_pair(key, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("SoldierPieceData.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) SoldierPieceData(item);
+        const int key = data->getId();
+        if (_soldierPieceDatas.find(key) != _soldierPieceDatas.end()) {
+            assert(false);
+        } else {
+            _soldierPieceDatas.insert(make_pair(key, data));
         }
-    }
+    });
 }
 
 void DataManager::parseSoldierUpgradeData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                SoldierUpgradeData* data = new (nothrow) SoldierUpgradeData(item);
-                string key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-                if (_soldierUpgradeDatas.find(key) != _soldierUpgradeDatas.end()) {
-                    assert(false);
-                } else {
-                    _soldierUpgradeDatas.insert(make_pair(key, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("SoldierUpgradeData.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) SoldierUpgradeData(item);
+        auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
+        if (_soldierUpgradeDatas.find(key) != _soldierUpgradeDatas.end()) {
+            assert(false);
+        } else {
+            _soldierUpgradeDatas.insert(make_pair(key, data));
         }
-    }
+    });
 }
 
 void DataManager::parseSoldierQualityData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                SoldierQualityData* data = new (nothrow) SoldierQualityData(item);
-                string key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-                if (_soldierQualityDatas.find(key) != _soldierQualityDatas.end()) {
-                    assert(false);
-                } else {
-                    _soldierQualityDatas.insert(make_pair(key, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("SoldierQualityData.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) SoldierQualityData(item);
+        auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
+        if (_soldierQualityDatas.find(key) != _soldierQualityDatas.end()) {
+            assert(false);
+        } else {
+            _soldierQualityDatas.insert(make_pair(key, data));
         }
-    }
+    });
 }
 
 void DataManager::parseSoldierTalentData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                SoldierTalentData* data = new (nothrow) SoldierTalentData(item);
-                string key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-                if (_soldierTalentDatas.find(key) != _soldierTalentDatas.end()) {
-                    assert(false);
-                } else {
-                    _soldierTalentDatas.insert(make_pair(key, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("SoldierTalentData.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) SoldierTalentData(item);
+        auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
+        if (_soldierTalentDatas.find(key) != _soldierTalentDatas.end()) {
+            assert(false);
+        } else {
+            _soldierTalentDatas.insert(make_pair(key, data));
         }
-    }
+    });
 }
 
 void DataManager::parseTowerData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                TowerLocalData* data = new (nothrow) TowerLocalData(item);
-                const int key = data->getId();
-                if (_towers.find(key) != _towers.end()) {
-                    assert(false);
-                } else {
-                    _towers.insert(make_pair(key, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("TowerData.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) TowerLocalData(item);
+        const int key = data->getId();
+        if (_towers.find(key) != _towers.end()) {
+            assert(false);
+        } else {
+            _towers.insert(make_pair(key, data));
         }
-    }
+    });
 }
 
 void DataManager::parseTowerUpgradeData()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath(".xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        tinyxml2::XMLDocument *xmlDoc = new (nothrow) tinyxml2::XMLDocument();
-        if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(fileName);
-            xmlDoc->Parse(content.c_str());
-            
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
-                 item;
-                 item = item->NextSiblingElement()) {
-                TowerUpgradeData* data = new (nothrow) TowerUpgradeData(item);
-                string key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-                if (_towerUpgradeDatas.find(key) != _towerUpgradeDatas.end()) {
-                    assert(false);
-                } else {
-                    _towerUpgradeDatas.insert(make_pair(key, data));
-                }
-            }
-            
-            CC_SAFE_DELETE(xmlDoc);
+    parseData("TowerUpgradeData.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) TowerUpgradeData(item);
+        auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
+        if (_towerUpgradeDatas.find(key) != _towerUpgradeDatas.end()) {
+            assert(false);
+        } else {
+            _towerUpgradeDatas.insert(make_pair(key, data));
         }
-    }
+    });
 }
 
 void DataManager::parseBinaryjsonTemplates()
 {
-    string fileName = LocalHelper::getLocalizedConfigFilePath("JsonTemplates.xml");
-    if (FileUtils::getInstance()->isFileExist(fileName)) {
-        _binaryJsonTool->initTemplates(LocalHelper::loadFileContentString(fileName), JSON_KEY);
+    auto content = getFileData("JsonTemplates.xml");
+    if (content.size() > 0) {
+        _binaryJsonTool->initTemplates(content, JSON_KEY);
     }
 }
 

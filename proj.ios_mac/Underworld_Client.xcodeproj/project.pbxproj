@@ -103,6 +103,11 @@
 		A103F45F1BE38112007F9A83 /* GameRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F45D1BE38112007F9A83 /* GameRender.cpp */; };
 		A10611FF1C3D20A40065070F /* SoldierPieceData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10611FD1C3D20A40065070F /* SoldierPieceData.cpp */; };
 		A10612021C3D22260065070F /* HeroPieceData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10612001C3D22260065070F /* HeroPieceData.cpp */; };
+		A108A7A81D24F41D00987658 /* CardLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A108A7A61D24F41D00987658 /* CardLocalData.cpp */; };
+		A108A7AB1D24F44300987658 /* CardUpgradeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A108A7A91D24F44300987658 /* CardUpgradeData.cpp */; };
+		A108A7AE1D24F47C00987658 /* TalentUpgradeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A108A7AC1D24F47C00987658 /* TalentUpgradeData.cpp */; };
+		A108A7B31D25253700987658 /* AchievementNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A108A7B11D25253700987658 /* AchievementNode.cpp */; };
+		A108A7B61D25254600987658 /* AchievementLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A108A7B41D25254600987658 /* AchievementLayer.cpp */; };
 		A1098E9C1C758C3500B2E044 /* BattleResourceNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1098E9A1C758C3500B2E044 /* BattleResourceNode.cpp */; };
 		A11469FE1C9FE9EC00E64125 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A11469F91C9FE9EC00E64125 /* libevent.a */; };
 		A11469FF1C9FE9EC00E64125 /* libevent_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A11469FA1C9FE9EC00E64125 /* libevent_core.a */; };
@@ -473,6 +478,16 @@
 		A10611FE1C3D20A40065070F /* SoldierPieceData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoldierPieceData.h; sourceTree = "<group>"; };
 		A10612001C3D22260065070F /* HeroPieceData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HeroPieceData.cpp; sourceTree = "<group>"; };
 		A10612011C3D22260065070F /* HeroPieceData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroPieceData.h; sourceTree = "<group>"; };
+		A108A7A61D24F41D00987658 /* CardLocalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardLocalData.cpp; sourceTree = "<group>"; };
+		A108A7A71D24F41D00987658 /* CardLocalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardLocalData.h; sourceTree = "<group>"; };
+		A108A7A91D24F44300987658 /* CardUpgradeData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardUpgradeData.cpp; sourceTree = "<group>"; };
+		A108A7AA1D24F44300987658 /* CardUpgradeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardUpgradeData.h; sourceTree = "<group>"; };
+		A108A7AC1D24F47C00987658 /* TalentUpgradeData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TalentUpgradeData.cpp; sourceTree = "<group>"; };
+		A108A7AD1D24F47C00987658 /* TalentUpgradeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TalentUpgradeData.h; sourceTree = "<group>"; };
+		A108A7B11D25253700987658 /* AchievementNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AchievementNode.cpp; sourceTree = "<group>"; };
+		A108A7B21D25253700987658 /* AchievementNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementNode.h; sourceTree = "<group>"; };
+		A108A7B41D25254600987658 /* AchievementLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AchievementLayer.cpp; sourceTree = "<group>"; };
+		A108A7B51D25254600987658 /* AchievementLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementLayer.h; sourceTree = "<group>"; };
 		A1098E9A1C758C3500B2E044 /* BattleResourceNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattleResourceNode.cpp; sourceTree = "<group>"; };
 		A1098E9B1C758C3500B2E044 /* BattleResourceNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BattleResourceNode.h; sourceTree = "<group>"; };
 		A11469D91C9FE9EC00E64125 /* evdns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = evdns.h; sourceTree = "<group>"; };
@@ -1317,6 +1332,19 @@
 			path = Unit;
 			sourceTree = "<group>";
 		};
+		A108A7A51D24F40500987658 /* Card */ = {
+			isa = PBXGroup;
+			children = (
+				A108A7A61D24F41D00987658 /* CardLocalData.cpp */,
+				A108A7A71D24F41D00987658 /* CardLocalData.h */,
+				A108A7A91D24F44300987658 /* CardUpgradeData.cpp */,
+				A108A7AA1D24F44300987658 /* CardUpgradeData.h */,
+				A108A7AC1D24F47C00987658 /* TalentUpgradeData.cpp */,
+				A108A7AD1D24F47C00987658 /* TalentUpgradeData.h */,
+			);
+			path = Card;
+			sourceTree = "<group>";
+		};
 		A11469D71C9FE9EC00E64125 /* Libevent */ = {
 			isa = PBXGroup;
 			children = (
@@ -1391,6 +1419,7 @@
 				A1D461581C3E251000E8E60B /* AnimationConfig */,
 				A1F58D5A1C3248EA00C8A2DD /* Artifact */,
 				A16BF27C1C313D6D00E91458 /* Attribute */,
+				A108A7A51D24F40500987658 /* Card */,
 				CB3EC8941C4E4CBC00447FE3 /* Chat */,
 				A19D6B091D1802170088AF23 /* Formation */,
 				CB3EC8A01C523D4E00447FE3 /* Friend */,
@@ -1665,6 +1694,10 @@
 		A18524C91C1AE3E800BE261D /* Quest */ = {
 			isa = PBXGroup;
 			children = (
+				A108A7B41D25254600987658 /* AchievementLayer.cpp */,
+				A108A7B51D25254600987658 /* AchievementLayer.h */,
+				A108A7B11D25253700987658 /* AchievementNode.cpp */,
+				A108A7B21D25253700987658 /* AchievementNode.h */,
 				A18524CA1C1AE3E800BE261D /* QuestLayer.cpp */,
 				A18524CB1C1AE3E800BE261D /* QuestLayer.h */,
 				A18524D11C1AE46400BE261D /* QuestNode.cpp */,
@@ -2262,6 +2295,7 @@
 				A1720EB81BCD2D2E00217E98 /* Api.mm in Sources */,
 				A1720E8F1BCCE19300217E98 /* md5.cpp in Sources */,
 				A1D45C4A1BEB3B1400D1E921 /* ResourceButton.cpp in Sources */,
+				A108A7A81D24F41D00987658 /* CardLocalData.cpp in Sources */,
 				A1A05B3C1C9668FB006FE03B /* GCDAsyncSocket.m in Sources */,
 				30FD55641C2CFDE80078EC3C /* Passive.cpp in Sources */,
 				3087FF081C9FD0CB004E31F6 /* Magic.cpp in Sources */,
@@ -2275,6 +2309,7 @@
 				CB3EC89F1C521C7F00447FE3 /* FriendCell.cpp in Sources */,
 				A16BF2821C313E1300E91458 /* AttributeLocalData.cpp in Sources */,
 				307534711BF33ECF0057DCED /* Logger.cpp in Sources */,
+				A108A7AE1D24F47C00987658 /* TalentUpgradeData.cpp in Sources */,
 				A16BF2A71C3156A100E91458 /* GearUpgradeData.cpp in Sources */,
 				A1F3D2281D1D044100EB5C17 /* CardInfoNode.cpp in Sources */,
 				A1720E971BCCE41A00217E98 /* ScrollBar.cpp in Sources */,
@@ -2286,12 +2321,14 @@
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				A1720EB91BCD2D2E00217E98 /* KeychainItemWrapper.m in Sources */,
 				A16BF2A11C314DA000E91458 /* GearSetLocalData.cpp in Sources */,
+				A108A7AB1D24F44300987658 /* CardUpgradeData.cpp in Sources */,
 				A1720E8B1BCCE19300217E98 /* aes_core.c in Sources */,
 				045117101BCFBA5F002AA721 /* Game.cpp in Sources */,
 				3028EBC31BFF0CBD00511C51 /* DynamicValue.cpp in Sources */,
 				CB3EC89A1C4E4DA600447FE3 /* ChatMark.cpp in Sources */,
 				CB3EC8971C4E4D1200447FE3 /* ChatData.cpp in Sources */,
 				045117081BCFBA53002AA721 /* Command.cpp in Sources */,
+				A108A7B61D25254600987658 /* AchievementLayer.cpp in Sources */,
 				3087FF0F1CA12A57004E31F6 /* TCPClient.mm in Sources */,
 				045117071BCFBA53002AA721 /* Bullet.cpp in Sources */,
 				A1DFAAD31D10FC2800817E69 /* BattleDeckUnitInfoNode.cpp in Sources */,
@@ -2361,6 +2398,7 @@
 				3031641A1CFD99AF00DBAB04 /* Heuristic.cpp in Sources */,
 				308B84691BE3856F00377802 /* AIBrain.cpp in Sources */,
 				A1720E7B1BCCE0F000217E98 /* NumberJump.cpp in Sources */,
+				A108A7B31D25253700987658 /* AchievementNode.cpp in Sources */,
 				A1F5BFA81C1FDFBE007C08CB /* ResourceNode.cpp in Sources */,
 				3087FF311CA2BF5A004E31F6 /* ClientTCPNetworkProxy.cpp in Sources */,
 				A1F3D2371D1D05CD00EB5C17 /* MessageBoxLayer.cpp in Sources */,

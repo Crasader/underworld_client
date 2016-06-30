@@ -20,6 +20,9 @@ namespace UnderWorld { namespace Core {
 }}
 
 class LevelLocalData;
+class CardLocalData;
+class CardUpgradeData;
+class TalentUpgradeData;
 class QuestLocalData;
 class AchievementLocalData;
 class ObjectLocalData;
@@ -63,6 +66,9 @@ public:
     
     const LevelLocalData* getLevelData(int levelId) const;
     const std::set<std::string>& getCardDecks() const;
+    const CardLocalData* getCardData(int idx) const;
+    const CardUpgradeData* getCardUpgradeData(int idx, int level) const;
+    const TalentUpgradeData* getTalentUpgradeData(int idx, int level) const;
     const QuestLocalData* getQuestData(QuestType type, int questId) const;
     const AchievementLocalData* getAchievementData(int achievementId) const;
     const ObjectLocalData* getObjectData(int objectId) const;
@@ -118,8 +124,13 @@ protected:
     M_DISALLOW_COPY_AND_ASSIGN(DataManager);
     
 protected:
+    string getFileData(const std::string& file) const;
+    void parseData(const std::string& file, const std::function<void(tinyxml2::XMLElement*)>& parser) const;
     void parseLevelData();
     void parseCardDecks();
+    void parseCardData();
+    void parseCardUpgradeData();
+    void parseTalentUpgradeData();
     void parseQuestData(QuestType type);
     void parseAchievementData();
     void parseObjectData();
@@ -153,6 +164,9 @@ protected:
 private:
     std::unordered_map<int, LevelLocalData*> _levels;
     std::set<std::string> _cardDecks;
+    std::unordered_map<int, CardLocalData*> _cards;
+    std::unordered_map<std::string, CardUpgradeData*> _cardUpgradeDatas;
+    std::unordered_map<std::string, TalentUpgradeData*> _talentUpgradeDatas;
     std::map<QuestType, std::unordered_map<int, QuestLocalData*>> _quests;
     std::unordered_map<int, AchievementLocalData*> _achievements;
     std::unordered_map<int, ObjectLocalData*> _objects;

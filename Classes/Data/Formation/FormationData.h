@@ -37,6 +37,8 @@ public:
     void exchangeSpell(size_t idx1, size_t idx2);
     
     void serialize(std::string& output);
+    
+protected:
     void parseHeroes(const std::string& input);
     void parseSpells(const std::string& input);
     

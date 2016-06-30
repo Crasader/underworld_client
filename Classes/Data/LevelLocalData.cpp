@@ -9,56 +9,101 @@
 #include "LevelLocalData.h"
 #include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
-#include "ConditionData.h"
-#include "RewardData.h"
 
 using namespace std;
 
 LevelLocalData::LevelLocalData(tinyxml2::XMLElement *xmlElement)
-:AbstractLocalData(xmlElement)
+:_level(0)
+,_exp(0)
+,_hp(0)
+,_defence(0)
 {
     if (xmlElement) {
+        _level = atoi(xmlElement->Attribute("level"));
+        _exp = atoi(xmlElement->Attribute("experience"));
+        
         {
-            const char *data = xmlElement->Attribute("cond");
+            const char *data = xmlElement->Attribute("hp");
+            if (data) {
+                _hp = atoi(data);
+            }
+        }
+        
+        {
+            const char *data = xmlElement->Attribute("defence");
+            if (data) {
+                _defence = atoi(data);
+            }
+        }
+        
+        {
+            const char *data = xmlElement->Attribute("stage");
             if (data) {
                 vector<string> result;
                 Utils::split(result, data, ",", "");
                 for (int i = 0; i < result.size(); ++i) {
-                    ConditionData* cd = new (nothrow) ConditionData(result.at(i));
-                    _conditions.push_back(cd);
+                    _stages.push_back(atoi(result.at(i).c_str()));
                 }
             }
         }
+        
         {
-            const char *data = xmlElement->Attribute("reward");
+            const char *data = xmlElement->Attribute("icon");
             if (data) {
                 vector<string> result;
                 Utils::split(result, data, ",", "");
                 for (int i = 0; i < result.size(); ++i) {
-                    RewardData* reward = new (nothrow) RewardData(result.at(i));
-                    _rewards.insert(make_pair(reward->getId(), reward));
+                    _icons.push_back(atoi(result.at(i).c_str()));
+                }
+            }
+        }
+        
+        {
+            const char *data = xmlElement->Attribute("quest");
+            if (data) {
+                vector<string> result;
+                Utils::split(result, data, ",", "");
+                for (int i = 0; i < result.size(); ++i) {
+                    _quests.push_back(atoi(result.at(i).c_str()));
                 }
             }
         }
     }
 }
 
-LevelLocalData::~LevelLocalData()
+LevelLocalData::~LevelLocalData() {}
+
+int LevelLocalData::getLevel() const
 {
-    Utils::clearVector(_conditions);
-    Utils::clearMap(_rewards);
+    return _level;
 }
 
-const vector<ConditionData*>& LevelLocalData::getConditions() const
+int LevelLocalData::getExp() const
 {
-    return _conditions;
+    return _exp;
 }
 
-const RewardData* LevelLocalData::getReward(int type) const
+int LevelLocalData::getHp() const
 {
-    if (_rewards.find(type) != _rewards.end()) {
-        return _rewards.at(type);
-    }
-    
-    return nullptr;
+    return _hp;
+}
+
+int LevelLocalData::getDefence() const
+{
+    return _defence;
+}
+
+const vector<int>& LevelLocalData::unlockedStages() const
+{
+    return _stages;
+}
+
+const vector<int>& LevelLocalData::unlockedIcons() const
+{
+    return _icons;
+}
+
+const vector<int>& LevelLocalData::unlockedQuests() const
+{
+    return _quests;
 }

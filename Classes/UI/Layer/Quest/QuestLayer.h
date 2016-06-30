@@ -11,7 +11,6 @@
 
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
-#include "ui/CocosGUI.h"
 #include "QuestNode.h"
 
 USING_NS_CC;
@@ -30,41 +29,53 @@ public:
 class QuestLayer : public LayerColor, public TableViewDataSource, public QuestNodeObserver
 {
 public:
-    static QuestLayer* create(int tabIndex);
+    static QuestLayer* create(QuestType type);
     virtual ~QuestLayer();
     void registerObserver(QuestLayerObserver *observer);
     
 protected:
     QuestLayer();
-    bool init(int levelId);
-    
-    // LayerColor
-    virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
-    virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
+    bool init(QuestType type);
     
     // TableViewDataSource
     virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx) override;
     virtual TableViewCell* tableCellAtIndex(TableView *table, ssize_t idx) override;
     virtual ssize_t numberOfCellsInTableView(TableView *table) override;
     
-    void addTabButton(Node* parent, const std::string& title, int tabIndex, const ui::Button::ccWidgetClickCallback& callback);
-    void addTableView(int index);
-    void switchTable(int index);
+    // table
+    void createTableView(QuestType type);
+    void refreshTable(TableView* table, bool reload);
+    ssize_t getCellsCount(TableView *table) const;
+    Size getCellSize() const;
+    Rect getBoundingBox(Node* node) const;
     
-private:
-    struct TabInfo {
-        TableView* tableView;
-        TabButton* tabButton;
-    };
+    // buttons
+    void createTabButtons(const Point& position);
+    
+    // functions
+    void reloadAllCandidates();
+    void reloadCandidates(QuestType type);
+    void insertCandidate(QuestType type, const std::string& name);
+    void removeCandidate(QuestType type, const std::string& name);
+    QuestType getTableType(TableView* table) const;
+    void setTableType(QuestType type);
+    std::string getTableName(QuestType type) const;
     
 private:
     QuestLayerObserver *_observer;
-    Size _tableViewMaxSize;
-    Size _cellSize;
-    ssize_t _cellsCount;
-    std::unordered_map<int, TabInfo> _tabInfos;
-    ScrollBar *_scrollBar;
-    int _tabIndex;
+    
+    // table
+    std::map<QuestType, TableView*> _tables;
+    QuestType _thisTableType;
+    TableView* _thisTable;
+    Size _nodeSize;
+    Size _tableMaxSize;
+    Point _tableBasePosition;
+    
+    std::map<QuestType, TabButton*> _tabButtons;
+    
+    // data
+    std::map<QuestType, std::vector<std::string>> _candidates;
 };
 
 #endif /* QuestLayer_h */

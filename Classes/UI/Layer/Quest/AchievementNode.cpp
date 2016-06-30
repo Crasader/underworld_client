@@ -1,27 +1,26 @@
 //
-//  QuestNode.cpp
+//  AchievementNode.cpp
 //  Underworld_Client
 //
-//  Created by Andy on 15/12/11.
-//  Copyright (c) 2015 Mofish Studio. All rights reserved.
+//  Created by Andy on 16/6/30.
+//  Copyright (c) 2016 Mofish Studio. All rights reserved.
 //
 
-#include "QuestNode.h"
-#include "ui/CocosGUI.h"
+#include "AchievementNode.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "SoundManager.h"
-#include "QuestLocalData.h"
-#include "QuestData.h"
+#include "AchievementLocalData.h"
+#include "AchievementData.h"
 #include "ContentData.h"
 
 using namespace std;
 using namespace ui;
 
-QuestNode* QuestNode::create(const QuestData* data, ssize_t idx)
+AchievementNode* AchievementNode::create(const AchievementData* data, ssize_t idx)
 {
-    QuestNode *ret = new (nothrow) QuestNode();
+    AchievementNode *ret = new (nothrow) AchievementNode();
     if (ret && ret->init(data, idx))
     {
         ret->autorelease();
@@ -32,7 +31,7 @@ QuestNode* QuestNode::create(const QuestData* data, ssize_t idx)
     return nullptr;
 }
 
-QuestNode::QuestNode()
+AchievementNode::AchievementNode()
 :_observer(nullptr)
 ,_data(nullptr)
 ,_idx(CC_INVALID_INDEX)
@@ -42,17 +41,17 @@ QuestNode::QuestNode()
 ,_button(nullptr)
 ,_buttonHintLabel(nullptr) {}
 
-QuestNode::~QuestNode()
+AchievementNode::~AchievementNode()
 {
     removeAllChildren();
 }
 
-void QuestNode::registerObserver(QuestNodeObserver *observer)
+void AchievementNode::registerObserver(AchievementNodeObserver *observer)
 {
     _observer = observer;
 }
 
-bool QuestNode::init(const QuestData* data, ssize_t idx)
+bool AchievementNode::init(const AchievementData* data, ssize_t idx)
 {
     if (Node::init()) {
         
@@ -63,18 +62,18 @@ bool QuestNode::init(const QuestData* data, ssize_t idx)
     return false;
 }
 
-ssize_t QuestNode::getIdx() const
+ssize_t AchievementNode::getIdx() const
 {
     return _idx;
 }
 
-void QuestNode::update(const QuestData* data, ssize_t idx)
+void AchievementNode::update(const AchievementData* data, ssize_t idx)
 {
     if (data) {
         _data = data;
         _idx = idx;
         
-        const QuestLocalData* localData = _data->getLocalData();
+        const AchievementLocalData* localData = _data->getLocalData();
         if (_nameLabel) {
             _nameLabel->setString(localData ? localData->getName() : "");
         }
@@ -87,10 +86,10 @@ void QuestNode::update(const QuestData* data, ssize_t idx)
     }
 }
 
-void QuestNode::updateProgress()
+void AchievementNode::updateProgress()
 {
     if (_data) {
-        const QuestLocalData* localData = _data->getLocalData();
+        const AchievementLocalData* localData = _data->getLocalData();
         const vector<ContentData*>& contents = localData->getContents();
         if (contents.size() > 0) {
             const int progress = _data->getProgress();
@@ -115,11 +114,11 @@ void QuestNode::updateProgress()
                 string file;
                 function<void()> callback;
                 if (progress < total) {
-                    hint = LocalHelper::getString("ui_questNode_buttonHint_unfinished");
+                    hint = LocalHelper::getString("");
                     file = "";
                     callback = nullptr;
                 } else {
-                    hint = LocalHelper::getString("ui_questNode_buttonHint_finished");
+                    hint = LocalHelper::getString("");
                     file = "";
                     callback = nullptr;
                 }
@@ -133,7 +132,6 @@ void QuestNode::updateProgress()
                     }
                 });
             }
-            
         } else if (_progressLabel) {
             _progressLabel->setString("");
         }
