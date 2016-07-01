@@ -63,7 +63,11 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
 {
     _unitName = unit->getUnitBase().getRenderKey();
     _configData = DataManager::getInstance()->getURConfigData(_unitName);
+#if USING_PVR
+    _needToFlip = !rightSide;
+#else
     _needToFlip = (rightSide == _configData->isFaceRight());
+#endif
     UnitClass uc(thisUnitClass());
     _isBuilding = (kUnitClass_Core == uc || kUnitClass_Building == uc);
     
@@ -293,15 +297,43 @@ void UnitNode::playSound(const string& file) const
 int UnitNode::getResourceId(Unit::Direction direction) const
 {
     switch (direction) {
+#if USING_PVR
+        case Unit::kDirection_Up:
+            return 0;
+        case Unit::kDirection_leftUp2:
+        case Unit::kDirection_rightUp2:
+            return 1;
+        case Unit::kDirection_leftUp1:
+        case Unit::kDirection_rightUp1:
+            return 2;
         case Unit::kDirection_right:
         case Unit::kDirection_left:
             return 3;
-        case Unit::kDirection_rightUp:
-        case Unit::kDirection_leftUp:
-            return 2;
-        case Unit::kDirectoin_rightDown:
-        case Unit::kDirection_leftDown:
+        case Unit::kDirection_leftDown1:
+        case Unit::kDirection_rightDown1:
             return 4;
+        case Unit::kDirection_leftDown2:
+        case Unit::kDirection_rightDown2:
+            return 5;
+        case Unit::kDirection_Down:
+            return 6;
+#else
+        case Unit::kDirection_Up:
+        case Unit::kDirection_rightUp1:
+        case Unit::kDirection_leftUp1:
+        case Unit::kDirection_rightUp2:
+        case Unit::kDirection_leftUp2:
+            return 2;
+        case Unit::kDirection_right:
+        case Unit::kDirection_left:
+            return 3;
+        case Unit::kDirection_rightDown1:
+        case Unit::kDirection_leftDown1:
+        case Unit::kDirection_rightDown2:
+        case Unit::kDirection_leftDown2:
+        case Unit::kDirection_Down:
+            return 4;
+#endif
             
         default:
             assert(false);
@@ -363,18 +395,26 @@ bool UnitNode::needToFlip(Unit::Direction direction) const
 {
     bool flip(false);
     if (_unit) {
-        const bool isFaceRight = _configData->isFaceRight();
+#if USING_PVR
+        const bool isFaceRight(false);
+#else
+        const bool isFaceRight(_configData->isFaceRight());
+#endif
         switch (direction) {
             case Unit::kDirection_right:
-            case Unit::kDirection_rightUp:
-            case Unit::kDirectoin_rightDown:
+            case Unit::kDirection_rightUp1:
+            case Unit::kDirection_rightUp2:
+            case Unit::kDirection_rightDown1:
+            case Unit::kDirection_rightDown2:
             {
                 flip = !isFaceRight;
             }
                 break;
             case Unit::kDirection_left:
-            case Unit::kDirection_leftUp:
-            case Unit::kDirection_leftDown:
+            case Unit::kDirection_leftUp1:
+            case Unit::kDirection_leftUp2:
+            case Unit::kDirection_leftDown1:
+            case Unit::kDirection_leftDown2:
             {
                 flip = isFaceRight;
             }
@@ -440,7 +480,7 @@ void UnitNode::getAnimationFiles(vector<string>& output,
     }
     
     if (prefix.size() > 0) {
-        data.assign(resourcePrefix + "/" + prefix + StringUtils::format("/body/%d", static_cast<int>(direction)));
+        data.assign(resourcePrefix + "/" + prefix + StringUtils::format("/body/%d", getResourceId(direction)));
     }
 #else
     const string& prefix = _configData->getPrefix();
@@ -982,7 +1022,11 @@ void UnitNode::adjustEffect(Node* effect,
     if (effect) {
         bool flip(false);
         if (SpellConfigData::kNone != direction) {
+#if USING_PVR
+            const bool isFaceRight(_needToFlip);
+#else
             const bool isFaceRight = _needToFlip ^ _configData->isFaceRight();
+#endif
             flip = (isFaceRight ^ (SpellConfigData::kRight == direction));
         }
         

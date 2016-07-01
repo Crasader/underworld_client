@@ -48,6 +48,27 @@
 USING_NS_CC;
 using namespace std;
 
+template<typename _Key, typename _Value>
+static void setMapValue(unordered_map<_Key, _Value>& m, const _Key& key, const _Value& value)
+{
+    if (m.find(key) != end(m)) {
+        assert(false);
+    } else {
+        m.insert(make_pair(key, value));
+    }
+}
+
+template<typename _Key, typename _Value>
+static const _Value& getMapValue(const unordered_map<_Key, _Value>& m, const _Key& key)
+{
+    if (m.find(key) != end(m)) {
+        return m.at(key);
+    }
+    
+    static _Value ret(nullptr);
+    return ret;
+}
+
 static DataManager *s_pSharedInstance = nullptr;
 
 DataManager* DataManager::getInstance()
@@ -88,7 +109,7 @@ DataManager::~DataManager()
     Utils::clearMap(_cardUpgradeDatas);
     Utils::clearMap(_talentUpgradeDatas);
     
-    for (auto iter = _quests.begin(); iter != _quests.end(); ++iter) {
+    for (auto iter = _quests.begin(); iter != end(_quests); ++iter) {
         Utils::clearMap(iter->second);
     }
     _quests.clear();
@@ -104,7 +125,7 @@ DataManager::~DataManager()
     Utils::clearMap(_urConfigData);
     Utils::clearMap(_brConfigData);
     
-    for (auto iter = _mapParticleConfigData.begin(); iter != _mapParticleConfigData.end(); ++iter) {
+    for (auto iter = _mapParticleConfigData.begin(); iter != end(_mapParticleConfigData); ++iter) {
         Utils::clearVector(iter->second);
     }
     _mapParticleConfigData.clear();
@@ -137,8 +158,7 @@ void DataManager::init()
     parseCardData();
     parseCardUpgradeData();
     parseTalentUpgradeData();
-    parseQuestData(QuestType::Main);
-    parseQuestData(QuestType::Daily);
+    parseQuestData();
     parseAchievementData();
     parseObjectData();
     parseGearData();
@@ -191,11 +211,7 @@ string DataManager::getHMMTechTreeData() const
 #pragma mark - getters
 const LevelLocalData* DataManager::getLevelData(int levelId) const
 {
-    if (_levels.find(levelId) != _levels.end()) {
-        return _levels.at(levelId);
-    }
-    
-    return nullptr;
+    return getMapValue(_levels, levelId);
 }
 
 const set<string>& DataManager::getCardDecks() const
@@ -205,40 +221,25 @@ const set<string>& DataManager::getCardDecks() const
 
 const CardLocalData* DataManager::getCardData(int idx) const
 {
-    if (_cards.find(idx) != end(_cards)) {
-        return _cards.at(idx);
-    }
-    
-    return nullptr;
+    return getMapValue(_cards, idx);
 }
 
 const CardUpgradeData* DataManager::getCardUpgradeData(int idx, int level) const
 {
     auto key = StringUtils::format("%d_%d", idx, level);
-    if (_cardUpgradeDatas.find(key) != end(_cardUpgradeDatas)) {
-        return _cardUpgradeDatas.at(key);
-    }
-    
-    return nullptr;
+    return getMapValue(_cardUpgradeDatas, key);
 }
 
 const TalentUpgradeData* DataManager::getTalentUpgradeData(int idx, int level) const
 {
     auto key = StringUtils::format("%d_%d", idx, level);
-    if (_talentUpgradeDatas.find(key) != end(_talentUpgradeDatas)) {
-        return _talentUpgradeDatas.at(key);
-    }
-    
-    return nullptr;
+    return getMapValue(_talentUpgradeDatas, key);
 }
 
 const QuestLocalData* DataManager::getQuestData(QuestType type, int questId) const
 {
-    if (_quests.find(type) != _quests.end()) {
-        const auto& quests = _quests.at(type);
-        if (quests.find(questId) != quests.end()) {
-            return quests.at(questId);
-        }
+    if (_quests.find(type) != end(_quests)) {
+        return getMapValue(_quests.at(type), questId);
     }
     
     return nullptr;
@@ -246,58 +247,34 @@ const QuestLocalData* DataManager::getQuestData(QuestType type, int questId) con
 
 const AchievementLocalData* DataManager::getAchievementData(int achievementId) const
 {
-    if (_achievements.find(achievementId) != _achievements.end()) {
-        return _achievements.at(achievementId);
-    }
-    
-    return nullptr;
+    return getMapValue(_achievements, achievementId);
 }
 
 const ObjectLocalData* DataManager::getObjectData(int objectId) const
 {
-    if (_objects.find(objectId) != _objects.end()) {
-        return _objects.at(objectId);
-    }
-    
-    return nullptr;
+    return getMapValue(_objects, objectId);
 }
 
 const GearLocalData* DataManager::getGearData(int gearId) const
 {
-    if (_gears.find(gearId) != _gears.end()) {
-        return _gears.at(gearId);
-    }
-    
-    return nullptr;
+    return getMapValue(_gears, gearId);
 }
 
 const GearUpgradeData* DataManager::getGearUpgradeData(int id, int level) const
 {
     auto key = StringUtils::format("%d_%d", id, level);
-    if (_gearUpgradeDatas.find(key) != _gearUpgradeDatas.end()) {
-        return _gearUpgradeDatas.at(key);
-    }
-    
-    return nullptr;
+    return getMapValue(_gearUpgradeDatas, key);
 }
 
 const GearAttributeData* DataManager::getGearAttributeData(int id, int level, int attributeId) const
 {
     auto key = StringUtils::format("%d_%d_%d", id, level, attributeId);
-    if (_gearAttributeDatas.find(key) != _gearAttributeDatas.end()) {
-        return _gearAttributeDatas.at(key);
-    }
-    
-    return nullptr;
+    return getMapValue(_gearAttributeDatas, key);
 }
 
 const GearSetLocalData* DataManager::getGearSetData(int id) const
 {
-    if (_gearSets.find(id) != _gearSets.end()) {
-        return _gearSets.at(id);
-    }
-    
-    return nullptr;
+    return getMapValue(_gearSets, id);
 }
 
 void DataManager::getAnimationParameters(const string& name, UnderWorld::Core::SkillClass skillClass, UnderWorld::Core::Unit::Direction direction, float& scale, float& speed) const
@@ -305,8 +282,8 @@ void DataManager::getAnimationParameters(const string& name, UnderWorld::Core::S
     scale = speed = 1.0f;
     
     auto key = name + StringUtils::format("_%d", skillClass);
-    if (_animationParameters.find(key) != _animationParameters.end()) {
-        UAConfigData* data = _animationParameters.at(key);
+    if (_animationParameters.find(key) != end(_animationParameters)) {
+        auto data = _animationParameters.at(key);
         if (data) {
             data->getAnimationParameters(direction, scale, speed);
         }
@@ -315,34 +292,22 @@ void DataManager::getAnimationParameters(const string& name, UnderWorld::Core::S
 
 const CardConfigData* DataManager::getCardConfigData(const string& name) const
 {
-    if (_cardConfigData.find(name) != _cardConfigData.end()) {
-        return _cardConfigData.at(name);
-    }
-    
-    return nullptr;
+    return getMapValue(_cardConfigData, name);
 }
 
 const URConfigData* DataManager::getURConfigData(const string& name) const
 {
-    if (_urConfigData.find(name) != _urConfigData.end()) {
-        return _urConfigData.at(name);
-    }
-    
-    return nullptr;
+    return getMapValue(_urConfigData, name);
 }
 
 const BRConfigData* DataManager::getBRConfigData(const string& name) const
 {
-    if (_brConfigData.find(name) != _brConfigData.end()) {
-        return _brConfigData.at(name);
-    }
-    
-    return nullptr;
+    return getMapValue(_brConfigData, name);
 }
 
 const vector<MapParticleConfigData*>& DataManager::getMapParticleConfigData(int mapId) const
 {
-    if (_mapParticleConfigData.find(mapId) != _mapParticleConfigData.end()) {
+    if (_mapParticleConfigData.find(mapId) != end(_mapParticleConfigData)) {
         return _mapParticleConfigData.at(mapId);
     }
     
@@ -352,147 +317,87 @@ const vector<MapParticleConfigData*>& DataManager::getMapParticleConfigData(int 
 
 const SpellConfigData* DataManager::getSpellConfigData(const string& name) const
 {
-    if (_spellConfigData.find(name) != _spellConfigData.end()) {
-        return _spellConfigData.at(name);
-    }
-    
-    return nullptr;
+    return getMapValue(_spellConfigData, name);
 }
 
 const ArtifactLocalData* DataManager::getArtifactData(int id) const
 {
-    if (_artifacts.find(id) != _artifacts.end()) {
-        return _artifacts.at(id);
-    }
-    
-    return nullptr;
+    return getMapValue(_artifacts, id);
 }
 
 const ArtifactUpgradeData* DataManager::getArtifactUpgradeData(int id, int level) const
 {
     auto key = StringUtils::format("%d_%d", id, level);
-    if (_artifactUpgradeData.find(key) != _artifactUpgradeData.end()) {
-        return _artifactUpgradeData.at(key);
-    }
-    
-    return nullptr;
+    return getMapValue(_artifactUpgradeData, key);
 }
 
 const AttributeLocalData* DataManager::getAttributeData(int id) const
 {
-    if (_attributes.find(id) != _attributes.end()) {
-        return _attributes.at(id);
-    }
-    
-    return nullptr;
+    return getMapValue(_attributes, id);
 }
 
 const HeroLocalData* DataManager::getHeroData(int id) const
 {
-    if (_heroes.find(id) != _heroes.end()) {
-        return _heroes.at(id);
-    }
-    
-    return nullptr;
+    return getMapValue(_heroes, id);
 }
 
 const HeroPieceData* DataManager::getHeroPieceData(int id) const
 {
-    if (_heroPieceDatas.find(id) != _heroPieceDatas.end()) {
-        return _heroPieceDatas.at(id);
-    }
-    
-    return nullptr;
+    return getMapValue(_heroPieceDatas, id);
 }
 
 const HeroUpgradeData* DataManager::getHeroUpgradeData(int id, int level) const
 {
     auto key = StringUtils::format("%d_%d", id, level);
-    if (_heroUpgradeDatas.find(key) != _heroUpgradeDatas.end()) {
-        return _heroUpgradeDatas.at(key);
-    }
-    
-    return nullptr;
+    return getMapValue(_heroUpgradeDatas, key);
 }
 
 const SkillLocalData* DataManager::getSkillData(int id) const
 {
-    if (_skills.find(id) != _skills.end()) {
-        return _skills.at(id);
-    }
-    
-    return nullptr;
+    return getMapValue(_skills, id);
 }
 
 const SoldierLocalData* DataManager::getSoldierData(int id) const
 {
-    if (_soldiers.find(id) != _soldiers.end()) {
-        return _soldiers.at(id);
-    }
-    
-    return nullptr;
+    return getMapValue(_soldiers, id);
 }
 
 const SoldierPieceData* DataManager::getSoldierPieceData(int id) const
 {
-    if (_soldierPieceDatas.find(id) != _soldierPieceDatas.end()) {
-        return _soldierPieceDatas.at(id);
-    }
-    
-    return nullptr;
+    return getMapValue(_soldierPieceDatas, id);
 }
 
 const SoldierUpgradeData* DataManager::getSoldierUpgradeData(int id, int level) const
 {
     auto key = StringUtils::format("%d_%d", id, level);
-    if (_soldierUpgradeDatas.find(key) != _soldierUpgradeDatas.end()) {
-        return _soldierUpgradeDatas.at(key);
-    }
-    
-    return nullptr;
+    return getMapValue(_soldierUpgradeDatas, key);
 }
 
 const SoldierQualityData* DataManager::getSoldierQualityData(int id, int level) const
 {
     auto key = StringUtils::format("%d_%d", id, level);
-    if (_soldierQualityDatas.find(key) != _soldierQualityDatas.end()) {
-        return _soldierQualityDatas.at(key);
-    }
-    
-    return nullptr;
+    return getMapValue(_soldierQualityDatas, key);
 }
 
 const SoldierTalentData* DataManager::getSoldierTalentData(int id, int level) const
 {
     auto key = StringUtils::format("%d_%d", id, level);
-    if (_soldierTalentDatas.find(key) != _soldierTalentDatas.end()) {
-        return _soldierTalentDatas.at(key);
-    }
-    
-    return nullptr;
+    return getMapValue(_soldierTalentDatas, key);
 }
 
 const TowerLocalData* DataManager::getTowerData(int id) const
 {
-    if (_towers.find(id) != _towers.end()) {
-        return _towers.at(id);
-    }
-    
-    return nullptr;
+    return getMapValue(_towers, id);
 }
 
 const TowerUpgradeData* DataManager::getTowerUpgradeData(int id, int level) const
 {
     auto key = StringUtils::format("%d_%d", id, level);
-    if (_towerUpgradeDatas.find(key) != _towerUpgradeDatas.end()) {
-        return _towerUpgradeDatas.at(key);
-    }
-    
-    return nullptr;
+    return getMapValue(_towerUpgradeDatas, key);
 }
 
 #pragma mark - parsers
-string DataManager::getFileData(const std::string& file) const
+string DataManager::getFileData(const string& file) const
 {
     auto fileName = LocalHelper::getLocalizedConfigFilePath(file);
     if (FileUtils::getInstance()->isFileExist(fileName)) {
@@ -522,12 +427,7 @@ void DataManager::parseLevelData()
 {
     parseData("LevelData.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) LevelLocalData(item);
-        const int levelId = data->getLevel();
-        if (_levels.find(levelId) != _levels.end()) {
-            assert(false);
-        } else {
-            _levels.insert(make_pair(levelId, data));
-        }
+        setMapValue(_levels, data->getLevel(), data);
     });
 }
 
@@ -542,12 +442,7 @@ void DataManager::parseCardData()
 {
     parseData("CardData.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) CardLocalData(item);
-        const int idx = data->getId();
-        if (_cards.find(idx) != _cards.end()) {
-            assert(false);
-        } else {
-            _cards.insert(make_pair(idx, data));
-        }
+        setMapValue(_cards, data->getId(), data);
     });
 }
 
@@ -556,11 +451,7 @@ void DataManager::parseCardUpgradeData()
     parseData("CardUpgradeData.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) CardUpgradeData(item);
         auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-        if (_cardUpgradeDatas.find(key) != end(_cardUpgradeDatas)) {
-            assert(false);
-        } else {
-            _cardUpgradeDatas.insert(make_pair(key, data));
-        }
+        setMapValue(_cardUpgradeDatas, key, data);
     });
 }
 
@@ -569,53 +460,41 @@ void DataManager::parseTalentUpgradeData()
     parseData("TalentUpgradeData.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) TalentUpgradeData(item);
         auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-        if (_talentUpgradeDatas.find(key) != end(_talentUpgradeDatas)) {
-            assert(false);
-        } else {
-            _talentUpgradeDatas.insert(make_pair(key, data));
-        }
+        setMapValue(_talentUpgradeDatas, key, data);
     });
 }
 
-void DataManager::parseQuestData(QuestType type)
+void DataManager::parseQuestData()
 {
-    string fileName;
+    map<QuestType, string> quests = {
+        {QuestType::Main, "MainQuestProperty.xml"},
+        {QuestType::Branch, "BranchQuestProperty.xml"},
+        {QuestType::Daily, "DailyQuestProperty.xml"},
+        {QuestType::TimeLimited, "TimeLimitedQuestProperty.xml"},
+    };
     
-    if (QuestType::Main == type) {
-        fileName = "MainQuestProperty.xml";
-    } else if (QuestType::Daily == type) {
-        fileName = "DailyQuestProperty.xml";
-    }
-    
-    // clear first
-    if (_quests.find(type) != _quests.end()) {
-        Utils::clearMap(_quests.at(type));
-    } else {
-        _quests.insert(make_pair(type, unordered_map<int, QuestLocalData*>()));
-    }
-    
-    parseData(fileName, [this, type](tinyxml2::XMLElement* item) {
-        auto& quests = _quests.at(type);
-        auto data = new (nothrow) QuestLocalData(item);
-        const int questId = data->getId();
-        if (quests.find(questId) != quests.end()) {
-            assert(false);
+    for (auto iter = begin(quests); iter != end(quests); ++iter) {
+        const auto& type = iter->first;
+        
+        // clear first
+        if (_quests.find(type) != end(_quests)) {
+            Utils::clearMap(_quests.at(type));
         } else {
-            quests.insert(make_pair(questId, data));
+            _quests.insert(make_pair(type, unordered_map<int, QuestLocalData*>()));
         }
-    });
+        
+        parseData(iter->second, [this, type](tinyxml2::XMLElement* item) {
+            auto data = new (nothrow) QuestLocalData(item);
+            setMapValue(_quests.at(type), data->getId(), data);
+        });
+    }
 }
 
 void DataManager::parseAchievementData()
 {
     parseData("EquipProperty.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) AchievementLocalData(item);
-        const int id = data->getId();
-        if (_achievements.find(id) != _achievements.end()) {
-            assert(false);
-        } else {
-            _achievements.insert(make_pair(id, data));
-        }
+        setMapValue(_achievements, data->getId(), data);
     });
 }
 
@@ -623,12 +502,7 @@ void DataManager::parseObjectData()
 {
     parseData("ObjectProperty.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) ObjectLocalData(item);
-        const int id = data->getId();
-        if (_objects.find(id) != _objects.end()) {
-            assert(false);
-        } else {
-            _objects.insert(make_pair(id, data));
-        }
+        setMapValue(_objects, data->getId(), data);
     });
 }
 
@@ -636,12 +510,7 @@ void DataManager::parseGearData()
 {
     parseData("EquipProperty.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) GearLocalData(item);
-        const int gearId = data->getId();
-        if (_gears.find(gearId) != _gears.end()) {
-            assert(false);
-        } else {
-            _gears.insert(make_pair(gearId, data));
-        }
+        setMapValue(_gears, data->getId(), data);
     });
 }
 
@@ -650,11 +519,7 @@ void DataManager::parseGearUpgradeData()
     parseData("GearUpgradeData.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) GearUpgradeData(item);
         auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-        if (_gearUpgradeDatas.find(key) != _gearUpgradeDatas.end()) {
-            assert(false);
-        } else {
-            _gearUpgradeDatas.insert(make_pair(key, data));
-        }
+        setMapValue(_gearUpgradeDatas, key, data);
     });
 }
 
@@ -663,11 +528,7 @@ void DataManager::parseGearAttributeData()
     parseData("GearAttributeData.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) GearAttributeData(item);
         auto key = StringUtils::format("%d_%d_%d", data->getId(), data->getLevel(), data->getAttributeId());
-        if (_gearAttributeDatas.find(key) != _gearAttributeDatas.end()) {
-            assert(false);
-        } else {
-            _gearAttributeDatas.insert(make_pair(key, data));
-        }
+        setMapValue(_gearAttributeDatas, key, data);
     });
 }
 
@@ -675,12 +536,7 @@ void DataManager::parseGearSetData()
 {
     parseData("GearSetData.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) GearSetLocalData(item);
-        const int key = data->getId();
-        if (_gearSets.find(key) != _gearSets.end()) {
-            assert(false);
-        } else {
-            _gearSets.insert(make_pair(key, data));
-        }
+        setMapValue(_gearSets, data->getId(), data);
     });
 }
 
@@ -692,11 +548,7 @@ void DataManager::parseAnimationConfigData()
         if (name && skill) {
             auto data = new (nothrow) UAConfigData(item);
             auto key = StringUtils::format("%s_%s", name, skill);
-            if (_animationParameters.find(key) != _animationParameters.end()) {
-                assert(false);
-            } else {
-                _animationParameters.insert(make_pair(key, data));
-            }
+            setMapValue(_animationParameters, key, data);
         }
     });
 }
@@ -705,12 +557,7 @@ void DataManager::parseCardConfigData()
 {
     parseData("CardConfig.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) CardConfigData(item);
-        const auto& key = data->getName();
-        if (_cardConfigData.find(key) != _cardConfigData.end()) {
-            assert(false);
-        } else {
-            _cardConfigData.insert(make_pair(key, data));
-        }
+        setMapValue(_cardConfigData, data->getName(), data);
     });
 }
 
@@ -718,12 +565,7 @@ void DataManager::parseURConfigData()
 {
     parseData("UnitResourceConfig.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) URConfigData(item);
-        const auto& key = data->getName();
-        if (_urConfigData.find(key) != _urConfigData.end()) {
-            assert(false);
-        } else {
-            _urConfigData.insert(make_pair(key, data));
-        }
+        setMapValue(_urConfigData, data->getName(), data);
     });
 }
 
@@ -731,12 +573,7 @@ void DataManager::parseBRConfigData()
 {
     parseData("BulletResourceConfig.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) BRConfigData(item);
-        const auto& key = data->getName();
-        if (_brConfigData.find(key) != _brConfigData.end()) {
-            assert(false);
-        } else {
-            _brConfigData.insert(make_pair(key, data));
-        }
+        setMapValue(_brConfigData, data->getName(), data);
     });
 }
 
@@ -744,7 +581,7 @@ void DataManager::parseMapParticleConfigData()
 {
     for (int i = 0; i < 2; ++i) {
         // clear first
-        if (_mapParticleConfigData.find(i) != _mapParticleConfigData.end()) {
+        if (_mapParticleConfigData.find(i) != end(_mapParticleConfigData)) {
             Utils::clearVector(_mapParticleConfigData.at(i));
         } else {
             _mapParticleConfigData.insert(make_pair(i, vector<MapParticleConfigData*>()));
@@ -763,16 +600,7 @@ void DataManager::parseSpellConfigData()
 {
     parseData("SpellConfig.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) SpellConfigData(item);
-        const auto& key = data->getName();
-        if (_spellConfigData.find(key) != _spellConfigData.end()) {
-            assert(false);
-        } else {
-            if (key.length() > 0) {
-                _spellConfigData.insert(make_pair(key, data));
-            } else {
-                CC_SAFE_DELETE(data);
-            }
-        }
+        setMapValue(_spellConfigData, data->getName(), data);
     });
 }
 
@@ -780,12 +608,7 @@ void DataManager::parseArtifactData()
 {
     parseData("ArtifactData.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) ArtifactLocalData(item);
-        const int key = data->getId();
-        if (_artifacts.find(key) != _artifacts.end()) {
-            assert(false);
-        } else {
-            _artifacts.insert(make_pair(key, data));
-        }
+        setMapValue(_artifacts, data->getId(), data);
     });
 }
 
@@ -794,11 +617,7 @@ void DataManager::parseArtifactUpgradeData()
     parseData("ArtifactUpgradeData.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) ArtifactUpgradeData(item);
         auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-        if (_artifactUpgradeData.find(key) != _artifactUpgradeData.end()) {
-            assert(false);
-        } else {
-            _artifactUpgradeData.insert(make_pair(key, data));
-        }
+        setMapValue(_artifactUpgradeData, key, data);
     });
 }
 
@@ -806,12 +625,7 @@ void DataManager::parseAttributeData()
 {
     parseData("AttributeData.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) AttributeLocalData(item);
-        const int key = data->getId();
-        if (_attributes.find(key) != _attributes.end()) {
-            assert(false);
-        } else {
-            _attributes.insert(make_pair(key, data));
-        }
+        setMapValue(_attributes, data->getId(), data);
     });
 }
 
@@ -819,12 +633,7 @@ void DataManager::parseHeroData()
 {
     parseData("HeroData.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) HeroLocalData(item);
-        const int key = data->getId();
-        if (_heroes.find(key) != _heroes.end()) {
-            assert(false);
-        } else {
-            _heroes.insert(make_pair(key, data));
-        }
+        setMapValue(_heroes, data->getId(), data);
     });
 }
 
@@ -832,12 +641,7 @@ void DataManager::parseHeroPieceData()
 {
     parseData("HeroPieceData.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) HeroPieceData(item);
-        const int key = data->getId();
-        if (_heroPieceDatas.find(key) != _heroPieceDatas.end()) {
-            assert(false);
-        } else {
-            _heroPieceDatas.insert(make_pair(key, data));
-        }
+        setMapValue(_heroPieceDatas, data->getId(), data);
     });
 }
 
@@ -846,11 +650,7 @@ void DataManager::parseHeroUpgradeData()
     parseData("HeroUpgradeData.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) HeroUpgradeData(item);
         auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-        if (_heroUpgradeDatas.find(key) != _heroUpgradeDatas.end()) {
-            assert(false);
-        } else {
-            _heroUpgradeDatas.insert(make_pair(key, data));
-        }
+        setMapValue(_heroUpgradeDatas, key, data);
     });
 }
 
@@ -858,12 +658,7 @@ void DataManager::parseSkillData()
 {
     parseData("SkillData.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) SkillLocalData(item);
-        const int key = data->getId();
-        if (_skills.find(key) != _skills.end()) {
-            assert(false);
-        } else {
-            _skills.insert(make_pair(key, data));
-        }
+        setMapValue(_skills, data->getId(), data);
     });
 }
 
@@ -871,12 +666,7 @@ void DataManager::parseSoldierData()
 {
     parseData("SoldierData.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) SoldierLocalData(item);
-        const int key = data->getId();
-        if (_soldiers.find(key) != _soldiers.end()) {
-            assert(false);
-        } else {
-            _soldiers.insert(make_pair(key, data));
-        }
+        setMapValue(_soldiers, data->getId(), data);
     });
 }
 
@@ -884,12 +674,7 @@ void DataManager::parseSoldierPieceData()
 {
     parseData("SoldierPieceData.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) SoldierPieceData(item);
-        const int key = data->getId();
-        if (_soldierPieceDatas.find(key) != _soldierPieceDatas.end()) {
-            assert(false);
-        } else {
-            _soldierPieceDatas.insert(make_pair(key, data));
-        }
+        setMapValue(_soldierPieceDatas, data->getId(), data);
     });
 }
 
@@ -898,11 +683,7 @@ void DataManager::parseSoldierUpgradeData()
     parseData("SoldierUpgradeData.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) SoldierUpgradeData(item);
         auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-        if (_soldierUpgradeDatas.find(key) != _soldierUpgradeDatas.end()) {
-            assert(false);
-        } else {
-            _soldierUpgradeDatas.insert(make_pair(key, data));
-        }
+        setMapValue(_soldierUpgradeDatas, key, data);
     });
 }
 
@@ -911,11 +692,7 @@ void DataManager::parseSoldierQualityData()
     parseData("SoldierQualityData.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) SoldierQualityData(item);
         auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-        if (_soldierQualityDatas.find(key) != _soldierQualityDatas.end()) {
-            assert(false);
-        } else {
-            _soldierQualityDatas.insert(make_pair(key, data));
-        }
+        setMapValue(_soldierQualityDatas, key, data);
     });
 }
 
@@ -924,11 +701,7 @@ void DataManager::parseSoldierTalentData()
     parseData("SoldierTalentData.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) SoldierTalentData(item);
         auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-        if (_soldierTalentDatas.find(key) != _soldierTalentDatas.end()) {
-            assert(false);
-        } else {
-            _soldierTalentDatas.insert(make_pair(key, data));
-        }
+        setMapValue(_soldierTalentDatas, key, data);
     });
 }
 
@@ -936,12 +709,7 @@ void DataManager::parseTowerData()
 {
     parseData("TowerData.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) TowerLocalData(item);
-        const int key = data->getId();
-        if (_towers.find(key) != _towers.end()) {
-            assert(false);
-        } else {
-            _towers.insert(make_pair(key, data));
-        }
+        setMapValue(_towers, data->getId(), data);
     });
 }
 
@@ -950,11 +718,7 @@ void DataManager::parseTowerUpgradeData()
     parseData("TowerUpgradeData.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) TowerUpgradeData(item);
         auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-        if (_towerUpgradeDatas.find(key) != _towerUpgradeDatas.end()) {
-            assert(false);
-        } else {
-            _towerUpgradeDatas.insert(make_pair(key, data));
-        }
+        setMapValue(_towerUpgradeDatas, key, data);
     });
 }
 

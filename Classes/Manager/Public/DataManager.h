@@ -131,7 +131,7 @@ protected:
     void parseCardData();
     void parseCardUpgradeData();
     void parseTalentUpgradeData();
-    void parseQuestData(QuestType type);
+    void parseQuestData();
     void parseAchievementData();
     void parseObjectData();
     void parseGearData();
