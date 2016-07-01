@@ -692,7 +692,7 @@ void UnitNode::playAnimation(const string& files,
             
             // 3. play animation
 #if USING_PVR
-            CocosUtils::playAnimation(_sprite, files, loop, frameIndex, DEFAULT_FRAME_DELAY, lastFrameCallFunc);
+            CocosUtils::playAnimation(_sprite, files, loop, frameIndex, -1, DEFAULT_FRAME_DELAY, lastFrameCallFunc);
 #else
             _animation = CSLoader::createTimeline(files);
             _node->runAction(_animation);
@@ -1007,7 +1007,7 @@ Node* UnitNode::addPVRAnimation(const string& folder,
                                 const SpellConfigData::Direction& direction,
                                 const SpellConfigData::Position& position)
 {
-    Sprite* sprite = CocosUtils::playAnimation(folder, loop, 0, frameDelay, callback);
+    Sprite* sprite = CocosUtils::playAnimation(folder, loop, frameDelay, callback);
     addChild(sprite, zOrder_top);
     adjustEffect(sprite, scale, direction, position);
     return sprite;

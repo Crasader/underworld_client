@@ -305,7 +305,7 @@ void CocosUtils::loadPVR(const string& file)
     }
 }
 
-SpriteFrame* CocosUtils::getFrame(const std::string& folder, int frameIndex)
+SpriteFrame* CocosUtils::getFrame(const string& folder, int frameIndex)
 {
     auto file = folder + StringUtils::format("/1%04d.png", frameIndex + 1);
     return SpriteFrameCache::getInstance()->getSpriteFrameByName(file);
@@ -343,12 +343,17 @@ static void playAnimation(Node* node,
 void CocosUtils::playAnimation(Node* node,
                                const string& folder,
                                bool loop,
-                               int frameIndex,
+                               int startIdx,
+                               int endIdx,
                                float frameDelay,
                                const function<void()>& callback)
 {
     Vector<SpriteFrame*> frames;
-    for (int i = frameIndex; ; ++i) {
+    for (int i = startIdx; ; ++i) {
+        if (endIdx >= 0 && endIdx < i) {
+            break;
+        }
+        
         auto frame = getFrame(folder, i);
         if (frame) {
             frames.pushBack(frame);
@@ -358,8 +363,8 @@ void CocosUtils::playAnimation(Node* node,
         }
     }
     
-    if (loop) {
-        for (int i = 0; i < frameIndex; ++i) {
+    if (loop && endIdx < 0) {
+        for (int i = 0; i < startIdx; ++i) {
             auto frame = getFrame(folder, i);
             if (frame) {
                 frames.pushBack(frame);
@@ -375,18 +380,28 @@ void CocosUtils::playAnimation(Node* node,
 
 Sprite* CocosUtils::playAnimation(const string& folder,
                                   bool loop,
-                                  int frameIndex,
+                                  int startIdx,
+                                  int endIdx,
                                   float frameDelay,
                                   const function<void()>& callback)
 {
-    auto frame = getFrame(folder, 0);
+    auto frame = getFrame(folder, startIdx);
+    CCASSERT(frame, "Null frame");
     if (frame) {
         auto sprite = Sprite::createWithSpriteFrame(frame);
-        playAnimation(sprite, folder, loop, frameIndex, frameDelay, callback);
+        playAnimation(sprite, folder, loop, startIdx, endIdx, frameDelay, callback);
         return sprite;
     }
     
     return nullptr;
+}
+
+Sprite* CocosUtils::playAnimation(const string& folder,
+                                  bool loop,
+                                  float frameDelay,
+                                  const function<void()>& callback)
+{
+    return playAnimation(folder, loop, 0, -1, frameDelay, callback);
 }
 
 Node* CocosUtils::playCSBAnimation(const string& file,
