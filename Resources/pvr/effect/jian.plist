@@ -4,172 +4,37 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>jian-all-1/jian-yingzi/10001.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-20,-10}</string>
-                <key>spriteSize</key>
-                <string>{26,8}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{75,73},{26,8}}</string>
-                <key>textureRotated</key>
-                <true/>
-            </dict>
-            <key>jian-all-1/jian-yingzi/10002.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-20,-10}</string>
-                <key>spriteSize</key>
-                <string>{26,8}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{117,53},{26,8}}</string>
-                <key>textureRotated</key>
-                <true/>
-            </dict>
-            <key>jian-all-1/jian-yingzi/10003.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-20,-10}</string>
-                <key>spriteSize</key>
-                <string>{26,8}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{127,67},{26,8}}</string>
-                <key>textureRotated</key>
-                <true/>
-            </dict>
-            <key>jian-all-1/jian-yingzi/10004.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-20,-10}</string>
-                <key>spriteSize</key>
-                <string>{28,8}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{77,43},{28,8}}</string>
-                <key>textureRotated</key>
-                <true/>
-            </dict>
-            <key>jian-all-1/jian-yingzi/10005.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-20,-10}</string>
-                <key>spriteSize</key>
-                <string>{28,8}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{33,69},{28,8}}</string>
-                <key>textureRotated</key>
-                <true/>
-            </dict>
-            <key>jian-all-1/jian-yingzi/10006.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-20,-10}</string>
-                <key>spriteSize</key>
-                <string>{30,8}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{45,43},{30,8}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>jian-all-1/jian-yingzi/10007.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-20,-10}</string>
-                <key>spriteSize</key>
-                <string>{32,8}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{35,35},{32,8}}</string>
-                <key>textureRotated</key>
-                <true/>
-            </dict>
-            <key>jian-all-1/jian-yingzi/10008.png</key>
+            <key>jian-all/jian-yingzi/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
                 <string>{-20,-11}</string>
                 <key>spriteSize</key>
-                <string>{34,8}</string>
+                <string>{40,8}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{129,31},{34,8}}</string>
+                <string>{{137,83},{40,8}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
-            <key>jian-all-1/jian-yingzi/10009.png</key>
+            <key>jian-all/jian-yingzi/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-20,-10}</string>
-                <key>spriteSize</key>
-                <string>{36,8}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{221,53},{36,8}}</string>
-                <key>textureRotated</key>
-                <true/>
-            </dict>
-            <key>jian-all-1/jian-yingzi/10010.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-21,-11}</string>
-                <key>spriteSize</key>
-                <string>{38,8}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{239,47},{38,8}}</string>
-                <key>textureRotated</key>
-                <true/>
-            </dict>
-            <key>jian-all-1/jian-yingzi/10011.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-21,-10}</string>
+                <string>{-20,-11}</string>
                 <key>spriteSize</key>
                 <string>{40,8}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{229,11},{40,8}}</string>
+                <string>{{179,89},{40,8}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
-            <key>jian-all-1/jian-yingzi/10012.png</key>
+            <key>jian-all/jian-yingzi/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -180,71 +45,41 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{95,21},{42,8}}</string>
+                <string>{{185,69},{42,8}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>jian-all-1/jian-yingzi/10013.png</key>
+            <key>jian-all/jian-yingzi/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-21,-10}</string>
+                <string>{-20,-11}</string>
                 <key>spriteSize</key>
-                <string>{44,8}</string>
+                <string>{42,8}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{97,11},{44,8}}</string>
+                <string>{{137,73},{42,8}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>jian-all-1/jian-yingzi/10014.png</key>
+            <key>jian-all/jian-yingzi/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-21,-11}</string>
+                <string>{-20,-11}</string>
                 <key>spriteSize</key>
-                <string>{46,8}</string>
+                <string>{42,8}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{97,1},{46,8}}</string>
+                <string>{{181,79},{42,8}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>jian-all-1/jian-yingzi/10015.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-21,-11}</string>
-                <key>spriteSize</key>
-                <string>{46,8}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{145,1},{46,8}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>jian-all-1/jian-yingzi/10016.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-20,-10}</string>
-                <key>spriteSize</key>
-                <string>{44,8}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{49,13},{44,8}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>jian-all-1/jian-yingzi/10017.png</key>
+            <key>jian-all/jian-yingzi/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -255,221 +90,251 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{45,23},{42,8}}</string>
+                <string>{{225,79},{42,8}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>jian-all/jian-yingzi/10007.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-21,-10}</string>
+                <key>spriteSize</key>
+                <string>{44,8}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{47,49},{44,8}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>jian-all-1/jian-yingzi/10018.png</key>
+            <key>jian-all/jian-yingzi/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
                 <string>{-20,-10}</string>
                 <key>spriteSize</key>
-                <string>{40,8}</string>
+                <string>{44,8}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{139,29},{40,8}}</string>
+                <string>{{1,51},{44,8}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>jian-all-1/jian-yingzi/10019.png</key>
+            <key>jian-all/jian-yingzi/10009.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-20,-11}</string>
+                <key>spriteSize</key>
+                <string>{44,8}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{139,43},{44,8}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>jian-all/jian-yingzi/10010.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-20,-11}</string>
+                <key>spriteSize</key>
+                <string>{44,8}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{185,49},{44,8}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>jian-all/jian-yingzi/10011.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-20,-11}</string>
+                <key>spriteSize</key>
+                <string>{44,8}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{139,53},{44,8}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>jian-all/jian-yingzi/10012.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-20,-11}</string>
+                <key>spriteSize</key>
+                <string>{44,8}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{93,57},{44,8}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>jian-all/jian-yingzi/10013.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-21,-11}</string>
+                <key>spriteSize</key>
+                <string>{46,8}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{193,13},{46,8}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>jian-all/jian-yingzi/10014.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-21,-11}</string>
+                <key>spriteSize</key>
+                <string>{46,8}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{193,23},{46,8}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>jian-all/jian-yingzi/10015.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-21,-11}</string>
+                <key>spriteSize</key>
+                <string>{46,8}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{1,15},{46,8}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>jian-all/jian-yingzi/10016.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-21,-11}</string>
+                <key>spriteSize</key>
+                <string>{46,8}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{49,15},{46,8}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>jian-all/jian-yingzi/10017.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-20,-11}</string>
+                <key>spriteSize</key>
+                <string>{44,8}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{47,59},{44,8}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>jian-all/jian-yingzi/10018.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-20,-11}</string>
+                <key>spriteSize</key>
+                <string>{44,8}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{1,61},{44,8}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>jian-all/jian-yingzi/10019.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
                 <string>{-20,-10}</string>
                 <key>spriteSize</key>
-                <string>{34,8}</string>
+                <string>{44,8}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{45,33},{34,8}}</string>
+                <string>{{185,59},{44,8}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>jian-all-1/jian-yingzi/10020.png</key>
+            <key>jian-all/jian-yingzi/10020.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-19,-10}</string>
+                <string>{-20,-10}</string>
                 <key>spriteSize</key>
-                <string>{26,8}</string>
+                <string>{44,8}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{31,99},{26,8}}</string>
+                <string>{{139,63},{44,8}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>jian-all/jian/10001.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-24,29}</string>
+                <key>spriteSize</key>
+                <string>{42,18}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{235,47},{42,18}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>jian-all-1/jian/10001.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-23,29}</string>
-                <key>spriteSize</key>
-                <string>{26,26}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{43,81},{26,26}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>jian-all-1/jian/10002.png</key>
+            <key>jian-all/jian/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
                 <string>{-24,29}</string>
                 <key>spriteSize</key>
-                <string>{28,26}</string>
+                <string>{42,18}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{45,53},{28,26}}</string>
+                <string>{{93,67},{42,18}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>jian-all-1/jian/10003.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-24,29}</string>
-                <key>spriteSize</key>
-                <string>{28,26}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{1,87},{28,26}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>jian-all-1/jian/10004.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-23,29}</string>
-                <key>spriteSize</key>
-                <string>{28,26}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{87,53},{28,26}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>jian-all-1/jian/10005.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-23,29}</string>
-                <key>spriteSize</key>
-                <string>{30,24}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{1,61},{30,24}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>jian-all-1/jian/10006.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-24,29}</string>
-                <key>spriteSize</key>
-                <string>{32,24}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{231,87},{32,24}}</string>
-                <key>textureRotated</key>
-                <true/>
-            </dict>
-            <key>jian-all-1/jian/10007.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-24,29}</string>
-                <key>spriteSize</key>
-                <string>{34,22}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{139,61},{34,22}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>jian-all-1/jian/10008.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-24,29}</string>
-                <key>spriteSize</key>
-                <string>{36,22}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{179,55},{36,22}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>jian-all-1/jian/10009.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-24,29}</string>
-                <key>spriteSize</key>
-                <string>{38,22}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{181,31},{38,22}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>jian-all-1/jian/10010.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-23,29}</string>
-                <key>spriteSize</key>
-                <string>{38,20}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{89,31},{38,20}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>jian-all-1/jian/10011.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-23,29}</string>
-                <key>spriteSize</key>
-                <string>{40,18}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{187,11},{40,18}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>jian-all-1/jian/10012.png</key>
+            <key>jian-all/jian/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -480,56 +345,71 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,17},{42,16}}</string>
+                <string>{{47,69},{42,16}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>jian-all-1/jian/10013.png</key>
+            <key>jian-all/jian/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
                 <string>{-24,29}</string>
                 <key>spriteSize</key>
-                <string>{46,14}</string>
+                <string>{44,16}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,1},{46,14}}</string>
+                <string>{{97,25},{44,16}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>jian-all-1/jian/10014.png</key>
+            <key>jian-all/jian/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
                 <string>{-24,29}</string>
                 <key>spriteSize</key>
-                <string>{46,10}</string>
+                <string>{44,16}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{49,1},{46,10}}</string>
+                <string>{{143,25},{44,16}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>jian-all-1/jian/10015.png</key>
+            <key>jian-all/jian/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
                 <string>{-24,29}</string>
                 <key>spriteSize</key>
-                <string>{46,8}</string>
+                <string>{44,14}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{193,1},{46,8}}</string>
+                <string>{{241,1},{44,14}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>jian-all/jian/10007.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-23,29}</string>
+                <key>spriteSize</key>
+                <string>{44,14}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{189,33},{44,14}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>jian-all-1/jian/10016.png</key>
+            <key>jian-all/jian/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -540,11 +420,176 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{241,1},{44,12}}</string>
+                <string>{{47,35},{44,12}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
-            <key>jian-all-1/jian/10017.png</key>
+            <key>jian-all/jian/10009.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-24,29}</string>
+                <key>spriteSize</key>
+                <string>{46,12}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{1,1},{46,12}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>jian-all/jian/10010.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-24,29}</string>
+                <key>spriteSize</key>
+                <string>{46,12}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{49,1},{46,12}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>jian-all/jian/10011.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-23,29}</string>
+                <key>spriteSize</key>
+                <string>{44,12}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{93,43},{44,12}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>jian-all/jian/10012.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-24,29}</string>
+                <key>spriteSize</key>
+                <string>{46,10}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{145,1},{46,10}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>jian-all/jian/10013.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-24,29}</string>
+                <key>spriteSize</key>
+                <string>{46,10}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{193,1},{46,10}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>jian-all/jian/10014.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-24,29}</string>
+                <key>spriteSize</key>
+                <string>{46,8}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{97,15},{46,8}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>jian-all/jian/10015.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-24,29}</string>
+                <key>spriteSize</key>
+                <string>{46,8}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{1,25},{46,8}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>jian-all/jian/10016.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-24,29}</string>
+                <key>spriteSize</key>
+                <string>{46,8}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{49,25},{46,8}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>jian-all/jian/10017.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-24,30}</string>
+                <key>spriteSize</key>
+                <string>{46,10}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{145,13},{46,10}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>jian-all/jian/10018.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-24,30}</string>
+                <key>spriteSize</key>
+                <string>{46,12}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{97,1},{46,12}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>jian-all/jian/10019.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-23,30}</string>
+                <key>spriteSize</key>
+                <string>{44,14}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{1,35},{44,14}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>jian-all/jian/10020.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -555,52 +600,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{143,11},{42,16}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>jian-all-1/jian/10018.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-23,30}</string>
-                <key>spriteSize</key>
-                <string>{38,20}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{139,39},{38,20}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>jian-all-1/jian/10019.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-23,30}</string>
-                <key>spriteSize</key>
-                <string>{32,24}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{1,35},{32,24}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>jian-all-1/jian/10020.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-23,30}</string>
-                <key>spriteSize</key>
-                <string>{26,26}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{1,115},{26,26}}</string>
+                <string>{{1,71},{42,16}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -612,13 +612,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>jian-test.pvr.ccz</string>
+            <string>jian.pvr.ccz</string>
             <key>size</key>
             <string>{256,256}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:4af594357eb7d78635a8a7479628e0f0:e74450fd23d0ebbc88d02e89ff24797f:b62d415109fb5a7742555b19647130f1$</string>
+            <string>$TexturePacker:SmartUpdate:353cc85e733827c0f2400199245c4a98:652a7bace5e00699e4e8002d62f950b7:547849ca510baf65b82de35cff041cdc$</string>
             <key>textureFileName</key>
-            <string>jian-test.pvr.ccz</string>
+            <string>jian.pvr.ccz</string>
         </dict>
     </dict>
 </plist>

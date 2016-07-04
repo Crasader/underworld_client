@@ -340,13 +340,13 @@ static void playAnimation(Node* node,
     }
 }
 
-void CocosUtils::playAnimation(Node* node,
-                               const string& folder,
-                               bool loop,
-                               int startIdx,
-                               int endIdx,
-                               float frameDelay,
-                               const function<void()>& callback)
+size_t CocosUtils::playAnimation(Node* node,
+                                 const string& folder,
+                                 bool loop,
+                                 int startIdx,
+                                 int endIdx,
+                                 float frameDelay,
+                                 const function<void()>& callback)
 {
     Vector<SpriteFrame*> frames;
     for (int i = startIdx; ; ++i) {
@@ -376,6 +376,8 @@ void CocosUtils::playAnimation(Node* node,
     }
     
     ::playAnimation(node, frames, loop, frameDelay, callback);
+    
+    return frames.size();
 }
 
 Sprite* CocosUtils::playAnimation(const string& folder,

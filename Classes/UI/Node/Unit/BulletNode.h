@@ -31,7 +31,7 @@ public:
 class BulletNode : public Node
 {
 public:
-    static BulletNode* create(const Bullet* bullet);
+    static BulletNode* create(const Bullet* bullet, float duration);
     virtual ~BulletNode();
     
     void registerObserver(BulletNodeObserver *observer);
@@ -41,15 +41,19 @@ public:
 protected:
     BulletNode();
     
-    bool init(const Bullet* bullet);
+    bool init(const Bullet* bullet, float duration);
     void update(bool newCreated);
-    Node* addActionNode(const std::string& file, bool loop);
-    Node* addParticle(const std::string& file);
+    Node* addActionNode(const std::string& file, bool loop, int startIdx, int endIdx, float duration);
     void onBulletDisabled();
+    
+    void setScheduler(Node* node);
     
 protected:
     BulletNodeObserver *_observer;
     const Bullet* _bullet;
+    bool _isPVR;
+    Scheduler* _speedScheduler;
+    ActionManager* _actionManager;
     float _angel;
 };
 

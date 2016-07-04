@@ -39,7 +39,13 @@ BattleScene::BattleScene()
 ,_sch(nullptr)
 , _proxy(nullptr)
 {
-    
+#if USING_PVR
+    CocosUtils::loadPVR("hero-Fat");
+    CocosUtils::loadPVR("soldier-Archer");
+    CocosUtils::loadPVR("effect/xeffect-1");
+    CocosUtils::loadPVR("effect/jian-test");
+    CocosUtils::loadPVR("effect/jian");
+#endif
 }
 
 BattleScene::~BattleScene()

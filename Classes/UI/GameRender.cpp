@@ -280,7 +280,9 @@ void GameRender::updateBullets(const Game* game)
             }
         } else {
             if (!isExploded) {
-                BulletNode* node = BulletNode::create(bullet);
+                const auto distance = pos.distance(targetPos);
+                const auto speed = bullet->getBulletType()->getSpeed();
+                BulletNode* node = BulletNode::create(bullet, (float)distance / speed);
                 node->registerObserver(this);
                 const float height = bullet->getHeight();
                 _mapLayer->addUnit(node, pos + Coordinate32(0, height));

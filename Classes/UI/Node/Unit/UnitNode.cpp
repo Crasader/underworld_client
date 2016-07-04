@@ -23,7 +23,7 @@ static const int zOrder_top(1);
 static const float hpThreshold(50.0f);
 
 // TODO: remove
-static const string resourcePrefix("hero-Fat");
+static const string resourcePrefix("soldier-Archer");
 
 UnitNode* UnitNode::create(const Unit* unit, bool rightSide)
 {
@@ -70,11 +70,6 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
 #endif
     UnitClass uc(thisUnitClass());
     _isBuilding = (kUnitClass_Core == uc || kUnitClass_Building == uc);
-    
-#if USING_PVR
-    CocosUtils::loadPVR(resourcePrefix);
-    CocosUtils::loadPVR("effect/xeffect-1");
-#endif
 }
 
 UnitNode::~UnitNode()
@@ -696,8 +691,7 @@ void UnitNode::playAnimation(const string& files,
 #else
             _animation = CSLoader::createTimeline(files);
             _node->runAction(_animation);
-            _animation->gotoFrameAndPlay(0, loop);
-            _animation->setCurrentFrame(frameIndex);
+            _animation->gotoFrameAndPlay(frameIndex, loop);
             _animation->setLastFrameCallFunc(lastFrameCallFunc);
 #endif
             
