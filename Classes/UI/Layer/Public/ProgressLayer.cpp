@@ -69,7 +69,7 @@ bool ProgressLayer::init()
     if (LayerColor::initWithColor(LAYER_MASK_COLOR))
     {
         const Size& winSize = Director::getInstance()->getWinSize();
-        Node* loadingNode = CocosUtils::playCSBAnimation(resourceFile, true, 0, nullptr);
+        Node* loadingNode = CocosUtils::playAnimation(resourceFile, 0, true);
         loadingNode->setPosition(winSize.width / 2, winSize.height / 2);
         addChild(loadingNode);
         

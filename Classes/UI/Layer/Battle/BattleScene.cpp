@@ -143,7 +143,7 @@ void BattleScene::start()
             const auto& cards = dm->getCardDecks();
             
             for (auto iter = begin(cards); iter != end(cards); ++iter) {
-                const auto& cardType = dm->getTechTree()->findUnitTypeByName(*iter);
+                auto cardType = dm->getTechTree()->findUnitTypeByName(*iter);
                 if (cardType) {
                     UnderWorld::Core::UnitSetting us;
                     us.setUnitTypeName(cardType->getName());

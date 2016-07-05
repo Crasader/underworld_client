@@ -243,25 +243,25 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
         // yezi
         {
             static const string file("particle/yezi/yezi.plist");
-            ParticleSystemQuad *effect = ParticleSystemQuad::create(file);
+            auto effect = CocosUtils::playAnimation(name, 0, true);
             effect->setPosition(Point(-50, winSize.height / 2));
             addChild(effect);
         }
         {
             static const string file("particle/yezi/yezi_0.plist");
-            ParticleSystemQuad *effect = ParticleSystemQuad::create(file);
+            auto effect = CocosUtils::playAnimation(name, 0, true);
             effect->setPosition(Point(-50, winSize.height / 2 - 10));
             addChild(effect);
         }
         {
             static const string file("particle/yezi/yezi_0_0.plist");
-            ParticleSystemQuad *effect = ParticleSystemQuad::create(file);
+            auto effect = CocosUtils::playAnimation(name, 0, true);
             effect->setPosition(Point(-50, winSize.height / 2 + 10));
             addChild(effect);
         }
         {
             static const string file("particle/yezi/yezi_0_0_0.plist");
-            ParticleSystemQuad *effect = ParticleSystemQuad::create(file);
+            auto effect = CocosUtils::playAnimation(name, 0, true);
             effect->setPosition(Point(-50, winSize.height / 2 + 20));
             addChild(effect);
         }
@@ -269,7 +269,7 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
         
 #if false
         static const string CsbFile("rankInfo_UI.csb");
-        Node *mainNode = CocosUtils::playCSBAnimation(CsbFile, false, 0, nullptr);
+        Node *mainNode = CocosUtils::playAnimation(CsbFile, 0, false);
         mainNode->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(mainNode);
         Widget* root = dynamic_cast<Widget *>(mainNode->getChildByTag(777));

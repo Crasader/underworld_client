@@ -66,7 +66,7 @@ bool BagLayer::init(int tabIndex)
         const Size& winSize = Director::getInstance()->getWinSize();
         
         static const string CsbFile("zhuchangjing.csb");
-        auto mainNode = CocosUtils::playCSBAnimation(CsbFile, false, 0, nullptr);
+        auto mainNode = CocosUtils::playAnimation(CsbFile, 0, false);
         mainNode->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(mainNode);
         

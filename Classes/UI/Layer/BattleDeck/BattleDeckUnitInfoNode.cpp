@@ -69,7 +69,7 @@ bool BattleDeckUnitInfoNode::init()
 {
     if (Node::init()) {
         static const string csbFile("UI_CardInfo.csb");
-        auto mainNode = CocosUtils::playCSBAnimation(csbFile, false, 0, nullptr);
+        auto mainNode = CocosUtils::playAnimation(csbFile, 0, false);
         addChild(mainNode);
         Widget* root = dynamic_cast<Widget *>(mainNode->getChildByTag(60));
         root->setSwallowTouches(false);

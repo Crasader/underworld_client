@@ -40,7 +40,7 @@ bool FriendCell::init(const FriendData* friendData)
     if (TableViewCell::init()) {
         
         static const string CsbFile("UI_Chat/UI_FriendIcon.csb");
-        Node* mainNode = CocosUtils::playCSBAnimation(CsbFile, false, 0, nullptr);
+        Node* mainNode = CocosUtils::playAnimation(CsbFile, 0, false);
         addChild(mainNode);
         
         _rootNode = dynamic_cast<Button *>(mainNode->getChildByTag(54)->getChildByTag(61));

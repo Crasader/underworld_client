@@ -43,7 +43,7 @@ bool ResourceNode::init(ResourceType type, int count)
     if(Node::init())
     {
         static const string csbFile("UI_Res.csb");
-        Node *mainNode = CocosUtils::playCSBAnimation(csbFile, true, 0, nullptr);
+        Node *mainNode = CocosUtils::playAnimation(csbFile, 0, true);
         addChild(mainNode);
         
         Node* root = mainNode->getChildByTag(20);

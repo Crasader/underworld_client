@@ -71,7 +71,7 @@ bool MainLayer::init()
         _mainNode->setAnchorPoint(Point::ZERO);
 #else
         static const string CsbFile("zhuchangjing.csb");
-        _mainNode = CocosUtils::playCSBAnimation(CsbFile, false, 0, nullptr);
+        _mainNode = CocosUtils::playAnimation(CsbFile, 0, false);
 #endif
         
         const Size& nodeSize = _mainNode->getContentSize();

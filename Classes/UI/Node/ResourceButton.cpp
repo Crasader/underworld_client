@@ -56,7 +56,7 @@ bool ResourceButton::init(bool isBigSize, bool animated, bool needResize, Resour
         
 #if false
         const string csbFile = isBigSize ? "LevelupButton_UI.csb" : "formationButton_UI.csb";
-        Node *bn = CocosUtils::playCSBAnimation(csbFile, true, 0, nullptr);
+        Node *bn = CocosUtils::playAnimation(csbFile, 0, true);
         addChild(bn);
         
         _button = dynamic_cast<Button*>(bn->getChildByTag(121));
@@ -201,7 +201,7 @@ void ResourceButton::addIconNode(ResourceType type)
         }
         
         const string& file(StringUtils::format("%d.csb", type));
-        _iconNode = CocosUtils::playCSBAnimation(file, true, 0, nullptr);
+        _iconNode = CocosUtils::playAnimation(file, 0, true);
         addChild(_iconNode);
         
         if (pos.x > 0) {

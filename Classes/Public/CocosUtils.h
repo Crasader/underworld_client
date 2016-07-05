@@ -47,15 +47,22 @@ namespace CocosUtils
     cocos2d::Sprite* createPureColorSprite(const cocos2d::Size& size, const cocos2d::Color4B& color);
     cocos2d::Sprite* createTitle(const std::string& title, float fontSize);
     
-    // pvr animation
+    // animation
     void loadPVR(const std::string& file);
-    cocos2d::SpriteFrame* getFrame(const std::string& folder, int frameIndex);
-    size_t playAnimation(cocos2d::Node* node, const std::string& folder, bool loop, int startIdx, int endIdx, float frameDelay, const std::function<void()>& callback);
-    cocos2d::Sprite* playAnimation(const std::string& folder, bool loop, int startIdx, int endIdx, float frameDelay, const std::function<void()>& callback);
-    cocos2d::Sprite* playAnimation(const std::string& folder, bool loop, float frameDelay, const std::function<void()>& callback);
-    
-    // csb animation
-    cocos2d::Node* playCSBAnimation(const std::string& file, bool loop, int frameIndex, const std::function<void(cocos2d::Node*)>& callback);
+    cocos2d::Node* getAnimationNode(const std::string& file, int idx);
+    float playAnimation(cocos2d::Node* node,
+                        const std::string& file,
+                        float frameDelay,
+                        bool loop,
+                        int startIdx = 0,
+                        int endIdx = -1,
+                        const std::function<void(cocos2d::Node*)>& callback = nullptr);
+    cocos2d::Node* playAnimation(const std::string& folder,
+                                 float frameDelay,
+                                 bool loop,
+                                 int startIdx = 0,
+                                 int endIdx = -1,
+                                 const std::function<void(cocos2d::Node*)>& callback = nullptr);
     
     // buttons
     cocos2d::Node* createExitButton(cocos2d::Node* parent, const std::function<void()>& callback);

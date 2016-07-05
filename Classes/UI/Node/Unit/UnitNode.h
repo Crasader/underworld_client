@@ -96,7 +96,6 @@ protected:
                         Unit::Direction direction,
                         bool isHealthy) const;
     int getCurrentFrameIndex() const;
-    float getAnimationDuration() const;
     
     // animations
     void playAnimation(const std::string& files,
@@ -105,7 +104,7 @@ protected:
                        float playTime,
                        int frameIndex,
                        bool flip,
-                       const std::function<void()>& lastFrameCallFunc);
+                       const std::function<void(Node*)>& lastFrameCallFunc);
     void updateAnimation(const Skill* skill,
                          int frameIndex,
                          bool flip,
@@ -126,22 +125,12 @@ protected:
     
     // effects
     Node* addEffect(const std::string& file);
-    Node* addCSBAnimation(const std::string& file,
-                          bool loop,
-                          const std::function<void()>& callback,
-                          bool scale,
-                          const SpellConfigData::Direction& direction,
-                          const SpellConfigData::Position& position);
-#if USING_PVR
-    Node* addPVREffect(const std::string& folder);
-    Node* addPVRAnimation(const std::string& folder,
-                          bool loop,
-                          float frameDelay,
-                          const std::function<void()>& callback,
-                          bool scale,
-                          const SpellConfigData::Direction& direction,
-                          const SpellConfigData::Position& position);
-#endif
+    Node* addAnimation(const std::string& file,
+                       bool loop,
+                       const std::function<void(Node*)>& callback,
+                       bool scale,
+                       const SpellConfigData::Direction& direction,
+                       const SpellConfigData::Position& position);
     void adjustEffect(Node* effect,
                       bool scale,
                       const SpellConfigData::Direction& direction,

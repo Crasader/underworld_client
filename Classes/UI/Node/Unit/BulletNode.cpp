@@ -71,9 +71,13 @@ bool BulletNode::init(const Bullet* bullet, float duration)
             if (data) {
                 const auto& file = data->getResource();
                 if (file.length() > 0) {
-                    static string file("jian-all/jian");
-                    addActionNode(file, false, 0, -1, duration);
+#if USING_PVR
+                    static string path("jian-all/jian");
                     _isPVR = true;
+#else
+                    string path = file + ".csb";
+#endif
+                    addActionNode(path, false, 0, -1, duration);
                     
                     enabled = true;
                 } else if (name.find(SPELL_NAME_FIREBALL) != string::npos) {
@@ -142,10 +146,8 @@ void BulletNode::update(bool newCreated)
         CCLOG("========= %d - %d - %d - %d - %.1f", currentPos.x, currentPos.y, targetPos.x, targetPos.y, _angel);
 #endif
         
-        if (_bullet->isExploded()) {
-            if (_observer) {
-                _observer->onBulletNodeExploded(this);
-            }
+        if (_bullet->isExploded() && _observer) {
+            _observer->onBulletNodeExploded(this);
         }
     } else {
         assert(false);
@@ -154,50 +156,26 @@ void BulletNode::update(bool newCreated)
 
 Node* BulletNode::addActionNode(const string& file, bool loop, int startIdx, int endIdx, float duration)
 {
+    Node* node(nullptr);
     if (file.size() > 0 && startIdx >= 0) {
-        if (file.find(".csb") != string::npos) {
-            auto node = CSLoader::createNode(file);
-            addChild(node);
-            
-            auto animation = CSLoader::createTimeline(file);
-            node->runAction(animation);
-            if (endIdx > 0) {
-                animation->gotoFrameAndPlay(startIdx, endIdx, loop);
-            } else {
-                animation->gotoFrameAndPlay(startIdx, loop);
-            }
-            animation->setLastFrameCallFunc(nullptr);
-            
-            // update speed
-            if (_speedScheduler && duration > 0) {
-                auto time = (float)animation->getDuration() / 60.0f;
-                _speedScheduler->setTimeScale(time / duration);
-            }
-            
-            return node;
-        } else if (file.find(".plist") != string::npos) {
-            auto node = ParticleSystemQuad::create(file);
-            addChild(node);
-            
-            node->setAutoRemoveOnFinish(!loop);
+        if (file.find(".plist") != string::npos) {
+            node = CocosUtils::playAnimation(file, 0, loop);
         } else {
-            auto frame = CocosUtils::getFrame(file, startIdx);
-            auto node = Sprite::createWithSpriteFrame(frame);
-            addChild(node);
+            node = CocosUtils::getAnimationNode(file, startIdx);
             
             setScheduler(node);
             
-            static const float frameDelay(DEFAULT_FRAME_DELAY);
-            auto framesCount = CocosUtils::playAnimation(node, file, loop, startIdx, endIdx, DEFAULT_FRAME_DELAY, nullptr);
+            auto time = CocosUtils::playAnimation(node, file, DEFAULT_FRAME_DELAY, loop, startIdx, endIdx, nullptr);
             
             // update speed
             if (_speedScheduler && duration > 0) {
-                auto time = framesCount * (frameDelay + Director::getInstance()->getAnimationInterval());
                 _speedScheduler->setTimeScale(time / duration);
             }
-            
-            return node;
         }
+    }
+    
+    if (node) {
+        addChild(node);
     }
     
     return nullptr;

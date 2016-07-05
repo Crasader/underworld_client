@@ -305,124 +305,132 @@ void CocosUtils::loadPVR(const string& file)
     }
 }
 
-SpriteFrame* CocosUtils::getFrame(const string& folder, int frameIndex)
+static SpriteFrame* getPVRFrame(const string& folder, int idx)
 {
-    auto file = folder + StringUtils::format("/1%04d.png", frameIndex + 1);
+    auto file = folder + StringUtils::format("/1%04d.png", idx + 1);
     return SpriteFrameCache::getInstance()->getSpriteFrameByName(file);
 }
 
-static void playAnimation(Node* node,
-                          const Vector<SpriteFrame*>& frames,
-                          bool loop,
-                          float frameDelay,
-                          const function<void()>& callback)
+Node* CocosUtils::getAnimationNode(const string& folder, int idx)
 {
+    Node* node(nullptr);
+    if (folder.find(".csb") != string::npos) {
+        CC_UNUSED_PARAM(idx);
+        node = CSLoader::createNode(folder);
+    } else {
+        auto frame = getPVRFrame(folder, idx);
+        CCASSERT(frame, "Null frame");
+        if (frame) {
+            node = Sprite::createWithSpriteFrame(frame);
+        }
+    }
+    
+    return node;
+}
+
+float CocosUtils::playAnimation(Node* node,
+                                const string& folder,
+                                float frameDelay,
+                                bool loop,
+                                int startIdx,
+                                int endIdx,
+                                const function<void(Node*)>& callback)
+{
+    CCASSERT(node, "Animayion node is null");
     if (node) {
         node->stopAllActions();
         
-        if (frames.size() > 0) {
-            auto animation = Animation::createWithSpriteFrames(frames);
-            animation->setDelayPerUnit(frameDelay);
-            animation->setRestoreOriginalFrame(false);
-            
-            Action* action(nullptr);
-            auto animate = Animate::create(animation);
-            if (loop) {
-                action = RepeatForever::create(animate);
-            } else {
-                action = Sequence::create(animate, CallFunc::create(callback), nullptr) ;
-            }
-            
+        if (folder.find(".csb") != string::npos) {
+            CC_UNUSED_PARAM(frameDelay);
+            auto action = CSLoader::createTimeline(folder);
             node->runAction(action);
+            
+            if (endIdx > 0) {
+                CCASSERT(endIdx >= startIdx, "Frame idx is not allowed");
+                action->gotoFrameAndPlay(startIdx, endIdx, loop);
+            } else {
+                action->gotoFrameAndPlay(startIdx, loop);
+            }
+            
+            if (loop) {
+                assert(!callback);
+            } else {
+                action->setLastFrameCallFunc([=]() {
+                    if (callback) {
+                        callback(node);
+                    }
+                });
+            }
+            
+            return (float)action->getDuration() / 60.0f;
         } else {
-            assert(false);
-        }
-    }
-}
-
-size_t CocosUtils::playAnimation(Node* node,
-                                 const string& folder,
-                                 bool loop,
-                                 int startIdx,
-                                 int endIdx,
-                                 float frameDelay,
-                                 const function<void()>& callback)
-{
-    Vector<SpriteFrame*> frames;
-    for (int i = startIdx; ; ++i) {
-        if (endIdx >= 0 && endIdx < i) {
-            break;
-        }
-        
-        auto frame = getFrame(folder, i);
-        if (frame) {
-            frames.pushBack(frame);
-        }
-        else {
-            break;
-        }
-    }
-    
-    if (loop && endIdx < 0) {
-        for (int i = 0; i < startIdx; ++i) {
-            auto frame = getFrame(folder, i);
-            if (frame) {
-                frames.pushBack(frame);
+            Vector<SpriteFrame*> frames;
+            for (int i = startIdx; ; ++i) {
+                if (endIdx >= 0 && endIdx < i) {
+                    break;
+                }
+                
+                auto frame = getPVRFrame(folder, i);
+                if (frame) {
+                    frames.pushBack(frame);
+                }
+                else {
+                    break;
+                }
             }
-            else {
-                break;
+            
+            if (loop && endIdx < 0) {
+                for (int i = 0; i < startIdx; ++i) {
+                    auto frame = getPVRFrame(folder, i);
+                    if (frame) {
+                        frames.pushBack(frame);
+                    }
+                    else {
+                        break;
+                    }
+                }
+            }
+            
+            const size_t cnt(frames.size());
+            CCASSERT(cnt > 0, "Animation is not exist.");
+            if (cnt > 0) {
+                auto animation = Animation::createWithSpriteFrames(frames, frameDelay);
+                animation->setRestoreOriginalFrame(false);
+                
+                Action* action(nullptr);
+                auto animate = Animate::create(animation);
+                if (loop) {
+                    action = RepeatForever::create(animate);
+                } else {
+                    action = Sequence::create(animate, CallFuncN::create(callback), nullptr) ;
+                }
+                
+                node->runAction(action);
+                
+                return animation->getDuration();
             }
         }
     }
     
-    ::playAnimation(node, frames, loop, frameDelay, callback);
-    
-    return frames.size();
+    return 0.0f;
 }
 
-Sprite* CocosUtils::playAnimation(const string& folder,
-                                  bool loop,
-                                  int startIdx,
-                                  int endIdx,
-                                  float frameDelay,
-                                  const function<void()>& callback)
+Node* CocosUtils::playAnimation(const string& file,
+                                float frameDelay,
+                                bool loop,
+                                int startIdx,
+                                int endIdx,
+                                const function<void(Node*)>& callback)
 {
-    auto frame = getFrame(folder, startIdx);
-    CCASSERT(frame, "Null frame");
-    if (frame) {
-        auto sprite = Sprite::createWithSpriteFrame(frame);
-        playAnimation(sprite, folder, loop, startIdx, endIdx, frameDelay, callback);
-        return sprite;
-    }
-    
-    return nullptr;
-}
-
-Sprite* CocosUtils::playAnimation(const string& folder,
-                                  bool loop,
-                                  float frameDelay,
-                                  const function<void()>& callback)
-{
-    return playAnimation(folder, loop, 0, -1, frameDelay, callback);
-}
-
-Node* CocosUtils::playCSBAnimation(const string& file,
-                                   bool loop,
-                                   int frameIndex,
-                                   const function<void(Node*)>& callback)
-{
-    auto node = CSLoader::createNode(file);
-    auto action = CSLoader::createTimeline(file);
-    node->runAction(action);
-    action->gotoFrameAndPlay(frameIndex, loop);
-    if (!loop) {
-        action->setLastFrameCallFunc([=]() {
-            if (callback) {
-                callback(node);
-            }
-        });
+    Node* node(nullptr);
+    if (file.find(".plist") != string::npos) {
+        node = ParticleSystemQuad::create(file);
+        auto particle = dynamic_cast<ParticleSystemQuad*>(node);
+        assert(particle);
+        particle->setAutoRemoveOnFinish(!loop);
     } else {
-        assert(!callback);
+        node = getAnimationNode(file, startIdx);
+        playAnimation(node, file, frameDelay, loop, startIdx, endIdx, callback);
     }
     
     return node;

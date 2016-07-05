@@ -63,7 +63,7 @@ bool CardNode::init(bool canShake)
         _canShake = canShake;
         
         static const string csbFile("UI_Card.csb");
-        Node *mainNode = CocosUtils::playCSBAnimation(csbFile, false, 0, nullptr);
+        Node *mainNode = CocosUtils::playAnimation(csbFile, 0, false);
         addChild(mainNode);
         
         _cardWidget = dynamic_cast<Widget *>(mainNode->getChildByTag(42));

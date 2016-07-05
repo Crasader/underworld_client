@@ -139,7 +139,7 @@ bool MapLayer::init(int mapId)
             // 2. campfire
             {
                 static const string file("effect-place-1.csb");
-                auto effect = CocosUtils::playCSBAnimation(file, true, 0, nullptr);
+                auto effect = CocosUtils::playAnimation(file, 0, true);
                 effect->setPosition(Point(875, 80));
                 _tiledMap->addChild(effect);
             }
@@ -147,7 +147,7 @@ bool MapLayer::init(int mapId)
             // 3. smoke
             {
                 static const string file("particle/guohuo.plist");
-                auto effect = ParticleSystemQuad::create(file);
+                auto effect = CocosUtils::playAnimation(file, 0, true);
                 effect->setPosition(Point(1455, 1020));
                 effect->setScale(2.5f);
                 _tiledMap->addChild(effect);
@@ -156,7 +156,7 @@ bool MapLayer::init(int mapId)
             // 4. spark
             {
                 static const string file("particle/huoxing.plist");
-                auto effect = ParticleSystemQuad::create(file);
+                auto effect = CocosUtils::playAnimation(file, 0, true);
                 effect->setPosition(Point(278, 232));
                 _tiledMap->addChild(effect);
             }
@@ -164,7 +164,7 @@ bool MapLayer::init(int mapId)
             // 5. fire
             {
                 static const string file("effect-fire-1.csb");
-                auto effect = CocosUtils::playCSBAnimation(file, true, 0, nullptr);
+                auto effect = CocosUtils::playAnimation(file, 0, true);
                 effect->setPosition(Point(285, 245));
                 _tiledMap->addChild(effect);
                 effect->setScaleX(0.6f);
@@ -271,7 +271,7 @@ void MapLayer::addUnitPlacementEffect(const Coordinate32& coordinate)
 {
     const Point& pos = coordinate2Point(coordinate);
     static string file("chuchang-fazhen.csb");
-    Node* effect = CocosUtils::playCSBAnimation(file, false, 0, [](Node* sender) {
+    Node* effect = CocosUtils::playAnimation(file, 0, false, 0, -1, [](Node* sender) {
         sender->removeFromParent();
     });
     effect->setPosition(pos);
@@ -316,17 +316,19 @@ void MapLayer::addAoeSpell(const Point& startPoint, const string& name, float du
             
             // effects
             {
-                ParticleSystemQuad *effect = ParticleSystemQuad::create("particle/yan.plist");
+                static const string file("particle/yan.plist");
+                auto effect = CocosUtils::playAnimation(file, 0, true);
                 effect->setPosition(-40, 0);
                 node->addChild(effect);
             }
             {
-                ParticleSystemQuad *effect = ParticleSystemQuad::create("particle/huo.plist");
+                static const string file("particle/huo.plist");
+                auto effect = CocosUtils::playAnimation(file, 0, true);
                 node->addChild(effect);
             }
             {
                 static const string file("huoqiu.csb");
-                auto effect = CocosUtils::playCSBAnimation(file, true, 0, nullptr);
+                auto effect = CocosUtils::playAnimation(file, 0, true);
                 node->addChild(effect);
             }
             
@@ -594,14 +596,10 @@ void MapLayer::coordinateConversion(const Coordinate32& coordinate, Point& mapPo
 void MapLayer::addParticle(const MapParticleConfigData* data)
 {
     const string& name = data->getName();
-    Node* effect = nullptr;
-    if (name.find(".csb") != string::npos) {
-        effect = CocosUtils::playCSBAnimation(name, true, 0, nullptr);
-    } else {
-        auto particle = ParticleSystemQuad::create(data->getName());
+    Node* effect = CocosUtils::playAnimation(name, 0, true);
+    if (name.find(".plist") != string::npos) {
+        auto particle = dynamic_cast<ParticleSystemQuad*>(effect);
         _particles.insert(particle);
-        
-        effect = particle;
     }
     
     auto pos = Point(_width * _tileWidth / 2, _height * _tileHeight / 2) + Point(data->getPosX(), data->getPosY());
@@ -627,9 +625,9 @@ Node* MapLayer::addSpellEffect(const string& file, bool loop, const Point& posit
     if (file.length() > 0) {
         Node* effect(nullptr);
         if (loop) {
-            effect = CocosUtils::playCSBAnimation(file, loop, 0, nullptr);
+            effect = CocosUtils::playAnimation(file, 0, loop);
         } else {
-            effect = CocosUtils::playCSBAnimation(file, loop, 0, [this](Node* sender) {
+            effect = CocosUtils::playAnimation(file, 0, loop, 0, -1, [this](Node* sender) {
                 sender->removeFromParent();
                 removeSpellEffect(sender);
             });
@@ -662,7 +660,7 @@ void MapLayer::addButterfly()
     }
     
     static const string file("effect-place-2.csb");
-    _butterfly = CocosUtils::playCSBAnimation(file, false, 0, [this](Node* sender) {
+    _butterfly = CocosUtils::playAnimation(file, 0, false, 0, -1, [this](Node* sender) {
         addButterfly();
     });
     _tiledMap->addChild(_butterfly);
@@ -705,7 +703,7 @@ Node* MapLayer::createUnitMask(const UnitType* ut) const
             }
             
             if (FileUtils::getInstance()->isFileExist(file)) {
-                auto actionNode = CocosUtils::playCSBAnimation(file, false, 0, nullptr);
+                auto actionNode = CocosUtils::playAnimation(file, 0, false);
                 auto sprite = dynamic_cast<Sprite*>(actionNode->getChildren().front());
                 if (sprite) {
                     sprite->setOpacity(180);
@@ -749,7 +747,7 @@ Node* MapLayer::createRing(const string& name, const Point& point)
     }
     
     if (fileName.length() > 0) {
-        auto ring = CocosUtils::playCSBAnimation(fileName, true, 0, nullptr);
+        auto ring = CocosUtils::playAnimation(fileName, 0, true);
         ring->setPosition(point);
         _mainLayer->addChild(ring);
         return ring;

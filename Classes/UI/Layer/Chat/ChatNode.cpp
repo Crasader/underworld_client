@@ -52,7 +52,7 @@ bool ChatNode::init()
         const Size& winSize = Director::getInstance()->getWinSize();
         
         static const string CsbFile("zhuchangjing.csb");
-        Node* mainNode = CocosUtils::playCSBAnimation(CsbFile, false, 0, nullptr);
+        Node* mainNode = CocosUtils::playAnimation(CsbFile, 0, false);
         mainNode->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(mainNode);
         

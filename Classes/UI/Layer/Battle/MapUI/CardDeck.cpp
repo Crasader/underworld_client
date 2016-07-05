@@ -231,7 +231,7 @@ void CardDeck::updateResource(const unordered_map<string, float>& resources)
         
         if (show) {
             static const string file("ui-tiao.csb");
-            Node* effect = CocosUtils::playCSBAnimation(file, false, 0, nullptr);
+            Node* effect = CocosUtils::playAnimation(file, 0, false);
             effect->setPosition(pt->getPosition());
             pt->getParent()->addChild(effect);
             _resources.at(i).first = effect;
