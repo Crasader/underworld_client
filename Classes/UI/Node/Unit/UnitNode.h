@@ -22,6 +22,7 @@ namespace UnderWorld { namespace Core {
 
 // Global
 class DisplayBar;
+class AnimationParameter;
 class URConfigData;
 
 USING_NS_CC;
@@ -119,15 +120,15 @@ protected:
     void resetAttackParams();
     
     // operations
+    void setScheduler(Node* node);
     void removeNode();
-    void scheduleSpeed();
-    void scaleNode();
+    void updateAnimationParams();
     
     // effects
     Node* addEffect(const std::string& file);
     Node* addAnimation(const std::string& file,
                        bool loop,
-                       const std::function<void(Node*)>& callback,
+                       const std::function<void()>& callback,
                        bool scale,
                        const SpellConfigData::Direction& direction,
                        const SpellConfigData::Position& position);
@@ -196,11 +197,8 @@ private:
     int _attackAnimationsCounter;
     
     // animation params
-    float _baseSpeed;
-    float _baseScale;
-    float _extraCasterScale;
-    std::map<SkillClass, float> _extraBufSpeeds;
-    std::map<SkillClass, float> _extraBufScales;
+    AnimationParameter* _baseParams;
+    std::map<SkillClass, AnimationParameter*> _extraParams;
     int _rollHintCounter;
 };
 

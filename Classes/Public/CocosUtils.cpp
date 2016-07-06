@@ -424,6 +424,10 @@ Node* CocosUtils::playAnimation(const string& file,
 {
     Node* node(nullptr);
     if (file.find(".plist") != string::npos) {
+        CC_UNUSED_PARAM(frameDelay);
+        CC_UNUSED_PARAM(startIdx);
+        CC_UNUSED_PARAM(endIdx);
+        CC_UNUSED_PARAM(callback);
         node = ParticleSystemQuad::create(file);
         auto particle = dynamic_cast<ParticleSystemQuad*>(node);
         assert(particle);

@@ -277,17 +277,17 @@ const GearSetLocalData* DataManager::getGearSetData(int id) const
     return getMapValue(_gearSets, id);
 }
 
-void DataManager::getAnimationParameters(const string& name, UnderWorld::Core::SkillClass skillClass, UnderWorld::Core::Unit::Direction direction, float& scale, float& speed) const
+const AnimationParameter* DataManager::getAnimationParameter(const string& name, UnderWorld::Core::SkillClass skillClass, UnderWorld::Core::Unit::Direction direction) const
 {
-    scale = speed = 1.0f;
-    
     auto key = name + StringUtils::format("_%d", skillClass);
     if (_animationParameters.find(key) != end(_animationParameters)) {
         auto data = _animationParameters.at(key);
         if (data) {
-            data->getAnimationParameters(direction, scale, speed);
+            return data->getAnimationParameter(direction);
         }
     }
+    
+    return nullptr;
 }
 
 const CardConfigData* DataManager::getCardConfigData(const string& name) const

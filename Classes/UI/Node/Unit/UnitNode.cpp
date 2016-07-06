@@ -8,6 +8,7 @@
 
 #include "UnitNode.h"
 #include "DataManager.h"
+#include "AnimationParameter.h"
 #include "URConfigData.h"
 #include "SoundManager.h"
 #include "Spell.h"
@@ -56,9 +57,7 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
 ,_isStandby(false)
 ,_isAttacking(false)
 ,_attackAnimationsCounter(0)
-,_baseSpeed(1.0f)
-,_baseScale(1.0f)
-,_extraCasterScale(1.0f)
+,_baseParams(nullptr)
 ,_rollHintCounter(0)
 {
     _unitName = unit->getUnitBase().getRenderKey();
@@ -70,6 +69,7 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
 #endif
     UnitClass uc(thisUnitClass());
     _isBuilding = (kUnitClass_Core == uc || kUnitClass_Building == uc);
+    _baseParams = new (nothrow) AnimationParameter();
 }
 
 UnitNode::~UnitNode()
@@ -84,6 +84,12 @@ UnitNode::~UnitNode()
     
     if (_actionManager) {
         CC_SAFE_RELEASE(_actionManager);
+    }
+    
+    CC_SAFE_DELETE(_baseParams);
+    
+    for (auto iter = begin(_extraParams); iter != end(_extraParams); ++iter) {
+        CC_SAFE_DELETE(iter->second);
     }
     
     removeAllChildren();
@@ -370,17 +376,16 @@ float UnitNode::getHpPercentage() const
 
 bool UnitNode::needToChangeStandbyStatus() const
 {
-    bool isStandby(false);
     if (kSkillClass_Attack == thisSkillClass()) {
+        bool isStandby(false);
+        
         // check if the unit is standby
-        const Skill::SkillState state(_unit->getCurrentSkill()->getSkillState());
+        auto state(_unit->getCurrentSkill()->getSkillState());
         if (!_isAttacking && Skill::SkillState::kSkillState_idle == state) {
             isStandby = true;
         }
         
-        if (_isStandby != isStandby) {
-            return true;
-        }
+        return (_isStandby != isStandby) ? true : false;
     }
     
     return false;
@@ -478,7 +483,7 @@ void UnitNode::getAnimationFiles(vector<string>& output,
         data.assign(resourcePrefix + "/" + prefix + StringUtils::format("/body/%d", getResourceId(direction)));
     }
 #else
-    const string& prefix = _configData->getPrefix();
+    const auto& prefix = _configData->getPrefix();
     switch (sc) {
         case kSkillClass_Stop:
         case kSkillClass_Produce:
@@ -506,7 +511,7 @@ void UnitNode::getAnimationFiles(vector<string>& output,
             break;
         case kSkillClass_Cast:
         {
-            const string& file = prefix + StringUtils::format("-skill-%d.csb", getResourceId(direction));
+            const auto& file = prefix + StringUtils::format("-skill-%d.csb", getResourceId(direction));
             if (FileUtils::getInstance()->isFileExist(file)) {
                 data = file;
             } else {
@@ -550,13 +555,13 @@ void UnitNode::getStandbyFiles(string& output,
     }
 #else
     if (_isBuilding) {
-        const string& normal = StringUtils::format(_configData->getBNormal().c_str(), getResourceId(direction));
-        const string& damaged = StringUtils::format(_configData->getBDamaged().c_str(), getResourceId(direction));
+        const auto& normal = StringUtils::format(_configData->getBNormal().c_str(), getResourceId(direction));
+        const auto& damaged = StringUtils::format(_configData->getBDamaged().c_str(), getResourceId(direction));
         output = isHealthy ? normal : (damaged.length() > 0 ? damaged : normal);
     }
     
     if (0 == output.length() || !FileUtils::getInstance()->isFileExist(output)) {
-        const string& prefix = _configData->getPrefix();
+        const auto& prefix = _configData->getPrefix();
         output = prefix + StringUtils::format("-standby-%d.csb", getResourceId(direction));
     }
 #endif
@@ -571,21 +576,21 @@ void UnitNode::getAttackFiles(vector<string>& output,
 #if USING_PVR
     getAnimationFiles(output, kSkillClass_Attack, direction, isHealthy);
 #else
-    const string& prefix = _configData->getPrefix();
+    const auto& prefix = _configData->getPrefix();
     {
-        const string& attack = prefix + StringUtils::format("-attack-%d.csb", getResourceId(direction));
+        const auto& attack = prefix + StringUtils::format("-attack-%d.csb", getResourceId(direction));
         output.push_back(attack);
     }
     // TODO: handle the unit
     if (_unitName != "巨龙哨兵")
     {
-        const string& backSing = prefix + StringUtils::format("-attack-%d-1.csb", getResourceId(direction));
+        const auto& backSing = prefix + StringUtils::format("-attack-%d-1.csb", getResourceId(direction));
         output.push_back(backSing);
     }
     
     bool isExist(true);
     for (auto iter = begin(output); iter != end(output); ++iter) {
-        const string& csbFile = *iter;
+        const auto& csbFile = *iter;
         if (0 == csbFile.length() || !FileUtils::getInstance()->isFileExist(csbFile)) {
             isExist = false;
             break;
@@ -640,7 +645,7 @@ void UnitNode::playAnimation(const string& files,
 #if USING_PVR
         _sprite = dynamic_cast<Sprite*>(_node);
 #else
-        _sprite = dynamic_cast<Sprite*>(*(_node->getChildren().begin()));
+        _sprite = dynamic_cast<Sprite*>(_node->getChildren().front());
 #endif
         
         addChild(_node);
@@ -655,45 +660,26 @@ void UnitNode::playAnimation(const string& files,
         }
         
         if (play) {
-            // 1. add scheduler
-            if (!_speedScheduler) {
-                _speedScheduler = new (nothrow) Scheduler();
-                Director::getInstance()->getScheduler()->scheduleUpdate(_speedScheduler, 0, false);
-                if (!_actionManager) {
-                    _actionManager = new (nothrow) ActionManager();
-                    _speedScheduler->scheduleUpdate(_actionManager, 0, false);
-                }
-            }
+            // 1. set scheduler
+            setScheduler(_node);
             
-            // 2. set actionManager every time before play animation
-            if (_actionManager) {
-                _node->setActionManager(_actionManager);
-            }
-            
-            // 3. play animation
+            // 2. play animation
             auto duration = CocosUtils::playAnimation(_sprite, files, DEFAULT_FRAME_DELAY, loop, frameIndex, -1, lastFrameCallFunc);
             
             // change scale and speed
-            float scale(1.0f);
-            float speed(1.0f);
-            DataManager::getInstance()->getAnimationParameters(_unitName, thisSkillClass(), _direction, scale, speed);
-            
-            // set scale
-            if (scale != 1.0f && scale > 0) {
-                _baseScale = scale;
-                scaleNode();
-            }
+            auto parameter = DataManager::getInstance()->getAnimationParameter(_unitName, thisSkillClass(), _direction);
+            auto scale = parameter ? parameter->scale : 1.0f;
+            auto speed = parameter ? parameter->speed : 1.0f;
             
             // the attack animation should be fit for preperforming time
             if (speed == 1.0f && playTime > 0.0f) {
                 speed = duration / playTime;
             }
             
-            if (speed != 1.0f && speed > 0) {
-                _baseSpeed = speed;
-            }
+            _baseParams->scale = scale;
+            _baseParams->speed = speed;
             
-            scheduleSpeed();
+            updateAnimationParams();
         }
     }
 }
@@ -703,15 +689,16 @@ void UnitNode::updateAnimation(const Skill* skill,
                                bool flip,
                                const Game* game)
 {
-    const ssize_t cnt = _animationFiles.size();
+    auto cnt = _animationFiles.size();
     if (_unit && cnt > 0) {
-        const bool isNewCreated(nullptr == _node);
+        // 0. check whether it's new created before remove node
+        auto isNewCreated(nullptr == _node);
         
         // 1. remove the old action node
         removeNode();
         
-        const SkillClass skillClass(thisSkillClass());
-        const bool isDead = (kSkillClass_Die == skillClass);
+        auto skillClass(thisSkillClass());
+        auto isDead(kSkillClass_Die == skillClass);
         
         // 2. remove effects
         if (isDead) {
@@ -719,7 +706,7 @@ void UnitNode::updateAnimation(const Skill* skill,
         }
         
         // 3. add the new action node
-        const UnitClass uc(thisUnitClass());
+        auto uc(thisUnitClass());
         {
             // attack
             if (kSkillClass_Attack == skillClass && !_isStandby) {
@@ -753,13 +740,13 @@ void UnitNode::updateAnimation(const Skill* skill,
                         playStandbyAnimation();
                     });
                     
-                    const Spell* spell = dynamic_cast<const Spell*>(_unit->getCurrentSkill());
+                    auto spell = dynamic_cast<const Spell*>(_unit->getCurrentSkill());
                     if (spell) {
-                        const string& spellName = spell->getSpellType()->getAlias();
-                        const SpellConfigData* data = DataManager::getInstance()->getSpellConfigData(spellName);
+                        const auto& spellName = spell->getSpellType()->getAlias();
+                        auto data = DataManager::getInstance()->getSpellConfigData(spellName);
                         if (data) {
-                            const vector<string>& resources = data->getCasterResourceNames();
-                            const size_t cnt = resources.size();
+                            const auto& resources = data->getCasterResourceNames();
+                            auto cnt = resources.size();
                             if (cnt > 0) {
                                 addEffect(resources.at(0));
                                 
@@ -767,13 +754,13 @@ void UnitNode::updateAnimation(const Skill* skill,
                                     addAnimation(resources.at(1), false, nullptr, false, data->getReceiverSpellDirection(), SpellConfigData::kFoot);
                                     
                                     if (cnt > 2) {
-                                        Node* node = addEffect(resources.at(2));
+                                        auto node = addEffect(resources.at(2));
                                         node->setPosition(node->getPosition() + Point(0, 87));
                                     }
                                 }
                             }
                             
-                            const bool shakeScreen = data->isCasterShakeScreen();
+                            auto shakeScreen(data->isCasterShakeScreen());
                             if (shakeScreen && _observer) {
                                 _observer->onUnitNodeShakeScreen(this);
                             }
@@ -842,7 +829,7 @@ void UnitNode::onAttackAnimationFinished()
 {
     // it means the "functionalIndex" of the animation sequence has a callback,
     // the others are only the animations without any function.
-    static const int functionalIndex = 0;
+    static const int functionalIndex(0);
     
     // 1. execute callback
     if (_attackAnimationsCounter == functionalIndex) {
@@ -878,6 +865,24 @@ void UnitNode::resetAttackParams()
 }
 
 #pragma mark - operations
+void UnitNode::setScheduler(Node* node)
+{
+    // 1. add scheduler
+    if (!_speedScheduler) {
+        _speedScheduler = new (nothrow) Scheduler();
+        Director::getInstance()->getScheduler()->scheduleUpdate(_speedScheduler, 0, false);
+        if (!_actionManager) {
+            _actionManager = new (nothrow) ActionManager();
+            _speedScheduler->scheduleUpdate(_actionManager, 0, false);
+        }
+    }
+    
+    // 2. set actionManager every time before play animation
+    if (_actionManager) {
+        node->setActionManager(_actionManager);
+    }
+}
+
 void UnitNode::removeNode()
 {
     if (_node) {
@@ -885,40 +890,36 @@ void UnitNode::removeNode()
         _node->removeFromParent();
         _node = nullptr;
         _animation = nullptr;
-        _baseScale = 1.0f;
-        _baseSpeed = 1.0f;
+        _baseParams->scale = 1.0f;
+        _baseParams->speed = 1.0f;
     }
 }
 
-void UnitNode::scheduleSpeed()
+void UnitNode::updateAnimationParams()
 {
-    if (_speedScheduler) {
-        float extraSpeed(1.0f);
-        const SkillClass skillClass(thisSkillClass());
-        if (_extraBufSpeeds.find(skillClass) != _extraBufSpeeds.end()) {
-            extraSpeed = _extraBufSpeeds.at(skillClass);
-        }
-        
-        auto speed = _baseSpeed * extraSpeed;
-        
-        if (speed != 1.0f) {
-            _speedScheduler->setTimeScale(speed);
-        } else if (_speedScheduler->getTimeScale() != 1.0f) {
-            _speedScheduler->setTimeScale(1.0f);
-        }
+    auto sc(thisSkillClass());
+    float scale(1.0f);
+    float speed(1.0f);
+    
+    if (_extraParams.find(sc) != end(_extraParams)) {
+        const auto& ap = _extraParams.at(sc);
+        scale = ap->scale;
+        speed = ap->speed;
     }
-}
-
-void UnitNode::scaleNode()
-{
+    
+    scale *= _baseParams->scale;
+    speed *= _baseParams->speed;
+    
     if (_node) {
-        float extraScale(1.0f);
-        auto sc(thisSkillClass());
-        if (_extraBufScales.find(sc) != _extraBufScales.end()) {
-            extraScale = _extraBufScales.at(sc);
-        }
+        this->scale(_node, scale);
         
-        scale(_node, _baseScale * extraScale);
+        if (_speedScheduler) {
+            if (speed != 1.0f) {
+                _speedScheduler->setTimeScale(speed);
+            } else if (_speedScheduler->getTimeScale() != 1.0f) {
+                _speedScheduler->setTimeScale(1.0f);
+            }
+        }
     }
 }
 
@@ -930,7 +931,7 @@ Node* UnitNode::addEffect(const string& file)
 
 Node* UnitNode::addAnimation(const string& file,
                              bool loop,
-                             const function<void(Node*)>& callback,
+                             const function<void()>& callback,
                              bool scale,
                              const SpellConfigData::Direction& direction,
                              const SpellConfigData::Position& position)
@@ -939,25 +940,17 @@ Node* UnitNode::addAnimation(const string& file,
         return nullptr;
     }
     
-    Node* effect;
-    if (file.find(".csb") != string::npos) {
-        effect = CocosUtils::playAnimation(file, 0, loop, 0, -1, [callback](Node* sender) {
-            sender->removeFromParent();
-            if (callback) {
-                callback(sender);
-            }
-        });
-        adjustEffect(effect, scale, direction, position);
-    } else if (file.find(".plist") != string::npos) {
-        effect = CocosUtils::playAnimation(file, 0, loop);
-    } else {
-        effect = CocosUtils::playAnimation(file, DEFAULT_FRAME_DELAY, loop, 0, -1, callback);
-        auto sprite = dynamic_cast<Sprite*>(effect);
-        assert(sprite);
-        adjustEffect(sprite, scale, direction, position);
-    }
-    
+    auto effect = CocosUtils::playAnimation(file, DEFAULT_FRAME_DELAY, loop, 0, -1, [callback](Node* sender) {
+        sender->removeFromParent();
+        if (callback) {
+            callback();
+        }
+    });
     if (effect) {
+        if (string::npos == file.find(".plist")) {
+            adjustEffect(effect, scale, direction, position);
+        }
+        
         addChild(effect, zOrder_top);
     }
     
@@ -985,10 +978,11 @@ void UnitNode::adjustEffect(Node* effect,
         }
         
         // set position
+        auto baseScale = _baseParams->scale;
         if (SpellConfigData::kFoot == position) {
             effect->setPosition(_configData->getFootEffectPosition());
             if (scale) {
-                this->scale(effect, _configData->getFootEffectScaleX() * _baseScale, _configData->getFootEffectScaleY() * _baseScale);
+                this->scale(effect, _configData->getFootEffectScaleX() * baseScale, _configData->getFootEffectScaleY() * baseScale);
             } else {
                 this->scale(effect, _configData->getFootEffectScaleX(), _configData->getFootEffectScaleY());
             }
@@ -996,12 +990,12 @@ void UnitNode::adjustEffect(Node* effect,
         } else if (SpellConfigData::kBody == position) {
             effect->setPosition(_sprite->getPosition());
             if (scale) {
-                this->scale(effect, _baseScale);
+                this->scale(effect, baseScale);
             }
         } else if (SpellConfigData::kHead == position) {
             effect->setPosition(getHPBarPosition());
             if (scale) {
-                this->scale(effect, _baseScale);
+                this->scale(effect, baseScale);
             }
         }
     }
@@ -1009,7 +1003,7 @@ void UnitNode::adjustEffect(Node* effect,
 
 void UnitNode::addSwordEffect()
 {
-    const string& file = StringUtils::format(_configData->getSwordEffect().c_str(), _direction);
+    const auto& file = StringUtils::format(_configData->getSwordEffect().c_str(), _direction);
     if (file.length() > 0) {
         addEffect(file);
     }
@@ -1018,14 +1012,13 @@ void UnitNode::addSwordEffect()
 #pragma mark bufs
 void UnitNode::addBuf(const string& name)
 {
-    if (_sprite && _bufs.find(name) == _bufs.end()) {
-        auto dm = DataManager::getInstance();
-        const SpellConfigData* data = dm->getSpellConfigData(name);
+    if (_sprite && _bufs.find(name) == end(_bufs)) {
+        auto data = DataManager::getInstance()->getSpellConfigData(name);
         if (data) {
-            const vector<string>& files = data->getReceiverResourceNames();
+            const auto& files = data->getReceiverResourceNames();
             if (files.size() > 0) {
-                const string& file = files.at(0);
-                Node* buf = addAnimation(file, true, nullptr, true, data->getReceiverSpellDirection(), data->getReceiverSpellPosition());
+                const auto& file = files.at(0);
+                auto buf = addAnimation(file, true, nullptr, true, data->getReceiverSpellDirection(), data->getReceiverSpellPosition());
                 if (buf) {
                     _bufs.insert(make_pair(name, buf));
                 }
@@ -1037,7 +1030,7 @@ void UnitNode::addBuf(const string& name)
 void UnitNode::removeBuf(const string& name)
 {
     if (_bufs.find(name) != _bufs.end()) {
-        Node* buf = _bufs.at(name);
+        auto buf = _bufs.at(name);
         if (buf) {
             buf->removeFromParent();
         }
@@ -1048,7 +1041,7 @@ void UnitNode::removeBuf(const string& name)
 void UnitNode::removeAllBufs()
 {
     for (auto iter = _bufs.begin(); iter != _bufs.end(); ++iter) {
-        Node* buf = iter->second;
+        auto buf = iter->second;
         if (buf) {
             buf->removeFromParent();
         }
@@ -1063,7 +1056,7 @@ void UnitNode::updateBufs()
     
     _bufNames.clear();
     for (int i = 0; i < _unit->getBuffCount(); ++i) {
-        const string& bufName = _unit->getBuff(i)->getBuffType()->getRenderKey();
+        const auto& bufName = _unit->getBuff(i)->getBuffType()->getRenderKey();
         if (bufName.length() > 0) {
             _bufNames.insert(bufName);
         }
@@ -1083,23 +1076,25 @@ void UnitNode::updateBufs()
         removeBuf(*iter);
     }
     
-    ssize_t cnt = added.size();
+    auto cnt = added.size();
     if (cnt > 0) {
         // re-calculate the buf scale
         for (auto iter = added.begin(); iter != added.end(); ++iter) {
-            const string& name = *iter;
-            const SpellConfigData* data = DataManager::getInstance()->getSpellConfigData(name);
+            const auto& name = *iter;
+            auto data = DataManager::getInstance()->getSpellConfigData(name);
             if (data) {
                 {
                     const auto& rates = data->getReceiverSpeedRates();
                     for (auto iter = rates.begin(); iter != rates.end(); ++iter) {
-                        const SkillClass sc = iter->first;
-                        const float rate = iter->second;
-                        if (_extraBufSpeeds.find(sc) != _extraBufSpeeds.end()) {
-                            const float extraRate = _extraBufSpeeds.at(sc);
-                            _extraBufSpeeds.at(sc) = rate + extraRate;
+                        auto sc = iter->first;
+                        auto rate = iter->second;
+                        if (_extraParams.find(sc) != end(_extraParams)) {
+                            const auto& ap = _extraParams.at(sc);
+                            ap->speed = rate + ap->speed;
                         } else {
-                            _extraBufSpeeds.insert(make_pair(sc, rate));
+                            auto ap = new (nothrow) AnimationParameter();
+                            ap->speed = rate;
+                            _extraParams.insert(make_pair(sc, ap));
                         }
                     }
                 }
@@ -1107,13 +1102,15 @@ void UnitNode::updateBufs()
                 {
                     const auto& rates = data->getReceiverVolumeRates();
                     for (auto iter = rates.begin(); iter != rates.end(); ++iter) {
-                        const SkillClass sc = iter->first;
-                        const float rate = iter->second;
-                        if (_extraBufScales.find(sc) != _extraBufScales.end()) {
-                            const float extraRate = _extraBufScales.at(sc);
-                            _extraBufScales.at(sc) = rate + extraRate;
+                        auto sc = iter->first;
+                        auto rate = iter->second;
+                        if (_extraParams.find(sc) != end(_extraParams)) {
+                            const auto& ap = _extraParams.at(sc);
+                            ap->scale = rate + ap->scale;
                         } else {
-                            _extraBufScales.insert(make_pair(sc, rate));
+                            auto ap = new (nothrow) AnimationParameter();
+                            ap->scale = rate;
+                            _extraParams.insert(make_pair(sc, ap));
                         }
                     }
                 }
@@ -1124,48 +1121,41 @@ void UnitNode::updateBufs()
         
         // calculate average
         {
-            for (auto iter = _extraBufSpeeds.begin(); iter != _extraBufSpeeds.end(); ++iter) {
-                const float sum = iter->second;
-                iter->second = sum / cnt;
-            }
-        }
-        
-        {
-            for (auto iter = _extraBufScales.begin(); iter != _extraBufScales.end(); ++iter) {
-                const float sum = iter->second;
-                iter->second = sum / cnt;
+            for (auto iter = begin(_extraParams); iter != end(_extraParams); ++iter) {
+                const auto& ap = iter->second;
+                ap->scale = ap->scale / cnt;
+                ap->speed = ap->speed / cnt;
             }
         }
     }
     
-    scheduleSpeed();
-    scaleNode();
+    updateAnimationParams();
 }
 
 void UnitNode::updateFeatures(const Game* game)
 {
-    const list<Unit::EventLog>& eventLogs = _unit->getEventLogs();
+    const auto& eventLogs = _unit->getEventLogs();
     for (auto iter = eventLogs.begin(); iter != eventLogs.end(); ++iter) {
-        const Unit::EventLog& log = *iter;
-        Unit::EventLogType type = log._type;
+        const auto& log = *iter;
+        auto type = log._type;
         if (type == Unit::kEventLogType_DamageOutput ||
             type == Unit::kEventLogType_DamageInupt) {
-            DamageNature dn = log._damageNature;
+            auto dn = log._damageNature;
             if (dn == kDamageNature_Hurt) {
                 // TODO:
             } else if (dn == kDamageNature_Heal) {
-                static string file("huifu-2.csb");
+                static const string file("huifu-2.csb");
                 addEffect(file);
             }
         } else if (type == Unit::kEventLogType_FeatureTakeEffect) {
-            const FeatureType* ft = log._featureType;
+            auto ft = log._featureType;
             if (ft) {
-                const string& renderKey = ft->getRenderKey();
-                const SpellConfigData* data = DataManager::getInstance()->getSpellConfigData(renderKey);
+                const auto& renderKey = ft->getRenderKey();
+                auto data = DataManager::getInstance()->getSpellConfigData(renderKey);
                 if (data) {
-                    const vector<string>& files = data->getReceiverResourceNames();
+                    const auto& files = data->getReceiverResourceNames();
                     if (files.size() > 0) {
-                        const string& file = files.at(0);
+                        const auto& file = files.at(0);
                         addAnimation(file, false, nullptr, true, data->getReceiverSpellDirection(), SpellConfigData::kBody);
                     }
                 }
@@ -1180,9 +1170,9 @@ void UnitNode::updateFeatures(const Game* game)
                 for (auto iter = log._resources.begin();
                      iter != log._resources.end();
                      ++iter) {
-                    string resource = iter->first;
-                    float amount = iter->second;
-                    string scheduleKey = rollHintScheduleKeyPrefix
+                    auto resource = iter->first;
+                    auto amount = iter->second;
+                    auto scheduleKey = rollHintScheduleKeyPrefix
                     + UnderWorldCoreUtils::to_string(_unit->getUnitId())
                     + rollHintScheduleKeySplitor
                     + UnderWorldCoreUtils::to_string(++_rollHintCounter);
@@ -1229,8 +1219,8 @@ Point UnitNode::getHPBarPosition() const
     if (_hpBar && (Point::ZERO != _hpBar->getPosition())) {
         return _hpBar->getPosition();
     } else if (_sprite) {
-        const Size& size = _sprite->getContentSize();
-        const Point& pos = _sprite->getPosition();
+        const auto& size = _sprite->getContentSize();
+        const auto& pos = _sprite->getPosition();
         float offsetX(0);
         float offsetY(0);
         if (_configData) {
@@ -1238,7 +1228,7 @@ Point UnitNode::getHPBarPosition() const
             offsetY = _configData->getHpBarPosY();
         }
         
-        Point position(pos + Point(offsetX, size.height / 2 + offsetY));
+        auto position(pos + Point(offsetX, size.height / 2 + offsetY));
         position = convertToNodeSpace(_sprite->getParent()->convertToWorldSpace(position));
         return position;
     }
@@ -1251,7 +1241,7 @@ void UnitNode::addShadow()
 {
     if (!_shadow) {
         static const string file("GameImages/effects/backcircle.png");
-        const Point& pos = _sprite->getPosition();
+        const auto& pos = _sprite->getPosition();
         _shadow = Sprite::create(file);
         _shadow->setPosition(pos + _configData->getFootEffectPosition());
         addChild(_shadow, zOrder_bottom);
@@ -1271,8 +1261,8 @@ void UnitNode::rollHintResource(const string& resource,
                                 float amount,
                                 float delay)
 {
-    Node* hintNode = Node::create();
-    Node* iconNode = nullptr;
+    auto hintNode = Node::create();
+    Node* iconNode(nullptr);
     if (resource == RES_NAME_GOLD) {
         iconNode = Sprite::create(StringUtils::format("GameImages/resources/icon_%dB.png", ::ResourceType::Gold));
     } else if (resource == RES_NAME_WOOD) {
@@ -1298,10 +1288,10 @@ void UnitNode::rollHintNode(Node* hintNode, float delay)
     hintNode->setVisible(false);
     getParent()->addChild(hintNode);
     static float duration(2.0f);
-    Sequence* fadeTo = Sequence::create(DelayTime::create(1.5f), FadeTo::create(duration - 1.5f, 0), NULL);
-    MoveBy* moveBy = MoveBy::create(duration, Point(0.f, 100.f));
+    auto fadeTo = Sequence::create(DelayTime::create(1.5f), FadeTo::create(duration - 1.5f, 0), nullptr);
+    auto moveBy = MoveBy::create(duration, Point(0.f, 100.f));
     hintNode->runAction(Sequence::create(DelayTime::create(delay),
                                          CallFunc::create([hintNode](){ hintNode->setVisible(true); }),
-                                         Spawn::create(fadeTo, moveBy, NULL),
-                                         RemoveSelf::create(), NULL));
+                                         Spawn::create(fadeTo, moveBy, nullptr),
+                                         RemoveSelf::create(), nullptr));
 }

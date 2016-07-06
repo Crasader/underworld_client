@@ -16,8 +16,7 @@
 
 namespace tinyxml2 { class XMLElement; }
 
-// first: scale, second: speed
-typedef std::pair<float, float> AnimationParameters;
+class AnimationParameter;
 
 class UAConfigData
 {
@@ -25,13 +24,13 @@ public:
     UAConfigData(tinyxml2::XMLElement *xmlElement);
     virtual ~UAConfigData();
     
-    void getAnimationParameters(UnderWorld::Core::Unit::Direction direction, float& scale, float& speed);
+    const AnimationParameter* getAnimationParameter(UnderWorld::Core::Unit::Direction direction) const;
     
 protected:
-    void parse(AnimationParameters& params, const std::vector<std::string>& directions, const std::vector<std::string>& scales, const std::vector<std::string>& speeds, int index);
+    void parse(AnimationParameter* ret, const std::vector<std::string>& directions, const std::vector<std::string>& scales, const std::vector<std::string>& speeds, int index);
     
 private:
-    std::map<UnderWorld::Core::Unit::Direction, AnimationParameters> _data;
+    std::map<UnderWorld::Core::Unit::Direction, AnimationParameter*> _data;
 };
 
 #endif /* UAConfigData_h */

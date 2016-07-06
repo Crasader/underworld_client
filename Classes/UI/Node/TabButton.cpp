@@ -28,6 +28,19 @@ TabButton::~TabButton()
     removeAllChildren();
 }
 
+TabButton* TabButton::create(const string& title, const string& normal, const string& selected, const Button::ccWidgetClickCallback& callback)
+{
+    TabButton *p = new (nothrow) TabButton();
+    if(p && p->init(title, normal, selected, callback))
+    {
+        p->autorelease();
+        return p;
+    }
+    
+    CC_SAFE_DELETE(p);
+    return nullptr;
+}
+
 TabButton* TabButton::create(const string& title, const Button::ccWidgetClickCallback& callback)
 {
     TabButton *p = new (nothrow) TabButton();
@@ -41,12 +54,10 @@ TabButton* TabButton::create(const string& title, const Button::ccWidgetClickCal
     return nullptr;
 }
 
-bool TabButton::init(const string& title, const Button::ccWidgetClickCallback& callback)
+bool TabButton::init(const string& title, const string& normal, const string& selected, const Button::ccWidgetClickCallback& callback)
 {
     if(Node::init())
     {
-        const auto normal("GameImages/public/button_white_1.png");
-        const auto selected("GameImages/public/button_black_1.png");
         _button = Button::create(normal, selected, selected);
         _button->addClickEventListener(callback);
         addChild(_button);
@@ -66,6 +77,13 @@ bool TabButton::init(const string& title, const Button::ccWidgetClickCallback& c
     }
     
     return false;
+}
+
+bool TabButton::init(const string& title, const Button::ccWidgetClickCallback& callback)
+{
+    static const auto normal("GameImages/public/button_white_1.png");
+    static const auto selected("GameImages/public/button_black_1.png");
+    return init(title, normal, selected, callback);
 }
 
 void TabButton::setEnabled(bool enabled)

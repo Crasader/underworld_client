@@ -158,7 +158,7 @@ protected:
     std::unordered_map<int, FormationUnitNode*> _formationNodes;
     
     Node* _draggingNode;
-    std::vector<Button*> _switchFormationButtons;
+    std::vector<TabButton*> _switchFormationButtons;
     std::map<FormationTableType, TabButton*> _tabButtons;
     Label* _populationLabel;
     Label* _spellCountLabel;

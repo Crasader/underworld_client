@@ -154,6 +154,7 @@
 		A1720EB91BCD2D2E00217E98 /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = A1720EB41BCD2D2E00217E98 /* KeychainItemWrapper.m */; };
 		A1720EBA1BCD2D2E00217E98 /* RMStore.m in Sources */ = {isa = PBXBuildFile; fileRef = A1720EB71BCD2D2E00217E98 /* RMStore.m */; };
 		A1720EBD1BCD309A00217E98 /* NetworkController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720EBB1BCD309A00217E98 /* NetworkController.cpp */; };
+		A173A6BE1D2CDA4A00F9485B /* AnimationParameter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A173A6BC1D2CDA4A00F9485B /* AnimationParameter.cpp */; };
 		A178F76A1D23B7FD006E3812 /* CardInfoLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A178F7681D23B7FD006E3812 /* CardInfoLayer.cpp */; };
 		A178F7701D23B83F006E3812 /* CardXInfoLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A178F76E1D23B83E006E3812 /* CardXInfoLayer.cpp */; };
 		A18524CC1C1AE3E800BE261D /* QuestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A18524CA1C1AE3E800BE261D /* QuestLayer.cpp */; };
@@ -606,6 +607,8 @@
 		A1720EBB1BCD309A00217E98 /* NetworkController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NetworkController.cpp; sourceTree = "<group>"; };
 		A1720EBC1BCD309A00217E98 /* NetworkController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkController.h; sourceTree = "<group>"; };
 		A1720EC71BCD321600217E98 /* CocosGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosGlobal.h; sourceTree = "<group>"; };
+		A173A6BC1D2CDA4A00F9485B /* AnimationParameter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimationParameter.cpp; sourceTree = "<group>"; };
+		A173A6BD1D2CDA4A00F9485B /* AnimationParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationParameter.h; sourceTree = "<group>"; };
 		A178A5031C9BBB63006FD4B0 /* uthash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uthash.h; sourceTree = "<group>"; };
 		A178F7681D23B7FD006E3812 /* CardInfoLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardInfoLayer.cpp; sourceTree = "<group>"; };
 		A178F7691D23B7FD006E3812 /* CardInfoLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardInfoLayer.h; sourceTree = "<group>"; };
@@ -1860,6 +1863,8 @@
 		A1D461581C3E251000E8E60B /* AnimationConfig */ = {
 			isa = PBXGroup;
 			children = (
+				A173A6BC1D2CDA4A00F9485B /* AnimationParameter.cpp */,
+				A173A6BD1D2CDA4A00F9485B /* AnimationParameter.h */,
 				A1DA08CA1CB61CEA00846300 /* BRConfigData.cpp */,
 				A1DA08CB1CB61CEA00846300 /* BRConfigData.h */,
 				A1CA77FE1C892D4E0060F71A /* CardConfigData.cpp */,
@@ -2316,6 +2321,7 @@
 				A18524D01C1AE42000BE261D /* BagLayer.cpp in Sources */,
 				A178F76A1D23B7FD006E3812 /* CardInfoLayer.cpp in Sources */,
 				A1E7BAE21C2149E800CE2A85 /* Constants.cpp in Sources */,
+				A173A6BE1D2CDA4A00F9485B /* AnimationParameter.cpp in Sources */,
 				A16BF2A41C314E5100E91458 /* AttributeData.cpp in Sources */,
 				A1B4AE301C200521005906A6 /* QuestManager.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,

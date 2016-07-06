@@ -126,11 +126,12 @@ bool FormationLayer::init()
         // buttons
         CocosUtils::createExitButton(this, [this]() { removeFromParent(); });
         {
-            static const float offsetX(-40.0f);
+            float offsetX(-40.0f);
             static const Point basePoint(345, getWinSize().height - 15);
             createSwitchFormationButton(basePoint);
             createTabButtons(Point(_tableBasePosition.x + offsetX, basePoint.y));
             
+            offsetX = 10.0f;
             createSaveFormationButton(Point(_tableBasePosition.x + offsetX, _deckBasePosition.y));
             createSetDefaultFormationButton(Point(_tableBasePosition.x + _tableMaxSize.width - offsetX, _deckBasePosition.y));
         }
@@ -464,10 +465,10 @@ Rect FormationLayer::getBoundingBox(Node* node) const
 void FormationLayer::createSwitchFormationButton(const Point& position)
 {
     for (int i = 0; i < FORMATION_MAX_COUNT; ++i) {
-        const auto normal("GameImages/formation/button_yellow_1.png");
-        const auto selected("GameImages/formation/button_blue.png");
-        auto button = Button::create(normal, selected, selected);
-        button->addClickEventListener([this, i](Ref*) {
+        static const auto normal("GameImages/formation/button_yellow_1.png");
+        static const auto selected("GameImages/formation/button_blue.png");
+        const string title = StringUtils::format("%d", i + 1);
+        auto button = TabButton::create(title, normal, selected, [this, i](Ref*) {
             loadFormation(i);
         });
         addChild(button);

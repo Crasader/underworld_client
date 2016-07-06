@@ -30,6 +30,7 @@ class GearLocalData;
 class GearUpgradeData;
 class GearAttributeData;
 class GearSetLocalData;
+class AnimationParameter;
 class UAConfigData;
 class CardConfigData;
 class URConfigData;
@@ -80,7 +81,7 @@ public:
     const GearSetLocalData* getGearSetData(int id) const;
     
     // ---------- animations ----------
-    void getAnimationParameters(const std::string& name, UnderWorld::Core::SkillClass skillClass, UnderWorld::Core::Unit::Direction direction, float& scale, float& speed) const;
+    const AnimationParameter* getAnimationParameter(const std::string& name, UnderWorld::Core::SkillClass skillClass, UnderWorld::Core::Unit::Direction direction) const;
     const CardConfigData* getCardConfigData(const std::string& name) const;
     const URConfigData* getURConfigData(const std::string& name) const;
     const BRConfigData* getBRConfigData(const std::string& name) const;

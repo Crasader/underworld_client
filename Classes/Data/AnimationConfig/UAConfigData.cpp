@@ -9,6 +9,7 @@
 #include "UAConfigData.h"
 #include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
+#include "AnimationParameter.h"
 
 using namespace std;
 
@@ -21,35 +22,37 @@ UAConfigData::UAConfigData(tinyxml2::XMLElement *xmlElement)
             Utils::split(v, direction, "_");
             
             vector<string> v1;
-            const char* scale = xmlElement->Attribute("scale");
-            if (scale) {
-                Utils::split(v1, scale, "_");
+            {
+                const char* data = xmlElement->Attribute("scale");
+                if (data) {
+                    Utils::split(v1, data, "_");
+                }
             }
             
             vector<string> v2;
-            const char* speed = xmlElement->Attribute("speed");
-            if (speed) {
-                Utils::split(v2, speed, "_");
+            {
+                const char* data = xmlElement->Attribute("speed");
+                if (data) {
+                    Utils::split(v2, data, "_");
+                }
             }
             
-            AnimationParameters params;
-            const size_t size(v.size());
-            if (1 == v.size()) {
-                parse(params, v, v1, v2, 0);
-                if (params.first != 1.0f || params.second != 1.0f) {
-                    for (int i = 0; i < UnderWorld::Core::Unit::DIRECTION_COUNT; ++i) {
-                        UnderWorld::Core::Unit::Direction ud = static_cast<UnderWorld::Core::Unit::Direction>(i);
-                        _data.insert(make_pair(ud, params));
-                    }
+            auto size(v.size());
+            if (1 == size) {
+                auto ap = new (nothrow) AnimationParameter();
+                parse(ap, v, v1, v2, 0);
+                for (int i = 0; i < UnderWorld::Core::Unit::DIRECTION_COUNT; ++i) {
+                    auto ud = static_cast<UnderWorld::Core::Unit::Direction>(i);
+                    _data.insert(make_pair(ud, new (nothrow) AnimationParameter(*ap)));
                 }
+                CC_SAFE_FREE(ap);
             } else {
-                const size_t cnt((size > UnderWorld::Core::Unit::DIRECTION_COUNT) ? UnderWorld::Core::Unit::DIRECTION_COUNT : size);
+                auto cnt((size > UnderWorld::Core::Unit::DIRECTION_COUNT) ? UnderWorld::Core::Unit::DIRECTION_COUNT : size);
                 for (int i = 0; i < cnt; ++i) {
-                    parse(params, v, v1, v2, i);
-                    if (params.first != 1.0f || params.second != 1.0f) {
-                        UnderWorld::Core::Unit::Direction ud = static_cast<UnderWorld::Core::Unit::Direction>(i);
-                        _data.insert(make_pair(ud, params));
-                    }
+                    auto ap = new (nothrow) AnimationParameter();
+                    parse(ap, v, v1, v2, i);
+                    auto ud = static_cast<UnderWorld::Core::Unit::Direction>(i);
+                    _data.insert(make_pair(ud, ap));
                 }
             }
         }
@@ -58,39 +61,35 @@ UAConfigData::UAConfigData(tinyxml2::XMLElement *xmlElement)
 
 UAConfigData::~UAConfigData()
 {
-    
+    Utils::clearMap(_data);
 }
 
-void UAConfigData::getAnimationParameters(UnderWorld::Core::Unit::Direction direction, float& scale, float& speed)
+const AnimationParameter* UAConfigData::getAnimationParameter(UnderWorld::Core::Unit::Direction direction) const
 {
-    scale = speed = 1.0f;
-    
-    if (_data.find(direction) != _data.end()) {
-        const AnimationParameters& data = _data.at(direction);
-        scale = data.first;
-        speed = data.second;
+    if (_data.find(direction) != end(_data)) {
+        return _data.at(direction);
     }
+    
+    return nullptr;
 }
 
-void UAConfigData::parse(AnimationParameters& params, const vector<string>& directions, const vector<string>& scales, const vector<string>& speeds, int index)
+void UAConfigData::parse(AnimationParameter* ret, const vector<string>& directions, const vector<string>& scales, const vector<string>& speeds, int index)
 {
+    ret->scale = ret->speed = 1.0f;
+    
     if (directions.size() > index) {
-        const string& string(directions.at(index));
+        const auto& string(directions.at(index));
         if (string.length() > 0) {
-            const bool has = atoi(string.c_str());
+            auto has = atoi(string.c_str());
             if (has) {
                 if (scales.size() > index) {
-                    const float scale = atof(scales.at(index).c_str());
-                    params.first = (scale > 0) ? scale : 1.0f;
-                } else {
-                    params.first = 1.0f;
+                    auto s = atof(scales.at(index).c_str());
+                    ret->scale = (s > 0) ? s : 1.0f;
                 }
                 
                 if (speeds.size() > index) {
-                    const float speed = atof(speeds.at(index).c_str());
-                    params.second = (speed > 0) ? speed : 1.0f;
-                } else {
-                    params.second = 1.0f;
+                    auto s = atof(speeds.at(index).c_str());
+                    ret->speed = (s > 0) ? s : 1.0f;
                 }
             }
         } else {
