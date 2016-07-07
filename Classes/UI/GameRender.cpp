@@ -270,13 +270,16 @@ void GameRender::updateBullets(const Game* game)
                 const float d = sqrt(pow(abs(opos.x- targetPos.x), 2) + pow(abs(opos.y - targetPos.y), 2));
                 const float distance = sqrt(pow(abs(pos.x- opos.x), 2) + pow(abs(pos.y - opos.y), 2));
                 float height = 0;
-                const float bulletMaxHeightFactor = bullet->getBulletType()->getHeight();
                 if (d > 0) {
-                    const float a = - (2.0f * d * bulletMaxHeightFactor + h + 2.0f * sqrt(pow(d * bulletMaxHeightFactor, 2) + d * h * bulletMaxHeightFactor)) / pow(d, 2);
-                    const float b = 2.0f * (d * bulletMaxHeightFactor + sqrt(pow(d * bulletMaxHeightFactor, 2) + d * h * bulletMaxHeightFactor)) / d;
+                    const float bulletMaxHeightFactor = bullet->getBulletType()->getHeight() / 100.0f;
+                    const float bulletMaxHeight = d * bulletMaxHeightFactor;
+                    const float a = - (2.0f * bulletMaxHeight + h + 2.0f * sqrt(pow(bulletMaxHeight, 2) + h * bulletMaxHeight)) / pow(d, 2);
+                    const float b = 2.0f * (bulletMaxHeight + sqrt(pow(bulletMaxHeight, 2) + h * bulletMaxHeight)) / d;
                     height = a * pow(distance, 2) + b * distance + h;
+                    node->setRotation(CC_RADIANS_TO_DEGREES(atan(2.0f * a * distance + b)) * -1);
                 }
                 _mapLayer->repositionUnit(node, pos + Coordinate32(0, height));
+                
             }
         } else {
             if (!isExploded) {
