@@ -276,7 +276,11 @@ void GameRender::updateBullets(const Game* game)
                     const float a = - (2.0f * bulletMaxHeight + h + 2.0f * sqrt(pow(bulletMaxHeight, 2) + h * bulletMaxHeight)) / pow(d, 2);
                     const float b = 2.0f * (bulletMaxHeight + sqrt(pow(bulletMaxHeight, 2) + h * bulletMaxHeight)) / d;
                     height = a * pow(distance, 2) + b * distance + h;
-                    node->setRotation(CC_RADIANS_TO_DEGREES(atan(2.0f * a * distance + b)) * -1);
+                    int32_t direction = -1;
+                    if (targetPos.x < opos.x) {
+                        direction = 1;
+                    }
+                    node->setRotation(CC_RADIANS_TO_DEGREES(atan(2.0f * a * distance + b)) * direction);
                 }
                 _mapLayer->repositionUnit(node, pos + Coordinate32(0, height));
                 
