@@ -30,6 +30,7 @@ using namespace UnderWorld::Core;
 
 static const string tickSelectorKey("tickSelectorKey");
 static const int battleTotalTime(600);
+static const float eyeRadians = tan(CC_DEGREES_TO_RADIANS(75));
 
 GameRender::GameRender(Scene* scene, const string& opponentsAccount)
 :_observer(nullptr)
@@ -276,11 +277,16 @@ void GameRender::updateBullets(const Game* game)
                     const float a = - (2.0f * bulletMaxHeight + h + 2.0f * sqrt(pow(bulletMaxHeight, 2) + h * bulletMaxHeight)) / pow(d, 2);
                     const float b = 2.0f * (bulletMaxHeight + sqrt(pow(bulletMaxHeight, 2) + h * bulletMaxHeight)) / d;
                     height = a * pow(distance, 2) + b * distance + h;
-                    int32_t direction = -1;
-                    if (targetPos.x < opos.x) {
-                        direction = 1;
+                    
+                    const float beta = atan(2.0f * a * distance + b);
+                    if (targetPos.x == opos.x) {
+                        node->setRotation(targetPos.y > opos.y ? 90 : -90);
+                    } else {
+                        const float alpha = atan(float(targetPos.y - opos.y) / (targetPos.x - opos.x));
+                        const float gamma = atan((sin(alpha) + tan(beta) / eyeRadians)/((targetPos.x - opos.x)/d)) - alpha;
+                        node->setRotation(CC_RADIANS_TO_DEGREES(gamma));
                     }
-                    node->setRotation(CC_RADIANS_TO_DEGREES(atan(2.0f * a * distance + b)) * direction);
+                    
                 }
                 _mapLayer->repositionUnit(node, pos + Coordinate32(0, height));
                 
