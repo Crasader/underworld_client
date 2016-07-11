@@ -742,7 +742,7 @@ Node* MapLayer::createRing(const string& name, const Point& point)
         fileName.assign("huixue-xin.csb");
     } else if (name.find(SPELL_NAME_SPEEDUP) != string::npos) {
         fileName.assign("jiasu-xin.csb");
-    } else if (name.find(SPELL_NAME_GLOBAL) != string::npos){
+    } else if (name.size() > 0) {
         fileName.assign("quan-2.csb");
     }
     

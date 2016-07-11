@@ -771,10 +771,11 @@ void GameRender::tryToUseCard(const string& card, int idx, const Point& point)
                                     }
                                 }
                             }
-                        } else if (spellName.find(SPELL_NAME_GLOBAL) != string::npos) {
-                            _mapLayer->addSpell(spellName, 1.0f);
-                        } else {
+                        } else if (spellName.find(SPELL_NAME_CURE) != string::npos ||
+                                   spellName.find(SPELL_NAME_SPEEDUP) != string::npos) {
                             _mapLayer->addSpell(spellName, 12.0f);
+                        } else {
+                            _mapLayer->addSpell(spellName, 1.0f);
                         }
                     }
                 }

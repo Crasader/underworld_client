@@ -72,10 +72,9 @@ typedef std::function<void(long errorCode)> httpErrorCallback;
 #define RES_NAME_GOLD       ("金子")
 #define RES_NAME_WOOD       ("木头")
 
-#define SPELL_NAME_FIREBALL ("全局技能火焰雨")
+#define SPELL_NAME_FIREBALL ("火焰雨")
 #define SPELL_NAME_CURE     ("治愈")
 #define SPELL_NAME_SPEEDUP  ("顺风之力")
-#define SPELL_NAME_GLOBAL   ("全局技能")
 
 #define JSON_KEY ("code")
 
