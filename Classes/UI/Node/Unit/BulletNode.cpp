@@ -71,7 +71,7 @@ bool BulletNode::init(const Bullet* bullet, float duration)
             if (data) {
                 const auto& file = data->getResource();
                 if (file.length() > 0) {
-#if USING_PVR
+#if false
                     static string path("jian-all/jian");
                     _isPVR = true;
 #else
@@ -134,7 +134,7 @@ void BulletNode::update(bool newCreated)
         const float deltaY(currentPos.y - targetPos.y);
         
         if (abs(deltaX) > 0) {
-            if (!_isPVR) {
+            if (false) {
                 _angel = (-180.0f) * atanf(deltaY / deltaX) / M_PI;
                 setRotation(_angel);
             }

@@ -776,14 +776,14 @@ void MapLayer::clearRingInfo()
 
 Rect MapLayer::getSpellRingBoundingBox() const
 {
-    Node* ring = _spellRing.second;
+    auto ring = _spellRing.second;
     if (ring) {
-        const Vector<Node*>& children = ring->getChildren();
+        const auto& children = ring->getChildren();
         if (children.size() > 0) {
-            auto sprite = dynamic_cast<Sprite*>(children.at(0));
+            auto sprite = dynamic_cast<Sprite*>(children.front());
             if (sprite) {
                 Point origin(ring->getPosition());
-                const Size& size = sprite->getContentSize();
+                const auto& size = sprite->getContentSize() * ring->getScale();
                 origin.x = origin.x - size.width / 2;
                 origin.y = origin.y - size.height / 2;
                 return Rect(origin, size);

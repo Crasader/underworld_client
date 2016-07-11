@@ -248,16 +248,16 @@ void GameRender::updateUnits(const Game* game, int index)
 void GameRender::updateBullets(const Game* game)
 {
     for (int i = 0; i < _world->getBulletCount(); ++i) {
-        const Bullet* bullet = _world->getBullet(i);
-        const Coordinate32& pos = bullet->getPos();
-        const Coordinate32& targetPos = bullet->targetPos();
+        auto bullet = _world->getBullet(i);
+        const auto& pos = bullet->getPos();
+        const auto& targetPos = bullet->targetPos();
         const bool isExploded(bullet->isExploded());
         if (_allBulletNodes.find(bullet) != _allBulletNodes.end()) {
             // already exist, update it
-            BulletNode* node = _allBulletNodes.at(bullet);
+            auto node = _allBulletNodes.at(bullet);
             node->update();
             if (isExploded) {
-                const BulletType* bt = bullet->getBulletType();
+                auto bt = bullet->getBulletType();
                 if (bt && _mapLayer) {
                     _mapLayer->addBulletExplosionEffect(bt->getRenderKey(), pos);
                 }
@@ -265,8 +265,8 @@ void GameRender::updateBullets(const Game* game)
                 _allBulletNodes.erase(bullet);
                 _bulletParams.erase(bullet);
             } else {
-                const pair<Coordinate32, float>& params = _bulletParams.at(bullet);
-                const Coordinate32& opos = params.first;
+                const auto& params = _bulletParams.at(bullet);
+                const auto& opos = params.first;
                 const float h = params.second;
                 const float d = sqrt(pow(abs(opos.x- targetPos.x), 2) + pow(abs(opos.y - targetPos.y), 2));
                 const float distance = sqrt(pow(abs(pos.x- opos.x), 2) + pow(abs(pos.y - opos.y), 2));
@@ -295,7 +295,7 @@ void GameRender::updateBullets(const Game* game)
             if (!isExploded) {
                 const auto distance = pos.distance(targetPos);
                 const auto speed = bullet->getBulletType()->getSpeed();
-                BulletNode* node = BulletNode::create(bullet, (float)distance / speed);
+                auto node = BulletNode::create(bullet, (float)distance / speed);
                 node->registerObserver(this);
                 const float height = bullet->getHeight();
                 _mapLayer->addUnit(node, pos + Coordinate32(0, height));

@@ -93,7 +93,9 @@ FormationLayer::FormationLayer()
     
     reloadAllCandidateCards();
     
-    CocosUtils::loadPVR("soldier-Archer");
+# if USING_PVR
+    CocosUtils::loadPVR("soldier-Archer-test");
+#endif
 }
 
 FormationLayer::~FormationLayer()
