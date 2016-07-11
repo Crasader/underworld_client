@@ -43,6 +43,7 @@ BattleScene::BattleScene()
 #if true
     CocosUtils::loadPVR("hero-Fat");
     CocosUtils::loadPVR("soldier-Archer-test");
+    CocosUtils::loadPVR("soldier-Archer-test-shadows");
     CocosUtils::loadPVR("effect/xeffect-1");
     CocosUtils::loadPVR("effect/jian-test");
     CocosUtils::loadPVR("effect/jian");

@@ -24,9 +24,6 @@ static const int zOrder_bottom(-1);
 static const int zOrder_top(1);
 static const float hpThreshold(50.0f);
 
-// TODO: remove
-static const string resourcePrefix("soldier-Archer");
-
 UnitNode* UnitNode::create(const Unit* unit, bool rightSide)
 {
     UnitNode *ret = new (nothrow) UnitNode(unit, rightSide);
@@ -272,6 +269,7 @@ void UnitNode::flipX(Node* node) const
 
 void UnitNode::scale(Node* node, float scale) const
 {
+    CS_RETURN_IF(!node);
     const float x = node->getScaleX();
     node->setScale(scale);
     if ((x > 0) ^ (scale > 0)) {
@@ -484,7 +482,7 @@ void UnitNode::getAnimationFiles(vector<string>& output,
         }
         
         if (prefix.size() > 0) {
-            data.assign(resourcePrefix + "/" + prefix + StringUtils::format("/body/%d", getResourceId(direction)));
+            data.assign(_configData->getPrefix() + "/" + prefix + StringUtils::format("/body/%d", getResourceId(direction)));
         }
     } else {
         const auto& prefix = _configData->getPrefix();
@@ -651,14 +649,25 @@ void UnitNode::playAnimation(const string& files,
         }
         
         _node = CocosUtils::getAnimationNode(files, 0);
+        addChild(_node);
         
+        string shadowFile;
         if (_configData->isPVR()) {
             _sprite = dynamic_cast<Sprite*>(_node);
+            
+            static const string separator("body");
+            auto pos = files.find(separator);
+            if (pos != string::npos) {
+                shadowFile.assign(files);
+                shadowFile.replace(pos, separator.size(), StringUtils::format("shadows/%d", flip ? 1 : 0));
+            }
         } else {
             _sprite = dynamic_cast<Sprite*>(_node->getChildren().front());
         }
         
-        addChild(_node);
+        if (false && shadowFile.size() > 0) {
+            createShadow(shadowFile, flip);
+        }
         
         if (false && defaultPixelFormat != Texture2D::getDefaultAlphaPixelFormat()) {
             Texture2D::setDefaultAlphaPixelFormat(defaultPixelFormat);
@@ -672,9 +681,15 @@ void UnitNode::playAnimation(const string& files,
         if (play) {
             // 1. set scheduler
             setScheduler(_node);
+            if (_shadow) {
+                setScheduler(_shadow);
+            }
             
             // 2. play animation
             auto duration = CocosUtils::playAnimation(_sprite, files, DEFAULT_FRAME_DELAY, loop, frameIndex, -1, lastFrameCallFunc);
+            if (_shadow) {
+                CocosUtils::playAnimation(_shadow, shadowFile, DEFAULT_FRAME_DELAY, loop, frameIndex);
+            }
             
             // change scale and speed
             auto parameter = DataManager::getInstance()->getAnimationParameter(_unitName, thisSkillClass(), _direction);
@@ -903,6 +918,8 @@ void UnitNode::removeNode()
         _baseParams->scale = 1.0f;
         _baseParams->speed = 1.0f;
     }
+    
+    removeShadow();
 }
 
 void UnitNode::updateAnimationParams()
@@ -922,6 +939,7 @@ void UnitNode::updateAnimationParams()
     
     if (_node) {
         this->scale(_node, scale);
+        this->scale(_shadow, scale);
         
         if (_speedScheduler) {
             if (speed != 1.0f) {
@@ -1243,23 +1261,29 @@ Point UnitNode::getHPBarPosition() const
 }
 
 #pragma mark shadow
-void UnitNode::addShadow()
+void UnitNode::createShadow(const string& file, bool flip)
 {
     if (!_shadow) {
-        static const string file("GameImages/effects/backcircle.png");
-        const auto& pos = _sprite->getPosition();
-        _shadow = Sprite::create(file);
-        _shadow->setPosition(pos + _configData->getFootEffectPosition());
-        addChild(_shadow, zOrder_bottom);
+        Point offset(Point::ZERO);
+        if (_configData->isPVR()) {
+            _shadow = CocosUtils::getAnimationNode(file, 0);
+        } else {
+            _shadow = Sprite::create(file);
+        }
+        
+        if (_observer) {
+            _observer->onUnitNodeCreateShadow(this, _shadow, _configData->getFootEffectPosition());
+        }
     }
 }
 
 void UnitNode::removeShadow()
 {
-    if (_shadow) {
-        _shadow->removeFromParent();
-        _shadow = nullptr;
+    if (_observer) {
+        _observer->onUnitNodeRemoveShadow(this);
     }
+    
+    _shadow = nullptr;
 }
 
 #pragma mark hint

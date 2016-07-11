@@ -211,6 +211,9 @@ void GameRender::updateUnits(const Game* game, int index)
                 if (_mapLayer) {
                     if (kSkillClass_Move == sc) {
                         _mapLayer->repositionUnit(node, pos);
+                        if (_unitShadows.find(node) != end(_unitShadows)) {
+                            _unitShadows.at(node)->setPosition(node->getPosition());
+                        }
                     }
                     
                     _mapLayer->checkUnitWithSpellRing(node);
@@ -421,6 +424,27 @@ void GameRender::hurtUnit(const Unit* target, const string& trigger)
 }
 
 #pragma mark - UnitNodeObserver
+void GameRender::onUnitNodeCreateShadow(UnitNode* node, Node* shadow, const Point& offset)
+{
+    if (node && shadow) {
+        auto parent = node->getParent();
+        shadow->setPosition(node->getPosition() + offset);
+        parent->addChild(shadow, -2000);
+        CCASSERT(_unitShadows.find(node) == end(_unitShadows), "shadow has exist.");
+        _unitShadows.insert(make_pair(node, shadow));
+    }
+}
+
+void GameRender::onUnitNodeRemoveShadow(UnitNode* node)
+{
+    if (node && _unitShadows.find(node) != end(_unitShadows)) {
+        auto shadow = _unitShadows.at(node);
+        shadow->stopAllActions();
+        shadow->removeFromParent();
+        _unitShadows.erase(node);
+    }
+}
+
 void GameRender::onUnitNodePlayedDeadAnimation(int unitId)
 {
     removeUnit(unitId);
@@ -555,9 +579,11 @@ void GameRender::onDefeatLayerContinued(Layer* pSender)
 void GameRender::removeUnit(int unitId)
 {
     if (_allUnitNodes.find(unitId) != _allUnitNodes.end()) {
-        Node* node = _allUnitNodes.at(unitId);
+        auto node = _allUnitNodes.at(unitId);
         node->removeFromParent();
         _allUnitNodes.erase(unitId);
+        
+        onUnitNodeRemoveShadow(node);
     }
 }
 
@@ -577,7 +603,12 @@ void GameRender::removeAllUnits()
         iter->second->removeFromParent();
     }
     
+    for (auto iter = begin(_unitShadows); iter != end(_unitShadows); ++iter) {
+        iter->second->removeFromParent();
+    }
+    
     _allUnitNodes.clear();
+    _unitShadows.clear();
     _cores.clear();
 }
 

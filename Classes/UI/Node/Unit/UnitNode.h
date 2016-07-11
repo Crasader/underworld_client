@@ -34,6 +34,8 @@ class UnitNodeObserver
 {
 public:
     virtual ~UnitNodeObserver() {}
+    virtual void onUnitNodeCreateShadow(UnitNode* node, Node* shadow, const Point& offset) = 0;
+    virtual void onUnitNodeRemoveShadow(UnitNode* node) = 0;
     virtual void onUnitNodePlayedDeadAnimation(int unitId) = 0;
     virtual void onUnitNodeHurtTheTarget(UnitNode* node) = 0;
     virtual void onUnitNodeShakeScreen(UnitNode* node) = 0;
@@ -145,7 +147,7 @@ protected:
     Point getHPBarPosition() const;
     
     // shadow
-    void addShadow();
+    void createShadow(const std::string& file, bool flip);
     void removeShadow();
     
     // hint

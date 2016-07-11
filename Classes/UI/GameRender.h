@@ -65,6 +65,8 @@ protected:
     virtual void render(const Game* game) override;
     
     // UnitNodeObserver
+    virtual void onUnitNodeCreateShadow(UnitNode* node, Node* shadow, const Point& offset) override;
+    virtual void onUnitNodeRemoveShadow(UnitNode* node) override;
     virtual void onUnitNodePlayedDeadAnimation(int unitId) override;
     virtual void onUnitNodeHurtTheTarget(UnitNode* node) override;
     virtual void onUnitNodeShakeScreen(UnitNode* node) override;
@@ -139,6 +141,7 @@ private:
     const GameModeHMM* _gameModeHMM;
     Commander* _commander;
     std::unordered_map<int, UnitNode*> _allUnitNodes;
+    std::unordered_map<UnitNode*, Node*> _unitShadows;
     std::unordered_map<const void*, std::pair<Coordinate32, float>> _bulletParams;
     std::unordered_map<const void*, BulletNode*> _allBulletNodes;
     std::unordered_map<int, const Unit*> _cores;
