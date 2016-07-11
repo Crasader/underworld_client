@@ -126,7 +126,8 @@ void BulletNode::update(bool newCreated)
         const auto& currentPos = _bullet->getPos();
         const auto& targetPos = _bullet->targetPos();
         
-        if (newCreated && (_isPVR == (currentPos.x < targetPos.x))) {
+        // TODO: remove the unused code
+        if (false && newCreated && (_isPVR == (currentPos.x < targetPos.x))) {
             setScaleX(-1 * getScaleX());
         }
         
@@ -134,6 +135,7 @@ void BulletNode::update(bool newCreated)
         const float deltaY(currentPos.y - targetPos.y);
         
         if (abs(deltaX) > 0) {
+            // TODO: remove the unused code
             if (false) {
                 _angel = (-180.0f) * atanf(deltaY / deltaX) / M_PI;
                 setRotation(_angel);

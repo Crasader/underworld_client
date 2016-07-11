@@ -7,6 +7,7 @@
 //
 
 #include "UnitNode.h"
+#include "cocostudio/CocoStudio.h"
 #include "DataManager.h"
 #include "AnimationParameter.h"
 #include "URConfigData.h"
@@ -62,11 +63,11 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
 {
     _unitName = unit->getUnitBase().getRenderKey();
     _configData = DataManager::getInstance()->getURConfigData(_unitName);
-#if USING_PVR
-    _needToFlip = !rightSide;
-#else
-    _needToFlip = (rightSide == _configData->isFaceRight());
-#endif
+    if (_configData->isPVR()) {
+        _needToFlip = !rightSide;
+    } else {
+        _needToFlip = (rightSide == _configData->isFaceRight());
+    }
     UnitClass uc(thisUnitClass());
     _isBuilding = (kUnitClass_Core == uc || kUnitClass_Building == uc);
     _baseParams = new (nothrow) AnimationParameter();
@@ -99,9 +100,9 @@ UnitNode::~UnitNode()
 bool UnitNode::init()
 {
     if (Node::init()) {
-#if USING_PVR
-        scheduleUpdate();
-#endif
+        if (_configData->isPVR()) {
+            scheduleUpdate();
+        }
         return true;
     }
     
@@ -297,48 +298,54 @@ void UnitNode::playSound(const string& file) const
 #pragma mark - getters
 int UnitNode::getResourceId(Unit::Direction direction) const
 {
-    switch (direction) {
-#if USING_PVR
-        case Unit::kDirection_Up:
-            return 0;
-        case Unit::kDirection_leftUp2:
-        case Unit::kDirection_rightUp2:
-            return 1;
-        case Unit::kDirection_leftUp1:
-        case Unit::kDirection_rightUp1:
-            return 2;
-        case Unit::kDirection_right:
-        case Unit::kDirection_left:
-            return 3;
-        case Unit::kDirection_leftDown1:
-        case Unit::kDirection_rightDown1:
-            return 4;
-        case Unit::kDirection_leftDown2:
-        case Unit::kDirection_rightDown2:
-            return 5;
-        case Unit::kDirection_Down:
-            return 6;
-#else
-        case Unit::kDirection_Up:
-        case Unit::kDirection_rightUp1:
-        case Unit::kDirection_leftUp1:
-        case Unit::kDirection_rightUp2:
-        case Unit::kDirection_leftUp2:
-            return 2;
-        case Unit::kDirection_right:
-        case Unit::kDirection_left:
-            return 3;
-        case Unit::kDirection_rightDown1:
-        case Unit::kDirection_leftDown1:
-        case Unit::kDirection_rightDown2:
-        case Unit::kDirection_leftDown2:
-        case Unit::kDirection_Down:
-            return 4;
-#endif
-            
-        default:
-            assert(false);
-            return 0;
+    if (_configData->isPVR()) {
+        switch (direction) {
+            case Unit::kDirection_Up:
+                return 0;
+            case Unit::kDirection_leftUp2:
+            case Unit::kDirection_rightUp2:
+                return 1;
+            case Unit::kDirection_leftUp1:
+            case Unit::kDirection_rightUp1:
+                return 2;
+            case Unit::kDirection_right:
+            case Unit::kDirection_left:
+                return 3;
+            case Unit::kDirection_leftDown1:
+            case Unit::kDirection_rightDown1:
+                return 4;
+            case Unit::kDirection_leftDown2:
+            case Unit::kDirection_rightDown2:
+                return 5;
+            case Unit::kDirection_Down:
+                return 6;
+                
+            default:
+                assert(false);
+                return 0;
+        }
+    } else {
+        switch (direction) {
+            case Unit::kDirection_Up:
+            case Unit::kDirection_rightUp1:
+            case Unit::kDirection_leftUp1:
+            case Unit::kDirection_rightUp2:
+            case Unit::kDirection_leftUp2:
+                return 2;
+            case Unit::kDirection_right:
+            case Unit::kDirection_left:
+                return 3;
+            case Unit::kDirection_rightDown1:
+            case Unit::kDirection_leftDown1:
+            case Unit::kDirection_rightDown2:
+            case Unit::kDirection_leftDown2:
+            case Unit::kDirection_Down:
+                return 4;
+                
+            default:
+                assert(false);
+                return 0;
+        }
     }
 }
 
@@ -395,11 +402,8 @@ bool UnitNode::needToFlip(Unit::Direction direction) const
 {
     bool flip(false);
     if (_unit) {
-#if USING_PVR
-        const bool isFaceRight(false);
-#else
-        const bool isFaceRight(_configData->isFaceRight());
-#endif
+        const bool isFaceRight(_configData->isPVR() ? false : _configData->isFaceRight());
+        
         switch (direction) {
             case Unit::kDirection_right:
             case Unit::kDirection_rightUp1:
@@ -437,104 +441,104 @@ void UnitNode::getAnimationFiles(vector<string>& output,
     
     string data;
     
-#if USING_PVR
-    string prefix("");
-    switch (sc) {
-        case kSkillClass_Stop:
-        case kSkillClass_Produce:
-        {
-            prefix = "stand";
-        }
-            break;
-        case kSkillClass_Move:
-        {
-            if (_isBuilding) {
-                assert(false);
-            } else {
-                prefix = "run";
-            }
-        }
-            break;
-        case kSkillClass_Attack:
-        {
-            if (_isStandby) {
+    if (_configData->isPVR()) {
+        string prefix("");
+        switch (sc) {
+            case kSkillClass_Stop:
+            case kSkillClass_Produce:
+            {
                 prefix = "stand";
-            } else {
-                prefix = "attack";
             }
-        }
-            break;
-        case kSkillClass_Cast:
-        {
-            prefix = "skill";
-        }
-            break;
-        case kSkillClass_Die:
-        {
-            prefix = "stand";
-        }
-            break;
-            
-        default:
-            break;
-    }
-    
-    if (prefix.size() > 0) {
-        data.assign(resourcePrefix + "/" + prefix + StringUtils::format("/body/%d", getResourceId(direction)));
-    }
-#else
-    const auto& prefix = _configData->getPrefix();
-    switch (sc) {
-        case kSkillClass_Stop:
-        case kSkillClass_Produce:
-        {
-            getStandbyFiles(data, direction, isHealthy);
-        }
-            break;
-        case kSkillClass_Move:
-        {
-            if (_isBuilding) {
-                assert(false);
-            } else {
-                data = prefix + StringUtils::format("-run-%d.csb", getResourceId(direction));
+                break;
+            case kSkillClass_Move:
+            {
+                if (_isBuilding) {
+                    assert(false);
+                } else {
+                    prefix = "run";
+                }
             }
+                break;
+            case kSkillClass_Attack:
+            {
+                if (_isStandby) {
+                    prefix = "stand";
+                } else {
+                    prefix = "attack";
+                }
+            }
+                break;
+            case kSkillClass_Cast:
+            {
+                prefix = "skill";
+            }
+                break;
+            case kSkillClass_Die:
+            {
+                prefix = "stand";
+            }
+                break;
+                
+            default:
+                break;
         }
-            break;
-        case kSkillClass_Attack:
-        {
-            if (_isStandby) {
+        
+        if (prefix.size() > 0) {
+            data.assign(resourcePrefix + "/" + prefix + StringUtils::format("/body/%d", getResourceId(direction)));
+        }
+    } else {
+        const auto& prefix = _configData->getPrefix();
+        switch (sc) {
+            case kSkillClass_Stop:
+            case kSkillClass_Produce:
+            {
                 getStandbyFiles(data, direction, isHealthy);
-            } else {
-                getAttackFiles(output, direction, isHealthy);
             }
+                break;
+            case kSkillClass_Move:
+            {
+                if (_isBuilding) {
+                    assert(false);
+                } else {
+                    data = prefix + StringUtils::format("-run-%d.csb", getResourceId(direction));
+                }
+            }
+                break;
+            case kSkillClass_Attack:
+            {
+                if (_isStandby) {
+                    getStandbyFiles(data, direction, isHealthy);
+                } else {
+                    getAttackFiles(output, direction, isHealthy);
+                }
+            }
+                break;
+            case kSkillClass_Cast:
+            {
+                const auto& file = prefix + StringUtils::format("-skill-%d.csb", getResourceId(direction));
+                if (FileUtils::getInstance()->isFileExist(file)) {
+                    data = file;
+                } else {
+                    getAttackFiles(output, direction, isHealthy);
+                }
+            }
+                break;
+            case kSkillClass_Die:
+            {
+                if (_isBuilding) {
+                    data = _configData->getBDestroyed();
+                }
+                
+                if (0 == data.length() || !FileUtils::getInstance()->isFileExist(data)) {
+                    data = prefix + StringUtils::format("-dead-%d.csb", getResourceId(direction));
+                }
+            }
+                break;
+            default:
+                assert(false);
+                break;
         }
-            break;
-        case kSkillClass_Cast:
-        {
-            const auto& file = prefix + StringUtils::format("-skill-%d.csb", getResourceId(direction));
-            if (FileUtils::getInstance()->isFileExist(file)) {
-                data = file;
-            } else {
-                getAttackFiles(output, direction, isHealthy);
-            }
-        }
-            break;
-        case kSkillClass_Die:
-        {
-            if (_isBuilding) {
-                data = _configData->getBDestroyed();
-            }
-            
-            if (0 == data.length() || !FileUtils::getInstance()->isFileExist(data)) {
-                data = prefix + StringUtils::format("-dead-%d.csb", getResourceId(direction));
-            }
-        }
-            break;
-        default:
-            assert(false);
-            break;
     }
-#endif
     
     if (0 == output.size() && 0 < data.size()) {
         output.push_back(data);
@@ -547,24 +551,24 @@ void UnitNode::getStandbyFiles(string& output,
 {
     output.clear();
     
-#if USING_PVR
-    vector<string> vs;
-    getAnimationFiles(vs, kSkillClass_Stop, direction, isHealthy);
-    if (vs.size() > 0) {
-        output.assign(vs.at(0));
+    if (_configData->isPVR()) {
+        vector<string> vs;
+        getAnimationFiles(vs, kSkillClass_Stop, direction, isHealthy);
+        if (vs.size() > 0) {
+            output.assign(vs.at(0));
+        }
+    } else {
+        if (_isBuilding) {
+            const auto& normal = StringUtils::format(_configData->getBNormal().c_str(), getResourceId(direction));
+            const auto& damaged = StringUtils::format(_configData->getBDamaged().c_str(), getResourceId(direction));
+            output = isHealthy ? normal : (damaged.length() > 0 ? damaged : normal);
+        }
+        
+        if (0 == output.length() || !FileUtils::getInstance()->isFileExist(output)) {
+            const auto& prefix = _configData->getPrefix();
+            output = prefix + StringUtils::format("-standby-%d.csb", getResourceId(direction));
+        }
     }
-#else
-    if (_isBuilding) {
-        const auto& normal = StringUtils::format(_configData->getBNormal().c_str(), getResourceId(direction));
-        const auto& damaged = StringUtils::format(_configData->getBDamaged().c_str(), getResourceId(direction));
-        output = isHealthy ? normal : (damaged.length() > 0 ? damaged : normal);
-    }
-    
-    if (0 == output.length() || !FileUtils::getInstance()->isFileExist(output)) {
-        const auto& prefix = _configData->getPrefix();
-        output = prefix + StringUtils::format("-standby-%d.csb", getResourceId(direction));
-    }
-#endif
 }
 
 void UnitNode::getAttackFiles(vector<string>& output,
@@ -573,47 +577,53 @@ void UnitNode::getAttackFiles(vector<string>& output,
 {
     output.clear();
     
-#if USING_PVR
-    getAnimationFiles(output, kSkillClass_Attack, direction, isHealthy);
-#else
-    const auto& prefix = _configData->getPrefix();
-    {
-        const auto& attack = prefix + StringUtils::format("-attack-%d.csb", getResourceId(direction));
-        output.push_back(attack);
-    }
-    // TODO: handle the unit
-    if (_unitName != "巨龙哨兵")
-    {
-        const auto& backSing = prefix + StringUtils::format("-attack-%d-1.csb", getResourceId(direction));
-        output.push_back(backSing);
-    }
-    
-    bool isExist(true);
-    for (auto iter = begin(output); iter != end(output); ++iter) {
-        const auto& csbFile = *iter;
-        if (0 == csbFile.length() || !FileUtils::getInstance()->isFileExist(csbFile)) {
-            isExist = false;
-            break;
+    if (_configData->isPVR()) {
+        getAnimationFiles(output, kSkillClass_Attack, direction, isHealthy);
+    } else {
+        const auto& prefix = _configData->getPrefix();
+        {
+            const auto& attack = prefix + StringUtils::format("-attack-%d.csb", getResourceId(direction));
+            output.push_back(attack);
+        }
+        // TODO: handle the unit
+        if (_unitName != "巨龙哨兵")
+        {
+            const auto& backSing = prefix + StringUtils::format("-attack-%d-1.csb", getResourceId(direction));
+            output.push_back(backSing);
+        }
+        
+        bool isExist(true);
+        for (auto iter = begin(output); iter != end(output); ++iter) {
+            const auto& csbFile = *iter;
+            if (0 == csbFile.length() || !FileUtils::getInstance()->isFileExist(csbFile)) {
+                isExist = false;
+                break;
+            }
+        }
+        
+        if (!isExist) {
+            output.clear();
+            string data;
+            getStandbyFiles(data, direction, isHealthy);
+            output.push_back(data);
         }
     }
-    
-    if (!isExist) {
-        output.clear();
-        string data;
-        getStandbyFiles(data, direction, isHealthy);
-        output.push_back(data);
-    }
-#endif
 }
 
 int UnitNode::getCurrentFrameIndex() const
 {
     if (_animation) {
-#if USING_PVR
-        return _animation->getCurrentFrameIndex();
-#else
-        return _animation->getCurrentFrame();
-#endif
+        if (_configData->isPVR()) {
+            auto animation = dynamic_cast<Animate*>(_animation);
+            if (animation) {
+                return animation->getCurrentFrameIndex();
+            }
+        } else {
+            auto animation = dynamic_cast<cocostudio::timeline::ActionTimeline*>(_animation);
+            if (animation) {
+                return animation->getCurrentFrame();
+            }
+        }
     }
     
     return 0;
@@ -642,11 +652,11 @@ void UnitNode::playAnimation(const string& files,
         
         _node = CocosUtils::getAnimationNode(files, 0);
         
-#if USING_PVR
-        _sprite = dynamic_cast<Sprite*>(_node);
-#else
-        _sprite = dynamic_cast<Sprite*>(_node->getChildren().front());
-#endif
+        if (_configData->isPVR()) {
+            _sprite = dynamic_cast<Sprite*>(_node);
+        } else {
+            _sprite = dynamic_cast<Sprite*>(_node->getChildren().front());
+        }
         
         addChild(_node);
         
@@ -965,11 +975,7 @@ void UnitNode::adjustEffect(Node* effect,
     if (effect) {
         bool flip(false);
         if (SpellConfigData::kNone != direction) {
-#if USING_PVR
-            const bool isFaceRight(_needToFlip);
-#else
-            const bool isFaceRight = _needToFlip ^ _configData->isFaceRight();
-#endif
+            const bool isFaceRight(_configData->isPVR() ? _needToFlip : (_needToFlip ^ _configData->isFaceRight()));
             flip = (isFaceRight ^ (SpellConfigData::kRight == direction));
         }
         

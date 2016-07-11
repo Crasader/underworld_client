@@ -39,13 +39,6 @@ public:
     virtual void onUnitNodeShakeScreen(UnitNode* node) = 0;
 };
 
-#if USING_PVR
-typedef Animate* AnimationType;
-#else
-#include "cocostudio/CocoStudio.h"
-typedef cocostudio::timeline::ActionTimeline* AnimationType;
-#endif
-
 class UnitNode : public Node
 {
 public:
@@ -173,7 +166,7 @@ private:
     // cocos2d
     Node* _node;
     Sprite* _sprite;
-    AnimationType _animation;
+    Action* _animation;
     Scheduler* _speedScheduler;
     ActionManager* _actionManager;
     DisplayBar* _hpBar;

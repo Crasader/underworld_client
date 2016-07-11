@@ -18,6 +18,7 @@ static const string audioSuffix(".mp3");
 
 URConfigData::URConfigData(tinyxml2::XMLElement *xmlElement)
 :_isShortRange(false)
+,_isPVR(false)
 ,_isFaceRight(false)
 ,_footEffectPosition(Point::ZERO)
 ,_footEffectScaleX(1.0f)
@@ -34,6 +35,14 @@ URConfigData::URConfigData(tinyxml2::XMLElement *xmlElement)
                 _isShortRange = (atoi(data) != 0);
             } else {
                 _isShortRange = false;
+            }
+        }
+        {
+            const char *data = xmlElement->Attribute("is_pvr");
+            if (data && strlen(data) > 0) {
+                _isPVR = (atoi(data) != 0);
+            } else {
+                _isPVR = false;
             }
         }
         {
@@ -162,6 +171,11 @@ const string& URConfigData::getName() const
 bool URConfigData::isShortRange() const
 {
     return _isShortRange;
+}
+
+bool URConfigData::isPVR() const
+{
+    return _isPVR;
 }
 
 bool URConfigData::isFaceRight() const

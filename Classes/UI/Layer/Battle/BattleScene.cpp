@@ -39,7 +39,8 @@ BattleScene::BattleScene()
 ,_sch(nullptr)
 , _proxy(nullptr)
 {
-#if USING_PVR
+    // TODO: remove the code to another place
+#if true
     CocosUtils::loadPVR("hero-Fat");
     CocosUtils::loadPVR("soldier-Archer-test");
     CocosUtils::loadPVR("effect/xeffect-1");

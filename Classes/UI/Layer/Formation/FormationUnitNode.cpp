@@ -9,11 +9,8 @@
 #include "FormationUnitNode.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
-
-#if !USING_PVR
 #include "DataManager.h"
 #include "URConfigData.h"
-#endif
 
 using namespace std;
 
@@ -45,20 +42,21 @@ bool FormationUnitNode::init(const string& name, const string& renderKey, const 
         
         setContentSize(size);
         
-# if USING_PVR
-        static string file("soldier-Archer/stand/body/3");
-        bool flip(true);
-#else
         string file;
         bool flip(false);
         auto data = DataManager::getInstance()->getURConfigData(renderKey);
         if (data) {
-            file = data->getPrefix() + StringUtils::format("-standby-%d.csb", 3);
-            if (!data->isFaceRight()) {
+            if (data->isPVR()) {
+                file = data->getPrefix() + "/stand/body/3";
                 flip = true;
+            } else {
+                file = data->getPrefix() + StringUtils::format("-standby-%d.csb", 3);
+                if (!data->isFaceRight()) {
+                    flip = true;
+                }
             }
         }
-#endif
+        
         if (file.size() > 0) {
             auto node = CocosUtils::playAnimation(file, DEFAULT_FRAME_DELAY, true);
             if (flip) {

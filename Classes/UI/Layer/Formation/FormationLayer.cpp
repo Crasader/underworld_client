@@ -93,7 +93,9 @@ FormationLayer::FormationLayer()
     
     reloadAllCandidateCards();
     
-# if USING_PVR
+    // TODO: remove the code to another place
+#if true
+    CocosUtils::loadPVR("hero-Fat");
     CocosUtils::loadPVR("soldier-Archer-test");
 #endif
 }
@@ -101,6 +103,8 @@ FormationLayer::FormationLayer()
 FormationLayer::~FormationLayer()
 {
     removeAllChildren();
+    // TODO: remove the code to another place
+    CocosUtils::cleanMemory();
 }
 
 void FormationLayer::registerObserver(FormationLayerObserver *observer)
