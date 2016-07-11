@@ -283,11 +283,12 @@ void GameRender::updateBullets(const Game* game)
                     
                     const float beta = atan(2.0f * a * distance + b);
                     if (targetPos.x == opos.x) {
-                        node->setRotation(targetPos.y > opos.y ? 90 : -90);
+                        node->setRotation(targetPos.y > opos.y ? -90 : 90);
                     } else {
                         const float alpha = atan(float(targetPos.y - opos.y) / (targetPos.x - opos.x));
-                        const float gamma = atan((sin(alpha) + tan(beta) / eyeRadians)/((targetPos.x - opos.x)/d)) - alpha;
-                        node->setRotation(CC_RADIANS_TO_DEGREES(gamma));
+                        const float gamma = atan(tan(beta)/cos(alpha)/eyeRadians + tan(alpha));
+                        int32_t direction = targetPos.x < opos.x ? 1 : -1;
+                        node->setRotation(CC_RADIANS_TO_DEGREES(gamma) * direction);
                     }
                     
                 }
