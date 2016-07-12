@@ -292,7 +292,7 @@ void GameRender::updateBullets(const Game* game)
                         const float gamma = atan(tan(beta)/cos(alpha)/eyeRadians + tan(alpha));
                         int32_t direction = targetPos.x < opos.x ? 1 : -1;
                         node->setRotation(CC_RADIANS_TO_DEGREES(gamma) * direction);
-                        scale = cos(alpha) * cos(beta) / cos(gamma);
+                        scale = abs(cos(alpha) * cos(beta) / cos(gamma));
                     }
                     node->setScale(scale * node->getScaleZ(), scale);
                     
