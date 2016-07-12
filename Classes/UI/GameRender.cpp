@@ -283,14 +283,18 @@ void GameRender::updateBullets(const Game* game)
                     height = a * pow(distance, 2) + b * distance + h;
                     
                     const float beta = atan(2.0f * a * distance + b);
+                    float scale = 1.0f;
                     if (targetPos.x == opos.x) {
                         node->setRotation(targetPos.y > opos.y ? -90 : 90);
+                        scale = abs(cos(beta) + sin(beta) / eyeRadians);
                     } else {
                         const float alpha = atan(float(targetPos.y - opos.y) / (targetPos.x - opos.x));
                         const float gamma = atan(tan(beta)/cos(alpha)/eyeRadians + tan(alpha));
                         int32_t direction = targetPos.x < opos.x ? 1 : -1;
                         node->setRotation(CC_RADIANS_TO_DEGREES(gamma) * direction);
+                        scale = cos(alpha) * cos(beta) / cos(gamma);
                     }
+                    node->setScale(scale * node->getScaleZ(), scale);
                     
                 }
                 _mapLayer->repositionUnit(node, pos + Coordinate32(0, height));
