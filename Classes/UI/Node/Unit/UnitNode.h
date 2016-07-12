@@ -44,6 +44,28 @@ public:
 class UnitNode : public Node
 {
 public:
+    class AnimationType {
+    public:
+        AnimationType() {}
+        void assign(const AnimationType& instance) {
+            _file.assign(instance._file);
+            _startIdx = instance._startIdx;
+            _endIdx = instance._endIdx;
+        }
+        void assign(const std::string& file, int startIdx = 0, int endIdx = -1) {
+            _file.assign(file); _startIdx = startIdx; _endIdx = endIdx;
+        }
+        const std::string& getFile() const { return _file; }
+        int getStartIdx() const { return _startIdx; }
+        int getEndIdx() const { return _endIdx; }
+        
+    private:
+        std::string _file;
+        int _startIdx;
+        int _endIdx;
+    };
+    
+public:
     static UnitNode* create(const Unit* unit, bool rightSide);
     virtual ~UnitNode();
     
@@ -81,20 +103,21 @@ protected:
     float getHpPercentage() const;
     bool needToChangeStandbyStatus() const;
     bool needToFlip(Unit::Direction direction) const;
-    void getAnimationFiles(std::vector<std::string>& output,
+    void getAnimationFiles(std::vector<AnimationType>& output,
                            SkillClass sc,
                            Unit::Direction direction,
                            bool isHealthy) const;
-    void getStandbyFiles(std::string& output,
+    void getStandbyFiles(AnimationType& output,
                          Unit::Direction direction,
                          bool isHealthy) const;
-    void getAttackFiles(std::vector<std::string>& output,
-                        Unit::Direction direction,
-                        bool isHealthy) const;
+    void getSegmentalFiles(std::vector<AnimationType>& output,
+                           const std::string& mark,
+                           Unit::Direction direction,
+                           bool isHealthy) const;
     int getCurrentFrameIndex() const;
     
     // animations
-    void playAnimation(const std::string& files,
+    void playAnimation(const AnimationType& at,
                        bool play,
                        bool loop,
                        float playTime,
@@ -185,7 +208,7 @@ private:
     bool _isStandby;
     
     // animations
-    std::vector<std::string> _animationFiles;
+    std::vector<AnimationType> _animationFiles;
     
     // attack animations
     bool _isAttacking;

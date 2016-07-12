@@ -430,14 +430,14 @@ bool UnitNode::needToFlip(Unit::Direction direction) const
     return flip;
 }
 
-void UnitNode::getAnimationFiles(vector<string>& output,
+void UnitNode::getAnimationFiles(vector<AnimationType>& output,
                                  SkillClass sc,
                                  Unit::Direction direction,
                                  bool isHealthy) const
 {
     output.clear();
     
-    string data;
+    AnimationType data;
     
     if (_configData->isPVR()) {
         string prefix("");
@@ -463,6 +463,7 @@ void UnitNode::getAnimationFiles(vector<string>& output,
                     prefix = "stand";
                 } else {
                     prefix = "attack";
+                    getSegmentalFiles(output, prefix, direction, isHealthy);
                 }
             }
                 break;
@@ -481,7 +482,7 @@ void UnitNode::getAnimationFiles(vector<string>& output,
                 break;
         }
         
-        if (prefix.size() > 0) {
+        if (0 == output.size()) {
             data.assign(_configData->getPrefix() + "/" + prefix + StringUtils::format("/body/%d", getResourceId(direction)));
         }
     } else {
@@ -498,7 +499,7 @@ void UnitNode::getAnimationFiles(vector<string>& output,
                 if (_isBuilding) {
                     assert(false);
                 } else {
-                    data = prefix + StringUtils::format("-run-%d.csb", getResourceId(direction));
+                    data.assign(prefix + StringUtils::format("-run-%d.csb", getResourceId(direction)));
                 }
             }
                 break;
@@ -507,7 +508,7 @@ void UnitNode::getAnimationFiles(vector<string>& output,
                 if (_isStandby) {
                     getStandbyFiles(data, direction, isHealthy);
                 } else {
-                    getAttackFiles(output, direction, isHealthy);
+                    getSegmentalFiles(output, "attack", direction, isHealthy);
                 }
             }
                 break;
@@ -515,20 +516,21 @@ void UnitNode::getAnimationFiles(vector<string>& output,
             {
                 const auto& file = prefix + StringUtils::format("-skill-%d.csb", getResourceId(direction));
                 if (FileUtils::getInstance()->isFileExist(file)) {
-                    data = file;
+                    data.assign(file);
                 } else {
-                    getAttackFiles(output, direction, isHealthy);
+                    getSegmentalFiles(output, "attack", direction, isHealthy);
                 }
             }
                 break;
             case kSkillClass_Die:
             {
                 if (_isBuilding) {
-                    data = _configData->getBDestroyed();
+                    data.assign(_configData->getBDestroyed());
                 }
                 
-                if (0 == data.length() || !FileUtils::getInstance()->isFileExist(data)) {
-                    data = prefix + StringUtils::format("-dead-%d.csb", getResourceId(direction));
+                const auto& file(data.getFile());
+                if (0 == file.length() || !FileUtils::getInstance()->isFileExist(file)) {
+                    data.assign(prefix + StringUtils::format("-dead-%d.csb", getResourceId(direction)));
                 }
             }
                 break;
@@ -538,19 +540,19 @@ void UnitNode::getAnimationFiles(vector<string>& output,
         }
     }
     
-    if (0 == output.size() && 0 < data.size()) {
+    if (0 == output.size() && 0 < data.getFile().size()) {
         output.push_back(data);
     }
 }
 
-void UnitNode::getStandbyFiles(string& output,
+void UnitNode::getStandbyFiles(AnimationType& output,
                                Unit::Direction direction,
                                bool isHealthy) const
 {
-    output.clear();
+    output.assign("");
     
     if (_configData->isPVR()) {
-        vector<string> vs;
+        vector<AnimationType> vs;
         getAnimationFiles(vs, kSkillClass_Stop, direction, isHealthy);
         if (vs.size() > 0) {
             output.assign(vs.at(0));
@@ -559,40 +561,56 @@ void UnitNode::getStandbyFiles(string& output,
         if (_isBuilding) {
             const auto& normal = StringUtils::format(_configData->getBNormal().c_str(), getResourceId(direction));
             const auto& damaged = StringUtils::format(_configData->getBDamaged().c_str(), getResourceId(direction));
-            output = isHealthy ? normal : (damaged.length() > 0 ? damaged : normal);
+            output.assign(isHealthy ? normal : (damaged.length() > 0 ? damaged : normal));
         }
         
-        if (0 == output.length() || !FileUtils::getInstance()->isFileExist(output)) {
+        const auto& file(output.getFile());
+        if (0 == file.length() || !FileUtils::getInstance()->isFileExist(file)) {
             const auto& prefix = _configData->getPrefix();
-            output = prefix + StringUtils::format("-standby-%d.csb", getResourceId(direction));
+            output.assign(prefix + StringUtils::format("-standby-%d.csb", getResourceId(direction)));
         }
     }
 }
 
-void UnitNode::getAttackFiles(vector<string>& output,
-                              Unit::Direction direction,
-                              bool isHealthy) const
+void UnitNode::getSegmentalFiles(vector<AnimationType>& output,
+                                 const std::string& mark,
+                                 Unit::Direction direction,
+                                 bool isHealthy) const
 {
     output.clear();
     
     if (_configData->isPVR()) {
-        getAnimationFiles(output, kSkillClass_Attack, direction, isHealthy);
+        string file = _configData->getPrefix() + "/" + mark + "/body/" + StringUtils::format("%d", getResourceId(direction));
+        int middle(0);
+        AnimationType at;
+        if (middle > 0) {
+            at.assign(file, 0, middle - 1);
+            output.push_back(at);
+            
+            at.assign(file, middle);
+            output.push_back(at);
+        } else {
+            at.assign(file);
+            output.push_back(at);
+        }
     } else {
         const auto& prefix = _configData->getPrefix();
         {
-            const auto& attack = prefix + StringUtils::format("-attack-%d.csb", getResourceId(direction));
-            output.push_back(attack);
+            AnimationType at;
+            at.assign(prefix + "-" + mark + StringUtils::format("-%d.csb", getResourceId(direction)));
+            output.push_back(at);
         }
         // TODO: handle the unit
         if (_unitName != "巨龙哨兵")
         {
-            const auto& backSing = prefix + StringUtils::format("-attack-%d-1.csb", getResourceId(direction));
-            output.push_back(backSing);
+            AnimationType at;
+            at.assign(prefix + "-" + mark + StringUtils::format("-%d-1.csb", getResourceId(direction)));
+            output.push_back(at);
         }
         
         bool isExist(true);
         for (auto iter = begin(output); iter != end(output); ++iter) {
-            const auto& csbFile = *iter;
+            const auto& csbFile = (*iter).getFile();
             if (0 == csbFile.length() || !FileUtils::getInstance()->isFileExist(csbFile)) {
                 isExist = false;
                 break;
@@ -601,9 +619,9 @@ void UnitNode::getAttackFiles(vector<string>& output,
         
         if (!isExist) {
             output.clear();
-            string data;
-            getStandbyFiles(data, direction, isHealthy);
-            output.push_back(data);
+            AnimationType at;
+            getStandbyFiles(at, direction, isHealthy);
+            output.push_back(at);
         }
     }
 }
@@ -628,7 +646,7 @@ int UnitNode::getCurrentFrameIndex() const
 }
 
 #pragma mark - animation
-void UnitNode::playAnimation(const string& files,
+void UnitNode::playAnimation(const AnimationType& at,
                              bool play,
                              bool loop,
                              float playTime,
@@ -638,7 +656,8 @@ void UnitNode::playAnimation(const string& files,
 {
     removeNode();
     
-    const auto cnt = files.size();
+    const auto& file(at.getFile());
+    auto cnt = file.size();
     if (cnt > 0) {
         // set PixelFormat if needed
         Texture2D::PixelFormat defaultPixelFormat = Texture2D::getDefaultAlphaPixelFormat();
@@ -648,7 +667,7 @@ void UnitNode::playAnimation(const string& files,
             Texture2D::setDefaultAlphaPixelFormat(LOW_PIXELFORMAT);
         }
         
-        _node = CocosUtils::getAnimationNode(files, 0);
+        _node = CocosUtils::getAnimationNode(file, at.getStartIdx());
         addChild(_node);
         
         string shadowFile;
@@ -658,9 +677,9 @@ void UnitNode::playAnimation(const string& files,
             // shadow
             if (!_configData->isShortRange()) {
                 static const string separator("body");
-                auto pos = files.find(separator);
+                auto pos = file.find(separator);
                 if (pos != string::npos) {
-                    shadowFile.assign(files);
+                    shadowFile.assign(file);
                     shadowFile.replace(pos, separator.size(), StringUtils::format("shadows/%d", flip ? 1 : 0));
                 }
             }
@@ -668,7 +687,7 @@ void UnitNode::playAnimation(const string& files,
             _sprite = dynamic_cast<Sprite*>(_node->getChildren().front());
         }
         
-        if (false && shadowFile.size() > 0) {
+        if (shadowFile.size() > 0) {
             createShadow(shadowFile, flip);
         }
         
@@ -689,9 +708,10 @@ void UnitNode::playAnimation(const string& files,
             }
             
             // 2. play animation
-            auto duration = CocosUtils::playAnimation(_sprite, files, DEFAULT_FRAME_DELAY, loop, frameIndex, -1, lastFrameCallFunc);
+            frameIndex += at.getStartIdx();
+            auto duration = CocosUtils::playAnimation(_sprite, file, DEFAULT_FRAME_DELAY, loop, frameIndex, at.getEndIdx(), lastFrameCallFunc);
             if (_shadow) {
-                CocosUtils::playAnimation(_shadow, shadowFile, DEFAULT_FRAME_DELAY, loop, frameIndex);
+                CocosUtils::playAnimation(_shadow, shadowFile, DEFAULT_FRAME_DELAY, loop, frameIndex, at.getEndIdx());
             }
             
             // change scale and speed
@@ -836,9 +856,9 @@ void UnitNode::playStandbyAnimation()
 {
     Unit::Direction direction = _unit->getDirection();
     bool flip = needToFlip(direction);
-    string files;
-    getStandbyFiles(files, direction, getHpPercentage() > hpThreshold);
-    playAnimation(files, true, true, 0.0f, 0, flip, nullptr);
+    AnimationType at;
+    getStandbyFiles(at, direction, getHpPercentage() > hpThreshold);
+    playAnimation(at, true, true, 0.0f, 0, flip, nullptr);
 }
 
 #pragma mark attack
@@ -1272,6 +1292,7 @@ void UnitNode::createShadow(const string& file, bool flip)
             _shadow = CocosUtils::getAnimationNode(file, 0);
         } else {
             _shadow = Sprite::create(file);
+            offset = _configData->getFootEffectPosition();
         }
         
         if (flip) {
@@ -1279,7 +1300,7 @@ void UnitNode::createShadow(const string& file, bool flip)
         }
         
         if (_observer) {
-            _observer->onUnitNodeCreateShadow(this, _shadow, _configData->getFootEffectPosition());
+            _observer->onUnitNodeCreateShadow(this, _shadow, offset);
         }
     }
 }
