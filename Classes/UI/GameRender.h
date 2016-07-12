@@ -141,7 +141,7 @@ private:
     const GameModeHMM* _gameModeHMM;
     Commander* _commander;
     std::unordered_map<int, UnitNode*> _allUnitNodes;
-    std::unordered_map<UnitNode*, Node*> _unitShadows;
+    std::unordered_map<UnitNode*, std::pair<Node*, Point>> _unitShadows;
     std::unordered_map<const void*, std::pair<Coordinate32, float>> _bulletParams;
     std::unordered_map<const void*, BulletNode*> _allBulletNodes;
     std::unordered_map<int, const Unit*> _cores;

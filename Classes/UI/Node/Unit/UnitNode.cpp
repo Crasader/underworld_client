@@ -655,11 +655,14 @@ void UnitNode::playAnimation(const string& files,
         if (_configData->isPVR()) {
             _sprite = dynamic_cast<Sprite*>(_node);
             
-            static const string separator("body");
-            auto pos = files.find(separator);
-            if (pos != string::npos) {
-                shadowFile.assign(files);
-                shadowFile.replace(pos, separator.size(), StringUtils::format("shadows/%d", flip ? 1 : 0));
+            // shadow
+            if (!_configData->isShortRange()) {
+                static const string separator("body");
+                auto pos = files.find(separator);
+                if (pos != string::npos) {
+                    shadowFile.assign(files);
+                    shadowFile.replace(pos, separator.size(), StringUtils::format("shadows/%d", flip ? 1 : 0));
+                }
             }
         } else {
             _sprite = dynamic_cast<Sprite*>(_node->getChildren().front());
@@ -1269,6 +1272,10 @@ void UnitNode::createShadow(const string& file, bool flip)
             _shadow = CocosUtils::getAnimationNode(file, 0);
         } else {
             _shadow = Sprite::create(file);
+        }
+        
+        if (flip) {
+            flipX(_shadow);
         }
         
         if (_observer) {

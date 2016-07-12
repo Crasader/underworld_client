@@ -562,7 +562,7 @@ void MapLayer::scrollChecking(float dt)
         _scheduler->unschedule(selector, this);
     } else {
         _scrollViewOffset = offset;
-        if (false == _scheduler->isScheduled(selector, this)) {
+        if (!_scheduler->isScheduled(selector, this)) {
             _scheduler->schedule(selector, this, 0.1f, false);
         }
     }

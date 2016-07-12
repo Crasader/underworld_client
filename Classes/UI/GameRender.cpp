@@ -212,7 +212,8 @@ void GameRender::updateUnits(const Game* game, int index)
                     if (kSkillClass_Move == sc) {
                         _mapLayer->repositionUnit(node, pos);
                         if (_unitShadows.find(node) != end(_unitShadows)) {
-                            _unitShadows.at(node)->setPosition(node->getPosition());
+                            const auto& pair = _unitShadows.at(node);
+                            pair.first->setPosition(node->getPosition() + pair.second);
                         }
                     }
                     
@@ -432,14 +433,14 @@ void GameRender::onUnitNodeCreateShadow(UnitNode* node, Node* shadow, const Poin
         shadow->setPosition(node->getPosition() + offset);
         parent->addChild(shadow, -2000);
         CCASSERT(_unitShadows.find(node) == end(_unitShadows), "shadow has exist.");
-        _unitShadows.insert(make_pair(node, shadow));
+        _unitShadows.insert(make_pair(node, make_pair(shadow, offset)));
     }
 }
 
 void GameRender::onUnitNodeRemoveShadow(UnitNode* node)
 {
     if (node && _unitShadows.find(node) != end(_unitShadows)) {
-        auto shadow = _unitShadows.at(node);
+        auto shadow = _unitShadows.at(node).first;
         shadow->stopAllActions();
         shadow->removeFromParent();
         _unitShadows.erase(node);
@@ -605,7 +606,7 @@ void GameRender::removeAllUnits()
     }
     
     for (auto iter = begin(_unitShadows); iter != end(_unitShadows); ++iter) {
-        iter->second->removeFromParent();
+        iter->second.first->removeFromParent();
     }
     
     _allUnitNodes.clear();

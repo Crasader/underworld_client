@@ -180,7 +180,7 @@ void MessageBoxLayer::onTouchEnded(Touch *touch, Event *unused_event)
     {
         hide();
     }
-    else if (_autoHide && false == rs.containsPoint(point))
+    else if (_autoHide && !rs.containsPoint(point))
     {
         if (_type == MessageBoxType::OnlyYes)
         {
