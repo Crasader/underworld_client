@@ -24,6 +24,7 @@
 		0451170A1BCFBA53002AA721 /* Skill.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045117021BCFBA53002AA721 /* Skill.cpp */; };
 		0451170B1BCFBA53002AA721 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045117041BCFBA53002AA721 /* Unit.cpp */; };
 		045117101BCFBA5F002AA721 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0451170C1BCFBA5F002AA721 /* Game.cpp */; };
+		046D9E631D34FD5D0093A745 /* ConfigChecker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 046D9E611D34FD5D0093A745 /* ConfigChecker.cpp */; };
 		047228B01C193A4D00E7F71B /* Geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047228AE1C193A4D00E7F71B /* Geometry.cpp */; };
 		047CBF8A1CAFE6AB0035DAF9 /* InstanceHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047CBF881CAFE6AB0035DAF9 /* InstanceHelper.cpp */; };
 		0487A6671CC897F9005FE8D0 /* GameMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0487A6651CC897F9005FE8D0 /* GameMode.cpp */; };
@@ -345,6 +346,8 @@
 		0451170D1BCFBA5F002AA721 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = Core/Game/Game.h; sourceTree = "<group>"; };
 		0451170E1BCFBA5F002AA721 /* GameConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameConstants.h; path = Core/Game/GameConstants.h; sourceTree = "<group>"; };
 		0451170F1BCFBA5F002AA721 /* GameSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameSettings.h; path = Core/Game/GameSettings.h; sourceTree = "<group>"; };
+		046D9E611D34FD5D0093A745 /* ConfigChecker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConfigChecker.cpp; path = Core/Test/ConfigChecker.cpp; sourceTree = "<group>"; };
+		046D9E621D34FD5D0093A745 /* ConfigChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConfigChecker.h; path = Core/Test/ConfigChecker.h; sourceTree = "<group>"; };
 		047228AE1C193A4D00E7F71B /* Geometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Geometry.cpp; path = Core/Utils/Geometry.cpp; sourceTree = "<group>"; };
 		047228AF1C193A4D00E7F71B /* Geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Geometry.h; path = Core/Utils/Geometry.h; sourceTree = "<group>"; };
 		047CBF881CAFE6AB0035DAF9 /* InstanceHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InstanceHelper.cpp; path = Core/Unit/Instance/InstanceHelper.cpp; sourceTree = "<group>"; };
@@ -1183,6 +1186,8 @@
 			children = (
 				3075346F1BF33ECF0057DCED /* Logger.cpp */,
 				307534701BF33ECF0057DCED /* Logger.h */,
+				046D9E611D34FD5D0093A745 /* ConfigChecker.cpp */,
+				046D9E621D34FD5D0093A745 /* ConfigChecker.h */,
 			);
 			name = Test;
 			sourceTree = "<group>";
@@ -2355,6 +2360,7 @@
 				A1CE89DE1C44AB2900B60704 /* SpellConfigData.cpp in Sources */,
 				A1B4AE2F1C200521005906A6 /* GuildManager.cpp in Sources */,
 				A1D5C9D51D2288DE006B1738 /* TalentBriefNode.cpp in Sources */,
+				046D9E631D34FD5D0093A745 /* ConfigChecker.cpp in Sources */,
 				A1F5BF9F1C1FD508007C08CB /* AchievementLocalData.cpp in Sources */,
 				A1DF50ED1C229488001CCFF2 /* TabButton.cpp in Sources */,
 				A1E8305C1C1E75BB00FE01B8 /* ChatLayer.cpp in Sources */,
