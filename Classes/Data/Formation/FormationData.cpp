@@ -32,9 +32,19 @@ FormationData::FormationData(const string& serializedString)
     }
 }
 
-FormationData::~FormationData()
+FormationData::FormationData(const FormationData* instance)
 {
-    
+    clone(instance);
+}
+
+FormationData::~FormationData() {}
+
+void FormationData::clone(const FormationData* instance)
+{
+    if (instance) {
+        _heroes = instance->_heroes;
+        _spells = instance->_spells;
+    }
 }
 
 const map<Coordinate32, FormationData::FormationUnitType>& FormationData::getHeroes() const

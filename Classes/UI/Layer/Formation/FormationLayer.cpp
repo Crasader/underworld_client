@@ -102,6 +102,10 @@ FormationLayer::FormationLayer()
 
 FormationLayer::~FormationLayer()
 {
+    for (auto iter = begin(_editedFormationData); iter != end(_editedFormationData); ++iter) {
+        CC_SAFE_DELETE(iter->second);
+    }
+    
     removeAllChildren();
     // TODO: remove the code to another place
     CocosUtils::cleanMemory();
@@ -885,7 +889,9 @@ int FormationLayer::formationCoordinate2Idx(const Coordinate32& point) const
 
 void FormationLayer::saveThisFormation()
 {
-    GameData::getInstance()->currentUser()->saveFormationData(_thisFormationIdx);
+    auto user = GameData::getInstance()->currentUser();
+    user->setFormationData(_thisFormationIdx, _thisFormationData);
+    user->saveFormationData(_thisFormationIdx);
 }
 
 void FormationLayer::loadFormation(int idx)
@@ -900,7 +906,12 @@ void FormationLayer::loadFormation(int idx)
             }
         }
         
-        _thisFormationData = GameData::getInstance()->currentUser()->getFormationData(idx);
+        if (_editedFormationData.find(idx) == end(_editedFormationData)) {
+            auto fd = GameData::getInstance()->currentUser()->getFormationData(idx);
+            _editedFormationData.insert(make_pair(idx, new (nothrow) FormationData(fd)));
+        }
+        
+        _thisFormationData = _editedFormationData.at(idx);
         
         // 1. heroes
         for (auto iter = begin(_formationNodes); iter != end(_formationNodes); ++iter) {

@@ -44,6 +44,7 @@ public:
     void setDefaultFormationId(int value);
     
     FormationData* getFormationData(int idx) const;
+    void setFormationData(int idx, const FormationData* data);
     void saveFormationData(int idx);
     
     FormationData* getDefaultFormationData() const;

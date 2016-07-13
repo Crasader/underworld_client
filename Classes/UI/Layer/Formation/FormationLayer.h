@@ -172,6 +172,7 @@ protected:
 
     int _thisFormationIdx;
     FormationData* _thisFormationData;
+    std::unordered_map<int, FormationData*> _editedFormationData;
 };
 
 #endif /* FormationLayer_h */

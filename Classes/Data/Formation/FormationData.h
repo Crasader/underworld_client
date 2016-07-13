@@ -22,7 +22,10 @@ protected:
     
 public:
     FormationData(const std::string& serializedString);
+    FormationData(const FormationData* instance);
     virtual ~FormationData();
+    
+    void clone(const FormationData* instance);
     
     const std::map<Coordinate32, FormationUnitType>& getHeroes() const;
     const std::vector<FormationUnitType>& getSpells() const;

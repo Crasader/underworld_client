@@ -120,6 +120,18 @@ FormationData* User::getFormationData(int idx) const
     return nullptr;
 }
 
+void User::setFormationData(int idx, const FormationData* data)
+{
+    if (idx < FORMATION_MAX_COUNT && data) {
+        auto d = getFormationData(idx);
+        if (d) {
+            d->clone(data);
+        } else {
+            _formations.insert(make_pair(idx, new (nothrow) FormationData(data)));
+        }
+    }
+}
+
 void User::saveFormationData(int idx)
 {
     if (_formations.find(idx) != end(_formations)) {
@@ -189,8 +201,10 @@ void User::init()
     
     for (int i = 0; i < FORMATION_MAX_COUNT; ++i) {
         const auto& string = UserDefaultsDataManager::getStringForKey(getFormationKey(i).c_str(), "");
-        auto data = new FormationData(string);
-        _formations.insert(make_pair(i, data));
+        if (string.size() > 0) {
+            auto data = new (nothrow) FormationData(string);
+            _formations.insert(make_pair(i, data));
+        }
     }
 }
 
