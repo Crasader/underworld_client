@@ -24,12 +24,18 @@ public:
     UAConfigData(tinyxml2::XMLElement *xmlElement);
     virtual ~UAConfigData();
     
+    const std::string& getName() const;
+    UnderWorld::Core::SkillClass getSkill() const;
     const AnimationParameter* getAnimationParameter(UnderWorld::Core::Unit::Direction direction) const;
     
 protected:
-    void parse(AnimationParameter* ret, const std::vector<std::string>& directions, const std::vector<std::string>& scales, const std::vector<std::string>& speeds, int index);
+    void parse(tinyxml2::XMLElement *element, const std::string& key);
+    const AnimationParameter* get(const UnderWorld::Core::Unit::Direction& direction) const;
+    const AnimationParameter* getEnd() const;
     
 private:
+    std::string _name;
+    UnderWorld::Core::SkillClass _skill;
     std::map<UnderWorld::Core::Unit::Direction, AnimationParameter*> _data;
 };
 

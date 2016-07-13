@@ -8,12 +8,18 @@
 
 #include "AnimationParameter.h"
 
-AnimationParameter::AnimationParameter()
+AnimationParameter::AnimationParameter(const AnimationParameter* instance)
 :scale(1.0f)
-,speed(1.0f) {}
-
-AnimationParameter::AnimationParameter(const AnimationParameter& instance)
-:scale(instance.scale)
-,speed(instance.speed) {}
+,speed(1.0f)
+,atkIdx(0)
+,castIdx(0)
+{
+    if (instance) {
+        scale = instance->scale;
+        speed = instance->speed;
+        atkIdx = instance->atkIdx;
+        castIdx = instance->castIdx;
+    }
+}
 
 AnimationParameter::~AnimationParameter() {}

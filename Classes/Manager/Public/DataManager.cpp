@@ -543,13 +543,9 @@ void DataManager::parseGearSetData()
 void DataManager::parseAnimationConfigData()
 {
     parseData("AnimationConfig.xml", [this](tinyxml2::XMLElement* item) {
-        const char* name = item->Attribute("name");
-        const char* skill = item->Attribute("skill");
-        if (name && skill) {
-            auto data = new (nothrow) UAConfigData(item);
-            auto key = StringUtils::format("%s_%s", name, skill);
-            setMapValue(_animationParameters, key, data);
-        }
+        auto data = new (nothrow) UAConfigData(item);
+        auto key = data->getName() + StringUtils::format("_%d", data->getSkill());
+        setMapValue(_animationParameters, key, data);
     });
 }
 

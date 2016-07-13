@@ -67,7 +67,7 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
     }
     UnitClass uc(thisUnitClass());
     _isBuilding = (kUnitClass_Core == uc || kUnitClass_Building == uc);
-    _baseParams = new (nothrow) AnimationParameter();
+    _baseParams = new (nothrow) AnimationParameter(nullptr);
 }
 
 UnitNode::~UnitNode()
@@ -180,8 +180,7 @@ void UnitNode::update(const Game* game)
                         }
                         
                         update = true;
-                    }
-                    else if (_direction != direction || _isFlipped != flip) {
+                    } else if (_direction != direction || _isFlipped != flip) {
                         // check if the unit is standby
                         if (needToChangeStandbyStatus()) {
                             _isStandby = !_isStandby;
@@ -1139,7 +1138,7 @@ void UnitNode::updateBufs()
                             const auto& ap = _extraParams.at(sc);
                             ap->speed = rate + ap->speed;
                         } else {
-                            auto ap = new (nothrow) AnimationParameter();
+                            auto ap = new (nothrow) AnimationParameter(nullptr);
                             ap->speed = rate;
                             _extraParams.insert(make_pair(sc, ap));
                         }
@@ -1155,7 +1154,7 @@ void UnitNode::updateBufs()
                             const auto& ap = _extraParams.at(sc);
                             ap->scale = rate + ap->scale;
                         } else {
-                            auto ap = new (nothrow) AnimationParameter();
+                            auto ap = new (nothrow) AnimationParameter(nullptr);
                             ap->scale = rate;
                             _extraParams.insert(make_pair(sc, ap));
                         }

@@ -12,12 +12,13 @@
 class AnimationParameter
 {
 public:
-    AnimationParameter();
-    AnimationParameter(const AnimationParameter& instance);
+    AnimationParameter(const AnimationParameter* instance);
     virtual ~AnimationParameter();
     
     float scale;
     float speed;
+    int atkIdx;
+    int castIdx;
 };
 
 #endif /* AnimationParameter_h */

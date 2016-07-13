@@ -12,50 +12,35 @@
 #include "AnimationParameter.h"
 
 using namespace std;
+using namespace UnderWorld::Core;
+
+static const vector<Unit::Direction> AnimationDirections = {
+    Unit::kDirection_Up,
+    Unit::kDirection_leftUp2,
+    Unit::kDirection_leftUp1,
+    Unit::kDirection_left,
+    Unit::kDirection_leftDown1,
+    Unit::kDirection_leftDown2,
+    Unit::kDirection_Down,
+};
+
+static const map<Unit::Direction, Unit::Direction> FlippedDirections = {
+    {Unit::kDirection_rightUp2, Unit::kDirection_leftUp2},
+    {Unit::kDirection_rightUp1, Unit::kDirection_leftUp1},
+    {Unit::kDirection_right, Unit::kDirection_left},
+    {Unit::kDirection_rightDown1, Unit::kDirection_leftDown1},
+    {Unit::kDirection_rightDown2, Unit::kDirection_leftDown2},
+};
 
 UAConfigData::UAConfigData(tinyxml2::XMLElement *xmlElement)
 {
     if (xmlElement) {
-        const char* direction = xmlElement->Attribute("direction");
-        if (direction) {
-            vector<string> v;
-            Utils::split(v, direction, "_");
-            
-            vector<string> v1;
-            {
-                const char* data = xmlElement->Attribute("scale");
-                if (data) {
-                    Utils::split(v1, data, "_");
-                }
-            }
-            
-            vector<string> v2;
-            {
-                const char* data = xmlElement->Attribute("speed");
-                if (data) {
-                    Utils::split(v2, data, "_");
-                }
-            }
-            
-            auto size(v.size());
-            if (1 == size) {
-                auto ap = new (nothrow) AnimationParameter();
-                parse(ap, v, v1, v2, 0);
-                for (int i = 0; i < UnderWorld::Core::Unit::DIRECTION_COUNT; ++i) {
-                    auto ud = static_cast<UnderWorld::Core::Unit::Direction>(i);
-                    _data.insert(make_pair(ud, new (nothrow) AnimationParameter(*ap)));
-                }
-                CC_SAFE_FREE(ap);
-            } else {
-                auto cnt((size > UnderWorld::Core::Unit::DIRECTION_COUNT) ? UnderWorld::Core::Unit::DIRECTION_COUNT : size);
-                for (int i = 0; i < cnt; ++i) {
-                    auto ap = new (nothrow) AnimationParameter();
-                    parse(ap, v, v1, v2, i);
-                    auto ud = static_cast<UnderWorld::Core::Unit::Direction>(i);
-                    _data.insert(make_pair(ud, ap));
-                }
-            }
-        }
+        _name = xmlElement->Attribute("name");
+        _skill = static_cast<SkillClass>(atoi(xmlElement->Attribute("skill")));
+        parse(xmlElement, "scale");
+        parse(xmlElement, "speed");
+        parse(xmlElement, "atk_separater");
+        parse(xmlElement, "cast_separater");
     }
 }
 
@@ -64,7 +49,63 @@ UAConfigData::~UAConfigData()
     Utils::clearMap(_data);
 }
 
-const AnimationParameter* UAConfigData::getAnimationParameter(UnderWorld::Core::Unit::Direction direction) const
+const string& UAConfigData::getName() const
+{
+    return _name;
+}
+
+SkillClass UAConfigData::getSkill() const
+{
+    return _skill;
+}
+
+const AnimationParameter* UAConfigData::getAnimationParameter(Unit::Direction direction) const
+{
+    auto ret = get(direction);
+    if (!ret) {
+        if (FlippedDirections.find(direction) != end(FlippedDirections)) {
+            ret = get(FlippedDirections.at(direction));
+        }
+        
+        if (!ret && _data.size() > 0) {
+            ret = getEnd();
+        }
+    }
+    
+    return ret;
+}
+
+void UAConfigData::parse(tinyxml2::XMLElement *element, const string& key)
+{
+    if (element) {
+        auto data = element->Attribute(key.c_str());
+        if (data) {
+            vector<string> v;
+            Utils::split(v, data, "_");
+            for (int i = 0; i < v.size(); ++i) {
+                CC_BREAK_IF(i >= AnimationDirections.size());
+                const auto& direction = AnimationDirections.at(i);
+                if (_data.find(direction) == end(_data)) {
+                    _data.insert(make_pair(direction, new (nothrow) AnimationParameter(getEnd())));
+                }
+                
+                auto ap = _data.at(direction);
+                auto value = atof(v.at(i).c_str());
+                if ("scale" == key) {
+                    ap->scale = value;
+                } else if ("speed" == key) {
+                    ap->speed = value;
+                } else if ("atk_separater" == key) {
+                    ap->atkIdx = value;
+                } else if ("cast_separater" == key) {
+                    ap->castIdx = value;
+                }
+            }
+        }
+    }
+}
+
+const AnimationParameter* UAConfigData::get(const Unit::Direction& direction) const
 {
     if (_data.find(direction) != end(_data)) {
         return _data.at(direction);
@@ -73,27 +114,12 @@ const AnimationParameter* UAConfigData::getAnimationParameter(UnderWorld::Core::
     return nullptr;
 }
 
-void UAConfigData::parse(AnimationParameter* ret, const vector<string>& directions, const vector<string>& scales, const vector<string>& speeds, int index)
+const AnimationParameter* UAConfigData::getEnd() const
 {
-    ret->scale = ret->speed = 1.0f;
-    
-    if (directions.size() > index) {
-        const auto& string(directions.at(index));
-        if (string.length() > 0) {
-            auto has = atoi(string.c_str());
-            if (has) {
-                if (scales.size() > index) {
-                    auto s = atof(scales.at(index).c_str());
-                    ret->scale = (s > 0) ? s : 1.0f;
-                }
-                
-                if (speeds.size() > index) {
-                    auto s = atof(speeds.at(index).c_str());
-                    ret->speed = (s > 0) ? s : 1.0f;
-                }
-            }
-        } else {
-            assert(false);
-        }
+    auto cnt(_data.size());
+    if (cnt > 0) {
+        return _data.at(AnimationDirections[cnt - 1]);
     }
+    
+    return nullptr;
 }
