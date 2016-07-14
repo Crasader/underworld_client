@@ -232,12 +232,12 @@ void BattleDeckUnitInfoNode::update(const string& name)
                 _atkRangeLabel->setString(default_value);
             }
             
-            const string& at = unit->getArmorPreference();
-            if (at.length() > 0) {
-                _armorPreferLabel->setString(StringUtils::format("%d", unit->getArmorPreferenceFactor().getLiteralValue()));
-            } else {
+//            const string& at = unit->getArmorPreference();
+//            if (at.length() > 0) {
+//                _armorPreferLabel->setString(StringUtils::format("%d", unit->getArmorPreferenceFactor().getLiteralValue()));
+//            } else {
                 _armorPreferLabel->setString(default_value);
-            }
+//            }
             
             // skill
             {

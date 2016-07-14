@@ -182,12 +182,7 @@ void CardInfoNode::update(const string& name)
                 _atkRange->setString(default_value);
             }
             
-            const string& at = unit->getArmorPreference();
-            if (at.length() > 0) {
-                _armorPrefer->setString(StringUtils::format("%d", unit->getArmorPreferenceFactor().getLiteralValue()));
-            } else {
-                _armorPrefer->setString(default_value);
-            }
+            _armorPrefer->setString(default_value);
         } else {
             _hp->setString(default_value);
             _armor->setString(default_value);
