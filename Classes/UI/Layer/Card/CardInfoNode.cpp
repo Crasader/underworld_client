@@ -46,7 +46,7 @@ CardInfoNode::CardInfoNode()
 ,_description(nullptr)
 ,_hp(nullptr)
 ,_armor(nullptr)
-,_armorPrefer(nullptr)
+,_atkType(nullptr)
 ,_dmg(nullptr)
 ,_atkSpeed(nullptr)
 ,_atkRange(nullptr)
@@ -102,15 +102,15 @@ bool CardInfoNode::init(const Callback& callback)
         
         addLabel(&_hp);
         addLabel(&_armor);
-        addLabel(&_armorPrefer);
+        addLabel(&_atkType);
         
         {
             const auto hh(_hp->getContentSize().height);
             const auto ah(_armor->getContentSize().height);
-            const auto ph(_armorPrefer->getContentSize().height);
+            const auto ph(_atkType->getContentSize().height);
             _hp->setPosition(Point(edgeX, lines.at(0)->getPosition().y - (edgeY + hh) / 2));
             _armor->setPosition(_hp->getPosition() - Point(0, edgeY + (hh + ah) / 2));
-            _armorPrefer->setPosition(_armor->getPosition() - Point(0, edgeY + (ah + ph) / 2));
+            _atkType->setPosition(_armor->getPosition() - Point(0, edgeY + (ah + ph) / 2));
         }
         
         addLabel(&_dmg);
@@ -121,7 +121,7 @@ bool CardInfoNode::init(const Callback& callback)
             const float x(size.width * 0.6f);
             _dmg->setPosition(Point(x, _hp->getPosition().y));
             _atkSpeed->setPosition(Point(x, _armor->getPosition().y));
-            _atkRange->setPosition(Point(x, _armorPrefer->getPosition().y));
+            _atkRange->setPosition(Point(x, _atkType->getPosition().y));
         }
         
         static const string file("GameImages/public/button_yellow.png");
@@ -155,12 +155,13 @@ void CardInfoNode::update(const string& name)
     }
     
     auto dm = DataManager::getInstance();
-    const HMMCardType* ct = dm->getGameModeHMM()->findCardTypeByName(name);
+    auto ct = dm->getGameModeHMM()->findCardTypeByName(name);
     if (ct) {
-        const UnitType* unit = dm->getTechTree()->findUnitTypeByName(name);
+        auto unit = dm->getTechTree()->findUnitTypeByName(name);
         if (unit) {
             _hp->setString(StringUtils::format("%d", unit->getMaxHp()));
             _armor->setString(StringUtils::format("%d", unit->getAmror()));
+            _atkType->setString(unit->getAttackType()->getName());
             
             const AttackSkillType* type = nullptr;
             for (int i = 0; i < FIELD_TYPE_COUNT; ++i) {
@@ -181,12 +182,10 @@ void CardInfoNode::update(const string& name)
                 _atkSpeed->setString(default_value);
                 _atkRange->setString(default_value);
             }
-            
-            _armorPrefer->setString(default_value);
         } else {
             _hp->setString(default_value);
             _armor->setString(default_value);
-            _armorPrefer->setString(default_value);
+            _atkType->setString(default_value);
             _dmg->setString(default_value);
             _atkSpeed->setString(default_value);
             _atkRange->setString(default_value);
@@ -195,7 +194,7 @@ void CardInfoNode::update(const string& name)
         _description->setString("");
         _hp->setString(default_value);
         _armor->setString(default_value);
-        _armorPrefer->setString(default_value);
+        _atkType->setString(default_value);
         _dmg->setString(default_value);
         _atkSpeed->setString(default_value);
         _atkRange->setString(default_value);

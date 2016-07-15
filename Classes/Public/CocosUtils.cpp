@@ -353,7 +353,7 @@ float CocosUtils::playAnimation(Node* node,
             }
             
             if (loop) {
-                assert(!callback);
+                CCLOG("CocosUtils::playAnimation : Callback will not be called when loop is enabled");
             } else {
                 action->setLastFrameCallFunc([=]() {
                     if (callback) {

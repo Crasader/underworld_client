@@ -47,7 +47,7 @@ private:
     Label* _nameLabel;
     Label* _hpLabel;
     Label* _armorLabel;
-    Label* _armorPreferLabel;
+    Label* _atkTypeLabel;
     Label* _dmgLabel;
     Label* _atkSpeedLabel;
     Label* _atkRangeLabel;

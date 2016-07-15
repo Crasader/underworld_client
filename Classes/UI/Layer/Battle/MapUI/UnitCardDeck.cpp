@@ -48,14 +48,18 @@ bool UnitCardDeck::init(int count)
     if (Node::init())
     {
         static const float x1(10.0f);
-        static const float x2(80.0f);
         static const float x3(8.0f);
         
         static const float y1(50.0f);
         static const float y2(5.0f);
         
         const Size& nodeSize = CardNode::create(false)->getContentSize();
+#if ENABLE_NEXT_CARD
+        static const float x2(80.0f);
         const Size size(x1 * 2 + x2 + (count + 1) * nodeSize.width + (count - 1) * x3, y1 + y2 + nodeSize.height);
+#else
+        const Size size(x1 * 2 + count * nodeSize.width + (count - 1) * x3, y1 + y2 + nodeSize.height);
+#endif
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         setContentSize(size);
         

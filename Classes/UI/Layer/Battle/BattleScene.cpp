@@ -37,18 +37,7 @@ BattleScene::BattleScene()
 ,_render(nullptr)
 ,_client(nullptr)
 ,_sch(nullptr)
-, _proxy(nullptr)
-{
-    // TODO: remove the code to another place
-#if true
-    CocosUtils::loadPVR("hero-Fat");
-    CocosUtils::loadPVR("soldier-Archer-test");
-    CocosUtils::loadPVR("soldier-Archer-test-shadows");
-//    CocosUtils::loadPVR("effect/xeffect-1");
-//    CocosUtils::loadPVR("effect/jian-test");
-//    CocosUtils::loadPVR("effect/jian");
-#endif
-}
+, _proxy(nullptr) {}
 
 BattleScene::~BattleScene()
 {
@@ -98,15 +87,16 @@ void BattleScene::start()
         clear();
     }
     
-    // 1. add map layer
-    
-    // 2. add map ui layer
+    // 1. render
     _render = new (nothrow) GameRender(this, "Vampire");
     _render->registerObserver(this);
     
+    // 2. scheduler
     _sch = new (nothrow) GameScheduler();
-//    _proxy = new (nothrow) ClientTCPNetworkProxy("192.168.31.100", 9999, "demoplayer", GameData::getInstance()->getUUID());
-    _proxy = new (nothrow) ClientTCPNetworkProxy("123.57.221.242", 8888, "demoplayer", GameData::getInstance()->getUUID());
+    
+//    static const pair<string, int> host = {"192.168.31.100", 9999};
+    static const pair<string, int> host = {"123.57.221.242", 8888};
+    _proxy = new (nothrow) ClientTCPNetworkProxy(host.first, host.second, "demoplayer", GameData::getInstance()->getUUID());
 
     // 3. game setting
     UnderWorld::Core::GameContentSetting contentSetting;
@@ -121,10 +111,30 @@ void BattleScene::start()
     tower.setUnitTypeName("狼人箭塔");
     contentSetting.setTower(tower);
     
+    // 4. start game
+    _client = new (nothrow) UnderworldClient("mofish", _proxy, _sch, _render);
+    
+    vector<UnderWorld::Core::UnitSetting> unitPool;
+    {
+        auto dm = DataManager::getInstance();
+        const auto& cards = dm->getCardDecks();
+        
+        for (auto iter = begin(cards); iter != end(cards); ++iter) {
+            auto cardType = dm->getTechTree()->findUnitTypeByName(*iter);
+            if (cardType) {
+                UnderWorld::Core::UnitSetting us;
+                us.setUnitTypeName(cardType->getName());
+                us.setLevel(0);
+                us.setQuality(0);
+                us.setTalentLevel(0);
+                unitPool.push_back(us);
+            }
+        }
+    }
+    
     auto formationData = GameData::getInstance()->currentUser()->getDefaultFormationData();
     if (formationData) {
-        _client = new (nothrow) UnderworldClient("mofish", _proxy, _sch, _render);
-        const auto& spells = formationData->getSpells();
+        const auto& cards = formationData->getSpells();
         const auto& heroes = formationData->getHeroes();
         GameModeHMMSetting::InitUnitList unitList;
         {
@@ -139,25 +149,12 @@ void BattleScene::start()
                 unitList.push_back(pair);
             }
         }
-        vector<UnderWorld::Core::UnitSetting> unitPool;
-        {
-            auto dm = DataManager::getInstance();
-            const auto& cards = dm->getCardDecks();
-            
-            for (auto iter = begin(cards); iter != end(cards); ++iter) {
-                auto cardType = dm->getTechTree()->findUnitTypeByName(*iter);
-                if (cardType) {
-                    UnderWorld::Core::UnitSetting us;
-                    us.setUnitTypeName(cardType->getName());
-                    us.setLevel(0);
-                    us.setQuality(0);
-                    us.setTalentLevel(0);
-                    unitPool.push_back(us);
-                }
-            }
-        }
-        _client->launchPve(_mapId, contentSetting, spells, unitList, unitPool);
+        _client->launchPve(_mapId, contentSetting, cards, unitList, unitPool);
 //        _client->launchPvp(contentSetting, cards);
+    } else {
+        const vector<string> cards;
+        GameModeHMMSetting::InitUnitList unitList;
+        _client->launchPve(_mapId, contentSetting, cards, unitList, unitPool);
     }
 }
 

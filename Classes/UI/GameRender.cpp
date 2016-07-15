@@ -361,8 +361,10 @@ void GameRender::updateUILayer()
 //            }
 //        }
 //
-        //TODO: delete next draw
-        //_mapUILayer->updateNextCard(_deck->getNextDraw());
+        
+#if ENABLE_NEXT_CARD
+        _mapUILayer->updateNextCard(_deck->getNextDraw());
+#endif
         
         // TODO:
         bool needReload(false);
@@ -839,14 +841,14 @@ const Unit* GameRender::getCore() const
     return nullptr;
 }
 
+// TODO: remove
 const vector<string>& GameRender::getSpells() const
 {
     const auto core = getCore();
     if (core) {
         auto ut = core->getUnitBase().getUnitType();
         if (ut) {
-            return vector<string>();
-            //return ut->getSpellNames();
+            
         }
     }
     

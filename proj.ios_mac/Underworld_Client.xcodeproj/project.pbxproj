@@ -180,6 +180,7 @@
 		A1A4BA491BCE096300175E8A /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A4BA471BCE096300175E8A /* Utils.cpp */; };
 		A1A74CA81C17DFE800648671 /* MainLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A74CA61C17DFE800648671 /* MainLayer.cpp */; };
 		A1A74CAB1C17DFFA00648671 /* MainUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A74CA91C17DFFA00648671 /* MainUILayer.cpp */; };
+		A1ABD4D61D38945600141E6A /* FrameLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1ABD4D41D38945600141E6A /* FrameLoader.cpp */; };
 		A1B4ADFF1C200480005906A6 /* DataManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B4ADEA1C200480005906A6 /* DataManager.cpp */; };
 		A1B4AE001C200480005906A6 /* OnlineUpdater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B4ADEC1C200480005906A6 /* OnlineUpdater.cpp */; };
 		A1B4AE011C200480005906A6 /* SoundManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B4ADEE1C200480005906A6 /* SoundManager.cpp */; };
@@ -663,6 +664,8 @@
 		A1A74CA71C17DFE800648671 /* MainLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainLayer.h; sourceTree = "<group>"; };
 		A1A74CA91C17DFFA00648671 /* MainUILayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainUILayer.cpp; sourceTree = "<group>"; };
 		A1A74CAA1C17DFFA00648671 /* MainUILayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainUILayer.h; sourceTree = "<group>"; };
+		A1ABD4D41D38945600141E6A /* FrameLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FrameLoader.cpp; sourceTree = "<group>"; };
+		A1ABD4D51D38945600141E6A /* FrameLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrameLoader.h; sourceTree = "<group>"; };
 		A1B4ADEA1C200480005906A6 /* DataManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataManager.cpp; sourceTree = "<group>"; };
 		A1B4ADEB1C200480005906A6 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		A1B4ADEC1C200480005906A6 /* OnlineUpdater.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OnlineUpdater.cpp; sourceTree = "<group>"; };
@@ -1800,6 +1803,8 @@
 			children = (
 				A1B4ADEA1C200480005906A6 /* DataManager.cpp */,
 				A1B4ADEB1C200480005906A6 /* DataManager.h */,
+				A1ABD4D41D38945600141E6A /* FrameLoader.cpp */,
+				A1ABD4D51D38945600141E6A /* FrameLoader.h */,
 				A1B4ADEC1C200480005906A6 /* OnlineUpdater.cpp */,
 				A1B4ADED1C200480005906A6 /* OnlineUpdater.h */,
 				A1B4ADEE1C200480005906A6 /* SoundManager.cpp */,
@@ -2358,6 +2363,7 @@
 				300098D61BD5E81700B6E284 /* InstanceFactory.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				A1CE89DE1C44AB2900B60704 /* SpellConfigData.cpp in Sources */,
+				A1ABD4D61D38945600141E6A /* FrameLoader.cpp in Sources */,
 				A1B4AE2F1C200521005906A6 /* GuildManager.cpp in Sources */,
 				A1D5C9D51D2288DE006B1738 /* TalentBriefNode.cpp in Sources */,
 				046D9E631D34FD5D0093A745 /* ConfigChecker.cpp in Sources */,

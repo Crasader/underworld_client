@@ -50,7 +50,7 @@ BattleDeckUnitInfoNode::BattleDeckUnitInfoNode()
 ,_nameLabel(nullptr)
 ,_hpLabel(nullptr)
 ,_armorLabel(nullptr)
-,_armorPreferLabel(nullptr)
+,_atkTypeLabel(nullptr)
 ,_dmgLabel(nullptr)
 ,_atkSpeedLabel(nullptr)
 ,_atkRangeLabel(nullptr)
@@ -123,7 +123,7 @@ bool BattleDeckUnitInfoNode::init()
                     {
                         Node* node = child->getChildByTag(70);
                         if (node) {
-                            _armorPreferLabel = createLabel(node, default_value);
+                            _atkTypeLabel = createLabel(node, default_value);
                         }
                     }
                         break;
@@ -232,12 +232,12 @@ void BattleDeckUnitInfoNode::update(const string& name)
                 _atkRangeLabel->setString(default_value);
             }
             
-//            const string& at = unit->getArmorPreference();
-//            if (at.length() > 0) {
-//                _armorPreferLabel->setString(StringUtils::format("%d", unit->getArmorPreferenceFactor().getLiteralValue()));
-//            } else {
-                _armorPreferLabel->setString(default_value);
-//            }
+            auto at = unit->getAttackType()->getName();
+            if (at.length() > 0) {
+                _atkTypeLabel->setString(at);
+            } else {
+                _atkTypeLabel->setString(default_value);
+            }
             
             // skill
             {
@@ -262,7 +262,7 @@ void BattleDeckUnitInfoNode::update(const string& name)
         } else {
             _hpLabel->setString(default_value);
             _armorLabel->setString(default_value);
-            _armorPreferLabel->setString(default_value);
+            _atkTypeLabel->setString(default_value);
             _dmgLabel->setString(default_value);
             _atkSpeedLabel->setString(default_value);
             _atkRangeLabel->setString(default_value);
@@ -274,7 +274,7 @@ void BattleDeckUnitInfoNode::update(const string& name)
         _descriptionLabel->setString("");
         _hpLabel->setString(default_value);
         _armorLabel->setString(default_value);
-        _armorPreferLabel->setString(default_value);
+        _atkTypeLabel->setString(default_value);
         _dmgLabel->setString(default_value);
         _atkSpeedLabel->setString(default_value);
         _atkRangeLabel->setString(default_value);

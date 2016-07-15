@@ -14,6 +14,7 @@
 #include "BattleDeckUnitInfoNode.h"
 #include "DataManager.h"
 #include "GameData.h"
+#include "FrameLoader.h"
 #include "SoundManager.h"
 #include "FormationData.h"
 #include "Utils.h"
@@ -127,7 +128,9 @@ bool BattleDeckLayer::init()
         button->addClickEventListener([this](Ref*) {
             saveData();
             // TODO
-            CocosUtils::replaceScene(BattleScene::create(DEFAULT_MAP_ID), true);
+            FrameLoader::getInstance()->addAllFramesAsync([]() {
+                CocosUtils::replaceScene(BattleScene::create(DEFAULT_MAP_ID), true);
+            });
         });
         
         _closeButton->addClickEventListener([this](Ref*) {

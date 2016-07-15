@@ -166,19 +166,15 @@ void User::parseResources(const rapidjson::Value& root, const char* key, bool si
 void User::loadUserInfo(const string& deviceToken, const httpRequestCallback& success, const httpErrorCallback& onError)
 {
     NetworkApi::loadUserInfo(deviceToken, [=](cocos2d::network::HttpClient* client, cocos2d::network::HttpResponse* response) {
-        if (NetworkApi::isSuccessfulResponse(response))
-        {
+        if (NetworkApi::isSuccessfulResponse(response)) {
             rapidjson::Document jsonDict;
             NetworkApi::parseResponseData(response->getResponseData(), jsonDict);
             parseUserInfo(jsonDict);
             
-            if (success)
-            {
+            if (success) {
                 success();
             }
-        }
-        else
-        {
+        } else {
             const long code = response->getResponseCode();
             if (onError) {
                 onError(code);

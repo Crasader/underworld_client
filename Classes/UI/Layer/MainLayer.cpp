@@ -11,6 +11,7 @@
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "SoundManager.h"
+#include "FrameLoader.h"
 #include "MainUILayer.h"
 #include "BattleScene.h"
 
@@ -193,7 +194,10 @@ void MainLayer::addLevelButtons()
                 if (!_touchInvalid) {
                     // TODO:
                     SoundManager::getInstance()->playButtonSound();
-                    CocosUtils::replaceScene(BattleScene::create(button->getTag() + 1), true);
+                    auto mapId(button->getTag() + 1);
+                    FrameLoader::getInstance()->addAllFramesAsync([mapId]() {
+                        CocosUtils::replaceScene(BattleScene::create(mapId), true);
+                    });
                 }
             }
         });

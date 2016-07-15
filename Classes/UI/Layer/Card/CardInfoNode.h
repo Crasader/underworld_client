@@ -50,7 +50,7 @@ private:
     Label* _description;
     Label* _hp;
     Label* _armor;
-    Label* _armorPrefer;
+    Label* _atkType;
     Label* _dmg;
     Label* _atkSpeed;
     Label* _atkRange;

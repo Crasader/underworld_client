@@ -16,6 +16,7 @@
 #include "FormationLayer.h"
 #include "BattleDeckLayer.h"
 #include "CardLayer.h"
+#include "FrameLoader.h"
 
 using namespace std;
 using namespace ui;
@@ -192,7 +193,9 @@ bool MainUILayer::init()
                                     setButtonIcons(button, 25, "icon_pvp_1", "icon_pvp_2");
                                     button->addClickEventListener([this](Ref *pSender){
                                         SoundManager::getInstance()->playButtonSound();
-                                        CocosUtils::replaceScene(BattleScene::create(DEFAULT_MAP_ID), true);
+                                        FrameLoader::getInstance()->addAllFramesAsync([]() {
+                                            CocosUtils::replaceScene(BattleScene::create(DEFAULT_MAP_ID), true);
+                                        });
                                     });
                                 }
                                 
