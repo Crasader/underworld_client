@@ -360,8 +360,9 @@ void GameRender::updateUILayer()
 //                _mapUILayer->insertCard(CardDeckType::Unit, card);
 //            }
 //        }
-//        
-        _mapUILayer->updateNextCard(_deck->getNextDraw());
+//
+        //TODO: delete next draw
+        //_mapUILayer->updateNextCard(_deck->getNextDraw());
         
         // TODO:
         bool needReload(false);
