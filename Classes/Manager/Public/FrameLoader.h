@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 #include <unordered_set>
+#include <functional>
 
 class FrameLoader
 {
@@ -19,6 +20,12 @@ public:
     static FrameLoader* getInstance();
     static void purge();
     
+    // synchronous
+    void addAllFrames();
+    void add(const std::vector<std::string>& files);
+    void add(const std::string& file);
+    
+    // asynchronous
     void addAllFramesAsync(const std::function<void()>& callback);
     void addAsync(const std::vector<std::string>& files, const std::function<void()>& callback);
     void addAsync(const std::string& file, const std::function<void(std::string)>& callback);
@@ -26,7 +33,7 @@ public:
 private:
     FrameLoader();
     virtual ~FrameLoader();
-    void recursiveAddFile();
+    void recursiveAddAsync();
     
 private:
     std::unordered_set<std::string> _resources;

@@ -12,11 +12,15 @@
 using namespace std;
 USING_NS_CC;
 
+static const string Folder("pvr/");
+static const string PlistFormat(".plist");
+static const string TextureFormat(".pvr.ccz");
 static const vector<string> FilesVector = {
     "hero-Fat",
     "soldier-Archer-test",
     "soldier-Archer-test-shadows"
 };
+
 
 static FrameLoader *s_pInstance(nullptr);
 FrameLoader* FrameLoader::getInstance()
@@ -41,6 +45,38 @@ FrameLoader::FrameLoader()
 
 FrameLoader::~FrameLoader() {}
 
+#pragma mark - synchronous
+void FrameLoader::addAllFrames()
+{
+    add(FilesVector);
+}
+
+void FrameLoader::add(const std::vector<std::string>& files)
+{
+    for (const auto& file : files) {
+        add(file);
+    }
+}
+
+void FrameLoader::add(const std::string& file)
+{
+    if (file.empty() || _resources.find(file) != end(_resources)) {
+        // do nothing
+    } else {
+        const string plist = Folder + file + PlistFormat;
+        const string textureFile = Folder + file + TextureFormat;
+        auto fileUtils = FileUtils::getInstance();
+        if (!fileUtils->isFileExist(plist) || !fileUtils->isFileExist(textureFile)) {
+            CC_ASSERT(false);
+            // do nothing
+        } else {
+            SpriteFrameCache::getInstance()->addSpriteFramesWithFile(plist, textureFile);
+            _resources.insert(file);
+        }
+    }
+}
+
+#pragma mark - asynchronous
 void FrameLoader::addAllFramesAsync(const function<void()>& callback)
 {
     addAsync(FilesVector, callback);
@@ -57,7 +93,7 @@ void FrameLoader::addAsync(const vector<string>& files, const function<void()>& 
             _callback = nullptr;
         }
         
-        recursiveAddFile();
+        recursiveAddAsync();
     }
 }
 
@@ -68,9 +104,8 @@ void FrameLoader::addAsync(const string &file, const function<void(string)>& cal
             callback(file);
         }
     } else {
-        static const string folder("pvr/");
-        const string plist = folder + file + ".plist";
-        const string textureFile = folder + file + ".pvr.ccz";
+        const string plist = Folder + file + PlistFormat;
+        const string textureFile = Folder + file + TextureFormat;
         auto fileUtils = FileUtils::getInstance();
         if (!fileUtils->isFileExist(plist) || !fileUtils->isFileExist(textureFile)) {
             CC_ASSERT(false);
@@ -89,14 +124,14 @@ void FrameLoader::addAsync(const string &file, const function<void(string)>& cal
     }
 }
 
-void FrameLoader::recursiveAddFile()
+void FrameLoader::recursiveAddAsync()
 {
     if (!_files.empty()) {
         auto iter = _files.begin();
         string file = *iter;
         _files.erase(iter);
         addAsync(file, [this](const string& file) {
-            recursiveAddFile();
+            recursiveAddAsync();
         });
     } else {
         _isLoading = false;
