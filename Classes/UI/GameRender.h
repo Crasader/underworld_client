@@ -40,6 +40,7 @@ class GameRenderObserver
 public:
     virtual ~GameRenderObserver() {}
     virtual void onGameRenderRestart() = 0;
+    virtual void onGameRenderExit() = 0;
 };
 
 class GameRender
@@ -107,7 +108,6 @@ private:
     void removeAllUnits();
     void pauseGame();
     void resumeGame();
-    void restartGame();
     void tick(float dt);
     void updateResources();
     void stopAllTimers();

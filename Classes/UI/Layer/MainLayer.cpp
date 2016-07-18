@@ -9,11 +9,9 @@
 #include "MainLayer.h"
 #include "ui/CocosGUI.h"
 #include "CocosGlobal.h"
-#include "CocosUtils.h"
+#include "GameManager.h"
 #include "SoundManager.h"
-#include "FrameLoader.h"
 #include "MainUILayer.h"
-#include "BattleScene.h"
 
 using namespace std;
 using namespace ui;
@@ -195,9 +193,7 @@ void MainLayer::addLevelButtons()
                     // TODO:
                     SoundManager::getInstance()->playButtonSound();
                     auto mapId(button->getTag() + 1);
-                    FrameLoader::getInstance()->addAllFramesAsync([mapId]() {
-                        CocosUtils::replaceScene(BattleScene::create(mapId), true);
-                    });
+                    GameManager::getInstance()->launchPve(mapId);
                 }
             }
         });

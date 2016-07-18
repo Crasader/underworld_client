@@ -258,6 +258,7 @@
 		A1F5BFA81C1FDFBE007C08CB /* ResourceNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BFA61C1FDFBE007C08CB /* ResourceNode.cpp */; };
 		A1F6A1171C4506A3005DC0CC /* HeroSpellHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F6A1151C4506A3005DC0CC /* HeroSpellHandler.cpp */; };
 		A1F96B101C86E805009D8B7C /* CardNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F96B0E1C86E805009D8B7C /* CardNode.cpp */; };
+		A1FACCE31D3C81AC007E95EA /* GameManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1FACCE11D3C81AC007E95EA /* GameManager.cpp */; };
 		A1FC1A091C97C2AE00270B50 /* NSString+Extended.mm in Sources */ = {isa = PBXBuildFile; fileRef = A1FC1A081C97C2AE00270B50 /* NSString+Extended.mm */; };
 		A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A1FC49B31BD8C249005C1B2E /* CrashHelper.m */; };
 		A1FC49B61BD8DBCF005C1B2E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1FC49B51BD8DBCF005C1B2E /* MessageUI.framework */; };
@@ -815,6 +816,8 @@
 		A1F6A1161C4506A3005DC0CC /* HeroSpellHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroSpellHandler.h; sourceTree = "<group>"; };
 		A1F96B0E1C86E805009D8B7C /* CardNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardNode.cpp; sourceTree = "<group>"; };
 		A1F96B0F1C86E805009D8B7C /* CardNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardNode.h; sourceTree = "<group>"; };
+		A1FACCE11D3C81AC007E95EA /* GameManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameManager.cpp; sourceTree = "<group>"; };
+		A1FACCE21D3C81AC007E95EA /* GameManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameManager.h; sourceTree = "<group>"; };
 		A1FC1A071C97C2AE00270B50 /* NSString+Extended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extended.h"; sourceTree = "<group>"; };
 		A1FC1A081C97C2AE00270B50 /* NSString+Extended.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSString+Extended.mm"; sourceTree = "<group>"; };
 		A1FC49B21BD8C249005C1B2E /* CrashHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashHelper.h; sourceTree = "<group>"; };
@@ -1805,6 +1808,8 @@
 				A1B4ADEB1C200480005906A6 /* DataManager.h */,
 				A1ABD4D41D38945600141E6A /* FrameLoader.cpp */,
 				A1ABD4D51D38945600141E6A /* FrameLoader.h */,
+				A1FACCE11D3C81AC007E95EA /* GameManager.cpp */,
+				A1FACCE21D3C81AC007E95EA /* GameManager.h */,
 				A1B4ADEC1C200480005906A6 /* OnlineUpdater.cpp */,
 				A1B4ADED1C200480005906A6 /* OnlineUpdater.h */,
 				A1B4ADEE1C200480005906A6 /* SoundManager.cpp */,
@@ -2301,6 +2306,7 @@
 				30B83D621CEF100B00195004 /* AIRule.cpp in Sources */,
 				A1E5BED61C3B7D2C005BC78B /* HeroData.cpp in Sources */,
 				045116E41BCFBA39002AA721 /* World.cpp in Sources */,
+				A1FACCE31D3C81AC007E95EA /* GameManager.cpp in Sources */,
 				A15698E11C3A96E500B94345 /* DamageType.cpp in Sources */,
 				A1B4AE2E1C200521005906A6 /* GearManager.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,

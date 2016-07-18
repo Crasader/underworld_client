@@ -17,19 +17,19 @@ USING_NS_CC;
 class ResourceNode : public Node
 {
 public:
-    static ResourceNode* create(ResourceType type, int count);
+    static ResourceNode* create(::ResourceType type, int count);
     virtual ~ResourceNode();
-    ResourceType getType() const;
+    ::ResourceType getType() const;
     int getCount() const;
-    void setType(ResourceType type);
+    void setType(::ResourceType type);
     void setCount(int count, bool animated);
     
 protected:
     ResourceNode();
-    bool init(ResourceType type, int count);
+    bool init(::ResourceType type, int count);
     
 private:
-    ResourceType _type;
+    ::ResourceType _type;
     int _count;
     Sprite *_icon;
     Label *_countLabel;

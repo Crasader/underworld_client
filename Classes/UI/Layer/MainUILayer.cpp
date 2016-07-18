@@ -10,13 +10,12 @@
 #include "ui/CocosGUI.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
+#include "GameManager.h"
 #include "SoundManager.h"
 #include "ResourceNode.h"
-#include "BattleScene.h"
 #include "FormationLayer.h"
 #include "BattleDeckLayer.h"
 #include "CardLayer.h"
-#include "FrameLoader.h"
 
 using namespace std;
 using namespace ui;
@@ -193,9 +192,7 @@ bool MainUILayer::init()
                                     setButtonIcons(button, 25, "icon_pvp_1", "icon_pvp_2");
                                     button->addClickEventListener([this](Ref *pSender){
                                         SoundManager::getInstance()->playButtonSound();
-                                        FrameLoader::getInstance()->addAllFramesAsync([]() {
-                                            CocosUtils::replaceScene(BattleScene::create(DEFAULT_MAP_ID), true);
-                                        });
+                                        GameManager::getInstance()->launchPve(DEFAULT_MAP_ID);
                                     });
                                 }
                                 

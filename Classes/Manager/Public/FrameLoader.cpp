@@ -21,8 +21,7 @@ static const vector<string> FilesVector = {
     "soldier-Archer-test-shadows"
 };
 
-
-static FrameLoader *s_pInstance(nullptr);
+static FrameLoader* s_pInstance(nullptr);
 FrameLoader* FrameLoader::getInstance()
 {
     if (!s_pInstance) {
@@ -51,29 +50,16 @@ void FrameLoader::addAllFrames()
     add(FilesVector);
 }
 
-void FrameLoader::add(const std::vector<std::string>& files)
+void FrameLoader::add(const vector<string>& files)
 {
     for (const auto& file : files) {
         add(file);
     }
 }
 
-void FrameLoader::add(const std::string& file)
+void FrameLoader::add(const string& file)
 {
-    if (file.empty() || _resources.find(file) != end(_resources)) {
-        // do nothing
-    } else {
-        const string plist = Folder + file + PlistFormat;
-        const string textureFile = Folder + file + TextureFormat;
-        auto fileUtils = FileUtils::getInstance();
-        if (!fileUtils->isFileExist(plist) || !fileUtils->isFileExist(textureFile)) {
-            CC_ASSERT(false);
-            // do nothing
-        } else {
-            SpriteFrameCache::getInstance()->addSpriteFramesWithFile(plist, textureFile);
-            _resources.insert(file);
-        }
-    }
+    universalAdd(file, nullptr);
 }
 
 #pragma mark - asynchronous
@@ -99,6 +85,18 @@ void FrameLoader::addAsync(const vector<string>& files, const function<void()>& 
 
 void FrameLoader::addAsync(const string &file, const function<void(string)>& callback)
 {
+    function<void(string)> cb(nullptr);
+    if (callback) {
+        cb = callback;
+    } else {
+        cb = [](string) {};
+    }
+    
+    universalAdd(file, cb);
+}
+
+void FrameLoader::universalAdd(const string& file, const function<void(string)>& callback)
+{
     if (file.empty() || _resources.find(file) != end(_resources)) {
         if (callback) {
             callback(file);
@@ -113,13 +111,18 @@ void FrameLoader::addAsync(const string &file, const function<void(string)>& cal
                 callback(file);
             }
         } else {
-            Director::getInstance()->getTextureCache()->addImageAsync(textureFile, [=](Texture2D* texture) {
-                SpriteFrameCache::getInstance()->addSpriteFramesWithFile(plist, texture);
+            if (callback) {
+                Director::getInstance()->getTextureCache()->addImageAsync(textureFile, [=](Texture2D* texture) {
+                    SpriteFrameCache::getInstance()->addSpriteFramesWithFile(plist, texture);
+                    _resources.insert(file);
+                    if (callback) {
+                        callback(file);
+                    }
+                });
+            } else {
+                SpriteFrameCache::getInstance()->addSpriteFramesWithFile(plist, textureFile);
                 _resources.insert(file);
-                if (callback) {
-                    callback(file);
-                }
-            });
+            }
         }
     }
 }

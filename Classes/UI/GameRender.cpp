@@ -581,7 +581,11 @@ void GameRender::onDefeatLayerClosed(Layer* pSender)
 
 void GameRender::onDefeatLayerContinued(Layer* pSender)
 {
-    
+    // remove layer first
+    pSender->removeFromParent();
+    if (_observer) {
+        _observer->onGameRenderRestart();
+    }
 }
 
 #pragma mark - private
@@ -623,19 +627,16 @@ void GameRender::removeAllUnits()
 
 void GameRender::pauseGame()
 {
-    MessageBoxLayer::getInstance()->show(LocalHelper::getString("hint_exitPve"), MessageBoxType::YesNo, [](Ref*) {
-        CocosUtils::replaceScene(MainLayer::createScene(), true);
+    MessageBoxLayer::getInstance()->show(LocalHelper::getString("hint_exitPve"), MessageBoxType::YesNo, [this](Ref*) {
+        if (_observer) {
+            _observer->onGameRenderExit();
+        }
     });
 }
 
 void GameRender::resumeGame()
 {
     pauseGame();
-}
-
-void GameRender::restartGame()
-{
-    
 }
 
 void GameRender::tick(float dt)

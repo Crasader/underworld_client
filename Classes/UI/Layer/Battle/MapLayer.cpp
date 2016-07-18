@@ -749,7 +749,7 @@ Node* MapLayer::createRing(const string& name, const Point& point)
     if (fileName.length() > 0) {
         auto ring = CocosUtils::playAnimation(fileName, 0, true);
         ring->setPosition(point);
-        _mainLayer->addChild(ring);
+        _mainLayer->addChild(ring, -2000);
         return ring;
     }
     

@@ -10,41 +10,22 @@
 #define BattleScene_h
 
 #include "cocos2d.h"
-#include "GameScheduler.h"
-#include "GameRender.h"
-#include "UnderworldClient.h"
-#include "ClientTCPNetworkProxy.h"
 
 USING_NS_CC;
 
 class MapLayer;
 
-class BattleScene : public Scene, public GameRenderObserver
+class BattleScene : public Scene
 {
 public:
-    static BattleScene *create(int mapId);
+    static BattleScene *create();
     virtual ~BattleScene();
     
 private:
     BattleScene();
-    bool init(int mapId);
+    virtual bool init() override;
     virtual void onEnter() override;
     virtual void onExit() override;
-    
-    // GameRenderObserver
-    virtual void onGameRenderRestart() override;
-    
-    void start();
-    void clear();
-    
-    void startTest();
-    
-private:
-    int _mapId;
-    GameRender* _render;
-    UnderworldClient * _client;
-    GameScheduler* _sch;
-    ClientTCPNetworkProxy* _proxy;
 };
 
 #endif /* BattleScene_h */

@@ -12,16 +12,15 @@
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "BattleDeckUnitInfoNode.h"
+#include "GameManager.h"
 #include "DataManager.h"
 #include "GameData.h"
-#include "FrameLoader.h"
 #include "SoundManager.h"
 #include "FormationData.h"
 #include "Utils.h"
 #include "TechTree.h"
 #include "GameModeHMM.h"
 #include "XTableViewCell.h"
-#include "BattleScene.h"
 
 using namespace std;
 using namespace ui;
@@ -128,9 +127,7 @@ bool BattleDeckLayer::init()
         button->addClickEventListener([this](Ref*) {
             saveData();
             // TODO
-            FrameLoader::getInstance()->addAllFramesAsync([]() {
-                CocosUtils::replaceScene(BattleScene::create(DEFAULT_MAP_ID), true);
-            });
+            GameManager::getInstance()->launchPve(DEFAULT_MAP_ID);
         });
         
         _closeButton->addClickEventListener([this](Ref*) {

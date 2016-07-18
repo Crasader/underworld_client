@@ -33,6 +33,7 @@ public:
 private:
     FrameLoader();
     virtual ~FrameLoader();
+    void universalAdd(const std::string& file, const std::function<void(std::string)>& callback);
     void recursiveAddAsync();
     
 private:

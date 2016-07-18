@@ -235,15 +235,15 @@ void CocosUtils::replaceScene(Scene* scene, bool animated)
 {
     if (scene) {
         auto director = Director::getInstance();
-        if (animated && director->getRunningScene()) {
-            auto pScene = TransitionFade::create(1.2f, scene);
-            if (pScene) {
-                director->replaceScene(pScene);
-            } else {
-                director->runWithScene(scene);
-            }
+        auto pScene(scene);
+        if (animated) {
+            pScene = TransitionFade::create(1.2f, scene);
+        }
+        
+        if (director->getRunningScene()) {
+            director->replaceScene(pScene);
         } else {
-            director->runWithScene(scene);
+            director->runWithScene(pScene);
         }
     }
 }
