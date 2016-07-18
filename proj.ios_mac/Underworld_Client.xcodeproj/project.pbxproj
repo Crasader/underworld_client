@@ -11,6 +11,8 @@
 		0404BE711D1B970000B46BAA /* Gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0404BE6F1D1B970000B46BAA /* Gui.cpp */; };
 		0404BE741D1B988A00B46BAA /* WorldRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0404BE721D1B988A00B46BAA /* WorldRender.cpp */; };
 		0404BE771D1BC7A300B46BAA /* WorldObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0404BE751D1BC7A300B46BAA /* WorldObject.cpp */; };
+		0424CD821D3CE108001F9777 /* UnitRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0424CD801D3CE108001F9777 /* UnitRender.cpp */; };
+		0424CD851D3CE183001F9777 /* BulletRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0424CD831D3CE183001F9777 /* BulletRender.cpp */; };
 		045116E21BCFBA39002AA721 /* Clock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116DC1BCFBA39002AA721 /* Clock.cpp */; };
 		045116E31BCFBA39002AA721 /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116DE1BCFBA39002AA721 /* Map.cpp */; };
 		045116E41BCFBA39002AA721 /* World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116E01BCFBA39002AA721 /* World.cpp */; };
@@ -321,6 +323,10 @@
 		0404BE731D1B988A00B46BAA /* WorldRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorldRender.h; path = Core/External/Render/WorldRender.h; sourceTree = "<group>"; };
 		0404BE751D1BC7A300B46BAA /* WorldObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WorldObject.cpp; path = Core/Unit/Instance/WorldObject.cpp; sourceTree = "<group>"; };
 		0404BE761D1BC7A300B46BAA /* WorldObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorldObject.h; path = Core/Unit/Instance/WorldObject.h; sourceTree = "<group>"; };
+		0424CD801D3CE108001F9777 /* UnitRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UnitRender.cpp; path = Core/External/Render/UnitRender.cpp; sourceTree = "<group>"; };
+		0424CD811D3CE108001F9777 /* UnitRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnitRender.h; path = Core/External/Render/UnitRender.h; sourceTree = "<group>"; };
+		0424CD831D3CE183001F9777 /* BulletRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BulletRender.cpp; path = Core/External/Render/BulletRender.cpp; sourceTree = "<group>"; };
+		0424CD841D3CE183001F9777 /* BulletRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BulletRender.h; path = Core/External/Render/BulletRender.h; sourceTree = "<group>"; };
 		045116DC1BCFBA39002AA721 /* Clock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Clock.cpp; path = Core/World/Clock.cpp; sourceTree = "<group>"; };
 		045116DD1BCFBA39002AA721 /* Clock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Clock.h; path = Core/World/Clock.h; sourceTree = "<group>"; };
 		045116DE1BCFBA39002AA721 /* Map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Map.cpp; path = Core/World/Map.cpp; sourceTree = "<group>"; };
@@ -1273,6 +1279,10 @@
 				0404BE731D1B988A00B46BAA /* WorldRender.h */,
 				04E846931D1D02E60041FAC3 /* WorldObjectRender.cpp */,
 				04E846941D1D02E60041FAC3 /* WorldObjectRender.h */,
+				0424CD801D3CE108001F9777 /* UnitRender.cpp */,
+				0424CD811D3CE108001F9777 /* UnitRender.h */,
+				0424CD831D3CE183001F9777 /* BulletRender.cpp */,
+				0424CD841D3CE183001F9777 /* BulletRender.h */,
 			);
 			name = Render;
 			sourceTree = "<group>";
@@ -2443,6 +2453,7 @@
 				A1F58D561C32444B00C8A2DD /* SoldierQualityData.cpp in Sources */,
 				A1A05B6C1C96B6A0006FE03B /* DDLog.m in Sources */,
 				A1B4AE001C200480005906A6 /* OnlineUpdater.cpp in Sources */,
+				0424CD821D3CE108001F9777 /* UnitRender.cpp in Sources */,
 				300F25331BFC67550080765C /* FeatureType.cpp in Sources */,
 				A1A74CA81C17DFE800648671 /* MainLayer.cpp in Sources */,
 				3028EBC61BFF0D4800511C51 /* Condition.cpp in Sources */,
@@ -2483,6 +2494,7 @@
 				3087FF1A1CA2A6B6004E31F6 /* NetworkMessage.cpp in Sources */,
 				A16BF2891C313E5900E91458 /* HeroUpgradeData.cpp in Sources */,
 				30236FF71C5B6AFA00FB1802 /* PathFinderInterface.cpp in Sources */,
+				0424CD851D3CE183001F9777 /* BulletRender.cpp in Sources */,
 				A16BF2921C313E9F00E91458 /* TowerLocalData.cpp in Sources */,
 				A1DF4BEC1C05902C000F2FDA /* DisplayBar.cpp in Sources */,
 				A1DFAAD21D10FC2800817E69 /* BattleDeckLayer.cpp in Sources */,
