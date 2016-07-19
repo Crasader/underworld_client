@@ -11,6 +11,7 @@
 		0404BE711D1B970000B46BAA /* Gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0404BE6F1D1B970000B46BAA /* Gui.cpp */; };
 		0404BE741D1B988A00B46BAA /* WorldRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0404BE721D1B988A00B46BAA /* WorldRender.cpp */; };
 		0404BE771D1BC7A300B46BAA /* WorldObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0404BE751D1BC7A300B46BAA /* WorldObject.cpp */; };
+		040DBB871D3E3EC40096F069 /* DisplayBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 040DBB851D3E3EC40096F069 /* DisplayBar.cpp */; };
 		0424CD821D3CE108001F9777 /* UnitRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0424CD801D3CE108001F9777 /* UnitRender.cpp */; };
 		0424CD851D3CE183001F9777 /* BulletRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0424CD831D3CE183001F9777 /* BulletRender.cpp */; };
 		045116E21BCFBA39002AA721 /* Clock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116DC1BCFBA39002AA721 /* Clock.cpp */; };
@@ -323,6 +324,8 @@
 		0404BE731D1B988A00B46BAA /* WorldRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorldRender.h; path = Core/External/Render/WorldRender.h; sourceTree = "<group>"; };
 		0404BE751D1BC7A300B46BAA /* WorldObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WorldObject.cpp; path = Core/Unit/Instance/WorldObject.cpp; sourceTree = "<group>"; };
 		0404BE761D1BC7A300B46BAA /* WorldObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorldObject.h; path = Core/Unit/Instance/WorldObject.h; sourceTree = "<group>"; };
+		040DBB851D3E3EC40096F069 /* DisplayBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayBar.cpp; path = Core/External/Render/View/DisplayBar.cpp; sourceTree = "<group>"; };
+		040DBB861D3E3EC40096F069 /* DisplayBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayBar.h; path = Core/External/Render/View/DisplayBar.h; sourceTree = "<group>"; };
 		0424CD801D3CE108001F9777 /* UnitRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UnitRender.cpp; path = Core/External/Render/UnitRender.cpp; sourceTree = "<group>"; };
 		0424CD811D3CE108001F9777 /* UnitRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnitRender.h; path = Core/External/Render/UnitRender.h; sourceTree = "<group>"; };
 		0424CD831D3CE183001F9777 /* BulletRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BulletRender.cpp; path = Core/External/Render/BulletRender.cpp; sourceTree = "<group>"; };
@@ -916,6 +919,15 @@
 			name = Gui;
 			sourceTree = "<group>";
 		};
+		040DBB841D3E3E620096F069 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				040DBB851D3E3EC40096F069 /* DisplayBar.cpp */,
+				040DBB861D3E3EC40096F069 /* DisplayBar.h */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		045116D51BCFB9E7002AA721 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -1272,6 +1284,7 @@
 		30F9982A1D06DE5200D56172 /* Render */ = {
 			isa = PBXGroup;
 			children = (
+				040DBB841D3E3E620096F069 /* View */,
 				0404BE6E1D1B96C300B46BAA /* Gui */,
 				0404BE641D1A7FE500B46BAA /* UWRender.cpp */,
 				0404BE651D1A7FE500B46BAA /* UWRender.h */,
@@ -2357,6 +2370,7 @@
 				A1F3D2281D1D044100EB5C17 /* CardInfoNode.cpp in Sources */,
 				A1720E971BCCE41A00217E98 /* ScrollBar.cpp in Sources */,
 				A18524D01C1AE42000BE261D /* BagLayer.cpp in Sources */,
+				040DBB871D3E3EC40096F069 /* DisplayBar.cpp in Sources */,
 				A178F76A1D23B7FD006E3812 /* CardInfoLayer.cpp in Sources */,
 				A1E7BAE21C2149E800CE2A85 /* Constants.cpp in Sources */,
 				A16BF2A41C314E5100E91458 /* AttributeData.cpp in Sources */,
