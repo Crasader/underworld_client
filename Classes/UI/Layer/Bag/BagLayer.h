@@ -50,19 +50,15 @@ protected:
     void addTabButton(Node* parent, const std::string& title, int tabIndex, const ui::Button::ccWidgetClickCallback& callback);
     void addTableView(int index);
     void switchTable(int index);
+    void removeTabInfos();
     
 private:
-    struct TabInfo {
-        TableView* tableView;
-        TabButton* tabButton;
-    };
-    
-private:
+    struct TabInfo;
     BagLayerObserver *_observer;
     Size _tableViewMaxSize;
     Size _cellSize;
     ssize_t _cellsCount;
-    std::unordered_map<int, TabInfo> _tabInfos;
+    std::unordered_map<int, TabInfo*> _tabInfos;
     ScrollBar *_scrollBar;
     int _tabIndex;
 };

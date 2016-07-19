@@ -17,6 +17,8 @@ static const string PlistFormat(".plist");
 static const string TextureFormat(".pvr.ccz");
 static const vector<string> FilesVector = {
     "hero-Fat",
+    "hero-Fat-shadows-0",
+    "hero-Fat-shadows-1",
     "soldier-Archer-test",
     "soldier-Archer-test-shadows"
 };
@@ -93,6 +95,15 @@ void FrameLoader::addAsync(const string &file, const function<void(string)>& cal
     }
     
     universalAdd(file, cb);
+}
+
+void FrameLoader::removeCachedFrames()
+{
+    for (auto iter = begin(_resources); iter != end(_resources); ++iter) {
+        SpriteFrameCache::getInstance()->removeSpriteFramesFromFile(*iter);
+    }
+    
+    _resources.clear();
 }
 
 void FrameLoader::universalAdd(const string& file, const function<void(string)>& callback)

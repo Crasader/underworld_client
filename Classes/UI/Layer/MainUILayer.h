@@ -41,20 +41,16 @@ protected:
     void setButtonIcons(ui::Button* button, int childTag, const std::string& normal, const std::string& touched);
     void setButtonEnabled(ui::Button* button, bool enabled);
     void addButtonIcon(Node* node, const std::string& file);
+    void removeButtonIcons();
     void updateIcon();
     void updateExp();
     void updateResources();
     
 private:
-    struct ButtonIconInfo {
-        int iconParentTag;
-        std::string iconNormal;
-        std::string iconTouched;
-    };
+    struct ButtonIconInfo;
     
-private:
     MainUILayerObserver *_observer;
-    std::unordered_map<ui::Button*, ButtonIconInfo> _buttonIconInfos;
+    std::unordered_map<ui::Button*, ButtonIconInfo*> _buttonIconInfos;
     ui::Button* _iconButton;
     Label* _nameLabel;
     Label* _levelLabel;

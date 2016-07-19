@@ -51,6 +51,7 @@ BagLayer::BagLayer()
 
 BagLayer::~BagLayer()
 {
+    removeTabInfos();
     removeAllChildren();
 }
 
@@ -198,28 +199,34 @@ ssize_t BagLayer::numberOfCellsInTableView(TableView *table)
     return 1;
 }
 
+#pragma mark - tab info
+struct BagLayer::TabInfo {
+    TableView* tableView;
+    TabButton* tabButton;
+};
+
 void BagLayer::addTabButton(Node* parent, const string& title, int tabIndex, const Button::ccWidgetClickCallback& callback)
 {
-    TabButton* button = TabButton::create(title, callback);
+    auto button = TabButton::create(title, callback);
     parent->addChild(button);
     if (_tabInfos.find(tabIndex) != _tabInfos.end()) {
         assert(false);
     } else {
-        _tabInfos.insert(make_pair(tabIndex, TabInfo{nullptr, button}));
+        _tabInfos.insert(make_pair(tabIndex, new (nothrow) TabInfo{nullptr, button}));
     }
 }
 
 void BagLayer::addTableView(int index)
 {
     if (_tabInfos.find(index) != _tabInfos.end()) {
-        TabInfo& info = _tabInfos.at(index);
-        if (nullptr == info.tableView) {
-            TableView* tableView = TableView::create(this, _tableViewMaxSize);
+        auto info = _tabInfos.at(index);
+        if (nullptr == info->tableView) {
+            auto tableView = TableView::create(this, _tableViewMaxSize);
             tableView->setDirection(extension::ScrollView::Direction::VERTICAL);
             tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
             tableView->setPosition(Point::ZERO);
             tableView->setBounceable(false);
-            info.tableView = tableView;
+            info->tableView = tableView;
         }
     }
 }
@@ -229,14 +236,21 @@ void BagLayer::switchTable(int index)
     if (_tabIndex != index) {
         _tabIndex = index;
         for (auto iter = _tabInfos.begin(); iter != _tabInfos.end(); ++iter) {
-            const TabInfo& info = iter->second;
+            auto info = iter->second;
             bool isThisIndex = (index == iter->first) ? true : false;
-            if (info.tableView) {
-                info.tableView->setVisible(isThisIndex);
+            if (info->tableView) {
+                info->tableView->setVisible(isThisIndex);
             } else if (isThisIndex) {
                 addTableView(index);
             }
-            info.tabButton->setEnabled(!isThisIndex);
+            info->tabButton->setEnabled(!isThisIndex);
         }
+    }
+}
+
+void BagLayer::removeTabInfos()
+{
+    for (auto iter = begin(_tabInfos); iter != end(_tabInfos); ++iter) {
+        CC_SAFE_DELETE(iter->second);
     }
 }

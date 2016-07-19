@@ -43,27 +43,8 @@ public:
 
 class UnitNode : public Node
 {
-public:
-    class AnimationType {
-    public:
-        AnimationType() {}
-        void assign(const AnimationType& instance) {
-            _file.assign(instance._file);
-            _startIdx = instance._startIdx;
-            _endIdx = instance._endIdx;
-        }
-        void assign(const std::string& file, int startIdx = 0, int endIdx = -1) {
-            _file.assign(file); _startIdx = startIdx; _endIdx = endIdx;
-        }
-        const std::string& getFile() const { return _file; }
-        int getStartIdx() const { return _startIdx; }
-        int getEndIdx() const { return _endIdx; }
-        
-    private:
-        std::string _file;
-        int _startIdx;
-        int _endIdx;
-    };
+protected:
+    class AnimationType;
     
 public:
     static UnitNode* create(const Unit* unit, bool rightSide);
@@ -86,7 +67,6 @@ protected:
     virtual bool init() override;
     virtual void update(float dt) override;
     virtual void setOpacity(GLubyte opacity) override;
-    virtual GLubyte getOpacity() const override;
     
     // universal
     void flipX(Node* node) const;

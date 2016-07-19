@@ -56,6 +56,7 @@ MainUILayer::MainUILayer()
 
 MainUILayer::~MainUILayer()
 {
+    removeButtonIcons();
     removeAllChildren();
 }
 
@@ -79,7 +80,7 @@ bool MainUILayer::init()
             addChild(mainNode);
             
             Node* root = mainNode->getChildByTag(7);
-            const Vector<Node*>& children = root->getChildren();
+            const auto& children = root->getChildren();
             for (int i = 0; i < children.size(); ++i)
             {
                 Node* child = children.at(i);
@@ -89,7 +90,7 @@ bool MainUILayer::init()
                         switch (tag) {
                             case 15:
                             {
-                                Button* button = dynamic_cast<Button*>(child);
+                                auto button = dynamic_cast<Button*>(child);
                                 if (button) {
                                     button->addClickEventListener([this](Ref *pSender){
                                         SoundManager::getInstance()->playButtonSound();
@@ -134,22 +135,22 @@ bool MainUILayer::init()
         // 2. left
         {
             static const string csbFile("UI_ChatIcon.csb");
-            Node *mainNode = CocosUtils::playAnimation(csbFile, 0, false);
+            auto mainNode = CocosUtils::playAnimation(csbFile, 0, false);
             mainNode->setPosition(Point(0, winSize.height / 2));
             addChild(mainNode);
             
-            Node* root = mainNode;
-            const Vector<Node*>& children = root->getChildren();
+            auto root = mainNode;
+            const auto& children = root->getChildren();
             for (int i = 0; i < children.size(); ++i)
             {
-                Node* child = children.at(i);
+                auto child = children.at(i);
                 if (child) {
                     const int tag = child->getTag();
                     if (tag > 0) {
                         switch (tag) {
                             case 20:
                             {
-                                Button* button = dynamic_cast<Button*>(child);
+                                auto button = dynamic_cast<Button*>(child);
                                 if (button) {
                                     button->setPressedActionEnabled(true);
                                     button->addClickEventListener([this](Ref *pSender){
@@ -171,22 +172,22 @@ bool MainUILayer::init()
         {
             static const float margin(5.0f);
             static const string csbFile("UI_PVPICON.csb");
-            Node *mainNode = CocosUtils::playAnimation(csbFile, 0, false);
+            auto mainNode = CocosUtils::playAnimation(csbFile, 0, false);
             mainNode->setPosition(Point(margin, margin));
             addChild(mainNode);
             
-            Node* root = mainNode->getChildByTag(23);
-            const Vector<Node*>& children = root->getChildren();
+            auto root = mainNode->getChildByTag(23);
+            const auto& children = root->getChildren();
             for (int i = 0; i < children.size(); ++i)
             {
-                Node* child = children.at(i);
+                auto child = children.at(i);
                 if (child) {
                     const int tag = child->getTag();
                     if (tag > 0) {
                         switch (tag) {
                             case 24:
                             {
-                                Button* button = dynamic_cast<Button*>(child);
+                                auto button = dynamic_cast<Button*>(child);
                                 if (button) {
                                     button->loadTextureDisabled("GameImages/public/button_4.png");
                                     setButtonIcons(button, 25, "icon_pvp_1", "icon_pvp_2");
@@ -209,8 +210,8 @@ bool MainUILayer::init()
         
         // 4. right top
         {
-            ResourceNode* node = ResourceNode::create(::ResourceType::Gem, 100);
-            const Size& size = node->getContentSize();
+            auto node = ResourceNode::create(::ResourceType::Gem, 100);
+            const auto& size = node->getContentSize();
             static float offsetX(20);
             static float offsetY(20);
             const float x = winSize.width - offsetX - size.width / 2;
@@ -241,7 +242,7 @@ bool MainUILayer::init()
                 // TODO:
             });
             
-            const Size& size = _bagButton->getContentSize();
+            const auto& size = _bagButton->getContentSize();
             static const float offset(-20.0f);
             
             _questButton = addFunctionButton("icon_renwu_1", "icon_renwu_2", "button_2", basePosition + Point(0, size.height + offset));
@@ -299,12 +300,12 @@ void MainUILayer::onTouchEnded(Touch *touch, Event *unused_event)
 Button* MainUILayer::addFunctionButton(const string& normal, const string& touched, const string& disabled, const Point& position)
 {
     static const string csbFile("UI_FunctionIcon.csb");
-    Node *mainNode = CocosUtils::playAnimation(csbFile, 0, false);
+    auto mainNode = CocosUtils::playAnimation(csbFile, 0, false);
     mainNode->setPosition(position);
     addChild(mainNode);
     
-    Node* root = mainNode->getChildByTag(21);
-    Button* button = dynamic_cast<Button*>(root->getChildByTag(22));
+    auto root = mainNode->getChildByTag(21);
+    auto button = dynamic_cast<Button*>(root->getChildByTag(22));
     if (button) {
         button->loadTextureDisabled("GameImages/public/" + disabled + ".png");
         setButtonIcons(button, 23, normal, touched);
@@ -314,15 +315,22 @@ Button* MainUILayer::addFunctionButton(const string& normal, const string& touch
     return nullptr;
 }
 
+#pragma mark - button icons
+struct MainUILayer::ButtonIconInfo {
+    int iconParentTag;
+    std::string iconNormal;
+    std::string iconTouched;
+};
+
 void MainUILayer::setButtonIcons(Button* button, int childTag, const string& normal, const string& touched)
 {
-    Node* node = button->getChildByTag(childTag);
+    auto node = button->getChildByTag(childTag);
     if (node) {
         static const string prefix("GameImages/icons/");
         static const string suffix(".png");
         
-        const string normalFile = prefix + normal + suffix;
-        const string touchedFile = prefix + touched + suffix;
+        auto normalFile = prefix + normal + suffix;
+        auto touchedFile = prefix + touched + suffix;
         
         addButtonIcon(node, normalFile);
         
@@ -335,10 +343,7 @@ void MainUILayer::setButtonIcons(Button* button, int childTag, const string& nor
         });
         
         if (_buttonIconInfos.find(button) == _buttonIconInfos.end()) {
-            ButtonIconInfo info;
-            info.iconParentTag = childTag;
-            info.iconNormal = normalFile;
-            info.iconTouched = touchedFile;
+            auto info = new (nothrow) ButtonIconInfo {childTag, normalFile, touchedFile};
             _buttonIconInfos.insert(make_pair(button, info));
         }
     }
@@ -350,12 +355,12 @@ void MainUILayer::setButtonEnabled(Button* button, bool enabled)
         button->setEnabled(enabled);
         
         if (_buttonIconInfos.find(button) != _buttonIconInfos.end()) {
-            const ButtonIconInfo& info = _buttonIconInfos.at(button);
-            Node* node = button->getChildByTag(info.iconParentTag);
+            auto info = _buttonIconInfos.at(button);
+            auto node = button->getChildByTag(info->iconParentTag);
             if (node) {
                 node->removeChildByTag(buttonIconTag);
-                string file = enabled ? info.iconNormal : info.iconTouched;
-                Sprite* s = Sprite::create(file);
+                auto file = enabled ? info->iconNormal : info->iconTouched;
+                auto s = Sprite::create(file);
                 s->setTag(buttonIconTag);
                 node->addChild(s);
             }
@@ -367,12 +372,20 @@ void MainUILayer::addButtonIcon(Node* node, const string& file)
 {
     if (node) {
         node->removeChildByTag(buttonIconTag);
-        Sprite* s = Sprite::create(file);
+        auto s = Sprite::create(file);
         s->setTag(buttonIconTag);
         node->addChild(s);
     }
 }
 
+void MainUILayer::removeButtonIcons()
+{
+    for (auto iter = begin(_buttonIconInfos); iter != end(_buttonIconInfos); ++iter) {
+        CC_SAFE_DELETE(iter->second);
+    }
+}
+
+#pragma mark - private
 void MainUILayer::updateIcon()
 {
     const string file("GameImages/avatars/icon_user.png");

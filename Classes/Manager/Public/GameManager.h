@@ -47,6 +47,7 @@ private:
 private:
     struct BattleContent;
     
+    bool _isLaunching;
     bool _isPvp;
     int _mapId;
     cocos2d::Scene* _scene;

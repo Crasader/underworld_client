@@ -24,6 +24,29 @@ static const int zOrder_bottom(-1);
 static const int zOrder_top(1);
 static const float hpThreshold(50.0f);
 
+#pragma mark - AnimationType
+class UnitNode::AnimationType {
+public:
+    AnimationType() {}
+    void assign(const AnimationType& instance) {
+        _file.assign(instance._file);
+        _startIdx = instance._startIdx;
+        _endIdx = instance._endIdx;
+    }
+    void assign(const std::string& file, int startIdx = 0, int endIdx = -1) {
+        _file.assign(file); _startIdx = startIdx; _endIdx = endIdx;
+    }
+    const std::string& getFile() const { return _file; }
+    int getStartIdx() const { return _startIdx; }
+    int getEndIdx() const { return _endIdx; }
+    
+private:
+    std::string _file;
+    int _startIdx;
+    int _endIdx;
+};
+
+#pragma mark - UnitNode
 UnitNode* UnitNode::create(const Unit* unit, bool rightSide)
 {
     UnitNode *ret = new (nothrow) UnitNode(unit, rightSide);
@@ -122,15 +145,6 @@ void UnitNode::setOpacity(GLubyte opacity)
     if (_sprite) {
         _sprite->setOpacity(opacity);
     }
-}
-
-GLubyte UnitNode::getOpacity() const
-{
-    if (_sprite) {
-        return _sprite->getOpacity();
-    }
-    
-    return Node::getOpacity();
 }
 
 #pragma mark - public
@@ -262,6 +276,7 @@ void UnitNode::onLose()
 #pragma mark - universal
 void UnitNode::flipX(Node* node) const
 {
+    CS_RETURN_IF(!node);
     const float scaleX = node->getScaleX();
     node->setScaleX(-1 * scaleX);
 }
@@ -278,6 +293,7 @@ void UnitNode::scale(Node* node, float scale) const
 
 void UnitNode::scale(Node* node, float scaleX, float scaleY) const
 {
+    CS_RETURN_IF(!node);
     const float x = node->getScaleX();
     node->setScale(scaleX, scaleY);
     if ((x > 0) ^ (scaleX > 0)) {
@@ -674,7 +690,7 @@ void UnitNode::playAnimation(const AnimationType& at,
             _sprite = dynamic_cast<Sprite*>(_node);
             
             // shadow
-            if (!_configData->isShortRange()) {
+            if (true) {
                 static const string separator("body");
                 auto pos = file.find(separator);
                 if (pos != string::npos) {

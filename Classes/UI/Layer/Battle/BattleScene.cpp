@@ -7,7 +7,6 @@
 //
 
 #include "BattleScene.h"
-#include "CocosUtils.h"
 #include "SoundManager.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "ApiBridge.h"
@@ -27,10 +26,7 @@ BattleScene* BattleScene::create()
 
 BattleScene::BattleScene() {}
 
-BattleScene::~BattleScene()
-{
-    CocosUtils::cleanMemory();
-}
+BattleScene::~BattleScene() {}
 
 bool BattleScene::init()
 {

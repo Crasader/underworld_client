@@ -262,6 +262,12 @@
 		A1FC1A091C97C2AE00270B50 /* NSString+Extended.mm in Sources */ = {isa = PBXBuildFile; fileRef = A1FC1A081C97C2AE00270B50 /* NSString+Extended.mm */; };
 		A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A1FC49B31BD8C249005C1B2E /* CrashHelper.m */; };
 		A1FC49B61BD8DBCF005C1B2E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1FC49B51BD8DBCF005C1B2E /* MessageUI.framework */; };
+		A1FF13BC1D3DFCF6007D2C08 /* GameCenterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A1FF13B41D3DFCF6007D2C08 /* GameCenterManager.m */; };
+		A1FF13BD1D3DFCF6007D2C08 /* GCMMultiplayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A1FF13B71D3DFCF6007D2C08 /* GCMMultiplayer.m */; };
+		A1FF13BE1D3DFCF6007D2C08 /* NSDataAES256.m in Sources */ = {isa = PBXBuildFile; fileRef = A1FF13B91D3DFCF6007D2C08 /* NSDataAES256.m */; };
+		A1FF13BF1D3DFCF6007D2C08 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = A1FF13BB1D3DFCF6007D2C08 /* Reachability.m */; };
+		A1FF13C11D3E0214007D2C08 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1FF13C01D3E0214007D2C08 /* GameKit.framework */; };
+		A1FF13C31D3E028A007D2C08 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1FF13C21D3E028A007D2C08 /* SystemConfiguration.framework */; };
 		A1FF6E881C16B9890017CAD2 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = A1FF6E871C16B9890017CAD2 /* configs */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
@@ -823,6 +829,17 @@
 		A1FC49B21BD8C249005C1B2E /* CrashHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashHelper.h; sourceTree = "<group>"; };
 		A1FC49B31BD8C249005C1B2E /* CrashHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrashHelper.m; sourceTree = "<group>"; };
 		A1FC49B51BD8DBCF005C1B2E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = DEVELOPER_DIR; };
+		A1FF13B31D3DFCF6007D2C08 /* GameCenterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameCenterManager.h; sourceTree = "<group>"; };
+		A1FF13B41D3DFCF6007D2C08 /* GameCenterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameCenterManager.m; sourceTree = "<group>"; };
+		A1FF13B51D3DFCF6007D2C08 /* GCMConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCMConstants.h; sourceTree = "<group>"; };
+		A1FF13B61D3DFCF6007D2C08 /* GCMMultiplayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCMMultiplayer.h; sourceTree = "<group>"; };
+		A1FF13B71D3DFCF6007D2C08 /* GCMMultiplayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCMMultiplayer.m; sourceTree = "<group>"; };
+		A1FF13B81D3DFCF6007D2C08 /* NSDataAES256.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataAES256.h; sourceTree = "<group>"; };
+		A1FF13B91D3DFCF6007D2C08 /* NSDataAES256.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataAES256.m; sourceTree = "<group>"; };
+		A1FF13BA1D3DFCF6007D2C08 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		A1FF13BB1D3DFCF6007D2C08 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		A1FF13C01D3E0214007D2C08 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/GameKit.framework; sourceTree = DEVELOPER_DIR; };
+		A1FF13C21D3E028A007D2C08 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		A1FF6E871C16B9890017CAD2 /* configs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = configs; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -866,10 +883,12 @@
 				BF1712471292920000B8313A /* libz.dylib in Frameworks */,
 				A1DE80391BD669BB004DEED1 /* CrashReporter.framework in Frameworks */,
 				BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */,
-				A11469FE1C9FE9EC00E64125 /* libevent.a in Frameworks */,
 				D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */,
 				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
 				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
+				A1FF13C11D3E0214007D2C08 /* GameKit.framework in Frameworks */,
+				A1FF13C31D3E028A007D2C08 /* SystemConfiguration.framework in Frameworks */,
+				A11469FE1C9FE9EC00E64125 /* libevent.a in Frameworks */,
 				A11469FF1C9FE9EC00E64125 /* libevent_core.a in Frameworks */,
 				A1146A001C9FE9EC00E64125 /* libevent_extra.a in Frameworks */,
 				A1146A021C9FE9EC00E64125 /* libevent_pthreads.a in Frameworks */,
@@ -1112,6 +1131,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A1FF13C21D3E028A007D2C08 /* SystemConfiguration.framework */,
+				A1FF13C01D3E0214007D2C08 /* GameKit.framework */,
 				A1F365481C8E89E60084B9B4 /* CFNetwork.framework */,
 				A1FC49B51BD8DBCF005C1B2E /* MessageUI.framework */,
 				A1B5588E1BCB65A100D30D6A /* StoreKit.framework */,
@@ -1658,6 +1679,7 @@
 			children = (
 				A1A05B391C9668FB006FE03B /* CocoaAsyncSocket */,
 				A1DE80371BD669BA004DEED1 /* CrashReporter */,
+				A1FF13B21D3DFCF6007D2C08 /* GCManager */,
 				A1720EB21BCD2D2E00217E98 /* KeyChain */,
 				A11469D71C9FE9EC00E64125 /* Libevent */,
 				A1A05B4D1C96B6A0006FE03B /* Lumberjack */,
@@ -2099,6 +2121,22 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		A1FF13B21D3DFCF6007D2C08 /* GCManager */ = {
+			isa = PBXGroup;
+			children = (
+				A1FF13B31D3DFCF6007D2C08 /* GameCenterManager.h */,
+				A1FF13B41D3DFCF6007D2C08 /* GameCenterManager.m */,
+				A1FF13B51D3DFCF6007D2C08 /* GCMConstants.h */,
+				A1FF13B61D3DFCF6007D2C08 /* GCMMultiplayer.h */,
+				A1FF13B71D3DFCF6007D2C08 /* GCMMultiplayer.m */,
+				A1FF13B81D3DFCF6007D2C08 /* NSDataAES256.h */,
+				A1FF13B91D3DFCF6007D2C08 /* NSDataAES256.m */,
+				A1FF13BA1D3DFCF6007D2C08 /* Reachability.h */,
+				A1FF13BB1D3DFCF6007D2C08 /* Reachability.m */,
+			);
+			path = GCManager;
+			sourceTree = "<group>";
+		};
 		CB3EC8941C4E4CBC00447FE3 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
@@ -2296,6 +2334,7 @@
 				A1F58D591C32465900C8A2DD /* SoldierTalentData.cpp in Sources */,
 				63CCBFDA1CC5BA1B00590513 /* BinaryJsonTool.cpp in Sources */,
 				0487A66C1CC8A90D005FE8D0 /* GameModeHMM.cpp in Sources */,
+				A1FF13BE1D3DFCF6007D2C08 /* NSDataAES256.m in Sources */,
 				A1D461601C3E251000E8E60B /* UAConfigData.cpp in Sources */,
 				A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */,
 				300B1E5C1C50CCED00F8D6ED /* PathFinderImpl.cpp in Sources */,
@@ -2348,6 +2387,7 @@
 				045117101BCFBA5F002AA721 /* Game.cpp in Sources */,
 				3028EBC31BFF0CBD00511C51 /* DynamicValue.cpp in Sources */,
 				CB3EC89A1C4E4DA600447FE3 /* ChatMark.cpp in Sources */,
+				A1FF13BF1D3DFCF6007D2C08 /* Reachability.m in Sources */,
 				CB3EC8971C4E4D1200447FE3 /* ChatData.cpp in Sources */,
 				045117081BCFBA53002AA721 /* Command.cpp in Sources */,
 				A108A7B61D25254600987658 /* AchievementLayer.cpp in Sources */,
@@ -2392,6 +2432,7 @@
 				A16BF2851C313E2900E91458 /* HeroLocalData.cpp in Sources */,
 				A1720E8D1BCCE19300217E98 /* AESCTREncryptor.cpp in Sources */,
 				0451170B1BCFBA53002AA721 /* Unit.cpp in Sources */,
+				A1FF13BC1D3DFCF6007D2C08 /* GameCenterManager.m in Sources */,
 				045117061BCFBA53002AA721 /* Buff.cpp in Sources */,
 				A18524CC1C1AE3E800BE261D /* QuestLayer.cpp in Sources */,
 				A1F395F21C23BBC500B75923 /* ObjectData.cpp in Sources */,
@@ -2490,6 +2531,7 @@
 				3087FF361CA825CD004E31F6 /* Damage.cpp in Sources */,
 				A1E8306D1C1EA55D00FE01B8 /* ContentData.cpp in Sources */,
 				045116F31BCFBA44002AA721 /* BuffType.cpp in Sources */,
+				A1FF13BD1D3DFCF6007D2C08 /* GCMMultiplayer.m in Sources */,
 				3087FF051C9F9D92004E31F6 /* MagicType.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

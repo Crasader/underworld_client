@@ -40,6 +40,9 @@ namespace iOSApi {
     void getAppleIAPInfo(const IAPProductsRequestSuccessCallback& success, const IAPProductsRequestFailedCallback& failed);
     void buyGemApple(const std::string& account, int gemNumber, const IAPPaymentSuccessCallback& success, const IAPPaymentFailedCallback& failed);
     
+    // game center
+    void setupGCManager();
+    
     // utils
     std::string getUUID();
     std::string getVersionId();

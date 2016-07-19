@@ -17,6 +17,7 @@
 #import "RootViewController.h"
 #import "platform/ios/CCEAGLView-ios.h"
 #import "RMStore.h"
+#import "GameCenterManager.h"
 #import "KeychainItemWrapper.h"
 #import "NSString+Extended.h"
 
@@ -27,7 +28,12 @@ static AlertViewClickedButtonCallback alertViewClickedButtonCallback = nullptr;
 long const IapVerificationFailedCode = RMStoreErrorCodeUnableToCompleteVerification;
 
 #pragma mark - Private Class that handle objc callbacks
-@interface Api : NSObject <UIAlertViewDelegate, RMStoreReceiptVerifier, SKPaymentTransactionObserver>
+@interface Api : NSObject <
+UIAlertViewDelegate,
+RMStoreReceiptVerifier,
+SKPaymentTransactionObserver,
+GameCenterManagerDelegate
+>
 
 @end
 
@@ -35,8 +41,7 @@ long const IapVerificationFailedCode = RMStoreErrorCodeUnableToCompleteVerificat
 #pragma mark Alloc & Dealloc
 - (instancetype)init
 {
-    if (self = [super init])
-    {
+    if (self = [super init]) {
         
     }
     
@@ -51,8 +56,7 @@ long const IapVerificationFailedCode = RMStoreErrorCodeUnableToCompleteVerificat
 #pragma mark UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (alertViewClickedButtonCallback)
-    {
+    if (alertViewClickedButtonCallback) {
         alertViewClickedButtonCallback(alertView.tag, buttonIndex);
     }
     
@@ -63,7 +67,7 @@ long const IapVerificationFailedCode = RMStoreErrorCodeUnableToCompleteVerificat
     // do nothing, just incase the user click "Home" button
 }
 
-#pragma mark RMStore
+#pragma mark RMStoreReceiptVerifier
 - (void)verifyTransaction:(SKPaymentTransaction*)transaction
                   success:(void (^)())successBlock
                   failure:(void (^)(NSError *error))failureBlock
@@ -116,6 +120,12 @@ long const IapVerificationFailedCode = RMStoreErrorCodeUnableToCompleteVerificat
     if (isPurchasing) {
         GameData::getInstance()->beginTransaction();
     }
+}
+
+#pragma mark GameCenterManagerDelegate
+- (void)gameCenterManager:(GameCenterManager *)manager authenticateUser:(UIViewController *)gameCenterLoginController
+{
+    
 }
 @end
 
@@ -257,6 +267,13 @@ void iOSApi::buyGemApple(const string& account, int gemNumber, const IAPPaymentS
             failedCallback([error.description stdString], code);
         }
     }];
+}
+
+#pragma mark - Game Center
+void iOSApi::setupGCManager()
+{
+    [[GameCenterManager sharedManager] setupManager];
+    [[GameCenterManager sharedManager] setDelegate:_api];
 }
 
 string iOSApi::getUUID()

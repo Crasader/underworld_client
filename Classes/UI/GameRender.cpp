@@ -198,15 +198,15 @@ void GameRender::updateUnits(const Game* game, int index)
     const Faction* f = _world->getFaction(index);
     
     for (int i = 0; i < f->getUnitCount(); ++i) {
-        const Unit* unit = f->getUnitByIndex(i);
-        const int key = unit->getUnitId();
-        const Coordinate32& pos = unit->getCenterPos();
-        const Skill* skill = unit->getCurrentSkill();
+        auto unit = f->getUnitByIndex(i);
+        auto key = unit->getUnitId();
+        auto pos = unit->getCenterPos();
+        auto skill = unit->getCurrentSkill();
         if (skill) {
-            SkillClass sc = skill->getSkillType()->getSkillClass();
+            auto sc = skill->getSkillType()->getSkillClass();
             if (_allUnitNodes.find(key) != _allUnitNodes.end()) {
                 // already exist, update it
-                UnitNode* node = _allUnitNodes.at(key);
+                auto node = _allUnitNodes.at(key);
                 node->update(game);
                 if (_mapLayer) {
                     if (kSkillClass_Move == sc) {
@@ -223,7 +223,7 @@ void GameRender::updateUnits(const Game* game, int index)
                 if (kSkillClass_Die != sc) {
                     const int factionIndex = f->getFactionIndex();
                     // TODO: check if the unit is on the right
-                    UnitNode* node = UnitNode::create(unit, factionIndex != 0);
+                    auto node = UnitNode::create(unit, factionIndex != 0);
                     node->registerObserver(this);
                     _mapLayer->addUnit(node, pos);
                     _allUnitNodes.insert(make_pair(key, node));
@@ -253,8 +253,8 @@ void GameRender::updateBullets(const Game* game)
 {
     for (int i = 0; i < _world->getBulletCount(); ++i) {
         auto bullet = _world->getBullet(i);
-        const auto& pos = bullet->getPos();
-        const auto& targetPos = bullet->targetPos();
+        auto pos = bullet->getPos();
+        auto targetPos = bullet->targetPos();
         const bool isExploded(bullet->isExploded());
         if (_allBulletNodes.find(bullet) != _allBulletNodes.end()) {
             // already exist, update it

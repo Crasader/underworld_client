@@ -30,6 +30,8 @@ public:
     void addAsync(const std::vector<std::string>& files, const std::function<void()>& callback);
     void addAsync(const std::string& file, const std::function<void(std::string)>& callback);
     
+    void removeCachedFrames();
+    
 private:
     FrameLoader();
     virtual ~FrameLoader();

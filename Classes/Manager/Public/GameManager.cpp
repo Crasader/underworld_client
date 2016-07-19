@@ -48,7 +48,8 @@ void GameManager::purge()
 }
 
 GameManager::GameManager()
-:_isPvp(false)
+:_isLaunching(false)
+,_isPvp(false)
 ,_mapId(0)
 ,_scene(nullptr)
 ,_render(nullptr)
@@ -96,11 +97,21 @@ void GameManager::onGameRenderExit()
 #pragma mark - private
 void GameManager::launchGame()
 {
+    if (_isLaunching) {
+        return;
+    }
+    
     if (loadBattleContent()) {
+        _isLaunching = true;
         _scene = BattleScene::create();
         _scene->retain();
         createClient(_scene);
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
         FrameLoader::getInstance()->addAllFramesAsync([this]() {
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+            FrameLoader::getInstance()->addAllFrames();
+#endif
+            _isLaunching = false;
             CocosUtils::replaceScene(_scene, true);
             _scene->release();
             if (_client && _battleContent) {
@@ -110,8 +121,9 @@ void GameManager::launchGame()
                     _client->launchPve(_mapId, _battleContent->contentSetting, _battleContent->cards, _battleContent->unitList, _battleContent->unitPool);
                 }
             }
-            
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
         });
+#endif
     } else {
         MessageBoxLayer::getInstance()->show("卡牌尚未选择！");
     }
@@ -120,6 +132,8 @@ void GameManager::launchGame()
 void GameManager::exitGame()
 {
     purgeClient();
+    FrameLoader::getInstance()->removeCachedFrames();
+    CocosUtils::cleanMemory();
 }
 
 void GameManager::restartPve()
