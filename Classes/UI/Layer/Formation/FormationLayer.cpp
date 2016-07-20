@@ -605,7 +605,7 @@ CardNode* FormationLayer::createCardNode(const string& name) const
 void FormationLayer::updateCardNode(CardNode* node, const string& name) const
 {
     if (node && name.length() > 0) {
-        node->update(name, BATTLE_RESOURCE_MAX_COUNT);
+        node->update(name, DataManager::getInstance()->getBattleResourceMaxCount());
     }
 }
 

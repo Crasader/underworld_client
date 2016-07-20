@@ -378,7 +378,7 @@ XCardNode* CardLayer::createXCardNode(const string& name) const
 void CardLayer::updateXCardNode(XCardNode* node, const string& name) const
 {
     if (node && name.length() > 0) {
-        node->getCardNode()->update(name, BATTLE_RESOURCE_MAX_COUNT);
+        node->getCardNode()->update(name, DataManager::getInstance()->getBattleResourceMaxCount());
     }
 }
 

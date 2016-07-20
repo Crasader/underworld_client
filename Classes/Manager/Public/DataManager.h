@@ -118,6 +118,7 @@ public:
     const BinaryJsonTool* getBinaryJsonTool() const;
     UnderWorld::Core::TechTree* getTechTree() const;
     UnderWorld::Core::GameModeHMM* getGameModeHMM() const;
+    float getBattleResourceMaxCount() const;
     
 protected:
     DataManager();

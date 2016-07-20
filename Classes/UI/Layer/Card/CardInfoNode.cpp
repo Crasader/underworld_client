@@ -151,7 +151,7 @@ bool CardInfoNode::init(const Callback& callback)
 void CardInfoNode::update(const string& name)
 {
     if (_cardNode) {
-        _cardNode->update(name, BATTLE_RESOURCE_MAX_COUNT);
+        _cardNode->update(name, DataManager::getInstance()->getBattleResourceMaxCount());
     }
     
     auto dm = DataManager::getInstance();

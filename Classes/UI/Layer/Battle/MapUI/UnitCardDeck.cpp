@@ -7,6 +7,7 @@
 //
 
 #include "UnitCardDeck.h"
+#include "DataManager.h"
 #include "GameModeHMM.h"
 #include "CocosUtils.h"
 #include "CCShake.h"
@@ -98,13 +99,14 @@ bool UnitCardDeck::init(int count)
         _countLabel = CocosUtils::createLabel("0", BIG_FONT_SIZE, DEFAULT_NUMBER_FONT);
         _background->addChild(_countLabel, topZOrder);
         
+        const auto resourceMaxCount(BATTLE_RESOURCE_MAX_COUNT);
 #if false
-        Label* maxCountLabel = CocosUtils::createLabel(StringUtils::format("Max:%d", BATTLE_RESOURCE_MAX_COUNT), BIG_FONT_SIZE, DEFAULT_NUMBER_FONT);
+        Label* maxCountLabel = CocosUtils::createLabel(StringUtils::format("Max:%d", resourceMaxCount), BIG_FONT_SIZE, DEFAULT_NUMBER_FONT);
         _background->addChild(maxCountLabel, topZOrder);
 #endif
         
         Size progressSize(Size::ZERO);
-        for (int i = 0; i < BATTLE_RESOURCE_MAX_COUNT; ++i) {
+        for (int i = 0; i < resourceMaxCount; ++i) {
             Sprite* s = Sprite::create("GameImages/test/ui_blood_9.png");
             ProgressTimer* pt = ProgressTimer::create(s);
             pt->setType(ProgressTimer::Type::BAR);
@@ -121,7 +123,7 @@ bool UnitCardDeck::init(int count)
         }
         
         const float midX = size.width / 2/*x1 + x2 + nodeSize.width + (count * (nodeSize.width + x3) - x3) / 2*/;
-        _costStartPosition.x = midX - ((progressSize.width + deckCostOffsetX) * BATTLE_RESOURCE_MAX_COUNT - deckCostOffsetX)  / 2;
+        _costStartPosition.x = midX - ((progressSize.width + deckCostOffsetX) * resourceMaxCount - deckCostOffsetX)  / 2;
         _costStartPosition.y = size.height - y1 / 2;
         for (int i = 0; i < _resources.size(); ++i) {
             auto pt = _resources.at(i).second;
@@ -217,10 +219,11 @@ void UnitCardDeck::stopShake()
 
 void UnitCardDeck::createNextCardNode(const HMMCard* card)
 {
+    const auto resourceMaxCount(DataManager::getInstance()->getBattleResourceMaxCount());
     if (_nextCardNode) {
         auto cardNode = dynamic_cast<CardNode*>(_nextCardNode);
         if (cardNode) {
-            cardNode->update(card, BATTLE_RESOURCE_MAX_COUNT);
+            cardNode->update(card, resourceMaxCount);
         } else {
             _nextCardNode->removeFromParent();
             _nextCardNode = nullptr;
@@ -229,7 +232,7 @@ void UnitCardDeck::createNextCardNode(const HMMCard* card)
     
     if (!_nextCardNode) {
         auto node = CardNode::create(true);
-        node->update(card, BATTLE_RESOURCE_MAX_COUNT);
+        node->update(card, resourceMaxCount);
         node->setPosition(_insertActionStartPosition);
         _background->addChild(node);
         createNextCardProgress(node);

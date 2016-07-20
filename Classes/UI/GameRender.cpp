@@ -212,8 +212,11 @@ void GameRender::updateUnits(const Game* game, int index)
                     if (kSkillClass_Move == sc) {
                         _mapLayer->repositionUnit(node, pos);
                         if (_unitShadows.find(node) != end(_unitShadows)) {
-                            const auto& pair = _unitShadows.at(node);
-                            pair.first->setPosition(node->getPosition() + pair.second);
+                            const auto& set = _unitShadows.at(node);
+                            for (auto iter = begin(set); iter != end(set); ++iter) {
+                                const auto& pair = (*iter);
+                                pair.first->setPosition(node->getPosition() + pair.second);
+                            }
                         }
                     }
                     
@@ -439,17 +442,22 @@ void GameRender::onUnitNodeCreateShadow(UnitNode* node, Node* shadow, const Poin
         auto parent = node->getParent();
         shadow->setPosition(node->getPosition() + offset);
         parent->addChild(shadow, -2000);
-        CCASSERT(_unitShadows.find(node) == end(_unitShadows), "shadow has exist.");
-        _unitShadows.insert(make_pair(node, make_pair(shadow, offset)));
+        if (_unitShadows.find(node) == end(_unitShadows)) {
+            _unitShadows.insert(make_pair(node, set<pair<Node*, Point>>()));
+        }
+        
+        _unitShadows.at(node).insert(make_pair(shadow, offset));
     }
 }
 
 void GameRender::onUnitNodeRemoveShadow(UnitNode* node)
 {
     if (node && _unitShadows.find(node) != end(_unitShadows)) {
-        auto shadow = _unitShadows.at(node).first;
-        shadow->stopAllActions();
-        shadow->removeFromParent();
+        auto& set = _unitShadows.at(node);
+        for (auto iter = begin(set); iter != end(set); ++iter) {
+            (*iter).first->removeFromParent();
+        }
+        set.clear();
         _unitShadows.erase(node);
     }
 }
@@ -617,7 +625,11 @@ void GameRender::removeAllUnits()
     }
     
     for (auto iter = begin(_unitShadows); iter != end(_unitShadows); ++iter) {
-        iter->second.first->removeFromParent();
+        auto& set = iter->second;
+        for (auto iter = begin(set); iter != end(set); ++iter) {
+            (*iter).first->removeFromParent();
+        }
+        set.clear();
     }
     
     _allUnitNodes.clear();

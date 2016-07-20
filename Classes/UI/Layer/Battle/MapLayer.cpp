@@ -405,7 +405,6 @@ void MapLayer::updateUnitMask(const UnitType* unitType, const Coordinate32& coor
 void MapLayer::removeUnitMask()
 {
     if (_selectedUnitMask) {
-        _selectedUnitMask->stopAllActions();
         _selectedUnitMask->removeFromParent();
         _selectedUnitMask = nullptr;
         _selectedUnitName = "";
@@ -449,7 +448,6 @@ void MapLayer::removeSpellRing()
 {
     auto ring = _spellRing.second;
     if (ring) {
-        ring->stopAllActions();
         ring->removeFromParent();
     }
     
@@ -645,7 +643,6 @@ Node* MapLayer::addSpellEffect(const string& file, bool loop, const Point& posit
 void MapLayer::removeSpellEffect(Node* effect)
 {
     if (effect) {
-        effect->stopAllActions();
         effect->removeFromParent();
         _spellEffects.erase(effect);
     }
@@ -654,7 +651,6 @@ void MapLayer::removeSpellEffect(Node* effect)
 void MapLayer::addButterfly()
 {
     if (_butterfly) {
-        _butterfly->stopAllActions();
         _butterfly->removeFromParent();
         _butterfly = nullptr;
     }

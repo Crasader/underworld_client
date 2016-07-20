@@ -195,7 +195,6 @@ void ResourceButton::addIconNode(ResourceType type)
         Point pos(-1, -1);
         if (_iconNode) {
             pos = _icon->getPosition();
-            _iconNode->stopAllActions();
             _iconNode->removeFromParent();
             _iconNode = nullptr;
         }

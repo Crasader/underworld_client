@@ -45,6 +45,7 @@ class UnitNode : public Node
 {
 protected:
     class AnimationType;
+    struct AnimationNode;
     
 public:
     static UnitNode* create(const Unit* unit, bool rightSide);
@@ -75,6 +76,8 @@ protected:
     void playSound(const std::string& file) const;
     
     // getters
+    std::string getShadowFile(const std::string& file, bool flip) const;
+    std::string getEquipmentFile(const std::string& file, bool flip) const;
     int getResourceId(Unit::Direction direction) const;
     int thisFactionIndex() const;
     UnitClass thisUnitClass() const;
@@ -118,8 +121,9 @@ protected:
     void resetAttackParams();
     
     // operations
-    void setScheduler(Node* node);
-    void removeNode();
+    void setScheduler();
+    void clear();
+    void scaleAnimationNode(AnimationNode* an, float scale);
     void updateAnimationParams();
     
     // effects
@@ -150,8 +154,12 @@ protected:
     Point getHPBarPosition() const;
     
     // shadow
-    void createShadow(const std::string& file, bool flip);
-    void removeShadow();
+    Node* createShadow(const std::string& file, bool flip, int startIdx);
+    void createShadow(AnimationNode** an, bool flip, int startIdx);
+    void notifyRemoveShadow();
+    
+    // equipment
+    void createEquipment(AnimationNode** an, const std::string& file, bool flip, int startIdx);
     
     // hint
     void rollHintResource(const std::string& resource,
@@ -169,13 +177,13 @@ private:
     bool _isBuilding;
     
     // cocos2d
-    Node* _node;
+    AnimationNode* _body;
+    AnimationNode* _equipment;
     Sprite* _sprite;
     Action* _animation;
     Scheduler* _speedScheduler;
     ActionManager* _actionManager;
     DisplayBar* _hpBar;
-    Node* _shadow;
     std::set<std::string> _bufNames;
     std::unordered_map<std::string, Node*> _bufs;
     Label* _idLabel;

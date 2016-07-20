@@ -525,7 +525,7 @@ CardNode* BattleDeckLayer::createCardNode(const string& name)
 void BattleDeckLayer::updateCardNode(CardNode* node, const string& name)
 {
     if (node && name.length() > 0) {
-        node->update(name, BATTLE_RESOURCE_MAX_COUNT);
+        node->update(name, DataManager::getInstance()->getBattleResourceMaxCount());
     }
 }
 

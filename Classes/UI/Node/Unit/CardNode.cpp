@@ -303,7 +303,7 @@ void CardNode::checkResource(float count)
     if (_resourceNode) {
         // if it is used
         if (getOpacity() < 255) {
-            count = BATTLE_RESOURCE_MAX_COUNT;
+            count = DataManager::getInstance()->getBattleResourceMaxCount();
         }
         
         _resourceNode->check(count);

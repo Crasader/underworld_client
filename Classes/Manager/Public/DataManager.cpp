@@ -740,3 +740,15 @@ UnderWorld::Core::GameModeHMM* DataManager::getGameModeHMM() const
 {
     return _gameModeHMM;
 }
+
+float DataManager::getBattleResourceMaxCount() const
+{
+    if (_techTree) {
+        auto rt = _techTree->findResourceTypeByName(RES_NAME_WOOD);
+        if (rt) {
+            return ((float)rt->getMax()) / 10.0f;
+        }
+    }
+    
+    return 0;
+}

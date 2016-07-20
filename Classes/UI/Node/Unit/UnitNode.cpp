@@ -33,17 +33,25 @@ public:
         _startIdx = instance._startIdx;
         _endIdx = instance._endIdx;
     }
-    void assign(const std::string& file, int startIdx = 0, int endIdx = -1) {
+    void assign(const string& file, int startIdx = 0, int endIdx = -1) {
         _file.assign(file); _startIdx = startIdx; _endIdx = endIdx;
     }
-    const std::string& getFile() const { return _file; }
+    const string& getFile() const { return _file; }
     int getStartIdx() const { return _startIdx; }
     int getEndIdx() const { return _endIdx; }
     
 private:
-    std::string _file;
+    string _file;
     int _startIdx;
     int _endIdx;
+};
+
+#pragma mark - AnimationNode
+struct UnitNode::AnimationNode {
+    string nodeFile;
+    Node* node;
+    string shadowFile;
+    Node* shadow;
 };
 
 #pragma mark - UnitNode
@@ -63,13 +71,13 @@ UnitNode* UnitNode::create(const Unit* unit, bool rightSide)
 UnitNode::UnitNode(const Unit* unit, bool rightSide)
 :_observer(nullptr)
 ,_unit(unit)
-,_node(nullptr)
+,_body(nullptr)
+,_equipment(nullptr)
 ,_sprite(nullptr)
 ,_animation(nullptr)
 ,_speedScheduler(nullptr)
 ,_actionManager(nullptr)
 ,_hpBar(nullptr)
-,_shadow(nullptr)
 ,_idLabel(nullptr)
 ,_skill(nullptr)
 ,_direction(static_cast<Unit::Direction>(-1))
@@ -90,6 +98,8 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
     }
     UnitClass uc(thisUnitClass());
     _isBuilding = (kUnitClass_Core == uc || kUnitClass_Building == uc);
+    _body = new (nothrow) AnimationNode();
+    _equipment = new (nothrow) AnimationNode();
     _baseParams = new (nothrow) AnimationParameter(nullptr);
 }
 
@@ -107,6 +117,8 @@ UnitNode::~UnitNode()
         CC_SAFE_RELEASE(_actionManager);
     }
     
+    CC_SAFE_DELETE(_body);
+    CC_SAFE_DELETE(_equipment);
     CC_SAFE_DELETE(_baseParams);
     
     for (auto iter = begin(_extraParams); iter != end(_extraParams); ++iter) {
@@ -254,7 +266,7 @@ void UnitNode::onHurt(const string& trigger)
 
 void UnitNode::onDead()
 {
-    removeShadow();
+    notifyRemoveShadow();
     removeAllBufs();
     removeHPBar();
     playSound(_configData->getDieSound());
@@ -309,6 +321,38 @@ void UnitNode::playSound(const string& file) const
 }
 
 #pragma mark - getters
+string UnitNode::getShadowFile(const string& file, bool flip) const
+{
+    if (!file.empty() && _configData->isPVR()) {
+        string ret;
+        static const string separator("body");
+        auto pos = file.find(separator);
+        if (string::npos != pos) {
+            ret.assign(file);
+            ret.replace(pos, separator.size(), StringUtils::format("shadows/%d", flip ? 1 : 0));
+        }
+        
+        return ret;
+    }
+    
+    return "";
+}
+
+string UnitNode::getEquipmentFile(const string& file, bool flip) const
+{
+    if (!file.empty() && _configData->isPVR()) {
+        string ret;
+        auto pos = file.find_first_of("/");
+        if (string::npos != pos) {
+            ret = file.substr(0, pos) + "-equipment" + file.substr(pos, file.size() - 1);
+        }
+        
+        return ret;
+    }
+    
+    return "";
+}
+
 int UnitNode::getResourceId(Unit::Direction direction) const
 {
     if (_configData->isPVR()) {
@@ -588,7 +632,7 @@ void UnitNode::getStandbyFiles(AnimationType& output,
 }
 
 void UnitNode::getSegmentalFiles(vector<AnimationType>& output,
-                                 const std::string& mark,
+                                 const string& mark,
                                  Unit::Direction direction,
                                  bool isHealthy) const
 {
@@ -669,10 +713,10 @@ void UnitNode::playAnimation(const AnimationType& at,
                              bool flip,
                              const function<void(Node*)>& lastFrameCallFunc)
 {
-    removeNode();
+    clear();
     
-    const auto& file(at.getFile());
-    auto cnt = file.size();
+    _body->nodeFile = at.getFile();
+    auto cnt = _body->nodeFile.size();
     if (cnt > 0) {
         // set PixelFormat if needed
         Texture2D::PixelFormat defaultPixelFormat = Texture2D::getDefaultAlphaPixelFormat();
@@ -682,28 +726,29 @@ void UnitNode::playAnimation(const AnimationType& at,
             Texture2D::setDefaultAlphaPixelFormat(LOW_PIXELFORMAT);
         }
         
-        _node = CocosUtils::getAnimationNode(file, at.getStartIdx());
-        addChild(_node);
+        // -- body's node -- //
+        auto startIdx(at.getStartIdx());
+        auto node = CocosUtils::getAnimationNode(_body->nodeFile, startIdx);
+        addChild(node);
+        _body->node = node;
         
-        string shadowFile;
         if (_configData->isPVR()) {
-            _sprite = dynamic_cast<Sprite*>(_node);
-            
-            // shadow
-            if (true) {
-                static const string separator("body");
-                auto pos = file.find(separator);
-                if (pos != string::npos) {
-                    shadowFile.assign(file);
-                    shadowFile.replace(pos, separator.size(), StringUtils::format("shadows/%d", flip ? 1 : 0));
-                }
-            }
+            _sprite = dynamic_cast<Sprite*>(node);
         } else {
-            _sprite = dynamic_cast<Sprite*>(_node->getChildren().front());
+            _sprite = dynamic_cast<Sprite*>(node->getChildren().front());
         }
         
-        if (shadowFile.size() > 0) {
-            createShadow(shadowFile, flip);
+        if (_configData->isPVR()) {
+            // -- body's shadow -- //
+            createShadow(&_body, flip, startIdx);
+            
+            if (_configData->isShortRange()) {
+                // -- equipment's node -- //
+                createEquipment(&_equipment, _body->nodeFile, flip, startIdx);
+                
+                // -- equipment's shadow -- //
+                createShadow(&_equipment, flip, startIdx);
+            }
         }
         
         if (false && defaultPixelFormat != Texture2D::getDefaultAlphaPixelFormat()) {
@@ -712,21 +757,27 @@ void UnitNode::playAnimation(const AnimationType& at,
         
         // flip if needed
         if (flip) {
-            flipX(_node);
+            flipX(node);
         }
         
         if (play) {
             // 1. set scheduler
-            setScheduler(_node);
-            if (_shadow) {
-                setScheduler(_shadow);
-            }
+            setScheduler();
             
             // 2. play animation
-            frameIndex += at.getStartIdx();
-            auto duration = CocosUtils::playAnimation(_sprite, file, DEFAULT_FRAME_DELAY, loop, frameIndex, at.getEndIdx(), lastFrameCallFunc);
-            if (_shadow) {
-                CocosUtils::playAnimation(_shadow, shadowFile, DEFAULT_FRAME_DELAY, loop, frameIndex, at.getEndIdx());
+            frameIndex += startIdx;
+            auto duration = CocosUtils::playAnimation(_sprite, _body->nodeFile, DEFAULT_FRAME_DELAY, loop, frameIndex, at.getEndIdx(), lastFrameCallFunc);
+            
+            if (_body->shadow && !_body->shadowFile.empty()) {
+                CocosUtils::playAnimation(_body->shadow, _body->shadowFile, DEFAULT_FRAME_DELAY, loop, frameIndex, at.getEndIdx());
+            }
+            
+            if (_equipment->node && !_equipment->nodeFile.empty()) {
+                CocosUtils::playAnimation(_equipment->node, _equipment->nodeFile, DEFAULT_FRAME_DELAY, loop, frameIndex, at.getEndIdx());
+            }
+            
+            if (_equipment->shadow && !_equipment->shadowFile.empty()) {
+                CocosUtils::playAnimation(_equipment->shadow, _equipment->shadowFile, DEFAULT_FRAME_DELAY, loop, frameIndex, at.getEndIdx());
             }
             
             // change scale and speed
@@ -755,10 +806,10 @@ void UnitNode::updateAnimation(const Skill* skill,
     auto cnt = _animationFiles.size();
     if (_unit && cnt > 0) {
         // 0. check whether it's new created before remove node
-        auto isNewCreated(nullptr == _node);
+        auto isNewCreated(!_body->node);
         
         // 1. remove the old action node
-        removeNode();
+        clear();
         
         auto skillClass(thisSkillClass());
         auto isDead(kSkillClass_Die == skillClass);
@@ -928,7 +979,7 @@ void UnitNode::resetAttackParams()
 }
 
 #pragma mark - operations
-void UnitNode::setScheduler(Node* node)
+void UnitNode::setScheduler()
 {
     // 1. add scheduler
     if (!_speedScheduler) {
@@ -942,22 +993,48 @@ void UnitNode::setScheduler(Node* node)
     
     // 2. set actionManager every time before play animation
     if (_actionManager) {
-        node->setActionManager(_actionManager);
+        if (_body->node) {
+            _body->node->setActionManager(_actionManager);
+        }
+        
+        if (_body->shadow) {
+            _body->shadow->setActionManager(_actionManager);
+        }
+        
+        if (_equipment->node) {
+            _equipment->node->setActionManager(_actionManager);
+        }
+        
+        if (_equipment->shadow) {
+            _equipment->shadow->setActionManager(_actionManager);
+        }
     }
 }
 
-void UnitNode::removeNode()
+void UnitNode::clear()
 {
-    if (_node) {
-        _node->stopAllActions();
-        _node->removeFromParent();
-        _node = nullptr;
+    if (_body->node) {
+        _body->node->removeFromParent();
+        _body->node = nullptr;
         _animation = nullptr;
         _baseParams->scale = 1.0f;
         _baseParams->speed = 1.0f;
     }
     
-    removeShadow();
+    if (_equipment->node) {
+        _equipment->node->removeFromParent();
+        _equipment->node = nullptr;
+    }
+    
+    notifyRemoveShadow();
+}
+
+void UnitNode::scaleAnimationNode(AnimationNode* an, float scale)
+{
+    if (an) {
+        this->scale(an->node, scale);
+        this->scale(an->shadow, scale);
+    }
 }
 
 void UnitNode::updateAnimationParams()
@@ -975,9 +1052,9 @@ void UnitNode::updateAnimationParams()
     scale *= _baseParams->scale;
     speed *= _baseParams->speed;
     
-    if (_node) {
-        this->scale(_node, scale);
-        this->scale(_shadow, scale);
+    if (_body->node) {
+        scaleAnimationNode(_body, scale);
+        scaleAnimationNode(_equipment, scale);
         
         if (_speedScheduler) {
             if (speed != 1.0f) {
@@ -1299,34 +1376,65 @@ Point UnitNode::getHPBarPosition() const
 }
 
 #pragma mark shadow
-void UnitNode::createShadow(const string& file, bool flip)
+Node* UnitNode::createShadow(const string& file, bool flip, int startIdx)
 {
-    if (!_shadow) {
-        Point offset(Point::ZERO);
-        if (_configData->isPVR()) {
-            _shadow = CocosUtils::getAnimationNode(file, 0);
-        } else {
-            _shadow = Sprite::create(file);
-            offset = _configData->getFootEffectPosition();
-        }
-        
-        if (flip) {
-            flipX(_shadow);
-        }
-        
-        if (_observer) {
-            _observer->onUnitNodeCreateShadow(this, _shadow, offset);
+    Node* shadow(nullptr);
+    Point offset(Point::ZERO);
+    
+    if (_configData->isPVR()) {
+        shadow = CocosUtils::getAnimationNode(file, startIdx);
+    } else {
+        shadow = Sprite::create(file);
+        offset = _configData->getFootEffectPosition();
+    }
+    
+    if (flip) {
+        flipX(shadow);
+    }
+    
+    if (_observer) {
+        _observer->onUnitNodeCreateShadow(this, shadow, offset);
+    }
+    
+    return shadow;
+}
+
+void UnitNode::createShadow(AnimationNode** an, bool flip, int startIdx)
+{
+    if (an && (*an)) {
+        const auto& nodeFile((*an)->nodeFile);
+        if (!nodeFile.empty()) {
+            auto file = getShadowFile(nodeFile, flip);
+            (*an)->shadowFile = file;
+            if (!file.empty()) {
+                (*an)->shadow = createShadow(file, flip, startIdx);
+            }
         }
     }
 }
 
-void UnitNode::removeShadow()
+void UnitNode::notifyRemoveShadow()
 {
     if (_observer) {
         _observer->onUnitNodeRemoveShadow(this);
     }
     
-    _shadow = nullptr;
+    _body->shadow = nullptr;
+    _equipment->shadow = nullptr;
+}
+
+#pragma mark equipment
+void UnitNode::createEquipment(AnimationNode** an, const string& file, bool flip, int startIdx)
+{
+    if (an && (*an) && !file.empty()) {
+        auto nodeFile = getEquipmentFile(file, flip);
+        (*an)->nodeFile = nodeFile;
+        if (!nodeFile.empty()) {
+            auto node = CocosUtils::getAnimationNode(nodeFile, startIdx);
+            addChild(node);
+            (*an)->node = node;
+        }
+    }
 }
 
 #pragma mark hint

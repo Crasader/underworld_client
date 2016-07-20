@@ -8,6 +8,7 @@
 
 #include "CardDeck.h"
 #include "CocosUtils.h"
+#include "DataManager.h"
 #include "GameModeHMM.h"
 
 using namespace std;
@@ -77,7 +78,8 @@ bool CardDeck::init(int count)
         }
         
         Size progressSize(Size::ZERO);
-        for (int i = 0; i < BATTLE_RESOURCE_MAX_COUNT; ++i) {
+        const auto resourceMaxCount(BATTLE_RESOURCE_MAX_COUNT);
+        for (int i = 0; i < resourceMaxCount; ++i) {
             Sprite* s = Sprite::create("GameImages/test/ui_blood_9.png");
             ProgressTimer* pt = ProgressTimer::create(s);
             pt->setType(ProgressTimer::Type::BAR);
@@ -94,7 +96,7 @@ bool CardDeck::init(int count)
         }
         
         const float midX = size.width / 2;
-        _costStartPosition.x = midX - ((progressSize.width + deckCostOffsetX) * BATTLE_RESOURCE_MAX_COUNT - deckCostOffsetX)  / 2;
+        _costStartPosition.x = midX - ((progressSize.width + deckCostOffsetX) * resourceMaxCount - deckCostOffsetX)  / 2;
         _costStartPosition.y = y2 / 2;
         for (int i = 0; i < _resources.size(); ++i) {
             auto pt = _resources.at(i).second;
@@ -153,7 +155,7 @@ void CardDeck::insert(const string& name, bool animated)
 void CardDeck::insert(const HMMCard* card, bool animated)
 {
     auto node = insert(animated);
-    node->update(card, BATTLE_RESOURCE_MAX_COUNT);
+    node->update(card, DataManager::getInstance()->getBattleResourceMaxCount());
 }
 
 void CardDeck::remove(const HMMCard* card, int index, bool animated)
@@ -206,18 +208,24 @@ void CardDeck::updateResource(const unordered_map<string, float>& resources)
     }
     
     const size_t cnt(_resources.size());
-    count = MIN(MAX(0, count), cnt);
+    auto resourceMaxCount(DataManager::getInstance()->getBattleResourceMaxCount());
+    count = MIN(MAX(0, count), resourceMaxCount);
+    
+    float percentage(0);
+    if (resourceMaxCount > 0) {
+        percentage = count / resourceMaxCount * BATTLE_RESOURCE_MAX_COUNT;
+    }
     
     for (int i = 0; i < cnt; ++i) {
         Node* s = _resources.at(i).first;
         ProgressTimer* pt = _resources.at(i).second;
         bool show(false);
         if (pt) {
-            if (i <= count - 1) {
+            if (i <= percentage - 1) {
                 show = (s == nullptr);
                 pt->setPercentage(100.0f);
-            } else if (i < count) {
-                const float percentage(count - i);
+            } else if (i < percentage) {
+                const float percentage(percentage - i);
                 show = (percentage >= 1);
                 pt->setPercentage(100.0f * percentage);
             } else {
