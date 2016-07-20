@@ -1247,51 +1247,51 @@ void UnitNode::updateFeatures(const Game* game)
 #pragma mark hp bar
 void UnitNode::addHPBar()
 {
-    if (!_hpBar && _unit && _sprite) {
-        _hpBar = DisplayBar::create(DisplayBarType::HP, thisFactionIndex(), thisUnitClass());
-        _hpBar->setPosition(getHPBarPosition());
-        addChild(_hpBar, zOrder_top);
-        if (_configData) {
-            scale(_hpBar, _configData->getHpBarScaleX(), 1.0f);
-        }
-    }
+//    if (!_hpBar && _unit && _sprite) {
+//        _hpBar = DisplayBar::create(DisplayBarType::HP, thisFactionIndex(), thisUnitClass());
+//        _hpBar->setPosition(getHPBarPosition());
+//        addChild(_hpBar, zOrder_top);
+//        if (_configData) {
+//            scale(_hpBar, _configData->getHpBarScaleX(), 1.0f);
+//        }
+//    }
 }
 
 void UnitNode::updateHPBar()
 {
-    if (_hpBar && _unit) {
-        _hpBar->setPercentage(getHpPercentage());
-    }
+//    if (_hpBar && _unit) {
+//        _hpBar->setPercentage(getHpPercentage());
+//    }
 }
 
 void UnitNode::removeHPBar()
 {
-    if (_hpBar) {
-        _hpBar->removeFromParent();
-        _hpBar = nullptr;
-    }
+//    if (_hpBar) {
+//        _hpBar->removeFromParent();
+//        _hpBar = nullptr;
+//    }
 }
 
 Point UnitNode::getHPBarPosition() const
 {
-    if (_hpBar && (Point::ZERO != _hpBar->getPosition())) {
-        return _hpBar->getPosition();
-    } else if (_sprite) {
-        const Size& size = _sprite->getContentSize();
-        const Point& pos = _sprite->getPosition();
-        float offsetX(0);
-        float offsetY(0);
-        if (_configData) {
-            offsetX = _configData->getHpBarPosX();
-            offsetY = _configData->getHpBarPosY();
-        }
-        
-        Point position(pos + Point(offsetX, size.height / 2 + offsetY));
-        position = convertToNodeSpace(_sprite->getParent()->convertToWorldSpace(position));
-        return position;
-    }
-    
-    return Point::ZERO;
+//    if (_hpBar && (Point::ZERO != _hpBar->getPosition())) {
+//        return _hpBar->getPosition();
+//    } else if (_sprite) {
+//        const Size& size = _sprite->getContentSize();
+//        const Point& pos = _sprite->getPosition();
+//        float offsetX(0);
+//        float offsetY(0);
+//        if (_configData) {
+//            offsetX = _configData->getHpBarPosX();
+//            offsetY = _configData->getHpBarPosY();
+//        }
+//        
+//        Point position(pos + Point(offsetX, size.height / 2 + offsetY));
+//        position = convertToNodeSpace(_sprite->getParent()->convertToWorldSpace(position));
+//        return position;
+//    }
+//    
+//    return Point::ZERO;
 }
 
 #pragma mark shadow

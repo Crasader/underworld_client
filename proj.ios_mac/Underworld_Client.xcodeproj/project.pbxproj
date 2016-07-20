@@ -223,7 +223,6 @@
 		A1DA08CC1CB61CEA00846300 /* BRConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1DA08CA1CB61CEA00846300 /* BRConfigData.cpp */; };
 		A1DE80391BD669BB004DEED1 /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1DE80381BD669BA004DEED1 /* CrashReporter.framework */; };
 		A1DEF5E91C59DFB3002F3531 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1DEF5E81C59DFB3002F3531 /* Images.xcassets */; };
-		A1DF4BEC1C05902C000F2FDA /* DisplayBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1DF4BEA1C05902C000F2FDA /* DisplayBar.cpp */; };
 		A1DF50ED1C229488001CCFF2 /* TabButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1DF50EB1C229488001CCFF2 /* TabButton.cpp */; };
 		A1DFAAD21D10FC2800817E69 /* BattleDeckLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1DFAACD1D10FC2800817E69 /* BattleDeckLayer.cpp */; };
 		A1DFAAD31D10FC2800817E69 /* BattleDeckUnitInfoNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1DFAACF1D10FC2800817E69 /* BattleDeckUnitInfoNode.cpp */; };
@@ -751,8 +750,6 @@
 		A1DE80381BD669BA004DEED1 /* CrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CrashReporter.framework; sourceTree = "<group>"; };
 		A1DEF5E81C59DFB3002F3531 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Underworld_Client-mobile/Images.xcassets"; sourceTree = SOURCE_ROOT; };
 		A1DEF5EB1C59E983002F3531 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ios/Info.plist; sourceTree = SOURCE_ROOT; };
-		A1DF4BEA1C05902C000F2FDA /* DisplayBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DisplayBar.cpp; sourceTree = "<group>"; };
-		A1DF4BEB1C05902C000F2FDA /* DisplayBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayBar.h; sourceTree = "<group>"; };
 		A1DF50EB1C229488001CCFF2 /* TabButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TabButton.cpp; sourceTree = "<group>"; };
 		A1DF50EC1C229488001CCFF2 /* TabButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabButton.h; sourceTree = "<group>"; };
 		A1DFAACD1D10FC2800817E69 /* BattleDeckLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattleDeckLayer.cpp; sourceTree = "<group>"; };
@@ -1606,8 +1603,6 @@
 				A103F4561BE37E2A007F9A83 /* Unit */,
 				CBD778C51C29390B0070D293 /* AnnouncementNode.cpp */,
 				CBD778C61C29390B0070D293 /* AnnouncementNode.h */,
-				A1DF4BEA1C05902C000F2FDA /* DisplayBar.cpp */,
-				A1DF4BEB1C05902C000F2FDA /* DisplayBar.h */,
 				A1720E721BCCE0A200217E98 /* FixedLabelAtlas.cpp */,
 				A1720E731BCCE0A200217E98 /* FixedLabelAtlas.h */,
 				A1D45C481BEB3B1400D1E921 /* ResourceButton.cpp */,
@@ -2510,7 +2505,6 @@
 				30236FF71C5B6AFA00FB1802 /* PathFinderInterface.cpp in Sources */,
 				0424CD851D3CE183001F9777 /* BulletRender.cpp in Sources */,
 				A16BF2921C313E9F00E91458 /* TowerLocalData.cpp in Sources */,
-				A1DF4BEC1C05902C000F2FDA /* DisplayBar.cpp in Sources */,
 				A1DFAAD21D10FC2800817E69 /* BattleDeckLayer.cpp in Sources */,
 				A1D461651C3E478F00E8E60B /* AbstractData.cpp in Sources */,
 				CBD778C71C29390B0070D293 /* AnnouncementNode.cpp in Sources */,
