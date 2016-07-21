@@ -80,7 +80,8 @@ enum class ResourceType {
     Gem = 100,
     Gold = 101,
     Wood = 102,
-    Jade = 103,
+    Stamina = 103,
+    Exp = 104,
     
     MAX,          // Used to network parsing
 };

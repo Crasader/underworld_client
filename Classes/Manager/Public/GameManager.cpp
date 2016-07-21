@@ -109,7 +109,9 @@ void GameManager::launchGame()
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
         FrameLoader::getInstance()->addAllFramesAsync([this]() {
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    #if false
             FrameLoader::getInstance()->addAllFrames();
+    #endif
 #endif
             _isLaunching = false;
             CocosUtils::replaceScene(_scene, true);
@@ -121,7 +123,7 @@ void GameManager::launchGame()
                     _client->launchPve(_mapId, _battleContent->contentSetting, _battleContent->cards, _battleContent->unitList, _battleContent->unitPool);
                 }
             }
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
         });
 #endif
     } else {

@@ -393,10 +393,15 @@ float CocosUtils::playAnimation(Node* node,
             
             const size_t cnt(frames.size());
             CCASSERT(cnt > 0, "Animation is not exist.");
-            if (cnt > 0) {
-                auto animation = Animation::createWithSpriteFrames(frames, frameDelay);
+            auto cache = AnimationCache::getInstance();
+            auto animation = cache->getAnimation(folder);
+            if (!animation && cnt > 0) {
+                animation = Animation::createWithSpriteFrames(frames, frameDelay);
                 animation->setRestoreOriginalFrame(false);
-                
+                cache->addAnimation(animation, folder);
+            }
+            
+            if (animation) {
                 Action* action(nullptr);
                 auto animate = Animate::create(animation);
                 if (loop) {

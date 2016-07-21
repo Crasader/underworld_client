@@ -17,21 +17,22 @@ USING_NS_CC;
 class ResourceNode : public Node
 {
 public:
-    static ResourceNode* create(::ResourceType type, int count);
+    typedef std::function<void(ResourceNode*)> Callback;
+    
+    static ResourceNode* create(::ResourceType type, int count, const Callback& callback);
     virtual ~ResourceNode();
     ::ResourceType getType() const;
     int getCount() const;
-    void setType(::ResourceType type);
     void setCount(int count, bool animated);
     
 protected:
     ResourceNode();
-    bool init(::ResourceType type, int count);
+    bool init(::ResourceType type, int count, const Callback& callback);
     
 private:
     ::ResourceType _type;
     int _count;
-    Sprite *_icon;
+    Callback _callback;
     Label *_countLabel;
 };
 

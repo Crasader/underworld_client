@@ -22,6 +22,22 @@ using namespace ui;
 
 static const int buttonIconTag(1000);
 
+enum class MainUILayer::ButtonType {
+    Rank,
+    Achievement,
+    Friend,
+    BattleLog,
+    Guild,
+    Battle,
+    Train,
+    Quest,
+    Shop,
+};
+
+class MainUILayer::FunctionButton {
+    
+};
+
 MainUILayer* MainUILayer::create()
 {
     MainUILayer *ret = new (nothrow) MainUILayer();
@@ -210,26 +226,25 @@ bool MainUILayer::init()
         
         // 4. right top
         {
-            auto node = ResourceNode::create(::ResourceType::Gem, 100);
-            const auto& size = node->getContentSize();
+            _gemResourceNode = ResourceNode::create(::ResourceType::Gem, 100, CC_CALLBACK_1(MainUILayer::onResourceButtonClicked, this));
             static float offsetX(20);
             static float offsetY(20);
-            const float x = winSize.width - offsetX - size.width / 2;
-            const float y = winSize.height - offsetY - size.height / 2;
+            const auto& gemSize(_gemResourceNode->getContentSize());
+            const float x = winSize.width - offsetX - gemSize.width / 2;
+            const float y = winSize.height - offsetY - gemSize.height / 2;
             
-            node->setPosition(Point(x, y));
-            addChild(node);
-            _gemResourceNode = node;
+            _gemResourceNode->setPosition(Point(x, y));
+            addChild(_gemResourceNode);
             
-            node = ResourceNode::create(::ResourceType::Gold, 100);
-            node->setPosition(Point(x - (offsetX + size.width), y));
-            addChild(node);
-            _goldResourceNode = node;
+            _goldResourceNode = ResourceNode::create(::ResourceType::Gold, 100, CC_CALLBACK_1(MainUILayer::onResourceButtonClicked, this));
+            const auto& goldSize(_goldResourceNode->getContentSize());
+            _goldResourceNode->setPosition(Point(x - (offsetX + (gemSize.width + goldSize.width) / 2), y));
+            addChild(_goldResourceNode);
             
-            node = ResourceNode::create(::ResourceType::Jade, 100);
-            node->setPosition(Point(x - (offsetX + size.width) * 2, y));
-            addChild(node);
-            _jadeResourceNode = node;
+            _jadeResourceNode = ResourceNode::create(::ResourceType::Stamina, 100, CC_CALLBACK_1(MainUILayer::onResourceButtonClicked, this));
+            const auto& jadeSize(_jadeResourceNode->getContentSize());
+            _jadeResourceNode->setPosition(Point(x - (offsetX * 2 + (gemSize.width + jadeSize.width) / 2 + goldSize.width), y));
+            addChild(_jadeResourceNode);
         }
         
         // 5. right bottom
@@ -398,6 +413,31 @@ void MainUILayer::updateExp()
 }
 
 void MainUILayer::updateResources()
+{
+    
+}
+
+void MainUILayer::onResourceButtonClicked(ResourceNode* node)
+{
+    switch (node->getType()) {
+        case ::ResourceType::Gem: {
+            
+        }
+            break;
+        case ::ResourceType::Gold: {
+            
+        }
+            break;
+        case ::ResourceType::Stamina: {
+            
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+void MainUILayer::onFunctionButtonClicked(FunctionButton* button)
 {
     
 }

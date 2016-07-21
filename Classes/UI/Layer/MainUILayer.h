@@ -30,6 +30,10 @@ public:
     void registerObserver(MainUILayerObserver *observer);
     
 protected:
+    enum class ButtonType;
+    class FunctionButton;
+    
+protected:
     MainUILayer();
     
     // LayerColor
@@ -42,9 +46,13 @@ protected:
     void setButtonEnabled(ui::Button* button, bool enabled);
     void addButtonIcon(Node* node, const std::string& file);
     void removeButtonIcons();
+    
     void updateIcon();
     void updateExp();
     void updateResources();
+    
+    void onResourceButtonClicked(ResourceNode* node);
+    void onFunctionButtonClicked(FunctionButton* button);
     
 private:
     struct ButtonIconInfo;

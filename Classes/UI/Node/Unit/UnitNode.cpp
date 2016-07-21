@@ -1090,11 +1090,13 @@ Node* UnitNode::addAnimation(const string& file,
         }
     });
     if (effect) {
+        // 1. add effect
+        addChild(effect, zOrder_top);
+        
+        // 2. adjust effect
         if (string::npos == file.find(".plist")) {
             adjustEffect(effect, scale, direction, position);
         }
-        
-        addChild(effect, zOrder_top);
     }
     
     return effect;
