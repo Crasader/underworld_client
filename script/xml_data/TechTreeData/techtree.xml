@@ -90,9 +90,9 @@
 	<unit armor="50" armor_type="英雄" attack_sight="320" attack_type="普通" class="hero" field="0" height="0" hp="8600" magical_defense="67" max_level="10" max_quality="5" max_talent_level="0" name="人族剑士队长" occupy="1" passive_names="人族剑士队长吸血光环" profession="rogue" race="人族" rarity="0" render_key="狼人独角兽" reward="金子:49" size="48" skill_names="单位停止;移动速度100;死亡移除碰撞;人族剑士队长" spell_names="人族剑士队长力量强化"/>
 	<unit armor="21" armor_type="英雄" attack_sight="360" attack_type="普通" class="hero" field="0" height="0" hp="3800" magical_defense="67" max_level="10" max_quality="5" max_talent_level="0" name="人族弓箭队长" occupy="1" passive_names="人族弓箭队长强击光环" profession="archer" race="人族" rarity="0" render_key="吸血鬼弓兵" reward="金子:49" size="48" skill_names="单位停止;移动速度100;死亡移除碰撞;人族弓箭队长" spell_names="人族弓箭队长穿透箭;人族弓箭队长沉默"/>
 	<unit armor="18" armor_type="英雄" attack_sight="300" attack_type="普通" class="hero" field="0" height="0" hp="3910" magical_defense="67" max_level="10" max_quality="5" max_talent_level="0" name="人族大法师" occupy="1" profession="mage" race="人族" rarity="0" render_key="狼人森林之魂" reward="金子:49" size="48" skill_names="单位停止;移动速度100;死亡移除碰撞;人族大法师" spell_names="人族大法师召唤水元素"/>
-	<unit armor="10" armor_type="无甲" attack_sight="200" attack_type="普通" class="summoned" field="0" height="0" hp="300" magical_defense="0" max_level="1" max_quality="0" max_talent_level="0" name="人族被召唤水元素" occupy="1" profession="no_one" race="人族" rarity="0" render_key="机械甲虫" reward="金子:8" size="16" skill_names="单位停止;移动速度100;死亡移除碰撞;人族被召唤水元素"/>
+	<unit armor="10" armor_type="无甲" attack_sight="200" attack_type="普通" class="summoned" field="0" height="0" hp="1500" magical_defense="0" max_level="1" max_quality="0" max_talent_level="0" name="人族被召唤水元素" occupy="1" profession="no_one" race="人族" rarity="0" render_key="机械甲虫" reward="金子:8" size="16" skill_names="单位停止;移动速度100;死亡移除碰撞;人族被召唤水元素"/>
 	<unit armor="25" armor_type="英雄" attack_sight="300" attack_type="普通" class="hero" field="0" height="0" hp="3690" magical_defense="67" max_level="10" max_quality="5" max_talent_level="0" name="人族秘法大师" occupy="1" passive_names="人族秘法大师回血光环" profession="mage" race="人族" rarity="0" render_key="莉莉丝" reward="金子:49" size="48" skill_names="单位停止;移动速度100;死亡移除碰撞;人族秘法大师" spell_names="人族秘法大师召唤火元素"/>
-	<unit armor="5" armor_type="无甲" attack_sight="150" attack_type="普通" class="summoned" field="0" height="0" hp="350" magical_defense="0" max_level="1" max_quality="0" max_talent_level="0" name="人族被召唤火元素" occupy="1" profession="no_one" race="人族" rarity="0" render_key="吸血鬼骑士" reward="金子:8" size="16" skill_names="单位停止;移动速度100;死亡移除碰撞;人族被召唤火元素"/>
+	<unit armor="5" armor_type="无甲" attack_sight="150" attack_type="普通" class="summoned" field="0" height="0" hp="1500" magical_defense="0" max_level="1" max_quality="0" max_talent_level="0" name="人族被召唤火元素" occupy="1" profession="no_one" race="人族" rarity="0" render_key="吸血鬼骑士" reward="金子:8" size="16" skill_names="单位停止;移动速度100;死亡移除碰撞;人族被召唤火元素"/>
 	<unit armor="75" armor_type="英雄" attack_sight="300" attack_type="普通" class="hero" field="0" height="0" hp="20560" magical_defense="67" max_level="10" max_quality="5" max_talent_level="0" name="魔族骷髅王子" occupy="1" passive_names="骷髅王子闪避;骷髅王子耐久光环" profession="tank" race="魔族" rarity="0" render_key="特斯拉" reward="金子:49" size="48" skill_names="单位停止;移动速度100;死亡移除碰撞;魔族骷髅王子"/>
 	<unit armor="45" armor_type="英雄" attack_sight="320" attack_type="普通" class="hero" field="0" height="0" hp="8888" magical_defense="67" max_level="10" max_quality="5" max_talent_level="0" name="魔族食尸鬼王" occupy="1" passive_names="食尸鬼王盛宴;人族剑士队长吸血光环" profession="rogue" race="魔族" rarity="0" render_key="威克拉姆国王" reward="金子:49" size="48" skill_names="单位停止;移动速度100;死亡移除碰撞;魔族食尸鬼王" spell_names="魔族食尸鬼王狂暴"/>
 	<unit armor="30" armor_type="英雄" attack_sight="360" attack_type="普通" class="hero" field="0" height="0" hp="3550" magical_defense="67" max_level="10" max_quality="5" max_talent_level="0" name="魔族地狱战舰" occupy="1" passive_names="魔族地狱战舰邪恶之箭;人族弓箭队长强击光环" profession="archer" race="魔族" rarity="0" render_key="巨龙哨兵" reward="金子:49" size="48" skill_names="单位停止;移动速度100;死亡移除碰撞;魔族地狱战舰" spell_names="魔族地狱战舰火箭弹幕"/>
@@ -116,7 +116,7 @@
 	<unit armor="12" armor_type="重甲" attack_sight="200" attack_type="普通" class="warrior" field="0" height="0" hp="1860" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="食尸鬼" occupy="1" passive_names="食尸鬼狂暴" profession="tank" race="魔族" rarity="0" render_key="刺客" reward="金子:0" size="32" skill_names="单位停止;移动速度100;死亡移除碰撞;食尸鬼"/>
 	<unit armor="8" armor_type="中甲" attack_sight="600" attack_type="穿刺" class="warrior" field="0" height="0" hp="1680" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="骷髅弓箭手" occupy="1" passive_names="骷髅弓箭手狂热" profession="archer" race="魔族" rarity="0" render_key="吸血鬼蜘蛛" reward="金子:0" size="32" skill_names="单位停止;移动速度60;死亡移除碰撞;骷髅弓箭手"/>
 	<unit armor="10" armor_type="无甲" attack_sight="600" attack_type="魔法" class="warrior" field="0" height="0" hp="1636" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="魔族传教士" occupy="1" profession="mage" race="魔族" rarity="0" render_key="七恶魔拉玛什图" reward="金子:0" size="32" skill_names="单位停止;移动速度60;死亡移除碰撞;魔族传教士" spell_names="魔族传教士召唤骷髅;魔族传教士吞噬魔法"/>
-	<unit armor="20" armor_type="重甲" attack_sight="200" attack_type="普通" class="summoned" field="0" height="0" hp="930" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="魔族被召唤骷髅" occupy="1" profession="no_one" race="魔族" rarity="0" render_key="腐化吸血鬼" reward="金子:0" size="32" skill_names="单位停止;移动速度60;死亡移除碰撞;魔族被召唤骷髅"/>
+	<unit armor="0" armor_type="重甲" attack_sight="200" attack_type="普通" class="summoned" field="0" height="0" hp="400" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="魔族被召唤骷髅" occupy="1" profession="no_one" race="魔族" rarity="0" render_key="腐化吸血鬼" reward="金子:0" size="32" skill_names="单位停止;移动速度60;死亡移除碰撞;魔族被召唤骷髅"/>
 	<unit armor="20" armor_type="无甲" attack_sight="600" attack_type="魔法" class="warrior" field="0" height="0" hp="1500" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="梦魇" occupy="1" profession="mage" race="魔族" rarity="0" render_key="时光法师" reward="金子:0" size="32" skill_names="单位停止;移动速度60;死亡移除碰撞;梦魇" spell_names="梦魇诅咒;梦魇虚无"/>
 	<unit armor="30" armor_type="无甲" attack_sight="600" attack_type="普通" class="warrior" field="1" height="0" hp="2400" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="石像鬼" occupy="1" passive_names="石像鬼减速;石像鬼毒素" profession="archer" race="魔族" rarity="0" render_key="石像鬼" reward="金子:0" size="16" skill_names="单位停止;移动速度100;死亡移除碰撞;石像鬼"/>
 	<skill cd="0" class="stop" name="单位停止" perform="0" preperform="0"/>
@@ -154,9 +154,9 @@
 	<skill cd="50" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="577" min_damage="569" name="人族剑士队长" perform="0" preperform="30" range="48"/>
 	<skill bullet_name="人族弓箭手" cd="45" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="1054" min_damage="1046" name="人族弓箭队长" perform="0" preperform="25" range="240"/>
 	<skill bullet_name="人族大法师" cd="55" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="1279" min_damage="1271" name="人族大法师" perform="0" preperform="30" range="240"/>
-	<skill bullet_name="中立仙女龙" cd="70" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="25" min_damage="20" name="人族被召唤水元素" perform="0" preperform="50" range="150"/>
+	<skill bullet_name="中立仙女龙" cd="70" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="450" min_damage="450" name="人族被召唤水元素" perform="0" preperform="50" range="150"/>
 	<skill bullet_name="人族大法师" cd="50" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="1129" min_damage="1121" name="人族秘法大师" perform="0" preperform="25" range="240"/>
-	<skill bullet_name="中立仙女龙" cd="50" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="30" min_damage="25" name="人族被召唤火元素" perform="0" preperform="70" range="120"/>
+	<skill bullet_name="中立仙女龙" cd="50" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="450" min_damage="450" name="人族被召唤火元素" perform="0" preperform="70" range="120"/>
 	<skill cd="60" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="259" min_damage="251" name="魔族骷髅王子" perform="0" preperform="40" range="48"/>
 	<skill cd="45" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="647" min_damage="640" name="魔族食尸鬼王" perform="0" preperform="45" range="48"/>
 	<skill bullet_name="人族弓箭手" cd="70" class="attack" damage_distance="faraway" deliver_class="physical" fields="1" max_damage="1429" min_damage="1421" name="魔族地狱战舰" perform="0" preperform="25" range="360"/>
@@ -179,7 +179,7 @@
 	<skill cd="50" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="90" min_damage="83" name="食尸鬼" perform="0" preperform="25" range="32"/>
 	<skill bullet_name="人族弓箭手" cd="60" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="289" min_damage="281" name="骷髅弓箭手" perform="0" preperform="35" range="224"/>
 	<skill bullet_name="人族法师" cd="75" class="attack" damage_distance="faraway" deliver_class="magical" fields="3" max_damage="169" min_damage="161" name="魔族传教士" perform="0" preperform="35" range="224"/>
-	<skill cd="60" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="80" min_damage="60" name="魔族被召唤骷髅" perform="0" preperform="30" range="32"/>
+	<skill cd="60" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="49" min_damage="41" name="魔族被召唤骷髅" perform="0" preperform="30" range="32"/>
 	<skill bullet_name="人族法师" cd="50" class="attack" damage_distance="faraway" deliver_class="magical" fields="3" max_damage="128" min_damage="127" name="梦魇" perform="0" preperform="35" range="224"/>
 	<skill bullet_name="人族弓箭手" cd="75" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="155" min_damage="147" name="石像鬼" perform="0" preperform="20" range="96"/>
 	<spell ai="人族法师暴风雨ai" alias="暴风雨" cast_distance="240" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" immediate_elements="0,人族法师暴风雨,1" level="1" perform="0" preperform="30" spell_name="人族法师暴风雨" to_dead="0"/>
@@ -193,19 +193,19 @@
 	<spell ai="法师队长暴风雪ai" alias="暴风雪" cast_distance="240" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" immediate_elements="0,法师队长暴风雪,1" level="1" perform="0" preperform="60" spell_name="法师队长暴风雪" to_dead="0"/>
 	<spell alias="第一版暴风雪" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" immediate_elements="0,元素全局技能暴风雪lv1,1" level="1" perform="0" preperform="60" spell_name="暴风雪lv1" spell_radius="96" to_dead="0"/>
 	<spell alias="第一版火球术" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" immediate_elements="0,元素全局技能火球术lv1,1" level="1" perform="0" preperform="60" spell_name="火球术lv1" spell_radius="24" to_dead="0"/>
-	<spell alias="第一版医疗术" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" immediate_elements="0,元素全局技能医疗术lv1,1" level="1" perform="0" preperform="60" spell_name="医疗术lv1" spell_radius="64" to_dead="0"/>
-	<spell alias="第一版沉默术" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" immediate_elements="0,元素全局技能沉默术lv1,1" level="1" perform="0" preperform="60" spell_name="沉默术lv1" spell_radius="64" to_dead="0"/>
-	<spell alias="第一版小型驱散" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="neutral" immediate_elements="0,元素全局技能小型驱散术lv1,1" level="1" perform="0" preperform="60" spell_name="小型驱散术lv1" spell_radius="96" to_dead="0"/>
+	<spell alias="第一版医疗术" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" immediate_elements="0,元素全局技能医疗术lv1,1" level="1" perform="0" preperform="60" spell_name="医疗术lv1" spell_radius="96" to_dead="0"/>
+	<spell alias="第一版沉默术" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" immediate_elements="0,元素全局技能沉默术lv1,1" level="1" perform="0" preperform="60" spell_name="沉默术lv1" spell_radius="96" to_dead="0"/>
+	<spell alias="第一版小型驱散" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="neutral" immediate_elements="0,元素全局技能小型驱散术lv1,1" level="1" perform="0" preperform="60" spell_name="小型驱散术lv1" spell_radius="112" to_dead="0"/>
 	<spell alias="第一版大型驱散" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="neutral" immediate_elements="0,元素全局技能大型驱散术lv1,1" level="1" perform="0" preperform="60" spell_name="大型驱散术lv1" spell_radius="24" to_dead="0"/>
 	<spell alias="第一版震晕法术" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" immediate_elements="0,元素全局技能震晕法术lv1,1" level="1" perform="0" preperform="60" spell_name="震晕法术lv1" spell_radius="64" to_dead="0"/>
-	<spell alias="第一版禁足术" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" immediate_elements="0,元素全局技能禁足术lv1,1" level="1" perform="0" preperform="60" spell_name="禁足术lv1" spell_radius="48" to_dead="0"/>
+	<spell alias="第一版禁足术" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" immediate_elements="0,元素全局技能禁足术lv1,1" level="1" perform="0" preperform="60" spell_name="禁足术lv1" spell_radius="64" to_dead="0"/>
 	<spell alias="第一版佯攻部队" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" immediate_elements="0,元素全局技能佯攻部队术lv1,1" level="1" perform="0" preperform="60" spell_name="佯攻部队术lv1" spell_radius="32" to_dead="0"/>
-	<spell alias="第一版酸雾" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="physical" deliver_natures="enemy" immediate_elements="0,元素全局技能酸雾术lv1,1" level="1" perform="0" preperform="60" spell_name="酸雾术lv1" spell_radius="48" to_dead="0"/>
+	<spell alias="第一版酸雾" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="physical" deliver_natures="enemy" immediate_elements="0,元素全局技能酸雾术lv1,1" level="1" perform="0" preperform="60" spell_name="酸雾术lv1" spell_radius="64" to_dead="0"/>
 	<spell alias="人族盾牌队长坚守" cast_distance="-1" cast_type="self" cd="1500" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" immediate_elements="0,人族盾牌队长坚守,1" level="1" perform="0" preperform="60" spell_name="人族盾牌队长坚守" spell_radius="48" to_dead="0"/>
 	<spell alias="人族剑士队长力量强化" cast_distance="240" cast_type="unit" cd="1200" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" immediate_elements="0,人族剑士队长力量强化,1" level="1" perform="0" preperform="60" spell_name="人族剑士队长力量强化" to_dead="0"/>
 	<spell alias="人族弓箭队长穿透箭" cast_distance="480" cast_type="position" cd="900" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" immediate_elements="0,人族弓箭队长穿透箭,1" level="1" perform="0" preperform="60" spell_name="人族弓箭队长穿透箭" to_dead="0"/>
-	<spell alias="人族大法师召唤水元素" cast_distance="-1" cast_type="self" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" immediate_elements="0,人族大法师召唤水元素,1" level="1" perform="0" preperform="90" spell_name="人族大法师召唤水元素" to_dead="0"/>
-	<spell alias="人族秘法大师召唤火元素" cast_distance="-1" cast_type="self" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" immediate_elements="0,人族秘法大师召唤火元素,1" level="1" perform="0" preperform="90" spell_name="人族秘法大师召唤火元素" to_dead="0"/>
+	<spell alias="人族大法师召唤水元素" cast_distance="-1" cast_type="self" cd="1800" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" immediate_elements="0,人族大法师召唤水元素,1" level="1" perform="0" preperform="90" spell_name="人族大法师召唤水元素" to_dead="0"/>
+	<spell alias="人族秘法大师召唤火元素" cast_distance="-1" cast_type="self" cd="1800" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" immediate_elements="0,人族秘法大师召唤火元素,1" level="1" perform="0" preperform="90" spell_name="人族秘法大师召唤火元素" to_dead="0"/>
 	<spell alias="死亡触发的分裂箭" cast_distance="-1" cast_type="self" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" immediate_elements="0,死亡触发分裂箭,1" level="1" perform="0" preperform="90" spell_name="死亡触发的分裂箭" to_dead="0"/>
 	<spell alias="魔族黑传教士霜冻新星" cast_distance="300" cast_type="unit" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" immediate_elements="0,黑传教士霜冻新星副伤害,1;0,黑传教士霜冻新星副伤害,1" level="1" perform="0" preperform="90" spell_name="魔族黑传教士霜冻新星" spell_radius="36" to_dead="0"/>
 	<spell alias="魔族梦魇精华腐臭蜂群" cast_distance="300" cast_type="unit" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" immediate_elements="0,魔族梦魇精华腐臭蜂群,1" level="1" perform="0" preperform="90" spell_name="魔族梦魇精华腐臭蜂群" spell_radius="36" to_dead="0"/>
@@ -223,7 +223,7 @@
 	<spell alias="人族男巫驱散" cast_distance="240" cast_type="unit" cd="300" class="cast" conditions="type:unit_enemy_buff_number;target:opposite;condition:&gt;0|type:unit_ally_buff_number;target:opposite;condition:&gt;0|type:unit_class;target:opposite;condition:is:summoned" deliver_class="magical" deliver_natures="ally|enemy|enemy" immediate_elements="0,人族男巫驱散友军,1;0,人族男巫驱散敌军,1;0,人族男巫驱散召唤,1" level="1" perform="0" preperform="30" spell_name="人族男巫驱散" to_dead="0"/>
 	<spell ai="人族男巫加血ai" alias="人族男巫加血" cast_distance="240" cast_type="unit" cd="300" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" immediate_elements="0,人族男巫加血,1" level="1" perform="0" preperform="30" spell_name="人族男巫加血" to_dead="0"/>
 	<spell ai="人族女巫减速ai" alias="人族女巫减速" cast_distance="240" cast_type="unit" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" immediate_elements="0,人族女巫减速,1" level="1" perform="0" preperform="30" spell_name="人族女巫减速" to_dead="0"/>
-	<spell ai="魔族传教士召唤骷髅ai" alias="魔族传教士召唤骷髅" cast_distance="-1" cast_type="self" cd="1200" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" immediate_elements="0,魔族传教士召唤骷髅,1" level="1" perform="0" preperform="35" spell_name="魔族传教士召唤骷髅" to_dead="0"/>
+	<spell ai="魔族传教士召唤骷髅ai" alias="魔族传教士召唤骷髅" cast_distance="-1" cast_type="self" cd="2400" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" immediate_elements="0,魔族传教士召唤骷髅,1" level="1" perform="0" preperform="35" spell_name="魔族传教士召唤骷髅" to_dead="0"/>
 	<spell ai="魔族传教士吞噬魔法ai" alias="魔族传教士吞噬魔法" cast_distance="240" cast_type="unit" cd="600" class="cast" conditions="type:unit_enemy_buff_number;target:opposite;condition:&gt;0|type:unit_ally_buff_number;target:opposite;condition:&gt;0" deliver_class="magical" deliver_natures="ally|enemy" immediate_elements="0,魔族传教士吞噬友军,1;0,魔族传教士吞噬敌军,1" level="1" perform="0" preperform="35" spell_name="魔族传教士吞噬魔法" to_dead="0"/>
 	<spell ai="梦魇诅咒ai" alias="梦魇诅咒" cast_distance="240" cast_type="unit" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" immediate_elements="0,梦魇诅咒,1" level="1" perform="0" preperform="40" spell_name="梦魇诅咒" to_dead="0"/>
 	<spell ai="梦魇虚无ai" alias="梦魇虚无" cast_distance="240" cast_type="unit" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" immediate_elements="0,梦魇虚无,1" level="1" perform="0" preperform="30" spell_name="梦魇虚无" to_dead="0"/>
@@ -251,9 +251,9 @@
 	<spell_pattern class="target_position_circle" conditions="type:unit_class;target:opposite;condition:not:building,core" content_name="内容全局技能火焰雨" count="3" deliver_natures="enemy" name="元素全局技能火焰雨" radius="50"/>
 	<spell_pattern class="target_position_circle" conditions="type:unit_class;target:opposite;condition:not:building,core" content_name="内容全局技能复活" count="3" deliver_natures="ally" name="元素全局技能复活" radius="50"/>
 	<spell_pattern class="target_position_circle" conditions=" " content_name="法师队长暴风雪" count="3" deliver_natures="enemy" name="法师队长暴风雪" radius="50"/>
-	<spell_pattern class="target_position_circle" conditions=" " content_name="内容全局技能暴风雪lv1" deliver_natures="enemy" name="元素全局技能暴风雪lv1" radius="96"/>
+	<spell_pattern class="target_position_circle" conditions=" " content_name="内容全局技能暴风雪lv1" count="8" deliver_natures="enemy" name="元素全局技能暴风雪lv1" radius="96"/>
 	<spell_pattern class="target_position_circle" conditions=" " content_name="内容全局技能火球术lv1" count="1" deliver_natures="enemy" name="元素全局技能火球术lv1" radius="24"/>
-	<spell_pattern class="target_position_circle" conditions=" " content_name="内容全局技能医疗术lv1" deliver_natures="ally" name="元素全局技能医疗术lv1" radius="64"/>
+	<spell_pattern class="target_position_circle" conditions=" " content_name="内容全局技能医疗术lv1" count="8" deliver_natures="ally" name="元素全局技能医疗术lv1" radius="64"/>
 	<spell_pattern class="target_position_circle" conditions=" " content_name="内容全局技能沉默术lv1" deliver_natures="enemy" name="元素全局技能沉默术lv1" radius="64"/>
 	<spell_pattern class="target_position_circle" conditions=" " content_name="内容全局技能小型驱散术lv1" deliver_natures="neutral" name="元素全局技能小型驱散术lv1" radius="96"/>
 	<spell_pattern class="target_position_circle" conditions=" " content_name="内容全局技能大型驱散术lv1" deliver_natures="neutral" name="元素全局技能大型驱散术lv1" radius="24"/>
@@ -431,12 +431,12 @@
 	<buff alias="buff技能强攻" buff_effect_names="buff效果技能强攻" deliver_class="physical" deliver_nature="ally" dispelable="1" level="1" max_overlay="1" name="buff技能强攻" span="600" span_type="limited" unique_on_unit="1"/>
 	<buff alias="buff技能洪流" buff_effect_names="buff效果技能洪流" deliver_class="physical" deliver_nature="enemy" dispelable="1" level="1" max_overlay="1" name="buff技能洪流" span="300" span_type="limited" unique_on_unit="1"/>
 	<buff alias="buff技能火焰雨" buff_effect_names="buff效果技能火焰雨" deliver_class="magical" deliver_nature="enemy" dispelable="1" level="1" max_overlay="5" name="buff技能火焰雨" span_type="loads" unique_on_unit="1"/>
-	<buff alias="沉默状态" buff_effect_names="沉默效果" deliver_class="magical" deliver_nature="enemy" dispelable="1" is_on_building="0" level="1" max_overlay="1" name="沉默状态" render_key="梦魇诅咒特性" span="300" span_type="limited" unique_on_unit="1"/>
-	<buff alias="击晕状态" buff_effect_names="击晕效果" deliver_class="magical" deliver_nature="enemy" dispelable="0" is_on_building="0" level="1" max_overlay="1" name="击晕状态" render_key="眩晕" span="120" span_type="limited" unique_on_unit="1"/>
-	<buff alias="无法移动状态" buff_effect_names="无法移动效果" deliver_class="magical" deliver_nature="enemy" dispelable="1" is_on_building="0" level="1" max_overlay="1" name="无法移动状态" render_key="眩晕" span="240" span_type="limited" unique_on_unit="1"/>
-	<buff alias="禁足持续伤害状态" buff_effect_names="禁足持续伤害效果" deliver_class="magical" deliver_nature="enemy" dispelable="1" is_on_building="0" level="1" max_overlay="1" name="禁足持续伤害状态" render_key="血雾" span="240" span_type="limited" unique_on_unit="1"/>
+	<buff alias="沉默状态" buff_effect_names="沉默效果" deliver_class="magical" deliver_nature="enemy" dispelable="1" is_on_building="0" level="1" max_overlay="1" name="沉默状态" render_key="梦魇诅咒特性" span="600" span_type="limited" unique_on_unit="1"/>
+	<buff alias="击晕状态" buff_effect_names="击晕效果" deliver_class="magical" deliver_nature="enemy" dispelable="0" is_on_building="0" level="1" max_overlay="1" name="击晕状态" render_key="眩晕" span="300" span_type="limited" unique_on_unit="1"/>
+	<buff alias="无法移动状态" buff_effect_names="无法移动效果" deliver_class="magical" deliver_nature="enemy" dispelable="1" is_on_building="0" level="1" max_overlay="1" name="无法移动状态" render_key="眩晕" span="480" span_type="limited" unique_on_unit="1"/>
+	<buff alias="禁足持续伤害状态" buff_effect_names="禁足持续伤害效果" deliver_class="magical" deliver_nature="enemy" dispelable="1" is_on_building="0" level="1" max_overlay="1" name="禁足持续伤害状态" render_key="血雾" span="480" span_type="limited" unique_on_unit="1"/>
 	<buff alias="火球术燃烧状态" buff_effect_names="火球术燃烧效果" deliver_class="magical" deliver_nature="enemy" dispelable="0" is_on_building="0" level="1" max_overlay="3" name="火球术燃烧状态" span_type="loads" unique_on_unit="1"/>
-	<buff alias="酸雾护甲降低" buff_effect_names="酸雾护甲降低效果" deliver_class="magical" deliver_nature="enemy" dispelable="0" is_on_building="0" level="1" max_overlay="1" name="酸雾护甲降低" span="300" span_type="limited" unique_on_unit="1"/>
+	<buff alias="酸雾护甲降低" buff_effect_names="酸雾护甲降低效果" deliver_class="magical" deliver_nature="enemy" dispelable="0" is_on_building="0" level="1" max_overlay="1" name="酸雾护甲降低" span="480" span_type="limited" unique_on_unit="1"/>
 	<buff alias="坚守状态" buff_effect_names="增加护甲效果;增加魔抗效果" deliver_class="physical" deliver_nature="ally" dispelable="1" is_on_building="0" level="1" max_overlay="1" name="坚守状态" span="300" span_type="limited" unique_on_unit="1"/>
 	<buff alias="力量强化状态" buff_effect_names="力量强化效果" deliver_class="physical" deliver_nature="ally" dispelable="1" is_on_building="0" level="1" max_overlay="1" name="力量强化状态" render_key="心灵之火" span="600" span_type="limited" unique_on_unit="1"/>
 	<buff alias="近战吸血光环" buff_effect_names="近战吸血光环" deliver_class="physical" deliver_nature="ally" dispelable="0" is_on_building="0" level="1" max_overlay="1" name="近战吸血光环" span_type="eternal" unique_on_unit="1"/>
@@ -527,16 +527,16 @@
 	<damage damage_name="伤害全局技能火焰雨" damage_nature="hurt" damage_value="150" deliver_class="magical" feature_names="效果全局技能火焰雨"/>
 	<damage damage_name="火焰雨持续伤害" damage_nature="hurt" damage_value="30" deliver_class="magical"/>
 	<damage damage_name="法师队长暴风雪伤害" damage_nature="hurt" damage_value="360" deliver_class="magical" is_on_building="0"/>
-	<damage damage_name="效果全局技能暴风雪lv1" damage_nature="hurt" damage_value="130" deliver_class="magical" is_on_building="0"/>
-	<damage damage_name="效果全局技能医疗术lv1" damage_nature="heal" damage_value="100" deliver_class="magical" is_on_building="0"/>
+	<damage damage_name="效果全局技能暴风雪lv1" damage_nature="hurt" damage_value="900" deliver_class="magical" is_on_building="0"/>
+	<damage damage_name="效果全局技能医疗术lv1" damage_nature="heal" damage_value="1000" deliver_class="magical" is_on_building="0"/>
 	<damage damage_name="效果全局技能沉默术lv1" damage_nature="hurt" damage_value="0" deliver_class="magical" feature_names="沉默特性" is_on_building="0"/>
 	<damage damage_name="效果全局技能小型驱散术lv1" damage_nature="hurt" damage_value="0" deliver_class="magical" feature_names="驱散友军负面状态;驱散敌军正面状态;对召唤单位造成少量伤害" is_on_building="0"/>
 	<damage damage_name="效果全局技能大型驱散术lv1" damage_nature="hurt" damage_value="0" deliver_class="magical" feature_names="驱散友军负面状态;驱散敌军正面状态;对召唤单位造成大量伤害" is_on_building="0"/>
-	<damage damage_name="效果全局技能震晕法术lv1" damage_nature="hurt" damage_value="30" deliver_class="magical" feature_names="击晕特性" is_on_building="0"/>
+	<damage damage_name="效果全局技能震晕法术lv1" damage_nature="hurt" damage_value="100" deliver_class="magical" feature_names="击晕特性" is_on_building="0"/>
 	<damage damage_name="效果全局技能禁足术lv1" damage_nature="hurt" damage_value="0" deliver_class="magical" feature_names="无法移动特性;禁足持续伤害" is_on_building="0"/>
-	<damage damage_name="禁足持续伤害" damage_nature="hurt" damage_value="20" deliver_class="magical" is_on_building="0"/>
-	<damage damage_name="效果全局技能火球术lv1" damage_nature="hurt" damage_value="250" deliver_class="magical" feature_names="火球术燃烧特性" is_on_building="0"/>
-	<damage damage_name="火球术燃烧伤害" damage_nature="hurt" damage_value="25" deliver_class="magical" is_on_building="0"/>
+	<damage damage_name="禁足持续伤害" damage_nature="hurt" damage_value="50" deliver_class="magical" is_on_building="0"/>
+	<damage damage_name="效果全局技能火球术lv1" damage_nature="hurt" damage_value="1600" deliver_class="magical" feature_names="火球术燃烧特性" is_on_building="0"/>
+	<damage damage_name="火球术燃烧伤害" damage_nature="hurt" damage_value="100" deliver_class="magical" is_on_building="0"/>
 	<damage damage_name="酸雾单次伤害" damage_nature="hurt" damage_value="20" deliver_class="physical" is_on_building="0"/>
 	<damage damage_name="效果人族盾牌队长坚守" damage_nature="heal" damage_value="0" deliver_class="magical" feature_names="坚守状态特性" is_on_building="0"/>
 	<damage damage_name="效果人族剑士队长力量强化" damage_nature="heal" damage_value="0" deliver_class="magical" feature_names="力量强化特性" is_on_building="0"/>
@@ -565,7 +565,7 @@
 	<damage damage_name="人族男巫驱散友军" damage_nature="hurt" damage_value="0" deliver_class="magical" feature_names="人族男巫驱散友军效果" is_on_building="0"/>
 	<damage damage_name="人族男巫驱散敌军" damage_nature="hurt" damage_value="0" deliver_class="magical" feature_names="人族男巫驱散敌军效果" is_on_building="0"/>
 	<damage damage_name="人族男巫驱散召唤" damage_nature="hurt" damage_value="600" deliver_class="magical" is_on_building="0"/>
-	<damage damage_name="骷髅盾牌兵瘟疫" damage_nature="hurt" damage_value="3" deliver_class="magical" is_on_building="0"/>
+	<damage damage_name="骷髅盾牌兵瘟疫" damage_nature="hurt" damage_value="30" deliver_class="magical" is_on_building="0"/>
 	<damage damage_name="魔族传教士吞噬友军" damage_nature="hurt" damage_value="0" deliver_class="magical" feature_names="魔族传教士吞噬友军效果" is_on_building="0"/>
 	<damage damage_name="魔族传教士吞噬敌军" damage_nature="hurt" damage_value="0" deliver_class="magical" feature_names="魔族传教士吞噬敌军效果" is_on_building="0"/>
 	<damage damage_name="梦魇诅咒" damage_nature="hurt" damage_value="0" deliver_class="magical" feature_names="梦魇诅咒效果" is_on_building="0"/>
@@ -577,7 +577,7 @@
 	<effect class="set_state" effect_name="沉默效果" state_name="silence"/>
 	<effect class="set_state" effect_name="击晕效果" state_name="stun"/>
 	<effect class="set_state" effect_name="无法移动效果" state_name="unmoveable"/>
-	<effect alias_name="效果护甲降低" attr_name="armor" class="alter_attr" effect_name="酸雾护甲降低效果" value="-15"/>
+	<effect alias_name="效果护甲降低" attr_name="armor" class="alter_attr" effect_name="酸雾护甲降低效果" value="-25"/>
 	<effect alias_name="人族盾牌队长增加护甲效果" attr_name="armor" class="alter_attr" effect_name="增加护甲效果" value="25"/>
 	<effect alias_name="人族盾牌队长增加魔抗效果" attr_name="magical_defense" class="alter_attr" effect_name="增加魔抗效果" value="25"/>
 	<effect alias_name="人族剑士队长增加攻击效果" attr_name="attack_speed" class="alter_attr" effect_name="增加攻击效果" value="90"/>
@@ -608,7 +608,7 @@
 	<effect alias_name="梦魇虚无物免" class="add_feature" effect_name="梦魇虚无物免" feature_name="被梦魇虚无物免效果"/>
 	<effect alias_name="梦魇虚无魔法攻击加成" class="add_feature" effect_name="梦魇虚无魔法攻击加成" feature_name="被梦魇虚无魔法攻击加成效果"/>
 	<effect alias_name="石像鬼减速" attr_name="move_speed" class="alter_attr" effect_name="石像鬼减速" feature_name="被石像鬼减速效果" value="p:-90"/>
-	<effect alias_name="魔族传教士减技能时间" attr_name="spell_cd_speed" class="alter_attr" effect_name="魔族传教士减技能时间" feature_name="被魔族传教士减技能时间效果" value="400"/>
+	<effect alias_name="魔族传教士减技能时间" attr_name="spell_cd_speed" class="alter_attr" effect_name="魔族传教士减技能时间" feature_name="被魔族传教士减技能时间效果" value="110"/>
 	<effect_alias name="反弹光环" unique="0"/>
 	<effect_alias name="效果技能强攻" unique="0"/>
 	<effect_alias name="效果技能洪流" unique="0"/>
@@ -709,8 +709,8 @@
 	<feature buff_type_name="沉默状态" effect_timing="hit" feature_name="沉默特性" type="add_buff"/>
 	<feature deliver_nature="enemy" effect_timing="hit" feature_name="驱散友军负面状态" type="dispel"/>
 	<feature deliver_nature="ally" effect_timing="hit" feature_name="驱散敌军正面状态" type="dispel"/>
-	<feature deliver_class="magical" effect_timing="hit" feature_name="对召唤单位造成少量伤害" type="extra_damage" value="100"/>
-	<feature deliver_class="magical" effect_timing="hit" feature_name="对召唤单位造成大量伤害" type="extra_damage" value="300"/>
+	<feature deliver_class="magical" effect_timing="hit" feature_name="对召唤单位造成少量伤害" type="extra_damage" value="750"/>
+	<feature deliver_class="magical" effect_timing="hit" feature_name="对召唤单位造成大量伤害" type="extra_damage" value="3000"/>
 	<feature buff_type_name="击晕状态" effect_timing="hit" feature_name="击晕特性" type="add_buff"/>
 	<feature buff_type_name="无法移动状态" effect_timing="hit" feature_name="无法移动特性" type="add_buff"/>
 	<feature buff_type_name="禁足持续伤害状态" effect_timing="hit" feature_name="禁足持续伤害" type="add_buff"/>
@@ -755,11 +755,11 @@
 	<feature buff_type_name="buff梦魇虚无物免" effect_timing="hit" feature_name="梦魇虚无物免特性" overlay="1" type="add_buff"/>
 	<feature buff_type_name="buff梦魇虚无魔法攻击加成" effect_timing="hit" feature_name="梦魇虚无魔法攻击加成特性" overlay="1" type="add_buff"/>
 	<feature effect_timing="be_attack" feature_name="被梦魇虚无物免特性" type="miss"/>
-	<feature effect_timing="be_hit" feature_name="被梦魇虚无魔法攻击加成特性" type="damage_enhance" value="p:500"/>
+	<feature effect_timing="be_hit" feature_name="被梦魇虚无魔法攻击加成特性" type="damage_enhance" value="p:300"/>
 	<feature effect_timing="attack" feature_name="被诅咒特性" render_key="人族盾牌兵格挡特性" type="miss"/>
 	<feature buff_type_name="buff石像鬼减速" effect_timing="hit" feature_name="石像鬼减速特性" overlay="1" type="add_buff"/>
 	<feature buff_type_name="buff石像鬼毒素" effect_timing="hit" feature_name="石像鬼毒素特性" overlay="1" type="add_buff"/>
-	<magic aura_names="酸雾降低护甲" magic_effect_names="酸雾持续伤害" name="效果全局技能酸雾术lv1" span="300" span_type="limited"/>
+	<magic aura_names="酸雾降低护甲" magic_effect_names="酸雾持续伤害" name="效果全局技能酸雾术lv1" span="480" span_type="limited"/>
 	<magic magic_effect_names="火海持续伤害" name="黑龙火海效果" span="300" span_type="limited"/>
 	<magic_effect magic_effect_condition="loop" magic_effect_name="酸雾持续伤害" magic_effect_spell_pattern_name="酸雾单次伤害" magic_effect_time="60"/>
 	<magic_effect magic_effect_condition="loop" magic_effect_name="火海持续伤害" magic_effect_spell_pattern_name="火海持续伤害" magic_effect_time="30"/>
