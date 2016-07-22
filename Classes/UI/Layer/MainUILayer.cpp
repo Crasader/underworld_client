@@ -21,10 +21,14 @@ using namespace std;
 using namespace ui;
 
 static const int buttonIconTag(1000);
+static const string getResourcePath(const string& file) {
+    return "GameImages/main_ui/" + file;
+}
 
 enum class MainUILayer::ButtonType {
     Rank,
     Achievement,
+    Chat,
     Friend,
     BattleLog,
     Guild,
@@ -34,15 +38,76 @@ enum class MainUILayer::ButtonType {
     Shop,
 };
 
-class MainUILayer::FunctionButton {
+#pragma mark - FunctionButton
+class MainUILayer::FunctionButton : public Node {
+public:
+    typedef function<void()> Callback;
+    static FunctionButton* create(ButtonType type, const Callback& callback) {
+        auto ret = new (nothrow) FunctionButton();
+        if (ret && ret->init(type, callback)) {
+            ret->autorelease();
+            return ret;
+        }
+        
+        CC_SAFE_DELETE(ret);
+        return nullptr;
+    }
     
+    virtual ~FunctionButton() { removeAllChildren(); }
+    
+private:
+    FunctionButton():_callback(nullptr) {}
+    bool init(ButtonType type, const Callback& callback) {
+        if (Node::init()) {
+            _callback = callback;
+            
+            static const map<ButtonType, pair<string, string>> ButtonInfos = {
+                {ButtonType::Rank,          {"ui_kuang_1", "icon_jiangbei"}},
+                {ButtonType::Achievement,   {"ui_kuang_1", "icon_xingxing"}},
+                {ButtonType::Chat,          {"ui_kuang_1", "icon_xingxing"}},
+                {ButtonType::Friend,        {"ui_kuang_3", "icon_haoyou"}},
+                {ButtonType::BattleLog,     {"ui_kuang_3", "icon_zhanji"}},
+                {ButtonType::Guild,         {"ui_kuang_3", "icon_lianmeng"}},
+                {ButtonType::Battle,        {"ui_kuang_2", "icon_pvp"}},
+                {ButtonType::Train,         {"ui_kuang_3", "icon_zhujue"}},
+                {ButtonType::Quest,         {"ui_kuang_3", ""}},
+                {ButtonType::Shop,          {"ui_kuang_2", ""}},
+            };
+            
+            if (ButtonInfos.find(type) != end(ButtonInfos)) {
+                const auto& pair = ButtonInfos.at(type);
+                const auto file = getResourcePath(StringUtils::format("%s.png", pair.first.c_str()));
+                auto button = Button::create(file, file);
+                addChild(button);
+                button->setPressedActionEnabled(true);
+                button->addClickEventListener([this](Ref*) {
+                    if (_callback) {
+                        _callback();
+                    }
+                });
+                
+                const auto iconFile = getResourcePath(StringUtils::format("%s.png", pair.second.c_str()));
+                auto icon = Sprite::create(iconFile);
+                button->addChild(icon);
+                const auto& size(button->getContentSize());
+                icon->setPosition(Point(size.width / 2, size.height / 2));
+            }
+            
+            return true;
+        }
+        
+        return false;
+    }
+    
+private:
+    Callback _callback;
 };
 
+#pragma mark - MainUILayer
 MainUILayer* MainUILayer::create()
 {
-    MainUILayer *ret = new (nothrow) MainUILayer();
-    if (ret && ret->init())
-    {
+    auto ret = new (nothrow) MainUILayer();
+    if (ret && ret->init()) {
         ret->autorelease();
         return ret;
     }
@@ -85,11 +150,85 @@ bool MainUILayer::init()
 {
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR))
     {
-        const Size& winSize = Director::getInstance()->getWinSize();
+        const auto& winSize = Director::getInstance()->getWinSize();
+        
+        static const float margin(10.0f);
         
         // 1. left top
         {
-            static const float margin(10.0f);
+#if false
+            auto background = Sprite::create(getResourcePath("ui_banzi_1.png"));
+            addChild(background);
+            background->setPosition(Point(margin, winSize.height - margin));
+            const auto& backgroundSize(background->getContentSize());
+            
+            // avatar
+            {
+                static const auto avatarFile(getResourcePath("icon_touxiang_1.png"));
+                auto avatar = Button::create(avatarFile, avatarFile);
+                avatar->addClickEventListener([this](Ref *pSender){
+                    SoundManager::getInstance()->playButtonSound();
+                    // TODO:
+                });
+                background->addChild(avatar);
+                _iconButton = avatar;
+                
+                static const Vec2 edge(5.0f, 5.0f);
+                const auto& size(avatar->getContentSize());
+                avatar->setPosition(Point(size.width + edge.x, size.height + edge.y));
+            }
+            
+            {
+                auto name = CocosUtils::createLabel("User Name", BIG_FONT_SIZE);
+                name->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+                background->addChild(name);
+                _nameLabel = name;
+                static const Vec2 edge(5.0f, 5.0f);
+                name->setPosition(Point(_iconButton->getPosition().x + _iconButton->getContentSize().width / 2 + edge.x, backgroundSize.height - (name->getContentSize().height / 2 + edge.y)));
+            }
+            
+            // trophy
+            {
+                auto bg = Sprite::create(getResourcePath("ui_tiao_2.png"));
+                background->addChild(bg);
+                
+                auto icon = Sprite::create(getResourcePath("icon_jiangbei.png"));
+                bg->addChild(icon);
+                
+                auto trophyCount = CocosUtils::createLabel("123", SMALL_FONT_SIZE, DEFAULT_NUMBER_FONT, Size::ZERO, TextHAlignment::CENTER, TextVAlignment::CENTER);
+                trophyCount->setAnchorPoint(Point::ANCHOR_MIDDLE);
+                bg->addChild(trophyCount);
+                
+                const auto& bsize(bg->getContentSize());
+                const auto& isize(icon->getContentSize());
+                icon->setPosition(Point(isize.width / 2, bsize.height / 2));
+                trophyCount->setPosition(Point(bsize.width / 2 + isize.width / 4, bsize.height / 2));
+            }
+            
+            // exp
+            {
+                auto bg = Sprite::create(getResourcePath("ui_tiao_1.png"));
+                background->addChild(bg);
+                
+                auto bar = LoadingBar::create(getResourcePath("ui_tiao_1_1.png"));
+                bar->setScale9Enabled(true);
+                bar->setCapInsets(Rect(1, 1, 176, 2));
+                bg->addChild(bar);
+                
+                auto icon = Sprite::create("GameImages/resources/icon_104B.png");
+                bg->addChild(icon);
+                
+                auto level = CocosUtils::createLabel("123", SMALL_FONT_SIZE, DEFAULT_NUMBER_FONT, Size::ZERO, TextHAlignment::CENTER, TextVAlignment::CENTER);
+                icon->addChild(level);
+                
+                const auto& bsize(bg->getContentSize());
+                const auto& isize(icon->getContentSize());
+                icon->setPosition(Point(isize.width / 2, bsize.height / 2));
+                bar->setPosition(Point(bsize.width / 2, bsize.height / 2));
+                level->setPosition(Point(isize.width / 2, isize.height / 2));
+            }
+#endif
+            
             static const string csbFile("UI_CharInfo.csb");
             Node *mainNode = CocosUtils::playAnimation(csbFile, 0, false);
             mainNode->setPosition(Point(margin, winSize.height - margin));
@@ -437,7 +576,7 @@ void MainUILayer::onResourceButtonClicked(ResourceNode* node)
     }
 }
 
-void MainUILayer::onFunctionButtonClicked(FunctionButton* button)
+void MainUILayer::onFunctionButtonClicked(ButtonType type)
 {
     
 }

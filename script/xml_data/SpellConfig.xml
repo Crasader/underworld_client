@@ -4,10 +4,10 @@
 	<item spell_name="全体恢复" caster_resource_name="Goddess-of-time-Yayse-Tati-jineng-3" caster_spell_pos="1" receiver_resource_name="huifu-2" receiver_spell_pos="1"/>
 	<item spell_name="减速" receiver_resource_name="jineng-jiansu" receiver_spell_pos="0" receiver_speed_rate="1.0_0.6_1.0_1.0_1.0"/>
 	<item spell_name="冲击波" receiver_resource_name="baolie" receiver_spell_pos="1"/>
-	<item spell_name="狂暴" receiver_resource_name="jiasu" receiver_spell_pos="1" receiver_speed_rate="1.0_1.0_1.4_1.0_1.0" receiver_volume_rate="1.2_1.2_1.2_1.2_1.2"/>
+	<item spell_name="狂暴" receiver_resource_name="jiasu" receiver_spell_pos="1" receiver_volume_rate="1.2_1.2_1.2_1.2_1.2" receiver_speed_rate="1.0_1.0_1.4_1.0_1.0"/>
 	<item spell_name="治疗" receiver_resource_name="yicixinghuixue" receiver_spell_pos="1"/>
 	<item spell_name="轰击"/>
-	<item spell_name="冲锋" receiver_resource_name="jineng-JiaSu" receiver_spell_direction="2" receiver_spell_pos="1" receiver_speed_rate="1.0_1.6_1.0_1.0_1.0"/>
+	<item spell_name="冲锋" receiver_resource_name="jineng-JiaSu" receiver_spell_pos="1" receiver_speed_rate="1.0_1.6_1.0_1.0_1.0" receiver_spell_direction="2"/>
 	<item spell_name="刚毅" receiver_resource_name="dun.2" receiver_spell_pos="1"/>
 	<item spell_name="强风护盾" receiver_resource_name="fengdun" receiver_spell_pos="1"/>
 	<item spell_name="血雾" receiver_resource_name="xuewu" receiver_spell_pos="1"/>
@@ -18,4 +18,20 @@
 	<item spell_name="心灵之火" receiver_resource_name="shengdun" receiver_spell_pos="2"/>
 	<item spell_name="地震" caster_shake_screen="1"/>
 	<item spell_name="冰霜之心" receiver_speed_rate="1.0_1.0_0.6_1.0_1.0"/>
+	<item spell_name="人族盾牌兵格挡特性" caster_resource_name="fengdun" caster_spell_pos="1" receiver_resource_name="fengdun" receiver_spell_pos="1"/>
+	<item spell_name="人族剑士暴击效果" caster_resource_name="fengdun" caster_spell_pos="1" receiver_resource_name="fengdun" receiver_spell_pos="1"/>
+	<item spell_name="人族弓手额外射击特性"/>
+	<item spell_name="人族女巫减移速特性" receiver_resource_name="fengdun" receiver_spell_pos="1"/>
+	<item spell_name="人族女巫减攻速特性" receiver_resource_name="fengdun" receiver_spell_pos="1"/>
+	<item spell_name="人族男巫驱散友军特性" receiver_resource_name="fengdun" receiver_spell_pos="1"/>
+	<item spell_name="人族男巫驱散敌军特性" receiver_resource_name="fengdun" receiver_spell_pos="1"/>
+	<item spell_name="人族狮鹫溅射特性" receiver_resource_name="fengdun" receiver_spell_pos="1"/>
+	<item spell_name="骷髅盾牌兵物理伤害减免特性" receiver_resource_name="fengdun" receiver_spell_pos="1"/>
+	<item spell_name="食尸鬼狂暴特性"/>
+	<item spell_name="骷髅弓箭手狂热特性"/>
+	<item spell_name="魔族传教士吞噬友军特性" receiver_resource_name="fengdun" receiver_spell_pos="1"/>
+	<item spell_name="魔族传教士吞噬敌军特性" receiver_resource_name="fengdun" receiver_spell_pos="1"/>
+	<item spell_name="梦魇诅咒特性" receiver_resource_name="fengdun" receiver_spell_pos="1"/>
+	<item spell_name="被诅咒特性" receiver_resource_name="fengdun" receiver_spell_pos="1"/>
+	<item spell_name="骷髅盾牌兵瘟疫" receiver_resource_name="fengdun" receiver_spell_pos="1"/>
 </root>

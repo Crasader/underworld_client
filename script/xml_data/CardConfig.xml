@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <root>
+    <!--
 	<item name="狼人步兵" icon="icon_w_langdun"/>
 	<item name="弓箭手" icon="icon_w_langgongjian"/>
 	<item name="法师" icon="icon_w_langfashi"/>
@@ -28,4 +29,49 @@
 	<item name="火球术" icon="icon_v_huoqiushu"/>
 	<item name="治愈" icon="icon_v_jiaxuefashu"/>
 	<item name="顺风之力" icon="icon_v_jiasufashu"/>
+	-->
+	
+	<item name="人族剑士0" icon="icon_w_langdun"/>
+    <item name="人族剑士1" icon="icon_w_langdun"/>
+    <item name="人族剑士2" icon="icon_w_langdun"/>
+	<item name="人族剑士3" icon="icon_w_langdun"/>
+    <item name="人族法师0" icon="icon_w_langfashi"/>
+    <item name="人族法师1" icon="icon_w_langfashi"/>
+	<item name="人族法师2" icon="icon_w_langfashi"/>
+    <item name="人族法师3" icon="icon_w_langfashi"/>
+    <item name="人族弓箭手0" icon="icon_w_langgongjian"/>
+	<item name="人族弓箭手1" icon="icon_w_langgongjian"/>
+    <item name="人族弓箭手2" icon="icon_w_langgongjian"/>
+    <item name="人族弓箭手3" icon="icon_w_langgongjian"/>
+	
+	<!--
+	<item name="人族盾牌兵" icon="icon_v_cike"/>
+	-->
+	
+	<item name="人族剑士队长" icon="icon_v_roudun"/>
+    <item name="人族法师队长" icon="icon_v_nvgongjianshou"/>
+    <item name="人族弓箭手队长" icon="icon_v_nvwushi"/>
+	
+	
+	<item name="冲锋" icon="icon_v_zhizhu"/>
+	<item name="回血" icon="icon_w_dujiaoshou"/>
+	<item name="海啸" icon="icon_v_cike"/>
+	<item name="火雨" icon="icon_w_senlinyouhun"/>
+	<item name="复活" icon="icon_v_qiemo"/>
+	
+   
+	<item name="暴风雪lv1" icon="icon_baofengxue"/>
+	<item name="火球术lv1" icon="icon_huoqiusu"/>
+   	<item name="医疗术lv1" icon="icon_yiliaosu"/>
+	<item name="沉默术lv1" icon="icon_chenmosu"/>
+   	<item name="小型驱散术lv1" icon="icon_xiaoqusan"/>
+	<item name="大型驱散术lv1" icon="icon_daqusan"/>
+   	<item name="震晕法术lv1" icon="icon_zhenyunsu"/>
+	<item name="禁足术lv1" icon="icon_jinzusu"/>
+   	<item name="佯攻部队术lv1" icon="icon_yanggongsu"/>
+	<item name="酸雾术lv1" icon="icon_suanwusu"/>
+   
+   
+   
+   
 </root>

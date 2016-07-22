@@ -52,7 +52,7 @@ protected:
     void updateResources();
     
     void onResourceButtonClicked(ResourceNode* node);
-    void onFunctionButtonClicked(FunctionButton* button);
+    void onFunctionButtonClicked(ButtonType type);
     
 private:
     struct ButtonIconInfo;
