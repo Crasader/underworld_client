@@ -48,9 +48,41 @@
 	<item name="人族盾牌兵" icon="icon_v_cike"/>
 	-->
 	
-	<item name="人族剑士队长" icon="icon_v_roudun"/>
-    <item name="人族法师队长" icon="icon_v_nvgongjianshou"/>
-    <item name="人族弓箭手队长" icon="icon_v_nvwushi"/>
+	<item name="人族剑士队长" icon="A"/>
+    <item name="人族盾牌队长" icon="B"/>
+	<item name="人族弓箭队长" icon="C"/>
+	<item name="人族大法师" icon="D"/>
+	<item name="人族秘法大师" icon="E"/>
+	<item name="魔族骷髅王子" icon="F"/>
+	<item name="魔族食尸鬼王" icon="G"/>
+	<item name="魔族地狱战舰" icon="H"/>
+	<item name="魔族黑传教士" icon="I"/>
+	<item name="魔族梦魇精华" icon="J"/>
+	<item name="中立兽族牛头人" icon="aa"/>
+	<item name="中立兽族巨魔巫医" icon="bb"/>
+	<item name="中立兽族斧王" icon="dd"/>
+	<item name="中立兽族食人鬼王" icon="ff"/>
+	<item name="中立龙族黑龙" icon="gg"/>
+	<item name="中立矮人族火枪手" icon="cc"/>
+	<item name="中立精灵族弓箭手" icon="ee"/>
+	
+	<item name="人族盾牌兵" icon="icon_w_renzudunbing"/>
+	<item name="人族剑士" icon="icon_w_renzujianshi"/>
+	<item name="人族弓手" icon="icon_w_renzugongshou"/>
+	<item name="人族男巫" icon="icon_w_renzunanwu"/>
+	<item name="人族女巫" icon="icon_w_renzunvwu"/>
+	<item name="人族狮鹫" icon="icon_w_renzushijiu"/>
+	<item name="骷髅盾牌兵" icon="icon_w_kuloudunpaibing"/>
+	<item name="食尸鬼" icon="icon_w_shishigui"/>
+	<item name="骷髅弓箭手" icon="icon_w_kulougongjianshou"/>
+	<item name="魔族传教士" icon="icon_w_mozuchuanjiaoshi"/>
+	<item name="魔族被召唤骷髅" icon="icon_w_mozubeizhaohuankulou"/>
+	<item name="梦魇" icon="icon_w_mengyan"/>
+	<item name="石像鬼" icon="icon_w_shixianggui"/>
+
+	
+	
+	
 	
 	
 	<item name="冲锋" icon="icon_v_zhizhu"/>
@@ -75,3 +107,4 @@
    
    
 </root>
+

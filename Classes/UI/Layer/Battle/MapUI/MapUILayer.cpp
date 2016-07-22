@@ -11,7 +11,6 @@
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "UnitCardDeck.h"
-#include "BattleResourceNode.h"
 #include "SoundManager.h"
 
 using namespace std;

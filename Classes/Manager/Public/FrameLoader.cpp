@@ -23,7 +23,8 @@ static const vector<string> FilesVector = {
     "hero-Fat-equipment-shadows",
     "soldier-Archer",
     "soldier-Archer-shadows",
-    "effect/effect-1"
+    "effect/effect-1",
+    "effect/effect-2"
 };
 
 static FrameLoader* s_pInstance(nullptr);

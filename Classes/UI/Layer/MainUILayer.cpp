@@ -20,7 +20,6 @@
 using namespace std;
 using namespace ui;
 
-static const int buttonIconTag(1000);
 static const string getResourcePath(const string& file) {
     return "GameImages/main_ui/" + file;
 }
@@ -28,6 +27,7 @@ static const string getResourcePath(const string& file) {
 enum class MainUILayer::ButtonType {
     Rank,
     Achievement,
+    Option,
     Chat,
     Friend,
     BattleLog,
@@ -41,7 +41,7 @@ enum class MainUILayer::ButtonType {
 #pragma mark - FunctionButton
 class MainUILayer::FunctionButton : public Node {
 public:
-    typedef function<void()> Callback;
+    typedef function<void(ButtonType)> Callback;
     static FunctionButton* create(ButtonType type, const Callback& callback) {
         auto ret = new (nothrow) FunctionButton();
         if (ret && ret->init(type, callback)) {
@@ -59,19 +59,21 @@ private:
     FunctionButton():_callback(nullptr) {}
     bool init(ButtonType type, const Callback& callback) {
         if (Node::init()) {
+            _type = type;
             _callback = callback;
             
             static const map<ButtonType, pair<string, string>> ButtonInfos = {
                 {ButtonType::Rank,          {"ui_kuang_1", "icon_jiangbei"}},
                 {ButtonType::Achievement,   {"ui_kuang_1", "icon_xingxing"}},
-                {ButtonType::Chat,          {"ui_kuang_1", "icon_xingxing"}},
+                {ButtonType::Option,        {"ui_kuang_1", "icon_shezhi"}},
+                {ButtonType::Chat,          {"ui_liaotian", ""}},
                 {ButtonType::Friend,        {"ui_kuang_3", "icon_haoyou"}},
                 {ButtonType::BattleLog,     {"ui_kuang_3", "icon_zhanji"}},
                 {ButtonType::Guild,         {"ui_kuang_3", "icon_lianmeng"}},
                 {ButtonType::Battle,        {"ui_kuang_2", "icon_pvp"}},
                 {ButtonType::Train,         {"ui_kuang_3", "icon_zhujue"}},
-                {ButtonType::Quest,         {"ui_kuang_3", ""}},
-                {ButtonType::Shop,          {"ui_kuang_2", ""}},
+                {ButtonType::Quest,         {"ui_kuang_3", "icon_renwu"}},
+                {ButtonType::Shop,          {"ui_kuang_2", "icon_shangdian"}},
             };
             
             if (ButtonInfos.find(type) != end(ButtonInfos)) {
@@ -82,15 +84,21 @@ private:
                 button->setPressedActionEnabled(true);
                 button->addClickEventListener([this](Ref*) {
                     if (_callback) {
-                        _callback();
+                        _callback(_type);
                     }
                 });
                 
-                const auto iconFile = getResourcePath(StringUtils::format("%s.png", pair.second.c_str()));
-                auto icon = Sprite::create(iconFile);
-                button->addChild(icon);
                 const auto& size(button->getContentSize());
-                icon->setPosition(Point(size.width / 2, size.height / 2));
+                if (!pair.second.empty()) {
+                    const auto iconFile = getResourcePath(StringUtils::format("%s.png", pair.second.c_str()));
+                    auto icon = Sprite::create(iconFile);
+                    button->addChild(icon);
+                    icon->setPosition(Point(size.width / 2, size.height / 2));
+                }
+                
+                setAnchorPoint(Point::ANCHOR_MIDDLE);
+                setContentSize(size);
+                button->setPosition(Point(size.width / 2, size.height / 2));
             }
             
             return true;
@@ -100,6 +108,7 @@ private:
     }
     
 private:
+    ButtonType _type;
     Callback _callback;
 };
 
@@ -121,14 +130,8 @@ MainUILayer::MainUILayer()
 ,_iconButton(nullptr)
 ,_nameLabel(nullptr)
 ,_levelLabel(nullptr)
-,_expProgressBar(nullptr)
-,_pvpButton(nullptr)
-,_bagButton(nullptr)
-,_questButton(nullptr)
-,_optionButton(nullptr)
-,_guildButton(nullptr)
-,_armyButton(nullptr)
-,_jadeResourceNode(nullptr)
+,_expProgress(nullptr)
+,_staminaResourceNode(nullptr)
 ,_goldResourceNode(nullptr)
 ,_gemResourceNode(nullptr)
 {
@@ -137,7 +140,6 @@ MainUILayer::MainUILayer()
 
 MainUILayer::~MainUILayer()
 {
-    removeButtonIcons();
     removeAllChildren();
 }
 
@@ -156,11 +158,10 @@ bool MainUILayer::init()
         
         // 1. left top
         {
-#if false
             auto background = Sprite::create(getResourcePath("ui_banzi_1.png"));
             addChild(background);
-            background->setPosition(Point(margin, winSize.height - margin));
-            const auto& backgroundSize(background->getContentSize());
+            const auto& mainSize(background->getContentSize());
+            background->setPosition(Point(mainSize.width / 2 + margin, winSize.height - (mainSize.height / 2 + margin)));
             
             // avatar
             {
@@ -173,9 +174,9 @@ bool MainUILayer::init()
                 background->addChild(avatar);
                 _iconButton = avatar;
                 
-                static const Vec2 edge(5.0f, 5.0f);
+                static const Vec2 edge(10.0f, 10.0f);
                 const auto& size(avatar->getContentSize());
-                avatar->setPosition(Point(size.width + edge.x, size.height + edge.y));
+                avatar->setPosition(Point(size.width / 2 + edge.x, size.height / 2 + edge.y));
             }
             
             {
@@ -184,7 +185,7 @@ bool MainUILayer::init()
                 background->addChild(name);
                 _nameLabel = name;
                 static const Vec2 edge(5.0f, 5.0f);
-                name->setPosition(Point(_iconButton->getPosition().x + _iconButton->getContentSize().width / 2 + edge.x, backgroundSize.height - (name->getContentSize().height / 2 + edge.y)));
+                name->setPosition(Point(_iconButton->getPosition().x + _iconButton->getContentSize().width / 2 + edge.x, mainSize.height - (name->getContentSize().height / 2 + edge.y)));
             }
             
             // trophy
@@ -193,6 +194,7 @@ bool MainUILayer::init()
                 background->addChild(bg);
                 
                 auto icon = Sprite::create(getResourcePath("icon_jiangbei.png"));
+                icon->setScale(0.5f);
                 bg->addChild(icon);
                 
                 auto trophyCount = CocosUtils::createLabel("123", SMALL_FONT_SIZE, DEFAULT_NUMBER_FONT, Size::ZERO, TextHAlignment::CENTER, TextVAlignment::CENTER);
@@ -201,8 +203,10 @@ bool MainUILayer::init()
                 
                 const auto& bsize(bg->getContentSize());
                 const auto& isize(icon->getContentSize());
-                icon->setPosition(Point(isize.width / 2, bsize.height / 2));
+                icon->setPosition(Point(0, bsize.height / 2));
                 trophyCount->setPosition(Point(bsize.width / 2 + isize.width / 4, bsize.height / 2));
+                static const Vec2 edge(8.0f, 5.0f);
+                bg->setPosition(Point(mainSize.width - (edge.x + bsize.width / 2), mainSize.height - (edge.y + bsize.height / 2)));
             }
             
             // exp
@@ -210,157 +214,48 @@ bool MainUILayer::init()
                 auto bg = Sprite::create(getResourcePath("ui_tiao_1.png"));
                 background->addChild(bg);
                 
-                auto bar = LoadingBar::create(getResourcePath("ui_tiao_1_1.png"));
-                bar->setScale9Enabled(true);
-                bar->setCapInsets(Rect(1, 1, 176, 2));
-                bg->addChild(bar);
+                auto s = Sprite::create(getResourcePath("ui_tiao_1_1.png"));
+                auto pt = ProgressTimer::create(s);
+                pt->setType(ProgressTimer::Type::BAR);
+                pt->setBarChangeRate(Vec2(1.0f, 0.0f));
+                pt->setMidpoint(Point::ANCHOR_BOTTOM_LEFT);
+                pt->setPercentage(80);
+                bg->addChild(pt);
+                _expProgress = pt;
                 
                 auto icon = Sprite::create("GameImages/resources/icon_104B.png");
                 bg->addChild(icon);
                 
                 auto level = CocosUtils::createLabel("123", SMALL_FONT_SIZE, DEFAULT_NUMBER_FONT, Size::ZERO, TextHAlignment::CENTER, TextVAlignment::CENTER);
                 icon->addChild(level);
+                _levelLabel = level;
                 
                 const auto& bsize(bg->getContentSize());
                 const auto& isize(icon->getContentSize());
-                icon->setPosition(Point(isize.width / 2, bsize.height / 2));
-                bar->setPosition(Point(bsize.width / 2, bsize.height / 2));
+                icon->setPosition(Point(0, bsize.height / 2));
+                pt->setPosition(Point(bsize.width / 2, bsize.height / 2));
                 level->setPosition(Point(isize.width / 2, isize.height / 2));
-            }
-#endif
-            
-            static const string csbFile("UI_CharInfo.csb");
-            Node *mainNode = CocosUtils::playAnimation(csbFile, 0, false);
-            mainNode->setPosition(Point(margin, winSize.height - margin));
-            addChild(mainNode);
-            
-            Node* root = mainNode->getChildByTag(7);
-            const auto& children = root->getChildren();
-            for (int i = 0; i < children.size(); ++i)
-            {
-                Node* child = children.at(i);
-                if (child) {
-                    const int tag = child->getTag();
-                    if (tag > 0) {
-                        switch (tag) {
-                            case 15:
-                            {
-                                auto button = dynamic_cast<Button*>(child);
-                                if (button) {
-                                    button->addClickEventListener([this](Ref *pSender){
-                                        SoundManager::getInstance()->playButtonSound();
-                                        // TODO:
-                                    });
-                                }
-                                _iconButton = button;
-                            }
-                                break;
-                            case 8:
-                            {
-                                Label* label = CocosUtils::createLabel("User Name", BIG_FONT_SIZE);
-                                label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
-                                child->addChild(label);
-                                _nameLabel = label;
-                            }
-                                break;
-                            case 11:
-                            {
-                                Label* label = CocosUtils::createLabel("LV.10", DEFAULT_FONT_SIZE);
-                                label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
-                                child->addChild(label);
-                                _levelLabel = label;
-                            }
-                                break;
-                            case 10:
-                            {
-                                LoadingBar* bar = dynamic_cast<LoadingBar*>(child);
-                                bar->setScale9Enabled(true);
-                                bar->setCapInsets(Rect(1, 1, 176, 2));
-                                _expProgressBar = bar;
-                            }
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
+                static const Vec2 edge(8.0f, 10.0f);
+                bg->setPosition(Point(mainSize.width - (bsize.width / 2 + edge.x), bsize.height / 2 + edge.y));
             }
         }
         
         // 2. left
         {
-            static const string csbFile("UI_ChatIcon.csb");
-            auto mainNode = CocosUtils::playAnimation(csbFile, 0, false);
-            mainNode->setPosition(Point(0, winSize.height / 2));
-            addChild(mainNode);
+            auto button = FunctionButton::create(ButtonType::Chat, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
+            addChild(button);
             
-            auto root = mainNode;
-            const auto& children = root->getChildren();
-            for (int i = 0; i < children.size(); ++i)
-            {
-                auto child = children.at(i);
-                if (child) {
-                    const int tag = child->getTag();
-                    if (tag > 0) {
-                        switch (tag) {
-                            case 20:
-                            {
-                                auto button = dynamic_cast<Button*>(child);
-                                if (button) {
-                                    button->setPressedActionEnabled(true);
-                                    button->addClickEventListener([this](Ref *pSender){
-                                        SoundManager::getInstance()->playButtonSound();
-                                        // TODO:
-                                    });
-                                }
-                            }
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-            }
+            const auto& size(button->getContentSize());
+            button->setPosition(Point(size.width / 2, winSize.height / 2));
         }
         
         // 3. left bottom
         {
-            static const float margin(5.0f);
-            static const string csbFile("UI_PVPICON.csb");
-            auto mainNode = CocosUtils::playAnimation(csbFile, 0, false);
-            mainNode->setPosition(Point(margin, margin));
-            addChild(mainNode);
+            auto button = FunctionButton::create(ButtonType::Shop, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
+            addChild(button);
             
-            auto root = mainNode->getChildByTag(23);
-            const auto& children = root->getChildren();
-            for (int i = 0; i < children.size(); ++i)
-            {
-                auto child = children.at(i);
-                if (child) {
-                    const int tag = child->getTag();
-                    if (tag > 0) {
-                        switch (tag) {
-                            case 24:
-                            {
-                                auto button = dynamic_cast<Button*>(child);
-                                if (button) {
-                                    button->loadTextureDisabled("GameImages/public/button_4.png");
-                                    setButtonIcons(button, 25, "icon_pvp_1", "icon_pvp_2");
-                                    button->addClickEventListener([this](Ref *pSender){
-                                        SoundManager::getInstance()->playButtonSound();
-                                        GameManager::getInstance()->launchPvp();
-                                    });
-                                }
-                                
-                                _pvpButton = button;
-                            }
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-            }
+            const auto& size(button->getContentSize());
+            button->setPosition(Point(margin + size.width / 2, margin + size.height / 2));
         }
         
         // 4. right top
@@ -380,50 +275,111 @@ bool MainUILayer::init()
             _goldResourceNode->setPosition(Point(x - (offsetX + (gemSize.width + goldSize.width) / 2), y));
             addChild(_goldResourceNode);
             
-            _jadeResourceNode = ResourceNode::create(::ResourceType::Stamina, 100, CC_CALLBACK_1(MainUILayer::onResourceButtonClicked, this));
-            const auto& jadeSize(_jadeResourceNode->getContentSize());
-            _jadeResourceNode->setPosition(Point(x - (offsetX * 2 + (gemSize.width + jadeSize.width) / 2 + goldSize.width), y));
-            addChild(_jadeResourceNode);
+            _staminaResourceNode = ResourceNode::create(::ResourceType::Stamina, 100, CC_CALLBACK_1(MainUILayer::onResourceButtonClicked, this));
+            const auto& jadeSize(_staminaResourceNode->getContentSize());
+            _staminaResourceNode->setPosition(Point(x - (offsetX * 2 + (gemSize.width + jadeSize.width) / 2 + goldSize.width), y));
+            addChild(_staminaResourceNode);
         }
         
         // 5. right bottom
         {
-            static const float margin(-5.0f);
-            static const Point basePosition(winSize.width - margin, margin);
-            _bagButton = addFunctionButton("icon_beibao_1", "icon_beibao_2", "button_2", basePosition);
-            _bagButton->addClickEventListener([this](Ref *pSender){
-                SoundManager::getInstance()->playButtonSound();
-                // TODO:
-            });
+            static const Vec2 space(10, 10);
+            float x(winSize.width - margin);
+            float y(margin);
+            const Point basePoint(x, y);
             
-            const auto& size = _bagButton->getContentSize();
-            static const float offset(-20.0f);
+            {
+                auto button = FunctionButton::create(ButtonType::Battle, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
+                addChild(button);
+                
+                const auto& size(button->getContentSize());
+                button->setPosition(Point(x - size.width / 2, y + size.height / 2));
+                
+                x -= size.width + space.x;
+                y += size.height + space.y;
+            }
             
-            _questButton = addFunctionButton("icon_renwu_1", "icon_renwu_2", "button_2", basePosition + Point(0, size.height + offset));
-            _questButton->addClickEventListener([this](Ref *pSender){
-                SoundManager::getInstance()->playButtonSound();
-                // TODO:
-            });
+            // left
+            {
+                auto button = FunctionButton::create(ButtonType::Train, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
+                addChild(button);
+                
+                const auto& size(button->getContentSize());
+                button->setPosition(Point(x - size.width / 2, basePoint.y + size.height / 2));
+                
+                x -= size.width + space.x;
+            }
             
-            _optionButton = addFunctionButton("icon_shezhi_1", "icon_shezhi_2", "button_2", basePosition + Point(0, (size.height + offset) * 2));
-            _optionButton->addClickEventListener([this](Ref *pSender){
-                SoundManager::getInstance()->playButtonSound();
-                // TODO:
-                Director::getInstance()->getRunningScene()->addChild(CardLayer::create());
-            });
+            {
+                auto button = FunctionButton::create(ButtonType::Quest, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
+                addChild(button);
+                
+                const auto& size(button->getContentSize());
+                button->setPosition(Point(x - size.width / 2, basePoint.y + size.height / 2));
+                
+                x -= size.width + space.x;
+            }
             
-            _guildButton = addFunctionButton("icon_gonghui_1", "icon_gonghui_2", "button_2", basePosition - Point(size.width + offset, 0));
-            _guildButton->addClickEventListener([this](Ref *pSender){
-                SoundManager::getInstance()->playButtonSound();
-                // TODO:
-                Director::getInstance()->getRunningScene()->addChild(BattleDeckLayer::create());
-            });
+            {
+                auto button = FunctionButton::create(ButtonType::Guild, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
+                addChild(button);
+                
+                const auto& size(button->getContentSize());
+                button->setPosition(Point(x - size.width / 2, basePoint.y + size.height / 2));
+                
+                x -= size.width + space.x;
+            }
             
-            _armyButton = addFunctionButton("icon_jundui_1", "icon_jundui_2", "button_2", basePosition - Point((size.width + offset) * 2, 0));
-            _armyButton->addClickEventListener([this](Ref *pSender){
-                SoundManager::getInstance()->playButtonSound();
-                Director::getInstance()->getRunningScene()->addChild(FormationLayer::create());
-            });
+            {
+                auto button = FunctionButton::create(ButtonType::Friend, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
+                addChild(button);
+                
+                const auto& size(button->getContentSize());
+                button->setPosition(Point(x - size.width / 2, basePoint.y + size.height / 2));
+                
+                x -= size.width + space.x;
+            }
+            
+            {
+                auto button = FunctionButton::create(ButtonType::BattleLog, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
+                addChild(button);
+                
+                const auto& size(button->getContentSize());
+                button->setPosition(Point(x - size.width / 2, basePoint.y + size.height / 2));
+                
+                x -= size.width + space.x;
+            }
+            
+            // top
+            {
+                auto button = FunctionButton::create(ButtonType::Option, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
+                addChild(button);
+                
+                const auto& size(button->getContentSize());
+                button->setPosition(Point(basePoint.x - size.width / 2, y + size.height / 2));
+                
+                y += size.height + space.y;
+            }
+            
+            {
+                auto button = FunctionButton::create(ButtonType::Rank, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
+                addChild(button);
+                
+                const auto& size(button->getContentSize());
+                button->setPosition(Point(basePoint.x - size.width / 2, y + size.height / 2));
+                
+                y += size.height + space.y;
+            }
+            
+            {
+                auto button = FunctionButton::create(ButtonType::Achievement, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
+                addChild(button);
+                
+                const auto& size(button->getContentSize());
+                button->setPosition(Point(basePoint.x - size.width / 2, y + size.height / 2));
+                
+                y += size.height + space.y;
+            }
         }
         
         updateIcon();
@@ -451,98 +407,10 @@ void MainUILayer::onTouchEnded(Touch *touch, Event *unused_event)
     
 }
 
-Button* MainUILayer::addFunctionButton(const string& normal, const string& touched, const string& disabled, const Point& position)
-{
-    static const string csbFile("UI_FunctionIcon.csb");
-    auto mainNode = CocosUtils::playAnimation(csbFile, 0, false);
-    mainNode->setPosition(position);
-    addChild(mainNode);
-    
-    auto root = mainNode->getChildByTag(21);
-    auto button = dynamic_cast<Button*>(root->getChildByTag(22));
-    if (button) {
-        button->loadTextureDisabled("GameImages/public/" + disabled + ".png");
-        setButtonIcons(button, 23, normal, touched);
-        return button;
-    }
-    
-    return nullptr;
-}
-
-#pragma mark - button icons
-struct MainUILayer::ButtonIconInfo {
-    int iconParentTag;
-    std::string iconNormal;
-    std::string iconTouched;
-};
-
-void MainUILayer::setButtonIcons(Button* button, int childTag, const string& normal, const string& touched)
-{
-    auto node = button->getChildByTag(childTag);
-    if (node) {
-        static const string prefix("GameImages/icons/");
-        static const string suffix(".png");
-        
-        auto normalFile = prefix + normal + suffix;
-        auto touchedFile = prefix + touched + suffix;
-        
-        addButtonIcon(node, normalFile);
-        
-        button->addTouchEventListener([=](Ref *pSender, Widget::TouchEventType type) {
-            if (type == Widget::TouchEventType::BEGAN) {
-                addButtonIcon(node, touchedFile);
-            } else if (type == Widget::TouchEventType::CANCELED || type == Widget::TouchEventType::ENDED) {
-                addButtonIcon(node, normalFile);
-            }
-        });
-        
-        if (_buttonIconInfos.find(button) == _buttonIconInfos.end()) {
-            auto info = new (nothrow) ButtonIconInfo {childTag, normalFile, touchedFile};
-            _buttonIconInfos.insert(make_pair(button, info));
-        }
-    }
-}
-
-void MainUILayer::setButtonEnabled(Button* button, bool enabled)
-{
-    if (button && button->isEnabled() != enabled) {
-        button->setEnabled(enabled);
-        
-        if (_buttonIconInfos.find(button) != _buttonIconInfos.end()) {
-            auto info = _buttonIconInfos.at(button);
-            auto node = button->getChildByTag(info->iconParentTag);
-            if (node) {
-                node->removeChildByTag(buttonIconTag);
-                auto file = enabled ? info->iconNormal : info->iconTouched;
-                auto s = Sprite::create(file);
-                s->setTag(buttonIconTag);
-                node->addChild(s);
-            }
-        }
-    }
-}
-
-void MainUILayer::addButtonIcon(Node* node, const string& file)
-{
-    if (node) {
-        node->removeChildByTag(buttonIconTag);
-        auto s = Sprite::create(file);
-        s->setTag(buttonIconTag);
-        node->addChild(s);
-    }
-}
-
-void MainUILayer::removeButtonIcons()
-{
-    for (auto iter = begin(_buttonIconInfos); iter != end(_buttonIconInfos); ++iter) {
-        CC_SAFE_DELETE(iter->second);
-    }
-}
-
 #pragma mark - private
 void MainUILayer::updateIcon()
 {
-    const string file("GameImages/avatars/icon_user.png");
+    const string file(getResourcePath("icon_touxiang_1.png"));
     _iconButton->loadTextures(file, file);
 }
 
@@ -578,5 +446,18 @@ void MainUILayer::onResourceButtonClicked(ResourceNode* node)
 
 void MainUILayer::onFunctionButtonClicked(ButtonType type)
 {
+    SoundManager::getInstance()->playButtonSound();
     
+    switch (type) {
+        case ButtonType::Battle:
+            GameManager::getInstance()->launchPvp();
+            break;
+            
+        case ButtonType::Train:
+            Director::getInstance()->getRunningScene()->addChild(FormationLayer::create());
+            break;
+            
+        default:
+            break;
+    }
 }
