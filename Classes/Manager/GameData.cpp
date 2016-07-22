@@ -275,7 +275,10 @@ void GameData::generateUUID()
         const string& uuid = iOSApi::getUUID();
         _uuid = Utils::bkdrHash(uuid.c_str());
 #else
-        _uuid = rand();
+        random_device rd;
+        mt19937 mt(rd());
+        _uuid = mt();
+        MessageBox(StringUtils::format("UUID: %d", _uuid).c_str(), nullptr);
 #endif
         ud->setIntegerForKey(key, _uuid);
         ud->flush();
