@@ -1054,6 +1054,96 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
+            <key>hero-Fat/run/body/0/10001.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-7,18}</string>
+                <key>spriteSize</key>
+                <string>{102,80}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{1719,157},{102,80}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>hero-Fat/run/body/0/10002.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-13,4}</string>
+                <key>spriteSize</key>
+                <string>{106,96}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{977,1037},{106,96}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>hero-Fat/run/body/0/10003.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-14,9}</string>
+                <key>spriteSize</key>
+                <string>{108,90}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{1,739},{108,90}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>hero-Fat/run/body/0/10004.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-8,14}</string>
+                <key>spriteSize</key>
+                <string>{108,70}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{481,1},{108,70}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>hero-Fat/run/body/0/10005.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-3,14}</string>
+                <key>spriteSize</key>
+                <string>{102,74}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{1601,1},{102,74}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>hero-Fat/run/body/0/10006.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-1,18}</string>
+                <key>spriteSize</key>
+                <string>{100,82}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,512}</string>
+                <key>textureRect</key>
+                <string>{{1935,157},{100,82}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
             <key>hero-Fat/run/body/1/10001.png</key>
             <dict>
                 <key>aliases</key>
@@ -1065,7 +1155,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,739},{90,106}}</string>
+                <string>{{473,747},{90,106}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -1141,96 +1231,6 @@
                 <string>{512,512}</string>
                 <key>textureRect</key>
                 <string>{{133,831},{98,94}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>hero-Fat/run/body/12/10001.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-7,18}</string>
-                <key>spriteSize</key>
-                <string>{102,80}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{1719,157},{102,80}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>hero-Fat/run/body/12/10002.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-13,4}</string>
-                <key>spriteSize</key>
-                <string>{106,96}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{977,1037},{106,96}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>hero-Fat/run/body/12/10003.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-14,9}</string>
-                <key>spriteSize</key>
-                <string>{108,90}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{471,747},{108,90}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>hero-Fat/run/body/12/10004.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-8,14}</string>
-                <key>spriteSize</key>
-                <string>{108,70}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{481,1},{108,70}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>hero-Fat/run/body/12/10005.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-3,14}</string>
-                <key>spriteSize</key>
-                <string>{102,74}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{1601,1},{102,74}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>hero-Fat/run/body/12/10006.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-1,18}</string>
-                <key>spriteSize</key>
-                <string>{100,82}</string>
-                <key>spriteSourceSize</key>
-                <string>{512,512}</string>
-                <key>textureRect</key>
-                <string>{{1935,157},{100,82}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1605,7 +1605,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{241,745},{102,90}}</string>
+                <string>{{243,745},{102,90}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3690,7 +3690,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{109,741},{130,88}}</string>
+                <string>{{111,741},{130,88}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -4185,7 +4185,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{345,747},{88,124}}</string>
+                <string>{{347,747},{88,124}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -4846,7 +4846,7 @@
             <key>size</key>
             <string>{2048,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:e2ff92bb73b524f8c9b9ab08ec083964:1df3d41dbf79e488c0d64918e4800ceb:304079feb5a2dcbcad3abeb9c820d445$</string>
+            <string>$TexturePacker:SmartUpdate:97bc92ce71bd336e9e127f67bf4983be:d885071f447b711a33332f9af6454872:304079feb5a2dcbcad3abeb9c820d445$</string>
             <key>textureFileName</key>
             <string>hero-Fat.pvr.ccz</string>
         </dict>
