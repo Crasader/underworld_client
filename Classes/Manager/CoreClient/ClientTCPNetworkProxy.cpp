@@ -31,6 +31,8 @@
 
 #define MESSAGE_KEY_CODE         ("code")
 #define MESSAGE_KEY_CARDS        ("cards")
+#define MESSAGE_KEY_INIT_UNITS   ("initUnits")
+#define MESSAGE_KEY_UNIT_POOL    ("unitPools")
 #define MESSAGE_KEY_FRAME        ("frame")
 #define MESSAGE_KEY_COMMANDS     ("commands")
 #define MESSAGE_KEY_TYPE         ("type")
@@ -74,22 +76,43 @@ static std::string parseLaunch2SMsg(
     const vector<std::string>& cardNames = msg->getCards();
     for (int i = 0; i < cardNames.size(); ++i) {
         cardString.append(cardNames[i]);
-        if (i != cardNames.size() - 1) {
-            cardString.append("|");
-        }
+        if (i != cardNames.size() - 1) cardString.append("|");
     }
     cards.SetString(cardString.c_str(), (int)cardString.size(), allocator);
+    
+    rapidjson::Value initUnitsJson(rapidjson::kStringType);
+    std::string initUnitsString = "";
+    const GameModeHMMSetting::InitUnitList& initUnits = msg->getInitUnits();
+    for (int i = 0; i < initUnits.size(); ++i) {
+        initUnitsString.append(initUnits[i].first).append("|").append(UnderWorldCoreUtils::to_string(initUnits[i].second));
+        if (i != initUnits.size() - 1) initUnitsString.append(",");
+    }
+    initUnitsJson.SetString(initUnitsString.c_str(), (int)initUnitsString.size(), allocator);
+    
+    rapidjson::Value unitPoolJson(rapidjson::kStringType);
+    std::string unitPoolString = "";
+    const std::vector<UnitSetting>& unitPool = msg->getUnitPool();
+    for (int i = 0; i < unitPool.size(); ++i) {
+        unitPoolString.append(unitPool[i].getUnitTypeName()).append("|")
+            .append(UnderWorldCoreUtils::to_string(unitPool[i].getLevel())).append("|")
+            .append(UnderWorldCoreUtils::to_string(unitPool[i].getQuality())).append("|")
+            .append(UnderWorldCoreUtils::to_string(unitPool[i].getTalentLevel()));
+        if (i != unitPool.size() - 1) unitPoolString.append(",");
+    }
+    unitPoolJson.SetString(unitPoolString.c_str(), (int)unitPoolString.size(), allocator);
     
     root.AddMember(MESSAGE_KEY_CODE, reqCode, allocator);
     root.AddMember(MESSAGE_KEY_CARDS, cards, allocator);
     root.AddMember(MESSAGE_KEY_NAME, nameJson, allocator);
     root.AddMember(MESSAGE_KEY_UID, uidJson, allocator);
+    root.AddMember(MESSAGE_KEY_INIT_UNITS, initUnitsJson, allocator);
+    root.AddMember(MESSAGE_KEY_UNIT_POOL, unitPoolJson, allocator);
     
-//    rapidjson::StringBuffer buffer;
-//    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-//    root.Accept(writer);
-//    return buffer.GetString();
-    return DataManager::getInstance()->getBinaryJsonTool()->encode(root);
+    rapidjson::StringBuffer buffer;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+    root.Accept(writer);
+    return buffer.GetString();
+//    return DataManager::getInstance()->getBinaryJsonTool()->encode(root);
 }
 
 static std::string parseSync2SMsg(
@@ -143,11 +166,11 @@ static std::string parseSync2SMsg(
     root.AddMember(MESSAGE_KEY_FRAME, msgFrame, allocator);
     root.AddMember(MESSAGE_KEY_COMMANDS, commands, allocator);
     
-//    rapidjson::StringBuffer buffer;
-//    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-//    root.Accept(writer);
-//    return buffer.GetString();
-    return DataManager::getInstance()->getBinaryJsonTool()->encode(root);
+    rapidjson::StringBuffer buffer;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+    root.Accept(writer);
+    return buffer.GetString();
+    //return DataManager::getInstance()->getBinaryJsonTool()->encode(root);
 }
 
 static std::string parseReconnect2SMsg(int uid, int battleid) {
@@ -231,10 +254,14 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
     
     /** 6. players */
     std::vector<std::vector<std::string> > cardNames;
+    std::vector<GameModeHMMSetting::InitUnitList> initUnits;
+    std::vector<std::vector<UnitSetting> > unitPools;
     if (DICTOOL->checkObjectExist_json(root, MESSAGE_KEY_PLAYERS)) {
         const rapidjson::Value& players =
             DICTOOL->getSubDictionary_json(root, MESSAGE_KEY_PLAYERS);
         cardNames.resize(players.Size());
+        initUnits.resize(players.Size());
+        unitPools.resize(players.Size());
         for (int i = 0; i < players.Size(); ++i) {
             const rapidjson::Value& player = players[i];
             GameContentSetting gcs;
@@ -243,10 +270,58 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
             if (DICTOOL->checkObjectExist_json(player, MESSAGE_KEY_CARDS)) {
                 std::string cards = DICTOOL->getStringValue_json(player, MESSAGE_KEY_CARDS);
                 if (!cards.empty()) {
-                    ::Utils::split(cardNames[i], cards, "|");
+                    UnderWorldCoreUtils::split(cardNames[i], cards, "|");
                 }
             }
             
+            /** 6.2 player's init units */
+            if (DICTOOL->checkObjectExist_json(player, MESSAGE_KEY_INIT_UNITS)) {
+                std::string initUnitsString = DICTOOL->getStringValue_json(player, MESSAGE_KEY_INIT_UNITS);
+                if (!initUnitsString.empty()) {
+                    static std::vector<std::string> initUnitsVec;
+                    initUnitsVec.clear();
+                    UnderWorldCoreUtils::split(initUnitsVec, initUnitsString, ",");
+                    
+                    for (int j = 0; j < initUnitsVec.size(); ++j) {
+                        static std::vector<string> initUnitVec;
+                        initUnitVec.clear();
+                        UnderWorldCoreUtils::split(initUnitVec, initUnitsVec[j], "|");
+                        
+                        if (initUnitVec.size() == 2) {
+                            initUnits[i].push_back(std::make_pair(initUnitVec[0],
+                                atoi(initUnitVec[1].c_str())));
+                        }
+                    }
+                }
+            }
+            
+            /** 6.3 player's unit pool */
+            if (DICTOOL->checkObjectExist_json(player, MESSAGE_KEY_UNIT_POOL)) {
+                std::string unitPoolString = DICTOOL->getStringValue_json(player, MESSAGE_KEY_UNIT_POOL);
+                if (!unitPoolString.empty()) {
+                    static std::vector<std::string> unitPoolVec;
+                    unitPoolVec.clear();
+                    UnderWorldCoreUtils::split(unitPoolVec, unitPoolString, ",");
+                    
+                    for (int j = 0; j < unitPoolVec.size(); ++j) {
+                        static std::vector<std::string> unitVec;
+                        unitVec.clear();
+                        UnderWorldCoreUtils::split(unitVec, unitPoolVec[j], "|");
+                        
+                        if (unitVec.size() == 4) {
+                            UnitSetting us;
+                            us.setUnitTypeName(unitVec[0]);
+                            us.setLevel(atoi(unitVec[1].c_str()));
+                            us.setQuality(atoi(unitVec[2].c_str()));
+                            us.setTalentLevel(atoi(unitVec[3].c_str()));
+                            unitPools[i].push_back(us);
+                        }
+                    }
+                }
+            }
+            
+            
+            //TODO:temp code, core and tower setting
             gcs.setFactionTypeKey("狼人族");
             UnitSetting core;
             core.setUnitTypeName("狼人基地");
@@ -264,6 +339,8 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
     
     msg->setFactionSetting(fs);
     msg->setCards(cardNames);
+    msg->setInitUnitLists(initUnits);
+    msg->setUnitPools(unitPools);
     output.push_back(msg);
 }
 
@@ -417,7 +494,8 @@ void ClientTCPNetworkProxy::parseResponse2Msg(
     response->getResponseDataString(data);
     
     rapidjson::Document document;
-    DataManager::getInstance()->getBinaryJsonTool()->decode(data, document);
+    document.Parse<rapidjson::kParseNoFlags>(data.c_str());
+    //DataManager::getInstance()->getBinaryJsonTool()->decode(data, document);
     
     if (!cocostudio::DICTOOL->checkObjectExist_json(document, MESSAGE_KEY_CODE)) {
         return;

@@ -36,7 +36,9 @@ UnderworldClient::~UnderworldClient() {
 }
     
 void UnderworldClient::launchPvp(const GameContentSetting& setting,
-    const std::vector<std::string>& cards) {
+    const std::vector<std::string>& cards,
+    const UnderWorld::Core::GameModeHMMSetting::InitUnitList& initUnits,
+    const std::vector<UnitSetting>& unitPool) {
     if (_state != kIdle || !_proxy) return;
     
     loadTechTree();
@@ -210,6 +212,13 @@ void UnderworldClient::onReceive(
             for (int i = 0; i < l2c->getCards().size(); ++i) {
                 _hmmSetting._cards[i] = l2c->getCards()[i];
             }
+            for (int i = 0; i < l2c->getInitUnitLists().size(); ++i) {
+                _hmmSetting._initUnits[i] = l2c->getInitUnitLists()[i];
+            }
+            for (int i = 0; i < l2c->getUnitPools().size(); ++i) {
+                _hmmSetting._unitPools[i] = l2c->getUnitPools()[i];
+            }
+                                                    
             _terminal.init(_name, _settings, new GameModeHMM(),
                 &_hmmSetting, _scheduler, _render, _proxy);
             _terminal.start();

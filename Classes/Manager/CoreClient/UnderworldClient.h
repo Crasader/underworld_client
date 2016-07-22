@@ -54,7 +54,9 @@ public:
     
     /** interface */
     void launchPvp(const UnderWorld::Core::GameContentSetting& setting,
-        const std::vector<std::string>& cards);
+        const std::vector<std::string>& cards,
+        const UnderWorld::Core::GameModeHMMSetting::InitUnitList& initUnits,
+        const std::vector<UnderWorld::Core::UnitSetting>& unitPool);
     void launchPve(int map, const UnderWorld::Core::GameContentSetting& setting,
         const std::vector<std::string>& cards,
         const UnderWorld::Core::GameModeHMMSetting::InitUnitList& initList,
@@ -80,35 +82,55 @@ public:
 class NetworkMessageLaunch2S : public UnderWorld::Core::NetworkMessage {
 private:
     typedef UnderWorld::Core::GameContentSetting ContentSetting;
+    typedef UnderWorld::Core::GameModeHMMSetting::InitUnitList InitUnits;
+    typedef std::vector<UnderWorld::Core::UnitSetting> UnitPool;
     
 private:
     ContentSetting _setting;
     std::vector<std::string> _cards;
+    InitUnits _initUnits;
+    UnitPool _unitPool;
     
 public:
     NetworkMessage* clone() const override                     {return new NetworkMessageLaunch2S(*this);}
+    
+    /** getters */
     const ContentSetting& getGameContentSetting() const        {return _setting;}
-    void setGameContentSetting(const ContentSetting& setting)  {_setting = setting;}
     const std::vector<std::string>& getCards() const           {return _cards;}
+    const InitUnits& getInitUnits() const                      {return _initUnits;}
+    const UnitPool& getUnitPool() const                        {return _unitPool;}
+    
+    /** setters */
+    void setGameContentSetting(const ContentSetting& setting)  {_setting = setting;}
     void setCards(const std::vector<std::string>& cards)       {_cards = cards;}
+    void setInitUnits(const InitUnits& initUnits)              {_initUnits = initUnits;}
+    void setUnitPool(const UnitPool& unitPool)                 {_unitPool = unitPool;}
 };
 
 class NetworkMessageLaunch2C : public UnderWorld::Core::NetworkMessage {
 private:
     typedef UnderWorld::Core::FactionSetting FactionSetting;
     typedef std::vector<std::vector<std::string> > Cards;
+    typedef std::vector<UnderWorld::Core::GameModeHMMSetting::InitUnitList> InitUnitLists;
+    typedef std::vector<std::vector<UnderWorld::Core::UnitSetting> > UnitPools;
 private:
     FactionSetting _factionSetting;
     Cards _cards;
+    InitUnitLists _initUnitLists;
+    UnitPools _unitPools;
     int _mapId;
     
 public:
     NetworkMessage* clone() const override                 {return new NetworkMessageLaunch2C(*this);}
     const FactionSetting& getFactionSetting() const        {return _factionSetting;}
     const Cards& getCards() const                          {return _cards;}
+    const InitUnitLists& getInitUnitLists() const          {return _initUnitLists;}
+    const UnitPools& getUnitPools() const                  {return _unitPools;}
     int getMapId() const                                   {return _mapId;}
     void setFactionSetting(const FactionSetting& fs)       {_factionSetting = fs;}
     void setCards(const Cards& cards)                      {_cards = cards;}
+    void setInitUnitLists(const InitUnitLists& list)       {_initUnitLists = list;}
+    void setUnitPools(const UnitPools& pools)              {_unitPools = pools;}
     void setMapId(int mapId)                               {_mapId = mapId;}
 };
 

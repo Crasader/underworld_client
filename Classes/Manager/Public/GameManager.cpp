@@ -118,7 +118,7 @@ void GameManager::launchGame()
             _scene->release();
             if (_client && _battleContent) {
                 if (_isPvp) {
-                    _client->launchPvp(_battleContent->contentSetting, _battleContent->cards);
+                    _client->launchPvp(_battleContent->contentSetting, _battleContent->cards, _battleContent->unitList, _battleContent->unitPool);
                 } else {
                     _client->launchPve(_mapId, _battleContent->contentSetting, _battleContent->cards, _battleContent->unitList, _battleContent->unitPool);
                 }
@@ -160,8 +160,8 @@ void GameManager::createClient(Scene* scene)
     _gameScheduler = new (nothrow) GameScheduler();
     
     // 3. proxy
-//    static const pair<string, int> host = {"192.168.31.100", 9999};
-    static const pair<string, int> host = {"123.57.221.242", 8888};
+    static const pair<string, int> host = {"192.168.31.100", 9999};
+//    static const pair<string, int> host = {"123.57.221.242", 8888};
     _pvpProxy = new (nothrow) ClientTCPNetworkProxy(host.first, host.second, "demoplayer", GameData::getInstance()->getUUID());
     
     // 4. client
