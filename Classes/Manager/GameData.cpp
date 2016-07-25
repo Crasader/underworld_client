@@ -104,7 +104,7 @@ void GameData::setDeviceToken(const string& token)
     _deviceToken.assign(token);
 }
 
-unsigned int GameData::getUUID() const
+int GameData::getUUID() const
 {
     return _uuid;
 }
@@ -277,8 +277,7 @@ void GameData::generateUUID()
 #else
         random_device rd;
         mt19937 mt(rd());
-        _uuid = mt();
-        MessageBox(StringUtils::format("UUID: %d", _uuid).c_str(), nullptr);
+        _uuid = mt() & 0x7FFFFFFF;
 #endif
         ud->setIntegerForKey(key, _uuid);
         ud->flush();

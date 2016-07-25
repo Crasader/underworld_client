@@ -27,7 +27,7 @@ public:
     User* currentUser() const;
     
     void setDeviceToken(const std::string& token);
-    unsigned int getUUID() const;
+    int getUUID() const;
     const std::string& getVersionId() const;
     
     // auto login (if a token is exist in local)
@@ -77,7 +77,7 @@ private:
     
 private:
     User *_user;
-    unsigned int _uuid;
+    int _uuid;
     std::string _versionId;
     std::string _deviceToken;
     bool _isTransacting;
