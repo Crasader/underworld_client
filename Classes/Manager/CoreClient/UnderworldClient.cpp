@@ -48,7 +48,7 @@ void UnderworldClient::launchPvp(const GameContentSetting& setting,
     
     //test code
 //    {
-//        loadMap(1);
+//        loadMap(4);
 //        FactionSetting fs;
 //        fs.setThisFactionIndex(0);
 //        fs.setFactionCount(2);
@@ -70,74 +70,54 @@ void UnderworldClient::launchPvp(const GameContentSetting& setting,
 //        tower.setUnitTypeName("狼人箭塔");
 //        gcs0.setTower(tower);
 //        gcs1.setTower(tower);
-//        std::vector<std::string> cards0 = {
-//            "巨人","狼人步兵","王子","迷你皮卡","高攻击战士"
-//        };
-//        vector<CardSetting> cs0;
-//        for (int i = 0; i < cards0.size(); ++i) {
-//            CardSetting cs;
-//            cs.setCardTypeName(cards0[i]);
-//            cs0.push_back(cs);
-//        }
-//        gcs0.setCards(cs0);
-//        std::vector<std::string> cards1 = {
-//            "火枪手","狗"
-//        };
-//        vector<CardSetting> cs1;
-//        for (int i = 0; i < cards1.size(); ++i) {
-//            CardSetting cs;
-//            cs.setCardTypeName(cards1[i]);
-//            cs1.push_back(cs);
-//        }
-//        gcs1.setCards(cs1);
+//        
 //        fs.setContentSetting(gcs0, 0);
 //        fs.setContentSetting(gcs1, 1);
 //        _settings.setFactionSetting(fs);
 //        
-//        _terminal.getGame().init(_settings);
+//        std::vector<std::string> cards0 = {
+//            "酸雾术lv1","震晕法术lv1","魔族梦魇精华","魔族骷髅王子","暴风雪lv1","医疗术lv1"
+//        };
+//        std::vector<std::string> cards1 = {
+//            "梦魇","石像鬼","食尸鬼","骷髅弓箭手","骷髅盾牌兵","魔族传教士","暴风雪lv1","震晕法术lv1"
+//        };
+//        
+//        _hmmSetting._cards[0] = cards0;
+//        _hmmSetting._cards[1] = cards1;
+//    
+//        
+//        _terminal.getGame().init(_settings, new GameModeHMM(), &_hmmSetting);
 //        std::vector<std::string> vec = {
-//            "594-0-2-1-3200_432",
-//            "804-0-3-0-1575_845",
-//            "1026-0-2-1-3200_649",
-//            "1380-0-3-0-1555_711",
-//            "1638-0-2-1-3200_534",
-//            "1956-0-2-0-1599_732",
-//            "2016-0-1-1-3356_508",
-//            "2328-0-0-1-3709_355",
-//            "2616-0-3-0-1599_639",
-//            "2754-0-0-1-3574_673",
-//            "3252-0-0-1-3543_628",
-//            "3330-0-3-0-1585_580",
-//            "3576-0-0-1-3425_512",
-//            "3900-0-1-0-1599_529",
-//            "4110-0-0-1-3537_465",
-//            "4278-0-2-0-1599_660",
-//            "4356-0-0-1-3417_443",
-//            "4974-0-3-0-1465_614",
-//            "4992-0-0-1-3350_422",
-//            "5604-0-3-0-1599_627",
-//            "6000-0-0-1-3594_425",
-//            "6282-0-0-1-3615_598",
-//            "6744-0-0-1-3463_534",
-//            "7356-0-0-1-3513_558",
-//            "7590-0-2-0-1400_615",
-//            "7920-0-5-0-1523_547",
-//            "7944-0-0-1-3415_445",
-//            "8382-0-4-0-1599_889",
-//            "8730-0-4-0-1599_911",
-//            "9192-0-0-1-4516_465",
-//            "9396-0-0-1-4455_421",
-//            "9444-0-1-0-1599_492"
+//            "234-0-3-0-246_363",
+//            "390-0-1-1-818_309",
+//            "480-0-2-1-733_343",
+//            "732-0-2-1-747_282",
+//            "1026-0-5-0-718_334",
+//            "1116-0-2-1-786_327",
+//            "2778-0-1-1-804_285",
+//            "3090-0-6-1-845_261",
+//            "3138-0-5-0-807_240",
+//            "3318-0-7-1-892_245",
+//            "3678-0-4-0-741_324",
+//            "3708-0-0-1-968_196",
+//            "3792-0-1-1-848_232",
+//            "3882-0-1-1-1000_326",
+//            "4332-0-2-0-316_330",
+//            "4956-0-0-1-734_208",
+//            "5772-0-4-0-274_301",
+//            "5916-0-3-0-151_226",
+//            "6510-0-4-0-251_313",
+//            "6648-0-4-0-303_313"
 //        };
 //        for (int i = 0; i< vec.size(); ++i) {
 //            std::vector<std::string> split;
-//            Utils::split(split, vec[i], "-");
+//            UnderWorldCoreUtils::split(split, vec[i], "-");
 //            int frame = std::atoi(split[0].c_str());
 //            int handindex = std::atoi(split[2].c_str());
 //            int factionindex = std::atoi(split[3].c_str());
 //            int x = atoi(split[4].substr(0, split[4].find("_")).c_str());
 //            int y = atoi(split[4].substr(split[4].find("_") + 1).c_str());
-//            OutsideDeckCommand* cmd = new OutsideDeckCommand(handindex, factionindex, Coordinate32(x, y));
+//            OutsideHMMCommand* cmd = new OutsideHMMCommand(handindex, factionindex, Coordinate32(x, y));
 //            _terminal.getGame().getCommander()->addCommandFromRemote(cmd, frame);
 //        }
 //        for (int i = 1; i <= 24000; ++i) {
@@ -153,13 +133,14 @@ void UnderworldClient::launchPvp(const GameContentSetting& setting,
 //                cout << "[update]" << i << s << endl;
 //            }
 //        }
-//
 //    }
     _proxy->registerListener(this);
     _proxy->connect();
     NetworkMessageLaunch2S* msg = new NetworkMessageLaunch2S();
     msg->setGameContentSetting(setting);
     msg->setCards(cards);
+    msg->setInitUnits(initUnits);
+    msg->setUnitPool(unitPool);
     _proxy->send(msg);
     
 }
