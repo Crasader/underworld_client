@@ -4,6 +4,381 @@
     <dict>
         <key>frames</key>
         <dict>
+            <key>effect-ceshi/10001.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-7,8}</string>
+                <key>spriteSize</key>
+                <string>{98,110}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{699,335},{98,110}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>effect-ceshi/10002.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-8,9}</string>
+                <key>spriteSize</key>
+                <string>{102,112}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{1921,101},{102,112}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>effect-ceshi/10003.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-9,9}</string>
+                <key>spriteSize</key>
+                <string>{102,112}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{1921,205},{102,112}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>effect-ceshi/10004.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-11,6}</string>
+                <key>spriteSize</key>
+                <string>{104,104}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{1797,235},{104,104}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>effect-ceshi/10005.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-11,2}</string>
+                <key>spriteSize</key>
+                <string>{104,94}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{1579,333},{104,94}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>effect-ceshi/10006.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-12,3}</string>
+                <key>spriteSize</key>
+                <string>{106,96}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{1473,235},{106,96}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>effect-ceshi/10007.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-12,5}</string>
+                <key>spriteSize</key>
+                <string>{106,98}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{1365,235},{106,98}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>effect-ceshi/10008.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-8,6}</string>
+                <key>spriteSize</key>
+                <string>{98,102}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{1789,341},{98,102}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>effect-ceshi/10009.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-7,3}</string>
+                <key>spriteSize</key>
+                <string>{98,96}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{1887,513},{98,96}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>effect-ceshi/10010.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-7,5}</string>
+                <key>spriteSize</key>
+                <string>{98,100}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{1785,441},{98,100}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>effect-ceshi/10011.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-6,7}</string>
+                <key>spriteSize</key>
+                <string>{96,106}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{1581,235},{96,106}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>effect-ceshi/10012.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-7,7}</string>
+                <key>spriteSize</key>
+                <string>{96,106}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{1689,235},{96,106}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>effect-ceshi/10013.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-7,9}</string>
+                <key>spriteSize</key>
+                <string>{98,108}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{1035,235},{98,108}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>effect-ceshi/10014.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-8,5}</string>
+                <key>spriteSize</key>
+                <string>{100,98}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{1893,413},{100,98}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>effect-ceshi/10015.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-7,6}</string>
+                <key>spriteSize</key>
+                <string>{100,100}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{1683,437},{100,100}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>effect-ceshi/10016.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-8,7}</string>
+                <key>spriteSize</key>
+                <string>{102,102}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{1685,333},{102,102}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>effect-ceshi/10017.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-8,7}</string>
+                <key>spriteSize</key>
+                <string>{102,104}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{1903,309},{102,104}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>effect-ceshi/10018.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-8,8}</string>
+                <key>spriteSize</key>
+                <string>{100,108}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{925,235},{100,108}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>effect-ceshi/10019.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-8,9}</string>
+                <key>spriteSize</key>
+                <string>{100,110}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{813,235},{100,110}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>effect-ceshi/10020.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-9,5}</string>
+                <key>spriteSize</key>
+                <string>{100,102}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{1579,429},{100,102}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>effect-ceshi/10021.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-8,6}</string>
+                <key>spriteSize</key>
+                <string>{100,104}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{1473,333},{100,104}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>effect-ceshi/10022.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-7,8}</string>
+                <key>spriteSize</key>
+                <string>{98,108}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{1145,235},{98,108}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>effect-ceshi/10023.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-8,9}</string>
+                <key>spriteSize</key>
+                <string>{98,112}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{699,235},{98,112}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>effect-ceshi/10024.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-7,10}</string>
+                <key>spriteSize</key>
+                <string>{98,114}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{1921,1},{98,114}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>effect-ceshi/10025.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-7,7}</string>
+                <key>spriteSize</key>
+                <string>{98,108}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{1255,235},{98,108}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
             <key>effect-electric/10001.png</key>
             <dict>
                 <key>aliases</key>
@@ -135,7 +510,7 @@
                 <key>spriteSourceSize</key>
                 <string>{256,256}</string>
                 <key>textureRect</key>
-                <string>{{1,235},{238,232}}</string>
+                <string>{{1,309},{238,232}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -150,7 +525,7 @@
                 <key>spriteSourceSize</key>
                 <string>{256,256}</string>
                 <key>textureRect</key>
-                <string>{{1,475},{238,232}}</string>
+                <string>{{1,549},{238,232}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -165,7 +540,7 @@
                 <key>spriteSourceSize</key>
                 <string>{256,256}</string>
                 <key>textureRect</key>
-                <string>{{1,715},{238,232}}</string>
+                <string>{{1,789},{238,232}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -180,7 +555,7 @@
                 <key>spriteSourceSize</key>
                 <string>{256,256}</string>
                 <key>textureRect</key>
-                <string>{{1,955},{238,232}}</string>
+                <string>{{1,1029},{238,232}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -195,7 +570,7 @@
                 <key>spriteSourceSize</key>
                 <string>{256,256}</string>
                 <key>textureRect</key>
-                <string>{{1,1195},{238,232}}</string>
+                <string>{{1,1269},{238,232}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -210,7 +585,7 @@
                 <key>spriteSourceSize</key>
                 <string>{256,256}</string>
                 <key>textureRect</key>
-                <string>{{1,1435},{238,232}}</string>
+                <string>{{1,1509},{238,232}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -225,7 +600,7 @@
                 <key>spriteSourceSize</key>
                 <string>{256,256}</string>
                 <key>textureRect</key>
-                <string>{{1,1675},{238,232}}</string>
+                <string>{{1,1749},{238,232}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -271,7 +646,7 @@
             <key>size</key>
             <string>{2048,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:29cb3209bdb26b51367b0ea99918e5ca:9411423e6cb4d55a3e723c5980b9fd5d:af23d7bf875c35b114cd7e2857e85469$</string>
+            <string>$TexturePacker:SmartUpdate:aa436c6f417954fefebe58435abcf63c:181e1e1487bf944af47d0c88c14b6814:af23d7bf875c35b114cd7e2857e85469$</string>
             <key>textureFileName</key>
             <string>effect-2.pvr.ccz</string>
         </dict>

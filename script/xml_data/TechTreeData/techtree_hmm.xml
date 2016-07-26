@@ -36,6 +36,7 @@
 	<card name="人族弓箭手3" card_class="summon" cost="木头:80" unit_name="人族弓箭手" summon_count="4" recover_span="10">
 		<custom_unit_setting unit_setting_name="人族弓箭手"/>
 	</card>
+<!-- 第一版单位：小兵部分 -->
 	<card name="人族盾牌兵" card_class="summon" cost="木头:40" unit_name="人族盾牌兵" summon_count="1" recover_span="10">
 		<custom_unit_setting unit_setting_name="人族盾牌兵"/>
 	</card>
@@ -99,36 +100,38 @@
 	<card name="复活" card_class="spell" cost="木头:20" spell_name="全局技能复活">
 		<custom_unit_setting/>
 	</card>
-	<card name="暴风雪lv1" card_class="spell" cost="木头:20" spell_name="暴风雪lv1">
+<!-- 第一版法术 -->
+	<card name="暴风雪lv1" card_class="spell" cost="木头:20" spell_name="暴风雪lv1" recover_span="10">
 		<custom_unit_setting/>
 	</card>
-	<card name="火球术lv1" card_class="spell" cost="木头:20" spell_name="火球术lv1">
+	<card name="火球术lv1" card_class="spell" cost="木头:20" spell_name="火球术lv1" recover_span="10">
 		<custom_unit_setting/>
 	</card>
-	<card name="医疗术lv1" card_class="spell" cost="木头:20" spell_name="医疗术lv1">
+	<card name="医疗术lv1" card_class="spell" cost="木头:20" spell_name="医疗术lv1" recover_span="10">
 		<custom_unit_setting/>
 	</card>
-	<card name="沉默术lv1" card_class="spell" cost="木头:20" spell_name="沉默术lv1">
+	<card name="沉默术lv1" card_class="spell" cost="木头:20" spell_name="沉默术lv1" recover_span="10">
 		<custom_unit_setting/>
 	</card>
-	<card name="小型驱散术lv1" card_class="spell" cost="木头:20" spell_name="小型驱散术lv1">
+	<card name="小型驱散术lv1" card_class="spell" cost="木头:20" spell_name="小型驱散术lv1" recover_span="10">
 		<custom_unit_setting/>
 	</card>
-	<card name="大型驱散术lv1" card_class="spell" cost="木头:20" spell_name="大型驱散术lv1">
+	<card name="大型驱散术lv1" card_class="spell" cost="木头:20" spell_name="大型驱散术lv1" recover_span="10">
 		<custom_unit_setting/>
 	</card>
-	<card name="震晕法术lv1" card_class="spell" cost="木头:20" spell_name="震晕法术lv1">
+	<card name="震晕法术lv1" card_class="spell" cost="木头:20" spell_name="震晕法术lv1" recover_span="10">
 		<custom_unit_setting/>
 	</card>
-	<card name="禁足术lv1" card_class="spell" cost="木头:20" spell_name="禁足术lv1">
+	<card name="禁足术lv1" card_class="spell" cost="木头:20" spell_name="禁足术lv1" recover_span="10">
 		<custom_unit_setting/>
 	</card>
-	<card name="佯攻部队术lv1" card_class="spell" cost="木头:20" spell_name="佯攻部队术lv1">
+	<card name="佯攻部队术lv1" card_class="spell" cost="木头:20" spell_name="佯攻部队术lv1" recover_span="10">
 		<custom_unit_setting/>
 	</card>
-	<card name="酸雾术lv1" card_class="spell" cost="木头:20" spell_name="酸雾术lv1">
+	<card name="酸雾术lv1" card_class="spell" cost="木头:20" spell_name="酸雾术lv1" recover_span="10">
 		<custom_unit_setting/>
 	</card>
+<!-- 第一版单位：英雄部分 -->
 	<card name="人族盾牌队长" card_class="summon" cost="木头:0" unit_name="人族盾牌队长">
 		<custom_unit_setting unit_setting_name="人族盾牌队长"/>
 	</card>
