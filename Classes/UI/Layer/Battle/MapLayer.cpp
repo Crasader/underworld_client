@@ -14,6 +14,7 @@
 #include "DataManager.h"
 #include "MapParticleConfigData.h"
 #include "URConfigData.h"
+#include "SpellRingNode.h"
 
 using namespace std;
 
@@ -281,24 +282,12 @@ void MapLayer::addUnitPlacementEffect(const Coordinate32& coordinate)
 #pragma mark spells
 void MapLayer::addSpell(const string& name, float duration)
 {
-    Node* ring = _spellRing.second;
+    auto ring(_spellRing.second);
     if (ring) {
-        const Point& targetPos = ring->getPosition();
-        static const string key("RemoveSpellRing");
-        auto scheduler = Director::getInstance()->getScheduler();
-        scheduler->schedule([=](float) {
-            scheduler->unschedule(key, this);
-            removeStaticRing(targetPos);
-        }, this, duration, false, key);
-        
-        // add a spell ring which will be removed when animation finished
-        const float scale(ring->getScale());
-        auto ring = createRing(name, targetPos);
-        ring->setScale(scale);
-        if (_staticSpellRings.find(targetPos) == _staticSpellRings.end()) {
-            _staticSpellRings.insert(make_pair(targetPos, ring));
-        } else {
-            assert(false);
+        auto staticRing = createRing(name, duration);
+        if (staticRing) {
+            staticRing->setPosition(ring->getPosition());
+            staticRing->setScale(ring->getScale());
         }
     }
 }
@@ -359,9 +348,9 @@ void MapLayer::addAoeSpell(const Point& startPoint, const string& name, float du
         }
         
         // add a spell ring which will be removed when animation finished
-        const float scale(ring->getScale());
-        auto ring = createRing(name, targetPos);
-        ring->setScale(scale);
+        auto staticRing = createRing(name, 0);
+        staticRing->setPosition(targetPos);
+        staticRing->setScale(ring->getScale());
         if (_staticSpellRings.find(targetPos) == _staticSpellRings.end()) {
             _staticSpellRings.insert(make_pair(targetPos, ring));
         } else {
@@ -372,8 +361,7 @@ void MapLayer::addAoeSpell(const Point& startPoint, const string& name, float du
 
 void MapLayer::removeAllSpellEffects()
 {
-    for (auto effect: _spellEffects)
-    {
+    for (auto effect: _spellEffects) {
         removeSpellEffect(effect);
     }
 }
@@ -414,20 +402,18 @@ void MapLayer::removeUnitMask()
 #pragma mark spell ring
 void MapLayer::updateSpellRing(const string& name, const Coordinate32& coordinate, int range)
 {
-    const Point& point = coordinate2Point(coordinate);
     auto ring = _spellRing.second;
     if (!ring) {
-        ring = createRing(name, point);
-    } else {
-        if (name != _spellRing.first) {
-            removeSpellRing();
-            ring = createRing(name, point);
-        } else {
-            ring->setPosition(point);
-        }
+        ring = createRing(name, 0);
+    } else if (name != _spellRing.first) {
+        removeSpellRing();
+        ring = createRing(name, 0);
     }
     
     if (ring) {
+        const Point& point = coordinate2Point(coordinate);
+        ring->setPosition(point);
+        
         if (name != _spellRing.first || ring != _spellRing.second) {
             _spellRing.first = name;
             _spellRing.second = ring;
@@ -729,24 +715,26 @@ Node* MapLayer::createUnitMask(const UnitType* ut) const
 }
 
 #pragma mark spell ring
-Node* MapLayer::createRing(const string& name, const Point& point)
+Node* MapLayer::createRing(const string& name, float duration)
 {
-    string fileName;
+    // get file name
+    string file;
     if (name.find(SPELL_NAME_FIREBALL) != string::npos) {
-        fileName.assign("quan-1.csb");
+        file.assign("quan-1.csb");
     } else if (name.find(SPELL_NAME_CURE) != string::npos) {
-        fileName.assign("huixue-xin.csb");
+        file.assign("huixue-xin.csb");
     } else if (name.find(SPELL_NAME_SPEEDUP) != string::npos) {
-        fileName.assign("jiasu-xin.csb");
+        file.assign("jiasu-xin.csb");
     } else if (name.size() > 0) {
-        fileName.assign("quan-2.csb");
+        file.assign("quan-2.csb");
     }
     
-    if (fileName.length() > 0) {
-        auto ring = CocosUtils::playAnimation(fileName, 0, true);
-        ring->setPosition(point);
-        _mainLayer->addChild(ring, -2000);
-        return ring;
+    if (!file.empty()) {
+        auto r = SpellRingNode::create(file, duration, [](Node* ring){
+            ring->removeFromParent();
+        });
+        _mainLayer->addChild(r, -2000);
+        return r;
     }
     
     return nullptr;

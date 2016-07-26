@@ -445,10 +445,9 @@ Node* CocosUtils::playAnimation(const string& file,
     return node;
 }
 
-Node* CocosUtils::createExitButton(Node* parent, const function<void()>& callback)
+Node* CocosUtils::createExitButton(Node* parent, const function<void()>& callback, const string& file)
 {
-    const Size& winSize = parent->getContentSize();
-    static const string file("GameImages/public/ui_guanbi.png");
+    const auto& winSize = parent->getContentSize();
     auto button = Button::create(file, file);
     button->addClickEventListener([callback](Ref*) {
         if (callback) {
@@ -458,7 +457,7 @@ Node* CocosUtils::createExitButton(Node* parent, const function<void()>& callbac
     parent->addChild(button);
     
     static const Vec2 offset(5.0f, 5.0f);
-    const Size& size = button->getContentSize();
+    const auto& size = button->getContentSize();
     button->setPosition(Point(winSize.width - size.width / 2, winSize.height - size.height / 2) - offset);
     
     return button;

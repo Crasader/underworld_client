@@ -65,7 +65,7 @@ namespace CocosUtils
                                  const std::function<void(cocos2d::Node*)>& callback = nullptr);
     
     // buttons
-    cocos2d::Node* createExitButton(cocos2d::Node* parent, const std::function<void()>& callback);
+    cocos2d::Node* createExitButton(cocos2d::Node* parent, const std::function<void()>& callback, const std::string& file = "GameImages/public/ui_guanbi.png");
     
 #pragma mark - notifications
     void postNotification(const std::string& notification);

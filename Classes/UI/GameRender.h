@@ -101,6 +101,7 @@ private:
     void updateUnits(const Game* game, int index);
     void updateBullets(const Game* game);
     void updateUILayer();
+    bool hasEnoughResources(const HMMCardType* ct) const;
     bool isValidAoeSpell(const SpellType* spellType) const;
     void hurtUnit(const Unit* target, const std::string& trigger);
     void removeUnit(int unitId);

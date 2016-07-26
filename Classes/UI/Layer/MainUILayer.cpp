@@ -16,6 +16,7 @@
 #include "FormationLayer.h"
 #include "BattleDeckLayer.h"
 #include "CardLayer.h"
+#include "SettingsLayer.h"
 
 using namespace std;
 using namespace ui;
@@ -448,13 +449,18 @@ void MainUILayer::onFunctionButtonClicked(ButtonType type)
 {
     SoundManager::getInstance()->playButtonSound();
     
+    auto runningScene(Director::getInstance()->getRunningScene());
     switch (type) {
         case ButtonType::Battle:
             GameManager::getInstance()->launchPvp();
             break;
             
         case ButtonType::Train:
-            Director::getInstance()->getRunningScene()->addChild(FormationLayer::create());
+            runningScene->addChild(FormationLayer::create());
+            break;
+            
+        case ButtonType::Option:
+//            runningScene->addChild(SettingsLayer::create());
             break;
             
         default:

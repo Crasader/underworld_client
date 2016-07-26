@@ -107,8 +107,8 @@ bool UnitCardDeck::init(int count)
         
         Size progressSize(Size::ZERO);
         for (int i = 0; i < resourceMaxCount; ++i) {
-            Sprite* s = Sprite::create("GameImages/test/ui_blood_9.png");
-            ProgressTimer* pt = ProgressTimer::create(s);
+            auto s = Sprite::create("GameImages/test/ui_blood_9.png");
+            auto pt = ProgressTimer::create(s);
             pt->setType(ProgressTimer::Type::BAR);
             pt->setBarChangeRate(Vec2(1.0f, 0.0f));
             pt->setMidpoint(Point::ANCHOR_BOTTOM_LEFT);

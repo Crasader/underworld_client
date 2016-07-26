@@ -1,18 +1,18 @@
 //
-//  ChatNode.cpp
+//  NoticeNode.cpp
 //  Underworld_Client
 //
-//  Created by Andy on 15/12/14.
-//  Copyright (c) 2015 Mofish Studio. All rights reserved.
+//  Created by Andy on 16/7/25.
+//  Copyright (c) 2016 Mofish Studio. All rights reserved.
 //
 
-#include "ChatNode.h"
+#include "NoticeNode.h"
 
 using namespace std;
 
-ChatNode* ChatNode::create()
+NoticeNode* NoticeNode::create()
 {
-    ChatNode *ret = new (nothrow) ChatNode();
+    NoticeNode *ret = new (nothrow) NoticeNode();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -23,23 +23,23 @@ ChatNode* ChatNode::create()
     return nullptr;
 }
 
-ChatNode::ChatNode()
+NoticeNode::NoticeNode()
 :_observer(nullptr)
 {
     
 }
 
-ChatNode::~ChatNode()
+NoticeNode::~NoticeNode()
 {
     removeAllChildren();
 }
 
-void ChatNode::registerObserver(ChatNodeObserver *observer)
+void NoticeNode::registerObserver(NoticeNodeObserver *observer)
 {
     _observer = observer;
 }
 
-bool ChatNode::init()
+bool NoticeNode::init()
 {
     if (Node::init()) {
         

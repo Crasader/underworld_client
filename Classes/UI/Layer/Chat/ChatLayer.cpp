@@ -13,21 +13,24 @@
 #include "LocalHelper.h"
 #include "SoundManager.h"
 #include "XTableViewCell.h"
-#include "ChatNode.h"
-#include <unordered_set>
+#include "TabButton.h"
 
 using namespace std;
 using namespace ui;
 
-static const float nodeOffsetX(17.0f);
-static const float nodeOffsetY(17.0f);
-static const int visibleCellsCount(6);
+static const unsigned int tableColumnCount(1);
+static const Vec2 nodeOffsetOnTable(5, 14);
+static const ChatTableType tableTypes[] = {
+    ChatTableType::Talk,
+    ChatTableType::Mail,
+    ChatTableType::Notice
+};
+static const unsigned int tablesCount(sizeof(tableTypes) / sizeof(ChatTableType));
 
-ChatLayer* ChatLayer::create(int levelId)
+ChatLayer* ChatLayer::create()
 {
     ChatLayer *ret = new (nothrow) ChatLayer();
-    if (ret && ret->init(levelId))
-    {
+    if (ret && ret->init()) {
         ret->autorelease();
         return ret;
     }
@@ -38,17 +41,19 @@ ChatLayer* ChatLayer::create(int levelId)
 
 ChatLayer::ChatLayer()
 :_observer(nullptr)
-,_scrollBar(nullptr)
-,_tabIndex(-1)
+,_thisTableType(ChatTableType::None)
+,_thisTable(nullptr)
+,_nodeSize(Size::ZERO)
+,_tableMaxSize(Size::ZERO)
+,_tableBasePosition(Point::ZERO)
 ,_editBoxBg(nullptr)
 ,_editBox(nullptr)
 {
-    static const Size unitNodeSize = ChatNode::create()->getContentSize();
-    _cellSize.height = unitNodeSize.height + nodeOffsetY * 2;
-    _cellSize.width = unitNodeSize.width + nodeOffsetX;
+    auto size(ChatNode::create()->getContentSize());
+    _nodeSize = size + Size(nodeOffsetOnTable.x, nodeOffsetOnTable.y);
     
-    _tableViewMaxSize.width = _cellSize.width * visibleCellsCount + nodeOffsetX;
-    _tableViewMaxSize.height = _cellSize.height;
+    _tableMaxSize.width = _nodeSize.width * tableColumnCount + nodeOffsetOnTable.x;
+    _tableMaxSize.height = _nodeSize.height;
 }
 
 ChatLayer::~ChatLayer()
@@ -61,11 +66,16 @@ void ChatLayer::registerObserver(ChatLayerObserver *observer)
     _observer = observer;
 }
 
-bool ChatLayer::init(int levelId)
+bool ChatLayer::init()
 {
-    if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR))
-    {
+    if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR)) {
+        // tables
+        for (int i = 0; i < tablesCount; ++i) {
+            auto type = tableTypes[i];
+            createTableView(type);
+        }
         
+        setTableType(ChatTableType::Talk);
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -92,29 +102,50 @@ void ChatLayer::onTouchEnded(Touch *touch, Event *unused_event)
 #pragma mark - TableViewDelegate
 Size ChatLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
 {
-    return Size(618, 60);
+    const Size size = getCellSize();
+    const ssize_t cnt = getCellsCount(table);
+    if (idx == cnt - 1) {
+        return size + Size(0, nodeOffsetOnTable.y);
+    }
+    
+    return size;
 }
 
 TableViewCell* ChatLayer::tableCellAtIndex(TableView *table, ssize_t idx)
 {
     auto cell = static_cast<XTableViewCell*>(table->dequeueCell());
-    
     if (!cell) {
         cell = XTableViewCell::create();
     }
     
-    auto node = dynamic_cast<ChatNode*>(cell->getNode(0));
-    if (node) {
-        
-    } else {
-        
+    const ssize_t maxCnt = getCellsCount(table);
+    const auto& messages = _messages.at(getTableType(table));
+    const size_t cnt = messages.size();
+    for (int i = 0; i < tableColumnCount; ++i) {
+        const ssize_t index = idx * tableColumnCount + i;
+        auto node = dynamic_cast<ChatNode*>(cell->getNode(i));
+        if (index < cnt) {
+            if (!node) {
+                node = ChatNode::create();
+                node->registerObserver(this);
+                cell->addChild(node);
+                cell->setNode(node, i);
+            }
+            
+            // we must update the position when the table was reloaded
+            const Point point(_nodeSize.width * (i + 0.5f) - nodeOffsetOnTable.x / 2, node->getContentSize().height * 0.5f);
+            node->setPosition(point + Point(0, (idx == maxCnt - 1) ? nodeOffsetOnTable.y : 0));
+        } else if (node) {
+            node->removeFromParent();
+            cell->resetNode(i);
+        }
     }
     
     return cell;
 }
 
 #pragma mark - EditBoxDelegate
-void ChatLayer::editBoxTextChanged(ui::EditBox* editBox, const std::string& text)
+void ChatLayer::editBoxTextChanged(ui::EditBox* editBox, const string& text)
 {
     
 }
@@ -129,8 +160,91 @@ ssize_t ChatLayer::numberOfCellsInTableView(TableView *table)
     return 1;
 }
 
-#pragma mark - private
-void ChatLayer::addEditBox()
+#pragma mark - ChatNodeObserver
+
+#pragma mark - table
+void ChatLayer::createTableView(ChatTableType type)
+{
+    auto tableView = TableView::create(this, _tableMaxSize);
+    tableView->setDirection(extension::ScrollView::Direction::VERTICAL);
+    tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
+    tableView->setBounceable(false);
+    tableView->setVisible(false);
+    tableView->setTag(static_cast<int>(type));
+    addChild(tableView);
+    
+    // 1. insert table
+    if (_tables.find(type) == end(_tables)) {
+        _tables.insert(make_pair(type, tableView));
+    } else {
+        assert(false);
+    }
+    
+    // 2. refresh table
+    refreshTable(tableView, false);
+    tableView->setContentOffset(Point::ZERO);
+}
+
+void ChatLayer::refreshTable(TableView* table, bool reload)
+{
+    if (table) {
+        auto totalHeight = _nodeSize.height * getCellsCount(table) + nodeOffsetOnTable.y;
+        auto size = Size(_tableMaxSize.width, MIN(totalHeight, _tableMaxSize.height));
+        table->setViewSize(size);
+        table->setPosition(_tableBasePosition - Point(0, size.height));
+        
+        if (reload) {
+            const auto& offset = table->getContentOffset();
+            table->reloadData();
+            table->setContentOffset(offset);
+        }
+    }
+}
+
+ssize_t ChatLayer::getCellsCount(TableView* table) const
+{
+    auto type = getTableType(table);
+    if (_messages.find(type) != end(_messages)) {
+        const auto& cards = _messages.at(type);
+        const size_t cnt(cards.size());
+        if (cnt > 0) {
+            return (cnt - 1) / tableColumnCount + 1;
+        }
+    }
+    
+    return 0;
+}
+
+Size ChatLayer::getCellSize() const
+{
+    return Size(_tableMaxSize.width, _nodeSize.height);
+}
+
+Rect ChatLayer::getBoundingBox(Node* node) const
+{
+    if (node) {
+        Rect rect = node->getBoundingBox();
+        Point origin = rect.origin;
+        rect.origin = convertToNodeSpace(node->getParent()->convertToWorldSpace(origin));
+        return rect;
+    }
+    
+    return Rect::ZERO;
+}
+
+#pragma mark - functions
+void ChatLayer::createTabButtons(const Point& position)
+{
+    
+}
+
+ChatNode* ChatLayer::createChatNode(const ChatData* data)
+{
+    auto node = ChatNode::create();
+    return node;
+}
+
+void ChatLayer::createEditBox()
 {
     _editBox = ui::EditBox::create(_editBoxBg->getContentSize(), nullptr);
     addChild(_editBox);
@@ -145,40 +259,52 @@ void ChatLayer::addEditBox()
     _editBox->setPlaceHolder("Please input...");
 }
 
-void ChatLayer::switchTable(int index)
+ChatTableType ChatLayer::getTableType(TableView* table) const
 {
-    if (_tabIndex != index) {
-        _tabIndex = index;
-        // TODO: refreshTable
+    if (table) {
+        const size_t cnt = _tables.size();
+        if (cnt < tablesCount) {
+            return tableTypes[cnt];
+        }
         
-        setButtonSelected(_tabIndex);
+        return static_cast<ChatTableType>(table->getTag());
+    }
+    
+    return ChatTableType::None;
+}
+
+void ChatLayer::setTableType(ChatTableType type)
+{
+    if (_thisTableType != type) {
+        _thisTableType = type;
+        
+        for (auto iter = begin(_tables); iter != end(_tables); ++iter) {
+            const bool isThisTable(iter->first == type);
+            auto table = iter->second;
+            table->setVisible(isThisTable);
+            
+            if (isThisTable) {
+                _thisTable = table;
+            }
+        }
+        
+        for (auto iter = begin(_tabButtons); iter != end(_tabButtons); ++iter) {
+            const bool isThisTable(iter->first == type);
+            iter->second->setEnabled(!isThisTable);
+        }
     }
 }
 
-void ChatLayer::setButtonSelected(int index)
+string ChatLayer::getTableName(ChatTableType type) const
 {
-    static string normalFile = "GameImages/world/ui_fenye_4.png";
-    static string selectedFile = "GameImages/world/ui_fenye_3.png";
-    
-    Button *selectedButton = _tabButtons.at(index);
-    unordered_set<Button *> otherButtons;
-    for (int i = 0; i < _tabButtons.size(); ++i) {
-        otherButtons.insert(_tabButtons.at(i));
-    }
-    otherButtons.erase(selectedButton);
-    // 1. set all buttons' ZOrder to 1
-    const Vector<Node*>& children = selectedButton->getParent()->getChildren();
-    for (auto child : children)
-    {
-        child->setLocalZOrder(1);
-    }
-    // 2. make sure the selected button is on the top
-    selectedButton->loadTextures(selectedFile, selectedFile);
-    selectedButton->setLocalZOrder(2);
-    // 3. make sure the other buttons are on the bottom
-    for (auto iter = otherButtons.begin(); iter != otherButtons.end(); ++iter)
-    {
-        (*iter)->loadTextures(normalFile, normalFile);
-        (*iter)->setLocalZOrder(0);
+    switch (type) {
+        case ChatTableType::Talk:
+            return "公共";
+        case ChatTableType::Mail:
+            return "邮箱";
+        case ChatTableType::Notice:
+            return "系统";
+        default:
+            return "";
     }
 }

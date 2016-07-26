@@ -9,7 +9,7 @@
 #ifndef ChatData_h
 #define ChatData_h
 
-#include <iostream>
+#include <string>
 #include "CocosGlobal.h"
 #include "json/document.h"
 

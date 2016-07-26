@@ -217,17 +217,23 @@ void CardDeck::updateResource(const unordered_map<string, float>& resources)
     }
     
     for (int i = 0; i < cnt; ++i) {
-        Node* s = _resources.at(i).first;
-        ProgressTimer* pt = _resources.at(i).second;
+        auto s = _resources.at(i).first;
+        auto pt = _resources.at(i).second;
         bool show(false);
         if (pt) {
             if (i <= percentage - 1) {
                 show = (s == nullptr);
                 pt->setPercentage(100.0f);
             } else if (i < percentage) {
-                const float percentage(percentage - i);
-                show = (percentage >= 1);
-                pt->setPercentage(100.0f * percentage);
+                const float p(percentage - i);
+                show = (p >= 1);
+                pt->setPercentage(100.0f * p);
+                
+                // remove if needed
+                if (percentage < 1 && s) {
+                    s->removeFromParent();
+                    _resources.at(i).first = nullptr;
+                }
             } else {
                 if (s) {
                     s->removeFromParent();
@@ -239,7 +245,7 @@ void CardDeck::updateResource(const unordered_map<string, float>& resources)
         
         if (show) {
             static const string file("ui-tiao.csb");
-            Node* effect = CocosUtils::playAnimation(file, 0, false);
+            auto effect = CocosUtils::playAnimation(file, 0, false);
             effect->setPosition(pt->getPosition());
             pt->getParent()->addChild(effect);
             _resources.at(i).first = effect;
@@ -331,7 +337,8 @@ void CardDeck::addCostHint(int cost)
             auto pt = _resources.at(0).second;
             if (pt) {
                 auto ptSize(pt->getContentSize());
-                auto size(Size(cost * (ptSize.width + deckCostOffsetX), ptSize.height));
+                auto resourceMaxCount(DataManager::getInstance()->getBattleResourceMaxCount());
+                auto size(Size(cost * (ptSize.width + deckCostOffsetX) * BATTLE_RESOURCE_MAX_COUNT / resourceMaxCount, ptSize.height));
                 _costHint->setContentSize(size);
             }
         }

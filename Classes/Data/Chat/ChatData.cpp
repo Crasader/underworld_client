@@ -14,10 +14,6 @@
 using namespace std;
 using namespace cocostudio;
 
-#pragma mark =====================================================
-#pragma mark Chat Data
-#pragma mark =====================================================
-
 ChatData::ChatData(ChatType type, const rapidjson::Value& jsonDict)
 :_id(0)
 ,_type(ChatType::World)

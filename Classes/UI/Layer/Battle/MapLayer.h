@@ -100,7 +100,7 @@ protected:
     Node* createUnitMask(const UnitType* ut) const;
     
     // spell ring
-    Node* createRing(const std::string& name, const Point& point);
+    Node* createRing(const std::string& name, float duration);
     void removeStaticRing(const Point& point);
     void clearRingInfo();
     Rect getSpellRingBoundingBox() const;
