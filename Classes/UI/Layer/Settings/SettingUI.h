@@ -10,21 +10,12 @@
 #define SettingUI_h
 
 #include "cocos2d.h"
-#include "ui/CocosGUI.h"
 
 USING_NS_CC;
 
 namespace SettingUI
 {
-    enum class ButtonType {
-        Normal,
-        Selected
-    };
-    
     std::string getResourcePath(const std::string& file);
-    Node* createSubBackground(const Size& size);
-    ui::Button* createButton(ButtonType type, const std::string& title);
-    void updateButton(ui::Button* button, ButtonType type, const std::string& title);
     Node* createExitButton(Node* parent, const std::function<void()>& callback);
 }
 

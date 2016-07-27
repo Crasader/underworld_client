@@ -121,6 +121,7 @@
 		A1211B271C0BF5CC00C27CCC /* RandomCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B251C0BF5CC00C27CCC /* RandomCreator.cpp */; };
 		A1211B291C0BF68E00C27CCC /* GameConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B281C0BF68E00C27CCC /* GameConstants.cpp */; };
 		A12BF9431D22278100D2E5CD /* XCardNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12BF9411D22278100D2E5CD /* XCardNode.cpp */; };
+		A12DE76C1D4868AC0012D127 /* UniversalButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12DE76A1D4868AC0012D127 /* UniversalButton.cpp */; };
 		A13108A51C046BF900EAAD90 /* particle in Resources */ = {isa = PBXBuildFile; fileRef = A13108A41C046BF900EAAD90 /* particle */; };
 		A14B5EFB1C311908006FB0DB /* Addon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14B5EF91C311908006FB0DB /* Addon.cpp */; };
 		A15698E11C3A96E500B94345 /* DamageType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A15698DF1C3A96E500B94345 /* DamageType.cpp */; };
@@ -242,6 +243,8 @@
 		A1E830691C1EA50200FE01B8 /* QuestLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E830641C1EA50200FE01B8 /* QuestLocalData.cpp */; };
 		A1E8306A1C1EA50200FE01B8 /* RewardData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E830661C1EA50200FE01B8 /* RewardData.cpp */; };
 		A1E8306D1C1EA55D00FE01B8 /* ContentData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E8306B1C1EA55D00FE01B8 /* ContentData.cpp */; };
+		A1E947C21D48A3A400BD7A27 /* UserOperationNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E947C01D48A3A400BD7A27 /* UserOperationNode.cpp */; };
+		A1E947C51D48AE9E00BD7A27 /* ChatUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E947C31D48AE9E00BD7A27 /* ChatUI.cpp */; };
 		A1F1B6DF1D23772F00E4CDEE /* TalentInfoNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F1B6DD1D23772F00E4CDEE /* TalentInfoNode.cpp */; };
 		A1F365491C8E89E60084B9B4 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1F365481C8E89E60084B9B4 /* CFNetwork.framework */; };
 		A1F395EF1C23BBA800B75923 /* ObjectLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F395ED1C23BBA800B75923 /* ObjectLocalData.cpp */; };
@@ -556,6 +559,8 @@
 		A1211B281C0BF68E00C27CCC /* GameConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameConstants.cpp; path = Core/Game/GameConstants.cpp; sourceTree = "<group>"; };
 		A12BF9411D22278100D2E5CD /* XCardNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XCardNode.cpp; sourceTree = "<group>"; };
 		A12BF9421D22278100D2E5CD /* XCardNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCardNode.h; sourceTree = "<group>"; };
+		A12DE76A1D4868AC0012D127 /* UniversalButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UniversalButton.cpp; sourceTree = "<group>"; };
+		A12DE76B1D4868AC0012D127 /* UniversalButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniversalButton.h; sourceTree = "<group>"; };
 		A13108A41C046BF900EAAD90 /* particle */ = {isa = PBXFileReference; lastKnownFileType = folder; path = particle; sourceTree = "<group>"; };
 		A14B5EF91C311908006FB0DB /* Addon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Addon.cpp; path = Core/Unit/Type/Addon.cpp; sourceTree = "<group>"; };
 		A14B5EFA1C311908006FB0DB /* Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Addon.h; path = Core/Unit/Type/Addon.h; sourceTree = "<group>"; };
@@ -799,6 +804,10 @@
 		A1E830671C1EA50200FE01B8 /* RewardData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardData.h; sourceTree = "<group>"; };
 		A1E8306B1C1EA55D00FE01B8 /* ContentData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ContentData.cpp; sourceTree = "<group>"; };
 		A1E8306C1C1EA55D00FE01B8 /* ContentData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentData.h; sourceTree = "<group>"; };
+		A1E947C01D48A3A400BD7A27 /* UserOperationNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserOperationNode.cpp; sourceTree = "<group>"; };
+		A1E947C11D48A3A400BD7A27 /* UserOperationNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserOperationNode.h; sourceTree = "<group>"; };
+		A1E947C31D48AE9E00BD7A27 /* ChatUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChatUI.cpp; sourceTree = "<group>"; };
+		A1E947C41D48AE9E00BD7A27 /* ChatUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatUI.h; sourceTree = "<group>"; };
 		A1F1B6DD1D23772F00E4CDEE /* TalentInfoNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TalentInfoNode.cpp; sourceTree = "<group>"; };
 		A1F1B6DE1D23772F00E4CDEE /* TalentInfoNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TalentInfoNode.h; sourceTree = "<group>"; };
 		A1F365481C8E89E60084B9B4 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
@@ -1621,6 +1630,8 @@
 				A1720E961BCCE41A00217E98 /* ScrollBar.h */,
 				A1DF50EB1C229488001CCFF2 /* TabButton.cpp */,
 				A1DF50EC1C229488001CCFF2 /* TabButton.h */,
+				A12DE76A1D4868AC0012D127 /* UniversalButton.cpp */,
+				A12DE76B1D4868AC0012D127 /* UniversalButton.h */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -2038,8 +2049,12 @@
 				A1E8305B1C1E75BB00FE01B8 /* ChatLayer.h */,
 				A1E830541C1E75A700FE01B8 /* ChatNode.cpp */,
 				A1E830551C1E75A700FE01B8 /* ChatNode.h */,
+				A1E947C31D48AE9E00BD7A27 /* ChatUI.cpp */,
+				A1E947C41D48AE9E00BD7A27 /* ChatUI.h */,
 				A1CA35E71D45BDE200584C9D /* NoticeNode.cpp */,
 				A1CA35E81D45BDE200584C9D /* NoticeNode.h */,
+				A1E947C01D48A3A400BD7A27 /* UserOperationNode.cpp */,
+				A1E947C11D48A3A400BD7A27 /* UserOperationNode.h */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -2433,6 +2448,7 @@
 				A16BF2A11C314DA000E91458 /* GearSetLocalData.cpp in Sources */,
 				A108A7AB1D24F44300987658 /* CardUpgradeData.cpp in Sources */,
 				A1720E8B1BCCE19300217E98 /* aes_core.c in Sources */,
+				A12DE76C1D4868AC0012D127 /* UniversalButton.cpp in Sources */,
 				045117101BCFBA5F002AA721 /* Game.cpp in Sources */,
 				3028EBC31BFF0CBD00511C51 /* DynamicValue.cpp in Sources */,
 				A1CA35F51D45F29D00584C9D /* SettingsLayer.cpp in Sources */,
@@ -2444,6 +2460,7 @@
 				3087FF0F1CA12A57004E31F6 /* TCPClient.mm in Sources */,
 				045117071BCFBA53002AA721 /* Bullet.cpp in Sources */,
 				A1DFAAD31D10FC2800817E69 /* BattleDeckUnitInfoNode.cpp in Sources */,
+				A1E947C51D48AE9E00BD7A27 /* ChatUI.cpp in Sources */,
 				3087FF321CA2BF5A004E31F6 /* UnderworldClient.cpp in Sources */,
 				A10611FF1C3D20A40065070F /* SoldierPieceData.cpp in Sources */,
 				A1E830681C1EA50200FE01B8 /* ConditionData.cpp in Sources */,
@@ -2463,6 +2480,7 @@
 				A1B4AE2F1C200521005906A6 /* GuildManager.cpp in Sources */,
 				A1D5C9D51D2288DE006B1738 /* TalentBriefNode.cpp in Sources */,
 				046D9E631D34FD5D0093A745 /* ConfigChecker.cpp in Sources */,
+				A1E947C21D48A3A400BD7A27 /* UserOperationNode.cpp in Sources */,
 				A1F5BF9F1C1FD508007C08CB /* AchievementLocalData.cpp in Sources */,
 				A1DF50ED1C229488001CCFF2 /* TabButton.cpp in Sources */,
 				A1E8305C1C1E75BB00FE01B8 /* ChatLayer.cpp in Sources */,

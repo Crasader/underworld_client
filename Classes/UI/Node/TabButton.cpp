@@ -18,10 +18,7 @@ static const Color4B& touchedTextColor(Color4B::ORANGE);
 
 TabButton::TabButton()
 :_titleLabel(nullptr)
-,_button(nullptr)
-{
-    
-}
+,_button(nullptr) {}
 
 TabButton::~TabButton()
 {
@@ -30,9 +27,8 @@ TabButton::~TabButton()
 
 TabButton* TabButton::create(const string& title, const string& normal, const string& selected, const Button::ccWidgetClickCallback& callback)
 {
-    TabButton *p = new (nothrow) TabButton();
-    if(p && p->init(title, normal, selected, callback))
-    {
+    auto p = new (nothrow) TabButton();
+    if(p && p->init(title, normal, selected, callback)) {
         p->autorelease();
         return p;
     }
@@ -43,9 +39,8 @@ TabButton* TabButton::create(const string& title, const string& normal, const st
 
 TabButton* TabButton::create(const string& title, const Button::ccWidgetClickCallback& callback)
 {
-    TabButton *p = new (nothrow) TabButton();
-    if(p && p->init(title, callback))
-    {
+    auto p = new (nothrow) TabButton();
+    if(p && p->init(title, callback)) {
         p->autorelease();
         return p;
     }

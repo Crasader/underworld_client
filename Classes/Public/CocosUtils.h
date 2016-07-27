@@ -10,6 +10,7 @@
 #define CocosUtils_h
 
 #include "cocos2d.h"
+#include "ui/CocosGUI.h"
 #include "CocosGlobal.h"
 
 namespace CocosUtils
@@ -45,6 +46,7 @@ namespace CocosUtils
     
     // test
     cocos2d::Sprite* createPureColorSprite(const cocos2d::Size& size, const cocos2d::Color4B& color);
+    cocos2d::Node* createBackground(const std::string& file, const cocos2d::Size& size);
     cocos2d::Sprite* createTitle(const std::string& title, float fontSize);
     
     // animation
@@ -65,7 +67,7 @@ namespace CocosUtils
                                  const std::function<void(cocos2d::Node*)>& callback = nullptr);
     
     // buttons
-    cocos2d::Node* createExitButton(cocos2d::Node* parent, const std::function<void()>& callback, const std::string& file = "GameImages/public/ui_guanbi.png");
+    cocos2d::ui::Button* createExitButton(cocos2d::Node* parent, const std::function<void()>& callback, const std::string& file = "GameImages/public/ui_guanbi.png");
     
 #pragma mark - notifications
     void postNotification(const std::string& notification);

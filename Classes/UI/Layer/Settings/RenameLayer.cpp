@@ -10,6 +10,7 @@
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "SettingUI.h"
+#include "UniversalButton.h"
 
 using namespace std;
 
@@ -50,7 +51,7 @@ bool RenameLayer::init()
         bg->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(bg);
         
-        auto subNode = SettingUI::createSubBackground(Size(579, 202));
+        auto subNode = CocosUtils::createBackground("GameImages/public/ui_background_1.png", Size(579, 202));
         bg->addChild(subNode);
         
         const auto& size(bg->getContentSize());
@@ -81,7 +82,9 @@ bool RenameLayer::init()
         }
         
         {
-            auto s = ui::Scale9Sprite::create(Rect(5, 5, 337, 43), SettingUI::getResourcePath("ui_kuang_6.png"));
+            static const Size rs(347, 53);
+            static const float capInsets(5.0f);
+            auto s = ui::Scale9Sprite::create(SettingUI::getResourcePath("ui_kuang_6.png"), Rect(0, 0, rs.width, rs.height), Rect(capInsets, capInsets, rs.width - capInsets * 2, rs.height - capInsets * 2));
             auto eb = ui::EditBox::create(Size(347, 53), s);
             const auto& size(eb->getContentSize());
             eb->setPosition(Point(subBgSize.width / 2, size.height / 2 + edgeY));
@@ -97,8 +100,8 @@ bool RenameLayer::init()
         title->setPosition(Point(size.width / 2, (size.height + subBgSize.height + edge) / 2));
         bg->addChild(title);
         
-        auto button = SettingUI::createButton(SettingUI::ButtonType::Normal, "Finish");
-        button->addClickEventListener([](Ref*) {
+        auto button = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Normal, "Finish");
+        button->setCallback([](Ref*) {
             
         });
         button->setPosition(Point(size.width / 2, edge / 2));

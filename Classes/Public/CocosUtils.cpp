@@ -7,7 +7,6 @@
 //
 
 #include "CocosUtils.h"
-#include "ui/CocosGUI.h"
 #include "cocostudio/CocoStudio.h"
 #include "Global.h"
 #include <iomanip>
@@ -284,6 +283,20 @@ Sprite* CocosUtils::createPureColorSprite(const Size& size, const Color4B& color
     return newSprite;
 }
 
+Node* CocosUtils::createBackground(const string& file, const Size& size)
+{
+    auto node = Node::create();
+    node->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    node->setContentSize(size);
+    
+    auto s = Sprite::create(file);
+    s->setScale(size.width, size.height);
+    s->setPosition(Point(size.width / 2, size.height / 2));
+    node->addChild(s);
+    
+    return node;
+}
+
 Sprite* CocosUtils::createTitle(const string& title, float fontSize)
 {
     Sprite* titleBg = Sprite::create("GameImages/test/ui_black_6.png");
@@ -445,9 +458,9 @@ Node* CocosUtils::playAnimation(const string& file,
     return node;
 }
 
-Node* CocosUtils::createExitButton(Node* parent, const function<void()>& callback, const string& file)
+Button* CocosUtils::createExitButton(Node* parent, const function<void()>& callback, const string& file)
 {
-    const auto& winSize = parent->getContentSize();
+    const auto& psize(parent->getContentSize());
     auto button = Button::create(file, file);
     button->addClickEventListener([callback](Ref*) {
         if (callback) {
@@ -458,7 +471,7 @@ Node* CocosUtils::createExitButton(Node* parent, const function<void()>& callbac
     
     static const Vec2 offset(5.0f, 5.0f);
     const auto& size = button->getContentSize();
-    button->setPosition(Point(winSize.width - size.width / 2, winSize.height - size.height / 2) - offset);
+    button->setPosition(Point(psize.width - size.width / 2, psize.height - size.height / 2) - offset);
     
     return button;
 }

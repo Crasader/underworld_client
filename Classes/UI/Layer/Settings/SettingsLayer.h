@@ -10,7 +10,6 @@
 #define SettingsLayer_h
 
 #include "cocos2d.h"
-#include "ui/CocosGUI.h"
 #include "LanguageLayer.h"
 #include "RenameLayer.h"
 
@@ -48,7 +47,7 @@ protected:
     
     // RenameLayerObserver
     
-    ui::Button* createReturnButton(Node* parent, const Vec2& offset, const std::function<void()>& callback) const;
+    Node* createReturnButton(Node* parent, const Vec2& offset, const std::function<void()>& callback) const;
     Node* createContent(Node* parent);
     void createSettingNodes(Node* parent, const std::vector<SettingType>& types, const Point& basePoint, int row, int column, const Vec2& edge, const Vec2& space);
     void checkButtonStatus(SettingType type, bool& isOn, bool& isEnabled) const;
@@ -56,7 +55,7 @@ protected:
     
 private:
     SettingsLayerObserver *_observer;
-    ui::Button* _returnButton;
+    Node* _returnButton;
 };
 
 #endif /* SettingsLayer_h */

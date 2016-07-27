@@ -7,14 +7,14 @@
 //
 
 #include "ChatNode.h"
+#include "ChatData.h"
 
 using namespace std;
 
-ChatNode* ChatNode::create()
+ChatNode* ChatNode::create(const ChatData* data)
 {
-    ChatNode *ret = new (nothrow) ChatNode();
-    if (ret && ret->init())
-    {
+    auto ret = new (nothrow) ChatNode();
+    if (ret && ret->init(data)) {
         ret->autorelease();
         return ret;
     }
@@ -25,9 +25,12 @@ ChatNode* ChatNode::create()
 
 ChatNode::ChatNode()
 :_observer(nullptr)
-{
-    
-}
+,_data(nullptr)
+,_icon(nullptr)
+,_bg(nullptr)
+,_user(nullptr)
+,_content(nullptr)
+,_time(nullptr) {}
 
 ChatNode::~ChatNode()
 {
@@ -39,7 +42,7 @@ void ChatNode::registerObserver(ChatNodeObserver *observer)
     _observer = observer;
 }
 
-bool ChatNode::init()
+bool ChatNode::init(const ChatData* data)
 {
     if (Node::init()) {
         
@@ -47,4 +50,14 @@ bool ChatNode::init()
     }
     
     return false;
+}
+
+void ChatNode::update(const ChatData* data)
+{
+    
+}
+
+void ChatNode::adjust()
+{
+    
 }

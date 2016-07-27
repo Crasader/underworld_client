@@ -7,9 +7,11 @@
 //
 
 #include "SettingsLayer.h"
+#include "ui/CocosGUI.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "SettingUI.h"
+#include "UniversalButton.h"
 
 using namespace std;
 
@@ -63,7 +65,7 @@ private:
     Callback _callback;
     bool _isSwitch;
     bool _isOn;
-    ui::Button* _button;
+    UniversalButton* _button;
 };
 
 SettingNode* SettingNode::create(SettingType type, const Callback& callback, bool isOn) {
@@ -127,10 +129,10 @@ bool SettingNode::init(SettingType type, const Callback& callback, bool isOn) {
                 bTitle.assign(title);
             }
             
-            auto bType(isOn ? SettingUI::ButtonType::Normal : SettingUI::ButtonType::Selected);
-            _button = createButton(bType, bTitle);
+            auto bType(isOn ? UniversalButton::BType::Normal : UniversalButton::BType::Selected);
+            _button = UniversalButton::create(UniversalButton::BSize::Small, bType, bTitle);
             _button->setPressedActionEnabled(true);
-            _button->addClickEventListener([this](Ref*) {
+            _button->setCallback([this](Ref*) {
                 if (_callback) {
                     _callback(_type);
                 }
@@ -177,9 +179,10 @@ void SettingNode::toggle(bool isOn) {
         _isOn = isOn;
         
         if (_button) {
-            auto bType(isOn ? SettingUI::ButtonType::Normal : SettingUI::ButtonType::Selected);
+            auto bType(isOn ? UniversalButton::BType::Normal : UniversalButton::BType::Selected);
             auto bTitle(isOn ? "On" : "Off");
-            updateButton(_button, bType, bTitle);
+            _button->setType(bType);
+            _button->setTitle(bTitle);
         }
     }
 }
@@ -226,7 +229,7 @@ bool SettingsLayer::init()
         bg->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(bg);
         
-        auto subNode = SettingUI::createSubBackground(subNodeSize);
+        auto subNode = CocosUtils::createBackground("GameImages/public/ui_background_1.png", subNodeSize);
         bg->addChild(subNode);
         
         const auto& size(bg->getContentSize());
@@ -284,10 +287,10 @@ void SettingsLayer::onLanguageLayerClosed()
 
 #pragma mark - RenameLayerObserver
 
-ui::Button* SettingsLayer::createReturnButton(Node* parent, const Vec2& offset, const function<void()>& callback) const
+Node* SettingsLayer::createReturnButton(Node* parent, const Vec2& offset, const function<void()>& callback) const
 {
     if (parent) {
-        auto button = SettingUI::createButton(SettingUI::ButtonType::Normal, "");
+        auto button = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Normal, "");
         parent->addChild(button);
         
         const auto& size(button->getContentSize());
@@ -297,7 +300,7 @@ ui::Button* SettingsLayer::createReturnButton(Node* parent, const Vec2& offset, 
         
         const auto& pSize(parent->getContentSize());
         button->setPosition(Point(offset.x + size.width / 2, pSize.height - (offset.y + size.height / 2)));
-        button->addClickEventListener([callback](Ref*) {
+        button->setCallback([callback](Ref*) {
             if (callback) { callback(); }
         });
         

@@ -49,7 +49,7 @@ ChatLayer::ChatLayer()
 ,_editBoxBg(nullptr)
 ,_editBox(nullptr)
 {
-    auto size(ChatNode::create()->getContentSize());
+    auto size(ChatNode::create(nullptr)->getContentSize());
     _nodeSize = size + Size(nodeOffsetOnTable.x, nodeOffsetOnTable.y);
     
     _tableMaxSize.width = _nodeSize.width * tableColumnCount + nodeOffsetOnTable.x;
@@ -126,7 +126,7 @@ TableViewCell* ChatLayer::tableCellAtIndex(TableView *table, ssize_t idx)
         auto node = dynamic_cast<ChatNode*>(cell->getNode(i));
         if (index < cnt) {
             if (!node) {
-                node = ChatNode::create();
+                node = ChatNode::create(nullptr);
                 node->registerObserver(this);
                 cell->addChild(node);
                 cell->setNode(node, i);
@@ -240,7 +240,7 @@ void ChatLayer::createTabButtons(const Point& position)
 
 ChatNode* ChatLayer::createChatNode(const ChatData* data)
 {
-    auto node = ChatNode::create();
+    auto node = ChatNode::create(nullptr);
     return node;
 }
 
