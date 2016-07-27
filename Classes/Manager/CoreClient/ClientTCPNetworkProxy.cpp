@@ -196,7 +196,11 @@ static std::string parseReconnect2SMsg(int uid, int battleid) {
     root.AddMember(MESSAGE_KEY_BATTLE_ID, battleidJson, allocator);
     root.AddMember(MESSAGE_KEY_FRAME, msgFrame, allocator);
     
-    return DataManager::getInstance()->getBinaryJsonTool()->encode(root);
+    rapidjson::StringBuffer buffer;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+    root.Accept(writer);
+    return buffer.GetString();
+//    return DataManager::getInstance()->getBinaryJsonTool()->encode(root);
 }
 
 
