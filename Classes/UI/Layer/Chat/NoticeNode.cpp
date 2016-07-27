@@ -56,15 +56,17 @@ bool NoticeNode::init(const NoticeData* data)
         addChild(_bg);
         
         _user = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
-        _user->setAnchorPoint(Point::ANCHOR_MIDDLE);
+        _user->setHorizontalAlignment(TextHAlignment::LEFT);
+        _user->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
         _bg->addChild(_user);
         
         _content = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
-        _content->setAnchorPoint(Point::ANCHOR_MIDDLE);
+        _content->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
         _bg->addChild(_content);
         
         _time = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
-        _time->setAnchorPoint(Point::ANCHOR_MIDDLE);
+        _user->setHorizontalAlignment(TextHAlignment::RIGHT);
+        _time->setAnchorPoint(Point::ANCHOR_TOP_RIGHT);
         _bg->addChild(_time);
         
         _resourceBg = Sprite::create(ChatUI::getResourcePath("ui_tiao_5.png"));
@@ -154,11 +156,12 @@ void NoticeNode::adjust()
     const auto& csize(_content->getContentSize());
     const auto& tsize(_time->getContentSize());
     const auto& rsize(_resourceBg->getContentSize());
-    const Size size(rsize.width + edge * 2, MAX(usize.height, tsize.height) + csize.height + space * 2);
+    const Size size(rsize.width + edge * 2,
+                    MAX(usize.height, tsize.height) + csize.height + space * 2 + rsize.height + edge * 2);
     _bg->setContentSize(size);
     
-    _user->setPosition(Point(edge + usize.width / 2, size.height - (edge + usize.height / 2)));
-    _time->setPosition(Point(size.width - (edge + tsize.width / 2), size.height - (edge + tsize.height / 2)));
+    _user->setPosition(Point(edge, size.height - edge));
+    _time->setPosition(Point(size.width - edge, size.height - edge));
     _content->setPosition(Point(size.width / 2, edge + rsize.height + space + csize.height / 2));
     _resourceBg->setPosition(Point(size.width / 2, edge + rsize.height / 2));
 }

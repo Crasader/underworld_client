@@ -33,13 +33,15 @@ public:
 protected:
     ChatNode();
     bool init(const ChatData* data);
-    void adjust();
+    void createDialog(bool isMe);
+    void createIcon();
+    void adjust(bool isMe);
     
 private:
     ChatNodeObserver* _observer;
     const ChatData* _data;
     Node* _icon;
-    ui::Scale9Sprite* _bg;
+    ui::Scale9Sprite* _dialogBg;
     Label* _user;
     Label* _content;
     Label* _time;
