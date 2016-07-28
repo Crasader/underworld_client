@@ -17,6 +17,7 @@
 #include "BattleDeckLayer.h"
 #include "CardLayer.h"
 #include "SettingsLayer.h"
+#include "ChatLayer.h"
 
 using namespace std;
 using namespace ui;
@@ -28,7 +29,7 @@ static const string getResourcePath(const string& file) {
 enum class MainUILayer::ButtonType {
     Rank,
     Achievement,
-    Option,
+    Settings,
     Chat,
     Friend,
     BattleLog,
@@ -66,7 +67,7 @@ private:
             static const map<ButtonType, pair<string, string>> ButtonInfos = {
                 {ButtonType::Rank,          {"ui_kuang_1", "icon_jiangbei"}},
                 {ButtonType::Achievement,   {"ui_kuang_1", "icon_xingxing"}},
-                {ButtonType::Option,        {"ui_kuang_1", "icon_shezhi"}},
+                {ButtonType::Settings,      {"ui_kuang_1", "icon_shezhi"}},
                 {ButtonType::Chat,          {"ui_liaotian", ""}},
                 {ButtonType::Friend,        {"ui_kuang_3", "icon_haoyou"}},
                 {ButtonType::BattleLog,     {"ui_kuang_3", "icon_zhanji"}},
@@ -353,7 +354,7 @@ bool MainUILayer::init()
             
             // top
             {
-                auto button = FunctionButton::create(ButtonType::Option, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
+                auto button = FunctionButton::create(ButtonType::Settings, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
                 addChild(button);
                 
                 const auto& size(button->getContentSize());
@@ -459,8 +460,12 @@ void MainUILayer::onFunctionButtonClicked(ButtonType type)
             runningScene->addChild(FormationLayer::create());
             break;
             
-        case ButtonType::Option:
-//            runningScene->addChild(SettingsLayer::create());
+        case ButtonType::Settings:
+            runningScene->addChild(SettingsLayer::create());
+            break;
+        
+        case ButtonType::Chat:
+            runningScene->addChild(ChatLayer::create());
             break;
             
         default:

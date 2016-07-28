@@ -4,7 +4,7 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>hero-Rifleman/attack/body/0/10001.png</key>
+            <key>hero-Rifleman-equipment/attack/body/0/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -19,7 +19,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/0/10002.png</key>
+            <key>hero-Rifleman-equipment/attack/body/0/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -34,7 +34,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/0/10003.png</key>
+            <key>hero-Rifleman-equipment/attack/body/0/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -49,7 +49,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/0/10004.png</key>
+            <key>hero-Rifleman-equipment/attack/body/0/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -64,7 +64,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/0/10005.png</key>
+            <key>hero-Rifleman-equipment/attack/body/0/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -79,7 +79,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/0/10006.png</key>
+            <key>hero-Rifleman-equipment/attack/body/0/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -94,7 +94,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/0/10007.png</key>
+            <key>hero-Rifleman-equipment/attack/body/0/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -109,7 +109,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/0/10008.png</key>
+            <key>hero-Rifleman-equipment/attack/body/0/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -124,7 +124,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/0/10009.png</key>
+            <key>hero-Rifleman-equipment/attack/body/0/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -139,7 +139,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/1/10001.png</key>
+            <key>hero-Rifleman-equipment/attack/body/1/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -154,7 +154,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/1/10002.png</key>
+            <key>hero-Rifleman-equipment/attack/body/1/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -169,7 +169,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/1/10003.png</key>
+            <key>hero-Rifleman-equipment/attack/body/1/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -184,7 +184,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/1/10004.png</key>
+            <key>hero-Rifleman-equipment/attack/body/1/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -199,7 +199,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/1/10005.png</key>
+            <key>hero-Rifleman-equipment/attack/body/1/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -214,7 +214,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/1/10006.png</key>
+            <key>hero-Rifleman-equipment/attack/body/1/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -229,7 +229,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/1/10007.png</key>
+            <key>hero-Rifleman-equipment/attack/body/1/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -244,7 +244,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/1/10008.png</key>
+            <key>hero-Rifleman-equipment/attack/body/1/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -259,7 +259,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/1/10009.png</key>
+            <key>hero-Rifleman-equipment/attack/body/1/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -274,7 +274,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/2/10001.png</key>
+            <key>hero-Rifleman-equipment/attack/body/2/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -289,7 +289,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/2/10002.png</key>
+            <key>hero-Rifleman-equipment/attack/body/2/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -304,7 +304,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/2/10003.png</key>
+            <key>hero-Rifleman-equipment/attack/body/2/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -319,7 +319,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/2/10004.png</key>
+            <key>hero-Rifleman-equipment/attack/body/2/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -334,7 +334,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/2/10005.png</key>
+            <key>hero-Rifleman-equipment/attack/body/2/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -349,7 +349,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/2/10006.png</key>
+            <key>hero-Rifleman-equipment/attack/body/2/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -364,7 +364,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/2/10007.png</key>
+            <key>hero-Rifleman-equipment/attack/body/2/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -379,7 +379,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/2/10008.png</key>
+            <key>hero-Rifleman-equipment/attack/body/2/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -394,7 +394,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/2/10009.png</key>
+            <key>hero-Rifleman-equipment/attack/body/2/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -409,7 +409,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/3/10001.png</key>
+            <key>hero-Rifleman-equipment/attack/body/3/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -424,7 +424,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/attack/body/3/10002.png</key>
+            <key>hero-Rifleman-equipment/attack/body/3/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -439,7 +439,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/attack/body/3/10003.png</key>
+            <key>hero-Rifleman-equipment/attack/body/3/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -454,7 +454,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/attack/body/3/10004.png</key>
+            <key>hero-Rifleman-equipment/attack/body/3/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -469,7 +469,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/attack/body/3/10005.png</key>
+            <key>hero-Rifleman-equipment/attack/body/3/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -484,7 +484,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/attack/body/3/10006.png</key>
+            <key>hero-Rifleman-equipment/attack/body/3/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -499,7 +499,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/attack/body/3/10007.png</key>
+            <key>hero-Rifleman-equipment/attack/body/3/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -514,7 +514,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/attack/body/3/10008.png</key>
+            <key>hero-Rifleman-equipment/attack/body/3/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -529,7 +529,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/attack/body/3/10009.png</key>
+            <key>hero-Rifleman-equipment/attack/body/3/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -544,7 +544,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/4/10001.png</key>
+            <key>hero-Rifleman-equipment/attack/body/4/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -559,7 +559,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/attack/body/4/10002.png</key>
+            <key>hero-Rifleman-equipment/attack/body/4/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -574,7 +574,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/attack/body/4/10003.png</key>
+            <key>hero-Rifleman-equipment/attack/body/4/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -589,7 +589,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/attack/body/4/10004.png</key>
+            <key>hero-Rifleman-equipment/attack/body/4/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -604,7 +604,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/4/10005.png</key>
+            <key>hero-Rifleman-equipment/attack/body/4/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -619,7 +619,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/attack/body/4/10006.png</key>
+            <key>hero-Rifleman-equipment/attack/body/4/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -634,7 +634,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/attack/body/4/10007.png</key>
+            <key>hero-Rifleman-equipment/attack/body/4/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -649,7 +649,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/attack/body/4/10008.png</key>
+            <key>hero-Rifleman-equipment/attack/body/4/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -664,7 +664,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/attack/body/4/10009.png</key>
+            <key>hero-Rifleman-equipment/attack/body/4/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -679,7 +679,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/attack/body/5/10001.png</key>
+            <key>hero-Rifleman-equipment/attack/body/5/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -694,7 +694,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/5/10002.png</key>
+            <key>hero-Rifleman-equipment/attack/body/5/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -709,7 +709,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/5/10003.png</key>
+            <key>hero-Rifleman-equipment/attack/body/5/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -724,7 +724,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/5/10004.png</key>
+            <key>hero-Rifleman-equipment/attack/body/5/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -739,7 +739,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/5/10005.png</key>
+            <key>hero-Rifleman-equipment/attack/body/5/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -754,7 +754,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/5/10006.png</key>
+            <key>hero-Rifleman-equipment/attack/body/5/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -769,7 +769,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/attack/body/5/10007.png</key>
+            <key>hero-Rifleman-equipment/attack/body/5/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -784,7 +784,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/attack/body/5/10008.png</key>
+            <key>hero-Rifleman-equipment/attack/body/5/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -799,7 +799,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/attack/body/5/10009.png</key>
+            <key>hero-Rifleman-equipment/attack/body/5/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -814,7 +814,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/6/10001.png</key>
+            <key>hero-Rifleman-equipment/attack/body/6/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -829,7 +829,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/6/10002.png</key>
+            <key>hero-Rifleman-equipment/attack/body/6/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -844,7 +844,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/6/10003.png</key>
+            <key>hero-Rifleman-equipment/attack/body/6/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -859,7 +859,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/6/10004.png</key>
+            <key>hero-Rifleman-equipment/attack/body/6/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -874,7 +874,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/6/10005.png</key>
+            <key>hero-Rifleman-equipment/attack/body/6/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -889,7 +889,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/6/10006.png</key>
+            <key>hero-Rifleman-equipment/attack/body/6/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -904,7 +904,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/6/10007.png</key>
+            <key>hero-Rifleman-equipment/attack/body/6/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -919,7 +919,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/6/10008.png</key>
+            <key>hero-Rifleman-equipment/attack/body/6/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -934,7 +934,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/attack/body/6/10009.png</key>
+            <key>hero-Rifleman-equipment/attack/body/6/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -949,7 +949,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/0/10001.png</key>
+            <key>hero-Rifleman-equipment/run/body/0/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -964,7 +964,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/0/10002.png</key>
+            <key>hero-Rifleman-equipment/run/body/0/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -979,7 +979,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/0/10003.png</key>
+            <key>hero-Rifleman-equipment/run/body/0/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -994,7 +994,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/0/10004.png</key>
+            <key>hero-Rifleman-equipment/run/body/0/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1009,7 +1009,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/0/10005.png</key>
+            <key>hero-Rifleman-equipment/run/body/0/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1024,7 +1024,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/0/10006.png</key>
+            <key>hero-Rifleman-equipment/run/body/0/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1039,7 +1039,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/1/10001.png</key>
+            <key>hero-Rifleman-equipment/run/body/1/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1054,7 +1054,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/1/10002.png</key>
+            <key>hero-Rifleman-equipment/run/body/1/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1069,7 +1069,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/run/body/1/10003.png</key>
+            <key>hero-Rifleman-equipment/run/body/1/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1084,7 +1084,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/1/10004.png</key>
+            <key>hero-Rifleman-equipment/run/body/1/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1099,7 +1099,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/1/10005.png</key>
+            <key>hero-Rifleman-equipment/run/body/1/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1114,7 +1114,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/1/10006.png</key>
+            <key>hero-Rifleman-equipment/run/body/1/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1129,7 +1129,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/2/10001.png</key>
+            <key>hero-Rifleman-equipment/run/body/2/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1144,7 +1144,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/run/body/2/10002.png</key>
+            <key>hero-Rifleman-equipment/run/body/2/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1159,7 +1159,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/run/body/2/10003.png</key>
+            <key>hero-Rifleman-equipment/run/body/2/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1174,7 +1174,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/run/body/2/10004.png</key>
+            <key>hero-Rifleman-equipment/run/body/2/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1189,7 +1189,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/run/body/2/10005.png</key>
+            <key>hero-Rifleman-equipment/run/body/2/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1204,7 +1204,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/run/body/2/10006.png</key>
+            <key>hero-Rifleman-equipment/run/body/2/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1219,7 +1219,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/run/body/3/10001.png</key>
+            <key>hero-Rifleman-equipment/run/body/3/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1234,7 +1234,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/run/body/3/10002.png</key>
+            <key>hero-Rifleman-equipment/run/body/3/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1249,7 +1249,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/run/body/3/10003.png</key>
+            <key>hero-Rifleman-equipment/run/body/3/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1264,7 +1264,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/run/body/3/10004.png</key>
+            <key>hero-Rifleman-equipment/run/body/3/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1279,7 +1279,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/3/10005.png</key>
+            <key>hero-Rifleman-equipment/run/body/3/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1294,7 +1294,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/run/body/3/10006.png</key>
+            <key>hero-Rifleman-equipment/run/body/3/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1309,7 +1309,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/run/body/4/10001.png</key>
+            <key>hero-Rifleman-equipment/run/body/4/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1324,7 +1324,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/run/body/4/10002.png</key>
+            <key>hero-Rifleman-equipment/run/body/4/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1339,7 +1339,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/run/body/4/10003.png</key>
+            <key>hero-Rifleman-equipment/run/body/4/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1354,7 +1354,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/run/body/4/10004.png</key>
+            <key>hero-Rifleman-equipment/run/body/4/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1369,7 +1369,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/4/10005.png</key>
+            <key>hero-Rifleman-equipment/run/body/4/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1384,7 +1384,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/run/body/4/10006.png</key>
+            <key>hero-Rifleman-equipment/run/body/4/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1399,7 +1399,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/run/body/5/10001.png</key>
+            <key>hero-Rifleman-equipment/run/body/5/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1414,7 +1414,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/5/10002.png</key>
+            <key>hero-Rifleman-equipment/run/body/5/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1429,7 +1429,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/5/10003.png</key>
+            <key>hero-Rifleman-equipment/run/body/5/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1444,7 +1444,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/5/10004.png</key>
+            <key>hero-Rifleman-equipment/run/body/5/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1459,7 +1459,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/5/10005.png</key>
+            <key>hero-Rifleman-equipment/run/body/5/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1474,7 +1474,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/5/10006.png</key>
+            <key>hero-Rifleman-equipment/run/body/5/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1489,7 +1489,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/6/10001.png</key>
+            <key>hero-Rifleman-equipment/run/body/6/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1504,7 +1504,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/6/10002.png</key>
+            <key>hero-Rifleman-equipment/run/body/6/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1519,7 +1519,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/6/10003.png</key>
+            <key>hero-Rifleman-equipment/run/body/6/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1534,7 +1534,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/6/10004.png</key>
+            <key>hero-Rifleman-equipment/run/body/6/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1549,7 +1549,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/6/10005.png</key>
+            <key>hero-Rifleman-equipment/run/body/6/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1564,7 +1564,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/run/body/6/10006.png</key>
+            <key>hero-Rifleman-equipment/run/body/6/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1579,7 +1579,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/0/10001.png</key>
+            <key>hero-Rifleman-equipment/skill/body/0/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1594,7 +1594,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/0/10002.png</key>
+            <key>hero-Rifleman-equipment/skill/body/0/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1609,7 +1609,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/0/10003.png</key>
+            <key>hero-Rifleman-equipment/skill/body/0/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1624,7 +1624,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/0/10004.png</key>
+            <key>hero-Rifleman-equipment/skill/body/0/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1639,7 +1639,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/0/10005.png</key>
+            <key>hero-Rifleman-equipment/skill/body/0/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1654,7 +1654,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/0/10006.png</key>
+            <key>hero-Rifleman-equipment/skill/body/0/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1669,7 +1669,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/0/10007.png</key>
+            <key>hero-Rifleman-equipment/skill/body/0/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1684,7 +1684,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/0/10008.png</key>
+            <key>hero-Rifleman-equipment/skill/body/0/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1699,7 +1699,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/0/10009.png</key>
+            <key>hero-Rifleman-equipment/skill/body/0/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1714,7 +1714,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/0/10010.png</key>
+            <key>hero-Rifleman-equipment/skill/body/0/10010.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1729,7 +1729,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/0/10011.png</key>
+            <key>hero-Rifleman-equipment/skill/body/0/10011.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1744,7 +1744,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/0/10012.png</key>
+            <key>hero-Rifleman-equipment/skill/body/0/10012.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1759,7 +1759,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/0/10013.png</key>
+            <key>hero-Rifleman-equipment/skill/body/0/10013.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1774,7 +1774,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/0/10014.png</key>
+            <key>hero-Rifleman-equipment/skill/body/0/10014.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1789,7 +1789,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/1/10001.png</key>
+            <key>hero-Rifleman-equipment/skill/body/1/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1804,7 +1804,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/1/10002.png</key>
+            <key>hero-Rifleman-equipment/skill/body/1/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1819,7 +1819,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/1/10003.png</key>
+            <key>hero-Rifleman-equipment/skill/body/1/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1834,7 +1834,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/1/10004.png</key>
+            <key>hero-Rifleman-equipment/skill/body/1/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1849,7 +1849,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/1/10005.png</key>
+            <key>hero-Rifleman-equipment/skill/body/1/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1864,7 +1864,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/1/10006.png</key>
+            <key>hero-Rifleman-equipment/skill/body/1/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1879,7 +1879,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/1/10007.png</key>
+            <key>hero-Rifleman-equipment/skill/body/1/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1894,7 +1894,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/1/10008.png</key>
+            <key>hero-Rifleman-equipment/skill/body/1/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1909,7 +1909,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/1/10009.png</key>
+            <key>hero-Rifleman-equipment/skill/body/1/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1924,7 +1924,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/1/10010.png</key>
+            <key>hero-Rifleman-equipment/skill/body/1/10010.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1939,7 +1939,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/1/10011.png</key>
+            <key>hero-Rifleman-equipment/skill/body/1/10011.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1954,7 +1954,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/1/10012.png</key>
+            <key>hero-Rifleman-equipment/skill/body/1/10012.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1969,7 +1969,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/1/10013.png</key>
+            <key>hero-Rifleman-equipment/skill/body/1/10013.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1984,7 +1984,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/1/10014.png</key>
+            <key>hero-Rifleman-equipment/skill/body/1/10014.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1999,7 +1999,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/2/10001.png</key>
+            <key>hero-Rifleman-equipment/skill/body/2/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2014,7 +2014,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/2/10002.png</key>
+            <key>hero-Rifleman-equipment/skill/body/2/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2029,7 +2029,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/2/10003.png</key>
+            <key>hero-Rifleman-equipment/skill/body/2/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2044,7 +2044,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/2/10004.png</key>
+            <key>hero-Rifleman-equipment/skill/body/2/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2059,7 +2059,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/2/10005.png</key>
+            <key>hero-Rifleman-equipment/skill/body/2/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2074,7 +2074,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/2/10006.png</key>
+            <key>hero-Rifleman-equipment/skill/body/2/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2089,7 +2089,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/2/10007.png</key>
+            <key>hero-Rifleman-equipment/skill/body/2/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2104,7 +2104,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/2/10008.png</key>
+            <key>hero-Rifleman-equipment/skill/body/2/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2119,7 +2119,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/2/10009.png</key>
+            <key>hero-Rifleman-equipment/skill/body/2/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2134,7 +2134,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/2/10010.png</key>
+            <key>hero-Rifleman-equipment/skill/body/2/10010.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2149,7 +2149,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/2/10011.png</key>
+            <key>hero-Rifleman-equipment/skill/body/2/10011.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2164,7 +2164,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/2/10012.png</key>
+            <key>hero-Rifleman-equipment/skill/body/2/10012.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2179,7 +2179,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/2/10013.png</key>
+            <key>hero-Rifleman-equipment/skill/body/2/10013.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2194,7 +2194,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/2/10014.png</key>
+            <key>hero-Rifleman-equipment/skill/body/2/10014.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2209,7 +2209,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/3/10001.png</key>
+            <key>hero-Rifleman-equipment/skill/body/3/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2224,7 +2224,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/3/10002.png</key>
+            <key>hero-Rifleman-equipment/skill/body/3/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2239,7 +2239,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/3/10003.png</key>
+            <key>hero-Rifleman-equipment/skill/body/3/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2254,7 +2254,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/3/10004.png</key>
+            <key>hero-Rifleman-equipment/skill/body/3/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2269,7 +2269,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/3/10005.png</key>
+            <key>hero-Rifleman-equipment/skill/body/3/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2284,7 +2284,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/3/10006.png</key>
+            <key>hero-Rifleman-equipment/skill/body/3/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2299,7 +2299,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/3/10007.png</key>
+            <key>hero-Rifleman-equipment/skill/body/3/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2314,7 +2314,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/3/10008.png</key>
+            <key>hero-Rifleman-equipment/skill/body/3/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2329,7 +2329,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/3/10009.png</key>
+            <key>hero-Rifleman-equipment/skill/body/3/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2344,7 +2344,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/3/10010.png</key>
+            <key>hero-Rifleman-equipment/skill/body/3/10010.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2359,7 +2359,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/3/10011.png</key>
+            <key>hero-Rifleman-equipment/skill/body/3/10011.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2374,7 +2374,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/3/10012.png</key>
+            <key>hero-Rifleman-equipment/skill/body/3/10012.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2389,7 +2389,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/3/10013.png</key>
+            <key>hero-Rifleman-equipment/skill/body/3/10013.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2404,7 +2404,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/3/10014.png</key>
+            <key>hero-Rifleman-equipment/skill/body/3/10014.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2419,7 +2419,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/4/10001.png</key>
+            <key>hero-Rifleman-equipment/skill/body/4/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2434,7 +2434,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/4/10002.png</key>
+            <key>hero-Rifleman-equipment/skill/body/4/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2449,7 +2449,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/4/10003.png</key>
+            <key>hero-Rifleman-equipment/skill/body/4/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2464,7 +2464,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/4/10004.png</key>
+            <key>hero-Rifleman-equipment/skill/body/4/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2479,7 +2479,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/4/10005.png</key>
+            <key>hero-Rifleman-equipment/skill/body/4/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2494,7 +2494,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/4/10006.png</key>
+            <key>hero-Rifleman-equipment/skill/body/4/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2509,7 +2509,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/4/10007.png</key>
+            <key>hero-Rifleman-equipment/skill/body/4/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2524,7 +2524,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/4/10008.png</key>
+            <key>hero-Rifleman-equipment/skill/body/4/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2539,7 +2539,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/4/10009.png</key>
+            <key>hero-Rifleman-equipment/skill/body/4/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2554,7 +2554,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/4/10010.png</key>
+            <key>hero-Rifleman-equipment/skill/body/4/10010.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2569,7 +2569,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/4/10011.png</key>
+            <key>hero-Rifleman-equipment/skill/body/4/10011.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2584,7 +2584,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/4/10012.png</key>
+            <key>hero-Rifleman-equipment/skill/body/4/10012.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2599,7 +2599,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/4/10013.png</key>
+            <key>hero-Rifleman-equipment/skill/body/4/10013.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2614,7 +2614,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/4/10014.png</key>
+            <key>hero-Rifleman-equipment/skill/body/4/10014.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2629,7 +2629,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/5/10001.png</key>
+            <key>hero-Rifleman-equipment/skill/body/5/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2644,7 +2644,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/5/10002.png</key>
+            <key>hero-Rifleman-equipment/skill/body/5/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2659,7 +2659,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/5/10003.png</key>
+            <key>hero-Rifleman-equipment/skill/body/5/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2674,7 +2674,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/5/10004.png</key>
+            <key>hero-Rifleman-equipment/skill/body/5/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2689,7 +2689,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/5/10005.png</key>
+            <key>hero-Rifleman-equipment/skill/body/5/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2704,7 +2704,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/5/10006.png</key>
+            <key>hero-Rifleman-equipment/skill/body/5/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2719,7 +2719,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/5/10007.png</key>
+            <key>hero-Rifleman-equipment/skill/body/5/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2734,7 +2734,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/5/10008.png</key>
+            <key>hero-Rifleman-equipment/skill/body/5/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2749,7 +2749,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/5/10009.png</key>
+            <key>hero-Rifleman-equipment/skill/body/5/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2764,7 +2764,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/5/10010.png</key>
+            <key>hero-Rifleman-equipment/skill/body/5/10010.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2779,7 +2779,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/5/10011.png</key>
+            <key>hero-Rifleman-equipment/skill/body/5/10011.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2794,7 +2794,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/5/10012.png</key>
+            <key>hero-Rifleman-equipment/skill/body/5/10012.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2809,7 +2809,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/5/10013.png</key>
+            <key>hero-Rifleman-equipment/skill/body/5/10013.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2824,7 +2824,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/5/10014.png</key>
+            <key>hero-Rifleman-equipment/skill/body/5/10014.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2839,7 +2839,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/6/10001.png</key>
+            <key>hero-Rifleman-equipment/skill/body/6/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2854,7 +2854,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/6/10002.png</key>
+            <key>hero-Rifleman-equipment/skill/body/6/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2869,7 +2869,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/6/10003.png</key>
+            <key>hero-Rifleman-equipment/skill/body/6/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2884,7 +2884,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/6/10004.png</key>
+            <key>hero-Rifleman-equipment/skill/body/6/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2899,7 +2899,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/6/10005.png</key>
+            <key>hero-Rifleman-equipment/skill/body/6/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2914,7 +2914,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/6/10006.png</key>
+            <key>hero-Rifleman-equipment/skill/body/6/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2929,7 +2929,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/6/10007.png</key>
+            <key>hero-Rifleman-equipment/skill/body/6/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2944,7 +2944,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/6/10008.png</key>
+            <key>hero-Rifleman-equipment/skill/body/6/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2959,7 +2959,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/6/10009.png</key>
+            <key>hero-Rifleman-equipment/skill/body/6/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2974,7 +2974,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/6/10010.png</key>
+            <key>hero-Rifleman-equipment/skill/body/6/10010.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2989,7 +2989,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/6/10011.png</key>
+            <key>hero-Rifleman-equipment/skill/body/6/10011.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3004,7 +3004,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/6/10012.png</key>
+            <key>hero-Rifleman-equipment/skill/body/6/10012.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3019,7 +3019,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/skill/body/6/10013.png</key>
+            <key>hero-Rifleman-equipment/skill/body/6/10013.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3034,7 +3034,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/skill/body/6/10014.png</key>
+            <key>hero-Rifleman-equipment/skill/body/6/10014.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3049,7 +3049,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/0/10001.png</key>
+            <key>hero-Rifleman-equipment/stand/body/0/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3064,7 +3064,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/0/10002.png</key>
+            <key>hero-Rifleman-equipment/stand/body/0/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3079,7 +3079,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/0/10003.png</key>
+            <key>hero-Rifleman-equipment/stand/body/0/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3094,7 +3094,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/0/10004.png</key>
+            <key>hero-Rifleman-equipment/stand/body/0/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3109,7 +3109,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/0/10005.png</key>
+            <key>hero-Rifleman-equipment/stand/body/0/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3124,7 +3124,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/0/10006.png</key>
+            <key>hero-Rifleman-equipment/stand/body/0/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3139,7 +3139,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/0/10007.png</key>
+            <key>hero-Rifleman-equipment/stand/body/0/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3154,7 +3154,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/0/10008.png</key>
+            <key>hero-Rifleman-equipment/stand/body/0/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3169,7 +3169,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/0/10009.png</key>
+            <key>hero-Rifleman-equipment/stand/body/0/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3184,7 +3184,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/0/10010.png</key>
+            <key>hero-Rifleman-equipment/stand/body/0/10010.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3199,7 +3199,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/1/10001.png</key>
+            <key>hero-Rifleman-equipment/stand/body/1/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3214,7 +3214,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/1/10002.png</key>
+            <key>hero-Rifleman-equipment/stand/body/1/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3229,7 +3229,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/1/10003.png</key>
+            <key>hero-Rifleman-equipment/stand/body/1/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3244,7 +3244,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/1/10004.png</key>
+            <key>hero-Rifleman-equipment/stand/body/1/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3259,7 +3259,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/1/10005.png</key>
+            <key>hero-Rifleman-equipment/stand/body/1/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3274,7 +3274,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/1/10006.png</key>
+            <key>hero-Rifleman-equipment/stand/body/1/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3289,7 +3289,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/1/10007.png</key>
+            <key>hero-Rifleman-equipment/stand/body/1/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3304,7 +3304,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/1/10008.png</key>
+            <key>hero-Rifleman-equipment/stand/body/1/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3319,7 +3319,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/1/10009.png</key>
+            <key>hero-Rifleman-equipment/stand/body/1/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3334,7 +3334,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/1/10010.png</key>
+            <key>hero-Rifleman-equipment/stand/body/1/10010.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3349,7 +3349,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/2/10001.png</key>
+            <key>hero-Rifleman-equipment/stand/body/2/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3364,7 +3364,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/2/10002.png</key>
+            <key>hero-Rifleman-equipment/stand/body/2/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3379,7 +3379,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/2/10003.png</key>
+            <key>hero-Rifleman-equipment/stand/body/2/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3394,7 +3394,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/2/10004.png</key>
+            <key>hero-Rifleman-equipment/stand/body/2/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3409,7 +3409,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/2/10005.png</key>
+            <key>hero-Rifleman-equipment/stand/body/2/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3424,7 +3424,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/2/10006.png</key>
+            <key>hero-Rifleman-equipment/stand/body/2/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3439,7 +3439,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/2/10007.png</key>
+            <key>hero-Rifleman-equipment/stand/body/2/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3454,7 +3454,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/2/10008.png</key>
+            <key>hero-Rifleman-equipment/stand/body/2/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3469,7 +3469,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/2/10009.png</key>
+            <key>hero-Rifleman-equipment/stand/body/2/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3484,7 +3484,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/2/10010.png</key>
+            <key>hero-Rifleman-equipment/stand/body/2/10010.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3499,7 +3499,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/3/10001.png</key>
+            <key>hero-Rifleman-equipment/stand/body/3/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3514,7 +3514,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/3/10002.png</key>
+            <key>hero-Rifleman-equipment/stand/body/3/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3529,7 +3529,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/3/10003.png</key>
+            <key>hero-Rifleman-equipment/stand/body/3/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3544,7 +3544,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/3/10004.png</key>
+            <key>hero-Rifleman-equipment/stand/body/3/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3559,7 +3559,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/3/10005.png</key>
+            <key>hero-Rifleman-equipment/stand/body/3/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3574,7 +3574,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/3/10006.png</key>
+            <key>hero-Rifleman-equipment/stand/body/3/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3589,7 +3589,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/3/10007.png</key>
+            <key>hero-Rifleman-equipment/stand/body/3/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3604,7 +3604,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/3/10008.png</key>
+            <key>hero-Rifleman-equipment/stand/body/3/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3619,7 +3619,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/3/10009.png</key>
+            <key>hero-Rifleman-equipment/stand/body/3/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3634,7 +3634,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/3/10010.png</key>
+            <key>hero-Rifleman-equipment/stand/body/3/10010.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3649,7 +3649,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/4/10001.png</key>
+            <key>hero-Rifleman-equipment/stand/body/4/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3664,7 +3664,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/4/10002.png</key>
+            <key>hero-Rifleman-equipment/stand/body/4/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3679,7 +3679,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/4/10003.png</key>
+            <key>hero-Rifleman-equipment/stand/body/4/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3694,7 +3694,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/4/10004.png</key>
+            <key>hero-Rifleman-equipment/stand/body/4/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3709,7 +3709,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/4/10005.png</key>
+            <key>hero-Rifleman-equipment/stand/body/4/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3724,7 +3724,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/4/10006.png</key>
+            <key>hero-Rifleman-equipment/stand/body/4/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3739,7 +3739,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/4/10007.png</key>
+            <key>hero-Rifleman-equipment/stand/body/4/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3754,7 +3754,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/4/10008.png</key>
+            <key>hero-Rifleman-equipment/stand/body/4/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3769,7 +3769,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/4/10009.png</key>
+            <key>hero-Rifleman-equipment/stand/body/4/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3784,7 +3784,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/4/10010.png</key>
+            <key>hero-Rifleman-equipment/stand/body/4/10010.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3799,7 +3799,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/stand/body/5/10001.png</key>
+            <key>hero-Rifleman-equipment/stand/body/5/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3814,7 +3814,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/5/10002.png</key>
+            <key>hero-Rifleman-equipment/stand/body/5/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3829,7 +3829,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/5/10003.png</key>
+            <key>hero-Rifleman-equipment/stand/body/5/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3844,7 +3844,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/5/10004.png</key>
+            <key>hero-Rifleman-equipment/stand/body/5/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3859,7 +3859,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/5/10005.png</key>
+            <key>hero-Rifleman-equipment/stand/body/5/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3874,7 +3874,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/5/10006.png</key>
+            <key>hero-Rifleman-equipment/stand/body/5/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3889,7 +3889,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/5/10007.png</key>
+            <key>hero-Rifleman-equipment/stand/body/5/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3904,7 +3904,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/5/10008.png</key>
+            <key>hero-Rifleman-equipment/stand/body/5/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3919,7 +3919,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/5/10009.png</key>
+            <key>hero-Rifleman-equipment/stand/body/5/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3934,7 +3934,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/5/10010.png</key>
+            <key>hero-Rifleman-equipment/stand/body/5/10010.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3949,7 +3949,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/6/10001.png</key>
+            <key>hero-Rifleman-equipment/stand/body/6/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3964,7 +3964,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/6/10002.png</key>
+            <key>hero-Rifleman-equipment/stand/body/6/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3979,7 +3979,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/6/10003.png</key>
+            <key>hero-Rifleman-equipment/stand/body/6/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -3994,7 +3994,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/6/10004.png</key>
+            <key>hero-Rifleman-equipment/stand/body/6/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4009,7 +4009,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/6/10005.png</key>
+            <key>hero-Rifleman-equipment/stand/body/6/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4024,7 +4024,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/6/10006.png</key>
+            <key>hero-Rifleman-equipment/stand/body/6/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4039,7 +4039,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/6/10007.png</key>
+            <key>hero-Rifleman-equipment/stand/body/6/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4054,7 +4054,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/6/10008.png</key>
+            <key>hero-Rifleman-equipment/stand/body/6/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4069,7 +4069,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/6/10009.png</key>
+            <key>hero-Rifleman-equipment/stand/body/6/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4084,7 +4084,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/stand/body/6/10010.png</key>
+            <key>hero-Rifleman-equipment/stand/body/6/10010.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4099,7 +4099,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/0/10001.png</key>
+            <key>hero-Rifleman-equipment/win/body/0/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4114,7 +4114,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/0/10002.png</key>
+            <key>hero-Rifleman-equipment/win/body/0/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4129,7 +4129,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/0/10003.png</key>
+            <key>hero-Rifleman-equipment/win/body/0/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4144,7 +4144,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/win/body/0/10004.png</key>
+            <key>hero-Rifleman-equipment/win/body/0/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4159,7 +4159,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/0/10005.png</key>
+            <key>hero-Rifleman-equipment/win/body/0/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4174,7 +4174,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/0/10006.png</key>
+            <key>hero-Rifleman-equipment/win/body/0/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4189,7 +4189,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/0/10007.png</key>
+            <key>hero-Rifleman-equipment/win/body/0/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4204,7 +4204,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/win/body/0/10008.png</key>
+            <key>hero-Rifleman-equipment/win/body/0/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4219,7 +4219,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/win/body/0/10009.png</key>
+            <key>hero-Rifleman-equipment/win/body/0/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4234,7 +4234,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/0/10010.png</key>
+            <key>hero-Rifleman-equipment/win/body/0/10010.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4249,7 +4249,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/0/10011.png</key>
+            <key>hero-Rifleman-equipment/win/body/0/10011.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4264,7 +4264,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/0/10012.png</key>
+            <key>hero-Rifleman-equipment/win/body/0/10012.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4279,7 +4279,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/1/10001.png</key>
+            <key>hero-Rifleman-equipment/win/body/1/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4294,7 +4294,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/1/10002.png</key>
+            <key>hero-Rifleman-equipment/win/body/1/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4309,7 +4309,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/win/body/1/10003.png</key>
+            <key>hero-Rifleman-equipment/win/body/1/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4324,7 +4324,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/win/body/1/10004.png</key>
+            <key>hero-Rifleman-equipment/win/body/1/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4339,7 +4339,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/win/body/1/10005.png</key>
+            <key>hero-Rifleman-equipment/win/body/1/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4354,7 +4354,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/1/10006.png</key>
+            <key>hero-Rifleman-equipment/win/body/1/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4369,7 +4369,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/win/body/1/10007.png</key>
+            <key>hero-Rifleman-equipment/win/body/1/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4384,7 +4384,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/1/10008.png</key>
+            <key>hero-Rifleman-equipment/win/body/1/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4399,7 +4399,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/1/10009.png</key>
+            <key>hero-Rifleman-equipment/win/body/1/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4414,7 +4414,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/1/10010.png</key>
+            <key>hero-Rifleman-equipment/win/body/1/10010.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4429,7 +4429,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/1/10011.png</key>
+            <key>hero-Rifleman-equipment/win/body/1/10011.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4444,7 +4444,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/1/10012.png</key>
+            <key>hero-Rifleman-equipment/win/body/1/10012.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4459,7 +4459,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/2/10001.png</key>
+            <key>hero-Rifleman-equipment/win/body/2/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4474,7 +4474,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/win/body/2/10002.png</key>
+            <key>hero-Rifleman-equipment/win/body/2/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4489,7 +4489,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/win/body/2/10003.png</key>
+            <key>hero-Rifleman-equipment/win/body/2/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4504,7 +4504,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/win/body/2/10004.png</key>
+            <key>hero-Rifleman-equipment/win/body/2/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4519,7 +4519,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/win/body/2/10005.png</key>
+            <key>hero-Rifleman-equipment/win/body/2/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4534,7 +4534,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/win/body/2/10006.png</key>
+            <key>hero-Rifleman-equipment/win/body/2/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4549,7 +4549,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/2/10007.png</key>
+            <key>hero-Rifleman-equipment/win/body/2/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4564,7 +4564,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/2/10008.png</key>
+            <key>hero-Rifleman-equipment/win/body/2/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4579,7 +4579,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/2/10009.png</key>
+            <key>hero-Rifleman-equipment/win/body/2/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4594,7 +4594,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/2/10010.png</key>
+            <key>hero-Rifleman-equipment/win/body/2/10010.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4609,7 +4609,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/2/10011.png</key>
+            <key>hero-Rifleman-equipment/win/body/2/10011.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4624,7 +4624,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/2/10012.png</key>
+            <key>hero-Rifleman-equipment/win/body/2/10012.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4639,7 +4639,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/3/10001.png</key>
+            <key>hero-Rifleman-equipment/win/body/3/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4654,7 +4654,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/win/body/3/10002.png</key>
+            <key>hero-Rifleman-equipment/win/body/3/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4669,7 +4669,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/win/body/3/10003.png</key>
+            <key>hero-Rifleman-equipment/win/body/3/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4684,7 +4684,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/3/10004.png</key>
+            <key>hero-Rifleman-equipment/win/body/3/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4699,7 +4699,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/3/10005.png</key>
+            <key>hero-Rifleman-equipment/win/body/3/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4714,7 +4714,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/3/10006.png</key>
+            <key>hero-Rifleman-equipment/win/body/3/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4729,7 +4729,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/3/10007.png</key>
+            <key>hero-Rifleman-equipment/win/body/3/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4744,7 +4744,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/3/10008.png</key>
+            <key>hero-Rifleman-equipment/win/body/3/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4759,7 +4759,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/3/10009.png</key>
+            <key>hero-Rifleman-equipment/win/body/3/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4774,7 +4774,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/3/10010.png</key>
+            <key>hero-Rifleman-equipment/win/body/3/10010.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4789,7 +4789,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/3/10011.png</key>
+            <key>hero-Rifleman-equipment/win/body/3/10011.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4804,7 +4804,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/3/10012.png</key>
+            <key>hero-Rifleman-equipment/win/body/3/10012.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4819,7 +4819,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/4/10001.png</key>
+            <key>hero-Rifleman-equipment/win/body/4/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4834,7 +4834,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/win/body/4/10002.png</key>
+            <key>hero-Rifleman-equipment/win/body/4/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4849,7 +4849,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/4/10003.png</key>
+            <key>hero-Rifleman-equipment/win/body/4/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4864,7 +4864,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/4/10004.png</key>
+            <key>hero-Rifleman-equipment/win/body/4/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4879,7 +4879,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/4/10005.png</key>
+            <key>hero-Rifleman-equipment/win/body/4/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4894,7 +4894,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/win/body/4/10006.png</key>
+            <key>hero-Rifleman-equipment/win/body/4/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4909,7 +4909,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/4/10007.png</key>
+            <key>hero-Rifleman-equipment/win/body/4/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4924,7 +4924,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/4/10008.png</key>
+            <key>hero-Rifleman-equipment/win/body/4/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4939,7 +4939,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/4/10009.png</key>
+            <key>hero-Rifleman-equipment/win/body/4/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4954,7 +4954,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/4/10010.png</key>
+            <key>hero-Rifleman-equipment/win/body/4/10010.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4969,7 +4969,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/4/10011.png</key>
+            <key>hero-Rifleman-equipment/win/body/4/10011.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4984,7 +4984,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/4/10012.png</key>
+            <key>hero-Rifleman-equipment/win/body/4/10012.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -4999,7 +4999,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/win/body/5/10001.png</key>
+            <key>hero-Rifleman-equipment/win/body/5/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -5014,7 +5014,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/5/10002.png</key>
+            <key>hero-Rifleman-equipment/win/body/5/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -5029,7 +5029,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/5/10003.png</key>
+            <key>hero-Rifleman-equipment/win/body/5/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -5044,7 +5044,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/5/10004.png</key>
+            <key>hero-Rifleman-equipment/win/body/5/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -5059,7 +5059,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/5/10005.png</key>
+            <key>hero-Rifleman-equipment/win/body/5/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -5074,7 +5074,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/win/body/5/10006.png</key>
+            <key>hero-Rifleman-equipment/win/body/5/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -5089,7 +5089,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/5/10007.png</key>
+            <key>hero-Rifleman-equipment/win/body/5/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -5104,7 +5104,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/5/10008.png</key>
+            <key>hero-Rifleman-equipment/win/body/5/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -5119,7 +5119,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/5/10009.png</key>
+            <key>hero-Rifleman-equipment/win/body/5/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -5134,7 +5134,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/5/10010.png</key>
+            <key>hero-Rifleman-equipment/win/body/5/10010.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -5149,7 +5149,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/5/10011.png</key>
+            <key>hero-Rifleman-equipment/win/body/5/10011.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -5164,7 +5164,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/5/10012.png</key>
+            <key>hero-Rifleman-equipment/win/body/5/10012.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -5179,7 +5179,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/win/body/6/10001.png</key>
+            <key>hero-Rifleman-equipment/win/body/6/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -5194,7 +5194,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/6/10002.png</key>
+            <key>hero-Rifleman-equipment/win/body/6/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -5209,7 +5209,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/6/10003.png</key>
+            <key>hero-Rifleman-equipment/win/body/6/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -5224,7 +5224,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/win/body/6/10004.png</key>
+            <key>hero-Rifleman-equipment/win/body/6/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -5239,7 +5239,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/win/body/6/10005.png</key>
+            <key>hero-Rifleman-equipment/win/body/6/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -5254,7 +5254,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>hero-Rifleman/win/body/6/10006.png</key>
+            <key>hero-Rifleman-equipment/win/body/6/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -5269,7 +5269,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/6/10007.png</key>
+            <key>hero-Rifleman-equipment/win/body/6/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -5284,7 +5284,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/6/10008.png</key>
+            <key>hero-Rifleman-equipment/win/body/6/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -5299,7 +5299,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/6/10009.png</key>
+            <key>hero-Rifleman-equipment/win/body/6/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -5314,7 +5314,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/6/10010.png</key>
+            <key>hero-Rifleman-equipment/win/body/6/10010.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -5329,7 +5329,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/6/10011.png</key>
+            <key>hero-Rifleman-equipment/win/body/6/10011.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -5344,7 +5344,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hero-Rifleman/win/body/6/10012.png</key>
+            <key>hero-Rifleman-equipment/win/body/6/10012.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -5371,7 +5371,7 @@
             <key>size</key>
             <string>{2048,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:a92d7a32f22bc57e6a21f28aa596946d:2c5aed3d2365be1f62866d5a1e4a5c74:d53be636d3d0c5fe40ba9d6657231a53$</string>
+            <string>$TexturePacker:SmartUpdate:4d72e759aa124a2130bc545b7300478e:2c5aed3d2365be1f62866d5a1e4a5c74:d53be636d3d0c5fe40ba9d6657231a53$</string>
             <key>textureFileName</key>
             <string>hero-Rifleman-equipment.pvr.ccz</string>
         </dict>

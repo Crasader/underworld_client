@@ -164,7 +164,7 @@
 	<skill bullet_name="中立仙女龙" cd="45" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="1220" min_damage="1180" name="魔族梦魇精华" perform="0" preperform="35" range="250"/>
 	<skill cd="40" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="39" min_damage="33" name="中立兽族牛头人" perform="0" preperform="50" range="32"/>
 	<skill bullet_name="人族大法师" cd="75" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="25" min_damage="21" name="中立兽族巨魔巫医" perform="0" preperform="45" range="240"/>
-	<skill cd="45" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="300" min_damage="60" name="中立兽族斧王" perform="0" preperform="45" range="32"/>
+	<skill cd="45" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="70" min_damage="70" name="中立兽族斧王" perform="0" preperform="45" range="32"/>
 	<skill cd="40" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="72" min_damage="60" name="中立兽族食人鬼王" perform="0" preperform="60" range="32"/>
 	<skill bullet_name="魔族梦魇" cd="55" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="66" min_damage="59" name="中立龙族黑龙" perform="0" preperform="35" range="200"/>
 	<skill bullet_name="魔族战车" cd="45" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="40" min_damage="35" name="中立矮人族火枪手" perform="0" preperform="30" range="300"/>
@@ -216,8 +216,8 @@
 	<spell alias="食人鬼王重生" cast_distance="-1" cast_type="self" cd="900" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" immediate_elements="0,食人鬼王重生,1" level="1" perform="0" preperform="30" spell_name="食人鬼王重生" to_dead="0"/>
 	<spell alias="中立兽族巫医诅咒" cast_distance="200" cast_type="unit" cd="300" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" immediate_elements="0,中立兽族巫医诅咒,1" level="1" perform="0" preperform="45" spell_name="中立兽族巫医诅咒" to_dead="0"/>
 	<spell alias="中立兽族巫医恢复术" cast_distance="-1" cast_type="self" cd="900" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" immediate_elements="0,中立兽族巫医恢复术,1" level="1" perform="0" preperform="50" spell_name="中立兽族巫医恢复术" to_dead="0"/>
-	<spell alias="中立兽族斧王旋风斩" cast_distance="-1" cast_type="self" cd="900" class="cast" conditions=" " deliver_class="physical" deliver_natures="enemy" immediate_elements="0,中立兽族斧王旋风斩,1" level="1" perform="0" preperform="20" spell_name="中立兽族斧王旋风斩" to_dead="0"/>
-	<spell alias="中立兽族斧王恐怖嚎叫" cast_distance="-1" cast_type="self" cd="900" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" immediate_elements="0,中立兽族斧王恐怖嚎叫,1" level="1" perform="0" preperform="40" spell_name="中立兽族斧王恐怖嚎叫" to_dead="0"/>
+	<spell ai="中立兽族斧王旋风斩ai" alias="中立兽族斧王旋风斩" cast_distance="-1" cast_type="self" cd="900" class="cast" conditions=" " deliver_class="physical" deliver_natures="enemy" immediate_elements="0,中立兽族斧王旋风斩,1" level="1" perform="0" preperform="300" spell_name="中立兽族斧王旋风斩" to_dead="0"/>
+	<spell alias="中立兽族斧王恐怖嚎叫" cast_distance="-1" cast_type="self" cd="900" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" immediate_elements="0,中立兽族斧王恐怖嚎叫,1" level="1" perform="0" preperform="300" spell_name="中立兽族斧王恐怖嚎叫" to_dead="0"/>
 	<spell alias="中立兽族食人鬼王嗜血术" cast_distance="300" cast_type="unit" cd="900" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" immediate_elements="0,中立兽族食人鬼王嗜血术,1" level="1" perform="0" preperform="50" spell_name="中立兽族食人鬼王嗜血术" to_dead="0"/>
 	<spell alias="中立龙族黑龙火海" cast_distance="220" cast_type="unit" cd="900" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" immediate_elements="0,中立龙族黑龙火海,1" level="1" perform="0" preperform="45" spell_name="中立龙族黑龙火海" to_dead="0"/>
 	<spell alias="人族男巫驱散" cast_distance="240" cast_type="unit" cd="300" class="cast" conditions="type:unit_enemy_buff_number;target:opposite;condition:&gt;0|type:unit_ally_buff_number;target:opposite;condition:&gt;0|type:unit_class;target:opposite;condition:is:summoned" deliver_class="magical" deliver_natures="ally|enemy|enemy" immediate_elements="0,人族男巫驱散友军,1;0,人族男巫驱散敌军,1;0,人族男巫驱散召唤,1" level="1" perform="0" preperform="30" spell_name="人族男巫驱散" to_dead="0"/>
@@ -237,6 +237,7 @@
 	<spell_ai_description conditions=" " deliver_natures="neutral" name="魔族传教士吞噬魔法ai" scenario="all"/>
 	<spell_ai_description conditions=" " deliver_natures="enemy" name="梦魇诅咒ai" scenario="all"/>
 	<spell_ai_description conditions=" " deliver_natures="enemy" name="梦魇虚无ai" scenario="all"/>
+	<spell_ai_description conditions="type:unit_lose_hp;target:owner;condition:&gt;500" deliver_natures="ally" name="中立兽族斧王旋风斩ai" scenario="in_battle"/>
 	<heuristic_element descending="0" heuristic_element_name="人族法师暴风雨启发" ref_value="200" type="less_then_ref_value" value="d:target:opposite;type:hp;v:p:100;template:0"/>
 	<heuristic_element descending="1" heuristic_element_name="中立仙女龙医疗波启发" ref_value="0" type="literal" value="d:target:opposite;type:lose_hp;v:p:100;template:0"/>
 	<heuristic_element descending="0" heuristic_element_name="法师队长暴风雪启发" ref_value="380" type="less_then_ref_value" value="d:target:opposite;type:hp;v:p:100;template:0"/>
@@ -278,8 +279,8 @@
 	<spell_pattern class="target" conditions=" " content_name="内容食人鬼王重生" count="1" deliver_natures="ally" name="食人鬼王重生"/>
 	<spell_pattern class="target" conditions="type:unit_class;target:opposite;condition:not:building,core" content_name="内容中立兽族巫医诅咒" deliver_natures="enemy" name="中立兽族巫医诅咒"/>
 	<spell_pattern class="target" conditions=" " content_name="内容中立兽族巫医恢复术" deliver_natures="ally" name="中立兽族巫医恢复术"/>
-	<spell_pattern class="target_position_circle" conditions="type:unit_class;target:opposite;condition:not:building,core" content_name="内容中立兽族斧王旋风斩" deliver_natures="enemy" name="中立兽族斧王旋风斩" radius="32"/>
-	<spell_pattern class="target_position_circle" conditions="type:unit_class;target:opposite;condition:not:building,core" content_name="内容中立兽族斧王恐怖嚎叫" deliver_natures="enemy" name="中立兽族斧王恐怖嚎叫" radius="32"/>
+	<spell_pattern class="target_position_circle" conditions="type:unit_class;target:opposite;condition:not:building,core" content_name="内容中立兽族斧王旋风斩" deliver_natures="enemy" name="中立兽族斧王旋风斩" radius="96"/>
+	<spell_pattern class="target_position_circle" conditions="type:unit_class;target:opposite;condition:not:building,core" content_name="内容中立兽族斧王恐怖嚎叫" deliver_natures="enemy" name="中立兽族斧王恐怖嚎叫" radius="96"/>
 	<spell_pattern class="target" conditions=" " content_name="内容中立兽族食人鬼王嗜血术" deliver_natures="ally" name="中立兽族食人鬼王嗜血术"/>
 	<spell_pattern class="target_position_circle" conditions="type:field_type;target:opposite;condition:not:air" content_name="内容中立龙族黑龙火海" deliver_natures="enemy" name="中立龙族黑龙火海" radius="48"/>
 	<spell_pattern class="target_position_circle" conditions="type:field_type;target:opposite;condition:not:air" content_name="内容火海持续伤害" deliver_natures="enemy" name="火海持续伤害" radius="48"/>
@@ -454,10 +455,10 @@
 	<buff alias="中立兽族食人鬼王肌肉锻炼" buff_effect_names="中立兽族食人鬼王肌肉锻炼" deliver_class="magical" deliver_nature="ally" dispelable="0" is_on_building="0" level="1" max_overlay="1" name="中立兽族食人鬼王肌肉锻炼" span_type="eternal" unique_on_unit="1"/>
 	<buff alias="中立黑龙龙体" buff_effect_names="中立黑龙伤害减免" deliver_class="magical" deliver_nature="ally" dispelable="0" is_on_building="0" level="1" max_overlay="1" name="中立黑龙龙体" span_type="eternal" unique_on_unit="1"/>
 	<buff alias="中立火枪手爆头晕眩" buff_effect_names="中立火枪手爆头晕眩" deliver_class="physical" deliver_nature="enemy" dispelable="0" is_on_building="0" level="1" max_overlay="1" name="中立火枪手爆头晕眩" span="120" span_type="limited" unique_on_unit="1"/>
-	<buff alias="诅咒降低护甲" buff_effect_names="诅咒降低护甲" deliver_class="magical" deliver_nature="enemy" dispelable="1" is_on_building="0" level="1" max_overlay="1" name="诅咒降低护甲" span="600" span_type="limited" unique_on_unit="1"/>
+	<buff alias="诅咒降低护甲" buff_effect_names="诅咒降低护甲" deliver_class="magical" deliver_nature="enemy" dispelable="1" is_on_building="0" level="1" max_overlay="1" name="诅咒降低护甲" render_key="心灵之火" span="600" span_type="limited" unique_on_unit="1"/>
 	<buff alias="治疗守卫回血光环" buff_effect_names="治疗守卫回血光环" deliver_class="magical" deliver_nature="ally" dispelable="0" is_on_building="0" level="1" max_overlay="1" name="治疗守卫回血光环" span_type="eternal" unique_on_unit="1"/>
-	<buff alias="恐怖嚎叫降低护甲" buff_effect_names="恐怖嚎叫降低护甲" deliver_class="magical" deliver_nature="enemy" dispelable="1" is_on_building="0" level="1" max_overlay="1" name="恐怖嚎叫降低护甲" span="300" span_type="limited" unique_on_unit="1"/>
-	<buff alias="嗜血术增加攻击移动" buff_effect_names="嗜血术增加攻速状态;嗜血术增加移动状态" deliver_class="magical" deliver_nature="ally" dispelable="0" is_on_building="0" level="1" max_overlay="1" name="嗜血术增加攻击移动" span="600" span_type="limited" unique_on_unit="1"/>
+	<buff alias="恐怖嚎叫降低护甲" buff_effect_names="恐怖嚎叫降低护甲" deliver_class="magical" deliver_nature="enemy" dispelable="1" is_on_building="0" level="1" max_overlay="1" name="恐怖嚎叫降低护甲" render_key="心灵之火" span="300" span_type="limited" unique_on_unit="1"/>
+	<buff alias="嗜血术增加攻击移动" buff_effect_names="嗜血术增加攻速状态;嗜血术增加移动状态" deliver_class="magical" deliver_nature="ally" dispelable="0" is_on_building="0" level="1" max_overlay="1" name="嗜血术增加攻击移动" render_key="心灵之火" span="600" span_type="limited" unique_on_unit="1"/>
 	<buff alias="buff人族弓手额外射击" buff_effect_names="buff效果人族弓手额外射击" deliver_class="physical" deliver_nature="ally" dispelable="0" level="1" max_overlay="1" name="buff人族弓手额外射击" render_key="心灵之火" span="30" span_type="limited" unique_on_unit="1"/>
 	<buff alias="buff人族女巫减移速" buff_effect_names="buff效果人族女巫减移速" deliver_class="magical" deliver_nature="enemy" dispelable="1" level="1" max_overlay="1" name="buff人族女巫减移速" render_key="心灵之火" span="900" span_type="limited" unique_on_unit="1"/>
 	<buff alias="buff人族女巫减攻速" buff_effect_names="buff效果人族女巫减攻速" deliver_class="magical" deliver_nature="enemy" dispelable="1" level="1" max_overlay="1" name="buff人族女巫减攻速" render_key="心灵之火" span="900" span_type="limited" unique_on_unit="1"/>
@@ -556,7 +557,7 @@
 	<damage damage_name="伤害食人鬼王重生" damage_nature="heal" damage_value="d:target:owner;type:max_hp;v:p:100;template:0" deliver_class="magical" is_on_building="0"/>
 	<damage damage_name="伤害中立兽族巫医诅咒" damage_nature="hurt" damage_value="0" deliver_class="magical" feature_names="诅咒降低护甲特性" is_on_building="0"/>
 	<damage damage_name="治疗守卫回血光环" damage_nature="heal" damage_value="7" deliver_class="magical" feature_names=" " is_on_building="0"/>
-	<damage damage_name="伤害中立兽族斧王旋风斩" damage_nature="hurt" damage_value="d:target:owner;type:attack_damage;v:p:150;template:0" deliver_class="physical" is_on_building="0"/>
+	<damage damage_name="伤害中立兽族斧王旋风斩" damage_nature="hurt" damage_value="500" deliver_class="physical" is_on_building="0"/>
 	<damage damage_name="伤害中立兽族斧王恐怖嚎叫" damage_nature="hurt" damage_value="0" deliver_class="magical" feature_names="恐怖嚎叫降低护甲" is_on_building="0"/>
 	<damage damage_name="伤害中立兽族食人鬼王嗜血术" damage_nature="heal" damage_value="0" deliver_class="magical" feature_names="嗜血术增加攻击移动" is_on_building="0"/>
 	<damage damage_name="伤害火海持续伤害" damage_nature="hurt" damage_value="10" deliver_class="magical" is_on_building="0"/>
@@ -597,7 +598,7 @@
 	<effect alias_name="效果护甲降低" attr_name="armor" class="alter_attr" effect_name="诅咒降低护甲" value="-20"/>
 	<effect alias_name="效果护甲降低" attr_name="armor" class="alter_attr" effect_name="恐怖嚎叫降低护甲" value="-25"/>
 	<effect alias_name="提高攻速效果" attr_name="attack_damage" class="alter_attr" effect_name="嗜血术增加攻速状态" value="45"/>
-	<effect alias_name="提高移动效果" attr_name="move_speed" class="alter_attr" effect_name="嗜血术增加移动状态" value="25"/>
+	<effect alias_name="提高移动效果" attr_name="move_speed" class="alter_attr" effect_name="嗜血术增加移动状态" value="50"/>
 	<effect alias_name="人族弓手额外射击" attr_name="attack_speed" class="alter_attr" effect_name="人族弓手额外射击" value="200"/>
 	<effect alias_name="人族女巫减移速" attr_name="move_speed" class="alter_attr" effect_name="人族女巫减移速" value="p:-30"/>
 	<effect alias_name="人族女巫减攻速" attr_name="attack_speed" class="alter_attr" effect_name="人族女巫减攻速" value="-40"/>
@@ -676,7 +677,7 @@
 	<feature_group conditions=" " deliver_natures="neutral" determine_timing="be_attack" feature_type_names="中立精灵族弓箭手闪避" name="中立精灵族弓箭手闪避" probability="100"/>
 	<feature_group conditions="type:unit_class;target:opposite;condition:not:core" deliver_natures="neutral" determine_timing="hit" feature_type_names="诅咒降低护甲特性" name="诅咒降低护甲特性"/>
 	<feature_group conditions="type:unit_class;target:opposite;condition:not:core" deliver_natures="neutral" determine_timing="hit" feature_type_names="恐怖嚎叫降低护甲" name="恐怖嚎叫降低护甲"/>
-	<feature_group conditions="type:unit_class;target:opposite;condition:not:core" deliver_natures="neutral" determine_timing="hit" feature_type_names="嗜血术增加攻击移动" name="嗜血术增加攻击移动"/>
+	<feature_group conditions="type:unit_class;target:opposite;condition:not:core" deliver_natures="neutral" determine_timing="heal" feature_type_names="嗜血术增加攻击移动" name="嗜血术增加攻击移动"/>
 	<feature_group conditions="type:deliver_class;target:damage;condition:is:physical" deliver_natures="ally" determine_timing="be_hit" feature_type_names="人族盾牌兵格挡特性" name="人族盾牌兵格挡效果" probability="15"/>
 	<feature_group determine_timing="hit" feature_type_names="人族剑士暴击特性" name="人族剑士暴击效果" probability="5"/>
 	<feature_group determine_timing="attack" feature_type_names="人族弓手额外射击特性" name="人族弓手额外射击效果" probability="15"/>
@@ -735,7 +736,7 @@
 	<feature effect_timing="be_attack" feature_name="中立精灵族弓箭手闪避" type="miss"/>
 	<feature buff_type_name="诅咒降低护甲" effect_timing="hit" feature_name="诅咒降低护甲特性" type="add_buff"/>
 	<feature buff_type_name="恐怖嚎叫降低护甲" effect_timing="hit" feature_name="恐怖嚎叫降低护甲" type="add_buff"/>
-	<feature buff_type_name="嗜血术增加攻击移动" effect_timing="hit" feature_name="嗜血术增加攻击移动" type="add_buff"/>
+	<feature buff_type_name="嗜血术增加攻击移动" effect_timing="heal" feature_name="嗜血术增加攻击移动" type="add_buff"/>
 	<feature effect_timing="be_hit" feature_name="人族盾牌兵格挡特性" type="damage_reduce" value="50"/>
 	<feature effect_timing="hit" feature_name="人族剑士暴击特性" type="damage_enhance" value="p:200"/>
 	<feature buff_type_name="buff人族弓手额外射击" effect_timing="attack" feature_name="人族弓手额外射击特性" is_to_self="1" overlay="1" type="add_buff"/>

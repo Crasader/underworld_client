@@ -16,13 +16,24 @@ static const string Folder("pvr/");
 static const string PlistFormat(".plist");
 static const string TextureFormat(".pvr.ccz");
 static const vector<string> FilesVector = {
+    // Fat
     "hero-Fat",
     "hero-Fat-shadows-0",
     "hero-Fat-shadows-1",
     "hero-Fat-equipment",
     "hero-Fat-equipment-shadows",
+    
+    // Rifleman
+    "hero-Rifleman",
+    "hero-Rifleman-shadows",
+    "hero-Rifleman-equipment",
+    "hero-Rifleman-equipment-shadows",
+    
+    // Archer
     "soldier-Archer",
     "soldier-Archer-shadows",
+    
+    // Effects
     "effect/effect-1",
     "effect/effect-2"
 };

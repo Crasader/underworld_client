@@ -715,7 +715,14 @@ void UnitNode::playAnimation(const AnimationType& at,
 {
     clear();
     
-    _body->nodeFile = at.getFile();
+    // TODO: move the temporary code
+    bool isHero(false);
+    const auto& file(at.getFile());
+    if (string::npos != file.find("hero")) {
+        isHero = true;
+    }
+    
+    _body->nodeFile.assign(file);
     auto cnt = _body->nodeFile.size();
     if (cnt > 0) {
         // set PixelFormat if needed
@@ -742,7 +749,7 @@ void UnitNode::playAnimation(const AnimationType& at,
             // -- body's shadow -- //
             createShadow(&_body, flip, startIdx);
             
-            if (_configData->isShortRange()) {
+            if (isHero) {
                 // -- equipment's node -- //
                 createEquipment(&_equipment, _body->nodeFile, flip, startIdx);
                 
