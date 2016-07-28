@@ -456,6 +456,7 @@ void ClientTCPNetworkProxy::onReceiveTCPResponse(TCPClient* client, TCPResponse*
 
 
 void ClientTCPNetworkProxy::onReconncected(TCPClient* client) {
+    //TODO when game finish, return
     if (_battleid < 0) {
         return;
     }

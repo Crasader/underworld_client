@@ -15,7 +15,7 @@
 		
 		
 	
-		
+	<!--	
 		<event>
 			<event_trigger class="schedule" time="120" />
             <event_effect class="add_unit" map_index="0" position="300,400">
@@ -52,7 +52,7 @@
                 <unit_setting unit_setting_name="人族被召唤水元素"/>
             </event_effect>
 		</event>
-	
+	-->
     <!--
 	
 		<event>
