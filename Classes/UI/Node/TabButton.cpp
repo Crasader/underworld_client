@@ -53,7 +53,7 @@ bool TabButton::init(const string& title, const string& normal, const string& se
 {
     if(Node::init())
     {
-        _button = Button::create(normal, selected, selected);
+        _button = Button::create(normal, normal, selected);
         _button->addClickEventListener(callback);
         addChild(_button);
         

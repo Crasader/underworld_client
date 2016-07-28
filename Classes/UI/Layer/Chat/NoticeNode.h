@@ -34,7 +34,7 @@ public:
 protected:
     NoticeNode();
     bool init(const NoticeData* data);
-    Node* createResourceNode(ResourceType type, int count);
+    Node* createResourceNode(::ResourceType type, int count);
     void adjust();
     
 private:
@@ -44,7 +44,7 @@ private:
     Label* _content;
     Label* _time;
     Sprite* _resourceBg;
-    std::map<ResourceType, Node*> _resourceNodes;
+    std::map<::ResourceType, Node*> _resourceNodes;
 };
 
 #endif /* NoticeNode_h */
