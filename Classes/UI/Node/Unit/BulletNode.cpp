@@ -102,7 +102,7 @@ void BulletNode::update(bool newCreated)
 {
     if (_bullet) {
         const Coordinate32& currentPos = _bullet->getPos();
-        const Coordinate32& targetPos = _bullet->targetPos();
+        const Coordinate32& targetPos = _bullet->getTargetPos();
         
         if (newCreated && currentPos.x > targetPos.x) {
             setScaleX(-1 * getScaleX());
