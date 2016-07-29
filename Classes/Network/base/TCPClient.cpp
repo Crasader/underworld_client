@@ -642,7 +642,7 @@ void TCPClient::dispatchResponseCallbacks()
 void TCPClient::processResponse(char *responseMessage)
 {
     int responseLen = -1;
-
+    
     int retVal = -1;
     /*
      *first 4 byte,the length of package
@@ -654,25 +654,33 @@ void TCPClient::processResponse(char *responseMessage)
         retVal = _read(_fd, (char *)(&responseLen), 4);
         if (retVal == 0) {
             reconnect2Server();
+            break;
         }
-
+        
         if (retVal == -1) {
             reconnect2Server();
-            retVal = _read(_fd, (char *)(&responseLen), 4);
+            break;
         }
-
+        
         if (responseLen != -1)
             responseLen = ntohl(responseLen);
+        
         CCLOG("processResponse,responseLen=%d", responseLen);
         string reponseData;
+        
         if (responseLen > 0) { // handle full package
             retVal = _read(_fd, reponseData, responseLen);
+            
             CCLOG("processResponse,read response data=%d", retVal);
-
+            
+            if (retVal != responseLen) {
+                reconnect2Server();
+                break;
+            }
+            
         } /*else if(writeSuccess!=-1&&responseLen==0){
            break;
            }*/
-
         // write data to TCPResponse
         TCPResponse *response = new (std::nothrow) TCPResponse();
         response->setResponseCode(retVal);

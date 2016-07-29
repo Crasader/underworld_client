@@ -49,6 +49,7 @@
 #define MESSAGE_KEY_NAME         ("name")
 #define MESSAGE_KEY_UID          ("uid")
 #define MESSAGE_KEY_BATTLE_ID    ("battleid")
+#define MESSAGE_KEY_FINISHED     ("finished")
 
 #define PROTOCOL_HEAD_LENGTH  (4)
 
@@ -349,7 +350,7 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
 }
 
 static void parseSync2CMsg(const rapidjson::Value& root,
-    std::vector<NetworkMessage *> &output) {
+    std::vector<NetworkMessage *> &output, int& battleid) {
     if (!DICTOOL->checkObjectExist_json(root, MESSAGE_KEY_START_FRAME)
         || !DICTOOL->checkObjectExist_json(root, MESSAGE_KEY_END_FRAME)) {
         return;
@@ -393,6 +394,12 @@ static void parseSync2CMsg(const rapidjson::Value& root,
     
     for (int i = 0; i < syncMsgs.size(); ++i) {
         output.push_back(syncMsgs[i]);
+    }
+    
+    //TODO: server finished,client do not reconnect
+    bool finished = DICTOOL->getBooleanValue_json(root, MESSAGE_KEY_FINISHED, false);
+    if (finished) {
+        battleid = INVALID_VALUE;
     }
 }
 
@@ -498,6 +505,8 @@ void ClientTCPNetworkProxy::parseResponse2Msg(
     string data;
     response->getResponseDataString(data);
     
+    CCLOG("[server]%s", data.c_str());
+    
     rapidjson::Document document;
     document.Parse<rapidjson::kParseNoFlags>(data.c_str());
     //DataManager::getInstance()->getBinaryJsonTool()->decode(data, document);
@@ -511,7 +520,7 @@ void ClientTCPNetworkProxy::parseResponse2Msg(
     if (respCode == MESSAGE_CODE_LAUNCH_2_C) {
         parseLaunch2CMsg(document, output, _battleid);
     } else if (respCode == MESSAGE_CODE_SYNE_2_C) {
-        parseSync2CMsg(document, output);
+        parseSync2CMsg(document, output, _battleid);
     }
 }
 
