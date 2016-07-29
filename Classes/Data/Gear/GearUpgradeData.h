@@ -11,7 +11,7 @@
 
 #include "AbstractUpgradeData.h"
 
-class RewardData;
+class ObjectBriefData;
 
 class GearUpgradeData : public AbstractUpgradeData
 {
@@ -19,10 +19,10 @@ public:
     GearUpgradeData(tinyxml2::XMLElement *xmlElement);
     virtual ~GearUpgradeData();
     
-    const RewardData* getSoldReward(int type) const;
+    const ObjectBriefData* getSoldReward(int type) const;
     
 private:
-    std::unordered_map<int, RewardData*> _soldRewards;
+    std::unordered_map<int, ObjectBriefData*> _soldRewards;
 };
 
 #endif /* GearUpgradeData_h */

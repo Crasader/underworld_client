@@ -11,7 +11,7 @@
 #include "Utils.h"
 #include "ConditionData.h"
 #include "ContentData.h"
-#include "RewardData.h"
+#include "ObjectBriefData.h"
 
 using namespace std;
 
@@ -54,7 +54,7 @@ QuestLocalData::QuestLocalData(tinyxml2::XMLElement *xmlElement)
                 vector<string> result;
                 Utils::split(result, data, ",", "");
                 for (int i = 0; i < result.size(); ++i) {
-                    RewardData* rd = new (nothrow) RewardData(result.at(i));
+                    ObjectBriefData* rd = new (nothrow) ObjectBriefData(result.at(i));
                     _rewards.push_back(rd);
                 }
             }
@@ -84,7 +84,7 @@ const vector<ContentData*>& QuestLocalData::getContents() const
     return _contents;
 }
 
-const vector<RewardData *>& QuestLocalData::getRewards() const
+const vector<ObjectBriefData *>& QuestLocalData::getRewards() const
 {
     return _rewards;
 }

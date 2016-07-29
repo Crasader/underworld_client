@@ -14,7 +14,7 @@
 
 class ConditionData;
 class ContentData;
-class RewardData;
+class ObjectBriefData;
 
 class QuestLocalData : public AbstractLocalData
 {
@@ -25,13 +25,13 @@ public:
     int getRace() const;
     const std::vector<ConditionData*>& getConditions() const;
     const std::vector<ContentData*>& getContents() const;
-    const std::vector<RewardData *>& getRewards() const;
+    const std::vector<ObjectBriefData *>& getRewards() const;
     
 private:
     int _race;
     std::vector<ConditionData*> _conditions;
     std::vector<ContentData*> _contents;
-    std::vector<RewardData*> _rewards;
+    std::vector<ObjectBriefData*> _rewards;
 };
 
 #endif /* QuestLocalData_h */

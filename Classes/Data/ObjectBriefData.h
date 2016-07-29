@@ -1,21 +1,21 @@
 //
-//  RewardData.h
+//  ObjectBriefData.h
 //  Underworld_Client
 //
 //  Created by Andy on 15/12/12.
 //  Copyright (c) 2015 Mofish Studio. All rights reserved.
 //
 
-#ifndef RewardData_h
-#define RewardData_h
+#ifndef ObjectBriefData_h
+#define ObjectBriefData_h
 
 #include <iostream>
 
-class RewardData
+class ObjectBriefData
 {
 public:
-    RewardData(const std::string& content);
-    virtual ~RewardData();
+    ObjectBriefData(const std::string& content);
+    virtual ~ObjectBriefData();
     
     int getPercentage() const;
     int getId() const;
@@ -27,4 +27,4 @@ private:
     int _count;
 };
 
-#endif /* RewardData_h */
+#endif /* ObjectBriefData_h */

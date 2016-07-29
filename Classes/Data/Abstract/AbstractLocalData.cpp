@@ -7,7 +7,7 @@
 //
 
 #include "AbstractLocalData.h"
-#include "RewardData.h"
+#include "ObjectBriefData.h"
 #include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
 #include "AttributeData.h"

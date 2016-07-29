@@ -12,6 +12,7 @@
 #include "cocos2d.h"
 #include "cocos-ext.h"
 #include "ui/CocosGUI.h"
+#include "CocosGlobal.h"
 #include "ChatNode.h"
 #include "NoticeNode.h"
 
@@ -21,19 +22,11 @@ USING_NS_CC_EXT;
 class ScrollBar;
 class TabButton;
 class ChatData;
-class NoticeData;
 
 class ChatLayerObserver
 {
 public:
     virtual ~ChatLayerObserver() {}
-};
-
-enum class ChatTableType {
-    None,
-    Talk,
-    Mail,
-    Notice,
 };
 
 class ChatLayer
@@ -73,40 +66,37 @@ protected:
     // NoticeNodeObserver
     
     // table
-    void createTableNode(ChatTableType type, float height, const Point& topLeft);
+    void createTableNode(ChatType type, float height, const Point& topLeft);
     ssize_t getCellsCount(TableView* table) const;
     Rect getBoundingBox(Node* node) const;
     
     // functions
     void createTabButtons(const Vec2& edge);
-    Node* createCellNode(ChatTableType type, size_t idx);
-    void createEditBox();
+    Size getCellSize(ChatType type, size_t idx);
+    Node* createCellNode(ChatType type, size_t idx);
     
-    size_t getDataSize(ChatTableType type) const;
-    ChatTableType getTableType(TableView* table) const;
-    void setTableType(ChatTableType type);
-    std::string getTableName(ChatTableType type) const;
+    size_t getDataSize(ChatType type) const;
+    ChatType getTableType(TableView* table) const;
+    void setTableType(ChatType type);
+    std::string getTableName(ChatType type) const;
     
 private:
     ChatLayerObserver *_observer;
+    bool _folder;
+    bool _isFolding;
     
+    // UI
     Node* _background;
-    // table
-    std::map<ChatTableType, TableNode*> _tableNodes;
-    std::unordered_map<TableView*, TableNode*> _tableMappings;
-    std::map<ChatTableType, float> _tableHeight;
-    ChatTableType _thisTableType;
+    ui::Button* _button;
+    Sprite* _buttonIcon;
+    std::map<ChatType, TableNode*> _tableNodes;
+    std::unordered_map<const TableView*, TableNode*> _tableMappings;
+    std::map<ChatType, float> _tableHeight;
+    ChatType _thisTableType;
     TableNode* _thisTableNode;
-    
     EditBoxNode* _editBoxNode;
-    
-    std::map<ChatTableType, TabButton*> _tabButtons;
+    std::map<ChatType, TabButton*> _tabButtons;
     ScrollBar* _scrollBar;
-    
-    // data
-    std::vector<ChatData*> _messages;
-    std::vector<NoticeData*> _mails;
-    std::vector<NoticeData*> _notices;
 };
 
 #endif /* ChatLayer_h */

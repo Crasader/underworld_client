@@ -11,11 +11,11 @@
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-#include "CocosGlobal.h"
 
 USING_NS_CC;
 
-class NoticeData;
+class ChatData;
+class ObjectBriefNode;
 
 class NoticeNodeObserver
 {
@@ -26,25 +26,25 @@ public:
 class NoticeNode: public Node
 {
 public:
-    static NoticeNode* create(const NoticeData* data);
+    static NoticeNode* create(float width, const ChatData* data);
     virtual ~NoticeNode();
     void registerObserver(NoticeNodeObserver *observer);
-    void update(const NoticeData* data);
+    void update(const ChatData* data);
     
 protected:
     NoticeNode();
-    bool init(const NoticeData* data);
-    Node* createResourceNode(::ResourceType type, int count);
+    bool init(float width, const ChatData* data);
     void adjust();
     
 private:
     NoticeNodeObserver* _observer;
+    float _width;
     ui::Scale9Sprite* _bg;
     Label* _user;
     Label* _content;
     Label* _time;
     Sprite* _resourceBg;
-    std::map<::ResourceType, Node*> _resourceNodes;
+    std::vector<ObjectBriefNode*> _resourceNodes;
 };
 
 #endif /* NoticeNode_h */

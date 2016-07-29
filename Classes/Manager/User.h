@@ -28,7 +28,7 @@ public:
     virtual ~User();
     
     // getters
-    unsigned int getUserId() const;
+    int getUid() const;
     bool isNewUser() const;
     bool isGuest() const;
     const std::string& getToken() const;
@@ -68,7 +68,7 @@ private:
 private:
     bool _isNewUser;
     bool _isGuest;
-    unsigned int _uid;
+    int _uid;
     std::string _token;
     std::string _name;
     

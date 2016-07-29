@@ -1,17 +1,17 @@
 //
-//  RewardData.cpp
+//  ObjectBriefData.cpp
 //  Underworld_Client
 //
 //  Created by Andy on 15/12/12.
 //  Copyright (c) 2015 Mofish Studio. All rights reserved.
 //
 
-#include "RewardData.h"
+#include "ObjectBriefData.h"
 #include "Utils.h"
 
 using namespace std;
 
-RewardData::RewardData(const string& content)
+ObjectBriefData::ObjectBriefData(const string& content)
 :_percentage(0)
 ,_id(0)
 ,_count(0)
@@ -32,22 +32,22 @@ RewardData::RewardData(const string& content)
     }
 }
 
-RewardData::~RewardData()
+ObjectBriefData::~ObjectBriefData()
 {
     
 }
 
-int RewardData::getPercentage() const
+int ObjectBriefData::getPercentage() const
 {
     return _percentage;
 }
 
-int RewardData::getId() const
+int ObjectBriefData::getId() const
 {
     return _id;
 }
 
-int RewardData::getCount() const
+int ObjectBriefData::getCount() const
 {
     return _count;
 }

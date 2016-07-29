@@ -12,7 +12,7 @@
 #include "AbstractLocalData.h"
 #include <vector>
 
-class RewardData;
+class ObjectBriefData;
 
 class AbstractPieceLocalData : public AbstractLocalData
 {
@@ -21,11 +21,11 @@ public:
     virtual ~AbstractPieceLocalData() = 0;
     
     int getRequiredCount() const;
-    const std::vector<RewardData*>& getSoldRewards() const;
+    const std::vector<ObjectBriefData*>& getSoldRewards() const;
     
 private:
     int _requiredCount;
-    std::vector<RewardData*> _soldRewards;
+    std::vector<ObjectBriefData*> _soldRewards;
 };
 
 #endif /* AbstractPieceLocalData_h */

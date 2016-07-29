@@ -25,20 +25,22 @@ public:
 class ChatNode: public Node
 {
 public:
-    static ChatNode* create(const ChatData* data);
+    static ChatNode* create(float width, const ChatData* data);
     virtual ~ChatNode();
     void registerObserver(ChatNodeObserver *observer);
     void update(const ChatData* data);
     
 protected:
     ChatNode();
-    bool init(const ChatData* data);
+    bool init(float width, const ChatData* data);
     void createDialog(bool isMe);
     void createIcon();
     void adjust(bool isMe);
     
 private:
     ChatNodeObserver* _observer;
+    float _width;
+    float _dialogWidth;
     const ChatData* _data;
     Node* _icon;
     ui::Scale9Sprite* _dialogBg;

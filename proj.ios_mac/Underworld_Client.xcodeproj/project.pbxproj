@@ -132,7 +132,6 @@
 		A16BF28F1C313E8E00E91458 /* SoldierUpgradeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF28D1C313E8E00E91458 /* SoldierUpgradeData.cpp */; };
 		A16BF2921C313E9F00E91458 /* TowerLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF2901C313E9F00E91458 /* TowerLocalData.cpp */; };
 		A16BF2951C313EAF00E91458 /* TowerUpgradeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF2931C313EAF00E91458 /* TowerUpgradeData.cpp */; };
-		A16BF2981C31406A00E91458 /* ResourceData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF2961C31406A00E91458 /* ResourceData.cpp */; };
 		A16BF29C1C31434500E91458 /* SkillLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF29A1C31434500E91458 /* SkillLocalData.cpp */; };
 		A16BF2A11C314DA000E91458 /* GearSetLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF29F1C314DA000E91458 /* GearSetLocalData.cpp */; };
 		A16BF2A41C314E5100E91458 /* AttributeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A16BF2A21C314E5100E91458 /* AttributeData.cpp */; };
@@ -170,6 +169,8 @@
 		A18885741C43A7A800C9586F /* HeroManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A18885721C43A7A800C9586F /* HeroManager.cpp */; };
 		A18885771C43ACFB00C9586F /* ArtifactData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A18885751C43ACFB00C9586F /* ArtifactData.cpp */; };
 		A188857A1C43BA1C00C9586F /* TowerManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A18885781C43BA1C00C9586F /* TowerManager.cpp */; };
+		A19382181D4B0B0D0059EDBF /* ObjectBriefNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19382161D4B0B0D0059EDBF /* ObjectBriefNode.cpp */; };
+		A193821B1D4B331B0059EDBF /* ObjectBriefData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19382191D4B331B0059EDBF /* ObjectBriefData.cpp */; };
 		A19D6B0C1D1802170088AF23 /* FormationData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19D6B0A1D1802170088AF23 /* FormationData.cpp */; };
 		A19EE96D1C1C0F1300E46D77 /* LevelLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19EE96B1C1C0F1300E46D77 /* LevelLocalData.cpp */; };
 		A1A05B3C1C9668FB006FE03B /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A05B3B1C9668FB006FE03B /* GCDAsyncSocket.m */; };
@@ -196,7 +197,6 @@
 		A1B5588F1BCB65A100D30D6A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B5588E1BCB65A100D30D6A /* StoreKit.framework */; };
 		A1C124DC1BF58AF700F3FDD2 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = A1C124DB1BF58AF700F3FDD2 /* sounds */; };
 		A1CA35E91D45BDE200584C9D /* NoticeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1CA35E71D45BDE200584C9D /* NoticeNode.cpp */; };
-		A1CA35EC1D45BE0700584C9D /* NoticeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1CA35EA1D45BE0700584C9D /* NoticeData.cpp */; };
 		A1CA35EF1D45BF2600584C9D /* SpellRingNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1CA35ED1D45BF2600584C9D /* SpellRingNode.cpp */; };
 		A1CA35F51D45F29D00584C9D /* SettingsLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1CA35F31D45F29D00584C9D /* SettingsLayer.cpp */; };
 		A1CA35F81D45F3C300584C9D /* LanguageLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1CA35F61D45F3C300584C9D /* LanguageLayer.cpp */; };
@@ -241,7 +241,6 @@
 		A1E8305C1C1E75BB00FE01B8 /* ChatLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E8305A1C1E75BB00FE01B8 /* ChatLayer.cpp */; };
 		A1E830681C1EA50200FE01B8 /* ConditionData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E830621C1EA50200FE01B8 /* ConditionData.cpp */; };
 		A1E830691C1EA50200FE01B8 /* QuestLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E830641C1EA50200FE01B8 /* QuestLocalData.cpp */; };
-		A1E8306A1C1EA50200FE01B8 /* RewardData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E830661C1EA50200FE01B8 /* RewardData.cpp */; };
 		A1E8306D1C1EA55D00FE01B8 /* ContentData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E8306B1C1EA55D00FE01B8 /* ContentData.cpp */; };
 		A1E947C21D48A3A400BD7A27 /* UserOperationNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E947C01D48A3A400BD7A27 /* UserOperationNode.cpp */; };
 		A1E947C51D48AE9E00BD7A27 /* ChatUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E947C31D48AE9E00BD7A27 /* ChatUI.cpp */; };
@@ -582,8 +581,6 @@
 		A16BF2911C313E9F00E91458 /* TowerLocalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TowerLocalData.h; sourceTree = "<group>"; };
 		A16BF2931C313EAF00E91458 /* TowerUpgradeData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TowerUpgradeData.cpp; sourceTree = "<group>"; };
 		A16BF2941C313EAF00E91458 /* TowerUpgradeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TowerUpgradeData.h; sourceTree = "<group>"; };
-		A16BF2961C31406A00E91458 /* ResourceData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResourceData.cpp; sourceTree = "<group>"; };
-		A16BF2971C31406A00E91458 /* ResourceData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceData.h; sourceTree = "<group>"; };
 		A16BF29A1C31434500E91458 /* SkillLocalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SkillLocalData.cpp; sourceTree = "<group>"; };
 		A16BF29B1C31434500E91458 /* SkillLocalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkillLocalData.h; sourceTree = "<group>"; };
 		A16BF29F1C314DA000E91458 /* GearSetLocalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GearSetLocalData.cpp; sourceTree = "<group>"; };
@@ -660,6 +657,10 @@
 		A18885761C43ACFB00C9586F /* ArtifactData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtifactData.h; sourceTree = "<group>"; };
 		A18885781C43BA1C00C9586F /* TowerManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TowerManager.cpp; sourceTree = "<group>"; };
 		A18885791C43BA1C00C9586F /* TowerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TowerManager.h; sourceTree = "<group>"; };
+		A19382161D4B0B0D0059EDBF /* ObjectBriefNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectBriefNode.cpp; sourceTree = "<group>"; };
+		A19382171D4B0B0D0059EDBF /* ObjectBriefNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectBriefNode.h; sourceTree = "<group>"; };
+		A19382191D4B331B0059EDBF /* ObjectBriefData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectBriefData.cpp; sourceTree = "<group>"; };
+		A193821A1D4B331B0059EDBF /* ObjectBriefData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectBriefData.h; sourceTree = "<group>"; };
 		A19D6B0A1D1802170088AF23 /* FormationData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FormationData.cpp; sourceTree = "<group>"; };
 		A19D6B0B1D1802170088AF23 /* FormationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormationData.h; sourceTree = "<group>"; };
 		A19EE96B1C1C0F1300E46D77 /* LevelLocalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelLocalData.cpp; sourceTree = "<group>"; };
@@ -712,8 +713,6 @@
 		A1C124DB1BF58AF700F3FDD2 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sounds; sourceTree = "<group>"; };
 		A1CA35E71D45BDE200584C9D /* NoticeNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NoticeNode.cpp; sourceTree = "<group>"; };
 		A1CA35E81D45BDE200584C9D /* NoticeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeNode.h; sourceTree = "<group>"; };
-		A1CA35EA1D45BE0700584C9D /* NoticeData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NoticeData.cpp; sourceTree = "<group>"; };
-		A1CA35EB1D45BE0700584C9D /* NoticeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeData.h; sourceTree = "<group>"; };
 		A1CA35ED1D45BF2600584C9D /* SpellRingNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpellRingNode.cpp; sourceTree = "<group>"; };
 		A1CA35EE1D45BF2600584C9D /* SpellRingNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpellRingNode.h; sourceTree = "<group>"; };
 		A1CA35F31D45F29D00584C9D /* SettingsLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsLayer.cpp; sourceTree = "<group>"; };
@@ -800,8 +799,6 @@
 		A1E830631C1EA50200FE01B8 /* ConditionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConditionData.h; sourceTree = "<group>"; };
 		A1E830641C1EA50200FE01B8 /* QuestLocalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuestLocalData.cpp; sourceTree = "<group>"; };
 		A1E830651C1EA50200FE01B8 /* QuestLocalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestLocalData.h; sourceTree = "<group>"; };
-		A1E830661C1EA50200FE01B8 /* RewardData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RewardData.cpp; sourceTree = "<group>"; };
-		A1E830671C1EA50200FE01B8 /* RewardData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardData.h; sourceTree = "<group>"; };
 		A1E8306B1C1EA55D00FE01B8 /* ContentData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ContentData.cpp; sourceTree = "<group>"; };
 		A1E8306C1C1EA55D00FE01B8 /* ContentData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentData.h; sourceTree = "<group>"; };
 		A1E947C01D48A3A400BD7A27 /* UserOperationNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserOperationNode.cpp; sourceTree = "<group>"; };
@@ -1502,8 +1499,8 @@
 				A1D4613E1C3E111B00E8E60B /* User */,
 				A19EE96B1C1C0F1300E46D77 /* LevelLocalData.cpp */,
 				A19EE96C1C1C0F1300E46D77 /* LevelLocalData.h */,
-				A16BF2961C31406A00E91458 /* ResourceData.cpp */,
-				A16BF2971C31406A00E91458 /* ResourceData.h */,
+				A19382191D4B331B0059EDBF /* ObjectBriefData.cpp */,
+				A193821A1D4B331B0059EDBF /* ObjectBriefData.h */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -1622,6 +1619,8 @@
 				A1DF4BEB1C05902C000F2FDA /* DisplayBar.h */,
 				A1720E721BCCE0A200217E98 /* FixedLabelAtlas.cpp */,
 				A1720E731BCCE0A200217E98 /* FixedLabelAtlas.h */,
+				A19382161D4B0B0D0059EDBF /* ObjectBriefNode.cpp */,
+				A19382171D4B0B0D0059EDBF /* ObjectBriefNode.h */,
 				A1D45C481BEB3B1400D1E921 /* ResourceButton.cpp */,
 				A1D45C491BEB3B1400D1E921 /* ResourceButton.h */,
 				A1F5BFA61C1FDFBE007C08CB /* ResourceNode.cpp */,
@@ -2070,8 +2069,6 @@
 				A1F5BF9A1C1FC724007C08CB /* QuestData.h */,
 				A1E830641C1EA50200FE01B8 /* QuestLocalData.cpp */,
 				A1E830651C1EA50200FE01B8 /* QuestLocalData.h */,
-				A1E830661C1EA50200FE01B8 /* RewardData.cpp */,
-				A1E830671C1EA50200FE01B8 /* RewardData.h */,
 			);
 			path = Quest;
 			sourceTree = "<group>";
@@ -2205,8 +2202,6 @@
 				CB3EC8951C4E4D1200447FE3 /* ChatData.h */,
 				CB3EC8981C4E4DA600447FE3 /* ChatMark.cpp */,
 				CB3EC8991C4E4DA600447FE3 /* ChatMark.h */,
-				A1CA35EA1D45BE0700584C9D /* NoticeData.cpp */,
-				A1CA35EB1D45BE0700584C9D /* NoticeData.h */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -2381,7 +2376,6 @@
 				045116E31BCFBA39002AA721 /* Map.cpp in Sources */,
 				A18524D61C1AE47A00BE261D /* BagNode.cpp in Sources */,
 				A1F395EF1C23BBA800B75923 /* ObjectLocalData.cpp in Sources */,
-				A16BF2981C31406A00E91458 /* ResourceData.cpp in Sources */,
 				A11B249F1D125ED600E22839 /* FormationUnitNode.cpp in Sources */,
 				309F76A01BEA3ABA00B2791F /* CoreUtils.cpp in Sources */,
 				A1B4ADFF1C200480005906A6 /* DataManager.cpp in Sources */,
@@ -2533,7 +2527,6 @@
 				3031641A1CFD99AF00DBAB04 /* Heuristic.cpp in Sources */,
 				308B84691BE3856F00377802 /* AIBrain.cpp in Sources */,
 				A1720E7B1BCCE0F000217E98 /* NumberJump.cpp in Sources */,
-				A1CA35EC1D45BE0700584C9D /* NoticeData.cpp in Sources */,
 				A108A7B31D25253700987658 /* AchievementNode.cpp in Sources */,
 				A1F5BFA81C1FDFBE007C08CB /* ResourceNode.cpp in Sources */,
 				3087FF311CA2BF5A004E31F6 /* ClientTCPNetworkProxy.cpp in Sources */,
@@ -2586,6 +2579,7 @@
 				A16BF2921C313E9F00E91458 /* TowerLocalData.cpp in Sources */,
 				A1DF4BEC1C05902C000F2FDA /* DisplayBar.cpp in Sources */,
 				A1DFAAD21D10FC2800817E69 /* BattleDeckLayer.cpp in Sources */,
+				A19382181D4B0B0D0059EDBF /* ObjectBriefNode.cpp in Sources */,
 				A1D461651C3E478F00E8E60B /* AbstractData.cpp in Sources */,
 				CBD778C71C29390B0070D293 /* AnnouncementNode.cpp in Sources */,
 				A18885771C43ACFB00C9586F /* ArtifactData.cpp in Sources */,
@@ -2596,12 +2590,12 @@
 				A188857A1C43BA1C00C9586F /* TowerManager.cpp in Sources */,
 				045116E21BCFBA39002AA721 /* Clock.cpp in Sources */,
 				A1720E931BCCE1D900217E98 /* LocalHelper.cpp in Sources */,
-				A1E8306A1C1EA50200FE01B8 /* RewardData.cpp in Sources */,
 				A1CA78001C892D4E0060F71A /* CardConfigData.cpp in Sources */,
 				A1E5BED31C3B7D08005BC78B /* SoldierData.cpp in Sources */,
 				045117091BCFBA53002AA721 /* Faction.cpp in Sources */,
 				A1F3D2251D1D042800EB5C17 /* CardLayer.cpp in Sources */,
 				3087FF361CA825CD004E31F6 /* Damage.cpp in Sources */,
+				A193821B1D4B331B0059EDBF /* ObjectBriefData.cpp in Sources */,
 				A1CA35F81D45F3C300584C9D /* LanguageLayer.cpp in Sources */,
 				A1E8306D1C1EA55D00FE01B8 /* ContentData.cpp in Sources */,
 				045116F31BCFBA44002AA721 /* BuffType.cpp in Sources */,

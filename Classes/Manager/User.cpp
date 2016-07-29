@@ -45,7 +45,7 @@ User::~User()
 }
 
 #pragma mark - public
-unsigned int User::getUserId() const
+int User::getUid() const
 {
     return _uid;
 }

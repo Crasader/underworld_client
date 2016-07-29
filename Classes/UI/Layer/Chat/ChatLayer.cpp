@@ -11,6 +11,7 @@
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "ChatUI.h"
+#include "ChatManager.h"
 #include "LocalHelper.h"
 #include "SoundManager.h"
 #include "XTableViewCell.h"
@@ -20,13 +21,13 @@ using namespace std;
 using namespace ui;
 
 static const size_t tableColumnCount(1);
-static const Vec2 nodeOffsetOnTable(5, 14);
-static const ChatTableType tableTypes[] = {
-    ChatTableType::Talk,
-    ChatTableType::Mail,
-    ChatTableType::Notice
+static const Vec2 nodeOffsetOnTable(0, 14);
+static const ChatType tableTypes[] = {
+    ChatType::World,
+    ChatType::Mail,
+    ChatType::Notice
 };
-static const unsigned int tablesCount(sizeof(tableTypes) / sizeof(ChatTableType));
+static const unsigned int tablesCount(sizeof(tableTypes) / sizeof(ChatType));
 
 #pragma mark - TableNode
 class ChatLayer::TableNode : public Node {
@@ -34,6 +35,7 @@ public:
     static TableNode* create(TableViewDataSource* source, const Size& size);
     virtual ~TableNode();
     void refresh(float height, bool reload);
+    const TableView* getTable() const;
     
 private:
     TableNode();
@@ -111,6 +113,11 @@ void ChatLayer::TableNode::refresh(float height, bool reload)
             _table->setContentOffset(offset);
         }
     }
+}
+
+const TableView* ChatLayer::TableNode::getTable() const
+{
+    return _table;
 }
 
 #pragma mark - EditBoxNode
@@ -192,6 +199,7 @@ bool ChatLayer::EditBoxNode::init(float width, EditBoxDelegate* delegate)
 #pragma mark - ChatLayer
 static const float viewWidth(385);
 static const float subViewWidth(366);
+static const int buttomZOrder(-1);
 ChatLayer* ChatLayer::create()
 {
     auto ret = new (nothrow) ChatLayer();
@@ -206,8 +214,12 @@ ChatLayer* ChatLayer::create()
 
 ChatLayer::ChatLayer()
 :_observer(nullptr)
+,_folder(false)
+,_isFolding(false)
 ,_background(nullptr)
-,_thisTableType(ChatTableType::None)
+,_button(nullptr)
+,_buttonIcon(nullptr)
+,_thisTableType(ChatType::None)
 ,_thisTableNode(nullptr)
 ,_editBoxNode(nullptr)
 ,_scrollBar(nullptr) {}
@@ -226,7 +238,35 @@ bool ChatLayer::init()
 {
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR)) {
         const auto& winSize(Director::getInstance()->getWinSize());
-        _background = CocosUtils::createBackground("GameImages/public/ui_background.png", Size(viewWidth, winSize.height));
+        const Size size(viewWidth, winSize.height);
+        setContentSize(size);
+        
+        // 1. button
+        static const string file(ChatUI::getResourcePath("button_liaotian_1.png"));
+        _button = Button::create(file, file);
+        static const float bOffsetX(2);
+        const auto& bsize(_button->getContentSize());
+        _button->setPosition(Point(size.width + bsize.width / 2 - bOffsetX, size.height / 2));
+        addChild(_button);
+        
+        _buttonIcon = Sprite::create(ChatUI::getResourcePath("icon_jiantou_1.png"));
+        _buttonIcon->setPosition(Point(bOffsetX + _buttonIcon->getContentSize().width / 2, bsize.height / 2));
+        _button->addChild(_buttonIcon);
+        _button->setPressedActionEnabled(true);
+        _button->addClickEventListener([this, size](Ref*) {
+            if (!_isFolding) {
+                _isFolding = true;
+                _folder = !_folder;
+                static const float duration(0.3f);
+                runAction(Sequence::create(MoveTo::create(duration, _folder ? Point(-size.width, 0) : Point::ZERO), CallFunc::create([this]() {
+                    _isFolding = false;
+                    _buttonIcon->setScaleX(_folder ? 1 : -1);
+                }), nullptr));
+            }
+        });
+        
+        // 2. background
+        _background = CocosUtils::createBackground("GameImages/public/ui_background.png", size);
         _background->setPosition(Point(viewWidth / 2, winSize.height / 2));
         addChild(_background);
         
@@ -241,7 +281,7 @@ bool ChatLayer::init()
         for (int i = 0; i < tablesCount; ++i) {
             auto type = tableTypes[i];
             float height(topLeft.y - edgeBottom);
-            if (ChatTableType::Talk == type) {
+            if (ChatType::World == type) {
                 _editBoxNode = EditBoxNode::create(subViewWidth, this);
                 _background->addChild(_editBoxNode);
                 
@@ -253,7 +293,7 @@ bool ChatLayer::init()
             createTableNode(type, height, topLeft);
         }
         
-        setTableType(ChatTableType::Talk);
+        setTableType(ChatType::World);
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -280,7 +320,13 @@ void ChatLayer::onTouchEnded(Touch *touch, Event *unused_event)
 #pragma mark - TableViewDelegate
 Size ChatLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
 {
-    return Size(350, 88);
+    auto size = getCellSize(getTableType(table), idx);
+    auto cnt = getCellsCount(table);
+    if (idx == cnt - 1) {
+        return size + Size(0, nodeOffsetOnTable.y);
+    }
+    
+    return size;
 }
 
 TableViewCell* ChatLayer::tableCellAtIndex(TableView *table, ssize_t idx)
@@ -297,11 +343,11 @@ TableViewCell* ChatLayer::tableCellAtIndex(TableView *table, ssize_t idx)
     for (int i = 0; i < tableColumnCount; ++i) {
         auto index = idx * tableColumnCount + i;
         Node* node(cell->getNode(i));
-        if (ChatTableType::Talk == type) {
+        if (ChatType::World == type) {
             node = dynamic_cast<ChatNode*>(node);
-        } else if (ChatTableType::Mail == type) {
+        } else if (ChatType::Mail == type) {
             node = dynamic_cast<NoticeNode*>(node);
-        } else if (ChatTableType::Notice == type) {
+        } else if (ChatType::Notice == type) {
             node = dynamic_cast<NoticeNode*>(node);
         }
         
@@ -346,7 +392,7 @@ void ChatLayer::editBoxReturn(ui::EditBox* editBox)
 #pragma mark - NoticeNodeObserver
 
 #pragma mark - table
-void ChatLayer::createTableNode(ChatTableType type, float height, const Point& topLeft)
+void ChatLayer::createTableNode(ChatType type, float height, const Point& topLeft)
 {
     auto node = TableNode::create(this, Size(subViewWidth, height));
     node->setVisible(false);
@@ -354,10 +400,17 @@ void ChatLayer::createTableNode(ChatTableType type, float height, const Point& t
     _background->addChild(node);
     
     // 1. insert table
-    if (_tableNodes.find(type) == end(_tableNodes)) {
-        _tableNodes.insert(make_pair(type, node));
-    } else {
+    if (_tableNodes.find(type) != end(_tableNodes)) {
         assert(false);
+    } else {
+        _tableNodes.insert(make_pair(type, node));
+    }
+    
+    auto table(node->getTable());
+    if (_tableMappings.find(table) != end(_tableMappings)) {
+        assert(false);
+    } else {
+        _tableMappings.insert(make_pair(table, node));
     }
     
     // 2. refresh table
@@ -370,15 +423,7 @@ void ChatLayer::createTableNode(ChatTableType type, float height, const Point& t
 ssize_t ChatLayer::getCellsCount(TableView* table) const
 {
     auto type = getTableType(table);
-    size_t cnt(0);
-    if (ChatTableType::Talk == type) {
-        cnt = _messages.size();
-    } else if (ChatTableType::Mail == type) {
-        cnt = _mails.size();
-    } else if (ChatTableType::Notice == type) {
-        cnt = _notices.size();
-    }
-    
+    auto cnt = getDataSize(type);
     if (cnt > 0) {
         return (cnt - 1) / tableColumnCount + 1;
     }
@@ -432,55 +477,56 @@ void ChatLayer::createTabButtons(const Vec2& edge)
     }
 }
 
-Node* ChatLayer::createCellNode(ChatTableType type, size_t idx)
+Size ChatLayer::getCellSize(ChatType type, size_t idx)
+{
+    // TODO: need to optimize
+    auto node = createCellNode(type, idx);
+    if (node) {
+        auto size(node->getContentSize());
+        return size;
+    }
+    
+    return Size::ZERO;
+}
+
+Node* ChatLayer::createCellNode(ChatType type, size_t idx)
 {
     Node* node(nullptr);
-    if (ChatTableType::Talk == type) {
-        node = ChatNode::create(_messages.at(idx));
-        (dynamic_cast<ChatNode*>(node))->registerObserver(this);
-    } else if (ChatTableType::Mail == type) {
-        node = NoticeNode::create(_mails.at(idx));
-        (dynamic_cast<NoticeNode*>(node))->registerObserver(this);
-    } else if (ChatTableType::Notice == type) {
-        node = NoticeNode::create(_notices.at(idx));
-        (dynamic_cast<NoticeNode*>(node))->registerObserver(this);
+    const auto& data = ChatManager::getInstance()->getChatData(type);
+    if (data.size() > idx) {
+        static const float edgeX(3);
+        static const float width(subViewWidth - edgeX * 2);
+        if (ChatType::World == type) {
+            node = ChatNode::create(width, data.at(idx));
+            (dynamic_cast<ChatNode*>(node))->registerObserver(this);
+        } else if (ChatType::Mail == type ||
+                   ChatType::Notice == type) {
+            node = NoticeNode::create(width, data.at(idx));
+            (dynamic_cast<NoticeNode*>(node))->registerObserver(this);
+        }
     }
     
     return node;
 }
 
-void ChatLayer::createEditBox()
+size_t ChatLayer::getDataSize(ChatType type) const
 {
-    _editBoxNode = EditBoxNode::create(100, this);
-    addChild(_editBoxNode);
+    return ChatManager::getInstance()->getChatData(type).size();
 }
 
-size_t ChatLayer::getDataSize(ChatTableType type) const
-{
-    if (ChatTableType::Talk == type) {
-        return _messages.size();
-    } else if (ChatTableType::Mail == type) {
-        return _mails.size();
-    } else if (ChatTableType::Notice == type) {
-        return _notices.size();
-    }
-    
-    return 0;
-}
-
-ChatTableType ChatLayer::getTableType(TableView* table) const
+ChatType ChatLayer::getTableType(TableView* table) const
 {
     if (table && _tableMappings.find(table) != end(_tableMappings)) {
         auto node(_tableMappings.at(table));
         if (node) {
-            return static_cast<ChatTableType>(node->getTag());
+            return static_cast<ChatType>(node->getTag());
         }
     }
     
-    return ChatTableType::None;
+    return ChatType::None;
 }
 
-void ChatLayer::setTableType(ChatTableType type)
+void ChatLayer::setTableType(ChatType type)
 {
     if (_thisTableType != type) {
         _thisTableType = type;
@@ -500,18 +546,18 @@ void ChatLayer::setTableType(ChatTableType type)
             iter->second->setEnabled(!isThisTable);
         }
         
-        _editBoxNode->setVisible(ChatTableType::Talk == type);
+        _editBoxNode->setVisible(ChatType::World == type);
     }
 }
 
-string ChatLayer::getTableName(ChatTableType type) const
+string ChatLayer::getTableName(ChatType type) const
 {
     switch (type) {
-        case ChatTableType::Talk:
+        case ChatType::World:
             return "公共";
-        case ChatTableType::Mail:
+        case ChatType::Mail:
             return "邮箱";
-        case ChatTableType::Notice:
+        case ChatType::Notice:
             return "系统";
         default:
             return "";

@@ -95,10 +95,13 @@ enum class QuestType {
 };
 
 enum class ChatType {
-    World = 0,
+    None,
+    World,
     Private,
     Guild,
     Group,
+    Mail,
+    Notice,
 };
 
 enum class GearType {

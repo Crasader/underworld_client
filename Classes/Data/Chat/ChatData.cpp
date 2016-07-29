@@ -9,39 +9,47 @@
 #include "ChatData.h"
 #include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
+#include "CocosUtils.h"
 #include "cocostudio/CocoStudio.h"
+#include "ObjectBriefData.h"
 
 using namespace std;
 using namespace cocostudio;
 
 ChatData::ChatData(ChatType type, const rapidjson::Value& jsonDict)
 :_id(0)
-,_type(ChatType::World)
-,_fromUserId(0)
-,_toUserId(0)
-,_timeStamp(0)
+,_type(type)
+,_uid(0)
+,_time(0)
 {
-    this->_type = type;
-    this->_fromUserId = DICTOOL->getIntValue_json(jsonDict, "from");
-    this->_toUserId = DICTOOL->getIntValue_json(jsonDict, "to");
-    if(DICTOOL->checkObjectExist_json(jsonDict, "fromName"))
-    {
-        this->_fromUserName = DICTOOL->getStringValue_json(jsonDict, "fromName");
+    _uid = DICTOOL->getIntValue_json(jsonDict, "uid");
+    _user = DICTOOL->getStringValue_json(jsonDict, "user");
+    
+    if (DICTOOL->checkObjectExist_json(jsonDict, "time")) {
+        _time = DICTOOL->getIntValue_json(jsonDict, "time");
+        _formattedTime = CocosUtils::getFormattedTime(_time);
     }
-    if(DICTOOL->checkObjectExist_json(jsonDict, "toName"))
-    {
-        this->_toUserName = DICTOOL->getStringValue_json(jsonDict, "toName");
+    
+    if (DICTOOL->checkObjectExist_json(jsonDict, "content")) {
+        _message = DICTOOL->getStringValue_json(jsonDict, "content");
     }
-    if(DICTOOL->checkObjectExist_json(jsonDict, "content"))
-    {
-        this->_message = DICTOOL->getStringValue_json(jsonDict, "content");
+    
+    if (DICTOOL->checkObjectExist_json(jsonDict, "rewards")) {
+        auto s = DICTOOL->getStringValue_json(jsonDict, "rewards");
+        vector<string> result;
+        Utils::split(result, s, ";", "");
+        for (int i = 0; i < result.size(); ++i) {
+            auto data = new ObjectBriefData(result.at(i));
+            _rewards.push_back(data);
+        }
     }
-    this->_timeStamp = DICTOOL->getIntValue_json(jsonDict, "time");
 }
 
 ChatData::~ChatData()
 {
-    
+    for (auto data : _rewards) {
+        CC_SAFE_DELETE(data);
+    }
 }
 
 int ChatData::getId() const
@@ -54,32 +62,32 @@ ChatType ChatData::getType() const
     return _type;
 }
 
-long ChatData::getTimeStamp() const
+int ChatData::getUid() const
 {
-    return _timeStamp;
+    return _uid;
 }
 
-int ChatData::getFromUserId() const
+const string& ChatData::getUser() const
 {
-    return _fromUserId;
+    return _user;
 }
 
-int ChatData::getToUserId() const
+long ChatData::getTime() const
 {
-    return _toUserId;
+    return _time;
 }
 
-const string& ChatData::getFromUserName() const
+const string& ChatData::getFormattedTime() const
 {
-    return _fromUserName;
-}
-
-const string& ChatData::getToUserName() const
-{
-    return _toUserName;
+    return _formattedTime;
 }
 
 const string& ChatData::getMessage() const
 {
     return _message;
+}
+
+const vector<ObjectBriefData*>& ChatData::getRewards() const
+{
+    return _rewards;
 }

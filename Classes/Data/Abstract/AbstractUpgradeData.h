@@ -15,7 +15,7 @@
 
 namespace tinyxml2 { class XMLElement; }
 
-class ResourceData;
+class ObjectBriefData;
 
 class AbstractUpgradeData
 {
@@ -32,7 +32,7 @@ private:
     int _id;
     int _level;
     int _unlockedLevel;
-    std::map<ResourceType, ResourceData*> _cost;
+    std::map<int, ObjectBriefData*> _cost;
 };
 
 #endif /* AbstractUpgradeData_h */

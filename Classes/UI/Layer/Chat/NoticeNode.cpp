@@ -7,18 +7,23 @@
 //
 
 #include "NoticeNode.h"
-#include "NoticeData.h"
 #include "CocosUtils.h"
+#include "ChatData.h"
+#include "ObjectBriefData.h"
 #include "ChatUI.h"
+#include "ObjectBriefNode.h"
 #include "UniversalButton.h"
 
 using namespace std;
 using namespace ui;
 
-NoticeNode* NoticeNode::create(const NoticeData* data)
+static const unsigned int resourceMaxCount(4);
+static const float resourceNodeEdgeX(3);
+
+NoticeNode* NoticeNode::create(float width, const ChatData* data)
 {
     auto ret = new (nothrow) NoticeNode();
-    if (ret && ret->init(data)) {
+    if (ret && ret->init(width, data)) {
         ret->autorelease();
         return ret;
     }
@@ -29,6 +34,7 @@ NoticeNode* NoticeNode::create(const NoticeData* data)
 
 NoticeNode::NoticeNode()
 :_observer(nullptr)
+,_width(0)
 ,_bg(nullptr)
 ,_user(nullptr)
 ,_content(nullptr)
@@ -45,10 +51,11 @@ void NoticeNode::registerObserver(NoticeNodeObserver *observer)
     _observer = observer;
 }
 
-bool NoticeNode::init(const NoticeData* data)
+bool NoticeNode::init(float width, const ChatData* data)
 {
     if (Node::init()) {
         setAnchorPoint(Point::ANCHOR_MIDDLE);
+        _width = width;
         
         static const Size size(348, 206);
         static const float capInsets(11.0f);
@@ -56,16 +63,20 @@ bool NoticeNode::init(const NoticeData* data)
         addChild(_bg);
         
         _user = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
+        _user->setTextColor(Color4B::BLACK);
         _user->setHorizontalAlignment(TextHAlignment::LEFT);
         _user->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
         _bg->addChild(_user);
         
         _content = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
+        _content->setTextColor(Color4B::BLACK);
+        _content->setHorizontalAlignment(TextHAlignment::LEFT);
         _content->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
         _bg->addChild(_content);
         
         _time = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
-        _user->setHorizontalAlignment(TextHAlignment::RIGHT);
+        _time->setTextColor(Color4B::BLUE);
+        _time->setHorizontalAlignment(TextHAlignment::RIGHT);
         _time->setAnchorPoint(Point::ANCHOR_TOP_RIGHT);
         _bg->addChild(_time);
         
@@ -75,21 +86,13 @@ bool NoticeNode::init(const NoticeData* data)
         const auto& rsize(_resourceBg->getContentSize());
         _content->setMaxLineWidth(rsize.width);
         
-        static const float edgeX(3);
         
         // resources
         if (true) {
-            float x(edgeX);
-            for (int i = 0; i < 3; ++i) {
-                static const float space(3);
-                auto type = static_cast<ResourceType>(101 + i);
-                auto node = createResourceNode(type, 100 + i);
+            for (int i = 0; i < resourceMaxCount; ++i) {
+                auto node = ObjectBriefNode::create(nullptr);
                 _resourceBg->addChild(node);
-                _resourceNodes.insert(make_pair(type, node));
-                
-                const auto& nsize(node->getContentSize());
-                node->setPosition(x + nsize.width / 2, rsize.height / 2);
-                x += nsize.width + space;
+                _resourceNodes.push_back(node);
             }
         }
         
@@ -102,7 +105,7 @@ bool NoticeNode::init(const NoticeData* data)
             _resourceBg->addChild(button);
             
             const auto& bsize(button->getContentSize());
-            button->setPosition(Point(rsize.width - (edgeX + bsize.width / 2), rsize.height / 2));
+            button->setPosition(Point(rsize.width - (resourceNodeEdgeX + bsize.width / 2), rsize.height / 2));
         }
         
         update(data);
@@ -113,39 +116,45 @@ bool NoticeNode::init(const NoticeData* data)
     return false;
 }
 
-void NoticeNode::update(const NoticeData* data)
+void NoticeNode::update(const ChatData* data)
 {
     if (data) {
+        _user->setString(data->getUser());
+        _content->setString(data->getMessage());
+        _time->setString(data->getFormattedTime());
+        const auto& rewards(data->getRewards());
+        auto cnt(rewards.size());
+        _resourceBg->setVisible(cnt > 0);
         
+        float x(resourceNodeEdgeX);
+        const auto& rsize(_resourceBg->getContentSize());
+        for (int i = 0; i < cnt; ++i) {
+            if (i < resourceMaxCount) {
+                auto node(_resourceNodes.at(i));
+                node->setVisible(true);
+                node->update(rewards.at(i));
+                
+                static const float space(3);
+                const auto& nsize(node->getContentSize());
+                node->setPosition(x + nsize.width / 2, rsize.height / 2);
+                x += nsize.width + space;
+            } else {
+                break;
+            }
+        }
+        
+        for (auto i = cnt; i < resourceMaxCount; ++i) {
+            _resourceNodes.at(i)->setVisible(false);
+        }
     } else {
-        
+        static const string empty("");
+        _user->setString(empty);
+        _content->setString(empty);
+        _time->setString(empty);
+        _resourceBg->setVisible(false);
     }
     
     adjust();
-}
-
-Node* NoticeNode::createResourceNode(ResourceType type, int count)
-{
-    auto node = Node::create();
-    
-    auto icon = Sprite::create(StringUtils::format("GameImages/resources/icon_%dS.png", type));
-    node->addChild(icon);
-    
-    auto label = CocosUtils::createLabel(StringUtils::format("X%d", count), DEFAULT_FONT_SIZE);
-    label->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    node->addChild(label);
-    
-    const auto& isize(icon->getContentSize());
-    const auto& lsize(label->getContentSize());
-    static const float space(3.0f);
-    const Size size(isize.width + space + lsize.width, 50);
-    node->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    node->setContentSize(size);
-    
-    icon->setPosition(Point(isize.width / 2, size.height / 2));
-    label->setPosition(Point(size.width - lsize.width / 2, size.height / 2));
-    
-    return node;
 }
 
 void NoticeNode::adjust()
@@ -156,12 +165,20 @@ void NoticeNode::adjust()
     const auto& csize(_content->getContentSize());
     const auto& tsize(_time->getContentSize());
     const auto& rsize(_resourceBg->getContentSize());
-    const Size size(rsize.width + edge * 2,
-                    MAX(usize.height, tsize.height) + csize.height + space * 2 + rsize.height + edge * 2);
+    const bool rvisible(_resourceBg->isVisible());
+    const float rh(rvisible ? (rsize.height + space) : 0);
+    const Size size(_width, MAX(usize.height, tsize.height) + csize.height + space + rh + edge * 2);
     _bg->setContentSize(size);
     
     _user->setPosition(Point(edge, size.height - edge));
     _time->setPosition(Point(size.width - edge, size.height - edge));
-    _content->setPosition(Point(size.width / 2, edge + rsize.height + space + csize.height / 2));
-    _resourceBg->setPosition(Point(size.width / 2, edge + rsize.height / 2));
+    _content->setPosition(Point(edge, edge + rh + csize.height / 2));
+    
+    if (rvisible) {
+        _resourceBg->setPosition(Point(size.width / 2, edge + rsize.height / 2));
+        _resourceBg->setScaleX((_width - edge * 2) / rsize.width);
+    }
+    
+    setContentSize(size);
+    _bg->setPosition(size.width / 2, size.height / 2);
 }

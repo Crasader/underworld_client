@@ -10,8 +10,11 @@
 #define ChatData_h
 
 #include <string>
+#include <vector>
 #include "CocosGlobal.h"
 #include "json/document.h"
+
+class ObjectBriefData;
 
 class ChatData
 {
@@ -21,22 +24,22 @@ public:
     
     int getId() const;
     ChatType getType() const;
-    long getTimeStamp() const;
-    int getFromUserId() const;
-    int getToUserId() const;
-    const std::string& getFromUserName() const;
-    const std::string& getToUserName() const;
+    int getUid() const;
+    const std::string& getUser() const;
+    long getTime() const;
+    const std::string& getFormattedTime() const;
     const std::string& getMessage() const;
+    const std::vector<ObjectBriefData*>& getRewards() const;
     
 private:
     int _id;
     ChatType _type;
-    long _timeStamp;
-    int _fromUserId;
-    std::string _fromUserName;
-    int _toUserId;
-    std::string _toUserName;
+    int _uid;
+    std::string _user;
+    long _time;
+    std::string _formattedTime;
     std::string _message;
+    std::vector<ObjectBriefData*> _rewards;
 };
 
 #endif /* ChatData_h */

@@ -7,7 +7,7 @@
 //
 
 #include "AbstractPieceLocalData.h"
-#include "RewardData.h"
+#include "ObjectBriefData.h"
 #include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
 #include "AttributeData.h"
@@ -28,7 +28,7 @@ AbstractPieceLocalData::AbstractPieceLocalData(tinyxml2::XMLElement *xmlElement)
                 Utils::split(result, data, ",", "");
                 for (auto iter = result.begin(); iter != result.end(); ++iter)
                 {
-                    RewardData* reward = new (nothrow) RewardData(*iter);
+                    ObjectBriefData* reward = new (nothrow) ObjectBriefData(*iter);
                     _soldRewards.push_back(reward);
                 }
             }
@@ -46,7 +46,7 @@ int AbstractPieceLocalData::getRequiredCount() const
     return _requiredCount;
 }
 
-const vector<RewardData*>& AbstractPieceLocalData::getSoldRewards() const
+const vector<ObjectBriefData*>& AbstractPieceLocalData::getSoldRewards() const
 {
     return _soldRewards;
 }

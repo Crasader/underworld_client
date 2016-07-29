@@ -12,7 +12,7 @@
 #include "AbstractUpgradeData.h"
 
 class AttributeData;
-class RewardData;
+class ObjectBriefData;
 
 class ArtifactUpgradeData : public AbstractUpgradeData
 {
@@ -22,11 +22,11 @@ public:
     
     const std::unordered_map<int, AttributeData *>& getAttributes() const;
     const AttributeData* getAttribute(int id) const;
-    const RewardData* getSoldReward(int type) const;
+    const ObjectBriefData* getSoldReward(int type) const;
     
 private:
     std::unordered_map<int, AttributeData *> _attributes;
-    std::unordered_map<int, RewardData*> _soldRewards;
+    std::unordered_map<int, ObjectBriefData*> _soldRewards;
 };
 
 #endif /* ArtifactUpgradeData_h */

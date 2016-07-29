@@ -51,7 +51,7 @@ UniversalButton* UniversalButton::create(BSize size, BType type, const string& t
 
 bool UniversalButton::init(BSize size, BType type, const string& title)
 {
-    if(Node::init()) {
+    if (Node::init()) {
         _bSize = size;
         _bType = type;
         
@@ -71,8 +71,6 @@ bool UniversalButton::init(BSize size, BType type, const string& title)
             
             setAnchorPoint(Point::ANCHOR_MIDDLE);
             adjust();
-            
-            return true;
         }
         
         return true;

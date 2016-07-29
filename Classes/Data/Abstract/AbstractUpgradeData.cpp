@@ -9,7 +9,7 @@
 #include "AbstractUpgradeData.h"
 #include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
-#include "ResourceData.h"
+#include "ObjectBriefData.h"
 
 using namespace std;
 
@@ -18,26 +18,24 @@ AbstractUpgradeData::AbstractUpgradeData(tinyxml2::XMLElement *xmlElement)
 ,_level(0)
 ,_unlockedLevel(0)
 {
-    if (xmlElement)
-    {
+    if (xmlElement) {
         _id = atoi(xmlElement->Attribute("id"));
         _level = atoi(xmlElement->Attribute("level"));
         
         {
-            const char *data = xmlElement->Attribute("unlock");
+            auto data = xmlElement->Attribute("unlock");
             if (data) {
                 _unlockedLevel = atoi(data);
             }
         }
+        
         {
-            const char *data = xmlElement->Attribute("worth");
-            if (data)
-            {
+            auto data = xmlElement->Attribute("worth");
+            if (data) {
                 vector<string> result;
                 Utils::split(result, data, ",", "");
-                for (auto iter = result.begin(); iter != result.end(); ++iter)
-                {
-                    ResourceData* data = new (nothrow) ResourceData(*iter);
+                for (auto iter = result.begin(); iter != result.end(); ++iter) {
+                    auto data = new (nothrow) ObjectBriefData(*iter);
                     _cost.insert(make_pair(data->getId(), data));
                 }
             }
@@ -67,9 +65,9 @@ int AbstractUpgradeData::getUnlockedLevel() const
 
 int AbstractUpgradeData::getResourceCount(ResourceType type) const
 {
-    if (_cost.find(type) != _cost.end())
-    {
-        return _cost.at(type)->getCount();
+    auto itype(static_cast<int>(type));
+    if (_cost.find(itype) != _cost.end()) {
+        return _cost.at(itype)->getCount();
     }
     
     return 99999;

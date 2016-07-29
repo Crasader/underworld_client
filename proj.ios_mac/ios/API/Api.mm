@@ -169,7 +169,7 @@ void iOSApi::saveAnonymousUser(const User* user)
 {
     const string& token = user->getToken();
     if (token.size() > 0) {
-        const unsigned int userId = user->getUserId();
+        const unsigned int userId = user->getUid();
         // serialize
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setValue:[NSString stringWithFormat:@"%d", userId] forKey:[NSString stringWithUTF8String:kUID]];

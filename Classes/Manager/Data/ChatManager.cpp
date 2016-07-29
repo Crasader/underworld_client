@@ -14,9 +14,26 @@
 using namespace std;
 using namespace cocostudio;
 
+static ChatManager* s_pInstance(nullptr);
+ChatManager* ChatManager::getInstance()
+{
+    if (!s_pInstance) {
+        s_pInstance = new (nothrow) ChatManager();
+    }
+    
+    return s_pInstance;
+}
+
+void ChatManager::purge()
+{
+    if (s_pInstance) {
+        CC_SAFE_DELETE(s_pInstance);
+    }
+}
+
 ChatManager::ChatManager()
 {
-    _mark = new ChatMark();
+    _mark = new (nothrow) ChatMark();
 }
 
 ChatManager::~ChatManager()
@@ -27,22 +44,22 @@ ChatManager::~ChatManager()
 
 void ChatManager::clear()
 {
-//    M_SAFE_DELETE(_mark);
     for(auto iter = _chatData.begin(); iter != _chatData.end(); ++iter){
-        vector<const ChatData*> vec = iter->second;
-        for(auto i = vec.begin(); i != vec.end(); ++i) {
-            const ChatData* data = *i;
+        auto& vec(iter->second);
+        for (auto data : vec) {
             CC_SAFE_DELETE(data);
         }
+        
         vec.clear();
     }
+    
     _chatData.clear();
 }
 
 void ChatManager::parseChannel(ChatType type, const rapidjson::Value& messages, const char* key)
 {
     if (DICTOOL->checkObjectExist_json(messages, key)) {
-        vector<const ChatData*> vec;
+        vector<ChatData*> vec;
         const rapidjson::Value& world = DICTOOL->getSubDictionary_json(messages, key);
         const int cnt = DICTOOL->getArrayCount_json(messages, key);
         for (int i = 0; i < cnt; ++i)
@@ -68,6 +85,7 @@ void ChatManager::parse(const rapidjson::Value& jsonDict)
         parseChannel(ChatType::Group, messages, "team");
         
     }
+    
     if(DICTOOL->checkObjectExist_json(jsonDict, "mark"))
     {
         const rapidjson::Value& mark = DICTOOL->getSubDictionary_json(jsonDict, "mark");
@@ -79,10 +97,10 @@ void ChatManager::parse(const rapidjson::Value& jsonDict)
     }
 }
 
-const vector<const ChatData*>& ChatManager::getChatData(ChatType type)
+const vector<ChatData*>& ChatManager::getChatData(ChatType type)
 {
     if (_chatData.find(type) == _chatData.end()) {
-        _chatData.insert(make_pair(type, vector<const ChatData*>()));
+        _chatData.insert(make_pair(type, vector<ChatData*>()));
     }
     
     return _chatData.at(type);

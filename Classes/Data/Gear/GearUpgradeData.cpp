@@ -9,7 +9,7 @@
 #include "GearUpgradeData.h"
 #include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
-#include "RewardData.h"
+#include "ObjectBriefData.h"
 
 using namespace std;
 
@@ -25,7 +25,7 @@ GearUpgradeData::GearUpgradeData(tinyxml2::XMLElement *xmlElement)
                 Utils::split(result, data, ",", "");
                 for (auto iter = result.begin(); iter != result.end(); ++iter)
                 {
-                    RewardData* reward = new (nothrow) RewardData(*iter);
+                    ObjectBriefData* reward = new (nothrow) ObjectBriefData(*iter);
                     _soldRewards.insert(make_pair(reward->getId(), reward));
                 }
             }
@@ -38,7 +38,7 @@ GearUpgradeData::~GearUpgradeData()
     Utils::clearMap(_soldRewards);
 }
 
-const RewardData* GearUpgradeData::getSoldReward(int type) const
+const ObjectBriefData* GearUpgradeData::getSoldReward(int type) const
 {
     if (_soldRewards.find(type) != _soldRewards.end()) {
         return _soldRewards.at(type);
