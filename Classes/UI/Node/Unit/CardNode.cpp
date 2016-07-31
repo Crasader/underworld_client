@@ -66,8 +66,7 @@ bool CardNode::init(bool canShake)
         Node *mainNode = CocosUtils::playCSBAnimation(csbFile, false, 0, nullptr);
         addChild(mainNode);
         
-        _cardWidget = dynamic_cast<Widget *>(mainNode->getChildByTag(42));
-        _cardWidget->setSwallowTouches(false);
+        
         
         const Vector<Node*>& children = _cardWidget->getChildren();
         for (int i = 0; i < children.size(); ++i)

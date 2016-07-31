@@ -11,7 +11,6 @@
 		0404BE711D1B970000B46BAA /* Gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0404BE6F1D1B970000B46BAA /* Gui.cpp */; };
 		0404BE741D1B988A00B46BAA /* WorldRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0404BE721D1B988A00B46BAA /* WorldRender.cpp */; };
 		0404BE771D1BC7A300B46BAA /* WorldObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0404BE751D1BC7A300B46BAA /* WorldObject.cpp */; };
-		040DBB871D3E3EC40096F069 /* DisplayBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 040DBB851D3E3EC40096F069 /* DisplayBar.cpp */; };
 		0424CD821D3CE108001F9777 /* UnitRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0424CD801D3CE108001F9777 /* UnitRender.cpp */; };
 		0424CD851D3CE183001F9777 /* BulletRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0424CD831D3CE183001F9777 /* BulletRender.cpp */; };
 		045116E21BCFBA39002AA721 /* Clock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116DC1BCFBA39002AA721 /* Clock.cpp */; };
@@ -57,6 +56,11 @@
 		3028EBC31BFF0CBD00511C51 /* DynamicValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3028EBC11BFF0CBD00511C51 /* DynamicValue.cpp */; };
 		3028EBC61BFF0D4800511C51 /* Condition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3028EBC41BFF0D4700511C51 /* Condition.cpp */; };
 		3031641A1CFD99AF00DBAB04 /* Heuristic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 303164181CFD99AF00DBAB04 /* Heuristic.cpp */; };
+		3058B4951D4C761B0002E547 /* HMMCardView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3058B4921D4C761B0002E547 /* HMMCardView.cpp */; };
+		3058B4981D4C76A40002E547 /* DisplayBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3058B4961D4C76A40002E547 /* DisplayBar.cpp */; };
+		3058B49C1D4C8AF60002E547 /* HMMCardRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3058B49A1D4C8AF60002E547 /* HMMCardRender.cpp */; };
+		3058B4A21D4C959C0002E547 /* HMMDeckRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3058B4A01D4C959C0002E547 /* HMMDeckRender.cpp */; };
+		3058B4A51D4DE1BB0002E547 /* UnitView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3058B4A31D4DE1BB0002E547 /* UnitView.cpp */; };
 		3070302B1CD1E6D70077D357 /* ProduceType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 307030291CD1E6D60077D357 /* ProduceType.cpp */; };
 		3070302E1CD3253B0077D357 /* Produce.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3070302C1CD3253B0077D357 /* Produce.cpp */; };
 		307534691BF1B2F20057DCED /* Commander.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 307534671BF1B2F20057DCED /* Commander.cpp */; };
@@ -324,8 +328,6 @@
 		0404BE731D1B988A00B46BAA /* WorldRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorldRender.h; path = Core/External/Render/WorldRender.h; sourceTree = "<group>"; };
 		0404BE751D1BC7A300B46BAA /* WorldObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WorldObject.cpp; path = Core/Unit/Instance/WorldObject.cpp; sourceTree = "<group>"; };
 		0404BE761D1BC7A300B46BAA /* WorldObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorldObject.h; path = Core/Unit/Instance/WorldObject.h; sourceTree = "<group>"; };
-		040DBB851D3E3EC40096F069 /* DisplayBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayBar.cpp; path = Core/External/Render/View/DisplayBar.cpp; sourceTree = "<group>"; };
-		040DBB861D3E3EC40096F069 /* DisplayBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayBar.h; path = Core/External/Render/View/DisplayBar.h; sourceTree = "<group>"; };
 		0424CD801D3CE108001F9777 /* UnitRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UnitRender.cpp; path = Core/External/Render/UnitRender.cpp; sourceTree = "<group>"; };
 		0424CD811D3CE108001F9777 /* UnitRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnitRender.h; path = Core/External/Render/UnitRender.h; sourceTree = "<group>"; };
 		0424CD831D3CE183001F9777 /* BulletRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BulletRender.cpp; path = Core/External/Render/BulletRender.cpp; sourceTree = "<group>"; };
@@ -411,6 +413,16 @@
 		3028EBC51BFF0D4700511C51 /* Condition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Condition.h; path = Core/Unit/Element/Condition.h; sourceTree = "<group>"; };
 		303164181CFD99AF00DBAB04 /* Heuristic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Heuristic.cpp; path = Core/Unit/Element/Heuristic.cpp; sourceTree = "<group>"; };
 		303164191CFD99AF00DBAB04 /* Heuristic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Heuristic.h; path = Core/Unit/Element/Heuristic.h; sourceTree = "<group>"; };
+		3058B4921D4C761B0002E547 /* HMMCardView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HMMCardView.cpp; path = Core/External/Render/View/Game/HMMCardView.cpp; sourceTree = "<group>"; };
+		3058B4931D4C761B0002E547 /* HMMCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMMCardView.h; path = Core/External/Render/View/Game/HMMCardView.h; sourceTree = "<group>"; };
+		3058B4961D4C76A40002E547 /* DisplayBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayBar.cpp; path = Core/External/Render/View/Public/DisplayBar.cpp; sourceTree = "<group>"; };
+		3058B4971D4C76A40002E547 /* DisplayBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayBar.h; path = Core/External/Render/View/Public/DisplayBar.h; sourceTree = "<group>"; };
+		3058B49A1D4C8AF60002E547 /* HMMCardRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HMMCardRender.cpp; path = Core/External/Render/Gui/HMMCardRender.cpp; sourceTree = "<group>"; };
+		3058B49B1D4C8AF60002E547 /* HMMCardRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMMCardRender.h; path = Core/External/Render/Gui/HMMCardRender.h; sourceTree = "<group>"; };
+		3058B4A01D4C959C0002E547 /* HMMDeckRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HMMDeckRender.cpp; path = Core/External/Render/Gui/HMMDeckRender.cpp; sourceTree = "<group>"; };
+		3058B4A11D4C959C0002E547 /* HMMDeckRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMMDeckRender.h; path = Core/External/Render/Gui/HMMDeckRender.h; sourceTree = "<group>"; };
+		3058B4A31D4DE1BB0002E547 /* UnitView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UnitView.cpp; path = Core/External/Render/View/Game/UnitView.cpp; sourceTree = "<group>"; };
+		3058B4A41D4DE1BB0002E547 /* UnitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnitView.h; path = Core/External/Render/View/Game/UnitView.h; sourceTree = "<group>"; };
 		307030291CD1E6D60077D357 /* ProduceType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ProduceType.cpp; path = Core/Unit/Type/ProduceType.cpp; sourceTree = "<group>"; };
 		3070302A1CD1E6D60077D357 /* ProduceType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProduceType.h; path = Core/Unit/Type/ProduceType.h; sourceTree = "<group>"; };
 		3070302C1CD3253B0077D357 /* Produce.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Produce.cpp; path = Core/Unit/Instance/Produce.cpp; sourceTree = "<group>"; };
@@ -917,6 +929,10 @@
 				0404BE701D1B970000B46BAA /* Gui.h */,
 				04760C3D1D49F000005CCF21 /* HMMGui.cpp */,
 				04760C3E1D49F001005CCF21 /* HMMGui.h */,
+				3058B49A1D4C8AF60002E547 /* HMMCardRender.cpp */,
+				3058B49B1D4C8AF60002E547 /* HMMCardRender.h */,
+				3058B4A01D4C959C0002E547 /* HMMDeckRender.cpp */,
+				3058B4A11D4C959C0002E547 /* HMMDeckRender.h */,
 			);
 			name = Gui;
 			sourceTree = "<group>";
@@ -924,8 +940,8 @@
 		040DBB841D3E3E620096F069 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				040DBB851D3E3EC40096F069 /* DisplayBar.cpp */,
-				040DBB861D3E3EC40096F069 /* DisplayBar.h */,
+				3058B48D1D4C75DC0002E547 /* Public */,
+				3058B48C1D4C75D60002E547 /* Game */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1219,6 +1235,26 @@
 				303164191CFD99AF00DBAB04 /* Heuristic.h */,
 			);
 			name = Element;
+			sourceTree = "<group>";
+		};
+		3058B48C1D4C75D60002E547 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				3058B4921D4C761B0002E547 /* HMMCardView.cpp */,
+				3058B4931D4C761B0002E547 /* HMMCardView.h */,
+				3058B4A31D4DE1BB0002E547 /* UnitView.cpp */,
+				3058B4A41D4DE1BB0002E547 /* UnitView.h */,
+			);
+			name = Game;
+			sourceTree = "<group>";
+		};
+		3058B48D1D4C75DC0002E547 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				3058B4961D4C76A40002E547 /* DisplayBar.cpp */,
+				3058B4971D4C76A40002E547 /* DisplayBar.h */,
+			);
+			name = Public;
 			sourceTree = "<group>";
 		};
 		3075346E1BF33DEE0057DCED /* Test */ = {
@@ -2333,6 +2369,7 @@
 				63CCBFDA1CC5BA1B00590513 /* BinaryJsonTool.cpp in Sources */,
 				0487A66C1CC8A90D005FE8D0 /* GameModeHMM.cpp in Sources */,
 				A1D461601C3E251000E8E60B /* UAConfigData.cpp in Sources */,
+				3058B4A21D4C959C0002E547 /* HMMDeckRender.cpp in Sources */,
 				A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */,
 				300B1E5C1C50CCED00F8D6ED /* PathFinderImpl.cpp in Sources */,
 				A1720E8C1BCCE19300217E98 /* aes_ctr.c in Sources */,
@@ -2371,7 +2408,6 @@
 				A1F3D2281D1D044100EB5C17 /* CardInfoNode.cpp in Sources */,
 				A1720E971BCCE41A00217E98 /* ScrollBar.cpp in Sources */,
 				A18524D01C1AE42000BE261D /* BagLayer.cpp in Sources */,
-				040DBB871D3E3EC40096F069 /* DisplayBar.cpp in Sources */,
 				A178F76A1D23B7FD006E3812 /* CardInfoLayer.cpp in Sources */,
 				A1E7BAE21C2149E800CE2A85 /* Constants.cpp in Sources */,
 				A16BF2A41C314E5100E91458 /* AttributeData.cpp in Sources */,
@@ -2423,6 +2459,7 @@
 				A1F5BF951C1FC381007C08CB /* GearData.cpp in Sources */,
 				30C6C3921C52183500DD1C8F /* AStarNode.cpp in Sources */,
 				A1F5BF921C1FC36C007C08CB /* GearLocalData.cpp in Sources */,
+				3058B4981D4C76A40002E547 /* DisplayBar.cpp in Sources */,
 				A16BF2851C313E2900E91458 /* HeroLocalData.cpp in Sources */,
 				A1720E8D1BCCE19300217E98 /* AESCTREncryptor.cpp in Sources */,
 				0451170B1BCFBA53002AA721 /* Unit.cpp in Sources */,
@@ -2459,6 +2496,7 @@
 				04E846951D1D02E60041FAC3 /* WorldObjectRender.cpp in Sources */,
 				A1720E7B1BCCE0F000217E98 /* NumberJump.cpp in Sources */,
 				A108A7B31D25253700987658 /* AchievementNode.cpp in Sources */,
+				3058B49C1D4C8AF60002E547 /* HMMCardRender.cpp in Sources */,
 				A1F5BFA81C1FDFBE007C08CB /* ResourceNode.cpp in Sources */,
 				3087FF311CA2BF5A004E31F6 /* ClientTCPNetworkProxy.cpp in Sources */,
 				A1F3D2371D1D05CD00EB5C17 /* MessageBoxLayer.cpp in Sources */,
@@ -2469,6 +2507,7 @@
 				A1A05B6C1C96B6A0006FE03B /* DDLog.m in Sources */,
 				A1B4AE001C200480005906A6 /* OnlineUpdater.cpp in Sources */,
 				0424CD821D3CE108001F9777 /* UnitRender.cpp in Sources */,
+				3058B4A51D4DE1BB0002E547 /* UnitView.cpp in Sources */,
 				300F25331BFC67550080765C /* FeatureType.cpp in Sources */,
 				A1A74CA81C17DFE800648671 /* MainLayer.cpp in Sources */,
 				3028EBC61BFF0D4800511C51 /* Condition.cpp in Sources */,
@@ -2521,6 +2560,7 @@
 				A1D461441C3E111B00E8E60B /* UserSimpleData.cpp in Sources */,
 				A188857A1C43BA1C00C9586F /* TowerManager.cpp in Sources */,
 				045116E21BCFBA39002AA721 /* Clock.cpp in Sources */,
+				3058B4951D4C761B0002E547 /* HMMCardView.cpp in Sources */,
 				A1720E931BCCE1D900217E98 /* LocalHelper.cpp in Sources */,
 				A1E8306A1C1EA50200FE01B8 /* RewardData.cpp in Sources */,
 				A1CA78001C892D4E0060F71A /* CardConfigData.cpp in Sources */,

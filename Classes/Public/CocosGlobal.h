@@ -116,4 +116,14 @@ enum class GearQuality {
     Orange,
 };
 
+ResourceType core_resource_type_key_2_ui_resource_type(const std::string& key) {
+    if (key == RES_NAME_GOLD) {
+        return ResourceType::Gold;
+    } else if (key == RES_NAME_WOOD) {
+        return ResourceType::Wood;
+    } else {
+        return ResourceType::MAX;
+    }
+}
+
 #endif /* CocosGlobal_h */
