@@ -376,12 +376,11 @@ TableViewCell* ChatLayer::tableCellAtIndex(TableView *table, ssize_t idx)
     
     auto type = getTableType(table);
     auto maxCnt(getDataCount(type));
-    
     auto cnt = getCellsCount(table);
     for (int i = 0; i < tableColumnCount; ++i) {
         auto index = idx * tableColumnCount + i;
-        Node* node(cell->getNode(i));
-        if (index < cnt) {
+        auto node(cell->getNode(i));
+        if (index < maxCnt) {
             if (!node) {
                 node = createCellNode(type, index);
                 cell->addChild(node);
@@ -393,7 +392,7 @@ TableViewCell* ChatLayer::tableCellAtIndex(TableView *table, ssize_t idx)
             // we must update the position when the table was reloaded
             const auto& nodeSize(node->getContentSize());
             const Point point(nodeSize.width * (i + 0.5f) + nodeGapOnTable.x / 2, nodeSize.height * 0.5f + nodeGapOnTable.y / 2);
-            node->setPosition(point + Point(0, (idx == maxCnt - 1) ? nodeGapOnTable.y / 2 : 0));
+            node->setPosition(point + Point(0, (idx == cnt - 1) ? nodeGapOnTable.y / 2 : 0));
         } else if (node) {
             node->removeFromParent();
             cell->resetNode(i);

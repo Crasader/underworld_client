@@ -7,7 +7,6 @@
 //
 
 #include "LanguageNode.h"
-#include "ui/CocosGUI.h"
 #include "CocosUtils.h"
 #include "SettingUI.h"
 
@@ -27,8 +26,8 @@ LanguageNode* LanguageNode::create(const string& name)
 }
 
 LanguageNode::LanguageNode()
-:_observer(nullptr)
-,_label(nullptr) {}
+:_button(nullptr)
+,_observer(nullptr) {}
 
 LanguageNode::~LanguageNode()
 {
@@ -56,10 +55,18 @@ bool LanguageNode::init(const string& name)
         _tick->setVisible(false);
         button->addChild(_tick);
         
-        _label = CocosUtils::createLabel(name, DEFAULT_FONT_SIZE, DEFAULT_FONT, Size::ZERO, TextHAlignment::LEFT, TextVAlignment::CENTER);
-        _label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
-        _label->setPosition(_tick->getPosition() + Point(tsize.width / 2 + space, 0));
-        button->addChild(_label);
+        button->setTitleFontName(DEFAULT_FONT);
+        button->setTitleFontSize(DEFAULT_FONT_SIZE);
+        button->setTitleColor(Color3B::BLACK);
+        button->setTitleAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
+        
+        auto label = button->getTitleRenderer();
+        if (label) {
+            label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+            label->setPosition(_tick->getPosition() + Point(tsize.width / 2 + space, 0));
+        }
+        
+        update(name);
         
         return true;
     }
@@ -76,7 +83,7 @@ void LanguageNode::tick(bool ticked)
 
 void LanguageNode::update(const string& name)
 {
-    if (_label) {
-        _label->setString(name);
+    if (_button) {
+        _button->setTitleText(name);
     }
 }

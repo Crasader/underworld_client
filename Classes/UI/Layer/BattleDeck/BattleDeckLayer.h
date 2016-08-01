@@ -55,7 +55,7 @@ protected:
     virtual void onCardNodeTouchedBegan(CardNode* node) override;
     virtual void onCardNodeTouchedEnded(CardNode* node, bool isValid) override;
     
-    Node* createTableView(const Size& size);
+    Node* createTable(const Size& size);
     ssize_t getCellsCount() const;
     Size getCellSize() const;
     Rect getRealBoundingBox(Node* node) const;

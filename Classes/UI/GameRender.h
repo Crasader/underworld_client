@@ -123,7 +123,6 @@ private:
     void tryToUseCard(const std::string& card, int idx, const Point& point);
     
     const Unit* getCore() const;
-    const std::vector<std::string>& getSpells() const;
     const HMMCardType* getCardType(const std::string& name) const;
     const SpellType* getSpellType(const std::string& name) const;
     Coordinate32 getValidPuttingCoordinate(const Point& point, bool check) const;

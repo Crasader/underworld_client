@@ -7,7 +7,6 @@
 //
 
 #include "CardInfoNode.h"
-#include "ui/CocosGUI.h"
 #include "CocosUtils.h"
 #include "CardNode.h"
 #include "Unit.h"
@@ -50,7 +49,7 @@ CardInfoNode::CardInfoNode()
 ,_dmg(nullptr)
 ,_atkSpeed(nullptr)
 ,_atkRange(nullptr)
-,_costLabel(nullptr) {}
+,_button(nullptr) {}
 
 CardInfoNode::~CardInfoNode()
 {
@@ -133,11 +132,10 @@ bool CardInfoNode::init(const Callback& callback)
         });
         const auto& buttonSize(button->getContentSize());
         button->setPosition(Point(size.width / 2, edgeY + buttonSize.height / 2));
+        button->setTitleFontName(DEFAULT_FONT);
+        button->setTitleFontSize(DEFAULT_FONT_SIZE);
         addChild(button);
-        
-        _costLabel = CocosUtils::createLabel("cost", DEFAULT_FONT_SIZE);
-        _costLabel->setPosition(Point(buttonSize.width / 2, buttonSize.height / 2));
-        button->addChild(_costLabel);
+        _button = button;
         
         lines.at(1)->setPosition(Point(size.width / 2, button->getPosition().y + buttonSize.height / 2 + edgeY));
         updateCost(0);
@@ -204,8 +202,8 @@ void CardInfoNode::update(const string& name)
 void CardInfoNode::updateCost(int count)
 {
     _cost = count;
-    if (_costLabel) {
-        _costLabel->setString(StringUtils::format("Cost: %d", count));
+    if (_button) {
+        _button->setTitleText(StringUtils::format("Cost: %d", count));
     }
 }
 

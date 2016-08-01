@@ -130,11 +130,11 @@ bool FormationLayer::init()
         for (int i = 0; i < tablesCount; ++i)
         {
             auto type = tableTypes[i];
-            createTableView(type);
+            createTable(type);
         }
         
         // buttons
-        CocosUtils::createExitButton(this, [this]() { removeFromParent(); });
+        CocosUtils::createGrayExitButton(this, [this]() { removeFromParent(); });
         {
             float offsetX(-40.0f);
             static const Point basePoint(345, getWinSize().height - 15);
@@ -388,7 +388,7 @@ void FormationLayer::createDeck()
 }
 
 #pragma mark table
-void FormationLayer::createTableView(FormationTableType type)
+void FormationLayer::createTable(FormationTableType type)
 {
     auto tableView = TableView::create(this, _tableMaxSize);
     tableView->setDelegate(this);

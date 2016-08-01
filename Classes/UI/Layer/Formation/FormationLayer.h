@@ -81,7 +81,7 @@ protected:
     void createDeck();
     
     // table
-    void createTableView(FormationTableType type);
+    void createTable(FormationTableType type);
     void refreshTable(TableView* table, bool reload);
     ssize_t getCellsCount(TableView *table) const;
     Size getCellSize() const;

@@ -84,11 +84,11 @@ bool QuestLayer::init(QuestType type)
         // tables
         for (int i = 0; i < tablesCount; ++i) {
             auto type = tableTypes[i];
-            createTableView(type);
+            createTable(type);
         }
         
         // buttons
-        CocosUtils::createExitButton(this, [this]() { removeFromParent(); });
+        CocosUtils::createGrayExitButton(this, [this]() { removeFromParent(); });
         {
             const auto& winSize = getWinSize();
             static const Vec2 edge(180, 50);
@@ -160,7 +160,7 @@ ssize_t QuestLayer::numberOfCellsInTableView(TableView *table)
 }
 
 #pragma mark table
-void QuestLayer::createTableView(QuestType type)
+void QuestLayer::createTable(QuestType type)
 {
     auto tableView = TableView::create(this, _tableMaxSize);
     tableView->setDirection(extension::ScrollView::Direction::VERTICAL);

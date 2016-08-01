@@ -15,24 +15,21 @@
 USING_NS_CC;
 using namespace ui;
 
+class UniversalButton;
+
 class MessageBoxBaseLayer : public LayerColor
 {
 protected:
     MessageBoxBaseLayer();
     virtual ~MessageBoxBaseLayer() = 0;
     virtual bool init() override;
-    virtual void onEnter() override;
-    virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
-    virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
 protected:
-    Sprite *_background;
-    Button *_confirmButton;
-    Button *_cancelButton;
+    Sprite* _background;
+    UniversalButton* _confirmButton;
+    UniversalButton* _cancelButton;
     Point _confirmButtonPosition;
     Point _cancelButtonPosition;
-    Label *_confirmLabel;
-    Label *_cancelLabel;
 };
 
 #endif /* MessageBoxBaseLayer_h */

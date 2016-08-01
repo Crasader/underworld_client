@@ -16,7 +16,6 @@ USING_NS_CC;
 namespace SettingUI
 {
     std::string getResourcePath(const std::string& file);
-    Node* createExitButton(Node* parent, const std::function<void()>& callback);
 }
 
 #endif /* SettingUI_h */

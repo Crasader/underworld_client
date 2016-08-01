@@ -63,7 +63,7 @@ bool UserOperationNode::init(int uid)
         const auto cnt(buttonTitles.size());
         for (int i = 0; i < cnt; ++i) {
             const auto& t(buttonTitles.at(i));
-            auto button = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Normal, t);
+            auto button = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, t);
             button->setCallback([this, i](Ref*) {
                 onButtonClicked(i);
             });

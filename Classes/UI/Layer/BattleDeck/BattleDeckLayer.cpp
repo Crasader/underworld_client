@@ -88,7 +88,7 @@ bool BattleDeckLayer::init()
         
         // table views
         const float width = bgSize.width - (_infoNode->getPositionX() + infoNodeSize.width / 2);
-        Node* tableNode = createTableView(Size(width, infoNodeSize.height));
+        Node* tableNode = createTable(Size(width, infoNodeSize.height));
         tableNode->setAnchorPoint(Point::ANCHOR_MIDDLE_TOP);
         tableNode->setPosition(marginX + infoNodeSize.width + width / 2, ceilY - marginY);
         parent->addChild(tableNode);
@@ -400,7 +400,7 @@ void BattleDeckLayer::onCardNodeTouchedEnded(CardNode* node, bool isValid)
 }
 
 #pragma mark - protected
-Node* BattleDeckLayer::createTableView(const Size& size)
+Node* BattleDeckLayer::createTable(const Size& size)
 {
     TableViewNode& tableViewNode = _tableViewNode;
     Node* parent = Node::create();

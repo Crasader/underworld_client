@@ -23,8 +23,9 @@ public:
     };
     
     enum class BType {
-        Normal,
-        Selected
+        Blue,
+        Red,
+        Green
     };
     
     typedef std::function<void(Ref*)> Callback;
@@ -40,7 +41,7 @@ public:
     void setEnabled(bool enabled);
     
     BType getType() const;
-    const std::string& getTitle() const;
+    Label* getLabel() const;
     
 protected:
     static const std::string DefaultTitle;
@@ -52,7 +53,6 @@ private:
     BSize _bSize;
     BType _bType;
     Callback _callback;
-    Label* _titleLabel;
     ui::Button* _button;
 };
 

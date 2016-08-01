@@ -71,7 +71,7 @@ protected:
     virtual void onCardXInfoLayerUpgradeTalent(const std::string& name) override;
     
     // table
-    void createTableView(CardTableType type);
+    void createTable(CardTableType type);
     void refreshTable(TableView* table, bool reload);
     ssize_t getCellsCount(TableView *table) const;
     Size getCellSize() const;

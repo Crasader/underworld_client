@@ -43,7 +43,7 @@ void LanguageLayer::registerObserver(LanguageLayerObserver *observer)
 bool LanguageLayer::init(const Size& size)
 {
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR)) {
-        createTableView();
+        createTable();
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -123,7 +123,7 @@ ssize_t LanguageLayer::numberOfCellsInTableView(TableView *table)
 #pragma mark - LanguageNodeObserver
 
 #pragma mark - table
-void LanguageLayer::createTableView()
+void LanguageLayer::createTable()
 {
     auto tableView = TableView::create(this, _tableMaxSize);
     tableView->setDirection(extension::ScrollView::Direction::VERTICAL);

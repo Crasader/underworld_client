@@ -54,8 +54,9 @@ void ChatNode::registerObserver(ChatNodeObserver *observer)
 bool ChatNode::init(float width, const ChatData* data)
 {
     if (Node::init()) {
-        setAnchorPoint(Point::ANCHOR_MIDDLE);
         _width = width;
+        
+        setAnchorPoint(Point::ANCHOR_MIDDLE);
         static const float nodeSpace(3);
         _dialogWidth = width - (iconSize.width + nodeSpace);
         
@@ -87,6 +88,8 @@ bool ChatNode::init(float width, const ChatData* data)
 
 void ChatNode::update(const ChatData* data)
 {
+    _data = data;
+    
     if (false) {
         createDialog(true);
     }

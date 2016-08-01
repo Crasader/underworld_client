@@ -269,6 +269,12 @@
 		A1F6A1171C4506A3005DC0CC /* HeroSpellHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F6A1151C4506A3005DC0CC /* HeroSpellHandler.cpp */; };
 		A1F96B101C86E805009D8B7C /* CardNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F96B0E1C86E805009D8B7C /* CardNode.cpp */; };
 		A1FACCE31D3C81AC007E95EA /* GameManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1FACCE11D3C81AC007E95EA /* GameManager.cpp */; };
+		A1FB5D001D4F18C500CD2622 /* PvpLogLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1FB5CFE1D4F18C500CD2622 /* PvpLogLayer.cpp */; };
+		A1FB5D031D4F18D800CD2622 /* PvpLogNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1FB5D011D4F18D800CD2622 /* PvpLogNode.cpp */; };
+		A1FB5D061D4F18E700CD2622 /* PvpLogUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1FB5D041D4F18E700CD2622 /* PvpLogUI.cpp */; };
+		A1FB5D091D4F197F00CD2622 /* PvpLogShareLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1FB5D071D4F197F00CD2622 /* PvpLogShareLayer.cpp */; };
+		A1FB5D0E1D4F279500CD2622 /* PvpLogData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1FB5D0C1D4F279500CD2622 /* PvpLogData.cpp */; };
+		A1FB5D111D4F2B4600CD2622 /* PvpManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1FB5D0F1D4F2B4600CD2622 /* PvpManager.cpp */; };
 		A1FC1A091C97C2AE00270B50 /* NSString+Extended.mm in Sources */ = {isa = PBXBuildFile; fileRef = A1FC1A081C97C2AE00270B50 /* NSString+Extended.mm */; };
 		A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A1FC49B31BD8C249005C1B2E /* CrashHelper.m */; };
 		A1FC49B61BD8DBCF005C1B2E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1FC49B51BD8DBCF005C1B2E /* MessageUI.framework */; };
@@ -854,6 +860,18 @@
 		A1F96B0F1C86E805009D8B7C /* CardNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardNode.h; sourceTree = "<group>"; };
 		A1FACCE11D3C81AC007E95EA /* GameManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameManager.cpp; sourceTree = "<group>"; };
 		A1FACCE21D3C81AC007E95EA /* GameManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameManager.h; sourceTree = "<group>"; };
+		A1FB5CFE1D4F18C500CD2622 /* PvpLogLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PvpLogLayer.cpp; sourceTree = "<group>"; };
+		A1FB5CFF1D4F18C500CD2622 /* PvpLogLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PvpLogLayer.h; sourceTree = "<group>"; };
+		A1FB5D011D4F18D800CD2622 /* PvpLogNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PvpLogNode.cpp; sourceTree = "<group>"; };
+		A1FB5D021D4F18D800CD2622 /* PvpLogNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PvpLogNode.h; sourceTree = "<group>"; };
+		A1FB5D041D4F18E700CD2622 /* PvpLogUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PvpLogUI.cpp; sourceTree = "<group>"; };
+		A1FB5D051D4F18E700CD2622 /* PvpLogUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PvpLogUI.h; sourceTree = "<group>"; };
+		A1FB5D071D4F197F00CD2622 /* PvpLogShareLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PvpLogShareLayer.cpp; sourceTree = "<group>"; };
+		A1FB5D081D4F197F00CD2622 /* PvpLogShareLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PvpLogShareLayer.h; sourceTree = "<group>"; };
+		A1FB5D0C1D4F279500CD2622 /* PvpLogData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PvpLogData.cpp; sourceTree = "<group>"; };
+		A1FB5D0D1D4F279500CD2622 /* PvpLogData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PvpLogData.h; sourceTree = "<group>"; };
+		A1FB5D0F1D4F2B4600CD2622 /* PvpManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PvpManager.cpp; sourceTree = "<group>"; };
+		A1FB5D101D4F2B4600CD2622 /* PvpManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PvpManager.h; sourceTree = "<group>"; };
 		A1FC1A071C97C2AE00270B50 /* NSString+Extended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extended.h"; sourceTree = "<group>"; };
 		A1FC1A081C97C2AE00270B50 /* NSString+Extended.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSString+Extended.mm"; sourceTree = "<group>"; };
 		A1FC49B21BD8C249005C1B2E /* CrashHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashHelper.h; sourceTree = "<group>"; };
@@ -1492,6 +1510,7 @@
 				A16BF29D1C314CE500E91458 /* GearSet */,
 				A16BF27D1C313D6D00E91458 /* Hero */,
 				A1F395EC1C23BBA800B75923 /* Object */,
+				A1FB5D0B1D4F278900CD2622 /* Pvp */,
 				A1E830611C1EA50200FE01B8 /* Quest */,
 				A16BF2991C31432800E91458 /* Skill */,
 				A16BF27E1C313D6D00E91458 /* Soldier */,
@@ -1752,6 +1771,7 @@
 				A1DFAAD41D10FC2F00817E69 /* Formation */,
 				CB3EC89C1C521B2100447FE3 /* Friend */,
 				A1F3D22C1D1D05CD00EB5C17 /* Public */,
+				A1FB5CFD1D4F18B700CD2622 /* PvpLog */,
 				A18524C91C1AE3E800BE261D /* Quest */,
 				A1CA35F21D45F28D00584C9D /* Settings */,
 				A1A74CA61C17DFE800648671 /* MainLayer.cpp */,
@@ -1892,6 +1912,8 @@
 				A18885731C43A7A800C9586F /* HeroManager.h */,
 				A188856D1C43921700C9586F /* PieceManager.cpp */,
 				A188856E1C43921700C9586F /* PieceManager.h */,
+				A1FB5D0F1D4F2B4600CD2622 /* PvpManager.cpp */,
+				A1FB5D101D4F2B4600CD2622 /* PvpManager.h */,
 				A1B4AE281C200521005906A6 /* QuestManager.cpp */,
 				A1B4AE291C200521005906A6 /* QuestManager.h */,
 				A18885681C438F1800C9586F /* ResourceManager.cpp */,
@@ -2170,6 +2192,30 @@
 			path = Misc;
 			sourceTree = "<group>";
 		};
+		A1FB5CFD1D4F18B700CD2622 /* PvpLog */ = {
+			isa = PBXGroup;
+			children = (
+				A1FB5CFE1D4F18C500CD2622 /* PvpLogLayer.cpp */,
+				A1FB5CFF1D4F18C500CD2622 /* PvpLogLayer.h */,
+				A1FB5D011D4F18D800CD2622 /* PvpLogNode.cpp */,
+				A1FB5D021D4F18D800CD2622 /* PvpLogNode.h */,
+				A1FB5D071D4F197F00CD2622 /* PvpLogShareLayer.cpp */,
+				A1FB5D081D4F197F00CD2622 /* PvpLogShareLayer.h */,
+				A1FB5D041D4F18E700CD2622 /* PvpLogUI.cpp */,
+				A1FB5D051D4F18E700CD2622 /* PvpLogUI.h */,
+			);
+			path = PvpLog;
+			sourceTree = "<group>";
+		};
+		A1FB5D0B1D4F278900CD2622 /* Pvp */ = {
+			isa = PBXGroup;
+			children = (
+				A1FB5D0C1D4F279500CD2622 /* PvpLogData.cpp */,
+				A1FB5D0D1D4F279500CD2622 /* PvpLogData.h */,
+			);
+			path = Pvp;
+			sourceTree = "<group>";
+		};
 		A1FC1A031C97C1FD00270B50 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -2431,6 +2477,7 @@
 				A16BF2A71C3156A100E91458 /* GearUpgradeData.cpp in Sources */,
 				A1F3D2281D1D044100EB5C17 /* CardInfoNode.cpp in Sources */,
 				A1720E971BCCE41A00217E98 /* ScrollBar.cpp in Sources */,
+				A1FB5D0E1D4F279500CD2622 /* PvpLogData.cpp in Sources */,
 				A18524D01C1AE42000BE261D /* BagLayer.cpp in Sources */,
 				A178F76A1D23B7FD006E3812 /* CardInfoLayer.cpp in Sources */,
 				A1E7BAE21C2149E800CE2A85 /* Constants.cpp in Sources */,
@@ -2503,6 +2550,7 @@
 				A1F3D2351D1D05CD00EB5C17 /* AbstractUILayer.cpp in Sources */,
 				A14B5EFB1C311908006FB0DB /* Addon.cpp in Sources */,
 				A1720E901BCCE19300217E98 /* MD5Verifier.cpp in Sources */,
+				A1FB5D001D4F18C500CD2622 /* PvpLogLayer.cpp in Sources */,
 				047CBF8A1CAFE6AB0035DAF9 /* InstanceHelper.cpp in Sources */,
 				A1DA08CC1CB61CEA00846300 /* BRConfigData.cpp in Sources */,
 				A1720EBA1BCD2D2E00217E98 /* RMStore.m in Sources */,
@@ -2520,6 +2568,7 @@
 				A103F45B1BE37E2A007F9A83 /* BulletNode.cpp in Sources */,
 				A16BF2951C313EAF00E91458 /* TowerUpgradeData.cpp in Sources */,
 				A1D461611C3E251000E8E60B /* URConfigData.cpp in Sources */,
+				A1FB5D091D4F197F00CD2622 /* PvpLogShareLayer.cpp in Sources */,
 				A188856F1C43921700C9586F /* PieceManager.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				A1211B271C0BF5CC00C27CCC /* RandomCreator.cpp in Sources */,
@@ -2550,6 +2599,7 @@
 				308B84661BE3853C00377802 /* AIBody.cpp in Sources */,
 				300098D01BD0CD5900B6E284 /* Resource.cpp in Sources */,
 				A1F6A1171C4506A3005DC0CC /* HeroSpellHandler.cpp in Sources */,
+				A1FB5D031D4F18D800CD2622 /* PvpLogNode.cpp in Sources */,
 				A1F58D601C32526E00C8A2DD /* ArtifactUpgradeData.cpp in Sources */,
 				30B83D5E1CEEC25500195004 /* WorldTest.cpp in Sources */,
 				A1720EBD1BCD309A00217E98 /* NetworkController.cpp in Sources */,
@@ -2565,6 +2615,7 @@
 				A1F3D2361D1D05CD00EB5C17 /* MessageBoxBaseLayer.cpp in Sources */,
 				300098D31BD0CDB000B6E284 /* ResourceType.cpp in Sources */,
 				A16BF29C1C31434500E91458 /* SkillLocalData.cpp in Sources */,
+				A1FB5D111D4F2B4600CD2622 /* PvpManager.cpp in Sources */,
 				A10612021C3D22260065070F /* HeroPieceData.cpp in Sources */,
 				A1F1B6DF1D23772F00E4CDEE /* TalentInfoNode.cpp in Sources */,
 				300098CD1BD0A94B00B6E284 /* Coordinate.cpp in Sources */,
@@ -2587,6 +2638,7 @@
 				045116F81BCFBA44002AA721 /* TechTree.cpp in Sources */,
 				A1B4AE311C200521005906A6 /* UserManager.cpp in Sources */,
 				A1D461441C3E111B00E8E60B /* UserSimpleData.cpp in Sources */,
+				A1FB5D061D4F18E700CD2622 /* PvpLogUI.cpp in Sources */,
 				A188857A1C43BA1C00C9586F /* TowerManager.cpp in Sources */,
 				045116E21BCFBA39002AA721 /* Clock.cpp in Sources */,
 				A1720E931BCCE1D900217E98 /* LocalHelper.cpp in Sources */,

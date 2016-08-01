@@ -50,7 +50,7 @@ protected:
     // LanguageNodeObserver
     
     // table
-    void createTableView();
+    void createTable();
     void refreshTable(bool reload);
     ssize_t getCellsCount() const;
     Size getCellSize() const;

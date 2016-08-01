@@ -129,7 +129,7 @@ bool SettingNode::init(SettingType type, const Callback& callback, bool isOn) {
                 bTitle.assign(title);
             }
             
-            auto bType(isOn ? UniversalButton::BType::Normal : UniversalButton::BType::Selected);
+            auto bType(isOn ? UniversalButton::BType::Blue : UniversalButton::BType::Red);
             _button = UniversalButton::create(UniversalButton::BSize::Small, bType, bTitle);
             _button->setPressedActionEnabled(true);
             _button->setCallback([this](Ref*) {
@@ -179,7 +179,7 @@ void SettingNode::toggle(bool isOn) {
         _isOn = isOn;
         
         if (_button) {
-            auto bType(isOn ? UniversalButton::BType::Normal : UniversalButton::BType::Selected);
+            auto bType(isOn ? UniversalButton::BType::Blue : UniversalButton::BType::Red);
             auto bTitle(isOn ? "On" : "Off");
             _button->setType(bType);
             _button->setTitle(bTitle);
@@ -237,7 +237,7 @@ bool SettingsLayer::init()
         const float edge((size.width - subBgSize.width) / 2);
         subNode->setPosition(Point(size.width / 2, subBgSize.height / 2 + edge));
         
-        SettingUI::createExitButton(bg, [this]() {
+        CocosUtils::createRedExitButton(bg, [this]() {
             removeFromParent();
         });
         
@@ -290,7 +290,7 @@ void SettingsLayer::onLanguageLayerClosed()
 Node* SettingsLayer::createReturnButton(Node* parent, const Vec2& offset, const function<void()>& callback) const
 {
     if (parent) {
-        auto button = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Normal, "");
+        auto button = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Blue, "");
         parent->addChild(button);
         
         const auto& size(button->getContentSize());

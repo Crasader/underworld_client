@@ -17,6 +17,7 @@
 #include "BattleDeckLayer.h"
 #include "CardLayer.h"
 #include "SettingsLayer.h"
+#include "PvpLogLayer.h"
 
 using namespace std;
 using namespace ui;
@@ -507,6 +508,10 @@ void MainUILayer::onFunctionButtonClicked(ButtonType type)
         
         case ButtonType::Chat:
             runningScene->addChild(ChatLayer::create());
+            break;
+            
+        case ButtonType::BattleLog:
+            runningScene->addChild(PvpLogLayer::create());
             break;
             
         default:

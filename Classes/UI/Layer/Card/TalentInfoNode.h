@@ -10,6 +10,7 @@
 #define TalentInfoNode_h
 
 #include "cocos2d.h"
+#include "ui/CocosGUI.h"
 
 USING_NS_CC;
 
@@ -32,11 +33,11 @@ protected:
     void updateCost(int count);
     
 private:
+    ui::Button* _button;
     std::string _name;
     int _cost;
     Callback _callback;
     std::vector<TalentBriefNode*> _nodes;
-    Label* _costLabel;
 };
 
 #endif /* TalentInfoNode_h */

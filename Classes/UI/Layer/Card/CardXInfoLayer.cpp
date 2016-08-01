@@ -81,7 +81,7 @@ bool CardXInfoLayer::init()
         _talentInfoNode->setPosition(Point(size.width - (edgeX + talentSize.width / 2), line->getPosition().y - talentSize.height / 2));
         bg->addChild(_talentInfoNode);
         
-        CocosUtils::createExitButton(bg, [this](){
+        CocosUtils::createGrayExitButton(bg, [this](){
             removeFromParent();
             if (_observer) {
                 _observer->onCardXInfoLayerUpgradeCard(_name);

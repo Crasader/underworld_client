@@ -42,7 +42,7 @@ protected:
     virtual ssize_t numberOfCellsInTableView(TableView *table) override;
     
     // table
-    void createTableView();
+    void createTable();
     void refreshTable(TableView* table, bool reload);
     ssize_t getCellsCount(TableView *table) const;
     Size getCellSize() const;

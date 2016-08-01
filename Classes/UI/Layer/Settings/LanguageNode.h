@@ -10,6 +10,7 @@
 #define LanguageNode_h
 
 #include "cocos2d.h"
+#include "ui/CocosGUI.h"
 
 USING_NS_CC;
 
@@ -34,8 +35,8 @@ protected:
     
 private:
     LanguageNodeObserver* _observer;
+    ui::Button* _button;
     Node* _tick;
-    Label* _label;
 };
 
 #endif /* LanguageNode_h */

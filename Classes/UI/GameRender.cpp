@@ -31,6 +31,7 @@ using namespace UnderWorld::Core;
 static const string tickSelectorKey("tickSelectorKey");
 static const int battleTotalTime(600);
 static const float eyeRadians = tan(CC_DEGREES_TO_RADIANS(75));
+static const CardDeckType cardDeckType(CardDeckType::Unit);
 
 GameRender::GameRender(Scene* scene, const string& opponentsAccount)
 :_observer(nullptr)
@@ -123,16 +124,15 @@ void GameRender::init(const Game* game, Commander* commander)
     onMapUILayerCardSelected("", INVALID_VALUE);
     
     if (_mapUILayer && _deck) {
-        static const CardDeckType type(CardDeckType::Unit);
         const int count = _deck->getHandCount();
-        _mapUILayer->createCardDeck(type, count);
+        _mapUILayer->createCardDeck(cardDeckType, count);
         
         for (int i = 0; i < count; ++i) {
             const HMMCard* card = _deck->getHandCard(i);
             if (card) {
                 const HMMCardType* ct = card->getCardType();
                 if (ct) {
-                    _mapUILayer->insertCard(type, card /*ct->getName()*/, false);
+                    _mapUILayer->insertCard(cardDeckType, card /*ct->getName()*/, false);
                     _handCards.push_back(ct->getName());
                 }
             }
@@ -358,9 +358,9 @@ void GameRender::updateUILayer()
 //            const auto event = log._event;
 //            const auto card = log._card;
 //            if (Deck::kDeckEvent_Use == event) {
-//                _mapUILayer->removeCard(CardDeckType::Unit, card, log._extra);
+//                _mapUILayer->removeCard(cardDeckType, card, log._extra);
 //            } else if (Deck::kDeckEvent_Draw == event) {
-//                _mapUILayer->insertCard(CardDeckType::Unit, card);
+//                _mapUILayer->insertCard(cardDeckType, card);
 //            }
 //        }
 //
@@ -384,14 +384,13 @@ void GameRender::updateUILayer()
         }
         
         if (needReload) {
-            static const auto type(CardDeckType::Unit);
-            _mapUILayer->clear(type);
+            _mapUILayer->clear(cardDeckType);
             _handCards.clear();
             for (int i = 0; i < cnt; ++i) {
                 auto card = _deck->getHandCard(i);
                 if (card) {
                     const string& name = card->getCardType()->getName();
-                    _mapUILayer->insertCard(type, card /*name*/, false);
+                    _mapUILayer->insertCard(cardDeckType, card /*name*/, false);
                     _handCards.push_back(name);
                 }
             }
@@ -399,13 +398,11 @@ void GameRender::updateUILayer()
 //        _deck->clearEventLog();
     }
     
-    auto core = getCore();
-    const auto& names = getSpells();
-    for (int i = 0; i < names.size(); ++i) {
-        auto spell = core->getSpellByIndex(i);
-        if (spell) {
-            const float percentage = (float)spell->getCDProgress() / (float)spell->getTotalCDFrames();
-            _mapUILayer->updateCardCD(CardDeckType::Spell, i, percentage);
+    for (int i = 0; i < _deck->getHandCount(); ++i) {
+        auto card(_deck->getHandCard(i));
+        if (card) {
+            const float percentage = (float)card->getRecoverProgress() / (float)card->getRecoverSpan();
+            _mapUILayer->updateCardCD(cardDeckType, i, percentage);
         }
     }
 }
@@ -872,21 +869,6 @@ const Unit* GameRender::getCore() const
     }
     
     return nullptr;
-}
-
-// TODO: remove
-const vector<string>& GameRender::getSpells() const
-{
-    const auto core = getCore();
-    if (core) {
-        auto ut = core->getUnitBase().getUnitType();
-        if (ut) {
-            
-        }
-    }
-    
-    static auto v = vector<string>();
-    return v;
 }
 
 const HMMCardType* GameRender::getCardType(const string& name) const

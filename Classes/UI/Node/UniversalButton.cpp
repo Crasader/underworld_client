@@ -15,21 +15,51 @@ static const string folder("GameImages/public/");
 
 static string getButtonFile(UniversalButton::BSize size, UniversalButton::BType type) {
     const bool big(UniversalButton::BSize::Big == size);
-    const bool normal(UniversalButton::BType::Normal == type);
-    if (big) {
-        return folder + (normal ? "button_lanse.png" : "button_hongse_1.png");
-    } else {
-        return folder + (normal ? "button_lanse_1.png" : "button_hongse_1.png");
+    string file;
+    switch (type) {
+        case UniversalButton::BType::Blue:
+        {
+            if (big) {
+                file = "button_lanse.png";
+            } else {
+                file = "button_lanse_1.png";
+            }
+        }
+            break;
+        case UniversalButton::BType::Red:
+        {
+            if (big) {
+                file = "button_hongse_1.png";
+            } else {
+                file = "button_hongse_1.png";
+            }
+        }
+            break;
+        case UniversalButton::BType::Green:
+        {
+            if (big) {
+                file = "button_lvse_1.png";
+            } else {
+                file = "button_lvse_1.png";
+            }
+        }
+            break;
+            
+        default:
+            break;
     }
+    
+    if (!file.empty()) {
+        return folder + file;
+    }
+    
+    return "";
 }
-
-const string UniversalButton::DefaultTitle = "";
 
 UniversalButton::UniversalButton()
 :_bSize(BSize::Big)
-,_bType(BType::Normal)
+,_bType(BType::Blue)
 ,_callback(nullptr)
-,_titleLabel(nullptr)
 ,_button(nullptr) {}
 
 UniversalButton::~UniversalButton()
@@ -57,17 +87,16 @@ bool UniversalButton::init(BSize size, BType type, const string& title)
         
         const auto& file = getButtonFile(size, type);
         if (!file.empty()) {
-            const string disabled = folder + ((UniversalButton::BType::Normal == type) ? "button_huise.png" : "button_huise.png");
+            const string disabled = folder + ((UniversalButton::BType::Blue == type) ? "button_huise.png" : "button_huise.png");
             auto button = ui::Button::create(file, file, disabled);
             addChild(button);
             
-            auto label = CocosUtils::createLabel(title, DEFAULT_FONT_SIZE);
-            label->setAnchorPoint(Point::ANCHOR_MIDDLE);
-            label->setTextColor(Color4B::BLACK);
-            button->addChild(label);
+            button->setTitleFontName(DEFAULT_FONT);
+            button->setTitleFontSize(DEFAULT_FONT_SIZE);
+            button->setTitleText(title);
+            button->setTitleColor(Color3B::BLACK);
             
             _button = button;
-            _titleLabel = label;
             
             setAnchorPoint(Point::ANCHOR_MIDDLE);
             adjust();
@@ -94,8 +123,8 @@ void UniversalButton::setType(BType type)
 
 void UniversalButton::setTitle(const string& title)
 {
-    if (_button && _titleLabel) {
-        _titleLabel->setString(title);
+    if (_button) {
+        _button->setTitleText(title);
     }
 }
 
@@ -127,13 +156,13 @@ UniversalButton::BType UniversalButton::getType() const
     return _bType;
 }
 
-const string& UniversalButton::getTitle() const
+Label* UniversalButton::getLabel() const
 {
-    if (_titleLabel) {
-        return _titleLabel->getString();
+    if (_button) {
+        return _button->getTitleRenderer();
     }
     
-    return DefaultTitle;
+    return nullptr;
 }
 
 void UniversalButton::adjust()
@@ -143,9 +172,5 @@ void UniversalButton::adjust()
         setContentSize(size);
         const Point mid(size.width / 2, size.height / 2);
         _button->setPosition(mid);
-        
-        if (_titleLabel) {
-            _titleLabel->setPosition(mid);
-        }
     }
 }

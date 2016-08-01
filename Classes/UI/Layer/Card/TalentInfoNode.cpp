@@ -7,7 +7,6 @@
 //
 
 #include "TalentInfoNode.h"
-#include "ui/CocosGUI.h"
 #include "CocosUtils.h"
 #include "TalentBriefNode.h"
 
@@ -30,9 +29,9 @@ TalentInfoNode* TalentInfoNode::create(const Callback& callback)
 }
 
 TalentInfoNode::TalentInfoNode()
-:_cost(0)
-,_callback(nullptr)
-,_costLabel(nullptr) {}
+:_button(nullptr)
+,_cost(0)
+,_callback(nullptr) {}
 
 TalentInfoNode::~TalentInfoNode()
 {
@@ -67,11 +66,10 @@ bool TalentInfoNode::init(const Callback& callback)
         });
         const auto& buttonSize(button->getContentSize());
         button->setPosition(Point(size.width / 2, edgeY + buttonSize.height / 2));
+        button->setTitleFontName(DEFAULT_FONT);
+        button->setTitleFontSize(DEFAULT_FONT_SIZE);
         addChild(button);
-        
-        _costLabel = CocosUtils::createLabel("cost", DEFAULT_FONT_SIZE);
-        _costLabel->setPosition(Point(buttonSize.width / 2, buttonSize.height / 2));
-        button->addChild(_costLabel);
+        _button = button;
         
         updateCost(0);
         
@@ -107,7 +105,7 @@ void TalentInfoNode::update(const string& name)
 void TalentInfoNode::updateCost(int count)
 {
     _cost = count;
-    if (_costLabel) {
-        _costLabel->setString(StringUtils::format("Cost: %d", count));
+    if (_button) {
+        _button->setTitleText(StringUtils::format("Cost: %d", count));
     }
 }

@@ -91,7 +91,7 @@ bool RenameLayer::init()
             subNode->addChild(eb);
         }
         
-        SettingUI::createExitButton(bg, [this]() {
+        CocosUtils::createRedExitButton(bg, [this]() {
             removeFromParent();
         });
         
@@ -100,7 +100,7 @@ bool RenameLayer::init()
         title->setPosition(Point(size.width / 2, (size.height + subBgSize.height + edge) / 2));
         bg->addChild(title);
         
-        auto button = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Normal, "Finish");
+        auto button = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Blue, "Finish");
         button->setCallback([](Ref*) {
             
         });

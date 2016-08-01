@@ -244,7 +244,9 @@ void CardNode::updateWithoutInfo(const string& name)
 void CardNode::updateCD(float percentage)
 {
     bool disabled(percentage > 0);
+#if false
     updateIcon(!disabled);
+#endif
     
     if (_coldDownProgress) {
         _coldDownProgress->setVisible(disabled);
@@ -312,12 +314,14 @@ void CardNode::checkResource(float count)
         bool disabled(cost > count);
         updateIcon(!disabled);
         
+#if false
         if (_coldDownProgress) {
             _coldDownProgress->setVisible(disabled);
             if (disabled) {
                 _coldDownProgress->setPercentage(100.0f * (1.0f - count / cost));
             }
         }
+#endif
     }
 }
 

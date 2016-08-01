@@ -13,8 +13,3 @@ std::string SettingUI::getResourcePath(const std::string& file)
 {
     return "GameImages/settings_ui/" + file;
 }
-
-Node* SettingUI::createExitButton(Node* parent, const std::function<void()>& callback)
-{
-    return CocosUtils::createExitButton(parent, callback, getResourcePath("button_hongse.png"));
-}

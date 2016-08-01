@@ -75,10 +75,10 @@ bool AchievementLayer::init()
 {
     if (LayerColor::initWithColor(LAYER_MASK_COLOR)) {
         // tables
-        createTableView();
+        createTable();
         
         // buttons
-        CocosUtils::createExitButton(this, [this]() { removeFromParent(); });
+        CocosUtils::createGrayExitButton(this, [this]() { removeFromParent(); });
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -142,7 +142,7 @@ ssize_t AchievementLayer::numberOfCellsInTableView(TableView *table)
 }
 
 #pragma mark table
-void AchievementLayer::createTableView()
+void AchievementLayer::createTable()
 {
     auto tableView = TableView::create(this, _tableMaxSize);
     tableView->setDirection(extension::ScrollView::Direction::VERTICAL);

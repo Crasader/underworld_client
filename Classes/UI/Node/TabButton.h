@@ -28,7 +28,6 @@ protected:
     bool init(const std::string& title, const ui::Button::ccWidgetClickCallback& callback);
     
 private:
-    Label* _titleLabel;
     ui::Button* _button;
 };
 

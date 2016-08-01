@@ -458,7 +458,7 @@ Node* CocosUtils::playAnimation(const string& file,
     return node;
 }
 
-Button* CocosUtils::createExitButton(Node* parent, const function<void()>& callback, const string& file)
+static Button* createExitButton(Node* parent, const function<void()>& callback, const string& file)
 {
     const auto& psize(parent->getContentSize());
     auto button = Button::create(file, file);
@@ -474,6 +474,16 @@ Button* CocosUtils::createExitButton(Node* parent, const function<void()>& callb
     button->setPosition(Point(psize.width - size.width / 2, psize.height - size.height / 2) - offset);
     
     return button;
+}
+
+Button* CocosUtils::createGrayExitButton(Node* parent, const std::function<void()>& callback)
+{
+    return createExitButton(parent, callback, "GameImages/public/ui_guanbi.png");
+}
+
+Button* CocosUtils::createRedExitButton(Node* parent, const std::function<void()>& callback)
+{
+    return createExitButton(parent, callback, "GameImages/public/button_hongse.png");
 }
 
 #pragma mark - notifications

@@ -7,6 +7,7 @@
 //
 
 #include "MessageBoxLayer.h"
+#include "UniversalButton.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "SoundManager.h"
@@ -123,8 +124,8 @@ void MessageBoxLayer::show(const std::string& message, MessageBoxType type, cons
         hide();
     }
     
-    _confirmLabel->setString(confirmString);
-    _cancelLabel->setString(cancelString);
+    _confirmButton->setTitle(confirmString);
+    _cancelButton->setTitle(cancelString);
     
     if (_messageLabel)
     {
@@ -153,11 +154,11 @@ void MessageBoxLayer::show(const std::string& message, MessageBoxType type, cons
         _confirmButton->setPosition(_cancelButtonPosition);
     }
     
-    _confirmButton->addClickEventListener([this](Ref *pSender) {
+    _confirmButton->setCallback([this](Ref *pSender) {
         SoundManager::getInstance()->playButtonSound();
         _confirmCallback(pSender);
     });
-    _cancelButton->addClickEventListener([this](Ref *pSender) {
+    _cancelButton->setCallback([this](Ref *pSender) {
         SoundManager::getInstance()->playButtonCancelSound();
         _cancelCallback(pSender);
     });

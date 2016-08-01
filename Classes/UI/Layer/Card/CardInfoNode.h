@@ -10,6 +10,7 @@
 #define CardInfoNode_h
 
 #include "cocos2d.h"
+#include "ui/CocosGUI.h"
 
 USING_NS_CC;
 
@@ -54,7 +55,7 @@ private:
     Label* _dmg;
     Label* _atkSpeed;
     Label* _atkRange;
-    Label* _costLabel;
+    ui::Button* _button;
 };
 
 #endif /* CardInfoNode_h */

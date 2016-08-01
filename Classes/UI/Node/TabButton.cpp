@@ -13,12 +13,11 @@
 using namespace std;
 using namespace ui;
 
-static const Color4B& normalTextColor(Color4B::WHITE);
-static const Color4B& touchedTextColor(Color4B::ORANGE);
+static const auto& normalTextColor(Color3B::WHITE);
+static const auto& touchedTextColor(Color3B::ORANGE);
 
 TabButton::TabButton()
-:_titleLabel(nullptr)
-,_button(nullptr) {}
+:_button(nullptr) {}
 
 TabButton::~TabButton()
 {
@@ -57,15 +56,13 @@ bool TabButton::init(const string& title, const string& normal, const string& se
         _button->addClickEventListener(callback);
         addChild(_button);
         
-        const auto& size = _button->getContentSize();
-        _titleLabel = CocosUtils::createLabel(title, DEFAULT_FONT_SIZE);
-        _titleLabel->setPosition(Point(size.width / 2, size.height / 2));
-        _titleLabel->setTextColor(normalTextColor);
-        _button->addChild(_titleLabel);
+        _button->setTitleFontName(DEFAULT_FONT);
+        _button->setTitleFontSize(DEFAULT_FONT_SIZE);
+        _button->setTitleColor(normalTextColor);
         
+        const auto& size = _button->getContentSize();
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         setContentSize(size);
-        
         _button->setPosition(Point(size.width / 2, size.height / 2));
         
         return true;
@@ -86,12 +83,10 @@ void TabButton::setEnabled(bool enabled)
     if (_button) {
         _button->setEnabled(enabled);
         
-        if (_titleLabel) {
-            if (enabled) {
-                _titleLabel->setTextColor(normalTextColor);
-            } else {
-                _titleLabel->setTextColor(touchedTextColor);
-            }
+        if (enabled) {
+            _button->setTitleColor(normalTextColor);
+        } else {
+            _button->setTitleColor(touchedTextColor);
         }
     }
 }

@@ -97,7 +97,7 @@ bool NoticeNode::init(float width, const ChatData* data)
         
         // "get" button
         if (true) {
-            auto button = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Normal, "Get");
+            auto button = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Blue, "Get");
             button->setCallback([](Ref*) {
                 
             });

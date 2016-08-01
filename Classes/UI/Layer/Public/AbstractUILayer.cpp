@@ -42,7 +42,7 @@ bool AbstractUILayer::init(const string& title)
         line->setScaleX(870 / line->getContentSize().width);
         _background->addChild(line);
         
-        _closeButton = dynamic_cast<Button*>(CocosUtils::createExitButton(_background, [this](){ removeFromParent(); }));
+        _closeButton = dynamic_cast<Button*>(CocosUtils::createGrayExitButton(_background, [this](){ removeFromParent(); }));
         
         const Size& size = _background->getContentSize();
         
