@@ -85,6 +85,7 @@
 		30C6C3921C52183500DD1C8F /* AStarNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30C6C3901C52183500DD1C8F /* AStarNode.cpp */; };
 		30DF03C41C0D898E00A1C6EB /* EffectType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DF03C21C0D898E00A1C6EB /* EffectType.cpp */; };
 		30E05B2C1C56450700A3A3E9 /* PathService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30E05B2A1C56450700A3A3E9 /* PathService.cpp */; };
+		30F8404A1D4F1C700050C976 /* PVRAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F840481D4F1C700050C976 /* PVRAnimation.cpp */; };
 		30FD55611C2BF57F0078EC3C /* PassiveType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD555F1C2BF57F0078EC3C /* PassiveType.cpp */; };
 		30FD55641C2CFDE80078EC3C /* Passive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD55621C2CFDE80078EC3C /* Passive.cpp */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
@@ -473,6 +474,8 @@
 		30DF03C31C0D898E00A1C6EB /* EffectType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectType.h; path = Core/Unit/Type/EffectType.h; sourceTree = "<group>"; };
 		30E05B2A1C56450700A3A3E9 /* PathService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PathService.cpp; path = Core/AI/Path/PathService.cpp; sourceTree = "<group>"; };
 		30E05B2B1C56450700A3A3E9 /* PathService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PathService.h; path = Core/AI/Path/PathService.h; sourceTree = "<group>"; };
+		30F840481D4F1C700050C976 /* PVRAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PVRAnimation.cpp; path = Core/External/Render/Action/PVRAnimation.cpp; sourceTree = "<group>"; };
+		30F840491D4F1C700050C976 /* PVRAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PVRAnimation.h; path = Core/External/Render/Action/PVRAnimation.h; sourceTree = "<group>"; };
 		30FD555F1C2BF57F0078EC3C /* PassiveType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PassiveType.cpp; path = Core/Unit/Type/PassiveType.cpp; sourceTree = "<group>"; };
 		30FD55601C2BF57F0078EC3C /* PassiveType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PassiveType.h; path = Core/Unit/Type/PassiveType.h; sourceTree = "<group>"; };
 		30FD55621C2CFDE80078EC3C /* Passive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Passive.cpp; path = Core/Unit/Instance/Passive.cpp; sourceTree = "<group>"; };
@@ -1319,9 +1322,19 @@
 			name = Test;
 			sourceTree = "<group>";
 		};
+		30F840471D4F1BDC0050C976 /* Action */ = {
+			isa = PBXGroup;
+			children = (
+				30F840481D4F1C700050C976 /* PVRAnimation.cpp */,
+				30F840491D4F1C700050C976 /* PVRAnimation.h */,
+			);
+			name = Action;
+			sourceTree = "<group>";
+		};
 		30F9982A1D06DE5200D56172 /* Render */ = {
 			isa = PBXGroup;
 			children = (
+				30F840471D4F1BDC0050C976 /* Action */,
 				040DBB841D3E3E620096F069 /* View */,
 				0404BE6E1D1B96C300B46BAA /* Gui */,
 				0404BE641D1A7FE500B46BAA /* UWRender.cpp */,
@@ -2479,6 +2492,7 @@
 				A1B4AE011C200480005906A6 /* SoundManager.cpp in Sources */,
 				A1B4AE2D1C200521005906A6 /* ChatManager.cpp in Sources */,
 				307534691BF1B2F20057DCED /* Commander.cpp in Sources */,
+				30F8404A1D4F1C700050C976 /* PVRAnimation.cpp in Sources */,
 				A1A4BA381BCDF81500175E8A /* IapObject.cpp in Sources */,
 				3019BABC1C99668E003258DB /* Aura.cpp in Sources */,
 				A1F3D23B1D1D062600EB5C17 /* XTableViewCell.cpp in Sources */,

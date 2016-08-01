@@ -307,7 +307,15 @@ void CocosUtils::loadPVR(const string& file)
 
 SpriteFrame* CocosUtils::getFrame(const string& folder, int frameIndex)
 {
-    auto file = folder + StringUtils::format("/1%04d.png", frameIndex + 1);
+    std::string fileName = "1";
+    fileName.append(std::to_string(frameIndex / 1000));
+    frameIndex = frameIndex % 1000;
+    fileName.append(std::to_string(frameIndex / 100));
+    frameIndex = frameIndex % 100;
+    fileName.append(std::to_string(frameIndex / 10));
+    fileName.append(std::to_string(frameIndex % 10));
+    
+    auto file = folder + "/" + fileName;
     return SpriteFrameCache::getInstance()->getSpriteFrameByName(file);
 }
 
