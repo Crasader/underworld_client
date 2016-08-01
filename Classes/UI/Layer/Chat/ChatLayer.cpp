@@ -342,7 +342,12 @@ bool ChatLayer::init()
 
 bool ChatLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
-    return true;
+    const auto& point = convertToNodeSpace(pTouch->getLocation());
+    if (_background->getBoundingBox().containsPoint(point)) {
+        return true;
+    }
+    
+    return false;
 }
 
 void ChatLayer::onTouchEnded(Touch *touch, Event *unused_event)
