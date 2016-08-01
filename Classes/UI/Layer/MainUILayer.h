@@ -11,6 +11,7 @@
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
+#include "ChatLayer.h"
 
 USING_NS_CC;
 
@@ -22,7 +23,9 @@ public:
     virtual ~MainUILayerObserver() {}
 };
 
-class MainUILayer : public LayerColor
+class MainUILayer
+: public LayerColor
+, public ChatLayerObserver
 {
 public:
     static MainUILayer* create();
@@ -33,7 +36,6 @@ protected:
     enum class ButtonType;
     class FunctionButton;
     
-protected:
     MainUILayer();
     
     // LayerColor
@@ -41,16 +43,26 @@ protected:
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
-    void updateIcon();
+    // ChatLayerObserver
+    virtual void onChatLayerClickedButton() override;
+    
+    void updateAvatar();
     void updateExp();
     void updateResources();
+    void moveChatLayer(bool folded, bool animated);
+    void onChatLayerMoved(bool folded);
     
     void onResourceButtonClicked(ResourceNode* node);
     void onFunctionButtonClicked(ButtonType type);
     
 private:
     MainUILayerObserver *_observer;
-    ui::Button* _iconButton;
+    bool _isChatLayerFolded;
+    bool _isChatLayerMoving;
+    
+    // UI
+    ChatLayer* _chatLayer;
+    ui::Button* _avatarButton;
     Label* _nameLabel;
     Label* _levelLabel;
     ProgressTimer* _expProgress;

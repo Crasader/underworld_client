@@ -13,6 +13,7 @@
 #include "CocosGlobal.h"
 #include <vector>
 #include <map>
+#include <functional>
 
 class ChatData;
 class ChatMark;
@@ -26,7 +27,7 @@ public:
     void parse(const rapidjson::Value& jsonDict);
     const std::vector<ChatData*>& getChatData(ChatType type);
     
-    void sendMessage(ChatType type, int contacter, const std::string& message);
+    void sendMessage(ChatType type, int contacter, const char* msg, const std::function<void(const char* msg)>& callback);
     
     void recieve();
     

@@ -27,6 +27,7 @@ class ChatLayerObserver
 {
 public:
     virtual ~ChatLayerObserver() {}
+    virtual void onChatLayerClickedButton() = 0;
 };
 
 class ChatLayer
@@ -40,15 +41,16 @@ public:
     static ChatLayer* create();
     virtual ~ChatLayer();
     void registerObserver(ChatLayerObserver *observer);
+    void setButtonStatus(bool fold);
     
 protected:
     class TableNode;
     class EditBoxNode;
     
     ChatLayer();
-    virtual bool init() override;
     
     // LayerColor
+    virtual bool init() override;
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
@@ -74,24 +76,23 @@ protected:
     void createTabButtons(const Vec2& edge);
     Size getCellSize(ChatType type, size_t idx);
     Node* createCellNode(ChatType type, size_t idx);
+    void updateCellNode(Node* node, ChatType type, size_t idx);
     
-    size_t getDataSize(ChatType type) const;
+    size_t getDataCount(ChatType type) const;
     ChatType getTableType(TableView* table) const;
     void setTableType(ChatType type);
     std::string getTableName(ChatType type) const;
     
+    void sendMessage();
+    
 private:
     ChatLayerObserver *_observer;
-    bool _folder;
-    bool _isFolding;
     
     // UI
     Node* _background;
-    ui::Button* _button;
     Sprite* _buttonIcon;
     std::map<ChatType, TableNode*> _tableNodes;
-    std::unordered_map<const TableView*, TableNode*> _tableMappings;
-    std::map<ChatType, float> _tableHeight;
+    std::unordered_map<TableView*, TableNode*> _tableMappings;
     ChatType _thisTableType;
     TableNode* _thisTableNode;
     EditBoxNode* _editBoxNode;

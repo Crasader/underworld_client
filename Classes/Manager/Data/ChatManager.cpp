@@ -106,9 +106,31 @@ const vector<ChatData*>& ChatManager::getChatData(ChatType type)
     return _chatData.at(type);
 }
 
-void ChatManager::sendMessage(ChatType type, int contacter, const string& message)
+void ChatManager::sendMessage(ChatType type, int contacter, const char* msg, const function<void(const char* msg)>& callback)
 {
-    
+    if (msg && strlen(msg) > 0) {
+        if (_chatData.find(type) == _chatData.end()) {
+            _chatData.insert(make_pair(type, vector<ChatData*>()));
+        }
+        
+        auto& vec(_chatData.at(type));
+        // TODO: remove test code
+        {
+            rapidjson::Document document;
+            document.SetObject();
+            rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+            document.AddMember("uid", 1, allocator);
+            document.AddMember("user", rapidjson::Value("self", allocator), allocator);
+            document.AddMember("time", 123456, allocator);
+            document.AddMember("content", rapidjson::Value(msg, allocator), allocator);
+            
+            vec.push_back(new (nothrow) ChatData(type, document));
+        }
+        
+        if (callback) {
+            callback(msg);
+        }
+    }
 }
 
 void ChatManager::recieve()

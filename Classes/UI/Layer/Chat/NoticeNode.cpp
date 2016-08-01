@@ -86,7 +86,6 @@ bool NoticeNode::init(float width, const ChatData* data)
         const auto& rsize(_resourceBg->getContentSize());
         _content->setMaxLineWidth(rsize.width);
         
-        
         // resources
         if (true) {
             for (int i = 0; i < resourceMaxCount; ++i) {

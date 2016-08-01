@@ -108,8 +108,9 @@ void ChatNode::createDialog(bool isMe)
 {
     string file;
     static const Size size(291, 58);
-    static const float offset(6);
-    Rect capInsets(offset, offset, size.width - (offset * 2 + dialogArrowWidth), size.height - offset * 2);
+    static const float offset(5);
+    static const float height(8);
+    Rect capInsets(offset, size.height - (offset + height), size.width - (offset * 2 + dialogArrowWidth), height);
     if (isMe) {
         file.assign(ChatUI::getResourcePath("ui_liaotiankuang.png"));
     } else {

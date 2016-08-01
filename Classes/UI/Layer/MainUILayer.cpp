@@ -17,7 +17,6 @@
 #include "BattleDeckLayer.h"
 #include "CardLayer.h"
 #include "SettingsLayer.h"
-#include "ChatLayer.h"
 
 using namespace std;
 using namespace ui;
@@ -115,6 +114,8 @@ private:
 };
 
 #pragma mark - MainUILayer
+static const int zorder_top(1);
+
 MainUILayer* MainUILayer::create()
 {
     auto ret = new (nothrow) MainUILayer();
@@ -129,7 +130,10 @@ MainUILayer* MainUILayer::create()
 
 MainUILayer::MainUILayer()
 :_observer(nullptr)
-,_iconButton(nullptr)
+,_isChatLayerFolded(true)
+,_isChatLayerMoving(false)
+,_chatLayer(nullptr)
+,_avatarButton(nullptr)
 ,_nameLabel(nullptr)
 ,_levelLabel(nullptr)
 ,_expProgress(nullptr)
@@ -174,7 +178,7 @@ bool MainUILayer::init()
                     // TODO:
                 });
                 background->addChild(avatar);
-                _iconButton = avatar;
+                _avatarButton = avatar;
                 
                 static const Vec2 edge(10.0f, 10.0f);
                 const auto& size(avatar->getContentSize());
@@ -187,7 +191,7 @@ bool MainUILayer::init()
                 background->addChild(name);
                 _nameLabel = name;
                 static const Vec2 edge(5.0f, 5.0f);
-                name->setPosition(Point(_iconButton->getPosition().x + _iconButton->getContentSize().width / 2 + edge.x, mainSize.height - (name->getContentSize().height / 2 + edge.y)));
+                name->setPosition(Point(_avatarButton->getPosition().x + _avatarButton->getContentSize().width / 2 + edge.x, mainSize.height - (name->getContentSize().height / 2 + edge.y)));
             }
             
             // trophy
@@ -244,11 +248,7 @@ bool MainUILayer::init()
         
         // 2. left
         {
-            auto button = FunctionButton::create(ButtonType::Chat, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
-            addChild(button);
-            
-            const auto& size(button->getContentSize());
-            button->setPosition(Point(size.width / 2, winSize.height / 2));
+            moveChatLayer(_isChatLayerFolded, false);
         }
         
         // 3. left bottom
@@ -384,7 +384,7 @@ bool MainUILayer::init()
             }
         }
         
-        updateIcon();
+        updateAvatar();
         updateResources();
         
         auto eventListener = EventListenerTouchOneByOne::create();
@@ -409,11 +409,17 @@ void MainUILayer::onTouchEnded(Touch *touch, Event *unused_event)
     
 }
 
+#pragma mark - ChatLayerObserver
+void MainUILayer::onChatLayerClickedButton()
+{
+    moveChatLayer(!_isChatLayerFolded, true);
+}
+
 #pragma mark - private
-void MainUILayer::updateIcon()
+void MainUILayer::updateAvatar()
 {
     const string file(getResourcePath("icon_touxiang_1.png"));
-    _iconButton->loadTextures(file, file);
+    _avatarButton->loadTextures(file, file);
 }
 
 void MainUILayer::updateExp()
@@ -424,6 +430,41 @@ void MainUILayer::updateExp()
 void MainUILayer::updateResources()
 {
     
+}
+
+void MainUILayer::moveChatLayer(bool folded, bool animated)
+{
+    if (!_chatLayer) {
+        _chatLayer = ChatLayer::create();
+        _chatLayer->registerObserver(this);
+        addChild(_chatLayer, zorder_top);
+    }
+    
+    const auto& size(_chatLayer->getContentSize());
+    const Point point(folded ? -size.width : 0, 0);
+    if (point != _chatLayer->getPosition()) {
+        if (animated) {
+            if (!_isChatLayerMoving) {
+                _isChatLayerMoving = true;
+                static const float duration(0.3f);
+                _chatLayer->runAction(Sequence::create(MoveTo::create(duration, point), CallFunc::create([this, folded]() {
+                    onChatLayerMoved(folded);
+                }), nullptr));
+            }
+        } else {
+            onChatLayerMoved(folded);
+        }
+    }
+}
+
+void MainUILayer::onChatLayerMoved(bool folded)
+{
+    const auto& size(_chatLayer->getContentSize());
+    const Point point(folded ? -size.width : 0, 0);
+    _chatLayer->setPosition(point);
+    _isChatLayerFolded = folded;
+    _isChatLayerMoving = false;
+    _chatLayer->setButtonStatus(folded);
 }
 
 void MainUILayer::onResourceButtonClicked(ResourceNode* node)

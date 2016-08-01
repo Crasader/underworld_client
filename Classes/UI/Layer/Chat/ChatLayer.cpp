@@ -7,8 +7,6 @@
 //
 
 #include "ChatLayer.h"
-#include "ui/CocosGUI.h"
-#include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "ChatUI.h"
 #include "ChatManager.h"
@@ -21,7 +19,7 @@ using namespace std;
 using namespace ui;
 
 static const size_t tableColumnCount(1);
-static const Vec2 nodeOffsetOnTable(0, 14);
+static const Vec2 nodeGapOnTable(0, 10);
 static const ChatType tableTypes[] = {
     ChatType::World,
     ChatType::Mail,
@@ -35,7 +33,7 @@ public:
     static TableNode* create(TableViewDataSource* source, const Size& size);
     virtual ~TableNode();
     void refresh(float height, bool reload);
-    const TableView* getTable() const;
+    TableView* getTable() const;
     
 private:
     TableNode();
@@ -115,7 +113,7 @@ void ChatLayer::TableNode::refresh(float height, bool reload)
     }
 }
 
-const TableView* ChatLayer::TableNode::getTable() const
+TableView* ChatLayer::TableNode::getTable() const
 {
     return _table;
 }
@@ -123,22 +121,25 @@ const TableView* ChatLayer::TableNode::getTable() const
 #pragma mark - EditBoxNode
 class ChatLayer::EditBoxNode : public Node {
 public:
-    static EditBoxNode* create(float width, EditBoxDelegate* delegate);
+    static EditBoxNode* create(float width, EditBoxDelegate* delegate, const function<void()>& callback);
     virtual ~EditBoxNode();
+    void setFocus(bool focus);
+    const char* getText() const;
+    void setText(const char* msg);
     
 private:
     EditBoxNode();
-    bool init(float width, EditBoxDelegate* delegate);
+    bool init(float width, EditBoxDelegate* delegate, const function<void()>& callback);
     
 private:
     ui::EditBox* _editBox;
     Button* _button;
 };
 
-ChatLayer::EditBoxNode* ChatLayer::EditBoxNode::create(float width, EditBoxDelegate* delegate)
+ChatLayer::EditBoxNode* ChatLayer::EditBoxNode::create(float width, EditBoxDelegate* delegate, const function<void()>& callback)
 {
     auto ret = new (nothrow) ChatLayer::EditBoxNode();
-    if (ret && ret->init(width, delegate)) {
+    if (ret && ret->init(width, delegate, callback)) {
         ret->autorelease();
         return ret;
     }
@@ -156,18 +157,22 @@ ChatLayer::EditBoxNode::~EditBoxNode()
     removeAllChildren();
 }
 
-bool ChatLayer::EditBoxNode::init(float width, EditBoxDelegate* delegate)
+bool ChatLayer::EditBoxNode::init(float width, EditBoxDelegate* delegate, const function<void()>& callback)
 {
     if (Node::init()) {
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         
         static const string file(ChatUI::getResourcePath("button_liaotian.png"));
         _button = Button::create(file, file);
+        _button->addClickEventListener([callback](Ref*) {
+            if (callback) {
+                callback();
+            }
+        });
         addChild(_button);
         
-        static const Vec2 edge(0, 0);
         const auto& bsize(_button->getContentSize());
-        const Size size(width, bsize.height + edge.y * 2);
+        const Size size(width, bsize.height);
         setContentSize(size);
         
         static const Size ebBgSize(289, 38);
@@ -177,18 +182,19 @@ bool ChatLayer::EditBoxNode::init(float width, EditBoxDelegate* delegate)
         
         static const float space(3);
         static const float eEdgeY(3);
-        const Size esize(width - (bsize.width + edge.x * 2 + space), bsize.height - eEdgeY * 2);
+        const Size esize(width - (bsize.width + space), bsize.height - eEdgeY * 2);
         _editBox = ui::EditBox::create(esize, s);
         _editBox->setDelegate(delegate);
-        _editBox->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
+        _editBox->setMaxLength(esize.width);
+        _editBox->setReturnType(ui::EditBox::KeyboardReturnType::SEND);
         _editBox->setInputMode(ui::EditBox::InputMode::ANY);
-        _editBox->setFontColor(Color4B::WHITE);
+        _editBox->setFontColor(Color4B::BLACK);
         _editBox->setPlaceholderFontSize(16);
         _editBox->setPlaceHolder("Please input...");
         addChild(_editBox);
         
-        _editBox->setPosition(Point(edge.x + esize.width / 2, size.height / 2));
-        _button->setPosition(Point(size.width - (edge.x + bsize.width / 2), size.height / 2));
+        _editBox->setPosition(Point(esize.width / 2, size.height / 2));
+        _button->setPosition(Point(size.width - bsize.width / 2, size.height / 2));
         
         return true;
     }
@@ -196,10 +202,37 @@ bool ChatLayer::EditBoxNode::init(float width, EditBoxDelegate* delegate)
     return false;
 }
 
+void ChatLayer::EditBoxNode::setFocus(bool focus)
+{
+    if (_editBox) {
+        if (focus) {
+            _editBox->touchDownAction(_editBox, Widget::TouchEventType::ENDED);
+        } else {
+            _editBox->onExit();
+        }
+    }
+}
+
+const char* ChatLayer::EditBoxNode::getText() const
+{
+    if (_editBox) {
+        return _editBox->getText();
+    }
+    
+    return nullptr;
+}
+
+void ChatLayer::EditBoxNode::setText(const char* msg)
+{
+    if (msg && _editBox) {
+        _editBox->setText(msg);
+    }
+}
+
 #pragma mark - ChatLayer
 static const float viewWidth(385);
 static const float subViewWidth(366);
-static const int buttomZOrder(-1);
+static const int zorder_top(1);
 ChatLayer* ChatLayer::create()
 {
     auto ret = new (nothrow) ChatLayer();
@@ -214,10 +247,7 @@ ChatLayer* ChatLayer::create()
 
 ChatLayer::ChatLayer()
 :_observer(nullptr)
-,_folder(false)
-,_isFolding(false)
 ,_background(nullptr)
-,_button(nullptr)
 ,_buttonIcon(nullptr)
 ,_thisTableType(ChatType::None)
 ,_thisTableNode(nullptr)
@@ -229,11 +259,20 @@ ChatLayer::~ChatLayer()
     removeAllChildren();
 }
 
+#pragma mark - public
 void ChatLayer::registerObserver(ChatLayerObserver *observer)
 {
     _observer = observer;
 }
 
+void ChatLayer::setButtonStatus(bool fold)
+{
+    if (_buttonIcon) {
+        _buttonIcon->setScaleX(fold ? 1 : -1);
+    }
+}
+
+#pragma mark - LayerColor
 bool ChatLayer::init()
 {
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR)) {
@@ -243,25 +282,19 @@ bool ChatLayer::init()
         
         // 1. button
         static const string file(ChatUI::getResourcePath("button_liaotian_1.png"));
-        _button = Button::create(file, file);
+        auto button = Button::create(file, file);
         static const float bOffsetX(2);
-        const auto& bsize(_button->getContentSize());
-        _button->setPosition(Point(size.width + bsize.width / 2 - bOffsetX, size.height / 2));
-        addChild(_button);
+        const auto& bsize(button->getContentSize());
+        button->setPosition(Point(size.width + bsize.width / 2 - bOffsetX, size.height / 2));
+        addChild(button);
         
         _buttonIcon = Sprite::create(ChatUI::getResourcePath("icon_jiantou_1.png"));
         _buttonIcon->setPosition(Point(bOffsetX + _buttonIcon->getContentSize().width / 2, bsize.height / 2));
-        _button->addChild(_buttonIcon);
-        _button->setPressedActionEnabled(true);
-        _button->addClickEventListener([this, size](Ref*) {
-            if (!_isFolding) {
-                _isFolding = true;
-                _folder = !_folder;
-                static const float duration(0.3f);
-                runAction(Sequence::create(MoveTo::create(duration, _folder ? Point(-size.width, 0) : Point::ZERO), CallFunc::create([this]() {
-                    _isFolding = false;
-                    _buttonIcon->setScaleX(_folder ? 1 : -1);
-                }), nullptr));
+        button->addChild(_buttonIcon);
+        button->setPressedActionEnabled(true);
+        button->addClickEventListener([this](Ref*) {
+            if (_observer) {
+                _observer->onChatLayerClickedButton();
             }
         });
         
@@ -282,7 +315,7 @@ bool ChatLayer::init()
             auto type = tableTypes[i];
             float height(topLeft.y - edgeBottom);
             if (ChatType::World == type) {
-                _editBoxNode = EditBoxNode::create(subViewWidth, this);
+                _editBoxNode = EditBoxNode::create(subViewWidth, this, CC_CALLBACK_0(ChatLayer::sendMessage, this));
                 _background->addChild(_editBoxNode);
                 
                 const auto& size(_editBoxNode->getContentSize());
@@ -322,8 +355,8 @@ Size ChatLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
 {
     auto size = getCellSize(getTableType(table), idx);
     auto cnt = getCellsCount(table);
-    if (idx == cnt - 1) {
-        return size + Size(0, nodeOffsetOnTable.y);
+    if (0 == idx || (cnt - 1) == idx) {
+        return size + Size(0, nodeGapOnTable.y / 2);
     }
     
     return size;
@@ -337,31 +370,25 @@ TableViewCell* ChatLayer::tableCellAtIndex(TableView *table, ssize_t idx)
     }
     
     auto type = getTableType(table);
-    auto maxCnt(getDataSize(type));
+    auto maxCnt(getDataCount(type));
     
     auto cnt = getCellsCount(table);
     for (int i = 0; i < tableColumnCount; ++i) {
         auto index = idx * tableColumnCount + i;
         Node* node(cell->getNode(i));
-        if (ChatType::World == type) {
-            node = dynamic_cast<ChatNode*>(node);
-        } else if (ChatType::Mail == type) {
-            node = dynamic_cast<NoticeNode*>(node);
-        } else if (ChatType::Notice == type) {
-            node = dynamic_cast<NoticeNode*>(node);
-        }
-        
         if (index < cnt) {
             if (!node) {
                 node = createCellNode(type, index);
                 cell->addChild(node);
                 cell->setNode(node, i);
+            } else {
+                updateCellNode(node, type, index);
             }
             
             // we must update the position when the table was reloaded
             const auto& nodeSize(node->getContentSize());
-            const Point point(nodeSize.width * (i + 0.5f) - nodeOffsetOnTable.x / 2, nodeSize.height * 0.5f);
-            node->setPosition(point + Point(0, (idx == maxCnt - 1) ? nodeOffsetOnTable.y : 0));
+            const Point point(nodeSize.width * (i + 0.5f) + nodeGapOnTable.x / 2, nodeSize.height * 0.5f + nodeGapOnTable.y / 2);
+            node->setPosition(point + Point(0, (idx == maxCnt - 1) ? nodeGapOnTable.y / 2 : 0));
         } else if (node) {
             node->removeFromParent();
             cell->resetNode(i);
@@ -384,7 +411,7 @@ void ChatLayer::editBoxTextChanged(ui::EditBox* editBox, const string& text)
 
 void ChatLayer::editBoxReturn(ui::EditBox* editBox)
 {
-    
+    sendMessage();
 }
 
 #pragma mark - ChatNodeObserver
@@ -423,7 +450,7 @@ void ChatLayer::createTableNode(ChatType type, float height, const Point& topLef
 ssize_t ChatLayer::getCellsCount(TableView* table) const
 {
     auto type = getTableType(table);
-    auto cnt = getDataSize(type);
+    auto cnt = getDataCount(type);
     if (cnt > 0) {
         return (cnt - 1) / tableColumnCount + 1;
     }
@@ -456,7 +483,7 @@ void ChatLayer::createTabButtons(const Vec2& edge)
         auto button = TabButton::create(getTableName(type), normal, select, [=](Ref*) {
             setTableType(type);
         });
-        _background->addChild(button);
+        _background->addChild(button, zorder_top);
         _tabButtons.insert(make_pair(type, button));
         
         if (0 == i) {
@@ -483,7 +510,7 @@ Size ChatLayer::getCellSize(ChatType type, size_t idx)
     auto node = createCellNode(type, idx);
     if (node) {
         auto size(node->getContentSize());
-        return size;
+        return size + Size(nodeGapOnTable.x, nodeGapOnTable.y);
     }
     
     return Size::ZERO;
@@ -491,25 +518,46 @@ Size ChatLayer::getCellSize(ChatType type, size_t idx)
 
 Node* ChatLayer::createCellNode(ChatType type, size_t idx)
 {
-    Node* node(nullptr);
     const auto& data = ChatManager::getInstance()->getChatData(type);
     if (data.size() > idx) {
         static const float edgeX(3);
         static const float width(subViewWidth - edgeX * 2);
+        auto chatData(data.at(idx));
         if (ChatType::World == type) {
-            node = ChatNode::create(width, data.at(idx));
-            (dynamic_cast<ChatNode*>(node))->registerObserver(this);
+            auto cn = ChatNode::create(width, chatData);
+            cn->registerObserver(this);
+            return cn;
         } else if (ChatType::Mail == type ||
                    ChatType::Notice == type) {
-            node = NoticeNode::create(width, data.at(idx));
-            (dynamic_cast<NoticeNode*>(node))->registerObserver(this);
+            auto nn = NoticeNode::create(width, chatData);
+            nn->registerObserver(this);
+            return nn;
         }
     }
     
-    return node;
+    return nullptr;
 }
 
-size_t ChatLayer::getDataSize(ChatType type) const
+void ChatLayer::updateCellNode(Node* node, ChatType type, size_t idx)
+{
+    if (node) {
+        const auto& data = ChatManager::getInstance()->getChatData(type);
+        if (data.size() > idx) {
+            auto chatData(data.at(idx));
+            auto cn(dynamic_cast<ChatNode*>(node));
+            if (cn) {
+                cn->update(chatData);
+            } else {
+                auto nn(dynamic_cast<NoticeNode*>(node));
+                if (nn) {
+                    nn->update(chatData);
+                }
+            }
+        }
+    }
+}
+
+size_t ChatLayer::getDataCount(ChatType type) const
 {
     return ChatManager::getInstance()->getChatData(type).size();
 }
@@ -546,7 +594,9 @@ void ChatLayer::setTableType(ChatType type)
             iter->second->setEnabled(!isThisTable);
         }
         
-        _editBoxNode->setVisible(ChatType::World == type);
+        const bool showEditBox(ChatType::World == type);
+        _editBoxNode->setVisible(showEditBox);
+        _editBoxNode->setFocus(showEditBox);
     }
 }
 
@@ -561,5 +611,26 @@ string ChatLayer::getTableName(ChatType type) const
             return "系统";
         default:
             return "";
+    }
+}
+
+void ChatLayer::sendMessage()
+{
+    if (_editBoxNode) {
+        static const auto type(ChatType::World);
+        const char* text = _editBoxNode->getText();
+        ChatManager::getInstance()->sendMessage(type, 1, text, [=](const char* msg) {
+            _editBoxNode->setText("");
+            
+            if (_tableNodes.find(type) != end(_tableNodes)) {
+                auto table = _tableNodes.at(type)->getTable();
+                auto cnt(getCellsCount(table));
+                if (cnt > 0) {
+                    table->insertCellAtIndex(cnt - 1);
+                } else {
+                    CC_ASSERT(false);
+                }
+            }
+        });
     }
 }
