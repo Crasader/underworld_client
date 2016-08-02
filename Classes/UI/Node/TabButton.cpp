@@ -59,6 +59,7 @@ bool TabButton::init(const string& title, const string& normal, const string& se
         _button->setTitleFontName(DEFAULT_FONT);
         _button->setTitleFontSize(DEFAULT_FONT_SIZE);
         _button->setTitleColor(normalTextColor);
+        _button->setTitleText(title);
         
         const auto& size = _button->getContentSize();
         setAnchorPoint(Point::ANCHOR_MIDDLE);
@@ -73,8 +74,8 @@ bool TabButton::init(const string& title, const string& normal, const string& se
 
 bool TabButton::init(const string& title, const Button::ccWidgetClickCallback& callback)
 {
-    static const auto normal("GameImages/public/button_white_1.png");
-    static const auto selected("GameImages/public/button_black_1.png");
+    static const auto normal(CocosUtils::getResourcePath("button_white_1.png"));
+    static const auto selected(CocosUtils::getResourcePath("button_black_1.png"));
     return init(title, normal, selected, callback);
 }
 

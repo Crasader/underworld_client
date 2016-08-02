@@ -70,7 +70,7 @@ bool CardXInfoLayer::init()
         titleSprite->setPosition(Point(size.width / 2, size.height - (titleHeight / 2 + offsetY)));
         bg->addChild(titleSprite);
         
-        Sprite* line = Sprite::create("GameImages/public/ui_line.png");
+        Sprite* line = Sprite::create(CocosUtils::getResourcePath("ui_line.png"));
         line->setScaleX(width / line->getContentSize().width);
         line->setPosition(titleSprite->getPosition() - Point(0, titleHeight / 2 + offsetY));
         bg->addChild(line);

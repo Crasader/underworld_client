@@ -39,7 +39,7 @@ bool XCardNode::init()
         _cardNode = CardNode::create(false);
         addChild(_cardNode);
         
-        auto sprite = Sprite::create("GameImages/public/ui_green_2.png");
+        auto sprite = Sprite::create(CocosUtils::getResourcePath("ui_green_2.png"));
         addChild(sprite);
         _countLabel = CocosUtils::createLabel("count", DEFAULT_FONT_SIZE, DEFAULT_NUMBER_FONT );
         _countLabel->setTextColor(Color4B::BLACK);

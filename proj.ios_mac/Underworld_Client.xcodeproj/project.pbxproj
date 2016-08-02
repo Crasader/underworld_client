@@ -110,6 +110,7 @@
 		A108A7B31D25253700987658 /* AchievementNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A108A7B11D25253700987658 /* AchievementNode.cpp */; };
 		A108A7B61D25254600987658 /* AchievementLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A108A7B41D25254600987658 /* AchievementLayer.cpp */; };
 		A1098E9C1C758C3500B2E044 /* BattleResourceNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1098E9A1C758C3500B2E044 /* BattleResourceNode.cpp */; };
+		A10D742F1D5083B1009674F9 /* AvatarNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10D742D1D5083B1009674F9 /* AvatarNode.cpp */; };
 		A11469FE1C9FE9EC00E64125 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A11469F91C9FE9EC00E64125 /* libevent.a */; };
 		A11469FF1C9FE9EC00E64125 /* libevent_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A11469FA1C9FE9EC00E64125 /* libevent_core.a */; };
 		A1146A001C9FE9EC00E64125 /* libevent_extra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A11469FB1C9FE9EC00E64125 /* libevent_extra.a */; };
@@ -121,6 +122,10 @@
 		A1211B271C0BF5CC00C27CCC /* RandomCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B251C0BF5CC00C27CCC /* RandomCreator.cpp */; };
 		A1211B291C0BF68E00C27CCC /* GameConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B281C0BF68E00C27CCC /* GameConstants.cpp */; };
 		A12BF9431D22278100D2E5CD /* XCardNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12BF9411D22278100D2E5CD /* XCardNode.cpp */; };
+		A12C60A41D50774C003FCF0D /* UserSimpleNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12C60A21D50774C003FCF0D /* UserSimpleNode.cpp */; };
+		A12C60AD1D50784B003FCF0D /* GuildSimpleNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12C60AB1D50784B003FCF0D /* GuildSimpleNode.cpp */; };
+		A12C60B01D50785A003FCF0D /* ExpNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12C60AE1D50785A003FCF0D /* ExpNode.cpp */; };
+		A12C60B41D507FB6003FCF0D /* TrophyNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12C60B21D507FB6003FCF0D /* TrophyNode.cpp */; };
 		A12DE76C1D4868AC0012D127 /* UniversalButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12DE76A1D4868AC0012D127 /* UniversalButton.cpp */; };
 		A13108A51C046BF900EAAD90 /* particle in Resources */ = {isa = PBXBuildFile; fileRef = A13108A41C046BF900EAAD90 /* particle */; };
 		A14B5EFB1C311908006FB0DB /* Addon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14B5EF91C311908006FB0DB /* Addon.cpp */; };
@@ -182,6 +187,9 @@
 		A1A4BA491BCE096300175E8A /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A4BA471BCE096300175E8A /* Utils.cpp */; };
 		A1A74CA81C17DFE800648671 /* MainLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A74CA61C17DFE800648671 /* MainLayer.cpp */; };
 		A1A74CAB1C17DFFA00648671 /* MainUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A74CA91C17DFFA00648671 /* MainUILayer.cpp */; };
+		A1AAA85E1D508DAF00EB7AEB /* TowerSimpleNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1AAA85C1D508DAF00EB7AEB /* TowerSimpleNode.cpp */; };
+		A1AAA8651D5094BF00EB7AEB /* CardDeckNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1AAA8631D5094BF00EB7AEB /* CardDeckNode.cpp */; };
+		A1AAA8681D50951D00EB7AEB /* CardSimpleNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1AAA8661D50951D00EB7AEB /* CardSimpleNode.cpp */; };
 		A1ABD4D61D38945600141E6A /* FrameLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1ABD4D41D38945600141E6A /* FrameLoader.cpp */; };
 		A1B4ADFF1C200480005906A6 /* DataManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B4ADEA1C200480005906A6 /* DataManager.cpp */; };
 		A1B4AE001C200480005906A6 /* OnlineUpdater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B4ADEC1C200480005906A6 /* OnlineUpdater.cpp */; };
@@ -517,6 +525,8 @@
 		A108A7B51D25254600987658 /* AchievementLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementLayer.h; sourceTree = "<group>"; };
 		A1098E9A1C758C3500B2E044 /* BattleResourceNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattleResourceNode.cpp; sourceTree = "<group>"; };
 		A1098E9B1C758C3500B2E044 /* BattleResourceNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BattleResourceNode.h; sourceTree = "<group>"; };
+		A10D742D1D5083B1009674F9 /* AvatarNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AvatarNode.cpp; sourceTree = "<group>"; };
+		A10D742E1D5083B1009674F9 /* AvatarNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvatarNode.h; sourceTree = "<group>"; };
 		A11469D91C9FE9EC00E64125 /* evdns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = evdns.h; sourceTree = "<group>"; };
 		A11469DA1C9FE9EC00E64125 /* event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = event.h; sourceTree = "<group>"; };
 		A11469DC1C9FE9EC00E64125 /* buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buffer.h; sourceTree = "<group>"; };
@@ -563,6 +573,14 @@
 		A1211B281C0BF68E00C27CCC /* GameConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameConstants.cpp; path = Core/Game/GameConstants.cpp; sourceTree = "<group>"; };
 		A12BF9411D22278100D2E5CD /* XCardNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XCardNode.cpp; sourceTree = "<group>"; };
 		A12BF9421D22278100D2E5CD /* XCardNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCardNode.h; sourceTree = "<group>"; };
+		A12C60A21D50774C003FCF0D /* UserSimpleNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserSimpleNode.cpp; sourceTree = "<group>"; };
+		A12C60A31D50774C003FCF0D /* UserSimpleNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserSimpleNode.h; sourceTree = "<group>"; };
+		A12C60AB1D50784B003FCF0D /* GuildSimpleNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuildSimpleNode.cpp; sourceTree = "<group>"; };
+		A12C60AC1D50784B003FCF0D /* GuildSimpleNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuildSimpleNode.h; sourceTree = "<group>"; };
+		A12C60AE1D50785A003FCF0D /* ExpNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExpNode.cpp; sourceTree = "<group>"; };
+		A12C60AF1D50785A003FCF0D /* ExpNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpNode.h; sourceTree = "<group>"; };
+		A12C60B21D507FB6003FCF0D /* TrophyNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TrophyNode.cpp; sourceTree = "<group>"; };
+		A12C60B31D507FB6003FCF0D /* TrophyNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrophyNode.h; sourceTree = "<group>"; };
 		A12DE76A1D4868AC0012D127 /* UniversalButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UniversalButton.cpp; sourceTree = "<group>"; };
 		A12DE76B1D4868AC0012D127 /* UniversalButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniversalButton.h; sourceTree = "<group>"; };
 		A13108A41C046BF900EAAD90 /* particle */ = {isa = PBXFileReference; lastKnownFileType = folder; path = particle; sourceTree = "<group>"; };
@@ -690,6 +708,12 @@
 		A1A74CA71C17DFE800648671 /* MainLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainLayer.h; sourceTree = "<group>"; };
 		A1A74CA91C17DFFA00648671 /* MainUILayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainUILayer.cpp; sourceTree = "<group>"; };
 		A1A74CAA1C17DFFA00648671 /* MainUILayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainUILayer.h; sourceTree = "<group>"; };
+		A1AAA85C1D508DAF00EB7AEB /* TowerSimpleNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TowerSimpleNode.cpp; sourceTree = "<group>"; };
+		A1AAA85D1D508DAF00EB7AEB /* TowerSimpleNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TowerSimpleNode.h; sourceTree = "<group>"; };
+		A1AAA8631D5094BF00EB7AEB /* CardDeckNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardDeckNode.cpp; sourceTree = "<group>"; };
+		A1AAA8641D5094BF00EB7AEB /* CardDeckNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardDeckNode.h; sourceTree = "<group>"; };
+		A1AAA8661D50951D00EB7AEB /* CardSimpleNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardSimpleNode.cpp; sourceTree = "<group>"; };
+		A1AAA8671D50951D00EB7AEB /* CardSimpleNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardSimpleNode.h; sourceTree = "<group>"; };
 		A1ABD4D41D38945600141E6A /* FrameLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FrameLoader.cpp; sourceTree = "<group>"; };
 		A1ABD4D51D38945600141E6A /* FrameLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrameLoader.h; sourceTree = "<group>"; };
 		A1B4ADEA1C200480005906A6 /* DataManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataManager.cpp; sourceTree = "<group>"; };
@@ -1493,6 +1517,23 @@
 			path = lib;
 			sourceTree = "<group>";
 		};
+		A12C60A11D50774C003FCF0D /* User */ = {
+			isa = PBXGroup;
+			children = (
+				A10D742D1D5083B1009674F9 /* AvatarNode.cpp */,
+				A10D742E1D5083B1009674F9 /* AvatarNode.h */,
+				A12C60AE1D50785A003FCF0D /* ExpNode.cpp */,
+				A12C60AF1D50785A003FCF0D /* ExpNode.h */,
+				A12C60AB1D50784B003FCF0D /* GuildSimpleNode.cpp */,
+				A12C60AC1D50784B003FCF0D /* GuildSimpleNode.h */,
+				A12C60B21D507FB6003FCF0D /* TrophyNode.cpp */,
+				A12C60B31D507FB6003FCF0D /* TrophyNode.h */,
+				A12C60A21D50774C003FCF0D /* UserSimpleNode.cpp */,
+				A12C60A31D50774C003FCF0D /* UserSimpleNode.h */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 		A12D2F571BFDE88A00389DAC /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -1630,6 +1671,8 @@
 			children = (
 				A1D91BE51C4E087C00C778F4 /* BattleUI */,
 				A103F4561BE37E2A007F9A83 /* Unit */,
+				A12C60A11D50774C003FCF0D /* User */,
+				A1AAA8621D50949600EB7AEB /* Card */,
 				CBD778C51C29390B0070D293 /* AnnouncementNode.cpp */,
 				CBD778C61C29390B0070D293 /* AnnouncementNode.h */,
 				A1DF4BEA1C05902C000F2FDA /* DisplayBar.cpp */,
@@ -1854,6 +1897,17 @@
 				A1A4BA371BCDF81500175E8A /* IapObject.h */,
 			);
 			path = Shop;
+			sourceTree = "<group>";
+		};
+		A1AAA8621D50949600EB7AEB /* Card */ = {
+			isa = PBXGroup;
+			children = (
+				A1AAA8631D5094BF00EB7AEB /* CardDeckNode.cpp */,
+				A1AAA8641D5094BF00EB7AEB /* CardDeckNode.h */,
+				A1AAA8661D50951D00EB7AEB /* CardSimpleNode.cpp */,
+				A1AAA8671D50951D00EB7AEB /* CardSimpleNode.h */,
+			);
+			path = Card;
 			sourceTree = "<group>";
 		};
 		A1AAE5491BCCC4C20090D917 /* Public */ = {
@@ -2200,6 +2254,8 @@
 				A1FB5D081D4F197F00CD2622 /* PvpLogShareLayer.h */,
 				A1FB5D041D4F18E700CD2622 /* PvpLogUI.cpp */,
 				A1FB5D051D4F18E700CD2622 /* PvpLogUI.h */,
+				A1AAA85C1D508DAF00EB7AEB /* TowerSimpleNode.cpp */,
+				A1AAA85D1D508DAF00EB7AEB /* TowerSimpleNode.h */,
 			);
 			path = PvpLog;
 			sourceTree = "<group>";
@@ -2468,6 +2524,7 @@
 				A1720E8B1BCCE19300217E98 /* aes_core.c in Sources */,
 				A12DE76C1D4868AC0012D127 /* UniversalButton.cpp in Sources */,
 				045117101BCFBA5F002AA721 /* Game.cpp in Sources */,
+				A1AAA8681D50951D00EB7AEB /* CardSimpleNode.cpp in Sources */,
 				3028EBC31BFF0CBD00511C51 /* DynamicValue.cpp in Sources */,
 				A1CA35F51D45F29D00584C9D /* SettingsLayer.cpp in Sources */,
 				CB3EC89A1C4E4DA600447FE3 /* ChatMark.cpp in Sources */,
@@ -2477,11 +2534,14 @@
 				A108A7B61D25254600987658 /* AchievementLayer.cpp in Sources */,
 				3087FF0F1CA12A57004E31F6 /* TCPClient.mm in Sources */,
 				045117071BCFBA53002AA721 /* Bullet.cpp in Sources */,
+				A10D742F1D5083B1009674F9 /* AvatarNode.cpp in Sources */,
+				A1AAA85E1D508DAF00EB7AEB /* TowerSimpleNode.cpp in Sources */,
 				A1DFAAD31D10FC2800817E69 /* BattleDeckUnitInfoNode.cpp in Sources */,
 				A1E947C51D48AE9E00BD7A27 /* ChatUI.cpp in Sources */,
 				3087FF321CA2BF5A004E31F6 /* UnderworldClient.cpp in Sources */,
 				A10611FF1C3D20A40065070F /* SoldierPieceData.cpp in Sources */,
 				A1E830681C1EA50200FE01B8 /* ConditionData.cpp in Sources */,
+				A1AAA8651D5094BF00EB7AEB /* CardDeckNode.cpp in Sources */,
 				045116F71BCFBA44002AA721 /* SkllType.cpp in Sources */,
 				A1B4AE021C200480005906A6 /* UserDefaultsDataManager.cpp in Sources */,
 				A1D461521C3E166900E8E60B /* AbstractLocalData.cpp in Sources */,
@@ -2496,6 +2556,7 @@
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				A1CE89DE1C44AB2900B60704 /* SpellConfigData.cpp in Sources */,
 				A1ABD4D61D38945600141E6A /* FrameLoader.cpp in Sources */,
+				A12C60A41D50774C003FCF0D /* UserSimpleNode.cpp in Sources */,
 				A1B4AE2F1C200521005906A6 /* GuildManager.cpp in Sources */,
 				A1D5C9D51D2288DE006B1738 /* TalentBriefNode.cpp in Sources */,
 				046D9E631D34FD5D0093A745 /* ConfigChecker.cpp in Sources */,
@@ -2583,9 +2644,11 @@
 				A1720EBD1BCD309A00217E98 /* NetworkController.cpp in Sources */,
 				A1D4615F1C3E251000E8E60B /* MapParticleConfigData.cpp in Sources */,
 				A12BF9431D22278100D2E5CD /* XCardNode.cpp in Sources */,
+				A12C60AD1D50784B003FCF0D /* GuildSimpleNode.cpp in Sources */,
 				A1D592271C9ABE7E009B9E8C /* Scheduler.cpp in Sources */,
 				A1A74CAB1C17DFFA00648671 /* MainUILayer.cpp in Sources */,
 				A1720EA41BCD29FF00217E98 /* GameData.cpp in Sources */,
+				A12C60B01D50785A003FCF0D /* ExpNode.cpp in Sources */,
 				A18524E01C1AF66900BE261D /* MapUILayer.cpp in Sources */,
 				045116F61BCFBA44002AA721 /* FactionType.cpp in Sources */,
 				A19EE96D1C1C0F1300E46D77 /* LevelLocalData.cpp in Sources */,
@@ -2599,6 +2662,7 @@
 				300098CD1BD0A94B00B6E284 /* Coordinate.cpp in Sources */,
 				A1FC1A091C97C2AE00270B50 /* NSString+Extended.mm in Sources */,
 				045116F41BCFBA44002AA721 /* BulletType.cpp in Sources */,
+				A12C60B41D507FB6003FCF0D /* TrophyNode.cpp in Sources */,
 				0451170A1BCFBA53002AA721 /* Skill.cpp in Sources */,
 				0487A6671CC897F9005FE8D0 /* GameMode.cpp in Sources */,
 				A1CA35E91D45BDE200584C9D /* NoticeNode.cpp in Sources */,

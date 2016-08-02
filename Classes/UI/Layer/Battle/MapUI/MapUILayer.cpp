@@ -309,7 +309,7 @@ bool MapUILayer::init(const string& myAccount, const string& opponentsAccount)
         
         // buttons
         {
-            static const string file("GameImages/public/ui_zt.png");
+            static const string file(CocosUtils::getResourcePath("ui_zt.png"));
             _pauseMenuItem = MenuItemImage::create(file, file, [this](Ref*) {
                 if (_observer) {
                     _observer->onMapUILayerClickedPauseButton();
@@ -556,7 +556,7 @@ void MapUILayer::addResourceNode()
         node->setContentSize(size);
         node->setPosition(size.width / 2, size.height / 2);
         
-        auto line = Sprite::create("GameImages/public/ui_line.png");
+        auto line = Sprite::create(CocosUtils::getResourcePath("ui_line.png"));
         line->setScaleX(size.width / line->getContentSize().width);
         line->setPosition(size.width / 2, size.height / 2);
         node->addChild(line);

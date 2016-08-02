@@ -57,7 +57,7 @@ bool TalentInfoNode::init(const Callback& callback)
             _nodes.push_back(node);
         }
         
-        static const string file("GameImages/public/button_yellow.png");
+        static const string file(CocosUtils::getResourcePath("button_yellow.png"));
         auto button = Button::create(file);
         button->addClickEventListener([this](Ref*) {
             if (_callback && _name.size() > 0) {

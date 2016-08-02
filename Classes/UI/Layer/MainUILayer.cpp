@@ -13,6 +13,7 @@
 #include "GameManager.h"
 #include "SoundManager.h"
 #include "ResourceNode.h"
+#include "UserSimpleNode.h"
 #include "FormationLayer.h"
 #include "BattleDeckLayer.h"
 #include "CardLayer.h"
@@ -134,10 +135,7 @@ MainUILayer::MainUILayer()
 ,_isChatLayerFolded(true)
 ,_isChatLayerMoving(false)
 ,_chatLayer(nullptr)
-,_avatarButton(nullptr)
-,_nameLabel(nullptr)
-,_levelLabel(nullptr)
-,_expProgress(nullptr)
+,_userNode(nullptr)
 ,_staminaResourceNode(nullptr)
 ,_goldResourceNode(nullptr)
 ,_gemResourceNode(nullptr)
@@ -164,88 +162,12 @@ bool MainUILayer::init()
         static const float margin(10.0f);
         
         // 1. left top
-        {
-            auto background = Sprite::create(getResourcePath("ui_banzi_1.png"));
-            addChild(background);
-            const auto& mainSize(background->getContentSize());
-            background->setPosition(Point(mainSize.width / 2 + margin, winSize.height - (mainSize.height / 2 + margin)));
-            
-            // avatar
-            {
-                static const auto avatarFile(getResourcePath("icon_touxiang_1.png"));
-                auto avatar = Button::create(avatarFile, avatarFile);
-                avatar->addClickEventListener([this](Ref *pSender){
-                    SoundManager::getInstance()->playButtonSound();
-                    // TODO:
-                });
-                background->addChild(avatar);
-                _avatarButton = avatar;
-                
-                static const Vec2 edge(10.0f, 10.0f);
-                const auto& size(avatar->getContentSize());
-                avatar->setPosition(Point(size.width / 2 + edge.x, size.height / 2 + edge.y));
-            }
-            
-            {
-                auto name = CocosUtils::createLabel("User Name", BIG_FONT_SIZE);
-                name->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
-                background->addChild(name);
-                _nameLabel = name;
-                static const Vec2 edge(5.0f, 5.0f);
-                name->setPosition(Point(_avatarButton->getPosition().x + _avatarButton->getContentSize().width / 2 + edge.x, mainSize.height - (name->getContentSize().height / 2 + edge.y)));
-            }
-            
-            // trophy
-            {
-                auto bg = Sprite::create(getResourcePath("ui_tiao_2.png"));
-                background->addChild(bg);
-                
-                auto icon = Sprite::create(getResourcePath("icon_jiangbei.png"));
-                icon->setScale(0.5f);
-                bg->addChild(icon);
-                
-                auto trophyCount = CocosUtils::createLabel("123", SMALL_FONT_SIZE, DEFAULT_NUMBER_FONT, Size::ZERO, TextHAlignment::CENTER, TextVAlignment::CENTER);
-                trophyCount->setAnchorPoint(Point::ANCHOR_MIDDLE);
-                bg->addChild(trophyCount);
-                
-                const auto& bsize(bg->getContentSize());
-                const auto& isize(icon->getContentSize());
-                icon->setPosition(Point(0, bsize.height / 2));
-                trophyCount->setPosition(Point(bsize.width / 2 + isize.width / 4, bsize.height / 2));
-                static const Vec2 edge(8.0f, 5.0f);
-                bg->setPosition(Point(mainSize.width - (edge.x + bsize.width / 2), mainSize.height - (edge.y + bsize.height / 2)));
-            }
-            
-            // exp
-            {
-                auto bg = Sprite::create(getResourcePath("ui_tiao_1.png"));
-                background->addChild(bg);
-                
-                auto s = Sprite::create(getResourcePath("ui_tiao_1_1.png"));
-                auto pt = ProgressTimer::create(s);
-                pt->setType(ProgressTimer::Type::BAR);
-                pt->setBarChangeRate(Vec2(1.0f, 0.0f));
-                pt->setMidpoint(Point::ANCHOR_BOTTOM_LEFT);
-                pt->setPercentage(80);
-                bg->addChild(pt);
-                _expProgress = pt;
-                
-                auto icon = Sprite::create("GameImages/resources/icon_104B.png");
-                bg->addChild(icon);
-                
-                auto level = CocosUtils::createLabel("123", SMALL_FONT_SIZE, DEFAULT_NUMBER_FONT, Size::ZERO, TextHAlignment::CENTER, TextVAlignment::CENTER);
-                icon->addChild(level);
-                _levelLabel = level;
-                
-                const auto& bsize(bg->getContentSize());
-                const auto& isize(icon->getContentSize());
-                icon->setPosition(Point(0, bsize.height / 2));
-                pt->setPosition(Point(bsize.width / 2, bsize.height / 2));
-                level->setPosition(Point(isize.width / 2, isize.height / 2));
-                static const Vec2 edge(8.0f, 10.0f);
-                bg->setPosition(Point(mainSize.width - (bsize.width / 2 + edge.x), bsize.height / 2 + edge.y));
-            }
-        }
+        _userNode = UserSimpleNode::create();
+        _userNode->setIsHome(true);
+        _userNode->setIsMe(true);
+        addChild(_userNode);
+        const auto& mainSize(_userNode->getContentSize());
+        _userNode->setPosition(Point(mainSize.width / 2 + margin, winSize.height - (mainSize.height / 2 + margin)));
         
         // 2. left
         {
@@ -385,7 +307,7 @@ bool MainUILayer::init()
             }
         }
         
-        updateAvatar();
+        updateAvatar(0);
         updateResources();
         
         auto eventListener = EventListenerTouchOneByOne::create();
@@ -417,10 +339,11 @@ void MainUILayer::onChatLayerClickedButton()
 }
 
 #pragma mark - private
-void MainUILayer::updateAvatar()
+void MainUILayer::updateAvatar(int idx)
 {
-    const string file(getResourcePath("icon_touxiang_1.png"));
-    _avatarButton->loadTextures(file, file);
+    if (_userNode) {
+        _userNode->setAvatar(idx);
+    }
 }
 
 void MainUILayer::updateExp()

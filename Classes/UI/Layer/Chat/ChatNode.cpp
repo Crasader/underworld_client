@@ -133,7 +133,7 @@ void ChatNode::createDialog(bool isMe)
 
 void ChatNode::createIcon()
 {
-    static const string file("GameImages/public/icon_touxiang_1.png");
+    static const string file(CocosUtils::getResourcePath("icon_touxiang_1.png"));
     bool find(false);
     Sprite* s(nullptr);
     if (_icon) {

@@ -40,7 +40,7 @@ TalentBriefNode::~TalentBriefNode()
 bool TalentBriefNode::init()
 {
     if (Node::init()) {
-        auto sprite = Sprite::create("GameImages/public/ui_white.png");
+        auto sprite = Sprite::create(CocosUtils::getResourcePath("ui_white.png"));
         addChild(sprite);
         
         const auto& size = sprite->getContentSize();

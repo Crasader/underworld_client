@@ -15,6 +15,8 @@
 
 namespace CocosUtils
 {
+    std::string getResourcePath(const std::string &file);
+    
 #pragma mark - labels
     cocos2d::Label *createLabel(const std::string& text, float fontSize, const std::string& fontName = DEFAULT_FONT, const cocos2d::Size& dimensions = cocos2d::Size::ZERO, cocos2d::TextHAlignment hAlignment = cocos2d::TextHAlignment::LEFT, cocos2d::TextVAlignment vAlignment = cocos2d::TextVAlignment::TOP);
     

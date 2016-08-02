@@ -413,12 +413,12 @@ Node* BattleDeckLayer::createTable(const Size& size)
     parent->addChild(title);
     
     // table view
-    static const string leftFile("GameImages/public/button_sanjiao_4.png");
+    static const string leftFile(CocosUtils::getResourcePath("button_sanjiao_4.png"));
     Button* topButton = Button::create(leftFile, leftFile);
     parent->addChild(topButton, topZOrder);
     tableViewNode.topButton = topButton;
     
-    static const string rightFile("GameImages/public/button_sanjiao_4.png");
+    static const string rightFile(CocosUtils::getResourcePath("button_sanjiao_4.png"));
     Button* bottomButton = Button::create(rightFile, rightFile);
     parent->addChild(bottomButton, topZOrder);
     tableViewNode.bottomButton = bottomButton;

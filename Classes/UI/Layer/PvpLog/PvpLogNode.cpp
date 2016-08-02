@@ -12,8 +12,19 @@
 #include "UserSimpleData.h"
 #include "CardSimpleData.h"
 #include "PvpLogUI.h"
+#include "UserSimpleNode.h"
+#include "TowerSimpleNode.h"
+#include "CardDeckNode.h"
+#include "SoundManager.h"
 
 using namespace std;
+using namespace ui;
+
+struct PvpLogNode::UserInfo {
+    UserSimpleNode* user;
+    TowerSimpleNode* tower;
+    CardDeckNode* deck;
+};
 
 PvpLogNode* PvpLogNode::create(const PvpLogData* data, bool expand)
 {
@@ -29,10 +40,18 @@ PvpLogNode* PvpLogNode::create(const PvpLogData* data, bool expand)
 
 PvpLogNode::PvpLogNode()
 :_observer(nullptr)
-,_data(nullptr) {}
+,_data(nullptr)
+{
+    _userInfos.insert(make_pair(true, new (nothrow) UserInfo()));
+    _userInfos.insert(make_pair(false, new (nothrow) UserInfo()));
+}
 
 PvpLogNode::~PvpLogNode()
 {
+    for (auto iter = begin(_userInfos); iter != end(_userInfos); ++iter) {
+        CC_SAFE_DELETE(iter->second);
+    }
+    
     removeAllChildren();
 }
 
@@ -59,6 +78,22 @@ bool PvpLogNode::init(const PvpLogData* data, bool expand)
         _background = ui::Scale9Sprite::create(file, Rect(0, 0, size.width, size.height), capInsets);
         _background->setAnchorPoint(Point::ANCHOR_MIDDLE);
         addChild(_background);
+        
+        for (auto iter = begin(_userInfos); iter != end(_userInfos); ++iter) {
+            auto user(UserSimpleNode::create());
+            addChild(user);
+            
+            auto tower(TowerSimpleNode::create());
+            addChild(tower);
+            
+            auto deck(CardDeckNode::create());
+            addChild(deck);
+            
+            auto& info(iter->second);
+            info->user = user;
+            info->tower = tower;
+            info->deck = deck;
+        }
         
         update(data, expand);
         
@@ -92,22 +127,4 @@ void PvpLogNode::adjust()
     _background->setContentSize(size);
     setContentSize(size);
     _background->setPosition(Point(size.width / 2, size.height / 2));
-}
-
-Node* PvpLogNode::createUserNode(bool isHome, const UserSimpleData* data)
-{
-    Node* node = Node::create();
-    return node;
-}
-
-Node* PvpLogNode::createTowerNode(bool isHome, int percentage)
-{
-    Node* node = Node::create();
-    return node;
-}
-
-Node* PvpLogNode::createCardsNode(const std::vector<CardSimpleData*>& data)
-{
-    Node* node = Node::create();
-    return node;
 }

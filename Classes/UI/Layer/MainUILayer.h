@@ -16,6 +16,7 @@
 USING_NS_CC;
 
 class ResourceNode;
+class UserSimpleNode;
 
 class MainUILayerObserver
 {
@@ -46,7 +47,7 @@ protected:
     // ChatLayerObserver
     virtual void onChatLayerClickedButton() override;
     
-    void updateAvatar();
+    void updateAvatar(int idx);
     void updateExp();
     void updateResources();
     void moveChatLayer(bool folded, bool animated);
@@ -62,10 +63,7 @@ private:
     
     // UI
     ChatLayer* _chatLayer;
-    ui::Button* _avatarButton;
-    Label* _nameLabel;
-    Label* _levelLabel;
-    ProgressTimer* _expProgress;
+    UserSimpleNode* _userNode;
     ResourceNode* _staminaResourceNode;
     ResourceNode* _goldResourceNode;
     ResourceNode* _gemResourceNode;

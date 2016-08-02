@@ -25,8 +25,10 @@ public:
     const std::string& getUser() const;
     int getIcon() const;
     int getLevel() const;
+    int getExp() const;
     int getTrophy() const;
-    const std::string& getGuild() const;
+    int getGuildIdx() const;
+    const std::string& getGuildName() const;
     const std::vector<CardSimpleData*>& getCards() const;
     
 private:
@@ -34,8 +36,10 @@ private:
     std::string _user;
     int _icon;
     int _level;
+    int _exp;
     int _trophy;
-    std::string _guild;
+    int _guildIdx;
+    std::string _guildName;
     std::vector<CardSimpleData*> _cards;
 };
 

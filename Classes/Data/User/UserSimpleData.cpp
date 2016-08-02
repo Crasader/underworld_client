@@ -20,7 +20,9 @@ UserSimpleData::UserSimpleData(const rapidjson::Value& jsonDict)
 :_uid(0)
 ,_icon(0)
 ,_level(0)
+,_exp(0)
 ,_trophy(0)
+,_guildIdx(0)
 {
     
 }
@@ -52,14 +54,24 @@ int UserSimpleData::getLevel() const
     return _level;
 }
 
+int UserSimpleData::getExp() const
+{
+    return _exp;
+}
+
 int UserSimpleData::getTrophy() const
 {
     return _trophy;
 }
 
-const string& UserSimpleData::getGuild() const
+int UserSimpleData::getGuildIdx() const
 {
-    return _guild;
+    return _guildIdx;
+}
+
+const string& UserSimpleData::getGuildName() const
+{
+    return _guildName;
 }
 
 const vector<CardSimpleData*>& UserSimpleData::getCards() const

@@ -68,7 +68,7 @@ bool CardInfoNode::init(const Callback& callback)
         // add lines
         vector<Sprite*> lines;
         for (int i = 0; i < 2; ++i) {
-            auto line = Sprite::create("GameImages/public/ui_line.png");
+            auto line = Sprite::create(CocosUtils::getResourcePath("ui_line.png"));
             line->setScaleX(size.width / line->getContentSize().width);
             addChild(line);
             
@@ -123,7 +123,7 @@ bool CardInfoNode::init(const Callback& callback)
             _atkRange->setPosition(Point(x, _atkType->getPosition().y));
         }
         
-        static const string file("GameImages/public/button_yellow.png");
+        static const string file(CocosUtils::getResourcePath("button_yellow.png"));
         auto button = Button::create(file);
         button->addClickEventListener([this](Ref*) {
             if (_callback && _name.size() > 0) {

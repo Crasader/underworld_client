@@ -21,6 +21,11 @@ USING_NS_CC;
 using namespace ui;
 using namespace std;
 
+std::string CocosUtils::getResourcePath(const std::string &file)
+{
+    return "GameImages/public/" + file;
+}
+
 #pragma mark - labels
 Label *CocosUtils::createLabel(const string& text, float fontSize, const string& fontName, const Size& dimensions, TextHAlignment hAlignment, TextVAlignment vAlignment)
 {
@@ -478,12 +483,12 @@ static Button* createExitButton(Node* parent, const function<void()>& callback, 
 
 Button* CocosUtils::createGrayExitButton(Node* parent, const std::function<void()>& callback)
 {
-    return createExitButton(parent, callback, "GameImages/public/ui_guanbi.png");
+    return createExitButton(parent, callback, getResourcePath("ui_guanbi.png"));
 }
 
 Button* CocosUtils::createRedExitButton(Node* parent, const std::function<void()>& callback)
 {
-    return createExitButton(parent, callback, "GameImages/public/button_hongse.png");
+    return createExitButton(parent, callback, getResourcePath("button_hongse.png"));
 }
 
 #pragma mark - notifications

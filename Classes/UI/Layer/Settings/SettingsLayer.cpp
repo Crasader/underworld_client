@@ -229,7 +229,7 @@ bool SettingsLayer::init()
         bg->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(bg);
         
-        auto subNode = CocosUtils::createBackground("GameImages/public/ui_background_1.png", subNodeSize);
+        auto subNode = CocosUtils::createBackground(CocosUtils::getResourcePath("ui_background_1.png"), subNodeSize);
         bg->addChild(subNode);
         
         const auto& size(bg->getContentSize());

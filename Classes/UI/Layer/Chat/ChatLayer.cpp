@@ -72,7 +72,7 @@ bool ChatLayer::TableNode::init(TableViewDataSource* source, const Size& size)
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         setContentSize(size);
         
-        auto background = CocosUtils::createBackground("GameImages/public/ui_background_1.png", size);
+        auto background = CocosUtils::createBackground(CocosUtils::getResourcePath("ui_background_1.png"), size);
         background->setPosition(Point(size.width / 2, size.height / 2));
         addChild(background);
         
@@ -299,7 +299,7 @@ bool ChatLayer::init()
         });
         
         // 2. background
-        _background = CocosUtils::createBackground("GameImages/public/ui_background.png", size);
+        _background = CocosUtils::createBackground(CocosUtils::getResourcePath("ui_background.png"), size);
         _background->setPosition(Point(viewWidth / 2, winSize.height / 2));
         addChild(_background);
         
@@ -600,7 +600,11 @@ void ChatLayer::setTableType(ChatType type)
         
         const bool showEditBox(ChatType::World == type);
         _editBoxNode->setVisible(showEditBox);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         _editBoxNode->setFocus(showEditBox);
+#else
+        _editBoxNode->setFocus(false);
+#endif
     }
 }
 

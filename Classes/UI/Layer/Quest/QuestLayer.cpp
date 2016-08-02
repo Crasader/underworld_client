@@ -262,7 +262,7 @@ void QuestLayer::createTabButtons(const Point& position)
     // add lines
     vector<Sprite*> lines;
     for (int i = 0; i < 2; ++i) {
-        auto line = Sprite::create("GameImages/public/ui_line.png");
+        auto line = Sprite::create(CocosUtils::getResourcePath("ui_line.png"));
         line->setScaleX(width / line->getContentSize().width);
         addChild(line);
         

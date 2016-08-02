@@ -38,18 +38,18 @@ public:
     void show();
     
 protected:
+    struct UserInfo;
+    
     PvpLogNode();
     bool init(const PvpLogData* data, bool expand);
     void adjust();
-    Node* createUserNode(bool isHome, const UserSimpleData* data);
-    Node* createTowerNode(bool isHome, int percentage);
-    Node* createCardsNode(const std::vector<CardSimpleData*>& data);
     
 private:
     PvpLogNodeObserver* _observer;
     bool _isExpanded;
     const PvpLogData* _data;
     ui::Scale9Sprite* _background;
+    std::unordered_map<bool, UserInfo*> _userInfos;
 };
 
 #endif /* PvpLogNode_h */

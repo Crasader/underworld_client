@@ -11,8 +11,6 @@
 
 using namespace std;
 
-static const string folder("GameImages/public/");
-
 static string getButtonFile(UniversalButton::BSize size, UniversalButton::BType type) {
     const bool big(UniversalButton::BSize::Big == size);
     string file;
@@ -50,7 +48,7 @@ static string getButtonFile(UniversalButton::BSize size, UniversalButton::BType 
     }
     
     if (!file.empty()) {
-        return folder + file;
+        return CocosUtils::getResourcePath(file);
     }
     
     return "";
@@ -87,18 +85,18 @@ bool UniversalButton::init(BSize size, BType type, const string& title)
         
         const auto& file = getButtonFile(size, type);
         if (!file.empty()) {
-            const string disabled = folder + ((UniversalButton::BType::Blue == type) ? "button_huise.png" : "button_huise.png");
+            const string disabled = CocosUtils::getResourcePath((UniversalButton::BType::Blue == type) ? "button_huise.png" : "button_huise.png");
             auto button = ui::Button::create(file, file, disabled);
             addChild(button);
             
             button->setTitleFontName(DEFAULT_FONT);
             button->setTitleFontSize(DEFAULT_FONT_SIZE);
-            button->setTitleText(title);
             button->setTitleColor(Color3B::BLACK);
             
             _button = button;
             
             setAnchorPoint(Point::ANCHOR_MIDDLE);
+            setTitle(title);
             adjust();
         }
         
