@@ -14,6 +14,7 @@
 #include "GameRender.h"
 #include "UnderworldClient.h"
 #include "ClientTCPNetworkProxy.h"
+#include "UWRender.h"
 
 USING_NS_CC;
 
@@ -41,7 +42,7 @@ private:
     
 private:
     int _mapId;
-    GameRender* _render;
+    UWRender* _render;
     UnderworldClient * _client;
     GameScheduler* _sch;
     ClientTCPNetworkProxy* _proxy;

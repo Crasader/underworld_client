@@ -93,8 +93,7 @@ void BattleScene::start()
     // 1. add map layer
     
     // 2. add map ui layer
-    _render = new (nothrow) GameRender(this, "Vampire");
-    _render->registerObserver(this);
+    _render = new (nothrow) UWRender(this);
     
     _sch = new (nothrow) GameScheduler();
 //    _proxy = new (nothrow) ClientTCPNetworkProxy("192.168.31.100", 9999, "demoplayer", GameData::getInstance()->getUUID());

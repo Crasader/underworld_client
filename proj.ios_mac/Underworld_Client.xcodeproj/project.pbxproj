@@ -7,12 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0404BE661D1A7FE500B46BAA /* UWRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0404BE641D1A7FE500B46BAA /* UWRender.cpp */; };
-		0404BE711D1B970000B46BAA /* Gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0404BE6F1D1B970000B46BAA /* Gui.cpp */; };
-		0404BE741D1B988A00B46BAA /* WorldRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0404BE721D1B988A00B46BAA /* WorldRender.cpp */; };
 		0404BE771D1BC7A300B46BAA /* WorldObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0404BE751D1BC7A300B46BAA /* WorldObject.cpp */; };
-		0424CD821D3CE108001F9777 /* UnitRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0424CD801D3CE108001F9777 /* UnitRender.cpp */; };
-		0424CD851D3CE183001F9777 /* BulletRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0424CD831D3CE183001F9777 /* BulletRender.cpp */; };
 		045116E21BCFBA39002AA721 /* Clock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116DC1BCFBA39002AA721 /* Clock.cpp */; };
 		045116E31BCFBA39002AA721 /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116DE1BCFBA39002AA721 /* Map.cpp */; };
 		045116E41BCFBA39002AA721 /* World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045116E01BCFBA39002AA721 /* World.cpp */; };
@@ -31,11 +26,9 @@
 		0451170B1BCFBA53002AA721 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045117041BCFBA53002AA721 /* Unit.cpp */; };
 		045117101BCFBA5F002AA721 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0451170C1BCFBA5F002AA721 /* Game.cpp */; };
 		047228B01C193A4D00E7F71B /* Geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047228AE1C193A4D00E7F71B /* Geometry.cpp */; };
-		04760C3F1D49F001005CCF21 /* HMMGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04760C3D1D49F000005CCF21 /* HMMGui.cpp */; };
 		047CBF8A1CAFE6AB0035DAF9 /* InstanceHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047CBF881CAFE6AB0035DAF9 /* InstanceHelper.cpp */; };
 		0487A6671CC897F9005FE8D0 /* GameMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0487A6651CC897F9005FE8D0 /* GameMode.cpp */; };
 		0487A66C1CC8A90D005FE8D0 /* GameModeHMM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0487A66A1CC8A90D005FE8D0 /* GameModeHMM.cpp */; };
-		04E846951D1D02E60041FAC3 /* WorldObjectRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04E846931D1D02E60041FAC3 /* WorldObjectRender.cpp */; };
 		1AC6FB21180E996B004C840B /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FAF9180E9839004C840B /* libcocos2d Mac.a */; };
 		1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FB07180E9839004C840B /* libcocos2d iOS.a */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -56,11 +49,6 @@
 		3028EBC31BFF0CBD00511C51 /* DynamicValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3028EBC11BFF0CBD00511C51 /* DynamicValue.cpp */; };
 		3028EBC61BFF0D4800511C51 /* Condition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3028EBC41BFF0D4700511C51 /* Condition.cpp */; };
 		3031641A1CFD99AF00DBAB04 /* Heuristic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 303164181CFD99AF00DBAB04 /* Heuristic.cpp */; };
-		3058B4951D4C761B0002E547 /* HMMCardView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3058B4921D4C761B0002E547 /* HMMCardView.cpp */; };
-		3058B4981D4C76A40002E547 /* DisplayBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3058B4961D4C76A40002E547 /* DisplayBar.cpp */; };
-		3058B49C1D4C8AF60002E547 /* HMMCardRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3058B49A1D4C8AF60002E547 /* HMMCardRender.cpp */; };
-		3058B4A21D4C959C0002E547 /* HMMDeckRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3058B4A01D4C959C0002E547 /* HMMDeckRender.cpp */; };
-		3058B4A51D4DE1BB0002E547 /* UnitView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3058B4A31D4DE1BB0002E547 /* UnitView.cpp */; };
 		3070302B1CD1E6D70077D357 /* ProduceType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 307030291CD1E6D60077D357 /* ProduceType.cpp */; };
 		3070302E1CD3253B0077D357 /* Produce.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3070302C1CD3253B0077D357 /* Produce.cpp */; };
 		307534691BF1B2F20057DCED /* Commander.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 307534671BF1B2F20057DCED /* Commander.cpp */; };
@@ -85,7 +73,19 @@
 		30C6C3921C52183500DD1C8F /* AStarNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30C6C3901C52183500DD1C8F /* AStarNode.cpp */; };
 		30DF03C41C0D898E00A1C6EB /* EffectType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DF03C21C0D898E00A1C6EB /* EffectType.cpp */; };
 		30E05B2C1C56450700A3A3E9 /* PathService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30E05B2A1C56450700A3A3E9 /* PathService.cpp */; };
-		30F8404A1D4F1C700050C976 /* PVRAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F840481D4F1C700050C976 /* PVRAnimation.cpp */; };
+		30F8405B1D50B3370050C976 /* BulletRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F840511D50B3370050C976 /* BulletRender.cpp */; };
+		30F8405C1D50B3370050C976 /* UnitRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F840531D50B3370050C976 /* UnitRender.cpp */; };
+		30F8405D1D50B3370050C976 /* UWRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F840551D50B3370050C976 /* UWRender.cpp */; };
+		30F8405E1D50B3370050C976 /* WorldObjectRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F840571D50B3370050C976 /* WorldObjectRender.cpp */; };
+		30F8405F1D50B3370050C976 /* WorldRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F840591D50B3370050C976 /* WorldRender.cpp */; };
+		30F840681D50B37F0050C976 /* Gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F840601D50B37F0050C976 /* Gui.cpp */; };
+		30F840691D50B37F0050C976 /* HMMCardRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F840621D50B37F0050C976 /* HMMCardRender.cpp */; };
+		30F8406A1D50B37F0050C976 /* HMMDeckRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F840641D50B37F0050C976 /* HMMDeckRender.cpp */; };
+		30F8406B1D50B37F0050C976 /* HMMGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F840661D50B37F0050C976 /* HMMGui.cpp */; };
+		30F8406E1D50B3AA0050C976 /* PVRAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F8406C1D50B3AA0050C976 /* PVRAnimation.cpp */; };
+		30F840731D50B3BF0050C976 /* HMMCardView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F8406F1D50B3BF0050C976 /* HMMCardView.cpp */; };
+		30F840741D50B3BF0050C976 /* UnitView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F840711D50B3BF0050C976 /* UnitView.cpp */; };
+		30F840771D50B3E30050C976 /* DisplayBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F840751D50B3E30050C976 /* DisplayBar.cpp */; };
 		30FD55611C2BF57F0078EC3C /* PassiveType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD555F1C2BF57F0078EC3C /* PassiveType.cpp */; };
 		30FD55641C2CFDE80078EC3C /* Passive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FD55621C2CFDE80078EC3C /* Passive.cpp */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
@@ -321,18 +321,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0404BE641D1A7FE500B46BAA /* UWRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UWRender.cpp; path = Core/External/Render/UWRender.cpp; sourceTree = "<group>"; };
-		0404BE651D1A7FE500B46BAA /* UWRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UWRender.h; path = Core/External/Render/UWRender.h; sourceTree = "<group>"; };
-		0404BE6F1D1B970000B46BAA /* Gui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gui.cpp; path = Core/External/Render/Gui/Gui.cpp; sourceTree = "<group>"; };
-		0404BE701D1B970000B46BAA /* Gui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui.h; path = Core/External/Render/Gui/Gui.h; sourceTree = "<group>"; };
-		0404BE721D1B988A00B46BAA /* WorldRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WorldRender.cpp; path = Core/External/Render/WorldRender.cpp; sourceTree = "<group>"; };
-		0404BE731D1B988A00B46BAA /* WorldRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorldRender.h; path = Core/External/Render/WorldRender.h; sourceTree = "<group>"; };
 		0404BE751D1BC7A300B46BAA /* WorldObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WorldObject.cpp; path = Core/Unit/Instance/WorldObject.cpp; sourceTree = "<group>"; };
 		0404BE761D1BC7A300B46BAA /* WorldObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorldObject.h; path = Core/Unit/Instance/WorldObject.h; sourceTree = "<group>"; };
-		0424CD801D3CE108001F9777 /* UnitRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UnitRender.cpp; path = Core/External/Render/UnitRender.cpp; sourceTree = "<group>"; };
-		0424CD811D3CE108001F9777 /* UnitRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnitRender.h; path = Core/External/Render/UnitRender.h; sourceTree = "<group>"; };
-		0424CD831D3CE183001F9777 /* BulletRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BulletRender.cpp; path = Core/External/Render/BulletRender.cpp; sourceTree = "<group>"; };
-		0424CD841D3CE183001F9777 /* BulletRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BulletRender.h; path = Core/External/Render/BulletRender.h; sourceTree = "<group>"; };
 		045116DC1BCFBA39002AA721 /* Clock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Clock.cpp; path = Core/World/Clock.cpp; sourceTree = "<group>"; };
 		045116DD1BCFBA39002AA721 /* Clock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Clock.h; path = Core/World/Clock.h; sourceTree = "<group>"; };
 		045116DE1BCFBA39002AA721 /* Map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Map.cpp; path = Core/World/Map.cpp; sourceTree = "<group>"; };
@@ -371,16 +361,12 @@
 		0451170F1BCFBA5F002AA721 /* GameSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameSettings.h; path = Core/Game/GameSettings.h; sourceTree = "<group>"; };
 		047228AE1C193A4D00E7F71B /* Geometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Geometry.cpp; path = Core/Utils/Geometry.cpp; sourceTree = "<group>"; };
 		047228AF1C193A4D00E7F71B /* Geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Geometry.h; path = Core/Utils/Geometry.h; sourceTree = "<group>"; };
-		04760C3D1D49F000005CCF21 /* HMMGui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HMMGui.cpp; path = Core/External/Render/Gui/HMMGui.cpp; sourceTree = "<group>"; };
-		04760C3E1D49F001005CCF21 /* HMMGui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMMGui.h; path = Core/External/Render/Gui/HMMGui.h; sourceTree = "<group>"; };
 		047CBF881CAFE6AB0035DAF9 /* InstanceHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InstanceHelper.cpp; path = Core/Unit/Instance/InstanceHelper.cpp; sourceTree = "<group>"; };
 		047CBF891CAFE6AB0035DAF9 /* InstanceHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstanceHelper.h; path = Core/Unit/Instance/InstanceHelper.h; sourceTree = "<group>"; };
 		0487A6651CC897F9005FE8D0 /* GameMode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameMode.cpp; path = Core/Game/GameMode.cpp; sourceTree = "<group>"; };
 		0487A6661CC897F9005FE8D0 /* GameMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameMode.h; path = Core/Game/GameMode.h; sourceTree = "<group>"; };
 		0487A66A1CC8A90D005FE8D0 /* GameModeHMM.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameModeHMM.cpp; path = Core/Game/GameModes/GameModeHMM.cpp; sourceTree = "<group>"; };
 		0487A66B1CC8A90D005FE8D0 /* GameModeHMM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameModeHMM.h; path = Core/Game/GameModes/GameModeHMM.h; sourceTree = "<group>"; };
-		04E846931D1D02E60041FAC3 /* WorldObjectRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WorldObjectRender.cpp; path = Core/External/Render/WorldObjectRender.cpp; sourceTree = "<group>"; };
-		04E846941D1D02E60041FAC3 /* WorldObjectRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorldObjectRender.h; path = Core/External/Render/WorldObjectRender.h; sourceTree = "<group>"; };
 		04FF24601C4A497100A66D71 /* GameSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameSettings.cpp; path = Core/Game/GameSettings.cpp; sourceTree = "<group>"; };
 		1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
@@ -414,16 +400,6 @@
 		3028EBC51BFF0D4700511C51 /* Condition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Condition.h; path = Core/Unit/Element/Condition.h; sourceTree = "<group>"; };
 		303164181CFD99AF00DBAB04 /* Heuristic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Heuristic.cpp; path = Core/Unit/Element/Heuristic.cpp; sourceTree = "<group>"; };
 		303164191CFD99AF00DBAB04 /* Heuristic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Heuristic.h; path = Core/Unit/Element/Heuristic.h; sourceTree = "<group>"; };
-		3058B4921D4C761B0002E547 /* HMMCardView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HMMCardView.cpp; path = Core/External/Render/View/Game/HMMCardView.cpp; sourceTree = "<group>"; };
-		3058B4931D4C761B0002E547 /* HMMCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMMCardView.h; path = Core/External/Render/View/Game/HMMCardView.h; sourceTree = "<group>"; };
-		3058B4961D4C76A40002E547 /* DisplayBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayBar.cpp; path = Core/External/Render/View/Public/DisplayBar.cpp; sourceTree = "<group>"; };
-		3058B4971D4C76A40002E547 /* DisplayBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayBar.h; path = Core/External/Render/View/Public/DisplayBar.h; sourceTree = "<group>"; };
-		3058B49A1D4C8AF60002E547 /* HMMCardRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HMMCardRender.cpp; path = Core/External/Render/Gui/HMMCardRender.cpp; sourceTree = "<group>"; };
-		3058B49B1D4C8AF60002E547 /* HMMCardRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMMCardRender.h; path = Core/External/Render/Gui/HMMCardRender.h; sourceTree = "<group>"; };
-		3058B4A01D4C959C0002E547 /* HMMDeckRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HMMDeckRender.cpp; path = Core/External/Render/Gui/HMMDeckRender.cpp; sourceTree = "<group>"; };
-		3058B4A11D4C959C0002E547 /* HMMDeckRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMMDeckRender.h; path = Core/External/Render/Gui/HMMDeckRender.h; sourceTree = "<group>"; };
-		3058B4A31D4DE1BB0002E547 /* UnitView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UnitView.cpp; path = Core/External/Render/View/Game/UnitView.cpp; sourceTree = "<group>"; };
-		3058B4A41D4DE1BB0002E547 /* UnitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnitView.h; path = Core/External/Render/View/Game/UnitView.h; sourceTree = "<group>"; };
 		307030291CD1E6D60077D357 /* ProduceType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ProduceType.cpp; path = Core/Unit/Type/ProduceType.cpp; sourceTree = "<group>"; };
 		3070302A1CD1E6D60077D357 /* ProduceType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProduceType.h; path = Core/Unit/Type/ProduceType.h; sourceTree = "<group>"; };
 		3070302C1CD3253B0077D357 /* Produce.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Produce.cpp; path = Core/Unit/Instance/Produce.cpp; sourceTree = "<group>"; };
@@ -474,8 +450,32 @@
 		30DF03C31C0D898E00A1C6EB /* EffectType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectType.h; path = Core/Unit/Type/EffectType.h; sourceTree = "<group>"; };
 		30E05B2A1C56450700A3A3E9 /* PathService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PathService.cpp; path = Core/AI/Path/PathService.cpp; sourceTree = "<group>"; };
 		30E05B2B1C56450700A3A3E9 /* PathService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PathService.h; path = Core/AI/Path/PathService.h; sourceTree = "<group>"; };
-		30F840481D4F1C700050C976 /* PVRAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PVRAnimation.cpp; path = Core/External/Render/Action/PVRAnimation.cpp; sourceTree = "<group>"; };
-		30F840491D4F1C700050C976 /* PVRAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PVRAnimation.h; path = Core/External/Render/Action/PVRAnimation.h; sourceTree = "<group>"; };
+		30F840511D50B3370050C976 /* BulletRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BulletRender.cpp; path = Render/BulletRender.cpp; sourceTree = "<group>"; };
+		30F840521D50B3370050C976 /* BulletRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BulletRender.h; path = Render/BulletRender.h; sourceTree = "<group>"; };
+		30F840531D50B3370050C976 /* UnitRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UnitRender.cpp; path = Render/UnitRender.cpp; sourceTree = "<group>"; };
+		30F840541D50B3370050C976 /* UnitRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnitRender.h; path = Render/UnitRender.h; sourceTree = "<group>"; };
+		30F840551D50B3370050C976 /* UWRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UWRender.cpp; path = Render/UWRender.cpp; sourceTree = "<group>"; };
+		30F840561D50B3370050C976 /* UWRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UWRender.h; path = Render/UWRender.h; sourceTree = "<group>"; };
+		30F840571D50B3370050C976 /* WorldObjectRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WorldObjectRender.cpp; path = Render/WorldObjectRender.cpp; sourceTree = "<group>"; };
+		30F840581D50B3370050C976 /* WorldObjectRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorldObjectRender.h; path = Render/WorldObjectRender.h; sourceTree = "<group>"; };
+		30F840591D50B3370050C976 /* WorldRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WorldRender.cpp; path = Render/WorldRender.cpp; sourceTree = "<group>"; };
+		30F8405A1D50B3370050C976 /* WorldRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorldRender.h; path = Render/WorldRender.h; sourceTree = "<group>"; };
+		30F840601D50B37F0050C976 /* Gui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gui.cpp; path = Render/Gui/Gui.cpp; sourceTree = "<group>"; };
+		30F840611D50B37F0050C976 /* Gui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui.h; path = Render/Gui/Gui.h; sourceTree = "<group>"; };
+		30F840621D50B37F0050C976 /* HMMCardRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HMMCardRender.cpp; path = Render/Gui/HMMCardRender.cpp; sourceTree = "<group>"; };
+		30F840631D50B37F0050C976 /* HMMCardRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMMCardRender.h; path = Render/Gui/HMMCardRender.h; sourceTree = "<group>"; };
+		30F840641D50B37F0050C976 /* HMMDeckRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HMMDeckRender.cpp; path = Render/Gui/HMMDeckRender.cpp; sourceTree = "<group>"; };
+		30F840651D50B37F0050C976 /* HMMDeckRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMMDeckRender.h; path = Render/Gui/HMMDeckRender.h; sourceTree = "<group>"; };
+		30F840661D50B37F0050C976 /* HMMGui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HMMGui.cpp; path = Render/Gui/HMMGui.cpp; sourceTree = "<group>"; };
+		30F840671D50B37F0050C976 /* HMMGui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMMGui.h; path = Render/Gui/HMMGui.h; sourceTree = "<group>"; };
+		30F8406C1D50B3AA0050C976 /* PVRAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PVRAnimation.cpp; path = Render/Action/PVRAnimation.cpp; sourceTree = "<group>"; };
+		30F8406D1D50B3AA0050C976 /* PVRAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PVRAnimation.h; path = Render/Action/PVRAnimation.h; sourceTree = "<group>"; };
+		30F8406F1D50B3BF0050C976 /* HMMCardView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HMMCardView.cpp; path = Render/View/Game/HMMCardView.cpp; sourceTree = "<group>"; };
+		30F840701D50B3BF0050C976 /* HMMCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMMCardView.h; path = Render/View/Game/HMMCardView.h; sourceTree = "<group>"; };
+		30F840711D50B3BF0050C976 /* UnitView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UnitView.cpp; path = Render/View/Game/UnitView.cpp; sourceTree = "<group>"; };
+		30F840721D50B3BF0050C976 /* UnitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnitView.h; path = Render/View/Game/UnitView.h; sourceTree = "<group>"; };
+		30F840751D50B3E30050C976 /* DisplayBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayBar.cpp; path = Render/View/Public/DisplayBar.cpp; sourceTree = "<group>"; };
+		30F840761D50B3E30050C976 /* DisplayBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayBar.h; path = Render/View/Public/DisplayBar.h; sourceTree = "<group>"; };
 		30FD555F1C2BF57F0078EC3C /* PassiveType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PassiveType.cpp; path = Core/Unit/Type/PassiveType.cpp; sourceTree = "<group>"; };
 		30FD55601C2BF57F0078EC3C /* PassiveType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PassiveType.h; path = Core/Unit/Type/PassiveType.h; sourceTree = "<group>"; };
 		30FD55621C2CFDE80078EC3C /* Passive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Passive.cpp; path = Core/Unit/Instance/Passive.cpp; sourceTree = "<group>"; };
@@ -925,30 +925,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0404BE6E1D1B96C300B46BAA /* Gui */ = {
-			isa = PBXGroup;
-			children = (
-				0404BE6F1D1B970000B46BAA /* Gui.cpp */,
-				0404BE701D1B970000B46BAA /* Gui.h */,
-				04760C3D1D49F000005CCF21 /* HMMGui.cpp */,
-				04760C3E1D49F001005CCF21 /* HMMGui.h */,
-				3058B49A1D4C8AF60002E547 /* HMMCardRender.cpp */,
-				3058B49B1D4C8AF60002E547 /* HMMCardRender.h */,
-				3058B4A01D4C959C0002E547 /* HMMDeckRender.cpp */,
-				3058B4A11D4C959C0002E547 /* HMMDeckRender.h */,
-			);
-			name = Gui;
-			sourceTree = "<group>";
-		};
-		040DBB841D3E3E620096F069 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				3058B48D1D4C75DC0002E547 /* Public */,
-				3058B48C1D4C75D60002E547 /* Game */,
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
 		045116D51BCFB9E7002AA721 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -1240,26 +1216,6 @@
 			name = Element;
 			sourceTree = "<group>";
 		};
-		3058B48C1D4C75D60002E547 /* Game */ = {
-			isa = PBXGroup;
-			children = (
-				3058B4921D4C761B0002E547 /* HMMCardView.cpp */,
-				3058B4931D4C761B0002E547 /* HMMCardView.h */,
-				3058B4A31D4DE1BB0002E547 /* UnitView.cpp */,
-				3058B4A41D4DE1BB0002E547 /* UnitView.h */,
-			);
-			name = Game;
-			sourceTree = "<group>";
-		};
-		3058B48D1D4C75DC0002E547 /* Public */ = {
-			isa = PBXGroup;
-			children = (
-				3058B4961D4C76A40002E547 /* DisplayBar.cpp */,
-				3058B4971D4C76A40002E547 /* DisplayBar.h */,
-			);
-			name = Public;
-			sourceTree = "<group>";
-		};
 		3075346E1BF33DEE0057DCED /* Test */ = {
 			isa = PBXGroup;
 			children = (
@@ -1272,7 +1228,6 @@
 		3087FF101CA2A02A004E31F6 /* External */ = {
 			isa = PBXGroup;
 			children = (
-				30F9982A1D06DE5200D56172 /* Render */,
 				3087FF121CA2A1A4004E31F6 /* ExternalInterface.h */,
 				3087FF131CA2A658004E31F6 /* Network */,
 				3087FF111CA2A0ED004E31F6 /* Terminal */,
@@ -1322,33 +1277,77 @@
 			name = Test;
 			sourceTree = "<group>";
 		};
-		30F840471D4F1BDC0050C976 /* Action */ = {
+		30F8404B1D50B1AB0050C976 /* Render */ = {
 			isa = PBXGroup;
 			children = (
-				30F840481D4F1C700050C976 /* PVRAnimation.cpp */,
-				30F840491D4F1C700050C976 /* PVRAnimation.h */,
+				30F840511D50B3370050C976 /* BulletRender.cpp */,
+				30F840521D50B3370050C976 /* BulletRender.h */,
+				30F840531D50B3370050C976 /* UnitRender.cpp */,
+				30F840541D50B3370050C976 /* UnitRender.h */,
+				30F840551D50B3370050C976 /* UWRender.cpp */,
+				30F840561D50B3370050C976 /* UWRender.h */,
+				30F840571D50B3370050C976 /* WorldObjectRender.cpp */,
+				30F840581D50B3370050C976 /* WorldObjectRender.h */,
+				30F840591D50B3370050C976 /* WorldRender.cpp */,
+				30F8405A1D50B3370050C976 /* WorldRender.h */,
+				30F8404E1D50B2BD0050C976 /* View */,
+				30F8404D1D50B2AF0050C976 /* Action */,
+				30F8404C1D50B29E0050C976 /* Gui */,
+			);
+			name = Render;
+			sourceTree = "<group>";
+		};
+		30F8404C1D50B29E0050C976 /* Gui */ = {
+			isa = PBXGroup;
+			children = (
+				30F840601D50B37F0050C976 /* Gui.cpp */,
+				30F840611D50B37F0050C976 /* Gui.h */,
+				30F840621D50B37F0050C976 /* HMMCardRender.cpp */,
+				30F840631D50B37F0050C976 /* HMMCardRender.h */,
+				30F840641D50B37F0050C976 /* HMMDeckRender.cpp */,
+				30F840651D50B37F0050C976 /* HMMDeckRender.h */,
+				30F840661D50B37F0050C976 /* HMMGui.cpp */,
+				30F840671D50B37F0050C976 /* HMMGui.h */,
+			);
+			name = Gui;
+			sourceTree = "<group>";
+		};
+		30F8404D1D50B2AF0050C976 /* Action */ = {
+			isa = PBXGroup;
+			children = (
+				30F8406C1D50B3AA0050C976 /* PVRAnimation.cpp */,
+				30F8406D1D50B3AA0050C976 /* PVRAnimation.h */,
 			);
 			name = Action;
 			sourceTree = "<group>";
 		};
-		30F9982A1D06DE5200D56172 /* Render */ = {
+		30F8404E1D50B2BD0050C976 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				30F840471D4F1BDC0050C976 /* Action */,
-				040DBB841D3E3E620096F069 /* View */,
-				0404BE6E1D1B96C300B46BAA /* Gui */,
-				0404BE641D1A7FE500B46BAA /* UWRender.cpp */,
-				0404BE651D1A7FE500B46BAA /* UWRender.h */,
-				0404BE721D1B988A00B46BAA /* WorldRender.cpp */,
-				0404BE731D1B988A00B46BAA /* WorldRender.h */,
-				04E846931D1D02E60041FAC3 /* WorldObjectRender.cpp */,
-				04E846941D1D02E60041FAC3 /* WorldObjectRender.h */,
-				0424CD801D3CE108001F9777 /* UnitRender.cpp */,
-				0424CD811D3CE108001F9777 /* UnitRender.h */,
-				0424CD831D3CE183001F9777 /* BulletRender.cpp */,
-				0424CD841D3CE183001F9777 /* BulletRender.h */,
+				30F840501D50B2E20050C976 /* Game */,
+				30F8404F1D50B2D90050C976 /* Public */,
 			);
-			name = Render;
+			name = View;
+			sourceTree = "<group>";
+		};
+		30F8404F1D50B2D90050C976 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				30F840751D50B3E30050C976 /* DisplayBar.cpp */,
+				30F840761D50B3E30050C976 /* DisplayBar.h */,
+			);
+			name = Public;
+			sourceTree = "<group>";
+		};
+		30F840501D50B2E20050C976 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				30F8406F1D50B3BF0050C976 /* HMMCardView.cpp */,
+				30F840701D50B3BF0050C976 /* HMMCardView.h */,
+				30F840711D50B3BF0050C976 /* UnitView.cpp */,
+				30F840721D50B3BF0050C976 /* UnitView.h */,
+			);
+			name = Game;
 			sourceTree = "<group>";
 		};
 		46880B7519C43A67006E1F66 /* Resources */ = {
@@ -1640,6 +1639,7 @@
 		A1720E701BCCE08E00217E98 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				30F8404B1D50B1AB0050C976 /* Render */,
 				A1720E751BCCE0F000217E98 /* Action */,
 				A1720EBF1BCD310100217E98 /* Layer */,
 				A1F6A1141C450690005DC0CC /* Misc */,
@@ -2378,12 +2378,14 @@
 				A1F58D521C32391200C8A2DD /* GearAttributeData.cpp in Sources */,
 				A1098E9C1C758C3500B2E044 /* BattleResourceNode.cpp in Sources */,
 				30FD55611C2BF57F0078EC3C /* PassiveType.cpp in Sources */,
+				30F8405B1D50B3370050C976 /* BulletRender.cpp in Sources */,
+				30F8405C1D50B3370050C976 /* UnitRender.cpp in Sources */,
 				A1F58D591C32465900C8A2DD /* SoldierTalentData.cpp in Sources */,
 				63CCBFDA1CC5BA1B00590513 /* BinaryJsonTool.cpp in Sources */,
 				0487A66C1CC8A90D005FE8D0 /* GameModeHMM.cpp in Sources */,
 				A1D461601C3E251000E8E60B /* UAConfigData.cpp in Sources */,
-				3058B4A21D4C959C0002E547 /* HMMDeckRender.cpp in Sources */,
 				A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */,
+				30F8406A1D50B37F0050C976 /* HMMDeckRender.cpp in Sources */,
 				300B1E5C1C50CCED00F8D6ED /* PathFinderImpl.cpp in Sources */,
 				A1720E8C1BCCE19300217E98 /* aes_ctr.c in Sources */,
 				A1720E8E1BCCE19300217E98 /* AESEncryptor.cpp in Sources */,
@@ -2401,12 +2403,13 @@
 				A1720EB81BCD2D2E00217E98 /* Api.mm in Sources */,
 				A1720E8F1BCCE19300217E98 /* md5.cpp in Sources */,
 				A1D45C4A1BEB3B1400D1E921 /* ResourceButton.cpp in Sources */,
+				30F8406E1D50B3AA0050C976 /* PVRAnimation.cpp in Sources */,
+				30F8405E1D50B3370050C976 /* WorldObjectRender.cpp in Sources */,
 				A108A7A81D24F41D00987658 /* CardLocalData.cpp in Sources */,
 				A1A05B3C1C9668FB006FE03B /* GCDAsyncSocket.m in Sources */,
 				30FD55641C2CFDE80078EC3C /* Passive.cpp in Sources */,
 				3087FF081C9FD0CB004E31F6 /* Magic.cpp in Sources */,
 				A1E7B1E91C81513100CE65B4 /* BattleSmallResourceNode.cpp in Sources */,
-				04760C3F1D49F001005CCF21 /* HMMGui.cpp in Sources */,
 				A188856A1C438F1800C9586F /* ResourceManager.cpp in Sources */,
 				A16BF28F1C313E8E00E91458 /* SoldierUpgradeData.cpp in Sources */,
 				A1720E7A1BCCE0F000217E98 /* CCShake.cpp in Sources */,
@@ -2419,12 +2422,14 @@
 				A108A7AE1D24F47C00987658 /* TalentUpgradeData.cpp in Sources */,
 				A16BF2A71C3156A100E91458 /* GearUpgradeData.cpp in Sources */,
 				A1F3D2281D1D044100EB5C17 /* CardInfoNode.cpp in Sources */,
+				30F840731D50B3BF0050C976 /* HMMCardView.cpp in Sources */,
 				A1720E971BCCE41A00217E98 /* ScrollBar.cpp in Sources */,
 				A18524D01C1AE42000BE261D /* BagLayer.cpp in Sources */,
 				A178F76A1D23B7FD006E3812 /* CardInfoLayer.cpp in Sources */,
 				A1E7BAE21C2149E800CE2A85 /* Constants.cpp in Sources */,
 				A16BF2A41C314E5100E91458 /* AttributeData.cpp in Sources */,
 				A1B4AE301C200521005906A6 /* QuestManager.cpp in Sources */,
+				30F840771D50B3E30050C976 /* DisplayBar.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				A1720EB91BCD2D2E00217E98 /* KeychainItemWrapper.m in Sources */,
 				A16BF2A11C314DA000E91458 /* GearSetLocalData.cpp in Sources */,
@@ -2448,10 +2453,12 @@
 				A1E830561C1E75A700FE01B8 /* ChatNode.cpp in Sources */,
 				A1F5BFA21C1FD519007C08CB /* AchievementData.cpp in Sources */,
 				A1720E6F1BCCDF9100217E98 /* CocosUtils.cpp in Sources */,
+				30F840691D50B37F0050C976 /* HMMCardRender.cpp in Sources */,
 				A1D461531C3E166900E8E60B /* AbstractPieceLocalData.cpp in Sources */,
 				A18524D31C1AE46400BE261D /* QuestNode.cpp in Sources */,
 				3070302E1CD3253B0077D357 /* Produce.cpp in Sources */,
 				300098D61BD5E81700B6E284 /* InstanceFactory.cpp in Sources */,
+				30F8405D1D50B3370050C976 /* UWRender.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				A1CE89DE1C44AB2900B60704 /* SpellConfigData.cpp in Sources */,
 				A1B4AE2F1C200521005906A6 /* GuildManager.cpp in Sources */,
@@ -2472,7 +2479,6 @@
 				A1F5BF951C1FC381007C08CB /* GearData.cpp in Sources */,
 				30C6C3921C52183500DD1C8F /* AStarNode.cpp in Sources */,
 				A1F5BF921C1FC36C007C08CB /* GearLocalData.cpp in Sources */,
-				3058B4981D4C76A40002E547 /* DisplayBar.cpp in Sources */,
 				A16BF2851C313E2900E91458 /* HeroLocalData.cpp in Sources */,
 				A1720E8D1BCCE19300217E98 /* AESCTREncryptor.cpp in Sources */,
 				0451170B1BCFBA53002AA721 /* Unit.cpp in Sources */,
@@ -2492,11 +2498,11 @@
 				A1B4AE011C200480005906A6 /* SoundManager.cpp in Sources */,
 				A1B4AE2D1C200521005906A6 /* ChatManager.cpp in Sources */,
 				307534691BF1B2F20057DCED /* Commander.cpp in Sources */,
-				30F8404A1D4F1C700050C976 /* PVRAnimation.cpp in Sources */,
 				A1A4BA381BCDF81500175E8A /* IapObject.cpp in Sources */,
 				3019BABC1C99668E003258DB /* Aura.cpp in Sources */,
 				A1F3D23B1D1D062600EB5C17 /* XTableViewCell.cpp in Sources */,
 				A1D11BC91CBE0C840060584A /* CardDeck.cpp in Sources */,
+				30F8406B1D50B37F0050C976 /* HMMGui.cpp in Sources */,
 				A1DFAADA1D10FC2F00817E69 /* FormationLayer.cpp in Sources */,
 				A103F45B1BE37E2A007F9A83 /* BulletNode.cpp in Sources */,
 				A16BF2951C313EAF00E91458 /* TowerUpgradeData.cpp in Sources */,
@@ -2507,30 +2513,27 @@
 				6308F93B1CA02098009D2BFC /* TCPClient.cpp in Sources */,
 				3031641A1CFD99AF00DBAB04 /* Heuristic.cpp in Sources */,
 				308B84691BE3856F00377802 /* AIBrain.cpp in Sources */,
-				04E846951D1D02E60041FAC3 /* WorldObjectRender.cpp in Sources */,
 				A1720E7B1BCCE0F000217E98 /* NumberJump.cpp in Sources */,
 				A108A7B31D25253700987658 /* AchievementNode.cpp in Sources */,
-				3058B49C1D4C8AF60002E547 /* HMMCardRender.cpp in Sources */,
+				30F8405F1D50B3370050C976 /* WorldRender.cpp in Sources */,
 				A1F5BFA81C1FDFBE007C08CB /* ResourceNode.cpp in Sources */,
 				3087FF311CA2BF5A004E31F6 /* ClientTCPNetworkProxy.cpp in Sources */,
 				A1F3D2371D1D05CD00EB5C17 /* MessageBoxLayer.cpp in Sources */,
 				A1D25C2F1C8588A100A84EB6 /* UnitCardDeck.cpp in Sources */,
 				A1D745C31C1AB7C40020BC1C /* VictoryLayer.cpp in Sources */,
+				30F840741D50B3BF0050C976 /* UnitView.cpp in Sources */,
 				A16BFBB21CA905E90089C4F2 /* CCParabola.cpp in Sources */,
 				A1F58D561C32444B00C8A2DD /* SoldierQualityData.cpp in Sources */,
 				A1A05B6C1C96B6A0006FE03B /* DDLog.m in Sources */,
+				30F840681D50B37F0050C976 /* Gui.cpp in Sources */,
 				A1B4AE001C200480005906A6 /* OnlineUpdater.cpp in Sources */,
-				0424CD821D3CE108001F9777 /* UnitRender.cpp in Sources */,
-				3058B4A51D4DE1BB0002E547 /* UnitView.cpp in Sources */,
 				300F25331BFC67550080765C /* FeatureType.cpp in Sources */,
 				A1A74CA81C17DFE800648671 /* MainLayer.cpp in Sources */,
 				3028EBC61BFF0D4800511C51 /* Condition.cpp in Sources */,
 				3019BAB91C9953FB003258DB /* AuraType.cpp in Sources */,
 				A1D745C01C1AB7C40020BC1C /* DefeatLayer.cpp in Sources */,
-				0404BE661D1A7FE500B46BAA /* UWRender.cpp in Sources */,
 				A1D745C11C1AB7C40020BC1C /* MapLayer.cpp in Sources */,
 				A19D6B0C1D1802170088AF23 /* FormationData.cpp in Sources */,
-				0404BE741D1B988A00B46BAA /* WorldRender.cpp in Sources */,
 				045116F51BCFBA44002AA721 /* CommandType.cpp in Sources */,
 				3070302B1CD1E6D70077D357 /* ProduceType.cpp in Sources */,
 				308B84661BE3853C00377802 /* AIBody.cpp in Sources */,
@@ -2554,7 +2557,6 @@
 				A10612021C3D22260065070F /* HeroPieceData.cpp in Sources */,
 				A1F1B6DF1D23772F00E4CDEE /* TalentInfoNode.cpp in Sources */,
 				300098CD1BD0A94B00B6E284 /* Coordinate.cpp in Sources */,
-				0404BE711D1B970000B46BAA /* Gui.cpp in Sources */,
 				A1FC1A091C97C2AE00270B50 /* NSString+Extended.mm in Sources */,
 				045116F41BCFBA44002AA721 /* BulletType.cpp in Sources */,
 				0451170A1BCFBA53002AA721 /* Skill.cpp in Sources */,
@@ -2562,7 +2564,6 @@
 				3087FF1A1CA2A6B6004E31F6 /* NetworkMessage.cpp in Sources */,
 				A16BF2891C313E5900E91458 /* HeroUpgradeData.cpp in Sources */,
 				30236FF71C5B6AFA00FB1802 /* PathFinderInterface.cpp in Sources */,
-				0424CD851D3CE183001F9777 /* BulletRender.cpp in Sources */,
 				A16BF2921C313E9F00E91458 /* TowerLocalData.cpp in Sources */,
 				A1DFAAD21D10FC2800817E69 /* BattleDeckLayer.cpp in Sources */,
 				A1D461651C3E478F00E8E60B /* AbstractData.cpp in Sources */,
@@ -2574,7 +2575,6 @@
 				A1D461441C3E111B00E8E60B /* UserSimpleData.cpp in Sources */,
 				A188857A1C43BA1C00C9586F /* TowerManager.cpp in Sources */,
 				045116E21BCFBA39002AA721 /* Clock.cpp in Sources */,
-				3058B4951D4C761B0002E547 /* HMMCardView.cpp in Sources */,
 				A1720E931BCCE1D900217E98 /* LocalHelper.cpp in Sources */,
 				A1E8306A1C1EA50200FE01B8 /* RewardData.cpp in Sources */,
 				A1CA78001C892D4E0060F71A /* CardConfigData.cpp in Sources */,
