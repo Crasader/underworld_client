@@ -349,11 +349,11 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
     output.push_back(msg);
 }
 
-static void parseSync2CMsg(const rapidjson::Value& root,
+static bool parseSync2CMsg(const rapidjson::Value& root,
     std::vector<NetworkMessage *> &output, int& battleid) {
     if (!DICTOOL->checkObjectExist_json(root, MESSAGE_KEY_START_FRAME)
         || !DICTOOL->checkObjectExist_json(root, MESSAGE_KEY_END_FRAME)) {
-        return;
+        return false;
     }
     
     int startFrame = DICTOOL->getIntValue_json(root, MESSAGE_KEY_START_FRAME, 0);
@@ -401,6 +401,7 @@ static void parseSync2CMsg(const rapidjson::Value& root,
     if (finished) {
         battleid = INVALID_VALUE;
     }
+    return finished;
 }
 
 ClientTCPNetworkProxy::~ClientTCPNetworkProxy() {
@@ -413,6 +414,7 @@ void ClientTCPNetworkProxy::destroyTCPClient() {
         _tcpClient = nullptr;
     }
     _battleid = INVALID_VALUE;
+    _status = ClientStatus::Ready;
 }
 
 void ClientTCPNetworkProxy::connect() {
@@ -463,8 +465,9 @@ void ClientTCPNetworkProxy::onReceiveTCPResponse(TCPClient* client, TCPResponse*
 
 
 void ClientTCPNetworkProxy::onReconncected(TCPClient* client) {
+    CCLOG("[server][%s]", __FUNCTION__);
     //TODO when game finish, return
-    if (_battleid < 0) {
+    if (_status == ClientStatus::Finished) {
         return;
     }
     std::string reqContent = parseReconnect2SMsg(_uid, _battleid);
@@ -519,8 +522,13 @@ void ClientTCPNetworkProxy::parseResponse2Msg(
     
     if (respCode == MESSAGE_CODE_LAUNCH_2_C) {
         parseLaunch2CMsg(document, output, _battleid);
+        _status = ClientStatus::Matched;
     } else if (respCode == MESSAGE_CODE_SYNE_2_C) {
-        parseSync2CMsg(document, output, _battleid);
+        if(parseSync2CMsg(document, output, _battleid)) {
+            _status = ClientStatus::Finished;
+        } else if(_status == ClientStatus::Matched) {
+            _status = ClientStatus::Fighting;
+        }
     }
 }
 
