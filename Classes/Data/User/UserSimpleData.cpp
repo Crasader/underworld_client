@@ -7,21 +7,62 @@
 //
 
 #include "UserSimpleData.h"
+#include "tinyxml2/tinyxml2.h"
+#include "Utils.h"
+#include "CocosUtils.h"
+#include "cocostudio/CocoStudio.h"
+#include "CardSimpleData.h"
 
 using namespace std;
+using namespace cocostudio;
 
 UserSimpleData::UserSimpleData(const rapidjson::Value& jsonDict)
-:_userId(0)
+:_uid(0)
+,_icon(0)
+,_level(0)
+,_trophy(0)
 {
     
 }
 
 UserSimpleData::~UserSimpleData()
 {
-    
+    for (auto data : _cards) {
+        CC_SAFE_DELETE(data);
+    }
 }
 
-int UserSimpleData::getUserId() const
+int UserSimpleData::getUid() const
 {
-    return _userId;
+    return _uid;
+}
+
+const string& UserSimpleData::getUser() const
+{
+    return _user;
+}
+
+int UserSimpleData::getIcon() const
+{
+    return _icon;
+}
+
+int UserSimpleData::getLevel() const
+{
+    return _level;
+}
+
+int UserSimpleData::getTrophy() const
+{
+    return _trophy;
+}
+
+const string& UserSimpleData::getGuild() const
+{
+    return _guild;
+}
+
+const vector<CardSimpleData*>& UserSimpleData::getCards() const
+{
+    return _cards;
 }

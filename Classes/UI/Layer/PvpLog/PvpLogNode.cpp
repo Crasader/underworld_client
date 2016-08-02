@@ -9,6 +9,8 @@
 #include "PvpLogNode.h"
 #include "CocosUtils.h"
 #include "PvpLogData.h"
+#include "UserSimpleData.h"
+#include "CardSimpleData.h"
 #include "PvpLogUI.h"
 
 using namespace std;
@@ -90,4 +92,22 @@ void PvpLogNode::adjust()
     _background->setContentSize(size);
     setContentSize(size);
     _background->setPosition(Point(size.width / 2, size.height / 2));
+}
+
+Node* PvpLogNode::createUserNode(bool isHome, const UserSimpleData* data)
+{
+    Node* node = Node::create();
+    return node;
+}
+
+Node* PvpLogNode::createTowerNode(bool isHome, int percentage)
+{
+    Node* node = Node::create();
+    return node;
+}
+
+Node* PvpLogNode::createCardsNode(const std::vector<CardSimpleData*>& data)
+{
+    Node* node = Node::create();
+    return node;
 }

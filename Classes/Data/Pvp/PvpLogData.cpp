@@ -10,31 +10,49 @@
 #include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
 #include "cocostudio/CocoStudio.h"
+#include "UserSimpleData.h"
 
 using namespace std;
 using namespace cocostudio;
 
 PvpLogData::PvpLogData(const rapidjson::Value& jsonDict)
-:_homeUid(0)
-,_awayUid(0)
-{
-    _homeUid = DICTOOL->getIntValue_json(jsonDict, "uid");
-    _homeUser = DICTOOL->getStringValue_json(jsonDict, "user");
-    _awayUid = DICTOOL->getIntValue_json(jsonDict, "uid");
-    _awayUser = DICTOOL->getStringValue_json(jsonDict, "user");
-}
-
-PvpLogData::~PvpLogData()
+:_isHomeWinner(false)
+,_trophy(0)
 {
     
 }
 
-const string& PvpLogData::getHomeUser() const
+PvpLogData::~PvpLogData()
 {
-    return _homeUser;
+    for (auto iter = begin(_userDatas); iter != end(_userDatas); ++iter) {
+        CC_SAFE_DELETE(iter->second);
+    }
 }
 
-const string& PvpLogData::getAwayUser() const
+bool PvpLogData::isHomeWinner() const
 {
-    return _awayUser;
+    return _isHomeWinner;
+}
+
+int PvpLogData::getTrophy() const
+{
+    return _trophy;
+}
+
+int PvpLogData::getTowerHpPercentage(bool isHome) const
+{
+    if (_towerHpPercentages.find(isHome) != end(_towerHpPercentages)) {
+        return _towerHpPercentages.at(isHome);
+    }
+    
+    return 0;
+}
+
+const UserSimpleData* PvpLogData::getUserData(bool isHome) const
+{
+    if (_userDatas.find(isHome) != end(_userDatas)) {
+        return _userDatas.at(isHome);
+    }
+    
+    return nullptr;
 }

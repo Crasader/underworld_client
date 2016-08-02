@@ -15,6 +15,8 @@
 USING_NS_CC;
 
 class PvpLogData;
+class UserSimpleData;
+class CardSimpleData;
 
 class PvpLogNodeObserver
 {
@@ -39,6 +41,9 @@ protected:
     PvpLogNode();
     bool init(const PvpLogData* data, bool expand);
     void adjust();
+    Node* createUserNode(bool isHome, const UserSimpleData* data);
+    Node* createTowerNode(bool isHome, int percentage);
+    Node* createCardsNode(const std::vector<CardSimpleData*>& data);
     
 private:
     PvpLogNodeObserver* _observer;

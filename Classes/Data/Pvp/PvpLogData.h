@@ -10,8 +10,10 @@
 #define PvpLogData_h
 
 #include <string>
-#include <vector>
+#include <unordered_map>
 #include "json/document.h"
+
+class UserSimpleData;
 
 class PvpLogData
 {
@@ -19,14 +21,17 @@ public:
     PvpLogData(const rapidjson::Value& jsonDict);
     virtual ~PvpLogData();
     
-    const std::string& getHomeUser() const;
-    const std::string& getAwayUser() const;
+    bool isHomeWinner() const;
+    int getTrophy() const;
+    long getTime() const;
+    int getTowerHpPercentage(bool isHome) const;
+    const UserSimpleData* getUserData(bool isHome) const;
     
 private:
-    int _homeUid;
-    std::string _homeUser;
-    int _awayUid;
-    std::string _awayUser;
+    bool _isHomeWinner;
+    int _trophy;
+    std::unordered_map<bool, int> _towerHpPercentages;
+    std::unordered_map<bool, UserSimpleData*> _userDatas;
 };
 
 #endif /* PvpLogData_h */

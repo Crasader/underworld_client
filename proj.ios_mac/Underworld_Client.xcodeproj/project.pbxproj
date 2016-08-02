@@ -290,14 +290,13 @@
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		CB3EC8971C4E4D1200447FE3 /* ChatData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB3EC8961C4E4D1200447FE3 /* ChatData.cpp */; };
 		CB3EC89A1C4E4DA600447FE3 /* ChatMark.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB3EC8981C4E4DA600447FE3 /* ChatMark.cpp */; };
-		CB3EC89F1C521C7F00447FE3 /* FriendCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB3EC89D1C521C7F00447FE3 /* FriendCell.cpp */; };
-		CB3EC8A31C523D6700447FE3 /* FriendData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB3EC8A11C523D6700447FE3 /* FriendData.cpp */; };
 		CBD778C71C29390B0070D293 /* AnnouncementNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBD778C51C29390B0070D293 /* AnnouncementNode.cpp */; };
 		CBDBD2131BD7B3B9004706A8 /* map in Resources */ = {isa = PBXBuildFile; fileRef = CBDBD2121BD7B3B9004706A8 /* map */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
 		D6B0611B1803AB670077942B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B0611A1803AB670077942B /* CoreMotion.framework */; };
+		E6DB72DA1D4F857E0045A8C0 /* CardSimpleData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6DB72D81D4F857E0045A8C0 /* CardSimpleData.cpp */; };
 		ED545A7C1B68A1F400C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A7B1B68A1F400C3958E /* libiconv.dylib */; };
 		ED545A7E1B68A1FA00C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A7D1B68A1FA00C3958E /* libiconv.dylib */; };
 /* End PBXBuildFile section */
@@ -896,10 +895,6 @@
 		CB3EC8961C4E4D1200447FE3 /* ChatData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ChatData.cpp; path = Chat/ChatData.cpp; sourceTree = "<group>"; };
 		CB3EC8981C4E4DA600447FE3 /* ChatMark.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ChatMark.cpp; path = Chat/ChatMark.cpp; sourceTree = "<group>"; };
 		CB3EC8991C4E4DA600447FE3 /* ChatMark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatMark.h; path = Chat/ChatMark.h; sourceTree = "<group>"; };
-		CB3EC89D1C521C7F00447FE3 /* FriendCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FriendCell.cpp; path = Friend/FriendCell.cpp; sourceTree = "<group>"; };
-		CB3EC89E1C521C7F00447FE3 /* FriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendCell.h; path = Friend/FriendCell.h; sourceTree = "<group>"; };
-		CB3EC8A11C523D6700447FE3 /* FriendData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FriendData.cpp; path = Friend/FriendData.cpp; sourceTree = "<group>"; };
-		CB3EC8A21C523D6700447FE3 /* FriendData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendData.h; path = Friend/FriendData.h; sourceTree = "<group>"; };
 		CBD778C51C29390B0070D293 /* AnnouncementNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnnouncementNode.cpp; sourceTree = "<group>"; };
 		CBD778C61C29390B0070D293 /* AnnouncementNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnnouncementNode.h; sourceTree = "<group>"; };
 		CBDBD2121BD7B3B9004706A8 /* map */ = {isa = PBXFileReference; lastKnownFileType = folder; path = map; sourceTree = "<group>"; };
@@ -907,6 +902,8 @@
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D6B0611A1803AB670077942B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
+		E6DB72D81D4F857E0045A8C0 /* CardSimpleData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardSimpleData.cpp; sourceTree = "<group>"; };
+		E6DB72D91D4F857E0045A8C0 /* CardSimpleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardSimpleData.h; sourceTree = "<group>"; };
 		ED545A7B1B68A1F400C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
 		ED545A7D1B68A1FA00C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -1420,6 +1417,8 @@
 			children = (
 				A108A7A61D24F41D00987658 /* CardLocalData.cpp */,
 				A108A7A71D24F41D00987658 /* CardLocalData.h */,
+				E6DB72D81D4F857E0045A8C0 /* CardSimpleData.cpp */,
+				E6DB72D91D4F857E0045A8C0 /* CardSimpleData.h */,
 				A108A7A91D24F44300987658 /* CardUpgradeData.cpp */,
 				A108A7AA1D24F44300987658 /* CardUpgradeData.h */,
 				A108A7AC1D24F47C00987658 /* TalentUpgradeData.cpp */,
@@ -1505,7 +1504,6 @@
 				A108A7A51D24F40500987658 /* Card */,
 				CB3EC8941C4E4CBC00447FE3 /* Chat */,
 				A19D6B091D1802170088AF23 /* Formation */,
-				CB3EC8A01C523D4E00447FE3 /* Friend */,
 				A1F5BF8F1C1FC36C007C08CB /* Gear */,
 				A16BF29D1C314CE500E91458 /* GearSet */,
 				A16BF27D1C313D6D00E91458 /* Hero */,
@@ -1769,7 +1767,6 @@
 				A1F3D2221D1D041900EB5C17 /* Card */,
 				A1E830531C1E758E00FE01B8 /* Chat */,
 				A1DFAAD41D10FC2F00817E69 /* Formation */,
-				CB3EC89C1C521B2100447FE3 /* Friend */,
 				A1F3D22C1D1D05CD00EB5C17 /* Public */,
 				A1FB5CFD1D4F18B700CD2622 /* PvpLog */,
 				A18524C91C1AE3E800BE261D /* Quest */,
@@ -2252,24 +2249,6 @@
 			name = Chat;
 			sourceTree = "<group>";
 		};
-		CB3EC89C1C521B2100447FE3 /* Friend */ = {
-			isa = PBXGroup;
-			children = (
-				CB3EC89D1C521C7F00447FE3 /* FriendCell.cpp */,
-				CB3EC89E1C521C7F00447FE3 /* FriendCell.h */,
-			);
-			name = Friend;
-			sourceTree = "<group>";
-		};
-		CB3EC8A01C523D4E00447FE3 /* Friend */ = {
-			isa = PBXGroup;
-			children = (
-				CB3EC8A11C523D6700447FE3 /* FriendData.cpp */,
-				CB3EC8A21C523D6700447FE3 /* FriendData.h */,
-			);
-			name = Friend;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2453,7 +2432,6 @@
 				A15698E11C3A96E500B94345 /* DamageType.cpp in Sources */,
 				A1B4AE2E1C200521005906A6 /* GearManager.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
-				CB3EC8A31C523D6700447FE3 /* FriendData.cpp in Sources */,
 				A16BF28C1C313E7D00E91458 /* SoldierLocalData.cpp in Sources */,
 				A103F45F1BE38112007F9A83 /* GameRender.cpp in Sources */,
 				A1720EB81BCD2D2E00217E98 /* Api.mm in Sources */,
@@ -2470,7 +2448,6 @@
 				30DF03C41C0D898E00A1C6EB /* EffectType.cpp in Sources */,
 				A1F58D5D1C3248F700C8A2DD /* ArtifactLocalData.cpp in Sources */,
 				A178F7701D23B83F006E3812 /* CardXInfoLayer.cpp in Sources */,
-				CB3EC89F1C521C7F00447FE3 /* FriendCell.cpp in Sources */,
 				A16BF2821C313E1300E91458 /* AttributeLocalData.cpp in Sources */,
 				307534711BF33ECF0057DCED /* Logger.cpp in Sources */,
 				A108A7AE1D24F47C00987658 /* TalentUpgradeData.cpp in Sources */,
@@ -2513,6 +2490,7 @@
 				A1720E6F1BCCDF9100217E98 /* CocosUtils.cpp in Sources */,
 				A1D461531C3E166900E8E60B /* AbstractPieceLocalData.cpp in Sources */,
 				A18524D31C1AE46400BE261D /* QuestNode.cpp in Sources */,
+				E6DB72DA1D4F857E0045A8C0 /* CardSimpleData.cpp in Sources */,
 				3070302E1CD3253B0077D357 /* Produce.cpp in Sources */,
 				300098D61BD5E81700B6E284 /* InstanceFactory.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
