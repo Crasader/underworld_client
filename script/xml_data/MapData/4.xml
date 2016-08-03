@@ -6,11 +6,11 @@
     <schedule_events>
 		<event>
 			<event_trigger class="schedule" time="0" />
-			<event_effect class="alter_resource" map_index="0" resource_name="木头" amount="90"/>
+			<event_effect class="alter_resource" map_index="0" resource_name="木头" amount="150"/>
 		</event>
 		<event>
 			<event_trigger class="schedule" time="0" />
-			<event_effect class="alter_resource" map_index="1" resource_name="木头" amount="90"/>
+			<event_effect class="alter_resource" map_index="1" resource_name="木头" amount="150"/>
 		</event>
 		
 		
@@ -477,12 +477,30 @@
 	
     <loop_events>
         <event>
-            <event_trigger class="loop" time="60" start_time="60" end_time="18000"/>
-            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="5"/>
+            <event_trigger class="loop" time="60" start_time="0" end_time="3600"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="10"/>
         </event>
         <event>
-            <event_trigger class="loop" time="60" start_time="60" end_time="18000"/>
-            <event_effect class="alter_resource" map_index="1" resource_name="木头" amount="5"/>
+            <event_trigger class="loop" time="60" start_time="0" end_time="3600"/>
+            <event_effect class="alter_resource" map_index="1" resource_name="木头" amount="10"/>
+        </event>
+		
+		  <event>
+            <event_trigger class="loop" time="60" start_time="3600" end_time="9000"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="15"/>
+        </event>
+        <event>
+            <event_trigger class="loop" time="60" start_time="3600" end_time="9000"/>
+            <event_effect class="alter_resource" map_index="1" resource_name="木头" amount="15"/>
+        </event>
+		
+		<event>
+            <event_trigger class="loop" time="60" start_time="9000" end_time="10800"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="30"/>
+        </event>
+        <event>
+            <event_trigger class="loop" time="60" start_time="9000" end_time="10800"/>
+            <event_effect class="alter_resource" map_index="1" resource_name="木头" amount="30"/>
         </event>
 		
 	<!--
