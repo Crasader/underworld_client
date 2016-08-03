@@ -13,6 +13,9 @@
 #include "FixedLabelAtlas.h"
 #include "NumberJump.h"
 
+// for "getFileLists"
+#include <dirent.h>
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
 #endif
@@ -21,9 +24,53 @@ USING_NS_CC;
 using namespace ui;
 using namespace std;
 
-std::string CocosUtils::getResourcePath(const std::string &file)
+string CocosUtils::getResourcePath(const string &file)
 {
     return "GameImages/public/" + file;
+}
+
+void CocosUtils::getFileLists(const string& folder, const string& prefix, const string& extension, vector<string>& output)
+{
+    if (folder.empty()) {
+        return;
+    }
+    
+    DIR* dir = opendir(folder.c_str());
+    if (dir) {
+        string rfolder(folder);
+        if ('/' != rfolder.back()) {
+            rfolder += "/";
+        }
+        
+        string rprefix(prefix);
+        if ('/' != rprefix.back()) {
+            rprefix.append("/");
+        }
+        
+        struct dirent* ent(nullptr);
+        while (nullptr != (ent = readdir(dir))) {
+            const char* name(ent->d_name);
+            if (!name || strlen(name) == 0) {
+                continue;
+            }
+            
+            const string file(name);
+            auto type(ent->d_type);
+            if (DT_REG == type) {
+                if (extension.empty() || FileUtils::getInstance()->getFileExtension(file) == extension) {
+                    output.push_back(rprefix + file);
+                }
+            } else if (DT_DIR == type) {
+                if ("." != file && ".." != file) {
+                    const string subpath(rfolder + file + "/");
+                    const string subprefix(rprefix + file + "/");
+                    getFileLists(subpath, subprefix, extension, output);
+                }
+            }
+        }
+        
+        closedir(dir);
+    }
 }
 
 #pragma mark - labels
@@ -481,12 +528,12 @@ static Button* createExitButton(Node* parent, const function<void()>& callback, 
     return button;
 }
 
-Button* CocosUtils::createGrayExitButton(Node* parent, const std::function<void()>& callback)
+Button* CocosUtils::createGrayExitButton(Node* parent, const function<void()>& callback)
 {
     return createExitButton(parent, callback, getResourcePath("ui_guanbi.png"));
 }
 
-Button* CocosUtils::createRedExitButton(Node* parent, const std::function<void()>& callback)
+Button* CocosUtils::createRedExitButton(Node* parent, const function<void()>& callback)
 {
     return createExitButton(parent, callback, getResourcePath("button_hongse.png"));
 }

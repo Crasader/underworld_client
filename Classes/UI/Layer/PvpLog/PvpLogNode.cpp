@@ -29,6 +29,11 @@ struct PvpLogNode::UserInfo {
     CardDeckNode* deck;
 };
 
+static const float edgeDefault(5);
+static const float edgeBottom(8);
+static float deckNodeWidth(0);
+static float userInfoWidth(0);
+
 PvpLogNode* PvpLogNode::create(const PvpLogData* data, bool expand)
 {
     auto ret = new (nothrow) PvpLogNode();
@@ -118,9 +123,6 @@ void PvpLogNode::createTopNode()
         auto node = Node::create();
         node->setAnchorPoint(Point::ANCHOR_MIDDLE);
         node->setContentSize(Size(Width, FoldedHeight));
-        
-        static const float edge(5);
-        static const float edgeBottom(8);
         const auto& size(node->getContentSize());
         
         // replay
@@ -132,7 +134,7 @@ void PvpLogNode::createTopNode()
         });
         node->addChild(replay);
         const auto& rsize(replay->getContentSize());
-        replay->setPosition(size.width - (edge + rsize.width / 2), size.height - (edge + rsize.height / 2));
+        replay->setPosition(size.width - (edgeDefault + rsize.width / 2), size.height - (edgeDefault + rsize.height / 2));
         
         // share
         auto share = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, "Share");
@@ -143,10 +145,10 @@ void PvpLogNode::createTopNode()
         });
         node->addChild(share);
         const auto& ssize(share->getContentSize());
-        share->setPosition(size.width - (edge + ssize.width / 2), edgeBottom + ssize.height / 2);
+        share->setPosition(size.width - (edgeDefault + ssize.width / 2), edgeBottom + ssize.height / 2);
         
         static const float spaceRight(8);
-        const float rightPosX(size.width - (edge + MAX(rsize.width, ssize.width) + spaceRight));
+        userInfoWidth = size.width - (edgeDefault + MAX(rsize.width, ssize.width) + spaceRight);
         
         // top-left
         {
@@ -160,8 +162,8 @@ void PvpLogNode::createTopNode()
             
             static const float space(20);
             const auto& rsize(_result->getContentSize());
-            _result->setPosition(edge + rsize.width / 2, size.height - (edge + rsize.height / 2));
-            _trophyGap->setPosition(edge + rsize.width + space, _result->getPositionY());
+            _result->setPosition(edgeDefault + rsize.width / 2, size.height - (edgeDefault + rsize.height / 2));
+            _trophyGap->setPosition(edgeDefault + rsize.width + space, _result->getPositionY());
         }
         
         // top-right
@@ -173,12 +175,12 @@ void PvpLogNode::createTopNode()
             node->addChild(_time);
             
             const auto& tsize(_time->getContentSize());
-            _time->setPosition(rightPosX, size.height - (edge + tsize.height / 2));
+            _time->setPosition(userInfoWidth, size.height - (edgeDefault + tsize.height / 2));
         }
         
         // middle
         {
-            const float midPos((edge + rightPosX) / 2);
+            const float midPos((edgeDefault + userInfoWidth) / 2);
             static const auto file(PvpLogUI::getResourcePath("icon_jiantou_3.png"));
             _expandButton = Button::create(file, file);
             node->addChild(_expandButton);
@@ -219,8 +221,10 @@ void PvpLogNode::createTopNode()
                 
                 const auto& usize(user->getContentSize());
                 const auto& tsize(tower->getContentSize());
-                user->setPosition(edge + usize.width / 2, edgeBottom + usize.height / 2);
-                tower->setPosition(edge + usize.width + space + tsize.width / 2, user->getPositionY());
+                user->setPosition(edgeDefault + usize.width / 2, edgeBottom + usize.height / 2);
+                tower->setPosition(edgeDefault + usize.width + space + tsize.width / 2, user->getPositionY());
+                
+                deckNodeWidth = usize.width + tsize.width + space;
             }
             
             // right
@@ -231,8 +235,8 @@ void PvpLogNode::createTopNode()
                 
                 const auto& usize(user->getContentSize());
                 const auto& tsize(tower->getContentSize());
-                user->setPosition(rightPosX - usize.width / 2, edgeBottom + usize.height / 2);
-                tower->setPosition(rightPosX - (usize.width + space + tsize.width / 2), user->getPositionY());
+                user->setPosition(userInfoWidth - usize.width / 2, edgeBottom + usize.height / 2);
+                tower->setPosition(userInfoWidth - (usize.width + space + tsize.width / 2), user->getPositionY());
             }
         }
         
@@ -246,7 +250,43 @@ void PvpLogNode::createBottomNode()
     if (!_bottom) {
         auto node = Node::create();
         node->setAnchorPoint(Point::ANCHOR_MIDDLE);
-        node->setContentSize(Size(Width, ExpandedHeight - FoldedHeight));
+        node->setContentSize(Size(userInfoWidth, ExpandedHeight - FoldedHeight));
+        const auto& size(node->getContentSize());
+        
+        // middle
+        {
+            auto icon = Sprite::create(PvpLogUI::getResourcePath("icon_pvp_1.png"));
+            icon->setPosition(size.width / 2, size.height / 2);
+            node->addChild(icon);
+        }
+        
+        const Size deckSize(deckNodeWidth, size.height - (edgeDefault + edgeBottom));
+        static const size_t column(5);
+        static const size_t row(2);
+        for (auto iter = begin(_userInfos); iter != end(_userInfos); ++iter) {
+            auto deck(CardDeckNode::create(deckSize, column, row));
+            vector<CardSimpleData*> vec;
+            for (int i = 0; i < 10; ++i) {
+                vec.push_back(nullptr);
+            }
+            deck->update(vec);
+            node->addChild(deck);
+            iter->second->deck = deck;
+        }
+        
+        // left
+        {
+            auto deck(_userInfos.at(true)->deck);
+            const auto& dsize(deck->getContentSize());
+            deck->setPosition(edgeDefault + dsize.width / 2, edgeBottom + dsize.height / 2);
+        }
+        
+        // right
+        {
+            auto deck(_userInfos.at(false)->deck);
+            const auto& dsize(deck->getContentSize());
+            deck->setPosition(size.width - dsize.width / 2, edgeBottom + dsize.height / 2);
+        }
         
         _background->addChild(node);
         _bottom = node;
@@ -277,11 +317,11 @@ void PvpLogNode::adjust()
     
     if (_top) {
         const auto& nsize(_top->getContentSize());
-        _top->setPosition(size.width / 2, size.height - nsize.height / 2);
+        _top->setPosition(nsize.width / 2, size.height - nsize.height / 2);
     }
     
     if (_isExpanded && _bottom) {
         const auto& nsize(_bottom->getContentSize());
-        _bottom->setPosition(size.width / 2, nsize.height / 2);
+        _bottom->setPosition(nsize.width / 2, nsize.height / 2);
     }
 }
