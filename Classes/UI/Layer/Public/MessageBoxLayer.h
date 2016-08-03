@@ -34,6 +34,7 @@ protected:
     MessageBoxLayer();
     virtual ~MessageBoxLayer();
     virtual bool init() override;
+    virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
     void resetMessageLabel(int fontSize = MESSAGEBOX_DEFAULT_FONT_SIZE);

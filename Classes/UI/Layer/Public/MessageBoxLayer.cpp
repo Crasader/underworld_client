@@ -172,6 +172,11 @@ void MessageBoxLayer::hide()
     removeFromParent();
 }
 
+bool MessageBoxLayer::onTouchBegan(Touch *touch, Event *unused_event)
+{
+    return true;
+}
+
 void MessageBoxLayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
     Point point = convertToWorldSpace(touch->getLocation());

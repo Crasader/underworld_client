@@ -601,7 +601,7 @@ void ChatLayer::setTableType(ChatType type)
         const bool showEditBox(ChatType::World == type);
         _editBoxNode->setVisible(showEditBox);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        _editBoxNode->setFocus(showEditBox);
+        _editBoxNode->setFocus(false);
 #else
         _editBoxNode->setFocus(false);
 #endif
