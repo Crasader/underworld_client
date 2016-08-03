@@ -10,6 +10,7 @@
 #include "CocosUtils.h"
 #include "ChatData.h"
 #include "ChatUI.h"
+#include "AvatarNode.h"
 
 using namespace std;
 
@@ -35,7 +36,7 @@ ChatNode::ChatNode()
 ,_width(0)
 ,_dialogWidth(0)
 ,_data(nullptr)
-,_icon(nullptr)
+,_avatar(nullptr)
 ,_dialogBg(nullptr)
 ,_user(nullptr)
 ,_content(nullptr)
@@ -61,7 +62,9 @@ bool ChatNode::init(float width, const ChatData* data)
         _dialogWidth = width - (iconSize.width + nodeSpace);
         
         createDialog(true);
-        createIcon();
+        
+        _avatar = AvatarNode::create();
+        addChild(_avatar);
         
         _user = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
         _user->setTextColor(Color4B::BLACK);
@@ -94,8 +97,8 @@ void ChatNode::update(const ChatData* data)
         createDialog(true);
     }
     
-    if (false) {
-        createIcon();
+    if (_avatar) {
+        
     }
     
     if (data) {
@@ -131,40 +134,6 @@ void ChatNode::createDialog(bool isMe)
     }
 }
 
-void ChatNode::createIcon()
-{
-    static const string file(CocosUtils::getResourcePath("icon_touxiang_1.png"));
-    bool find(false);
-    Sprite* s(nullptr);
-    if (_icon) {
-        if (_icon->getChildrenCount() > 0) {
-            s = dynamic_cast<Sprite*>(_icon->getChildren().front());
-            if (s) {
-                s->setTexture(file);
-                find = true;
-            } else {
-                _icon->removeAllChildren();
-            }
-        }
-    } else {
-        _icon = Node::create();
-        _icon->setAnchorPoint(Point::ANCHOR_MIDDLE);
-        _icon->setContentSize(iconSize);
-        addChild(_icon);
-    }
-    
-    if (!find) {
-        s = Sprite::create(file);
-        s->setPosition(Point(iconSize.width / 2, iconSize.height / 2));
-        _icon->addChild(s);
-    }
-    
-    if (s) {
-        const auto& spriteSize(s->getContentSize());
-        s->setScale(iconSize.width / spriteSize.width, iconSize.height / spriteSize.height);
-    }
-}
-
 void ChatNode::adjust(bool isMe)
 {
     // dialog
@@ -196,15 +165,15 @@ void ChatNode::adjust(bool isMe)
     
     _content->setPosition(Point((isMe ? 0 : dialogArrowWidth) + dialogEdge, dialogBottomEdge + csize.height / 2));
     
-    const auto& isize(_icon->getContentSize());
+    const auto& isize(_avatar->getContentSize());
     const Size size(_width, MAX(isize.height, dbgsize.height));
     setContentSize(size);
     
     if (isMe) {
         _dialogBg->setPosition(Point(_dialogWidth / 2, size.height / 2));
-        _icon->setPosition(Point(_width - isize.width / 2, size.height - isize.height / 2));
+        _avatar->setPosition(Point(_width - isize.width / 2, size.height - isize.height / 2));
     } else {
         _dialogBg->setPosition(Point(_width - _dialogWidth / 2, size.height / 2));
-        _icon->setPosition(Point(isize.width / 2, size.height - isize.height / 2));
+        _avatar->setPosition(Point(isize.width / 2, size.height - isize.height / 2));
     }
 }

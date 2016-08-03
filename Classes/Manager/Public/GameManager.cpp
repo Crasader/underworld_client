@@ -109,7 +109,7 @@ void GameManager::launchGame()
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
         FrameLoader::getInstance()->addAllFramesAsync([this]() {
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    #if false
+    #if true
             FrameLoader::getInstance()->addAllFrames();
     #endif
 #endif

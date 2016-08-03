@@ -15,6 +15,7 @@
 USING_NS_CC;
 
 class ChatData;
+class AvatarNode;
 
 class ChatNodeObserver
 {
@@ -34,7 +35,6 @@ protected:
     ChatNode();
     bool init(float width, const ChatData* data);
     void createDialog(bool isMe);
-    void createIcon();
     void adjust(bool isMe);
     
 private:
@@ -42,7 +42,7 @@ private:
     float _width;
     float _dialogWidth;
     const ChatData* _data;
-    Node* _icon;
+    AvatarNode* _avatar;
     ui::Scale9Sprite* _dialogBg;
     Label* _user;
     Label* _content;

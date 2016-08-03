@@ -13,13 +13,13 @@ using namespace std;
 
 AvatarNode* AvatarNode::create()
 {
-    AvatarNode *p = new (nothrow) AvatarNode();
-    if(p && p->init()) {
-        p->autorelease();
-        return p;
+    auto ret = new (nothrow) AvatarNode();
+    if(ret && ret->init()) {
+        ret->autorelease();
+        return ret;
     }
     
-    CC_SAFE_DELETE(p);
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
@@ -65,7 +65,6 @@ void AvatarNode::setAvatar(int idx)
         }
     }
 }
-
 
 void AvatarNode::setCallback(const Callback& callback)
 {
