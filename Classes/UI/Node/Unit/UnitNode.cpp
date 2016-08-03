@@ -1440,6 +1440,9 @@ void UnitNode::createEquipment(AnimationNode** an, const string& file, bool flip
         (*an)->nodeFile = nodeFile;
         if (!nodeFile.empty()) {
             auto node = CocosUtils::getAnimationNode(nodeFile, startIdx);
+            if (flip) {
+                flipX(node);
+            }
             addChild(node);
             (*an)->node = node;
         }
