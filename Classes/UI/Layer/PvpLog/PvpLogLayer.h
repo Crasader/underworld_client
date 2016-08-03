@@ -48,6 +48,8 @@ protected:
     virtual ssize_t numberOfCellsInTableView(TableView *table) override;
     
     // PvpLogNodeObserver
+    virtual void onPvpLogNodeReplay(const PvpLogData* data) override;
+    virtual void onPvpLogNodeShare(const PvpLogData* data) override;
     
     // table
     void createTable(Node* parent);

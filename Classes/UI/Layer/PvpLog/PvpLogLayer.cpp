@@ -155,6 +155,17 @@ ssize_t PvpLogLayer::numberOfCellsInTableView(TableView *table)
     return getCellsCount();
 }
 
+#pragma mark - PvpLogNodeObserver
+void PvpLogLayer::onPvpLogNodeReplay(const PvpLogData* data)
+{
+    
+}
+
+void PvpLogLayer::onPvpLogNodeShare(const PvpLogData* data)
+{
+    
+}
+
 #pragma mark - table
 void PvpLogLayer::createTable(Node* parent)
 {

@@ -75,10 +75,10 @@ bool CardXInfoLayer::init()
         line->setPosition(titleSprite->getPosition() - Point(0, titleHeight / 2 + offsetY));
         bg->addChild(line);
         
-        _cardInfoNode->setPosition(Point(edgeX + cardSize.width / 2, line->getPosition().y - cardSize.height / 2));
+        _cardInfoNode->setPosition(Point(edgeX + cardSize.width / 2, line->getPositionY() - cardSize.height / 2));
         bg->addChild(_cardInfoNode);
         
-        _talentInfoNode->setPosition(Point(size.width - (edgeX + talentSize.width / 2), line->getPosition().y - talentSize.height / 2));
+        _talentInfoNode->setPosition(Point(size.width - (edgeX + talentSize.width / 2), line->getPositionY() - talentSize.height / 2));
         bg->addChild(_talentInfoNode);
         
         CocosUtils::createGrayExitButton(bg, [this](){

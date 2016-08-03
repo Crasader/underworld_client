@@ -12,9 +12,12 @@
 #include "UserSimpleData.h"
 #include "CardSimpleData.h"
 #include "PvpLogUI.h"
+#include "PvpResultNode.h"
+#include "TrophyGapNode.h"
 #include "UserSimpleNode.h"
 #include "TowerSimpleNode.h"
 #include "CardDeckNode.h"
+#include "UniversalButton.h"
 #include "SoundManager.h"
 
 using namespace std;
@@ -40,7 +43,15 @@ PvpLogNode* PvpLogNode::create(const PvpLogData* data, bool expand)
 
 PvpLogNode::PvpLogNode()
 :_observer(nullptr)
+,_isExpanded(false)
 ,_data(nullptr)
+,_background(nullptr)
+,_result(nullptr)
+,_trophyGap(nullptr)
+,_time(nullptr)
+,_expandButton(nullptr)
+,_top(nullptr)
+,_bottom(nullptr)
 {
     _userInfos.insert(make_pair(true, new (nothrow) UserInfo()));
     _userInfos.insert(make_pair(false, new (nothrow) UserInfo()));
@@ -79,22 +90,7 @@ bool PvpLogNode::init(const PvpLogData* data, bool expand)
         _background->setAnchorPoint(Point::ANCHOR_MIDDLE);
         addChild(_background);
         
-        for (auto iter = begin(_userInfos); iter != end(_userInfos); ++iter) {
-            auto user(UserSimpleNode::create());
-            addChild(user);
-            
-            auto tower(TowerSimpleNode::create());
-            addChild(tower);
-            
-            auto deck(CardDeckNode::create());
-            addChild(deck);
-            
-            auto& info(iter->second);
-            info->user = user;
-            info->tower = tower;
-            info->deck = deck;
-        }
-        
+        createTopNode();
         update(data, expand);
         
         return true;
@@ -116,15 +112,176 @@ void PvpLogNode::show()
     adjust();
 }
 
+void PvpLogNode::createTopNode()
+{
+    if (!_top) {
+        auto node = Node::create();
+        node->setAnchorPoint(Point::ANCHOR_MIDDLE);
+        node->setContentSize(Size(Width, FoldedHeight));
+        
+        static const float edge(5);
+        static const float edgeBottom(8);
+        const auto& size(node->getContentSize());
+        
+        // replay
+        auto replay = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Green, "Replay");
+        replay->setCallback([this](Ref*) {
+            if (_observer) {
+                _observer->onPvpLogNodeReplay(_data);
+            }
+        });
+        node->addChild(replay);
+        const auto& rsize(replay->getContentSize());
+        replay->setPosition(size.width - (edge + rsize.width / 2), size.height - (edge + rsize.height / 2));
+        
+        // share
+        auto share = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, "Share");
+        share->setCallback([this](Ref*) {
+            if (_observer) {
+                _observer->onPvpLogNodeShare(_data);
+            }
+        });
+        node->addChild(share);
+        const auto& ssize(share->getContentSize());
+        share->setPosition(size.width - (edge + ssize.width / 2), edgeBottom + ssize.height / 2);
+        
+        static const float spaceRight(8);
+        const float rightPosX(size.width - (edge + MAX(rsize.width, ssize.width) + spaceRight));
+        
+        // top-left
+        {
+            _result = PvpResultNode::create();
+            node->addChild(_result);
+            
+            _trophyGap = TrophyGapNode::create();
+            _trophyGap->setCount(-29);
+            _trophyGap->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+            node->addChild(_trophyGap);
+            
+            static const float space(20);
+            const auto& rsize(_result->getContentSize());
+            _result->setPosition(edge + rsize.width / 2, size.height - (edge + rsize.height / 2));
+            _trophyGap->setPosition(edge + rsize.width + space, _result->getPositionY());
+        }
+        
+        // top-right
+        {
+            const auto& time = CocosUtils::getFormattedTime(1234);
+            _time = CocosUtils::createLabel(time, SMALL_FONT_SIZE, DEFAULT_NUMBER_FONT);
+            _time->setAlignment(cocos2d::TextHAlignment::RIGHT, cocos2d::TextVAlignment::CENTER);
+            _time->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
+            node->addChild(_time);
+            
+            const auto& tsize(_time->getContentSize());
+            _time->setPosition(rightPosX, size.height - (edge + tsize.height / 2));
+        }
+        
+        // middle
+        {
+            const float midPos((edge + rightPosX) / 2);
+            static const auto file(PvpLogUI::getResourcePath("icon_jiantou_3.png"));
+            _expandButton = Button::create(file, file);
+            node->addChild(_expandButton);
+            
+            auto icon = Sprite::create(PvpLogUI::getResourcePath("icon_pvp_1.png"));
+            node->addChild(icon);
+            
+            static const float space(20);
+            const auto& esize(_expandButton->getContentSize());
+            const auto& isize(icon->getContentSize());
+            _expandButton->setPosition(Point(midPos, edgeBottom + esize.height / 2));
+            icon->setPosition(_expandButton->getPosition() + Point(0, (esize.height + isize.height) / 2 + space));
+        }
+        
+        {
+            // user info
+            for (auto iter = begin(_userInfos); iter != end(_userInfos); ++iter) {
+                auto user(UserSimpleNode::create());
+                user->setIsHome(iter->first);
+                user->setIsMe(false);
+                node->addChild(user);
+                
+                auto tower(TowerSimpleNode::create());
+                node->addChild(tower);
+                
+                auto& info(iter->second);
+                info->user = user;
+                info->tower = tower;
+            }
+            
+            static const float space(20);
+            
+            // left
+            {
+                auto userInfo = _userInfos.at(true);
+                auto user(userInfo->user);
+                auto tower(userInfo->tower);
+                
+                const auto& usize(user->getContentSize());
+                const auto& tsize(tower->getContentSize());
+                user->setPosition(edge + usize.width / 2, edgeBottom + usize.height / 2);
+                tower->setPosition(edge + usize.width + space + tsize.width / 2, user->getPositionY());
+            }
+            
+            // right
+            {
+                auto userInfo = _userInfos.at(false);
+                auto user(userInfo->user);
+                auto tower(userInfo->tower);
+                
+                const auto& usize(user->getContentSize());
+                const auto& tsize(tower->getContentSize());
+                user->setPosition(rightPosX - usize.width / 2, edgeBottom + usize.height / 2);
+                tower->setPosition(rightPosX - (usize.width + space + tsize.width / 2), user->getPositionY());
+            }
+        }
+        
+        _background->addChild(node);
+        _top = node;
+    }
+}
+
+void PvpLogNode::createBottomNode()
+{
+    if (!_bottom) {
+        auto node = Node::create();
+        node->setAnchorPoint(Point::ANCHOR_MIDDLE);
+        node->setContentSize(Size(Width, ExpandedHeight - FoldedHeight));
+        
+        _background->addChild(node);
+        _bottom = node;
+    }
+}
+
+void PvpLogNode::removeBottomNode()
+{
+    if (_bottom) {
+        _bottom->removeFromParent();
+        _bottom = nullptr;
+    }
+}
+
 void PvpLogNode::adjust()
 {
     Size size(Width, 0);
     if (_isExpanded) {
+        createBottomNode();
         size.height = ExpandedHeight;
     } else {
+        removeBottomNode();
         size.height = FoldedHeight;
     }
     _background->setContentSize(size);
     setContentSize(size);
     _background->setPosition(Point(size.width / 2, size.height / 2));
+    
+    if (_top) {
+        const auto& nsize(_top->getContentSize());
+        _top->setPosition(size.width / 2, size.height - nsize.height / 2);
+    }
+    
+    if (_isExpanded && _bottom) {
+        const auto& nsize(_bottom->getContentSize());
+        _bottom->setPosition(size.width / 2, nsize.height / 2);
+    }
 }
