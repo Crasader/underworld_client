@@ -17,53 +17,53 @@
      左边scale和speed缩放比率为1.3和2.1，左上scale和speed缩放比率为1.2和2.2
      -->
     
-    <item name="狼人基地" skill="0" direction="1" scale="0.5" speed="0.9"/>
-    <item name="狼人基地" skill="1" direction="1" scale="0.5" speed="0.9"/>
-    <item name="狼人基地" skill="2" direction="1" scale="0.5" speed="0.9"/>
-    <item name="狼人基地" skill="3" direction="1" scale="0.5" speed="0.9"/>
-    <item name="狼人基地" skill="4" direction="1" scale="0.5" speed="1.5"/>
+    <item name="狼人基地" skill="0" direction="1" scale="0.4" speed="0.9"/>
+    <item name="狼人基地" skill="1" direction="1" scale="0.4" speed="0.9"/>
+    <item name="狼人基地" skill="2" direction="1" scale="0.4" speed="0.9"/>
+    <item name="狼人基地" skill="3" direction="1" scale="0.4" speed="0.9"/>
+    <item name="狼人基地" skill="4" direction="1" scale="0.4" speed="1.5"/>
     
-    <item name="吸血鬼核心" skill="0" direction="1" scale="0.5" speed="0.9"/>
-    <item name="吸血鬼核心" skill="1" direction="1" scale="0.5" speed="0.9"/>
-    <item name="吸血鬼核心" skill="2" direction="1" scale="0.5" speed="0.9"/>
-    <item name="吸血鬼核心" skill="3" direction="1" scale="0.5" speed="0.9"/>
-    <item name="吸血鬼核心" skill="4" direction="1" scale="0.5" speed="1.5"/>
+    <item name="吸血鬼核心" skill="0" direction="1" scale="0.4" speed="0.9"/>
+    <item name="吸血鬼核心" skill="1" direction="1" scale="0.4" speed="0.9"/>
+    <item name="吸血鬼核心" skill="2" direction="1" scale="0.4" speed="0.9"/>
+    <item name="吸血鬼核心" skill="3" direction="1" scale="0.4" speed="0.9"/>
+    <item name="吸血鬼核心" skill="4" direction="1" scale="0.4" speed="1.5"/>
     
-    <item name="狼人箭塔" skill="0" direction="1" scale="0.5" speed="0.9"/>
-    <item name="狼人箭塔" skill="1" direction="1" scale="0.5" speed="0.9"/>
-    <item name="狼人箭塔" skill="2" direction="1" scale="0.5" speed="0.9"/>
-    <item name="狼人箭塔" skill="3" direction="1" scale="0.5" speed="0.9"/>
-    <item name="狼人箭塔" skill="4" direction="1" scale="0.5" speed="1.5"/>
+    <item name="狼人箭塔" skill="0" direction="1" scale="0.4" speed="0.9"/>
+    <item name="狼人箭塔" skill="1" direction="1" scale="0.4" speed="0.9"/>
+    <item name="狼人箭塔" skill="2" direction="1" scale="0.4" speed="0.9"/>
+    <item name="狼人箭塔" skill="3" direction="1" scale="0.4" speed="0.9"/>
+    <item name="狼人箭塔" skill="4" direction="1" scale="0.4" speed="1.5"/>
     
-    <item name="吸血鬼箭塔" skill="0" direction="1" scale="0.5" speed="0.9"/>
-    <item name="吸血鬼箭塔" skill="1" direction="1" scale="0.5" speed="0.9"/>
-    <item name="吸血鬼箭塔" skill="2" direction="1" scale="0.5" speed="0.9"/>
-    <item name="吸血鬼箭塔" skill="3" direction="1" scale="0.5" speed="0.9"/>
-    <item name="吸血鬼箭塔" skill="4" direction="1" scale="0.5" speed="1.5"/>
+    <item name="吸血鬼箭塔" skill="0" direction="1" scale="0.4" speed="0.9"/>
+    <item name="吸血鬼箭塔" skill="1" direction="1" scale="0.4" speed="0.9"/>
+    <item name="吸血鬼箭塔" skill="2" direction="1" scale="0.4" speed="0.9"/>
+    <item name="吸血鬼箭塔" skill="3" direction="1" scale="0.4" speed="0.9"/>
+    <item name="吸血鬼箭塔" skill="4" direction="1" scale="0.4" speed="1.5"/>
     
-    <item name="狼人步兵" skill="0" direction="1" scale="0.5" speed="1.0"/>
-    <item name="狼人步兵" skill="1" direction="1" scale="0.5" speed="1.0"/>
-    <item name="狼人步兵" skill="2" direction="1" scale="0.5" speed="1.0"/>
-    <item name="狼人步兵" skill="3" direction="1" scale="0.5" speed="1.0"/>
-    <item name="狼人步兵" skill="4" direction="1" scale="0.5" speed="1.5"/>
+    <item name="狼人步兵" skill="0" direction="1" scale="0.4" speed="1.0"/>
+    <item name="狼人步兵" skill="1" direction="1" scale="0.4" speed="1.0"/>
+    <item name="狼人步兵" skill="2" direction="1" scale="0.4" speed="1.0"/>
+    <item name="狼人步兵" skill="3" direction="1" scale="0.4" speed="1.0"/>
+    <item name="狼人步兵" skill="4" direction="1" scale="0.4" speed="1.5"/>
     
-    <item name="狼人射手" skill="0" direction="1" scale="0.5" speed="1.0"/>
-    <item name="狼人射手" skill="1" direction="1" scale="0.5" speed="1.0"/>
-    <item name="狼人射手" skill="2" direction="1" scale="0.5" speed="1.0"/>
-    <item name="狼人射手" skill="3" direction="1" scale="0.5" speed="1.0"/>
-    <item name="狼人射手" skill="4" direction="1" scale="0.5" speed="1.5"/>
+    <item name="狼人射手" skill="0" direction="1" scale="0.4" speed="1.0"/>
+    <item name="狼人射手" skill="1" direction="1" scale="0.4" speed="1.0"/>
+    <item name="狼人射手" skill="2" direction="1" scale="0.4" speed="1.0"/>
+    <item name="狼人射手" skill="3" direction="1" scale="0.4" speed="1.0"/>
+    <item name="狼人射手" skill="4" direction="1" scale="0.4" speed="1.5"/>
     
-    <item name="狼人巫师" skill="0" direction="1" scale="0.5" speed="1.0"/>
-    <item name="狼人巫师" skill="1" direction="1" scale="0.5" speed="1.0"/>
-    <item name="狼人巫师" skill="2" direction="1" scale="0.5" speed="1.0"/>
-    <item name="狼人巫师" skill="3" direction="1" scale="0.5" speed="1.0"/>
-    <item name="狼人巫师" skill="4" direction="1" scale="0.5" speed="1.5"/>
+    <item name="狼人巫师" skill="0" direction="1" scale="0.4" speed="1.0"/>
+    <item name="狼人巫师" skill="1" direction="1" scale="0.4" speed="1.0"/>
+    <item name="狼人巫师" skill="2" direction="1" scale="0.4" speed="1.0"/>
+    <item name="狼人巫师" skill="3" direction="1" scale="0.4" speed="1.0"/>
+    <item name="狼人巫师" skill="4" direction="1" scale="0.4" speed="1.5"/>
     
-    <item name="吸血鬼战士" skill="0" direction="1" scale="0.5" speed="1.0"/>
-    <item name="吸血鬼战士" skill="1" direction="1" scale="0.5" speed="1.0"/>
-    <item name="吸血鬼战士" skill="2" direction="1" scale="0.5" speed="1.0"/>
-    <item name="吸血鬼战士" skill="3" direction="1" scale="0.5" speed="1.0"/>
-    <item name="吸血鬼战士" skill="4" direction="1" scale="0.5" speed="1.5"/>
+    <item name="吸血鬼战士" skill="0" direction="1" scale="0.4" speed="1.0"/>
+    <item name="吸血鬼战士" skill="1" direction="1" scale="0.4" speed="1.0"/>
+    <item name="吸血鬼战士" skill="2" direction="1" scale="0.4" speed="1.0"/>
+    <item name="吸血鬼战士" skill="3" direction="1" scale="0.4" speed="1.0"/>
+    <item name="吸血鬼战士" skill="4" direction="1" scale="0.4" speed="1.5"/>
     
     <item name="吸血鬼弓兵" skill="0" direction="1" scale="0.5" speed="1.0"/>
     <item name="吸血鬼弓兵" skill="1" direction="1" scale="0.5" speed="1.0"/>
@@ -71,11 +71,11 @@
     <item name="吸血鬼弓兵" skill="3" direction="1" scale="0.5" speed="1.0"/>
     <item name="吸血鬼弓兵" skill="4" direction="1" scale="0.5" speed="1.5"/>
     
-    <item name="吸血鬼巫师" skill="0" direction="1" scale="0.5" speed="1.2"/>
-    <item name="吸血鬼巫师" skill="1" direction="1" scale="0.5" speed="1.2"/>
-    <item name="吸血鬼巫师" skill="2" direction="1" scale="0.5" speed="1.2"/>
-    <item name="吸血鬼巫师" skill="3" direction="1" scale="0.5" speed="1.2"/>
-    <item name="吸血鬼巫师" skill="4" direction="1" scale="0.5" speed="1.5"/>
+    <item name="吸血鬼巫师" skill="0" direction="1" scale="0.4" speed="1.2"/>
+    <item name="吸血鬼巫师" skill="1" direction="1" scale="0.4" speed="1.2"/>
+    <item name="吸血鬼巫师" skill="2" direction="1" scale="0.4" speed="1.2"/>
+    <item name="吸血鬼巫师" skill="3" direction="1" scale="0.4" speed="1.2"/>
+    <item name="吸血鬼巫师" skill="4" direction="1" scale="0.4" speed="1.5"/>
        
     <item name="狼人独角兽" skill="0" direction="1" scale="0.5" speed="1.0"/>
     <item name="狼人独角兽" skill="1" direction="1" scale="0.5" speed="1.0"/>
@@ -83,11 +83,11 @@
     <item name="狼人独角兽" skill="3" direction="1" scale="0.5" speed="1.0"/>
     <item name="狼人独角兽" skill="4" direction="1" scale="0.5" speed="1.5"/>
     
-    <item name="狼人机械狼" skill="0" direction="1" scale="0.5" speed="1.0"/>
-    <item name="狼人机械狼" skill="1" direction="1" scale="0.5" speed="1.0"/>
-    <item name="狼人机械狼" skill="2" direction="1" scale="0.5" speed="1.0"/>
-    <item name="狼人机械狼" skill="3" direction="1" scale="0.5" speed="1.0"/>
-    <item name="狼人机械狼" skill="4" direction="1" scale="0.5" speed="1.5"/>
+    <item name="狼人机械狼" skill="0" direction="1" scale="0.4" speed="1.0"/>
+    <item name="狼人机械狼" skill="1" direction="1" scale="0.4" speed="1.0"/>
+    <item name="狼人机械狼" skill="2" direction="1" scale="0.4" speed="1.0"/>
+    <item name="狼人机械狼" skill="3" direction="1" scale="0.4" speed="1.0"/>
+    <item name="狼人机械狼" skill="4" direction="1" scale="0.4" speed="1.5"/>
     
     <item name="狼人森林之魂" skill="0" direction="1" scale="0.5" speed="1.0"/>
     <item name="狼人森林之魂" skill="1" direction="1" scale="0.5" speed="1.0"/>
@@ -95,11 +95,11 @@
     <item name="狼人森林之魂" skill="3" direction="1" scale="0.5" speed="1.0"/>
     <item name="狼人森林之魂" skill="4" direction="1" scale="0.5" speed="1.0"/>
 	
-	<item name="七恶魔拉玛什图" skill="0" direction="1" scale="0.5" speed="0.9"/>
-    <item name="七恶魔拉玛什图" skill="1" direction="1" scale="0.5" speed="0.9"/>
-    <item name="七恶魔拉玛什图" skill="2" direction="1" scale="0.5" speed="0.9"/>
-    <item name="七恶魔拉玛什图" skill="3" direction="1" scale="0.5" speed="0.9"/>
-    <item name="七恶魔拉玛什图" skill="4" direction="1" scale="0.5" speed="1.5"/>
+	<item name="七恶魔拉玛什图" skill="0" direction="1" scale="0.4" speed="0.9"/>
+    <item name="七恶魔拉玛什图" skill="1" direction="1" scale="0.4" speed="0.9"/>
+    <item name="七恶魔拉玛什图" skill="2" direction="1" scale="0.4" speed="0.9"/>
+    <item name="七恶魔拉玛什图" skill="3" direction="1" scale="0.4" speed="0.9"/>
+    <item name="七恶魔拉玛什图" skill="4" direction="1" scale="0.4" speed="1.5"/>
     
     <item name="莉莉丝" skill="0" direction="1" scale="0.5" speed="0.9"/>
     <item name="莉莉丝" skill="1" direction="1" scale="0.5" speed="0.9"/>
@@ -107,11 +107,11 @@
     <item name="莉莉丝" skill="3" direction="1" scale="0.5" speed="0.9"/>
     <item name="莉莉丝" skill="4" direction="1" scale="0.5" speed="1.5"/>
     
-    <item name="时光法师" skill="0" direction="1" scale="0.5" speed="0.9"/>
-    <item name="时光法师" skill="1" direction="1" scale="0.5" speed="0.9"/>
-    <item name="时光法师" skill="2" direction="1" scale="0.5" speed="0.9"/>
-    <item name="时光法师" skill="3" direction="1" scale="0.5" speed="0.9"/>
-    <item name="时光法师" skill="4" direction="1" scale="0.5" speed="1.5"/>
+    <item name="时光法师" skill="0" direction="1" scale="0.4" speed="0.9"/>
+    <item name="时光法师" skill="1" direction="1" scale="0.4" speed="0.9"/>
+    <item name="时光法师" skill="2" direction="1" scale="0.4" speed="0.9"/>
+    <item name="时光法师" skill="3" direction="1" scale="0.4" speed="0.9"/>
+    <item name="时光法师" skill="4" direction="1" scale="0.4" speed="1.5"/>
     
     <item name="时光女神" skill="0" direction="1" scale="0.5" speed="0.9"/>
     <item name="时光女神" skill="1" direction="1" scale="0.5" speed="0.9"/>
@@ -125,11 +125,11 @@
     <item name="特斯拉" skill="3" direction="1" scale="0.5" speed="1.0"/>
     <item name="特斯拉" skill="4" direction="1" scale="0.5" speed="1.5"/>
     
-    <item name="天空女神" skill="0" direction="1" scale="0.5" speed="1.0"/>
-    <item name="天空女神" skill="1" direction="1" scale="0.5" speed="1.0"/>
-    <item name="天空女神" skill="2" direction="1" scale="0.5" speed="1.0"/>
-    <item name="天空女神" skill="3" direction="1" scale="0.5" speed="1.0"/>
-    <item name="天空女神" skill="4" direction="1" scale="0.5" speed="1.5"/>
+    <item name="天空女神" skill="0" direction="1" scale="0.4" speed="1.0"/>
+    <item name="天空女神" skill="1" direction="1" scale="0.4" speed="1.0"/>
+    <item name="天空女神" skill="2" direction="1" scale="0.4" speed="1.0"/>
+    <item name="天空女神" skill="3" direction="1" scale="0.4" speed="1.0"/>
+    <item name="天空女神" skill="4" direction="1" scale="0.4" speed="1.5"/>
     
     <item name="甲壳虫" skill="0" direction="1" scale="0.5" speed="1.0"/>
     <item name="甲壳虫" skill="1" direction="1" scale="0.5" speed="1.0"/>
@@ -137,29 +137,29 @@
     <item name="甲壳虫" skill="3" direction="1" scale="0.5" speed="1.0"/>
     <item name="甲壳虫" skill="4" direction="1" scale="0.5" speed="1.5"/>
     
-    <item name="机械甲虫" skill="0" direction="1" scale="0.5" speed="1.0"/>
-    <item name="机械甲虫" skill="1" direction="1" scale="0.5" speed="1.0"/>
-    <item name="机械甲虫" skill="2" direction="1" scale="0.5" speed="1.0"/>
-    <item name="机械甲虫" skill="3" direction="1" scale="0.5" speed="1.0"/>
-    <item name="机械甲虫" skill="4" direction="1" scale="0.5" speed="1.5"/>
+    <item name="机械甲虫" skill="0" direction="1" scale="0.4" speed="1.0"/>
+    <item name="机械甲虫" skill="1" direction="1" scale="0.4" speed="1.0"/>
+    <item name="机械甲虫" skill="2" direction="1" scale="0.4" speed="1.0"/>
+    <item name="机械甲虫" skill="3" direction="1" scale="0.4" speed="1.0"/>
+    <item name="机械甲虫" skill="4" direction="1" scale="0.4" speed="1.5"/>
     
-    <item name="刺客" skill="0" direction="1" scale="0.5" speed="1.0"/>
-    <item name="刺客" skill="1" direction="1" scale="0.5" speed="1.0"/>
-    <item name="刺客" skill="2" direction="1" scale="0.5" speed="1.0"/>
-    <item name="刺客" skill="3" direction="1" scale="0.5" speed="1.0"/>
-    <item name="刺客" skill="4" direction="1" scale="0.5" speed="1.5"/>
+    <item name="刺客" skill="0" direction="1" scale="0.6" speed="1.0"/>
+    <item name="刺客" skill="1" direction="1" scale="0.6" speed="1.0"/>
+    <item name="刺客" skill="2" direction="1" scale="0.6" speed="1.0"/>
+    <item name="刺客" skill="3" direction="1" scale="0.6" speed="1.0"/>
+    <item name="刺客" skill="4" direction="1" scale="0.6" speed="1.5"/>
     
-    <item name="腐化狼人" skill="0" direction="1" scale="0.5" speed="1.2"/>
-    <item name="腐化狼人" skill="1" direction="1" scale="0.5" speed="1.2"/>
-    <item name="腐化狼人" skill="2" direction="1" scale="0.5" speed="1.2"/>
-    <item name="腐化狼人" skill="3" direction="1" scale="0.5" speed="1.2"/>
-    <item name="腐化狼人" skill="4" direction="1" scale="0.5" speed="1.5"/>
+    <item name="腐化狼人" skill="0" direction="1" scale="0.4" speed="1.2"/>
+    <item name="腐化狼人" skill="1" direction="1" scale="0.4" speed="1.2"/>
+    <item name="腐化狼人" skill="2" direction="1" scale="0.4" speed="1.2"/>
+    <item name="腐化狼人" skill="3" direction="1" scale="0.4" speed="1.2"/>
+    <item name="腐化狼人" skill="4" direction="1" scale="0.4" speed="1.5"/>
     
-    <item name="腐化吸血鬼" skill="0" direction="1" scale="0.5" speed="1.0"/>
-    <item name="腐化吸血鬼" skill="1" direction="1" scale="0.5" speed="1.0"/>
-    <item name="腐化吸血鬼" skill="2" direction="1" scale="0.5" speed="1.0"/>
-    <item name="腐化吸血鬼" skill="3" direction="1" scale="0.5" speed="1.0"/>
-    <item name="腐化吸血鬼" skill="4" direction="1" scale="0.5" speed="1.5"/>
+    <item name="腐化吸血鬼" skill="0" direction="1" scale="0.4" speed="1.0"/>
+    <item name="腐化吸血鬼" skill="1" direction="1" scale="0.4" speed="1.0"/>
+    <item name="腐化吸血鬼" skill="2" direction="1" scale="0.4" speed="1.0"/>
+    <item name="腐化吸血鬼" skill="3" direction="1" scale="0.4" speed="1.0"/>
+    <item name="腐化吸血鬼" skill="4" direction="1" scale="0.4" speed="1.5"/>
     
     <item name="巨龙哨兵" skill="0" direction="1" scale="0.5" speed="1.0"/>
     <item name="巨龙哨兵" skill="1" direction="1" scale="0.5" speed="1.0"/>
@@ -167,17 +167,17 @@
     <item name="巨龙哨兵" skill="3" direction="1" scale="0.5" speed="1.0"/>
     <item name="巨龙哨兵" skill="4" direction="1" scale="0.5" speed="1.5"/>
     
-    <item name="精灵守护者" skill="0" direction="1" scale="0.5" speed="1.0"/>
-    <item name="精灵守护者" skill="1" direction="1" scale="0.5" speed="1.0"/>
-    <item name="精灵守护者" skill="2" direction="1" scale="0.5" speed="1.0"/>
-    <item name="精灵守护者" skill="3" direction="1" scale="0.5" speed="1.0"/>
-    <item name="精灵守护者" skill="4" direction="1" scale="0.5" speed="1.5"/>
+    <item name="精灵守护者" skill="0" direction="1" scale="0.4" speed="1.0"/>
+    <item name="精灵守护者" skill="1" direction="1" scale="0.4" speed="1.0"/>
+    <item name="精灵守护者" skill="2" direction="1" scale="0.4" speed="1.0"/>
+    <item name="精灵守护者" skill="3" direction="1" scale="0.4" speed="1.0"/>
+    <item name="精灵守护者" skill="4" direction="1" scale="0.4" speed="1.5"/>
     
-    <item name="时光神殿守卫" skill="0" direction="1" scale="0.5" speed="1.0"/>
-    <item name="时光神殿守卫" skill="1" direction="1" scale="0.5" speed="1.0"/>
-    <item name="时光神殿守卫" skill="2" direction="1" scale="0.5" speed="1.0"/>
-    <item name="时光神殿守卫" skill="3" direction="1" scale="0.5" speed="1.0"/>
-    <item name="时光神殿守卫" skill="4" direction="1" scale="0.5" speed="1.0"/>
+    <item name="时光神殿守卫" skill="0" direction="1" scale="0.4" speed="1.0"/>
+    <item name="时光神殿守卫" skill="1" direction="1" scale="0.4" speed="1.0"/>
+    <item name="时光神殿守卫" skill="2" direction="1" scale="0.4" speed="1.0"/>
+    <item name="时光神殿守卫" skill="3" direction="1" scale="0.4" speed="1.0"/>
+    <item name="时光神殿守卫" skill="4" direction="1" scale="0.4" speed="1.0"/>
 	
 	<item name="威克拉姆国王" skill="0" direction="1" scale="0.5" speed="0.9"/>
     <item name="威克拉姆国王" skill="1" direction="1" scale="0.5" speed="0.9"/>
@@ -185,22 +185,46 @@
     <item name="威克拉姆国王" skill="3" direction="1" scale="0.5" speed="0.9"/>
     <item name="威克拉姆国王" skill="4" direction="1" scale="0.5" speed="1.5"/>
     
-    <item name="吸血鬼骑士" skill="0" direction="1" scale="0.5" speed="0.9"/>
-    <item name="吸血鬼骑士" skill="1" direction="1" scale="0.5" speed="0.9"/>
-    <item name="吸血鬼骑士" skill="2" direction="1" scale="0.5" speed="0.9"/>
-    <item name="吸血鬼骑士" skill="3" direction="1" scale="0.5" speed="0.9"/>
-    <item name="吸血鬼骑士" skill="4" direction="1" scale="0.5" speed="1.5"/>
+    <item name="吸血鬼骑士" skill="0" direction="1" scale="0.4" speed="0.9"/>
+    <item name="吸血鬼骑士" skill="1" direction="1" scale="0.4" speed="0.9"/>
+    <item name="吸血鬼骑士" skill="2" direction="1" scale="0.4" speed="0.9"/>
+    <item name="吸血鬼骑士" skill="3" direction="1" scale="0.4" speed="0.9"/>
+    <item name="吸血鬼骑士" skill="4" direction="1" scale="0.4" speed="1.5"/>
     
-    <item name="石像鬼" skill="0" direction="1" scale="0.5" speed="0.9"/>
-    <item name="石像鬼" skill="1" direction="1" scale="0.5" speed="0.9"/>
-    <item name="石像鬼" skill="2" direction="1" scale="0.5" speed="0.9"/>
-    <item name="石像鬼" skill="3" direction="1" scale="0.5" speed="0.9"/>
-    <item name="石像鬼" skill="4" direction="1" scale="0.5" speed="1.5"/>
+    <item name="石像鬼" skill="0" direction="1" scale="0.4" speed="0.9"/>
+    <item name="石像鬼" skill="1" direction="1" scale="0.4" speed="0.9"/>
+    <item name="石像鬼" skill="2" direction="1" scale="0.4" speed="0.9"/>
+    <item name="石像鬼" skill="3" direction="1" scale="0.4" speed="0.9"/>
+    <item name="石像鬼" skill="4" direction="1" scale="0.4" speed="1.5"/>
     
-    <item name="飞鹰" skill="0" direction="1" scale="0.5" speed="0.9"/>
-    <item name="飞鹰" skill="1" direction="1" scale="0.5" speed="0.9"/>
-    <item name="飞鹰" skill="2" direction="1" scale="0.5" speed="0.9"/>
-    <item name="飞鹰" skill="3" direction="1" scale="0.5" speed="0.9"/>
-    <item name="飞鹰" skill="4" direction="1" scale="0.5" speed="1.5"/>
+    <item name="飞鹰" skill="0" direction="1" scale="0.4" speed="0.9"/>
+    <item name="飞鹰" skill="1" direction="1" scale="0.4" speed="0.9"/>
+    <item name="飞鹰" skill="2" direction="1" scale="0.4" speed="0.9"/>
+    <item name="飞鹰" skill="3" direction="1" scale="0.4" speed="0.9"/>
+    <item name="飞鹰" skill="4" direction="1" scale="0.4" speed="1.5"/>
+	
+	<item name="大棒槌" skill="0" direction="1" scale="0.4" speed="0.9"/>
+    <item name="大棒槌" skill="1" direction="1" scale="0.4" speed="0.9"/>
+    <item name="大棒槌" skill="2" direction="1" scale="0.4" speed="0.9"/>
+    <item name="大棒槌" skill="3" direction="1" scale="0.4" speed="0.9"/>
+    <item name="大棒槌" skill="4" direction="1" scale="0.4" speed="1.5"/>
+	
+	<item name="精灵弓箭手" skill="0" direction="1" scale="0.4" speed="0.9"/>
+    <item name="精灵弓箭手" skill="1" direction="1" scale="0.4" speed="0.9"/>
+    <item name="精灵弓箭手" skill="2" direction="1" scale="0.4" speed="0.9"/>
+    <item name="精灵弓箭手" skill="3" direction="1" scale="0.4" speed="0.9"/>
+    <item name="精灵弓箭手" skill="4" direction="1" scale="0.4" speed="1.5"/>
+	
+	<item name="火枪手" skill="0" direction="1" scale="0.4" speed="0.9"/>
+    <item name="火枪手" skill="1" direction="1" scale="0.4" speed="0.9"/>
+    <item name="火枪手" skill="2" direction="1" scale="0.4" speed="0.9"/>
+    <item name="火枪手" skill="3" direction="1" scale="0.4" speed="0.9"/>
+    <item name="火枪手" skill="4" direction="1" scale="0.4" speed="1.5"/>
+	
+	<item name="人族牧师" skill="0" direction="1" scale="0.4" speed="0.9"/>
+    <item name="人族牧师" skill="1" direction="1" scale="0.4" speed="0.9"/>
+    <item name="人族牧师" skill="2" direction="1" scale="0.4" speed="0.9"/>
+    <item name="人族牧师" skill="3" direction="1" scale="0.4" speed="0.9"/>
+    <item name="人族牧师" skill="4" direction="1" scale="0.4" speed="1.5"/>
     
 </root>
