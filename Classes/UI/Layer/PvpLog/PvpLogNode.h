@@ -26,6 +26,7 @@ public:
     virtual ~PvpLogNodeObserver() {}
     virtual void onPvpLogNodeReplay(const PvpLogData* data) = 0;
     virtual void onPvpLogNodeShare(const PvpLogData* data) = 0;
+    virtual void onPvpLogNodeExpand(Node* sender, bool expanded) = 0;
 };
 
 class PvpLogNode: public Node

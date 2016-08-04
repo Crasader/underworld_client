@@ -33,6 +33,7 @@ static const float edgeDefault(5);
 static const float edgeBottom(8);
 static float deckNodeWidth(0);
 static float userInfoWidth(0);
+static const int zorder_top(1);
 
 PvpLogNode* PvpLogNode::create(const PvpLogData* data, bool expand)
 {
@@ -94,6 +95,16 @@ bool PvpLogNode::init(const PvpLogData* data, bool expand)
         _background = ui::Scale9Sprite::create(file, Rect(0, 0, size.width, size.height), capInsets);
         _background->setAnchorPoint(Point::ANCHOR_MIDDLE);
         addChild(_background);
+        
+        static const auto efile(PvpLogUI::getResourcePath("icon_jiantou_3.png"));
+        _expandButton = Button::create(efile, efile);
+        _expandButton->addClickEventListener([this](Ref*) {
+            show();
+            if (_observer) {
+                _observer->onPvpLogNodeExpand(this, _isExpanded);
+            }
+        });
+        addChild(_expandButton, zorder_top);
         
         createTopNode();
         update(data, expand);
@@ -181,18 +192,9 @@ void PvpLogNode::createTopNode()
         // middle
         {
             const float midPos((edgeDefault + userInfoWidth) / 2);
-            static const auto file(PvpLogUI::getResourcePath("icon_jiantou_3.png"));
-            _expandButton = Button::create(file, file);
-            node->addChild(_expandButton);
-            
             auto icon = Sprite::create(PvpLogUI::getResourcePath("icon_pvp_1.png"));
             node->addChild(icon);
-            
-            static const float space(20);
-            const auto& esize(_expandButton->getContentSize());
-            const auto& isize(icon->getContentSize());
-            _expandButton->setPosition(Point(midPos, edgeBottom + esize.height / 2));
-            icon->setPosition(_expandButton->getPosition() + Point(0, (esize.height + isize.height) / 2 + space));
+            icon->setPosition(midPos, size.height / 2);
         }
         
         {
@@ -315,12 +317,16 @@ void PvpLogNode::adjust()
     setContentSize(size);
     _background->setPosition(Point(size.width / 2, size.height / 2));
     
+    const auto& esize(_expandButton->getContentSize());
+    _expandButton->setPosition(Point((edgeDefault + userInfoWidth) / 2, edgeBottom + esize.height / 2));
+    _expandButton->setScaleY(_isExpanded ? -1 : 1);
+    
     if (_top) {
         const auto& nsize(_top->getContentSize());
         _top->setPosition(nsize.width / 2, size.height - nsize.height / 2);
     }
     
-    if (_isExpanded && _bottom) {
+    if (_bottom) {
         const auto& nsize(_bottom->getContentSize());
         _bottom->setPosition(nsize.width / 2, nsize.height / 2);
     }

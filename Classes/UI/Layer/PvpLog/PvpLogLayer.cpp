@@ -163,6 +163,37 @@ void PvpLogLayer::onPvpLogNodeReplay(const PvpLogData* data)
 
 void PvpLogLayer::onPvpLogNodeShare(const PvpLogData* data)
 {
+    auto layer = PvpLogShareLayer::create();
+    layer->registerObserver(this);
+    addChild(layer);
+}
+
+void PvpLogLayer::onPvpLogNodeExpand(Node* sender, bool expanded)
+{
+    auto cell(dynamic_cast<XTableViewCell*>(sender->getParent()));
+    if (cell) {
+        auto idx(cell->getIdx());
+        if (idx != _expandedIdx) {
+            _expandedIdx = idx;
+        } else {
+            assert(!expanded);
+            _expandedIdx = CC_INVALID_INDEX;
+        }
+        
+        refreshTable(true);
+    }
+}
+
+#pragma mark - PvpLogShareLayerObserver
+void PvpLogLayer::onPvpLogShareLayerClickedExitButton(Node* pSender)
+{
+    if (pSender) {
+        pSender->removeFromParent();
+    }
+}
+
+void PvpLogLayer::onPvpLogShareLayerClickedShareButton(Node* pSender)
+{
     
 }
 

@@ -28,6 +28,12 @@ void CheatConfiguration::purge()
 }
 
 CheatConfiguration::CheatConfiguration()
-:loadPVR(false) {}
+:
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+loadPVR(true)
+#else
+loadPVR(false)
+#endif
+{}
 
 CheatConfiguration::~CheatConfiguration() {}
