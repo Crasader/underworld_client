@@ -89,7 +89,7 @@ void BattleSmallResourceNode::setOpacity(GLubyte opacity)
     }
 }
 
-void BattleSmallResourceNode::check(float count)
+void BattleSmallResourceNode::check(int count)
 {
     if (_countLabel) {
         const Color4B& color = (count >= _count) ? ENABLED_COLOR : DISABLED_COLOR;
@@ -105,7 +105,7 @@ void BattleSmallResourceNode::setCount(int count)
         _count = count;
         
         if (_countLabel) {
-            _countLabel->setString(StringUtils::format("%d", count));
+            _countLabel->setString(std::to_string(count));
         }
     }
 }

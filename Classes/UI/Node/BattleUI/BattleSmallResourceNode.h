@@ -21,7 +21,7 @@ public:
     virtual ~BattleSmallResourceNode();
     
     virtual void setOpacity(GLubyte opacity) override;
-    void check(float count);
+    void check(int count);
     void setCount(int count);
     
     // getters

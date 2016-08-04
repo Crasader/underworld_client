@@ -199,9 +199,10 @@ void GameRender::updateUnits(const Game* game, int index)
     
     for (int i = 0; i < f->getUnitCount(); ++i) {
         auto unit = f->getUnitByIndex(i);
-        auto key = unit->getUnitId();
+        auto key = unit->getId();
         auto pos = unit->getCenterPos();
         auto skill = unit->getCurrentSkill();
+        
         if (skill) {
             auto sc = skill->getSkillType()->getSkillClass();
             if (_allUnitNodes.find(key) != _allUnitNodes.end()) {
@@ -254,10 +255,12 @@ void GameRender::updateUnits(const Game* game, int index)
 
 void GameRender::updateBullets(const Game* game)
 {
-    for (int i = 0; i < _world->getBulletCount(); ++i) {
-        auto bullet = _world->getBullet(i);
+    for (int i = 0; i < _world->getObjectCount(); ++i) {
+        auto bullet = dynamic_cast<const Bullet*>(_world->getWorldObject(i));
+        if (!bullet) continue;
+        
         auto pos = bullet->getPos();
-        auto targetPos = bullet->targetPos();
+        auto targetPos = bullet->getTargetPos();
         const bool isExploded(bullet->isExploded());
         if (_allBulletNodes.find(bullet) != _allBulletNodes.end()) {
             // already exist, update it
@@ -309,7 +312,7 @@ void GameRender::updateBullets(const Game* game)
                 const auto speed = bullet->getBulletType()->getSpeed();
                 auto node = BulletNode::create(bullet, (float)distance / speed);
                 node->registerObserver(this);
-                const float height = bullet->getHeight();
+                const float height = bullet->getBornHeight();
                 _mapLayer->addUnit(node, pos + Coordinate32(0, height));
                 _allBulletNodes.insert(make_pair(bullet, node));
                 _bulletParams.insert(make_pair(bullet, make_pair(pos, height)));
@@ -440,7 +443,7 @@ bool GameRender::isValidAoeSpell(const SpellType* spellType) const
 void GameRender::hurtUnit(const Unit* target, const string& trigger)
 {
     if (target && kSkillClass_Die != target->getCurrentSkill()->getSkillType()->getSkillClass()) {
-        const int key = target->getUnitId();
+        const int key = target->getId();
         if (_allUnitNodes.find(key) != _allUnitNodes.end()) {
             UnitNode* node = _allUnitNodes.at(key);
             if (node) {
@@ -832,7 +835,7 @@ void GameRender::tryToUseCard(const string& card, int idx, const Point& point)
                             if (spellName.find(SPELL_NAME_FIREBALL) != string::npos) {
                                 auto core = getCore();
                                 if (core) {
-                                    const int unitId = core->getUnitId();
+                                    const int unitId = core->getId();
                                     if (_allUnitNodes.find(unitId) != end(_allUnitNodes)) {
                                         auto node = _allUnitNodes.at(unitId);
                                         if (node) {

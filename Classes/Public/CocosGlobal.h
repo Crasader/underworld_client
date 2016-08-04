@@ -27,14 +27,14 @@
 #define BIG_FONT_SIZE       (24.0f)
 #define TITLE_FONT_SIZE     (40.0f)
 
-#define LAYER_DEFAULT_COLOR (Color4B(0, 0, 0, 0))
-#define LAYER_MASK_COLOR    (Color4B(0, 0, 0, 128))
+#define LAYER_DEFAULT_COLOR (cocos2d::Color4B(0, 0, 0, 0))
+#define LAYER_MASK_COLOR    (cocos2d::Color4B(0, 0, 0, 128))
 
-#define GOLD_LABEL_COLOR    (Color4B(255, 246, 0, 255))
-#define WOOD_LABEL_COLOR    (Color4B(0, 228, 255, 255))
+#define GOLD_LABEL_COLOR    (cocos2d::Color4B(255, 246, 0, 255))
+#define WOOD_LABEL_COLOR    (cocos2d::Color4B(0, 228, 255, 255))
 
-#define ENABLED_COLOR       (Color4B::WHITE)
-#define DISABLED_COLOR      (Color4B::RED)
+#define ENABLED_COLOR       (cocos2d::Color4B::WHITE)
+#define DISABLED_COLOR      (cocos2d::Color4B::RED)
 
 #define TOUCH_CANCEL_BY_MOVING_DISTANCE (10.0f)
 
@@ -116,5 +116,15 @@ enum class GearQuality {
     Purple,
     Orange,
 };
+
+static ResourceType core_resource_type_key_2_ui_resource_type(const std::string& key) {
+    if (key == RES_NAME_GOLD) {
+        return ResourceType::Gold;
+    } else if (key == RES_NAME_WOOD) {
+        return ResourceType::Wood;
+    } else {
+        return ResourceType::MAX;
+    }
+}
 
 #endif /* CocosGlobal_h */

@@ -842,7 +842,7 @@ void UnitNode::updateAnimation(const Skill* skill,
                     
                     // the unit might has been destroyed when animation finished,
                     // so save the unitId before playing the animation
-                    const int unitId = _unit->getUnitId();
+                    const int unitId = _unit->getId();
                     playAnimation(file, true, false, 0.0f, frameIndex, flip, [=](Node* unused) {
                         if (_observer) {
                             _observer->onUnitNodePlayedDeadAnimation(unitId);
@@ -1282,7 +1282,7 @@ void UnitNode::updateBufs()
 
 void UnitNode::updateFeatures(const Game* game)
 {
-    const auto& eventLogs = _unit->getEventLogs();
+    list<Unit::EventLog> eventLogs;
     for (auto iter = eventLogs.begin(); iter != eventLogs.end(); ++iter) {
         const auto& log = *iter;
         auto type = log._type;
@@ -1321,7 +1321,7 @@ void UnitNode::updateFeatures(const Game* game)
                     auto resource = iter->first;
                     auto amount = iter->second;
                     auto scheduleKey = rollHintScheduleKeyPrefix
-                    + UnderWorldCoreUtils::to_string(_unit->getUnitId())
+                    + UnderWorld::Core::UnderWorldCoreUtils::to_string(_unit->getId())
                     + rollHintScheduleKeySplitor
                     + UnderWorldCoreUtils::to_string(++_rollHintCounter);
                     rollHintResource(resource, amount, delay * index);
@@ -1330,36 +1330,34 @@ void UnitNode::updateFeatures(const Game* game)
             }
         }
     }
-    
-    _unit->clearEventLogs();
 }
 
 #pragma mark hp bar
 void UnitNode::addHPBar()
 {
-    if (!_hpBar && _unit && _sprite) {
-        _hpBar = DisplayBar::create(DisplayBarType::HP, thisFactionIndex(), thisUnitClass());
-        _hpBar->setPosition(getHPBarPosition());
-        addChild(_hpBar, zOrder_top);
-        if (_configData) {
-            scale(_hpBar, _configData->getHpBarScaleX(), 1.0f);
-        }
-    }
+//    if (!_hpBar && _unit && _sprite) {
+//        _hpBar = DisplayBar::create(DisplayBarType::HP, thisFactionIndex(), thisUnitClass());
+//        _hpBar->setPosition(getHPBarPosition());
+//        addChild(_hpBar, zOrder_top);
+//        if (_configData) {
+//            scale(_hpBar, _configData->getHpBarScaleX(), 1.0f);
+//        }
+//    }
 }
 
 void UnitNode::updateHPBar()
 {
-    if (_hpBar && _unit) {
-        _hpBar->setPercentage(getHpPercentage());
-    }
+//    if (_hpBar && _unit) {
+//        _hpBar->setPercentage(getHpPercentage());
+//    }
 }
 
 void UnitNode::removeHPBar()
 {
-    if (_hpBar) {
-        _hpBar->removeFromParent();
-        _hpBar = nullptr;
-    }
+//    if (_hpBar) {
+//        _hpBar->removeFromParent();
+//        _hpBar = nullptr;
+//    }
 }
 
 Point UnitNode::getHPBarPosition() const

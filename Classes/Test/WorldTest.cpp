@@ -67,7 +67,7 @@ void WorldTest::test() {
             
             if (world.getFaction(fid)->getUnitCount() > 0) {
                 auto unit = world.getFaction(fid)->getUnitByIndex(0);
-                std::cout << "eliminate unit <======== " << unit->getUnitId() << std::endl;
+                std::cout << "eliminate unit <======== " << unit->getId() << std::endl;
                 unit->eliminate();
             }
         }
@@ -75,17 +75,15 @@ void WorldTest::test() {
         if (count % UnderWorld::Core::GameConstants::FRAME_PER_SEC) {
             world.tick(count / UnderWorld::Core::GameConstants::FRAME_PER_SEC);
         }
-        
-        
     }
 }
 
 void WorldTest::onNotifyWorldEvents(const std::vector<UnderWorld::Core::World::EventLog>& events) {
     for (int i = 0; i < events.size(); ++i) {
         auto& event = events[i];
-        if (event._type == UnderWorld::Core::World::EventLogType::UnitCreate) {
+        if (event._type == UnderWorld::Core::World::EventLogType::ObjectCreate) {
             std::cout << "notify create unit <======== " << event._id << std::endl;
-        } else if (event._type == UnderWorld::Core::World::EventLogType::UnitEliminate) {
+        } else if (event._type == UnderWorld::Core::World::EventLogType::ObjectEliminate) {
             std::cout << "notify eliminate unit <======== " << event._id << std::endl;
         }
     }

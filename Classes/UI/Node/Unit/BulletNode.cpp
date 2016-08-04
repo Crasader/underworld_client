@@ -124,7 +124,7 @@ void BulletNode::update(bool newCreated)
 {
     if (_bullet) {
         const auto& currentPos = _bullet->getPos();
-        const auto& targetPos = _bullet->targetPos();
+        const auto& targetPos = _bullet->getTargetPos();
         
         if (newCreated && (_isPVR == (currentPos.x < targetPos.x))) {
             setScaleZ(-1 * getScaleX());
