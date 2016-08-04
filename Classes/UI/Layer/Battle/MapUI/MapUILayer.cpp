@@ -469,7 +469,7 @@ void MapUILayer::reorderDecks()
 #if false
     if (_resourceNode) {
         static const float offsetX(10.0f);
-        float x(_resourceNode->getPosition().x + _resourceNode->getContentSize().width / 2);
+        float x(_resourceNode->getPositionX() + _resourceNode->getContentSize().width / 2);
         
         for (auto iter = begin(_decks); iter != end(_decks); ++iter) {
             auto deck = iter->second;

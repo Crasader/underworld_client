@@ -41,6 +41,7 @@ protected:
     
     // LayerColor
     virtual bool init() override;
+    virtual void onEnterTransitionDidFinish() override;
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
@@ -51,7 +52,7 @@ protected:
     void updateExp();
     void updateResources();
     void moveChatLayer(bool folded, bool animated);
-    void onChatLayerMoved(bool folded);
+    void onChatLayerMoved(bool folded, const Point& point);
     
     void onResourceButtonClicked(ResourceNode* node);
     void onFunctionButtonClicked(ButtonType type);

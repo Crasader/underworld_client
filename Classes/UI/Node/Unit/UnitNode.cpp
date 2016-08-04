@@ -173,7 +173,7 @@ const Unit* UnitNode::getUnit() const
 void UnitNode::update(const Game* game)
 {
     if (_unit) {
-        const Skill* skill = _unit->getCurrentSkill();
+        auto skill = _unit->getCurrentSkill();
         if (skill) {
             // direction and flip
             auto direction = _unit->getDirection();
@@ -329,7 +329,10 @@ string UnitNode::getShadowFile(const string& file, bool flip) const
         auto pos = file.find(separator);
         if (string::npos != pos) {
             ret.assign(file);
-            ret.replace(pos, separator.size(), StringUtils::format("shadows/%d", flip ? 1 : 0));
+            ret.replace(pos, separator.size(), StringUtils::format("shadows/%d", flip ? 0 : 1));
+            if (_isBuilding) {
+                ret = ret.substr(0, ret.rfind('/'));
+            }
         }
         
         return ret;
@@ -499,50 +502,51 @@ void UnitNode::getAnimationFiles(vector<AnimationType>& output,
     AnimationType data;
     
     if (_configData->isPVR()) {
-        string prefix("");
-        switch (sc) {
-            case kSkillClass_Stop:
-            case kSkillClass_Produce:
-            {
-                prefix = "stand";
-            }
-                break;
-            case kSkillClass_Move:
-            {
-                if (_isBuilding) {
-                    assert(false);
-                } else {
+        if (_isBuilding) {
+            const string suffix(0 == thisFactionIndex() ? "Blue" : "Red");
+            data.assign(_configData->getPrefix() + "/body/" + suffix);
+        } else {
+            string prefix("");
+            switch (sc) {
+                case kSkillClass_Stop:
+                case kSkillClass_Produce:
+                {
+                    prefix = "stand";
+                }
+                    break;
+                case kSkillClass_Move:
+                {
                     prefix = "run";
                 }
-            }
-                break;
-            case kSkillClass_Attack:
-            {
-                if (_isStandby) {
-                    prefix = "stand";
-                } else {
-                    prefix = "attack";
-                    getSegmentalFiles(output, prefix, direction, isHealthy);
+                    break;
+                case kSkillClass_Attack:
+                {
+                    if (_isStandby) {
+                        prefix = "stand";
+                    } else {
+                        prefix = "attack";
+                        getSegmentalFiles(output, prefix, direction, isHealthy);
+                    }
                 }
+                    break;
+                case kSkillClass_Cast:
+                {
+                    prefix = "skill";
+                }
+                    break;
+                case kSkillClass_Die:
+                {
+                    prefix = "stand";
+                }
+                    break;
+                    
+                default:
+                    break;
             }
-                break;
-            case kSkillClass_Cast:
-            {
-                prefix = "skill";
+            
+            if (0 == output.size()) {
+                data.assign(_configData->getPrefix() + "/" + prefix + StringUtils::format("/body/%d", getResourceId(direction)));
             }
-                break;
-            case kSkillClass_Die:
-            {
-                prefix = "stand";
-            }
-                break;
-                
-            default:
-                break;
-        }
-        
-        if (0 == output.size()) {
-            data.assign(_configData->getPrefix() + "/" + prefix + StringUtils::format("/body/%d", getResourceId(direction)));
         }
     } else {
         const auto& prefix = _configData->getPrefix();
@@ -1438,6 +1442,9 @@ void UnitNode::createEquipment(AnimationNode** an, const string& file, bool flip
         (*an)->nodeFile = nodeFile;
         if (!nodeFile.empty()) {
             auto node = CocosUtils::getAnimationNode(nodeFile, startIdx);
+            if (flip) {
+                flipX(node);
+            }
             addChild(node);
             (*an)->node = node;
         }

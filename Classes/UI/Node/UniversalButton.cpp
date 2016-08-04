@@ -29,7 +29,7 @@ static string getButtonFile(UniversalButton::BSize size, UniversalButton::BType 
             if (big) {
                 file = "button_hongse_1.png";
             } else {
-                file = "button_hongse_1.png";
+                file = "button_hongse_2.png";
             }
         }
             break;

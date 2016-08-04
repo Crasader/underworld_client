@@ -12,14 +12,10 @@
 
 using namespace std;
 
-static const unsigned int row(2);
-static const unsigned int column(6);
-static const Vec2 space(5, 3);
-
-CardDeckNode* CardDeckNode::create()
+CardDeckNode* CardDeckNode::create(const Size& size, size_t column, size_t row)
 {
     auto ret = new (nothrow) CardDeckNode();
-    if(ret && ret->init()) {
+    if(ret && ret->init(size, column, row)) {
         ret->autorelease();
         return ret;
     }
@@ -29,19 +25,30 @@ CardDeckNode* CardDeckNode::create()
 }
 
 CardDeckNode::CardDeckNode()
-{}
+:_column(1)
+,_row(1)
+,_space(Vec2(0,0)) {}
 
 CardDeckNode::~CardDeckNode()
 {
     removeFromParent();
 }
 
-bool CardDeckNode::init()
+bool CardDeckNode::init(const Size& size, size_t column, size_t row)
 {
     if (Node::init()) {
+        _column = column;
+        _row = row;
         setAnchorPoint(Point::ANCHOR_MIDDLE);
-        const Size size(CardSimpleNode::Width * column + space.x * (column - 1), CardSimpleNode::Height * row + space.y * (row - 1));
         setContentSize(size);
+        
+        if (column > 1) {
+            _space.x = MAX(0, (size.width - column * CardSimpleNode::Width) / (column - 1));
+        }
+        
+        if (row > 1) {
+            _space.y = MAX(0, (size.height - row * CardSimpleNode::Height) / (row - 1));
+        }
         
         return true;
     }
@@ -62,16 +69,17 @@ void CardDeckNode::update(const vector<CardSimpleData*>& vec)
     
     static const float w(CardSimpleNode::Width);
     static const float h(CardSimpleNode::Height);
-    for (int i = 0; i < row; ++i) {
+    for (int i = 0; i < _row; ++i) {
         bool loop(true);
-        for (int j = 0; j < column; ++j) {
-            const size_t index(i * column + j);
+        for (int j = 0; j < _column; ++j) {
+            const size_t index(i * _column + j);
             if (vec.size() > index) {
                 if (_nodes.size() > index) {
                     _nodes.at(index)->update(vec.at(index));
                 } else {
                     auto node = CardSimpleNode::create(vec.at(index));
-                    node->setPosition((w + space.x) * j + w / 2, (h + space.y) * (row - (i + 1)) + h / 2);
+                    addChild(node);
+                    node->setPosition((w + _space.x) * j + w / 2, (h + _space.y) * (_row - (i + 1)) + h / 2);
                     _nodes.push_back(node);
                 }
             } else {

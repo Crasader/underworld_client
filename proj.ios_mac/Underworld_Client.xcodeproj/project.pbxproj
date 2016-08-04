@@ -205,6 +205,8 @@
 		A1AAA8651D5094BF00EB7AEB /* CardDeckNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1AAA8631D5094BF00EB7AEB /* CardDeckNode.cpp */; };
 		A1AAA8681D50951D00EB7AEB /* CardSimpleNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1AAA8661D50951D00EB7AEB /* CardSimpleNode.cpp */; };
 		A1ABD4D61D38945600141E6A /* FrameLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1ABD4D41D38945600141E6A /* FrameLoader.cpp */; };
+		A1AC97241D53187200FCEF5D /* CheatLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1AC97221D53187200FCEF5D /* CheatLayer.cpp */; };
+		A1AC972A1D53190800FCEF5D /* CheatConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1AC97281D53190800FCEF5D /* CheatConfiguration.cpp */; };
 		A1B4ADFF1C200480005906A6 /* DataManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B4ADEA1C200480005906A6 /* DataManager.cpp */; };
 		A1B4AE001C200480005906A6 /* OnlineUpdater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B4ADEC1C200480005906A6 /* OnlineUpdater.cpp */; };
 		A1B4AE011C200480005906A6 /* SoundManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B4ADEE1C200480005906A6 /* SoundManager.cpp */; };
@@ -317,6 +319,8 @@
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
 		D6B0611B1803AB670077942B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B0611A1803AB670077942B /* CoreMotion.framework */; };
+		E63DE5051D50E27E00735E88 /* TrophyGapNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E63DE5031D50E27E00735E88 /* TrophyGapNode.cpp */; };
+		E63DE5081D50E33300735E88 /* PvpResultNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E63DE5061D50E33300735E88 /* PvpResultNode.cpp */; };
 		E6DB72DA1D4F857E0045A8C0 /* CardSimpleData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6DB72D81D4F857E0045A8C0 /* CardSimpleData.cpp */; };
 		ED545A7C1B68A1F400C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A7B1B68A1F400C3958E /* libiconv.dylib */; };
 		ED545A7E1B68A1FA00C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A7D1B68A1FA00C3958E /* libiconv.dylib */; };
@@ -757,6 +761,10 @@
 		A1AAA8671D50951D00EB7AEB /* CardSimpleNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardSimpleNode.h; sourceTree = "<group>"; };
 		A1ABD4D41D38945600141E6A /* FrameLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FrameLoader.cpp; sourceTree = "<group>"; };
 		A1ABD4D51D38945600141E6A /* FrameLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrameLoader.h; sourceTree = "<group>"; };
+		A1AC97221D53187200FCEF5D /* CheatLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CheatLayer.cpp; sourceTree = "<group>"; };
+		A1AC97231D53187200FCEF5D /* CheatLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheatLayer.h; sourceTree = "<group>"; };
+		A1AC97281D53190800FCEF5D /* CheatConfiguration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CheatConfiguration.cpp; sourceTree = "<group>"; };
+		A1AC97291D53190800FCEF5D /* CheatConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheatConfiguration.h; sourceTree = "<group>"; };
 		A1B4ADEA1C200480005906A6 /* DataManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataManager.cpp; sourceTree = "<group>"; };
 		A1B4ADEB1C200480005906A6 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		A1B4ADEC1C200480005906A6 /* OnlineUpdater.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OnlineUpdater.cpp; sourceTree = "<group>"; };
@@ -965,6 +973,10 @@
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D6B0611A1803AB670077942B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
+		E63DE5031D50E27E00735E88 /* TrophyGapNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TrophyGapNode.cpp; sourceTree = "<group>"; };
+		E63DE5041D50E27E00735E88 /* TrophyGapNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrophyGapNode.h; sourceTree = "<group>"; };
+		E63DE5061D50E33300735E88 /* PvpResultNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PvpResultNode.cpp; sourceTree = "<group>"; };
+		E63DE5071D50E33300735E88 /* PvpResultNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PvpResultNode.h; sourceTree = "<group>"; };
 		E6DB72D81D4F857E0045A8C0 /* CardSimpleData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardSimpleData.cpp; sourceTree = "<group>"; };
 		E6DB72D91D4F857E0045A8C0 /* CardSimpleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardSimpleData.h; sourceTree = "<group>"; };
 		ED545A7B1B68A1F400C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
@@ -1914,6 +1926,7 @@
 				A1DFAACA1D10FC2800817E69 /* BattleDeck */,
 				A1F3D2221D1D041900EB5C17 /* Card */,
 				A1E830531C1E758E00FE01B8 /* Chat */,
+				A1AC97211D53187200FCEF5D /* Cheat */,
 				A1DFAAD41D10FC2F00817E69 /* Formation */,
 				A1F3D22C1D1D05CD00EB5C17 /* Public */,
 				A1FB5CFD1D4F18B700CD2622 /* PvpLog */,
@@ -2032,6 +2045,17 @@
 				A1A4BA481BCE096300175E8A /* Utils.h */,
 			);
 			path = Public;
+			sourceTree = "<group>";
+		};
+		A1AC97211D53187200FCEF5D /* Cheat */ = {
+			isa = PBXGroup;
+			children = (
+				A1AC97281D53190800FCEF5D /* CheatConfiguration.cpp */,
+				A1AC97291D53190800FCEF5D /* CheatConfiguration.h */,
+				A1AC97221D53187200FCEF5D /* CheatLayer.cpp */,
+				A1AC97231D53187200FCEF5D /* CheatLayer.h */,
+			);
+			path = Cheat;
 			sourceTree = "<group>";
 		};
 		A1B4ADE91C200480005906A6 /* Public */ = {
@@ -2359,8 +2383,12 @@
 				A1FB5D081D4F197F00CD2622 /* PvpLogShareLayer.h */,
 				A1FB5D041D4F18E700CD2622 /* PvpLogUI.cpp */,
 				A1FB5D051D4F18E700CD2622 /* PvpLogUI.h */,
+				E63DE5061D50E33300735E88 /* PvpResultNode.cpp */,
+				E63DE5071D50E33300735E88 /* PvpResultNode.h */,
 				A1AAA85C1D508DAF00EB7AEB /* TowerSimpleNode.cpp */,
 				A1AAA85D1D508DAF00EB7AEB /* TowerSimpleNode.h */,
+				E63DE5031D50E27E00735E88 /* TrophyGapNode.cpp */,
+				E63DE5041D50E27E00735E88 /* TrophyGapNode.h */,
 			);
 			path = PvpLog;
 			sourceTree = "<group>";
@@ -2656,6 +2684,7 @@
 				A1AAA8651D5094BF00EB7AEB /* CardDeckNode.cpp in Sources */,
 				045116F71BCFBA44002AA721 /* SkllType.cpp in Sources */,
 				A1B4AE021C200480005906A6 /* UserDefaultsDataManager.cpp in Sources */,
+				E63DE5051D50E27E00735E88 /* TrophyGapNode.cpp in Sources */,
 				A1D461521C3E166900E8E60B /* AbstractLocalData.cpp in Sources */,
 				A1E830561C1E75A700FE01B8 /* ChatNode.cpp in Sources */,
 				A1F5BFA21C1FD519007C08CB /* AchievementData.cpp in Sources */,
@@ -2689,6 +2718,7 @@
 				A1F96B101C86E805009D8B7C /* CardNode.cpp in Sources */,
 				A1F3D2381D1D05CD00EB5C17 /* ProgressLayer.cpp in Sources */,
 				A1F5BF951C1FC381007C08CB /* GearData.cpp in Sources */,
+				E63DE5081D50E33300735E88 /* PvpResultNode.cpp in Sources */,
 				30C6C3921C52183500DD1C8F /* AStarNode.cpp in Sources */,
 				A1F5BF921C1FC36C007C08CB /* GearLocalData.cpp in Sources */,
 				A16BF2851C313E2900E91458 /* HeroLocalData.cpp in Sources */,
@@ -2714,6 +2744,7 @@
 				A1CA35FB1D45F5B100584C9D /* LanguageNode.cpp in Sources */,
 				A1B4AE2D1C200521005906A6 /* ChatManager.cpp in Sources */,
 				307534691BF1B2F20057DCED /* Commander.cpp in Sources */,
+				A1AC97241D53187200FCEF5D /* CheatLayer.cpp in Sources */,
 				A1A4BA381BCDF81500175E8A /* IapObject.cpp in Sources */,
 				3019BABC1C99668E003258DB /* Aura.cpp in Sources */,
 				A1F3D23B1D1D062600EB5C17 /* XTableViewCell.cpp in Sources */,
@@ -2783,6 +2814,7 @@
 				045116F41BCFBA44002AA721 /* BulletType.cpp in Sources */,
 				A12C60B41D507FB6003FCF0D /* TrophyNode.cpp in Sources */,
 				0451170A1BCFBA53002AA721 /* Skill.cpp in Sources */,
+				A1AC972A1D53190800FCEF5D /* CheatConfiguration.cpp in Sources */,
 				0487A6671CC897F9005FE8D0 /* GameMode.cpp in Sources */,
 				A1CA35E91D45BDE200584C9D /* NoticeNode.cpp in Sources */,
 				3087FF1A1CA2A6B6004E31F6 /* NetworkMessage.cpp in Sources */,

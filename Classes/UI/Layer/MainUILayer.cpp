@@ -19,6 +19,7 @@
 #include "CardLayer.h"
 #include "SettingsLayer.h"
 #include "PvpLogLayer.h"
+#include "CheatLayer.h"
 
 using namespace std;
 using namespace ui;
@@ -322,6 +323,12 @@ bool MainUILayer::init()
     return false;
 }
 
+void MainUILayer::onEnterTransitionDidFinish()
+{
+    LayerColor::onEnterTransitionDidFinish();
+    CheatLayer::getInstance()->show();
+}
+
 bool MainUILayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
     return false;
@@ -371,24 +378,26 @@ void MainUILayer::moveChatLayer(bool folded, bool animated)
             if (!_isChatLayerMoving) {
                 _isChatLayerMoving = true;
                 static const float duration(0.3f);
-                _chatLayer->runAction(Sequence::create(MoveTo::create(duration, point), CallFunc::create([this, folded]() {
-                    onChatLayerMoved(folded);
+                if (folded) {
+                    _chatLayer->setFocus(false);
+                }
+                _chatLayer->runAction(Sequence::create(MoveTo::create(duration, point), CallFunc::create([=]() {
+                    onChatLayerMoved(folded, point);
                 }), nullptr));
             }
         } else {
-            onChatLayerMoved(folded);
+            onChatLayerMoved(folded, point);
         }
     }
 }
 
-void MainUILayer::onChatLayerMoved(bool folded)
+void MainUILayer::onChatLayerMoved(bool folded, const Point& point)
 {
-    const auto& size(_chatLayer->getContentSize());
-    const Point point(folded ? -size.width : 0, 0);
     _chatLayer->setPosition(point);
     _isChatLayerFolded = folded;
     _isChatLayerMoving = false;
     _chatLayer->setButtonStatus(folded);
+    _chatLayer->setFocus(!folded);
 }
 
 void MainUILayer::onResourceButtonClicked(ResourceNode* node)

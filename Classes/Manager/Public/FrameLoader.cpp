@@ -8,35 +8,14 @@
 
 #include "FrameLoader.h"
 #include "cocos2d.h"
+#include "CocosUtils.h"
+#include "DataManager.h"
 
 using namespace std;
 USING_NS_CC;
 
-static const string Folder("pvr/");
-static const string PlistFormat(".plist");
-static const string TextureFormat(".pvr.ccz");
-static const vector<string> FilesVector = {
-    // Fat
-    "hero-Fat",
-    "hero-Fat-shadows-0",
-    "hero-Fat-shadows-1",
-    "hero-Fat-equipment",
-    "hero-Fat-equipment-shadows",
-    
-    // Rifleman
-    "hero-Rifleman",
-    "hero-Rifleman-shadows",
-    "hero-Rifleman-equipment",
-    "hero-Rifleman-equipment-shadows",
-    
-    // Archer
-    "soldier-Archer",
-    "soldier-Archer-shadows",
-    
-    // Effects
-    "effect/effect-1",
-    "effect/effect-2"
-};
+static const string PlistExtension(".plist");
+static const string TextureExtension(".pvr.ccz");
 
 static FrameLoader* s_pInstance(nullptr);
 FrameLoader* FrameLoader::getInstance()
@@ -64,7 +43,7 @@ FrameLoader::~FrameLoader() {}
 #pragma mark - synchronous
 void FrameLoader::addAllFrames()
 {
-    add(FilesVector);
+    add(DataManager::getInstance()->getPVRFiles());
 }
 
 void FrameLoader::add(const vector<string>& files)
@@ -82,7 +61,7 @@ void FrameLoader::add(const string& file)
 #pragma mark - asynchronous
 void FrameLoader::addAllFramesAsync(const function<void()>& callback)
 {
-    addAsync(FilesVector, callback);
+    addAsync(DataManager::getInstance()->getPVRFiles(), callback);
 }
 
 void FrameLoader::addAsync(const vector<string>& files, const function<void()>& callback)
@@ -128,8 +107,13 @@ void FrameLoader::universalAdd(const string& file, const function<void(string)>&
             callback(file);
         }
     } else {
-        const string plist = Folder + file + PlistFormat;
-        const string textureFile = Folder + file + TextureFormat;
+        const string& plist(file);
+        auto pos = plist.rfind(PlistExtension);
+        if (string::npos == pos) {
+            return;
+        }
+        
+        const string textureFile = plist.substr(0, pos) + TextureExtension;
         auto fileUtils = FileUtils::getInstance();
         if (!fileUtils->isFileExist(plist) || !fileUtils->isFileExist(textureFile)) {
             CC_ASSERT(false);

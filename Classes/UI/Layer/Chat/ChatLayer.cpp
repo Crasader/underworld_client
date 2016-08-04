@@ -272,6 +272,15 @@ void ChatLayer::setButtonStatus(bool fold)
     }
 }
 
+void ChatLayer::setFocus(bool focus)
+{
+#if false
+    if (_editBoxNode) {
+        _editBoxNode->setFocus(focus && (ChatType::World == _thisTableType));
+    }
+#endif
+}
+
 #pragma mark - LayerColor
 bool ChatLayer::init()
 {
@@ -486,6 +495,7 @@ void ChatLayer::createTabButtons(const Vec2& edge)
         auto type(tableTypes[i]);
         auto button = TabButton::create(getTableName(type), normal, select, [=](Ref*) {
             setTableType(type);
+            setFocus(true);
         });
         _background->addChild(button, zorder_top);
         _tabButtons.insert(make_pair(type, button));
@@ -598,13 +608,7 @@ void ChatLayer::setTableType(ChatType type)
             iter->second->setEnabled(!isThisTable);
         }
         
-        const bool showEditBox(ChatType::World == type);
-        _editBoxNode->setVisible(showEditBox);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        _editBoxNode->setFocus(showEditBox);
-#else
-        _editBoxNode->setFocus(false);
-#endif
+        _editBoxNode->setVisible(ChatType::World == type);
     }
 }
 

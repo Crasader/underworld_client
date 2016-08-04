@@ -13,6 +13,7 @@
 #include "cocos-ext.h"
 #include "ui/CocosGUI.h"
 #include "PvpLogNode.h"
+#include "PvpLogShareLayer.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -28,6 +29,7 @@ class PvpLogLayer
 : public LayerColor
 , public TableViewDataSource
 , public PvpLogNodeObserver
+, public PvpLogShareLayerObserver
 {
 public:
     static PvpLogLayer* create();
@@ -48,6 +50,13 @@ protected:
     virtual ssize_t numberOfCellsInTableView(TableView *table) override;
     
     // PvpLogNodeObserver
+    virtual void onPvpLogNodeReplay(const PvpLogData* data) override;
+    virtual void onPvpLogNodeShare(const PvpLogData* data) override;
+    virtual void onPvpLogNodeExpand(Node* sender, bool expanded) override;
+    
+    // PvpLogShareLayerObserver
+    virtual void onPvpLogShareLayerClickedExitButton(Node* pSender) override;
+    virtual void onPvpLogShareLayerClickedShareButton(Node* pSender) override;
     
     // table
     void createTable(Node* parent);

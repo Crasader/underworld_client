@@ -12,6 +12,7 @@
 #include "CocosGlobal.h"
 #include "Unit.h"
 #include "SkllType.h"
+#include <vector>
 #include <unordered_map>
 
 namespace UnderWorld { namespace Core {
@@ -65,6 +66,7 @@ public:
     std::string getTechTreeData() const;
     std::string getHMMTechTreeData() const;
     
+    const std::vector<std::string>& getPVRFiles() const;
     const LevelLocalData* getLevelData(int levelId) const;
     const std::set<std::string>& getCardDecks() const;
     const CardLocalData* getCardData(int idx) const;
@@ -128,6 +130,7 @@ protected:
 protected:
     string getFileData(const std::string& file) const;
     void parseData(const std::string& file, const std::function<void(tinyxml2::XMLElement*)>& parser) const;
+    void parsePvrFiles();
     void parseLevelData();
     void parseCardDecks();
     void parseCardData();
@@ -164,6 +167,7 @@ protected:
     // ---------- binaryjson ----------
     void parseBinaryjsonTemplates();
 private:
+    std::vector<std::string> _pvrFiles;
     std::unordered_map<int, LevelLocalData*> _levels;
     std::set<std::string> _cardDecks;
     std::unordered_map<int, CardLocalData*> _cards;

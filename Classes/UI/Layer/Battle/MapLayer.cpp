@@ -672,38 +672,52 @@ Node* MapLayer::createUnitMask(const UnitType* ut) const
 {
     if (ut) {
         string file;
-        const string& name = ut->getRenderKey();
-        const URConfigData* data = DataManager::getInstance()->getURConfigData(name);
+        const auto& name = ut->getRenderKey();
+        auto data = DataManager::getInstance()->getURConfigData(name);
         if (data) {
             static const int resourceId(2);
             auto uc = ut->getUnitClass();
-            if (kUnitClass_Core == uc || kUnitClass_Building == uc) {
-                file = StringUtils::format(data->getBNormal().c_str(), resourceId);
+            if (data->isPVR()) {
+                file = data->getPrefix() + StringUtils::format("/stand/body/%d", resourceId);
             } else {
-                const string& prefix = data->getPrefix();
-                file = prefix + StringUtils::format("-standby-%d.csb", resourceId);
+                if (kUnitClass_Core == uc || kUnitClass_Building == uc) {
+                    file = StringUtils::format(data->getBNormal().c_str(), resourceId);
+                } else {
+                    file = data->getPrefix() + StringUtils::format("-standby-%d.csb", resourceId);
+                }
             }
             
-            if (FileUtils::getInstance()->isFileExist(file)) {
+            if (file.size() > 0) {
                 auto actionNode = CocosUtils::playAnimation(file, 0, false);
-                auto sprite = dynamic_cast<Sprite*>(actionNode->getChildren().front());
+                Sprite* sprite(nullptr);
+                if (data->isPVR()) {
+                    sprite = dynamic_cast<Sprite*>(actionNode);
+                } else {
+                    sprite = dynamic_cast<Sprite*>(actionNode->getChildren().front());
+                }
+                
                 if (sprite) {
                     sprite->setOpacity(180);
                     
-                    {
-                        const Point& point = sprite->getPosition() + Point(data->getHpBarPosX(), sprite->getContentSize().height / 2 + data->getHpBarPosY());
-                        
-                        auto node = Node::create();
-                        actionNode->addChild(node);
-                        
-                        auto levelLabel = CocosUtils::createLabel(StringUtils::format(LocalHelper::getString("hint_level").c_str(), 1), BIG_FONT_SIZE);
-                        levelLabel->setPosition(point + Point(0, 10));
-                        node->addChild(levelLabel);
-                        
-                        auto nameLabel = CocosUtils::createLabel(ut->getName(), BIG_FONT_SIZE);
-                        nameLabel->setPosition(point + Point(0, 35));
-                        node->addChild(nameLabel);
+                    Point basePoint(Point::ZERO);
+                    if (data->isPVR()) {
+                        basePoint.x = sprite->getContentSize().width / 2;
+                    } else {
+                        basePoint = sprite->getPosition();
                     }
+                    
+                    const Point& point = basePoint + Point(data->getHpBarPosX(), sprite->getContentSize().height / 2 + data->getHpBarPosY());
+                    
+                    auto node = Node::create();
+                    actionNode->addChild(node);
+                    
+                    auto levelLabel = CocosUtils::createLabel(StringUtils::format(LocalHelper::getString("hint_level").c_str(), 1), BIG_FONT_SIZE);
+                    levelLabel->setPosition(point + Point(0, 10));
+                    node->addChild(levelLabel);
+                    
+                    auto nameLabel = CocosUtils::createLabel(ut->getName(), BIG_FONT_SIZE);
+                    nameLabel->setPosition(point + Point(0, 35));
+                    node->addChild(nameLabel);
                 }
                 
                 return actionNode;

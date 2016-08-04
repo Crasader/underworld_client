@@ -87,7 +87,7 @@ bool CardInfoNode::init(const Callback& callback)
         
         const auto& cardSize(_cardNode->getContentSize());
         _cardNode->setPosition(Point(edgeX + cardSize.width / 2, size.height - (edgeY + cardSize.height / 2)));
-        lines.at(0)->setPosition(Point(size.width / 2, _cardNode->getPosition().y - (edgeY + cardSize.height / 2 + 8.0f)));
+        lines.at(0)->setPosition(Point(size.width / 2, _cardNode->getPositionY() - (edgeY + cardSize.height / 2 + 8.0f)));
         {
             const auto lh(_level->getContentSize().height);
             const auto qh(_quality->getContentSize().height);
@@ -107,7 +107,7 @@ bool CardInfoNode::init(const Callback& callback)
             const auto hh(_hp->getContentSize().height);
             const auto ah(_armor->getContentSize().height);
             const auto ph(_atkType->getContentSize().height);
-            _hp->setPosition(Point(edgeX, lines.at(0)->getPosition().y - (edgeY + hh) / 2));
+            _hp->setPosition(Point(edgeX, lines.at(0)->getPositionY() - (edgeY + hh) / 2));
             _armor->setPosition(_hp->getPosition() - Point(0, edgeY + (hh + ah) / 2));
             _atkType->setPosition(_armor->getPosition() - Point(0, edgeY + (ah + ph) / 2));
         }
@@ -118,9 +118,9 @@ bool CardInfoNode::init(const Callback& callback)
         
         {
             const float x(size.width * 0.6f);
-            _dmg->setPosition(Point(x, _hp->getPosition().y));
-            _atkSpeed->setPosition(Point(x, _armor->getPosition().y));
-            _atkRange->setPosition(Point(x, _atkType->getPosition().y));
+            _dmg->setPosition(Point(x, _hp->getPositionY()));
+            _atkSpeed->setPosition(Point(x, _armor->getPositionY()));
+            _atkRange->setPosition(Point(x, _atkType->getPositionY()));
         }
         
         static const string file(CocosUtils::getResourcePath("button_yellow.png"));
@@ -137,7 +137,7 @@ bool CardInfoNode::init(const Callback& callback)
         addChild(button);
         _button = button;
         
-        lines.at(1)->setPosition(Point(size.width / 2, button->getPosition().y + buttonSize.height / 2 + edgeY));
+        lines.at(1)->setPosition(Point(size.width / 2, button->getPositionY() + buttonSize.height / 2 + edgeY));
         updateCost(0);
         
         return true;

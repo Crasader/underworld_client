@@ -153,6 +153,7 @@ DataManager::~DataManager()
 
 void DataManager::init()
 {
+    parsePvrFiles();
     parseLevelData();
     parseCardDecks();
     parseCardData();
@@ -209,6 +210,11 @@ string DataManager::getHMMTechTreeData() const
 }
 
 #pragma mark - getters
+const vector<string>& DataManager::getPVRFiles() const
+{
+    return _pvrFiles;
+}
+
 const LevelLocalData* DataManager::getLevelData(int levelId) const
 {
     return getMapValue(_levels, levelId);
@@ -421,6 +427,13 @@ void DataManager::parseData(const string& file, const function<void(tinyxml2::XM
         
         CC_SAFE_DELETE(xmlDoc);
     }
+}
+
+void DataManager::parsePvrFiles()
+{
+    parseData("pvrlist.xml", [this](tinyxml2::XMLElement* item) {
+        _pvrFiles.push_back(item->Attribute("name"));
+    });
 }
 
 void DataManager::parseLevelData()

@@ -64,6 +64,7 @@ bool MessageBoxLayer::init()
     {
         static const Size dimensions(440, 120);
         _messageLabel = CocosUtils::createLabel("", MESSAGEBOX_DEFAULT_FONT_SIZE, DEFAULT_FONT, dimensions, TextHAlignment::CENTER, TextVAlignment::CENTER);
+        _messageLabel->setTextColor(Color4B::BLACK);
         _background->addChild(_messageLabel);
         
         const Size& size = _background->getContentSize();
@@ -170,6 +171,11 @@ void MessageBoxLayer::show(const std::string& message, MessageBoxType type, cons
 void MessageBoxLayer::hide()
 {
     removeFromParent();
+}
+
+bool MessageBoxLayer::onTouchBegan(Touch *touch, Event *unused_event)
+{
+    return true;
 }
 
 void MessageBoxLayer::onTouchEnded(Touch *touch, Event *unused_event)
