@@ -92,12 +92,6 @@ FormationLayer::FormationLayer()
     }
     
     reloadAllCandidateCards();
-    
-    // TODO: remove the code to another place
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-    CocosUtils::loadPVR("hero-Fat");
-    CocosUtils::loadPVR("soldier-Archer-test");
-#endif
 }
 
 FormationLayer::~FormationLayer()

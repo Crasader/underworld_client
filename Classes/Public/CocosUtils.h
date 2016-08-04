@@ -53,7 +53,6 @@ namespace CocosUtils
     cocos2d::Sprite* createTitle(const std::string& title, float fontSize);
     
     // animation
-    void loadPVR(const std::string& file);
     cocos2d::Node* getAnimationNode(const std::string& file, int idx);
     float playAnimation(cocos2d::Node* node,
                         const std::string& file,

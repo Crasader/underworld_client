@@ -42,6 +42,7 @@ public:
     virtual ~ChatLayer();
     void registerObserver(ChatLayerObserver *observer);
     void setButtonStatus(bool fold);
+    void setFocus(bool focus);
     
 protected:
     class TableNode;

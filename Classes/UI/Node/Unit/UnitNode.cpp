@@ -329,7 +329,7 @@ string UnitNode::getShadowFile(const string& file, bool flip) const
         auto pos = file.find(separator);
         if (string::npos != pos) {
             ret.assign(file);
-            ret.replace(pos, separator.size(), StringUtils::format("shadows/%d", flip ? 1 : 0));
+            ret.replace(pos, separator.size(), StringUtils::format("shadows/%d", flip ? 0 : 1));
         }
         
         return ret;

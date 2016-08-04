@@ -360,16 +360,6 @@ Sprite* CocosUtils::createTitle(const string& title, float fontSize)
 }
 
 #pragma mark - animations
-void CocosUtils::loadPVR(const string& file)
-{
-    static const string root("pvr/");
-    const string plist = root + file + ".plist";
-    const string pvr = root + file + ".pvr.ccz";
-    if (FileUtils::getInstance()->isFileExist(plist)) {
-        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(plist, pvr);
-    }
-}
-
 static SpriteFrame* getPVRFrame(const string& folder, int idx)
 {
     auto file = folder + StringUtils::format("/1%04d.png", idx + 1);

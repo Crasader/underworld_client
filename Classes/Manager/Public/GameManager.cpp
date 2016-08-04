@@ -108,10 +108,8 @@ void GameManager::launchGame()
         createClient(_scene);
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
         FrameLoader::getInstance()->addAllFramesAsync([this]() {
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    #if true
-            FrameLoader::getInstance()->addAllFrames();
-    #endif
+#else
+        FrameLoader::getInstance()->addAllFrames();
 #endif
             _isLaunching = false;
             CocosUtils::replaceScene(_scene, true);
