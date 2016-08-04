@@ -17,6 +17,7 @@
 #include "FrameLoader.h"
 #include "FormationData.h"
 #include "CocosUtils.h"
+#include "CheatConfiguration.h"
 #include "BattleScene.h"
 #include "MainLayer.h"
 #include "MessageBoxLayer.h"
@@ -106,24 +107,17 @@ void GameManager::launchGame()
         _scene = BattleScene::create();
         _scene->retain();
         createClient(_scene);
+        if (CheatConfiguration::getInstance()->loadPVR) {
+            auto loader(FrameLoader::getInstance());
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-        FrameLoader::getInstance()->addAllFramesAsync([this]() {
+            loader->addAllFramesAsync([this]() { onPVRLoaded(); });
 #else
-        FrameLoader::getInstance()->addAllFrames();
+            loader->addAllFrames();
+            onPVRLoaded();
 #endif
-            _isLaunching = false;
-            CocosUtils::replaceScene(_scene, true);
-            _scene->release();
-            if (_client && _battleContent) {
-                if (_isPvp) {
-                    _client->launchPvp(_battleContent->contentSetting, _battleContent->cards, _battleContent->unitList, _battleContent->unitPool);
-                } else {
-                    _client->launchPve(_mapId, _battleContent->contentSetting, _battleContent->cards, _battleContent->unitList, _battleContent->unitPool);
-                }
-            }
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-        });
-#endif
+        } else {
+            onPVRLoaded();
+        }
     } else {
         MessageBoxLayer::getInstance()->show("卡牌尚未选择！");
     }
@@ -240,4 +234,18 @@ bool GameManager::loadBattleContent()
     }
     
     return true;
+}
+
+void GameManager::onPVRLoaded()
+{
+    _isLaunching = false;
+    CocosUtils::replaceScene(_scene, true);
+    _scene->release();
+    if (_client && _battleContent) {
+        if (_isPvp) {
+            _client->launchPvp(_battleContent->contentSetting, _battleContent->cards, _battleContent->unitList, _battleContent->unitPool);
+        } else {
+            _client->launchPve(_mapId, _battleContent->contentSetting, _battleContent->cards, _battleContent->unitList, _battleContent->unitPool);
+        }
+    }
 }

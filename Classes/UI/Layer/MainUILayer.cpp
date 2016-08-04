@@ -19,6 +19,7 @@
 #include "CardLayer.h"
 #include "SettingsLayer.h"
 #include "PvpLogLayer.h"
+#include "CheatLayer.h"
 
 using namespace std;
 using namespace ui;
@@ -320,6 +321,12 @@ bool MainUILayer::init()
     }
     
     return false;
+}
+
+void MainUILayer::onEnterTransitionDidFinish()
+{
+    LayerColor::onEnterTransitionDidFinish();
+    CheatLayer::getInstance()->show();
 }
 
 bool MainUILayer::onTouchBegan(Touch *pTouch, Event *pEvent)

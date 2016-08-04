@@ -10,6 +10,12 @@
 	<item name="pvr/hero-Rifleman-shadows.plist"/>
 	<item name="pvr/hero-Rifleman.plist"/>
 	<item name="pvr/HumanPriest.plist"/>
+	<item name="pvr/Niutoubing-0123.plist"/>
+	<item name="pvr/Niutoubing-456.plist"/>
+	<item name="pvr/Niutoubing-shadows-0-0123.plist"/>
+	<item name="pvr/Niutoubing-shadows-0-456.plist"/>
+	<item name="pvr/Niutoubing-shadows-1-0123.plist"/>
+	<item name="pvr/Niutoubing-shadows-1-456.plist"/>
 	<item name="pvr/soldier-Archer-shadows.plist"/>
 	<item name="pvr/soldier-Archer.plist"/>
 	<item name="pvr/Tower.plist"/>

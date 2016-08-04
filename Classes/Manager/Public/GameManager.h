@@ -44,6 +44,8 @@ private:
     void purgeClient();
     bool loadBattleContent();
     
+    void onPVRLoaded();
+    
 private:
     struct BattleContent;
     

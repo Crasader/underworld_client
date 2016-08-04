@@ -9,43 +9,13 @@
 #include "FrameLoader.h"
 #include "cocos2d.h"
 #include "CocosUtils.h"
+#include "DataManager.h"
 
 using namespace std;
 USING_NS_CC;
 
 static const string PlistExtension(".plist");
 static const string TextureExtension(".pvr.ccz");
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-static vector<string> FilesVector;
-#else
-static const vector<string> FilesVector = {
-    "pvr/hero-Fat-equipment-shadows.plist",
-    "pvr/hero-Fat-equipment.plist",
-    "pvr/hero-Fat-shadows-0.plist",
-    "pvr/hero-Fat-shadows-1.plist",
-    "pvr/hero-Fat.plist",
-    "pvr/hero-Rifleman-equipment-shadows.plist",
-    "pvr/hero-Rifleman-equipment.plist",
-    "pvr/hero-Rifleman-shadows.plist",
-    "pvr/hero-Rifleman.plist",
-    "pvr/HumanPriest.plist",
-    "pvr/Niutoubing-0123.plist",
-    "pvr/Niutoubing-456.plist",
-    "pvr/Niutoubing-shadows-0-0123.plist",
-    "pvr/Niutoubing-shadows-0-456.plist",
-    "pvr/Niutoubing-shadows-1-0123.plist",
-    "pvr/Niutoubing-shadows-1-456.plist",
-    "pvr/soldier-Archer-shadows.plist",
-    "pvr/soldier-Archer.plist",
-    "pvr/Tower.plist",
-    
-    "pvr/effect/effect-1.plist",
-    "pvr/effect/effect-2.plist",
-    "pvr/effect/jian-test.plist",
-    "pvr/effect/jian.plist",
-    "pvr/effect/xeffect-1.plist"
-};
-#endif
 
 static FrameLoader* s_pInstance(nullptr);
 FrameLoader* FrameLoader::getInstance()
@@ -66,23 +36,14 @@ void FrameLoader::purge()
 
 FrameLoader::FrameLoader()
 :_isLoading(false)
-,_callback(nullptr)
-{
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-    static const string Folder("pvr/");
-    static const string KeepFile("keep.txt");
-    auto folder = FileUtils::getInstance()->fullPathForFilename(Folder + KeepFile);
-    folder = folder.substr(0, folder.rfind('/'));
-    CocosUtils::getFileLists(folder, Folder, PlistExtension, FilesVector);
-#endif
-}
+,_callback(nullptr) {}
 
 FrameLoader::~FrameLoader() {}
 
 #pragma mark - synchronous
 void FrameLoader::addAllFrames()
 {
-    add(FilesVector);
+    add(DataManager::getInstance()->getPVRFiles());
 }
 
 void FrameLoader::add(const vector<string>& files)
@@ -100,7 +61,7 @@ void FrameLoader::add(const string& file)
 #pragma mark - asynchronous
 void FrameLoader::addAllFramesAsync(const function<void()>& callback)
 {
-    addAsync(FilesVector, callback);
+    addAsync(DataManager::getInstance()->getPVRFiles(), callback);
 }
 
 void FrameLoader::addAsync(const vector<string>& files, const function<void()>& callback)
