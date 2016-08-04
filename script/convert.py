@@ -37,7 +37,7 @@ if __name__ == "__main__":
     # print doc.toprettyxml()
 
     # file = open("/Users/MacUser/csdn/underworld_config/AAALL.xml", "w")
-    file = open(sys.argv[2], "w")
+    file = open(sys.argv[2], "wb")
     doc.writexml(file, addindent='\t', newl='\n')
     file.close()
 

@@ -3,6 +3,9 @@ dir=$(cd `dirname $0`;pwd)
 cd $dir
 project_root=`dirname $dir`
 echo $project_root
+cd $dir
+python pvr.py ../Resources/pvr xml_data/pvrlist.xml
+
 cd $dir/xml_data
 for _f in `ls *.xml`;do
 	echo $_f
