@@ -470,7 +470,12 @@ void ClientTCPNetworkProxy::onReconncected(TCPClient* client) {
     if (_status == ClientStatus::Finished) {
         return;
     }
-    std::string reqContent = parseReconnect2SMsg(_uid, _battleid);
+    std::string reqContent;
+    if (_status == ClientStatus::Ready) {
+        //TODO need to resend battle user info
+    } else {
+        reqContent = parseReconnect2SMsg(_uid, _battleid);
+    }
     TCPRequest* ret = nullptr;
     if (!reqContent.empty()) {
         ret = new TCPRequest();
