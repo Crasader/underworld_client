@@ -11,6 +11,7 @@
 #include "CocosUtils.h"
 #include "PvpLogUI.h"
 #include "PvpManager.h"
+#include "LocalHelper.h"
 #include "XTableViewCell.h"
 
 using namespace std;
@@ -75,7 +76,7 @@ bool PvpLogLayer::init()
             removeFromParent();
         });
         
-        auto title = CocosUtils::createLabel("Share", BIG_FONT_SIZE);
+        auto title = CocosUtils::createLabel(LocalHelper::getString("ui_log_title"), BIG_FONT_SIZE);
         title->setAnchorPoint(Point::ANCHOR_MIDDLE);
         title->setPosition(Point(size.width / 2, (size.height + subBgSize.height + edge) / 2));
         bg->addChild(title);
@@ -192,7 +193,7 @@ void PvpLogLayer::onPvpLogShareLayerClickedExitButton(Node* pSender)
     }
 }
 
-void PvpLogLayer::onPvpLogShareLayerClickedShareButton(Node* pSender)
+void PvpLogLayer::onPvpLogShareLayerClickedShareButton(Node* pSender, const string& msg)
 {
     
 }

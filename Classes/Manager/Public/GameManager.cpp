@@ -18,6 +18,7 @@
 #include "FormationData.h"
 #include "CocosUtils.h"
 #include "CheatConfiguration.h"
+#include "LocalHelper.h"
 #include "BattleScene.h"
 #include "MainLayer.h"
 #include "MessageBoxLayer.h"
@@ -119,7 +120,7 @@ void GameManager::launchGame()
             onPVRLoaded();
         }
     } else {
-        MessageBoxLayer::getInstance()->show("卡牌尚未选择！");
+        MessageBoxLayer::getInstance()->show(LocalHelper::getString("hint_selectNoCard"));
     }
 }
 

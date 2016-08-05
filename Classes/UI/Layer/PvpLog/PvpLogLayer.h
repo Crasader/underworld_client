@@ -56,7 +56,7 @@ protected:
     
     // PvpLogShareLayerObserver
     virtual void onPvpLogShareLayerClickedExitButton(Node* pSender) override;
-    virtual void onPvpLogShareLayerClickedShareButton(Node* pSender) override;
+    virtual void onPvpLogShareLayerClickedShareButton(Node* pSender, const std::string& msg) override;
     
     // table
     void createTable(Node* parent);

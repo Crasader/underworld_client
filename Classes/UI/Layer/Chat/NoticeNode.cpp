@@ -11,6 +11,7 @@
 #include "ChatData.h"
 #include "ObjectBriefData.h"
 #include "ChatUI.h"
+#include "LocalHelper.h"
 #include "ObjectBriefNode.h"
 #include "UniversalButton.h"
 
@@ -20,10 +21,10 @@ using namespace ui;
 static const unsigned int resourceMaxCount(4);
 static const float resourceNodeEdgeX(3);
 
-NoticeNode* NoticeNode::create(float width, const ChatData* data)
+NoticeNode* NoticeNode::create(ChatType type, float width, const ChatData* data)
 {
     auto ret = new (nothrow) NoticeNode();
-    if (ret && ret->init(width, data)) {
+    if (ret && ret->init(type, width, data)) {
         ret->autorelease();
         return ret;
     }
@@ -34,12 +35,15 @@ NoticeNode* NoticeNode::create(float width, const ChatData* data)
 
 NoticeNode::NoticeNode()
 :_observer(nullptr)
+,_type(ChatType::Mail)
 ,_width(0)
+,_data(nullptr)
 ,_bg(nullptr)
 ,_user(nullptr)
 ,_content(nullptr)
 ,_time(nullptr)
-,_resourceBg(nullptr) {}
+,_resourceBg(nullptr)
+,_button(nullptr) {}
 
 NoticeNode::~NoticeNode()
 {
@@ -51,11 +55,13 @@ void NoticeNode::registerObserver(NoticeNodeObserver *observer)
     _observer = observer;
 }
 
-bool NoticeNode::init(float width, const ChatData* data)
+bool NoticeNode::init(ChatType type, float width, const ChatData* data)
 {
     if (Node::init()) {
         setAnchorPoint(Point::ANCHOR_MIDDLE);
+        _type = type;
         _width = width;
+        _data = data;
         
         static const Size size(348, 206);
         static const float capInsets(11.0f);
@@ -72,6 +78,7 @@ bool NoticeNode::init(float width, const ChatData* data)
         _content->setTextColor(Color4B::BLACK);
         _content->setHorizontalAlignment(TextHAlignment::LEFT);
         _content->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+        _content->setMaxLineWidth(size.width - 10);
         _bg->addChild(_content);
         
         _time = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
@@ -80,31 +87,22 @@ bool NoticeNode::init(float width, const ChatData* data)
         _time->setAnchorPoint(Point::ANCHOR_TOP_RIGHT);
         _bg->addChild(_time);
         
-        _resourceBg = Sprite::create(ChatUI::getResourcePath("ui_tiao_5.png"));
-        _bg->addChild(_resourceBg);
-        
-        const auto& rsize(_resourceBg->getContentSize());
-        _content->setMaxLineWidth(rsize.width);
-        
-        // resources
-        if (true) {
+        if (ChatType::Mail == type) {
+            _resourceBg = Sprite::create(ChatUI::getResourcePath("ui_tiao_5.png"));
+            _bg->addChild(_resourceBg);
+            
             for (int i = 0; i < resourceMaxCount; ++i) {
                 auto node = ObjectBriefNode::create(nullptr);
                 _resourceBg->addChild(node);
                 _resourceNodes.push_back(node);
             }
-        }
-        
-        // "get" button
-        if (true) {
-            auto button = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Blue, "Get");
-            button->setCallback([](Ref*) {
-                
-            });
-            _resourceBg->addChild(button);
             
-            const auto& bsize(button->getContentSize());
-            button->setPosition(Point(rsize.width - (resourceNodeEdgeX + bsize.width / 2), rsize.height / 2));
+            _button = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Blue, "");
+            _resourceBg->addChild(_button);
+            
+            const auto& bsize(_button->getContentSize());
+            const auto& rsize(_resourceBg->getContentSize());
+            _button->setPosition(Point(rsize.width - (resourceNodeEdgeX + bsize.width / 2), rsize.height / 2));
         }
         
         update(data);
@@ -121,36 +119,58 @@ void NoticeNode::update(const ChatData* data)
         _user->setString(data->getUser());
         _content->setString(data->getMessage());
         _time->setString(data->getFormattedTime());
-        const auto& rewards(data->getRewards());
-        auto cnt(rewards.size());
-        _resourceBg->setVisible(cnt > 0);
         
-        float x(resourceNodeEdgeX);
-        const auto& rsize(_resourceBg->getContentSize());
-        for (int i = 0; i < cnt; ++i) {
-            if (i < resourceMaxCount) {
-                auto node(_resourceNodes.at(i));
-                node->setVisible(true);
-                node->update(rewards.at(i));
-                
-                static const float space(3);
-                const auto& nsize(node->getContentSize());
-                node->setPosition(x + nsize.width / 2, rsize.height / 2);
-                x += nsize.width + space;
+        if (_resourceBg) {
+            const auto& rewards(data->getRewards());
+            auto cnt(rewards.size());
+            if (cnt > 0) {
+                _button->setType(UniversalButton::BType::Blue);
+                _button->setTitle(LocalHelper::getString("ui_chat_mail_get"));
+                _button->setCallback([this](Ref*) {
+                    if (_observer) {
+                        _observer->onNoticeNodeGet(_data);
+                    }
+                });
             } else {
-                break;
+                _button->setType(UniversalButton::BType::Red);
+                _button->setTitle(LocalHelper::getString("ui_chat_mail_delete"));
+                _button->setCallback([this](Ref*) {
+                    if (_observer) {
+                        _observer->onNoticeNodeDelete(_data);
+                    }
+                });
             }
-        }
-        
-        for (auto i = cnt; i < resourceMaxCount; ++i) {
-            _resourceNodes.at(i)->setVisible(false);
+            
+            float x(resourceNodeEdgeX);
+            const auto& rsize(_resourceBg->getContentSize());
+            for (int i = 0; i < cnt; ++i) {
+                if (i < resourceMaxCount) {
+                    auto node(_resourceNodes.at(i));
+                    node->setVisible(true);
+                    node->update(rewards.at(i));
+                    
+                    static const float space(3);
+                    const auto& nsize(node->getContentSize());
+                    node->setPosition(x + nsize.width / 2, rsize.height / 2);
+                    x += nsize.width + space;
+                } else {
+                    break;
+                }
+            }
+            
+            for (auto i = cnt; i < resourceMaxCount; ++i) {
+                _resourceNodes.at(i)->setVisible(false);
+            }
         }
     } else {
         static const string empty("");
         _user->setString(empty);
         _content->setString(empty);
         _time->setString(empty);
-        _resourceBg->setVisible(false);
+        if (_resourceBg) {
+            _resourceBg->removeFromParent();
+            _resourceBg = nullptr;
+        }
     }
     
     adjust();
@@ -163,9 +183,7 @@ void NoticeNode::adjust()
     const auto& usize(_user->getContentSize());
     const auto& csize(_content->getContentSize());
     const auto& tsize(_time->getContentSize());
-    const auto& rsize(_resourceBg->getContentSize());
-    const bool rvisible(_resourceBg->isVisible());
-    const float rh(rvisible ? (rsize.height + space) : 0);
+    const float rh(_resourceBg ? (_resourceBg->getContentSize().height + space) : 0);
     const Size size(_width, MAX(usize.height, tsize.height) + csize.height + space + rh + edge * 2);
     _bg->setContentSize(size);
     
@@ -173,7 +191,8 @@ void NoticeNode::adjust()
     _time->setPosition(Point(size.width - edge, size.height - edge));
     _content->setPosition(Point(edge, edge + rh + csize.height / 2));
     
-    if (rvisible) {
+    if (_resourceBg) {
+        const auto& rsize(_resourceBg->getContentSize());
         _resourceBg->setPosition(Point(size.width / 2, edge + rsize.height / 2));
         _resourceBg->setScaleX((_width - edge * 2) / rsize.width);
     }

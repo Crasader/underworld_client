@@ -23,18 +23,71 @@
     
     
     <item key="battle_summoning" value="召唤中"/>
+    
+    <!-- 卡牌 -->
+    <item key="ui_card_tab_all" value="全部"/>
+    <item key="ui_card_tab_hero" value="布阵英雄"/>
+    <item key="ui_card_tab_soldier" value="援军法术"/>
+    <item key="ui_card_tab_spell" value="法术卡牌"/>
+    <item key="ui_card_progress" value="收集进度："/>
+    
+    <!-- 阵型 -->
+    <item key="ui_formation_tab_hero" value="英雄"/>
+    <item key="ui_formation_tab_spell" value="法术"/>
+    <item key="ui_formation_heroResource" value="人口资源"/>
+    <item key="ui_formation_spellResource" value="法术资源"/>
+    
+    <!-- 聊天 -->
+    <item key="ui_chat_tab_world" value="公共"/>
+    <item key="ui_chat_tab_mail" value="邮箱"/>
+    <item key="ui_chat_tab_notice" value="系统"/>
+    <item key="ui_chat_user_detail" value="玩家详情"/>
+    <item key="ui_chat_user_makeFriend" value="成为好友"/>
+    <item key="ui_chat_user_block" value="屏蔽言论"/>
+    <item key="ui_chat_mail_get" value="获取"/>
+    <item key="ui_chat_mail_delete" value="删除"/>
+    <item key="ui_chat_placeholder" value="请输入..."/>
+    
+    <!-- 战绩回放 -->
+    <item key="ui_log_title" value="战绩回放"/>
+    <item key="ui_log_replay" value="观看"/>
+    <item key="ui_log_share" value="分享"/>
+    <item key="ui_log_win" value="胜利"/>
+    <item key="ui_log_lose" value="战败"/>
+    <item key="ui_logShare_title" value="分享回放"/>
+    <item key="ui_logShare_description" value="描述"/>
+    <item key="ui_logShare_share" value="分享"/>
+    <item key="ui_logShare_hint" value="看看这个回放！"/>
 	
-	
-	 <!-- 任务 -->
-	<item key="ui_quest_title" value="任务"/>
-	<item key="ui_quest_tab_daily" value="每日任务"/>
-	<item key="ui_quest_tab_life" value="主线任务"/>
-	<item key="ui_quest_tab_timeLimited" value="限时任务"/>
+	<!-- 任务 -->
+    <item key="ui_quest_title" value="任务"/>
+    <item key="ui_quest_tab_main" value="主线"/>
+    <item key="ui_quest_tab_branch" value="支线"/>
+    <item key="ui_quest_tab_daily" value="日常"/>
+	<item key="ui_quest_tab_timeLimited" value="限时"/>
 	<item key="ui_questNode_reward_label" value="奖励："/>
 	<item key="ui_questNode_buttonHint_unfinished" value="前往"/>
 	<item key="ui_questNode_buttonHint_finished" value="领取"/>
-	
-	 <!-- 提示 -->
+    
+    <!-- 设置 -->
+    <item key="ui_setting_title" value="设置"/>
+    <item key="ui_setting_music" value="音乐"/>
+    <item key="ui_setting_sound" value="声音"/>
+    <item key="ui_setting_language" value="语言"/>
+    <item key="ui_setting_apns" value="推送"/>
+    <item key="ui_setting_rename" value="更改名称"/>
+    <item key="ui_setting_login" value="登录账号"/>
+    <item key="ui_setting_logout" value="注销账号"/>
+    <item key="ui_setting_help" value="帮助与支持"/>
+    <item key="ui_setting_privacyPolicy" value="隐私政策"/>
+    <item key="ui_setting_serviceTerms" value="服务条款"/>
+    <item key="ui_setting_guide" value="家长指南"/>
+    <item key="ui_setting_on" value="开启"/>
+    <item key="ui_setting_off" value="关闭"/>
+    <item key="ui_setting_hint" value="登录xx保存您的游戏进度，并可在多台设备上玩游戏。"/>
+    
+    <!-- 提示 -->
+    <item key="hint_selectNoCard" value="卡牌尚未选择！"/>
 	<item key="hint_exitPve" value="您确定结束战斗并退出该关卡吗？"/>
 	<item key="hint_confirm" value="确定"/>
     <item key="hint_cancel" value="取消"/>

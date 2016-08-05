@@ -12,6 +12,7 @@
 #include "ChatManager.h"
 #include "LocalHelper.h"
 #include "SoundManager.h"
+#include "LocalHelper.h"
 #include "XTableViewCell.h"
 #include "TabButton.h"
 
@@ -190,7 +191,7 @@ bool ChatLayer::EditBoxNode::init(float width, EditBoxDelegate* delegate, const 
         _editBox->setInputMode(ui::EditBox::InputMode::ANY);
         _editBox->setFontColor(Color4B::BLACK);
         _editBox->setPlaceholderFontSize(16);
-        _editBox->setPlaceHolder("Please input...");
+        _editBox->setPlaceHolder(LocalHelper::getString("ui_chat_placeholder").c_str());
         addChild(_editBox);
         
         _editBox->setPosition(Point(esize.width / 2, size.height / 2));
@@ -428,8 +429,27 @@ void ChatLayer::editBoxReturn(ui::EditBox* editBox)
 }
 
 #pragma mark - ChatNodeObserver
+void ChatLayer::onChatNodeTouchedAvatar(const ChatData* data)
+{
+    if (data) {
+        
+    }
+}
 
 #pragma mark - NoticeNodeObserver
+void ChatLayer::onNoticeNodeGet(const ChatData* data)
+{
+    if (data) {
+        
+    }
+}
+
+void ChatLayer::onNoticeNodeDelete(const ChatData* data)
+{
+    if (data) {
+        
+    }
+}
 
 #pragma mark - table
 void ChatLayer::createTableNode(ChatType type, float height, const Point& topLeft)
@@ -543,7 +563,7 @@ Node* ChatLayer::createCellNode(ChatType type, size_t idx)
             return cn;
         } else if (ChatType::Mail == type ||
                    ChatType::Notice == type) {
-            auto nn = NoticeNode::create(width, chatData);
+            auto nn = NoticeNode::create(type, width, chatData);
             nn->registerObserver(this);
             return nn;
         }
@@ -616,11 +636,11 @@ string ChatLayer::getTableName(ChatType type) const
 {
     switch (type) {
         case ChatType::World:
-            return "公共";
+            return LocalHelper::getString("ui_chat_tab_world");
         case ChatType::Mail:
-            return "邮箱";
+            return LocalHelper::getString("ui_chat_tab_mail");
         case ChatType::Notice:
-            return "系统";
+            return LocalHelper::getString("ui_chat_tab_notice");
         default:
             return "";
     }

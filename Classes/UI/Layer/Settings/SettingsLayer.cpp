@@ -11,6 +11,7 @@
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "SettingUI.h"
+#include "LocalHelper.h"
 #include "UniversalButton.h"
 
 using namespace std;
@@ -22,10 +23,10 @@ enum class SettingType {
     APNS,
     Rename,
     Logout,
-    ST1,
-    ST2,
-    ST3,
-    ST4,
+    Help,
+    PrivacyPolicy,
+    ServiceTerms,
+    Guide,
 };
 
 #pragma mark - static
@@ -41,10 +42,10 @@ static const vector<SettingType> upperTypes = {
 };
 
 static const vector<SettingType> lowerTypes = {
-    SettingType::ST1,
-    SettingType::ST2,
-    SettingType::ST3,
-    SettingType::ST4,
+    SettingType::Help,
+    SettingType::PrivacyPolicy,
+    SettingType::ServiceTerms,
+    SettingType::Guide,
 };
 
 #pragma mark - SettingNode
@@ -96,16 +97,16 @@ bool SettingNode::init(SettingType type, const Callback& callback, bool isOn) {
         // first(bool): if the button is a on/off switch
         // second: if "first" is true, it's the title; else it's the button's title
         static const map<SettingType, std::pair<bool, std::string>> SettingNodeInfo {
-            {SettingType::Music, {true, "Music"}},
-            {SettingType::Sound, {true, "Sound"}},
-            {SettingType::Language, {true, "Language"}},
-            {SettingType::APNS, {true, "APNS"}},
-            {SettingType::Rename, {false, "Rename"}},
-            {SettingType::Logout, {false, "Logout"}},
-            {SettingType::ST1, {false, "ST1"}},
-            {SettingType::ST2, {false, "ST2"}},
-            {SettingType::ST3, {false, "ST3"}},
-            {SettingType::ST4, {false, "ST4"}},
+            {SettingType::Music, {true, LocalHelper::getString("ui_setting_music")}},
+            {SettingType::Sound, {true, LocalHelper::getString("ui_setting_sound")}},
+            {SettingType::Language, {true, LocalHelper::getString("ui_setting_language")}},
+            {SettingType::APNS, {true, LocalHelper::getString("ui_setting_apns")}},
+            {SettingType::Rename, {false, LocalHelper::getString("ui_setting_rename")}},
+            {SettingType::Logout, {false, LocalHelper::getString("ui_setting_logout")}},
+            {SettingType::Help, {false, LocalHelper::getString("ui_setting_help")}},
+            {SettingType::PrivacyPolicy, {false, LocalHelper::getString("ui_setting_privacyPolicy")}},
+            {SettingType::ServiceTerms, {false, LocalHelper::getString("ui_setting_serviceTerms")}},
+            {SettingType::Guide, {false, LocalHelper::getString("ui_setting_guide")}},
         };
         
         _type = type;
@@ -124,7 +125,7 @@ bool SettingNode::init(SettingType type, const Callback& callback, bool isOn) {
             // button
             string bTitle;
             if (_isSwitch) {
-                bTitle.assign(isOn ? "On" : "Off");
+                bTitle.assign(isOn ? LocalHelper::getString("ui_setting_on") : LocalHelper::getString("ui_setting_off"));
             } else {
                 bTitle.assign(title);
             }
@@ -137,6 +138,7 @@ bool SettingNode::init(SettingType type, const Callback& callback, bool isOn) {
                     _callback(_type);
                 }
             });
+            _button->getLabel()->setSystemFontSize(SMALL_FONT_SIZE);
             addChild(_button);
             
             // check if the button is lower
@@ -180,7 +182,7 @@ void SettingNode::toggle(bool isOn) {
         
         if (_button) {
             auto bType(isOn ? UniversalButton::BType::Blue : UniversalButton::BType::Red);
-            auto bTitle(isOn ? "On" : "Off");
+            auto bTitle(isOn ? LocalHelper::getString("ui_setting_on") : LocalHelper::getString("ui_setting_off"));
             _button->setType(bType);
             _button->setTitle(bTitle);
         }
@@ -241,7 +243,7 @@ bool SettingsLayer::init()
             removeFromParent();
         });
         
-        auto title = CocosUtils::createLabel("Settings", BIG_FONT_SIZE);
+        auto title = CocosUtils::createLabel(LocalHelper::getString("ui_setting_title"), BIG_FONT_SIZE);
         title->setAnchorPoint(Point::ANCHOR_MIDDLE);
         title->setPosition(Point(size.width / 2, (size.height + subBgSize.height + edge) / 2));
         bg->addChild(title);
@@ -310,7 +312,7 @@ Node* SettingsLayer::createReturnButton(Node* parent, const Vec2& offset, const 
     return nullptr;
 }
 
-Node* SettingsLayer::createContent(Node* parent)
+void SettingsLayer::createContent(Node* parent)
 {
     if (parent) {
         static float edgeX(12);
@@ -348,7 +350,7 @@ Node* SettingsLayer::createContent(Node* parent)
             
             const auto& nsize(notice->getContentSize());
             static const float offsetX(8);
-            auto message = CocosUtils::createLabel("adadadadad", SMALL_FONT_SIZE, DEFAULT_FONT, nsize - Size(offsetX * 2, 0), TextHAlignment::LEFT, TextVAlignment::CENTER);
+            auto message = CocosUtils::createLabel(LocalHelper::getString("ui_setting_hint"), SMALL_FONT_SIZE, DEFAULT_FONT, nsize - Size(offsetX * 2, 0), TextHAlignment::LEFT, TextVAlignment::CENTER);
             message->setTextColor(Color4B::BLACK);
             message->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
             message->setPosition(Point(offsetX, notice->getContentSize().height / 2));
@@ -357,8 +359,6 @@ Node* SettingsLayer::createContent(Node* parent)
             createSettingNodes(parent, lowerTypes, Point::ZERO, row, column, Vec2(edgeX, offset.y), Vec2(offset.x, edgeX + offset.y));
         }
     }
-    
-    return nullptr;
 }
 
 void SettingsLayer::createSettingNodes(Node* parent, const vector<SettingType>& types, const Point& basePoint, int row, int column, const Vec2& edge, const Vec2& space)

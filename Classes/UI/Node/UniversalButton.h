@@ -38,6 +38,7 @@ public:
     void setTitle(const std::string& title);
     void setCallback(const Callback& callback);
     void setPressedActionEnabled(bool enabled);
+    void setSwallowTouches(bool swallow);
     void setEnabled(bool enabled);
     
     BType getType() const;
@@ -54,6 +55,7 @@ private:
     BType _bType;
     Callback _callback;
     ui::Button* _button;
+    bool _touchInvalid;
 };
 
 #endif /* UniversalButton_h */

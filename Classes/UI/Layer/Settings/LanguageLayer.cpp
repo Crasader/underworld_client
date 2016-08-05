@@ -12,8 +12,24 @@
 
 using namespace std;
 
-static const unsigned int tableColumnCount(10);
-static const Vec2 nodeOffsetOnTable(5, 14);
+static const float tableNodeGapY(14);
+static const vector<pair<string, string>> languages = {
+    {"English", "English"},
+    {"French", "Français"},
+    {"German", "Deutsch"},
+    {"Spanish", "Español"},
+    {"Italian", "Italiano"},
+    {"Dutch", "Nederlands"},
+    {"Norwegian", "Norsk"},
+    {"Portuguese", "Português"},
+    {"Turkish", "Türkçe"},
+    {"SimplifiedChinese", "简体中文"},
+    {"Japanese", "日本語"},
+    {"Korean", "한국어"},
+    {"Russian", "Pусский"},
+    {"TraditionalChinese", "繁體中文"},
+    {"Arabic", "العربية"},
+};
 
 LanguageLayer* LanguageLayer::create(const Size& size)
 {
@@ -28,7 +44,10 @@ LanguageLayer* LanguageLayer::create(const Size& size)
 }
 
 LanguageLayer::LanguageLayer()
-:_observer(nullptr) {}
+:_observer(nullptr)
+{
+    _nodeSize = LanguageNode::create("")->getContentSize();
+}
 
 LanguageLayer::~LanguageLayer()
 {
@@ -70,10 +89,10 @@ void LanguageLayer::onTouchEnded(Touch *touch, Event *unused_event)
 #pragma mark - TableViewDataSource
 Size LanguageLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
 {
-    const Size size = getCellSize();
-    const ssize_t cnt = getCellsCount();
-    if (idx == cnt - 1) {
-        return size + Size(0, nodeOffsetOnTable.y);
+    const Size size(_tableMaxSize.width, _nodeSize.height + tableNodeGapY);
+    auto cnt = getCellsCount();
+    if (0 == idx || (cnt - 1) == idx) {
+        return size + Size(0, tableNodeGapY / 2);
     }
     
     return size;
@@ -87,29 +106,26 @@ TableViewCell* LanguageLayer::tableCellAtIndex(TableView *table, ssize_t idx)
         cell = XTableViewCell::create();
     }
     
-    const ssize_t maxCnt = getCellsCount();
-    const size_t cnt = _languages.size();
-    for (int i = 0; i < tableColumnCount; ++i) {
-        const ssize_t index = idx * tableColumnCount + i;
-        auto node = dynamic_cast<LanguageNode*>(cell->getNode(i));
-        if (index < cnt) {
-            const auto& name(_languages.at(index));
-            if (!node) {
-                node = LanguageNode::create(_languages.at(index));
-                node->registerObserver(this);
-                cell->addChild(node);
-                cell->setNode(node, i);
-            } else {
-                node->update(name);
-            }
-            
-            // we must update the position when the table was reloaded
-            const Point point(_nodeSize.width * (i + 0.5f) - nodeOffsetOnTable.x / 2, node->getContentSize().height * 0.5f);
-            node->setPosition(point + Point(0, (idx == maxCnt - 1) ? nodeOffsetOnTable.y : 0));
-        } else if (node) {
-            node->removeFromParent();
-            cell->resetNode(i);
+    auto cnt = getCellsCount();
+    static const float nodeIdx(0);
+    auto node = dynamic_cast<LanguageNode*>(cell->getNode(nodeIdx));
+    if (idx < cnt) {
+        const auto& name(languages.at(idx).second);
+        if (!node) {
+            node = LanguageNode::create(name);
+            node->registerObserver(this);
+            cell->addChild(node);
+            cell->setNode(node, nodeIdx);
+        } else {
+            node->update(name);
         }
+        
+        // we must update the position when the table was reloaded
+        const Point point(_tableMaxSize.width / 2, node->getContentSize().height * 0.5f + tableNodeGapY / 2);
+        node->setPosition(point + Point(0, (idx == cnt - 1) ? tableNodeGapY / 2 : 0));
+    } else if (node) {
+        node->removeFromParent();
+        cell->resetNode(nodeIdx);
     }
     
     return cell;
@@ -140,7 +156,7 @@ void LanguageLayer::createTable()
 void LanguageLayer::refreshTable(bool reload)
 {
     if (_table) {
-        auto totalHeight = _nodeSize.height * getCellsCount() + nodeOffsetOnTable.y;
+        auto totalHeight = _nodeSize.height * getCellsCount() + tableNodeGapY;
         auto size = Size(_tableMaxSize.width, MIN(totalHeight, _tableMaxSize.height));
         _table->setViewSize(size);
         _table->setPosition(_tableBasePosition - Point(0, size.height));
@@ -155,27 +171,5 @@ void LanguageLayer::refreshTable(bool reload)
 
 ssize_t LanguageLayer::getCellsCount() const
 {
-    const size_t cnt(_languages.size());
-    if (cnt > 0) {
-        return (cnt - 1) / tableColumnCount + 1;
-    }
-    
-    return 0;
-}
-
-Size LanguageLayer::getCellSize() const
-{
-    return Size(_tableMaxSize.width, _nodeSize.height);
-}
-
-Rect LanguageLayer::getBoundingBox(Node* node) const
-{
-    if (node) {
-        Rect rect = node->getBoundingBox();
-        Point origin = rect.origin;
-        rect.origin = convertToNodeSpace(node->getParent()->convertToWorldSpace(origin));
-        return rect;
-    }
-    
-    return Rect::ZERO;
+    return languages.size();
 }

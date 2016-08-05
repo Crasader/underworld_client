@@ -7,10 +7,10 @@
 //
 
 #include "PvpLogShareLayer.h"
-#include "ui/CocosGUI.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "PvpLogUI.h"
+#include "LocalHelper.h"
 #include "UniversalButton.h"
 
 using namespace std;
@@ -31,7 +31,8 @@ PvpLogShareLayer* PvpLogShareLayer::create()
 
 PvpLogShareLayer::PvpLogShareLayer()
 :_observer(nullptr)
-,_background(nullptr) {}
+,_background(nullptr)
+,_editBox(nullptr) {}
 
 PvpLogShareLayer::~PvpLogShareLayer()
 {
@@ -69,7 +70,7 @@ bool PvpLogShareLayer::init()
             }
         });
         
-        auto title = CocosUtils::createLabel("Share", BIG_FONT_SIZE);
+        auto title = CocosUtils::createLabel(LocalHelper::getString("ui_logShare_title"), BIG_FONT_SIZE);
         title->setAnchorPoint(Point::ANCHOR_MIDDLE);
         title->setPosition(Point(size.width / 2, (size.height + subBgSize.height + edge) / 2));
         bg->addChild(title);
@@ -77,19 +78,43 @@ bool PvpLogShareLayer::init()
         auto subTitleBg = Sprite::create(PvpLogUI::getResourcePath("ui_tiao_12.png"));
         subNode->addChild(subTitleBg);
         
+        const auto& stbgsize(subTitleBg->getContentSize());
+        auto subTitle = CocosUtils::createLabel(LocalHelper::getString("ui_logShare_description"), DEFAULT_FONT_SIZE);
+        subTitle->setPosition(stbgsize.width / 2, stbgsize.height / 2);
+        subTitleBg->addChild(subTitle);
+        
         auto contentBg = Sprite::create(PvpLogUI::getResourcePath("ui_tiao_11.png"));
         subNode->addChild(contentBg);
         
-        const auto& stbgsize(subTitleBg->getContentSize());
+        static const Size ebBgSize(289, 38);
+        static const float capInsetsOffset(6);
+        Rect capInsets(capInsetsOffset, capInsetsOffset, ebBgSize.width - capInsetsOffset * 2, ebBgSize.height - capInsetsOffset * 2);
+        auto s = Scale9Sprite::create(PvpLogUI::getResourcePath("ui_shuruzikuang.png"), Rect(0, 0, ebBgSize.width, ebBgSize.height), capInsets);
+        
         const auto& cbgsize(contentBg->getContentSize());
+        static const Vec2 editBoxEdge(5, 10);
+        const Size esize(cbgsize.width - editBoxEdge.x * 2, cbgsize.height - editBoxEdge.y);
+        _editBox = EditBox::create(esize, s);
+        _editBox->setDelegate(this);
+        _editBox->setMaxLength(esize.width);
+        _editBox->setReturnType(EditBox::KeyboardReturnType::SEND);
+        _editBox->setInputMode(EditBox::InputMode::ANY);
+        _editBox->setFontSize(DEFAULT_FONT_SIZE);
+        _editBox->setFontColor(Color4B::BLACK);
+        _editBox->setText(LocalHelper::getString("ui_logShare_hint").c_str());
+        contentBg->addChild(_editBox);
+        
+        const auto& cbsize(contentBg->getContentSize());
+        _editBox->setPosition(Point(cbsize.width / 2, cbsize.height / 2 + editBoxEdge.y));
+        
         const float gapY((subNodeSize.height - (stbgsize.height + cbgsize.height)) / 3);
         subTitleBg->setPosition(Point(subNodeSize.width / 2, subNodeSize.height - (gapY + stbgsize.height / 2)));
         contentBg->setPosition(Point(subNodeSize.width / 2, gapY + cbgsize.height / 2));
         
-        auto button = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, "Share");
+        auto button = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, LocalHelper::getString("ui_logShare_share"));
         button->setCallback([this](Ref*) {
             if (_observer) {
-                _observer->onPvpLogShareLayerClickedShareButton(this);
+                _observer->onPvpLogShareLayerClickedShareButton(this, _editBox->getText());
             }
         });
         addChild(button);
@@ -113,6 +138,12 @@ bool PvpLogShareLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 }
 
 void PvpLogShareLayer::onTouchEnded(Touch *touch, Event *unused_event)
+{
+    
+}
+
+#pragma mark - EditBoxDelegate
+void PvpLogShareLayer::editBoxReturn(EditBox* editBox)
 {
     
 }

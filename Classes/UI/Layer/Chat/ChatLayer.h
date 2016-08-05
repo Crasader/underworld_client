@@ -65,8 +65,11 @@ protected:
     virtual void editBoxReturn(ui::EditBox* editBox) override;
     
     // ChatNodeObserver
+    virtual void onChatNodeTouchedAvatar(const ChatData* data) override;
     
     // NoticeNodeObserver
+    virtual void onNoticeNodeGet(const ChatData* data) override;
+    virtual void onNoticeNodeDelete(const ChatData* data) override;
     
     // table
     void createTableNode(ChatType type, float height, const Point& topLeft);

@@ -9,13 +9,16 @@
 #include "UserOperationNode.h"
 #include "CocosUtils.h"
 #include "ChatUI.h"
+#include "LocalHelper.h"
 #include "UniversalButton.h"
 
 using namespace std;
 using namespace ui;
 
 static const vector<string> buttonTitles = {
-    "玩家详情", "成为好友", "屏蔽言论"
+    LocalHelper::getString("ui_chat_user_detail"),
+    LocalHelper::getString("ui_chat_user_makeFriend"),
+    LocalHelper::getString("ui_chat_user_block"),
 };
 
 UserOperationNode* UserOperationNode::create(int uid)

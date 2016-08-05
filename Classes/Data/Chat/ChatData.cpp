@@ -20,6 +20,7 @@ ChatData::ChatData(ChatType type, const rapidjson::Value& jsonDict)
 :_id(0)
 ,_type(type)
 ,_uid(0)
+,_icon(0)
 ,_time(0)
 {
     _uid = DICTOOL->getIntValue_json(jsonDict, "uid");
@@ -65,6 +66,11 @@ ChatType ChatData::getType() const
 int ChatData::getUid() const
 {
     return _uid;
+}
+
+int ChatData::getIcon() const
+{
+    return _icon;
 }
 
 const string& ChatData::getUser() const

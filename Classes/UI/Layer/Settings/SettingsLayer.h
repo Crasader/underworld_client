@@ -48,7 +48,7 @@ protected:
     // RenameLayerObserver
     
     Node* createReturnButton(Node* parent, const Vec2& offset, const std::function<void()>& callback) const;
-    Node* createContent(Node* parent);
+    void createContent(Node* parent);
     void createSettingNodes(Node* parent, const std::vector<SettingType>& types, const Point& basePoint, int row, int column, const Vec2& edge, const Vec2& space);
     void checkButtonStatus(SettingType type, bool& isOn, bool& isEnabled) const;
     void onButtonClicked(SettingType type);

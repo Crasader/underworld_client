@@ -12,6 +12,7 @@
 #include "UserSimpleData.h"
 #include "CardSimpleData.h"
 #include "PvpLogUI.h"
+#include "LocalHelper.h"
 #include "PvpResultNode.h"
 #include "TrophyGapNode.h"
 #include "UserSimpleNode.h"
@@ -82,13 +83,7 @@ bool PvpLogNode::init(const PvpLogData* data, bool expand)
     if (Node::init()) {
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         
-        string file;
-        if (true) {
-            file.assign(PvpLogUI::getResourcePath("ui_tiao_10.png"));
-        } else {
-            file.assign(PvpLogUI::getResourcePath("ui_tiao_9.png"));
-        }
-        
+        static const string file(PvpLogUI::getResourcePath("ui_tiao_10.png"));
         static const Size size(975, 131);
         static const float offset(6);
         static const Rect capInsets(offset, offset, size.width - offset * 2, size.height - offset * 2);
@@ -119,6 +114,12 @@ void PvpLogNode::update(const PvpLogData* data, bool expand)
 {
     _data = data;
     _isExpanded = expand;
+    static bool win(true);
+    const string file(PvpLogUI::getResourcePath(win ? "ui_tiao_9.png" : "ui_tiao_10.png"));
+    _background->setSpriteFrame(Sprite::create(file)->getSpriteFrame());
+    _result->setResult(win);
+    _userInfos.at(win)->tower->setWin(win);
+    _userInfos.at(!win)->tower->setWin(!win);
     adjust();
 }
 
@@ -137,7 +138,7 @@ void PvpLogNode::createTopNode()
         const auto& size(node->getContentSize());
         
         // replay
-        auto replay = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Green, "Replay");
+        auto replay = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Green, LocalHelper::getString("ui_log_replay"));
         replay->setCallback([this](Ref*) {
             if (_observer) {
                 _observer->onPvpLogNodeReplay(_data);
@@ -148,7 +149,7 @@ void PvpLogNode::createTopNode()
         replay->setPosition(size.width - (edgeDefault + rsize.width / 2), size.height - (edgeDefault + rsize.height / 2));
         
         // share
-        auto share = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, "Share");
+        auto share = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, LocalHelper::getString("ui_log_share"));
         share->setCallback([this](Ref*) {
             if (_observer) {
                 _observer->onPvpLogNodeShare(_data);
@@ -253,15 +254,7 @@ void PvpLogNode::createBottomNode()
         auto node = Node::create();
         node->setAnchorPoint(Point::ANCHOR_MIDDLE);
         node->setContentSize(Size(userInfoWidth, ExpandedHeight - FoldedHeight));
-        const auto& size(node->getContentSize());
-        
-        // middle
-        {
-            auto icon = Sprite::create(PvpLogUI::getResourcePath("icon_pvp_1.png"));
-            icon->setPosition(size.width / 2, size.height / 2);
-            node->addChild(icon);
-        }
-        
+        const auto& size(node->getContentSize());        
         const Size deckSize(deckNodeWidth, size.height - (edgeDefault + edgeBottom));
         static const size_t column(5);
         static const size_t row(2);

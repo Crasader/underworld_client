@@ -43,6 +43,7 @@ bool TrophyNode::init()
         bg->addChild(icon);
         
         auto trophy = CocosUtils::createLabel("0", SMALL_FONT_SIZE, DEFAULT_NUMBER_FONT, Size::ZERO, TextHAlignment::CENTER, TextVAlignment::CENTER);
+        trophy->setTextColor(Color4B::YELLOW);
         trophy->setAnchorPoint(Point::ANCHOR_MIDDLE);
         bg->addChild(trophy);
         _trophy = trophy;

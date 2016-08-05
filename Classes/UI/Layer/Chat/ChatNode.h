@@ -21,6 +21,7 @@ class ChatNodeObserver
 {
 public:
     virtual ~ChatNodeObserver() {}
+    virtual void onChatNodeTouchedAvatar(const ChatData* data) = 0;
 };
 
 class ChatNode: public Node

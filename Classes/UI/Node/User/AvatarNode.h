@@ -34,6 +34,7 @@ private:
 private:
     ui::Button* _avatar;
     Callback _callback;
+    bool _touchInvalid;
 };
 
 #endif /* AvatarNode_h */

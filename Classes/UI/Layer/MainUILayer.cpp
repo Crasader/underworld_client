@@ -446,6 +446,10 @@ void MainUILayer::onFunctionButtonClicked(ButtonType type)
             runningScene->addChild(PvpLogLayer::create());
             break;
             
+        case ButtonType::Shop:
+            runningScene->addChild(CardLayer::create());
+            break;
+            
         default:
             break;
     }

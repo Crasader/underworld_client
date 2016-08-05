@@ -43,6 +43,7 @@ bool GuildSimpleNode::init()
         _icon = icon;
         
         auto name = CocosUtils::createLabel("guild name", SMALL_FONT_SIZE);
+        name->setTextColor(Color4B::YELLOW);
         name->setHorizontalAlignment(TextHAlignment::LEFT);
         name->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
         addChild(name);

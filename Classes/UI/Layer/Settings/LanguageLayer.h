@@ -53,8 +53,6 @@ protected:
     void createTable();
     void refreshTable(bool reload);
     ssize_t getCellsCount() const;
-    Size getCellSize() const;
-    Rect getBoundingBox(Node* node) const;
     
 private:
     LanguageLayerObserver *_observer;
@@ -62,7 +60,6 @@ private:
     Size _nodeSize;
     Size _tableMaxSize;
     Point _tableBasePosition;
-    std::vector<std::string> _languages;
 };
 
 #endif /* LanguageLayer_h */

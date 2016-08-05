@@ -14,6 +14,7 @@
 #include "GameData.h"
 #include "DataManager.h"
 #include "FormationData.h"
+#include "LocalHelper.h"
 #include "XTableViewCell.h"
 #include "FormationUnitNode.h"
 #include "TabButton.h"
@@ -538,7 +539,7 @@ void FormationLayer::updatePopulationCount(int count)
 {
     const string msg = StringUtils::format("%d/%d", count, FORMATION_POPULATION_COUNT);
     if (!_populationLabel) {
-        auto hintLabel = CocosUtils::createLabel("人口资源", DEFAULT_FONT_SIZE);
+        auto hintLabel = CocosUtils::createLabel(LocalHelper::getString("ui_formation_heroResource"), DEFAULT_FONT_SIZE);
         addChild(hintLabel);
         
         _populationLabel = CocosUtils::createLabel(msg, DEFAULT_FONT_SIZE);
@@ -565,7 +566,7 @@ void FormationLayer::updateSpellsCount(size_t count)
 {
     const string msg = StringUtils::format("%ld/%d", count, FORMATION_SPELLS_COUNT);
     if (!_spellCountLabel) {
-        auto hintLabel = CocosUtils::createLabel("法术资源", DEFAULT_FONT_SIZE);
+        auto hintLabel = CocosUtils::createLabel(LocalHelper::getString("ui_formation_spellResource"), DEFAULT_FONT_SIZE);
         addChild(hintLabel);
         
         _spellCountLabel = CocosUtils::createLabel(msg, DEFAULT_FONT_SIZE);
@@ -863,9 +864,9 @@ string FormationLayer::getTableName(FormationTableType type) const
 {
     switch (type) {
         case FormationTableType::Hero:
-            return "英雄";
+            return LocalHelper::getString("ui_formation_tab_hero");
         case FormationTableType::Spell:
-            return "法术";
+            return LocalHelper::getString("ui_formation_tab_spell");
         default:
             return "";
     }

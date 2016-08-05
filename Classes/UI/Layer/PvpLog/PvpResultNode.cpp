@@ -9,6 +9,7 @@
 #include "PvpResultNode.h"
 #include "CocosUtils.h"
 #include "PvpLogUI.h"
+#include "LocalHelper.h"
 
 using namespace std;
 
@@ -42,7 +43,7 @@ bool PvpResultNode::init()
         addChild(bg);
         _bg = bg;
         
-        auto result = CocosUtils::createLabel("0", SMALL_FONT_SIZE, DEFAULT_NUMBER_FONT, Size::ZERO, TextHAlignment::CENTER, TextVAlignment::CENTER);
+        auto result = CocosUtils::createLabel("", SMALL_FONT_SIZE, DEFAULT_NUMBER_FONT, Size::ZERO, TextHAlignment::CENTER, TextVAlignment::CENTER);
         result->setAnchorPoint(Point::ANCHOR_MIDDLE);
         result->setTextColor(Color4B::BLACK);
         bg->addChild(result);
@@ -62,11 +63,11 @@ bool PvpResultNode::init()
 void PvpResultNode::setResult(bool win)
 {
     if (_bg) {
-        const string& file(PvpLogUI::getResourcePath(win ? "ui_tiao_18.png" : "ui_tiao_17.png"));
+        const string& file(PvpLogUI::getResourcePath(win ? "ui_tiao_17.png" : "ui_tiao_18.png"));
         _bg->setTexture(file);
     }
     
     if (_result) {
-        _result->setString(win ? "You Win" : "You Lose");
+        _result->setString(win ? LocalHelper::getString("ui_log_win") : LocalHelper::getString("ui_log_lose"));
     }
 }

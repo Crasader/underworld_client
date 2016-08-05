@@ -64,6 +64,11 @@ bool ChatNode::init(float width, const ChatData* data)
         createDialog(true);
         
         _avatar = AvatarNode::create();
+        _avatar->setCallback([this]() {
+            if (_observer) {
+                _observer->onChatNodeTouchedAvatar(_data);
+            }
+        });
         addChild(_avatar);
         
         _user = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
@@ -97,14 +102,14 @@ void ChatNode::update(const ChatData* data)
         createDialog(true);
     }
     
-    if (_avatar) {
-        
-    }
-    
     if (data) {
         _user->setString(data->getUser());
         _content->setString(data->getMessage());
         _time->setString(data->getFormattedTime());
+        
+        if (_avatar) {
+            _avatar->setAvatar(data->getIcon());
+        }
     }
     
     adjust(true);

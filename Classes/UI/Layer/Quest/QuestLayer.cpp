@@ -15,6 +15,7 @@
 #include "DataManager.h"
 #include "QuestData.h"
 #include "QuestLocalData.h"
+#include "LocalHelper.h"
 
 using namespace std;
 using namespace ui;
@@ -351,13 +352,13 @@ string QuestLayer::getTableName(QuestType type) const
 {
     switch (type) {
         case QuestType::Main:
-            return "主线";
+            return LocalHelper::getString("ui_quest_tab_main");
         case QuestType::Branch:
-            return "支线";
+            return LocalHelper::getString("ui_quest_tab_branch");
         case QuestType::Daily:
-            return "日常";
+            return LocalHelper::getString("ui_quest_tab_daily");
         case QuestType::TimeLimited:
-            return "限时";
+            return LocalHelper::getString("ui_quest_tab_timeLimited");
         default:
             return "";
     }

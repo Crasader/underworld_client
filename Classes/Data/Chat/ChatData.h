@@ -26,6 +26,7 @@ public:
     ChatType getType() const;
     int getUid() const;
     const std::string& getUser() const;
+    int getIcon() const;
     long getTime() const;
     const std::string& getFormattedTime() const;
     const std::string& getMessage() const;
@@ -36,6 +37,7 @@ private:
     ChatType _type;
     int _uid;
     std::string _user;
+    int _icon;
     long _time;
     std::string _formattedTime;
     std::string _message;

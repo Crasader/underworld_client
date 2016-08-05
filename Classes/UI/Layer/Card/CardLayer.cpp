@@ -12,6 +12,7 @@
 #include "TechTree.h"
 #include "GameModeHMM.h"
 #include "DataManager.h"
+#include "LocalHelper.h"
 #include "XTableViewCell.h"
 #include "TabButton.h"
 
@@ -344,7 +345,7 @@ void CardLayer::updateCardsCount(int count)
 {
     const string msg = StringUtils::format("%d/%d", count, FORMATION_POPULATION_COUNT);
     if (!_cardsCountLabel) {
-        auto hintLabel = CocosUtils::createLabel("收集进度：", DEFAULT_FONT_SIZE);
+        auto hintLabel = CocosUtils::createLabel(LocalHelper::getString("ui_card_progress"), DEFAULT_FONT_SIZE);
         addChild(hintLabel);
         
         _cardsCountLabel = CocosUtils::createLabel(msg, DEFAULT_FONT_SIZE);
@@ -492,13 +493,13 @@ string CardLayer::getTableName(CardTableType type) const
 {
     switch (type) {
         case CardTableType::All:
-            return "全部";
+            return LocalHelper::getString("ui_card_tab_all");
         case CardTableType::Heroes:
-            return "布阵英雄";
+            return LocalHelper::getString("ui_card_tab_hero");
         case CardTableType::Soldiers:
-            return "援军法术";
+            return LocalHelper::getString("ui_card_tab_soldier");
         case CardTableType::Spells:
-            return "法术卡牌";
+            return LocalHelper::getString("ui_card_tab_spell");
         default:
             return "";
     }
