@@ -1105,7 +1105,7 @@ Node* UnitNode::addAnimation(const string& file,
         addChild(effect, zOrder_top);
         
         // 2. adjust effect
-        if (string::npos == file.find(".plist")) {
+        if (".plist" != FileUtils::getInstance()->getFileExtension(file)) {
             adjustEffect(effect, scale, direction, position);
         }
     }

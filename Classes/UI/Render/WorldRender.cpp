@@ -359,7 +359,7 @@ std::string WorldRender::getWorldTMXTiledFile(int mapId) {
 void WorldRender::addMapParticle(const MapParticleConfigData* particleData) {
     const string& fileName = particleData->getName();
     Node* effect = nullptr;
-    if (fileName.find(".csb") != string::npos) {
+    if (".csb" == FileUtils::getInstance()->getFileExtension(fileName)) {
         effect = CocosUtils::playAnimation(fileName, 0.f, true, 0, -1, nullptr);
     } else {
         auto particle = ParticleSystemQuad::create(particleData->getName());

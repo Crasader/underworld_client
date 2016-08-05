@@ -371,14 +371,14 @@ static SpriteFrame* getPVRFrame(const string& folder, int idx)
     fileName.append(std::to_string(idx / 10));
     fileName.append(std::to_string(idx % 10));
     
-    auto file = folder + "/" + fileName;
+    auto file = folder + "/" + fileName + ".png";
     return SpriteFrameCache::getInstance()->getSpriteFrameByName(file);
 }
 
 Node* CocosUtils::getAnimationNode(const string& folder, int idx)
 {
     Node* node(nullptr);
-    if (folder.find(".csb") != string::npos) {
+    if (".csb" == FileUtils::getInstance()->getFileExtension(folder)) {
         CC_UNUSED_PARAM(idx);
         node = CSLoader::createNode(folder);
     } else {
@@ -404,7 +404,7 @@ float CocosUtils::playAnimation(Node* node,
     if (node) {
         node->stopAllActions();
         
-        if (folder.find(".csb") != string::npos) {
+        if (".csb" == FileUtils::getInstance()->getFileExtension(folder)) {
             CC_UNUSED_PARAM(frameDelay);
             auto action = CSLoader::createTimeline(folder);
             node->runAction(action);
@@ -492,7 +492,7 @@ Node* CocosUtils::playAnimation(const string& file,
                                 const function<void(Node*)>& callback)
 {
     Node* node(nullptr);
-    if (file.find(".plist") != string::npos) {
+    if (".plist" == FileUtils::getInstance()->getFileExtension(file)) {
         CC_UNUSED_PARAM(frameDelay);
         CC_UNUSED_PARAM(startIdx);
         CC_UNUSED_PARAM(endIdx);

@@ -159,7 +159,7 @@ Node* BulletNode::addActionNode(const string& file, bool loop, int startIdx, int
 {
     Node* node(nullptr);
     if (file.size() > 0 && startIdx >= 0) {
-        if (file.find(".plist") != string::npos) {
+        if (".plist" == FileUtils::getInstance()->getFileExtension(file)) {
             node = CocosUtils::playAnimation(file, 0, loop);
         } else {
             node = CocosUtils::getAnimationNode(file, startIdx);

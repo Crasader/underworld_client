@@ -171,7 +171,7 @@ bool MapLayer::init(int mapId)
                 effect->setScaleX(0.6f);
                 effect->setScaleY(1.3f);
             }
-        } else {
+        } else if (false) {
             const auto& particles = DataManager::getInstance()->getMapParticleConfigData(_mapId);
             for (int i = 0; i < particles.size(); ++i) {
                 addParticle(particles.at(i));
@@ -581,7 +581,7 @@ void MapLayer::addParticle(const MapParticleConfigData* data)
 {
     const string& name = data->getName();
     Node* effect = CocosUtils::playAnimation(name, 0, true);
-    if (name.find(".plist") != string::npos) {
+    if (".plist" == FileUtils::getInstance()->getFileExtension(name)) {
         auto particle = dynamic_cast<ParticleSystemQuad*>(effect);
         _particles.insert(particle);
     }
