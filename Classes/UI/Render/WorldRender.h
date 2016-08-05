@@ -26,6 +26,8 @@ class UWRender;
 class WorldObject;
 class AbstractWorldObjectRender;
 class SpellPattern;
+class HMMDeck;
+class HMMCard;
     
 // ===============================
 // 	class WorldRender
@@ -79,6 +81,8 @@ private:
     cocos2d::Node* _worldContainer;
     cocos2d::experimental::TMXTiledMap* _tiledMap;
     std::unordered_set<cocos2d::ParticleSystemQuad*> _mapParticles;
+    cocos2d::Node* _hmmCardRegionTipView;
+    
     
 public:
     /** init & destroy */
@@ -99,8 +103,12 @@ public:
     int worldCoordinate2Zorder(const Coordinate32& pos,
         RenderLayer renderLayer,
         int32_t height = 0);
+    Coordinate32 cocosPoint2WorldCoordinate(const cocos2d::Vec2& pos);
     cocos2d::Node* addEffect(const std::string& renderKey, bool loop,
         const Coordinate32& pos);
+    void showHMMCardRegionTips(const HMMDeck* deck, const HMMCard* card);
+    void hideHMMCardRegionTips();
+    
     
     /** getter */
     cocos2d::Node* getWorldLayer()               {return _worldLayer;}

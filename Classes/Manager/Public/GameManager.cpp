@@ -22,6 +22,7 @@
 #include "BattleScene.h"
 #include "MainScene.h"
 #include "MessageBoxLayer.h"
+#include "UWRender.h"
 
 using namespace std;
 
@@ -146,8 +147,9 @@ void GameManager::createClient(Scene* scene)
     }
     
     // 1. render
-    _render = new (nothrow) GameRender(scene, "Vampire");
-    _render->registerObserver(this);
+    _render = new (nothrow) UWRender(scene);
+//    _render = new (nothrow) GameRender(scene, "");
+//    dynamic_cast<GameRender*>(_render)->registerObserver(this);
     
     // 2. scheduler
     _gameScheduler = new (nothrow) GameScheduler();

@@ -64,7 +64,8 @@ private:
     /** cocos */
     cocos2d::Node* _mainNode;
     cocos2d::Node* _shadowNode;
-    cocos2d::Node* _bodyNode;
+    cocos2d::Node* _body;
+    cocos2d::Node* _shadow;
     
 public:
     /** init */
@@ -81,7 +82,7 @@ public:
     virtual void onNotifyBulletEvents(const std::vector<Bullet::EventLog>& events) override;
     
     /** interface */
-    cocos2d::Node* addEffect(const std::string& file, bool loop, const std::function<void ()>& callback = nullptr);
+    cocos2d::Node* addEffect(const std::string& file, bool loop, bool toBody, const std::function<void ()>& callback = nullptr);
     
 private:
     void updateParams(const Coordinate32& currentPos,

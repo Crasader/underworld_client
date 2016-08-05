@@ -46,11 +46,11 @@ bool FormationUnitNode::init(const string& name, const string& renderKey, const 
         bool flip(false);
         auto data = DataManager::getInstance()->getURConfigData(renderKey);
         if (data) {
-            if (data->isPVR()) {
-                file = data->getPrefix() + "/stand/body/3";
+            if (data->getAnimationType() == UnitAnimationType::PVR) {
+                file = data->getNormalPrefix() + "/stand/body/3";
                 flip = true;
             } else {
-                file = data->getPrefix() + StringUtils::format("-standby-%d.csb", 3);
+                file = data->getNormalPrefix() + StringUtils::format("-standby-%d.csb", 3);
                 if (!data->isFaceRight()) {
                     flip = true;
                 }

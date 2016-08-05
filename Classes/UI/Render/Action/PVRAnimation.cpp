@@ -37,7 +37,7 @@ bool PVRAnimation::init(const std::string& folder) {
     
     // 2. get frames
     for (int i = 0; true; ++i) {
-        cocos2d::SpriteFrame* frame = dynamic_cast<cocos2d::SpriteFrame*>(CocosUtils::getAnimationNode(folder, i));
+        cocos2d::SpriteFrame* frame = dynamic_cast<cocos2d::SpriteFrame*>(CocosUtils::getPVRFrame(folder, i));
         
         if (frame) _frames.pushBack(frame);
         else break;

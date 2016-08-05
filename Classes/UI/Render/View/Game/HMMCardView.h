@@ -31,7 +31,6 @@ private:
     const CardConfigData* _configData;
     
     /** cocos */
-    cocos2d::ui::Widget *_cardWidget;
     cocos2d::Sprite *_iconSprite;
     cocos2d::Sprite *_qualitySprite;
     BattleSmallResourceNode* _resourceNode;

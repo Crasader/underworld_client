@@ -609,7 +609,7 @@ void DataManager::parseSpellConfigData()
 {
     parseData("SpellConfig.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) SpellConfigData(item);
-        setMapValue(_spellConfigData, data->getName(), data);
+        setMapValue(_spellConfigData, data->getRenderKey(), data);
     });
 }
 

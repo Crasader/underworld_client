@@ -42,7 +42,7 @@ void HMMCardRender::render(const HMMCard *card) {
         if (r) _cardview->setResourceEnough(r->getBalanceMicro());
     }
     
-    int progress = card->getRecoverSpan() == 0 ? 100 : card->getRecoverProgress() * 100 / card->getRecoverSpan();
+    int progress = card->getRecoverSpan() == 0 ? 0 : card->getRecoverProgress() * 100 / card->getRecoverSpan();
     _cardview->setColdDownProgress(progress);
 }
     

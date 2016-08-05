@@ -21,6 +21,8 @@
 
 class URConfigData;
 class DisplayBar;
+class MoveSkill;
+class MoveSkillType;
 
 namespace UnderWorld{ namespace Core{
     
@@ -84,9 +86,12 @@ class UnitRender : public AbstractWorldObjectRender, public UnitObserver {
 public:
     
     /** zorder */
+    static const int IN_MAIN_FOOT_EFFECT_BACKGROUND_ZORDER;
+    static const int IN_MAIN_FOOT_EFFECT_FOREGROUND_ZORDER;
+    static const int IN_MAIN_BODY_EFFECT_BACKGROUND_ZORDER;
     static const int IN_MAIN_BODY_NODE_ZORDER;
     static const int IN_MAIN_HP_BAR_ZORDER;
-    static const int IN_MAIN_EFFECT_ZORDER;
+    static const int IN_MAIN_BODY_EFFECT_FOREGROUND_ZORDER;
     
     /** consts */
     static const float HEALTHY_HP_THRESHOLD;
@@ -198,6 +203,8 @@ private:
         BodyAnimationPoseBundle& output) const;
     void buildAndPlayBodyAnimWithCurrentStatus(BodyAnimationPoseBundle& poseBundle);
     void bodyAnimationCallback();
+    static float getMoveAnimationDurationScale(const MoveSkill* skill, const MoveSkillType* skillType, const URConfigData* configData);
+    static float getStandAnimationDurationScale(const URConfigData* configData);
     
     /** buf */
     void renderBuf(const Buff* buf);

@@ -53,6 +53,10 @@
 
 #define ONLINE_UPDATE_SEARCH_PATH       (FileUtils::getInstance()->getWritablePath() + "Resource/")
 #define DEFAULT_RESOURCE_FOLDER         ("res")
+#define AUDIO_PREFIX                    ("sounds/effect/")
+#define AUDIO_SUFFIX                    (".mp3")
+#define PILIST_PREFIX                   ("particle/")
+#define PILIST_SUFFIX                   (".plist")
 
 #ifndef M_DISALLOW_COPY_AND_ASSIGN
 #define M_DISALLOW_COPY_AND_ASSIGN(TypeName) \

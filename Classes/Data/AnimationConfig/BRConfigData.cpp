@@ -8,6 +8,7 @@
 
 #include "BRConfigData.h"
 #include "tinyxml2/tinyxml2.h"
+#include "CocosGlobal.h"
 
 using namespace std;
 
@@ -21,6 +22,25 @@ BRConfigData::BRConfigData(tinyxml2::XMLElement *xmlElement)
                 _resource = data;
             }
         }
+        {
+            const char *data = xmlElement->Attribute("shadow_resource");
+            if (data && strlen(data) > 0) {
+                _shadowResource = data;
+            }
+        }
+        {
+            const char *data = xmlElement->Attribute("explode_resource");
+            if (data && strlen(data) > 0) {
+                _explodeResource = data;
+            }
+        }
+        {
+            const char *data = xmlElement->Attribute("explode_sound");
+            if (data && strlen(data) > 0) {
+                _explodeSound = data;
+            }
+        }
+
     }
 }
 
@@ -37,4 +57,19 @@ const string& BRConfigData::getName() const
 const string& BRConfigData::getResource() const
 {
     return _resource;
+}
+
+const string& BRConfigData::getShadowResource() const
+{
+    return _shadowResource;
+}
+
+const string& BRConfigData::getExplodeResource() const
+{
+    return _explodeResource;
+}
+
+const string& BRConfigData::getExplodeSound() const
+{
+    return _explodeSound;
 }

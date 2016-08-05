@@ -91,7 +91,7 @@ UnitNode::UnitNode(const Unit* unit, bool rightSide)
 {
     _unitName = unit->getUnitBase().getRenderKey();
     _configData = DataManager::getInstance()->getURConfigData(_unitName);
-    if (_configData->isPVR()) {
+    if (_configData->getAnimationType() == UnitAnimationType::PVR) {
         _needToFlip = !rightSide;
     } else {
         _needToFlip = (rightSide == _configData->isFaceRight());
@@ -132,7 +132,7 @@ UnitNode::~UnitNode()
 bool UnitNode::init()
 {
     if (Node::init()) {
-        if (_configData->isPVR()) {
+        if (_configData->getAnimationType() == UnitAnimationType::PVR) {
             scheduleUpdate();
         }
         return true;
@@ -260,7 +260,7 @@ void UnitNode::onHurt(const string& trigger)
     const URConfigData* data = DataManager::getInstance()->getURConfigData(trigger);
     if (data) {
         playSound(data->getHurtSound());
-        addEffect(data->getHurtEffect());
+        //addEffect(data->getHurtEffect());
     }
 }
 
@@ -323,7 +323,7 @@ void UnitNode::playSound(const string& file) const
 #pragma mark - getters
 string UnitNode::getShadowFile(const string& file, bool flip) const
 {
-    if (!file.empty() && _configData->isPVR()) {
+    if (!file.empty() && _configData->getAnimationType() == UnitAnimationType::PVR) {
         string ret;
         static const string separator("body");
         auto pos = file.find(separator);
@@ -343,7 +343,7 @@ string UnitNode::getShadowFile(const string& file, bool flip) const
 
 string UnitNode::getEquipmentFile(const string& file, bool flip) const
 {
-    if (!file.empty() && _configData->isPVR()) {
+    if (!file.empty() && _configData->getAnimationType() == UnitAnimationType::PVR) {
         string ret;
         auto pos = file.find_first_of("/");
         if (string::npos != pos) {
@@ -358,7 +358,7 @@ string UnitNode::getEquipmentFile(const string& file, bool flip) const
 
 int UnitNode::getResourceId(Unit::Direction direction) const
 {
-    if (_configData->isPVR()) {
+    if (_configData->getAnimationType() == UnitAnimationType::PVR) {
         switch (direction) {
             case Unit::kDirection_Up:
                 return 0;
@@ -462,7 +462,7 @@ bool UnitNode::needToFlip(Unit::Direction direction) const
 {
     bool flip(false);
     if (_unit) {
-        const bool isFaceRight(_configData->isPVR() ? false : _configData->isFaceRight());
+        const bool isFaceRight(_configData->getAnimationType() == UnitAnimationType::PVR ? false : _configData->isFaceRight());
         
         switch (direction) {
             case Unit::kDirection_right:
@@ -501,10 +501,10 @@ void UnitNode::getAnimationFiles(vector<AnimationType>& output,
     
     AnimationType data;
     
-    if (_configData->isPVR()) {
+    if (_configData->getAnimationType() == UnitAnimationType::PVR) {
         if (_isBuilding) {
             const string suffix(0 == thisFactionIndex() ? "Blue" : "Red");
-            data.assign(_configData->getPrefix() + "/body/" + suffix);
+            data.assign(_configData->getNormalPrefix() + "/body/" + suffix);
         } else {
             string prefix("");
             switch (sc) {
@@ -545,11 +545,11 @@ void UnitNode::getAnimationFiles(vector<AnimationType>& output,
             }
             
             if (0 == output.size()) {
-                data.assign(_configData->getPrefix() + "/" + prefix + StringUtils::format("/body/%d", getResourceId(direction)));
+                data.assign(_configData->getNormalPrefix() + "/" + prefix + StringUtils::format("/body/%d", getResourceId(direction)));
             }
         }
     } else {
-        const auto& prefix = _configData->getPrefix();
+        const auto& prefix = _configData->getNormalPrefix();
         switch (sc) {
             case kSkillClass_Stop:
             case kSkillClass_Produce:
@@ -588,7 +588,7 @@ void UnitNode::getAnimationFiles(vector<AnimationType>& output,
             case kSkillClass_Die:
             {
                 if (_isBuilding) {
-                    data.assign(_configData->getBDestroyed());
+                    data.assign(_configData->getNormalPrefix());
                 }
                 
                 const auto& file(data.getFile());
@@ -614,7 +614,7 @@ void UnitNode::getStandbyFiles(AnimationType& output,
 {
     output.assign("");
     
-    if (_configData->isPVR()) {
+    if (_configData->getAnimationType() == UnitAnimationType::PVR) {
         vector<AnimationType> vs;
         getAnimationFiles(vs, kSkillClass_Stop, direction, isHealthy);
         if (vs.size() > 0) {
@@ -622,14 +622,14 @@ void UnitNode::getStandbyFiles(AnimationType& output,
         }
     } else {
         if (_isBuilding) {
-            const auto& normal = StringUtils::format(_configData->getBNormal().c_str(), getResourceId(direction));
-            const auto& damaged = StringUtils::format(_configData->getBDamaged().c_str(), getResourceId(direction));
+            const auto& normal = StringUtils::format(_configData->getNormalPrefix().c_str(), getResourceId(direction));
+            const auto& damaged = StringUtils::format(_configData->getNormalPrefix().c_str(), getResourceId(direction));
             output.assign(isHealthy ? normal : (damaged.length() > 0 ? damaged : normal));
         }
         
         const auto& file(output.getFile());
         if (0 == file.length() || !FileUtils::getInstance()->isFileExist(file)) {
-            const auto& prefix = _configData->getPrefix();
+            const auto& prefix = _configData->getNormalPrefix();
             output.assign(prefix + StringUtils::format("-standby-%d.csb", getResourceId(direction)));
         }
     }
@@ -642,8 +642,8 @@ void UnitNode::getSegmentalFiles(vector<AnimationType>& output,
 {
     output.clear();
     
-    if (_configData->isPVR()) {
-        string file = _configData->getPrefix() + "/" + mark + "/body/" + StringUtils::format("%d", getResourceId(direction));
+    if (_configData->getAnimationType() == UnitAnimationType::PVR) {
+        string file = _configData->getNormalPrefix() + "/" + mark + "/body/" + StringUtils::format("%d", getResourceId(direction));
         int middle(0);
         AnimationType at;
         if (middle > 0) {
@@ -657,7 +657,7 @@ void UnitNode::getSegmentalFiles(vector<AnimationType>& output,
             output.push_back(at);
         }
     } else {
-        const auto& prefix = _configData->getPrefix();
+        const auto& prefix = _configData->getNormalPrefix();
         {
             AnimationType at;
             at.assign(prefix + "-" + mark + StringUtils::format("-%d.csb", getResourceId(direction)));
@@ -692,7 +692,7 @@ void UnitNode::getSegmentalFiles(vector<AnimationType>& output,
 int UnitNode::getCurrentFrameIndex() const
 {
     if (_animation) {
-        if (_configData->isPVR()) {
+        if (_configData->getAnimationType() == UnitAnimationType::PVR) {
             auto animation = dynamic_cast<Animate*>(_animation);
             if (animation) {
                 return animation->getCurrentFrameIndex();
@@ -743,13 +743,13 @@ void UnitNode::playAnimation(const AnimationType& at,
         addChild(node);
         _body->node = node;
         
-        if (_configData->isPVR()) {
+        if (_configData->getAnimationType() == UnitAnimationType::PVR) {
             _sprite = dynamic_cast<Sprite*>(node);
         } else {
             _sprite = dynamic_cast<Sprite*>(node->getChildren().front());
         }
         
-        if (_configData->isPVR()) {
+        if (_configData->getAnimationType() == UnitAnimationType::PVR) {
             // -- body's shadow -- //
             createShadow(&_body, flip, startIdx);
             
@@ -870,25 +870,25 @@ void UnitNode::updateAnimation(const Skill* skill,
                         const auto& spellName = spell->getSpellType()->getAlias();
                         auto data = DataManager::getInstance()->getSpellConfigData(spellName);
                         if (data) {
-                            const auto& resources = data->getCasterResourceNames();
-                            auto cnt = resources.size();
-                            if (cnt > 0) {
-                                addEffect(resources.at(0));
-                                
-                                if (cnt > 1) {
-                                    addAnimation(resources.at(1), false, nullptr, false, data->getReceiverSpellDirection(), SpellConfigData::kFoot);
-                                    
-                                    if (cnt > 2) {
-                                        auto node = addEffect(resources.at(2));
-                                        node->setPosition(node->getPosition() + Point(0, 87));
-                                    }
-                                }
-                            }
-                            
-                            auto shakeScreen(data->isCasterShakeScreen());
-                            if (shakeScreen && _observer) {
-                                _observer->onUnitNodeShakeScreen(this);
-                            }
+//                            const auto& resources = data->getCasterResourceNames();
+//                            auto cnt = resources.size();
+//                            if (cnt > 0) {
+//                                addEffect(resources.at(0));
+//                                
+//                                if (cnt > 1) {
+//                                    addAnimation(resources.at(1), false, nullptr, false, data->getReceiverSpellDirection(), SpellConfigData::kFoot);
+//                                    
+//                                    if (cnt > 2) {
+//                                        auto node = addEffect(resources.at(2));
+//                                        node->setPosition(node->getPosition() + Point(0, 87));
+//                                    }
+//                                }
+//                            }
+//                            
+//                            auto shakeScreen(data->isCasterShakeScreen());
+//                            if (shakeScreen && _observer) {
+//                                _observer->onUnitNodeShakeScreen(this);
+//                            }
                         }
                     }
                 } else {
@@ -961,14 +961,14 @@ void UnitNode::onAttackAnimationFinished()
         // play sound
         playSound(_configData->getAttackSound());
         
-        // if it is footman
-        if (_configData->isShortRange()) {
-            if (_observer) {
-                _observer->onUnitNodeHurtTheTarget(this);
-            }
-            
-            addSwordEffect();
-        }
+//        // if it is footman
+//        if (_configData->isShortRange()) {
+//            if (_observer) {
+//                _observer->onUnitNodeHurtTheTarget(this);
+//            }
+//            
+//            addSwordEffect();
+//        }
     }
     
     // 2. play the next animation
@@ -1118,47 +1118,47 @@ void UnitNode::adjustEffect(Node* effect,
                             const SpellConfigData::Direction& direction,
                             const SpellConfigData::Position& position)
 {
-    if (effect) {
-        bool flip(false);
-        if (SpellConfigData::kNone != direction) {
-            const bool isFaceRight(_configData->isPVR() ? _needToFlip : (_needToFlip ^ _configData->isFaceRight()));
-            flip = (isFaceRight ^ (SpellConfigData::kRight == direction));
-        }
-        
-        if (flip ^ (_needToFlip != _isFlipped)) {
-            flipX(effect);
-        }
-        
-        // set position
-        auto baseScale = _baseParams->scale;
-        if (SpellConfigData::kFoot == position) {
-            effect->setPosition(_configData->getFootEffectPosition());
-            if (scale) {
-                this->scale(effect, _configData->getFootEffectScaleX() * baseScale, _configData->getFootEffectScaleY() * baseScale);
-            } else {
-                this->scale(effect, _configData->getFootEffectScaleX(), _configData->getFootEffectScaleY());
-            }
-            effect->setLocalZOrder(zOrder_bottom);
-        } else if (SpellConfigData::kBody == position) {
-            effect->setPosition(_sprite->getPosition());
-            if (scale) {
-                this->scale(effect, baseScale);
-            }
-        } else if (SpellConfigData::kHead == position) {
-            effect->setPosition(getHPBarPosition());
-            if (scale) {
-                this->scale(effect, baseScale);
-            }
-        }
-    }
+//    if (effect) {
+//        bool flip(false);
+//        if (SpellConfigData::kNone != direction) {
+//            const bool isFaceRight(_configData->getAnimationType() == "pvr" ? _needToFlip : (_needToFlip ^ _configData->isFaceRight()));
+//            flip = (isFaceRight ^ (SpellConfigData::kRight == direction));
+//        }
+//        
+//        if (flip ^ (_needToFlip != _isFlipped)) {
+//            flipX(effect);
+//        }
+//        
+//        // set position
+//        auto baseScale = _baseParams->scale;
+//        if (SpellConfigData::kFoot == position) {
+//            effect->setPosition(_configData->getFootEffectPosition());
+//            if (scale) {
+//                this->scale(effect, _configData->getFootEffectScaleX() * baseScale, _configData->getFootEffectScaleY() * baseScale);
+//            } else {
+//                this->scale(effect, _configData->getFootEffectScaleX(), _configData->getFootEffectScaleY());
+//            }
+//            effect->setLocalZOrder(zOrder_bottom);
+//        } else if (SpellConfigData::kBody == position) {
+//            effect->setPosition(_sprite->getPosition());
+//            if (scale) {
+//                this->scale(effect, baseScale);
+//            }
+//        } else if (SpellConfigData::kHead == position) {
+//            effect->setPosition(getHPBarPosition());
+//            if (scale) {
+//                this->scale(effect, baseScale);
+//            }
+//        }
+//    }
 }
 
 void UnitNode::addSwordEffect()
 {
-    const auto& file = StringUtils::format(_configData->getSwordEffect().c_str(), _direction);
-    if (file.length() > 0) {
-        addEffect(file);
-    }
+//    const auto& file = StringUtils::format(_configData->getSwordEffect().c_str(), _direction);
+//    if (file.length() > 0) {
+//        addEffect(file);
+//    }
 }
 
 #pragma mark bufs
@@ -1167,14 +1167,14 @@ void UnitNode::addBuf(const string& name)
     if (_sprite && _bufs.find(name) == end(_bufs)) {
         auto data = DataManager::getInstance()->getSpellConfigData(name);
         if (data) {
-            const auto& files = data->getReceiverResourceNames();
-            if (files.size() > 0) {
-                const auto& file = files.at(0);
-                auto buf = addAnimation(file, true, nullptr, true, data->getReceiverSpellDirection(), data->getReceiverSpellPosition());
-                if (buf) {
-                    _bufs.insert(make_pair(name, buf));
-                }
-            }
+//            const auto& files = data->getReceiverResourceNames();
+//            if (files.size() > 0) {
+//                const auto& file = files.at(0);
+//                auto buf = addAnimation(file, true, nullptr, true, data->getReceiverSpellDirection(), data->getReceiverSpellPosition());
+//                if (buf) {
+//                    _bufs.insert(make_pair(name, buf));
+//                }
+//            }
         }
     }
 }
@@ -1236,35 +1236,35 @@ void UnitNode::updateBufs()
             auto data = DataManager::getInstance()->getSpellConfigData(name);
             if (data) {
                 {
-                    const auto& rates = data->getReceiverSpeedRates();
-                    for (auto iter = rates.begin(); iter != rates.end(); ++iter) {
-                        auto sc = iter->first;
-                        auto rate = iter->second;
-                        if (_extraParams.find(sc) != end(_extraParams)) {
-                            const auto& ap = _extraParams.at(sc);
-                            ap->speed = rate + ap->speed;
-                        } else {
-                            auto ap = new (nothrow) AnimationParameter(nullptr);
-                            ap->speed = rate;
-                            _extraParams.insert(make_pair(sc, ap));
-                        }
-                    }
-                }
-                
-                {
-                    const auto& rates = data->getReceiverVolumeRates();
-                    for (auto iter = rates.begin(); iter != rates.end(); ++iter) {
-                        auto sc = iter->first;
-                        auto rate = iter->second;
-                        if (_extraParams.find(sc) != end(_extraParams)) {
-                            const auto& ap = _extraParams.at(sc);
-                            ap->scale = rate + ap->scale;
-                        } else {
-                            auto ap = new (nothrow) AnimationParameter(nullptr);
-                            ap->scale = rate;
-                            _extraParams.insert(make_pair(sc, ap));
-                        }
-                    }
+//                    const auto& rates = data->getReceiverSpeedRates();
+//                    for (auto iter = rates.begin(); iter != rates.end(); ++iter) {
+//                        auto sc = iter->first;
+//                        auto rate = iter->second;
+//                        if (_extraParams.find(sc) != end(_extraParams)) {
+//                            const auto& ap = _extraParams.at(sc);
+//                            ap->speed = rate + ap->speed;
+//                        } else {
+//                            auto ap = new (nothrow) AnimationParameter(nullptr);
+//                            ap->speed = rate;
+//                            _extraParams.insert(make_pair(sc, ap));
+//                        }
+//                    }
+//                }
+//                
+//                {
+//                    const auto& rates = data->getReceiverVolumeRates();
+//                    for (auto iter = rates.begin(); iter != rates.end(); ++iter) {
+//                        auto sc = iter->first;
+//                        auto rate = iter->second;
+//                        if (_extraParams.find(sc) != end(_extraParams)) {
+//                            const auto& ap = _extraParams.at(sc);
+//                            ap->scale = rate + ap->scale;
+//                        } else {
+//                            auto ap = new (nothrow) AnimationParameter(nullptr);
+//                            ap->scale = rate;
+//                            _extraParams.insert(make_pair(sc, ap));
+//                        }
+//                    }
                 }
                 
                 addBuf(*iter);
@@ -1305,11 +1305,11 @@ void UnitNode::updateFeatures(const Game* game)
                 const auto& renderKey = ft->getRenderKey();
                 auto data = DataManager::getInstance()->getSpellConfigData(renderKey);
                 if (data) {
-                    const auto& files = data->getReceiverResourceNames();
-                    if (files.size() > 0) {
-                        const auto& file = files.at(0);
-                        addAnimation(file, false, nullptr, true, data->getReceiverSpellDirection(), SpellConfigData::kBody);
-                    }
+//                    const auto& files = data->getReceiverResourceNames();
+//                    if (files.size() > 0) {
+//                        const auto& file = files.at(0);
+//                        addAnimation(file, false, nullptr, true, data->getReceiverSpellDirection(), SpellConfigData::kBody);
+//                    }
                 }
             }
         } else if (type == Unit::kEventLogType_ResourceOutput) {
@@ -1392,11 +1392,11 @@ Node* UnitNode::createShadow(const string& file, bool flip, int startIdx)
     Node* shadow(nullptr);
     Point offset(Point::ZERO);
     
-    if (_configData->isPVR()) {
+    if (_configData->getAnimationType() == UnitAnimationType::PVR) {
         shadow = CocosUtils::getAnimationNode(file, startIdx);
     } else {
         shadow = Sprite::create(file);
-        offset = _configData->getFootEffectPosition();
+        //offset = _configData->getFootEffectPosition();
     }
     
     if (flip) {

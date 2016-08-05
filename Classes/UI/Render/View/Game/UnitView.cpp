@@ -45,11 +45,13 @@ bool UnitView::init(const UnitType* unitType) {
     if (_unitType) _configData = DataManager::getInstance()->getURConfigData(_unitType->getRenderKey());
     _playCallback = nullptr;
     
+    if (!_unitType || !_configData) return false;
+    
     /** init status */
     _bodyAnimationFiles.clear();
     _shadowAnimationFiles.clear();
     
-    _type = UnitAnimationType::CSB; //TODO: type
+    _type = _configData->getAnimationType();
     _pose = UnitAnimationPose::Stand;
     _direction = Unit::kDirection_right;
     _durationScale = 1.f;
@@ -80,16 +82,13 @@ void UnitView::buildAnimation() {
     }
     
     if (!_shadowAnimationFiles.empty() && _shadowNode) {
-        loadAnimation(_bodyAnimationFiles.front(), _type, _shadowAnimNode, _shadowAnimation);
+        loadAnimation(_shadowAnimationFiles.front(), _type, _shadowAnimNode, _shadowAnimation);
         if (_shadowAnimNode) _shadowNode->addChild(_shadowAnimNode);
         if (_shadowAnimation) _shadowAnimation->retain();
         
     }
     
     updateNodeScale();
-    
-    //TODO: set contentsize
-    
 }
 bool UnitView::runAnimation(bool loop, const std::function<void ()>& callback) {
     if (_playing || !_bodyAnimNode || !_bodyAnimation) return false;
@@ -162,8 +161,6 @@ bool UnitView::runAnimation(bool loop, const std::function<void ()>& callback) {
     }
     
     return _playing;
-    
-    //TODO: scheduler time scale wrong;
     
 }
 void UnitView::stopAnimation() {
@@ -270,8 +267,11 @@ void UnitView::loadAnimation(const std::string& file,
             animNodeOutput = pvr->buildNode();
         }
     } else if (type == UnitAnimationType::CSB) {
-        animNodeOutput = CSLoader::createNode(file);
-        animationOutput = CSLoader::createTimeline(file);
+        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(file);
+        if (FileUtils::getInstance()->isFileExist(fullPath)) {
+            animNodeOutput = CSLoader::createNode(file);
+            animationOutput = CSLoader::createTimeline(file);
+        }
     }
 }
     
@@ -284,6 +284,7 @@ void UnitView::playAnimationCallback() {
 
 void UnitView::updateNodeScale() {
     float scaleY = _nodeScale;
+    if (_configData) scaleY *= _configData->getBodyScale();
     float scaleX = scaleY * (scaleY > 0 && _flip ? -1 : 1);
     this->setScale(scaleX, scaleY);
     if (_shadowNode) _shadowNode->setScale(scaleX, scaleY);
@@ -304,29 +305,34 @@ void UnitView::getAnimationFiles(UnitAnimationType type,
 
     static std::vector<std::vector<std::string> > pose_files = {
         {"stand", "run", "attack", "attack_post", "skill", "skill_post", "killed", "dead", ""},
-        {"standby", "run", "attack", "", "skill", "skill_post", "dead", "", ""}
+        {"standby", "run", "attack", "attack_post", "skill", "skill_post", "dead", "dead_body", ""}
     };
     
     if (!configData) return;
     
     std::string bodyData;
+    std::string shadowData;
     
-    std::string resourcePrefix = configData->getPrefix();
+    std::string resourcePrefix = configData->getNormalPrefix();
     std::string posePrefix = pose_files[(int)type][(int)pose];
-    int resourceId = getResourceId(type, direction);
+    int resourceId = getResourceId(type, direction, configData);
     
     if (!resourcePrefix.empty() && !posePrefix.empty()) {
         if (type == UnitAnimationType::PVR) {
             bodyData.assign(resourcePrefix + "/" + posePrefix + "/body/" + UnderWorldCoreUtils::to_string(resourceId));
+            shadowData.assign(resourcePrefix + "/" + posePrefix + "/shadow/" + UnderWorldCoreUtils::to_string(resourceId));
         } else if (type == UnitAnimationType::CSB) {
             bodyData.assign(resourcePrefix + "-" + posePrefix + "-" + UnderWorldCoreUtils::to_string(resourceId) + ".csb");
         }
     }
     
     if (!bodyData.empty()) bodyAnimationOutput.push_back(bodyData);
+    if (!shadowData.empty()) shadowAnimationOutput.push_back(shadowData);
 }
     
-int UnitView::getResourceId(UnitAnimationType type, Unit::Direction direction) {
+int UnitView::getResourceId(UnitAnimationType type, Unit::Direction direction, const URConfigData* configData) {
+    if (configData && !configData->isMultiDirection()) return 0;
+        
     if (type == UnitAnimationType::PVR) {
         switch (direction) {
             case Unit::kDirection_Up:
@@ -380,6 +386,9 @@ int UnitView::getResourceId(UnitAnimationType type, Unit::Direction direction) {
     
 bool UnitView::needToFlip(Unit::Direction direction, const URConfigData* configData) {
     bool flip(false);
+    
+    if (configData && !configData->isMultiDirection()) return flip;
+    
     const bool isFaceRight(configData ? configData->isFaceRight() : false);
 
     switch (direction) {

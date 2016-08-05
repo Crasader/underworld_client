@@ -10,6 +10,7 @@
 #define GameManager_h
 
 #include "GameRender.h"
+#include "ExternalInterface.h"
 
 class UnderworldClient;
 class GameScheduler;
@@ -53,7 +54,7 @@ private:
     bool _isPvp;
     int _mapId;
     cocos2d::Scene* _scene;
-    GameRender* _render;
+    UnderWorld::Core::AbstractRender* _render;
     GameScheduler* _gameScheduler;
     ClientTCPNetworkProxy* _pvpProxy;
     UnderworldClient* _client;

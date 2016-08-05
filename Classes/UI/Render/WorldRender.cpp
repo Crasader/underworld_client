@@ -8,6 +8,7 @@
 
 #include <cmath>
 
+#include "ui/CocosGUI.h"
 #include "CocosUtils.h"
 #include "CocosGlobal.h"
 #include "WorldRender.h"
@@ -21,6 +22,7 @@
 #include "BulletRender.h"
 #include "SpellType.h"
 #include "SpellConfigData.h"
+#include "GameModeHMM.h"
 
 USING_NS_CC;
 
@@ -48,7 +50,8 @@ WorldRender::WorldRender()
 , _cameraAngelRadians(0.f)
 , _worldLayer(nullptr)
 , _worldContainer(nullptr)
-, _tiledMap(nullptr) {
+, _tiledMap(nullptr)
+, _hmmCardRegionTipView(nullptr){
 }
     
     
@@ -151,6 +154,41 @@ int WorldRender::worldCoordinate2Zorder(const Coordinate32 &pos,
         (_world->getMap()->getMapElementHeight() - pos.y);
 }
     
+Coordinate32 WorldRender::cocosPoint2WorldCoordinate(const cocos2d::Vec2& pos) {
+    return Coordinate32(pos.x / _pixelPerMapsizeX, pos.y / _pixelPerMapsizeY);
+}
+
+void WorldRender::showHMMCardRegionTips(const HMMDeck* deck, const HMMCard* card) {
+    if (!deck || !card) return;
+    
+    hideHMMCardRegionTips();
+    if (card->getCardType()->getCardClass() == kHMMCardClass_Summon
+        || card->getCardType()->getCardClass() == kHMMCardClass_Tower) {
+        const Rect32& region = card->getCardType()->getCardClass() == kHMMCardClass_Summon ? deck->getSummonRegion() : deck->getTowerRegion();
+        static string file("GameImages/test/ui_hongse.png");
+        static const Rect rect(0, 0, 326, 326);
+        static const Rect capInsets(160, 160, 6, 6);
+        _hmmCardRegionTipView = cocos2d::ui::Scale9Sprite::create(file, rect, capInsets);
+        if (_hmmCardRegionTipView) {
+            int zorder = worldCoordinate2Zorder(region._origin, RenderLayer::Ground);
+            cocos2d::Vec2 leftDown = worldCoordinate2CocosPoint(region._origin, RenderLayer::Ground);
+            cocos2d::Vec2 rightUp = worldCoordinate2CocosPoint(Coordinate32(region.getMaxX(), region.getMaxY()), RenderLayer::Ground);
+            _hmmCardRegionTipView->setPosition(leftDown);
+            _hmmCardRegionTipView->setContentSize(cocos2d::Size(abs(leftDown.x - rightUp.x), abs(leftDown.y - rightUp.y)));
+            _hmmCardRegionTipView->setAnchorPoint(cocos2d::Vec2::ANCHOR_BOTTOM_LEFT);
+            _worldContainer->addChild(_hmmCardRegionTipView, zorder);
+        }
+        
+    }
+}
+    
+void WorldRender::hideHMMCardRegionTips() {
+    if (_hmmCardRegionTipView) {
+        _hmmCardRegionTipView->removeFromParent();
+        _hmmCardRegionTipView = nullptr;
+    }
+}
+    
 cocos2d::Node* WorldRender::addEffect(const std::string &renderKey, bool loop,
     const Coordinate32 &pos) {
     cocos2d::Node* ret = nullptr;
@@ -163,10 +201,8 @@ cocos2d::Node* WorldRender::addEffect(const std::string &renderKey, bool loop,
         if (!data) break;
         
         // check file
-        const vector<string>& files = data->getReceiverResourceNames();
-        if (files.size() <= 0 || files.at(0).empty()) break;
-        
-        const std::string& file = files.at(0);
+        const std::string& file = data->getFgResource();
+        if (file.empty()) break;
         
         //check file name
         const size_t found = file.find_last_of(".");
@@ -192,8 +228,8 @@ cocos2d::Node* WorldRender::addEffect(const std::string &renderKey, bool loop,
     // attach node
     if (ret) {
         //TODO: postiion and order
-        int zorder = worldCoordinate2Zorder(pos, RenderLayer::Land);
-        cocos2d::Vec2 position = worldCoordinate2CocosPoint(pos, RenderLayer::Land);
+        int zorder = worldCoordinate2Zorder(pos, (RenderLayer)data->getSpellRenderLayer(), data->getSpellHeight());
+        cocos2d::Vec2 position = worldCoordinate2CocosPoint(pos, (RenderLayer)data->getSpellRenderLayer(), data->getSpellHeight());
         ret->setPosition(position);
         _worldContainer->addChild(ret, zorder);
     }

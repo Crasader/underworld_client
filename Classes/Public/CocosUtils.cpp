@@ -401,7 +401,7 @@ Sprite* CocosUtils::createTitle(const string& title, float fontSize)
 }
 
 #pragma mark - animations
-static SpriteFrame* getPVRFrame(const string& folder, int idx)
+cocos2d::SpriteFrame* CocosUtils::getPVRFrame(const string& folder, int idx)
 {
     idx += 1;
     std::string fileName = "1";
@@ -424,7 +424,6 @@ Node* CocosUtils::getAnimationNode(const string& folder, int idx)
         node = CSLoader::createNode(folder);
     } else {
         auto frame = getPVRFrame(folder, idx);
-        CCASSERT(frame, "Null frame");
         if (frame) {
             node = Sprite::createWithSpriteFrame(frame);
         }

@@ -45,9 +45,12 @@ void BuffAnimation::descreaseContributors() {
     if (_contributors > 0) --_contributors;
 }
     
-const int UnitRender::IN_MAIN_BODY_NODE_ZORDER = 1;
-const int UnitRender::IN_MAIN_HP_BAR_ZORDER = 2;
-const int UnitRender::IN_MAIN_EFFECT_ZORDER = 3;
+const int UnitRender::IN_MAIN_FOOT_EFFECT_BACKGROUND_ZORDER = 1;
+const int UnitRender::IN_MAIN_FOOT_EFFECT_FOREGROUND_ZORDER = 2;
+const int UnitRender::IN_MAIN_BODY_EFFECT_BACKGROUND_ZORDER = 3;
+const int UnitRender::IN_MAIN_BODY_NODE_ZORDER = 4;
+const int UnitRender::IN_MAIN_HP_BAR_ZORDER = 5;
+const int UnitRender::IN_MAIN_BODY_EFFECT_FOREGROUND_ZORDER = 6;
     
 const float UnitRender::HEALTHY_HP_THRESHOLD = .3f;
 const int UnitRender::MAX_HP_PERCENT = 100;
@@ -192,10 +195,8 @@ cocos2d::Node* UnitRender::addEffect(const std::string &renderKey, bool loop) {
         if (!data) break;
         
         // check file
-        const vector<string>& files = data->getReceiverResourceNames();
-        if (files.size() <= 0 || files.at(0).empty()) break;
-        
-        const std::string& file = files.at(0);
+        const std::string& file = data->getFgResource();
+        if (file.empty()) break;
         
         //check file name
         const size_t found = file.find_last_of(".");
@@ -221,8 +222,23 @@ cocos2d::Node* UnitRender::addEffect(const std::string &renderKey, bool loop) {
     
     // attach node
     if (ret) {
-        //TDOO : position
-        _mainNode->addChild(ret, IN_MAIN_EFFECT_ZORDER);
+        //TODO: consider effect direction
+        int foregourndZorder = IN_MAIN_BODY_EFFECT_FOREGROUND_ZORDER;
+        cocos2d::Vec2 pos;
+        if (data->getSpellPosition() == SpellConfigData::kHead) {
+            if (_configData) pos.set(_configData->getHeadEffectPosX(), _configData->getHeadEffectPosY());
+            foregourndZorder = IN_MAIN_BODY_EFFECT_FOREGROUND_ZORDER;
+        } else if (data->getSpellPosition() == SpellConfigData::kBody) {
+            if (_configData) pos.set(_configData->getBodyEffectPosX(), _configData->getBodyEffectPosY());
+            foregourndZorder = IN_MAIN_BODY_EFFECT_FOREGROUND_ZORDER;
+        } else if (data->getSpellPosition() == SpellConfigData::kFoot) {
+            pos.set(0.f, 0.f);
+            foregourndZorder = IN_MAIN_FOOT_EFFECT_FOREGROUND_ZORDER;
+        }
+        
+        ret->setPosition(pos);
+        ret->setScale(_configData->getEffectScale());
+        _mainNode->addChild(ret, foregourndZorder);
     }
     
     return ret;
@@ -361,10 +377,7 @@ void UnitRender::renderSkill() {
             if (_status._skill) {
                 const MoveSkill* moveSkill = dynamic_cast<const MoveSkill*>(_status._skill);
                 const MoveSkillType* mst = dynamic_cast<const MoveSkillType*>(_status._skill->getSkillType());
-                if (moveSkill && mst) {
-                    float scale = mst->getSpeed() == 0 ? 1.f : ((float)moveSkill->getSpeed() / mst->getSpeed());
-                    _unitView->setDurationScale(scale);
-                }
+                _unitView->setDurationScale(getMoveAnimationDurationScale(moveSkill, mst, _configData));
             }
         }
     }
@@ -538,10 +551,9 @@ void UnitRender::getCurrentPoseBundle(BodyAnimationPoseBundle& output) {
     } else if (output.getPose() == UnitAnimationPose::Move) {
         const MoveSkill* moveSkill = dynamic_cast<const MoveSkill*>(currentSkill);
         const MoveSkillType* mst = dynamic_cast<const MoveSkillType*>(currentSkill->getSkillType());
-        if (moveSkill && mst) {
-            float scale = (mst->getSpeed() == 0) ? 1.f : ((float)moveSkill->getSpeed() / mst->getSpeed());
-            output.specificDurationScale(scale);
-        }
+        output.specificDurationScale(getMoveAnimationDurationScale(moveSkill, mst, _configData));
+    } else if (output.getPose() == UnitAnimationPose::Stand) {
+        output.specificDurationScale(getStandAnimationDurationScale(_configData));
     }
     
 }
@@ -582,8 +594,6 @@ void UnitRender::needRebuildBodyAnim(const BodyAnimationPoseBundle& curentPoseBu
                         _unitView->getPlayTime() / _unitView->getDurationScale());
 
                 }
-                // never exec code
-                output.specificDurationScale(1.f);
             }
         } else {
             output = curentPoseBundle;
@@ -603,6 +613,9 @@ void UnitRender::buildAndPlayBodyAnimWithCurrentStatus(BodyAnimationPoseBundle& 
     //1. create body animation for first time
     if (!_unitView) {
         _unitView = UnitView::create(_unitType);
+        
+        if (!_unitView) return;
+        
         _unitView->retain();
         _mainNode->addChild(_unitView->getBodyNode(), IN_MAIN_BODY_NODE_ZORDER);
         _groundNode->addChild(_unitView->getShadowNode());
@@ -669,7 +682,31 @@ void UnitRender::bodyAnimationCallback() {
         else bundle.setPose(UnitAnimationPose::Dead);
     }
     
+    if (bundle.getPose() == UnitAnimationPose::Stand) {
+        bundle.specificDurationScale(getStandAnimationDurationScale(_configData));
+    }
+    
     buildAndPlayBodyAnimWithCurrentStatus(bundle);
+}
+    
+float UnitRender::getMoveAnimationDurationScale(const MoveSkill* skill, const MoveSkillType* skillType, const URConfigData* configData) {
+    float ret = 1.f;
+    
+    if (configData) ret *= configData->getMoveDuratioScale();
+    
+    if (skill && skillType) {
+        ret *= (skillType->getSpeed() == 0) ? 1.f : ((float)skill->getSpeed() / skillType->getSpeed());
+    }
+    
+    return ret;
+}
+    
+float UnitRender::getStandAnimationDurationScale(const URConfigData *configData) {
+    float ret = 1.f;
+    
+    if (configData) ret *= configData->getStandDurationScale();
+    
+    return ret;
 }
     
 void UnitRender::rollNode(cocos2d::Node *node) {
@@ -694,7 +731,7 @@ void UnitRender::rollNodeCallback(float dt) {
         if (rollNode) {
             rollNode->setCascadeOpacityEnabled(true);
             //TODO:: Position
-            _mainNode->addChild(rollNode, IN_MAIN_EFFECT_ZORDER);
+            _mainNode->addChild(rollNode, IN_MAIN_BODY_EFFECT_FOREGROUND_ZORDER);
             
             Sequence* fadeTo = Sequence::create(DelayTime::create(ROLL_DURATION - FADE_DURATION), FadeTo::create(FADE_DURATION, 0), NULL);
             MoveBy* moveBy = MoveBy::create(ROLL_DURATION, Point(0.f, ROLL_DIS_IN_PIXEL));
@@ -713,12 +750,6 @@ void UnitRender::rollNodeCallback(float dt) {
 cocos2d::Vec2 UnitRender::calculateHpBarPosition() {
     cocos2d::Vec2 ret;
     
-    if (_unitView) {
-        const cocos2d::Size& size = _unitView->getContentSize();
-        const cocos2d::Vec2& position = _unitView->getPosition();
-        ret += cocos2d::Vec2(position.x, position.y + size.height / 2);
-    }
-    
     float offsetX(0), offsetY(0);
     if (_configData) {
         offsetX = _configData->getHpBarPosX();
@@ -727,10 +758,6 @@ cocos2d::Vec2 UnitRender::calculateHpBarPosition() {
     
     ret += cocos2d::Vec2(offsetX, offsetY);
     
-    if (_unitView) {
-        ret = _mainNode->convertToNodeSpace(_unitView->getParent()->convertToWorldSpace(ret));
-    }
-
     return ret;
 }
     

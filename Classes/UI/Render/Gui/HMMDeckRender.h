@@ -31,6 +31,9 @@ public:
     
     /** consts */
     static const std::string BATTLE_RESOURCE_NAME;
+    static const int BATTLE_RESOURCE_AMOUNT_PER_VIEW = 1;
+    static const int CARD_INDEX_INVALID = -1;
+    static const float TOUCH_MOVE_THRESHOLD;
     
 private:
     /** instance */
@@ -38,13 +41,28 @@ private:
     
     /** cocos */
     cocos2d::Node* _background;
-    std::vector<cocos2d::ProgressTimer*> _resourceViews;
+    cocos2d::Node* _resourceBackground;
+    cocos2d::ProgressTimer* _resourceProgress1;
+    cocos2d::ProgressTimer* _resourceProgress2;
+    cocos2d::Label* _resourceLabel;
     cocos2d::Node* _cardRegion;
     std::vector<HMMCardView*> _cardViews;
+    
+    /** touch event */
+    cocos2d::Vec2 _touchBeginPos;
+    int _pressingCardIndex;
+    cocos2d::Vec2 _pressingCardOriginPos;
+    bool _draggingCard;
+    bool _placingCard;
+    
+    /** status */
+    int _selectedCardIndex;
     
     /** refs */
     Commander* _commander;
     WorldRender* _worldRender;
+    const HMMDeck* _deck;
+    const Game* _game;
     
 public:
     /** init */
@@ -60,7 +78,7 @@ public:
     
     /** upate */
     void render(const HMMDeck* deck, const Game* game);
-    void updateBattleResource(microres_t amount);
+    void updateBattleResource(microres_t amount, microres_t max);
     
     /** touch event */
     bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) override;
@@ -72,6 +90,17 @@ public:
     
 private:
     HMMDeckRender();
+    
+    /** touch event */
+    void resetTouchEventStatus();
+    int calculatePositionOnWhichCard(const cocos2d::Vec2& pos);
+    bool calculatePositionInCardRegion(const cocos2d::Vec2& pos);
+    
+    /** misc */
+    void selectCard(int index);
+    void try2UseCard(int cardIndex, const cocos2d::Vec2& pos);
+    
+
 };
 
     

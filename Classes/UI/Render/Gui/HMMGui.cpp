@@ -94,7 +94,6 @@ void HMMGui::init(const Game *game, Commander *commander, WorldRender *worldRend
     _gameOver = false;
     
     /**4. init cocos */
-    static const float ceilOffset(5.0f);
     
     //4a. clean up
     const cocos2d::Size& winSize = cocos2d::Director::getInstance()->getWinSize();
@@ -117,16 +116,20 @@ void HMMGui::init(const Game *game, Commander *commander, WorldRender *worldRend
 
     //4c. time label
     {
-        cocos2d::Sprite* sprite = cocos2d::Sprite::create("GameImages/test/ui_time.png");
+        cocos2d::Sprite* sprite = cocos2d::Sprite::create("GameImages/battle_ui/ui_clock_bg.png");
         _guiView->addChild(sprite, COVER_UI_ZORDER);
         
         const cocos2d::Size& size = sprite->getContentSize();
-        sprite->setPosition(cocos2d::Vec2(winSize.width / 2, winSize.height - size.height / 2 - ceilOffset));
+        sprite->setPosition(cocos2d::Vec2(winSize.width / 2, winSize.height - size.height / 2 - 25.f));
         
-        _timeLabel = CocosUtils::createLabel("", 24, DEFAULT_NUMBER_FONT);
-        _timeLabel->setAnchorPoint(cocos2d::Vec2::ANCHOR_MIDDLE_LEFT);
-        _timeLabel->setPosition(cocos2d::Vec2(size.width * 0.45f, size.height / 2));
+        _timeLabel = CocosUtils::createLabel("player", 24, DEFAULT_NUMBER_FONT);
+        //_timeLabel->setAnchorPoint(cocos2d::Vec2::ANCHOR_MIDDLE_LEFT);
+        _timeLabel->setPosition(cocos2d::Vec2(size.width * 0.5, 13.f));
         sprite->addChild(_timeLabel);
+        
+        cocos2d::Node* hint_icon = cocos2d::Sprite::create("GameImages/battle_ui/ui_clock_hint_icon.png");
+        hint_icon->setPosition(cocos2d::Vec2(size.width * 0.5f, size.height));
+        sprite->addChild(hint_icon);
     }
     
     
@@ -152,11 +155,11 @@ void HMMGui::render(const Game *game) {
     if (_timeLabel) {
         _timeLabel->setString(CocosUtils::getFormattedTime(timeRemainInSec));
         
-        if (timeRemainInSec <= ALERT_REMAIN_TIME_IN_SECOND) {
-            _timeLabel->setTextColor(ALERT_REMAIN_TIME_COLOR);
-        } else {
-            _timeLabel->setTextColor(NORMAL_REMAIN_TIME_COLOR);
-        }
+//        if (timeRemainInSec <= ALERT_REMAIN_TIME_IN_SECOND && _timeLabel->getTextColor() != ALERT_REMAIN_TIME_COLOR) {
+//            _timeLabel->setTextColor(NORMAL_REMAIN_TIME_COLOR);
+//        } else if (timeRemainInSec > ALERT_REMAIN_TIME_IN_SECOND && _timeLabel->getTextColor() != NORMAL_REMAIN_TIME_COLOR){
+//            _timeLabel->setTextColor(NORMAL_REMAIN_TIME_COLOR);
+//        }
     }
     
     //2. update hp
@@ -181,38 +184,41 @@ void HMMGui::render(const Game *game) {
 }
     
 void HMMGui::initFactionInfo(const Faction *faction) {
+    static const float background_margin_top = 8.f;
+    static const float background_padding = 8.f;
+    static const float icon_size = 57.f;
+    
     if (!faction || !_guiView) return;
     
     bool left = (_thisFactionIndex == faction->getFactionIndex());
     
     const cocos2d::Size& winSize = cocos2d::Director::getInstance()->getWinSize();
     
-    cocos2d::Sprite* nameBg = CocosUtils::createPureColorSprite(cocos2d::Size(163, 26), LAYER_MASK_COLOR);
+    cocos2d::Sprite* nameBg = cocos2d::Sprite::create("GameImages/battle_ui/ui_user_info_bg.png");
     _guiView->addChild(nameBg, COVER_UI_ZORDER);
     
     const cocos2d::Size& nameBgSize = nameBg->getContentSize();
     static const float offsetX(192.0f);
-    nameBg->setPosition(cocos2d::Vec2(winSize.width / 2 + offsetX * (left ? -1 : 1), winSize.height - nameBgSize.height / 2));
-    
-    const cocos2d::Vec2& position = nameBg->getPosition();
+    nameBg->setPosition(cocos2d::Vec2(winSize.width / 2 + offsetX * (left ? -1 : 1), winSize.height - nameBgSize.height / 2 - background_margin_top));
     
     // name
     {
-        std::string playerName;
+        std::string playerName = "player";
         cocos2d::Label* label = CocosUtils::createLabel(playerName, DEFAULT_FONT_SIZE);
-        label->setPosition(cocos2d::Vec2(nameBgSize.width / 2, nameBgSize.height / 2));
+        label->setAnchorPoint(cocos2d::Vec2::ANCHOR_MIDDLE_LEFT);
+        label->setPosition(cocos2d::Vec2(76.f, 56.f));
         nameBg->addChild(label);
     }
     
     // progress
     {
-        cocos2d::Sprite* sprite = cocos2d::Sprite::create(left ? "GameImages/test/ui_blood_left_bg.png" : "GameImages/test/ui_blood_right_bg.png");
-        _guiView->addChild(sprite, COVER_UI_ZORDER);
+        cocos2d::Sprite* sprite = cocos2d::Sprite::create("GameImages/battle_ui/ui_faction_hp_bg.png");
+        nameBg->addChild(sprite);
         
         const cocos2d::Size& size = sprite->getContentSize();
-        sprite->setPosition(position - cocos2d::Vec2(0, (nameBgSize.height + size.height) / 2));
+        sprite->setPosition(cocos2d::Vec2(73.f, background_padding) + cocos2d::Vec2(size.width / 2, size.height / 2));
         
-        cocos2d::ProgressTimer* pt = createProgressTimer(left ? "GameImages/test/ui_blood_left.png" : "GameImages/test/ui_blood_right.png");
+        cocos2d::ProgressTimer* pt = createProgressTimer(left ? "GameImages/battle_ui/ui_faction_hp_fg_ally.png" : "GameImages/battle_ui/ui_faction_hp_fg_enemy.png");
         pt->setPosition(cocos2d::Vec2(size.width / 2, size.height / 2));
         pt->setMidpoint(left ? cocos2d::Vec2::ANCHOR_BOTTOM_RIGHT : cocos2d::Vec2::ANCHOR_BOTTOM_LEFT);
         sprite->addChild(pt);
@@ -232,11 +238,16 @@ void HMMGui::initFactionInfo(const Faction *faction) {
     
     // icon
     {
-        cocos2d::Sprite* sprite = cocos2d::Sprite::create(left ? "GameImages/test/icon_zg.png" : "GameImages/test/icon_bc.png");
-        _guiView->addChild(sprite, COVER_UI_ZORDER);
+        cocos2d::Sprite* sprite = cocos2d::Sprite::create("GameImages/public/icon_touxiang_1.png");
+        nameBg->addChild(sprite);
         
-        const cocos2d::Size& size = sprite->getContentSize();
-        sprite->setPosition(cocos2d::Vec2(position.x + (nameBgSize.width / 2 + size.width / 2) * (left ? 1 : -1), winSize.height - size.height / 2));
+        sprite->setPosition(cocos2d::Vec2(icon_size / 2 + background_padding, icon_size / 2 + background_padding));
+        Rect rect(0.f,
+            0.f,
+            M_MIN(sprite->getContentSize().width , icon_size),
+            M_MIN(sprite->getContentSize().height , icon_size));
+        sprite->setTextureRect(rect);
+        sprite->getContentSize();
     }
 }
     

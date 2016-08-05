@@ -14,6 +14,34 @@
 		</event>
 		
 		
+		
+		
+		
+		<event>
+			<event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="300,500">
+                <unit_setting unit_setting_name="人族剑士"/>
+            </event_effect>
+		</event>
+		<event>
+			<event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="1" position="900,400">
+                <unit_setting unit_setting_name="木桩单位"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="1" position="900,550">
+                <unit_setting unit_setting_name="木桩单位"/>
+            </event_effect>
+		</event>
+		<event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="1" position="900,500">
+                <unit_setting unit_setting_name="中立兽族牛头人"/>
+            </event_effect>
+		</event>
+		
 	
 	 <!--
 		

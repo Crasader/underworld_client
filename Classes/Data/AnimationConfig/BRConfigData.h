@@ -21,10 +21,16 @@ public:
     
     const std::string& getName() const;
     const std::string& getResource() const;
+    const std::string& getShadowResource() const;
+    const std::string& getExplodeResource() const;
+    const std::string& getExplodeSound() const;
     
 private:
     std::string _name;
     std::string _resource;
+    std::string _shadowResource;
+    std::string _explodeResource;
+    std::string _explodeSound;
 };
 
 #endif /* BRConfigData_h */

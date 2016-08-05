@@ -36,7 +36,8 @@ BulletRender::BulletRender()
 , _explodeLog(nullptr)
 , _mainNode(nullptr)
 , _shadowNode(nullptr)
-, _bodyNode(nullptr){
+, _body(nullptr)
+, _shadow(nullptr) {
 }
     
 BulletRender::~BulletRender() {
@@ -101,7 +102,8 @@ bool BulletRender::init(const WorldObject *object, WorldRender *worldRender) {
         _shadowNode->retain();
     }
     _shadowNode->removeAllChildren();
-    _bodyNode = nullptr;
+    _body = nullptr;
+    _shadow = nullptr;
     
     // init render
     render();
@@ -169,7 +171,7 @@ void BulletRender::onNotifyBulletEvents(const std::vector<Bullet::EventLog>& eve
     }
 }
     
-cocos2d::Node* BulletRender::addEffect(const std::string&file, bool loop, const std::function<void ()>& callback) {
+cocos2d::Node* BulletRender::addEffect(const std::string&file, bool loop, bool toBody, const std::function<void ()>& callback) {
     cocos2d::Node* ret = nullptr;
     
     // create node
@@ -210,8 +212,8 @@ cocos2d::Node* BulletRender::addEffect(const std::string&file, bool loop, const 
     
     // attach node
     if (ret) {
-        //TODO: position
-        _mainNode->addChild(ret);
+        if (toBody) _mainNode->addChild(ret);
+        else _shadowNode->addChild(ret);
     }
     
     return ret;
@@ -270,27 +272,46 @@ void BulletRender::renderPosition(const Coordinate32& currentPos) {
     
 void BulletRender::renderFlyingAnimation() {
     // create bodyNode
-    if (!_bodyNode) {
+    if (!_body) {
         const std::string& file = _configData->getResource();
-        _bodyNode = addEffect(file, true);
+        _body = addEffect(file, true, true);
     }
     
     // set params
-    if (_bodyNode) {
-        _bodyNode->setRotation(_rotation);
-        _bodyNode->setScaleX(_scale);
+    if (_body) {
+        _body->setRotation(_rotation);
+        _body->setScaleX(_scale);
+    }
+    
+    // create shadow
+    if (!_shadow) {
+        const std::string& file = _configData->getShadowResource();
+        _shadow = addEffect(file, true, false);
+    }
+    
+    if (_shadow) {
+        _shadow->setRotation(_rotation);
+        _shadow->setScaleX(_scale);
     }
     
 }
     
 void BulletRender::renderExplodeAnimation() {
-    if (_bodyNode) {
-        _bodyNode->removeFromParent();
-        _bodyNode = nullptr;
+    if (_body) {
+        _body->removeFromParent();
+        _body = nullptr;
     }
     
-    std::string file;  //TODO: explode file
-    auto ret = addEffect(file, false, std::bind(&BulletRender::explodeCallback, this));
+    if (_shadow) {
+        _shadow->removeFromParent();
+        _shadow = nullptr;
+    }
+    
+    std::string file;
+    if (_configData) {
+        file = _configData->getExplodeResource();
+    }
+    auto ret = addEffect(file, false, true, std::bind(&BulletRender::explodeCallback, this));
     
     if (!ret) explodeCallback();
 }

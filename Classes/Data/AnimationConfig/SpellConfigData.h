@@ -12,60 +12,62 @@
 #include <iostream>
 #include <vector>
 #include <unordered_map>
-#include "SkllType.h"
+
+#include "GameConstants.h"
 
 namespace tinyxml2 { class XMLElement; }
 
 class SpellConfigData
 {
 public:
-    typedef enum
-    {
+    typedef enum {
         kNone = 0,
         kLeft = 1,
         kRight = 2,
-    }Direction;
+    } Direction;
     
-    typedef enum
-    {
+    typedef enum {
         kFoot = 0,
         kBody = 1,
         kHead = 2,
-    }Position;
+    } Position;
+    
+    typedef UnderWorld::Core::mapsize_t uw_mapsize_t;
     
 public:
     SpellConfigData(tinyxml2::XMLElement *xmlElement);
     virtual ~SpellConfigData();
     
     // key
-    const std::string& getName() const;
+    const std::string& getRenderKey() const        {return _renderKey;}
     
-    // caster params
-    const std::vector<std::string>& getCasterResourceNames() const;
-    Position getCasterSpellPosition() const;
-    bool isCasterShakeScreen() const;
+    // position
+    Direction getSpellDirection() const            {return _spellDirection;}
+    Position getSpellPosition() const              {return _spellPosition;}
+    int getSpellRenderLayer() const                {return _spellRenderLayer;}
+    uw_mapsize_t getSpellHeight() const            {return _spellHeight;}
     
-    // receiver params
-    const std::vector<std::string>& getReceiverResourceNames() const;
-    Direction getReceiverSpellDirection() const;
-    Position getReceiverSpellPosition() const;
-    const std::map<UnderWorld::Core::SkillClass, float>& getReceiverSpeedRates() const;
-    float getReceiverSpeedRate(UnderWorld::Core::SkillClass sc) const;
-    const std::map<UnderWorld::Core::SkillClass, float>& getReceiverVolumeRates() const;
-    float getReceiverVolumeRate(UnderWorld::Core::SkillClass sc) const;
+    // resource
+    bool isLoop() const                            {return _loop;}
+    const std::string& getFgResource() const       {return _foregroundResource;}
+    const std::string& getBgResource() const       {return _backgroundResource;}
+    const std::string& effectSound() const         {return _effectSound;}
     
 private:
-    std::string _spellName;
+    std::string _renderKey;
     
-    std::vector<std::string> _casterResourceNames;
-    Position _casterSpellPosition;
-    bool _isCasterShakeScreen;
+    /** this two attribute is useful, when effect is on unit */
+    Direction _spellDirection;
+    Position _spellPosition;
     
-    std::vector<std::string> _receiverResourceNames;
-    Direction _receiverSpellDirection;
-    Position _receiverSpellPosition;
-    std::map<UnderWorld::Core::SkillClass, float> _receiverSpeedRates;
-    std::map<UnderWorld::Core::SkillClass, float> _receiverVolumeRates;
+    /** this two attribute is useful, when effect is in world space, not on unit */
+    int _spellRenderLayer;
+    UnderWorld::Core::mapsize_t _spellHeight;
+    
+    bool _loop;
+    std::string _foregroundResource;
+    std::string _backgroundResource;
+    std::string _effectSound;
 };
 
 #endif /* SpellConfigData_h */

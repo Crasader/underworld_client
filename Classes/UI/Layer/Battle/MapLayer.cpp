@@ -677,20 +677,20 @@ Node* MapLayer::createUnitMask(const UnitType* ut) const
         if (data) {
             static const int resourceId(2);
             auto uc = ut->getUnitClass();
-            if (data->isPVR()) {
-                file = data->getPrefix() + StringUtils::format("/stand/body/%d", resourceId);
+            if (data->getAnimationType() == UnitAnimationType::PVR) {
+                file = data->getNormalPrefix() + StringUtils::format("/stand/body/%d", resourceId);
             } else {
                 if (kUnitClass_Core == uc || kUnitClass_Building == uc) {
-                    file = StringUtils::format(data->getBNormal().c_str(), resourceId);
+                    file = StringUtils::format(data->getNormalPrefix().c_str(), resourceId);
                 } else {
-                    file = data->getPrefix() + StringUtils::format("-standby-%d.csb", resourceId);
+                    file = data->getNormalPrefix() + StringUtils::format("-standby-%d.csb", resourceId);
                 }
             }
             
             if (file.size() > 0) {
                 auto actionNode = CocosUtils::playAnimation(file, 0, false);
                 Sprite* sprite(nullptr);
-                if (data->isPVR()) {
+                if (data->getAnimationType() == UnitAnimationType::PVR) {
                     sprite = dynamic_cast<Sprite*>(actionNode);
                 } else {
                     sprite = dynamic_cast<Sprite*>(actionNode->getChildren().front());
@@ -700,7 +700,7 @@ Node* MapLayer::createUnitMask(const UnitType* ut) const
                     sprite->setOpacity(180);
                     
                     Point basePoint(Point::ZERO);
-                    if (data->isPVR()) {
+                    if (data->getAnimationType() == UnitAnimationType::PVR) {
                         basePoint.x = sprite->getContentSize().width / 2;
                     } else {
                         basePoint = sprite->getPosition();

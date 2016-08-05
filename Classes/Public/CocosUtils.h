@@ -71,6 +71,8 @@ namespace CocosUtils
                                  int startIdx = 0,
                                  int endIdx = -1,
                                  const std::function<void(cocos2d::Node*)>& callback = nullptr);
+    cocos2d::SpriteFrame* getPVRFrame(const std::string& folder, int idx);
+
     
     // buttons
     cocos2d::ui::Button* createGrayExitButton(cocos2d::Node* parent, const std::function<void()>& callback);

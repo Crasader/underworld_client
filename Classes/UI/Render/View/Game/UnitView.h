@@ -11,21 +11,14 @@
 
 #include <functional>
 #include "cocos2d.h"
+#include "URConfigData.h"
 
 #include "Unit.h"
 
-class URConfigData;
 
 namespace UnderWorld{ namespace Core{
     
 class UnitType;
-    
-enum class UnitAnimationType {
-    PVR,
-    CSB,
-    
-    UNIT_ANIMATION_TYPE_COUNT
-};
 
 enum class UnitAnimationPose {
     Stand,
@@ -123,7 +116,7 @@ protected:
         const URConfigData* configData,
         std::vector<std::string>& bodyAnimationOutput,
         std::vector<std::string>& shadowAnimationOutput);
-    static int getResourceId(UnitAnimationType type, Unit::Direction direction);
+    static int getResourceId(UnitAnimationType type, Unit::Direction direction, const URConfigData* configData);
     static bool needToFlip(Unit::Direction direction, const URConfigData* configData);
 };
     

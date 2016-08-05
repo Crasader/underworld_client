@@ -15,6 +15,13 @@ USING_NS_CC;
 
 namespace tinyxml2 { class XMLElement; }
 
+enum class UnitAnimationType {
+    PVR,
+    CSB,
+    
+    UNIT_ANIMATION_TYPE_COUNT
+};
+
 class URConfigData
 {
 public:
@@ -22,51 +29,53 @@ public:
     virtual ~URConfigData();
     
     const std::string& getName() const;
-    bool isShortRange() const;
-    bool isPVR() const;
     bool isFaceRight() const;
-    const std::string& getPrefix() const;
-    const std::string& getBNormal() const;
-    const std::string& getBDamaged() const;
-    const std::string& getBDestroyed() const;
-    const std::string& getSwordEffect() const;
-    const std::string& getHurtEffect() const;
-    const std::string& getCritHurtEffect() const;
+    bool isMultiDirection() const;
+    bool isTransformOnHealth() const;
+    UnitAnimationType getAnimationType() const;
+    const std::string& getNormalPrefix() const;
     const std::string& getAttackSound() const;
     const std::string& getHurtSound() const;
     const std::string& getDieSound() const;
     
-    const Point& getFootEffectPosition() const;
-    float getFootEffectScaleX() const;
-    float getFootEffectScaleY() const;
+    float getBodyScale() const;
+    float getEffectScale() const;
+    float getBodyEffectPosX() const;
+    float getBodyEffectPosY() const;
+    float getHeadEffectPosX() const;
+    float getHeadEffectPosY() const;
     
     float getHpBarPosX() const;
     float getHpBarPosY() const;
     float getHpBarScaleX() const;
     
+    float getMoveDuratioScale() const;
+    float getStandDurationScale() const;
+    
 private:
     std::string _name;
-    bool _isShortRange;
-    bool _isPVR;
     bool _isFaceRight;
-    std::string _prefix;
-    std::string _bNormal;
-    std::string _bDamaged;
-    std::string _bDestroyed;
-    std::string _swordEffect;
-    std::string _hurtEffect;
-    std::string _critHurtEffect;
+    bool _isMultiDirection;
+    bool _isTransformOnHealth;
+    UnitAnimationType _animationType;
+    std::string _normalPrefix;
     std::string _attckSound;
     std::string _hurtSound;
     std::string _dieSound;
     
-    Point _footEffectPosition;
-    float _footEffectScaleX;
-    float _footEffectScaleY;
+    float _bodyScale;
+    float _effectScale;
+    float _bodyEffectPosX;
+    float _bodyEffectPosY;
+    float _headEffectPosX;
+    float _headEffectPoxY;
     
     float _hpBarPosX;
     float _hpBarPosY;
     float _hpBarScaleX;
+    
+    float _moveDurationScale;
+    float _standDuraionScale;
 };
 
 #endif /* URConfigData_h */
