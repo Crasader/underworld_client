@@ -45,8 +45,13 @@ LanguageLayer* LanguageLayer::create(const Size& size)
 
 LanguageLayer::LanguageLayer()
 :_observer(nullptr)
+,_table(nullptr)
+,_nodeSize(Size::ZERO)
+,_tableMaxSize(Size::ZERO)
+,_tableBasePosition(Point::ZERO)
+,_selectedIdx(CC_INVALID_INDEX)
 {
-    _nodeSize = LanguageNode::create("")->getContentSize();
+    _nodeSize = LanguageNode::create()->getContentSize();
 }
 
 LanguageLayer::~LanguageLayer()
@@ -62,6 +67,10 @@ void LanguageLayer::registerObserver(LanguageLayerObserver *observer)
 bool LanguageLayer::init(const Size& size)
 {
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR)) {
+        setContentSize(size);
+        _tableMaxSize = size;
+        _tableBasePosition = Point(0, size.height);
+        
         createTable();
         
         auto eventListener = EventListenerTouchOneByOne::create();
@@ -112,16 +121,18 @@ TableViewCell* LanguageLayer::tableCellAtIndex(TableView *table, ssize_t idx)
     if (idx < cnt) {
         const auto& name(languages.at(idx).second);
         if (!node) {
-            node = LanguageNode::create(name);
+            node = LanguageNode::create();
             node->registerObserver(this);
             cell->addChild(node);
             cell->setNode(node, nodeIdx);
-        } else {
-            node->update(name);
         }
         
+        node->update(name);
+        node->setIdx(idx);
+        node->tick(idx == _selectedIdx);
+        
         // we must update the position when the table was reloaded
-        const Point point(_tableMaxSize.width / 2, node->getContentSize().height * 0.5f + tableNodeGapY / 2);
+        const Point point(_tableMaxSize.width / 2, (_nodeSize.height + tableNodeGapY) / 2);
         node->setPosition(point + Point(0, (idx == cnt - 1) ? tableNodeGapY / 2 : 0));
     } else if (node) {
         node->removeFromParent();
@@ -137,6 +148,22 @@ ssize_t LanguageLayer::numberOfCellsInTableView(TableView *table)
 }
 
 #pragma mark - LanguageNodeObserver
+void LanguageLayer::onLanguageNodeSelected(ssize_t idx)
+{
+    auto prior(_selectedIdx);
+    
+    if (idx != _selectedIdx) {
+        _selectedIdx = idx;
+        
+        if (CC_INVALID_INDEX != prior) {
+            _table->updateCellAtIndex(prior);
+        }
+        
+        if (CC_INVALID_INDEX != idx) {
+            _table->updateCellAtIndex(idx);
+        }
+    }
+}
 
 #pragma mark - table
 void LanguageLayer::createTable()
@@ -145,7 +172,6 @@ void LanguageLayer::createTable()
     tableView->setDirection(extension::ScrollView::Direction::VERTICAL);
     tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
     tableView->setBounceable(false);
-    tableView->setVisible(false);
     addChild(tableView);
     
     _table = tableView;

@@ -10,6 +10,7 @@
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "SettingUI.h"
+#include "LocalHelper.h"
 #include "UniversalButton.h"
 
 using namespace std;
@@ -85,7 +86,7 @@ bool RenameLayer::init()
             static const Size rs(347, 53);
             static const float capInsets(5.0f);
             auto s = ui::Scale9Sprite::create(SettingUI::getResourcePath("ui_kuang_6.png"), Rect(0, 0, rs.width, rs.height), Rect(capInsets, capInsets, rs.width - capInsets * 2, rs.height - capInsets * 2));
-            auto eb = ui::EditBox::create(Size(347, 53), s);
+            auto eb = ui::EditBox::create(rs, s);
             const auto& size(eb->getContentSize());
             eb->setPosition(Point(subBgSize.width / 2, size.height / 2 + edgeY));
             subNode->addChild(eb);

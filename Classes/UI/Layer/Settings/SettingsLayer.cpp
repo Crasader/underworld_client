@@ -210,7 +210,10 @@ SettingsLayer* SettingsLayer::create()
 
 SettingsLayer::SettingsLayer()
 :_observer(nullptr)
-,_returnButton(nullptr) {}
+,_returnButton(nullptr)
+,_subNode(nullptr)
+,_contentNode(nullptr)
+,_languageLayer(nullptr) {}
 
 SettingsLayer::~SettingsLayer()
 {
@@ -233,6 +236,7 @@ bool SettingsLayer::init()
         
         auto subNode = CocosUtils::createBackground(CocosUtils::getResourcePath("ui_background_1.png"), subNodeSize);
         bg->addChild(subNode);
+        _subNode = subNode;
         
         const auto& size(bg->getContentSize());
         const auto& subBgSize(subNode->getContentSize());
@@ -249,10 +253,19 @@ bool SettingsLayer::init()
         bg->addChild(title);
         
         _returnButton = createReturnButton(bg, Vec2(8.0f, 10.0f), [this]() {
-            
+            if (_languageLayer) {
+                _languageLayer->setVisible(false);
+            }
+            if (_returnButton) {
+                _returnButton->setVisible(false);
+            }
+            if (_contentNode) {
+                _contentNode->setVisible(true);
+            }
         });
+        _returnButton->setVisible(false);
         
-        createContent(subNode);
+        createContent();
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -277,15 +290,6 @@ void SettingsLayer::onTouchEnded(Touch *touch, Event *unused_event)
 }
 
 #pragma mark - LanguageLayerObserver
-void SettingsLayer::onLanguageLayerReturn()
-{
-    
-}
-
-void SettingsLayer::onLanguageLayerClosed()
-{
-    
-}
 
 #pragma mark - RenameLayerObserver
 
@@ -312,8 +316,15 @@ Node* SettingsLayer::createReturnButton(Node* parent, const Vec2& offset, const 
     return nullptr;
 }
 
-void SettingsLayer::createContent(Node* parent)
+void SettingsLayer::createContent()
 {
+    _contentNode = Node::create();
+    _contentNode->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    _contentNode->setContentSize(subNodeSize);
+    _contentNode->setPosition(Point(subNodeSize.width / 2, subNodeSize.height / 2));
+    _subNode->addChild(_contentNode);
+    
+    auto parent(_contentNode);
     if (parent) {
         static float edgeX(12);
         const auto& size(parent->getContentSize());
@@ -394,8 +405,21 @@ void SettingsLayer::onButtonClicked(SettingType type)
         layer->registerObserver(this);
         addChild(layer);
     } else if (SettingType::Language == type) {
-        auto layer = LanguageLayer::create(subNodeSize);
-        layer->registerObserver(this);
-        addChild(layer);
+        if (_languageLayer) {
+            _languageLayer->setVisible(true);
+        } else {
+            auto layer = LanguageLayer::create(subNodeSize);
+            layer->registerObserver(this);
+            _subNode->addChild(layer);
+            _languageLayer = layer;
+        }
+        
+        if (_returnButton) {
+            _returnButton->setVisible(true);
+        }
+        
+        if (_contentNode) {
+            _contentNode->setVisible(false);
+        }
     }
 }

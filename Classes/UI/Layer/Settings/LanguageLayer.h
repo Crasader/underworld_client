@@ -20,8 +20,6 @@ class LanguageLayerObserver
 {
 public:
     virtual ~LanguageLayerObserver() {}
-    virtual void onLanguageLayerReturn() = 0;
-    virtual void onLanguageLayerClosed() = 0;
 };
 
 class LanguageLayer
@@ -48,6 +46,7 @@ protected:
     virtual ssize_t numberOfCellsInTableView(TableView *table) override;
     
     // LanguageNodeObserver
+    virtual void onLanguageNodeSelected(ssize_t idx) override;
     
     // table
     void createTable();
@@ -60,6 +59,7 @@ private:
     Size _nodeSize;
     Size _tableMaxSize;
     Point _tableBasePosition;
+    ssize_t _selectedIdx;
 };
 
 #endif /* LanguageLayer_h */

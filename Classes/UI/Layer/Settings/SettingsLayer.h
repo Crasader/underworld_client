@@ -42,13 +42,11 @@ protected:
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
     // LanguageLayerObserver
-    virtual void onLanguageLayerReturn() override;
-    virtual void onLanguageLayerClosed() override;
     
     // RenameLayerObserver
     
     Node* createReturnButton(Node* parent, const Vec2& offset, const std::function<void()>& callback) const;
-    void createContent(Node* parent);
+    void createContent();
     void createSettingNodes(Node* parent, const std::vector<SettingType>& types, const Point& basePoint, int row, int column, const Vec2& edge, const Vec2& space);
     void checkButtonStatus(SettingType type, bool& isOn, bool& isEnabled) const;
     void onButtonClicked(SettingType type);
@@ -56,6 +54,9 @@ protected:
 private:
     SettingsLayerObserver *_observer;
     Node* _returnButton;
+    Node* _subNode;
+    Node* _contentNode;
+    Node* _languageLayer;
 };
 
 #endif /* SettingsLayer_h */

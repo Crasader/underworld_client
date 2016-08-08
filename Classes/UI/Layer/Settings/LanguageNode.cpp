@@ -12,10 +12,10 @@
 
 using namespace std;
 
-LanguageNode* LanguageNode::create(const string& name)
+LanguageNode* LanguageNode::create()
 {
     LanguageNode *ret = new (nothrow) LanguageNode();
-    if (ret && ret->init(name))
+    if (ret && ret->init())
     {
         ret->autorelease();
         return ret;
@@ -27,7 +27,10 @@ LanguageNode* LanguageNode::create(const string& name)
 
 LanguageNode::LanguageNode()
 :_button(nullptr)
-,_observer(nullptr) {}
+,_observer(nullptr)
+,_tick(nullptr)
+,_touchInvalid(false)
+,_idx(CC_INVALID_INDEX) {}
 
 LanguageNode::~LanguageNode()
 {
@@ -39,7 +42,7 @@ void LanguageNode::registerObserver(LanguageNodeObserver *observer)
     _observer = observer;
 }
 
-bool LanguageNode::init(const string& name)
+bool LanguageNode::init()
 {
     if (Node::init())
     {
@@ -48,6 +51,10 @@ bool LanguageNode::init(const string& name)
         addChild(button);
         
         const auto& size(button->getContentSize());
+        setAnchorPoint(Point::ANCHOR_MIDDLE);
+        setContentSize(size);
+        button->setPosition(Point(size.width / 2, size.height / 2));
+        
         static const float space(3);
         _tick = Sprite::create(SettingUI::getResourcePath("icon_duihao.png"));
         const auto& tsize(_tick->getContentSize());
@@ -63,10 +70,32 @@ bool LanguageNode::init(const string& name)
         auto label = button->getTitleRenderer();
         if (label) {
             label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
-            label->setPosition(_tick->getPosition() + Point(tsize.width / 2 + space, 0));
+            const Point& pos(button->convertToWorldSpace(_tick->getPosition()));
+            label->setPosition(label->getParent()->convertToNodeSpace(pos) + Point(tsize.width / 2 + space, 0));
         }
         
-        update(name);
+        button->addTouchEventListener([this](Ref *pSender, ui::Widget::TouchEventType type) {
+            auto widget = dynamic_cast<ui::Widget*>(pSender);
+            if (type == ui::Widget::TouchEventType::BEGAN) {
+                _touchInvalid = false;
+            } else if (type == ui::Widget::TouchEventType::MOVED) {
+                if (!_touchInvalid) {
+                    const auto& mp(widget->getTouchMovePosition());
+                    const auto& bp(widget->getTouchBeganPosition());
+                    static const float offset(40);
+                    if (abs(mp.x - bp.x) >= offset || abs(mp.y - bp.y) >= offset) {
+                        _touchInvalid = true;
+                    }
+                }
+            } else if (type == ui::Widget::TouchEventType::ENDED) {
+                if (!_touchInvalid && _observer) {
+                    _observer->onLanguageNodeSelected(_idx);
+                }
+            }
+        });
+        button->setSwallowTouches(false);
+        
+        _button = button;
         
         return true;
     }
@@ -86,4 +115,9 @@ void LanguageNode::update(const string& name)
     if (_button) {
         _button->setTitleText(name);
     }
+}
+
+void LanguageNode::setIdx(ssize_t idx)
+{
+    _idx = idx;
 }
