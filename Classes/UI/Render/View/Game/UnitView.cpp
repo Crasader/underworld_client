@@ -14,6 +14,7 @@
 #include "URConfigData.h"
 #include "CocosUtils.h"
 #include "PVRAnimation.h"
+#include "CoreUtils.h"
 
 
 namespace UnderWorld{ namespace Core{
@@ -316,9 +317,9 @@ void UnitView::getAnimationFiles(UnitAnimationType type,
     
     if (!resourcePrefix.empty() && !posePrefix.empty()) {
         if (type == UnitAnimationType::PVR) {
-            bodyData.assign(resourcePrefix + "/" + posePrefix + "/body/" + std::to_string(resourceId));
+            bodyData.assign(resourcePrefix + "/" + posePrefix + "/body/" + UnderWorldCoreUtils::to_string(resourceId));
         } else if (type == UnitAnimationType::CSB) {
-            bodyData.assign(resourcePrefix + "-" + posePrefix + "-" + std::to_string(resourceId) + ".csb");
+            bodyData.assign(resourcePrefix + "-" + posePrefix + "-" + UnderWorldCoreUtils::to_string(resourceId) + ".csb");
         }
     }
     

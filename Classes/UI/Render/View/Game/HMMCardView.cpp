@@ -13,6 +13,7 @@
 #include "CardConfigData.h"
 #include "CocosUtils.h"
 #include "CocosGlobal.h"
+#include "CoreUtils.h"
 
 namespace UnderWorld{ namespace Core{
     
@@ -133,7 +134,7 @@ bool HMMCardView::init(const HMMCardType* cardType) {
     //TODO: rarity in cardType
     int rarity = 0;
     if (_cardType && _qualitySprite) {
-        _qualitySprite->setTexture("GameImages/test/ui_kuang_"+ std::to_string(rarity + 1) + ".png");
+        _qualitySprite->setTexture("GameImages/test/ui_kuang_"+ UnderWorldCoreUtils::to_string(rarity + 1) + ".png");
     }
     
     if (_resourceNode && _cardType) {

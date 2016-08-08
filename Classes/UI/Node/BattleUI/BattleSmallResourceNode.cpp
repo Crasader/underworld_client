@@ -8,6 +8,7 @@
 
 #include "BattleSmallResourceNode.h"
 #include "CocosUtils.h"
+#include "CoreUtils.h"
 
 using namespace std;
 
@@ -105,7 +106,7 @@ void BattleSmallResourceNode::setCount(int count)
         _count = count;
         
         if (_countLabel) {
-            _countLabel->setString(std::to_string(count));
+            _countLabel->setString(UnderWorld::Core::UnderWorldCoreUtils::to_string(count));
         }
     }
 }

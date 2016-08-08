@@ -12,6 +12,7 @@
 #include <iomanip>
 #include "FixedLabelAtlas.h"
 #include "NumberJump.h"
+#include "CoreUtils.h"
 
 // for "getFileLists"
 #include <dirent.h>
@@ -364,12 +365,12 @@ static SpriteFrame* getPVRFrame(const string& folder, int idx)
 {
     idx += 1;
     std::string fileName = "1";
-    fileName.append(std::to_string(idx / 1000));
+    fileName.append(UnderWorld::Core::UnderWorldCoreUtils::to_string(idx / 1000));
     idx = idx % 1000;
-    fileName.append(std::to_string(idx / 100));
+    fileName.append(UnderWorld::Core::UnderWorldCoreUtils::to_string(idx / 100));
     idx = idx % 100;
-    fileName.append(std::to_string(idx / 10));
-    fileName.append(std::to_string(idx % 10));
+    fileName.append(UnderWorld::Core::UnderWorldCoreUtils::to_string(idx / 10));
+    fileName.append(UnderWorld::Core::UnderWorldCoreUtils::to_string(idx % 10));
     
     auto file = folder + "/" + fileName + ".png";
     return SpriteFrameCache::getInstance()->getSpriteFrameByName(file);
