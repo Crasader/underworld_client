@@ -42,7 +42,7 @@ public:
     void setEnabled(bool enabled);
     
     BType getType() const;
-    Label* getLabel() const;
+    void setTitleFontSize(float size);
     
 protected:
     static const std::string DefaultTitle;

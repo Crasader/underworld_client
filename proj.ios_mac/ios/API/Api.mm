@@ -300,6 +300,14 @@ string iOSApi::getBuildId()
     return [[info objectForKey:@"CFBundleVersion"] stdString];
 }
 
+string iOSApi::getLanguage()
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *languages = [defaults objectForKey:@"AppleLanguages"];
+    NSString *currentLanguage = [languages objectAtIndex:0];
+    return [currentLanguage stdString];
+}
+
 void iOSApi::setMultipleTouchEnabled(bool enabled)
 {
     auto ad = (AppController*)[UIApplication sharedApplication].delegate;

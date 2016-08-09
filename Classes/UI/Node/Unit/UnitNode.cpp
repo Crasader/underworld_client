@@ -758,7 +758,7 @@ void UnitNode::playAnimation(const AnimationType& at,
                 createEquipment(&_equipment, _body->nodeFile, flip, startIdx);
                 
                 // -- equipment's shadow -- //
-                createShadow(&_equipment, flip, startIdx);
+//                createShadow(&_equipment, flip, startIdx);
             }
         }
         

@@ -12,6 +12,7 @@
 #include "cocos2d.h"
 #include "cocos-ext.h"
 #include "LanguageNode.h"
+#include "LanguageConfirmationLayer.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -26,6 +27,7 @@ class LanguageLayer
 : public LayerColor
 , public TableViewDataSource
 , public LanguageNodeObserver
+, public LanguageConfirmationLayerObserver
 {
 public:
     static LanguageLayer* create(const Size& size);
@@ -47,6 +49,9 @@ protected:
     
     // LanguageNodeObserver
     virtual void onLanguageNodeSelected(ssize_t idx) override;
+    
+    // LanguageConfirmationLayerObserver
+    virtual void onLanguageConfirmationLayerConfirm(ssize_t idx) override;
     
     // table
     void createTable();

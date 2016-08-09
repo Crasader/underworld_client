@@ -21,6 +21,10 @@
 	<item name="pvr/TerranMage-shadows-0.plist"/>
 	<item name="pvr/TerranMage-shadows-1.plist"/>
 	<item name="pvr/TerranMage.plist"/>
+	<item name="pvr/Thrall-shadows-0.plist"/>
+	<item name="pvr/Thrall-shadows-1.plist"/>
+	<item name="pvr/Thrall-skill.plist"/>
+	<item name="pvr/Thrall.plist"/>
 	<item name="pvr/Tower.plist"/>
 	<item name="pvr/Troll-shadows.plist"/>
 	<item name="pvr/Troll.plist"/>

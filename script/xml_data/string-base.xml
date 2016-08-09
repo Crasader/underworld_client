@@ -85,6 +85,12 @@
     <item key="ui_setting_on" value="开启"/>
     <item key="ui_setting_off" value="关闭"/>
     <item key="ui_setting_hint" value="登录xx保存您的游戏进度，并可在多台设备上玩游戏。"/>
+    <item key="ui_rename_title" value="更改名称"/>
+    <item key="ui_rename_hint" value="注意：您只有一次改名机会"/>
+    <item key="ui_rename_inputHint" value="请输入新名称："/>
+    <item key="ui_rename_buttonTitle" value="继续"/>
+    <item key="ui_language_title" value="语言设置"/>
+    <item key="ui_language_hint" value="您确定要更改语言设置吗？"/>
     
     <!-- 提示 -->
     <item key="hint_selectNoCard" value="卡牌尚未选择！"/>

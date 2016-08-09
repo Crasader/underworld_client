@@ -22,6 +22,7 @@ public:
 };
 
 enum class SettingType;
+class SettingNode;
 
 class SettingsLayer
 : public LayerColor
@@ -49,7 +50,8 @@ protected:
     void createContent();
     void createSettingNodes(Node* parent, const std::vector<SettingType>& types, const Point& basePoint, int row, int column, const Vec2& edge, const Vec2& space);
     void checkButtonStatus(SettingType type, bool& isOn, bool& isEnabled) const;
-    void onButtonClicked(SettingType type);
+    void onButtonClicked(SettingNode* node, SettingType type);
+    void setCurrentLanguage();
     
 private:
     SettingsLayerObserver *_observer;
@@ -57,6 +59,7 @@ private:
     Node* _subNode;
     Node* _contentNode;
     Node* _languageLayer;
+    SettingNode* _languageNode;
 };
 
 #endif /* SettingsLayer_h */

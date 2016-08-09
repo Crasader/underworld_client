@@ -14,10 +14,7 @@
 #include "UniversalButton.h"
 
 using namespace std;
-
-static const string getResourcePath(const string& file) {
-    return "GameImages/settings_ui/" + file;
-}
+using namespace ui;
 
 RenameLayer* RenameLayer::create()
 {
@@ -44,11 +41,12 @@ void RenameLayer::registerObserver(RenameLayerObserver *observer)
     _observer = observer;
 }
 
+#pragma mark - LayerColor
 bool RenameLayer::init()
 {
     if (LayerColor::initWithColor(LAYER_MASK_COLOR)) {
         const auto& winSize(Director::getInstance()->getWinSize());
-        auto bg = Sprite::create(getResourcePath("ui_background_3.png"));
+        auto bg = Sprite::create(SettingUI::getResourcePath("ui_background_3.png"));
         bg->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(bg);
         
@@ -68,14 +66,14 @@ bool RenameLayer::init()
             s->setPosition(Point(subBgSize.width / 2, subBgSize.height - (size.height / 2 + edgeY)));
             subNode->addChild(s);
             
-            auto hint = CocosUtils::createLabel("Only change once", DEFAULT_FONT_SIZE);
+            auto hint = CocosUtils::createLabel(LocalHelper::getString("ui_rename_hint"), DEFAULT_FONT_SIZE);
             hint->setAnchorPoint(Point::ANCHOR_MIDDLE);
             hint->setPosition(Point(size.width / 2, size.height / 2));
             s->addChild(hint);
         }
         
         {
-            auto hint = CocosUtils::createLabel("Change your nickname", DEFAULT_FONT_SIZE);
+            auto hint = CocosUtils::createLabel(LocalHelper::getString("ui_rename_inputHint"), DEFAULT_FONT_SIZE);
             hint->setTextColor(Color4B::BLACK);
             hint->setAnchorPoint(Point::ANCHOR_MIDDLE);
             hint->setPosition(Point(subBgSize.width / 2, subBgSize.height / 2));
@@ -87,6 +85,12 @@ bool RenameLayer::init()
             static const float capInsets(5.0f);
             auto s = ui::Scale9Sprite::create(SettingUI::getResourcePath("ui_kuang_6.png"), Rect(0, 0, rs.width, rs.height), Rect(capInsets, capInsets, rs.width - capInsets * 2, rs.height - capInsets * 2));
             auto eb = ui::EditBox::create(rs, s);
+            eb->setDelegate(this);
+            eb->setMaxLength(rs.width);
+            eb->setReturnType(EditBox::KeyboardReturnType::SEND);
+            eb->setInputMode(EditBox::InputMode::ANY);
+            eb->setFontSize(DEFAULT_FONT_SIZE);
+            eb->setFontColor(Color4B::BLACK);
             const auto& size(eb->getContentSize());
             eb->setPosition(Point(subBgSize.width / 2, size.height / 2 + edgeY));
             subNode->addChild(eb);
@@ -96,12 +100,12 @@ bool RenameLayer::init()
             removeFromParent();
         });
         
-        auto title = CocosUtils::createLabel("Rename", BIG_FONT_SIZE);
+        auto title = CocosUtils::createLabel(LocalHelper::getString("ui_rename_title"), BIG_FONT_SIZE);
         title->setAnchorPoint(Point::ANCHOR_MIDDLE);
         title->setPosition(Point(size.width / 2, (size.height + subBgSize.height + edge) / 2));
         bg->addChild(title);
         
-        auto button = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Blue, "Finish");
+        auto button = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Blue, LocalHelper::getString("ui_rename_buttonTitle"));
         button->setCallback([](Ref*) {
             
         });
@@ -126,6 +130,12 @@ bool RenameLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 }
 
 void RenameLayer::onTouchEnded(Touch *touch, Event *unused_event)
+{
+    
+}
+
+#pragma mark - EditBoxDelegate
+void RenameLayer::editBoxReturn(EditBox* editBox)
 {
     
 }

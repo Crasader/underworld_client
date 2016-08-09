@@ -9,26 +9,27 @@
 #include "LanguageLayer.h"
 #include "XTableViewCell.h"
 #include "CocosGlobal.h"
+#include "LocalHelper.h"
 
 using namespace std;
 
 static const float tableNodeGapY(14);
-static const vector<pair<string, string>> languages = {
-    {"English", "English"},
-    {"French", "Français"},
-    {"German", "Deutsch"},
-    {"Spanish", "Español"},
-    {"Italian", "Italiano"},
-    {"Dutch", "Nederlands"},
-    {"Norwegian", "Norsk"},
-    {"Portuguese", "Português"},
-    {"Turkish", "Türkçe"},
-    {"SimplifiedChinese", "简体中文"},
-    {"Japanese", "日本語"},
-    {"Korean", "한국어"},
-    {"Russian", "Pусский"},
-    {"TraditionalChinese", "繁體中文"},
-    {"Arabic", "العربية"},
+static const vector<LocalType> languages = {
+    LocalType::ENGLISH,
+    LocalType::FRENCH,
+    LocalType::GERMAN,
+    LocalType::SPANISH,
+    LocalType::ITALIAN,
+    LocalType::DUTCH,
+    LocalType::NORWEGIAN,
+    LocalType::PORTUGUESE,
+    LocalType::TURKISH,
+    LocalType::CHINESE,
+    LocalType::JAPANESE,
+    LocalType::KOREAN,
+    LocalType::RUSSIAN,
+    LocalType::TCHINESE,
+    LocalType::ARABIC,
 };
 
 LanguageLayer* LanguageLayer::create(const Size& size)
@@ -52,6 +53,13 @@ LanguageLayer::LanguageLayer()
 ,_selectedIdx(CC_INVALID_INDEX)
 {
     _nodeSize = LanguageNode::create()->getContentSize();
+    
+    for (auto i = 0; i < languages.size(); ++i) {
+        if (LocalHelper::getLocalType() == languages.at(i)) {
+            _selectedIdx = i;
+            break;
+        }
+    }
 }
 
 LanguageLayer::~LanguageLayer()
@@ -119,7 +127,7 @@ TableViewCell* LanguageLayer::tableCellAtIndex(TableView *table, ssize_t idx)
     static const float nodeIdx(0);
     auto node = dynamic_cast<LanguageNode*>(cell->getNode(nodeIdx));
     if (idx < cnt) {
-        const auto& name(languages.at(idx).second);
+        const auto& name(LocalHelper::getLanguageName(languages.at(idx)));
         if (!node) {
             node = LanguageNode::create();
             node->registerObserver(this);
@@ -150,6 +158,14 @@ ssize_t LanguageLayer::numberOfCellsInTableView(TableView *table)
 #pragma mark - LanguageNodeObserver
 void LanguageLayer::onLanguageNodeSelected(ssize_t idx)
 {
+    auto confirmLayer = LanguageConfirmationLayer::create(idx);
+    confirmLayer->registerObserver(this);
+    Director::getInstance()->getRunningScene()->addChild(confirmLayer);
+}
+
+#pragma mark - LanguageConfirmationLayerObserver
+void LanguageLayer::onLanguageConfirmationLayerConfirm(ssize_t idx)
+{
     auto prior(_selectedIdx);
     
     if (idx != _selectedIdx) {
@@ -161,6 +177,10 @@ void LanguageLayer::onLanguageNodeSelected(ssize_t idx)
         
         if (CC_INVALID_INDEX != idx) {
             _table->updateCellAtIndex(idx);
+        }
+        
+        if (idx < languages.size()) {
+            LocalHelper::setLocalType(languages.at(idx));
         }
     }
 }

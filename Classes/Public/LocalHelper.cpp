@@ -7,47 +7,73 @@
 //
 
 #include "LocalHelper.h"
-#include "cocos2d.h"
 #include "tinyxml2/tinyxml2.h"
 #include "AESCTREncryptor.h"
+#include "UserDefaultsDataManager.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+#include "ApiBridge.h"
+#endif
 
 using namespace std;
-USING_NS_CC;
 
-static const string LOCAL_KEY_BASE = "base";
-static LocalType local = LocalType::Chinese;
-static unordered_map<string, unordered_map<string, string> > stringsMap;
+static const string languageKey("languageKey");
+static LocalType _localType = static_cast<LocalType>(-1);
 
+typedef unordered_map<string, string> StringsType;
+StringsType _baseStrings;
+StringsType _localizedStrings;
+
+// http://www.lingoes.net/en/translator/langcode.htm
 static string getLocalKey(LocalType type)
 {
     switch (type) {
-        case LocalType::Chinese:
-            return "zh";
-        case LocalType::English:
+        case LocalType::ENGLISH:
             return "en";
-        default:
-            return "";
+        case LocalType::FRENCH:
+            return "fr";
+        case LocalType::GERMAN:
+            return "de";
+        case LocalType::SPANISH:
+            return "es";
+        case LocalType::ITALIAN:
+            return "it";
+        case LocalType::DUTCH:
+            return "nl";
+        case LocalType::NORWEGIAN:
+            return "nb";
+        case LocalType::PORTUGUESE:
+            return "pt";
+        case LocalType::TURKISH:
+            return "tr";
+        case LocalType::JAPANESE:
+            return "ja";
+        case LocalType::KOREAN:
+            return "ko";
+        case LocalType::RUSSIAN:
+            return "ru";
+        case LocalType::ARABIC:
+            return "ar";
+        case LocalType::CHINESE:
+            return "zh";
+        case LocalType::TCHINESE:
+            return "zht";
     }
 }
 
-static void parseStrings(string local) {
-    string file = StringUtils::format("configs/string-%s.xml", local.c_str());
-    if (LocalHelper::isFileExists(file)) {
-        if (stringsMap.find(local) == stringsMap.end()) {
-            stringsMap.insert(make_pair(local, unordered_map<string, string>()));
-        }
-        auto& localMap = stringsMap.at(local);
-        tinyxml2::XMLDocument* xmlDoc = new tinyxml2::XMLDocument();
+static void parseStrings(const string& file, StringsType& container)
+{
+    if (FileUtils::getInstance()->isFileExist(file)) {
+        auto xmlDoc = new (nothrow) tinyxml2::XMLDocument();
         if (xmlDoc) {
-            string content = LocalHelper::loadFileContentString(file);
+            auto content = LocalHelper::loadFileContentString(file);
             xmlDoc->Parse(content.c_str());
-            for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement();
+            for (auto item = xmlDoc->RootElement()->FirstChildElement();
                  item;
                  item = item->NextSiblingElement()) {
-                string key = item->Attribute("key");
-                string value = item->Attribute("value");
-                assert(localMap.find(key) == localMap.end());
-                localMap.insert(make_pair(key, value));
+                auto key = item->Attribute("key");
+                auto value = item->Attribute("value");
+                assert(container.find(key) == container.end());
+                container.insert(make_pair(key, value));
             }
             
             CC_SAFE_DELETE(xmlDoc);
@@ -55,47 +81,112 @@ static void parseStrings(string local) {
     }
 }
 
-bool LocalHelper::isFileExists(const std::string& file) {
-    return FileUtils::getInstance()->isFileExist(file);
+static void parseBaseStrings()
+{
+    parseStrings("configs/string-base.xml", _baseStrings);
 }
 
-string LocalHelper::loadFileContentString(const std::string& file) {
-    Data data = FileUtils::getInstance()->getDataFromFile(file);
+static void parseLocalizedStrings(LocalType type)
+{
+    auto file = StringUtils::format("configs/string-%s.xml", getLocalKey(type).c_str());
+    parseStrings(file, _localizedStrings);
+}
+
+static bool isSimplifiedChinese()
+{
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+    if (string::npos != iOSApi::getLanguage().find("zh-Hans")) {
+        return true;
+    }
+    
+    return false;
+#else
+    return true;
+#endif
+}
+
+static LocalType getLocalTypeFromLanguage()
+{
+    auto language(Application::getInstance()->getCurrentLanguage());
+    
+    switch (language) {
+        case LanguageType::CHINESE: {
+            if (isSimplifiedChinese()) {
+                return LocalType::CHINESE;
+            } else {
+                return LocalType::TCHINESE;
+            }
+        }
+        case LanguageType::FRENCH:
+            return LocalType::FRENCH;
+        case LanguageType::GERMAN:
+            return LocalType::GERMAN;
+        case LanguageType::SPANISH:
+            return LocalType::SPANISH;
+        case LanguageType::ITALIAN:
+            return LocalType::ITALIAN;
+        case LanguageType::DUTCH:
+            return LocalType::DUTCH;
+        case LanguageType::NORWEGIAN:
+            return LocalType::NORWEGIAN;
+        case LanguageType::PORTUGUESE:
+            return LocalType::PORTUGUESE;
+        case LanguageType::TURKISH:
+            return LocalType::TURKISH;
+        case LanguageType::JAPANESE:
+            return LocalType::JAPANESE;
+        case LanguageType::KOREAN:
+            return LocalType::KOREAN;
+        case LanguageType::RUSSIAN:
+            return LocalType::RUSSIAN;
+        case LanguageType::ARABIC:
+            return LocalType::ARABIC;
+            
+        default:
+            return LocalType::ENGLISH;
+    }
+}
+
+#pragma mark - LocalHelper
+string LocalHelper::loadFileContentString(const string& file) {
+    auto data = FileUtils::getInstance()->getDataFromFile(file);
     if(!data.isNull()){
-        std::string ret;
+        string ret;
         ret.assign((char*)data.getBytes(), data.getSize());
         return AESCTREncryptor::getInstance()->Encrypt(ret);
     }
+    
     return "";
 }
 
 void LocalHelper::init() {
-    LanguageType lt = Application::getInstance()->getCurrentLanguage();
+    parseBaseStrings();
     
-    if (lt == LanguageType::CHINESE) {
-        local = LocalType::Chinese;
+    LocalType type;
+    int value = UserDefaultsDataManager::getIntegerForKey(languageKey.c_str(), -1);
+    if (value >= 0) {
+        type = static_cast<LocalType>(value);
     } else {
-        local = LocalType::English;
+        type = getLocalTypeFromLanguage();
+        
+        // test
+        type = LocalType::CHINESE;
     }
     
-    // test
-    local = LocalType::Chinese;
-    
-    parseStrings(LOCAL_KEY_BASE);
-//    parseStrings(getLocalKey(local));
+    setLocalType(type);
 }
 
-string LocalHelper::getLocalizedFilePath(const std::string &filePath) {
-    const string key = getLocalKey(local);
+string LocalHelper::getLocalizedFilePath(const string &filePath) {
+    const string key = getLocalKey(_localType);
     string localPath = key + "/" + filePath;
-    if (isFileExists(localPath)) {
+    if (FileUtils::getInstance()->isFileExist(localPath)) {
         return localPath;
     } else {
         return filePath;
     }
 }
 
-std::string LocalHelper::getLocalizedConfigFilePath(const std::string& fileName) {
+string LocalHelper::getLocalizedConfigFilePath(const string& fileName) {
     static const string defaultPrefix = "configs/";
 #if VERSION_HK
     static const string localizedFolder = "configs_tw/";
@@ -106,7 +197,7 @@ std::string LocalHelper::getLocalizedConfigFilePath(const std::string& fileName)
 #endif
     
     string path = localizedFolder + fileName;
-    FileUtils *fileUtils = FileUtils::getInstance();
+    auto fileUtils = FileUtils::getInstance();
     if (localizedFolder.length() == 0 || !fileUtils->isFileExist(path)) {
         path = defaultPrefix + fileName;
         if (!fileUtils->isFileExist(path)) {
@@ -117,18 +208,11 @@ std::string LocalHelper::getLocalizedConfigFilePath(const std::string& fileName)
     return path;
 }
 
-LocalType LocalHelper::getLocal() {
-    return local;
-}
-
-string LocalHelper::getString(const std::string &key) {
-    const string localKey = getLocalKey(local);
-    if (stringsMap.find(localKey) != stringsMap.end()
-        && stringsMap.find(localKey)->second.find(key) != stringsMap.find(localKey)->second.end()) {
-        return stringsMap.find(localKey)->second.find(key)->second;
-    } else if (stringsMap.find(LOCAL_KEY_BASE) != stringsMap.end()
-               && stringsMap.find(LOCAL_KEY_BASE)->second.find(key) != stringsMap.find(LOCAL_KEY_BASE)->second.end()) {
-        return stringsMap.find(LOCAL_KEY_BASE)->second.find(key)->second;
+string LocalHelper::getString(const string &key) {
+    if (_localizedStrings.find(key) != end(_localizedStrings)) {
+        return _localizedStrings.at(key);
+    } else if (_baseStrings.find(key) != end(_baseStrings)) {
+        return _baseStrings.at(key);
     } else {
         // lack value
         if (key.length() > 0) {
@@ -139,6 +223,47 @@ string LocalHelper::getString(const std::string &key) {
     }
 }
 
-void LocalHelper::setLocal(LocalType type) {
-    local = type;
+LocalType LocalHelper::getLocalType() {
+    return _localType;
+}
+
+void LocalHelper::setLocalType(LocalType type) {
+    if (_localType != type) {
+        _localType = type;
+        UserDefaultsDataManager::setIntegerForKey(languageKey.c_str(), static_cast<int>(type));
+        _localizedStrings.clear();
+        parseLocalizedStrings(type);
+    }
+}
+
+const string& LocalHelper::getLanguageName(LocalType type) {
+    static map<LocalType, string> languages = {
+        {LocalType::ENGLISH, "English"},
+        {LocalType::FRENCH, "Français"},
+        {LocalType::GERMAN, "Deutsch"},
+        {LocalType::SPANISH, "Español"},
+        {LocalType::ITALIAN, "Italiano"},
+        {LocalType::DUTCH, "Nederlands"},
+        {LocalType::NORWEGIAN, "Norsk"},
+        {LocalType::PORTUGUESE, "Português"},
+        {LocalType::TURKISH, "Türkçe"},
+        {LocalType::CHINESE, "简体中文"},
+        {LocalType::JAPANESE, "日本語"},
+        {LocalType::KOREAN, "한국어"},
+        {LocalType::RUSSIAN, "Pусский"},
+        {LocalType::TCHINESE, "繁體中文"},
+        {LocalType::ARABIC, "العربية"},
+    };
+    
+    if (languages.find(type) != end(languages)) {
+        return languages.at(type);
+    }
+    
+    static const string empty("");
+    return empty;
+}
+
+const string& LocalHelper::getCurrentLanguageName()
+{
+    return getLanguageName(_localType);
 }

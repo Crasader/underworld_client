@@ -129,8 +129,8 @@ void MainLayer::onEnter()
     
     if (_scrollView)
     {
-//        _scrollView->jumpToBottom();
-        _scrollView->setInnerContainerPosition(Point(-1180, -720));
+        _scrollView->jumpToBottom();
+//        _scrollView->setInnerContainerPosition(Point(-1180, -720));
     }
 }
 

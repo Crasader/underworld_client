@@ -16,7 +16,6 @@
 using namespace std;
 using namespace ui;
 
-static const Size subNodeSize(359, 174);
 PvpLogShareLayer* PvpLogShareLayer::create()
 {
     auto ret = new (nothrow) PvpLogShareLayer();
@@ -56,13 +55,13 @@ bool PvpLogShareLayer::init()
         addChild(bg);
         _background = bg;
         
+        static const Size subNodeSize(359, 174);
         auto subNode = CocosUtils::createBackground(CocosUtils::getResourcePath("ui_background_1.png"), subNodeSize);
         bg->addChild(subNode);
         
         const auto& size(bg->getContentSize());
-        const auto& subBgSize(subNode->getContentSize());
-        const float edge((size.width - subBgSize.width) / 2);
-        subNode->setPosition(Point(size.width / 2, subBgSize.height / 2 + edge));
+        const float edge((size.width - subNodeSize.width) / 2);
+        subNode->setPosition(Point(size.width / 2, subNodeSize.height / 2 + edge));
         
         CocosUtils::createRedExitButton(bg, [this]() {
             if (_observer) {
@@ -72,7 +71,7 @@ bool PvpLogShareLayer::init()
         
         auto title = CocosUtils::createLabel(LocalHelper::getString("ui_logShare_title"), BIG_FONT_SIZE);
         title->setAnchorPoint(Point::ANCHOR_MIDDLE);
-        title->setPosition(Point(size.width / 2, (size.height + subBgSize.height + edge) / 2));
+        title->setPosition(Point(size.width / 2, (size.height + subNodeSize.height + edge) / 2));
         bg->addChild(title);
         
         auto subTitleBg = Sprite::create(PvpLogUI::getResourcePath("ui_tiao_12.png"));

@@ -180,13 +180,11 @@ UniversalButton::BType UniversalButton::getType() const
     return _bType;
 }
 
-Label* UniversalButton::getLabel() const
+void UniversalButton::setTitleFontSize(float size)
 {
     if (_button) {
-        return _button->getTitleRenderer();
+        return _button->setTitleFontSize(size);
     }
-    
-    return nullptr;
 }
 
 void UniversalButton::adjust()

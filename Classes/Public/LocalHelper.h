@@ -9,25 +9,41 @@
 #ifndef LocalHelper_h
 #define LocalHelper_h
 
-#include <string>
+#include "cocos2d.h"
+
+USING_NS_CC;
 
 enum class LocalType {
-    Chinese = 0,
-    English,
+    ENGLISH = 0,
+    FRENCH,
+    GERMAN,
+    SPANISH,
+    ITALIAN,
+    DUTCH,
+    NORWEGIAN,
+    PORTUGUESE,
+    TURKISH,
+    JAPANESE,
+    KOREAN,
+    RUSSIAN,
+    ARABIC,
+    CHINESE,
+    TCHINESE
 };
 
 namespace LocalHelper
-{    
-    bool isFileExists(const std::string& file);
+{
     std::string loadFileContentString(const std::string& file);
     
     void init();
     std::string getLocalizedFilePath(const std::string& filePath);
     std::string getLocalizedConfigFilePath(const std::string& fileName);
-    LocalType getLocal();
     std::string getString(const std::string& key);
     
-    void setLocal(LocalType type);
+    LocalType getLocalType();
+    void setLocalType(LocalType type);
+    const std::string& getLanguageName(LocalType type);
+    const std::string& getCurrentLanguageName();
 };
 
 #endif /* LocalHelper_h */

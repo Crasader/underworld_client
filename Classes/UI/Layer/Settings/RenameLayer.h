@@ -10,6 +10,7 @@
 #define RenameLayer_h
 
 #include "cocos2d.h"
+#include "ui/CocosGUI.h"
 
 USING_NS_CC;
 
@@ -19,7 +20,9 @@ public:
     virtual ~RenameLayerObserver() {}
 };
 
-class RenameLayer : public LayerColor
+class RenameLayer
+: public LayerColor
+, public ui::EditBoxDelegate
 {
 public:
     static RenameLayer* create();
@@ -28,9 +31,14 @@ public:
     
 protected:
     RenameLayer();
+    
+    // LayerColor
     virtual bool init() override;
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
+    
+    // EditBoxDelegate
+    virtual void editBoxReturn(ui::EditBox* editBox) override;
     
 private:
     RenameLayerObserver *_observer;

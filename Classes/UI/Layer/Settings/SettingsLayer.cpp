@@ -12,6 +12,7 @@
 #include "CocosUtils.h"
 #include "SettingUI.h"
 #include "LocalHelper.h"
+#include "SoundManager.h"
 #include "UniversalButton.h"
 
 using namespace std;
@@ -51,11 +52,12 @@ static const vector<SettingType> lowerTypes = {
 #pragma mark - SettingNode
 class SettingNode : public Node {
 public:
-    typedef function<void(SettingType)> Callback;
+    typedef function<void(SettingNode*, SettingType)> Callback;
     static SettingNode* create(SettingType type, const Callback& callback, bool isOn);
     virtual ~SettingNode();
     void toggle(bool isOn);
     void setEnabled(bool enabled);
+    void setTitle(const string& title);
     
 private:
     SettingNode();
@@ -135,10 +137,10 @@ bool SettingNode::init(SettingType type, const Callback& callback, bool isOn) {
             _button->setPressedActionEnabled(true);
             _button->setCallback([this](Ref*) {
                 if (_callback) {
-                    _callback(_type);
+                    _callback(this, _type);
                 }
             });
-            _button->getLabel()->setSystemFontSize(SMALL_FONT_SIZE);
+            _button->setTitleFontSize(SMALL_FONT_SIZE);
             addChild(_button);
             
             // check if the button is lower
@@ -184,7 +186,7 @@ void SettingNode::toggle(bool isOn) {
             auto bType(isOn ? UniversalButton::BType::Blue : UniversalButton::BType::Red);
             auto bTitle(isOn ? LocalHelper::getString("ui_setting_on") : LocalHelper::getString("ui_setting_off"));
             _button->setType(bType);
-            _button->setTitle(bTitle);
+            setTitle(bTitle);
         }
     }
 }
@@ -192,6 +194,12 @@ void SettingNode::toggle(bool isOn) {
 void SettingNode::setEnabled(bool enabled) {
     if (_button) {
         _button->setEnabled(enabled);
+    }
+}
+
+void SettingNode::setTitle(const string& title) {
+    if (_button) {
+        _button->setTitle(title);
     }
 }
 
@@ -213,7 +221,8 @@ SettingsLayer::SettingsLayer()
 ,_returnButton(nullptr)
 ,_subNode(nullptr)
 ,_contentNode(nullptr)
-,_languageLayer(nullptr) {}
+,_languageLayer(nullptr)
+,_languageNode(nullptr) {}
 
 SettingsLayer::~SettingsLayer()
 {
@@ -262,10 +271,13 @@ bool SettingsLayer::init()
             if (_contentNode) {
                 _contentNode->setVisible(true);
             }
+            
+            setCurrentLanguage();
         });
         _returnButton->setVisible(false);
         
         createContent();
+        setCurrentLanguage();
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -326,48 +338,59 @@ void SettingsLayer::createContent()
     
     auto parent(_contentNode);
     if (parent) {
-        static float edgeX(12);
+        static const Vec2 edge(12, 28);
+        static const float edgeTop(edge.x);
         const auto& size(parent->getContentSize());
         
         auto line = Sprite::create(SettingUI::getResourcePath("ui_line.png"));
-        line->setScaleX(size.width - edgeX * 2);
+        line->setScaleX(size.width - edge.x * 2);
         line->setPosition(Point(size.width / 2, size.height / 2));
         parent->addChild(line);
         
         static const unsigned int column(3);
         static const unsigned int row(2);
         
-        Vec2 offset(Vec2::ZERO);
-        auto node = SettingNode::create(SettingType::Music, nullptr, true);
-        const auto& nsize(node->getContentSize());
-        if (column > 1) {
-            offset.x = (size.width - nsize.width * column - edgeX * 2) / (column - 1);
-        }
-        
-        if (row > 0) {
-            offset.y = (size.height - line->getPositionY() - nsize.height * row) / (row * 2);
-        }
-        
         // top
-        createSettingNodes(parent, upperTypes, Point(0, line->getPositionY()), row, column, Vec2(edgeX, offset.y), offset);
-        
+        {
+            Vec2 offset(Vec2::ZERO);
+            const auto& nsize(SettingNode::create(upperTypes.front(), nullptr, true)->getContentSize());
+            if (column > 1) {
+                offset.x = (size.width - nsize.width * column - edge.x * 2) / (column - 1);
+            }
+            
+            if (row > 1) {
+                offset.y = (size.height - line->getPositionY() - (nsize.height * row + edgeTop + edge.y)) / (row - 1);
+            }
+            
+            createSettingNodes(parent, upperTypes, Point(0, line->getPositionY()), row, column, edge, offset);
+        }
+            
         // bottom
         {
-            static const float offsetY(edgeX);
-            
             auto notice = Sprite::create(SettingUI::getResourcePath("ui_tiao_6.png"));
-            notice->setPosition(Point(size.width / 2, line->getPositionY() - offsetY - notice->getContentSize().height / 2));
             parent->addChild(notice);
             
-            const auto& nsize(notice->getContentSize());
+            const auto& noticeSize(notice->getContentSize());
+            notice->setPosition(Point(size.width / 2, line->getPositionY() - (edgeTop + noticeSize.height / 2)));
+            
             static const float offsetX(8);
-            auto message = CocosUtils::createLabel(LocalHelper::getString("ui_setting_hint"), SMALL_FONT_SIZE, DEFAULT_FONT, nsize - Size(offsetX * 2, 0), TextHAlignment::LEFT, TextVAlignment::CENTER);
+            auto message = CocosUtils::createLabel(LocalHelper::getString("ui_setting_hint"), SMALL_FONT_SIZE, DEFAULT_FONT, noticeSize - Size(offsetX * 2, 0), TextHAlignment::LEFT, TextVAlignment::CENTER);
             message->setTextColor(Color4B::BLACK);
             message->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
             message->setPosition(Point(offsetX, notice->getContentSize().height / 2));
             notice->addChild(message);
             
-            createSettingNodes(parent, lowerTypes, Point::ZERO, row, column, Vec2(edgeX, offset.y), Vec2(offset.x, edgeX + offset.y));
+            Vec2 offset(Vec2::ZERO);
+            const auto& nsize(SettingNode::create(lowerTypes.front(), nullptr, true)->getContentSize());
+            if (column > 1) {
+                offset.x = (size.width - nsize.width * column - edge.x * 2) / (column - 1);
+            }
+            
+            if (row > 1) {
+                offset.y = (line->getPositionY() - (nsize.height * row + edgeTop * 2 + edge.y + noticeSize.height)) / (row - 1);
+            }
+            
+            createSettingNodes(parent, lowerTypes, Point::ZERO, row, column, edge, offset);
         }
     }
 }
@@ -382,12 +405,16 @@ void SettingsLayer::createSettingNodes(Node* parent, const vector<SettingType>& 
                 bool isOn(true);
                 bool isEnabled(true);
                 checkButtonStatus(type, isOn, isEnabled);
-                auto node = SettingNode::create(type, CC_CALLBACK_1(SettingsLayer::onButtonClicked, this), isOn);
+                auto node = SettingNode::create(type, CC_CALLBACK_2(SettingsLayer::onButtonClicked, this), isOn);
                 const auto& size(node->getContentSize());
                 node->setEnabled(isEnabled);
                 const Point point(Point(edge.x + (j + 0.5) * size.width + j * space.x, edge.y + (row - i - 0.5) * size.height + (row - i - 1) * space.y));
                 node->setPosition(basePoint + point);
                 parent->addChild(node);
+                
+                if (SettingType::Language == type) {
+                    _languageNode = node;
+                }
             }
         }
     }
@@ -395,11 +422,27 @@ void SettingsLayer::createSettingNodes(Node* parent, const vector<SettingType>& 
 
 void SettingsLayer::checkButtonStatus(SettingType type, bool& isOn, bool& isEnabled) const
 {
-    
+    auto sm(SoundManager::getInstance());
+    if (SettingType::Music == type) {
+        isOn = sm->isMusicOn();
+    } else if (SettingType::Sound == type) {
+        isOn = sm->isSoundOn();
+    } else if (SettingType::APNS == type) {
+        
+    } else if (SettingType::Rename == type) {
+        if (true) {
+            isEnabled = true;
+        } else {
+            isEnabled = false;
+        }
+    }
 }
 
-void SettingsLayer::onButtonClicked(SettingType type)
+void SettingsLayer::onButtonClicked(SettingNode* node, SettingType type)
 {
+    auto sm(SoundManager::getInstance());
+    sm->playButtonSound();
+    
     if (SettingType::Rename == type) {
         auto layer = RenameLayer::create();
         layer->registerObserver(this);
@@ -421,5 +464,18 @@ void SettingsLayer::onButtonClicked(SettingType type)
         if (_contentNode) {
             _contentNode->setVisible(false);
         }
+    } else if (SettingType::Music == type) {
+        sm->setMusicOn(!sm->isMusicOn());
+        node->toggle(sm->isMusicOn());
+    } else if (SettingType::Sound == type) {
+        sm->setSoundOn(!sm->isSoundOn());
+        node->toggle(sm->isSoundOn());
+    }
+}
+
+void SettingsLayer::setCurrentLanguage()
+{
+    if (_languageNode) {
+        _languageNode->setTitle(LocalHelper::getCurrentLanguageName());
     }
 }

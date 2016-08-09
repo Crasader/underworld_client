@@ -18,7 +18,7 @@ float Constants::TILEDMAP_MAX_SCALE = 0;
 void Constants::init()
 {
     static std::string file("configs/Constants.xml");
-    if (LocalHelper::isFileExists(file))
+    if (FileUtils::getInstance()->isFileExist(file))
     {
         tinyxml2::XMLDocument *xmlDoc = new (std::nothrow) tinyxml2::XMLDocument();
         if (xmlDoc) {
