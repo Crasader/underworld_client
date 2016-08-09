@@ -308,6 +308,21 @@ string iOSApi::getLanguage()
     return [currentLanguage stdString];
 }
 
+bool iOSApi::isAPNSEnabled()
+{
+    UIApplication* application = [UIApplication sharedApplication];
+    if ([UIApplication instancesRespondToSelector:@selector(isRegisteredForRemoteNotifications)]) {
+        return [application isRegisteredForRemoteNotifications];
+    } else {
+        UIRemoteNotificationType type = [application enabledRemoteNotificationTypes];
+        if (UIRemoteNotificationTypeNone != type) {
+            return true;
+        }
+        
+        return false;
+    }
+}
+
 void iOSApi::setMultipleTouchEnabled(bool enabled)
 {
     auto ad = (AppController*)[UIApplication sharedApplication].delegate;

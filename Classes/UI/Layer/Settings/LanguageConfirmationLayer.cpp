@@ -78,10 +78,8 @@ bool LanguageConfirmationLayer::init(ssize_t idx)
         
         auto confirm = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Blue, LocalHelper::getString("hint_confirm"));
         confirm->setCallback([this](Ref*) {
-            removeFromParent();
-            
             if (_observer) {
-                _observer->onLanguageConfirmationLayerConfirm(_idx);
+                _observer->onLanguageConfirmationLayerConfirm(this, _idx);
             }
         });
         confirm->setPosition(Point(size.width / 2, edge / 2));

@@ -36,6 +36,7 @@ private:
     const CardSimpleData* _data;
     ui::Button* _icon;
     Callback _callback;
+    bool _touchInvalid;
 };
 
 #endif /* CardSimpleNode_h */

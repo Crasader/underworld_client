@@ -14,6 +14,9 @@
 #include "LocalHelper.h"
 #include "SoundManager.h"
 #include "UniversalButton.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+#include "ApiBridge.h"
+#endif
 
 using namespace std;
 
@@ -98,7 +101,7 @@ bool SettingNode::init(SettingType type, const Callback& callback, bool isOn) {
         // value:
         // first(bool): if the button is a on/off switch
         // second: if "first" is true, it's the title; else it's the button's title
-        static const map<SettingType, std::pair<bool, std::string>> SettingNodeInfo {
+        static const map<SettingType, pair<bool, string>> SettingNodeInfo {
             {SettingType::Music, {true, LocalHelper::getString("ui_setting_music")}},
             {SettingType::Sound, {true, LocalHelper::getString("ui_setting_sound")}},
             {SettingType::Language, {true, LocalHelper::getString("ui_setting_language")}},
@@ -302,8 +305,25 @@ void SettingsLayer::onTouchEnded(Touch *touch, Event *unused_event)
 }
 
 #pragma mark - LanguageLayerObserver
+void SettingsLayer::onLanguageLayerSelected(ssize_t idx)
+{
+    const auto& languages = LocalHelper::getSupportedLocalTypes();
+    if (idx < languages.size()) {
+        LocalHelper::setLocalType(languages.at(idx));
+    }
+}
 
 #pragma mark - RenameLayerObserver
+void SettingsLayer::onRenameLayerRename(Node* pSender, const string& name)
+{
+    if (name.empty()) {
+        MessageBox("名字不能为空", nullptr);
+    } else {
+        if (pSender) {
+            pSender->removeFromParent();
+        }
+    }
+}
 
 Node* SettingsLayer::createReturnButton(Node* parent, const Vec2& offset, const function<void()>& callback) const
 {
@@ -428,7 +448,9 @@ void SettingsLayer::checkButtonStatus(SettingType type, bool& isOn, bool& isEnab
     } else if (SettingType::Sound == type) {
         isOn = sm->isSoundOn();
     } else if (SettingType::APNS == type) {
-        
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+        isOn = iOSApi::isAPNSEnabled();
+#endif
     } else if (SettingType::Rename == type) {
         if (true) {
             isEnabled = true;

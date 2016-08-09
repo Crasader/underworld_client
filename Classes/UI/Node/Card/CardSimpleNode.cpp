@@ -27,7 +27,8 @@ CardSimpleNode* CardSimpleNode::create(const CardSimpleData* data)
 CardSimpleNode::CardSimpleNode()
 :_data(nullptr)
 ,_icon(nullptr)
-,_callback(nullptr) {}
+,_callback(nullptr)
+,_touchInvalid(false) {}
 
 CardSimpleNode::~CardSimpleNode()
 {
@@ -42,11 +43,26 @@ bool CardSimpleNode::init(const CardSimpleData* data)
         
         static const auto file(CocosUtils::getResourcePath("icon_kapai.png"));
         auto button = ui::Button::create(file, file);
-        button->addClickEventListener([this](Ref *pSender){
-            if (_callback) {
-                _callback();
+        button->addTouchEventListener([this](Ref *pSender, ui::Widget::TouchEventType type) {
+            auto widget = dynamic_cast<ui::Widget*>(pSender);
+            if (type == ui::Widget::TouchEventType::BEGAN) {
+                _touchInvalid = false;
+            } else if (type == ui::Widget::TouchEventType::MOVED) {
+                if (!_touchInvalid) {
+                    const auto& mp(widget->getTouchMovePosition());
+                    const auto& bp(widget->getTouchBeganPosition());
+                    static const float offset(40);
+                    if (abs(mp.x - bp.x) >= offset || abs(mp.y - bp.y) >= offset) {
+                        _touchInvalid = true;
+                    }
+                }
+            } else if (type == ui::Widget::TouchEventType::ENDED) {
+                if (!_touchInvalid && _callback) {
+                    _callback();
+                }
             }
         });
+        button->setSwallowTouches(false);
         button->setPosition(Point(Width / 2, Height / 2));
         addChild(button);
         

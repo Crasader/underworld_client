@@ -43,8 +43,10 @@ protected:
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
     // LanguageLayerObserver
+    virtual void onLanguageLayerSelected(ssize_t idx) override;
     
     // RenameLayerObserver
+    virtual void onRenameLayerRename(Node* pSender, const std::string& name) override;
     
     Node* createReturnButton(Node* parent, const Vec2& offset, const std::function<void()>& callback) const;
     void createContent();

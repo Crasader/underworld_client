@@ -10,6 +10,7 @@
 #include "tinyxml2/tinyxml2.h"
 #include "Global.h"
 #include "LocalHelper.h"
+#include "platform/CCFileUtils.h"
 
 int Constants::ISLAND_TOTAL_COUNT = 0;
 int Constants::STAGE_COUNT_PER_ISLAND = 0;
@@ -18,7 +19,7 @@ float Constants::TILEDMAP_MAX_SCALE = 0;
 void Constants::init()
 {
     static std::string file("configs/Constants.xml");
-    if (FileUtils::getInstance()->isFileExist(file))
+    if (cocos2d::FileUtils::getInstance()->isFileExist(file))
     {
         tinyxml2::XMLDocument *xmlDoc = new (std::nothrow) tinyxml2::XMLDocument();
         if (xmlDoc) {

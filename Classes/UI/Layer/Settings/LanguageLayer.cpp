@@ -14,23 +14,7 @@
 using namespace std;
 
 static const float tableNodeGapY(14);
-static const vector<LocalType> languages = {
-    LocalType::ENGLISH,
-    LocalType::FRENCH,
-    LocalType::GERMAN,
-    LocalType::SPANISH,
-    LocalType::ITALIAN,
-    LocalType::DUTCH,
-    LocalType::NORWEGIAN,
-    LocalType::PORTUGUESE,
-    LocalType::TURKISH,
-    LocalType::CHINESE,
-    LocalType::JAPANESE,
-    LocalType::KOREAN,
-    LocalType::RUSSIAN,
-    LocalType::TCHINESE,
-    LocalType::ARABIC,
-};
+static const vector<LocalType>& languages(LocalHelper::getSupportedLocalTypes());
 
 LanguageLayer* LanguageLayer::create(const Size& size)
 {
@@ -164,8 +148,12 @@ void LanguageLayer::onLanguageNodeSelected(ssize_t idx)
 }
 
 #pragma mark - LanguageConfirmationLayerObserver
-void LanguageLayer::onLanguageConfirmationLayerConfirm(ssize_t idx)
+void LanguageLayer::onLanguageConfirmationLayerConfirm(Node* pSender, ssize_t idx)
 {
+    if (pSender) {
+        pSender->removeFromParent();
+    }
+    
     auto prior(_selectedIdx);
     
     if (idx != _selectedIdx) {
@@ -179,8 +167,8 @@ void LanguageLayer::onLanguageConfirmationLayerConfirm(ssize_t idx)
             _table->updateCellAtIndex(idx);
         }
         
-        if (idx < languages.size()) {
-            LocalHelper::setLocalType(languages.at(idx));
+        if (_observer) {
+            _observer->onLanguageLayerSelected(idx);
         }
     }
 }

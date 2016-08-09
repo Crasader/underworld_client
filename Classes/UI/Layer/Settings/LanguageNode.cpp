@@ -65,14 +65,7 @@ bool LanguageNode::init()
         button->setTitleFontName(DEFAULT_FONT);
         button->setTitleFontSize(DEFAULT_FONT_SIZE);
         button->setTitleColor(Color3B::BLACK);
-        button->setTitleAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
-        
-        auto label = button->getTitleRenderer();
-        if (label) {
-            label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
-            const Point& pos(button->convertToWorldSpace(_tick->getPosition()));
-            label->setPosition(label->getParent()->convertToNodeSpace(pos) + Point(tsize.width / 2 + space, 0));
-        }
+        button->setTitleAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
         
         button->addTouchEventListener([this](Ref *pSender, ui::Widget::TouchEventType type) {
             auto widget = dynamic_cast<ui::Widget*>(pSender);

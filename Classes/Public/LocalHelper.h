@@ -9,9 +9,8 @@
 #ifndef LocalHelper_h
 #define LocalHelper_h
 
-#include "cocos2d.h"
-
-USING_NS_CC;
+#include <string>
+#include <vector>
 
 enum class LocalType {
     ENGLISH = 0,
@@ -39,6 +38,7 @@ namespace LocalHelper
     std::string getLocalizedFilePath(const std::string& filePath);
     std::string getLocalizedConfigFilePath(const std::string& fileName);
     std::string getString(const std::string& key);
+    const std::vector<LocalType>& getSupportedLocalTypes();
     
     LocalType getLocalType();
     void setLocalType(LocalType type);

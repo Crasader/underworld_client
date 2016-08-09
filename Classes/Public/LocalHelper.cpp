@@ -7,6 +7,7 @@
 //
 
 #include "LocalHelper.h"
+#include "platform/CCFileUtils.h"
 #include "tinyxml2/tinyxml2.h"
 #include "AESCTREncryptor.h"
 #include "UserDefaultsDataManager.h"
@@ -14,6 +15,7 @@
 #include "ApiBridge.h"
 #endif
 
+USING_NS_CC;
 using namespace std;
 
 static const string languageKey("languageKey");
@@ -221,6 +223,28 @@ string LocalHelper::getString(const string &key) {
         
         return "This label lacks key";
     }
+}
+
+const vector<LocalType>& LocalHelper::getSupportedLocalTypes() {
+    static const vector<LocalType> languages = {
+        LocalType::ENGLISH,
+        LocalType::FRENCH,
+        LocalType::GERMAN,
+        LocalType::SPANISH,
+        LocalType::ITALIAN,
+        LocalType::DUTCH,
+        LocalType::NORWEGIAN,
+        LocalType::PORTUGUESE,
+        LocalType::TURKISH,
+        LocalType::CHINESE,
+        LocalType::JAPANESE,
+        LocalType::KOREAN,
+        LocalType::RUSSIAN,
+        LocalType::TCHINESE,
+        LocalType::ARABIC,
+    };
+    
+    return languages;
 }
 
 LocalType LocalHelper::getLocalType() {

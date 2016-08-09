@@ -18,6 +18,7 @@ class RenameLayerObserver
 {
 public:
     virtual ~RenameLayerObserver() {}
+    virtual void onRenameLayerRename(Node* pSender, const std::string& name) = 0;
 };
 
 class RenameLayer
@@ -41,7 +42,8 @@ protected:
     virtual void editBoxReturn(ui::EditBox* editBox) override;
     
 private:
-    RenameLayerObserver *_observer;
+    RenameLayerObserver* _observer;
+    ui::EditBox* _editBox;
 };
 
 #endif /* RenameLayer_h */

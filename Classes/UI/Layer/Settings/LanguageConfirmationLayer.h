@@ -17,7 +17,7 @@ class LanguageConfirmationLayerObserver
 {
 public:
     virtual ~LanguageConfirmationLayerObserver() {}
-    virtual void onLanguageConfirmationLayerConfirm(ssize_t idx) = 0;
+    virtual void onLanguageConfirmationLayerConfirm(Node* pSender, ssize_t idx) = 0;
 };
 
 class LanguageConfirmationLayer : public LayerColor

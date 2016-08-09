@@ -29,7 +29,8 @@ RenameLayer* RenameLayer::create()
 }
 
 RenameLayer::RenameLayer()
-:_observer(nullptr) {}
+:_observer(nullptr)
+,_editBox(nullptr) {}
 
 RenameLayer::~RenameLayer()
 {
@@ -94,6 +95,8 @@ bool RenameLayer::init()
             const auto& size(eb->getContentSize());
             eb->setPosition(Point(subBgSize.width / 2, size.height / 2 + edgeY));
             subNode->addChild(eb);
+            
+            _editBox = eb;
         }
         
         CocosUtils::createRedExitButton(bg, [this]() {
@@ -106,8 +109,10 @@ bool RenameLayer::init()
         bg->addChild(title);
         
         auto button = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Blue, LocalHelper::getString("ui_rename_buttonTitle"));
-        button->setCallback([](Ref*) {
-            
+        button->setCallback([this](Ref*) {
+            if (_observer) {
+                _observer->onRenameLayerRename(this, _editBox->getText());
+            }
         });
         button->setPosition(Point(size.width / 2, edge / 2));
         bg->addChild(button);

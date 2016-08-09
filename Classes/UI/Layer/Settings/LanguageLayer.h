@@ -21,6 +21,7 @@ class LanguageLayerObserver
 {
 public:
     virtual ~LanguageLayerObserver() {}
+    virtual void onLanguageLayerSelected(ssize_t idx) = 0;
 };
 
 class LanguageLayer
@@ -51,7 +52,7 @@ protected:
     virtual void onLanguageNodeSelected(ssize_t idx) override;
     
     // LanguageConfirmationLayerObserver
-    virtual void onLanguageConfirmationLayerConfirm(ssize_t idx) override;
+    virtual void onLanguageConfirmationLayerConfirm(Node* pSender, ssize_t idx) override;
     
     // table
     void createTable();
