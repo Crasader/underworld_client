@@ -73,7 +73,7 @@ bool ChatLayer::TableNode::init(TableViewDataSource* source, const Size& size)
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         setContentSize(size);
         
-        auto background = CocosUtils::createBackground(CocosUtils::getResourcePath("ui_background_1.png"), size);
+        auto background = CocosUtils::createSubBackground(size);
         background->setPosition(Point(size.width / 2, size.height / 2));
         addChild(background);
         
@@ -309,7 +309,7 @@ bool ChatLayer::init()
         });
         
         // 2. background
-        _background = CocosUtils::createBackground(CocosUtils::getResourcePath("ui_background.png"), size);
+        _background = CocosUtils::createBackground(size);
         _background->setPosition(Point(viewWidth / 2, winSize.height / 2));
         addChild(_background);
         
@@ -658,7 +658,10 @@ void ChatLayer::sendMessage()
                 auto table = _tableNodes.at(type)->getTable();
                 auto cnt(getCellsCount(table));
                 if (cnt > 0) {
-                    table->insertCellAtIndex(cnt - 1);
+                    const auto& offset = table->getContentOffset();
+                    table->reloadData();
+                    table->setContentOffset(offset);
+                    table->reloadData();
                 } else {
                     CC_ASSERT(false);
                 }

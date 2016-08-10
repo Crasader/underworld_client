@@ -336,14 +336,34 @@ Sprite* CocosUtils::createPureColorSprite(const Size& size, const Color4B& color
     return newSprite;
 }
 
-Node* CocosUtils::createBackground(const string& file, const Size& size)
+Node* CocosUtils::createBackground(const Size& size)
 {
     auto node = Node::create();
     node->setAnchorPoint(Point::ANCHOR_MIDDLE);
     node->setContentSize(size);
     
+    static const string file(getResourcePath("ui_background.png"));
     auto s = Sprite::create(file);
     s->setScale(size.width, size.height);
+    s->setPosition(Point(size.width / 2, size.height / 2));
+    node->addChild(s);
+    
+    return node;
+}
+
+Node* CocosUtils::createSubBackground(const Size& size)
+{
+    auto node = Node::create();
+    node->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    node->setContentSize(size);
+    
+    static const string file(getResourcePath("ui_background_7.png"));
+    static const float length(56);
+    static const float offset(16);
+    static const Rect rect(Point::ZERO, Size(length, length));
+    static const Rect capInset(offset, offset, length - offset * 2, length - offset * 2);
+    auto s = Scale9Sprite::create(file, rect, capInset);
+    s->setContentSize(size);
     s->setPosition(Point(size.width / 2, size.height / 2));
     node->addChild(s);
     

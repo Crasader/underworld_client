@@ -53,7 +53,7 @@ bool LanguageConfirmationLayer::init(ssize_t idx)
         addChild(bg);
         
         static const Size subNodeSize(359, 174);
-        auto subNode = CocosUtils::createBackground(CocosUtils::getResourcePath("ui_background_1.png"), subNodeSize);
+        auto subNode = CocosUtils::createSubBackground(subNodeSize);
         bg->addChild(subNode);
         
         const auto& size(bg->getContentSize());

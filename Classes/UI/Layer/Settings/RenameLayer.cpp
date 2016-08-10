@@ -51,7 +51,7 @@ bool RenameLayer::init()
         bg->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(bg);
         
-        auto subNode = CocosUtils::createBackground(CocosUtils::getResourcePath("ui_background_1.png"), Size(579, 202));
+        auto subNode = CocosUtils::createSubBackground(Size(579, 202));
         bg->addChild(subNode);
         
         const auto& size(bg->getContentSize());

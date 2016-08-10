@@ -450,6 +450,10 @@ void MainUILayer::onFunctionButtonClicked(ButtonType type)
             runningScene->addChild(CardLayer::create());
             break;
             
+        case ButtonType::Quest:
+            runningScene->addChild(BattleDeckLayer::create());
+            break;
+            
         default:
             break;
     }

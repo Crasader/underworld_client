@@ -59,7 +59,7 @@ bool CheatLayer::init(const function<void(Ref*)>& callback)
 {
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR)) {
         setContentSize(size);
-        auto bg = CocosUtils::createBackground(CocosUtils::getResourcePath("ui_background.png"), size);
+        auto bg = CocosUtils::createBackground(size);
         bg->setPosition(size.width / 2, size.height / 2);
         addChild(bg);
         _bg = bg;

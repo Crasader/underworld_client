@@ -7,7 +7,6 @@
 //
 
 #include "SettingUI.h"
-#include "CocosUtils.h"
 
 std::string SettingUI::getResourcePath(const std::string& file)
 {
