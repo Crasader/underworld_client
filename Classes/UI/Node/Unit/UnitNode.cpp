@@ -1339,29 +1339,29 @@ void UnitNode::updateFeatures(const Game* game)
 #pragma mark hp bar
 void UnitNode::addHPBar()
 {
-//    if (!_hpBar && _unit && _sprite) {
-//        _hpBar = DisplayBar::create(DisplayBarType::HP, thisFactionIndex(), thisUnitClass());
-//        _hpBar->setPosition(getHPBarPosition());
-//        addChild(_hpBar, zOrder_top);
-//        if (_configData) {
-//            scale(_hpBar, _configData->getHpBarScaleX(), 1.0f);
-//        }
-//    }
+    if (!_hpBar && _unit && _sprite) {
+        _hpBar = DisplayBar::create("GameImages/test/ui_blood.png", "GameImages/test/ui_blood_2.png");
+        _hpBar->setPosition(getHPBarPosition());
+        addChild(_hpBar, zOrder_top);
+        if (_configData) {
+            scale(_hpBar, _configData->getHpBarScaleX(), 1.0f);
+        }
+    }
 }
 
 void UnitNode::updateHPBar()
 {
-//    if (_hpBar && _unit) {
-//        _hpBar->setPercentage(getHpPercentage());
-//    }
+    if (_hpBar && _unit) {
+        _hpBar->setPercentage(getHpPercentage());
+    }
 }
 
 void UnitNode::removeHPBar()
 {
-//    if (_hpBar) {
-//        _hpBar->removeFromParent();
-//        _hpBar = nullptr;
-//    }
+    if (_hpBar) {
+        _hpBar->removeFromParent();
+        _hpBar = nullptr;
+    }
 }
 
 Point UnitNode::getHPBarPosition() const
