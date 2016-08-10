@@ -1,20 +1,21 @@
 //
-//  BattleScene.cpp
+//  MainScene.cpp
 //  Underworld_Client
 //
-//  Created by Andy on 15/12/11.
-//  Copyright (c) 2015 Mofish Studio. All rights reserved.
+//  Created by Andy on 16/8/10.
+//  Copyright (c) 2016 Mofish Studio. All rights reserved.
 //
 
-#include "BattleScene.h"
+#include "MainScene.h"
+#include "MainLayer.h"
 #include "SoundManager.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "ApiBridge.h"
 #endif
 
-BattleScene* BattleScene::create()
+MainScene* MainScene::create()
 {
-    auto ret = new (std::nothrow) BattleScene();
+    auto ret = new (std::nothrow) MainScene();
     if (ret && ret->init()) {
         ret->autorelease();
         return ret;
@@ -24,20 +25,22 @@ BattleScene* BattleScene::create()
     return nullptr;
 }
 
-BattleScene::BattleScene() {}
+MainScene::MainScene() {}
 
-BattleScene::~BattleScene() {}
+MainScene::~MainScene() {}
 
-bool BattleScene::init()
+bool MainScene::init()
 {
     if (Scene::init()) {
+        auto layer = MainLayer::create();
+        addChild(layer);
         return true;
     }
     
     return false;
 }
 
-void BattleScene::onEnter()
+void MainScene::onEnter()
 {
     Scene::onEnter();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
@@ -45,7 +48,7 @@ void BattleScene::onEnter()
 #endif
 }
 
-void BattleScene::onExit()
+void MainScene::onExit()
 {
     SoundManager::getInstance()->stopBackgroundMusic();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)

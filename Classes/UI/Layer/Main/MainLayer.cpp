@@ -16,14 +16,6 @@
 using namespace std;
 using namespace ui;
 
-Scene* MainLayer::createScene()
-{
-    Scene* scene = Scene::create();
-    MainLayer* layer = MainLayer::create();
-    scene->addChild(layer);
-    return scene;
-}
-
 MainLayer* MainLayer::create()
 {
     MainLayer *ret = new (nothrow) MainLayer();
@@ -42,13 +34,7 @@ MainLayer::MainLayer()
 ,_uiLayer(nullptr)
 ,_mainNode(nullptr)
 ,_scrollView(nullptr)
-,_touchInvalid(false)
-#if TCP_CLIENT_TEST_CPP
-,_fd(-1)
-#endif
-{
-    
-}
+,_touchInvalid(false) {}
 
 MainLayer::~MainLayer()
 {
@@ -64,28 +50,30 @@ bool MainLayer::init()
 {
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR))
     {
-        const Size& winSize = Director::getInstance()->getWinSize();
+        const auto& winSize = Director::getInstance()->getWinSize();
 #if true
         _mainNode = Sprite::create("GameImages/world_bg/world_1.png");
-        _mainNode->setAnchorPoint(Point::ZERO);
+        _mainNode->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
 #else
         static const string CsbFile("zhuchangjing.csb");
         _mainNode = CocosUtils::playAnimation(CsbFile, 0, false);
 #endif
         
-        const Size& nodeSize = _mainNode->getContentSize();
-        _touchEnabled = (nodeSize.height > winSize.height) ? true : false;
-        _scrollView = ui::ScrollView::create();
-        _scrollView->setDirection(cocos2d::ui::ScrollView::Direction::BOTH);
+        const auto& nodeSize(_mainNode->getContentSize());
+        _touchEnabled = (nodeSize.width > winSize.width || nodeSize.height > winSize.height) ? true : false;
+        _scrollView = extension::ScrollView::create();
+        _scrollView->setDirection(extension::ScrollView::Direction::BOTH);
         _scrollView->setTouchEnabled(_touchEnabled);
-        _scrollView->setBounceEnabled(false);
-        _scrollView->setContentSize(winSize);
+        _scrollView->setBounceable(false);
+        _scrollView->setViewSize(winSize);
+        _scrollView->setContentSize(nodeSize);
         _scrollView->setPosition(Point::ZERO);
-        _scrollView->setInnerContainerSize(_touchEnabled ? nodeSize : winSize);
-        _scrollView->setSwallowTouches(!_touchEnabled);
-        _scrollView->setScrollBarEnabled(false);
         _scrollView->addChild(_mainNode);
         addChild(_scrollView);
+        
+        const float scale(MAX(winSize.width / nodeSize.width, winSize.height / nodeSize.height));
+        _scrollView->setMaxScale(1);
+        _scrollView->setMinScale(scale);
         
         // UI layer
         _uiLayer = MainUILayer::create();
@@ -99,24 +87,6 @@ bool MainLayer::init()
         eventListener->onTouchEnded = CC_CALLBACK_2(MainLayer::onTouchEnded, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
         
-#if TCP_CLIENT_TEST_CPP || TCP_CLIENT_TEST_OC
-        static const string host("192.168.31.139");
-        static const uint16_t port(8080);
-#endif
-        
-#if TCP_CLIENT_TEST_CPP
-        _fd = TCPClient::connect(host, port, 1000);
-        TCPClient::write(_fd, "Hello World\n");
-        string data;
-        TCPClient::read(_fd, data, 20);
-        CCLOG("");
-#endif
-        
-#if TCP_CLIENT_TEST_OC
-        TCPClient::init(this);
-        TCPClient::connect(host, port, -1);
-#endif
-        
         return true;
     }
     
@@ -127,10 +97,8 @@ void MainLayer::onEnter()
 {
     LayerColor::onEnter();
     
-    if (_scrollView)
-    {
-        _scrollView->jumpToBottom();
-//        _scrollView->setInnerContainerPosition(Point(-1180, -720));
+    if (_scrollView) {
+        _scrollView->setContentOffset(Vec2::ZERO);
     }
 }
 
@@ -143,34 +111,6 @@ void MainLayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
     
 }
-
-#if TCP_CLIENT_TEST_OC
-#pragma mark - TCPClientObserver
-void MainLayer::onConnect(const std::string& url, uint16_t port)
-{
-    CCLOG("onConnect");
-    static const long tag(0);
-    TCPClient::writeData("{\"code\":2,\"uid\":1,\"name\":\"p1\",\"cards\":\"骑士|弓箭手|炸弹人\"}", -1, tag);
-    TCPClient::readData(-1, tag);
-}
-
-void MainLayer::onWriteData(long tag)
-{
-    CCLOG("onWriteData : %ld", tag);
-//    TCPClient::writeData("Hello World", tag);
-}
-
-void MainLayer::onReadData(const char* data, unsigned long len, long tag)
-{
-    CCLOG("onReadData : %s, %ld", data, tag);
-    TCPClient::disconnect();
-}
-
-void MainLayer::onDisconnect(TcpErrorCode code)
-{
-    CCLOG("onClose");
-}
-#endif
 
 void MainLayer::addLevelButtons()
 {

@@ -20,7 +20,7 @@
 #include "CheatConfiguration.h"
 #include "LocalHelper.h"
 #include "BattleScene.h"
-#include "MainLayer.h"
+#include "MainScene.h"
 #include "MessageBoxLayer.h"
 
 using namespace std;
@@ -93,7 +93,7 @@ void GameManager::onGameRenderRestart()
 void GameManager::onGameRenderExit()
 {
     exitGame();
-    CocosUtils::replaceScene(MainLayer::createScene(), true);
+    CocosUtils::replaceScene(MainScene::create(), true);
 }
 
 #pragma mark - private

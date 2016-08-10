@@ -17,7 +17,7 @@
 #include "IapObject.h"
 #include "ProgressLayer.h"
 #include "MessageBoxLayer.h"
-#include "MainLayer.h"
+#include "MainScene.h"
 #include "Constants.h"
 #include "DataManager.h"
 #include "NetworkApi.h"
@@ -326,7 +326,7 @@ void GameData::reloadGame()
     
     // 3. update UI
     auto director = Director::getInstance();
-    auto scene = MainLayer::createScene();
+    auto scene = MainScene::create();
     director->purgeCachedData();
     director->popToRootScene();
     director->replaceScene(scene);

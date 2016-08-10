@@ -1,5 +1,5 @@
 #include "AppDelegate.h"
-#include "MainLayer.h"
+#include "MainScene.h"
 #include "CocosGlobal.h"
 #include "GameData.h"
 #include "LocalHelper.h"
@@ -117,7 +117,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 #endif
     
     // create a scene. it's an autorelease object
-    auto scene = MainLayer::createScene();
+    auto scene = MainScene::create();
 
     // run
     director->runWithScene(scene);

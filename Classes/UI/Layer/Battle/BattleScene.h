@@ -13,8 +13,6 @@
 
 USING_NS_CC;
 
-class MapLayer;
-
 class BattleScene : public Scene
 {
 public:
