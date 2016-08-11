@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
 <root>
+	<item name="pvr/Dragon-shadows.plist"/>
+	<item name="pvr/Dragon.plist"/>
 	<item name="pvr/hero-Fat-equipment-shadows.plist"/>
 	<item name="pvr/hero-Fat-equipment.plist"/>
 	<item name="pvr/hero-Fat-shadows-0.plist"/>
@@ -10,6 +12,15 @@
 	<item name="pvr/hero-Rifleman-shadows.plist"/>
 	<item name="pvr/hero-Rifleman.plist"/>
 	<item name="pvr/HumanPriest.plist"/>
+	<item name="pvr/HumanWarrior-shadows.plist"/>
+	<item name="pvr/HumanWarrior.plist"/>
+	<item name="pvr/MoHead-0.plist"/>
+	<item name="pvr/MoHead-1.plist"/>
+	<item name="pvr/MoHead-2.plist"/>
+	<item name="pvr/MoHead-3.plist"/>
+	<item name="pvr/MoHead-4.plist"/>
+	<item name="pvr/MoHead-5.plist"/>
+	<item name="pvr/MoHead-6.plist"/>
 	<item name="pvr/Niutoubing-0123.plist"/>
 	<item name="pvr/Niutoubing-456.plist"/>
 	<item name="pvr/Niutoubing-shadows-0-0123.plist"/>

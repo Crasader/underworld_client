@@ -336,38 +336,58 @@ Sprite* CocosUtils::createPureColorSprite(const Size& size, const Color4B& color
     return newSprite;
 }
 
-Node* CocosUtils::createBackground(const Size& size)
+static Node* createFixedNode(const string& file, const Size& size)
 {
     auto node = Node::create();
     node->setAnchorPoint(Point::ANCHOR_MIDDLE);
     node->setContentSize(size);
     
-    static const string file(getResourcePath("ui_background.png"));
-    auto s = Sprite::create(file);
-    s->setScale(size.width, size.height);
-    s->setPosition(Point(size.width / 2, size.height / 2));
-    node->addChild(s);
+    auto sprite = Sprite::create(file);
+    const auto& spriteSize(sprite->getContentSize());
+    sprite->setScale(size.width / spriteSize.width, size.height / spriteSize.height);
+    sprite->setPosition(Point(size.width / 2, size.height / 2));
+    node->addChild(sprite);
     
     return node;
 }
 
-Node* CocosUtils::createSubBackground(const Size& size)
+static Node* createScaleableNode(const string& file, const Vec2& offset, const Size& size)
 {
     auto node = Node::create();
     node->setAnchorPoint(Point::ANCHOR_MIDDLE);
     node->setContentSize(size);
     
-    static const string file(getResourcePath("ui_background_7.png"));
-    static const float length(56);
-    static const float offset(16);
-    static const Rect rect(Point::ZERO, Size(length, length));
-    static const Rect capInset(offset, offset, length - offset * 2, length - offset * 2);
-    auto s = Scale9Sprite::create(file, rect, capInset);
-    s->setContentSize(size);
-    s->setPosition(Point(size.width / 2, size.height / 2));
-    node->addChild(s);
+    auto sprite = Sprite::create(file);
+    const auto& spriteSize(sprite->getContentSize());
+    const Rect rect(Point::ZERO, spriteSize);
+    const Rect capInset(offset, Size(spriteSize.width - offset.x * 2, spriteSize.height - offset.y * 2));
     
-    return node;
+    auto s9Sprite = new (nothrow) Scale9Sprite();
+    if (s9Sprite && s9Sprite->init(sprite, rect, capInset)) {
+        s9Sprite->autorelease();
+        s9Sprite->setContentSize(size);
+        s9Sprite->setPosition(Point(size.width / 2, size.height / 2));
+        node->addChild(s9Sprite);
+        return node;
+    }
+    
+    CC_SAFE_DELETE(s9Sprite);
+    return nullptr;
+}
+
+Node* CocosUtils::createBackground(const Size& size)
+{
+    return createFixedNode(getResourcePath("ui_background.png"), size);
+}
+
+Node* CocosUtils::createSubBackground(const Size& size)
+{
+    return createScaleableNode(getResourcePath("ui_background_7.png"), Vec2(16, 16), size);
+}
+
+Node* CocosUtils::createPureBar(const Size& size)
+{
+    return createScaleableNode(getResourcePath("ui_background_6.png"), Vec2(16, 16), size);
 }
 
 Sprite* CocosUtils::createTitle(const string& title, float fontSize)

@@ -49,8 +49,11 @@ namespace CocosUtils
     
     // test
     cocos2d::Sprite* createPureColorSprite(const cocos2d::Size& size, const cocos2d::Color4B& color);
+    
+    // pure background
     cocos2d::Node* createBackground(const cocos2d::Size& size);
     cocos2d::Node* createSubBackground(const cocos2d::Size& size);
+    cocos2d::Node* createPureBar(const cocos2d::Size& size);
     cocos2d::Sprite* createTitle(const std::string& title, float fontSize);
     
     // animation

@@ -26,9 +26,9 @@
     
     <!-- 卡牌 -->
     <item key="ui_card_tab_all" value="全部"/>
-    <item key="ui_card_tab_hero" value="布阵英雄"/>
-    <item key="ui_card_tab_soldier" value="援军法术"/>
-    <item key="ui_card_tab_spell" value="法术卡牌"/>
+    <item key="ui_card_tab_hero" value="英雄"/>
+    <item key="ui_card_tab_soldier" value="士兵"/>
+    <item key="ui_card_tab_spell" value="法术"/>
     <item key="ui_card_progress" value="收集进度："/>
     
     <!-- 阵型 -->

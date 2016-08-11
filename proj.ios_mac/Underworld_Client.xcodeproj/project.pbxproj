@@ -125,6 +125,8 @@
 		A108A7B61D25254600987658 /* AchievementLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A108A7B41D25254600987658 /* AchievementLayer.cpp */; };
 		A1098E9C1C758C3500B2E044 /* BattleResourceNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1098E9A1C758C3500B2E044 /* BattleResourceNode.cpp */; };
 		A10D742F1D5083B1009674F9 /* AvatarNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10D742D1D5083B1009674F9 /* AvatarNode.cpp */; };
+		A10E8F911D5C1FFA00320B3D /* DeckManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10E8F8F1D5C1FFA00320B3D /* DeckManager.cpp */; };
+		A10E8F951D5C21D300320B3D /* DeckData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10E8F931D5C21D300320B3D /* DeckData.cpp */; };
 		A11469FE1C9FE9EC00E64125 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A11469F91C9FE9EC00E64125 /* libevent.a */; };
 		A11469FF1C9FE9EC00E64125 /* libevent_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A11469FA1C9FE9EC00E64125 /* libevent_core.a */; };
 		A1146A001C9FE9EC00E64125 /* libevent_extra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A11469FB1C9FE9EC00E64125 /* libevent_extra.a */; };
@@ -135,7 +137,6 @@
 		A11649061D5AFB3700D03985 /* MainScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A11649041D5AFB3700D03985 /* MainScene.cpp */; };
 		A116490A1D5B1B8C00D03985 /* BattleDeckLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A11649081D5B1B8C00D03985 /* BattleDeckLayer.cpp */; };
 		A116490D1D5B1E3400D03985 /* BattleDeckUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A116490B1D5B1E3400D03985 /* BattleDeckUI.cpp */; };
-		A11649111D5B378000D03985 /* CardDeckData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A116490F1D5B378000D03985 /* CardDeckData.cpp */; };
 		A11B249F1D125ED600E22839 /* FormationUnitNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A11B249D1D125ED600E22839 /* FormationUnitNode.cpp */; };
 		A1208BA51CFFFE34007B25DC /* pvr in Resources */ = {isa = PBXBuildFile; fileRef = A1208BA41CFFFE33007B25DC /* pvr */; };
 		A1211B231C0BF55200C27CCC /* LiteralValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B211C0BF55200C27CCC /* LiteralValue.cpp */; };
@@ -575,6 +576,10 @@
 		A1098E9B1C758C3500B2E044 /* BattleResourceNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BattleResourceNode.h; sourceTree = "<group>"; };
 		A10D742D1D5083B1009674F9 /* AvatarNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AvatarNode.cpp; sourceTree = "<group>"; };
 		A10D742E1D5083B1009674F9 /* AvatarNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvatarNode.h; sourceTree = "<group>"; };
+		A10E8F8F1D5C1FFA00320B3D /* DeckManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DeckManager.cpp; sourceTree = "<group>"; };
+		A10E8F901D5C1FFA00320B3D /* DeckManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckManager.h; sourceTree = "<group>"; };
+		A10E8F931D5C21D300320B3D /* DeckData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DeckData.cpp; sourceTree = "<group>"; };
+		A10E8F941D5C21D300320B3D /* DeckData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckData.h; sourceTree = "<group>"; };
 		A11469D91C9FE9EC00E64125 /* evdns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = evdns.h; sourceTree = "<group>"; };
 		A11469DA1C9FE9EC00E64125 /* event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = event.h; sourceTree = "<group>"; };
 		A11469DC1C9FE9EC00E64125 /* buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buffer.h; sourceTree = "<group>"; };
@@ -620,8 +625,6 @@
 		A11649091D5B1B8C00D03985 /* BattleDeckLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BattleDeckLayer.h; sourceTree = "<group>"; };
 		A116490B1D5B1E3400D03985 /* BattleDeckUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattleDeckUI.cpp; sourceTree = "<group>"; };
 		A116490C1D5B1E3400D03985 /* BattleDeckUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BattleDeckUI.h; sourceTree = "<group>"; };
-		A116490F1D5B378000D03985 /* CardDeckData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardDeckData.cpp; sourceTree = "<group>"; };
-		A11649101D5B378000D03985 /* CardDeckData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardDeckData.h; sourceTree = "<group>"; };
 		A11B249D1D125ED600E22839 /* FormationUnitNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FormationUnitNode.cpp; sourceTree = "<group>"; };
 		A11B249E1D125ED600E22839 /* FormationUnitNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormationUnitNode.h; sourceTree = "<group>"; };
 		A1208BA41CFFFE33007B25DC /* pvr */ = {isa = PBXFileReference; lastKnownFileType = folder; path = pvr; sourceTree = "<group>"; };
@@ -1578,6 +1581,15 @@
 			path = Card;
 			sourceTree = "<group>";
 		};
+		A10E8F921D5C21D300320B3D /* Deck */ = {
+			isa = PBXGroup;
+			children = (
+				A10E8F931D5C21D300320B3D /* DeckData.cpp */,
+				A10E8F941D5C21D300320B3D /* DeckData.h */,
+			);
+			path = Deck;
+			sourceTree = "<group>";
+		};
 		A11469D71C9FE9EC00E64125 /* Libevent */ = {
 			isa = PBXGroup;
 			children = (
@@ -1657,15 +1669,6 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
-		A116490E1D5B377500D03985 /* CardDeck */ = {
-			isa = PBXGroup;
-			children = (
-				A116490F1D5B378000D03985 /* CardDeckData.cpp */,
-				A11649101D5B378000D03985 /* CardDeckData.h */,
-			);
-			path = CardDeck;
-			sourceTree = "<group>";
-		};
 		A12C60A11D50774C003FCF0D /* User */ = {
 			isa = PBXGroup;
 			children = (
@@ -1692,8 +1695,8 @@
 				A1F58D5A1C3248EA00C8A2DD /* Artifact */,
 				A16BF27C1C313D6D00E91458 /* Attribute */,
 				A108A7A51D24F40500987658 /* Card */,
-				A116490E1D5B377500D03985 /* CardDeck */,
 				CB3EC8941C4E4CBC00447FE3 /* Chat */,
+				A10E8F921D5C21D300320B3D /* Deck */,
 				A19D6B091D1802170088AF23 /* Formation */,
 				A1F5BF8F1C1FC36C007C08CB /* Gear */,
 				A16BF29D1C314CE500E91458 /* GearSet */,
@@ -2113,6 +2116,8 @@
 				A1B4AE211C200521005906A6 /* AchievementManager.h */,
 				A1B4AE221C200521005906A6 /* ChatManager.cpp */,
 				A1B4AE231C200521005906A6 /* ChatManager.h */,
+				A10E8F8F1D5C1FFA00320B3D /* DeckManager.cpp */,
+				A10E8F901D5C1FFA00320B3D /* DeckManager.h */,
 				A1B4AE241C200521005906A6 /* GearManager.cpp */,
 				A1B4AE251C200521005906A6 /* GearManager.h */,
 				A1B4AE261C200521005906A6 /* GuildManager.cpp */,
@@ -2611,6 +2616,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10E8F911D5C1FFA00320B3D /* DeckManager.cpp in Sources */,
 				30AA1D591CB3EF7700D099D1 /* SpellType.cpp in Sources */,
 				3019BABD1C9BF3D9003258DB /* Spell.cpp in Sources */,
 				3087FF3B1CABAD70004E31F6 /* ClientTerminal.cpp in Sources */,
@@ -2771,7 +2777,6 @@
 				047CBF8A1CAFE6AB0035DAF9 /* InstanceHelper.cpp in Sources */,
 				A1DA08CC1CB61CEA00846300 /* BRConfigData.cpp in Sources */,
 				A1720EBA1BCD2D2E00217E98 /* RMStore.m in Sources */,
-				A11649111D5B378000D03985 /* CardDeckData.cpp in Sources */,
 				047228B01C193A4D00E7F71B /* Geometry.cpp in Sources */,
 				3075346D1BF324340057DCED /* EventTriggers.cpp in Sources */,
 				A1B4AE011C200480005906A6 /* SoundManager.cpp in Sources */,
@@ -2860,6 +2865,7 @@
 				A1D461651C3E478F00E8E60B /* AbstractData.cpp in Sources */,
 				CBD778C71C29390B0070D293 /* AnnouncementNode.cpp in Sources */,
 				A18885771C43ACFB00C9586F /* ArtifactData.cpp in Sources */,
+				A10E8F951D5C21D300320B3D /* DeckData.cpp in Sources */,
 				3087FF3F1CABD3DF004E31F6 /* GameScheduler.cpp in Sources */,
 				045116F81BCFBA44002AA721 /* TechTree.cpp in Sources */,
 				A1B4AE311C200521005906A6 /* UserManager.cpp in Sources */,

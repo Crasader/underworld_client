@@ -1,13 +1,12 @@
 //
-//  CardDeckData.cpp
+//  DeckData.cpp
 //  Underworld_Client
 //
 //  Created by Andy on 16/8/10.
 //  Copyright (c) 2016 Mofish Studio. All rights reserved.
 //
 
-#include "CardDeckData.h"
-#include "CardDeckData.h"
+#include "DeckData.h"
 #include "Utils.h"
 
 using namespace std;
@@ -15,7 +14,7 @@ using namespace std;
 static const string TypeSeparator("|");
 static const string ElementSeparator(";");
 
-CardDeckData::CardDeckData(const string& serializedString)
+DeckData::DeckData(const string& serializedString)
 {
     if (serializedString.size() > 0) {
         vector<string> msgs;
@@ -27,14 +26,14 @@ CardDeckData::CardDeckData(const string& serializedString)
     }
 }
 
-CardDeckData::CardDeckData(const CardDeckData* instance)
+DeckData::DeckData(const DeckData* instance)
 {
     clone(instance);
 }
 
-CardDeckData::~CardDeckData() {}
+DeckData::~DeckData() {}
 
-void CardDeckData::clone(const CardDeckData* instance)
+void DeckData::clone(const DeckData* instance)
 {
     if (instance) {
         const auto& cardsMap(instance->_cards);
@@ -49,17 +48,17 @@ void CardDeckData::clone(const CardDeckData* instance)
     }
 }
 
-const vector<CardDeckData::Card>& CardDeckData::getCards(CardType type)
+const vector<DeckData::Card>& DeckData::getCards(CardType type)
 {
     return getMutableCards(type);
 }
 
-void CardDeckData::insert(CardType type, ssize_t idx, const Card& card)
+void DeckData::insert(CardType type, ssize_t idx, const Card& card)
 {
     
 }
 
-void CardDeckData::remove(CardType type, ssize_t idx)
+void DeckData::remove(CardType type, ssize_t idx)
 {
     int i = 0;
     auto& cards(getMutableCards(type));
@@ -71,7 +70,7 @@ void CardDeckData::remove(CardType type, ssize_t idx)
     }
 }
 
-void CardDeckData::exchange(CardType type, ssize_t idx1, ssize_t idx2)
+void DeckData::exchange(CardType type, ssize_t idx1, ssize_t idx2)
 {
     auto& cards(getMutableCards(type));
     const auto cnt = cards.size();
@@ -82,7 +81,7 @@ void CardDeckData::exchange(CardType type, ssize_t idx1, ssize_t idx2)
     }
 }
 
-void CardDeckData::serialize(string& output)
+void DeckData::serialize(string& output)
 {
     output.clear();
     
@@ -107,7 +106,7 @@ void CardDeckData::serialize(string& output)
     }
 }
 
-vector<CardDeckData::Card>& CardDeckData::getMutableCards(CardType type)
+vector<DeckData::Card>& DeckData::getMutableCards(CardType type)
 {
     if (_cards.find(type) == end(_cards)) {
         _cards.insert(make_pair(type, vector<Card>()));
@@ -116,7 +115,7 @@ vector<CardDeckData::Card>& CardDeckData::getMutableCards(CardType type)
     return _cards.at(type);
 }
 
-void CardDeckData::parse(CardType type, const string& input)
+void DeckData::parse(CardType type, const string& input)
 {
     if (!input.empty()) {
         vector<string> outputs;

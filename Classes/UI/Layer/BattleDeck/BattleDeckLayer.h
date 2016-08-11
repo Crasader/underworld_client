@@ -10,8 +10,22 @@
 #define BattleDeckLayer_h
 
 #include "cocos2d.h"
+#include "ui/CocosGUI.h"
+#include <unordered_map>
 
 USING_NS_CC;
+
+class DeckData;
+class TabButton;
+class UniversalButton;
+
+enum class DeckTabType {
+    None,
+    All,
+    Heroes,
+    Soldiers,
+    Spells,
+};
 
 class BattleDeckLayerObserver
 {
@@ -37,10 +51,31 @@ protected:
     void createLeftNode();
     void createRightNode();
     
+    void updateCardsCount(int count);
+    
+    // functions
+    void saveThisDeck();
+    void loadDeck(int idx);
+    void setDefaultDeck();
+    void setCardType(DeckTabType type);
+    std::string getCardTabName(DeckTabType type) const;
+    
 private:
     BattleDeckLayerObserver *_observer;
-    Node* _background;
     
+    // UI
+    Node* _background;
+    std::vector<TabButton*> _deckTabButtons;
+    std::vector<TabButton*> _cardTabButtons;
+    Label* _cardsCountLabel;
+    UniversalButton* _sortTypeButton;
+    
+    // Data
+    int _thisDeckIdx;
+    DeckData* _thisDeckData;
+    std::unordered_map<int, DeckData*> _editedDeckData;
+    
+    DeckTabType _thisCardType;
 };
 
 #endif /* BattleDeckLayer_h */

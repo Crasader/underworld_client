@@ -1,5 +1,5 @@
 //
-//  CardDeckData.h
+//  DeckData.h
 //  Underworld_Client
 //
 //  Created by Andy on 16/8/10.
@@ -13,7 +13,7 @@
 #include <vector>
 #include <map>
 
-class CardDeckData
+class DeckData
 {
 public:
     enum class CardType {
@@ -24,11 +24,11 @@ protected:
     typedef std::string Card;
     
 public:
-    CardDeckData(const std::string& serializedString);
-    CardDeckData(const CardDeckData* instance);
-    virtual ~CardDeckData();
+    DeckData(const std::string& serializedString);
+    DeckData(const DeckData* instance);
+    virtual ~DeckData();
     
-    void clone(const CardDeckData* instance);
+    void clone(const DeckData* instance);
     
     const std::vector<Card>& getCards(CardType type);
     void insert(CardType type, ssize_t idx, const Card& card);
