@@ -7,8 +7,7 @@
 //
 
 #include "LocalHelper.h"
-#include "platform/CCFileUtils.h"
-#include "platform/CCCommon.h"
+#include "cocos2d.h"
 #include "tinyxml2/tinyxml2.h"
 #include "AESCTREncryptor.h"
 #include "UserDefaultsDataManager.h"

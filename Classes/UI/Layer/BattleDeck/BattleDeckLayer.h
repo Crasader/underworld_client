@@ -11,6 +11,7 @@
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
+#include "BattleDeckCard.h"
 #include <unordered_map>
 
 USING_NS_CC;
@@ -33,7 +34,9 @@ public:
     virtual ~BattleDeckLayerObserver() {}
 };
 
-class BattleDeckLayer : public LayerColor
+class BattleDeckLayer
+: public LayerColor
+, public BattleDeckCardObserver
 {
 public:
     static BattleDeckLayer* create();
@@ -48,8 +51,13 @@ protected:
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
+    // BattleDeckCardObserver
+    virtual void onBattleDeckCardUse(BattleDeckCard* pSender) override;
+    virtual void onBattleDeckCardInfo(BattleDeckCard* pSender) override;
+    
     void createLeftNode();
     void createRightNode();
+    Node* createLine(DeckTabType type) const;
     
     void updateCardsCount(int count);
     
@@ -69,6 +77,7 @@ private:
     std::vector<TabButton*> _cardTabButtons;
     Label* _cardsCountLabel;
     UniversalButton* _sortTypeButton;
+    ui::ScrollView* _scrollView;
     
     // Data
     int _thisDeckIdx;

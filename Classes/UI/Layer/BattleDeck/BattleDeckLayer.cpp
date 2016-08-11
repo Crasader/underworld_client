@@ -43,6 +43,7 @@ BattleDeckLayer::BattleDeckLayer()
 ,_background(nullptr)
 ,_cardsCountLabel(nullptr)
 ,_sortTypeButton(nullptr)
+,_scrollView(nullptr)
 ,_thisDeckIdx(-1)
 ,_thisDeckData(nullptr)
 ,_thisCardType(DeckTabType::None) {}
@@ -57,6 +58,7 @@ void BattleDeckLayer::registerObserver(BattleDeckLayerObserver *observer)
     _observer = observer;
 }
 
+#pragma mark - LayerColor
 bool BattleDeckLayer::init()
 {
     if (LayerColor::initWithColor(LAYER_MASK_COLOR)) {
@@ -105,6 +107,17 @@ void BattleDeckLayer::onTouchEnded(Touch *touch, Event *unused_event)
     
 }
 
+#pragma mark - BattleDeckCardObserver
+void BattleDeckLayer::onBattleDeckCardUse(BattleDeckCard* pSender)
+{
+    
+}
+
+void BattleDeckLayer::onBattleDeckCardInfo(BattleDeckCard* pSender)
+{
+    
+}
+
 #pragma mark - public
 void BattleDeckLayer::createLeftNode()
 {
@@ -114,21 +127,22 @@ void BattleDeckLayer::createLeftNode()
         node->setPosition(edge.x + subSize.width / 2, edge.y + subSize.height / 2);
         _background->addChild(node);
         
+        static const Vec2 secondaryEdge(5, 5);
+        static const Size subBgSize(subSize.width - secondaryEdge.x * 2, 60);
+        auto subBg = CocosUtils::createPureBar(subBgSize);
+        subBg->setPosition(subSize.width / 2, subSize.height - (secondaryEdge.y + subBgSize.height / 2));
+        node->addChild(subBg);
+        
+        // top
         {
-            static const Vec2 secondaryEdge(5, 5);
-            const Size subBgSize(subSize.width - secondaryEdge.x * 2, 60);
-            auto subBg = CocosUtils::createPureBar(subBgSize);
-            subBg->setPosition(subSize.width / 2, subSize.height - (secondaryEdge.y + subBgSize.height / 2));
-            node->addChild(subBg);
-            
-            static const float thirdEdgeX(5);
+            static const float edgeX(5);
             auto label = CocosUtils::createLabel("Battle Deck", DEFAULT_FONT_SIZE);
             label->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
             label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
-            label->setPosition(thirdEdgeX, subBgSize.height / 2);
+            label->setPosition(edgeX, subBgSize.height / 2);
             subBg->addChild(label);
             
-            float x(thirdEdgeX);
+            float x(edgeX);
             for (int i = 0; i < DeckManager::MaxCount; ++i) {
                 static const auto normal(CocosUtils::getResourcePath("button_lanse_2.png"));
                 static const auto selected(CocosUtils::getResourcePath("button_lvse_3.png"));
@@ -147,6 +161,55 @@ void BattleDeckLayer::createLeftNode()
                 x += size.width + spaceX;
             }
         }
+        
+        // heroes
+        {
+            static const float spaceY1(18);
+            auto line = createLine(DeckTabType::Heroes);
+            line->setPosition(subSize.width / 2, subBg->getPositionY() - (subBgSize.height / 2 + spaceY1));
+            node->addChild(line);
+            
+            static const float spaceY2(18);
+            static const int column(2);
+            for (int i = 0; i < column; ++i) {
+                static const float cardSpaceX(20);
+                static const float basePosX((subSize.width - (column * BattleDeckCard::Width + (column - 1) * cardSpaceX)) / 2);
+                auto card = BattleDeckCard::create("");
+                card->setIsHero(true);
+                const float x = basePosX + (i + 0.5) * BattleDeckCard::Width + i * cardSpaceX;
+                const float y = line->getPositionY() - (line->getContentSize().height / 2 + spaceY2 + BattleDeckCard::Height / 2);
+                card->setPosition(Point(x, y));
+                node->addChild(card);
+            }
+        }
+        
+        // soldiers
+        {
+            static const float edgeBottom(8);
+            static const float spaceY(33);
+            static const int column(4);
+            static const int row(2);
+            static const float cardSpaceY(14);
+            
+            static float posY(edgeBottom + row * BattleDeckCard::Height + (row - 1) * cardSpaceY + spaceY);
+            auto line = createLine(DeckTabType::Soldiers);
+            line->setPosition(subSize.width / 2, posY);
+            node->addChild(line);
+            
+            for (int i = 0; i < row; ++i) {
+                static const float basePosY(posY - spaceY);
+                for (int j = 0; j < column; ++j) {
+                    static const float cardSpaceX(5);
+                    static const float basePosX((subSize.width - (column * BattleDeckCard::Width + (column - 1) * cardSpaceX)) / 2);
+                    auto card = BattleDeckCard::create("");
+                    card->setIsHero(false);
+                    const float x = basePosX + (j + 0.5) * BattleDeckCard::Width + j * cardSpaceX;
+                    const float y = basePosY - (i + 0.5) * BattleDeckCard::Height - i * cardSpaceY;
+                    card->setPosition(Point(x, y));
+                    node->addChild(card);
+                }
+            }
+        }
     }
 }
 
@@ -160,11 +223,12 @@ void BattleDeckLayer::createRightNode()
         _background->addChild(node);
         
         static const Vec2 secondaryEdge(5, 5);
-        const Size subBgSize(subSize.width - secondaryEdge.x * 2, 92);
+        static const Size subBgSize(subSize.width - secondaryEdge.x * 2, 92);
         auto subBg = CocosUtils::createPureBar(subBgSize);
         subBg->setPosition(subSize.width / 2, subSize.height - (secondaryEdge.y + subBgSize.height / 2));
         node->addChild(subBg);
         
+        // top
         {
             static const Vec2 thirdEdge(5, 5);
             
@@ -208,7 +272,42 @@ void BattleDeckLayer::createRightNode()
                 subBg->addChild(label);
             }
         }
+        
+        // cards
+        {
+            static const float spaceY(5);
+            _scrollView = ui::ScrollView::create();
+            _scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
+            node->addChild(_scrollView);
+            
+            static const Size viewSize(subBgSize.width, subSize.height - (subBgSize.height + secondaryEdge.y * 2 + spaceY));
+            _scrollView->setContentSize(viewSize);
+            _scrollView->setPosition(secondaryEdge);
+            _scrollView->setInnerContainerSize(Size(viewSize.width, viewSize.height * 2));
+        }
     }
+}
+
+Node* BattleDeckLayer::createLine(DeckTabType type) const
+{
+    string file;
+    string text;
+    if (DeckTabType::Heroes == type) {
+        file = "ui_line_1.png";
+        text = "Heroes";
+    } else if (DeckTabType::Soldiers == type) {
+        file = "ui_line_2.png";
+        text = "Soldiers";
+    }
+    
+    auto line = Sprite::create(CocosUtils::getResourcePath(file));
+    auto label = CocosUtils::createLabel(text, DEFAULT_FONT_SIZE);
+    label->setTextColor(Color4B::BLACK);
+    label->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
+    label->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    label->setPosition(line->getContentSize().width / 2, line->getContentSize().height / 2);
+    line->addChild(label);
+    return line;
 }
 
 void BattleDeckLayer::updateCardsCount(int count)
