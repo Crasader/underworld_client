@@ -197,6 +197,7 @@
 		A188857A1C43BA1C00C9586F /* TowerManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A18885781C43BA1C00C9586F /* TowerManager.cpp */; };
 		A19382181D4B0B0D0059EDBF /* ObjectBriefNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19382161D4B0B0D0059EDBF /* ObjectBriefNode.cpp */; };
 		A193821B1D4B331B0059EDBF /* ObjectBriefData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19382191D4B331B0059EDBF /* ObjectBriefData.cpp */; };
+		A197D9EF1D5C58EF00EE242F /* BattleDeckCard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A197D9ED1D5C58EF00EE242F /* BattleDeckCard.cpp */; };
 		A19AE2101D59D41400D109AD /* LanguageConfirmationLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19AE20E1D59D41400D109AD /* LanguageConfirmationLayer.cpp */; };
 		A19D6B0C1D1802170088AF23 /* FormationData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19D6B0A1D1802170088AF23 /* FormationData.cpp */; };
 		A19EE96D1C1C0F1300E46D77 /* LevelLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19EE96B1C1C0F1300E46D77 /* LevelLocalData.cpp */; };
@@ -747,6 +748,8 @@
 		A19382171D4B0B0D0059EDBF /* ObjectBriefNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectBriefNode.h; sourceTree = "<group>"; };
 		A19382191D4B331B0059EDBF /* ObjectBriefData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectBriefData.cpp; sourceTree = "<group>"; };
 		A193821A1D4B331B0059EDBF /* ObjectBriefData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectBriefData.h; sourceTree = "<group>"; };
+		A197D9ED1D5C58EF00EE242F /* BattleDeckCard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattleDeckCard.cpp; sourceTree = "<group>"; };
+		A197D9EE1D5C58EF00EE242F /* BattleDeckCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BattleDeckCard.h; sourceTree = "<group>"; };
 		A19AE20E1D59D41400D109AD /* LanguageConfirmationLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LanguageConfirmationLayer.cpp; sourceTree = "<group>"; };
 		A19AE20F1D59D41400D109AD /* LanguageConfirmationLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanguageConfirmationLayer.h; sourceTree = "<group>"; };
 		A19D6B0A1D1802170088AF23 /* FormationData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FormationData.cpp; sourceTree = "<group>"; };
@@ -2260,6 +2263,8 @@
 		A1DFAACA1D10FC2800817E69 /* BattleDeck */ = {
 			isa = PBXGroup;
 			children = (
+				A197D9ED1D5C58EF00EE242F /* BattleDeckCard.cpp */,
+				A197D9EE1D5C58EF00EE242F /* BattleDeckCard.h */,
 				A11649081D5B1B8C00D03985 /* BattleDeckLayer.cpp */,
 				A11649091D5B1B8C00D03985 /* BattleDeckLayer.h */,
 				A116490B1D5B1E3400D03985 /* BattleDeckUI.cpp */,
@@ -2732,6 +2737,7 @@
 				A1D461531C3E166900E8E60B /* AbstractPieceLocalData.cpp in Sources */,
 				A18524D31C1AE46400BE261D /* QuestNode.cpp in Sources */,
 				E6DB72DA1D4F857E0045A8C0 /* CardSimpleData.cpp in Sources */,
+				A197D9EF1D5C58EF00EE242F /* BattleDeckCard.cpp in Sources */,
 				3070302E1CD3253B0077D357 /* Produce.cpp in Sources */,
 				300098D61BD5E81700B6E284 /* InstanceFactory.cpp in Sources */,
 				30F8405D1D50B3370050C976 /* UWRender.cpp in Sources */,
