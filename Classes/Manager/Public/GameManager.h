@@ -28,6 +28,7 @@ public:
     // pvp
     void launchPvp();
     
+    void exitGame();
 private:
     GameManager();
     virtual ~GameManager();
@@ -38,7 +39,7 @@ private:
     
     // private
     void launchGame();
-    void exitGame();
+    //void exitGame();
     void restartPve();
     
     void createClient(cocos2d::Scene* scene);

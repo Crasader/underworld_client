@@ -169,10 +169,10 @@ void GameManager::purgeClient()
         _client->quit();
     }
     
+    CC_SAFE_DELETE(_render);
     CC_SAFE_DELETE(_client);
     CC_SAFE_DELETE(_pvpProxy);
     CC_SAFE_DELETE(_gameScheduler);
-    CC_SAFE_DELETE(_render);
 }
 
 bool GameManager::loadBattleContent()

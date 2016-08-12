@@ -20,6 +20,9 @@
 #include "CardConfigData.h"
 #include "GameModeHMM.h"
 #include "HMMDeckRender.h"
+#include "MessageBoxLayer.h"
+#include "GameManager.h"
+#include "MainScene.h"
 
 namespace UnderWorld{ namespace Core{
     
@@ -33,8 +36,8 @@ static cocos2d::ProgressTimer* createProgressTimer(const string& file) {
     return pt;
 }
     
-const int HMMGui::COVER_UI_ZORDER = 1;
-const int HMMGui::DECK_UI_ZORDER = 2;
+const int HMMGui::COVER_UI_ZORDER = 2;
+const int HMMGui::DECK_UI_ZORDER = 1;
 
 const int HMMGui::INVALID_FACTION_INDEX = -1;
 const int HMMGui::ALERT_REMAIN_TIME_IN_SECOND = 180;
@@ -144,6 +147,22 @@ void HMMGui::init(const Game *game, Commander *commander, WorldRender *worldRend
     }
     _guiView->addChild(_deckRender->getDeckView(), DECK_UI_ZORDER);
     
+    //4e. exit button
+    {
+        static const string file("GameImages/battle_ui/ui_exit_button.png");
+        MenuItemImage* exitItem = MenuItemImage::create(file, file, [this](Ref*) {
+            MessageBoxLayer::getInstance()->show(LocalHelper::getString("hint_exitPve"), MessageBoxType::YesNo, [this](Ref*) {
+                GameManager::getInstance()->exitGame();
+                CocosUtils::replaceScene(MainScene::create(), true);
+            });
+
+        });
+        exitItem->setAnchorPoint(Point::ANCHOR_TOP_RIGHT);
+        exitItem->setPosition(Point(winSize.width - 5.0f, winSize.height - 5.0f));
+        Menu *menu = Menu::create(exitItem, nullptr);
+        menu->setPosition(Point::ZERO);
+        _guiView->addChild(menu, COVER_UI_ZORDER);
+    }
 }
     
 void HMMGui::render(const Game *game) {
