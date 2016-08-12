@@ -116,7 +116,7 @@ protected:
         const URConfigData* configData,
         std::vector<std::string>& bodyAnimationOutput,
         std::vector<std::string>& shadowAnimationOutput);
-    static int getResourceId(UnitAnimationType type, Unit::Direction direction, const URConfigData* configData);
+    static int getResourceId(UnitAnimationType type, Unit::Direction direction, const URConfigData* configData, bool isShadow);
     static bool needToFlip(Unit::Direction direction, const URConfigData* configData);
 };
     

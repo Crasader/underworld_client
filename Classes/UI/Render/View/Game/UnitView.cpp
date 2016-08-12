@@ -130,8 +130,8 @@ bool UnitView::runAnimation(bool loop, const std::function<void ()>& callback) {
             
             PVRAnimation* shadowPVR = dynamic_cast<PVRAnimation*>(_shadowAnimation);
             
-            if (shadowPVR && _shadowNode) {
-                shadowPVR->play(_shadowNode, loop, beginFrame, nullptr);
+            if (shadowPVR && _shadowAnimNode) {
+                shadowPVR->play(_shadowAnimNode, loop, beginFrame, nullptr);
             }
             
             _playing = true;
@@ -285,7 +285,7 @@ void UnitView::playAnimationCallback() {
 void UnitView::updateNodeScale() {
     float scaleY = _nodeScale;
     if (_configData) scaleY *= _configData->getBodyScale();
-    float scaleX = scaleY * (scaleY > 0 && _flip ? -1 : 1);
+    float scaleX = scaleY * ((scaleY > 0 && _flip) ? -1 : 1);
     this->setScale(scaleX, scaleY);
     if (_shadowNode) _shadowNode->setScale(scaleX, scaleY);
 }
@@ -315,14 +315,15 @@ void UnitView::getAnimationFiles(UnitAnimationType type,
     
     std::string resourcePrefix = configData->getNormalPrefix();
     std::string posePrefix = pose_files[(int)type][(int)pose];
-    int resourceId = getResourceId(type, direction, configData);
+    int bodyResId = getResourceId(type, direction, configData, false);
+    int shadowResId = getResourceId(type, direction, configData, true);
     
     if (!resourcePrefix.empty() && !posePrefix.empty()) {
         if (type == UnitAnimationType::PVR) {
-            bodyData.assign(resourcePrefix + "/" + posePrefix + "/body/" + UnderWorldCoreUtils::to_string(resourceId));
-            shadowData.assign(resourcePrefix + "/" + posePrefix + "/shadow/" + UnderWorldCoreUtils::to_string(resourceId));
+            bodyData.assign(resourcePrefix + "/" + posePrefix + "/body/" + UnderWorldCoreUtils::to_string(bodyResId));
+            shadowData.assign(resourcePrefix + "/" + posePrefix + "/shadows/" + UnderWorldCoreUtils::to_string(shadowResId));
         } else if (type == UnitAnimationType::CSB) {
-            bodyData.assign(resourcePrefix + "-" + posePrefix + "-" + UnderWorldCoreUtils::to_string(resourceId) + ".csb");
+            bodyData.assign(resourcePrefix + "-" + posePrefix + "-" + UnderWorldCoreUtils::to_string(bodyResId) + ".csb");
         }
     }
     
@@ -330,33 +331,37 @@ void UnitView::getAnimationFiles(UnitAnimationType type,
     if (!shadowData.empty()) shadowAnimationOutput.push_back(shadowData);
 }
     
-int UnitView::getResourceId(UnitAnimationType type, Unit::Direction direction, const URConfigData* configData) {
+int UnitView::getResourceId(UnitAnimationType type, Unit::Direction direction, const URConfigData* configData, bool isShadow) {
     if (configData && !configData->isMultiDirection()) return 0;
         
     if (type == UnitAnimationType::PVR) {
-        switch (direction) {
-            case Unit::kDirection_Up:
-                return 0;
-            case Unit::kDirection_leftUp2:
-            case Unit::kDirection_rightUp2:
-                return 1;
-            case Unit::kDirection_leftUp1:
-            case Unit::kDirection_rightUp1:
-                return 2;
-            case Unit::kDirection_right:
-            case Unit::kDirection_left:
-                return 3;
-            case Unit::kDirection_leftDown1:
-            case Unit::kDirection_rightDown1:
-                return 4;
-            case Unit::kDirection_leftDown2:
-            case Unit::kDirection_rightDown2:
-                return 5;
-            case Unit::kDirection_Down:
-                return 6;
-            default:
-                assert(false);
-                return 0;
+        if (isShadow) {
+            return ((int)direction) + 1;
+        } else {
+            switch (direction) {
+                case Unit::kDirection_Up:
+                    return 0;
+                case Unit::kDirection_leftUp2:
+                case Unit::kDirection_rightUp2:
+                    return 1;
+                case Unit::kDirection_leftUp1:
+                case Unit::kDirection_rightUp1:
+                    return 2;
+                case Unit::kDirection_right:
+                case Unit::kDirection_left:
+                    return 3;
+                case Unit::kDirection_leftDown1:
+                case Unit::kDirection_rightDown1:
+                    return 4;
+                case Unit::kDirection_leftDown2:
+                case Unit::kDirection_rightDown2:
+                    return 5;
+                case Unit::kDirection_Down:
+                    return 6;
+                default:
+                    assert(false);
+                    return 0;
+            }
         }
     } else if (type == UnitAnimationType::CSB) {
         switch (direction) {
