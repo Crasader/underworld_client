@@ -7,7 +7,6 @@
 //
 
 #include "ChatData.h"
-#include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
 #include "CocosUtils.h"
 #include "cocostudio/CocoStudio.h"

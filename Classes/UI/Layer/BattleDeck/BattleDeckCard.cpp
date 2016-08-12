@@ -10,14 +10,15 @@
 #include "CocosUtils.h"
 #include "BattleDeckUI.h"
 #include "DataManager.h"
+#include "CardSimpleData.h"
 #include "UniversalButton.h"
 
 using namespace std;
 
-BattleDeckCard* BattleDeckCard::create(const string& name)
+BattleDeckCard* BattleDeckCard::create(const CardSimpleData* data)
 {
     auto ret = new (nothrow) BattleDeckCard();
-    if (ret && ret->init(name)) {
+    if (ret && ret->init(data)) {
         ret->autorelease();
         return ret;
     }
@@ -34,17 +35,19 @@ BattleDeckCard::BattleDeckCard()
 ,_hint(nullptr)
 ,_use(nullptr)
 ,_info(nullptr)
+,_data(nullptr)
 ,_isHero(false)
-,_inDeck(false) {}
+,_inDeck(false)
+,_touchInvalid(false) {}
 
 BattleDeckCard::~BattleDeckCard()
 {
     removeAllChildren();
 }
 
-bool BattleDeckCard::init(const string& name)
+bool BattleDeckCard::init(const CardSimpleData* data)
 {
-    if (Node::init())
+    if (Widget::init())
     {
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         setContentSize(Size(Width, Height));
@@ -73,10 +76,42 @@ bool BattleDeckCard::init(const string& name)
         addChild(_hint, -1);
         
         _use = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Green, "Use");
+        _use->setCallback([this](Ref*) {
+            if (_observer) {
+                _observer->onBattleDeckCardUse(this);
+            }
+        });
         addChild(_use);
         
         _info = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Blue, "Info");
+        _info->setCallback([this](Ref*) {
+            if (_observer) {
+                _observer->onBattleDeckCardInfo(this);
+            }
+        });
         addChild(_info);
+        
+        setTouchEnabled(true);
+        setSwallowTouches(false);
+        addTouchEventListener([this](Ref *pSender, ui::Widget::TouchEventType type) {
+            auto widget = dynamic_cast<ui::Widget*>(pSender);
+            if (type == ui::Widget::TouchEventType::BEGAN) {
+                _touchInvalid = false;
+            } else if (type == ui::Widget::TouchEventType::MOVED) {
+                if (!_touchInvalid) {
+                    const auto& mp(widget->getTouchMovePosition());
+                    const auto& bp(widget->getTouchBeganPosition());
+                    static const float offset(40);
+                    if (abs(mp.x - bp.x) >= offset || abs(mp.y - bp.y) >= offset) {
+                        _touchInvalid = true;
+                    }
+                }
+            } else if (type == ui::Widget::TouchEventType::ENDED) {
+                if (!_touchInvalid && _observer) {
+                    _observer->onBattleDeckCardTouched(this);
+                }
+            }
+        });
         
         showHint(false);
         
@@ -91,10 +126,10 @@ void BattleDeckCard::registerObserver(BattleDeckCardObserver *observer)
     _observer = observer;
 }
 
-void BattleDeckCard::update(const string& name)
+void BattleDeckCard::update(const CardSimpleData* data)
 {
-    if (_cardName != name) {
-        _cardName = name;
+    if (_data != data) {
+        _data = data;
     }
 }
 
@@ -153,7 +188,12 @@ void BattleDeckCard::showHint(bool show)
     }
 }
 
-const string& BattleDeckCard::getCardName() const
+bool BattleDeckCard::isShowHint() const
 {
-    return _cardName;
+    return _use->isVisible();
+}
+
+const CardSimpleData* BattleDeckCard::getData() const
+{
+    return _data;
 }

@@ -10,6 +10,7 @@
 #include "cocostudio/CocoStudio.h"
 #include "UserDefaultsDataManager.h"
 #include "DeckData.h"
+#include "CardSimpleData.h"
 
 using namespace std;
 using namespace cocostudio;
@@ -36,6 +37,7 @@ void DeckManager::purge()
 }
 
 DeckManager::DeckManager()
+:_defaultId(0)
 {
     for (int i = 0; i < MaxCount; ++i) {
         const auto& string = UserDefaultsDataManager::getStringForKey(getDeckKey(i).c_str(), "");
@@ -50,6 +52,11 @@ DeckManager::~DeckManager()
 {
     for (int i = 0; i < _decks.size(); ++i) {
         CC_SAFE_DELETE(_decks.at(i));
+    }
+    
+    for (auto iter = begin(_foundCards); iter != end(_foundCards); ++iter) {
+        auto data = *iter;
+        CC_SAFE_DELETE(data);
     }
 }
 
@@ -111,4 +118,14 @@ DeckData* DeckManager::getDefaultDeckData() const
 void DeckManager::saveDefaultDeckData()
 {
     saveDeckData(_defaultId);
+}
+
+const set<CardSimpleData*>& DeckManager::getFoundCards() const
+{
+    return _foundCards;
+}
+
+const set<string>& DeckManager::getUnfoundCards() const
+{
+    return _unfoundCards;
 }

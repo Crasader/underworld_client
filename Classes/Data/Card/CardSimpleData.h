@@ -16,6 +16,7 @@ class CardSimpleData
 {
 public:
     CardSimpleData(const rapidjson::Value& jsonDict);
+    CardSimpleData(const CardSimpleData* instance);
     virtual ~CardSimpleData();
     
     const std::string& getName() const;

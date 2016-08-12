@@ -11,8 +11,10 @@
 
 #include "json/document.h"
 #include <unordered_map>
+#include <set>
 
 class DeckData;
+class CardSimpleData;
 
 class DeckManager
 {
@@ -34,6 +36,9 @@ public:
     DeckData* getDefaultDeckData() const;
     void saveDefaultDeckData();
     
+    const std::set<CardSimpleData*>& getFoundCards() const;
+    const std::set<std::string>& getUnfoundCards() const;
+    
 private:
     DeckManager();
     virtual ~DeckManager();
@@ -43,6 +48,8 @@ private:
 private:
     int _defaultId;
     std::unordered_map<int, DeckData*> _decks;
+    std::set<CardSimpleData*> _foundCards;
+    std::set<std::string> _unfoundCards;
 };
 
 #endif /* DeckManager_h */

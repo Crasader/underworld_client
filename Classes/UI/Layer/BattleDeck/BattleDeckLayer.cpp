@@ -12,13 +12,31 @@
 #include "LocalHelper.h"
 #include "BattleDeckUI.h"
 #include "DeckData.h"
+#include "CardSimpleData.h"
 #include "DeckManager.h"
 #include "TabButton.h"
 #include "UniversalButton.h"
 
 using namespace std;
 
-static const Vec2 edge(15, 15);
+static const Vec2 primaryEdge(15, 15);
+static const Vec2 secondaryEdge(5, 5);
+
+static const float leftWidth(366);
+static const float rightWidth(612);
+static const float nodeHeight(496);
+
+static const Size leftSubNodeSize(leftWidth - secondaryEdge.x * 2, 60);
+static const Size rightSubNodeSize(rightWidth - secondaryEdge.x * 2, 92);
+static const Size scrollViewSize(rightSubNodeSize.width, nodeHeight- (rightSubNodeSize.height + secondaryEdge.y * 2 + 5));
+
+static const int candidateColumn(6);
+static const float cardSpaceX((scrollViewSize.width - BattleDeckCard::Width * candidateColumn) / (candidateColumn + 1));
+static const float cardSpaceY(15);
+static const float foundSpaceTop(10);
+static const float foundSpaceBottom(30);
+static const float unfoundSpaceTop(20);
+static const float unfoundSpaceBottom(40);
 static const vector<DeckTabType> cardTabs = {
     DeckTabType::All,
     DeckTabType::Heroes,
@@ -26,6 +44,23 @@ static const vector<DeckTabType> cardTabs = {
     DeckTabType::Spells
 };
 
+#pragma mark - Candidate
+class BattleDeckLayer::Candidate
+{
+public:
+    Candidate() {}
+    virtual ~Candidate() {
+        for (int i = 0; i < foundCards.size(); ++i) {
+            CC_SAFE_DELETE(foundCards.at(i));
+        }
+    }
+    
+public:
+    vector<CardSimpleData*> foundCards;
+    vector<string> unfoundCards;
+};
+
+#pragma mark - BattleDeckLayer
 BattleDeckLayer* BattleDeckLayer::create()
 {
     auto ret = new (nothrow) BattleDeckLayer();
@@ -44,6 +79,7 @@ BattleDeckLayer::BattleDeckLayer()
 ,_cardsCountLabel(nullptr)
 ,_sortTypeButton(nullptr)
 ,_scrollView(nullptr)
+,_unfoundLine(nullptr)
 ,_thisDeckIdx(-1)
 ,_thisDeckData(nullptr)
 ,_thisCardType(DeckTabType::None) {}
@@ -51,6 +87,12 @@ BattleDeckLayer::BattleDeckLayer()
 BattleDeckLayer::~BattleDeckLayer()
 {
     removeAllChildren();
+    
+    clearCandidates();
+    
+    for (auto iter = begin(_editedDeckData); iter != end(_editedDeckData); ++iter) {
+        CC_SAFE_DELETE(iter->second);
+    }
 }
 
 void BattleDeckLayer::registerObserver(BattleDeckLayerObserver *observer)
@@ -81,9 +123,16 @@ bool BattleDeckLayer::init()
 
         createLeftNode();
         createRightNode();
-        
         updateCardsCount(0);
-        loadDeck(DeckManager::getInstance()->getDefaultDeckId());
+        
+        // deck
+        const auto idx(MAX(MIN(DeckManager::MaxCount, DeckManager::getInstance()->getDefaultDeckId()), 1));
+        loadDeck(idx);
+        
+        // scroll view
+        initPositions();
+        initCandidates();
+        setCardType(DeckTabType::All);
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -108,6 +157,14 @@ void BattleDeckLayer::onTouchEnded(Touch *touch, Event *unused_event)
 }
 
 #pragma mark - BattleDeckCardObserver
+void BattleDeckLayer::onBattleDeckCardTouched(BattleDeckCard* pSender)
+{
+    if (pSender) {
+        const auto show(pSender->isShowHint());
+        pSender->showHint(!show);
+    }
+}
+
 void BattleDeckLayer::onBattleDeckCardUse(BattleDeckCard* pSender)
 {
     
@@ -122,13 +179,12 @@ void BattleDeckLayer::onBattleDeckCardInfo(BattleDeckCard* pSender)
 void BattleDeckLayer::createLeftNode()
 {
     if (_background) {
-        static const Size subSize(366, 496);
+        static const Size subSize(leftWidth, nodeHeight);
         auto node = CocosUtils::createSubBackground(subSize);
-        node->setPosition(edge.x + subSize.width / 2, edge.y + subSize.height / 2);
+        node->setPosition(primaryEdge.x + subSize.width / 2, primaryEdge.y + subSize.height / 2);
         _background->addChild(node);
         
-        static const Vec2 secondaryEdge(5, 5);
-        static const Size subBgSize(subSize.width - secondaryEdge.x * 2, 60);
+        static const Size& subBgSize(leftSubNodeSize);
         auto subBg = CocosUtils::createPureBar(subBgSize);
         subBg->setPosition(subSize.width / 2, subSize.height - (secondaryEdge.y + subBgSize.height / 2));
         node->addChild(subBg);
@@ -152,7 +208,7 @@ void BattleDeckLayer::createLeftNode()
                     loadDeck(idx);
                 });
                 subBg->addChild(button);
-                _deckTabButtons.push_back(button);
+                _deckTabButtons.insert(make_pair(idx, button));
                 
                 const auto& size = button->getContentSize();
                 button->setPosition(subBgSize.width - (x + size.width / 2), subBgSize.height / 2);
@@ -174,8 +230,9 @@ void BattleDeckLayer::createLeftNode()
             for (int i = 0; i < column; ++i) {
                 static const float cardSpaceX(20);
                 static const float basePosX((subSize.width - (column * BattleDeckCard::Width + (column - 1) * cardSpaceX)) / 2);
-                auto card = BattleDeckCard::create("");
+                auto card = createFoundCard(nullptr);
                 card->setIsHero(true);
+                card->setInDeck(true);
                 const float x = basePosX + (i + 0.5) * BattleDeckCard::Width + i * cardSpaceX;
                 const float y = line->getPositionY() - (line->getContentSize().height / 2 + spaceY2 + BattleDeckCard::Height / 2);
                 card->setPosition(Point(x, y));
@@ -201,8 +258,9 @@ void BattleDeckLayer::createLeftNode()
                 for (int j = 0; j < column; ++j) {
                     static const float cardSpaceX(5);
                     static const float basePosX((subSize.width - (column * BattleDeckCard::Width + (column - 1) * cardSpaceX)) / 2);
-                    auto card = BattleDeckCard::create("");
+                    auto card = createFoundCard(nullptr);
                     card->setIsHero(false);
+                    card->setInDeck(true);
                     const float x = basePosX + (j + 0.5) * BattleDeckCard::Width + j * cardSpaceX;
                     const float y = basePosY - (i + 0.5) * BattleDeckCard::Height - i * cardSpaceY;
                     card->setPosition(Point(x, y));
@@ -217,13 +275,12 @@ void BattleDeckLayer::createRightNode()
 {
     if (_background) {
         const auto& size(_background->getContentSize());
-        static const Size subSize(612, 496);
+        static const Size subSize(rightWidth, nodeHeight);
         auto node = CocosUtils::createSubBackground(subSize);
-        node->setPosition(size.width - (edge.x + subSize.width / 2), edge.y + subSize.height / 2);
+        node->setPosition(size.width - (primaryEdge.x + subSize.width / 2), primaryEdge.y + subSize.height / 2);
         _background->addChild(node);
         
-        static const Vec2 secondaryEdge(5, 5);
-        static const Size subBgSize(subSize.width - secondaryEdge.x * 2, 92);
+        static const Size& subBgSize(rightSubNodeSize);
         auto subBg = CocosUtils::createPureBar(subBgSize);
         subBg->setPosition(subSize.width / 2, subSize.height - (secondaryEdge.y + subBgSize.height / 2));
         node->addChild(subBg);
@@ -246,8 +303,8 @@ void BattleDeckLayer::createRightNode()
                 static const auto normal(CocosUtils::getResourcePath("button_lanse_1.png"));
                 static const auto selected(CocosUtils::getResourcePath("button_lvse_2.png"));
                 const auto type(cardTabs.at(i));
-                auto button = TabButton::create(getCardTabName(type), normal, selected, [this](Ref*) {
-                    
+                auto button = TabButton::create(getCardTabName(type), normal, selected, [this, type](Ref*) {
+                    setCardType(type);
                 });
                 subBg->addChild(button);
                 _cardTabButtons.push_back(button);
@@ -275,17 +332,31 @@ void BattleDeckLayer::createRightNode()
         
         // cards
         {
-            static const float spaceY(5);
             _scrollView = ui::ScrollView::create();
             _scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
+            _scrollView->setContentSize(scrollViewSize);
+            _scrollView->setPosition(secondaryEdge);
+            _scrollView->setInnerContainerSize(scrollViewSize);
+            _scrollView->setScrollBarEnabled(false);
             node->addChild(_scrollView);
             
-            static const Size viewSize(subBgSize.width, subSize.height - (subBgSize.height + secondaryEdge.y * 2 + spaceY));
-            _scrollView->setContentSize(viewSize);
-            _scrollView->setPosition(secondaryEdge);
-            _scrollView->setInnerContainerSize(Size(viewSize.width, viewSize.height * 2));
+            _unfoundLine = createUnfoundLine();
+            _scrollView->addChild(_unfoundLine);
         }
     }
+}
+
+BattleDeckCard* BattleDeckLayer::createFoundCard(const CardSimpleData* data)
+{
+    auto card = BattleDeckCard::create(data);
+    card->registerObserver(this);
+    return card;
+}
+
+Node* BattleDeckLayer::createUnfoundCard(const std::string& name) const
+{
+    auto card = BattleDeckCard::create(nullptr);
+    return card;
 }
 
 Node* BattleDeckLayer::createLine(DeckTabType type) const
@@ -310,6 +381,33 @@ Node* BattleDeckLayer::createLine(DeckTabType type) const
     return line;
 }
 
+Node* BattleDeckLayer::createUnfoundLine() const
+{
+    auto node = Node::create();
+    
+    auto line = Sprite::create(CocosUtils::getResourcePath("ui_line.png"));
+    line->setScaleX(scrollViewSize.width / line->getContentSize().width);
+    node->addChild(line);
+    
+    auto label = CocosUtils::createLabel("Cards to be found", SMALL_FONT_SIZE);
+    label->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
+    label->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    label->setTextColor(Color4B::BLACK);
+    node->addChild(label);
+    
+    static const float spaceY(3);
+    const float lineHeight(line->getContentSize().height);
+    const float labelHeight(label->getContentSize().height);
+    const Size size(scrollViewSize.width, lineHeight + labelHeight + spaceY);
+    node->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    node->setContentSize(size);
+    
+    line->setPosition(Point(size.width / 2, size.height - (lineHeight / 2)));
+    label->setPosition(Point(size.width / 2, labelHeight / 2));
+    
+    return node;
+}
+
 void BattleDeckLayer::updateCardsCount(int count)
 {
     if (_cardsCountLabel) {
@@ -317,7 +415,66 @@ void BattleDeckLayer::updateCardsCount(int count)
     }
 }
 
+float BattleDeckLayer::getHeight(size_t count, float spaceY) const
+{
+    if (count > 0) {
+        const size_t row = (count - 1) / candidateColumn + 1;
+        return row * (BattleDeckCard::Height + spaceY) - spaceY;
+    }
+    
+    return 0;
+}
+
+Point BattleDeckLayer::getPosition(int row, int column) const
+{
+    static const float cw(BattleDeckCard::Width);
+    static const float ch(BattleDeckCard::Height);
+    const float x = (column + 1) * (cardSpaceX + cw) - cw / 2;
+    const float y = row * (ch + cardSpaceY) + ch / 2;
+    return Point(x, y);
+}
+
 #pragma mark - functions
+void BattleDeckLayer::initPositions()
+{
+    _foundPositions.clear();
+    
+    const auto cnt = DeckManager::getInstance()->getFoundCards().size();
+    for (int i = 0; i < cnt; ++i) {
+        auto pos = getPosition(i / candidateColumn, i % candidateColumn);
+        _foundPositions.push_back(pos + Point(0, foundSpaceTop));
+    }
+}
+
+void BattleDeckLayer::initCandidates()
+{
+    clearCandidates();
+    
+    for (int i = 0; i < cardTabs.size(); ++i) {
+        _candidates.insert(make_pair(cardTabs.at(i), new (nothrow) Candidate()));
+    }
+    
+    const auto& found = DeckManager::getInstance()->getFoundCards();
+    for (auto it = begin(found); it != end(found); ++it) {
+        // TODO: remove test code
+        for (auto iter = begin(_candidates); iter != end(_candidates); ++iter) {
+            auto candidate(iter->second);
+            auto data(*it);
+            candidate->foundCards.push_back(new (nothrow) CardSimpleData(data));
+            candidate->unfoundCards.push_back(data->getName());
+        }
+    }
+}
+
+void BattleDeckLayer::clearCandidates()
+{
+    for (auto iter = begin(_candidates); iter != end(_candidates); ++iter) {
+        CC_SAFE_DELETE(iter->second);
+    }
+    
+    _candidates.clear();
+}
+
 void BattleDeckLayer::saveThisDeck()
 {
     
@@ -327,6 +484,11 @@ void BattleDeckLayer::loadDeck(int idx)
 {
     if (_thisDeckIdx != idx) {
         _thisDeckIdx = idx;
+        
+        // tab buttons
+        for (auto iter = begin(_deckTabButtons); iter != end(_deckTabButtons); ++iter) {
+            iter->second->setEnabled(idx != iter->first);
+        }
     }
 }
 
@@ -340,7 +502,57 @@ void BattleDeckLayer::setCardType(DeckTabType type)
     if (_thisCardType != type) {
         _thisCardType = type;
         
+        for (int i = 0; i < _candidateCards.size(); ++i) {
+            auto node(_candidateCards.at(i));
+            node->removeFromParent();
+        }
         
+        _candidateCards.clear();
+        
+        const auto info(_candidates.at(type));
+        const auto& found(info->foundCards);
+        const auto& unfound(info->unfoundCards);
+        
+        const float width(_scrollView->getContentSize().width);
+        const float h1 = getHeight(found.size(), cardSpaceY);
+        const float h2 = getHeight(unfound.size(), cardSpaceY);
+        const float fb(h1 > 0 ? foundSpaceBottom : 0);
+        const float height = (foundSpaceTop + h1 + h2) + fb + (h2 > 0 ? (_unfoundLine->getContentSize().height + unfoundSpaceTop + unfoundSpaceBottom) : 0);
+        _scrollView->setInnerContainerSize(Size(width, height));
+        
+        // the found cards
+        for (int i = 0; i < found.size(); ++i) {
+            auto card = createFoundCard(found.at(i));
+            card->setInDeck(false);
+            _scrollView->addChild(card);
+            _candidateCards.push_back(card);
+            
+            const auto& point(_foundPositions.at(i));
+            card->setPosition(Point(point.x, height - point.y));
+        }
+        
+        // hint
+        _unfoundLine->setVisible(h2 > 0);
+        
+        if (h2 > 0) {
+            _unfoundLine->setPosition(width / 2, h2 + unfoundSpaceTop + unfoundSpaceBottom + _unfoundLine->getContentSize().height / 2);
+            
+            // the unfound cards
+            for (int i = 0; i < unfound.size(); ++i) {
+                auto node = createUnfoundCard(unfound.at(i));
+                (dynamic_cast<BattleDeckCard*>(node))->setIsHero(true);
+                _scrollView->addChild(node);
+                _candidateCards.push_back(node);
+                
+                const auto& point = getPosition(i / candidateColumn, i % candidateColumn);
+                node->setPosition(Point(point.x, h2 + unfoundSpaceBottom - point.y));
+            }
+        }
+        
+        // tab buttons
+        for (int i = 0; i < _cardTabButtons.size(); ++i) {
+            _cardTabButtons.at(i)->setEnabled(type != cardTabs[i]);
+        }
     }
 }
 

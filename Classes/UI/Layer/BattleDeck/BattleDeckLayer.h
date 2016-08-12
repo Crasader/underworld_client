@@ -17,6 +17,7 @@
 USING_NS_CC;
 
 class DeckData;
+class CardSimpleData;
 class TabButton;
 class UniversalButton;
 
@@ -52,16 +53,24 @@ protected:
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
     // BattleDeckCardObserver
+    virtual void onBattleDeckCardTouched(BattleDeckCard* pSender) override;
     virtual void onBattleDeckCardUse(BattleDeckCard* pSender) override;
     virtual void onBattleDeckCardInfo(BattleDeckCard* pSender) override;
     
     void createLeftNode();
     void createRightNode();
+    BattleDeckCard* createFoundCard(const CardSimpleData* data);
+    Node* createUnfoundCard(const std::string& name) const;
     Node* createLine(DeckTabType type) const;
-    
+    Node* createUnfoundLine() const;
     void updateCardsCount(int count);
+    float getHeight(size_t count, float spaceY) const;
+    Point getPosition(int row, int column) const;
     
     // functions
+    void initPositions();
+    void initCandidates();
+    void clearCandidates();
     void saveThisDeck();
     void loadDeck(int idx);
     void setDefaultDeck();
@@ -69,15 +78,22 @@ protected:
     std::string getCardTabName(DeckTabType type) const;
     
 private:
+    class Candidate;
     BattleDeckLayerObserver *_observer;
     
     // UI
     Node* _background;
-    std::vector<TabButton*> _deckTabButtons;
+    std::unordered_map<int, TabButton*> _deckTabButtons;
     std::vector<TabButton*> _cardTabButtons;
     Label* _cardsCountLabel;
     UniversalButton* _sortTypeButton;
     ui::ScrollView* _scrollView;
+    Node* _unfoundLine;
+    
+    std::map<DeckTabType, Candidate*> _candidates;
+    std::vector<Node*> _candidateCards;
+    
+    std::vector<Point> _foundPositions;
     
     // Data
     int _thisDeckIdx;

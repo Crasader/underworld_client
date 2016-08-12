@@ -362,7 +362,7 @@ void SettingsLayer::createContent()
         static const float edgeTop(edge.x);
         const auto& size(parent->getContentSize());
         
-        auto line = Sprite::create(SettingUI::getResourcePath("ui_line.png"));
+        auto line = Sprite::create(CocosUtils::getResourcePath("ui_line.png"));
         line->setScaleX(size.width - edge.x * 2);
         line->setPosition(Point(size.width / 2, size.height / 2));
         parent->addChild(line);
