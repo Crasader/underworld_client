@@ -84,4 +84,6 @@
   
   	<item render_key="基地" direction="0" multi_direction="0" transform_on_health="0" anim_type="pvr" normal_prefix="Tower" shadow_prefix="" damaged_prefix="" attck_sound="sound_arrowlaunch" hurt_sound="sound_arrowhit" die_sound="sound_wad" body_scale="1.f" effect_scale="1.f" body_effect_pos_x="0" body_effect_pos_y="16" head_effect_pos_x="0" head_effect_pos_y="32" hp_bar_pos_x="0" hp_bar_pos_y="0" hp_bar_scale_x="1"/>
     
+    <item render_key="人族战士" direction="0" multi_direction="1" transform_on_health="0" anim_type="pvr" normal_prefix="HumanWarrior" attck_sound="sound_arrowlaunch" hurt_sound="sound_arrowhit" die_sound="sound_wad" body_scale="1.f" effect_scale="1.f" body_effect_pos_x="0" body_effect_pos_y="16" head_effect_pos_x="0" head_effect_pos_y="32" hp_bar_pos_x="0" hp_bar_pos_y="0" hp_bar_scale_x="1"/>
+    
 </root>
