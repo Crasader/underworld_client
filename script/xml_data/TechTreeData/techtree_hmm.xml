@@ -66,31 +66,31 @@
 	-->
 
 	<!-- 第一版法术 -->
-	<card name="暴风雪lv1" card_class="spell" cost="木头:30" spell_name="实际效果暴风雪" recover_span="600">
+	<card name="暴风雪lv1" card_class="spell" cost="木头:40" spell_name="实际效果暴风雪" recover_span="1000">
 		<custom_unit_setting/>
 	</card>
-	<card name="火球术lv1" card_class="spell" cost="木头:20" spell_name="实际效果火球术" recover_span="600">
+	<card name="火球术lv1" card_class="spell" cost="木头:30" spell_name="实际效果火球术" recover_span="1000">
 		<custom_unit_setting/>
 	</card>
-	<card name="医疗术lv1" card_class="spell" cost="木头:30" spell_name="实际效果医疗术" recover_span="600">
+	<card name="医疗术lv1" card_class="spell" cost="木头:40" spell_name="实际效果医疗术" recover_span="1000">
 		<custom_unit_setting/>
 	</card>
-	<card name="沉默术lv1" card_class="spell" cost="木头:10" spell_name="实际效果沉默术" recover_span="600">
+	<card name="沉默术lv1" card_class="spell" cost="木头:10" spell_name="实际效果沉默术" recover_span="1800">
 		<custom_unit_setting/>
 	</card>
-	<card name="小型驱散术lv1" card_class="spell" cost="木头:10" spell_name="实际效果小型驱散" recover_span="600">
+	<card name="小型驱散术lv1" card_class="spell" cost="木头:20" spell_name="实际效果小型驱散" recover_span="1000">
 		<custom_unit_setting/>
 	</card>
-	<card name="大型驱散术lv1" card_class="spell" cost="木头:20" spell_name="实际效果大型驱散" recover_span="600">
+	<card name="大型驱散术lv1" card_class="spell" cost="木头:10" spell_name="实际效果大型驱散" recover_span="1000">
 		<custom_unit_setting/>
 	</card>
-	<card name="震晕法术lv1" card_class="spell" cost="木头:20" spell_name="实际效果震晕法术" recover_span="600">
+	<card name="震晕法术lv1" card_class="spell" cost="木头:30" spell_name="实际效果震晕法术" recover_span="1800">
 		<custom_unit_setting/>
 	</card>
-	<card name="禁足术lv1" card_class="spell" cost="木头:20" spell_name="实际效果禁足术" recover_span="600">
+	<card name="禁足术lv1" card_class="spell" cost="木头:20" spell_name="实际效果禁足术" recover_span="1800">
 		<custom_unit_setting/>
 	</card>
-	<card name="酸雾术lv1" card_class="spell" cost="木头:20" spell_name="实际效果酸雾" recover_span="600">
+	<card name="酸雾术lv1" card_class="spell" cost="木头:20" spell_name="实际效果酸雾" recover_span="1800">
 		<custom_unit_setting/>
 	</card>
 <!-- 第一版单位：小兵部分 -->
@@ -115,7 +115,7 @@
 	<card name="骷髅盾牌兵" card_class="summon" cost="木头:40" unit_name="骷髅盾牌兵" summon_count="1" recover_span="0">
 		<custom_unit_setting unit_setting_name="骷髅盾牌兵"/>
 	</card>
-	<card name="食尸鬼" card_class="summon" cost="木头:30" unit_name="食尸鬼" summon_count="3" recover_span="0">
+	<card name="食尸鬼" card_class="summon" cost="木头:10" unit_name="食尸鬼" summon_count="1" recover_span="0">
 		<custom_unit_setting unit_setting_name="食尸鬼"/>
 	</card>
 	<card name="骷髅弓箭手" card_class="summon" cost="木头:20" unit_name="骷髅弓箭手" summon_count="1" recover_span="0">
@@ -144,6 +144,12 @@
 	</card>
 	<card name="中立精灵族弓箭手" card_class="summon" cost="木头:20" unit_name="中立精灵族弓箭手" recover_span="0">
 		<custom_unit_setting unit_setting_name="中立精灵族弓箭手"/>
+	</card>
+	<card name="兽族攻城车" card_class="summon" cost="木头:20" unit_name="兽族攻城车" recover_span="0">
+		<custom_unit_setting unit_setting_name="兽族攻城车"/>
+	</card>
+	<card name="月之骑士" card_class="summon" cost="木头:20" unit_name="月之骑士" recover_span="0">
+		<custom_unit_setting unit_setting_name="月之骑士"/>
 	</card>
 <!-- 第一版单位：英雄部分 -->
 	<card name="人族盾牌队长" card_class="summon" cost="木头:0" unit_name="人族盾牌队长" recover_span="0" >
