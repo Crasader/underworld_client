@@ -31,6 +31,25 @@
     <item key="ui_card_tab_spell" value="法术"/>
     <item key="ui_card_progress" value="收集进度："/>
     
+    <!-- 牌组 -->
+    <item key="ui_deck_tab_all" value="全部"/>
+    <item key="ui_deck_tab_hero" value="英雄"/>
+    <item key="ui_deck_tab_soldier" value="士兵"/>
+    <item key="ui_deck_tab_spell" value="法术"/>
+    <item key="ui_deck_sort_default" value="默认"/>
+    <item key="ui_deck_sort_rarity" value="稀有度"/>
+    <item key="ui_deck_sort_elixir" value="能量花费"/>
+    <item key="ui_deck_sort_dungeon" value="副本解锁"/>
+    <item key="ui_deck_progress" value="已收集："/>
+    <item key="ui_deck_battleDeck" value="出战卡组"/>
+    <item key="ui_deck_elixirCost" value="平均花费能量："/>
+    <item key="ui_deck_sortType" value="排列顺序"/>
+    <item key="ui_deck_unfoundCards" value="待收集的卡牌"/>
+    <item key="ui_deck_upgrade" value="升级"/>
+    <item key="ui_deck_info" value="信息"/>
+    <item key="ui_deck_use" value="使用"/>
+    <item key="ui_deck_move" value="编辑"/>
+    
     <!-- 阵型 -->
     <item key="ui_formation_tab_hero" value="英雄"/>
     <item key="ui_formation_tab_spell" value="法术"/>

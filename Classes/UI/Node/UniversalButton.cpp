@@ -42,6 +42,14 @@ static string getButtonFile(UniversalButton::BSize size, UniversalButton::BType 
             }
         }
             break;
+        case UniversalButton::BType::Purple:
+        {
+            if (big) {
+                file = "button_zise.png";
+            } else {
+                file = "button_zise.png";
+            }
+        }
             
         default:
             break;

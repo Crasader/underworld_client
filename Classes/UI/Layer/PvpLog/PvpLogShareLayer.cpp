@@ -69,7 +69,7 @@ bool PvpLogShareLayer::init()
             }
         });
         
-        auto title = CocosUtils::createLabel(LocalHelper::getString("ui_logShare_title"), BIG_FONT_SIZE);
+        auto title = CocosUtils::createLabel(LocalHelper::getString("ui_logShare_title"), TITLE_FONT_SIZE);
         title->setAnchorPoint(Point::ANCHOR_MIDDLE);
         title->setPosition(Point(size.width / 2, (size.height + subNodeSize.height + edge) / 2));
         bg->addChild(title);

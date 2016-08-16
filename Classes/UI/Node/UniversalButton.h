@@ -25,7 +25,8 @@ public:
     enum class BType {
         Blue,
         Red,
-        Green
+        Green,
+        Purple
     };
     
     typedef std::function<void(Ref*)> Callback;

@@ -761,7 +761,7 @@ void FormationLayer::reloadAllCandidateCards()
     for (auto iter = begin(cards); iter != end(cards); ++iter) {
         const auto& name = *iter;
         auto ct = dm->getGameModeHMM()->findCardTypeByName(name);
-        if (ct) {
+        if (false) {
             if (kHMMCardClass_Spell == ct->getCardClass()) {
                 insertCandidateCard(FormationTableType::Spell, name);
             } else {
@@ -786,7 +786,7 @@ void FormationLayer::reloadCandidateCards(FormationTableType type)
     for (auto iter = begin(cards); iter != end(cards); ++iter) {
         const auto& name = *iter;
         auto ct = dm->getGameModeHMM()->findCardTypeByName(name);
-        if (ct) {
+        if (false) {
             if (kHMMCardClass_Spell == ct->getCardClass()) {
                 if (FormationTableType::Spell == type) {
                     insertCandidateCard(type, name);

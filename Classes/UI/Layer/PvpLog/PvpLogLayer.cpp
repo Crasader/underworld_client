@@ -76,7 +76,7 @@ bool PvpLogLayer::init()
             removeFromParent();
         });
         
-        auto title = CocosUtils::createLabel(LocalHelper::getString("ui_log_title"), BIG_FONT_SIZE);
+        auto title = CocosUtils::createLabel(LocalHelper::getString("ui_log_title"), TITLE_FONT_SIZE);
         title->setAnchorPoint(Point::ANCHOR_MIDDLE);
         title->setPosition(Point(size.width / 2, (size.height + subBgSize.height + edge) / 2));
         bg->addChild(title);

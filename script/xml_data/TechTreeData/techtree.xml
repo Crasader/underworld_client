@@ -473,7 +473,7 @@
 	<addon feature_addons="魔族地狱战舰邪恶之箭" name="魔族地狱战舰邪恶之箭"/>
 	<addon feature_addons="魔族梦魇精华沉默攻击" name="魔族梦魇精华沉默攻击"/>
 	<addon feature_addons="牛头人攻击粉碎" name="牛头人攻击粉碎"/>
-	<addon attribute_addons="max_hp:100" name="牛头人天赋生命"/>
+	<addon attribute_addons="max_hp,100" name="牛头人天赋生命"/>
 	<addon feature_addons="牛头人天赋恢复" name="牛头人天赋恢复"/>
 	<addon feature_addons="中立火枪手爆头" name="中立火枪手爆头"/>
 	<addon feature_addons="中立精灵族弓箭手闪避" name="中立精灵族弓箭手闪避"/>
