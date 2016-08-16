@@ -247,9 +247,10 @@ void BulletRender::updateParams(const Coordinate32& currentPos,
         _scale = abs(cos(beta) + sin(beta) / _worldRender->getCameraAngelRadians());
     } else {
         const float gamma = atan(tan(beta)/cos(_alpha)/_worldRender->getCameraAngelRadians() + tan(_alpha));
-        int direction = _targetPos.x < _startPos.x ? 1 : -1;
-        _rotation = gamma * 180 / M_PI * direction;
+        int direction = _targetPos.x < _startPos.x ? -1 : 1;
+        _rotation = gamma * 180 / M_PI * -1;
         _scale = abs(cos(_alpha) * cos(beta) / cos(gamma)) * direction;
+        std::cout << "wtf" << std::endl;
     }
 }
     
