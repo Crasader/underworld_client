@@ -23,13 +23,13 @@ namespace UnderWorld { namespace Core {
 class CardInfoNode : public Node
 {
 public:
-    typedef std::function<void(const std::string&, int)> Callback;
+    typedef std::function<void(int, int)> Callback;
     
 public:
     static CardInfoNode* create(const Callback& callback);
     virtual ~CardInfoNode();
     
-    void update(const std::string& name);
+    void update(int idx);
     
 protected:
     CardInfoNode();
@@ -38,7 +38,7 @@ protected:
     void addLabel(Label** label);
     
 private:
-    std::string _name;
+    int _cardId;
     int _cost;
     Callback _callback;
     const UnderWorld::Core::UnitBase* _unit;

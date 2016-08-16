@@ -62,13 +62,13 @@ protected:
     virtual void onCardNodeTouchedEnded(CardNode* node, bool isValid) override;
     
     // CardInfoLayerObserver
-    virtual void onCardInfoLayerClosed(const std::string& name) override;
-    virtual void onCardInfoLayerUpgradeCard(const std::string& name) override;
+    virtual void onCardInfoLayerClosed(int card) override;
+    virtual void onCardInfoLayerUpgradeCard(int card) override;
     
     // CardXInfoLayerObserver
-    virtual void onCardXInfoLayerClosed(const std::string& name) override;
-    virtual void onCardXInfoLayerUpgradeCard(const std::string& name) override;
-    virtual void onCardXInfoLayerUpgradeTalent(const std::string& name) override;
+    virtual void onCardXInfoLayerClosed(int card) override;
+    virtual void onCardXInfoLayerUpgradeCard(int card) override;
+    virtual void onCardXInfoLayerUpgradeTalent(int card) override;
     
     // table
     void createTable(CardTableType type);
@@ -84,14 +84,14 @@ protected:
     void updateCardsCount(int count);
     
     // card
-    XCardNode* createXCardNode(const std::string& name) const;
-    void updateXCardNode(XCardNode* node, const std::string& name) const;
+    XCardNode* createXCardNode(int idx) const;
+    void updateXCardNode(XCardNode* node, int idx) const;
     
     // functions
     void reloadAllCandidateCards();
     void reloadCandidateCards(CardTableType type);
-    void insertCandidateCard(CardTableType type, const std::string& name);
-    void removeCandidateCard(CardTableType type, const std::string& name);
+    void insertCandidateCard(CardTableType type, int idx);
+    void removeCandidateCard(CardTableType type, int idx);
     CardTableType getTableType(TableView* table) const;
     void setTableType(CardTableType type);
     std::string getTableName(CardTableType type) const;
@@ -113,7 +113,7 @@ private:
     
     // data
     std::string _touchedCard;
-    std::map<CardTableType, std::vector<std::string>> _candidateCards;
+    std::map<CardTableType, std::vector<int>> _candidateCards;
 };
 
 #endif /* CardLayer_h */

@@ -9,6 +9,8 @@
 #include "CardInfoLayer.h"
 #include "CocosUtils.h"
 #include "CardInfoNode.h"
+#include "DataManager.h"
+#include "GameModeHMM.h"
 
 using namespace std;
 
@@ -39,9 +41,9 @@ bool CardInfoLayer::init()
 {
     if (Layer::init())
     {
-        _cardInfoNode = CardInfoNode::create([this](const string& name, int cost) {
+        _cardInfoNode = CardInfoNode::create([this](int card, int cost) {
             if (_observer) {
-                _observer->onCardInfoLayerUpgradeCard(name);
+                _observer->onCardInfoLayerUpgradeCard(card);
             }
         });
         
@@ -72,7 +74,7 @@ bool CardInfoLayer::init()
         CocosUtils::createGrayExitButton(bg, [this](){
             removeFromParent();
             if (_observer) {
-                _observer->onCardInfoLayerUpgradeCard(_name);
+                _observer->onCardInfoLayerUpgradeCard(_cardId);
             }
         });
         
@@ -103,15 +105,16 @@ void CardInfoLayer::registerObserver(CardInfoLayerObserver *observer)
     _observer = observer;
 }
 
-void CardInfoLayer::update(const string& name)
+void CardInfoLayer::update(int idx)
 {
-    _name = name;
+    _cardId = idx;
     
     if (_cardInfoNode) {
-        _cardInfoNode->update(name);
+        _cardInfoNode->update(idx);
     }
     
     if (_titleLabel) {
-        _titleLabel->setString(name);
+        auto data = DataManager::getInstance()->getGameModeHMM()->findCardTypeById(idx);
+        _titleLabel->setString(data ? data->getName() : "");
     }
 }

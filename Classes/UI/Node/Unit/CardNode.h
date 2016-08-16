@@ -50,26 +50,26 @@ public:
     virtual void setOpacity(GLubyte opacity) override;
     
     // spell cards
-    void updateWithoutInfo(const std::string& name);
+    void updateWithoutInfo(int idx);
     void updateCD(float percentage);
     
     // unit cards
     void update(const HMMCard* card, float resource);
-    void update(const std::string& name, float resource);
+    void update(int idx, float resource);
     void setSelected(bool selected);
     void checkResource(float count);
     
     // getters
     const HMMCard* getCard() const;
-    const std::string& getCardName() const;
+    int getCardId() const;
     int getCost() const;
     
 protected:
     CardNode();
     
     bool init(bool canShake);
-    void update(const std::string& name, const HMMCardType* ct, float resource);
-    std::string getIconFile(const std::string& name, bool enable) const;
+    void update(int idx, const HMMCardType* ct, float resource);
+    std::string getIconFile(int idx, bool enable) const;
     BattleSmallResourceNode* readdResourceNode(Node* currentNode, ::ResourceType type, int count);
     void updateIcon(bool colorful);
     void resetPosition();
@@ -89,7 +89,7 @@ private:
     ProgressTimer* _coldDownProgress;
     
     const HMMCard* _card;
-    std::string _cardName;
+    int _cardId;
     bool _touchInvalid;
     bool _selected;
     bool _canShake;

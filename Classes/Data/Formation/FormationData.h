@@ -17,9 +17,6 @@ using namespace UnderWorld::Core;
 
 class FormationData
 {
-protected:
-    typedef std::string FormationUnitType;
-    
 public:
     FormationData(const std::string& serializedString);
     FormationData(const FormationData* instance);
@@ -27,15 +24,15 @@ public:
     
     void clone(const FormationData* instance);
     
-    const std::map<Coordinate32, FormationUnitType>& getHeroes() const;
-    const std::vector<FormationUnitType>& getSpells() const;
+    const std::map<Coordinate32, int>& getHeroes() const;
+    const std::vector<int>& getSpells() const;
     
-    void insertHero(const Coordinate32& coordinate, const FormationUnitType& name);
+    void insertHero(const Coordinate32& coordinate, int card);
     void removeHero(const Coordinate32& coordinate);
     void exchangeHero(const Coordinate32& c1, const Coordinate32& c2);
     
-    void insertSpell(const FormationUnitType& name);
-    void removeSpell(const FormationUnitType& name);
+    void insertSpell(int card);
+    void removeSpell(int card);
     void removeSpell(size_t idx);
     void exchangeSpell(size_t idx1, size_t idx2);
     
@@ -46,8 +43,8 @@ protected:
     void parseSpells(const std::string& input);
     
 private:
-    std::map<Coordinate32, FormationUnitType> _heroes;
-    std::vector<FormationUnitType> _spells;
+    std::map<Coordinate32, int> _heroes;
+    std::vector<int> _spells;
 };
 
 #endif /* FormationData_h */

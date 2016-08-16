@@ -99,27 +99,27 @@ protected:
     void updateSpellsCount(size_t count);
     
     // card
-    CardNode* createCardNode(const std::string& name) const;
-    void updateCardNode(CardNode* node, const std::string& name) const;
-    void createDraggingNode(FormationTableType type, const std::string& name, const Point& point);
+    CardNode* createCardNode(int card) const;
+    void updateCardNode(CardNode* node, int card) const;
+    void createDraggingNode(FormationTableType type, int card, const Point& point);
     void removeDraggingNode();
     void unitBackToTable();
     void unitBackToFormation();
-    FormationUnitNode* createUnitNode(const std::string& name);
+    FormationUnitNode* createUnitNode(int card);
     
     // decks
     ssize_t getIntersectedDeckIdx(const Rect& rect) const;
-    void pickSpellCard(const std::string& name);
-    void cancelSpellCard(const std::string& name);
-    void exchangeSpellCards(const std::string& picked, const std::string& candidate);
+    void pickSpellCard(int card);
+    void cancelSpellCard(int card);
+    void exchangeSpellCards(int picked, int candidate);
     void reloadDecks();
-    void selectCardOnDecks(const std::string& name);
+    void selectCardOnDecks(int card);
     
     // functions
     void reloadAllCandidateCards();
     void reloadCandidateCards(FormationTableType type);
-    void insertCandidateCard(FormationTableType type, const std::string& name);
-    void removeCandidateCard(FormationTableType type, const std::string& name);
+    void insertCandidateCard(FormationTableType type, int card);
+    void removeCandidateCard(FormationTableType type, int card);
     FormationTableType getTableType(TableView* table) const;
     void setTableType(FormationTableType type);
     std::string getTableName(FormationTableType type) const;
@@ -129,7 +129,7 @@ protected:
     void loadFormation(int idx);
     void setDefaultFormation();
     void placeUnit(FormationUnitNode* node, const Point& point);
-    void onPlacedEnded(const std::string& name, const Point& point);
+    void onPlacedEnded(int card, const Point& point);
     void onUnitTouchedBegan(FormationUnitNode* node);
     void onUnitTouchedMoved(FormationUnitNode* node);
     void onUnitTouchedEnded(FormationUnitNode* node);
@@ -166,9 +166,9 @@ protected:
     // data
     FormationTableType _thisTableType;
     bool _isPickingCard;
-    std::string _touchedCard;
-    std::string _selectedCard;
-    std::map<FormationTableType, std::vector<std::string>> _candidateCards;
+    int _touchedCard;
+    int _selectedCard;
+    std::map<FormationTableType, std::vector<int>> _candidateCards;
 
     int _thisFormationIdx;
     FormationData* _thisFormationData;

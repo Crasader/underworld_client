@@ -124,6 +124,7 @@
 		A108A7B31D25253700987658 /* AchievementNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A108A7B11D25253700987658 /* AchievementNode.cpp */; };
 		A108A7B61D25254600987658 /* AchievementLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A108A7B41D25254600987658 /* AchievementLayer.cpp */; };
 		A1098E9C1C758C3500B2E044 /* BattleResourceNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1098E9A1C758C3500B2E044 /* BattleResourceNode.cpp */; };
+		A10C1D571D61795300B81896 /* EditDeckMask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10C1D551D61795300B81896 /* EditDeckMask.cpp */; };
 		A10D742F1D5083B1009674F9 /* AvatarNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10D742D1D5083B1009674F9 /* AvatarNode.cpp */; };
 		A10E8F911D5C1FFA00320B3D /* DeckManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10E8F8F1D5C1FFA00320B3D /* DeckManager.cpp */; };
 		A10E8F951D5C21D300320B3D /* DeckData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10E8F931D5C21D300320B3D /* DeckData.cpp */; };
@@ -197,7 +198,7 @@
 		A188857A1C43BA1C00C9586F /* TowerManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A18885781C43BA1C00C9586F /* TowerManager.cpp */; };
 		A19382181D4B0B0D0059EDBF /* ObjectBriefNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19382161D4B0B0D0059EDBF /* ObjectBriefNode.cpp */; };
 		A193821B1D4B331B0059EDBF /* ObjectBriefData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19382191D4B331B0059EDBF /* ObjectBriefData.cpp */; };
-		A197D9EF1D5C58EF00EE242F /* BattleDeckCard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A197D9ED1D5C58EF00EE242F /* BattleDeckCard.cpp */; };
+		A197D9EF1D5C58EF00EE242F /* DeckCard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A197D9ED1D5C58EF00EE242F /* DeckCard.cpp */; };
 		A19AE2101D59D41400D109AD /* LanguageConfirmationLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19AE20E1D59D41400D109AD /* LanguageConfirmationLayer.cpp */; };
 		A19D6B0C1D1802170088AF23 /* FormationData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19D6B0A1D1802170088AF23 /* FormationData.cpp */; };
 		A19EE96D1C1C0F1300E46D77 /* LevelLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19EE96B1C1C0F1300E46D77 /* LevelLocalData.cpp */; };
@@ -294,6 +295,7 @@
 		A1F5BF9F1C1FD508007C08CB /* AchievementLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BF9D1C1FD508007C08CB /* AchievementLocalData.cpp */; };
 		A1F5BFA21C1FD519007C08CB /* AchievementData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BFA01C1FD519007C08CB /* AchievementData.cpp */; };
 		A1F5BFA81C1FDFBE007C08CB /* ResourceNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F5BFA61C1FDFBE007C08CB /* ResourceNode.cpp */; };
+		A1F676A11D6168F200CAADCF /* DeckCardOpNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F6769F1D6168F200CAADCF /* DeckCardOpNode.cpp */; };
 		A1F6A1171C4506A3005DC0CC /* HeroSpellHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F6A1151C4506A3005DC0CC /* HeroSpellHandler.cpp */; };
 		A1F96B101C86E805009D8B7C /* CardNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F96B0E1C86E805009D8B7C /* CardNode.cpp */; };
 		A1FACCE31D3C81AC007E95EA /* GameManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1FACCE11D3C81AC007E95EA /* GameManager.cpp */; };
@@ -575,6 +577,8 @@
 		A108A7B51D25254600987658 /* AchievementLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementLayer.h; sourceTree = "<group>"; };
 		A1098E9A1C758C3500B2E044 /* BattleResourceNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattleResourceNode.cpp; sourceTree = "<group>"; };
 		A1098E9B1C758C3500B2E044 /* BattleResourceNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BattleResourceNode.h; sourceTree = "<group>"; };
+		A10C1D551D61795300B81896 /* EditDeckMask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditDeckMask.cpp; sourceTree = "<group>"; };
+		A10C1D561D61795300B81896 /* EditDeckMask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditDeckMask.h; sourceTree = "<group>"; };
 		A10D742D1D5083B1009674F9 /* AvatarNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AvatarNode.cpp; sourceTree = "<group>"; };
 		A10D742E1D5083B1009674F9 /* AvatarNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvatarNode.h; sourceTree = "<group>"; };
 		A10E8F8F1D5C1FFA00320B3D /* DeckManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DeckManager.cpp; sourceTree = "<group>"; };
@@ -748,8 +752,8 @@
 		A19382171D4B0B0D0059EDBF /* ObjectBriefNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectBriefNode.h; sourceTree = "<group>"; };
 		A19382191D4B331B0059EDBF /* ObjectBriefData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectBriefData.cpp; sourceTree = "<group>"; };
 		A193821A1D4B331B0059EDBF /* ObjectBriefData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectBriefData.h; sourceTree = "<group>"; };
-		A197D9ED1D5C58EF00EE242F /* BattleDeckCard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattleDeckCard.cpp; sourceTree = "<group>"; };
-		A197D9EE1D5C58EF00EE242F /* BattleDeckCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BattleDeckCard.h; sourceTree = "<group>"; };
+		A197D9ED1D5C58EF00EE242F /* DeckCard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DeckCard.cpp; sourceTree = "<group>"; };
+		A197D9EE1D5C58EF00EE242F /* DeckCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckCard.h; sourceTree = "<group>"; };
 		A19AE20E1D59D41400D109AD /* LanguageConfirmationLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LanguageConfirmationLayer.cpp; sourceTree = "<group>"; };
 		A19AE20F1D59D41400D109AD /* LanguageConfirmationLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanguageConfirmationLayer.h; sourceTree = "<group>"; };
 		A19D6B0A1D1802170088AF23 /* FormationData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FormationData.cpp; sourceTree = "<group>"; };
@@ -939,6 +943,8 @@
 		A1F5BFA11C1FD519007C08CB /* AchievementData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementData.h; sourceTree = "<group>"; };
 		A1F5BFA61C1FDFBE007C08CB /* ResourceNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResourceNode.cpp; sourceTree = "<group>"; };
 		A1F5BFA71C1FDFBE007C08CB /* ResourceNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceNode.h; sourceTree = "<group>"; };
+		A1F6769F1D6168F200CAADCF /* DeckCardOpNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DeckCardOpNode.cpp; sourceTree = "<group>"; };
+		A1F676A01D6168F200CAADCF /* DeckCardOpNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckCardOpNode.h; sourceTree = "<group>"; };
 		A1F6A1151C4506A3005DC0CC /* HeroSpellHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HeroSpellHandler.cpp; sourceTree = "<group>"; };
 		A1F6A1161C4506A3005DC0CC /* HeroSpellHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroSpellHandler.h; sourceTree = "<group>"; };
 		A1F96B0E1C86E805009D8B7C /* CardNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardNode.cpp; sourceTree = "<group>"; };
@@ -2263,12 +2269,16 @@
 		A1DFAACA1D10FC2800817E69 /* BattleDeck */ = {
 			isa = PBXGroup;
 			children = (
-				A197D9ED1D5C58EF00EE242F /* BattleDeckCard.cpp */,
-				A197D9EE1D5C58EF00EE242F /* BattleDeckCard.h */,
 				A11649081D5B1B8C00D03985 /* BattleDeckLayer.cpp */,
 				A11649091D5B1B8C00D03985 /* BattleDeckLayer.h */,
 				A116490B1D5B1E3400D03985 /* BattleDeckUI.cpp */,
 				A116490C1D5B1E3400D03985 /* BattleDeckUI.h */,
+				A197D9ED1D5C58EF00EE242F /* DeckCard.cpp */,
+				A197D9EE1D5C58EF00EE242F /* DeckCard.h */,
+				A1F6769F1D6168F200CAADCF /* DeckCardOpNode.cpp */,
+				A1F676A01D6168F200CAADCF /* DeckCardOpNode.h */,
+				A10C1D551D61795300B81896 /* EditDeckMask.cpp */,
+				A10C1D561D61795300B81896 /* EditDeckMask.h */,
 			);
 			path = BattleDeck;
 			sourceTree = "<group>";
@@ -2692,6 +2702,7 @@
 				A108A7AE1D24F47C00987658 /* TalentUpgradeData.cpp in Sources */,
 				A16BF2A71C3156A100E91458 /* GearUpgradeData.cpp in Sources */,
 				A1F3D2281D1D044100EB5C17 /* CardInfoNode.cpp in Sources */,
+				A1F676A11D6168F200CAADCF /* DeckCardOpNode.cpp in Sources */,
 				30F840731D50B3BF0050C976 /* HMMCardView.cpp in Sources */,
 				A1720E971BCCE41A00217E98 /* ScrollBar.cpp in Sources */,
 				A1FB5D0E1D4F279500CD2622 /* PvpLogData.cpp in Sources */,
@@ -2737,7 +2748,7 @@
 				A1D461531C3E166900E8E60B /* AbstractPieceLocalData.cpp in Sources */,
 				A18524D31C1AE46400BE261D /* QuestNode.cpp in Sources */,
 				E6DB72DA1D4F857E0045A8C0 /* CardSimpleData.cpp in Sources */,
-				A197D9EF1D5C58EF00EE242F /* BattleDeckCard.cpp in Sources */,
+				A197D9EF1D5C58EF00EE242F /* DeckCard.cpp in Sources */,
 				3070302E1CD3253B0077D357 /* Produce.cpp in Sources */,
 				300098D61BD5E81700B6E284 /* InstanceFactory.cpp in Sources */,
 				30F8405D1D50B3370050C976 /* UWRender.cpp in Sources */,
@@ -2890,6 +2901,7 @@
 				A1E8306D1C1EA55D00FE01B8 /* ContentData.cpp in Sources */,
 				045116F31BCFBA44002AA721 /* BuffType.cpp in Sources */,
 				A1FF13BD1D3DFCF6007D2C08 /* GCMMultiplayer.m in Sources */,
+				A10C1D571D61795300B81896 /* EditDeckMask.cpp in Sources */,
 				3087FF051C9F9D92004E31F6 /* MagicType.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

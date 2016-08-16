@@ -84,9 +84,9 @@ protected:
     // MapUILayerObserver
     virtual bool onMapUILayerIsGameOver() const override;
     virtual void onMapUILayerClickedPauseButton() override;
-    virtual void onMapUILayerCardSelected(const std::string& card, int idx) override;
-    virtual void onMapUILayerTouchMoved(const std::string& card, const Point& point) override;
-    virtual void onMapUILayerTouchEnded(const std::string& card, int idx, const Point& position) override;
+    virtual void onMapUILayerCardSelected(int card, int idx) override;
+    virtual void onMapUILayerTouchMoved(int card, const Point& point) override;
+    virtual void onMapUILayerTouchEnded(int card, int idx, const Point& position) override;
     
     // VictoryLayerObserver
     virtual void onVictoryLayerClosed(Layer* pSender) override;
@@ -118,13 +118,13 @@ private:
     Point convertToUILayer(const Point& mapLayerPoint) const;
     
     //
-    void updateCardMask(const std::string& card, const Point& point);
+    void updateCardMask(int card, const Point& point);
     void removeCardMask();
-    void tryToUseCard(const std::string& card, int idx, const Point& point);
+    void tryToUseCard(int card, int idx, const Point& point);
     
     const Unit* getCore() const;
-    const HMMCardType* getCardType(const std::string& name) const;
-    const SpellType* getSpellType(const std::string& name) const;
+    const HMMCardType* getCardType(int card) const;
+    const SpellType* getSpellType(int card) const;
     Coordinate32 getValidPuttingCoordinate(const Point& point, bool check) const;
     
 private:
@@ -146,8 +146,8 @@ private:
     std::unordered_map<const void*, BulletNode*> _allBulletNodes;
     std::unordered_map<int, const Unit*> _cores;
     const HMMDeck* _deck;
-    std::vector<std::string> _handCards;
-    std::pair<std::string ,int> _selectedCard;
+    std::vector<int> _handCards;
+    std::pair<int ,int> _selectedCard;
     
     bool _paused;
     bool _isGameOver;

@@ -53,8 +53,8 @@ public:
     void setPlacedArea(float x1, float x2);
     
     // spells
-    void addSpell(const std::string& name, float duration);
-    void addAoeSpell(const Point& startPoint, const std::string& name, float duration);
+    void addSpell(int card, float duration);
+    void addAoeSpell(const Point& startPoint, int card, float duration);
     void removeAllSpellEffects();
     
     // unit mask
@@ -62,7 +62,7 @@ public:
     void removeUnitMask();
     
     // spell ring
-    void updateSpellRing(const std::string& name, const Coordinate32& coordinate, int range);
+    void updateSpellRing(int cardId, const Coordinate32& coordinate, int range);
     void removeSpellRing();
     void checkUnitWithSpellRing(Node* unit);
     
@@ -100,7 +100,7 @@ protected:
     Node* createUnitMask(const UnitType* ut) const;
     
     // spell ring
-    Node* createRing(const std::string& name, float duration);
+    Node* createRing(int cardId, float duration);
     void removeStaticRing(const Point& point);
     void clearRingInfo();
     Rect getSpellRingBoundingBox() const;
@@ -137,7 +137,7 @@ protected:
     Node* _butterfly;
     
     // spell ring
-    std::pair<std::string, Node*> _spellRing;
+    std::pair<int, Node*> _spellRing;
     std::map<Point, Node*> _staticSpellRings;
     std::unordered_set<Node*> _nodesInTheRing;
     

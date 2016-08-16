@@ -194,7 +194,7 @@ bool GameManager::loadBattleContent()
             const auto& cards = dm->getCardDecks();
             
             for (auto iter = begin(cards); iter != end(cards); ++iter) {
-                auto cardType = dm->getTechTree()->findUnitTypeByName(*iter);
+                auto cardType = dm->getTechTree()->findUnitTypeById(*iter);
                 if (cardType) {
                     UnderWorld::Core::UnitSetting us;
                     us.setUnitTypeId(cardType->getId());
@@ -217,7 +217,7 @@ bool GameManager::loadBattleContent()
     if (formationData) {
         _battleContent->cards.clear();
         for (auto spellType : formationData->getSpells()) {
-            _battleContent->cards.push_back(DataManager::getInstance()->getGameModeHMM()->findCardTypeByName(spellType)->getId());
+            _battleContent->cards.push_back(DataManager::getInstance()->getGameModeHMM()->findCardTypeById(spellType)->getId());
         }
         
         const auto& heroes = formationData->getHeroes();
@@ -226,7 +226,7 @@ bool GameManager::loadBattleContent()
             const auto& coordinate = iter->first;
             
             pair<int, int> pair;
-            pair.first = DataManager::getInstance()->getGameModeHMM()->findCardTypeByName(iter->second)->getId();
+            pair.first = DataManager::getInstance()->getGameModeHMM()->findCardTypeById(iter->second)->getId();
             pair.second = coordinate.y * FORMATION_WIDTH + coordinate.x;
             
             _battleContent->unitList.push_back(pair);

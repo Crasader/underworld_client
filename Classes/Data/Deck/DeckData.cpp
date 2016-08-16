@@ -20,8 +20,8 @@ DeckData::DeckData(const string& serializedString)
         vector<string> msgs;
         Utils::split(msgs, serializedString, TypeSeparator);
         if (2 <= msgs.size()) {
-            parse(CardType::Hero, msgs.at(0));
-            parse(CardType::Soldier, msgs.at(1));
+            parse(Type::Hero, msgs.at(0));
+            parse(Type::Soldier, msgs.at(1));
         }
     }
 }
@@ -48,29 +48,20 @@ void DeckData::clone(const DeckData* instance)
     }
 }
 
-const vector<DeckData::Card>& DeckData::getCards(CardType type)
+const vector<int>& DeckData::getCards(Type type)
 {
     return getMutableCards(type);
 }
 
-void DeckData::insert(CardType type, ssize_t idx, const Card& card)
+void DeckData::insert(Type type, ssize_t idx, int card)
 {
-    
-}
-
-void DeckData::remove(CardType type, ssize_t idx)
-{
-    int i = 0;
     auto& cards(getMutableCards(type));
-    for (auto iter = begin(cards); iter != end(cards); ++iter, ++i) {
-        if (i == idx) {
-            cards.erase(iter);
-            break;
-        }
+    if (idx < cards.size()) {
+        cards.at(idx) = card;
     }
 }
 
-void DeckData::exchange(CardType type, ssize_t idx1, ssize_t idx2)
+void DeckData::exchange(Type type, ssize_t idx1, ssize_t idx2)
 {
     auto& cards(getMutableCards(type));
     const auto cnt = cards.size();
@@ -85,20 +76,20 @@ void DeckData::serialize(string& output)
 {
     output.clear();
     
-    auto& heroes(getMutableCards(CardType::Hero));
+    auto& heroes(getMutableCards(Type::Hero));
     // serialized string like this:
     // hero1;hero2;...heroN|spell1;spell2;...spellN
     for (int i = 0; i < heroes.size(); ++i) {
-        output += heroes.at(i) + ElementSeparator;
+        output += to_string(heroes.at(i)) + ElementSeparator;
     }
     
     output = output.substr(0, output.size() - 1);
     
     output += TypeSeparator;
     
-    auto& soldiers(getMutableCards(CardType::Soldier));
+    auto& soldiers(getMutableCards(Type::Soldier));
     for (int i = 0; i < soldiers.size(); ++i) {
-        output += soldiers.at(i) + ElementSeparator;
+        output += to_string(soldiers.at(i)) + ElementSeparator;
     }
     
     if (TypeSeparator != &output.back() || 1 == output.size()) {
@@ -106,23 +97,35 @@ void DeckData::serialize(string& output)
     }
 }
 
-vector<DeckData::Card>& DeckData::getMutableCards(CardType type)
+vector<int>& DeckData::getMutableCards(Type type)
 {
     if (_cards.find(type) == end(_cards)) {
-        _cards.insert(make_pair(type, vector<Card>()));
+        _cards.insert(make_pair(type, vector<int>()));
     }
     
     return _cards.at(type);
 }
 
-void DeckData::parse(CardType type, const string& input)
+void DeckData::parse(Type type, const string& input)
 {
     if (!input.empty()) {
         vector<string> outputs;
         Utils::split(outputs, input, ElementSeparator);
         auto& cards(getMutableCards(type));
         for (int i = 0; i < outputs.size(); ++i) {
-            cards.push_back(outputs.at(i));
+            cards.push_back(atoi(outputs.at(i).c_str()));
+        }
+    }
+}
+
+void DeckData::remove(Type type, ssize_t idx)
+{
+    int i = 0;
+    auto& cards(getMutableCards(type));
+    for (auto iter = begin(cards); iter != end(cards); ++iter, ++i) {
+        if (i == idx) {
+            cards.erase(iter);
+            break;
         }
     }
 }

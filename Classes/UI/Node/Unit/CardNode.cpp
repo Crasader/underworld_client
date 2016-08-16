@@ -43,6 +43,7 @@ CardNode::CardNode()
 ,_shiningSprite(nullptr)
 ,_coldDownProgress(nullptr)
 ,_card(nullptr)
+,_cardId(0)
 ,_touchInvalid(false)
 ,_selected(false)
 ,_isShaking(false)
@@ -224,9 +225,9 @@ void CardNode::setOpacity(GLubyte opacity)
     }
 }
 
-void CardNode::updateWithoutInfo(const string& name)
+void CardNode::updateWithoutInfo(int idx)
 {
-    _cardName = name;
+    _cardId = idx;
     
     updateIcon(true);
     
@@ -262,16 +263,16 @@ void CardNode::update(const HMMCard* card, float resource)
     if (card) {
         auto ct = card->getCardType();
         if (ct) {
-            update(ct->getName(), ct, resource);
+            update(ct->getId(), ct, resource);
         }
     }
 }
 
-void CardNode::update(const string& name, float resource)
+void CardNode::update(int idx, float resource)
 {
     _card = nullptr;
-    auto ct = DataManager::getInstance()->getGameModeHMM()->findCardTypeByName(name);
-    update(name, ct, resource);
+    auto ct = DataManager::getInstance()->getGameModeHMM()->findCardTypeById(idx);
+    update(idx, ct, resource);
 }
 
 void CardNode::setSelected(bool selected)
@@ -330,9 +331,9 @@ const HMMCard* CardNode::getCard() const
     return _card;
 }
 
-const string& CardNode::getCardName() const
+int CardNode::getCardId() const
 {
-    return _cardName;
+    return _cardId;
 }
 
 int CardNode::getCost() const
@@ -345,14 +346,14 @@ int CardNode::getCost() const
 }
 
 #pragma mark - protected
-void CardNode::update(const string& name, const HMMCardType* ct, float resource)
+void CardNode::update(int idx, const HMMCardType* ct, float resource)
 {
-    _cardName = name;
+    _cardId = idx;
     
     // rarity
     auto dm = DataManager::getInstance();
     int rarity(0);
-    auto ut = dm->getTechTree()->findUnitTypeByName(name);
+    auto ut = dm->getTechTree()->findUnitTypeById(idx);
     if (ut) {
         rarity = ut->getRarity();
     }
@@ -392,9 +393,9 @@ void CardNode::update(const string& name, const HMMCardType* ct, float resource)
     }
 }
 
-string CardNode::getIconFile(const string& name, bool enable) const
+string CardNode::getIconFile(int idx, bool enable) const
 {
-    const CardConfigData* configData = DataManager::getInstance()->getCardConfigData(name);
+    auto configData = DataManager::getInstance()->getCardConfigData(idx);
     if (configData) {
         if (enable) {
             return configData->getIcon();
@@ -422,7 +423,7 @@ BattleSmallResourceNode* CardNode::readdResourceNode(Node* currentNode, ::Resour
 
 void CardNode::updateIcon(bool colorful)
 {
-    const string& iconFile = getIconFile(_cardName, colorful);
+    const string& iconFile = getIconFile(_cardId, colorful);
     const bool show(_iconSprite && iconFile.length() > 0);
     if (_iconSprite) {
         _iconSprite->setVisible(show);

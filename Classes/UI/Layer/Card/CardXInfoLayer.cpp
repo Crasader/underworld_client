@@ -10,6 +10,8 @@
 #include "CocosUtils.h"
 #include "CardInfoNode.h"
 #include "TalentInfoNode.h"
+#include "DataManager.h"
+#include "GameModeHMM.h"
 
 using namespace std;
 
@@ -28,6 +30,7 @@ CardXInfoLayer* CardXInfoLayer::create()
 
 CardXInfoLayer::CardXInfoLayer()
 :_observer(nullptr)
+,_cardId(0)
 ,_cardInfoNode(nullptr)
 ,_talentInfoNode(nullptr)
 ,_titleLabel(nullptr) {}
@@ -41,15 +44,15 @@ bool CardXInfoLayer::init()
 {
     if (Layer::init())
     {
-        _cardInfoNode = CardInfoNode::create([this](const string& name, int cost) {
+        _cardInfoNode = CardInfoNode::create([this](int card, int cost) {
             if (_observer) {
-                _observer->onCardXInfoLayerUpgradeCard(name);
+                _observer->onCardXInfoLayerUpgradeCard(card);
             }
         });
         
-        _talentInfoNode = TalentInfoNode::create([this](const string& name, int cost) {
+        _talentInfoNode = TalentInfoNode::create([this](int card, int cost) {
             if (_observer) {
-                _observer->onCardXInfoLayerUpgradeTalent(name);
+                _observer->onCardXInfoLayerUpgradeTalent(card);
             }
         });
         
@@ -84,7 +87,7 @@ bool CardXInfoLayer::init()
         CocosUtils::createGrayExitButton(bg, [this](){
             removeFromParent();
             if (_observer) {
-                _observer->onCardXInfoLayerUpgradeCard(_name);
+                _observer->onCardXInfoLayerUpgradeCard(_cardId);
             }
         });
         
@@ -115,19 +118,20 @@ void CardXInfoLayer::registerObserver(CardXInfoLayerObserver *observer)
     _observer = observer;
 }
 
-void CardXInfoLayer::update(const string& name)
+void CardXInfoLayer::update(int idx)
 {
-    _name = name;
+    _cardId = idx;
     
     if (_cardInfoNode) {
-        _cardInfoNode->update(name);
+        _cardInfoNode->update(idx);
     }
     
     if (_talentInfoNode) {
-        _talentInfoNode->update(name);
+        _talentInfoNode->update(idx);
     }
     
     if (_titleLabel) {
-        _titleLabel->setString(name);
+        auto data = DataManager::getInstance()->getGameModeHMM()->findCardTypeById(idx);
+        _titleLabel->setString(data ? data->getName() : "");
     }
 }

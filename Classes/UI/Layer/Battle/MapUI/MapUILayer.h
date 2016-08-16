@@ -25,10 +25,10 @@ public:
     virtual bool onMapUILayerIsGameOver() const = 0;
     virtual void onMapUILayerClickedPauseButton() = 0;
     
-    virtual void onMapUILayerCardSelected(const std::string& card, int idx) = 0;
+    virtual void onMapUILayerCardSelected(int card, int idx) = 0;
     
-    virtual void onMapUILayerTouchMoved(const std::string& card, const Point& position) = 0;
-    virtual void onMapUILayerTouchEnded(const std::string& card, int idx, const Point& position) = 0;
+    virtual void onMapUILayerTouchMoved(int card, const Point& position) = 0;
+    virtual void onMapUILayerTouchEnded(int card, int idx, const Point& position) = 0;
 };
 
 class MapUILayer
@@ -52,7 +52,7 @@ public:
     
     // card deck
     void createCardDeck(CardDeckType type, int count);
-    void insertCard(CardDeckType type, const std::string& name, bool animated);
+    void insertCard(CardDeckType type, int card, bool animated);
     void insertCard(CardDeckType type, const HMMCard* card, bool animated);
     void removeCard(CardDeckType type, const HMMCard* card, int index);
     void clear(CardDeckType type);
@@ -71,8 +71,8 @@ protected:
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
     // CardDeckObserver
-    virtual void onCardDeckTouchedBegan(CardDeck* node, const std::string& card, int idx) override;
-    virtual void onCardDeckTouchedEnded(CardDeck* node, const std::string& card, int idx) override;
+    virtual void onCardDeckTouchedBegan(CardDeck* node, int card, int idx) override;
+    virtual void onCardDeckTouchedEnded(CardDeck* node, int card, int idx) override;
     
     void createUserInfo(bool left, const std::string& account);
     bool isGameOver() const;
@@ -89,7 +89,7 @@ private:
     float _decksTotalWidth;
     CardInfo _highlightedCardInfo;
     CardInfo _selectedCardInfo;
-    std::string _selectedCard;
+    int _selectedCard;
     
     // cocos2d
     Label *_timeLabel;

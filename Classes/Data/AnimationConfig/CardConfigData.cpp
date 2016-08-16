@@ -15,7 +15,7 @@ using namespace std;
 CardConfigData::CardConfigData(tinyxml2::XMLElement *xmlElement)
 {
     if (xmlElement) {
-        _name = xmlElement->Attribute("name");
+        _cardId = atoi(xmlElement->Attribute("id"));
         
         const char *data = xmlElement->Attribute("icon");
         if (data && strlen(data) > 0) {
@@ -33,9 +33,9 @@ CardConfigData::~CardConfigData()
     
 }
 
-const string& CardConfigData::getName() const
+int CardConfigData::getId() const
 {
-    return _name;
+    return _cardId;
 }
 
 const string& CardConfigData::getIcon() const

@@ -19,7 +19,7 @@ class CardSimpleData;
 class DeckManager
 {
 public:
-    static constexpr int MaxCount = 3;
+    static constexpr int DecksMaxCount = 3;
     
     static DeckManager* getInstance();
     static void purge();
@@ -36,8 +36,11 @@ public:
     DeckData* getDefaultDeckData() const;
     void saveDefaultDeckData();
     
-    const std::set<CardSimpleData*>& getFoundCards() const;
-    const std::set<std::string>& getUnfoundCards() const;
+    const std::unordered_map<int, CardSimpleData*>& getFoundCards() const;
+    const std::set<int>& getUnfoundCards() const;
+    
+    void useCard(int used, int replaced);
+    void findCard(int card);
     
 private:
     DeckManager();
@@ -48,8 +51,8 @@ private:
 private:
     int _defaultId;
     std::unordered_map<int, DeckData*> _decks;
-    std::set<CardSimpleData*> _foundCards;
-    std::set<std::string> _unfoundCards;
+    std::unordered_map<int, CardSimpleData*> _foundCards;
+    std::set<int> _unfoundCards;
 };
 
 #endif /* DeckManager_h */

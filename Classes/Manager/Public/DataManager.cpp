@@ -221,7 +221,7 @@ const LevelLocalData* DataManager::getLevelData(int levelId) const
     return getMapValue(_levels, levelId);
 }
 
-const set<string>& DataManager::getCardDecks() const
+const set<int>& DataManager::getCardDecks() const
 {
     return _cardDecks;
 }
@@ -297,9 +297,9 @@ const AnimationParameter* DataManager::getAnimationParameter(const string& name,
     return nullptr;
 }
 
-const CardConfigData* DataManager::getCardConfigData(const string& name) const
+const CardConfigData* DataManager::getCardConfigData(int idx) const
 {
-    return getMapValue(_cardConfigData, name);
+    return getMapValue(_cardConfigData, idx);
 }
 
 const URConfigData* DataManager::getURConfigData(const string& name) const
@@ -448,7 +448,7 @@ void DataManager::parseLevelData()
 void DataManager::parseCardDecks()
 {
     parseData("CardDecks.xml", [this](tinyxml2::XMLElement* item) {
-        _cardDecks.insert(item->Attribute("name"));
+        _cardDecks.insert(atoi(item->Attribute("id")));
     });
 }
 
@@ -567,7 +567,7 @@ void DataManager::parseCardConfigData()
 {
     parseData("CardConfig.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) CardConfigData(item);
-        setMapValue(_cardConfigData, data->getName(), data);
+        setMapValue(_cardConfigData, data->getId(), data);
     });
 }
 

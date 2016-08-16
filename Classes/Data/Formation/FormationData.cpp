@@ -47,22 +47,22 @@ void FormationData::clone(const FormationData* instance)
     }
 }
 
-const map<Coordinate32, FormationData::FormationUnitType>& FormationData::getHeroes() const
+const map<Coordinate32, int>& FormationData::getHeroes() const
 {
     return _heroes;
 }
 
-const vector<FormationData::FormationUnitType>& FormationData::getSpells() const
+const vector<int>& FormationData::getSpells() const
 {
     return _spells;
 }
 
-void FormationData::insertHero(const Coordinate32& coordinate, const FormationUnitType& name)
+void FormationData::insertHero(const Coordinate32& coordinate, int card)
 {
     if (_heroes.find(coordinate) != end(_heroes)) {
         assert(false);
     } else {
-        _heroes.insert(make_pair(coordinate, name));
+        _heroes.insert(make_pair(coordinate, card));
     }
 }
 
@@ -83,15 +83,15 @@ void FormationData::exchangeHero(const Coordinate32& c1, const Coordinate32& c2)
     }
 }
 
-void FormationData::insertSpell(const FormationUnitType& name)
+void FormationData::insertSpell(int card)
 {
-    _spells.push_back(name);
+    _spells.push_back(card);
 }
 
-void FormationData::removeSpell(const FormationUnitType& name)
+void FormationData::removeSpell(int card)
 {
     for (auto iter = begin(_spells); iter != end(_spells); ++iter) {
-        if (name == *iter) {
+        if (card == *iter) {
             _spells.erase(iter);
             break;
         }
@@ -129,7 +129,7 @@ void FormationData::serialize(string& output)
         const auto& coordinate = iter->first;
         output += Utils::format("%d", coordinate.x) + ParameterSeparator;
         output += Utils::format("%d", coordinate.y) + ParameterSeparator;
-        output += iter->second + ElementSeparator;
+        output += to_string(iter->second) + ElementSeparator;
     }
     
     output = output.substr(0, output.size() - 1);
@@ -137,7 +137,7 @@ void FormationData::serialize(string& output)
     output += TypeSeparator;
     
     for (int i = 0; i < _spells.size(); ++i) {
-        output += _spells.at(i) + ElementSeparator;
+        output += to_string(_spells.at(i)) + ElementSeparator;
     }
     
     if (TypeSeparator != &output.back() || 1 == output.size()) {
@@ -158,7 +158,7 @@ void FormationData::parseHeroes(const string& input)
                 Coordinate32 point;
                 point.x = atoi(splits.at(0).c_str());
                 point.y = atoi(splits.at(1).c_str());
-                _heroes.insert(make_pair(point, splits.at(2)));
+                _heroes.insert(make_pair(point, atoi(splits.at(2).c_str())));
             }
         }
     }
@@ -170,7 +170,7 @@ void FormationData::parseSpells(const string& input)
         vector<string> outputs;
         Utils::split(outputs, input, ElementSeparator);
         for (int i = 0; i < outputs.size(); ++i) {
-            _spells.push_back(outputs.at(i));
+            _spells.push_back(atoi(outputs.at(i).c_str()));
         }
     }
 }

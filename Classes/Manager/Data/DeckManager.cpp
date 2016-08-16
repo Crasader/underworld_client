@@ -39,7 +39,7 @@ void DeckManager::purge()
 DeckManager::DeckManager()
 :_defaultId(0)
 {
-    for (int i = 0; i < MaxCount; ++i) {
+    for (int i = 0; i < DecksMaxCount; ++i) {
         const auto& string = UserDefaultsDataManager::getStringForKey(getDeckKey(i).c_str(), "");
         if (string.size() > 0) {
             auto data = new (nothrow) DeckData(string);
@@ -55,8 +55,7 @@ DeckManager::~DeckManager()
     }
     
     for (auto iter = begin(_foundCards); iter != end(_foundCards); ++iter) {
-        auto data = *iter;
-        CC_SAFE_DELETE(data);
+        CC_SAFE_DELETE(iter->second);
     }
 }
 
@@ -89,7 +88,7 @@ DeckData* DeckManager::getDeckData(int idx) const
 
 void DeckManager::setDeckData(int idx, const DeckData* data)
 {
-    if (idx < MaxCount && data) {
+    if (idx < DecksMaxCount && data) {
         auto d = getDeckData(idx);
         if (d) {
             d->clone(data);
@@ -120,12 +119,43 @@ void DeckManager::saveDefaultDeckData()
     saveDeckData(_defaultId);
 }
 
-const set<CardSimpleData*>& DeckManager::getFoundCards() const
+const unordered_map<int, CardSimpleData*>& DeckManager::getFoundCards() const
 {
     return _foundCards;
 }
 
-const set<string>& DeckManager::getUnfoundCards() const
+const set<int>& DeckManager::getUnfoundCards() const
 {
     return _unfoundCards;
+}
+
+void DeckManager::useCard(int used, int replaced)
+{
+    if (_foundCards.find(used) != _foundCards.end()) {
+        CC_SAFE_DELETE(_foundCards.at(used));
+        _foundCards.erase(used);
+    } else {
+        CC_ASSERT(false);
+    }
+    
+    if (_foundCards.find(replaced) == end(_foundCards)) {
+        _foundCards.insert(make_pair(replaced, new (nothrow) CardSimpleData(replaced)));
+    } else {
+        CC_ASSERT(false);
+    }
+}
+
+void DeckManager::findCard(int card)
+{
+    if (_foundCards.find(card) == end(_foundCards)) {
+        _foundCards.insert(make_pair(card, new (nothrow) CardSimpleData(card)));
+    } else {
+        CC_ASSERT(false);
+    }
+    
+    if (_unfoundCards.find(card) != _unfoundCards.end()) {
+        _unfoundCards.erase(card);
+    } else {
+        CC_ASSERT(false);
+    }
 }

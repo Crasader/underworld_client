@@ -18,8 +18,8 @@ class CardDeckObserver
 {
 public:
     virtual ~CardDeckObserver() {}
-    virtual void onCardDeckTouchedBegan(CardDeck* node, const std::string& card, int idx) = 0;
-    virtual void onCardDeckTouchedEnded(CardDeck* node, const std::string& card, int idx) = 0;
+    virtual void onCardDeckTouchedBegan(CardDeck* node, int card, int idx) = 0;
+    virtual void onCardDeckTouchedEnded(CardDeck* node, int card, int idx) = 0;
 };
 
 class CardDeck: public Node, public CardNodeObserver
@@ -29,9 +29,9 @@ public:
     virtual ~CardDeck();
     void registerObserver(CardDeckObserver *observer);
     
-    std::string getCard(int idx) const;
+    int getCard(int idx) const;
     void select(int idx);
-    void insert(const std::string& name, bool animated);
+    void insert(int idx, bool animated);
     void insert(const HMMCard* card, bool animated);
     void remove(const HMMCard* card, int index, bool animated);
     void clear();

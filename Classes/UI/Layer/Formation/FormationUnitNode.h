@@ -17,17 +17,17 @@ using namespace ui;
 class FormationUnitNode : public Widget
 {
 public:
-    static FormationUnitNode* create(const std::string& name, const std::string& renderKey, const Size& size);
+    static FormationUnitNode* create(int cardId, const std::string& renderKey, const Size& size);
     virtual ~FormationUnitNode();
     
-    const std::string& getUnitName() const;
+    int getCardId() const;
     
 protected:
     FormationUnitNode();
-    bool init(const std::string& name, const std::string& renderKey, const Size& size);
+    bool init(int cardId, const std::string& renderKey, const Size& size);
     
 protected:
-    std::string _name;
+    int _cardId;
 };
 
 #endif /* FormationUnitNode_h */

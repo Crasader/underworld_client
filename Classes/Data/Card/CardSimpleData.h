@@ -16,13 +16,16 @@ class CardSimpleData
 {
 public:
     CardSimpleData(const rapidjson::Value& jsonDict);
+    CardSimpleData(int idx);
     CardSimpleData(const CardSimpleData* instance);
     virtual ~CardSimpleData();
     
+    int getIdx() const;
     const std::string& getName() const;
     int getLevel() const;
     
 private:
+    int _idx;
     std::string _name;
     int _level;
 };

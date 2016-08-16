@@ -280,11 +280,11 @@ void MapLayer::addUnitPlacementEffect(const Coordinate32& coordinate)
 }
 
 #pragma mark spells
-void MapLayer::addSpell(const string& name, float duration)
+void MapLayer::addSpell(int card, float duration)
 {
     auto ring(_spellRing.second);
     if (ring) {
-        auto staticRing = createRing(name, duration);
+        auto staticRing = createRing(card, duration);
         if (staticRing) {
             staticRing->setPosition(ring->getPosition());
             staticRing->setScale(ring->getScale());
@@ -292,12 +292,12 @@ void MapLayer::addSpell(const string& name, float duration)
     }
 }
 
-void MapLayer::addAoeSpell(const Point& startPoint, const string& name, float duration)
+void MapLayer::addAoeSpell(const Point& startPoint, int card, float duration)
 {
     auto ring = _spellRing.second;
     if (ring) {
         const Point& targetPos = ring->getPosition();
-        if (name.find(SPELL_NAME_FIREBALL) != string::npos) {
+        if (card == SPELL_NAME_FIREBALL) {
 #if false
             Node* node = Node::create();
             node->setPosition(startPoint);
@@ -348,7 +348,7 @@ void MapLayer::addAoeSpell(const Point& startPoint, const string& name, float du
         }
         
         // add a spell ring which will be removed when animation finished
-        auto staticRing = createRing(name, 0);
+        auto staticRing = createRing(card, 0);
         staticRing->setPosition(targetPos);
         staticRing->setScale(ring->getScale());
         if (_staticSpellRings.find(targetPos) == _staticSpellRings.end()) {
@@ -400,22 +400,22 @@ void MapLayer::removeUnitMask()
 }
 
 #pragma mark spell ring
-void MapLayer::updateSpellRing(const string& name, const Coordinate32& coordinate, int range)
+void MapLayer::updateSpellRing(int cardId, const Coordinate32& coordinate, int range)
 {
     auto ring = _spellRing.second;
     if (!ring) {
-        ring = createRing(name, 0);
-    } else if (name != _spellRing.first) {
+        ring = createRing(cardId, 0);
+    } else if (cardId != _spellRing.first) {
         removeSpellRing();
-        ring = createRing(name, 0);
+        ring = createRing(cardId, 0);
     }
     
     if (ring) {
         const Point& point = coordinate2Point(coordinate);
         ring->setPosition(point);
         
-        if (name != _spellRing.first || ring != _spellRing.second) {
-            _spellRing.first = name;
+        if (cardId != _spellRing.first || ring != _spellRing.second) {
+            _spellRing.first = cardId;
             _spellRing.second = ring;
         }
         
@@ -729,17 +729,17 @@ Node* MapLayer::createUnitMask(const UnitType* ut) const
 }
 
 #pragma mark spell ring
-Node* MapLayer::createRing(const string& name, float duration)
+Node* MapLayer::createRing(int cardId, float duration)
 {
     // get file name
     string file;
-    if (name.find(SPELL_NAME_FIREBALL) != string::npos) {
+    if (cardId == SPELL_NAME_FIREBALL) {
         file.assign("quan-1.csb");
-    } else if (name.find(SPELL_NAME_CURE) != string::npos) {
+    } else if (cardId == SPELL_NAME_CURE) {
         file.assign("huixue-xin.csb");
-    } else if (name.find(SPELL_NAME_SPEEDUP) != string::npos) {
+    } else if (cardId == SPELL_NAME_SPEEDUP) {
         file.assign("jiasu-xin.csb");
-    } else if (name.size() > 0) {
+    } else if (cardId > 0) {
         file.assign("quan-2.csb");
     }
     
@@ -768,7 +768,7 @@ void MapLayer::removeStaticRing(const Point& point)
 
 void MapLayer::clearRingInfo()
 {
-    _spellRing.first = "";
+    _spellRing.first = 0;
     _spellRing.second = nullptr;
 }
 

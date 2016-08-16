@@ -19,13 +19,13 @@ public:
     CardConfigData(tinyxml2::XMLElement *xmlElement);
     virtual ~CardConfigData();
     
-    const std::string& getName() const;
+    int getId() const;
     const std::string& getIcon() const;
     const std::string& getSmallIcon() const;
     const std::string& getDisabledIcon() const;
     
 private:
-    std::string _name;
+    int _cardId;
     std::string _icon;
     std::string _smallIcon;
     std::string _disabledIcon;

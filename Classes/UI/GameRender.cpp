@@ -121,7 +121,7 @@ void GameRender::init(const Game* game, Commander* commander)
     _mapUILayer->registerObserver(this);
     _scene->addChild(_mapUILayer);
     
-    onMapUILayerCardSelected("", INVALID_VALUE);
+    onMapUILayerCardSelected(0, INVALID_VALUE);
     
     if (_mapUILayer && _deck) {
         const int count = _deck->getHandCount();
@@ -133,7 +133,7 @@ void GameRender::init(const Game* game, Commander* commander)
                 const HMMCardType* ct = card->getCardType();
                 if (ct) {
                     _mapUILayer->insertCard(cardDeckType, card /*ct->getName()*/, false);
-                    _handCards.push_back(ct->getName());
+                    _handCards.push_back(ct->getId());
                 }
             }
         }
@@ -379,7 +379,7 @@ void GameRender::updateUILayer()
             needReload = true;
         } else {
             for (int i = 0; i < cnt; ++i) {
-                if (_deck->getHandCard(i)->getCardType()->getName() != _handCards.at(i)) {
+                if (_deck->getHandCard(i)->getCardType()->getId() != _handCards.at(i)) {
                     needReload = true;
                     break;
                 }
@@ -392,9 +392,9 @@ void GameRender::updateUILayer()
             for (int i = 0; i < cnt; ++i) {
                 auto card = _deck->getHandCard(i);
                 if (card) {
-                    const string& name = card->getCardType()->getName();
-                    _mapUILayer->insertCard(cardDeckType, card /*name*/, false);
-                    _handCards.push_back(name);
+                    _mapUILayer->insertCard(cardDeckType, card, false);
+                    int cardId = card->getCardType()->getId();
+                    _handCards.push_back(cardId);
                 }
             }
         }
@@ -534,7 +534,7 @@ void GameRender::onMapLayerTouchMoved(const Point& point, bool isValid)
 
 void GameRender::onMapLayerTouchEnded(const Point& point)
 {
-    const string& card = _selectedCard.first;
+    int card = _selectedCard.first;
     updateCardMask(card, point);
     tryToUseCard(card, _selectedCard.second, point);
 }
@@ -555,14 +555,14 @@ void GameRender::onMapUILayerClickedPauseButton()
     }
 }
 
-void GameRender::onMapUILayerCardSelected(const string& card, int idx)
+void GameRender::onMapUILayerCardSelected(int card, int idx)
 {
     _selectedCard.first = card;
     _selectedCard.second = idx;
     
     if (_mapLayer) {
-        if (card.length() > 0) {
-            const HMMCardType* ct = getCardType(card);
+        if (card > 0) {
+            auto ct = getCardType(card);
             if (ct && kHMMCardClass_Spell != ct->getCardClass()) {
                 _mapLayer->setPlacedArea(_minPuttingX, _maxPuttingX);
             }
@@ -572,12 +572,12 @@ void GameRender::onMapUILayerCardSelected(const string& card, int idx)
     }
 }
 
-void GameRender::onMapUILayerTouchMoved(const string& card, const Point& point)
+void GameRender::onMapUILayerTouchMoved(int card, const Point& point)
 {
     updateCardMask(card, convertToMapLayer(point));
 }
 
-void GameRender::onMapUILayerTouchEnded(const string& card, int idx, const Point& point)
+void GameRender::onMapUILayerTouchEnded(int card, int idx, const Point& point)
 {
     const Point& p = convertToMapLayer(point);
     updateCardMask(card, p);
@@ -777,9 +777,9 @@ Point GameRender::convertToUILayer(const Point& mapLayerPoint) const
     return _mapUILayer->convertToNodeSpace(_mapLayer->convertToWorldSpace(mapLayerPoint));
 }
 
-void GameRender::updateCardMask(const string& card, const Point& point)
+void GameRender::updateCardMask(int card, const Point& point)
 {
-    if (_mapLayer && _mapUILayer && card.length() > 0) {
+    if (_mapLayer && _mapUILayer && card > 0) {
         const bool inDeck = _mapUILayer->isPointInDeck(convertToUILayer(point));
         if (inDeck) {
             removeCardMask();
@@ -794,11 +794,11 @@ void GameRender::updateCardMask(const string& card, const Point& point)
                         _mapLayer->updateUnitMask(ut, coordinate);
                     }
                 } else if (kHMMCardClass_Spell == type) {
-                    const auto& name(ct->getSpellName());
-                    auto st = getSpellType(name);
+                    int idx(ct->getId());
+                    auto st = getSpellType(idx);
                     if (isValidAoeSpell(st)) {
                         auto coordinate = getValidPuttingCoordinate(point, false);
-                        _mapLayer->updateSpellRing(name, coordinate, st->getSpellRadius());
+                        _mapLayer->updateSpellRing(idx, coordinate, st->getSpellRadius());
                     }
                 }
             }
@@ -814,9 +814,9 @@ void GameRender::removeCardMask()
     }
 }
 
-void GameRender::tryToUseCard(const string& card, int idx, const Point& point)
+void GameRender::tryToUseCard(int card, int idx, const Point& point)
 {
-    if (_mapLayer && card.length() > 0) {
+    if (_mapLayer && card > 0) {
         const bool inDeck = _mapUILayer->isPointInDeck(convertToUILayer(point));
         if (inDeck) {
             // TODO:
@@ -829,25 +829,25 @@ void GameRender::tryToUseCard(const string& card, int idx, const Point& point)
                 
                 if (kCommandResult_suc == result) {
                     if (kHMMCardClass_Spell == type) {
-                        const auto& spellName = ct->getSpellName();
-                        const bool isAOE(isValidAoeSpell(getSpellType(spellName)));
+                        const auto& spellId = ct->getId();
+                        const bool isAOE(isValidAoeSpell(getSpellType(spellId)));
                         if (isAOE) {
-                            if (spellName.find(SPELL_NAME_FIREBALL) != string::npos) {
+                            if (spellId == SPELL_NAME_FIREBALL) {
                                 auto core = getCore();
                                 if (core) {
                                     const int unitId = core->getId();
                                     if (_allUnitNodes.find(unitId) != end(_allUnitNodes)) {
                                         auto node = _allUnitNodes.at(unitId);
                                         if (node) {
-                                            _mapLayer->addAoeSpell(node->getPosition(), spellName, 2.0f);
+                                            _mapLayer->addAoeSpell(node->getPosition(), spellId, 2.0f);
                                         }
                                     }
                                 }
-                            } else if (spellName.find(SPELL_NAME_CURE) != string::npos ||
-                                       spellName.find(SPELL_NAME_SPEEDUP) != string::npos) {
-                                _mapLayer->addSpell(spellName, 12.0f);
+                            } else if (spellId == SPELL_NAME_CURE ||
+                                       spellId == SPELL_NAME_SPEEDUP) {
+                                _mapLayer->addSpell(spellId, 12.0f);
                             } else {
-                                _mapLayer->addSpell(spellName, 1.0f);
+                                _mapLayer->addSpell(spellId, 1.0f);
                             }
                         }
                     }
@@ -874,19 +874,19 @@ const Unit* GameRender::getCore() const
     return nullptr;
 }
 
-const HMMCardType* GameRender::getCardType(const string& name) const
+const HMMCardType* GameRender::getCardType(int card) const
 {
     if (_gameModeHMM) {
-        return _gameModeHMM->findCardTypeByName(name);
+        return _gameModeHMM->findCardTypeById(card);
     }
     
     return nullptr;
 }
 
-const SpellType* GameRender::getSpellType(const string& name) const
+const SpellType* GameRender::getSpellType(int card) const
 {
     if (_techTree) {
-        return _techTree->findSpellTypeByName(name);
+        return _techTree->findSpellTypeById(card);
     }
     
     return nullptr;

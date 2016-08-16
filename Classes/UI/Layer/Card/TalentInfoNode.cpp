@@ -29,7 +29,8 @@ TalentInfoNode* TalentInfoNode::create(const Callback& callback)
 }
 
 TalentInfoNode::TalentInfoNode()
-:_button(nullptr)
+:_cardId(0)
+,_button(nullptr)
 ,_cost(0)
 ,_callback(nullptr) {}
 
@@ -60,8 +61,8 @@ bool TalentInfoNode::init(const Callback& callback)
         static const string file(CocosUtils::getResourcePath("button_yellow.png"));
         auto button = Button::create(file);
         button->addClickEventListener([this](Ref*) {
-            if (_callback && _name.size() > 0) {
-                _callback(_name, _cost);
+            if (_callback && _cardId > 0) {
+                _callback(_cardId, _cost);
             }
         });
         const auto& buttonSize(button->getContentSize());
@@ -79,9 +80,9 @@ bool TalentInfoNode::init(const Callback& callback)
     return false;
 }
 
-void TalentInfoNode::update(const string& name)
+void TalentInfoNode::update(int idx)
 {
-    _name = name;
+    _cardId = idx;
     
     // TODO:
     int cost = 10;

@@ -157,8 +157,7 @@ TableViewCell* CardLayer::tableCellAtIndex(TableView *table, ssize_t idx)
             const Point point(_cardSize.width * (i + 0.5f) - cardOffsetOnTable.x / 2, cardNode->getContentSize().height * 0.5f);
             cardNode->setPosition(point + Point(0, (idx == maxCnt - 1) ? cardOffsetOnTable.y : 0));
             
-            const string& name = cards.at(index);
-            updateXCardNode(cardNode, name);
+            updateXCardNode(cardNode, cards.at(index));
         } else if (cardNode) {
             cardNode->removeFromParent();
             cell->resetNode(i);
@@ -182,15 +181,15 @@ void CardLayer::onCardNodeTouchedBegan(CardNode* node)
 void CardLayer::onCardNodeTouchedEnded(CardNode* node, bool isValid)
 {
     if (node) {
-        const auto& name(node->getCardName());
+        int card(node->getCardId());
         if (CardTableType::Heroes == _thisTableType) {
             auto layer = CardXInfoLayer::create();
-            layer->update(name);
+            layer->update(card);
             layer->registerObserver(this);
             addChild(layer);
         } else {
             auto layer = CardInfoLayer::create();
-            layer->update(name);
+            layer->update(card);
             layer->registerObserver(this);
             addChild(layer);
         }
@@ -198,28 +197,28 @@ void CardLayer::onCardNodeTouchedEnded(CardNode* node, bool isValid)
 }
 
 #pragma mark - CardInfoLayerObserver
-void CardLayer::onCardInfoLayerClosed(const string& name)
+void CardLayer::onCardInfoLayerClosed(int card)
 {
     
 }
 
-void CardLayer::onCardInfoLayerUpgradeCard(const string& name)
+void CardLayer::onCardInfoLayerUpgradeCard(int card)
 {
     
 }
 
 #pragma mark - CardXInfoLayerObserver
-void CardLayer::onCardXInfoLayerClosed(const string& name)
+void CardLayer::onCardXInfoLayerClosed(int card)
 {
     
 }
 
-void CardLayer::onCardXInfoLayerUpgradeCard(const string& name)
+void CardLayer::onCardXInfoLayerUpgradeCard(int card)
 {
     
 }
 
-void CardLayer::onCardXInfoLayerUpgradeTalent(const string& name)
+void CardLayer::onCardXInfoLayerUpgradeTalent(int card)
 {
     
 }
@@ -369,17 +368,17 @@ void CardLayer::updateCardsCount(int count)
 }
 
 #pragma mark card
-XCardNode* CardLayer::createXCardNode(const string& name) const
+XCardNode* CardLayer::createXCardNode(int idx) const
 {
     auto node = XCardNode::create();
-    updateXCardNode(node, name);
+    updateXCardNode(node, idx);
     return node;
 }
 
-void CardLayer::updateXCardNode(XCardNode* node, const string& name) const
+void CardLayer::updateXCardNode(XCardNode* node, int idx) const
 {
-    if (node && name.length() > 0) {
-        node->getCardNode()->update(name, DataManager::getInstance()->getBattleResourceMaxCount());
+    if (node && idx > 0) {
+        node->getCardNode()->update(idx, DataManager::getInstance()->getBattleResourceMaxCount());
     }
 }
 
@@ -390,20 +389,20 @@ void CardLayer::reloadAllCandidateCards()
     auto dm = DataManager::getInstance();
     const auto& cards = dm->getCardDecks();
     for (auto iter = begin(cards); iter != end(cards); ++iter) {
-        const auto& name = *iter;
-        auto ct = dm->getGameModeHMM()->findCardTypeByName(name);
+        const auto& idx = *iter;
+        auto ct = dm->getGameModeHMM()->findCardTypeById(idx);
         if (ct) {
             if (kHMMCardClass_Spell == ct->getCardClass()) {
-                insertCandidateCard(CardTableType::Spells, name);
+                insertCandidateCard(CardTableType::Spells, idx);
             } else {
-                insertCandidateCard(CardTableType::Heroes, name);
+                insertCandidateCard(CardTableType::Heroes, idx);
             }
         } else {
             // TODO: remove code
-            insertCandidateCard(CardTableType::All, name);
-            insertCandidateCard(CardTableType::Heroes, name);
-            insertCandidateCard(CardTableType::Soldiers, name);
-            insertCandidateCard(CardTableType::Spells, name);
+            insertCandidateCard(CardTableType::All, idx);
+            insertCandidateCard(CardTableType::Heroes, idx);
+            insertCandidateCard(CardTableType::Soldiers, idx);
+            insertCandidateCard(CardTableType::Spells, idx);
         }
     }
 }
@@ -417,35 +416,35 @@ void CardLayer::reloadCandidateCards(CardTableType type)
     auto dm = DataManager::getInstance();
     const auto& cards = dm->getCardDecks();
     for (auto iter = begin(cards); iter != end(cards); ++iter) {
-        const auto& name = *iter;
-        auto ct = dm->getGameModeHMM()->findCardTypeByName(name);
+        const auto& idx = *iter;
+        auto ct = dm->getGameModeHMM()->findCardTypeById(idx);
         if (kHMMCardClass_Spell == ct->getCardClass()) {
             if (CardTableType::Spells == type) {
-                insertCandidateCard(type, name);
+                insertCandidateCard(type, idx);
             }
         } else if (CardTableType::Heroes == type) {
-            insertCandidateCard(type, name);
+            insertCandidateCard(type, idx);
         }
     }
 }
 
 
-void CardLayer::insertCandidateCard(CardTableType type, const string& name)
+void CardLayer::insertCandidateCard(CardTableType type, int idx)
 {
     if (_candidateCards.find(type) == end(_candidateCards)) {
-        _candidateCards.insert(make_pair(type, vector<string>()));
+        _candidateCards.insert(make_pair(type, vector<int>()));
     }
     
     auto& cards = _candidateCards.at(type);
-    cards.push_back(name);
+    cards.push_back(idx);
 }
 
-void CardLayer::removeCandidateCard(CardTableType type, const string& name)
+void CardLayer::removeCandidateCard(CardTableType type, int idx)
 {
     if (_candidateCards.find(type) != end(_candidateCards)) {
         auto& cards = _candidateCards.at(type);
         for (auto iter = begin(cards); iter != end(cards); ++iter) {
-            if (name == *iter) {
+            if (idx == *iter) {
                 cards.erase(iter);
                 break;
             }

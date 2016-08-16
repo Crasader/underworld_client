@@ -16,12 +16,9 @@
 class DeckData
 {
 public:
-    enum class CardType {
+    enum class Type {
         Hero, Soldier
     };
-    
-protected:
-    typedef std::string Card;
     
 public:
     DeckData(const std::string& serializedString);
@@ -30,19 +27,19 @@ public:
     
     void clone(const DeckData* instance);
     
-    const std::vector<Card>& getCards(CardType type);
-    void insert(CardType type, ssize_t idx, const Card& card);
-    void remove(CardType type, ssize_t idx);
-    void exchange(CardType type, ssize_t idx1, ssize_t idx2);
+    const std::vector<int>& getCards(Type type);
+    void insert(Type type, ssize_t idx, int card);
+    void exchange(Type type, ssize_t idx1, ssize_t idx2);
     
     void serialize(std::string& output);
     
 protected:
-    std::vector<Card>& getMutableCards(CardType type);
-    void parse(CardType type, const std::string& input);
+    std::vector<int>& getMutableCards(Type type);
+    void parse(Type type, const std::string& input);
+    void remove(Type type, ssize_t idx);
     
 private:
-    std::map<CardType, std::vector<Card>> _cards;
+    std::map<Type, std::vector<int>> _cards;
 };
 
 #endif /* CardDeckData_h */

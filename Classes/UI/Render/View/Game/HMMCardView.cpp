@@ -49,7 +49,7 @@ bool HMMCardView::init(const HMMCardType* cardType) {
     _configData = nullptr;
     
     _cardType = cardType;
-    if (_cardType) _configData = DataManager::getInstance()->getCardConfigData(_cardType->getName());
+    if (_cardType) _configData = DataManager::getInstance()->getCardConfigData(_cardType->getId());
     
     /** init cocos */
     //1. clean up

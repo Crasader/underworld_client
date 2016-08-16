@@ -117,14 +117,14 @@ void CardDeck::registerObserver(CardDeckObserver *observer)
     _observer = observer;
 }
 
-string CardDeck::getCard(int idx) const
+int CardDeck::getCard(int idx) const
 {
     if (_nodes.size() > idx && idx >= 0) {
-        CardNode* node = _nodes.at(idx);
-        return node->getCardName();
+        auto node = _nodes.at(idx);
+        return node->getCardId();
     }
     
-    return "";
+    return 0;
 }
 
 void CardDeck::select(int idx)
@@ -146,10 +146,10 @@ void CardDeck::select(int idx)
     addCostHint(cost);
 }
 
-void CardDeck::insert(const string& name, bool animated)
+void CardDeck::insert(int idx, bool animated)
 {
     auto node = insert(animated);
-    node->updateWithoutInfo(name);
+    node->updateWithoutInfo(idx);
 }
 
 void CardDeck::insert(const HMMCard* card, bool animated)
@@ -359,13 +359,13 @@ void CardDeck::removeCostHint()
 void CardDeck::onCardNodeTouchedBegan(CardNode* node)
 {
     if (_observer) {
-        _observer->onCardDeckTouchedBegan(this, node->getCardName(), node->getTag());
+        _observer->onCardDeckTouchedBegan(this, node->getCardId(), node->getTag());
     }
 }
 
 void CardDeck::onCardNodeTouchedEnded(CardNode* node, bool isValid)
 {
     if (isValid && _observer) {
-        _observer->onCardDeckTouchedEnded(this, node->getCardName(), node->getTag());
+        _observer->onCardDeckTouchedEnded(this, node->getCardId(), node->getTag());
     }
 }

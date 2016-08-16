@@ -20,9 +20,9 @@ class CardXInfoLayerObserver
 {
 public:
     virtual ~CardXInfoLayerObserver() {}
-    virtual void onCardXInfoLayerClosed(const std::string& name) = 0;
-    virtual void onCardXInfoLayerUpgradeCard(const std::string& name) = 0;
-    virtual void onCardXInfoLayerUpgradeTalent(const std::string& name) = 0;
+    virtual void onCardXInfoLayerClosed(int card) = 0;
+    virtual void onCardXInfoLayerUpgradeCard(int card) = 0;
+    virtual void onCardXInfoLayerUpgradeTalent(int card) = 0;
 };
 
 class CardXInfoLayer : public Layer
@@ -31,7 +31,7 @@ public:
     static CardXInfoLayer* create();
     virtual ~CardXInfoLayer();
     void registerObserver(CardXInfoLayerObserver *observer);
-    void update(const std::string& name);
+    void update(int idx);
     
 protected:
     CardXInfoLayer();
@@ -43,7 +43,7 @@ protected:
     
 private:
     CardXInfoLayerObserver *_observer;
-    std::string _name;
+    int _cardId;
     CardInfoNode* _cardInfoNode;
     TalentInfoNode* _talentInfoNode;
     Label* _titleLabel;

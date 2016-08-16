@@ -14,10 +14,10 @@
 
 using namespace std;
 
-FormationUnitNode* FormationUnitNode::create(const string& name, const string& renderKey, const Size& size)
+FormationUnitNode* FormationUnitNode::create(int cardId, const string& renderKey, const Size& size)
 {
-    FormationUnitNode *ret = new (nothrow) FormationUnitNode();
-    if (ret && ret->init(name, renderKey, size))
+    auto ret = new (nothrow) FormationUnitNode();
+    if (ret && ret->init(cardId, renderKey, size))
     {
         ret->autorelease();
         return ret;
@@ -34,11 +34,11 @@ FormationUnitNode::~FormationUnitNode()
     removeAllChildren();
 }
 
-bool FormationUnitNode::init(const string& name, const string& renderKey, const Size& size)
+bool FormationUnitNode::init(int cardId, const string& renderKey, const Size& size)
 {
     if (Widget::init())
     {
-        _name = name;
+        _cardId = cardId;
         
         setContentSize(size);
         
@@ -82,7 +82,7 @@ bool FormationUnitNode::init(const string& name, const string& renderKey, const 
     return false;
 }
 
-const string& FormationUnitNode::getUnitName() const
+int FormationUnitNode::getCardId() const
 {
-    return _name;
+    return _cardId;
 }

@@ -20,8 +20,8 @@ class CardInfoLayerObserver
 {
 public:
     virtual ~CardInfoLayerObserver() {}
-    virtual void onCardInfoLayerClosed(const std::string& name) = 0;
-    virtual void onCardInfoLayerUpgradeCard(const std::string& name) = 0;
+    virtual void onCardInfoLayerClosed(int card) = 0;
+    virtual void onCardInfoLayerUpgradeCard(int card) = 0;
 };
 
 class CardInfoLayer : public Layer
@@ -30,7 +30,7 @@ public:
     static CardInfoLayer* create();
     virtual ~CardInfoLayer();
     void registerObserver(CardInfoLayerObserver *observer);
-    void update(const std::string& name);
+    void update(int idx);
     
 protected:
     CardInfoLayer();
@@ -42,7 +42,7 @@ protected:
     
 private:
     CardInfoLayerObserver *_observer;
-    std::string _name;
+    int _cardId;
     CardInfoNode* _cardInfoNode;
     Label* _titleLabel;
 };

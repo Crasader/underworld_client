@@ -63,6 +63,8 @@ FormationLayer::FormationLayer()
 ,_spellCountLabel(nullptr)
 ,_thisTableType(FormationTableType::None)
 ,_isPickingCard(false)
+,_touchedCard(0)
+,_selectedCard(0)
 ,_thisFormationIdx(-1)
 ,_thisFormationData(nullptr)
 {
@@ -175,7 +177,7 @@ bool FormationLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 
 void FormationLayer::onTouchMoved(Touch *touch, Event *unused_event)
 {
-    if (_selectedCard.size() > 0) {
+    if (_selectedCard > 0) {
         const auto& point = touch->getLocation();
         const auto& rect = getBoundingBox(_thisTable);
         const bool isInTableView(rect.containsPoint(point));
@@ -196,7 +198,7 @@ void FormationLayer::onTouchMoved(Touch *touch, Event *unused_event)
 
 void FormationLayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
-    if (_selectedCard.size() > 0 && _draggingNode) {
+    if (_selectedCard > 0 && _draggingNode) {
         const auto& point = touch->getLocation();
         static const auto spellTableType(FormationTableType::Spell);
         FormationTableType type = _isPickingCard ? _thisTableType : spellTableType;
@@ -215,7 +217,7 @@ void FormationLayer::onTouchEnded(Touch *touch, Event *unused_event)
                     } else if (_decks.size() > idx) {
                         auto node = dynamic_cast<CardNode*>(_decks.at(idx)->getChildByTag(cardTagOnDeck));
                         if (node) {
-                            exchangeSpellCards(node->getCardName(), _selectedCard);
+                            exchangeSpellCards(node->getCardId(), _selectedCard);
                             refreshUI = true;
                         }
                     }
@@ -228,13 +230,13 @@ void FormationLayer::onTouchEnded(Touch *touch, Event *unused_event)
                     cancelSpellCard(_selectedCard);
                     refreshUI = true;
                 } else {
-                    string exchanged("");
+                    int exchanged(0);
                     const auto& rect = getBoundingBox(spellTable);
                     if (rect.containsPoint(point)) {
-                        exchanged = "";
+                        exchanged = 0;
                     }
                     
-                    if (exchanged.size() > 0) {
+                    if (exchanged > 0) {
                         exchangeSpellCards(_selectedCard, exchanged);
                         refreshUI = true;
                     }
@@ -301,8 +303,8 @@ TableViewCell* FormationLayer::tableCellAtIndex(TableView *table, ssize_t idx)
             const Point point(_cardSize.width * (i + 0.5f) - cardOffsetOnTable.x / 2, cardNode->getContentSize().height * 0.5f);
             cardNode->setPosition(point + Point(0, (idx == maxCnt - 1) ? cardOffsetOnTable.y : 0));
             
-            const string& name = cards.at(index);
-            updateCardNode(cardNode, name);
+            int card = cards.at(index);
+            updateCardNode(cardNode, card);
         } else if (cardNode) {
             cardNode->removeFromParent();
             cell->resetNode(i);
@@ -320,7 +322,7 @@ ssize_t FormationLayer::numberOfCellsInTableView(TableView *table)
 #pragma mark - CardNodeObserver
 void FormationLayer::onCardNodeTouchedBegan(CardNode* node)
 {
-    _selectedCard = node->getCardName();
+    _selectedCard = node->getCardId();
     const auto& point = convertToNodeSpace(node->getParent()->convertToWorldSpace(node->getPosition()));
     createDraggingNode(isContainedByTableView(point) ? _thisTableType : FormationTableType::Spell, _selectedCard, point);
     const auto& spells = _thisFormationData->getSpells();
@@ -590,28 +592,28 @@ void FormationLayer::updateSpellsCount(size_t count)
 }
 
 #pragma mark card
-CardNode* FormationLayer::createCardNode(const string& name) const
+CardNode* FormationLayer::createCardNode(int card) const
 {
     auto node = CardNode::create(false);
-    updateCardNode(node, name);
+    updateCardNode(node, card);
     return node;
 }
 
-void FormationLayer::updateCardNode(CardNode* node, const string& name) const
+void FormationLayer::updateCardNode(CardNode* node, int card) const
 {
-    if (node && name.length() > 0) {
-        node->update(name, DataManager::getInstance()->getBattleResourceMaxCount());
+    if (node && card > 0) {
+        node->update(card, DataManager::getInstance()->getBattleResourceMaxCount());
     }
 }
 
-void FormationLayer::createDraggingNode(FormationTableType type, const string& name, const Point& point)
+void FormationLayer::createDraggingNode(FormationTableType type, int card, const Point& point)
 {
-    if (!_draggingNode && name.length() > 0) {
+    if (!_draggingNode && card > 0) {
         Node* node(nullptr);
         if (FormationTableType::Hero == type) {
             node = Sprite::create("GameImages/effects/backcircle_bule.png");
         } else {
-            node = createCardNode(name);
+            node = createCardNode(card);
         }
         node->setVisible(false);
         node->setPosition(point);
@@ -625,7 +627,7 @@ void FormationLayer::removeDraggingNode()
     if (_draggingNode) {
         _draggingNode->removeFromParent();
         _draggingNode = nullptr;
-        _selectedCard = "";
+        _selectedCard = 0;
     }
 }
 
@@ -639,15 +641,10 @@ void FormationLayer::unitBackToFormation()
     
 }
 
-FormationUnitNode* FormationLayer::createUnitNode(const string& name)
+FormationUnitNode* FormationLayer::createUnitNode(int card)
 {
-    string renderKey(name);
-    auto ut = DataManager::getInstance()->getTechTree()->findUnitTypeByName(name);
-    if (ut) {
-        renderKey = ut->getRenderKey();
-    }
-    
-    auto node = FormationUnitNode::create(name, renderKey, _tileSize);
+    auto ut = DataManager::getInstance()->getTechTree()->findUnitTypeById(card);
+    auto node = FormationUnitNode::create(card, ut->getRenderKey(), _tileSize);
     addChild(node);
     node->setTouchEnabled(true);
     node->setSwallowTouches(true);
@@ -686,25 +683,25 @@ ssize_t FormationLayer::getIntersectedDeckIdx(const Rect& rect) const
     return idx;
 }
 
-void FormationLayer::pickSpellCard(const string& name)
+void FormationLayer::pickSpellCard(int card)
 {
     static const auto type(FormationTableType::Spell);
-    removeCandidateCard(type, name);
-    _thisFormationData->insertSpell(name);
+    removeCandidateCard(type, card);
+    _thisFormationData->insertSpell(card);
 }
 
-void FormationLayer::cancelSpellCard(const string& name)
+void FormationLayer::cancelSpellCard(int card)
 {
     static const auto type(FormationTableType::Spell);
-    _thisFormationData->removeSpell(name);
-    insertCandidateCard(type, name);
+    _thisFormationData->removeSpell(card);
+    insertCandidateCard(type, card);
     auto& cards = _candidateCards.at(type);
-    sort(begin(cards), end(cards), [](const string& first, const string& second){
+    sort(begin(cards), end(cards), [](int first, int second){
         return (first > second);
     });
 }
 
-void FormationLayer::exchangeSpellCards(const string& picked, const string& candidate)
+void FormationLayer::exchangeSpellCards(int picked, int candidate)
 {
     pickSpellCard(candidate);
     cancelSpellCard(picked);
@@ -740,14 +737,14 @@ void FormationLayer::reloadDecks()
     updateSpellsCount(spells.size());
 }
 
-void FormationLayer::selectCardOnDecks(const string& name)
+void FormationLayer::selectCardOnDecks(int card)
 {
     for (int i = 0; i < _decks.size(); ++i) {
         Sprite* deck = _decks.at(i);
         CardNode* node = dynamic_cast<CardNode*>(deck->getChildByTag(cardTagOnDeck));
         if (node) {
-            const string& unitName = node->getCardName();
-            node->setSelected(unitName == name);
+            int idx = node->getCardId();
+            node->setSelected(idx == card);
         }
     }
 }
@@ -759,18 +756,18 @@ void FormationLayer::reloadAllCandidateCards()
     auto dm = DataManager::getInstance();
     const auto& cards = dm->getCardDecks();
     for (auto iter = begin(cards); iter != end(cards); ++iter) {
-        const auto& name = *iter;
-        auto ct = dm->getGameModeHMM()->findCardTypeByName(name);
+        int card = *iter;
+        auto ct = dm->getGameModeHMM()->findCardTypeById(card);
         if (false) {
             if (kHMMCardClass_Spell == ct->getCardClass()) {
-                insertCandidateCard(FormationTableType::Spell, name);
+                insertCandidateCard(FormationTableType::Spell, card);
             } else {
-                insertCandidateCard(FormationTableType::Hero, name);
+                insertCandidateCard(FormationTableType::Hero, card);
             }
         } else {
             // TODO: remove code
-            insertCandidateCard(FormationTableType::Hero, name);
-            insertCandidateCard(FormationTableType::Spell, name);
+            insertCandidateCard(FormationTableType::Hero, card);
+            insertCandidateCard(FormationTableType::Spell, card);
         }
     }
 }
@@ -784,39 +781,39 @@ void FormationLayer::reloadCandidateCards(FormationTableType type)
     auto dm = DataManager::getInstance();
     const auto& cards = dm->getCardDecks();
     for (auto iter = begin(cards); iter != end(cards); ++iter) {
-        const auto& name = *iter;
-        auto ct = dm->getGameModeHMM()->findCardTypeByName(name);
+        int card = *iter;
+        auto ct = dm->getGameModeHMM()->findCardTypeById(card);
         if (false) {
             if (kHMMCardClass_Spell == ct->getCardClass()) {
                 if (FormationTableType::Spell == type) {
-                    insertCandidateCard(type, name);
+                    insertCandidateCard(type, card);
                 }
             } else if (FormationTableType::Hero == type) {
-                insertCandidateCard(type, name);
+                insertCandidateCard(type, card);
             }
         } else {
             // TODO: remove code
-            insertCandidateCard(type, name);
+            insertCandidateCard(type, card);
         }
     }
 }
 
-void FormationLayer::insertCandidateCard(FormationTableType type, const string& name)
+void FormationLayer::insertCandidateCard(FormationTableType type, int card)
 {
     if (_candidateCards.find(type) == end(_candidateCards)) {
-        _candidateCards.insert(make_pair(type, vector<string>()));
+        _candidateCards.insert(make_pair(type, vector<int>()));
     }
     
     auto& cards = _candidateCards.at(type);
-    cards.push_back(name);
+    cards.push_back(card);
 }
 
-void FormationLayer::removeCandidateCard(FormationTableType type, const string& name)
+void FormationLayer::removeCandidateCard(FormationTableType type, int card)
 {
     if (_candidateCards.find(type) != end(_candidateCards)) {
         auto& cards = _candidateCards.at(type);
         for (auto iter = begin(cards); iter != end(cards); ++iter) {
-            if (name == *iter) {
+            if (card == *iter) {
                 cards.erase(iter);
                 break;
             }
@@ -954,13 +951,13 @@ void FormationLayer::placeUnit(FormationUnitNode* node, const Point& point)
     }
 }
 
-void FormationLayer::onPlacedEnded(const string& name, const Point& point)
+void FormationLayer::onPlacedEnded(int card, const Point& point)
 {
     const auto& tileInfoB = getTileInfo(point);
     int idxB(tileInfoB.idx);
     if (idxB >= 0) {
         // create node
-        auto nodeA = createUnitNode(name);
+        auto nodeA = createUnitNode(card);
         
         // if the position is occupied
         if (_formationNodes.find(idxB) != end(_formationNodes)) {
@@ -972,7 +969,7 @@ void FormationLayer::onPlacedEnded(const string& name, const Point& point)
         
         const auto& coordinate = formationIdx2Coordinate(idxB);
         _thisFormationData->removeHero(coordinate);
-        _thisFormationData->insertHero(coordinate, name);
+        _thisFormationData->insertHero(coordinate, card);
         
         // place
         placeUnit(nodeA, tileInfoB.midPoint);
@@ -983,7 +980,7 @@ void FormationLayer::onUnitTouchedBegan(FormationUnitNode* node)
 {
     if (node) {
         const auto& point = node->getTouchBeganPosition();
-        createDraggingNode(FormationTableType::Hero, node->getUnitName(), point);
+        createDraggingNode(FormationTableType::Hero, node->getCardId(), point);
     }
 }
 
@@ -1034,7 +1031,7 @@ void FormationLayer::onUnitTouchedEnded(FormationUnitNode* nodeA)
                     _formationNodes.erase(idxA);
                     
                     _thisFormationData->removeHero(fcA);
-                    _thisFormationData->insertHero(fcB, nodeA->getUnitName());
+                    _thisFormationData->insertHero(fcB, nodeA->getCardId());
                 }
             }
         } else {

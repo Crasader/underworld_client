@@ -35,7 +35,8 @@ CardInfoNode* CardInfoNode::create(const Callback& callback)
 }
 
 CardInfoNode::CardInfoNode()
-:_cost(0)
+:_cardId(0)
+,_cost(0)
 ,_callback(nullptr)
 ,_unit(nullptr)
 ,_cardNode(nullptr)
@@ -126,8 +127,8 @@ bool CardInfoNode::init(const Callback& callback)
         static const string file(CocosUtils::getResourcePath("button_yellow.png"));
         auto button = Button::create(file);
         button->addClickEventListener([this](Ref*) {
-            if (_callback && _name.size() > 0) {
-                _callback(_name, _cost);
+            if (_callback && _cardId > 0) {
+                _callback(_cardId, _cost);
             }
         });
         const auto& buttonSize(button->getContentSize());
@@ -146,16 +147,16 @@ bool CardInfoNode::init(const Callback& callback)
     return false;
 }
 
-void CardInfoNode::update(const string& name)
+void CardInfoNode::update(int idx)
 {
     if (_cardNode) {
-        _cardNode->update(name, DataManager::getInstance()->getBattleResourceMaxCount());
+        _cardNode->update(idx, DataManager::getInstance()->getBattleResourceMaxCount());
     }
     
     auto dm = DataManager::getInstance();
-    auto ct = dm->getGameModeHMM()->findCardTypeByName(name);
+    auto ct = dm->getGameModeHMM()->findCardTypeById(idx);
     if (ct) {
-        auto unit = dm->getTechTree()->findUnitTypeByName(name);
+        auto unit = dm->getTechTree()->findUnitTypeById(idx);
         if (unit) {
             _hp->setString(StringUtils::format("%d", unit->getMaxHp()));
             _armor->setString(StringUtils::format("%d", unit->getAmror()));

@@ -44,6 +44,7 @@ MapUILayer::MapUILayer()
 :_observer(nullptr)
 ,_isTouchingTableView(false)
 ,_decksTotalWidth(0)
+,_selectedCard(0)
 ,_timeLabel(nullptr)
 ,_myHpProgress(nullptr)
 ,_myHpPercentageLabel(nullptr)
@@ -158,11 +159,11 @@ void MapUILayer::createCardDeck(CardDeckType type, int count)
     }
 }
 
-void MapUILayer::insertCard(CardDeckType type, const string& name, bool animated)
+void MapUILayer::insertCard(CardDeckType type, int card, bool animated)
 {
     auto deck = getDeck(type);
     if (deck) {
-        deck->insert(name, animated);
+        deck->insert(card, animated);
     }
 }
 
@@ -354,7 +355,7 @@ bool MapUILayer::onTouchBegan(Touch *touch, Event *unused_event)
 void MapUILayer::onTouchMoved(Touch *touch, Event *unused_event)
 {
     const bool gameOver = isGameOver();
-    if (!gameOver && _isTouchingTableView && _selectedCard.length() > 0) {
+    if (!gameOver && _isTouchingTableView && _selectedCard > 0) {
         const Point& point = touch->getLocation();
         const bool inDeck = isPointInDeck(point);
         
@@ -371,26 +372,26 @@ void MapUILayer::onTouchMoved(Touch *touch, Event *unused_event)
 void MapUILayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
     const bool gameOver = isGameOver();
-    if (!gameOver && _isTouchingTableView && _selectedCard.length() > 0) {
+    if (!gameOver && _isTouchingTableView && _selectedCard > 0) {
         if (_observer) {
             const Point& point = touch->getLocation();
             _observer->onMapUILayerTouchEnded(_selectedCard, _selectedCardInfo.second, point);
         }
         
         clearCardInfo(_selectedCardInfo);
-        _selectedCard = "";
+        _selectedCard = 0;
         _isTouchingTableView = false;
     }
 }
 
 #pragma mark - UnitCardDeckObserver
-void MapUILayer::onCardDeckTouchedBegan(CardDeck* node, const string& card, int idx)
+void MapUILayer::onCardDeckTouchedBegan(CardDeck* node, int card, int idx)
 {
     setCardInfo(_selectedCardInfo, node, idx);
     _selectedCard = card;
 }
 
-void MapUILayer::onCardDeckTouchedEnded(CardDeck* node, const string& card, int idx)
+void MapUILayer::onCardDeckTouchedEnded(CardDeck* node, int card, int idx)
 {
     if (!isGameOver()) {
         setHighlightedCard(node, idx);
@@ -527,10 +528,10 @@ void MapUILayer::setHighlightedCard(CardDeck* deck, int idx)
     if (_observer) {
         if (deck) {
             const int highlightedIdx(_highlightedCardInfo.second);
-            const string& card = deck->getCard(highlightedIdx);
+            int card = deck->getCard(highlightedIdx);
             _observer->onMapUILayerCardSelected(card, highlightedIdx);
         } else {
-            _observer->onMapUILayerCardSelected("", INVALID_VALUE);
+            _observer->onMapUILayerCardSelected(0, INVALID_VALUE);
         }
     }
 }

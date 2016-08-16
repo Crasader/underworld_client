@@ -19,13 +19,13 @@ class TalentBriefNode;
 class TalentInfoNode : public Node
 {
 public:
-    typedef std::function<void(const std::string&, int)> Callback;
+    typedef std::function<void(int, int)> Callback;
     
 public:
     static TalentInfoNode* create(const Callback& callback);
     virtual ~TalentInfoNode();
     
-    void update(const std::string& name);
+    void update(int idx);
     
 protected:
     TalentInfoNode();
@@ -34,7 +34,7 @@ protected:
     
 private:
     ui::Button* _button;
-    std::string _name;
+    int _cardId;
     int _cost;
     Callback _callback;
     std::vector<TalentBriefNode*> _nodes;
