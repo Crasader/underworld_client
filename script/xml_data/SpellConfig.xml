@@ -8,9 +8,9 @@
 	<item render_key="治疗" spell_direction="0" spell_position="1" spell_render_layer="0" spell_height="0" loop="1" foreground_resource="yicixinghuixue.csb" background_resource=""/>
 	<item render_key="冲锋" spell_direction="2" spell_position="1" spell_render_layer="0" spell_height="0" loop="1" foreground_resource="jineng-JiaSu.csb" background_resource=""/>
 	<item render_key="刚毅" spell_direction="0" spell_position="1" spell_render_layer="0" spell_height="0" loop="1" foreground_resource="dun.2.csb" background_resource=""/>
-	<item render_key="强风护盾" spell_direction="0" spell_position="1" spell_render_layer="0" spell_height="0" loop="1" foreground_resource="fengdun" background_resource=""/>
-	<item render_key="血雾" spell_direction="0" spell_position="1" spell_render_layer="0" spell_height="0" loop="1" foreground_resource="xuewu" background_resource=""/>
-	<item render_key="眩晕" spell_direction="0" spell_position="1" spell_render_layer="0" spell_height="0" loop="1" foreground_resource="xuanyun" background_resource=""/>
-	<item render_key="吸血" spell_direction="0" spell_position="0" spell_render_layer="0" spell_height="0" loop="1" foreground_resource="Vampiric-Aura-1" background_resource=""/>
-	<item render_key="心灵之火" spell_direction="0" spell_position="2" spell_render_layer="0" spell_height="0" loop="1" foreground_resource="shengdun" background_resource=""/>
+	<item render_key="强风护盾" spell_direction="0" spell_position="1" spell_render_layer="0" spell_height="0" loop="1" foreground_resource="fengdun.csb" background_resource=""/>
+	<item render_key="血雾" spell_direction="0" spell_position="1" spell_render_layer="0" spell_height="0" loop="1" foreground_resource="xuewu.csb" background_resource=""/>
+	<item render_key="眩晕" spell_direction="0" spell_position="1" spell_render_layer="0" spell_height="0" loop="1" foreground_resource="xuanyun.csb" background_resource=""/>
+	<item render_key="吸血" spell_direction="0" spell_position="0" spell_render_layer="0" spell_height="0" loop="1" foreground_resource="Vampiric-Aura-1.csb" background_resource=""/>
+	<item render_key="心灵之火" spell_direction="0" spell_position="2" spell_render_layer="0" spell_height="0" loop="1" foreground_resource="shengdun.csb" background_resource=""/>
 </root>

@@ -208,7 +208,6 @@ cocos2d::Node* UnitRender::addEffect(const std::string &renderKey, bool loop) {
             if (!loop) {
                 callback = [](Node* sender) { if (sender) sender->removeFromParent(); };
             }
-            cocos2d::Node* ret = CocosUtils::getAnimationNode(file, 0);
             ret = CocosUtils::playAnimation(file, 0.f, loop, 0, -1, callback);
         } else if ("plist" == suffix) {
             ParticleSystemQuad *particle = ParticleSystemQuad::create(file);
