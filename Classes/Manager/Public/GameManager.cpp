@@ -28,7 +28,7 @@ using namespace std;
 
 struct GameManager::BattleContent {
     UnderWorld::Core::GameContentSetting contentSetting;
-    vector<string> cards;
+    vector<int> cards;
     GameModeHMMSetting::InitUnitList unitList;
     vector<UnderWorld::Core::UnitSetting> unitPool;
 };
@@ -185,12 +185,8 @@ bool GameManager::loadBattleContent()
             cs.setFactionTypeKey("狼人族");
             
             UnderWorld::Core::UnitSetting core;
-            core.setUnitTypeName("狼人基地");
+            core.setUnitTypeId(10000);
             cs.setCore(core);
-            
-            UnderWorld::Core::UnitSetting tower;
-            tower.setUnitTypeName("狼人箭塔");
-            cs.setTower(tower);
         }
         
         {
@@ -201,7 +197,8 @@ bool GameManager::loadBattleContent()
                 auto cardType = dm->getTechTree()->findUnitTypeByName(*iter);
                 if (cardType) {
                     UnderWorld::Core::UnitSetting us;
-                    us.setUnitTypeName(cardType->getName());
+                    us.setUnitTypeId(cardType->getId());
+                    //us.setUnitTypeName(cardType->getName());
                     us.setLevel(0);
                     us.setQuality(0);
                     us.setTalentLevel(0);
@@ -218,14 +215,18 @@ bool GameManager::loadBattleContent()
     _battleContent->unitList.clear();
     
     if (formationData) {
-        _battleContent->cards = formationData->getSpells();
+        _battleContent->cards.clear();
+        for (auto spellType : formationData->getSpells()) {
+            _battleContent->cards.push_back(DataManager::getInstance()->getGameModeHMM()->findCardTypeByName(spellType)->getId());
+        }
+        
         const auto& heroes = formationData->getHeroes();
         for (auto iter = begin(heroes); iter != end(heroes); ++iter) {
             static const Point basePosition(240, 120);
             const auto& coordinate = iter->first;
             
-            pair<string, int> pair;
-            pair.first = iter->second;
+            pair<int, int> pair;
+            pair.first = DataManager::getInstance()->getGameModeHMM()->findCardTypeByName(iter->second)->getId();
             pair.second = coordinate.y * FORMATION_WIDTH + coordinate.x;
             
             _battleContent->unitList.push_back(pair);

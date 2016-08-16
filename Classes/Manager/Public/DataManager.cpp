@@ -100,6 +100,7 @@ DataManager::DataManager()
     
     // game mode
     _gameModeHMM = new (nothrow) UnderWorld::Core::GameModeHMM();
+    _gameModeHMM->initStatic(getHMMTechTreeData());
 }
 
 DataManager::~DataManager()

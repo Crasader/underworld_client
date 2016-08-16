@@ -238,7 +238,12 @@ cocos2d::Node* UnitRender::addEffect(const std::string &renderKey, bool loop) {
         
         ret->setPosition(pos);
         ret->setScale(_configData->getEffectScale());
-        _mainNode->addChild(ret, foregourndZorder);
+        if (data->getSpellPosition() == SpellConfigData::kFoot) {
+            _groundNode->addChild(ret, foregourndZorder);
+        } else {
+            _mainNode->addChild(ret, foregourndZorder);
+        }
+        
     }
     
     return ret;

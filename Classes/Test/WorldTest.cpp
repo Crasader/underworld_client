@@ -21,13 +21,9 @@ void WorldTest::test() {
     contentSetting.setFactionTypeKey("狼人族");
     
     UnderWorld::Core::UnitSetting core;
-    core.setUnitTypeName("狼人基地");
+    core.setUnitTypeId(10000);
     contentSetting.setCore(core);
     
-    UnderWorld::Core::UnitSetting tower;
-    tower.setUnitTypeName("狼人箭塔");
-    contentSetting.setTower(tower);
-
     UnderWorld::Core::GameSettings gs;
     std::string commonTechTree;
     UnderworldClient::loadCommonTechTree(commonTechTree);
@@ -55,7 +51,7 @@ void WorldTest::test() {
         
         if (count % 71 == 0) {
             UnderWorld::Core::UnitSetting us;
-            us.setUnitTypeName("疾风弓手_作战");
+            us.setUnitTypeId(0);
             UnderWorld::Core::creatureid_t id =  world.createUnit2World(us, random.rand_i() % 2, UnderWorld::Core::Coordinate32(random.rand_i() % 1500, random.rand_i() % 1500));
             if (id != UnderWorld::Core::World::INVALID_ID) {
                 std::cout << "create unit <======== " << id << std::endl;

@@ -788,7 +788,7 @@ void GameRender::updateCardMask(const string& card, const Point& point)
             if (hasEnoughResources(ct)) {
                 auto type = ct->getCardClass();
                 if (kHMMCardClass_Summon == type) {
-                    auto ut = _techTree->findUnitTypeByName(ct->getCustomUnitSetting().getUnitTypeName());
+                    auto ut = _techTree->findUnitTypeById(ct->getCustomUnitSetting().getUnitTypeId());
                     if (ut) {
                         auto coordinate = getValidPuttingCoordinate(point, true);
                         _mapLayer->updateUnitMask(ut, coordinate);

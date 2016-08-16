@@ -54,11 +54,11 @@ public:
     
     /** interface */
     void launchPvp(const UnderWorld::Core::GameContentSetting& setting,
-        const std::vector<std::string>& cards,
+        const std::vector<int>& cards,
         const UnderWorld::Core::GameModeHMMSetting::InitUnitList& initUnits,
         const std::vector<UnderWorld::Core::UnitSetting>& unitPool);
     void launchPve(int map, const UnderWorld::Core::GameContentSetting& setting,
-        const std::vector<std::string>& cards,
+        const std::vector<int>& cards,
         const UnderWorld::Core::GameModeHMMSetting::InitUnitList& initList,
         const std::vector<UnderWorld::Core::UnitSetting>& unitPool);
     void cancelLaunch();
@@ -87,7 +87,7 @@ private:
     
 private:
     ContentSetting _setting;
-    std::vector<std::string> _cards;
+    std::vector<int> _cards;
     InitUnits _initUnits;
     UnitPool _unitPool;
     
@@ -96,13 +96,13 @@ public:
     
     /** getters */
     const ContentSetting& getGameContentSetting() const        {return _setting;}
-    const std::vector<std::string>& getCards() const           {return _cards;}
+    const std::vector<int>& getCards() const                   {return _cards;}
     const InitUnits& getInitUnits() const                      {return _initUnits;}
     const UnitPool& getUnitPool() const                        {return _unitPool;}
     
     /** setters */
     void setGameContentSetting(const ContentSetting& setting)  {_setting = setting;}
-    void setCards(const std::vector<std::string>& cards)       {_cards = cards;}
+    void setCards(const std::vector<int>& cards)               {_cards = cards;}
     void setInitUnits(const InitUnits& initUnits)              {_initUnits = initUnits;}
     void setUnitPool(const UnitPool& unitPool)                 {_unitPool = unitPool;}
 };
@@ -110,7 +110,7 @@ public:
 class NetworkMessageLaunch2C : public UnderWorld::Core::NetworkMessage {
 private:
     typedef UnderWorld::Core::FactionSetting FactionSetting;
-    typedef std::vector<std::vector<std::string> > Cards;
+    typedef std::vector<std::vector<int> > Cards;
     typedef std::vector<UnderWorld::Core::GameModeHMMSetting::InitUnitList> InitUnitLists;
     typedef std::vector<std::vector<UnderWorld::Core::UnitSetting> > UnitPools;
 private:

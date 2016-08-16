@@ -74,9 +74,9 @@ static std::string parseLaunch2SMsg(
     
     rapidjson::Value cards(rapidjson::kStringType);
     std::string cardString = "";
-    const vector<std::string>& cardNames = msg->getCards();
+    const vector<int>& cardNames = msg->getCards();
     for (int i = 0; i < cardNames.size(); ++i) {
-        cardString.append(cardNames[i]);
+        cardString.append(UnderWorldCoreUtils::to_string(cardNames[i]));
         if (i != cardNames.size() - 1) cardString.append("|");
     }
     cards.SetString(cardString.c_str(), (int)cardString.size(), allocator);
@@ -85,7 +85,7 @@ static std::string parseLaunch2SMsg(
     std::string initUnitsString = "";
     const GameModeHMMSetting::InitUnitList& initUnits = msg->getInitUnits();
     for (int i = 0; i < initUnits.size(); ++i) {
-        initUnitsString.append(initUnits[i].first).append("|").append(UnderWorldCoreUtils::to_string(initUnits[i].second));
+        initUnitsString.append(UnderWorldCoreUtils::to_string(initUnits[i].first)).append("|").append(UnderWorldCoreUtils::to_string(initUnits[i].second));
         if (i != initUnits.size() - 1) initUnitsString.append(",");
     }
     initUnitsJson.SetString(initUnitsString.c_str(), (int)initUnitsString.size(), allocator);
@@ -94,7 +94,7 @@ static std::string parseLaunch2SMsg(
     std::string unitPoolString = "";
     const std::vector<UnitSetting>& unitPool = msg->getUnitPool();
     for (int i = 0; i < unitPool.size(); ++i) {
-        unitPoolString.append(unitPool[i].getUnitTypeName()).append("|")
+        unitPoolString.append(UnderWorldCoreUtils::to_string(unitPool[i].getUnitTypeId())).append("|")
             .append(UnderWorldCoreUtils::to_string(unitPool[i].getLevel())).append("|")
             .append(UnderWorldCoreUtils::to_string(unitPool[i].getQuality())).append("|")
             .append(UnderWorldCoreUtils::to_string(unitPool[i].getTalentLevel()));
@@ -258,7 +258,7 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
     }
     
     /** 6. players */
-    std::vector<std::vector<std::string> > cardNames;
+    std::vector<std::vector<int> > cardNames;
     std::vector<GameModeHMMSetting::InitUnitList> initUnits;
     std::vector<std::vector<UnitSetting> > unitPools;
     if (DICTOOL->checkObjectExist_json(root, MESSAGE_KEY_PLAYERS)) {
@@ -275,7 +275,13 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
             if (DICTOOL->checkObjectExist_json(player, MESSAGE_KEY_CARDS)) {
                 std::string cards = DICTOOL->getStringValue_json(player, MESSAGE_KEY_CARDS);
                 if (!cards.empty()) {
-                    UnderWorldCoreUtils::split(cardNames[i], cards, "|");
+                    std::vector<std::string> cardsVes;
+                    UnderWorldCoreUtils::split(cardsVes, cards, "|");
+                    cardNames[i].clear();
+                    for (int j = 0; j < cardsVes.size(); ++j) {
+                        cardNames[i].push_back(atoi(cardsVes[j].c_str()));
+                    }
+                    
                 }
             }
             
@@ -293,7 +299,7 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
                         UnderWorldCoreUtils::split(initUnitVec, initUnitsVec[j], "|");
                         
                         if (initUnitVec.size() == 2) {
-                            initUnits[i].push_back(std::make_pair(initUnitVec[0],
+                            initUnits[i].push_back(std::make_pair(atoi(initUnitVec[0].c_str()),
                                 atoi(initUnitVec[1].c_str())));
                         }
                     }
@@ -315,7 +321,7 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
                         
                         if (unitVec.size() == 4) {
                             UnitSetting us;
-                            us.setUnitTypeName(unitVec[0]);
+                            us.setUnitTypeId(atoi(unitVec[0].c_str()));
                             us.setLevel(atoi(unitVec[1].c_str()));
                             us.setQuality(atoi(unitVec[2].c_str()));
                             us.setTalentLevel(atoi(unitVec[3].c_str()));
@@ -329,14 +335,9 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
             //TODO:temp code, core and tower setting
             gcs.setFactionTypeKey("狼人族");
             UnitSetting core;
-            core.setUnitTypeName("狼人基地");
+            core.setUnitTypeId(10000); //狼人基地
             core.setLevel(0);core.setQuality(0);core.setTalentLevel(0);
             gcs.setCore(core);
-            
-            UnitSetting tower;
-            tower.setUnitTypeName("狼人箭塔");
-            core.setLevel(0);core.setQuality(0);core.setTalentLevel(0);
-            gcs.setTower(tower);
             
             fs.setContentSetting(gcs, i);
         }
