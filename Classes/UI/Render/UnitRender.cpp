@@ -616,7 +616,8 @@ void UnitRender::needRebuildBodyAnim(const BodyAnimationPoseBundle& curentPoseBu
 void UnitRender::buildAndPlayBodyAnimWithCurrentStatus(BodyAnimationPoseBundle& poseBundle) {
     //1. create body animation for first time
     if (!_unitView) {
-        _unitView = UnitView::create(_unitType);
+        bool isAlly = _status._factionIndex == _worldRender->getGameRender()->getGame()->getThisFactionIndex();
+        _unitView = UnitView::create(_unitType, isAlly);
         
         if (!_unitView) return;
         
@@ -800,18 +801,10 @@ void UnitRender::getHpBarFiles(const UnitRender* ur, std::string& background, st
     const bool hero = ur->_unitType->getUnitClass() == kUnitClass_Hero;
     
     bool isAlly = ur->_unit->getBelongFaction()->getTeamIndex() == ur->_worldRender->getGameRender()->getGame()->getThisTeamIndex();
-    if (big) {
-        background.assign("GameImages/test/ui_blood_3.png");
-        foreground.assign(isAlly ? "GameImages/test/ui_blood_5.png" : "GameImages/test/ui_blood_4.png");
-    } else {
-        if (hero) {
-            background.assign("GameImages/test/ui_blood_hero_bg.png");
-            foreground.assign("GameImages/test/ui_blood_hero.png");
-        } else {
-            background.assign("GameImages/test/ui_blood.png");
-            foreground.assign(isAlly ? "GameImages/test/ui_blood_2.png" : "GameImages/test/ui_blood_1.png");
-        }
-    }
+
+    background.assign(isAlly ? "GameImages/battle_ui/ui_normal_ally_hp_bg.png" : "GameImages/battle_ui/ui_normal_enemy_hp_bg.png");
+    foreground.assign(isAlly ? "GameImages/battle_ui/ui_normal_ally_hp_fg.png" : "GameImages/battle_ui/ui_normal_enemy_hp_fg.png");
+
 }
 
 

@@ -19,9 +19,9 @@
 
 namespace UnderWorld{ namespace Core{
 
-UnitView* UnitView::create(const UnitType* unitType) {
+UnitView* UnitView::create(const UnitType* unitType, bool isAlly) {
     UnitView* ret = new (std::nothrow) UnitView();
-    if (ret && ret->init(unitType)) {
+    if (ret && ret->init(unitType, isAlly)) {
         ret->autorelease();
     } else {
         CC_SAFE_DELETE(ret);
@@ -35,7 +35,7 @@ UnitView::~UnitView() {
     CC_SAFE_RELEASE(_shadowNode);
 }
     
-bool UnitView::init(const UnitType* unitType) {
+bool UnitView::init(const UnitType* unitType, bool isAlly) {
     if (!Node::init()) return false;
     
     destroyAnimation();
@@ -43,6 +43,7 @@ bool UnitView::init(const UnitType* unitType) {
     /** init data */
     _unitType = unitType;
     if (_unitType) _configData = DataManager::getInstance()->getURConfigData(_unitType->getRenderKey());
+    _isAlly = isAlly;
     _playCallback = nullptr;
     
     if (!_unitType || !_configData) return false;
@@ -71,7 +72,7 @@ void UnitView::buildAnimation() {
     stopAnimation();
     destroyAnimation();
     
-    getAnimationFiles(_type, _pose, _direction, _configData, _bodyAnimationFiles, _shadowAnimationFiles);
+    getAnimationFiles(_type, _pose, _direction, _unitType, _configData, _bodyAnimationFiles, _shadowAnimationFiles, _isAlly);
     
     _flip = needToFlip(_direction, _configData);
     
@@ -237,6 +238,7 @@ void UnitView::setNodeScale(float nodeScale) {
 UnitView::UnitView()
 : _unitType(nullptr)
 , _configData(nullptr)
+, _isAlly(true)
 , _playCallback(nullptr)
 , _type(UnitAnimationType::PVR)
 , _pose(UnitAnimationPose::Stand)
@@ -299,16 +301,18 @@ void UnitView::updateDurationScale() {
 void UnitView::getAnimationFiles(UnitAnimationType type,
     UnitAnimationPose pose,
     Unit::Direction direction,
+    const UnitType* unitType,
     const URConfigData* configData,
     std::vector<std::string>& bodyAnimationOutput,
-    std::vector<std::string>& shadowAnimationOutput) {
+    std::vector<std::string>& shadowAnimationOutput,
+    bool isAlly) {
 
     static std::vector<std::vector<std::string> > pose_files = {
         {"stand", "run", "attack", "attack_post", "skill", "skill_post", "killed", "dead", ""},
         {"standby", "run", "attack", "attack_post", "skill", "skill_post", "dead", "dead_body", ""}
     };
     
-    if (!configData) return;
+    if (!configData || !unitType) return;
     
     std::string bodyData;
     std::string shadowData;
@@ -320,7 +324,11 @@ void UnitView::getAnimationFiles(UnitAnimationType type,
     
     if (!resourcePrefix.empty() && !posePrefix.empty()) {
         if (type == UnitAnimationType::PVR) {
-            bodyData.assign(resourcePrefix + "/" + posePrefix + "/body/" + UnderWorldCoreUtils::to_string(bodyResId));
+            if (unitType->getUnitClass() == kUnitClass_Core) {
+                bodyData.assign(resourcePrefix + "/" + posePrefix + "/body/" + (isAlly ? "Blue/" : "Red/")  + UnderWorldCoreUtils::to_string(bodyResId));
+            } else {
+                bodyData.assign(resourcePrefix + "/" + posePrefix + "/body/" + UnderWorldCoreUtils::to_string(bodyResId));
+            }
             shadowData.assign(resourcePrefix + "/" + posePrefix + "/shadows/" + UnderWorldCoreUtils::to_string(shadowResId));
         } else if (type == UnitAnimationType::CSB) {
             bodyData.assign(resourcePrefix + "-" + posePrefix + "-" + UnderWorldCoreUtils::to_string(bodyResId) + ".csb");

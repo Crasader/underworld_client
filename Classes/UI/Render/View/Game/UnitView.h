@@ -39,6 +39,7 @@ private:
     /** data */
     const UnitType* _unitType;
     const URConfigData* _configData;
+    bool _isAlly;
     
     /** instance */
     std::function<void ()> _playCallback;
@@ -66,9 +67,9 @@ private:
     
 public:
     /** init */
-    static UnitView* create(const UnitType* unitType);
+    static UnitView* create(const UnitType* unitType, bool isAlly = true);
     virtual ~UnitView();
-    bool init(const UnitType* unitType);
+    bool init(const UnitType* unitType, bool isAlly);
     
     /** amination interface */
     void buildAnimation();
@@ -94,6 +95,7 @@ public:
     void setDurationScale(float durationScale);
     void setNodeScale(float nodeScale);
     void setBeginTime(float beginTime)                    {_beginTime = beginTime;}
+    void setIsAlly(bool ally)                             {_isAlly = ally;}
     
 protected:
     UnitView();
@@ -113,9 +115,11 @@ protected:
     static void getAnimationFiles(UnitAnimationType type,
         UnitAnimationPose pose,
         Unit::Direction direction,
+        const UnitType* unitType,
         const URConfigData* configData,
         std::vector<std::string>& bodyAnimationOutput,
-        std::vector<std::string>& shadowAnimationOutput);
+        std::vector<std::string>& shadowAnimationOutput,
+        bool isAlly);
     static int getResourceId(UnitAnimationType type, Unit::Direction direction, const URConfigData* configData, bool isShadow);
     static bool needToFlip(Unit::Direction direction, const URConfigData* configData);
 };
