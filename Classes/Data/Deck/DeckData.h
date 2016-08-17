@@ -17,26 +17,25 @@ class DeckData
 {
 public:
     enum class Type {
-        Hero, Soldier
+        None, Hero, Soldier
     };
     
 public:
     DeckData(const std::string& serializedString);
-    DeckData(const DeckData* instance);
     virtual ~DeckData();
     
-    void clone(const DeckData* instance);
-    
-    const std::vector<int>& getCards(Type type);
-    void insert(Type type, ssize_t idx, int card);
-    void exchange(Type type, ssize_t idx1, ssize_t idx2);
+    const std::vector<int>& getCards(Type type) const;
+    void use(int used, int replaced);
+    void exchange(int from, int to);
     
     void serialize(std::string& output);
     
 protected:
-    std::vector<int>& getMutableCards(Type type);
+    struct CardInfo;
     void parse(Type type, const std::string& input);
-    void remove(Type type, ssize_t idx);
+    CardInfo getInfo(int card) const;
+    bool use(Type type, int used, int replaced);
+    void remove(Type type, int card);
     
 private:
     std::map<Type, std::vector<int>> _cards;

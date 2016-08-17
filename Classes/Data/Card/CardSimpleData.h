@@ -16,18 +16,21 @@ class CardSimpleData
 {
 public:
     CardSimpleData(const rapidjson::Value& jsonDict);
-    CardSimpleData(int idx);
-    CardSimpleData(const CardSimpleData* instance);
     virtual ~CardSimpleData();
+    
+    bool operator==(const CardSimpleData& instance) const;
     
     int getIdx() const;
     const std::string& getName() const;
     int getLevel() const;
+    int getCost() const;
+    bool isHero() const;
     
 private:
     int _idx;
     std::string _name;
     int _level;
+    int _cost;
 };
 
 #endif /* CardSimpleData_h */

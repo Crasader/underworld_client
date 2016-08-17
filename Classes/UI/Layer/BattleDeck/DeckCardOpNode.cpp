@@ -55,7 +55,7 @@ bool DeckCardOpNode::init()
         _hint = ui::Scale9Sprite::create(BattleDeckUI::getResourcePath("ui_kuang_11.png"), Rect(Point::ZERO, size), capInset);
         addChild(_hint, -1);
         
-        _icon = DeckCard::create(nullptr);
+        _icon = DeckCard::create(0);
         _hint->addChild(_icon);
         
         resetPositions();
@@ -75,11 +75,11 @@ void DeckCardOpNode::setCard(DeckCard* card)
 {
     _card = card;
     
-    const CardSimpleData* data(nullptr);
+    int cardId(0);
     if (card) {
-        data = card->getData();
+        cardId = card->getCardId();
     }
-    _icon->update(data);
+    _icon->update(card ? card->getCardId() : 0);
 }
 
 void DeckCardOpNode::setTypes(const vector<DeckCardOpType>& types)

@@ -8,6 +8,7 @@
 
 #include "DeckManager.h"
 #include "cocostudio/CocoStudio.h"
+#include "DataManager.h"
 #include "UserDefaultsDataManager.h"
 #include "DeckData.h"
 #include "CardSimpleData.h"
@@ -15,9 +16,12 @@
 using namespace std;
 using namespace cocostudio;
 
+const string DeckManager::SortNotification = "SortNotification";
+
 static inline string getDeckKey(int idx)
 { return cocos2d::StringUtils::format("deck_%d", idx); }
 static const string defaultDeckKey("default_deck");
+static const string sortTypeKey("sort_type");
 
 static DeckManager* s_pInstance(nullptr);
 DeckManager* DeckManager::getInstance()
@@ -36,16 +40,42 @@ void DeckManager::purge()
     }
 }
 
+CardSimpleData* DeckManager::createFakeData(int card)
+{
+    rapidjson::Document document;
+    document.SetObject();
+    rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+    document.AddMember("id", card, allocator);
+    document.AddMember("level", 1, allocator);
+    return new (nothrow) CardSimpleData(document);
+}
+
 DeckManager::DeckManager()
 :_defaultId(0)
+,_defaultDeckData(nullptr)
+,_sortType(SortType::Default)
 {
+    const int idx = UserDefaultsDataManager::getIntegerForKey(defaultDeckKey.c_str(), 0);
+    _defaultId = MAX(MIN(DecksMaxCount - 1, idx), 0);
+    _sortType = static_cast<SortType>(UserDefaultsDataManager::getIntegerForKey(sortTypeKey.c_str(), 0));
+    
+    static const string fake("21110;21111|22001;22003;22004;22012;22013;22014;22015;22016");
+    
     for (int i = 0; i < DecksMaxCount; ++i) {
-        const auto& string = UserDefaultsDataManager::getStringForKey(getDeckKey(i).c_str(), "");
+        const auto& string = UserDefaultsDataManager::getStringForKey(getDeckKey(i).c_str(), fake);
         if (string.size() > 0) {
             auto data = new (nothrow) DeckData(string);
             _decks.insert(make_pair(i, data));
         }
     }
+    
+    const auto& cards = DataManager::getInstance()->getCardDecks();
+    for (auto iter = begin(cards); iter != end(cards); ++iter) {
+        auto data(createFakeData(*iter));
+        _allFoundCards.insert(make_pair(data->getIdx(), data));
+    }
+    
+    loadThisDeck();
 }
 
 DeckManager::~DeckManager()
@@ -54,7 +84,7 @@ DeckManager::~DeckManager()
         CC_SAFE_DELETE(_decks.at(i));
     }
     
-    for (auto iter = begin(_foundCards); iter != end(_foundCards); ++iter) {
+    for (auto iter = begin(_allFoundCards); iter != end(_allFoundCards); ++iter) {
         CC_SAFE_DELETE(iter->second);
     }
 }
@@ -65,18 +95,107 @@ void DeckManager::parse(const rapidjson::Value& jsonDict)
     
 }
 
-int DeckManager::getDefaultDeckId() const
+int DeckManager::getThisDeckId() const
 {
     return _defaultId;
 }
 
-void DeckManager::setDefaultDeckId(int value)
+void DeckManager::loadDeck(int idx)
 {
-    _defaultId = value;
-    UserDefaultsDataManager::setIntegerForKey(defaultDeckKey.c_str(), value);
-    UserDefaultsDataManager::flush();
+    if (_defaultId != idx) {
+        _defaultId = idx;
+        UserDefaultsDataManager::setIntegerForKey(defaultDeckKey.c_str(), idx);
+        loadThisDeck();
+    }
 }
 
+DeckManager::SortType DeckManager::getSortType() const
+{
+    return _sortType;
+}
+
+void DeckManager::setSortType(SortType type)
+{
+    if (_sortType != type) {
+        _sortType = type;
+        UserDefaultsDataManager::setIntegerForKey(sortTypeKey.c_str(), static_cast<int>(type));
+        sortFoundCards();
+    }
+}
+
+const DeckData* DeckManager::getThisDeckData() const
+{
+    return getDeckData(_defaultId);
+}
+
+void DeckManager::saveThisDeckData()
+{
+    saveDeckData(_defaultId);
+}
+
+size_t DeckManager::getAllFoundCardsCount() const
+{
+    return _allFoundCards.size();
+}
+
+const CardSimpleData* DeckManager::getCardData(int card) const
+{
+    if (_allFoundCards.find(card) != end(_allFoundCards)) {
+        return _allFoundCards.at(card);
+    }
+    
+    return nullptr;
+}
+
+const vector<int>& DeckManager::getFoundCards() const
+{
+    return _foundCards;
+}
+
+const vector<int>& DeckManager::getUnfoundCards() const
+{
+    return _unfoundCards;
+}
+
+void DeckManager::useCard(int used, int replaced)
+{
+    for (auto iter = begin(_foundCards); iter != end(_foundCards); ++iter) {
+        if (used == (*iter)) {
+            _foundCards.erase(iter);
+            break;
+        }
+    }
+    
+    _foundCards.push_back(replaced);
+    sortFoundCards();
+    
+    if (_defaultDeckData) {
+        _defaultDeckData->use(used, replaced);
+    }
+}
+
+void DeckManager::exchangeCard(int from, int to)
+{
+    if (_defaultDeckData) {
+        _defaultDeckData->exchange(from, to);
+    }
+}
+
+void DeckManager::findCard(int card)
+{
+    for (auto iter = begin(_unfoundCards); iter != end(_unfoundCards); ++iter) {
+        if (card == (*iter)) {
+            _unfoundCards.erase(iter);
+            break;
+        }
+    }
+    
+    auto data(createFakeData(card));
+    _allFoundCards.insert(make_pair(data->getIdx(), data));
+    _foundCards.push_back(card);
+}
+
+#pragma mark - private
 DeckData* DeckManager::getDeckData(int idx) const
 {
     if (_decks.size() > idx) {
@@ -86,76 +205,82 @@ DeckData* DeckManager::getDeckData(int idx) const
     return nullptr;
 }
 
-void DeckManager::setDeckData(int idx, const DeckData* data)
+void DeckManager::loadThisDeck()
 {
-    if (idx < DecksMaxCount && data) {
-        auto d = getDeckData(idx);
-        if (d) {
-            d->clone(data);
-        } else {
-            _decks.insert(make_pair(idx, new (nothrow) DeckData(data)));
+    _defaultDeckData = getDeckData(_defaultId);
+    
+    _foundCards.clear();
+    
+    unordered_set<int> container;
+    for (auto iter = begin(_allFoundCards); iter != end(_allFoundCards); ++iter) {
+        container.insert(iter->first);
+    }
+    
+    static const vector<DeckData::Type> types = {DeckData::Type::Hero, DeckData::Type::Soldier};
+    for (auto type : types) {
+        const auto& cards(_defaultDeckData->getCards(type));
+        for (auto card : cards) {
+            container.erase(card);
         }
     }
+    
+    for (auto card : container) {
+        _foundCards.push_back(card);
+    }
+    
+    sortFoundCards();
 }
 
 void DeckManager::saveDeckData(int idx)
 {
     if (_decks.size() > idx) {
-        string output;
         auto data = _decks.at(idx);
+        string output;
         data->serialize(output);
         UserDefaultsDataManager::setStringForKey(getDeckKey(idx).c_str(), output);
-        UserDefaultsDataManager::flush();
     }
 }
 
-DeckData* DeckManager::getDefaultDeckData() const
+void DeckManager::sortFoundCards()
 {
-    return getDeckData(_defaultId);
-}
-
-void DeckManager::saveDefaultDeckData()
-{
-    saveDeckData(_defaultId);
-}
-
-const unordered_map<int, CardSimpleData*>& DeckManager::getFoundCards() const
-{
-    return _foundCards;
-}
-
-const set<int>& DeckManager::getUnfoundCards() const
-{
-    return _unfoundCards;
-}
-
-void DeckManager::useCard(int used, int replaced)
-{
-    if (_foundCards.find(used) != _foundCards.end()) {
-        CC_SAFE_DELETE(_foundCards.at(used));
-        _foundCards.erase(used);
-    } else {
-        CC_ASSERT(false);
+    static const auto defaultSort = [](int c1, int c2) {
+        return c1 < c2;
+    };
+    static const auto raritySort = [](int c1, int c2) {
+        return defaultSort(c1, c2);
+    };
+    static const auto elixirSort = [this](int c1, int c2) {
+        auto d1 = getCardData(c1);
+        auto d2 = getCardData(c2);
+        auto cost1 = d1 ? d1->getCost() : 0;
+        auto cost2 = d2 ? d2->getCost() : 0;
+        if (cost1 == cost2) {
+            return defaultSort(c1, c2);
+        }
+        
+        return cost1 < cost2;
+    };
+    static const auto dungeonSort = [](int c1, int c2) {
+        return c1 < c2;
+    };
+    
+    switch (_sortType) {
+        case SortType::Default:
+            sort(_foundCards.begin(), _foundCards.end(), defaultSort);
+            break;
+        case SortType::Rarity:
+            sort(_foundCards.begin(), _foundCards.end(), raritySort);
+            break;
+        case SortType::Elixir:
+            sort(_foundCards.begin(), _foundCards.end(), elixirSort);
+            break;
+        case SortType::Dungeon:
+            sort(_foundCards.begin(), _foundCards.end(), dungeonSort);
+            break;
+            
+        default:
+            break;
     }
     
-    if (_foundCards.find(replaced) == end(_foundCards)) {
-        _foundCards.insert(make_pair(replaced, new (nothrow) CardSimpleData(replaced)));
-    } else {
-        CC_ASSERT(false);
-    }
-}
-
-void DeckManager::findCard(int card)
-{
-    if (_foundCards.find(card) == end(_foundCards)) {
-        _foundCards.insert(make_pair(card, new (nothrow) CardSimpleData(card)));
-    } else {
-        CC_ASSERT(false);
-    }
-    
-    if (_unfoundCards.find(card) != _unfoundCards.end()) {
-        _unfoundCards.erase(card);
-    } else {
-        CC_ASSERT(false);
-    }
+    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(SortNotification);
 }

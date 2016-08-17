@@ -1,126 +1,126 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <root>
 	<!-- 第一版法术 -->
-	<card name="暴风雪lv1" card_class="spell" cost="木头:30" spell_name="实际效果暴风雪" recover_span="1000" id="100">
+	<card name="暴风雪lv1" card_class="spell" cost="木头:30" spell_name="实际效果暴风雪" recover_span="1000" id="23100">
 		<custom_unit_setting/>
 	</card>
-	<card name="火球术lv1" card_class="spell" cost="木头:30" spell_name="实际效果火球术" recover_span="1000" id="101">
+	<card name="火球术lv1" card_class="spell" cost="木头:30" spell_name="实际效果火球术" recover_span="1000" id="23101">
 		<custom_unit_setting/>
 	</card>
-	<card name="医疗术lv1" card_class="spell" cost="木头:30" spell_name="实际效果医疗术" recover_span="1000" id="102">
+	<card name="医疗术lv1" card_class="spell" cost="木头:30" spell_name="实际效果医疗术" recover_span="1000" id="23102">
 		<custom_unit_setting/>
 	</card>
-	<card name="沉默术lv1" card_class="spell" cost="木头:10" spell_name="实际效果沉默术" recover_span="1800" id="103">
+	<card name="沉默术lv1" card_class="spell" cost="木头:10" spell_name="实际效果沉默术" recover_span="1800" id="23103">
 		<custom_unit_setting/>
 	</card>
-	<card name="小型驱散术lv1" card_class="spell" cost="木头:10" spell_name="实际效果小型驱散" recover_span="1000" id="104">
+	<card name="小型驱散术lv1" card_class="spell" cost="木头:10" spell_name="实际效果小型驱散" recover_span="1000" id="23104">
 		<custom_unit_setting/>
 	</card>
-	<card name="大型驱散术lv1" card_class="spell" cost="木头:10" spell_name="实际效果大型驱散" recover_span="1000" id="105">
+	<card name="大型驱散术lv1" card_class="spell" cost="木头:10" spell_name="实际效果大型驱散" recover_span="1000" id="23105">
 		<custom_unit_setting/>
 	</card>
-	<card name="震晕法术lv1" card_class="spell" cost="木头:30" spell_name="实际效果震晕法术" recover_span="1800" id="106">
+	<card name="震晕法术lv1" card_class="spell" cost="木头:30" spell_name="实际效果震晕法术" recover_span="1800" id="23106">
 		<custom_unit_setting/>
 	</card>
-	<card name="禁足术lv1" card_class="spell" cost="木头:20" spell_name="实际效果禁足术" recover_span="1800" id="107">
+	<card name="禁足术lv1" card_class="spell" cost="木头:20" spell_name="实际效果禁足术" recover_span="1800" id="23107">
 		<custom_unit_setting/>
 	</card>
-	<card name="酸雾术lv1" card_class="spell" cost="木头:20" spell_name="实际效果酸雾" recover_span="1800" id="108">
+	<card name="酸雾术lv1" card_class="spell" cost="木头:20" spell_name="实际效果酸雾" recover_span="1800" id="23108">
 		<custom_unit_setting/>
 	</card>
 <!-- 第一版单位：小兵部分 -->
-	<card name="人族盾牌兵" card_class="summon" cost="木头:30" unit_id="12005" summon_count="1" recover_span="0" id="109">
+	<card name="人族盾牌兵" card_class="summon" cost="木头:30" unit_id="12005" summon_count="1" recover_span="0" id="22000">
 		<custom_unit_setting unit_setting_id="12005"/>
 	</card>
-	<card name="人族剑士" card_class="summon" cost="木头:20" unit_id="12006" summon_count="1" recover_span="0" id="110">
+	<card name="人族剑士" card_class="summon" cost="木头:20" unit_id="12006" summon_count="1" recover_span="0" id="22001">
 		<custom_unit_setting unit_setting_id="12006"/>
 	</card>
-	<card name="人族弓手" card_class="summon" cost="木头:20" unit_id="12007" summon_count="1" recover_span="0" id="111">
+	<card name="人族弓手" card_class="summon" cost="木头:20" unit_id="12007" summon_count="1" recover_span="0" id="22002">
 		<custom_unit_setting unit_setting_id="12007"/>
 	</card>
-	<card name="人族男巫" card_class="summon" cost="木头:20" unit_id="12008" summon_count="1" recover_span="0" id="112">
+	<card name="人族男巫" card_class="summon" cost="木头:20" unit_id="12008" summon_count="1" recover_span="0" id="22003">
 		<custom_unit_setting unit_setting_id="12008"/>
 	</card>
-	<card name="人族女巫" card_class="summon" cost="木头:20" unit_id="12009" summon_count="1" recover_span="0" id="113">
+	<card name="人族女巫" card_class="summon" cost="木头:20" unit_id="12009" summon_count="1" recover_span="0" id="22004">
 		<custom_unit_setting unit_setting_id="12009"/>
 	</card>
-	<card name="人族狮鹫" card_class="summon" cost="木头:40" unit_id="12010" summon_count="1" recover_span="0" id="114">
+	<card name="人族狮鹫" card_class="summon" cost="木头:40" unit_id="12010" summon_count="1" recover_span="0" id="22005">
 		<custom_unit_setting unit_setting_id="12010"/>
 	</card>
-	<card name="骷髅盾牌兵" card_class="summon" cost="木头:40" unit_id="12011" summon_count="1" recover_span="0" id="115">
+	<card name="骷髅盾牌兵" card_class="summon" cost="木头:40" unit_id="12011" summon_count="1" recover_span="0" id="22006">
 		<custom_unit_setting unit_setting_id="12011"/>
 	</card>
-	<card name="食尸鬼" card_class="summon" cost="木头:10" unit_id="12012" summon_count="1" recover_span="0" id="116">
+	<card name="食尸鬼" card_class="summon" cost="木头:10" unit_id="12012" summon_count="1" recover_span="0" id="22007">
 		<custom_unit_setting unit_setting_id="12012"/>
 	</card>
-	<card name="骷髅弓箭手" card_class="summon" cost="木头:20" unit_id="12013" summon_count="1" recover_span="0" id="117">
+	<card name="骷髅弓箭手" card_class="summon" cost="木头:20" unit_id="12013" summon_count="1" recover_span="0" id="22008">
 		<custom_unit_setting unit_setting_id="12013"/>
 	</card>
-	<card name="魔族传教士" card_class="summon" cost="木头:20" unit_id="12014" summon_count="1" recover_span="0" id="118">
+	<card name="魔族传教士" card_class="summon" cost="木头:20" unit_id="12014" summon_count="1" recover_span="0" id="22009">
 		<custom_unit_setting unit_setting_id="12014"/>
 	</card>
-	<card name="梦魇" card_class="summon" cost="木头:20" unit_id="12015" summon_count="1" recover_span="0" id="119">
+	<card name="梦魇" card_class="summon" cost="木头:20" unit_id="12015" summon_count="1" recover_span="0" id="22010">
 		<custom_unit_setting unit_setting_id="12015"/>
 	</card>
-	<card name="石像鬼" card_class="summon" cost="木头:30" unit_id="12016" summon_count="1" recover_span="0" id="120">
+	<card name="石像鬼" card_class="summon" cost="木头:30" unit_id="12016" summon_count="1" recover_span="0" id="22011">
 		<custom_unit_setting unit_setting_id="12016"/>
 	</card>
-    <card name="中立兽族牛头人" card_class="summon" cost="木头:40" unit_id="12000" recover_span="0" id="121">
+    <card name="中立兽族牛头人" card_class="summon" cost="木头:40" unit_id="12000" recover_span="0" id="22012">
 		<custom_unit_setting unit_setting_id="12000"/>
 	</card>
-	<card name="中立兽族巨魔巫医" card_class="summon" cost="木头:20" unit_id="12001" recover_span="0" id="122">
+	<card name="中立兽族巨魔巫医" card_class="summon" cost="木头:20" unit_id="12001" recover_span="0" id="22013">
 		<custom_unit_setting unit_setting_id="12001"/>
 	</card>
-	<card name="中立龙族黑龙" card_class="summon" cost="木头:60" unit_id="12002" recover_span="0" id="123">
+	<card name="中立龙族黑龙" card_class="summon" cost="木头:60" unit_id="12002" recover_span="0" id="22014">
 		<custom_unit_setting unit_setting_id="12002"/>
 	</card>
-	<card name="中立矮人族火枪手" card_class="summon" cost="木头:30" unit_id="12003" recover_span="0" id="124">
+	<card name="中立矮人族火枪手" card_class="summon" cost="木头:30" unit_id="12003" recover_span="0" id="22015">
 		<custom_unit_setting unit_setting_id="12003"/>
 	</card>
-	<card name="中立精灵族弓箭手" card_class="summon" cost="木头:20" unit_id="12004" recover_span="0" id="125">
+	<card name="中立精灵族弓箭手" card_class="summon" cost="木头:20" unit_id="12004" recover_span="0" id="22016">
 		<custom_unit_setting unit_setting_id="12004"/>
 	</card>
-	<card name="兽族攻城车" card_class="summon" cost="木头:20" unit_id="12017" recover_span="0" id="126">
+	<card name="兽族攻城车" card_class="summon" cost="木头:20" unit_id="12017" recover_span="0" id="22017">
 		<custom_unit_setting unit_setting_id="12017"/>
 	</card>
-	<card name="月之骑士" card_class="summon" cost="木头:20" unit_id="12018" recover_span="0" id="127">
+	<card name="月之骑士" card_class="summon" cost="木头:20" unit_id="12018" recover_span="0" id="22018">
 		<custom_unit_setting unit_setting_id="12018"/>
 	</card>
 <!-- 第一版单位：英雄部分 -->
-	<card name="人族盾牌队长" card_class="summon" cost="木头:0" unit_id="11000" recover_span="0" id="128">
+	<card name="人族盾牌队长" card_class="summon" cost="木头:0" unit_id="11000" recover_span="0" id="21100">
 		<custom_unit_setting unit_setting_id="11000"/>
 	</card>
-	<card name="人族剑士队长" card_class="summon" cost="木头:0" unit_id="11001" recover_span="0" id="129">
+	<card name="人族剑士队长" card_class="summon" cost="木头:0" unit_id="11001" recover_span="0" id="21101">
 		<custom_unit_setting unit_setting_id="11001"/>
 	</card>
-	<card name="人族弓箭队长" card_class="summon" cost="木头:0" unit_id="11002" recover_span="0" id="130">
+	<card name="人族弓箭队长" card_class="summon" cost="木头:0" unit_id="11002" recover_span="0" id="21102">
 		<custom_unit_setting unit_setting_id="11002"/>
 	</card>
-	<card name="人族大法师" card_class="summon" cost="木头:0" unit_id="11003" recover_span="0" id="131">
+	<card name="人族大法师" card_class="summon" cost="木头:0" unit_id="11003" recover_span="0" id="21103">
 		<custom_unit_setting unit_setting_id="11003"/>
 	</card>
-	<card name="人族秘法大师" card_class="summon" cost="木头:0" unit_id="11004" recover_span="0" id="132">
+	<card name="人族秘法大师" card_class="summon" cost="木头:0" unit_id="11004" recover_span="0" id="21104">
 		<custom_unit_setting unit_setting_id="11004"/>
 	</card>
-	<card name="魔族骷髅王子" card_class="summon" cost="木头:0" unit_id="11005" recover_span="0" id="133">
+	<card name="魔族骷髅王子" card_class="summon" cost="木头:0" unit_id="11005" recover_span="0" id="21105">
 		<custom_unit_setting unit_setting_id="11005"/>
 	</card>
-	<card name="魔族食尸鬼王" card_class="summon" cost="木头:0" unit_id="11006" recover_span="0" id="134">
+	<card name="魔族食尸鬼王" card_class="summon" cost="木头:0" unit_id="11006" recover_span="0" id="21106">
 		<custom_unit_setting unit_setting_id="11006"/>
 	</card>
-	<card name="魔族地狱战舰" card_class="summon" cost="木头:0" unit_id="11007" recover_span="0" id="135">
+	<card name="魔族地狱战舰" card_class="summon" cost="木头:0" unit_id="11007" recover_span="0" id="21107">
 		<custom_unit_setting unit_setting_id="11008"/>
 	</card>
-	<card name="魔族黑传教士" card_class="summon" cost="木头:0" unit_id="11008" recover_span="0" id="136">
+	<card name="魔族黑传教士" card_class="summon" cost="木头:0" unit_id="11008" recover_span="0" id="21108">
 		<custom_unit_setting unit_setting_id="11008"/>
 	</card>
-	<card name="魔族梦魇精华" card_class="summon" cost="木头:0" unit_id="11009" recover_span="0" id="137">
+	<card name="魔族梦魇精华" card_class="summon" cost="木头:0" unit_id="11009" recover_span="0" id="21109">
 		<custom_unit_setting unit_setting_id="11009"/>
 	</card>
-	<card name="中立兽族斧王" card_class="summon" cost="木头:0" unit_id="11010" recover_span="0" id="138">
+	<card name="中立兽族斧王" card_class="summon" cost="木头:0" unit_id="11010" recover_span="0" id="21110">
 		<custom_unit_setting unit_setting_id="11010"/>
 	</card>
-	<card name="中立兽族食人鬼王" card_class="summon" cost="木头:0" unit_id="11011" recover_span="0" id="139">
+	<card name="中立兽族食人鬼王" card_class="summon" cost="木头:0" unit_id="11011" recover_span="0" id="21111">
 		<custom_unit_setting unit_setting_id="11011"/>
 	</card>
 	

@@ -14,8 +14,16 @@ using namespace std;
 static const string TypeSeparator("|");
 static const string ElementSeparator(";");
 
+struct DeckData::CardInfo {
+    Type type;
+    int idx;
+};
+
 DeckData::DeckData(const string& serializedString)
 {
+    _cards.insert(make_pair(Type::Hero, vector<int>()));
+    _cards.insert(make_pair(Type::Soldier, vector<int>()));
+    
     if (serializedString.size() > 0) {
         vector<string> msgs;
         Utils::split(msgs, serializedString, TypeSeparator);
@@ -26,49 +34,39 @@ DeckData::DeckData(const string& serializedString)
     }
 }
 
-DeckData::DeckData(const DeckData* instance)
-{
-    clone(instance);
-}
-
 DeckData::~DeckData() {}
 
-void DeckData::clone(const DeckData* instance)
+const vector<int>& DeckData::getCards(Type type) const
 {
-    if (instance) {
-        const auto& cardsMap(instance->_cards);
-        for (auto iter = begin(cardsMap); iter != end(cardsMap); ++iter) {
-            const auto& type(iter->first);
-            auto& cards(getMutableCards(type));
-            const auto& value(iter->second);
-            for (int i = 0; i < value.size(); ++i) {
-                cards.push_back(value.at(i));
-            }
-        }
+    return _cards.at(type);
+}
+
+void DeckData::use(int used, int replaced)
+{
+    if (!use(Type::Hero, used, replaced)) {
+        use(Type::Soldier, used, replaced);
     }
 }
 
-const vector<int>& DeckData::getCards(Type type)
+void DeckData::exchange(int from, int to)
 {
-    return getMutableCards(type);
-}
-
-void DeckData::insert(Type type, ssize_t idx, int card)
-{
-    auto& cards(getMutableCards(type));
-    if (idx < cards.size()) {
-        cards.at(idx) = card;
-    }
-}
-
-void DeckData::exchange(Type type, ssize_t idx1, ssize_t idx2)
-{
-    auto& cards(getMutableCards(type));
-    const auto cnt = cards.size();
-    if (idx1 < cnt && idx2 < cnt) {
-        const auto name1 = cards.at(idx1);
-        cards.at(idx1) = cards.at(idx2);
-        cards.at(idx2) = name1;
+    CardInfo c1 = getInfo(from);
+    CardInfo c2 = getInfo(to);
+    
+    if (c1.type == c2.type) {
+        if (Type::None != c1.type) {
+            auto& cards(_cards.at(c1.type));
+            cards.at(c1.idx) = to;
+            cards.at(c2.idx) = from;
+        } else { assert(false); }
+    } else {
+        if (Type::None != c1.type) {
+            _cards.at(c1.type).at(c1.idx) = to;
+        } else { assert(false); }
+        
+        if (Type::None != c2.type) {
+            _cards.at(c2.type).at(c2.idx) = from;
+        } else { assert(false); }
     }
 }
 
@@ -76,7 +74,7 @@ void DeckData::serialize(string& output)
 {
     output.clear();
     
-    auto& heroes(getMutableCards(Type::Hero));
+    auto& heroes(_cards.at(Type::Hero));
     // serialized string like this:
     // hero1;hero2;...heroN|spell1;spell2;...spellN
     for (int i = 0; i < heroes.size(); ++i) {
@@ -87,7 +85,7 @@ void DeckData::serialize(string& output)
     
     output += TypeSeparator;
     
-    auto& soldiers(getMutableCards(Type::Soldier));
+    auto& soldiers(_cards.at(Type::Soldier));
     for (int i = 0; i < soldiers.size(); ++i) {
         output += to_string(soldiers.at(i)) + ElementSeparator;
     }
@@ -97,33 +95,51 @@ void DeckData::serialize(string& output)
     }
 }
 
-vector<int>& DeckData::getMutableCards(Type type)
-{
-    if (_cards.find(type) == end(_cards)) {
-        _cards.insert(make_pair(type, vector<int>()));
-    }
-    
-    return _cards.at(type);
-}
-
 void DeckData::parse(Type type, const string& input)
 {
     if (!input.empty()) {
         vector<string> outputs;
         Utils::split(outputs, input, ElementSeparator);
-        auto& cards(getMutableCards(type));
+        auto& cards(_cards.at(type));
         for (int i = 0; i < outputs.size(); ++i) {
             cards.push_back(atoi(outputs.at(i).c_str()));
         }
     }
 }
 
-void DeckData::remove(Type type, ssize_t idx)
+DeckData::CardInfo DeckData::getInfo(int card) const
+{
+    for (auto iter = begin(_cards); iter != end(_cards); ++iter) {
+        const auto& cv(iter->second);
+        for (int i = 0; i < cv.size(); ++i) {
+            if (cv.at(i) == card) {
+                return {iter->first, i};
+            }
+        }
+    }
+    
+    return {Type::None, -1};
+}
+
+bool DeckData::use(Type type, int used, int replaced)
+{
+    auto& cards(_cards.at(type));
+    for (int i = 0; i < cards.size(); ++i) {
+        if (replaced == cards.at(i)) {
+            cards.at(i) = used;
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+void DeckData::remove(Type type, int card)
 {
     int i = 0;
-    auto& cards(getMutableCards(type));
+    auto& cards(_cards.at(type));
     for (auto iter = begin(cards); iter != end(cards); ++iter, ++i) {
-        if (i == idx) {
+        if (card == (*iter)) {
             cards.erase(iter);
             break;
         }

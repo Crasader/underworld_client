@@ -11,7 +11,7 @@
 
 #include "json/document.h"
 #include <unordered_map>
-#include <set>
+#include <vector>
 
 class DeckData;
 class CardSimpleData;
@@ -20,26 +20,39 @@ class DeckManager
 {
 public:
     static constexpr int DecksMaxCount = 3;
+    static const std::string SortNotification;
+    
+    enum class SortType {
+        Default,
+        Rarity,
+        Elixir,
+        Dungeon
+    };
     
     static DeckManager* getInstance();
     static void purge();
     
+    // TODO: remove the test method
+    static CardSimpleData* createFakeData(int card);
+    
     void parse(const rapidjson::Value& jsonDict);
     
-    int getDefaultDeckId() const;
-    void setDefaultDeckId(int value);
+    int getThisDeckId() const;
+    void loadDeck(int idx);
     
-    DeckData* getDeckData(int idx) const;
-    void setDeckData(int idx, const DeckData* data);
-    void saveDeckData(int idx);
+    SortType getSortType() const;
+    void setSortType(SortType type);
     
-    DeckData* getDefaultDeckData() const;
-    void saveDefaultDeckData();
+    const DeckData* getThisDeckData() const;
+    void saveThisDeckData();
     
-    const std::unordered_map<int, CardSimpleData*>& getFoundCards() const;
-    const std::set<int>& getUnfoundCards() const;
+    size_t getAllFoundCardsCount() const;
+    const CardSimpleData* getCardData(int card) const;
+    const std::vector<int>& getFoundCards() const;
+    const std::vector<int>& getUnfoundCards() const;
     
     void useCard(int used, int replaced);
+    void exchangeCard(int from, int to);
     void findCard(int card);
     
 private:
@@ -48,11 +61,19 @@ private:
     DeckManager(const DeckManager &) = delete; 
     DeckManager &operator =(const DeckManager &) = delete;
     
+    DeckData* getDeckData(int idx) const;
+    void loadThisDeck();
+    void saveDeckData(int idx);
+    void sortFoundCards();
+    
 private:
     int _defaultId;
+    DeckData* _defaultDeckData;
+    SortType _sortType;
     std::unordered_map<int, DeckData*> _decks;
-    std::unordered_map<int, CardSimpleData*> _foundCards;
-    std::set<int> _unfoundCards;
+    std::unordered_map<int, CardSimpleData*> _allFoundCards;
+    std::vector<int> _foundCards;
+    std::vector<int> _unfoundCards;
 };
 
 #endif /* DeckManager_h */

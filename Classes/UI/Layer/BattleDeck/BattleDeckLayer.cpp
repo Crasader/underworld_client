@@ -16,6 +16,7 @@
 #include "DeckManager.h"
 #include "TabButton.h"
 #include "UniversalButton.h"
+#include <unordered_set>
 
 using namespace std;
 
@@ -44,6 +45,43 @@ static const float foundSpaceBottom(30);
 static const float unfoundSpaceTop(20);
 static const float unfoundSpaceBottom(40);
 
+static const vector<DeckManager::SortType> sortTypes = {
+    DeckManager::SortType::Default,
+    DeckManager::SortType::Rarity,
+    DeckManager::SortType::Elixir,
+    DeckManager::SortType::Dungeon
+};
+
+static int getSortTypeIdx(DeckManager::SortType type)
+{
+    for (int i = 0; i < sortTypes.size(); ++i) {
+        if (sortTypes.at(i) == type) {
+            return i;
+        }
+    }
+    
+    return -1;
+}
+
+static string getSortTypeName(int idx)
+{
+    idx = MAX(MIN((int)sortTypes.size() - 1, idx), 0);
+    
+    auto type(sortTypes.at(idx));
+    switch (type) {
+        case DeckManager::SortType::Default:
+            return LocalHelper::getString("ui_deck_sort_default");
+        case DeckManager::SortType::Rarity:
+            return LocalHelper::getString("ui_deck_sort_rarity");
+        case DeckManager::SortType::Elixir:
+            return LocalHelper::getString("ui_deck_sort_elixir");
+        case DeckManager::SortType::Dungeon:
+            return LocalHelper::getString("ui_deck_sort_dungeon");
+        default:
+            return "";
+    }
+}
+
 #if DECKLAYER_ENABLE_TYPE_FILTER
 static const vector<DeckTabType> cardTabs = {
     DeckTabType::All,
@@ -53,17 +91,10 @@ static const vector<DeckTabType> cardTabs = {
 };
 #endif
 
-enum class BattleDeckLayer::SortType {
-    Default,
-    Rarity,
-    Elixir,
-    Dungeon
-};
-
 template<typename _Type>
-static void clearCardSet(unordered_set<_Type>& s)
+static void clearVector(vector<_Type>& v)
 {
-    for (auto iter = begin(s); iter != end(s); ++iter) {
+    for (auto iter = begin(v); iter != end(v); ++iter) {
         Node* node = dynamic_cast<Node*>(*iter);
         if (node) {
             node->removeFromParent();
@@ -73,24 +104,8 @@ static void clearCardSet(unordered_set<_Type>& s)
         }
     }
     
-    s.clear();
+    v.clear();
 }
-
-#pragma mark - Candidate
-class BattleDeckLayer::Candidate
-{
-public:
-    Candidate() {}
-    virtual ~Candidate() {
-        for (int i = 0; i < foundCards.size(); ++i) {
-            CC_SAFE_DELETE(foundCards.at(i));
-        }
-    }
-    
-public:
-    vector<CardSimpleData*> foundCards;
-    vector<int> unfoundCards;
-};
 
 #pragma mark - BattleDeckLayer
 BattleDeckLayer* BattleDeckLayer::create()
@@ -110,8 +125,6 @@ BattleDeckLayer::BattleDeckLayer()
 ,_background(nullptr)
 #if DECKLAYER_ENABLE_TYPE_FILTER
 ,_thisCardType(DeckTabType::None)
-#else
-,_candidates(nullptr)
 #endif
 ,_cardsCountLabel(nullptr)
 ,_averageElixirLabel(nullptr)
@@ -124,19 +137,12 @@ BattleDeckLayer::BattleDeckLayer()
 ,_usedCard(nullptr)
 ,_usedCardPoint(Point::ZERO)
 ,_thisDeckIdx(-1)
-,_thisDeckData(nullptr)
 ,_isEditing(false)
-,_thisSortIdx(0) {}
+,_thisSortIdx(getSortTypeIdx(DeckManager::getInstance()->getSortType())) {}
 
 BattleDeckLayer::~BattleDeckLayer()
 {
     removeAllChildren();
-    
-    clearCandidates();
-    
-    for (auto iter = begin(_editedDeckData); iter != end(_editedDeckData); ++iter) {
-        CC_SAFE_DELETE(iter->second);
-    }
 }
 
 void BattleDeckLayer::registerObserver(BattleDeckLayerObserver *observer)
@@ -155,6 +161,7 @@ bool BattleDeckLayer::init()
         _background = bg;
         
         CocosUtils::createRedExitButton(bg, [this]() {
+            DeckManager::getInstance()->saveThisDeckData();
             removeFromParent();
         });
         
@@ -167,32 +174,28 @@ bool BattleDeckLayer::init()
         
         createLeftNode();
         createRightNode();
-        updateCardsCount(0);
+        updateCardsCount();
         updateAverageElixir();
         
         // deck
-        const auto idx(MAX(MIN(DeckManager::DecksMaxCount, DeckManager::getInstance()->getDefaultDeckId()), 1));
-        loadDeck(idx);
+        const int deckId(DeckManager::getInstance()->getThisDeckId());
+        loadDeck(deckId);
         
         // scroll view
-        initPositions();
-        initCandidates();
+        loadCandidates();
 #if DECKLAYER_ENABLE_TYPE_FILTER
         setCardType(DeckTabType::All);
-#else
-        loadCandidates(_candidates);
 #endif
-        
-        if (true) {
-            _thisSortIdx = -1;
-            setNextSortType();
-        }
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
         eventListener->onTouchBegan = CC_CALLBACK_2(BattleDeckLayer::onTouchBegan, this);
         eventListener->onTouchEnded = CC_CALLBACK_2(BattleDeckLayer::onTouchEnded, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
+        
+        _eventDispatcher->addCustomEventListener(DeckManager::SortNotification, [this](EventCustom *event) {
+            onReceivedManagerNotifications(event->getEventName());
+        });
         
         return true;
     }
@@ -233,8 +236,7 @@ void BattleDeckLayer::onDeckCardTouched(DeckCard* touchedCard, ui::Widget::Touch
                     if (replacedCard == _usedCard) {
                         useCard(replacedCard, touchedCard, _cardOriginalPoint);
                     } else {
-                        move(touchedCard, replacedCard->getPosition(), nullptr);
-                        move(replacedCard, _cardOriginalPoint, nullptr);
+                        exchangeCard(touchedCard, replacedCard);
                     }
                 } else {
                     move(touchedCard, _cardOriginalPoint, nullptr);
@@ -300,9 +302,10 @@ void BattleDeckLayer::createLeftNode()
             for (int i = 0; i < DeckManager::DecksMaxCount; ++i) {
                 static const auto normal(CocosUtils::getResourcePath("button_lanse_2.png"));
                 static const auto selected(CocosUtils::getResourcePath("button_lvse_3.png"));
-                const auto idx(DeckManager::DecksMaxCount - i);
-                const string title = StringUtils::format("%d", idx);
+                const auto idx(DeckManager::DecksMaxCount - i - 1);
+                const string title = StringUtils::format("%d", idx + 1);
                 auto button = TabButton::create(title, normal, selected, [this, idx](Ref*) {
+                    DeckManager::getInstance()->saveThisDeckData();
                     loadDeck(idx);
                 });
                 bar->addChild(button);
@@ -328,14 +331,13 @@ void BattleDeckLayer::createLeftNode()
             for (int i = 0; i < column; ++i) {
                 static const float cardSpaceX(20);
                 static const float basePosX((subSize.width - (column * DeckCard::Width + (column - 1) * cardSpaceX)) / 2);
-                auto card = createFoundCard(nullptr);
-                card->setIsHero(true);
+                auto card = createFoundCard(0);
                 card->setInDeck(true);
                 const float x = basePosX + (i + 0.5) * DeckCard::Width + i * cardSpaceX;
                 const float y = line->getPositionY() - (line->getContentSize().height / 2 + spaceLineCard + DeckCard::Height / 2);
                 card->setPosition(Point(x, y));
                 node->addChild(card);
-                _heroCards.insert(card);
+                _deckCards.push_back(card);
             }
         }
         
@@ -380,14 +382,13 @@ void BattleDeckLayer::createLeftNode()
                 for (int j = 0; j < column; ++j) {
                     static const float cardSpaceX(5);
                     static const float basePosX((subSize.width - (column * DeckCard::Width + (column - 1) * cardSpaceX)) / 2);
-                    auto card = createFoundCard(nullptr);
-                    card->setIsHero(false);
+                    auto card = createFoundCard(0);
                     card->setInDeck(true);
                     const float x = basePosX + (j + 0.5) * DeckCard::Width + j * cardSpaceX;
                     const float y = basePosY - (i + 0.5) * DeckCard::Height - i * cardSpaceY;
                     card->setPosition(Point(x, y));
                     node->addChild(card);
-                    _nonheroCards.insert(card);
+                    _deckCards.push_back(card);
                 }
             }
         }
@@ -448,7 +449,7 @@ void BattleDeckLayer::createRightNode()
 #endif
             
             {
-                _sortTypeButton = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, "By Rarity");
+                _sortTypeButton = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, getSortTypeName(_thisSortIdx));
                 _sortTypeButton->setCallback([this](Ref*) {
                     setNextSortType();
                 });
@@ -490,17 +491,17 @@ void BattleDeckLayer::createRightNode()
     }
 }
 
-DeckCard* BattleDeckLayer::createFoundCard(const CardSimpleData* data)
+DeckCard* BattleDeckLayer::createFoundCard(int card)
 {
-    auto card = DeckCard::create(data);
-    card->registerObserver(this);
-    return card;
+    auto node = DeckCard::create(card);
+    node->registerObserver(this);
+    return node;
 }
 
-Node* BattleDeckLayer::createUnfoundCard(int cid) const
+Node* BattleDeckLayer::createUnfoundCard(int card) const
 {
-    auto card = DeckCard::create(nullptr);
-    return card;
+    auto node = DeckCard::create(0);
+    return node;
 }
 
 Node* BattleDeckLayer::createLine(bool isHero) const
@@ -564,8 +565,7 @@ void BattleDeckLayer::showOpNode(DeckCard* card)
         }
         
         _opNode->setCard(card);
-        if (_heroCards.find(card) != end(_heroCards) ||
-            _nonheroCards.find(card) != end(_nonheroCards)) {
+        if (find(_deckCards, card)) {
             _opNode->setTypes({DeckCardOpType::Info});
         } else {
             _opNode->setTypes({DeckCardOpType::Info, DeckCardOpType::Use});
@@ -606,14 +606,14 @@ void BattleDeckLayer::beginEdit(DeckCard* pickedCard)
     // create card
     if (pickedCard) {
         _usedCard = pickedCard;
-        auto parent = (*_heroCards.begin())->getParent();
+        auto parent = (*_deckCards.begin())->getParent();
         readdChild(parent, pickedCard);
         _usedCardPoint = pickedCard->getPosition();
         
-        shake({_heroCards, _nonheroCards, {_usedCard}});
+        shake({_deckCards, {_usedCard}});
     } else {
         _usedCard = nullptr;
-        shake({_heroCards, _nonheroCards});
+        shake({_deckCards});
     }
 }
 
@@ -629,10 +629,10 @@ void BattleDeckLayer::endEdit()
     stopShake();
 }
 
-void BattleDeckLayer::updateCardsCount(int count)
+void BattleDeckLayer::updateCardsCount()
 {
     if (_cardsCountLabel) {
-        _cardsCountLabel->setString(LocalHelper::getString("ui_deck_progress") + StringUtils::format("%d/%d", count, 50));
+        _cardsCountLabel->setString(LocalHelper::getString("ui_deck_progress") + StringUtils::format("%ld/%d", DeckManager::getInstance()->getAllFoundCardsCount(), 50));
     }
 }
 
@@ -643,9 +643,29 @@ void BattleDeckLayer::updateAverageElixir()
     }
 }
 
+void BattleDeckLayer::onReceivedManagerNotifications(const string& notification)
+{
+    if (DeckManager::SortNotification == notification) {
+        const auto& found(DeckManager::getInstance()->getFoundCards());
+        CC_ASSERT(found.size() == _foundCards.size());
+        for (int i = 0; i < _foundCards.size(); ++i) {
+            if (i < found.size()) {
+                _foundCards.at(i)->update(found.at(i));
+            }
+        }
+    }
+}
+
 void BattleDeckLayer::exchangeCard(DeckCard* from, DeckCard* to)
 {
-    
+    if (from && to) {
+        move(from, to->getPosition(), nullptr);
+        move(to, _cardOriginalPoint, nullptr);
+        
+        exchange(_deckCards, from, to);
+        
+        DeckManager::getInstance()->exchangeCard(from->getCardId(), to->getCardId());
+    }
 }
 
 void BattleDeckLayer::useCard(DeckCard* touchedCard, DeckCard* replaced, const Point& point)
@@ -662,15 +682,11 @@ void BattleDeckLayer::useCard(DeckCard* touchedCard, DeckCard* replaced, const P
         
         endEdit();
         
-        if (_heroCards.find(replaced) != end(_heroCards)) {
-            _heroCards.erase(replaced);
-            _heroCards.insert(touchedCard);
-        } else if (_nonheroCards.find(replaced) != end(_nonheroCards)) {
-            _nonheroCards.erase(replaced);
-            _nonheroCards.insert(touchedCard);
-        }
+        replace(_deckCards, touchedCard, replaced);
+        // TODO:
+        replace(_foundCards, replaced, touchedCard);
         
-        _foundCards.insert(replaced);
+        DeckManager::getInstance()->useCard(touchedCard->getCardId(), replaced->getCardId());
     }
 }
 
@@ -707,7 +723,7 @@ void BattleDeckLayer::move(Node* node, const Point& point, const function<void()
     }
 }
 
-void BattleDeckLayer::shake(const vector<unordered_set<DeckCard*>>& nodes)
+void BattleDeckLayer::shake(const vector<vector<DeckCard*>>& nodes)
 {
     for (int i = 0; i < nodes.size(); ++i) {
         auto& set(nodes.at(i));
@@ -722,8 +738,8 @@ void BattleDeckLayer::shake(const vector<unordered_set<DeckCard*>>& nodes)
 
 void BattleDeckLayer::stopShake()
 {
-    vector<unordered_set<DeckCard*>> nodes = {
-        _heroCards, _nonheroCards, {_usedCard}
+    vector<vector<DeckCard*>> nodes = {
+        _deckCards, {_usedCard}
     };
     
     for (int i = 0; i < nodes.size(); ++i) {
@@ -758,23 +774,20 @@ void BattleDeckLayer::readdChild(Node* parent, Node* child) const
 DeckCard* BattleDeckLayer::getIntersectedCard(const DeckCard* touchedCard) const
 {
     if (touchedCard) {
-        float harea(INT_MAX);
-        auto hero = getIntersectedCard(touchedCard, _heroCards, harea);
+        float unused(INT_MAX);
+        auto card = getIntersectedCard(touchedCard, _deckCards, unused);
         
-        float narea(INT_MAX);
-        auto nonhero = getIntersectedCard(touchedCard, _nonheroCards, narea);
-        
-        if (hero || nonhero) {
-            return (harea < narea) ? hero : nonhero;
+        if (card) {
+            return card;
         } else if (_usedCard) {
-            return getIntersectedCard(touchedCard, {_usedCard}, narea);
+            return getIntersectedCard(touchedCard, {_usedCard}, unused);
         }
     }
     
     return nullptr;
 }
 
-DeckCard* BattleDeckLayer::getIntersectedCard(const DeckCard* touchedCard, const unordered_set<DeckCard*>& cards, float& intersectedArea) const
+DeckCard* BattleDeckLayer::getIntersectedCard(const DeckCard* touchedCard, const vector<DeckCard*>& cards, float& intersectedArea) const
 {
     if (nullptr == touchedCard || 0 == cards.size()) {
         return nullptr;
@@ -834,74 +847,64 @@ Point BattleDeckLayer::getPosition(int row, int column) const
 }
 
 #pragma mark - functions
-void BattleDeckLayer::initPositions()
+bool BattleDeckLayer::find(const vector<DeckCard*>& cards, const DeckCard* data) const
 {
+    for (const DeckCard* type : cards) {
+        if (type == data) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+bool BattleDeckLayer::replace(vector<DeckCard*>& cards, DeckCard* used, DeckCard* replaced) const
+{
+    if (used && replaced && used != replaced) {
+        for (int i = 0; i < cards.size(); ++i) {
+            if (replaced == cards.at(i)) {
+                cards.at(i) = used;
+                return true;
+            }
+        }
+    }
+    
+    return false;
+}
+
+void BattleDeckLayer::exchange(vector<DeckCard*>& cards, DeckCard* from, DeckCard* to) const
+{
+    if (from && to && from != to) {
+        int idxFrom(-1);
+        int idxTo(-1);
+        
+        for (int i = 0; i < cards.size(); ++i) {
+            if (from == cards.at(i)) {
+                idxFrom = i;
+            } else if (to == cards.at(i)) {
+                idxTo = i;
+            }
+            
+            if (idxFrom >= 0 && idxTo >= 0) {
+                break;
+            }
+        }
+        
+        if (idxFrom >= 0 && idxTo >= 0) {
+            cards.at(idxFrom) = to;
+            cards.at(idxTo) = from;
+        }
+    }
+}
+
+void BattleDeckLayer::loadCandidates()
+{
+    clearVector(_foundCards);
+    clearVector(_unfoundCards);
     _foundPositions.clear();
     
-    const auto cnt = DeckManager::getInstance()->getFoundCards().size();
-    for (int i = 0; i < cnt; ++i) {
-        auto pos = getPosition(i / candidateColumn, i % candidateColumn);
-        _foundPositions.push_back(pos + Point(0, foundSpaceTop));
-    }
-}
-
-void BattleDeckLayer::initCandidates()
-{
-    clearCandidates();
-    
-#if DECKLAYER_ENABLE_TYPE_FILTER
-    for (int i = 0; i < cardTabs.size(); ++i) {
-        _candidates.insert(make_pair(cardTabs.at(i), new (nothrow) Candidate()));
-    }
-#else
-    _candidates = new (nothrow) Candidate();
-#endif
-    
-    {
-        const auto& found = DeckManager::getInstance()->getFoundCards();
-        for (auto it = begin(found); it != end(found); ++it) {
-#if DECKLAYER_ENABLE_TYPE_FILTER
-            // TODO: remove test code
-            for (auto iter = begin(_candidates); iter != end(_candidates); ++iter) {
-                auto candidate(iter->second);
-                auto data(*it);
-                candidate->foundCards.push_back(new (nothrow) CardSimpleData(data));
-                candidate->unfoundCards.push_back(data->getName());
-            }
-#else
-            _candidates->foundCards.push_back(new (nothrow) CardSimpleData(it->second));
-#endif
-        }
-    }
-    
-    {
-        const auto& unfound = DeckManager::getInstance()->getUnfoundCards();
-        for (auto it = begin(unfound); it != end(unfound); ++it) {
-            _candidates->unfoundCards.push_back(*it);
-        }
-    }
-}
-
-void BattleDeckLayer::clearCandidates()
-{
-#if DECKLAYER_ENABLE_TYPE_FILTER
-    for (auto iter = begin(_candidates); iter != end(_candidates); ++iter) {
-        CC_SAFE_DELETE(iter->second);
-    }
-    
-    _candidates.clear();
-#else
-    CC_SAFE_DELETE(_candidates);
-#endif
-}
-
-void BattleDeckLayer::loadCandidates(Candidate* candidates)
-{
-    clearCardSet(_foundCards);
-    clearCardSet(_unfoundCards);
-    
-    const auto& found(candidates->foundCards);
-    const auto& unfound(candidates->unfoundCards);
+    const auto& found(DeckManager::getInstance()->getFoundCards());
+    const auto& unfound(DeckManager::getInstance()->getUnfoundCards());
     
     const float width(_scrollView->getContentSize().width);
     const float h1 = getHeight(found.size(), cardSpaceY);
@@ -915,10 +918,11 @@ void BattleDeckLayer::loadCandidates(Candidate* candidates)
         auto card = createFoundCard(found.at(i));
         card->setInDeck(false);
         _scrollView->addChild(card);
-        _foundCards.insert(card);
+        _foundCards.push_back(card);
         
-        const auto& point(_foundPositions.at(i));
+        auto point = getPosition(i / candidateColumn, i % candidateColumn);
         card->setPosition(Point(point.x, height - point.y));
+        _foundPositions.push_back(point + Point(0, foundSpaceTop));
     }
     
     // hint
@@ -930,21 +934,13 @@ void BattleDeckLayer::loadCandidates(Candidate* candidates)
         // the unfound cards
         for (int i = 0; i < unfound.size(); ++i) {
             auto node = createUnfoundCard(unfound.at(i));
-            (dynamic_cast<DeckCard*>(node))->setIsHero(true);
             _scrollView->addChild(node);
-            _unfoundCards.insert(node);
+            _unfoundCards.push_back(node);
             
             const auto& point = getPosition(i / candidateColumn, i % candidateColumn);
             node->setPosition(Point(point.x, h2 + unfoundSpaceBottom - point.y));
         }
     }
-}
-
-void BattleDeckLayer::saveThisDeck()
-{
-    auto dm(DeckManager::getInstance());
-    dm->setDeckData(_thisDeckIdx, _thisDeckData);
-    dm->saveDeckData(_thisDeckIdx);
 }
 
 void BattleDeckLayer::loadDeck(int idx)
@@ -957,46 +953,41 @@ void BattleDeckLayer::loadDeck(int idx)
             iter->second->setEnabled(idx != iter->first);
         }
         
-        if (_editedDeckData.find(idx) == end(_editedDeckData)) {
-            auto dd = DeckManager::getInstance()->getDeckData(idx);
-            _editedDeckData.insert(make_pair(idx, new (nothrow) DeckData(dd)));
+        DeckManager::getInstance()->loadDeck(idx);
+        
+        auto data(DeckManager::getInstance()->getThisDeckData());
+        
+        static const vector<DeckData::Type> types = {
+            DeckData::Type::Hero, DeckData::Type::Soldier
+        };
+        size_t cnt(0);
+        for ( int i = 0; i < types.size(); ++i) {
+            const auto& cards(data->getCards(types.at(i)));
+            for (int j = 0; j < cards.size(); ++j) {
+                const auto idx(j + cnt);
+                if (idx < _deckCards.size()) {
+                    _deckCards.at(idx)->update(cards.at(j));
+                }
+            }
+            cnt += cards.size();
         }
-        
-        _thisDeckData = _editedDeckData.at(idx);
-        
-        // heroes
-        
-        
-        // soldiers
     }
-}
-
-void BattleDeckLayer::setDefaultDeck()
-{
-    DeckManager::getInstance()->setDefaultDeckId(_thisDeckIdx);
 }
 
 void BattleDeckLayer::setNextSortType()
 {
-    static const vector<BattleDeckLayer::SortType> types = {
-        BattleDeckLayer::SortType::Default,
-        BattleDeckLayer::SortType::Rarity,
-        BattleDeckLayer::SortType::Elixir,
-        BattleDeckLayer::SortType::Dungeon
-    };
-    
-    int nextIdx = _thisSortIdx + 1;
-    if (nextIdx >= types.size()) {
+    int nextIdx = MAX(0, _thisSortIdx + 1);
+    if (nextIdx >= sortTypes.size()) {
         nextIdx = 0;
     }
     
     _thisSortIdx = nextIdx;
     
     if (_sortTypeButton) {
-        _sortTypeButton->setTitle(getSortTypeName(types.at(nextIdx)));
+        _sortTypeButton->setTitle(getSortTypeName(_thisSortIdx));
     }
     
-    // TODO: sort
+    DeckManager::getInstance()->setSortType(sortTypes.at(_thisSortIdx));
 }
 
 #if DECKLAYER_ENABLE_TYPE_FILTER
@@ -1031,19 +1022,3 @@ string BattleDeckLayer::getCardTabName(DeckTabType type) const
     }
 }
 #endif
-
-string BattleDeckLayer::getSortTypeName(SortType type) const
-{
-    switch (type) {
-        case SortType::Default:
-            return LocalHelper::getString("ui_deck_sort_default");
-        case SortType::Rarity:
-            return LocalHelper::getString("ui_deck_sort_rarity");
-        case SortType::Elixir:
-            return LocalHelper::getString("ui_deck_sort_elixir");
-        case SortType::Dungeon:
-            return LocalHelper::getString("ui_deck_sort_dungeon");
-        default:
-            return "";
-    }
-}

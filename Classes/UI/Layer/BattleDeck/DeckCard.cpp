@@ -9,16 +9,18 @@
 #include "DeckCard.h"
 #include "CocosUtils.h"
 #include "BattleDeckUI.h"
+#include "DeckManager.h"
 #include "DataManager.h"
+#include "CardConfigData.h"
 #include "CardSimpleData.h"
 #include "CCShake.h"
 
 using namespace std;
 
-DeckCard* DeckCard::create(const CardSimpleData* data)
+DeckCard* DeckCard::create(int cardId)
 {
     auto ret = new (nothrow) DeckCard();
-    if (ret && ret->init(data)) {
+    if (ret && ret->init(cardId)) {
         ret->autorelease();
         return ret;
     }
@@ -32,8 +34,7 @@ DeckCard::DeckCard()
 ,_icon(nullptr)
 ,_costNode(nullptr)
 ,_cost(nullptr)
-,_data(nullptr)
-,_isHero(false)
+,_cardId(0)
 ,_inDeck(false)
 ,_touchInvalid(false)
 ,_iconPoint(Point::ZERO) {}
@@ -43,7 +44,7 @@ DeckCard::~DeckCard()
     removeAllChildren();
 }
 
-bool DeckCard::init(const CardSimpleData* data)
+bool DeckCard::init(int cardId)
 {
     if (Widget::init())
     {
@@ -94,6 +95,8 @@ bool DeckCard::init(const CardSimpleData* data)
             }
         });
         
+        update(cardId);
+        
         return true;
     }
     
@@ -105,21 +108,21 @@ void DeckCard::registerObserver(DeckCardObserver *observer)
     _observer = observer;
 }
 
-void DeckCard::update(const CardSimpleData* data)
+void DeckCard::update(int cardId)
 {
-    if (_data != data) {
-        _data = data;
-    }
-}
-
-// TODO: remove this method
-void DeckCard::setIsHero(bool isHero)
-{
-    if (_isHero != isHero) {
-        _isHero = isHero;
-        static const string file("GameImages/icons/unit/");
-        _icon->setTexture(file + (isHero ? "icon_shirenmo.png" : "icon_fashi.png"));
-        _costNode->setVisible(!isHero);
+    if (_cardId != cardId) {
+        _cardId = cardId;
+        
+        auto data = DeckManager::getInstance()->getCardData(cardId);
+        if (data) {
+            auto cd(DataManager::getInstance()->getCardConfigData(data->getIdx()));
+            if (cd && _icon) {
+                _icon->setTexture(cd->getIcon());
+            }
+            
+            _costNode->setVisible(!data->isHero());
+            _cost->setString(StringUtils::format("%d", data->getCost()));
+        }
     }
 }
 
@@ -130,9 +133,9 @@ void DeckCard::setInDeck(bool inDeck)
     }
 }
 
-const CardSimpleData* DeckCard::getData() const
+int DeckCard::getCardId() const
 {
-    return _data;
+    return _cardId;
 }
 
 static float shake_action_tag = 2016;

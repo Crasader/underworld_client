@@ -15,7 +15,6 @@
 USING_NS_CC;
 
 class DeckCard;
-class CardSimpleData;
 
 class DeckCardObserver
 {
@@ -30,29 +29,27 @@ class DeckCard : public ui::Widget
 public:
     static constexpr float Width = 82;
     static constexpr float Height = 104;
-    static DeckCard* create(const CardSimpleData* data);
+    static DeckCard* create(int cardId);
     virtual ~DeckCard();
     void registerObserver(DeckCardObserver *observer);
     
-    void update(const CardSimpleData* data);
-    void setIsHero(bool isHero);
+    void update(int cardId);
     void setInDeck(bool inDeck);
-    const CardSimpleData* getData() const;
+    int getCardId() const;
     
     void shake();
     void stopShake();
     
 private:
     DeckCard();
-    bool init(const CardSimpleData* data);
+    bool init(int cardId);
     
 private:
     DeckCardObserver* _observer;
     Sprite* _icon;
     Node* _costNode;
     Label* _cost;
-    const CardSimpleData* _data;
-    bool _isHero;
+    int _cardId;
     bool _inDeck;
     bool _touchInvalid;
     Point _iconPoint;
