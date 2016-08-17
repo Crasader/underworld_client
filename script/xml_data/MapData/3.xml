@@ -13,35 +13,38 @@
 			<event_effect class="alter_resource" map_index="1" resource_name="木头" amount="80"/>
 		</event>
 		
-	<!--注释 -->
+		
+	<!--	
+		
+    -->
     </schedule_events>
 	
     <loop_events>
         <event>
             <event_trigger class="loop" time="60" start_time="0" end_time="1800"/>
-            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="6"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="4"/>
         </event>
         <event>
             <event_trigger class="loop" time="60" start_time="0" end_time="1800"/>
-            <event_effect class="alter_resource" map_index="1" resource_name="木头" amount="6"/>
+            <event_effect class="alter_resource" map_index="1" resource_name="木头" amount="4"/>
         </event>
 		
 		  <event>
             <event_trigger class="loop" time="60" start_time="1800" end_time="5400"/>
-            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="8"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="3"/>
         </event>
         <event>
             <event_trigger class="loop" time="60" start_time="1800" end_time="5400"/>
-            <event_effect class="alter_resource" map_index="1" resource_name="木头" amount="8"/>
+            <event_effect class="alter_resource" map_index="1" resource_name="木头" amount="3"/>
         </event>
 		
 		<event>
             <event_trigger class="loop" time="60" start_time="5400" end_time="7200"/>
-            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="12"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="6"/>
         </event>
         <event>
             <event_trigger class="loop" time="60" start_time="5400" end_time="7200"/>
-            <event_effect class="alter_resource" map_index="1" resource_name="木头" amount="12"/>
+            <event_effect class="alter_resource" map_index="1" resource_name="木头" amount="6"/>
         </event>
 		
 	<!--

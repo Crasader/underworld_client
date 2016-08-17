@@ -81,10 +81,10 @@
 		<custom_unit_setting unit_setting_id="12004"/>
 	</card>
 	<card name="兽族攻城车" card_class="summon" cost="木头:20" unit_id="12017" recover_span="0" id="126">
-		<custom_unit_setting unit_setting_id="12004"/>
+		<custom_unit_setting unit_setting_id="12017"/>
 	</card>
 	<card name="月之骑士" card_class="summon" cost="木头:20" unit_id="12018" recover_span="0" id="127">
-		<custom_unit_setting unit_setting_id="12004"/>
+		<custom_unit_setting unit_setting_id="12018"/>
 	</card>
 <!-- 第一版单位：英雄部分 -->
 	<card name="人族盾牌队长" card_class="summon" cost="木头:0" unit_id="11000" recover_span="0" id="128">
