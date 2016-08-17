@@ -8,6 +8,7 @@
 
 #include "FormationData.h"
 #include "Utils.h"
+#include "CoreUtils.h"
 
 using namespace std;
 
@@ -129,7 +130,7 @@ void FormationData::serialize(string& output)
         const auto& coordinate = iter->first;
         output += Utils::format("%d", coordinate.x) + ParameterSeparator;
         output += Utils::format("%d", coordinate.y) + ParameterSeparator;
-        output += to_string(iter->second) + ElementSeparator;
+        output += UnderWorld::Core::UnderWorldCoreUtils::to_string(iter->second) + ElementSeparator;
     }
     
     output = output.substr(0, output.size() - 1);
@@ -137,7 +138,7 @@ void FormationData::serialize(string& output)
     output += TypeSeparator;
     
     for (int i = 0; i < _spells.size(); ++i) {
-        output += to_string(_spells.at(i)) + ElementSeparator;
+        output += UnderWorld::Core::UnderWorldCoreUtils::to_string(_spells.at(i)) + ElementSeparator;
     }
     
     if (TypeSeparator != &output.back() || 1 == output.size()) {

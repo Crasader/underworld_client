@@ -8,6 +8,7 @@
 
 #include "DeckData.h"
 #include "Utils.h"
+#include "CoreUtils.h"
 
 using namespace std;
 
@@ -78,7 +79,7 @@ void DeckData::serialize(string& output)
     // serialized string like this:
     // hero1;hero2;...heroN|spell1;spell2;...spellN
     for (int i = 0; i < heroes.size(); ++i) {
-        output += to_string(heroes.at(i)) + ElementSeparator;
+        output += UnderWorld::Core::UnderWorldCoreUtils::to_string(heroes.at(i)) + ElementSeparator;
     }
     
     output = output.substr(0, output.size() - 1);
@@ -87,7 +88,7 @@ void DeckData::serialize(string& output)
     
     auto& soldiers(_cards.at(Type::Soldier));
     for (int i = 0; i < soldiers.size(); ++i) {
-        output += to_string(soldiers.at(i)) + ElementSeparator;
+        output += UnderWorld::Core::UnderWorldCoreUtils::to_string(soldiers.at(i)) + ElementSeparator;
     }
     
     if (TypeSeparator != &output.back() || 1 == output.size()) {
