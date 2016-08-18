@@ -152,7 +152,7 @@ void HMMGui::init(const Game *game, Commander *commander, WorldRender *worldRend
         static const string file("GameImages/battle_ui/ui_exit_button.png");
         MenuItemImage* exitItem = MenuItemImage::create(file, file, [this](Ref*) {
             MessageBoxLayer::getInstance()->show(LocalHelper::getString("hint_exitPve"), MessageBoxType::YesNo, [this](Ref*) {
-                GameManager::getInstance()->exitGame();
+                GameManager::getGameClient()->exitGame();
                 CocosUtils::replaceScene(MainScene::create(), true);
             });
 

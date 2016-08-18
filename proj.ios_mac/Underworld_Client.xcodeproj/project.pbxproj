@@ -30,6 +30,7 @@
 		047CBF8A1CAFE6AB0035DAF9 /* InstanceHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047CBF881CAFE6AB0035DAF9 /* InstanceHelper.cpp */; };
 		0487A6671CC897F9005FE8D0 /* GameMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0487A6651CC897F9005FE8D0 /* GameMode.cpp */; };
 		0487A66C1CC8A90D005FE8D0 /* GameModeHMM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0487A66A1CC8A90D005FE8D0 /* GameModeHMM.cpp */; };
+		04CE7CBC1D645BD60000B391 /* GameLooper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04CE7CBA1D645BD60000B391 /* GameLooper.cpp */; };
 		1AC6FB21180E996B004C840B /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FAF9180E9839004C840B /* libcocos2d Mac.a */; };
 		1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FB07180E9839004C840B /* libcocos2d iOS.a */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -58,12 +59,8 @@
 		3087FF051C9F9D92004E31F6 /* MagicType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3087FF031C9F9D92004E31F6 /* MagicType.cpp */; };
 		3087FF081C9FD0CB004E31F6 /* Magic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3087FF061C9FD0CB004E31F6 /* Magic.cpp */; };
 		3087FF0F1CA12A57004E31F6 /* TCPClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3087FF0E1CA12A57004E31F6 /* TCPClient.mm */; };
-		3087FF1A1CA2A6B6004E31F6 /* NetworkMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3087FF141CA2A6B6004E31F6 /* NetworkMessage.cpp */; };
-		3087FF1B1CA2A6B6004E31F6 /* ClientNetwork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3087FF161CA2A6B6004E31F6 /* ClientNetwork.cpp */; };
-		3087FF311CA2BF5A004E31F6 /* ClientTCPNetworkProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3087FF2D1CA2BF5A004E31F6 /* ClientTCPNetworkProxy.cpp */; };
-		3087FF321CA2BF5A004E31F6 /* UnderworldClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3087FF2F1CA2BF5A004E31F6 /* UnderworldClient.cpp */; };
+		3087FF311CA2BF5A004E31F6 /* ClientTCPNetwork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3087FF2D1CA2BF5A004E31F6 /* ClientTCPNetwork.cpp */; };
 		3087FF361CA825CD004E31F6 /* Damage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3087FF341CA825CD004E31F6 /* Damage.cpp */; };
-		3087FF3B1CABAD70004E31F6 /* ClientTerminal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3087FF391CABAD70004E31F6 /* ClientTerminal.cpp */; };
 		3087FF3F1CABD3DF004E31F6 /* GameScheduler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3087FF3D1CABD3DF004E31F6 /* GameScheduler.cpp */; };
 		308B84661BE3853C00377802 /* AIBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84641BE3853C00377802 /* AIBody.cpp */; };
 		308B84691BE3856F00377802 /* AIBrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308B84671BE3856F00377802 /* AIBrain.cpp */; };
@@ -403,6 +400,8 @@
 		0487A6661CC897F9005FE8D0 /* GameMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameMode.h; path = Core/Game/GameMode.h; sourceTree = "<group>"; };
 		0487A66A1CC8A90D005FE8D0 /* GameModeHMM.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameModeHMM.cpp; path = Core/Game/GameModes/GameModeHMM.cpp; sourceTree = "<group>"; };
 		0487A66B1CC8A90D005FE8D0 /* GameModeHMM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameModeHMM.h; path = Core/Game/GameModes/GameModeHMM.h; sourceTree = "<group>"; };
+		04CE7CBA1D645BD60000B391 /* GameLooper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameLooper.cpp; path = Core/External/GameLooper.cpp; sourceTree = "<group>"; };
+		04CE7CBB1D645BD60000B391 /* GameLooper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameLooper.h; path = Core/External/GameLooper.h; sourceTree = "<group>"; };
 		04FF24601C4A497100A66D71 /* GameSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameSettings.cpp; path = Core/Game/GameSettings.cpp; sourceTree = "<group>"; };
 		1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
@@ -453,18 +452,10 @@
 		3087FF0D1CA12A57004E31F6 /* TCPClient.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TCPClient.hpp; sourceTree = "<group>"; };
 		3087FF0E1CA12A57004E31F6 /* TCPClient.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TCPClient.mm; sourceTree = "<group>"; };
 		3087FF121CA2A1A4004E31F6 /* ExternalInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExternalInterface.h; path = Core/External/ExternalInterface.h; sourceTree = "<group>"; };
-		3087FF141CA2A6B6004E31F6 /* NetworkMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NetworkMessage.cpp; path = Core/External/Network/NetworkMessage.cpp; sourceTree = "<group>"; };
-		3087FF151CA2A6B6004E31F6 /* NetworkMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkMessage.h; path = Core/External/Network/NetworkMessage.h; sourceTree = "<group>"; };
-		3087FF161CA2A6B6004E31F6 /* ClientNetwork.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ClientNetwork.cpp; path = Core/External/Network/ClientNetwork.cpp; sourceTree = "<group>"; };
-		3087FF171CA2A6B6004E31F6 /* ClientNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClientNetwork.h; path = Core/External/Network/ClientNetwork.h; sourceTree = "<group>"; };
-		3087FF2D1CA2BF5A004E31F6 /* ClientTCPNetworkProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ClientTCPNetworkProxy.cpp; path = CoreClient/ClientTCPNetworkProxy.cpp; sourceTree = "<group>"; };
-		3087FF2E1CA2BF5A004E31F6 /* ClientTCPNetworkProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClientTCPNetworkProxy.h; path = CoreClient/ClientTCPNetworkProxy.h; sourceTree = "<group>"; };
-		3087FF2F1CA2BF5A004E31F6 /* UnderworldClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UnderworldClient.cpp; path = CoreClient/UnderworldClient.cpp; sourceTree = "<group>"; };
-		3087FF301CA2BF5A004E31F6 /* UnderworldClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnderworldClient.h; path = CoreClient/UnderworldClient.h; sourceTree = "<group>"; };
+		3087FF2D1CA2BF5A004E31F6 /* ClientTCPNetwork.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ClientTCPNetwork.cpp; path = CoreClient/ClientTCPNetwork.cpp; sourceTree = "<group>"; };
+		3087FF2E1CA2BF5A004E31F6 /* ClientTCPNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClientTCPNetwork.h; path = CoreClient/ClientTCPNetwork.h; sourceTree = "<group>"; };
 		3087FF341CA825CD004E31F6 /* Damage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Damage.cpp; path = Core/Unit/Instance/Damage.cpp; sourceTree = "<group>"; };
 		3087FF351CA825CD004E31F6 /* Damage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Damage.h; path = Core/Unit/Instance/Damage.h; sourceTree = "<group>"; };
-		3087FF391CABAD70004E31F6 /* ClientTerminal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ClientTerminal.cpp; path = Core/External/Terminal/ClientTerminal.cpp; sourceTree = "<group>"; };
-		3087FF3A1CABAD70004E31F6 /* ClientTerminal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClientTerminal.h; path = Core/External/Terminal/ClientTerminal.h; sourceTree = "<group>"; };
 		3087FF3D1CABD3DF004E31F6 /* GameScheduler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameScheduler.cpp; path = CoreClient/GameScheduler.cpp; sourceTree = "<group>"; };
 		3087FF3E1CABD3DF004E31F6 /* GameScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameScheduler.h; path = CoreClient/GameScheduler.h; sourceTree = "<group>"; };
 		308B84641BE3853C00377802 /* AIBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AIBody.cpp; path = Core/AI/AIBody.cpp; sourceTree = "<group>"; };
@@ -1336,30 +1327,10 @@
 			isa = PBXGroup;
 			children = (
 				3087FF121CA2A1A4004E31F6 /* ExternalInterface.h */,
-				3087FF131CA2A658004E31F6 /* Network */,
-				3087FF111CA2A0ED004E31F6 /* Terminal */,
+				04CE7CBA1D645BD60000B391 /* GameLooper.cpp */,
+				04CE7CBB1D645BD60000B391 /* GameLooper.h */,
 			);
 			name = External;
-			sourceTree = "<group>";
-		};
-		3087FF111CA2A0ED004E31F6 /* Terminal */ = {
-			isa = PBXGroup;
-			children = (
-				3087FF391CABAD70004E31F6 /* ClientTerminal.cpp */,
-				3087FF3A1CABAD70004E31F6 /* ClientTerminal.h */,
-			);
-			name = Terminal;
-			sourceTree = "<group>";
-		};
-		3087FF131CA2A658004E31F6 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				3087FF141CA2A6B6004E31F6 /* NetworkMessage.cpp */,
-				3087FF151CA2A6B6004E31F6 /* NetworkMessage.h */,
-				3087FF161CA2A6B6004E31F6 /* ClientNetwork.cpp */,
-				3087FF171CA2A6B6004E31F6 /* ClientNetwork.h */,
-			);
-			name = Network;
 			sourceTree = "<group>";
 		};
 		3087FF2C1CA2BF36004E31F6 /* CoreClient */ = {
@@ -1367,10 +1338,8 @@
 			children = (
 				3087FF3D1CABD3DF004E31F6 /* GameScheduler.cpp */,
 				3087FF3E1CABD3DF004E31F6 /* GameScheduler.h */,
-				3087FF2D1CA2BF5A004E31F6 /* ClientTCPNetworkProxy.cpp */,
-				3087FF2E1CA2BF5A004E31F6 /* ClientTCPNetworkProxy.h */,
-				3087FF2F1CA2BF5A004E31F6 /* UnderworldClient.cpp */,
-				3087FF301CA2BF5A004E31F6 /* UnderworldClient.h */,
+				3087FF2D1CA2BF5A004E31F6 /* ClientTCPNetwork.cpp */,
+				3087FF2E1CA2BF5A004E31F6 /* ClientTCPNetwork.h */,
 			);
 			name = CoreClient;
 			sourceTree = "<group>";
@@ -2560,8 +2529,6 @@
 				A10E8F911D5C1FFA00320B3D /* DeckManager.cpp in Sources */,
 				30AA1D591CB3EF7700D099D1 /* SpellType.cpp in Sources */,
 				3019BABD1C9BF3D9003258DB /* Spell.cpp in Sources */,
-				3087FF3B1CABAD70004E31F6 /* ClientTerminal.cpp in Sources */,
-				3087FF1B1CA2A6B6004E31F6 /* ClientNetwork.cpp in Sources */,
 				300B1E581C50C4D800F8D6ED /* GameSettings.cpp in Sources */,
 				A1B4AE0B1C2004AB005906A6 /* User.cpp in Sources */,
 				30E05B2C1C56450700A3A3E9 /* PathService.cpp in Sources */,
@@ -2655,7 +2622,6 @@
 				A10D742F1D5083B1009674F9 /* AvatarNode.cpp in Sources */,
 				A1AAA85E1D508DAF00EB7AEB /* TowerSimpleNode.cpp in Sources */,
 				A1E947C51D48AE9E00BD7A27 /* ChatUI.cpp in Sources */,
-				3087FF321CA2BF5A004E31F6 /* UnderworldClient.cpp in Sources */,
 				A10611FF1C3D20A40065070F /* SoldierPieceData.cpp in Sources */,
 				A1E830681C1EA50200FE01B8 /* ConditionData.cpp in Sources */,
 				A1AAA8651D5094BF00EB7AEB /* CardDeckNode.cpp in Sources */,
@@ -2740,7 +2706,7 @@
 				A108A7B31D25253700987658 /* AchievementNode.cpp in Sources */,
 				30F8405F1D50B3370050C976 /* WorldRender.cpp in Sources */,
 				A1F5BFA81C1FDFBE007C08CB /* ResourceNode.cpp in Sources */,
-				3087FF311CA2BF5A004E31F6 /* ClientTCPNetworkProxy.cpp in Sources */,
+				3087FF311CA2BF5A004E31F6 /* ClientTCPNetwork.cpp in Sources */,
 				A1F3D2371D1D05CD00EB5C17 /* MessageBoxLayer.cpp in Sources */,
 				A1D25C2F1C8588A100A84EB6 /* UnitCardDeck.cpp in Sources */,
 				A1D745C31C1AB7C40020BC1C /* VictoryLayer.cpp in Sources */,
@@ -2778,6 +2744,7 @@
 				A1720EAD1BCD2A8400217E98 /* NetworkApi.cpp in Sources */,
 				A1F3D2361D1D05CD00EB5C17 /* MessageBoxBaseLayer.cpp in Sources */,
 				300098D31BD0CDB000B6E284 /* ResourceType.cpp in Sources */,
+				04CE7CBC1D645BD60000B391 /* GameLooper.cpp in Sources */,
 				A16BF29C1C31434500E91458 /* SkillLocalData.cpp in Sources */,
 				A1FB5D111D4F2B4600CD2622 /* PvpManager.cpp in Sources */,
 				A10612021C3D22260065070F /* HeroPieceData.cpp in Sources */,
@@ -2791,7 +2758,6 @@
 				A1AC972A1D53190800FCEF5D /* CheatConfiguration.cpp in Sources */,
 				0487A6671CC897F9005FE8D0 /* GameMode.cpp in Sources */,
 				A1CA35E91D45BDE200584C9D /* NoticeNode.cpp in Sources */,
-				3087FF1A1CA2A6B6004E31F6 /* NetworkMessage.cpp in Sources */,
 				A16BF2891C313E5900E91458 /* HeroUpgradeData.cpp in Sources */,
 				30236FF71C5B6AFA00FB1802 /* PathFinderInterface.cpp in Sources */,
 				A16BF2921C313E9F00E91458 /* TowerLocalData.cpp in Sources */,

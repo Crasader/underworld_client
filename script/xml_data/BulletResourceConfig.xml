@@ -2,11 +2,12 @@
 <root>
 	<item render_key="狼人基地子弹" resource="wolf-base-attack-1.csb" shadow_resource="" explode_resource="" explode_sound=""/>
 	<item render_key="吸血鬼核心子弹" resource="Vampire-base-attack-1.csb" shadow_resource="" explode_resource="" explode_sound=""/>
-	<item render_key="箭" resource="effect-jian.csb" shadow_resource="" explode_resource="" explode_sound=""/>
+	<item render_key="箭" resource="effect-jian.csb" shadow_resource="effect-jian-shadows.csb" explode_resource="" explode_sound=""/>
 	<item render_key="炮塔子弹" resource="Vampire-tower-attack.csb" shadow_resource="" explode_resource="" explode_sound=""/>
 	<item render_key="法师子弹1" resource="effect-fireball.csb" shadow_resource="" explode_resource="" explode_sound=""/>
 	<item render_key="法师子弹2" resource="effect-fireball-1.csb" shadow_resource="" explode_resource="" explode_sound=""/>
 	<item render_key="蜘蛛子弹" resource="spider-attack-1.csb" shadow_resource="" explode_resource="" explode_sound=""/>
 	<item render_key="时光女神子弹" resource="Goddess-of-time-Yayse-Tati-dd.csb" shadow_resource="" explode_resource="" explode_sound=""/>
 	<item render_key="骷髅头子弹" resource="kuloutou.csb" shadow_resource="" explode_resource="" explode_sound=""/>
+	<item render_key="黑龙子弹" resource="Dragon-Ball.csb" shadow_resource="" explode_resource="Fireball-Blast" explode_sound=""/>
 </root>

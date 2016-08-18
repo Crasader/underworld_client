@@ -9,7 +9,6 @@
 #ifndef GameClient_h
 #define GameClient_h
 
-#include "ClientTerminal.h"
 #include "ClientTCPNetworkProxy.h"
 #include "GameScheduler.h"
 #include "NetworkMessage.h"

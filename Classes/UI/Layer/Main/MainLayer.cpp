@@ -133,7 +133,7 @@ void MainLayer::addLevelButtons()
                     // TODO:
                     SoundManager::getInstance()->playButtonSound();
                     auto mapId(button->getTag() + 1);
-                    GameManager::getInstance()->launchPve(mapId);
+                    GameManager::getGameClient()->launchPve(mapId);
                 }
             }
         });

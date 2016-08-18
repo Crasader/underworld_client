@@ -1,6 +1,7 @@
 <?xml version="1.0" ?>
 <root>
 	<item name="pvr/Alsace.plist"/>
+	<item name="pvr/Character-effects.plist"/>
 	<item name="pvr/Dragon-shadows.plist"/>
 	<item name="pvr/Dragon.plist"/>
 	<item name="pvr/Fat-equipment.plist"/>

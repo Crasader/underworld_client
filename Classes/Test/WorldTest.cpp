@@ -9,9 +9,9 @@
 #include <iostream>
 
 #include "WorldTest.h"
-#include "UnderworldClient.h"
 #include "Faction.h"
 #include "Unit.h"
+#include "GameManager.h"
 
 
 void WorldTest::test() {
@@ -26,12 +26,12 @@ void WorldTest::test() {
     
     UnderWorld::Core::GameSettings gs;
     std::string commonTechTree;
-    UnderworldClient::loadCommonTechTree(commonTechTree);
+    GameClient::loadCommonTechTree(commonTechTree);
     gs.setTechTree(commonTechTree);
     
     gs.setMapId(1);
     UnderWorld::Core::MapSetting ms;
-    UnderworldClient::loadCommonMapSetting(1, ms);
+    GameClient::loadCommonMapSetting(1, ms);
     gs.setMapSetting(ms);
     gs.setFactionSetting(ms.getFactionSetting());
     

@@ -11,55 +11,97 @@
 
 #include "GameRender.h"
 #include "ExternalInterface.h"
+#include "ClientTCPNetwork.h"
 
-class UnderworldClient;
+namespace UnderWorld { namespace Core {
+    class GameLooper;
+    class GameSettings;
+    class GameModeHMMSetting;
+}}
+
 class GameScheduler;
-class ClientTCPNetworkProxy;
+class ClientTCPNetwork;
 
-class GameManager : public GameRenderObserver
+enum GameMode {
+    kPvp,
+    kPve,
+    GAME_MODE_COUNT,
+};
+
+enum GameState {
+    kIdle,
+    kLaunchingPVR,
+    kLaunchingNetwork,
+    kPlaying,
+    GAME_STATE_COUNT
+};
+
+
+class GameClient : public ClientTCPNetwork::LaunchListener
 {
 public:
-    static GameManager* getInstance();
-    static void purge();
+    GameClient();
+    virtual ~GameClient();
     
-    // pve
+    // interface
     void launchPve(int mapId);
-    
-    // pvp
     void launchPvp();
-    
+    void cancelLaunch();
     void exitGame();
-private:
-    GameManager();
-    virtual ~GameManager();
     
-    // GameRenderObserver
-    virtual void onGameRenderRestart() override;
-    virtual void onGameRenderExit() override;
+private:
+    
     
     // private
     void launchGame();
-    //void exitGame();
+    
     void restartPve();
     
-    void createClient(cocos2d::Scene* scene);
-    void purgeClient();
+    void createInstance();
+    void purgeInstance();
     bool loadBattleContent();
+    void resetStatus();
     
     void onPVRLoaded();
+    
+    void loadTechTree2Settings();
+    void loadMap2Settings(int mapId);
+    
+    // override ClientTCPNetwork::LaunchListener
+    virtual void onLaunched(const NetworkMessageLaunch2C& l2c) override;
+
+public:
+    static void loadCommonMapSetting(int mapId, UnderWorld::Core::MapSetting& output);
+    static void loadHMMMapSetting(int mapId, std::string& output);
+    static void loadCommonTechTree(std::string& output);
+    static void loadHMMMTechTree(std::string& output);
+
     
 private:
     struct BattleContent;
     
-    bool _isLaunching;
-    bool _isPvp;
+    // status
     int _mapId;
+    GameMode _mode;
+    GameState _state;
+    
+    // instance
     cocos2d::Scene* _scene;
     UnderWorld::Core::AbstractRender* _render;
     GameScheduler* _gameScheduler;
-    ClientTCPNetworkProxy* _pvpProxy;
-    UnderworldClient* _client;
+    ClientTCPNetwork* _network;
+    GameLooper* _looper;
     BattleContent* _battleContent;
+    GameSettings* _settings;
+    GameModeHMMSetting* _hmmSettings;
+};
+
+class GameManager {
+public:
+    static GameClient* getGameClient();
+    static void purgeGameClient();
+private:
+    GameManager();
 };
 
 #endif /* GameManager_h */

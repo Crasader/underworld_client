@@ -8,11 +8,10 @@
 
 #include <stdlib.h>
 
+#include "ClientTCPNetwork.h"
+
 #include "GameSettings.h"
-#include "ClientTCPNetworkProxy.h"
-#include "NetworkMessage.h"
 #include "GameModeHMM.h"
-#include "UnderworldClient.h"
 #include "cocos2d.h"
 #include "json/document.h"
 #include "json/stringbuffer.h"
@@ -56,6 +55,10 @@
 using namespace UnderWorld::Core;
 using namespace rapidjson;
 using namespace cocostudio;
+
+static bool syncMessageCompare(NetworkMessageSync* a, NetworkMessageSync* b) {
+    return a->getFrame() < b->getFrame();
+}
 
 static std::string parseLaunch2SMsg(
     const NetworkMessageLaunch2S* msg, std::string name, int uid) {
@@ -117,7 +120,7 @@ static std::string parseLaunch2SMsg(
 }
 
 static std::string parseSync2SMsg(
-    const UnderWorld::Core::NetworkMessageSync* msg, int uid) {
+    const NetworkMessageSync* msg, int uid) {
     rapidjson::Document document;
     rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
     rapidjson::Value root(rapidjson::kObjectType);
@@ -206,7 +209,7 @@ static std::string parseReconnect2SMsg(int uid, int battleid) {
 
 
 static void parseLaunch2CMsg(const rapidjson::Value& root,
-        std::vector<UnderWorld::Core::NetworkMessage *> &output, int& battleid) {
+        std::vector<NetworkMessage *> &output, int& battleid) {
     NetworkMessageLaunch2C* msg = new NetworkMessageLaunch2C();
     
     /** 0. battle Id */
@@ -405,29 +408,68 @@ static bool parseSync2CMsg(const rapidjson::Value& root,
     return finished;
 }
 
-ClientTCPNetworkProxy::~ClientTCPNetworkProxy() {
+ClientTCPNetwork::~ClientTCPNetwork() {
     destroyTCPClient();
+    cleanSyncInstance();
 }
 
-void ClientTCPNetworkProxy::destroyTCPClient() {
+void ClientTCPNetwork::destroyTCPClient() {
     if (_tcpClient) {
         _tcpClient->destroy();
         _tcpClient = nullptr;
     }
     _battleid = INVALID_VALUE;
-    _status = ClientStatus::Ready;
+    _status = ClientStatus::Idle;
 }
 
-void ClientTCPNetworkProxy::connect() {
+void ClientTCPNetwork::connect() {
     destroyTCPClient();
     _tcpClient = new TCPClient();
     _tcpClient->setTimeoutForConnect(300);
     _tcpClient->init(_host, _port);
-    _tcpClient->setResponseCallback(std::bind(&ClientTCPNetworkProxy::onReceiveTCPResponse, this, std::placeholders::_1, std::placeholders::_2));
-    _tcpClient->setReconnectCallback(std::bind(&ClientTCPNetworkProxy::onReconncected, this, std::placeholders::_1));
+    _tcpClient->setResponseCallback(std::bind(&ClientTCPNetwork::onReceiveTCPResponse, this, std::placeholders::_1, std::placeholders::_2));
+    _tcpClient->setReconnectCallback(std::bind(&ClientTCPNetwork::onReconncected, this, std::placeholders::_1));
 }
 
-void ClientTCPNetworkProxy::send(UnderWorld::Core::NetworkMessage* msg) {
+void ClientTCPNetwork::launchGame(LaunchListener* launchListener,
+    const UnderWorld::Core::GameContentSetting& contentSetting,
+    const std::vector<int>& cards,
+    const UnderWorld::Core::GameModeHMMSetting::InitUnitList& initList,
+    const vector<UnderWorld::Core::UnitSetting>& unitPool) {
+    if (_status != ClientStatus::Idle || !_tcpClient) return;
+    
+    _status = ClientStatus::Launching;
+    _launchListener = launchListener;
+    NetworkMessageLaunch2S* msg = new NetworkMessageLaunch2S();
+    msg->setGameContentSetting(contentSetting);
+    msg->setCards(cards);
+    msg->setInitUnits(initList);
+    msg->setUnitPool(unitPool);
+    send(msg);
+}
+
+void ClientTCPNetwork::init() {
+    cleanSyncInstance();
+    
+    _safeFrame = _lastSafeFrame = 0;
+}
+
+void ClientTCPNetwork::sendOutsideCommand(OutsideCommand* commmd) {
+    _outputCommands.push_back(commmd);
+}
+
+void ClientTCPNetwork::update(int nextFrame, std::vector<CmdFramePair>& incomeCommands) {
+    updateFrame(nextFrame);
+    if (GameConstants::isKeyFrame(nextFrame)) {
+        updateNetworkKeyFrame(nextFrame, incomeCommands);
+    }
+}
+
+int ClientTCPNetwork::getSynchronizedFrame() const {
+    return _safeFrame;
+}
+
+void ClientTCPNetwork::send(NetworkMessage* msg) {
     TCPRequest* req = parseMsg2Request(msg);
     if (req) {
         _tcpClient->send(req);
@@ -435,44 +477,34 @@ void ClientTCPNetworkProxy::send(UnderWorld::Core::NetworkMessage* msg) {
     CC_SAFE_DELETE(msg);
 }
 
-void ClientTCPNetworkProxy::registerListener(ProxyListener *listener) {
-    if (_listeners.find(listener) == _listeners.end()) {
-        _listeners.insert(listener);
-    }
-}
-
-void ClientTCPNetworkProxy::unregisterListener(ProxyListener *listener) {
-    std::unordered_set<ProxyListener*>::iterator iter = _listeners.find(listener);
-    if (iter != _listeners.end()) {
-        _listeners.erase(iter);
-    }
-}
-
-void ClientTCPNetworkProxy::onReceiveTCPResponse(TCPClient* client, TCPResponse* response) {
-    std::vector<UnderWorld::Core::NetworkMessage*> msgs;
+void ClientTCPNetwork::onReceiveTCPResponse(TCPClient* client, TCPResponse* response) {
+    std::vector<NetworkMessage*> msgs;
     parseResponse2Msg(response, msgs);
-    auto listeners = _listeners;
-    if (!msgs.empty()) {
-        for (std::unordered_set<ProxyListener*>::iterator iter = listeners.begin();
-             iter != listeners.end();
-             ++iter) {
-            (*iter)->onReceive(msgs);
+    for (int i = 0; i < msgs.size(); ++i) {
+        if (M_INSTANCE_OF(msgs[i], NetworkMessageLaunch2C*) && _status == ClientStatus::Launching) {
+            if (_launchListener) {
+                _launchListener->onLaunched(*(dynamic_cast<NetworkMessageLaunch2C*>(msgs[i])));
+            }
+            _status = ClientStatus::Fighting;
+        } else if (M_INSTANCE_OF(msgs[i], NetworkMessageSync*) && _status == ClientStatus::Fighting) {
+            _incomeNetworkMessages.push_back(msgs[i]->clone());
         }
-        for (int i = 0; i < msgs.size(); ++i) {
-            delete msgs[i];
-        }
+    }
+    
+    for (int i = 0; i < msgs.size(); ++i) {
+        delete msgs[i];
     }
 }
 
 
-void ClientTCPNetworkProxy::onReconncected(TCPClient* client) {
+void ClientTCPNetwork::onReconncected(TCPClient* client) {
     CCLOG("[server][%s]", __FUNCTION__);
     //TODO when game finish, return
     if (_status == ClientStatus::Finished) {
         return;
     }
     std::string reqContent;
-    if (_status == ClientStatus::Ready) {
+    if (_status == ClientStatus::Idle) {
         //TODO need to resend battle user info
     } else {
         reqContent = parseReconnect2SMsg(_uid, _battleid);
@@ -485,16 +517,16 @@ void ClientTCPNetworkProxy::onReconncected(TCPClient* client) {
     }
 }
 
-TCPRequest* ClientTCPNetworkProxy::parseMsg2Request(
-    const UnderWorld::Core::NetworkMessage* msg) {
+TCPRequest* ClientTCPNetwork::parseMsg2Request(
+    const NetworkMessage* msg) {
     std::string reqContent = "";
     if (dynamic_cast<const NetworkMessageLaunch2S*>(msg)) {
         const NetworkMessageLaunch2S* l2s =
             dynamic_cast<const NetworkMessageLaunch2S*>(msg);
         reqContent = parseLaunch2SMsg(l2s, _name, _uid);
-    } else if (dynamic_cast<const UnderWorld::Core::NetworkMessageSync*>(msg)) {
-        const UnderWorld::Core::NetworkMessageSync* sync =
-            dynamic_cast<const UnderWorld::Core::NetworkMessageSync*>(msg);
+    } else if (dynamic_cast<const NetworkMessageSync*>(msg)) {
+        const NetworkMessageSync* sync =
+            dynamic_cast<const NetworkMessageSync*>(msg);
         reqContent = parseSync2SMsg(sync, _uid);
     }
     
@@ -506,9 +538,9 @@ TCPRequest* ClientTCPNetworkProxy::parseMsg2Request(
     return ret;
 }
 
-void ClientTCPNetworkProxy::parseResponse2Msg(
+void ClientTCPNetwork::parseResponse2Msg(
     const TCPResponse* response,
-    std::vector<UnderWorld::Core::NetworkMessage *> &output) {
+    std::vector<NetworkMessage*> &output) {
     ;
     
     string data;
@@ -528,16 +560,95 @@ void ClientTCPNetworkProxy::parseResponse2Msg(
     
     if (respCode == MESSAGE_CODE_LAUNCH_2_C) {
         parseLaunch2CMsg(document, output, _battleid);
-        _status = ClientStatus::Matched;
     } else if (respCode == MESSAGE_CODE_SYNE_2_C) {
         if(parseSync2CMsg(document, output, _battleid)) {
             _status = ClientStatus::Finished;
-        } else if(_status == ClientStatus::Matched) {
-            _status = ClientStatus::Fighting;
         }
     }
 }
 
+void ClientTCPNetwork::cleanSyncInstance() {
+    for (int i = 0; i < _outputCommands.size(); ++i) {
+        delete _outputCommands[i];
+    }
+    _outputCommands.clear();
+    
+    for (int i = 0; i < _incomeNetworkMessages.size(); ++i) {
+        delete _incomeNetworkMessages[i];
+    }
+    _incomeNetworkMessages.clear();
+}
+void ClientTCPNetwork::updateFrame(int nextFrame) {
+    if (!_outputCommands.empty()) {
+        flushOutputCommands(_safeFrame);
+    }
+}
 
+void ClientTCPNetwork::updateNetworkKeyFrame(int nextFrame,
+    std::vector<CmdFramePair>& incomeCommands) {
+    _lastSafeFrame = _safeFrame;
+    
+    /** proccess sync messages */
+    std::vector<NetworkMessageSync*> syncMsgs;
+    for (int i = 0; i < _incomeNetworkMessages.size(); ++i) {
+        NetworkMessageSync* syncMsg =
+        dynamic_cast<NetworkMessageSync*>(_incomeNetworkMessages[i]);
+        if (syncMsg) {
+            syncMsgs.push_back(syncMsg);
+        }
+    }
+    
+    std::sort(syncMsgs.begin(), syncMsgs.end(), syncMessageCompare);
+    
+    for (int i = 0; i < syncMsgs.size(); ++i) {
+        assert(GameConstants::isKeyFrame(syncMsgs[i]->getFrame()));
+        if (syncMsgs[i]->getFrame() == GameConstants::nextKeyFrame(_safeFrame)) {
+            _safeFrame = syncMsgs[i]->getFrame();
+            for (int j = 0; j < syncMsgs[i]->getCommandCount(); ++j) {
+                const CmdFramePair commandPair = syncMsgs[i]->getCommand(j);
+                incomeCommands.push_back(std::make_pair(commandPair.first->clone(),
+                    commandPair.second));
+            }
+        }
+    }
+    
+    assert(_safeFrame == 0 || GameConstants::isKeyFrame(_safeFrame));
+    
+    if (_safeFrame > _lastSafeFrame) {
+        /** sync with server */
+        NetworkMessageSync* msg = new NetworkMessageSync(_safeFrame);
+        send(msg);
+    }
+    
+    for (int i = 0; i < _incomeNetworkMessages.size(); ++i) {
+        delete _incomeNetworkMessages[i];
+    }
+    _incomeNetworkMessages.clear();
+}
 
+void ClientTCPNetwork::flushOutputCommands(int frame) {
+    NetworkMessageSync* msg = new NetworkMessageSync(frame);
+    for (int i = 0; i < _outputCommands.size(); ++i) {
+        msg->addCommand(_outputCommands[i], frame);
+    }
+    send(msg);
+    _outputCommands.clear();
+}
+
+NetworkMessageSync::~NetworkMessageSync() {
+    for (int i = 0; i < _commands.size(); ++i) {
+        delete _commands[i].first;
+    }
+    _commands.clear();
+}
+
+NetworkMessage* NetworkMessageSync::clone() const {
+    NetworkMessageSync* instance = new NetworkMessageSync(this->_frame);
+    for (int i = 0; i < this->_commands.size(); ++i) {
+        instance->_commands.push_back(
+            std::make_pair(this->_commands[i].first->clone(),
+            this->_commands[i].second));
+    }
+    return instance;
+}
 

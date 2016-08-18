@@ -140,8 +140,10 @@ void BulletRender::render() {
     
     renderPosition(*currentPos);
     if (_bulletExploded) {
-        _renderingExplode = true;
-        renderExplodeAnimation();
+        if (!_renderingExplode) {
+            _renderingExplode = true;
+            renderExplodeAnimation();
+        }
     } else {
         renderFlyingAnimation();
     }
@@ -179,35 +181,19 @@ cocos2d::Node* BulletRender::addEffect(const std::string&file, bool loop, bool t
         // check file
         if (file.empty()) break;
         
-        //check file name
-        const size_t found = file.find_last_of(".");
-        if (found == string::npos) break;
-        
-        const string& suffix = file.substr(found + 1);
-        if ("csb" == suffix) {
-            function<void(cocos2d::Node*)> func = nullptr;
-            if (!loop) {
-                func = [callback](cocos2d::Node* sender) {
-                    if (sender) {
-                        sender->removeFromParent();
-                    }
-                    //TODO: check if this bug, sender->removeFromParent() cause sender release
-                    // check whether func is release with sender
-                    callback();
-                };
-            }
-
-            ret = CocosUtils::playAnimation(file, 0.f, loop, 0, -1, func);
-        } else if ("plist" == suffix) {
-            cocos2d::ParticleSystemQuad *particle = cocos2d::ParticleSystemQuad::create(file);
-            if (particle) {
-                if (!loop) particle->setAutoRemoveOnFinish(true);
-                ret = particle;
-            }
-            
-            //TODO: figure out and exec callback
+        function<void(cocos2d::Node*)> func = nullptr;
+        if (!loop) {
+            func = [callback](cocos2d::Node* sender) {
+                if (sender) {
+                    sender->removeFromParent();
+                }
+                //TODO: check if this bug, sender->removeFromParent() cause sender release
+                // check whether func is release with sender
+                callback();
+            };
         }
         
+        ret = CocosUtils::playAnimation(file, DEFAULT_FRAME_DELAY, loop, 0, -1, func);
     } while (0);
     
     // attach node
@@ -247,10 +233,9 @@ void BulletRender::updateParams(const Coordinate32& currentPos,
         _scale = abs(cos(beta) + sin(beta) / _worldRender->getCameraAngelRadians());
     } else {
         const float gamma = atan(tan(beta)/cos(_alpha)/_worldRender->getCameraAngelRadians() + tan(_alpha));
-        int direction = _targetPos.x < _startPos.x ? -1 : 1;
-        _rotation = gamma * 180 / M_PI * -1;
-        _scale = abs(cos(_alpha) * cos(beta) / cos(gamma)) * direction;
-        std::cout << "wtf" << std::endl;
+        int direction = _targetPos.x < _startPos.x ? 1 : -1;
+        _rotation = gamma * 180 / M_PI * direction;
+        _scale = abs(cos(_alpha) * cos(beta) / cos(gamma)) * direction * -1;
     }
 }
     

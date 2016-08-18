@@ -425,7 +425,7 @@ void MainUILayer::onFunctionButtonClicked(ButtonType type)
     auto runningScene(Director::getInstance()->getRunningScene());
     switch (type) {
         case ButtonType::Battle:
-            GameManager::getInstance()->launchPvp();
+            GameManager::getGameClient()->launchPvp();
             break;
             
         case ButtonType::Train:
