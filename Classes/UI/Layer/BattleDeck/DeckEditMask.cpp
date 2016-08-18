@@ -1,19 +1,19 @@
 //
-//  EditDeckMask.cpp
+//  DeckEditMask.cpp
 //  Underworld_Client
 //
 //  Created by Andy on 16/8/15.
 //  Copyright (c) 2016 Mofish Studio. All rights reserved.
 //
 
-#include "EditDeckMask.h"
+#include "DeckEditMask.h"
 #include "CocosGlobal.h"
 
 using namespace std;
 
-EditDeckMask* EditDeckMask::create(const Size& size)
+DeckEditMask* DeckEditMask::create(const Size& size)
 {
-    auto ret = new (nothrow) EditDeckMask();
+    auto ret = new (nothrow) DeckEditMask();
     if (ret && ret->init(size)) {
         ret->autorelease();
         return ret;
@@ -23,22 +23,22 @@ EditDeckMask* EditDeckMask::create(const Size& size)
     return nullptr;
 }
 
-EditDeckMask::EditDeckMask()
+DeckEditMask::DeckEditMask()
 :_observer(nullptr) {}
 
-EditDeckMask::~EditDeckMask()
+DeckEditMask::~DeckEditMask()
 {
     removeAllChildren();
 }
 
-bool EditDeckMask::init(const Size& size)
+bool DeckEditMask::init(const Size& size)
 {
     if (LayerColor::initWithColor(LAYER_MASK_COLOR, size.width, size.height)) {
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
-        eventListener->onTouchBegan = CC_CALLBACK_2(EditDeckMask::onTouchBegan, this);
-        eventListener->onTouchEnded = CC_CALLBACK_2(EditDeckMask::onTouchEnded, this);
+        eventListener->onTouchBegan = CC_CALLBACK_2(DeckEditMask::onTouchBegan, this);
+        eventListener->onTouchEnded = CC_CALLBACK_2(DeckEditMask::onTouchEnded, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
         
         return true;
@@ -47,7 +47,7 @@ bool EditDeckMask::init(const Size& size)
     return false;
 }
 
-bool EditDeckMask::onTouchBegan(Touch *pTouch, Event *pEvent)
+bool DeckEditMask::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
     const auto& point(pTouch->getLocation());
     Rect rect(getBoundingBox());
@@ -59,14 +59,14 @@ bool EditDeckMask::onTouchBegan(Touch *pTouch, Event *pEvent)
     return false;
 }
 
-void EditDeckMask::onTouchEnded(Touch *touch, Event *unused_event)
+void DeckEditMask::onTouchEnded(Touch *touch, Event *unused_event)
 {
     if (_observer) {
-        _observer->onEditDeckMaskTouched(touch->getLocation());
+        _observer->onDeckEditMaskTouched(touch->getLocation());
     }
 }
 
-void EditDeckMask::registerObserver(EditDeckMaskObserver *observer)
+void DeckEditMask::registerObserver(DeckEditMaskObserver *observer)
 {
     _observer = observer;
 }

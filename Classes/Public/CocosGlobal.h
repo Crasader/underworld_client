@@ -43,14 +43,6 @@
 #define MAP_OFFSET_Y                (0)
 #define DEFAULT_FRAME_DELAY         (1.0f/12.0f)
 
-#define FORMATION_MAX_COUNT         (3)
-#define FORMATION_POPULATION_COUNT  (80)
-#define FORMATION_SPELLS_COUNT      (12)
-#define FORMATION_WIDTH             (5)
-#define FORMATION_HEIGHT            (5)
-#define FORMATION_TILE_WIDTH        (48)
-#define FORMATION_TILE_HEIGHT       (48)
-
 #define ONLINE_UPDATE_SEARCH_PATH       (FileUtils::getInstance()->getWritablePath() + "Resource/")
 #define DEFAULT_RESOURCE_FOLDER         ("res")
 #define AUDIO_PREFIX                    ("sounds/effect/")
@@ -63,7 +55,6 @@
 TypeName(const TypeName &) = delete; \
 TypeName &operator =(const TypeName &) = delete;
 #endif // DISALLOW_COPY_AND_ASSIGN
-
 
 #define LOW_PIXELFORMAT (cocos2d::Texture2D::PixelFormat::RGB5A1)
 

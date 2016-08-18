@@ -15,7 +15,8 @@
 #include "GameData.h"
 #include "DataManager.h"
 #include "FrameLoader.h"
-#include "FormationData.h"
+#include "DeckManager.h"
+#include "DeckData.h"
 #include "CocosUtils.h"
 #include "CheatConfiguration.h"
 #include "LocalHelper.h"
@@ -208,28 +209,23 @@ bool GameManager::loadBattleContent()
         }
     }
     
-    // reload formation data every time
-    auto formationData = GameData::getInstance()->currentUser()->getDefaultFormationData();
+    // reload cards data every time
+    auto data = DeckManager::getInstance()->getThisDeckData();
     
     _battleContent->cards.clear();
     _battleContent->unitList.clear();
     
-    if (formationData) {
+    if (data) {
         _battleContent->cards.clear();
-        for (auto spellType : formationData->getSpells()) {
-            _battleContent->cards.push_back(DataManager::getInstance()->getGameModeHMM()->findCardTypeById(spellType)->getId());
-        }
+        static const vector<DeckData::Type> types = {
+            DeckData::Type::Hero, DeckData::Type::Soldier
+        };
         
-        const auto& heroes = formationData->getHeroes();
-        for (auto iter = begin(heroes); iter != end(heroes); ++iter) {
-            static const Point basePosition(240, 120);
-            const auto& coordinate = iter->first;
-            
-            pair<int, int> pair;
-            pair.first = DataManager::getInstance()->getGameModeHMM()->findCardTypeById(iter->second)->getId();
-            pair.second = coordinate.y * FORMATION_WIDTH + coordinate.x;
-            
-            _battleContent->unitList.push_back(pair);
+        for (auto type : types) {
+            const auto& cards(data->getCards(type));
+            for (auto card : cards) {
+                _battleContent->cards.push_back(card);
+            }
         }
     }
     

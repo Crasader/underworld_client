@@ -11,15 +11,11 @@
 
 #include "json/document.h"
 #include "CocosGlobal.h"
-#include <unordered_set>
-#include <unordered_map>
 
 // from login response
 #define kUID    ("uid")
 #define kAuth   ("auth")
 #define kNew    ("new_user")
-
-class FormationData;
 
 class User
 {
@@ -39,16 +35,6 @@ public:
     
     bool hasFinishedTutorial(int idx) const;
     void saveFinishedTutorialTag(int idx);
-    
-    int getDefaultFormationId() const;
-    void setDefaultFormationId(int value);
-    
-    FormationData* getFormationData(int idx) const;
-    void setFormationData(int idx, const FormationData* data);
-    void saveFormationData(int idx);
-    
-    FormationData* getDefaultFormationData() const;
-    void saveDefaultFormationData();
     
     //------------------------------ NETWORKING BEGIN ------------------------------//
     void parseGemInfo(const rapidjson::Value& root);
@@ -74,8 +60,6 @@ private:
     
     bool _isFirstLogin;
     int _finishedTutorialsMaxIdx;
-    int _defaultFormationId;
-    std::unordered_map<int, FormationData*> _formations;
 };
 
 #endif /* User_h */

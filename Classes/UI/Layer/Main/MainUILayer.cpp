@@ -14,9 +14,7 @@
 #include "SoundManager.h"
 #include "ResourceNode.h"
 #include "UserSimpleNode.h"
-#include "FormationLayer.h"
 #include "BattleDeckLayer.h"
-#include "CardLayer.h"
 #include "SettingsLayer.h"
 #include "PvpLogLayer.h"
 #include "CheatLayer.h"
@@ -431,7 +429,7 @@ void MainUILayer::onFunctionButtonClicked(ButtonType type)
             break;
             
         case ButtonType::Train:
-            runningScene->addChild(FormationLayer::create());
+            runningScene->addChild(BattleDeckLayer::create());
             break;
             
         case ButtonType::Settings:
@@ -444,14 +442,6 @@ void MainUILayer::onFunctionButtonClicked(ButtonType type)
             
         case ButtonType::BattleLog:
             runningScene->addChild(PvpLogLayer::create());
-            break;
-            
-        case ButtonType::Shop:
-            runningScene->addChild(CardLayer::create());
-            break;
-            
-        case ButtonType::Quest:
-            runningScene->addChild(BattleDeckLayer::create());
             break;
             
         default:

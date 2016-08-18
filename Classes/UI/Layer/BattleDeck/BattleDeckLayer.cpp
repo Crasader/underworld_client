@@ -132,7 +132,7 @@ BattleDeckLayer::BattleDeckLayer()
 ,_scrollView(nullptr)
 ,_unfoundLine(nullptr)
 ,_opNode(nullptr)
-,_editDeckMask(nullptr)
+,_deckEditMask(nullptr)
 ,_usedCard(nullptr)
 ,_usedCardPoint(Point::ZERO)
 ,_cardOriginalPoint(Point::ZERO)
@@ -176,7 +176,6 @@ bool BattleDeckLayer::init()
         createRightNode();
         loadCandidates();
         updateCardsCount();
-        updateAverageElixir();
         
         // deck
         const int deckId(DeckManager::getInstance()->getThisDeckId());
@@ -285,8 +284,8 @@ void BattleDeckLayer::onDeckCardOpNodeClickedButton(DeckCardOpType type, int car
     }
 }
 
-#pragma mark - EditDeckMaskObserver
-void BattleDeckLayer::onEditDeckMaskTouched(const Point& point)
+#pragma mark - DeckEditMaskObserver
+void BattleDeckLayer::onDeckEditMaskTouched(const Point& point)
 {
     if (!_usedCard || !getWorldBoundingBox(_usedCard).containsPoint(point)) {
         useCardCancelled();
@@ -585,7 +584,15 @@ void BattleDeckLayer::updateCardsCount()
 void BattleDeckLayer::updateAverageElixir()
 {
     if (_averageElixirLabel) {
-        _averageElixirLabel->setString(LocalHelper::getString("ui_deck_elixirCost") + StringUtils::format("%.1f", 4.0f));
+        float total(0);
+        for (auto card : _deckCards) {
+            auto data = DeckManager::getInstance()->getCardData(card->getCardId());
+            if (data) {
+                total += data->getCost();
+            }
+        }
+        
+        _averageElixirLabel->setString(LocalHelper::getString("ui_deck_elixirCost") + StringUtils::format("%.1f", total / 10.0f));
     }
 }
 
@@ -679,15 +686,15 @@ void BattleDeckLayer::beginEdit(int cardId)
     hideOpNode();
     
     // create mask
-    if (!_editDeckMask) {
+    if (!_deckEditMask) {
         const auto& size(_background->getContentSize());
         const Size subSize(rightWidth, nodeHeight);
         const Point point(size.width - (primaryEdge.x + subSize.width), primaryEdge.y);
         
-        _editDeckMask = EditDeckMask::create(subSize);
-        _editDeckMask->registerObserver(this);
-        _editDeckMask->setPosition(point);
-        _background->addChild(_editDeckMask);
+        _deckEditMask = DeckEditMask::create(subSize);
+        _deckEditMask->registerObserver(this);
+        _deckEditMask->setPosition(point);
+        _background->addChild(_deckEditMask);
     }
     
     // create card
@@ -719,9 +726,9 @@ void BattleDeckLayer::endEdit()
 {
     _isEditing = false;
     
-    if (_editDeckMask) {
-        _editDeckMask->removeFromParent();
-        _editDeckMask = nullptr;
+    if (_deckEditMask) {
+        _deckEditMask->removeFromParent();
+        _deckEditMask = nullptr;
     }
     
     stopShake();
@@ -812,6 +819,8 @@ void BattleDeckLayer::useCard(DeckCard* replaced, bool fromDeck)
                 endEdit();
                 
                 replace(_deckCards, _usedCard, replaced);
+                
+                updateAverageElixir();
                 
                 if (_foundCards.find(uid) != end(_foundCards)) {
                     _foundCards.erase(uid);
@@ -1156,6 +1165,8 @@ void BattleDeckLayer::loadDeck(int idx)
             action->setTag(actionTag);
             card->runAction(action);
         }
+        
+        updateAverageElixir();
     }
 }
 

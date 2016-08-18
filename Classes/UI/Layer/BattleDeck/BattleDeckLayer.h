@@ -13,7 +13,7 @@
 #include "ui/CocosGUI.h"
 #include "DeckCard.h"
 #include "DeckCardOpNode.h"
-#include "EditDeckMask.h"
+#include "DeckEditMask.h"
 #include <vector>
 #include <unordered_map>
 
@@ -46,7 +46,7 @@ class BattleDeckLayer
 : public LayerColor
 , public DeckCardObserver
 , public DeckCardOpNodeObserver
-, public EditDeckMaskObserver
+, public DeckEditMaskObserver
 {
 public:
     static BattleDeckLayer* create();
@@ -69,8 +69,8 @@ protected:
     virtual void onDeckCardOpNodeClicked() override;
     virtual void onDeckCardOpNodeClickedButton(DeckCardOpType type, int cardId) override;
     
-    // EditDeckMaskObserver
-    virtual void onEditDeckMaskTouched(const Point& point) override;
+    // DeckEditMaskObserver
+    virtual void onDeckEditMaskTouched(const Point& point) override;
     
     // -------- UI --------
     void createLeftNode();
@@ -133,7 +133,7 @@ private:
     ui::ScrollView* _scrollView;
     Node* _unfoundLine;
     DeckCardOpNode* _opNode;
-    EditDeckMask* _editDeckMask;
+    DeckEditMask* _deckEditMask;
     DeckCard* _usedCard;
     Point _usedCardPoint;
     Point _cardOriginalPoint;
