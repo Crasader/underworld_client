@@ -28,17 +28,19 @@ class DeckCardOpNodeObserver
 {
 public:
     virtual ~DeckCardOpNodeObserver() {}
-    virtual void onDeckCardOpNodeClickedButton(DeckCardOpType type, DeckCard* card) = 0;
+    virtual void onDeckCardOpNodeClicked() = 0;
+    virtual void onDeckCardOpNodeClickedButton(DeckCardOpType type, int cardId) = 0;
 };
 
-class DeckCardOpNode : public Node
+class DeckCardOpNode : public ui::Widget
 {
 public:
     static DeckCardOpNode* create();
     virtual ~DeckCardOpNode();
     void registerObserver(DeckCardOpNodeObserver* observer);
-    void setCard(DeckCard* card);
+    void setCard(int cardId);
     void setTypes(const std::vector<DeckCardOpType>& types);
+    int getCardId() const;
     
 private:
     DeckCardOpNode();
@@ -53,7 +55,7 @@ private:
     static Size _hintMinSize;
     std::vector<DeckCardOpType> _opTypes;
     std::map<DeckCardOpType, UniversalButton*> _buttons;
-    DeckCard* _card;
+    bool _touchInvalid;
 };
 
 #endif /* DeckCardOpNode_h */

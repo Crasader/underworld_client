@@ -36,7 +36,7 @@ DeckCardOpNode::DeckCardOpNode()
 :_observer(nullptr)
 ,_icon(nullptr)
 ,_hint(nullptr)
-,_card(nullptr) {}
+,_touchInvalid(false) {}
 
 DeckCardOpNode::~DeckCardOpNode()
 {
@@ -45,7 +45,7 @@ DeckCardOpNode::~DeckCardOpNode()
 
 bool DeckCardOpNode::init()
 {
-    if (Node::init())
+    if (ui::Widget::init())
     {
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         
@@ -53,12 +53,33 @@ bool DeckCardOpNode::init()
         static const float capInsets(18.0f);
         static Rect capInset(capInsets, capInsets, size.width - capInsets * 2, size.height - capInsets * 2);
         _hint = ui::Scale9Sprite::create(BattleDeckUI::getResourcePath("ui_kuang_11.png"), Rect(Point::ZERO, size), capInset);
-        addChild(_hint, -1);
+        addChild(_hint);
         
         _icon = DeckCard::create(0);
         _hint->addChild(_icon);
         
         resetPositions();
+        setTouchEnabled(true);
+        setSwallowTouches(true);
+        addTouchEventListener([this](Ref *pSender, ui::Widget::TouchEventType type) {
+            auto widget = dynamic_cast<ui::Widget*>(pSender);
+            if (type == ui::Widget::TouchEventType::BEGAN) {
+                _touchInvalid = false;
+            } else if (type == ui::Widget::TouchEventType::MOVED) {
+                if (!_touchInvalid) {
+                    const auto& mp(widget->getTouchMovePosition());
+                    const auto& bp(widget->getTouchBeganPosition());
+                    static const float offset(40);
+                    if (abs(mp.x - bp.x) >= offset || abs(mp.y - bp.y) >= offset) {
+                        _touchInvalid = true;
+                    }
+                }
+            } else if (type == ui::Widget::TouchEventType::ENDED) {
+                if (!_touchInvalid && _observer) {
+                    _observer->onDeckCardOpNodeClicked();
+                }
+            }
+        });
         
         return true;
     }
@@ -71,15 +92,9 @@ void DeckCardOpNode::registerObserver(DeckCardOpNodeObserver *observer)
     _observer = observer;
 }
 
-void DeckCardOpNode::setCard(DeckCard* card)
+void DeckCardOpNode::setCard(int cardId)
 {
-    _card = card;
-    
-    int cardId(0);
-    if (card) {
-        cardId = card->getCardId();
-    }
-    _icon->update(card ? card->getCardId() : 0);
+    _icon->update(cardId);
 }
 
 void DeckCardOpNode::setTypes(const vector<DeckCardOpType>& types)
@@ -104,6 +119,15 @@ void DeckCardOpNode::setTypes(const vector<DeckCardOpType>& types)
         
         resetPositions();
     }
+}
+
+int DeckCardOpNode::getCardId() const
+{
+    if (_icon) {
+        return _icon->getCardId();
+    }
+    
+    return 0;
 }
 
 UniversalButton* DeckCardOpNode::createButton(DeckCardOpType opType) const
@@ -139,7 +163,7 @@ UniversalButton* DeckCardOpNode::createButton(DeckCardOpType opType) const
     auto button = UniversalButton::create(size, type, title);
     button->setCallback([opType, this](Ref*) {
         if (_observer) {
-            _observer->onDeckCardOpNodeClickedButton(opType, _card);
+            _observer->onDeckCardOpNodeClickedButton(opType, getCardId());
         }
     });
     return button;

@@ -34,7 +34,6 @@ public:
     void registerObserver(DeckCardObserver *observer);
     
     void update(int cardId);
-    void setInDeck(bool inDeck);
     int getCardId() const;
     
     void shake();
@@ -50,7 +49,6 @@ private:
     Node* _costNode;
     Label* _cost;
     int _cardId;
-    bool _inDeck;
     bool _touchInvalid;
     Point _iconPoint;
 };

@@ -66,29 +66,39 @@ protected:
     virtual void onDeckCardClicked(DeckCard* pSender) override;
     
     // DeckCardOpNodeObserver
-    virtual void onDeckCardOpNodeClickedButton(DeckCardOpType type, DeckCard* card) override;
+    virtual void onDeckCardOpNodeClicked() override;
+    virtual void onDeckCardOpNodeClickedButton(DeckCardOpType type, int cardId) override;
     
     // EditDeckMaskObserver
     virtual void onEditDeckMaskTouched(const Point& point) override;
     
+    // -------- UI --------
     void createLeftNode();
     void createRightNode();
-    DeckCard* createFoundCard(int card);
-    Node* createUnfoundCard(int card) const;
+    DeckCard* createCard(int card);
     Node* createLine(bool isHero) const;
     Node* createUnfoundLine() const;
-    void showOpNode(DeckCard* card);
-    void hideOpNode();
-    void beginEdit(DeckCard* pickedCard);
-    void endEdit();
     void updateCardsCount();
     void updateAverageElixir();
+    
+    // Oprations Node
+    void showOpNode(DeckCard* card);
+    void hideOpNode();
+    bool setOpNodePosition(DeckCard* card);
+    
+    // Move cards
+    void beginEdit(int cardId);
+    void endEdit();
     void onReceivedManagerNotifications(const std::string& notification);
+    void sortCards(const std::vector<int>& cards, std::unordered_map<int, DeckCard*>& nodes, const std::vector<Point>& positions);
     void exchangeCard(DeckCard* from, DeckCard* to);
-    void useCard(DeckCard* touchedCard, DeckCard* replaced, const Point& point);
+    void exchangeCardCancelled(DeckCard* card);
+    void useCard(DeckCard* replaced, bool fromDeck);
     void useCardCancelled();
-    void move(Node* node, const Point& point, const std::function<void()>& callback) const;
-    void shake(const std::vector<std::vector<DeckCard*>>& nodes);
+    
+    // Universal Methods
+    void move(Node* node, const Point& point, float duration, const std::function<void()>& callback) const;
+    void shake(const std::vector<std::vector<DeckCard*>>& nodes) const;
     void stopShake();
     void readdChild(Node* parent, Node* child) const;
     DeckCard* getIntersectedCard(const DeckCard* touchedCard) const;
@@ -97,13 +107,14 @@ protected:
     float getHeight(size_t count, float spaceY) const;
     Point getPosition(int row, int column) const;
     
-    // functions
+    // Functions
     bool find(const std::vector<DeckCard*>& cards, const DeckCard* data) const;
     bool replace(std::vector<DeckCard*>& cards, DeckCard* used, DeckCard* replaced) const;
     void exchange(std::vector<DeckCard*>& cards, DeckCard* from, DeckCard* to) const;
     void loadCandidates();
     void loadDeck(int idx);
     void setNextSortType();
+    void resetParams();
     
 #if DECKLAYER_ENABLE_TYPE_FILTER
     void setCardType(DeckTabType type);
@@ -123,18 +134,18 @@ private:
     Node* _unfoundLine;
     DeckCardOpNode* _opNode;
     EditDeckMask* _editDeckMask;
-    Point _cardOriginalPoint;
     DeckCard* _usedCard;
-    Point _usedCardPoint; // TODO: remove the parameter
+    Point _usedCardPoint;
+    Point _cardOriginalPoint;
     
     std::vector<DeckCard*> _deckCards;
-    std::vector<DeckCard*> _foundCards;
-    std::vector<Node*> _unfoundCards;
+    std::unordered_map<int, DeckCard*> _foundCards;
+    std::unordered_map<int, DeckCard*> _unfoundCards;
     
     std::vector<Point> _foundPositions;
+    std::vector<Point> _unfoundPositions;
     
     // Data
-    int _thisDeckIdx;
     bool _isEditing;
     int _thisSortIdx;
 };

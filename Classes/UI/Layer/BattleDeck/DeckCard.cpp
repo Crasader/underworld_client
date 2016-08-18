@@ -35,7 +35,6 @@ DeckCard::DeckCard()
 ,_costNode(nullptr)
 ,_cost(nullptr)
 ,_cardId(0)
-,_inDeck(false)
 ,_touchInvalid(false)
 ,_iconPoint(Point::ZERO) {}
 
@@ -123,13 +122,6 @@ void DeckCard::update(int cardId)
             _costNode->setVisible(!data->isHero());
             _cost->setString(StringUtils::format("%d", data->getCost()));
         }
-    }
-}
-
-void DeckCard::setInDeck(bool inDeck)
-{
-    if (_inDeck != inDeck) {
-        _inDeck = inDeck;
     }
 }
 
