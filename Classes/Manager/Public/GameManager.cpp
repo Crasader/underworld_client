@@ -216,24 +216,12 @@ bool GameManager::loadBattleContent()
     _battleContent->unitList.clear();
     
     if (data) {
-        _battleContent->cards.clear();
-        static const vector<DeckData::Type> types = {
-            DeckData::Type::Hero, DeckData::Type::Soldier
-        };
-        
-        for (auto type : types) {
-            const auto& cards(data->getCards(type));
-            for (auto card : cards) {
-                _battleContent->cards.push_back(card);
-            }
+        for (auto card : data->getCards()) {
+            _battleContent->cards.push_back(card);
         }
     }
     
-    if (_battleContent->cards.empty()) {
-        return false;
-    }
-    
-    return true;
+    return !_battleContent->cards.empty();
 }
 
 void GameManager::onPVRLoaded()

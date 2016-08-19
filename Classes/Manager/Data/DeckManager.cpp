@@ -133,6 +133,11 @@ void DeckManager::saveThisDeckData()
     saveDeckData(_defaultId);
 }
 
+size_t DeckManager::getAllCardsCount() const
+{
+    return getAllFoundCardsCount() + _unfoundCards.size();
+}
+
 size_t DeckManager::getAllFoundCardsCount() const
 {
     return _allFoundCards.size();
@@ -157,7 +162,7 @@ const vector<int>& DeckManager::getUnfoundCards() const
     return _unfoundCards;
 }
 
-void DeckManager::useCard(int used, int replaced)
+void DeckManager::useCard(int used, int replaced, const function<void(int)>& callback)
 {
     for (auto iter = begin(_foundCards); iter != end(_foundCards); ++iter) {
         if (used == (*iter)) {
@@ -170,14 +175,14 @@ void DeckManager::useCard(int used, int replaced)
     sortFoundCards();
     
     if (_defaultDeckData) {
-        _defaultDeckData->use(used, replaced);
+        _defaultDeckData->use(used, replaced, callback);
     }
 }
 
-void DeckManager::exchangeCard(int from, int to)
+void DeckManager::exchangeCard(int from, int to, const function<void(int, int)>& callback)
 {
     if (_defaultDeckData) {
-        _defaultDeckData->exchange(from, to);
+        _defaultDeckData->exchange(from, to, callback);
     }
 }
 
@@ -216,12 +221,8 @@ void DeckManager::loadThisDeck()
         container.insert(iter->first);
     }
     
-    static const vector<DeckData::Type> types = {DeckData::Type::Hero, DeckData::Type::Soldier};
-    for (auto type : types) {
-        const auto& cards(_defaultDeckData->getCards(type));
-        for (auto card : cards) {
-            container.erase(card);
-        }
+    for (auto card : _defaultDeckData->getCards()) {
+        container.erase(card);
     }
     
     for (auto card : container) {

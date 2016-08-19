@@ -11,34 +11,28 @@
 
 #include <string>
 #include <vector>
-#include <map>
+#include <functional>
 
 class DeckData
 {
 public:
-    enum class Type {
-        None, Hero, Soldier
-    };
-    
-public:
+    static constexpr int HeroCount = 2;
+    static constexpr int SoldierCount = 8;
     DeckData(const std::string& serializedString);
     virtual ~DeckData();
     
-    const std::vector<int>& getCards(Type type) const;
-    void use(int used, int replaced);
-    void exchange(int from, int to);
+    const std::vector<int>& getCards() const;
+    void use(int used, int replaced, const std::function<void(int)>& callback);
+    void exchange(int from, int to, const std::function<void(int, int)>& callback);
     
     void serialize(std::string& output);
     
 protected:
-    struct CardInfo;
-    void parse(Type type, const std::string& input);
-    CardInfo getInfo(int card) const;
-    bool use(Type type, int used, int replaced);
-    void remove(Type type, int card);
+    void parse(const std::string& input);
+    void remove(int card);
     
 private:
-    std::map<Type, std::vector<int>> _cards;
+    std::vector<int> _cards;
 };
 
 #endif /* CardDeckData_h */

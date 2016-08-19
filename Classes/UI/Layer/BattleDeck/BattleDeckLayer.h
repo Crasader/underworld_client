@@ -98,19 +98,16 @@ protected:
     
     // Universal Methods
     void move(Node* node, const Point& point, float duration, const std::function<void()>& callback) const;
-    void shake(const std::vector<std::vector<DeckCard*>>& nodes) const;
+    void shake(const std::vector<DeckCard*>& nodes) const;
     void stopShake();
     void readdChild(Node* parent, Node* child) const;
     DeckCard* getIntersectedCard(const DeckCard* touchedCard) const;
-    DeckCard* getIntersectedCard(const DeckCard* touchedCard, const std::vector<DeckCard*>& cards, float& intersectedArea) const;
+    DeckCard* getIntersectedCard(const DeckCard* touchedCard, const std::vector<DeckCard*>& cards) const;
     Rect getWorldBoundingBox(const Node* node) const;
     float getHeight(size_t count, float spaceY) const;
     Point getPosition(int row, int column) const;
     
     // Functions
-    bool find(const std::vector<DeckCard*>& cards, const DeckCard* data) const;
-    bool replace(std::vector<DeckCard*>& cards, DeckCard* used, DeckCard* replaced) const;
-    void exchange(std::vector<DeckCard*>& cards, DeckCard* from, DeckCard* to) const;
     void loadCandidates();
     void loadDeck(int idx);
     void setNextSortType();

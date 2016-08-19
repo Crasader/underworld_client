@@ -206,7 +206,11 @@ void MessageBoxLayer::resetMessageLabel(int fontSize)
 {
     if (!_messageLabel || fontSize == _messageLabel->getTTFConfig().fontSize) return;
     
+#if true
+    _messageLabel->setSystemFontSize(fontSize);
+#else
     TTFConfig ttfConfig(_messageLabel->getTTFConfig());
     ttfConfig.fontSize = fontSize;
     _messageLabel->setTTFConfig(ttfConfig);
+#endif
 }

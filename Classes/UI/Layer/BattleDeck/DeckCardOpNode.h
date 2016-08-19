@@ -11,18 +11,11 @@
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
+#include "BattleDeckUI.h"
 
 USING_NS_CC;
 
 class DeckCard;
-class UniversalButton;
-
-enum class DeckCardOpType {
-    Upgrade,
-    Use,
-    Info,
-    Move
-};
 
 class DeckCardOpNodeObserver
 {
@@ -45,7 +38,6 @@ public:
 private:
     DeckCardOpNode();
     virtual bool init() override;
-    UniversalButton* createButton(DeckCardOpType opType) const;
     void resetPositions();
     
 private:

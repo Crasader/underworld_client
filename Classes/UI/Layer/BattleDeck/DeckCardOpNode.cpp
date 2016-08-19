@@ -10,8 +10,6 @@
 #include "DeckCard.h"
 #include "UniversalButton.h"
 #include "CardSimpleData.h"
-#include "BattleDeckUI.h"
-#include "LocalHelper.h"
 
 using namespace std;
 
@@ -111,7 +109,11 @@ void DeckCardOpNode::setTypes(const vector<DeckCardOpType>& types)
             if (_buttons.find(type) != end(_buttons)) {
                 _buttons.at(type)->setVisible(true);
             } else {
-                auto button = createButton(type);
+                auto button = BattleDeckUI::createButton(type, [this, type]() {
+                    if (_observer) {
+                        _observer->onDeckCardOpNodeClickedButton(type, getCardId());
+                    }
+                });
                 _hint->addChild(button);
                 _buttons.insert(make_pair(type, button));
             }
@@ -128,45 +130,6 @@ int DeckCardOpNode::getCardId() const
     }
     
     return 0;
-}
-
-UniversalButton* DeckCardOpNode::createButton(DeckCardOpType opType) const
-{
-    static const UniversalButton::BSize size(UniversalButton::BSize::Small);
-    
-    UniversalButton::BType type(UniversalButton::BType::Blue);
-    string title;
-    switch (opType) {
-        case DeckCardOpType::Upgrade: {
-            type = UniversalButton::BType::Green;
-            title = LocalHelper::getString("ui_deck_upgrade");
-        }
-            break;
-        case DeckCardOpType::Use: {
-            type = UniversalButton::BType::Green;
-            title = LocalHelper::getString("ui_deck_use");
-        }
-            break;
-        case DeckCardOpType::Info: {
-            title = LocalHelper::getString("ui_deck_info");
-        }
-            break;
-        case DeckCardOpType::Move: {
-            type = UniversalButton::BType::Green;
-            title = LocalHelper::getString("ui_deck_move");
-        }
-            break;
-        default:
-            break;
-    }
-    
-    auto button = UniversalButton::create(size, type, title);
-    button->setCallback([opType, this](Ref*) {
-        if (_observer) {
-            _observer->onDeckCardOpNodeClickedButton(opType, getCardId());
-        }
-    });
-    return button;
 }
 
 void DeckCardOpNode::resetPositions()

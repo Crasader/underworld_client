@@ -12,6 +12,7 @@
 #include "json/document.h"
 #include <unordered_map>
 #include <vector>
+#include <functional>
 
 class DeckData;
 class CardSimpleData;
@@ -46,13 +47,14 @@ public:
     const DeckData* getThisDeckData() const;
     void saveThisDeckData();
     
+    size_t getAllCardsCount() const;
     size_t getAllFoundCardsCount() const;
     const CardSimpleData* getCardData(int card) const;
     const std::vector<int>& getFoundCards() const;
     const std::vector<int>& getUnfoundCards() const;
     
-    void useCard(int used, int replaced);
-    void exchangeCard(int from, int to);
+    void useCard(int used, int replaced, const std::function<void(int)>& callback);
+    void exchangeCard(int from, int to, const std::function<void(int, int)>& callback);
     void findCard(int card);
     
 private:
