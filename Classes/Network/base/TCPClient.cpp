@@ -638,6 +638,16 @@ void TCPClient::dispatchResponseCallbacks()
     }
 }
 
+void TCPClient::dispatchReconnectCallbacks()
+{
+    const ccTCPReconnectCallback &callback = _rCallback;
+    if (callback != nullptr) {
+        callback(this, nullptr);
+    }
+}
+
+
+
 // Process Response
 void TCPClient::processResponse(char *responseMessage)
 {
@@ -875,13 +885,11 @@ int TCPClient::reconnect2Server()
     event_base_set(base, &server_event);
     event_add(&server_event, NULL);
     
-    
-    const ccTCPReconnectCallback &callback = _rCallback;
-    // Ref* pTarget = request->getTarget();
-    // SEL_TCPResponse pSelector = request->getSelector();
-    if (callback != nullptr) {
-        callback(this, nullptr);
+    _schedulerMutex.lock();
+    if (nullptr != _scheduler) {
+        _scheduler->performFunctionInCocosThread(CC_CALLBACK_0(TCPClient::dispatchReconnectCallbacks, this));
     }
+    _schedulerMutex.unlock();
     
     return 0;
 }

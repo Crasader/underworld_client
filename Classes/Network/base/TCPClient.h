@@ -210,6 +210,8 @@ private:
     /** Poll function called from main thread to dispatch callbacks when http requests finished **/
     void dispatchResponseCallbacks();
     
+    void dispatchReconnectCallbacks();
+    
     void increaseThreadCount();
     void decreaseThreadCountAndMayDeleteThis();
     int reconnect2Server();
