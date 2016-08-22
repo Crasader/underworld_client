@@ -175,11 +175,9 @@ bool MainUILayer::init()
         
         // 3. left bottom
         {
-            auto button = FunctionButton::create(ButtonType::Shop, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
-            addChild(button);
-            
+            auto button = createButton(ButtonType::Shop, Point::ZERO);
             const auto& size(button->getContentSize());
-            button->setPosition(Point(margin + size.width / 2, margin + size.height / 2));
+            button->setPosition(margin + size.width / 2, margin + size.height / 2);
         }
         
         // 4. right top
@@ -207,103 +205,24 @@ bool MainUILayer::init()
         
         // 5. right bottom
         {
-            static const Vec2 space(10, 10);
-            float x(winSize.width - margin);
-            float y(margin);
-            const Point basePoint(x, y);
+            static const float space(10.0f);
+            const Point original(winSize.width - margin, margin);
             
-            {
-                auto button = FunctionButton::create(ButtonType::Battle, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
-                addChild(button);
-                
-                const auto& size(button->getContentSize());
-                button->setPosition(Point(x - size.width / 2, y + size.height / 2));
-                
-                x -= size.width + space.x;
-                y += size.height + space.y;
-            }
+            auto button = createButton(ButtonType::Battle, original);
             
-            // left
-            {
-                auto button = FunctionButton::create(ButtonType::Train, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
-                addChild(button);
-                
-                const auto& size(button->getContentSize());
-                button->setPosition(Point(x - size.width / 2, basePoint.y + size.height / 2));
-                
-                x -= size.width + space.x;
-            }
+            // leftward
+            float x(original.x - (button->getContentSize().width + space));
+            createButtonLeftward(ButtonType::Train, x, original.y, space);
+            createButtonLeftward(ButtonType::Quest, x, original.y, space);
+            createButtonLeftward(ButtonType::Guild, x, original.y, space);
+            createButtonLeftward(ButtonType::Friend, x, original.y, space);
+            createButtonLeftward(ButtonType::BattleLog, x, original.y, space);
             
-            {
-                auto button = FunctionButton::create(ButtonType::Quest, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
-                addChild(button);
-                
-                const auto& size(button->getContentSize());
-                button->setPosition(Point(x - size.width / 2, basePoint.y + size.height / 2));
-                
-                x -= size.width + space.x;
-            }
-            
-            {
-                auto button = FunctionButton::create(ButtonType::Guild, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
-                addChild(button);
-                
-                const auto& size(button->getContentSize());
-                button->setPosition(Point(x - size.width / 2, basePoint.y + size.height / 2));
-                
-                x -= size.width + space.x;
-            }
-            
-            {
-                auto button = FunctionButton::create(ButtonType::Friend, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
-                addChild(button);
-                
-                const auto& size(button->getContentSize());
-                button->setPosition(Point(x - size.width / 2, basePoint.y + size.height / 2));
-                
-                x -= size.width + space.x;
-            }
-            
-            {
-                auto button = FunctionButton::create(ButtonType::BattleLog, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
-                addChild(button);
-                
-                const auto& size(button->getContentSize());
-                button->setPosition(Point(x - size.width / 2, basePoint.y + size.height / 2));
-                
-                x -= size.width + space.x;
-            }
-            
-            // top
-            {
-                auto button = FunctionButton::create(ButtonType::Settings, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
-                addChild(button);
-                
-                const auto& size(button->getContentSize());
-                button->setPosition(Point(basePoint.x - size.width / 2, y + size.height / 2));
-                
-                y += size.height + space.y;
-            }
-            
-            {
-                auto button = FunctionButton::create(ButtonType::Rank, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
-                addChild(button);
-                
-                const auto& size(button->getContentSize());
-                button->setPosition(Point(basePoint.x - size.width / 2, y + size.height / 2));
-                
-                y += size.height + space.y;
-            }
-            
-            {
-                auto button = FunctionButton::create(ButtonType::Achievement, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
-                addChild(button);
-                
-                const auto& size(button->getContentSize());
-                button->setPosition(Point(basePoint.x - size.width / 2, y + size.height / 2));
-                
-                y += size.height + space.y;
-            }
+            // upward
+            float y(original.y + (button->getContentSize().height + space));
+            createButtonUpward(ButtonType::Settings, original.x, y, space);
+            createButtonUpward(ButtonType::Rank, original.x, y, space);
+            createButtonUpward(ButtonType::Achievement, original.x, y, space);
         }
         
         updateAvatar(0);
@@ -338,9 +257,15 @@ void MainUILayer::onTouchEnded(Touch *touch, Event *unused_event)
 }
 
 #pragma mark - ChatLayerObserver
-void MainUILayer::onChatLayerClickedButton()
+void MainUILayer::onChatLayerTouchedButton(Widget::TouchEventType type)
 {
-    moveChatLayer(!_isChatLayerFolded, true);
+    if (Widget::TouchEventType::BEGAN == type) {
+        
+    } else if (Widget::TouchEventType::MOVED == type) {
+        
+    } else {
+        moveChatLayer(!_isChatLayerFolded, true);
+    }
 }
 
 #pragma mark - private
@@ -398,6 +323,27 @@ void MainUILayer::onChatLayerMoved(bool folded, const Point& point)
     _chatLayer->setFocus(!folded);
 }
 
+MainUILayer::FunctionButton* MainUILayer::createButton(ButtonType type, const Point& point)
+{
+    auto button = FunctionButton::create(type, CC_CALLBACK_1(MainUILayer::onFunctionButtonClicked, this));
+    addChild(button);
+    const auto& size(button->getContentSize());
+    button->setPosition(point.x - size.width / 2, point.y + size.height / 2);
+    return button;
+}
+
+void MainUILayer::createButtonLeftward(ButtonType type, float& x, float y, float space)
+{
+    auto button = createButton(type, Point(x, y));
+    x -= button->getContentSize().width + space;
+}
+
+void MainUILayer::createButtonUpward(ButtonType type, float x, float& y, float space)
+{
+    auto button = createButton(type, Point(x, y));
+    y += button->getContentSize().height + space;
+}
+
 void MainUILayer::onResourceButtonClicked(ResourceNode* node)
 {
     switch (node->getType()) {
@@ -434,10 +380,6 @@ void MainUILayer::onFunctionButtonClicked(ButtonType type)
             
         case ButtonType::Settings:
             runningScene->addChild(SettingsLayer::create());
-            break;
-        
-        case ButtonType::Chat:
-            runningScene->addChild(ChatLayer::create());
             break;
             
         case ButtonType::BattleLog:

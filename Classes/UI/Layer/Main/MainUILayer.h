@@ -9,8 +9,6 @@
 #ifndef MainUILayer_h
 #define MainUILayer_h
 
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
 #include "ChatLayer.h"
 
 USING_NS_CC;
@@ -46,7 +44,7 @@ protected:
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
     // ChatLayerObserver
-    virtual void onChatLayerClickedButton() override;
+    virtual void onChatLayerTouchedButton(ui::Widget::TouchEventType type) override;
     
     void updateAvatar(int idx);
     void updateExp();
@@ -54,6 +52,9 @@ protected:
     void moveChatLayer(bool folded, bool animated);
     void onChatLayerMoved(bool folded, const Point& point);
     
+    FunctionButton* createButton(ButtonType type, const Point& point);
+    void createButtonLeftward(ButtonType type, float& x, float y, float space);
+    void createButtonUpward(ButtonType type, float x, float& y, float space);
     void onResourceButtonClicked(ResourceNode* node);
     void onFunctionButtonClicked(ButtonType type);
     

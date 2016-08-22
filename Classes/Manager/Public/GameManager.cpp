@@ -213,7 +213,7 @@ void GameClient::purgeInstance()
     CC_SAFE_DELETE(_looper);
     CC_SAFE_DELETE(_network);
     CC_SAFE_DELETE(_gameScheduler);
-    CC_SAFE_RELEASE(_scene);
+    CC_SAFE_RELEASE_NULL(_scene);
 }
 
 bool GameClient::loadBattleContent()
