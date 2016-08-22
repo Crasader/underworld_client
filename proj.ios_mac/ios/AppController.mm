@@ -25,6 +25,7 @@
 #import "AppController.h"
 #import "platform/ios/CCEAGLView-ios.h"
 #import "cocos2d.h"
+#import "ApiBridge.h"
 #import "AppDelegate.h"
 #import "RootViewController.h"
 #import "CrashHelper.h"
@@ -123,6 +124,10 @@ static AppDelegate s_sharedApplication;
      */
      //We don't need to call this method any more. It will interupt user defined game pause&resume logic
     /* cocos2d::Director::getInstance()->resume(); */
+    
+    if (iOSApi::isAPNSEnabled()) {
+        application.applicationIconBadgeNumber = 0;
+    }
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {

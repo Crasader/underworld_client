@@ -27,7 +27,7 @@ class ChatLayerObserver
 {
 public:
     virtual ~ChatLayerObserver() {}
-    virtual void onChatLayerTouchedButton(ui::Widget::TouchEventType type) = 0;
+    virtual void onChatLayerTouchedButton(ui::Button* button, ui::Widget::TouchEventType type) = 0;
 };
 
 class ChatLayer

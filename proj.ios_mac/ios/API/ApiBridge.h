@@ -48,7 +48,9 @@ namespace iOSApi {
     std::string getVersionId();
     std::string getBuildId();
     std::string getLanguage();
+    void registerAPNS();
     bool isAPNSEnabled();
+    void gotoSettingApp();
     void setMultipleTouchEnabled(bool enabled);
     void showAlertView(const std::string& title, const std::string& message, bool showTwoButtons, int tag, const AlertViewClickedButtonCallback& callback);
 }

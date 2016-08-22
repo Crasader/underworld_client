@@ -18,7 +18,7 @@ class CheatLayer : public LayerColor
 public:
     static CheatLayer* getInstance();
     static void purge();
-    void show();
+    void show(Node* parent);
     
 protected:
     CheatLayer();

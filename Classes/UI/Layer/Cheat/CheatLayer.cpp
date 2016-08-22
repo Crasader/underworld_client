@@ -39,12 +39,15 @@ void CheatLayer::purge()
     }
 }
 
-void CheatLayer::show()
+void CheatLayer::show(Node* parent)
 {
-    auto director(Director::getInstance());
-    director->getRunningScene()->addChild(s_pInstance);
-    const auto& winSize(director->getWinSize());
-    s_pInstance->setPosition(winSize.width, winSize.height / 2);
+    removeFromParent();
+    
+    if (parent) {
+        parent->addChild(this);
+        const auto& size(parent->getContentSize());
+        setPosition(size.width, size.height / 2);
+    }
 }
 
 CheatLayer::CheatLayer()

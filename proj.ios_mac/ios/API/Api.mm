@@ -308,6 +308,17 @@ string iOSApi::getLanguage()
     return [currentLanguage stdString];
 }
 
+void iOSApi::registerAPNS()
+{
+    UIApplication* application = [UIApplication sharedApplication];
+    if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
+        [application registerForRemoteNotifications];
+        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil]];
+    } else {
+        [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeBadge)];
+    }
+}
+
 bool iOSApi::isAPNSEnabled()
 {
     UIApplication* application = [UIApplication sharedApplication];
@@ -320,6 +331,19 @@ bool iOSApi::isAPNSEnabled()
         }
         
         return false;
+    }
+}
+
+void iOSApi::gotoSettingApp()
+{
+    if (&UIApplicationOpenSettingsURLString != nil) {
+        UIApplication* application = [UIApplication sharedApplication];
+        NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        if ([application canOpenURL:url]) {
+            [application openURL:url];
+        }
+    } else {
+        // Present some dialog telling the user to open the settings app.
     }
 }
 

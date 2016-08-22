@@ -39,16 +39,17 @@ protected:
     
     // LayerColor
     virtual bool init() override;
-    virtual void onEnterTransitionDidFinish() override;
+    virtual void onEnter() override;
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
     // ChatLayerObserver
-    virtual void onChatLayerTouchedButton(ui::Widget::TouchEventType type) override;
+    virtual void onChatLayerTouchedButton(ui::Button* button, ui::Widget::TouchEventType type) override;
     
     void updateAvatar(int idx);
     void updateExp();
     void updateResources();
+    Point getChatLayerDefaultPosition(bool folded) const;
     void moveChatLayer(bool folded, bool animated);
     void onChatLayerMoved(bool folded, const Point& point);
     

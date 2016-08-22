@@ -240,10 +240,10 @@ bool MainUILayer::init()
     return false;
 }
 
-void MainUILayer::onEnterTransitionDidFinish()
+void MainUILayer::onEnter()
 {
-    LayerColor::onEnterTransitionDidFinish();
-    CheatLayer::getInstance()->show();
+    LayerColor::onEnter();
+    CheatLayer::getInstance()->show(this);
 }
 
 bool MainUILayer::onTouchBegan(Touch *pTouch, Event *pEvent)
@@ -257,14 +257,31 @@ void MainUILayer::onTouchEnded(Touch *touch, Event *unused_event)
 }
 
 #pragma mark - ChatLayerObserver
-void MainUILayer::onChatLayerTouchedButton(Widget::TouchEventType type)
+void MainUILayer::onChatLayerTouchedButton(Button* button, Widget::TouchEventType type)
 {
-    if (Widget::TouchEventType::BEGAN == type) {
-        
-    } else if (Widget::TouchEventType::MOVED == type) {
-        
-    } else {
-        moveChatLayer(!_isChatLayerFolded, true);
+    if (Widget::TouchEventType::MOVED == type) {
+        const float x(button->getTouchMovePosition().x - button->getTouchBeganPosition().x);
+        const auto& basePoint(getChatLayerDefaultPosition(_isChatLayerFolded));
+        if (_isChatLayerFolded ^ (x < 0)) {
+            const float offsetX(MAX(MIN(abs(x), _chatLayer->getContentSize().width), 0));
+            _chatLayer->setPosition(basePoint + Point((x > 0) ? offsetX : -offsetX, 0));
+        } else {
+            _chatLayer->setPosition(basePoint);
+        }
+    } else if (Widget::TouchEventType::ENDED == type ||
+               Widget::TouchEventType::CANCELED == type) {
+        const auto& endPoint(button->getTouchEndPosition());
+        const float x(endPoint.x - button->getTouchBeganPosition().x);
+        if (0 == x) {
+            moveChatLayer(!_isChatLayerFolded, true);
+        } else if (_isChatLayerFolded ^ (x < 0)) {
+            const float width(_chatLayer->getContentSize().width);
+            const float offsetX(MAX(MIN(abs(x), width), 0));
+            const bool changed(_isChatLayerFolded ^ (offsetX > width / 2));
+            moveChatLayer(changed, true);
+        } else {
+            moveChatLayer(_isChatLayerFolded, true);
+        }
     }
 }
 
@@ -286,6 +303,15 @@ void MainUILayer::updateResources()
     
 }
 
+Point MainUILayer::getChatLayerDefaultPosition(bool folded) const
+{
+    if (folded && _chatLayer) {
+        return Point(-_chatLayer->getContentSize().width, 0);
+    }
+    
+    return Point::ZERO;
+}
+
 void MainUILayer::moveChatLayer(bool folded, bool animated)
 {
     if (!_chatLayer) {
@@ -294,23 +320,22 @@ void MainUILayer::moveChatLayer(bool folded, bool animated)
         addChild(_chatLayer, zorder_top);
     }
     
-    const auto& size(_chatLayer->getContentSize());
-    const Point point(folded ? -size.width : 0, 0);
-    if (point != _chatLayer->getPosition()) {
-        if (animated) {
-            if (!_isChatLayerMoving) {
-                _isChatLayerMoving = true;
-                static const float duration(0.3f);
-                if (folded) {
-                    _chatLayer->setFocus(false);
-                }
-                _chatLayer->runAction(Sequence::create(MoveTo::create(duration, point), CallFunc::create([=]() {
-                    onChatLayerMoved(folded, point);
-                }), nullptr));
+    const auto& currentPoint(_chatLayer->getPosition());
+    const auto& point(getChatLayerDefaultPosition(folded));
+    if (point != currentPoint && animated) {
+        if (!_isChatLayerMoving) {
+            _isChatLayerMoving = true;
+            static const float speed(2400.f);
+            if (folded) {
+                _chatLayer->setFocus(false);
             }
-        } else {
-            onChatLayerMoved(folded, point);
+            
+            _chatLayer->runAction(Sequence::create(MoveTo::create(currentPoint.distance(point) / speed, point), CallFunc::create([=]() {
+                onChatLayerMoved(folded, point);
+            }), nullptr));
         }
+    } else {
+        onChatLayerMoved(folded, point);
     }
 }
 

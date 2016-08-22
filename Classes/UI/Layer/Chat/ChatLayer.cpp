@@ -302,9 +302,12 @@ bool ChatLayer::init()
         _buttonIcon->setPosition(Point(bOffsetX + _buttonIcon->getContentSize().width / 2, bsize.height / 2));
         button->addChild(_buttonIcon);
         button->setPressedActionEnabled(true);
-        button->addTouchEventListener([this](Ref*, Widget::TouchEventType type) {
-            if (_observer) {
-                _observer->onChatLayerTouchedButton(type);
+        button->addTouchEventListener([this](Ref* pSender, Widget::TouchEventType type) {
+            if (pSender && _observer) {
+                Button* button(dynamic_cast<Button*>(pSender));
+                if (button) {
+                    _observer->onChatLayerTouchedButton(button, type);
+                }
             }
         });
         
