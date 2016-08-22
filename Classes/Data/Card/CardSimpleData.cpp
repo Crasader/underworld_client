@@ -26,12 +26,12 @@ CardSimpleData::CardSimpleData(const rapidjson::Value& jsonDict)
     auto ct = DataManager::getInstance()->getGameModeHMM()->findCardTypeById(_idx);
     if (ct) {
         _name = ct->getName();
+        auto iter = ct->getCost().find(RES_NAME_WOOD);
+        _cost = (iter == ct->getCost().end()) ? 0 : UnderWorld::Core::GameConstants::microres2Res(iter->second);
     } else {
         _name = "";
+        _cost = 0;
     }
-    
-    auto iter = ct->getCost().find(RES_NAME_WOOD);
-    _cost = (iter == ct->getCost().end()) ? 0 : UnderWorld::Core::GameConstants::microres2Res(iter->second);
 }
 
 CardSimpleData::~CardSimpleData() {}

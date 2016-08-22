@@ -40,13 +40,14 @@ void DeckManager::purge()
     }
 }
 
-CardSimpleData* DeckManager::createFakeData(int card)
+// TODO: remove the test method
+CardSimpleData* createFakeData(int card, int level)
 {
     rapidjson::Document document;
     document.SetObject();
     rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
     document.AddMember("id", card, allocator);
-    document.AddMember("level", 1, allocator);
+    document.AddMember("level", level, allocator);
     return new (nothrow) CardSimpleData(document);
 }
 
@@ -71,8 +72,15 @@ DeckManager::DeckManager()
     
     const auto& cards = DataManager::getInstance()->getCardDecks();
     for (auto iter = begin(cards); iter != end(cards); ++iter) {
-        auto data(createFakeData(*iter));
-        _allFoundCards.insert(make_pair(data->getIdx(), data));
+        const int cardId(*iter);
+        _allFoundCards.insert(cardId);
+        _allCards.insert(make_pair(cardId, createFakeData(cardId, 1)));
+    }
+    
+//    _unfoundCards = {23100, 23101};
+    for (auto iter = begin(_unfoundCards); iter != end(_unfoundCards); ++iter) {
+        const int cardId(*iter);
+        _allCards.insert(make_pair(cardId, createFakeData(cardId, 1)));
     }
     
     loadThisDeck();
@@ -84,7 +92,7 @@ DeckManager::~DeckManager()
         CC_SAFE_DELETE(_decks.at(i));
     }
     
-    for (auto iter = begin(_allFoundCards); iter != end(_allFoundCards); ++iter) {
+    for (auto iter = begin(_allCards); iter != end(_allCards); ++iter) {
         CC_SAFE_DELETE(iter->second);
     }
 }
@@ -135,7 +143,7 @@ void DeckManager::saveThisDeckData()
 
 size_t DeckManager::getAllCardsCount() const
 {
-    return getAllFoundCardsCount() + _unfoundCards.size();
+    return _allCards.size();
 }
 
 size_t DeckManager::getAllFoundCardsCount() const
@@ -145,11 +153,20 @@ size_t DeckManager::getAllFoundCardsCount() const
 
 const CardSimpleData* DeckManager::getCardData(int card) const
 {
-    if (_allFoundCards.find(card) != end(_allFoundCards)) {
-        return _allFoundCards.at(card);
+    if (_allCards.find(card) != end(_allCards)) {
+        return _allCards.at(card);
     }
     
     return nullptr;
+}
+
+bool DeckManager::isFound(int card) const
+{
+    if (_allFoundCards.find(card) != end(_allFoundCards)) {
+        return true;
+    }
+    
+    return false;
 }
 
 const vector<int>& DeckManager::getFoundCards() const
@@ -195,8 +212,7 @@ void DeckManager::findCard(int card)
         }
     }
     
-    auto data(createFakeData(card));
-    _allFoundCards.insert(make_pair(data->getIdx(), data));
+    _allFoundCards.insert(card);
     _foundCards.push_back(card);
 }
 
@@ -216,11 +232,7 @@ void DeckManager::loadThisDeck()
     
     _foundCards.clear();
     
-    unordered_set<int> container;
-    for (auto iter = begin(_allFoundCards); iter != end(_allFoundCards); ++iter) {
-        container.insert(iter->first);
-    }
-    
+    unordered_set<int> container(_allFoundCards);
     for (auto card : _defaultDeckData->getCards()) {
         container.erase(card);
     }

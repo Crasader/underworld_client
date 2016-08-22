@@ -54,6 +54,8 @@ public:
     void registerObserver(BattleDeckLayerObserver *observer);
     
 protected:
+    class CardSet;
+    
     BattleDeckLayer();
     
     // LayerColor
@@ -85,12 +87,17 @@ protected:
     void showOpNode(DeckCard* card);
     void hideOpNode();
     bool setOpNodePosition(DeckCard* card);
+    bool isOpNodeOnCard(DeckCard* card) const;
+    
+    // Info
+    void showInfo(int cardId);
     
     // Move cards
     void beginEdit(int cardId);
     void endEdit();
     void onReceivedManagerNotifications(const std::string& notification);
-    void sortCards(const std::vector<int>& cards, std::unordered_map<int, DeckCard*>& nodes, const std::vector<Point>& positions);
+    DeckCard* getCandidateCard(int cardId) const;
+    void sortCards(const std::vector<int>& cards, CardSet* cardSet);
     void exchangeCard(DeckCard* from, DeckCard* to);
     void exchangeCardCancelled(DeckCard* card);
     void useCard(DeckCard* replaced, bool fromDeck);
@@ -108,7 +115,7 @@ protected:
     Point getPosition(int row, int column) const;
     
     // Functions
-    void loadCandidates();
+    void loadCards();
     void loadDeck(int idx);
     void setNextSortType();
     void resetParams();
@@ -136,11 +143,8 @@ private:
     Point _cardOriginalPoint;
     
     std::vector<DeckCard*> _deckCards;
-    std::unordered_map<int, DeckCard*> _foundCards;
-    std::unordered_map<int, DeckCard*> _unfoundCards;
-    
-    std::vector<Point> _foundPositions;
-    std::vector<Point> _unfoundPositions;
+    CardSet* _foundCards;
+    CardSet* _unfoundCards;
     
     // Data
     bool _isEditing;

@@ -10,6 +10,7 @@
 #define DeckManager_h
 
 #include "json/document.h"
+#include <unordered_set>
 #include <unordered_map>
 #include <vector>
 #include <functional>
@@ -33,9 +34,6 @@ public:
     static DeckManager* getInstance();
     static void purge();
     
-    // TODO: remove the test method
-    static CardSimpleData* createFakeData(int card);
-    
     void parse(const rapidjson::Value& jsonDict);
     
     int getThisDeckId() const;
@@ -50,6 +48,7 @@ public:
     size_t getAllCardsCount() const;
     size_t getAllFoundCardsCount() const;
     const CardSimpleData* getCardData(int card) const;
+    bool isFound(int card) const;
     const std::vector<int>& getFoundCards() const;
     const std::vector<int>& getUnfoundCards() const;
     
@@ -73,7 +72,8 @@ private:
     DeckData* _defaultDeckData;
     SortType _sortType;
     std::unordered_map<int, DeckData*> _decks;
-    std::unordered_map<int, CardSimpleData*> _allFoundCards;
+    std::unordered_map<int, CardSimpleData*> _allCards;
+    std::unordered_set<int> _allFoundCards;
     std::vector<int> _foundCards;
     std::vector<int> _unfoundCards;
 };
