@@ -30,13 +30,7 @@
 #define LAYER_DEFAULT_COLOR (cocos2d::Color4B(0, 0, 0, 0))
 #define LAYER_MASK_COLOR    (cocos2d::Color4B(0, 0, 0, 128))
 
-#define GOLD_LABEL_COLOR    (cocos2d::Color4B(255, 246, 0, 255))
-#define WOOD_LABEL_COLOR    (cocos2d::Color4B(0, 228, 255, 255))
-
-#define ENABLED_COLOR       (cocos2d::Color4B::WHITE)
-#define DISABLED_COLOR      (cocos2d::Color4B::RED)
-
-#define TOUCH_CANCEL_BY_MOVING_DISTANCE (10.0f)
+#define TOUCH_CANCEL_BY_MOVING_DISTANCE (40.0f)
 
 #define DEFAULT_MAP_ID              (2)
 #define BATTLE_RESOURCE_MAX_COUNT   (10)
@@ -70,6 +64,10 @@ typedef std::function<void(long errorCode)> httpErrorCallback;
 #define SPELL_NAME_SPEEDUP  (999)
 
 #define JSON_KEY ("code")
+
+// Global Notifications
+#define AppDidEnterBackgroundNotification   ("UWDidEnterBackgroundNotification")
+#define AppWillEnterForegroundNotification  ("UWWillEnterForegroundNotification")
 
 enum class ResourceType {
     Gem = 100,

@@ -120,29 +120,14 @@ bool CardNode::init(bool canShake)
         setContentSize(size);
         mainNode->setPosition(mid);
         
-        _cardWidget->addTouchEventListener([=](Ref *pSender, Widget::TouchEventType type) {
-            Widget* button = dynamic_cast<Widget*>(pSender);
+        CocosUtils::fixWidgetTouchEvent(_cardWidget, _touchInvalid, [this](Ref*, Widget::TouchEventType type) {
             if (type == Widget::TouchEventType::BEGAN) {
-                _touchInvalid = false;
-                
                 _cardWidget->setScale(_selected ? 1.05f : 0.95f);
                 
                 if(_observer) {
                     _observer->onCardNodeTouchedBegan(this);
                 }
-            } else if (type == Widget::TouchEventType::MOVED) {
-                if (!_touchInvalid) {
-                    const Point& currentPoint = button->getTouchMovePosition();
-                    const Point& beganPoint = button->getTouchBeganPosition();
-                    if (abs(currentPoint.x - beganPoint.x) > 40.0f) {
-                        _touchInvalid = true;
-                    }
-                }
             } else if (type == Widget::TouchEventType::ENDED) {
-                if (!_touchInvalid) {
-                    SoundManager::getInstance()->playButtonSound();
-                }
-                
                 _cardWidget->setScale(_selected ? selectedScale : normalScale);
                 
                 if(_observer) {
@@ -151,6 +136,8 @@ bool CardNode::init(bool canShake)
             } else if (type == Widget::TouchEventType::CANCELED) {
                 _cardWidget->setScale(_selected ? selectedScale : normalScale);
             }
+        }, [this](Ref*) {
+            SoundManager::getInstance()->playButtonSound();
         });
         
         // spell CD

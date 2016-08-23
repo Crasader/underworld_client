@@ -54,7 +54,6 @@ namespace CocosUtils
     cocos2d::Node* createBackground(const cocos2d::Size& size);
     cocos2d::Node* createSubBackground(const cocos2d::Size& size);
     cocos2d::Node* createPureBar(const cocos2d::Size& size);
-    cocos2d::Sprite* createTitle(const std::string& title, float fontSize);
     
     // animation
     cocos2d::Node* getAnimationNode(const std::string& file, int idx);
@@ -77,6 +76,7 @@ namespace CocosUtils
     // buttons
     cocos2d::ui::Button* createGrayExitButton(cocos2d::Node* parent, const std::function<void()>& callback);
     cocos2d::ui::Button* createRedExitButton(cocos2d::Node* parent, const std::function<void()>& callback);
+    void fixWidgetTouchEvent(cocos2d::ui::Widget* widget, bool& flag, const cocos2d::ui::Widget::ccWidgetTouchCallback& touchedCallback, const cocos2d::ui::Widget::ccWidgetClickCallback& clickedCallback);
     
 #pragma mark - notifications
     void postNotification(const std::string& notification);

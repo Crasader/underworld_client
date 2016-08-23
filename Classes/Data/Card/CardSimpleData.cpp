@@ -18,20 +18,11 @@ using namespace cocostudio;
 CardSimpleData::CardSimpleData(const rapidjson::Value& jsonDict)
 :_idx(0)
 ,_level(0)
-,_cost(0)
+,_cardType(nullptr)
 {
     _idx = DICTOOL->getIntValue_json(jsonDict, "id");
     _level = DICTOOL->getIntValue_json(jsonDict, "level");
-    
-    auto ct = DataManager::getInstance()->getGameModeHMM()->findCardTypeById(_idx);
-    if (ct) {
-        _name = ct->getName();
-        auto iter = ct->getCost().find(RES_NAME_WOOD);
-        _cost = (iter == ct->getCost().end()) ? 0 : UnderWorld::Core::GameConstants::microres2Res(iter->second);
-    } else {
-        _name = "";
-        _cost = 0;
-    }
+    _cardType = DataManager::getInstance()->getGameModeHMM()->findCardTypeById(_idx);
 }
 
 CardSimpleData::~CardSimpleData() {}
@@ -46,11 +37,6 @@ int CardSimpleData::getIdx() const
     return _idx;
 }
 
-const string& CardSimpleData::getName() const
-{
-    return _name;
-}
-
 int CardSimpleData::getLevel() const
 {
     return _level;
@@ -58,10 +44,56 @@ int CardSimpleData::getLevel() const
 
 int CardSimpleData::getCost() const
 {
-    return _cost;
+    if (_cardType) {
+        const auto& costs(_cardType->getCost());
+        auto iter(costs.find(RES_NAME_WOOD));
+        if (iter != end(costs)) {
+            return UnderWorld::Core::GameConstants::microres2Res(iter->second);
+        }
+    }
+    
+    return 0;
+}
+
+int CardSimpleData::getQuality() const
+{
+    if (_cardType) {
+        
+    }
+    
+    return 0;
 }
 
 bool CardSimpleData::isHero() const
 {
-    return _cost <= 0;
+    return getCost() <= 0;
+}
+
+static const string emptyString("");
+
+const string& CardSimpleData::getName() const
+{
+    if (_cardType) {
+        return _cardType->getName();
+    }
+    
+    return emptyString;
+}
+
+const string& CardSimpleData::getDescription() const
+{
+    if (_cardType) {
+        
+    }
+    
+    return emptyString;
+}
+
+const string& CardSimpleData::getUnlockInfo() const
+{
+    if (_cardType) {
+        
+    }
+    
+    return emptyString;
 }

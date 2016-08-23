@@ -12,6 +12,7 @@
 #include "PvpLogUI.h"
 #include "PvpManager.h"
 #include "LocalHelper.h"
+#include "UniversalBoard.h"
 #include "XTableViewCell.h"
 
 using namespace std;
@@ -38,7 +39,6 @@ PvpLogLayer* PvpLogLayer::create()
 
 PvpLogLayer::PvpLogLayer()
 :_observer(nullptr)
-,_background(nullptr)
 ,_table(nullptr)
 ,_expandedIdx(0) {}
 
@@ -58,30 +58,12 @@ bool PvpLogLayer::init()
 {
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR)) {
         const auto& winSize(Director::getInstance()->getWinSize());
+        auto board = UniversalBoard::create();
+        board->setTitle(LocalHelper::getString("ui_log_title"));
+        board->setPosition(Point(winSize.width / 2, winSize.height / 2));
+        addChild(board);
         
-        auto bg = Sprite::create(PvpLogUI::getResourcePath("ui_background_5.png"));
-        bg->setPosition(Point(winSize.width / 2, winSize.height / 2));
-        addChild(bg);
-        _background = bg;
-        
-        auto subNode = CocosUtils::createSubBackground(subNodeSize);
-        bg->addChild(subNode);
-        
-        const auto& size(bg->getContentSize());
-        const auto& subBgSize(subNode->getContentSize());
-        const float edge((size.width - subBgSize.width) / 2);
-        subNode->setPosition(Point(size.width / 2, subBgSize.height / 2 + edge));
-        
-        CocosUtils::createRedExitButton(bg, [this]() {
-            removeFromParent();
-        });
-        
-        auto title = CocosUtils::createLabel(LocalHelper::getString("ui_log_title"), TITLE_FONT_SIZE);
-        title->setAnchorPoint(Point::ANCHOR_MIDDLE);
-        title->setPosition(Point(size.width / 2, (size.height + subBgSize.height + edge) / 2));
-        bg->addChild(title);
-        
-        createTable(subNode);
+        createTable(board->getSubNode());
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);

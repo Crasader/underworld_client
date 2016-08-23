@@ -13,6 +13,7 @@
 #include "BattleDeckUI.h"
 #include "DeckData.h"
 #include "CardSimpleData.h"
+#include "CardSet.h"
 #include "DeckManager.h"
 #include "TabButton.h"
 #include "UniversalButton.h"
@@ -91,96 +92,6 @@ static const vector<DeckTabType> cardTabs = {
     DeckTabType::Spells
 };
 #endif
-
-#pragma mark - CardSet
-class BattleDeckLayer::CardSet
-{
-public:
-    virtual ~CardSet();
-    
-    void insertCard(int cardId, DeckCard* card);
-    void removeCard(int cardId, bool cleanup);
-    void pushPosition(const Point& point);
-    void clear();
-    
-    size_t getCardsCount() const;
-    DeckCard* getCard(int cardId) const;
-    
-    size_t getPositionsCount() const;
-    const Point& getPosition(size_t idx) const;
-    
-private:
-    unordered_map<int, DeckCard*> _cards;
-    vector<Point> _positions;
-};
-
-BattleDeckLayer::CardSet::~CardSet()
-{
-    clear();
-}
-
-void BattleDeckLayer::CardSet::insertCard(int cardId, DeckCard* card)
-{
-    if (_cards.find(cardId) == end(_cards)) {
-        _cards.insert(make_pair(cardId, card));
-    } else { CC_ASSERT(false); }
-}
-
-void BattleDeckLayer::CardSet::removeCard(int cardId, bool cleanup)
-{
-    if (_cards.find(cardId) != end(_cards)) {
-        auto node(_cards.at(cardId));
-        if (cleanup) {
-            node->removeFromParent();
-        }
-        
-        _cards.erase(cardId);
-    }
-}
-
-void BattleDeckLayer::CardSet::pushPosition(const Point& point)
-{
-    _positions.push_back(point);
-}
-
-void BattleDeckLayer::CardSet::clear()
-{
-    for (auto iter = begin(_cards); iter != end(_cards); ++iter) {
-        iter->second->removeFromParent();
-    }
-    
-    _cards.clear();
-    _positions.clear();
-}
-
-size_t BattleDeckLayer::CardSet::getCardsCount() const
-{
-    return _cards.size();
-}
-
-DeckCard* BattleDeckLayer::CardSet::getCard(int cardId) const
-{
-    if (_cards.find(cardId) != end(_cards)) {
-        return _cards.at(cardId);
-    }
-    
-    return nullptr;
-}
-
-size_t BattleDeckLayer::CardSet::getPositionsCount() const
-{
-    return _positions.size();
-}
-
-const Point& BattleDeckLayer::CardSet::getPosition(size_t idx) const
-{
-    if (_positions.size() > idx) {
-        return _positions.at(idx);
-    }
-    
-    CC_ASSERT(false);
-    return Point::ZERO;
-}
 
 #pragma mark - BattleDeckLayer
 BattleDeckLayer* BattleDeckLayer::create()

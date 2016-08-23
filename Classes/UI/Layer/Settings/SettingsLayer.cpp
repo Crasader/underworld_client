@@ -224,8 +224,7 @@ SettingsLayer::SettingsLayer()
 ,_returnButton(nullptr)
 ,_subNode(nullptr)
 ,_contentNode(nullptr)
-,_languageLayer(nullptr)
-,_languageNode(nullptr) {}
+,_languageLayer(nullptr) {}
 
 SettingsLayer::~SettingsLayer()
 {
@@ -287,6 +286,16 @@ bool SettingsLayer::init()
         eventListener->onTouchBegan = CC_CALLBACK_2(SettingsLayer::onTouchBegan, this);
         eventListener->onTouchEnded = CC_CALLBACK_2(SettingsLayer::onTouchEnded, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
+        _eventDispatcher->addCustomEventListener(AppWillEnterForegroundNotification, [this](EventCustom *) {
+            static const auto type(SettingType::APNS);
+            auto iter = _settingNodes.find(type);
+            if (iter != end(_settingNodes)) {
+                bool isOn(true);
+                bool isEnabled(true);
+                checkButtonStatus(type, isOn, isEnabled);
+                iter->second->toggle(isOn);
+            }
+        });
         
         return true;
     }
@@ -431,9 +440,10 @@ void SettingsLayer::createSettingNodes(Node* parent, const vector<SettingType>& 
                 const Point point(Point(edge.x + (j + 0.5) * size.width + j * space.x, edge.y + (row - i - 0.5) * size.height + (row - i - 1) * space.y));
                 node->setPosition(basePoint + point);
                 parent->addChild(node);
-                
-                if (SettingType::Language == type) {
-                    _languageNode = node;
+                if (_settingNodes.find(type) != end(_settingNodes)) {
+                    CC_ASSERT(false);
+                } else {
+                    _settingNodes.insert(make_pair(type, node));
                 }
             }
         }
@@ -458,6 +468,11 @@ void SettingsLayer::checkButtonStatus(SettingType type, bool& isOn, bool& isEnab
             isEnabled = false;
         }
     }
+}
+
+static const string getAPNSHint(bool enabled)
+{
+    return enabled ? LocalHelper::getString("ui_apns_on") : LocalHelper::getString("ui_apns_off");
 }
 
 void SettingsLayer::onButtonClicked(SettingNode* node, SettingType type)
@@ -492,12 +507,23 @@ void SettingsLayer::onButtonClicked(SettingNode* node, SettingType type)
     } else if (SettingType::Sound == type) {
         sm->setSoundOn(!sm->isSoundOn());
         node->toggle(sm->isSoundOn());
+    } else if (SettingType::APNS == type) {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+        const bool enabled(iOSApi::isAPNSEnabled());
+        const string msg = StringUtils::format(LocalHelper::getString("ui_apns_hint").c_str(), getAPNSHint(enabled).c_str(), getAPNSHint(!enabled).c_str());
+        iOSApi::showAlertView(LocalHelper::getString("ui_apns_notice"), msg, true, 100, [](long tag, long buttonIndex){
+            if (buttonIndex == 1) {
+                iOSApi::gotoSettingApp();
+            }
+        });
+#endif
     }
 }
 
 void SettingsLayer::setCurrentLanguage()
 {
-    if (_languageNode) {
-        _languageNode->setTitle(LocalHelper::getCurrentLanguageName());
+    auto iter = _settingNodes.find(SettingType::Language);
+    if (iter != end(_settingNodes)) {
+        iter->second->setTitle(LocalHelper::getCurrentLanguageName());
     }
 }

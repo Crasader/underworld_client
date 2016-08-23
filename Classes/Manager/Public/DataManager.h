@@ -21,7 +21,6 @@ namespace UnderWorld { namespace Core {
 }}
 
 class LevelLocalData;
-class CardLocalData;
 class CardUpgradeData;
 class TalentUpgradeData;
 class QuestLocalData;
@@ -69,7 +68,6 @@ public:
     const std::vector<std::string>& getPVRFiles() const;
     const LevelLocalData* getLevelData(int levelId) const;
     const std::set<int>& getCardDecks() const;
-    const CardLocalData* getCardData(int idx) const;
     const CardUpgradeData* getCardUpgradeData(int idx, int level) const;
     const TalentUpgradeData* getTalentUpgradeData(int idx, int level) const;
     const QuestLocalData* getQuestData(QuestType type, int questId) const;
@@ -133,7 +131,6 @@ protected:
     void parsePvrFiles();
     void parseLevelData();
     void parseCardDecks();
-    void parseCardData();
     void parseCardUpgradeData();
     void parseTalentUpgradeData();
     void parseQuestData();
@@ -170,7 +167,6 @@ private:
     std::vector<std::string> _pvrFiles;
     std::unordered_map<int, LevelLocalData*> _levels;
     std::set<int> _cardDecks;
-    std::unordered_map<int, CardLocalData*> _cards;
     std::unordered_map<std::string, CardUpgradeData*> _cardUpgradeDatas;
     std::unordered_map<std::string, TalentUpgradeData*> _talentUpgradeDatas;
     std::map<QuestType, std::unordered_map<int, QuestLocalData*>> _quests;

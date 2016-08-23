@@ -41,28 +41,15 @@ bool AvatarNode::init()
         
         static const auto file(CocosUtils::getResourcePath("icon_touxiang_1.png"));
         auto avatar = ui::Button::create(file, file);
-        avatar->addTouchEventListener([this](Ref *pSender, ui::Widget::TouchEventType type) {
-            auto widget = dynamic_cast<ui::Widget*>(pSender);
-            if (type == ui::Widget::TouchEventType::BEGAN) {
-                _touchInvalid = false;
-            } else if (type == ui::Widget::TouchEventType::MOVED) {
-                if (!_touchInvalid) {
-                    const auto& mp(widget->getTouchMovePosition());
-                    const auto& bp(widget->getTouchBeganPosition());
-                    static const float offset(40);
-                    if (abs(mp.x - bp.x) >= offset || abs(mp.y - bp.y) >= offset) {
-                        _touchInvalid = true;
-                    }
-                }
-            } else if (type == ui::Widget::TouchEventType::ENDED) {
-                if (!_touchInvalid && _callback) {
-                    _callback();
-                }
-            }
-        });
         avatar->setSwallowTouches(false);
         avatar->setPosition(Point(Width / 2, Height / 2));
         addChild(avatar);
+        
+        CocosUtils::fixWidgetTouchEvent(avatar, _touchInvalid, nullptr, [this](Ref*) {
+            if (_callback) {
+                _callback();
+            }
+        });
         
         _avatar = avatar;
         

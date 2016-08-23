@@ -127,24 +127,26 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground() {
-    Director::getInstance()->stopAnimation();
+    auto director = Director::getInstance();
+    director->stopAnimation();
+    director->getEventDispatcher()->dispatchCustomEvent(AppDidEnterBackgroundNotification);
 
     // if you use SimpleAudioEngine, it must be pause
-    SoundManager* sm = SoundManager::getInstance();
-    if (sm->isMusicOn())
-    {
+    auto sm(SoundManager::getInstance());
+    if (sm->isMusicOn()) {
         sm->pauseBackgroundMusic();
     }
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground() {
-    Director::getInstance()->startAnimation();
+    auto director = Director::getInstance();
+    director->startAnimation();
+    director->getEventDispatcher()->dispatchCustomEvent(AppWillEnterForegroundNotification);
 
     // if you use SimpleAudioEngine, it must resume here
-    SoundManager* sm = SoundManager::getInstance();
-    if (sm->isMusicOn())
-    {
+    auto sm(SoundManager::getInstance());
+    if (sm->isMusicOn()) {
         sm->resumeBackgroundMusic();
     }
 }

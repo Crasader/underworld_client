@@ -67,7 +67,6 @@ protected:
     
 private:
     PvpLogLayerObserver *_observer;
-    Sprite* _background;
     TableView* _table;
     ssize_t _expandedIdx;
 };

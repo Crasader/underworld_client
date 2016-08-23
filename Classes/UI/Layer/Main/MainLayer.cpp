@@ -9,6 +9,7 @@
 #include "MainLayer.h"
 #include "ui/CocosGUI.h"
 #include "CocosGlobal.h"
+#include "CocosUtils.h"
 #include "GameManager.h"
 #include "SoundManager.h"
 #include "MainUILayer.h"
@@ -119,26 +120,18 @@ void MainLayer::addLevelButtons()
     const Size& size = _mainNode->getContentSize();
     for (int i = 0; i < count; ++i) {
         string file = StringUtils::format("GameImages/icons/guanqia/icon_guanka_%d.png", i + 1);
-        Button* button = Button::create(file, file);
-        button->addTouchEventListener([=](Ref* pSender, Widget::TouchEventType type) {
-            Widget* button = dynamic_cast<Widget*>(pSender);
-            if (type == Widget::TouchEventType::BEGAN) {
-                _touchInvalid = false;
-            } else if (type == Widget::TouchEventType::MOVED) {
-                if (!_touchInvalid && button->getTouchMovePosition().distance(button->getTouchBeganPosition()) > TOUCH_CANCEL_BY_MOVING_DISTANCE) {
-                    _touchInvalid = true;
-                }
-            } else if (type == Widget::TouchEventType::ENDED) {
-                if (!_touchInvalid) {
-                    // TODO:
-                    SoundManager::getInstance()->playButtonSound();
-                    auto mapId(button->getTag() + 1);
-                    GameManager::getGameClient()->launchPve(mapId);
-                }
-            }
-        });
+        auto button = Button::create(file, file);
         button->setPosition(Point(size.width * positions[i].x, size.height * positions[i].y));
         button->setSwallowTouches(false);
         _mainNode->addChild(button, 0, i);
+        
+        CocosUtils::fixWidgetTouchEvent(button, _touchInvalid, nullptr, [this](Ref* pSender) {
+            // TODO:
+            SoundManager::getInstance()->playButtonSound();
+            
+            auto widget = dynamic_cast<ui::Widget*>(pSender);
+            auto mapId(widget->getTag() + 1);
+            GameManager::getGameClient()->launchPve(mapId);
+        });
     }
 }

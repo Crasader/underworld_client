@@ -70,27 +70,14 @@ bool DeckCard::init(int cardId)
         
         setTouchEnabled(true);
         setSwallowTouches(false);
-        addTouchEventListener([this](Ref *pSender, ui::Widget::TouchEventType type) {
+        CocosUtils::fixWidgetTouchEvent(this, _touchInvalid, [this](Ref*, ui::Widget::TouchEventType type) {
             if (_observer) {
                 _observer->onDeckCardTouched(this, type);
             }
-            
-            auto widget = dynamic_cast<ui::Widget*>(pSender);
-            if (type == ui::Widget::TouchEventType::BEGAN) {
-                _touchInvalid = false;
-            } else if (type == ui::Widget::TouchEventType::MOVED) {
-                if (!_touchInvalid) {
-                    const auto& mp(widget->getTouchMovePosition());
-                    const auto& bp(widget->getTouchBeganPosition());
-                    static const float offset(40);
-                    if (abs(mp.x - bp.x) >= offset || abs(mp.y - bp.y) >= offset) {
-                        _touchInvalid = true;
-                    }
-                }
-            } else if (type == ui::Widget::TouchEventType::ENDED) {
-                if (!_touchInvalid && _observer) {
-                    _observer->onDeckCardClicked(this);
-                }
+
+        }, [this](Ref*) {
+            if (_observer) {
+                _observer->onDeckCardClicked(this);
             }
         });
         

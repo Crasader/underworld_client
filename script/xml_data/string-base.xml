@@ -111,6 +111,15 @@
     <item key="ui_language_title" value="语言设置"/>
     <item key="ui_language_hint" value="您确定要更改语言设置吗？"/>
     
+    <!-- APNS -->
+    <item key="ui_apns_notice" value="通知"/>
+    <item key="ui_apns_on" value="开启"/>
+    <item key="ui_apns_off" value="关闭"/>
+    <item key="ui_apns_hint" value="您的推送通知已%s，如需%s，请进入“设置”界面进行设置，您确定进入“设置”界面吗？"/>
+    
+    <!-- 养成 -->
+    <item key="ui_develop_title" value="养成界面"/>
+    
     <!-- 提示 -->
     <item key="hint_selectNoCard" value="卡牌尚未选择！"/>
 	<item key="hint_exitPve" value="您确定结束战斗并退出该关卡吗？"/>

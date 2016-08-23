@@ -61,7 +61,7 @@ private:
     Node* _subNode;
     Node* _contentNode;
     Node* _languageLayer;
-    SettingNode* _languageNode;
+    std::map<SettingType, SettingNode*> _settingNodes;
 };
 
 #endif /* SettingsLayer_h */

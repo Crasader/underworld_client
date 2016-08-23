@@ -138,28 +138,7 @@ void UniversalButton::setTitle(const string& title)
 void UniversalButton::setCallback(const Callback& callback)
 {
     _callback = callback;
-    
-    if (_button) {
-        _button->addTouchEventListener([this](Ref *pSender, ui::Widget::TouchEventType type) {
-            auto widget = dynamic_cast<ui::Widget*>(pSender);
-            if (type == ui::Widget::TouchEventType::BEGAN) {
-                _touchInvalid = false;
-            } else if (type == ui::Widget::TouchEventType::MOVED) {
-                if (!_touchInvalid) {
-                    const auto& mp(widget->getTouchMovePosition());
-                    const auto& bp(widget->getTouchBeganPosition());
-                    static const float offset(40);
-                    if (abs(mp.x - bp.x) >= offset || abs(mp.y - bp.y) >= offset) {
-                        _touchInvalid = true;
-                    }
-                }
-            } else if (type == ui::Widget::TouchEventType::ENDED) {
-                if (!_touchInvalid && _callback) {
-                    _callback(pSender);
-                }
-            }
-        });
-    }
+    CocosUtils::fixWidgetTouchEvent(_button, _touchInvalid, nullptr, _callback);
 }
 
 void UniversalButton::setPressedActionEnabled(bool enabled)

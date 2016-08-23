@@ -11,7 +11,6 @@
 #include "Utils.h"
 #include "LocalHelper.h"
 #include "LevelLocalData.h"
-#include "CardLocalData.h"
 #include "CardUpgradeData.h"
 #include "TalentUpgradeData.h"
 #include "QuestLocalData.h"
@@ -106,7 +105,6 @@ DataManager::DataManager()
 DataManager::~DataManager()
 {
     Utils::clearMap(_levels);
-    Utils::clearMap(_cards);
     Utils::clearMap(_cardUpgradeDatas);
     Utils::clearMap(_talentUpgradeDatas);
     
@@ -157,7 +155,6 @@ void DataManager::init()
     parsePvrFiles();
     parseLevelData();
     parseCardDecks();
-    parseCardData();
     parseCardUpgradeData();
     parseTalentUpgradeData();
     parseQuestData();
@@ -224,11 +221,6 @@ const LevelLocalData* DataManager::getLevelData(int levelId) const
 const set<int>& DataManager::getCardDecks() const
 {
     return _cardDecks;
-}
-
-const CardLocalData* DataManager::getCardData(int idx) const
-{
-    return getMapValue(_cards, idx);
 }
 
 const CardUpgradeData* DataManager::getCardUpgradeData(int idx, int level) const
@@ -449,14 +441,6 @@ void DataManager::parseCardDecks()
 {
     parseData("CardDecks.xml", [this](tinyxml2::XMLElement* item) {
         _cardDecks.insert(atoi(item->Attribute("id")));
-    });
-}
-
-void DataManager::parseCardData()
-{
-    parseData("CardData.xml", [this](tinyxml2::XMLElement* item) {
-        auto data = new (nothrow) CardLocalData(item);
-        setMapValue(_cards, data->getId(), data);
     });
 }
 

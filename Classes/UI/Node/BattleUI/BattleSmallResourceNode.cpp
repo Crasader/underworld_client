@@ -92,8 +92,11 @@ void BattleSmallResourceNode::setOpacity(GLubyte opacity)
 
 void BattleSmallResourceNode::check(int count)
 {
+    static const auto& enabled_color(Color4B::WHITE);
+    static const auto& disabled_color(Color4B::RED);
+    
     if (_countLabel) {
-        const Color4B& color = (count >= _count) ? ENABLED_COLOR : DISABLED_COLOR;
+        const auto& color = (count >= _count) ? enabled_color : disabled_color;
         if (_countLabel->getTextColor() != color) {
             _countLabel->setTextColor(color);
         }

@@ -390,21 +390,11 @@ Node* CocosUtils::createPureBar(const Size& size)
     return createScaleableNode(getResourcePath("ui_background_6.png"), Vec2(16, 16), size);
 }
 
-Sprite* CocosUtils::createTitle(const string& title, float fontSize)
-{
-    Sprite* titleBg = Sprite::create("GameImages/test/ui_black_6.png");
-    Label* titleLabel = CocosUtils::createLabel(title, fontSize);
-    titleBg->addChild(titleLabel);
-    const Size& titleSize = titleBg->getContentSize();
-    titleLabel->setPosition(Point(titleSize.width / 2, titleSize.height / 2));
-    return titleBg;
-}
-
 #pragma mark - animations
-cocos2d::SpriteFrame* CocosUtils::getPVRFrame(const string& folder, int idx)
+SpriteFrame* CocosUtils::getPVRFrame(const string& folder, int idx)
 {
     idx += 1;
-    std::string fileName = "1";
+    string fileName = "1";
     fileName.append(UnderWorld::Core::UnderWorldCoreUtils::to_string(idx / 1000));
     idx = idx % 1000;
     fileName.append(UnderWorld::Core::UnderWorldCoreUtils::to_string(idx / 100));
@@ -575,6 +565,36 @@ Button* CocosUtils::createGrayExitButton(Node* parent, const function<void()>& c
 Button* CocosUtils::createRedExitButton(Node* parent, const function<void()>& callback)
 {
     return createExitButton(parent, callback, getResourcePath("button_hongse.png"));
+}
+
+void CocosUtils::fixWidgetTouchEvent(Widget* widget, bool& flag, const Widget::ccWidgetTouchCallback& touchedCallback, const Widget::ccWidgetClickCallback& clickedCallback)
+{
+    if (widget) {
+        CC_ASSERT(widget->isTouchEnabled());
+        widget->addTouchEventListener([=, &flag](Ref* pSender, Widget::TouchEventType type) {
+            if (touchedCallback) {
+                touchedCallback(pSender, type);
+            }
+            
+            auto widget = dynamic_cast<Widget*>(pSender);
+            if (type == Widget::TouchEventType::BEGAN) {
+                flag = false;
+            } else if (type == Widget::TouchEventType::MOVED) {
+                if (!flag) {
+                    const auto& mp(widget->getTouchMovePosition());
+                    const auto& bp(widget->getTouchBeganPosition());
+                    if (abs(mp.x - bp.x) >= TOUCH_CANCEL_BY_MOVING_DISTANCE ||
+                        abs(mp.y - bp.y) >= TOUCH_CANCEL_BY_MOVING_DISTANCE) {
+                        flag = true;
+                    }
+                }
+            } else if (type == Widget::TouchEventType::ENDED) {
+                if (!flag && clickedCallback) {
+                    clickedCallback(pSender);
+                }
+            }
+        });
+    }
 }
 
 #pragma mark - notifications

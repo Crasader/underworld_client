@@ -14,6 +14,7 @@
 #include "SoundManager.h"
 #include "ResourceNode.h"
 #include "UserSimpleNode.h"
+#include "DevelopLayer.h"
 #include "BattleDeckLayer.h"
 #include "SettingsLayer.h"
 #include "PvpLogLayer.h"
@@ -31,12 +32,12 @@ enum class MainUILayer::ButtonType {
     Achievement,
     Settings,
     Chat,
-    Friend,
+    Quest,
     BattleLog,
     Guild,
     Battle,
     Train,
-    Quest,
+    Prepare,
     Shop,
 };
 
@@ -69,12 +70,12 @@ private:
                 {ButtonType::Achievement,   {"ui_kuang_1", "icon_xingxing"}},
                 {ButtonType::Settings,      {"ui_kuang_1", "icon_shezhi"}},
                 {ButtonType::Chat,          {"ui_liaotian", ""}},
-                {ButtonType::Friend,        {"ui_kuang_3", "icon_haoyou"}},
+                {ButtonType::Quest,       {"ui_kuang_3", "icon_haoyou"}},
                 {ButtonType::BattleLog,     {"ui_kuang_3", "icon_zhanji"}},
                 {ButtonType::Guild,         {"ui_kuang_3", "icon_lianmeng"}},
                 {ButtonType::Battle,        {"ui_kuang_2", "icon_pvp"}},
                 {ButtonType::Train,         {"ui_kuang_3", "icon_zhujue"}},
-                {ButtonType::Quest,         {"ui_kuang_3", "icon_renwu"}},
+                {ButtonType::Prepare,         {"ui_kuang_3", "icon_renwu"}},
                 {ButtonType::Shop,          {"ui_kuang_2", "icon_shangdian"}},
             };
             
@@ -213,9 +214,9 @@ bool MainUILayer::init()
             // leftward
             float x(original.x - (button->getContentSize().width + space));
             createButtonLeftward(ButtonType::Train, x, original.y, space);
-            createButtonLeftward(ButtonType::Quest, x, original.y, space);
+            createButtonLeftward(ButtonType::Prepare, x, original.y, space);
             createButtonLeftward(ButtonType::Guild, x, original.y, space);
-            createButtonLeftward(ButtonType::Friend, x, original.y, space);
+            createButtonLeftward(ButtonType::Quest, x, original.y, space);
             createButtonLeftward(ButtonType::BattleLog, x, original.y, space);
             
             // upward
@@ -400,6 +401,10 @@ void MainUILayer::onFunctionButtonClicked(ButtonType type)
             break;
             
         case ButtonType::Train:
+            runningScene->addChild(DevelopLayer::create());
+            break;
+            
+        case ButtonType::Prepare:
             runningScene->addChild(BattleDeckLayer::create());
             break;
             

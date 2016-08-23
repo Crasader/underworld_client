@@ -1,13 +1,13 @@
 //
-//  DeckCardInfo.h
+//  CardInfoLayer.h
 //  Underworld_Client
 //
 //  Created by Andy on 16/8/19.
 //  Copyright (c) 2016 Mofish Studio. All rights reserved.
 //
 
-#ifndef DeckCardInfo_h
-#define DeckCardInfo_h
+#ifndef CardInfoLayer_h
+#define CardInfoLayer_h
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
@@ -17,26 +17,26 @@ USING_NS_CC;
 
 class DeckCard;
 
-class DeckCardInfoObserver
+class CardInfoLayerObserver
 {
 public:
-    virtual ~DeckCardInfoObserver() {}
-    virtual void onDeckCardInfoClickedButton(DeckCardOpType type, int cardId) = 0;
+    virtual ~CardInfoLayerObserver() {}
+    virtual void onCardInfoLayerClickedButton(DeckCardOpType type, int cardId) = 0;
 };
 
-class DeckCardInfo : public LayerColor
+class CardInfoLayer : public LayerColor
 {
 public:
-    static DeckCardInfo* create();
-    virtual ~DeckCardInfo();
-    void registerObserver(DeckCardInfoObserver *observer);
+    static CardInfoLayer* create();
+    virtual ~CardInfoLayer();
+    void registerObserver(CardInfoLayerObserver *observer);
     
     void setCard(int cardId);
     int getCard() const;
     
 private:
     class PropertyNode;
-    DeckCardInfo();
+    CardInfoLayer();
     
     // LayerColor
     virtual bool init() override;
@@ -44,7 +44,7 @@ private:
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
 private:
-    DeckCardInfoObserver* _observer;
+    CardInfoLayerObserver* _observer;
     Node* _background;
     DeckCard* _icon;
     Label* _level;
@@ -54,4 +54,4 @@ private:
     std::map<DeckCardOpType, UniversalButton*> _buttons;
 };
 
-#endif /* DeckCardInfo_h */
+#endif /* CardInfoLayer_h */

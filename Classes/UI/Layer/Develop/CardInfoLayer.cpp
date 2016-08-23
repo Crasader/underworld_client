@@ -1,12 +1,12 @@
 //
-//  DeckCardInfo.cpp
+//  CardInfoLayer.cpp
 //  Underworld_Client
 //
 //  Created by Andy on 16/8/19.
 //  Copyright (c) 2016 Mofish Studio. All rights reserved.
 //
 
-#include "DeckCardInfo.h"
+#include "CardInfoLayer.h"
 #include "DeckCard.h"
 #include "UniversalButton.h"
 #include "CocosGlobal.h"
@@ -14,7 +14,7 @@
 using namespace std;
 
 #pragma mark - PropertyNode
-class DeckCardInfo::PropertyNode : public Node {
+class CardInfoLayer::PropertyNode : public Node {
 public:
     static PropertyNode* create();
     virtual ~PropertyNode();
@@ -30,9 +30,9 @@ private:
     Label* _data;
 };
 
-DeckCardInfo::PropertyNode* DeckCardInfo::PropertyNode::create()
+CardInfoLayer::PropertyNode* CardInfoLayer::PropertyNode::create()
 {
-    auto ret = new (nothrow) DeckCardInfo::PropertyNode();
+    auto ret = new (nothrow) CardInfoLayer::PropertyNode();
     if (ret && ret->init()) {
         ret->autorelease();
         return ret;
@@ -42,17 +42,17 @@ DeckCardInfo::PropertyNode* DeckCardInfo::PropertyNode::create()
     return nullptr;
 }
 
-DeckCardInfo::PropertyNode::PropertyNode()
+CardInfoLayer::PropertyNode::PropertyNode()
 :_icon(nullptr)
 ,_name(nullptr)
 ,_data(nullptr) {}
 
-DeckCardInfo::PropertyNode::~PropertyNode()
+CardInfoLayer::PropertyNode::~PropertyNode()
 {
     removeAllChildren();
 }
 
-bool DeckCardInfo::PropertyNode::init()
+bool CardInfoLayer::PropertyNode::init()
 {
     if (Node::init()) {
         setAnchorPoint(Point::ANCHOR_MIDDLE);
@@ -62,15 +62,15 @@ bool DeckCardInfo::PropertyNode::init()
     return false;
 }
 
-void DeckCardInfo::PropertyNode::setProperty()
+void CardInfoLayer::PropertyNode::setProperty()
 {
     
 }
 
-#pragma mark - DeckCardInfo
-DeckCardInfo* DeckCardInfo::create()
+#pragma mark - CardInfoLayer
+CardInfoLayer* CardInfoLayer::create()
 {
-    auto ret = new (nothrow) DeckCardInfo();
+    auto ret = new (nothrow) CardInfoLayer();
     if (ret && ret->init()) {
         ret->autorelease();
         return ret;
@@ -80,7 +80,7 @@ DeckCardInfo* DeckCardInfo::create()
     return nullptr;
 }
 
-DeckCardInfo::DeckCardInfo()
+CardInfoLayer::CardInfoLayer()
 :_observer(nullptr)
 ,_background(nullptr)
 ,_icon(nullptr)
@@ -88,18 +88,18 @@ DeckCardInfo::DeckCardInfo()
 ,_profession(nullptr)
 ,_description(nullptr) {}
 
-DeckCardInfo::~DeckCardInfo()
+CardInfoLayer::~CardInfoLayer()
 {
     removeAllChildren();
 }
 
-bool DeckCardInfo::init()
+bool CardInfoLayer::init()
 {
     if (LayerColor::initWithColor(LAYER_MASK_COLOR)) {
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
-        eventListener->onTouchBegan = CC_CALLBACK_2(DeckCardInfo::onTouchBegan, this);
-        eventListener->onTouchEnded = CC_CALLBACK_2(DeckCardInfo::onTouchEnded, this);
+        eventListener->onTouchBegan = CC_CALLBACK_2(CardInfoLayer::onTouchBegan, this);
+        eventListener->onTouchEnded = CC_CALLBACK_2(CardInfoLayer::onTouchEnded, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
         
         return true;
@@ -108,7 +108,7 @@ bool DeckCardInfo::init()
     return false;
 }
 
-bool DeckCardInfo::onTouchBegan(Touch *pTouch, Event *pEvent)
+bool CardInfoLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
     const auto& point(pTouch->getLocation());
     Rect rect(getBoundingBox());
@@ -120,22 +120,22 @@ bool DeckCardInfo::onTouchBegan(Touch *pTouch, Event *pEvent)
     return false;
 }
 
-void DeckCardInfo::onTouchEnded(Touch *touch, Event *unused_event)
+void CardInfoLayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
     
 }
 
-void DeckCardInfo::registerObserver(DeckCardInfoObserver *observer)
+void CardInfoLayer::registerObserver(CardInfoLayerObserver *observer)
 {
     _observer = observer;
 }
 
-void DeckCardInfo::setCard(int cardId)
+void CardInfoLayer::setCard(int cardId)
 {
     _icon->update(cardId);
 }
 
-int DeckCardInfo::getCard() const
+int CardInfoLayer::getCard() const
 {
     if (_icon) {
         return _icon->getCardId();

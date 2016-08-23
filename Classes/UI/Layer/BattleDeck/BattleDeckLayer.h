@@ -23,6 +23,7 @@ USING_NS_CC;
 
 class DeckData;
 class CardSimpleData;
+class CardSet;
 class TabButton;
 class UniversalButton;
 
@@ -54,8 +55,6 @@ public:
     void registerObserver(BattleDeckLayerObserver *observer);
     
 protected:
-    class CardSet;
-    
     BattleDeckLayer();
     
     // LayerColor

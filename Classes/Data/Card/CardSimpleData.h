@@ -12,6 +12,12 @@
 #include <string>
 #include "json/document.h"
 
+namespace UnderWorld {
+    namespace Core {
+        class HMMCardType;
+    }
+}
+
 class CardSimpleData
 {
 public:
@@ -21,16 +27,18 @@ public:
     bool operator==(const CardSimpleData& instance) const;
     
     int getIdx() const;
-    const std::string& getName() const;
     int getLevel() const;
     int getCost() const;
+    int getQuality() const;
     bool isHero() const;
+    const std::string& getName() const;
+    const std::string& getDescription() const;
+    const std::string& getUnlockInfo() const;
     
 private:
     int _idx;
-    std::string _name;
     int _level;
-    int _cost;
+    const UnderWorld::Core::HMMCardType* _cardType;
 };
 
 #endif /* CardSimpleData_h */
