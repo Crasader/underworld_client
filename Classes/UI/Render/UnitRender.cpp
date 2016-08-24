@@ -797,13 +797,16 @@ void UnitRender::getHpBarFiles(const UnitRender* ur, std::string& background, st
     
     if (!ur || !ur->_unitType || !ur->_unit) return;
     
-    const bool big = ur->_unitType->getUnitClass() == kUnitClass_Building || ur->_unitType->getUnitClass() == kUnitClass_Core;
     const bool hero = ur->_unitType->getUnitClass() == kUnitClass_Hero;
-    
     bool isAlly = ur->_unit->getBelongFaction()->getTeamIndex() == ur->_worldRender->getGameRender()->getGame()->getThisTeamIndex();
-
-    background.assign(isAlly ? "GameImages/battle_ui/ui_normal_ally_hp_bg.png" : "GameImages/battle_ui/ui_normal_enemy_hp_bg.png");
-    foreground.assign(isAlly ? "GameImages/battle_ui/ui_normal_ally_hp_fg.png" : "GameImages/battle_ui/ui_normal_enemy_hp_fg.png");
+    
+    if (hero) {
+        background.assign("GameImages/battle_ui/unit_hero_hp_bg.png");
+        foreground.assign("GameImages/battle_ui/unit_hero_hp_fg.png");
+    } else {
+        background.assign(isAlly ? "GameImages/battle_ui/ui_normal_ally_hp_bg.png" : "GameImages/battle_ui/ui_normal_enemy_hp_bg.png");
+        foreground.assign(isAlly ? "GameImages/battle_ui/ui_normal_ally_hp_fg.png" : "GameImages/battle_ui/ui_normal_enemy_hp_fg.png");
+    }
 
 }
 

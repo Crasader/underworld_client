@@ -75,10 +75,10 @@
     <unit armor="60" armor_type="英雄" attack_sight="300" attack_type="英雄" class="hero" field="0" height="0" hp="24150" id="11010" magical_defense="67" max_level="10" max_quality="5" max_talent_level="0" name="中立兽族斧王" occupy="1" profession="rogue" race="中立" rarity="0" render_key="萨尔" reward="金子:0" size="40" skill_names="单位停止;移动速度80;死亡移除碰撞;中立兽族斧王" spell_names="中立兽族斧王旋风斩;中立兽族斧王恐怖嚎叫"/>
     <unit armor="40" armor_type="英雄" attack_sight="300" attack_type="英雄" class="hero" field="0" height="0" hp="27625" id="11011" magical_defense="67" max_level="10" max_quality="5" max_talent_level="0" name="中立兽族食人鬼王" occupy="1" passive_names="中立兽族食人鬼王肌肉锻炼;中立兽族食人鬼王治疗加成" profession="tank" race="中立" rarity="0" render_key="大棒槌" reward="金子:0" size="40" skill_names="单位停止;移动速度60;死亡移除碰撞;中立兽族食人鬼王"/>
     <unit armor="50" armor_type="重甲" attack_sight="300" attack_type="普通" class="warrior" field="0" height="0" hp="9900" id="12006" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="人族剑士" occupy="1" profession="tank" race="人族" rarity="0" render_key="人族战士" reward="金子:0" size="32" skill_names="单位停止;移动速度90;死亡移除碰撞;人族剑士" spell_names="人族剑士致命打击"/>
-    <unit armor="14" armor_type="无甲" attack_sight="300" attack_type="魔法" class="warrior" field="0" height="0" hp="3950" id="12008" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="人族男巫" occupy="1" profession="mage" race="人族" rarity="0" render_key="人族牧师" reward="金子:0" size="24" skill_names="单位停止;移动速度50;死亡移除碰撞;人族男巫" spell_names="人族男巫加血;人族男巫驱散"/>
-    <unit armor="15" armor_type="无甲" attack_sight="300" attack_type="魔法" class="warrior" field="0" height="0" hp="4950" id="12009" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="人族女巫" occupy="1" profession="mage" race="人族" rarity="0" render_key="人族法师" reward="金子:0" size="24" skill_names="单位停止;移动速度50;死亡移除碰撞;人族女巫" spell_names="人族女巫减速"/>
+    <unit armor="14" armor_type="无甲" attack_sight="300" attack_type="魔法" class="warrior" field="0" height="24" hp="3950" id="12008" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="人族男巫" occupy="1" profession="mage" race="人族" rarity="0" render_key="人族牧师" reward="金子:0" size="24" skill_names="单位停止;移动速度50;死亡移除碰撞;人族男巫" spell_names="人族男巫加血;人族男巫驱散"/>
+    <unit armor="15" armor_type="无甲" attack_sight="300" attack_type="魔法" class="warrior" field="0" height="24" hp="4950" id="12009" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="人族女巫" occupy="1" profession="mage" race="人族" rarity="0" render_key="人族法师" reward="金子:0" size="24" skill_names="单位停止;移动速度50;死亡移除碰撞;人族女巫" spell_names="人族女巫减速"/>
 	<unit armor="15" armor_type="城甲" attack_sight="300" attack_type="普通" class="core" field="0" height="0" hp="20000" id="10001" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="吸血鬼基地" occupy="1" profession="no_one" render_key="基地" reward="金子:0" size="80" skill_names="单位停止;死亡移除碰撞;吸血鬼基地"/>
-	<unit armor="0" armor_type="重甲" attack_sight="300" attack_type="普通" class="warrior" field="0" height="0" hp="9999" id="12800" magical_defense="25" max_level="0" max_quality="0" max_talent_level="0" name="木桩单位" occupy="1" profession="no_one" render_key="狼人步兵" reward="金子:9" size="32" skill_names="单位停止;移动速度0;死亡移除碰撞"/>
+	<unit armor="0" armor_type="重甲" attack_sight="300" attack_type="普通" class="warrior" field="0" height="0" hp="99999999" id="12800" magical_defense="25" max_level="0" max_quality="0" max_talent_level="0" name="木桩单位" occupy="1" profession="no_one" render_key="狼人步兵" reward="金子:9" size="32" skill_names="单位停止;移动速度0;死亡移除碰撞"/>
 	<unit armor="6" armor_type="重甲" attack_sight="300" attack_type="普通" class="warrior" field="0" height="0" hp="720" id="12801" magical_defense="1" max_level="0" max_quality="0" max_talent_level="0" name="测试人族剑士" occupy="1" profession="no_one" race="人族" rarity="0" render_key="狼人步兵" reward="金子:10" size="32" skill_names="单位停止;移动速度100;死亡移除碰撞;人族剑士"/>
 	<unit armor="0" armor_type="无甲" attack_sight="400" attack_type="普通" class="warrior" field="0" height="0" hp="350" id="12802" magical_defense="5" max_level="0" max_quality="0" max_talent_level="0" name="人族法师" occupy="1" profession="no_one" race="人族" rarity="0" render_key="狼人巫师" reward="金子:11" size="32" skill_names="单位停止;移动速度100;死亡移除碰撞;人族法师" spell_names="人族法师暴风雨"/>
 	<unit armor="2" armor_type="中甲" attack_sight="400" attack_type="普通" class="warrior" field="0" height="0" hp="420" id="12803" magical_defense="3" max_level="0" max_quality="0" max_talent_level="0" name="人族弓箭手" occupy="1" passive_names="人族弓箭手三重射击" profession="no_one" race="人族" rarity="0" render_key="狼人射手" reward="金子:12" size="32" skill_names="单位停止;移动速度100;死亡移除碰撞;人族弓箭手"/>
@@ -175,12 +175,12 @@
 	<skill cd="50" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="652" min_damage="652" name="中立兽族斧王" perform="0" preperform="45" range="32"/>
 	<skill cd="55" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="686" min_damage="686" name="中立兽族食人鬼王" perform="0" preperform="45" range="32"/>
 	<skill bullet_name="魔族梦魇" cd="45" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="345" min_damage="345" name="中立龙族黑龙" perform="0" preperform="40" range="96"/>
-	<skill bullet_name="魔族战车" cd="120" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="918" min_damage="918" name="中立矮人族火枪手" perform="0" preperform="50" range="224"/>
+	<skill bullet_name="枪械子弹" cd="120" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="918" min_damage="918" name="中立矮人族火枪手" perform="0" preperform="50" range="224"/>
 	<skill bullet_name="人族弓箭手" cd="40" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="240" min_damage="240" name="中立精灵族弓箭手" perform="0" preperform="40" range="192"/>
 	<skill cd="110" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="311" min_damage="311" name="人族盾牌兵" perform="0" preperform="40" range="32"/>
 	<skill cd="60" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="238" min_damage="238" name="人族剑士" perform="0" preperform="30" range="32"/>
 	<skill bullet_name="人族弓箭手" cd="80" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="360" min_damage="360" name="人族弓手" perform="0" preperform="40" range="160"/>
-	<skill bullet_name="人族法师" cd="65" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="80" min_damage="80" name="人族男巫" perform="0" preperform="35" range="160"/>
+	<skill bullet_name="牧师子弹" cd="65" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="80" min_damage="80" name="人族男巫" perform="0" preperform="35" range="160"/>
 	<skill bullet_name="人族法师" cd="55" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="240" min_damage="240" name="人族女巫" perform="0" preperform="25" range="160"/>
 	<skill bullet_name="人族法师" cd="100" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="294" min_damage="294" name="人族狮鹫" perform="0" preperform="40" range="96"/>
 	<skill cd="120" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="531" min_damage="531" name="骷髅盾牌兵" perform="0" preperform="40" range="32"/>
@@ -426,9 +426,10 @@
 	<spell_content name="梦魇nova冰冻" spell_content_class="damage" spell_content_damage_name="梦魇nova冰冻"/>
 	<spell_content name="内容牛头人冲锋踩" spell_content_class="damage" spell_content_damage_name="内容牛头人冲锋踩"/>
 	<spell_content name="内容人族狮鹫引雷击" spell_content_bullet_name="人族弓箭手" spell_content_class="damage" spell_content_damage_name="人族狮鹫引雷击伤害"/>
-	<bullet name="人族法师" render_key="狼人基地子弹" speed="600"/>
-	<bullet name="人族弓箭手" render_key="箭" speed="800"/>
+	<bullet name="人族法师" render_key="法师子弹3" speed="300" height="0"/>
+	<bullet name="人族弓箭手" render_key="箭" speed="400" height="15"/>
 	<bullet name="魔族战车" render_key="箭" speed="400"/>
+	<bullet name="枪械子弹" render_key="火枪子弹" speed="500"/>
 	<bullet name="魔族梦魇" render_key="狼人基地子弹" speed="600"/>
 	<bullet name="中立巨鹰" render_key="箭" speed="200"/>
 	<bullet name="中立仙女龙" render_key="狼人基地子弹" speed="500"/>
@@ -440,6 +441,7 @@
 	<bullet name="火箭弹幕弹道" render_key="狼人基地子弹" speed="450"/>
 	<bullet flying_distance="360" name="穿透弹弹道" radius="16" render_key="狼人基地子弹" speed="300" sweep_on_the_way="1" target_class="unlimited"/>
 	<bullet name="兽族攻城车" render_key="箭" speed="600"/>
+	<bullet name="牧师子弹" render_key="牧师子弹" speed="250" height="0"/>
 	<bullet name="月之骑士" render_key="箭" speed="450"/>
 	<passive addon_types="人族弓箭手三重射击" alias="多重射击" desc="攻击时可额外攻击2个敌人" id="1000" level="1" name="人族弓箭手三重射击"/>
 	<passive addon_types="魔族梦魇攻击效果" alias="按比例移除生命" desc="攻击时移除目标5%当前生命" id="1001" level="1" name="魔族梦魇攻击效果"/>

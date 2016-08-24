@@ -14,31 +14,59 @@
 		</event>
 		
 		
-		
-		
-		
-		<event>
-			<event_trigger class="schedule" time="120" />
-            <event_effect class="add_unit" map_index="0" position="300,500">
-                <unit_setting unit_setting_id="12006"/>
-            </event_effect>
-		</event>
-		<event>
-			<event_trigger class="schedule" time="120" />
-            <event_effect class="add_unit" map_index="1" position="900,400">
-                <unit_setting unit_setting_id="12800"/>
-            </event_effect>
-		</event>
 		<event>
             <event_trigger class="schedule" time="120" />
-            <event_effect class="add_unit" map_index="1" position="900,550">
-                <unit_setting unit_setting_id="12800"/>
+            <event_effect class="add_unit" map_index="0" position="550,650">
+                <unit_setting unit_setting_id="12003"/>
             </event_effect>
-		</event>
+        </event>
+        <event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="550,350">
+                <unit_setting unit_setting_id="12003"/>
+            </event_effect>
+        </event>
+        <event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="550,500">
+                <unit_setting unit_setting_id="12003"/>
+            </event_effect>
+        </event>
+        <event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="700,650">
+                <unit_setting unit_setting_id="12003"/>
+            </event_effect>
+        </event>
+        <event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="700,350">
+                <unit_setting unit_setting_id="12003"/>
+            </event_effect>
+        </event>
+        <event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="850,350">
+                <unit_setting unit_setting_id="12003"/>
+            </event_effect>
+        </event>
+        <event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="850,650">
+                <unit_setting unit_setting_id="12003"/>
+            </event_effect>
+        </event>
+        <event>
+            <event_trigger class="schedule" time="120" />
+            <event_effect class="add_unit" map_index="0" position="850,500">
+                <unit_setting unit_setting_id="12003"/>
+            </event_effect>
+        </event>  
+		
 		<event>
             <event_trigger class="schedule" time="120" />
-            <event_effect class="add_unit" map_index="1" position="900,500">
-                <unit_setting unit_setting_id="12000"/>
+            <event_effect class="add_unit" map_index="1" position="700,500">
+                <unit_setting unit_setting_id="12800"/>
             </event_effect>
 		</event>
 		
