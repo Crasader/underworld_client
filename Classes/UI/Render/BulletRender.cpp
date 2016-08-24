@@ -14,6 +14,7 @@
 #include "CocosUtils.h"
 
 namespace UnderWorld{ namespace Core{
+    
 
 BulletRender::BulletRender()
 : _bullet(nullptr)
@@ -223,8 +224,9 @@ void BulletRender::updateParams(const Coordinate32& currentPos,
         _parabolaA = - (2.f * bulletMaxHeight + _parabolaH + 2.0f * sqrt(pow(bulletMaxHeight, 2) + _parabolaH * bulletMaxHeight)) / pow(d, 2);
         _parabolaB = 2.0f * (bulletMaxHeight + sqrt(pow(bulletMaxHeight, 2) + _parabolaH * bulletMaxHeight)) / d;
     }
-    const float distance = sqrt(pow(abs(currentPos.x - _startPos.x), 2) + pow(abs(currentPos.y - _startPos.y), 2));
     
+    const float distance = sqrt(pow(abs(currentPos.x - _startPos.x), 2) + pow(abs(currentPos.y - _startPos.y), 2));
+
     _currentHeight = _parabolaA * pow(distance, 2) + _parabolaB * distance + _parabolaH;
     
     const float beta = atan(2.f * _parabolaA * distance + _parabolaB);
@@ -232,10 +234,10 @@ void BulletRender::updateParams(const Coordinate32& currentPos,
         _rotation = _targetPos.y > _startPos.y ? -90.f : 90.f;
         _scale = abs(cos(beta) + sin(beta) / _worldRender->getCameraAngelRadians());
     } else {
-        const float gamma = atan(tan(beta)/cos(_alpha)/_worldRender->getCameraAngelRadians() + tan(_alpha));
-        int direction = _targetPos.x < _startPos.x ? 1 : -1;
-        _rotation = gamma * 180 / M_PI * direction;
-        _scale = abs(cos(_alpha) * cos(beta) / cos(gamma)) * direction * -1;
+        int direction1 = _targetPos.x < _startPos.x ? 1 : -1;
+        const float gamma = atan(tan(direction1 == 1 ? -beta : beta)/cos(_alpha)/_worldRender->getCameraAngelRadians() + tan(_alpha));
+        _rotation = gamma * 180 / M_PI * -1;
+        _scale = abs(cos(_alpha) * cos(beta) / cos(gamma)) * direction1 * -1;
     }
 }
     

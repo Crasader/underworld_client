@@ -159,28 +159,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{0,-10}</string>
+                <string>{12,-8}</string>
                 <key>spriteSize</key>
-                <string>{90,44}</string>
+                <string>{64,70}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{399,331},{90,44}}</string>
+                <string>{{1437,1293},{64,70}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Dragon/attack/shadows/10/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{7,-11}</string>
+                <string>{15,-3}</string>
                 <key>spriteSize</key>
-                <string>{70,56}</string>
+                <string>{82,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1205,1261},{70,56}}</string>
+                <string>{{523,783},{82,68}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -189,13 +189,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{12,-15}</string>
+                <string>{18,0}</string>
                 <key>spriteSize</key>
-                <string>{54,64}</string>
+                <string>{86,56}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,1911},{54,64}}</string>
+                <string>{{177,569},{86,56}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -204,13 +204,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{16,-4}</string>
+                <string>{14,-7}</string>
                 <key>spriteSize</key>
-                <string>{74,72}</string>
+                <string>{104,66}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{837,1121},{74,72}}</string>
+                <string>{{109,119},{104,66}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -219,13 +219,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-24,-22}</string>
+                <string>{9,-22}</string>
                 <key>spriteSize</key>
-                <string>{94,66}</string>
+                <string>{102,78}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1721,63},{94,66}}</string>
+                <string>{{1519,1},{102,78}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -234,13 +234,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-23,-22}</string>
+                <string>{8,-25}</string>
                 <key>spriteSize</key>
-                <string>{102,66}</string>
+                <string>{92,74}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1199,121},{102,66}}</string>
+                <string>{{1495,199},{92,74}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -249,28 +249,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-20,-14}</string>
+                <string>{10,-25}</string>
                 <key>spriteSize</key>
-                <string>{102,52}</string>
+                <string>{58,70}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{771,107},{102,52}}</string>
+                <string>{{1133,1209},{58,70}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Dragon/attack/shadows/10/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-16,-16}</string>
+                <string>{7,-24}</string>
                 <key>spriteSize</key>
-                <string>{96,62}</string>
+                <string>{98,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{957,191},{96,62}}</string>
+                <string>{{209,187},{98,68}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -279,13 +279,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-10,-16}</string>
+                <string>{3,-19}</string>
                 <key>spriteSize</key>
-                <string>{94,66}</string>
+                <string>{104,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1817,63},{94,66}}</string>
+                <string>{{665,55},{104,68}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -294,13 +294,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-8,-14}</string>
+                <string>{9,-13}</string>
                 <key>spriteSize</key>
-                <string>{92,66}</string>
+                <string>{106,74}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1381,299},{92,66}}</string>
+                <string>{{337,41},{106,74}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -459,28 +459,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{12,-8}</string>
+                <string>{0,-10}</string>
                 <key>spriteSize</key>
-                <string>{64,70}</string>
+                <string>{90,44}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1437,1293},{64,70}}</string>
+                <string>{{399,331},{90,44}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Dragon/attack/shadows/12/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{15,-3}</string>
+                <string>{7,-11}</string>
                 <key>spriteSize</key>
-                <string>{82,68}</string>
+                <string>{70,56}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{523,783},{82,68}}</string>
+                <string>{{1205,1261},{70,56}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -489,13 +489,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{18,0}</string>
+                <string>{12,-15}</string>
                 <key>spriteSize</key>
-                <string>{86,56}</string>
+                <string>{54,64}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{177,569},{86,56}}</string>
+                <string>{{1,1911},{54,64}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -504,13 +504,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{14,-7}</string>
+                <string>{16,-4}</string>
                 <key>spriteSize</key>
-                <string>{104,66}</string>
+                <string>{74,72}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{109,119},{104,66}}</string>
+                <string>{{837,1121},{74,72}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -519,13 +519,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{9,-22}</string>
+                <string>{-24,-22}</string>
                 <key>spriteSize</key>
-                <string>{102,78}</string>
+                <string>{94,66}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1519,1},{102,78}}</string>
+                <string>{{1721,63},{94,66}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -534,13 +534,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{8,-25}</string>
+                <string>{-23,-22}</string>
                 <key>spriteSize</key>
-                <string>{92,74}</string>
+                <string>{102,66}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1495,199},{92,74}}</string>
+                <string>{{1199,121},{102,66}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -549,28 +549,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{10,-25}</string>
+                <string>{-20,-14}</string>
                 <key>spriteSize</key>
-                <string>{58,70}</string>
+                <string>{102,52}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1133,1209},{58,70}}</string>
+                <string>{{771,107},{102,52}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Dragon/attack/shadows/12/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{7,-24}</string>
+                <string>{-16,-16}</string>
                 <key>spriteSize</key>
-                <string>{98,68}</string>
+                <string>{96,62}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{209,187},{98,68}}</string>
+                <string>{{957,191},{96,62}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -579,13 +579,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{3,-19}</string>
+                <string>{-10,-16}</string>
                 <key>spriteSize</key>
-                <string>{104,68}</string>
+                <string>{94,66}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{665,55},{104,68}}</string>
+                <string>{{1817,63},{94,66}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -594,13 +594,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{9,-13}</string>
+                <string>{-8,-14}</string>
                 <key>spriteSize</key>
-                <string>{106,74}</string>
+                <string>{92,66}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{337,41},{106,74}}</string>
+                <string>{{1381,299},{92,66}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1899,13 +1899,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-3,-10}</string>
+                <string>{7,-9}</string>
                 <key>spriteSize</key>
-                <string>{96,46}</string>
+                <string>{44,72}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1411,111},{96,46}}</string>
+                <string>{{2001,1147},{44,72}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1914,13 +1914,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-2,-16}</string>
+                <string>{15,-9}</string>
                 <key>spriteSize</key>
-                <string>{96,60}</string>
+                <string>{94,74}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1721,1},{96,60}}</string>
+                <string>{{1191,189},{94,74}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1929,28 +1929,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-2,-12}</string>
+                <string>{6,-10}</string>
                 <key>spriteSize</key>
-                <string>{92,46}</string>
+                <string>{74,76}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1379,429},{92,46}}</string>
+                <string>{{165,1045},{74,76}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Dragon/run/shadows/10/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-1,-12}</string>
+                <string>{11,-11}</string>
                 <key>spriteSize</key>
-                <string>{88,48}</string>
+                <string>{60,74}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{783,329},{88,48}}</string>
+                <string>{{1855,1253},{60,74}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -1959,13 +1959,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{1,-16}</string>
+                <string>{13,-10}</string>
                 <key>spriteSize</key>
-                <string>{88,58}</string>
+                <string>{92,74}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{479,377},{88,58}}</string>
+                <string>{{1589,239},{92,74}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1974,13 +1974,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{0,-10}</string>
+                <string>{17,-10}</string>
                 <key>spriteSize</key>
-                <string>{94,46}</string>
+                <string>{62,74}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1797,233},{94,46}}</string>
+                <string>{{1937,1099},{62,74}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2079,13 +2079,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{7,-9}</string>
+                <string>{-3,-10}</string>
                 <key>spriteSize</key>
-                <string>{44,72}</string>
+                <string>{96,46}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{2001,1147},{44,72}}</string>
+                <string>{{1411,111},{96,46}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2094,13 +2094,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{15,-9}</string>
+                <string>{-2,-16}</string>
                 <key>spriteSize</key>
-                <string>{94,74}</string>
+                <string>{96,60}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1191,189},{94,74}}</string>
+                <string>{{1721,1},{96,60}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2109,28 +2109,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{6,-10}</string>
+                <string>{-2,-12}</string>
                 <key>spriteSize</key>
-                <string>{74,76}</string>
+                <string>{92,46}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{165,1045},{74,76}}</string>
+                <string>{{1379,429},{92,46}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Dragon/run/shadows/12/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{11,-11}</string>
+                <string>{-1,-12}</string>
                 <key>spriteSize</key>
-                <string>{60,74}</string>
+                <string>{88,48}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1855,1253},{60,74}}</string>
+                <string>{{783,329},{88,48}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -2139,13 +2139,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{13,-10}</string>
+                <string>{1,-16}</string>
                 <key>spriteSize</key>
-                <string>{92,74}</string>
+                <string>{88,58}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1589,239},{92,74}}</string>
+                <string>{{479,377},{88,58}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2154,13 +2154,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{17,-10}</string>
+                <string>{0,-10}</string>
                 <key>spriteSize</key>
-                <string>{62,74}</string>
+                <string>{94,46}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1937,1099},{62,74}}</string>
+                <string>{{1797,233},{94,46}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3054,28 +3054,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{0,-10}</string>
+                <string>{12,-8}</string>
                 <key>spriteSize</key>
-                <string>{90,44}</string>
+                <string>{64,70}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{399,331},{90,44}}</string>
+                <string>{{1437,1293},{64,70}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Dragon/skill/shadows/10/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{5,-12}</string>
+                <string>{16,-5}</string>
                 <key>spriteSize</key>
-                <string>{68,58}</string>
+                <string>{88,64}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1559,1457},{68,58}}</string>
+                <string>{{1461,705},{88,64}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3084,13 +3084,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{12,-11}</string>
+                <string>{12,-2}</string>
                 <key>spriteSize</key>
-                <string>{52,56}</string>
+                <string>{82,52}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{175,1903},{52,56}}</string>
+                <string>{{85,903},{82,52}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3099,73 +3099,73 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{23,-1}</string>
+                <string>{8,0}</string>
                 <key>spriteSize</key>
-                <string>{64,56}</string>
+                <string>{94,50}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{63,1271},{64,56}}</string>
+                <string>{{1901,171},{94,50}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Dragon/skill/shadows/10/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{37,2}</string>
+                <string>{8,7}</string>
                 <key>spriteSize</key>
-                <string>{90,54}</string>
+                <string>{62,56}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1561,681},{90,54}}</string>
+                <string>{{57,1975},{62,56}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Dragon/skill/shadows/10/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{31,-2}</string>
+                <string>{7,8}</string>
                 <key>spriteSize</key>
-                <string>{76,44}</string>
+                <string>{54,56}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{2001,991},{76,44}}</string>
+                <string>{{169,1969},{54,56}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Dragon/skill/shadows/10/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{4,-9}</string>
+                <string>{13,-10}</string>
                 <key>spriteSize</key>
-                <string>{80,46}</string>
+                <string>{62,72}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1263,861},{80,46}}</string>
+                <string>{{1691,1371},{62,72}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Dragon/skill/shadows/10/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-26,-20}</string>
+                <string>{1,-28}</string>
                 <key>spriteSize</key>
-                <string>{100,66}</string>
+                <string>{104,70}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{433,141},{100,66}}</string>
+                <string>{{775,35},{104,70}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3174,13 +3174,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-28,-19}</string>
+                <string>{-1,-31}</string>
                 <key>spriteSize</key>
-                <string>{100,60}</string>
+                <string>{92,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{755,161},{100,60}}</string>
+                <string>{{1287,267},{92,68}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3189,13 +3189,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-29,-27}</string>
+                <string>{9,-31}</string>
                 <key>spriteSize</key>
-                <string>{98,72}</string>
+                <string>{102,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,227},{98,72}}</string>
+                <string>{{989,67},{102,68}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3204,13 +3204,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-23,-22}</string>
+                <string>{16,-28}</string>
                 <key>spriteSize</key>
-                <string>{96,64}</string>
+                <string>{82,70}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{101,351},{96,64}}</string>
+                <string>{{1965,387},{82,70}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3384,28 +3384,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{12,-8}</string>
+                <string>{0,-10}</string>
                 <key>spriteSize</key>
-                <string>{64,70}</string>
+                <string>{90,44}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1437,1293},{64,70}}</string>
+                <string>{{399,331},{90,44}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Dragon/skill/shadows/12/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{16,-5}</string>
+                <string>{5,-12}</string>
                 <key>spriteSize</key>
-                <string>{88,64}</string>
+                <string>{68,58}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1461,705},{88,64}}</string>
+                <string>{{1559,1457},{68,58}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3414,13 +3414,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{12,-2}</string>
+                <string>{12,-11}</string>
                 <key>spriteSize</key>
-                <string>{82,52}</string>
+                <string>{52,56}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{85,903},{82,52}}</string>
+                <string>{{175,1903},{52,56}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3429,73 +3429,73 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{8,0}</string>
+                <string>{23,-1}</string>
                 <key>spriteSize</key>
-                <string>{94,50}</string>
+                <string>{64,56}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1901,171},{94,50}}</string>
+                <string>{{63,1271},{64,56}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Dragon/skill/shadows/12/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{8,7}</string>
+                <string>{37,2}</string>
                 <key>spriteSize</key>
-                <string>{62,56}</string>
+                <string>{90,54}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{57,1975},{62,56}}</string>
+                <string>{{1561,681},{90,54}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Dragon/skill/shadows/12/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{7,8}</string>
+                <string>{31,-2}</string>
                 <key>spriteSize</key>
-                <string>{54,56}</string>
+                <string>{76,44}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{169,1969},{54,56}}</string>
+                <string>{{2001,991},{76,44}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Dragon/skill/shadows/12/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{13,-10}</string>
+                <string>{4,-9}</string>
                 <key>spriteSize</key>
-                <string>{62,72}</string>
+                <string>{80,46}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1691,1371},{62,72}}</string>
+                <string>{{1263,861},{80,46}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Dragon/skill/shadows/12/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{1,-28}</string>
+                <string>{-26,-20}</string>
                 <key>spriteSize</key>
-                <string>{104,70}</string>
+                <string>{100,66}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{775,35},{104,70}}</string>
+                <string>{{433,141},{100,66}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3504,13 +3504,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-1,-31}</string>
+                <string>{-28,-19}</string>
                 <key>spriteSize</key>
-                <string>{92,68}</string>
+                <string>{100,60}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1287,267},{92,68}}</string>
+                <string>{{755,161},{100,60}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3519,13 +3519,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{9,-31}</string>
+                <string>{-29,-27}</string>
                 <key>spriteSize</key>
-                <string>{102,68}</string>
+                <string>{98,72}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{989,67},{102,68}}</string>
+                <string>{{1,227},{98,72}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3534,13 +3534,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{16,-28}</string>
+                <string>{-23,-22}</string>
                 <key>spriteSize</key>
-                <string>{82,70}</string>
+                <string>{96,64}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1965,387},{82,70}}</string>
+                <string>{{101,351},{96,64}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -4989,28 +4989,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{0,-10}</string>
+                <string>{12,-8}</string>
                 <key>spriteSize</key>
-                <string>{90,44}</string>
+                <string>{64,70}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{691,329},{90,44}}</string>
+                <string>{{1509,1331},{64,70}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Dragon/stand/shadows/10/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-5,-15}</string>
+                <string>{14,-8}</string>
                 <key>spriteSize</key>
-                <string>{76,56}</string>
+                <string>{88,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1173,973},{76,56}}</string>
+                <string>{{925,443},{88,68}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -5019,13 +5019,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-4,-16}</string>
+                <string>{14,-8}</string>
                 <key>spriteSize</key>
-                <string>{74,58}</string>
+                <string>{86,66}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1931,1313},{74,58}}</string>
+                <string>{{831,579},{86,66}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -5034,13 +5034,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-2,-18}</string>
+                <string>{18,-8}</string>
                 <key>spriteSize</key>
-                <string>{78,60}</string>
+                <string>{100,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1589,887},{78,60}}</string>
+                <string>{{551,125},{100,68}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -5049,13 +5049,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{1,-12}</string>
+                <string>{14,-9}</string>
                 <key>spriteSize</key>
-                <string>{94,44}</string>
+                <string>{66,70}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1145,295},{94,44}}</string>
+                <string>{{1221,1193},{66,70}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -5064,28 +5064,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-1,-12}</string>
+                <string>{7,-9}</string>
                 <key>spriteSize</key>
-                <string>{84,56}</string>
+                <string>{92,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{527,725},{84,56}}</string>
+                <string>{{1121,391},{92,68}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Dragon/stand/shadows/10/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-4,-16}</string>
+                <string>{4,-9}</string>
                 <key>spriteSize</key>
-                <string>{86,56}</string>
+                <string>{88,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{89,605},{86,56}}</string>
+                <string>{{1015,461},{88,68}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -5094,13 +5094,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-3,-12}</string>
+                <string>{7,-9}</string>
                 <key>spriteSize</key>
-                <string>{82,70}</string>
+                <string>{110,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{711,739},{82,70}}</string>
+                <string>{{1,1},{110,68}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -5229,28 +5229,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{12,-8}</string>
+                <string>{0,-10}</string>
                 <key>spriteSize</key>
-                <string>{64,70}</string>
+                <string>{90,44}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1509,1331},{64,70}}</string>
+                <string>{{691,329},{90,44}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Dragon/stand/shadows/12/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{14,-8}</string>
+                <string>{-5,-15}</string>
                 <key>spriteSize</key>
-                <string>{88,68}</string>
+                <string>{76,56}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{925,443},{88,68}}</string>
+                <string>{{1173,973},{76,56}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -5259,13 +5259,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{14,-8}</string>
+                <string>{-4,-16}</string>
                 <key>spriteSize</key>
-                <string>{86,66}</string>
+                <string>{74,58}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{831,579},{86,66}}</string>
+                <string>{{1931,1313},{74,58}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -5274,13 +5274,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{18,-8}</string>
+                <string>{-2,-18}</string>
                 <key>spriteSize</key>
-                <string>{100,68}</string>
+                <string>{78,60}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{551,125},{100,68}}</string>
+                <string>{{1589,887},{78,60}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -5289,13 +5289,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{14,-9}</string>
+                <string>{1,-12}</string>
                 <key>spriteSize</key>
-                <string>{66,70}</string>
+                <string>{94,44}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1221,1193},{66,70}}</string>
+                <string>{{1145,295},{94,44}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -5304,28 +5304,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{7,-9}</string>
+                <string>{-1,-12}</string>
                 <key>spriteSize</key>
-                <string>{92,68}</string>
+                <string>{84,56}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1121,391},{92,68}}</string>
+                <string>{{527,725},{84,56}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Dragon/stand/shadows/12/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{4,-9}</string>
+                <string>{-4,-16}</string>
                 <key>spriteSize</key>
-                <string>{88,68}</string>
+                <string>{86,56}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1015,461},{88,68}}</string>
+                <string>{{89,605},{86,56}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -5334,13 +5334,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{7,-9}</string>
+                <string>{-3,-12}</string>
                 <key>spriteSize</key>
-                <string>{110,68}</string>
+                <string>{82,70}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,1},{110,68}}</string>
+                <string>{{711,739},{82,70}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -6459,43 +6459,43 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-1,-10}</string>
+                <string>{12,-10}</string>
                 <key>spriteSize</key>
-                <string>{92,44}</string>
+                <string>{64,72}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1759,401},{92,44}}</string>
+                <string>{{1621,1263},{64,72}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Dragon/win/shadows/10/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-2,-10}</string>
+                <string>{2,-9}</string>
                 <key>spriteSize</key>
-                <string>{80,42}</string>
+                <string>{52,66}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1179,863},{80,42}}</string>
+                <string>{{1969,1725},{52,66}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Dragon/win/shadows/10/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-1,-11}</string>
+                <string>{10,-14}</string>
                 <key>spriteSize</key>
-                <string>{74,60}</string>
+                <string>{92,60}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1931,1251},{74,60}}</string>
+                <string>{{1191,463},{92,60}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -6504,13 +6504,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-4,-19}</string>
+                <string>{14,-13}</string>
                 <key>spriteSize</key>
-                <string>{74,70}</string>
+                <string>{98,54}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1407,1015},{74,70}}</string>
+                <string>{{309,251},{98,54}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -6519,13 +6519,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{23,-8}</string>
+                <string>{17,-9}</string>
                 <key>spriteSize</key>
-                <string>{76,52}</string>
+                <string>{88,52}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1947,943},{76,52}}</string>
+                <string>{{871,419},{88,52}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -6534,13 +6534,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{17,-10}</string>
+                <string>{8,-7}</string>
                 <key>spriteSize</key>
-                <string>{68,48}</string>
+                <string>{72,58}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1795,1547},{68,48}}</string>
+                <string>{{1917,1435},{72,58}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -6549,13 +6549,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{2,-23}</string>
+                <string>{15,-11}</string>
                 <key>spriteSize</key>
-                <string>{80,64}</string>
+                <string>{100,64}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{855,933},{80,64}}</string>
+                <string>{{653,125},{100,64}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -6564,13 +6564,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{5,-22}</string>
+                <string>{13,-12}</string>
                 <key>spriteSize</key>
-                <string>{84,54}</string>
+                <string>{76,64}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{261,753},{84,54}}</string>
+                <string>{{759,1059},{76,64}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -6579,13 +6579,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{10,-22}</string>
+                <string>{18,-11}</string>
                 <key>spriteSize</key>
-                <string>{74,66}</string>
+                <string>{96,60}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{745,1125},{74,66}}</string>
+                <string>{{1819,1},{96,60}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -6594,13 +6594,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{6,-13}</string>
+                <string>{19,-11}</string>
                 <key>spriteSize</key>
-                <string>{76,68}</string>
+                <string>{96,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{83,1073},{76,68}}</string>
+                <string>{{201,311},{96,68}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -6759,43 +6759,43 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{12,-10}</string>
+                <string>{-1,-10}</string>
                 <key>spriteSize</key>
-                <string>{64,72}</string>
+                <string>{92,44}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1621,1263},{64,72}}</string>
+                <string>{{1759,401},{92,44}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Dragon/win/shadows/12/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{2,-9}</string>
+                <string>{-2,-10}</string>
                 <key>spriteSize</key>
-                <string>{52,66}</string>
+                <string>{80,42}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1969,1725},{52,66}}</string>
+                <string>{{1179,863},{80,42}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Dragon/win/shadows/12/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{10,-14}</string>
+                <string>{-1,-11}</string>
                 <key>spriteSize</key>
-                <string>{92,60}</string>
+                <string>{74,60}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1191,463},{92,60}}</string>
+                <string>{{1931,1251},{74,60}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -6804,13 +6804,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{14,-13}</string>
+                <string>{-4,-19}</string>
                 <key>spriteSize</key>
-                <string>{98,54}</string>
+                <string>{74,70}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{309,251},{98,54}}</string>
+                <string>{{1407,1015},{74,70}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -6819,13 +6819,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{17,-9}</string>
+                <string>{23,-8}</string>
                 <key>spriteSize</key>
-                <string>{88,52}</string>
+                <string>{76,52}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{871,419},{88,52}}</string>
+                <string>{{1947,943},{76,52}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -6834,13 +6834,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{8,-7}</string>
+                <string>{17,-10}</string>
                 <key>spriteSize</key>
-                <string>{72,58}</string>
+                <string>{68,48}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1917,1435},{72,58}}</string>
+                <string>{{1795,1547},{68,48}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -6849,13 +6849,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{15,-11}</string>
+                <string>{2,-23}</string>
                 <key>spriteSize</key>
-                <string>{100,64}</string>
+                <string>{80,64}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{653,125},{100,64}}</string>
+                <string>{{855,933},{80,64}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -6864,13 +6864,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{13,-12}</string>
+                <string>{5,-22}</string>
                 <key>spriteSize</key>
-                <string>{76,64}</string>
+                <string>{84,54}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{759,1059},{76,64}}</string>
+                <string>{{261,753},{84,54}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -6879,13 +6879,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{18,-11}</string>
+                <string>{10,-22}</string>
                 <key>spriteSize</key>
-                <string>{96,60}</string>
+                <string>{74,66}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1819,1},{96,60}}</string>
+                <string>{{745,1125},{74,66}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -6894,13 +6894,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{19,-11}</string>
+                <string>{6,-13}</string>
                 <key>spriteSize</key>
-                <string>{96,68}</string>
+                <string>{76,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{201,311},{96,68}}</string>
+                <string>{{83,1073},{76,68}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -8116,7 +8116,7 @@
             <key>size</key>
             <string>{2048,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:e2b963d492489e7a9c66dabc270fd4b1:ae0ab720acd94325a48683a1f9be9b3a:2cf39a269c92ba32bd3ba1b7e2376836$</string>
+            <string>$TexturePacker:SmartUpdate:961d208b1e69ba793743f24100d67e5c:d22e45d15099e69576a3dbe55d4cce4a:2cf39a269c92ba32bd3ba1b7e2376836$</string>
             <key>textureFileName</key>
             <string>Dragon-shadows.pvr.ccz</string>
         </dict>

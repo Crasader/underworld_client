@@ -53,7 +53,7 @@ public:
     static const std::string TILEDMAP_LAYER_LOGIC_NAME;
     
     static const int RENDER_LAYER_AIR_HEIGHT_IN_MAP_SIZE = 200;
-    static const int CAMERA_ANGEL_DEGREES = 75;
+    static const int CAMERA_ANGEL_DEGREES = 45;
     static const int EFFECT_RENDER_DELAY_THRESHOLD_IN_SECOND = 1;
 
     

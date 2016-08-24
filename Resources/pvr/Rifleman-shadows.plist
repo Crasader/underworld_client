@@ -144,13 +144,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-2,-2}</string>
+                <string>{1,-11}</string>
                 <key>spriteSize</key>
-                <string>{88,48}</string>
+                <string>{50,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{905,149},{88,48}}</string>
+                <string>{{543,681},{50,68}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -159,28 +159,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-13,-2}</string>
+                <string>{-1,-19}</string>
                 <key>spriteSize</key>
-                <string>{110,44}</string>
+                <string>{46,78}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{115,1},{110,44}}</string>
+                <string>{{1197,557},{46,78}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/attack/shadows/10/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-11,-5}</string>
+                <string>{-1,-20}</string>
                 <key>spriteSize</key>
-                <string>{104,52}</string>
+                <string>{46,80}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{115,47},{104,52}}</string>
+                <string>{{857,301},{46,80}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -189,43 +189,43 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-9,-5}</string>
+                <string>{-1,-19}</string>
                 <key>spriteSize</key>
-                <string>{106,52}</string>
+                <string>{46,80}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{887,1},{106,52}}</string>
+                <string>{{677,353},{46,80}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/attack/shadows/10/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{6,-2}</string>
+                <string>{0,-9}</string>
                 <key>spriteSize</key>
-                <string>{78,46}</string>
+                <string>{48,66}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1035,545},{78,46}}</string>
+                <string>{{657,741},{48,66}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/attack/shadows/10/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{13,3}</string>
+                <string>{2,-5}</string>
                 <key>spriteSize</key>
-                <string>{84,42}</string>
+                <string>{52,62}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1309,391},{84,42}}</string>
+                <string>{{351,837},{52,62}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -234,45 +234,45 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{12,3}</string>
+                <string>{3,-5}</string>
                 <key>spriteSize</key>
-                <string>{86,42}</string>
+                <string>{52,64}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1223,345},{86,42}}</string>
+                <string>{{923,825},{52,64}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/attack/shadows/10/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{9,2}</string>
+                <string>{2,-7}</string>
                 <key>spriteSize</key>
-                <string>{94,40}</string>
+                <string>{50,66}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,153},{94,40}}</string>
+                <string>{{357,785},{50,66}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/attack/shadows/10/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{2,-1}</string>
+                <string>{1,-10}</string>
                 <key>spriteSize</key>
-                <string>{92,46}</string>
+                <string>{48,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1883,235},{92,46}}</string>
+                <string>{{955,775},{48,68}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/attack/shadows/11/10001.png</key>
             <dict>
@@ -414,13 +414,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{1,-11}</string>
+                <string>{-2,-2}</string>
                 <key>spriteSize</key>
-                <string>{50,68}</string>
+                <string>{88,48}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{543,681},{50,68}}</string>
+                <string>{{905,149},{88,48}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -429,28 +429,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-1,-19}</string>
+                <string>{-13,-2}</string>
                 <key>spriteSize</key>
-                <string>{46,78}</string>
+                <string>{110,44}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1197,557},{46,78}}</string>
+                <string>{{115,1},{110,44}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/attack/shadows/12/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-1,-20}</string>
+                <string>{-11,-5}</string>
                 <key>spriteSize</key>
-                <string>{46,80}</string>
+                <string>{104,52}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{857,301},{46,80}}</string>
+                <string>{{115,47},{104,52}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -459,43 +459,43 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-1,-19}</string>
+                <string>{-9,-5}</string>
                 <key>spriteSize</key>
-                <string>{46,80}</string>
+                <string>{106,52}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{677,353},{46,80}}</string>
+                <string>{{887,1},{106,52}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/attack/shadows/12/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{0,-9}</string>
+                <string>{6,-2}</string>
                 <key>spriteSize</key>
-                <string>{48,66}</string>
+                <string>{78,46}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{657,741},{48,66}}</string>
+                <string>{{1035,545},{78,46}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/attack/shadows/12/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{2,-5}</string>
+                <string>{13,3}</string>
                 <key>spriteSize</key>
-                <string>{52,62}</string>
+                <string>{84,42}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{351,837},{52,62}}</string>
+                <string>{{1309,391},{84,42}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -504,45 +504,45 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{3,-5}</string>
+                <string>{12,3}</string>
                 <key>spriteSize</key>
-                <string>{52,64}</string>
+                <string>{86,42}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{923,825},{52,64}}</string>
+                <string>{{1223,345},{86,42}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/attack/shadows/12/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{2,-7}</string>
+                <string>{9,2}</string>
                 <key>spriteSize</key>
-                <string>{50,66}</string>
+                <string>{94,40}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{357,785},{50,66}}</string>
+                <string>{{1,153},{94,40}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/attack/shadows/12/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{1,-10}</string>
+                <string>{2,-1}</string>
                 <key>spriteSize</key>
-                <string>{48,68}</string>
+                <string>{92,46}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{955,775},{48,68}}</string>
+                <string>{{1883,235},{92,46}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/attack/shadows/2/10001.png</key>
             <dict>
@@ -1734,13 +1734,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-4,-10}</string>
+                <string>{1,-15}</string>
                 <key>spriteSize</key>
-                <string>{80,64}</string>
+                <string>{64,74}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1663,621},{80,64}}</string>
+                <string>{{1909,703},{64,74}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1749,13 +1749,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-7,-10}</string>
+                <string>{-1,-16}</string>
                 <key>spriteSize</key>
-                <string>{86,60}</string>
+                <string>{58,72}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1681,291},{86,60}}</string>
+                <string>{{363,443},{58,72}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1764,58 +1764,58 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-10,-10}</string>
+                <string>{0,-18}</string>
                 <key>spriteSize</key>
-                <string>{80,60}</string>
+                <string>{56,70}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1833,621},{80,60}}</string>
+                <string>{{1101,641},{56,70}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/run/shadows/10/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-3,-9}</string>
+                <string>{1,-15}</string>
                 <key>spriteSize</key>
-                <string>{82,62}</string>
+                <string>{60,72}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1755,417},{82,62}}</string>
+                <string>{{1,647},{60,72}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/run/shadows/10/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-1,-11}</string>
+                <string>{2,-15}</string>
                 <key>spriteSize</key>
-                <string>{84,66}</string>
+                <string>{68,74}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1411,321},{84,66}}</string>
+                <string>{{1799,787},{68,74}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/run/shadows/10/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-5,-13}</string>
+                <string>{3,-19}</string>
                 <key>spriteSize</key>
-                <string>{78,68}</string>
+                <string>{72,70}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{759,397},{78,68}}</string>
+                <string>{{181,511},{72,70}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1824,13 +1824,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-4,-10}</string>
+                <string>{1,-15}</string>
                 <key>spriteSize</key>
-                <string>{80,64}</string>
+                <string>{64,74}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1663,621},{80,64}}</string>
+                <string>{{1909,703},{64,74}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1920,9 +1920,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{363,443},{58,72}}</string>
+                <string>{{573,447},{58,72}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/run/shadows/11/10007.png</key>
             <dict>
@@ -1944,13 +1944,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{1,-15}</string>
+                <string>{-4,-10}</string>
                 <key>spriteSize</key>
-                <string>{64,74}</string>
+                <string>{80,64}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1909,703},{64,74}}</string>
+                <string>{{1663,621},{80,64}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1959,73 +1959,73 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-1,-16}</string>
+                <string>{-7,-10}</string>
                 <key>spriteSize</key>
-                <string>{58,72}</string>
+                <string>{86,60}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{573,447},{58,72}}</string>
+                <string>{{1681,291},{86,60}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/run/shadows/12/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{0,-18}</string>
+                <string>{-10,-10}</string>
                 <key>spriteSize</key>
-                <string>{56,70}</string>
+                <string>{80,60}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1101,641},{56,70}}</string>
+                <string>{{1833,621},{80,60}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/run/shadows/12/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{1,-15}</string>
+                <string>{-3,-9}</string>
                 <key>spriteSize</key>
-                <string>{60,72}</string>
+                <string>{82,62}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,647},{60,72}}</string>
+                <string>{{1755,417},{82,62}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/run/shadows/12/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{2,-15}</string>
+                <string>{-1,-11}</string>
                 <key>spriteSize</key>
-                <string>{68,74}</string>
+                <string>{84,66}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1799,787},{68,74}}</string>
+                <string>{{1411,321},{84,66}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/run/shadows/12/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{3,-19}</string>
+                <string>{-5,-13}</string>
                 <key>spriteSize</key>
-                <string>{72,70}</string>
+                <string>{78,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{181,511},{72,70}}</string>
+                <string>{{759,397},{78,68}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2034,13 +2034,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{1,-15}</string>
+                <string>{-4,-10}</string>
                 <key>spriteSize</key>
-                <string>{64,74}</string>
+                <string>{80,64}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1909,703},{64,74}}</string>
+                <string>{{1663,621},{80,64}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3099,43 +3099,43 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-17,-2}</string>
+                <string>{-8,-11}</string>
                 <key>spriteSize</key>
-                <string>{88,48}</string>
+                <string>{52,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{91,447},{88,48}}</string>
+                <string>{{543,627},{52,68}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/skill/shadows/10/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-17,-4}</string>
+                <string>{-9,-13}</string>
                 <key>spriteSize</key>
-                <string>{88,52}</string>
+                <string>{54,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{815,149},{88,52}}</string>
+                <string>{{219,725},{54,68}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/skill/shadows/10/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-18,-6}</string>
+                <string>{-11,-15}</string>
                 <key>spriteSize</key>
-                <string>{84,56}</string>
+                <string>{58,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1353,319},{84,56}}</string>
+                <string>{{1917,1059},{58,68}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -3144,13 +3144,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-25,0}</string>
+                <string>{-16,-15}</string>
                 <key>spriteSize</key>
-                <string>{98,42}</string>
+                <string>{68,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1515,43},{98,42}}</string>
+                <string>{{1389,731},{68,68}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3159,13 +3159,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-17,1}</string>
+                <string>{-15,-8}</string>
                 <key>spriteSize</key>
-                <string>{82,38}</string>
+                <string>{66,58}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1749,583},{82,38}}</string>
+                <string>{{453,687},{66,58}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3174,88 +3174,88 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-29,-7}</string>
+                <string>{-8,-20}</string>
                 <key>spriteSize</key>
-                <string>{102,52}</string>
+                <string>{52,78}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1099,1},{102,52}}</string>
+                <string>{{1117,543},{52,78}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/skill/shadows/10/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-31,-7}</string>
+                <string>{-6,-22}</string>
                 <key>spriteSize</key>
-                <string>{102,52}</string>
+                <string>{48,82}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1203,1},{102,52}}</string>
+                <string>{{1751,533},{48,82}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/skill/shadows/10/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-29,-7}</string>
+                <string>{-6,-22}</string>
                 <key>spriteSize</key>
-                <string>{104,54}</string>
+                <string>{48,82}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{335,75},{104,54}}</string>
+                <string>{{1665,571},{48,82}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/skill/shadows/10/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-29,-7}</string>
+                <string>{-7,-22}</string>
                 <key>spriteSize</key>
-                <string>{104,52}</string>
+                <string>{50,80}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,57},{104,52}}</string>
+                <string>{{1037,397},{50,80}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/skill/shadows/10/10010.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-30,-7}</string>
+                <string>{-7,-22}</string>
                 <key>spriteSize</key>
-                <string>{102,52}</string>
+                <string>{50,80}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1307,1},{102,52}}</string>
+                <string>{{1119,435},{50,80}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/skill/shadows/10/10011.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-6,2}</string>
+                <string>{-13,1}</string>
                 <key>spriteSize</key>
-                <string>{62,40}</string>
+                <string>{62,42}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{129,999},{62,40}}</string>
+                <string>{{1,1009},{62,42}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3264,28 +3264,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-10,2}</string>
+                <string>{-15,-3}</string>
                 <key>spriteSize</key>
-                <string>{78,40}</string>
+                <string>{70,50}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1311,311},{78,40}}</string>
+                <string>{{1245,709},{70,50}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/skill/shadows/10/10013.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-18,1}</string>
+                <string>{-16,-9}</string>
                 <key>spriteSize</key>
-                <string>{92,38}</string>
+                <string>{68,62}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1165,141},{92,38}}</string>
+                <string>{{1567,879},{68,62}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3294,15 +3294,15 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-20,-1}</string>
+                <string>{-8,-12}</string>
                 <key>spriteSize</key>
-                <string>{94,44}</string>
+                <string>{52,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{213,133},{94,44}}</string>
+                <string>{{613,629},{52,68}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/skill/shadows/11/10001.png</key>
             <dict>
@@ -3345,7 +3345,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1917,1059},{58,68}}</string>
+                <string>{{473,627},{58,68}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -3495,7 +3495,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{815,203},{88,52}}</string>
+                <string>{{815,149},{88,52}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3519,43 +3519,43 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-8,-11}</string>
+                <string>{-17,-2}</string>
                 <key>spriteSize</key>
-                <string>{52,68}</string>
+                <string>{88,48}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{543,627},{52,68}}</string>
+                <string>{{91,447},{88,48}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/skill/shadows/12/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-9,-13}</string>
+                <string>{-17,-4}</string>
                 <key>spriteSize</key>
-                <string>{54,68}</string>
+                <string>{88,52}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{219,725},{54,68}}</string>
+                <string>{{815,203},{88,52}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/skill/shadows/12/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-11,-15}</string>
+                <string>{-18,-6}</string>
                 <key>spriteSize</key>
-                <string>{58,68}</string>
+                <string>{84,56}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{473,627},{58,68}}</string>
+                <string>{{1353,319},{84,56}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -3564,13 +3564,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-16,-15}</string>
+                <string>{-25,0}</string>
                 <key>spriteSize</key>
-                <string>{68,68}</string>
+                <string>{98,42}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1389,731},{68,68}}</string>
+                <string>{{1515,43},{98,42}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3579,13 +3579,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-15,-8}</string>
+                <string>{-17,1}</string>
                 <key>spriteSize</key>
-                <string>{66,58}</string>
+                <string>{82,38}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{453,687},{66,58}}</string>
+                <string>{{1749,583},{82,38}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3594,88 +3594,88 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-8,-20}</string>
+                <string>{-29,-7}</string>
                 <key>spriteSize</key>
-                <string>{52,78}</string>
+                <string>{102,52}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1117,543},{52,78}}</string>
+                <string>{{1099,1},{102,52}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/skill/shadows/12/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-6,-22}</string>
+                <string>{-31,-7}</string>
                 <key>spriteSize</key>
-                <string>{48,82}</string>
+                <string>{102,52}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1751,533},{48,82}}</string>
+                <string>{{1203,1},{102,52}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/skill/shadows/12/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-6,-22}</string>
+                <string>{-29,-7}</string>
                 <key>spriteSize</key>
-                <string>{48,82}</string>
+                <string>{104,54}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1665,571},{48,82}}</string>
+                <string>{{335,75},{104,54}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/skill/shadows/12/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-7,-22}</string>
+                <string>{-29,-7}</string>
                 <key>spriteSize</key>
-                <string>{50,80}</string>
+                <string>{104,52}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1037,397},{50,80}}</string>
+                <string>{{1,57},{104,52}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/skill/shadows/12/10010.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-7,-22}</string>
+                <string>{-30,-7}</string>
                 <key>spriteSize</key>
-                <string>{50,80}</string>
+                <string>{102,52}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1119,435},{50,80}}</string>
+                <string>{{1307,1},{102,52}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/skill/shadows/12/10011.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-13,1}</string>
+                <string>{-6,2}</string>
                 <key>spriteSize</key>
-                <string>{62,42}</string>
+                <string>{62,40}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,1009},{62,42}}</string>
+                <string>{{129,999},{62,40}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3684,28 +3684,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-15,-3}</string>
+                <string>{-10,2}</string>
                 <key>spriteSize</key>
-                <string>{70,50}</string>
+                <string>{78,40}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1245,709},{70,50}}</string>
+                <string>{{1311,311},{78,40}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/skill/shadows/12/10013.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-16,-9}</string>
+                <string>{-18,1}</string>
                 <key>spriteSize</key>
-                <string>{68,62}</string>
+                <string>{92,38}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1567,879},{68,62}}</string>
+                <string>{{1165,141},{92,38}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3714,15 +3714,15 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-8,-12}</string>
+                <string>{-20,-1}</string>
                 <key>spriteSize</key>
-                <string>{52,68}</string>
+                <string>{94,44}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{613,629},{52,68}}</string>
+                <string>{{213,133},{94,44}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/skill/shadows/2/10001.png</key>
             <dict>
@@ -5010,7 +5010,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{815,149},{88,52}}</string>
+                <string>{{815,203},{88,52}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -5235,7 +5235,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1917,1059},{58,68}}</string>
+                <string>{{473,627},{58,68}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -5385,7 +5385,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{815,203},{88,52}}</string>
+                <string>{{815,149},{88,52}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -5559,13 +5559,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-2,-2}</string>
+                <string>{1,-11}</string>
                 <key>spriteSize</key>
-                <string>{88,48}</string>
+                <string>{50,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{905,149},{88,48}}</string>
+                <string>{{543,681},{50,68}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -5574,118 +5574,118 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-2,-1}</string>
+                <string>{1,-11}</string>
                 <key>spriteSize</key>
-                <string>{88,48}</string>
+                <string>{50,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,477},{88,48}}</string>
+                <string>{{683,637},{50,68}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/stand/shadows/10/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-3,-1}</string>
+                <string>{1,-11}</string>
                 <key>spriteSize</key>
-                <string>{90,46}</string>
+                <string>{50,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{277,229},{90,46}}</string>
+                <string>{{613,683},{50,68}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/stand/shadows/10/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-2,-1}</string>
+                <string>{2,-11}</string>
                 <key>spriteSize</key>
-                <string>{90,46}</string>
+                <string>{50,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{277,277},{90,46}}</string>
+                <string>{{753,645},{50,68}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/stand/shadows/10/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-1,-1}</string>
+                <string>{2,-11}</string>
                 <key>spriteSize</key>
-                <string>{90,46}</string>
+                <string>{50,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,245},{90,46}}</string>
+                <string>{{683,689},{50,68}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/stand/shadows/10/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{0,-2}</string>
+                <string>{2,-11}</string>
                 <key>spriteSize</key>
-                <string>{90,46}</string>
+                <string>{50,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{93,245},{90,46}}</string>
+                <string>{{823,653},{50,68}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/stand/shadows/10/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{0,-2}</string>
+                <string>{2,-11}</string>
                 <key>spriteSize</key>
-                <string>{90,48}</string>
+                <string>{50,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{203,179},{90,48}}</string>
+                <string>{{753,697},{50,68}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/stand/shadows/10/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{1,-3}</string>
+                <string>{2,-11}</string>
                 <key>spriteSize</key>
-                <string>{88,48}</string>
+                <string>{50,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{273,425},{88,48}}</string>
+                <string>{{823,705},{50,68}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/stand/shadows/10/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{1,-3}</string>
+                <string>{1,-11}</string>
                 <key>spriteSize</key>
-                <string>{88,50}</string>
+                <string>{50,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1359,55},{88,50}}</string>
+                <string>{{955,723},{50,68}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -5694,15 +5694,15 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-1,-2}</string>
+                <string>{1,-11}</string>
                 <key>spriteSize</key>
-                <string>{88,50}</string>
+                <string>{50,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{955,183},{88,50}}</string>
+                <string>{{1025,757},{50,68}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/stand/shadows/11/10001.png</key>
             <dict>
@@ -5859,13 +5859,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{1,-11}</string>
+                <string>{-2,-2}</string>
                 <key>spriteSize</key>
-                <string>{50,68}</string>
+                <string>{88,48}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{543,681},{50,68}}</string>
+                <string>{{905,149},{88,48}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -5874,118 +5874,118 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{1,-11}</string>
+                <string>{-2,-1}</string>
                 <key>spriteSize</key>
-                <string>{50,68}</string>
+                <string>{88,48}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{683,637},{50,68}}</string>
+                <string>{{1,477},{88,48}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/stand/shadows/12/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{1,-11}</string>
+                <string>{-3,-1}</string>
                 <key>spriteSize</key>
-                <string>{50,68}</string>
+                <string>{90,46}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{613,683},{50,68}}</string>
+                <string>{{277,229},{90,46}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/stand/shadows/12/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{2,-11}</string>
+                <string>{-2,-1}</string>
                 <key>spriteSize</key>
-                <string>{50,68}</string>
+                <string>{90,46}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{753,645},{50,68}}</string>
+                <string>{{277,277},{90,46}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/stand/shadows/12/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{2,-11}</string>
+                <string>{-1,-1}</string>
                 <key>spriteSize</key>
-                <string>{50,68}</string>
+                <string>{90,46}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{683,689},{50,68}}</string>
+                <string>{{1,245},{90,46}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/stand/shadows/12/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{2,-11}</string>
+                <string>{0,-2}</string>
                 <key>spriteSize</key>
-                <string>{50,68}</string>
+                <string>{90,46}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{823,653},{50,68}}</string>
+                <string>{{93,245},{90,46}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/stand/shadows/12/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{2,-11}</string>
+                <string>{0,-2}</string>
                 <key>spriteSize</key>
-                <string>{50,68}</string>
+                <string>{90,48}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{753,697},{50,68}}</string>
+                <string>{{203,179},{90,48}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/stand/shadows/12/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{2,-11}</string>
+                <string>{1,-3}</string>
                 <key>spriteSize</key>
-                <string>{50,68}</string>
+                <string>{88,48}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{823,705},{50,68}}</string>
+                <string>{{273,425},{88,48}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/stand/shadows/12/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{1,-11}</string>
+                <string>{1,-3}</string>
                 <key>spriteSize</key>
-                <string>{50,68}</string>
+                <string>{88,50}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{955,723},{50,68}}</string>
+                <string>{{1359,55},{88,50}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -5994,15 +5994,15 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{1,-11}</string>
+                <string>{-1,-2}</string>
                 <key>spriteSize</key>
-                <string>{50,68}</string>
+                <string>{88,50}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1025,757},{50,68}}</string>
+                <string>{{955,183},{88,50}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/stand/shadows/2/10001.png</key>
             <dict>
@@ -7389,13 +7389,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-2,-2}</string>
+                <string>{1,-11}</string>
                 <key>spriteSize</key>
-                <string>{88,48}</string>
+                <string>{50,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{905,149},{88,48}}</string>
+                <string>{{543,681},{50,68}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -7404,13 +7404,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{8,-14}</string>
+                <string>{11,-12}</string>
                 <key>spriteSize</key>
-                <string>{68,68}</string>
+                <string>{76,62}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1317,773},{68,68}}</string>
+                <string>{{1411,609},{76,62}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -7419,28 +7419,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{6,-17}</string>
+                <string>{19,-6}</string>
                 <key>spriteSize</key>
-                <string>{54,72}</string>
+                <string>{92,48}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{831,535},{54,72}}</string>
+                <string>{{1695,203},{92,48}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/win/shadows/10/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{1,-19}</string>
+                <string>{19,-8}</string>
                 <key>spriteSize</key>
-                <string>{56,76}</string>
+                <string>{96,52}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1353,489},{56,76}}</string>
+                <string>{{1707,149},{96,52}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -7449,13 +7449,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-1,-12}</string>
+                <string>{16,-24}</string>
                 <key>spriteSize</key>
-                <string>{78,48}</string>
+                <string>{62,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{905,327},{78,48}}</string>
+                <string>{{1847,1045},{62,68}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -7464,28 +7464,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{10,-12}</string>
+                <string>{13,-10}</string>
                 <key>spriteSize</key>
-                <string>{52,48}</string>
+                <string>{64,32}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{739,965},{52,48}}</string>
+                <string>{{1875,787},{64,32}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/win/shadows/10/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{16,-2}</string>
+                <string>{1,-4}</string>
                 <key>spriteSize</key>
-                <string>{80,46}</string>
+                <string>{62,40}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{513,333},{80,46}}</string>
+                <string>{{65,1029},{62,40}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -7494,13 +7494,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{17,-2}</string>
+                <string>{3,-4}</string>
                 <key>spriteSize</key>
-                <string>{80,46}</string>
+                <string>{58,40}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{423,379},{80,46}}</string>
+                <string>{{699,875},{58,40}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -7509,13 +7509,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{17,-2}</string>
+                <string>{3,-1}</string>
                 <key>spriteSize</key>
-                <string>{80,46}</string>
+                <string>{60,38}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{595,333},{80,46}}</string>
+                <string>{{1833,1109},{60,38}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -7524,28 +7524,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{16,-2}</string>
+                <string>{4,-3}</string>
                 <key>spriteSize</key>
-                <string>{78,48}</string>
+                <string>{62,38}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{905,407},{78,48}}</string>
+                <string>{{1,1053},{62,38}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/win/shadows/10/10011.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{15,-2}</string>
+                <string>{3,-3}</string>
                 <key>spriteSize</key>
-                <string>{78,46}</string>
+                <string>{60,38}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1035,593},{78,46}}</string>
+                <string>{{1895,1119},{60,38}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -7554,15 +7554,15 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{5,0}</string>
+                <string>{-1,-3}</string>
                 <key>spriteSize</key>
-                <string>{68,42}</string>
+                <string>{56,40}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1523,875},{68,42}}</string>
+                <string>{{817,883},{56,40}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/win/shadows/11/10001.png</key>
             <dict>
@@ -7749,13 +7749,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{1,-11}</string>
+                <string>{-2,-2}</string>
                 <key>spriteSize</key>
-                <string>{50,68}</string>
+                <string>{88,48}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{543,681},{50,68}}</string>
+                <string>{{905,149},{88,48}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -7764,13 +7764,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{11,-12}</string>
+                <string>{8,-14}</string>
                 <key>spriteSize</key>
-                <string>{76,62}</string>
+                <string>{68,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1411,609},{76,62}}</string>
+                <string>{{1317,773},{68,68}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -7779,28 +7779,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{19,-6}</string>
+                <string>{6,-17}</string>
                 <key>spriteSize</key>
-                <string>{92,48}</string>
+                <string>{54,72}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1695,203},{92,48}}</string>
+                <string>{{831,535},{54,72}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/win/shadows/12/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{19,-8}</string>
+                <string>{1,-19}</string>
                 <key>spriteSize</key>
-                <string>{96,52}</string>
+                <string>{56,76}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1707,149},{96,52}}</string>
+                <string>{{1353,489},{56,76}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -7809,13 +7809,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{16,-24}</string>
+                <string>{-1,-12}</string>
                 <key>spriteSize</key>
-                <string>{62,68}</string>
+                <string>{78,48}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1847,1045},{62,68}}</string>
+                <string>{{905,327},{78,48}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -7824,28 +7824,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{13,-10}</string>
+                <string>{10,-12}</string>
                 <key>spriteSize</key>
-                <string>{64,32}</string>
+                <string>{52,48}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1875,787},{64,32}}</string>
+                <string>{{739,965},{52,48}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Rifleman/win/shadows/12/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{1,-4}</string>
+                <string>{16,-2}</string>
                 <key>spriteSize</key>
-                <string>{62,40}</string>
+                <string>{80,46}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{65,1029},{62,40}}</string>
+                <string>{{513,333},{80,46}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -7854,13 +7854,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{3,-4}</string>
+                <string>{17,-2}</string>
                 <key>spriteSize</key>
-                <string>{58,40}</string>
+                <string>{80,46}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{699,875},{58,40}}</string>
+                <string>{{423,379},{80,46}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -7869,13 +7869,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{3,-1}</string>
+                <string>{17,-2}</string>
                 <key>spriteSize</key>
-                <string>{60,38}</string>
+                <string>{80,46}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1833,1109},{60,38}}</string>
+                <string>{{595,333},{80,46}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -7884,28 +7884,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{4,-3}</string>
+                <string>{16,-2}</string>
                 <key>spriteSize</key>
-                <string>{62,38}</string>
+                <string>{78,48}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,1053},{62,38}}</string>
+                <string>{{905,407},{78,48}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/win/shadows/12/10011.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{3,-3}</string>
+                <string>{15,-2}</string>
                 <key>spriteSize</key>
-                <string>{60,38}</string>
+                <string>{78,46}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1895,1119},{60,38}}</string>
+                <string>{{1035,593},{78,46}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -7914,15 +7914,15 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-1,-3}</string>
+                <string>{5,0}</string>
                 <key>spriteSize</key>
-                <string>{56,40}</string>
+                <string>{68,42}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{817,883},{56,40}}</string>
+                <string>{{1523,875},{68,42}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Rifleman/win/shadows/2/10001.png</key>
             <dict>
@@ -9376,7 +9376,7 @@
             <key>size</key>
             <string>{2048,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:78b7aac89c23b8034b397b44aa81a868:594f6273f9e0a688f1a8d6911ac2f97b:fb173b485eba3a505a27a2a7b60f2634$</string>
+            <string>$TexturePacker:SmartUpdate:d860a21fb001bb813a2afc42d3acc83d:f35d3a7fe4beb1c615da40e6d814fb3e:fb173b485eba3a505a27a2a7b60f2634$</string>
             <key>textureFileName</key>
             <string>Rifleman-shadows.pvr.ccz</string>
         </dict>

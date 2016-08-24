@@ -10,13 +10,8 @@
 	<item name="pvr/HumanPriest.plist"/>
 	<item name="pvr/HumanWarrior-shadows.plist"/>
 	<item name="pvr/HumanWarrior.plist"/>
-	<item name="pvr/MoHead-0.plist"/>
-	<item name="pvr/MoHead-1.plist"/>
-	<item name="pvr/MoHead-2.plist"/>
-	<item name="pvr/MoHead-3.plist"/>
-	<item name="pvr/MoHead-4.plist"/>
-	<item name="pvr/MoHead-5.plist"/>
-	<item name="pvr/MoHead-6.plist"/>
+	<item name="pvr/MoHead-shadows.plist"/>
+	<item name="pvr/MoHead.plist"/>
 	<item name="pvr/Niutoubing-shadows.plist"/>
 	<item name="pvr/Niutoubing.plist"/>
 	<item name="pvr/Rifleman-shadows.plist"/>
