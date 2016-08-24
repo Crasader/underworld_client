@@ -29,22 +29,22 @@
 		<custom_unit_setting/>
 	</card>
 <!-- 第一版单位：小兵部分 -->
-	<card name="人族盾牌兵" card_class="summon" cost="木头:30" unit_id="12005" summon_count="1" recover_span="0" id="22000">
+	<card name="人族盾牌兵" card_class="summon" cost="木头:40" unit_id="12005" summon_count="1" recover_span="0" id="22000">
 		<custom_unit_setting unit_setting_id="12005"/>
 	</card>
-	<card name="人族剑士" card_class="summon" cost="木头:20" unit_id="12006" summon_count="1" recover_span="0" id="22001">
+	<card name="人族剑士" card_class="summon" cost="木头:30" unit_id="12006" summon_count="1" recover_span="0" id="22001">
 		<custom_unit_setting unit_setting_id="12006"/>
 	</card>
-	<card name="人族弓手" card_class="summon" cost="木头:20" unit_id="12007" summon_count="1" recover_span="0" id="22002">
+	<card name="人族弓手" card_class="summon" cost="木头:40" unit_id="12007" summon_count="1" recover_span="0" id="22002">
 		<custom_unit_setting unit_setting_id="12007"/>
 	</card>
 	<card name="人族男巫" card_class="summon" cost="木头:20" unit_id="12008" summon_count="1" recover_span="0" id="22003">
 		<custom_unit_setting unit_setting_id="12008"/>
 	</card>
-	<card name="人族女巫" card_class="summon" cost="木头:20" unit_id="12009" summon_count="1" recover_span="0" id="22004">
+	<card name="人族女巫" card_class="summon" cost="木头:30" unit_id="12009" summon_count="1" recover_span="0" id="22004">
 		<custom_unit_setting unit_setting_id="12009"/>
 	</card>
-	<card name="人族狮鹫" card_class="summon" cost="木头:40" unit_id="12010" summon_count="1" recover_span="0" id="22005">
+	<card name="人族狮鹫" card_class="summon" cost="木头:30" unit_id="12010" summon_count="1" recover_span="0" id="22005">
 		<custom_unit_setting unit_setting_id="12010"/>
 	</card>
 	<card name="骷髅盾牌兵" card_class="summon" cost="木头:40" unit_id="12011" summon_count="1" recover_span="0" id="22006">
@@ -56,7 +56,7 @@
 	<card name="骷髅弓箭手" card_class="summon" cost="木头:20" unit_id="12013" summon_count="1" recover_span="0" id="22008">
 		<custom_unit_setting unit_setting_id="12013"/>
 	</card>
-	<card name="魔族传教士" card_class="summon" cost="木头:20" unit_id="12014" summon_count="1" recover_span="0" id="22009">
+	<card name="魔族传教士" card_class="summon" cost="木头:40" unit_id="12014" summon_count="1" recover_span="0" id="22009">
 		<custom_unit_setting unit_setting_id="12014"/>
 	</card>
 	<card name="梦魇" card_class="summon" cost="木头:20" unit_id="12015" summon_count="1" recover_span="0" id="22010">
