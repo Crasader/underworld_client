@@ -10,9 +10,9 @@
 #define DeckManager_h
 
 #include "json/document.h"
-#include <unordered_set>
 #include <unordered_map>
 #include <vector>
+#include <map>
 #include <functional>
 
 class DeckData;
@@ -22,7 +22,11 @@ class DeckManager
 {
 public:
     static constexpr int DecksMaxCount = 3;
-    static const std::string SortNotification;
+    
+    enum class FeatureType {
+        Develop,
+        Deck
+    };
     
     enum class SortType {
         Default,
@@ -36,11 +40,11 @@ public:
     
     void parse(const rapidjson::Value& jsonDict);
     
+    SortType getSortType(FeatureType type) const;
+    void setSortType(FeatureType ft, SortType st);
+    
     int getThisDeckId() const;
     void loadDeck(int idx);
-    
-    SortType getSortType() const;
-    void setSortType(SortType type);
     
     const DeckData* getThisDeckData() const;
     void saveThisDeckData();
@@ -49,7 +53,7 @@ public:
     size_t getAllFoundCardsCount() const;
     const CardSimpleData* getCardData(int card) const;
     bool isFound(int card) const;
-    const std::vector<int>& getFoundCards() const;
+    const std::vector<int>& getFoundCards(FeatureType type) const;
     const std::vector<int>& getUnfoundCards() const;
     
     void useCard(int used, int replaced, const std::function<void(int)>& callback);
@@ -65,15 +69,16 @@ private:
     DeckData* getDeckData(int idx) const;
     void loadThisDeck();
     void saveDeckData(int idx);
-    void sortFoundCards();
+    void sortCards(SortType type, std::vector<int>& cards) const;
+    void sortAllCards(FeatureType type, bool sortUnfound);
     
 private:
     int _defaultId;
     DeckData* _defaultDeckData;
-    SortType _sortType;
     std::unordered_map<int, DeckData*> _decks;
     std::unordered_map<int, CardSimpleData*> _allCards;
-    std::unordered_set<int> _allFoundCards;
+    std::map<FeatureType, SortType> _sortTypes;
+    std::vector<int> _allFoundCards;
     std::vector<int> _foundCards;
     std::vector<int> _unfoundCards;
 };

@@ -7,14 +7,14 @@
 //
 
 #include "CardSet.h"
-#include "DeckCard.h"
+#include "AbstractCard.h"
 
 CardSet::~CardSet()
 {
     clear();
 }
 
-void CardSet::insertCard(int cardId, DeckCard* card)
+void CardSet::insertCard(int cardId, AbstractCard* card)
 {
     if (_cards.find(cardId) == end(_cards)) {
         _cards.insert(std::make_pair(cardId, card));
@@ -24,9 +24,9 @@ void CardSet::insertCard(int cardId, DeckCard* card)
 void CardSet::removeCard(int cardId, bool cleanup)
 {
     if (_cards.find(cardId) != end(_cards)) {
-        auto node(_cards.at(cardId));
+        auto card(_cards.at(cardId));
         if (cleanup) {
-            node->removeFromParent();
+            card->removeFromParent();
         }
         
         _cards.erase(cardId);
@@ -53,7 +53,7 @@ size_t CardSet::getCardsCount() const
     return _cards.size();
 }
 
-DeckCard* CardSet::getCard(int cardId) const
+AbstractCard* CardSet::getCard(int cardId) const
 {
     if (_cards.find(cardId) != end(_cards)) {
         return _cards.at(cardId);

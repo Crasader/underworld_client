@@ -1,13 +1,13 @@
 //
-//  DeckCardOpNode.h
+//  CardOpNode.h
 //  Underworld_Client
 //
 //  Created by Andy on 16/8/12.
 //  Copyright (c) 2016 Mofish Studio. All rights reserved.
 //
 
-#ifndef DeckCardOpNode_h
-#define DeckCardOpNode_h
+#ifndef CardOpNode_h
+#define CardOpNode_h
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
@@ -17,31 +17,31 @@ USING_NS_CC;
 
 class DeckCard;
 
-class DeckCardOpNodeObserver
+class CardOpNodeObserver
 {
 public:
-    virtual ~DeckCardOpNodeObserver() {}
-    virtual void onDeckCardOpNodeClicked() = 0;
-    virtual void onDeckCardOpNodeClickedButton(DeckCardOpType type, int cardId) = 0;
+    virtual ~CardOpNodeObserver() {}
+    virtual void onCardOpNodeClicked() = 0;
+    virtual void onCardOpNodeClickedButton(DeckCardOpType type, int cardId) = 0;
 };
 
-class DeckCardOpNode : public ui::Widget
+class CardOpNode : public ui::Widget
 {
 public:
-    static DeckCardOpNode* create();
-    virtual ~DeckCardOpNode();
-    void registerObserver(DeckCardOpNodeObserver* observer);
+    static CardOpNode* create();
+    virtual ~CardOpNode();
+    void registerObserver(CardOpNodeObserver* observer);
     void setCard(int cardId);
     void setTypes(const std::vector<DeckCardOpType>& types);
     int getCardId() const;
     
 private:
-    DeckCardOpNode();
+    CardOpNode();
     virtual bool init() override;
     void resetPositions();
     
 private:
-    DeckCardOpNodeObserver* _observer;
+    CardOpNodeObserver* _observer;
     DeckCard* _icon;
     ui::Scale9Sprite* _hint;
     static Size _hintMinSize;
@@ -50,4 +50,4 @@ private:
     bool _touchInvalid;
 };
 
-#endif /* DeckCardOpNode_h */
+#endif /* CardOpNode_h */

@@ -18,10 +18,12 @@ using namespace cocostudio;
 CardSimpleData::CardSimpleData(const rapidjson::Value& jsonDict)
 :_idx(0)
 ,_level(0)
+,_amount(0)
 ,_cardType(nullptr)
 {
     _idx = DICTOOL->getIntValue_json(jsonDict, "id");
     _level = DICTOOL->getIntValue_json(jsonDict, "level");
+    _amount = DICTOOL->getIntValue_json(jsonDict, "amount");
     _cardType = DataManager::getInstance()->getGameModeHMM()->findCardTypeById(_idx);
 }
 
@@ -40,6 +42,11 @@ int CardSimpleData::getIdx() const
 int CardSimpleData::getLevel() const
 {
     return _level;
+}
+
+int CardSimpleData::getAmount() const
+{
+    return _amount;
 }
 
 int CardSimpleData::getCost() const

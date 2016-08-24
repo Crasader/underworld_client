@@ -9,15 +9,10 @@
 #ifndef DevelopLayer_h
 #define DevelopLayer_h
 
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
 #include "DevelopCard.h"
-#include "DeckCardOpNode.h"
+#include "CardPreview.h"
 
 USING_NS_CC;
-
-class CardSet;
-class UniversalButton;
 
 class DevelopLayerObserver
 {
@@ -28,7 +23,7 @@ public:
 class DevelopLayer
 : public LayerColor
 , public DevelopCardObserver
-, public DeckCardOpNodeObserver
+, public CardPreviewObserver
 {
 public:
     static DevelopLayer* create();
@@ -44,23 +39,18 @@ protected:
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
     // DevelopCardObserver
-    virtual void onDevelopCardClicked() override;
+    virtual void onDevelopCardClicked(DevelopCard* pSender, bool canUpgrade) override;
     
-    // DeckCardOpNodeObserver
-    virtual void onDeckCardOpNodeClicked() override;
-    virtual void onDeckCardOpNodeClickedButton(DeckCardOpType type, int cardId) override;
-    
-    void createScrollView(Node* parent);
+    // CardPreviewObserver
+    virtual AbstractCard* onCardPreviewCreateCard(int cardId) override;
+    virtual void onCardPreviewClickedOpButton(DeckCardOpType type, int cardId) override;
     
 private:
     DevelopLayerObserver *_observer;
-    Label* _cardsCountLabel;
-    UniversalButton* _sortTypeButton;
-    ui::ScrollView* _scrollView;
-    Node* _unfoundLine;
-    DeckCardOpNode* _opNode;
-    CardSet* _foundCards;
-    CardSet* _unfoundCards;
+    CardPreview* _cardPreview;
+    
+    // Data
+    DeckManager::FeatureType _featureType;
 };
 
 #endif /* DevelopLayer_h */

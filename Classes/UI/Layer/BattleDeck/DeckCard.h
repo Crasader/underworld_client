@@ -9,8 +9,7 @@
 #ifndef DeckCard_h
 #define DeckCard_h
 
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
+#include "AbstractCard.h"
 
 USING_NS_CC;
 
@@ -24,7 +23,7 @@ public:
     virtual void onDeckCardClicked(DeckCard* pSender) = 0;
 };
 
-class DeckCard : public ui::Widget
+class DeckCard : public AbstractCard
 {
 public:
     static constexpr float Width = 82;
@@ -34,7 +33,7 @@ public:
     void registerObserver(DeckCardObserver *observer);
     
     void update(int cardId);
-    int getCardId() const;
+    virtual int getCardId() const override;
     
     void shake();
     void stopShake();

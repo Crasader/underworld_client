@@ -9,8 +9,9 @@
 #ifndef BattleDeckUI_h
 #define BattleDeckUI_h
 
-#include <string>
-#include <functional>
+#include "cocos2d.h"
+
+USING_NS_CC;
 
 enum class DeckCardOpType {
     Upgrade,
@@ -25,6 +26,8 @@ namespace BattleDeckUI
 {
     std::string getResourcePath(const std::string& file);
     UniversalButton* createButton(DeckCardOpType opType, const std::function<void()>& callback);
+    void move(Node* node, const Point& point, float duration, const std::function<void()>& callback);
+    void readdChild(Node* parent, Node* child);
 }
 
 #endif /* BattleDeckUI_h */

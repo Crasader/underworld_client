@@ -28,6 +28,7 @@ public:
     
     int getIdx() const;
     int getLevel() const;
+    int getAmount() const;
     int getCost() const;
     int getQuality() const;
     bool isHero() const;
@@ -38,6 +39,7 @@ public:
 private:
     int _idx;
     int _level;
+    int _amount;
     const UnderWorld::Core::HMMCardType* _cardType;
 };
 

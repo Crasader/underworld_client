@@ -16,12 +16,16 @@
 using namespace std;
 using namespace cocostudio;
 
-const string DeckManager::SortNotification = "SortNotification";
-
 static inline string getDeckKey(int idx)
 { return cocos2d::StringUtils::format("deck_%d", idx); }
 static const string defaultDeckKey("default_deck");
-static const string sortTypeKey("sort_type");
+static inline string getSortTypeKey(DeckManager::FeatureType type)
+{ return cocos2d::StringUtils::format("sort_type_%d", static_cast<int>(type)); }
+
+static const set<DeckManager::FeatureType> featureTypes = {
+    DeckManager::FeatureType::Develop,
+    DeckManager::FeatureType::Deck
+};
 
 static DeckManager* s_pInstance(nullptr);
 DeckManager* DeckManager::getInstance()
@@ -48,17 +52,21 @@ CardSimpleData* createFakeData(int card, int level)
     rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
     document.AddMember("id", card, allocator);
     document.AddMember("level", level, allocator);
+    document.AddMember("amount", 50, allocator);
     return new (nothrow) CardSimpleData(document);
 }
 
 DeckManager::DeckManager()
 :_defaultId(0)
 ,_defaultDeckData(nullptr)
-,_sortType(SortType::Default)
 {
     const int idx = UserDefaultsDataManager::getIntegerForKey(defaultDeckKey.c_str(), 0);
     _defaultId = MAX(MIN(DecksMaxCount - 1, idx), 0);
-    _sortType = static_cast<SortType>(UserDefaultsDataManager::getIntegerForKey(sortTypeKey.c_str(), 0));
+    
+    for (auto ft : featureTypes) {
+        auto st = static_cast<SortType>(UserDefaultsDataManager::getIntegerForKey(getSortTypeKey(ft).c_str(), 0));
+        _sortTypes.insert(make_pair(ft, st));
+    }
     
     static const string fake("21110;21111|22001;22003;22004;22012;22013;22014;22015;22016");
     
@@ -73,14 +81,14 @@ DeckManager::DeckManager()
     const auto& cards = DataManager::getInstance()->getCardDecks();
     for (auto iter = begin(cards); iter != end(cards); ++iter) {
         const int cardId(*iter);
-        _allFoundCards.insert(cardId);
+        _allFoundCards.push_back(cardId);
         _allCards.insert(make_pair(cardId, createFakeData(cardId, 1)));
     }
     
 //    _unfoundCards = {23100, 23101};
     for (auto iter = begin(_unfoundCards); iter != end(_unfoundCards); ++iter) {
         const int cardId(*iter);
-        _allCards.insert(make_pair(cardId, createFakeData(cardId, 1)));
+        _allCards.insert(make_pair(cardId, createFakeData(cardId, 0)));
     }
     
     loadThisDeck();
@@ -103,6 +111,32 @@ void DeckManager::parse(const rapidjson::Value& jsonDict)
     
 }
 
+DeckManager::SortType DeckManager::getSortType(FeatureType type) const
+{
+    if (_sortTypes.find(type) != end(_sortTypes)) {
+        return _sortTypes.at(type);
+    }
+    
+    return SortType::Default;
+}
+
+void DeckManager::setSortType(FeatureType ft, SortType st)
+{
+    bool update(true);
+    if (_sortTypes.find(ft) == end(_sortTypes)) {
+        _sortTypes.insert(make_pair(ft, st));
+    } else if (st != _sortTypes.at(ft)) {
+        _sortTypes.at(ft) = st;
+    } else {
+        update = false;
+    }
+    
+    if (update) {
+        UserDefaultsDataManager::setIntegerForKey(getSortTypeKey(ft).c_str(), static_cast<int>(st));
+        sortAllCards(ft, true);
+    }
+}
+
 int DeckManager::getThisDeckId() const
 {
     return _defaultId;
@@ -114,20 +148,6 @@ void DeckManager::loadDeck(int idx)
         _defaultId = idx;
         UserDefaultsDataManager::setIntegerForKey(defaultDeckKey.c_str(), idx);
         loadThisDeck();
-    }
-}
-
-DeckManager::SortType DeckManager::getSortType() const
-{
-    return _sortType;
-}
-
-void DeckManager::setSortType(SortType type)
-{
-    if (_sortType != type) {
-        _sortType = type;
-        UserDefaultsDataManager::setIntegerForKey(sortTypeKey.c_str(), static_cast<int>(type));
-        sortFoundCards();
     }
 }
 
@@ -162,16 +182,17 @@ const CardSimpleData* DeckManager::getCardData(int card) const
 
 bool DeckManager::isFound(int card) const
 {
-    if (_allFoundCards.find(card) != end(_allFoundCards)) {
+    auto iter(_allCards.find(card));
+    if (iter != end(_allCards) && iter->second->getLevel() > 0) {
         return true;
     }
     
     return false;
 }
 
-const vector<int>& DeckManager::getFoundCards() const
+const vector<int>& DeckManager::getFoundCards(FeatureType type) const
 {
-    return _foundCards;
+    return (FeatureType::Deck == type) ? _foundCards : _allFoundCards;
 }
 
 const vector<int>& DeckManager::getUnfoundCards() const
@@ -181,15 +202,16 @@ const vector<int>& DeckManager::getUnfoundCards() const
 
 void DeckManager::useCard(int used, int replaced, const function<void(int)>& callback)
 {
-    for (auto iter = begin(_foundCards); iter != end(_foundCards); ++iter) {
+    auto& foundCards(_foundCards);
+    for (auto iter = begin(foundCards); iter != end(foundCards); ++iter) {
         if (used == (*iter)) {
-            _foundCards.erase(iter);
+            foundCards.erase(iter);
             break;
         }
     }
     
-    _foundCards.push_back(replaced);
-    sortFoundCards();
+    foundCards.push_back(replaced);
+    sortAllCards(FeatureType::Deck, false);
     
     if (_defaultDeckData) {
         _defaultDeckData->use(used, replaced, callback);
@@ -212,7 +234,7 @@ void DeckManager::findCard(int card)
         }
     }
     
-    _allFoundCards.insert(card);
+    _allFoundCards.push_back(card);
     _foundCards.push_back(card);
 }
 
@@ -232,7 +254,11 @@ void DeckManager::loadThisDeck()
     
     _foundCards.clear();
     
-    unordered_set<int> container(_allFoundCards);
+    unordered_set<int> container;
+    for (auto card : _allFoundCards) {
+        container.insert(card);
+    }
+    
     for (auto card : _defaultDeckData->getCards()) {
         container.erase(card);
     }
@@ -241,7 +267,7 @@ void DeckManager::loadThisDeck()
         _foundCards.push_back(card);
     }
     
-    sortFoundCards();
+    sortAllCards(FeatureType::Deck, false);
 }
 
 void DeckManager::saveDeckData(int idx)
@@ -254,8 +280,12 @@ void DeckManager::saveDeckData(int idx)
     }
 }
 
-void DeckManager::sortFoundCards()
+void DeckManager::sortCards(SortType type, vector<int>& cards) const
 {
+    if (cards.empty()) {
+        return;
+    }
+    
     static const auto defaultSort = [](int c1, int c2) {
         return c1 < c2;
     };
@@ -277,23 +307,30 @@ void DeckManager::sortFoundCards()
         return c1 < c2;
     };
     
-    switch (_sortType) {
+    switch (type) {
         case SortType::Default:
-            sort(_foundCards.begin(), _foundCards.end(), defaultSort);
+            sort(cards.begin(), cards.end(), defaultSort);
             break;
         case SortType::Rarity:
-            sort(_foundCards.begin(), _foundCards.end(), raritySort);
+            sort(cards.begin(), cards.end(), raritySort);
             break;
         case SortType::Elixir:
-            sort(_foundCards.begin(), _foundCards.end(), elixirSort);
+            sort(cards.begin(), cards.end(), elixirSort);
             break;
         case SortType::Dungeon:
-            sort(_foundCards.begin(), _foundCards.end(), dungeonSort);
+            sort(cards.begin(), cards.end(), dungeonSort);
             break;
             
         default:
             break;
     }
-    
-    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(SortNotification);
+}
+
+void DeckManager::sortAllCards(FeatureType type, bool sortUnfound)
+{
+    auto st(getSortType(type));
+    sortCards(st, (FeatureType::Deck == type) ? _foundCards : _allFoundCards);
+    if (sortUnfound) {
+        sortCards(st, _unfoundCards);
+    }
 }

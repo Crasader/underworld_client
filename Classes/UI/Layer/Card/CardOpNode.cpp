@@ -1,12 +1,12 @@
 //
-//  DeckCardOpNode.cpp
+//  CardOpNode.cpp
 //  Underworld_Client
 //
 //  Created by Andy on 16/8/12.
 //  Copyright (c) 2016 Mofish Studio. All rights reserved.
 //
 
-#include "DeckCardOpNode.h"
+#include "CardOpNode.h"
 #include "DeckCard.h"
 #include "CocosUtils.h"
 #include "UniversalButton.h"
@@ -17,11 +17,11 @@ using namespace std;
 static const float edgeX(5);
 static const float edgeTop(12);
 static const float edgeBottom(8);
-Size DeckCardOpNode::_hintMinSize = Size(DeckCard::Width + edgeX * 2, DeckCard::Height + edgeTop + edgeBottom);
+Size CardOpNode::_hintMinSize = Size(DeckCard::Width + edgeX * 2, DeckCard::Height + edgeTop + edgeBottom);
 
-DeckCardOpNode* DeckCardOpNode::create()
+CardOpNode* CardOpNode::create()
 {
-    auto ret = new (nothrow) DeckCardOpNode();
+    auto ret = new (nothrow) CardOpNode();
     if (ret && ret->init()) {
         ret->autorelease();
         return ret;
@@ -31,18 +31,18 @@ DeckCardOpNode* DeckCardOpNode::create()
     return nullptr;
 }
 
-DeckCardOpNode::DeckCardOpNode()
+CardOpNode::CardOpNode()
 :_observer(nullptr)
 ,_icon(nullptr)
 ,_hint(nullptr)
 ,_touchInvalid(false) {}
 
-DeckCardOpNode::~DeckCardOpNode()
+CardOpNode::~CardOpNode()
 {
     removeAllChildren();
 }
 
-bool DeckCardOpNode::init()
+bool CardOpNode::init()
 {
     if (ui::Widget::init())
     {
@@ -62,7 +62,7 @@ bool DeckCardOpNode::init()
         setSwallowTouches(true);
         CocosUtils::fixWidgetTouchEvent(this, _touchInvalid, nullptr, [this](Ref*) {
             if (_observer) {
-                _observer->onDeckCardOpNodeClicked();
+                _observer->onCardOpNodeClicked();
             }
         });
         
@@ -72,17 +72,17 @@ bool DeckCardOpNode::init()
     return false;
 }
 
-void DeckCardOpNode::registerObserver(DeckCardOpNodeObserver *observer)
+void CardOpNode::registerObserver(CardOpNodeObserver *observer)
 {
     _observer = observer;
 }
 
-void DeckCardOpNode::setCard(int cardId)
+void CardOpNode::setCard(int cardId)
 {
     _icon->update(cardId);
 }
 
-void DeckCardOpNode::setTypes(const vector<DeckCardOpType>& types)
+void CardOpNode::setTypes(const vector<DeckCardOpType>& types)
 {
     if (_opTypes != types) {
         _opTypes = types;
@@ -98,7 +98,7 @@ void DeckCardOpNode::setTypes(const vector<DeckCardOpType>& types)
             } else {
                 auto button = BattleDeckUI::createButton(type, [this, type]() {
                     if (_observer) {
-                        _observer->onDeckCardOpNodeClickedButton(type, getCardId());
+                        _observer->onCardOpNodeClickedButton(type, getCardId());
                     }
                 });
                 _hint->addChild(button);
@@ -110,7 +110,7 @@ void DeckCardOpNode::setTypes(const vector<DeckCardOpType>& types)
     }
 }
 
-int DeckCardOpNode::getCardId() const
+int CardOpNode::getCardId() const
 {
     if (_icon) {
         return _icon->getCardId();
@@ -119,7 +119,7 @@ int DeckCardOpNode::getCardId() const
     return 0;
 }
 
-void DeckCardOpNode::resetPositions()
+void CardOpNode::resetPositions()
 {
     static const float space(5);
     float h(0);

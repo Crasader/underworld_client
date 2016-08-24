@@ -30,13 +30,8 @@ DevelopLayer* DevelopLayer::create()
 
 DevelopLayer::DevelopLayer()
 :_observer(nullptr)
-,_cardsCountLabel(nullptr)
-,_sortTypeButton(nullptr)
-,_scrollView(nullptr)
-,_unfoundLine(nullptr)
-,_opNode(nullptr)
-,_foundCards(nullptr)
-,_unfoundCards(nullptr) {}
+,_cardPreview(nullptr)
+,_featureType(DeckManager::FeatureType::Develop) {}
 
 DevelopLayer::~DevelopLayer()
 {
@@ -59,6 +54,9 @@ bool DevelopLayer::init()
         board->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(board);
         
+        if (!_cardPreview && board) {
+            _cardPreview = new (nothrow) CardPreview(_featureType, board->getSubNode(), this);
+        }
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -83,23 +81,30 @@ void DevelopLayer::onTouchEnded(Touch *touch, Event *unused_event)
 }
 
 #pragma mark - DevelopCardObserver
-void DevelopLayer::onDevelopCardClicked()
+void DevelopLayer::onDevelopCardClicked(DevelopCard* pSender, bool canUpgrade)
 {
-    
+    if (_cardPreview) {
+        if (canUpgrade) {
+            _cardPreview->showOpNode(pSender, {DeckCardOpType::Upgrade});
+        } else {
+            _cardPreview->showOpNode(pSender, {DeckCardOpType::Info});
+        }
+    }
 }
 
-#pragma mark - DeckCardOpNodeObserver
-void DevelopLayer::onDeckCardOpNodeClicked()
+#pragma mark - CardPreviewObserver
+AbstractCard* DevelopLayer::onCardPreviewCreateCard(int cardId)
 {
-    
+    auto card = DevelopCard::create(cardId);
+    card->registerObserver(this);
+    return card;
 }
 
-void DevelopLayer::onDeckCardOpNodeClickedButton(DeckCardOpType type, int cardId)
+void DevelopLayer::onCardPreviewClickedOpButton(DeckCardOpType type, int cardId)
 {
-    
-}
-
-#pragma mark - protected
-void DevelopLayer::createScrollView(Node* parent)
-{
+    if (DeckCardOpType::Upgrade == type) {
+        
+    } else if (DeckCardOpType::Info == type) {
+        
+    }
 }
