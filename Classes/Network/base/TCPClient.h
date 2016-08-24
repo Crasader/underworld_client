@@ -179,6 +179,12 @@ public:
         return _rCallback;
     }
     
+    inline void pushBack(TCPResponse *resp)
+    {
+        _responseQueue.pushBack(resp);
+        ++_countForKey;
+    }
+    
     void destroy();
     
     /*
@@ -246,6 +252,8 @@ private:
     Vector<TCPResponse*> _responseQueue;
     std::mutex _responseQueueMutex;
     
+    std::mutex _reconnectMutex;
+    
     //std::string _cookieFilename;
     //std::mutex _cookieFileMutex;
     
@@ -265,6 +273,8 @@ private:
     struct event server_event;
     struct event timer_event;
     struct event_base* base;
+    
+    int _countForKey;
 };
 
 // end group
