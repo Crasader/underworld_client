@@ -55,7 +55,6 @@ BattleDeckLayer::BattleDeckLayer()
 ,_deckEditMask(nullptr)
 ,_usedCard(nullptr)
 ,_usedCardPoint(Point::ZERO)
-,_cardOriginalPoint(Point::ZERO)
 ,_featureType(DeckManager::FeatureType::Deck)
 ,_isEditing(false) {}
 
@@ -135,7 +134,6 @@ void BattleDeckLayer::onDeckCardTouched(DeckCard* touchedCard, ui::Widget::Touch
 {
     if (touchedCard && _isEditing) {
         if (ui::Widget::TouchEventType::BEGAN == type) {
-            _cardOriginalPoint = touchedCard->getPosition();
             touchedCard->setLocalZOrder(zorder_top);
         } else if (ui::Widget::TouchEventType::MOVED == type) {
             const auto& point(touchedCard->getParent()->convertToNodeSpace(touchedCard->getTouchMovePosition()));
@@ -144,19 +142,20 @@ void BattleDeckLayer::onDeckCardTouched(DeckCard* touchedCard, ui::Widget::Touch
             auto replacedCard(getIntersectedCard(touchedCard));
             if (touchedCard == _usedCard) {
                 if (replacedCard) {
-                    useCard(replacedCard, false);
+                    useCard(replacedCard->getTag(), false);
                 } else {
                     useCardCancelled();
                 }
             } else {
+                int idx(touchedCard->getTag());
                 if (replacedCard) {
                     if (replacedCard == _usedCard) {
-                        useCard(touchedCard, true);
+                        useCard(idx, true);
                     } else {
-                        exchangeCard(touchedCard, replacedCard);
+                        exchangeCard(idx, replacedCard->getTag());
                     }
                 } else {
-                    exchangeCardCancelled(touchedCard);
+                    exchangeCardCancelled(idx);
                 }
             }
         }
@@ -167,7 +166,7 @@ void BattleDeckLayer::onDeckCardClicked(DeckCard* pSender)
 {
     if (_isEditing) {
         if (_usedCard && pSender != _usedCard) {
-            useCard(pSender, false);
+            useCard(pSender->getTag(), false);
         }
     } else if (pSender) {
         const int cardId(pSender->getCardId());
@@ -281,12 +280,9 @@ void BattleDeckLayer::createLeftNode(Node* node)
             for (int i = 0; i < column; ++i) {
                 static const float cardSpaceX(20);
                 static const float basePosX((subSize.width - (column * DeckCard::Width + (column - 1) * cardSpaceX)) / 2);
-                auto card = createCard(0);
                 const float x = basePosX + (i + 0.5) * DeckCard::Width + i * cardSpaceX;
                 const float y = line->getPositionY() - (line->getContentSize().height / 2 + spaceLineCard + DeckCard::Height / 2);
-                card->setPosition(Point(x, y));
-                node->addChild(card);
-                _deckCards.push_back(card);
+                node->addChild(initDeckCard(Point(x, y)));
             }
         }
         
@@ -333,12 +329,9 @@ void BattleDeckLayer::createLeftNode(Node* node)
                 for (int j = 0; j < column; ++j) {
                     static const float cardSpaceX(5);
                     static const float basePosX((subSize.width - (column * DeckCard::Width + (column - 1) * cardSpaceX)) / 2);
-                    auto card = createCard(0);
                     const float x = basePosX + (j + 0.5) * DeckCard::Width + j * cardSpaceX;
                     const float y = basePosY - (i + 0.5) * DeckCard::Height - i * cardSpaceY;
-                    card->setPosition(Point(x, y));
-                    node->addChild(card);
-                    _deckCards.push_back(card);
+                    node->addChild(initDeckCard(Point(x, y)));
                 }
             }
         }
@@ -428,8 +421,7 @@ void BattleDeckLayer::beginEdit(int cardId)
     _usedCard = getFoundCard(cardId);
     
     if (_usedCard) {
-        auto parent = _deckCards.front()->getParent();
-        BattleDeckUI::readdChild(parent, _usedCard);
+        BattleDeckUI::readdChild(_deckCards.front()->getParent(), _usedCard);
         _usedCardPoint = _usedCard->getPosition();
         
         auto dm(DeckManager::getInstance());
@@ -474,43 +466,39 @@ DeckCard* BattleDeckLayer::getFoundCard(int cardId) const
     return nullptr;
 }
 
-void BattleDeckLayer::exchangeCard(DeckCard* from, DeckCard* to)
+void BattleDeckLayer::exchangeCard(int idxFrom, int idxTo)
 {
-    if (from && to) {
+    if (isIdxValid(idxFrom) && isIdxValid(idxTo)) {
         auto dm(DeckManager::getInstance());
+        auto from(_deckCards.at(idxFrom));
+        auto to(_deckCards.at(idxTo));
         auto fd(dm->getCardData(from->getCardId()));
         auto td(dm->getCardData(to->getCardId()));
         if (fd && td) {
             if (fd->isHero() == td->isHero()) {
-                BattleDeckUI::move(from, to->getPosition(), moveDuration, nullptr);
-                BattleDeckUI::move(to, _cardOriginalPoint, moveDuration, nullptr);
-                
-                DeckManager::getInstance()->exchangeCard(from->getCardId(), to->getCardId(), [=](int idxFrom, int idxTo) {
-                    const ssize_t cnt(_deckCards.size());
-                    if (cnt > idxFrom && cnt > idxTo) {
-                        _deckCards.at(idxFrom) = to;
-                        _deckCards.at(idxTo) = from;
-                    }
-                });
+                DeckManager::getInstance()->exchangeCard(from->getCardId(), to->getCardId());
+                moveToDeck(from, idxTo);
+                moveToDeck(to, idxFrom);
             } else {
-                exchangeCardCancelled(from);
+                exchangeCardCancelled(idxFrom);
                 MessageBox("英雄与士兵卡牌无法互换", nullptr);
             }
         } else { CC_ASSERT(false); }
     }
 }
 
-void BattleDeckLayer::exchangeCardCancelled(DeckCard* card)
+void BattleDeckLayer::exchangeCardCancelled(int idx)
 {
-    if (card) {
-        BattleDeckUI::move(card, _cardOriginalPoint, moveDuration, nullptr);
+    if (isIdxValid(idx)) {
+        _deckCards.at(idx)->move(_deckPositions.at(idx), nullptr);
     }
 }
 
-void BattleDeckLayer::useCard(DeckCard* replaced, bool fromDeck)
+void BattleDeckLayer::useCard(int idx, bool fromDeck)
 {
     CC_ASSERT(_usedCard);
-    if (_usedCard && replaced && replaced->getParent()) {
+    if (_usedCard && isIdxValid(idx)) {
+        auto replaced(_deckCards.at(idx));
         const auto uid(_usedCard->getCardId());
         const auto rid(replaced->getCardId());
         auto dm(DeckManager::getInstance());
@@ -518,38 +506,25 @@ void BattleDeckLayer::useCard(DeckCard* replaced, bool fromDeck)
         auto rd(dm->getCardData(rid));
         if (ud && rd) {
             if (ud->isHero() == rd->isHero()) {
-                BattleDeckUI::readdChild(replaced->getParent(), _usedCard);
-                
-                Point point(Point::ZERO);
-                if (fromDeck) {
-                    point = _cardOriginalPoint;
-                } else {
-                    point = replaced->getPosition();
-                }
-                BattleDeckUI::move(_usedCard, point, moveDuration, nullptr);
-                
                 if (_cardPreview) {
                     _cardPreview->readdToScrollView(replaced);
                 }
                 
                 endEdit();
                 
-                updateAverageElixir();
-                
+                DeckManager::getInstance()->useCard(uid, rid);
+                moveToDeck(_usedCard, idx);
                 if (_cardPreview) {
                     _cardPreview->removeFoundCard(uid, false);
                     _cardPreview->insertFoundCard(rid, replaced);
+                    // this function will move the replaced card
+                    _cardPreview->sortAndRealign();
                 }
                 
-                DeckManager::getInstance()->useCard(uid, rid, [this](int idx) {
-                    _deckCards.at(idx) = _usedCard;
-                    if (_cardPreview) {
-                        _cardPreview->sortAndRealign();
-                    }
-                });
+                updateAverageElixir();
             } else {
                 if (fromDeck) {
-                    exchangeCardCancelled(replaced);
+                    exchangeCardCancelled(idx);
                 } else {
                     useCardCancelled();
                 }
@@ -563,7 +538,7 @@ void BattleDeckLayer::useCardCancelled()
 {
     const bool isMoving(_usedCard && _usedCardPoint != _usedCard->getPosition());
     if (_usedCard) {
-        BattleDeckUI::move(_usedCard, _usedCardPoint, moveDuration, [=]() {
+        _usedCard->move(_usedCardPoint, [=]() {
             if (_cardPreview) {
                 _cardPreview->readdToScrollView(_usedCard);
             }
@@ -582,6 +557,30 @@ void BattleDeckLayer::useCardCancelled()
 }
 
 #pragma mark - Universal Methods
+bool BattleDeckLayer::isIdxValid(int idx) const
+{
+    return idx >= 0 && idx < _deckPositions.size();
+}
+
+DeckCard* BattleDeckLayer::initDeckCard(const Point& point)
+{
+    auto card = createCard(0);
+    card->setPosition(point);
+    card->setTag(static_cast<int>(_deckCards.size()));
+    _deckCards.push_back(card);
+    _deckPositions.push_back(point);
+    return card;
+}
+
+void BattleDeckLayer::moveToDeck(DeckCard* card, int idx)
+{
+    if (card && isIdxValid(idx)) {
+        card->move(_deckPositions.at(idx), nullptr);
+        card->setTag(idx);
+        _deckCards.at(idx) = card;
+    }
+}
+
 void BattleDeckLayer::shake(const vector<DeckCard*>& nodes) const
 {
     for (auto node : nodes) {
@@ -718,9 +717,7 @@ void BattleDeckLayer::loadDeck(int idx)
 
 void BattleDeckLayer::resetParams()
 {
-    _cardOriginalPoint = Point::ZERO;
     _usedCard = nullptr;
-    _usedCardPoint = Point::ZERO;
 }
 
 #if DECKLAYER_ENABLE_TYPE_FILTER

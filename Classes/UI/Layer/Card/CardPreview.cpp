@@ -397,7 +397,7 @@ void CardPreview::realignCards(const vector<int>& cards, CardSet* cardSet)
             const auto& point(cardSet->getPosition(i));
             auto card(cardSet->getCard(cardId));
             if (card) {
-                BattleDeckUI::move(card, point, 0.3f, [this, card]() {
+                card->move(point, [this, card]() {
                     setOpNodePosition(card);
                 });
             } else {

@@ -84,12 +84,15 @@ protected:
     void beginEdit(int cardId);
     void endEdit();
     DeckCard* getFoundCard(int cardId) const;
-    void exchangeCard(DeckCard* from, DeckCard* to);
-    void exchangeCardCancelled(DeckCard* card);
-    void useCard(DeckCard* replaced, bool fromDeck);
+    void exchangeCard(int idxFrom, int idxTo);
+    void exchangeCardCancelled(int idx);
+    void useCard(int idx, bool fromDeck);
     void useCardCancelled();
     
     // Universal Methods
+    bool isIdxValid(int idx) const;
+    DeckCard* initDeckCard(const Point& point);
+    void moveToDeck(DeckCard* card, int idx);
     void shake(const std::vector<DeckCard*>& nodes) const;
     void stopShake();
     DeckCard* getIntersectedCard(const DeckCard* touchedCard) const;
@@ -116,9 +119,9 @@ private:
     DeckEditMask* _deckEditMask;
     DeckCard* _usedCard;
     Point _usedCardPoint;
-    Point _cardOriginalPoint;
     
     std::vector<DeckCard*> _deckCards;
+    std::vector<Point> _deckPositions;
     
     // Data
     DeckManager::FeatureType _featureType;

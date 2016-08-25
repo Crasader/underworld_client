@@ -26,7 +26,6 @@ namespace BattleDeckUI
 {
     std::string getResourcePath(const std::string& file);
     UniversalButton* createButton(DeckCardOpType opType, const std::function<void()>& callback);
-    void move(Node* node, const Point& point, float duration, const std::function<void()>& callback);
     void readdChild(Node* parent, Node* child);
 }
 

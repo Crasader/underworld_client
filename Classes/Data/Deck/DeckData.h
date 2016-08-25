@@ -22,8 +22,8 @@ public:
     virtual ~DeckData();
     
     const std::vector<int>& getCards() const;
-    void use(int used, int replaced, const std::function<void(int)>& callback);
-    void exchange(int from, int to, const std::function<void(int, int)>& callback);
+    void use(int used, int replaced);
+    void exchange(int from, int to);
     
     void serialize(std::string& output);
     

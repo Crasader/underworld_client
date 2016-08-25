@@ -36,20 +36,17 @@ const vector<int>& DeckData::getCards() const
     return _cards;
 }
 
-void DeckData::use(int used, int replaced, const function<void(int)>& callback)
+void DeckData::use(int used, int replaced)
 {
     for (int i = 0; i < _cards.size(); ++i) {
         if (replaced == _cards.at(i)) {
             _cards.at(i) = used;
-            if (callback) {
-                callback(i);
-            }
             break;
         }
     }
 }
 
-void DeckData::exchange(int from, int to, const function<void(int, int)>& callback)
+void DeckData::exchange(int from, int to)
 {
     int idxFrom(-1);
     int idxTo(-1);
@@ -68,9 +65,6 @@ void DeckData::exchange(int from, int to, const function<void(int, int)>& callba
     if (idxFrom >= 0 && idxTo >= 0) {
         _cards.at(idxFrom) = to;
         _cards.at(idxTo) = from;
-        if (callback) {
-            callback(idxFrom, idxTo);
-        }
     }
 }
 

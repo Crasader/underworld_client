@@ -200,7 +200,7 @@ const vector<int>& DeckManager::getUnfoundCards() const
     return _unfoundCards;
 }
 
-void DeckManager::useCard(int used, int replaced, const function<void(int)>& callback)
+void DeckManager::useCard(int used, int replaced)
 {
     auto& foundCards(_foundCards);
     for (auto iter = begin(foundCards); iter != end(foundCards); ++iter) {
@@ -214,14 +214,14 @@ void DeckManager::useCard(int used, int replaced, const function<void(int)>& cal
     sortAllCards(FeatureType::Deck, false);
     
     if (_defaultDeckData) {
-        _defaultDeckData->use(used, replaced, callback);
+        _defaultDeckData->use(used, replaced);
     }
 }
 
-void DeckManager::exchangeCard(int from, int to, const function<void(int, int)>& callback)
+void DeckManager::exchangeCard(int from, int to)
 {
     if (_defaultDeckData) {
-        _defaultDeckData->exchange(from, to, callback);
+        _defaultDeckData->exchange(from, to);
     }
 }
 

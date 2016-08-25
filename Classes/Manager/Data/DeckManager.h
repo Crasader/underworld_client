@@ -56,8 +56,8 @@ public:
     const std::vector<int>& getFoundCards(FeatureType type) const;
     const std::vector<int>& getUnfoundCards() const;
     
-    void useCard(int used, int replaced, const std::function<void(int)>& callback);
-    void exchangeCard(int from, int to, const std::function<void(int, int)>& callback);
+    void useCard(int used, int replaced);
+    void exchangeCard(int from, int to);
     void findCard(int card);
     
 private:

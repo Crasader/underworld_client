@@ -56,32 +56,6 @@ UniversalButton* BattleDeckUI::createButton(DeckCardOpType opType, const functio
     return button;
 }
 
-void BattleDeckUI::move(Node* node, const Point& point, float duration, const function<void()>& callback)
-{
-    static const int zorder_top(1);
-    static const int zorder_bottom(0);
-    static const int actionTag(818);
-    if (node) {
-        if (node->getPosition() != point) {
-            if (node->getActionByTag(actionTag)) {
-                node->stopActionByTag(actionTag);
-            }
-            
-            node->setLocalZOrder(zorder_top);
-            auto action = Sequence::create(MoveTo::create(duration, point), CallFunc::create([=]() {
-                node->setLocalZOrder(zorder_bottom);
-                if (callback) {
-                    callback();
-                }
-            }), nullptr);
-            action->setTag(actionTag);
-            node->runAction(action);
-        } else if (callback) {
-            callback();
-        }
-    }
-}
-
 void BattleDeckUI::readdChild(Node* parent, Node* child)
 {
     if (child && parent) {

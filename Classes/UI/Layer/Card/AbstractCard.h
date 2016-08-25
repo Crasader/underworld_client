@@ -17,6 +17,7 @@ class AbstractCard : public cocos2d::ui::Widget
 public:
     virtual ~AbstractCard() = 0;
     virtual int getCardId() const;
+    void move(const cocos2d::Point& point, const std::function<void()>& callback);
     
 protected:
     AbstractCard();
