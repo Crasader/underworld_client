@@ -49,6 +49,7 @@
 #include <sys/types.h>
 #include <sys/un.h>
 #include <unistd.h>
+#include "CoreUtils.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 typedef int int32_t;
@@ -95,6 +96,9 @@ static int processDeleteTask(TCPClient* client,  TCPRequest* request, write_call
 #endif
 
 using namespace std;
+
+static const string dispatchResponseScheduleKey("dispatchResponseScheduleKey");
+static const string dispatchReconnectScheduleKey("dispatchReconnectScheduleKey");
 
 static int _set_non_block(int fd)
 {
@@ -486,7 +490,7 @@ void TCPClient::setSSLVerification(const std::string& caFile)
 }
 #endif
 
-TCPClient::TCPClient() : _timeoutForConnect(30), _timeoutForRead(60), _isInited(false), _threadCount(0), _requestSentinel(new TCPRequest()), _fd(-1), _url(""), _port(-1), _timerInterval(5), base(0)
+TCPClient::TCPClient() : _timeoutForConnect(30), _timeoutForRead(60), _isInited(false), _threadCount(0), _requestSentinel(new TCPRequest()), _fd(-1), _url(""), _port(-1), _timerInterval(5), base(0), _countForKey(0)
 //, _cookie(nullptr)
 {
     CCLOG("In the constructor of TCPClient!");
@@ -523,7 +527,7 @@ TCPClient::~TCPClient()
     if (_pipeWrite != -1)
         _close(_pipeWrite);
     CC_SAFE_DELETE(_requestSentinel);
-    decreaseThreadCountAndMayDeleteThis();
+//    decreaseThreadCountAndMayDeleteThis();
 }
 
 void TCPClient::destroy()
@@ -704,14 +708,15 @@ void TCPClient::processResponse(char *responseMessage)
         }
         // add response packet into queue
         _responseQueueMutex.lock();
-        _responseQueue.pushBack(response);
+        int count = pushBack(response);
         _responseQueueMutex.unlock();
 
         _schedulerMutex.lock();
         if (nullptr != _scheduler) {
-            _scheduler->performFunctionInCocosThread(CC_CALLBACK_0(TCPClient::dispatchResponseCallbacks, this));
+            _scheduler->schedule(CC_CALLBACK_0(TCPClient::dispatchResponseCallbacks, this), this, 0.0f, 0, 0.0f, false, dispatchResponseScheduleKey + UnderWorld::Core::UnderWorldCoreUtils::to_string(count));
         }
         _schedulerMutex.unlock();
+        
 
     } while (0);
 }
@@ -772,14 +777,15 @@ void TCPClient::processRequest(char *responseMessage)
             response->setErrorBuffer(responseMessage);
             // add response packet into queue
             _responseQueueMutex.lock();
-            _responseQueue.pushBack(response);
+            int count = pushBack(response);
             _responseQueueMutex.unlock();
 
             _schedulerMutex.lock();
             if (nullptr != _scheduler) {
-                _scheduler->performFunctionInCocosThread(CC_CALLBACK_0(TCPClient::dispatchResponseCallbacks, this));
+                _scheduler->schedule(CC_CALLBACK_0(TCPClient::dispatchResponseCallbacks, this), this, 0.0f, 0, 0.0f, false, dispatchResponseScheduleKey + UnderWorld::Core::UnderWorldCoreUtils::to_string(count));
             }
             _schedulerMutex.unlock();
+            
         }
         request->release();
     }
@@ -860,6 +866,7 @@ int TCPClient::getTimeoutForRead()
 
 int TCPClient::reconnect2Server()
 {
+    std::lock_guard<std::mutex> lock(_reconnectMutex);
 
     if (_fd != -1) {
         event_del(&server_event);
@@ -887,7 +894,7 @@ int TCPClient::reconnect2Server()
     
     _schedulerMutex.lock();
     if (nullptr != _scheduler) {
-        _scheduler->performFunctionInCocosThread(CC_CALLBACK_0(TCPClient::dispatchReconnectCallbacks, this));
+        _scheduler->schedule(CC_CALLBACK_0(TCPClient::dispatchReconnectCallbacks, this), this, 0.0f, 0, 0.0f, false, dispatchReconnectScheduleKey);
     }
     _schedulerMutex.unlock();
     
