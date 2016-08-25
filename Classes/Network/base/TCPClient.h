@@ -151,6 +151,7 @@ public:
     
     inline void setResponseCallback(const ccTCPRequestCallback& callback)
     {
+        std::lock_guard<std::mutex> lock(_responseCallbackMutex);
         _pCallback = callback;
     }
     
@@ -161,6 +162,7 @@ public:
      *                     */
     inline const ccTCPRequestCallback& getCallback()
     {
+        std::lock_guard<std::mutex> lock(_responseCallbackMutex);
         return _pCallback;
     }
     
@@ -177,6 +179,13 @@ public:
     inline const ccTCPReconnectCallback& getReconnectCallback()
     {
         return _rCallback;
+    }
+    
+    inline int pushBack(TCPResponse *resp)
+    {
+        _responseQueue.pushBack(resp);
+        ++_countForKey;
+        return _countForKey;
     }
     
     void destroy();
@@ -246,6 +255,9 @@ private:
     Vector<TCPResponse*> _responseQueue;
     std::mutex _responseQueueMutex;
     
+    std::mutex _reconnectMutex;
+    std::mutex _responseCallbackMutex;
+    
     //std::string _cookieFilename;
     //std::mutex _cookieFileMutex;
     
@@ -265,6 +277,8 @@ private:
     struct event server_event;
     struct event timer_event;
     struct event_base* base;
+    
+    int _countForKey;
 };
 
 // end group

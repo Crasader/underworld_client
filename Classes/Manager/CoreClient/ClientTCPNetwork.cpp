@@ -478,43 +478,50 @@ void ClientTCPNetwork::send(NetworkMessage* msg) {
 }
 
 void ClientTCPNetwork::onReceiveTCPResponse(TCPClient* client, TCPResponse* response) {
-    std::vector<NetworkMessage*> msgs;
-    parseResponse2Msg(response, msgs);
-    for (int i = 0; i < msgs.size(); ++i) {
-        if (M_INSTANCE_OF(msgs[i], NetworkMessageLaunch2C*) && _status == ClientStatus::Launching) {
-            if (_launchListener) {
-                _launchListener->onLaunched(*(dynamic_cast<NetworkMessageLaunch2C*>(msgs[i])));
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+        if(_tcpClient != client) return;
+        
+        std::vector<NetworkMessage*> msgs;
+        parseResponse2Msg(response, msgs);
+        for (int i = 0; i < msgs.size(); ++i) {
+            if (M_INSTANCE_OF(msgs[i], NetworkMessageLaunch2C*) && _status == ClientStatus::Launching) {
+                if (_launchListener) {
+                    _launchListener->onLaunched(*(dynamic_cast<NetworkMessageLaunch2C*>(msgs[i])));
+                }
+                _status = ClientStatus::Fighting;
+            } else if (M_INSTANCE_OF(msgs[i], NetworkMessageSync*) && _status == ClientStatus::Fighting) {
+                _incomeNetworkMessages.push_back(msgs[i]->clone());
             }
-            _status = ClientStatus::Fighting;
-        } else if (M_INSTANCE_OF(msgs[i], NetworkMessageSync*) && _status == ClientStatus::Fighting) {
-            _incomeNetworkMessages.push_back(msgs[i]->clone());
         }
-    }
-    
-    for (int i = 0; i < msgs.size(); ++i) {
-        delete msgs[i];
-    }
+        
+        for (int i = 0; i < msgs.size(); ++i) {
+            delete msgs[i];
+        }
+    });
 }
 
 
 void ClientTCPNetwork::onReconncected(TCPClient* client) {
-    CCLOG("[server][%s]", __FUNCTION__);
-    //TODO when game finish, return
-    if (_status == ClientStatus::Finished) {
-        return;
-    }
-    std::string reqContent;
-    if (_status == ClientStatus::Idle) {
-        //TODO need to resend battle user info
-    } else {
-        reqContent = parseReconnect2SMsg(_uid, _battleid);
-    }
-    TCPRequest* ret = nullptr;
-    if (!reqContent.empty()) {
-        ret = new TCPRequest();
-        ret->setRequestData(reqContent.c_str(), reqContent.size());
-        _tcpClient->send(ret);
-    }
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+        if(_tcpClient != client) return;
+        CCLOG("[server][%s]", __FUNCTION__);
+        //TODO when game finish, return
+        if (_status == ClientStatus::Finished) {
+            return;
+        }
+        std::string reqContent;
+        if (_status == ClientStatus::Idle) {
+            //TODO need to resend battle user info
+        } else {
+            reqContent = parseReconnect2SMsg(_uid, _battleid);
+        }
+        TCPRequest* ret = nullptr;
+        if (!reqContent.empty()) {
+            ret = new TCPRequest();
+            ret->setRequestData(reqContent.c_str(), reqContent.size());
+            _tcpClient->send(ret);
+        }
+    });
 }
 
 TCPRequest* ClientTCPNetwork::parseMsg2Request(
