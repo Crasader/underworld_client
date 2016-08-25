@@ -14,6 +14,7 @@
 #include "Gui.h"
 #include "GameConstants.h"
 #include "CocosGlobal.h"
+#include "World.h"
 
 class BattleSmallResourceNode;
 class CardConfigData;
@@ -27,7 +28,7 @@ class HMMCard;
 class HMMCardType;
 class HMMDeckRender;
     
-class HMMGui : public Gui {
+class HMMGui : public Gui, public WorldObserver {
 public:
     // zorders
     static const int COVER_UI_ZORDER;
@@ -46,7 +47,9 @@ private:
     
     /** instance */
     const Unit* _thisCore;
+    creatureid_t _thisCoreId;
     const Unit* _enemyCore;
+    creatureid_t _enemyCoreId;
     bool _gameOver;
     
     /** cocos */
@@ -70,6 +73,10 @@ public:
     /** override Gui */
     virtual void init(const Game* game, Commander* commander, WorldRender* worldRender) override;
     virtual void render(const Game* game) override;
+    
+    /** override WorldObserver */
+    virtual void onNotifyWorldEvents(const std::vector<World::EventLog>& events) override;
+    virtual void onNotifyWorldReleased() override;
     
     /* getters */
     cocos2d::Node* getGuiView() override        {return _guiView;}

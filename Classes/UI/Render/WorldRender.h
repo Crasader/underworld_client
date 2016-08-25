@@ -16,6 +16,7 @@
 
 #include "World.h"
 #include "Coordinate.h"
+#include "Geometry.h"
 
 class MapParticleConfigData;
 
@@ -26,8 +27,7 @@ class UWRender;
 class WorldObject;
 class AbstractWorldObjectRender;
 class SpellPattern;
-class HMMDeck;
-class HMMCard;
+class HMMCardType;
     
 // ===============================
 // 	class WorldRender
@@ -52,7 +52,7 @@ public:
     static const std::string TILEDMAP_LAYER_FOREGROUND_NAME;
     static const std::string TILEDMAP_LAYER_LOGIC_NAME;
     
-    static const int RENDER_LAYER_AIR_HEIGHT_IN_MAP_SIZE = 200;
+    static const int RENDER_LAYER_AIR_HEIGHT_IN_MAP_SIZE = 65;
     static const int CAMERA_ANGEL_DEGREES = 45;
     static const int EFFECT_RENDER_DELAY_THRESHOLD_IN_SECOND = 1;
 
@@ -68,6 +68,8 @@ private:
     float _pixelPerMapsizeY;
     int _cameraAngelDegrees;
     float _cameraAngelRadians;
+    int _worldHeight;
+    int _worldWidth;
     
     /** status */
     std::vector<World::EventLog> _events;
@@ -93,6 +95,7 @@ public:
     
     /** override WorldObserver */
     virtual void onNotifyWorldEvents(const std::vector<World::EventLog>& events) override;
+    virtual void onNotifyWorldReleased() override;
     
     /** interface */
     virtual void render(const World* world);
@@ -106,7 +109,8 @@ public:
     Coordinate32 cocosPoint2WorldCoordinate(const cocos2d::Vec2& pos);
     cocos2d::Node* addEffect(const std::string& renderKey, bool loop,
         const Coordinate32& pos);
-    void showHMMCardRegionTips(const HMMDeck* deck, const HMMCard* card);
+    void showHMMCardRegionTips(const HMMCardType* cardType,
+        const Rect32& summonRegion, const Rect32& towerRegion);
     void hideHMMCardRegionTips();
     
     

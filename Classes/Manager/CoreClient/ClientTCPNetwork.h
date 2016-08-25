@@ -34,7 +34,6 @@ public:
 
 private:
     
-    
     enum ClientStatus {
         Idle = 0,
         Launching = 1,

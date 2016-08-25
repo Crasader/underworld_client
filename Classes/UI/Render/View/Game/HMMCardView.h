@@ -50,6 +50,9 @@ public:
     void setSelected(bool selected);
     void setColdDownProgress(int progress);
     
+    /** getters */
+    const HMMCardType* getCardType() const        {return _cardType;}
+    
 protected:
     HMMCardView();
     

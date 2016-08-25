@@ -10,7 +10,6 @@
 
 #include "HMMGui.h"
 #include "Game.h"
-#include "World.h"
 #include "TechTree.h"
 #include "GameModeHMM.h"
 #include "CocosUtils.h"
@@ -65,6 +64,7 @@ HMMGui::HMMGui()
     
 HMMGui::~HMMGui() {
     CC_SAFE_RELEASE(_guiView);
+    if (_game) _game->getWorld()->removeWorldObserver(this);
 }
 
 void HMMGui::init(const Game *game, Commander *commander, WorldRender *worldRender) {
@@ -83,16 +83,19 @@ void HMMGui::init(const Game *game, Commander *commander, WorldRender *worldRend
     _game = game;
     _commander = commander;
     _worldRender = worldRender;
+    _game->getWorld()->addWorldObserver(this);
     
     /**3. init instance */
     _thisCore = nullptr;
     _enemyCore = nullptr;
     if (game->getWorld()->getFaction(_thisFactionIndex)) {
         _thisCore = game->getWorld()->getFaction(_thisFactionIndex)->findFirstUnitByClass(kUnitClass_Core);
+        _thisCoreId = _thisCore ? _thisCore->getId() : World::INVALID_ID;
     }
     if (_enemyFactionIndex != INVALID_FACTION_INDEX
         && game->getWorld()->getFaction(_enemyFactionIndex)) {
         _enemyCore = game->getWorld()->getFaction(_enemyFactionIndex)->findFirstUnitByClass(kUnitClass_Core);
+        _enemyCoreId = _enemyCore ? _enemyCore->getId() : World::INVALID_ID;
     }
     _gameOver = false;
     
@@ -201,6 +204,26 @@ void HMMGui::render(const Game *game) {
         _gameOver = true;
     }
 }
+    
+void HMMGui::onNotifyWorldEvents(const std::vector<World::EventLog>& events) {
+    for (int i = 0; i < events.size(); ++i) {
+        if (events[i]._type == World::EventLogType::ObjectEliminate) {
+            if (_thisCore && events[i]._id == _thisCoreId) {
+                _thisCore = nullptr;
+                _thisCoreId = World::INVALID_ID;
+            } else if (_enemyCore && events[i]._id == _enemyCoreId) {
+                _enemyCore = nullptr;
+                _enemyCoreId = World::INVALID_ID;
+            }
+        }
+    }
+}
+    
+void HMMGui::onNotifyWorldReleased() {
+    _game = nullptr;
+    if (_deckRender) _deckRender->markObjectReleased();
+}
+    
     
 void HMMGui::initFactionInfo(const Faction *faction) {
     static const float background_margin_top = 8.f;

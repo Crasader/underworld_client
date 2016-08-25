@@ -69,6 +69,10 @@ bool HMMDeckRender::init(const HMMDeck* deck, Commander* commander,
         _cardRenders.back()->init(deck->getHandCard(i));
     }
     
+    /**2.1 data */
+    _summonRegion = deck->getSummonRegion();
+    _towerRegion = deck->getTowerRegion();
+    
     /**3. init cocos */
     // 3a. clean up
     if (!_cardRegion) {
@@ -218,7 +222,12 @@ void HMMDeckRender::updateBattleResource(microres_t amount, microres_t max) {
     if (_resourceProgress2) {
         _resourceProgress2->setPercentage(resRemind * 100 / GameConstants::MICRORES_PER_RES);
     }
+}
     
+void HMMDeckRender::markObjectReleased() {
+    _commander = nullptr;
+    _deck = nullptr;
+    _game = nullptr;
 }
 
 bool HMMDeckRender::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
@@ -315,11 +324,10 @@ void HMMDeckRender::selectCard(int index) {
     if (_selectedCardIndex == CARD_INDEX_INVALID) {
         _worldRender->hideHMMCardRegionTips();
     } else {
-        if (!_deck) return;
-        const HMMCard* card = _deck->getHandCard(index);
-        if (!card) return;
-        
-        _worldRender->showHMMCardRegionTips(_deck, card);
+        _worldRender->showHMMCardRegionTips(
+            _cardViews[_selectedCardIndex]->getCardType(),
+            _summonRegion,
+            _towerRegion);
     }
 }
 

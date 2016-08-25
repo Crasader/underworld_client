@@ -48,6 +48,8 @@ WorldRender::WorldRender()
 , _pixelPerMapsizeY(0.f)
 , _cameraAngelDegrees(0)
 , _cameraAngelRadians(0.f)
+, _worldHeight(0)
+, _worldWidth(0)
 , _worldLayer(nullptr)
 , _worldContainer(nullptr)
 , _tiledMap(nullptr)
@@ -99,16 +101,24 @@ void WorldRender::onNotifyWorldEvents(const std::vector<World::EventLog>& events
     }
 }
     
+void WorldRender::onNotifyWorldReleased() {
+    _world = nullptr;
+    deleteAllWorldObjectRender();
+}
+    
 // ===================== interface ========================
     
 void WorldRender::render(const World *world) {
-    //handle concerned event log
-    handleEvents();
-    
-    //render all objects
-    std::unordered_map<creatureid_t, AbstractWorldObjectRender*> clone = _objectRenders;
-    for (auto iter = clone.begin(); iter != clone.end(); ++iter) {
-        iter->second->render();
+    // if world is not released
+    if (_world) {
+        //handle concerned event log
+        handleEvents();
+        
+        //render all objects
+        std::unordered_map<creatureid_t, AbstractWorldObjectRender*> clone = _objectRenders;
+        for (auto iter = clone.begin(); iter != clone.end(); ++iter) {
+            iter->second->render();
+        }
     }
     
     //recycle dead object renders
@@ -150,21 +160,22 @@ cocos2d::Vec2 WorldRender::worldCoordinate2CocosPoint(const Coordinate32& pos,
 int WorldRender::worldCoordinate2Zorder(const Coordinate32 &pos,
     RenderLayer renderLayer,
     int32_t height) {
-    return (_world->getMap()->getMapElementHeight() * (int)renderLayer) +
-        (_world->getMap()->getMapElementHeight() - pos.y);
+    return (_worldHeight * (int)renderLayer) +
+        (_worldHeight - pos.y);
 }
     
 Coordinate32 WorldRender::cocosPoint2WorldCoordinate(const cocos2d::Vec2& pos) {
     return Coordinate32(pos.x / _pixelPerMapsizeX, pos.y / _pixelPerMapsizeY);
 }
 
-void WorldRender::showHMMCardRegionTips(const HMMDeck* deck, const HMMCard* card) {
-    if (!deck || !card) return;
+void WorldRender::showHMMCardRegionTips(const HMMCardType* cardType,
+    const Rect32& summonRegion, const Rect32& towerRegion) {
+    if (!cardType) return;
     
     hideHMMCardRegionTips();
-    if (card->getCardType()->getCardClass() == kHMMCardClass_Summon
-        || card->getCardType()->getCardClass() == kHMMCardClass_Tower) {
-        const Rect32& region = card->getCardType()->getCardClass() == kHMMCardClass_Summon ? deck->getSummonRegion() : deck->getTowerRegion();
+    if (cardType->getCardClass() == kHMMCardClass_Summon
+        || cardType->getCardClass() == kHMMCardClass_Tower) {
+        const Rect32& region = cardType->getCardClass() == kHMMCardClass_Summon ? summonRegion : towerRegion;
         static string file("GameImages/test/ui_hongse.png");
         static const Rect rect(0, 0, 326, 326);
         static const Rect capInsets(160, 160, 6, 6);
@@ -333,6 +344,8 @@ bool WorldRender::initWorldEnvironment() {
     _pixelPerMapsizeY = getTile2PixelScale().height / Map::TILE_2_ELEMENT_SCALE;
     _cameraAngelDegrees = CAMERA_ANGEL_DEGREES;
     _cameraAngelRadians = _cameraAngelDegrees * M_PI / 180;
+    _worldHeight = _world->getMap()->getMapElementHeight();
+    _worldWidth = _world->getMap()->getMapElementWidth();
     
     return true;
 }

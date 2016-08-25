@@ -12,6 +12,7 @@
 #include "cocos2d.h"
 
 #include "GameConstants.h"
+#include "Geometry.h"
 
 namespace UnderWorld{ namespace Core{
     
@@ -38,6 +39,10 @@ public:
 private:
     /** instance */
     std::vector<HMMCardRender*> _cardRenders;
+    
+    /** data */
+    Rect32 _summonRegion;
+    Rect32 _towerRegion;
     
     /** cocos */
     cocos2d::Node* _background;
@@ -79,6 +84,7 @@ public:
     /** upate */
     void render(const HMMDeck* deck, const Game* game);
     void updateBattleResource(microres_t amount, microres_t max);
+    void markObjectReleased();
     
     /** touch event */
     bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) override;
