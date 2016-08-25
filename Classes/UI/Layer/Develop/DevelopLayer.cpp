@@ -49,13 +49,13 @@ bool DevelopLayer::init()
 {
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR)) {
         const auto& winSize(Director::getInstance()->getWinSize());
-        auto board = UniversalBoard::create();
+        auto board = UniversalBoard::create(1);
         board->setTitle(LocalHelper::getString("ui_develop_title"));
         board->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(board);
         
         if (!_cardPreview && board) {
-            _cardPreview = new (nothrow) CardPreview(_featureType, board->getSubNode(), this);
+            _cardPreview = new (nothrow) CardPreview(_featureType, board->getSubNode(0), this);
         }
         
         auto eventListener = EventListenerTouchOneByOne::create();
@@ -105,6 +105,25 @@ void DevelopLayer::onCardPreviewClickedOpButton(DeckCardOpType type, int cardId)
     if (DeckCardOpType::Upgrade == type) {
         
     } else if (DeckCardOpType::Info == type) {
-        
+        auto layer = CardInfoLayer::create(cardId);
+        layer->registerObserver(this);
+        addChild(layer);
     }
+}
+
+#pragma mark - CardInfoLayerObserver
+void DevelopLayer::onCardInfoLayerReturn(Node* pSender)
+{
+    if (pSender) {
+        pSender->removeFromParent();
+    }
+}
+
+void DevelopLayer::onCardInfoLayerExit(Node* pSender)
+{
+    if (pSender) {
+        pSender->removeFromParent();
+    }
+    
+    removeFromParent();
 }

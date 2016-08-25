@@ -13,22 +13,14 @@
 #include "BattleDeckUI.h"
 #include "DeckData.h"
 #include "CardSimpleData.h"
+#include "UniversalBoard.h"
 #include "TabButton.h"
 #include "UniversalButton.h"
 
 using namespace std;
 
 static const int zorder_top(1);
-static const float moveDuration(0.2f);
-
-static const Vec2 primaryEdge(15, 15);
 static const Vec2 secondaryEdge(5, 5);
-
-static const float leftWidth(366);
-static const float rightWidth(612);
-static const float nodeHeight(496);
-
-static const Size leftSubNodeSize(leftWidth - secondaryEdge.x * 2, 60);
 
 #if DECKLAYER_ENABLE_TYPE_FILTER
 static const vector<DeckTabType> cardTabs = {
@@ -83,25 +75,18 @@ bool BattleDeckLayer::init()
 {
     if (LayerColor::initWithColor(LAYER_MASK_COLOR)) {
         const auto& winSize(Director::getInstance()->getWinSize());
-        auto bg = Sprite::create(BattleDeckUI::getResourcePath("ui_background_8.png"));
-        bg->setPosition(Point(winSize.width / 2, winSize.height / 2));
-        addChild(bg);
-        _background = bg;
-        
-        CocosUtils::createRedExitButton(bg, [this]() {
+        auto board = UniversalBoard::create(2);
+        board->setTitle(LocalHelper::getString("ui_deck_battleDeck"));
+        board->setExitCallback([this]() {
             DeckManager::getInstance()->saveThisDeckData();
             removeFromParent();
         });
+        board->setPosition(Point(winSize.width / 2, winSize.height / 2));
+        addChild(board);
+        _background = board;
         
-        const auto& size(bg->getContentSize());
-        static const float titleEdgeY(32);
-        auto title = CocosUtils::createLabel(LocalHelper::getString("ui_deck_battleDeck"), TITLE_FONT_SIZE);
-        title->setAnchorPoint(Point::ANCHOR_MIDDLE);
-        title->setPosition(Point(size.width / 2, size.height - titleEdgeY));
-        bg->addChild(title);
-        
-        createLeftNode();
-        createRightNode();
+        createLeftNode(board->getSubNode(0));
+        createRightNode(board->getSubNode(1));
         
         // deck
         const int deckId(DeckManager::getInstance()->getThisDeckId());
@@ -222,16 +207,31 @@ void BattleDeckLayer::onCardPreviewClickedOpButton(DeckCardOpType type, int card
     }
 }
 
-#pragma mark - UI
-void BattleDeckLayer::createLeftNode()
+#pragma mark - CardInfoLayerObserver
+void BattleDeckLayer::onCardInfoLayerReturn(Node* pSender)
 {
-    if (_background) {
-        static const Size subSize(leftWidth, nodeHeight);
-        auto node = CocosUtils::createSubBackground(subSize);
-        node->setPosition(primaryEdge.x + subSize.width / 2, primaryEdge.y + subSize.height / 2);
-        _background->addChild(node, zorder_top);
+    if (pSender) {
+        pSender->removeFromParent();
+    }
+}
+
+void BattleDeckLayer::onCardInfoLayerExit(Node* pSender)
+{
+    if (pSender) {
+        pSender->removeFromParent();
+    }
+    
+    removeFromParent();
+}
+
+#pragma mark - UI
+void BattleDeckLayer::createLeftNode(Node* node)
+{
+    if (_background && node) {
+        node->setLocalZOrder(zorder_top);
         
-        static const Size& topBarSize(leftSubNodeSize);
+        const auto& subSize(node->getContentSize());
+        static const Size topBarSize(subSize.width - secondaryEdge.x * 2, 60);
         
         // top
         {
@@ -345,18 +345,10 @@ void BattleDeckLayer::createLeftNode()
     }
 }
 
-void BattleDeckLayer::createRightNode()
+void BattleDeckLayer::createRightNode(Node* node)
 {
-    if (_background) {
-        const auto& size(_background->getContentSize());
-        static const Size subSize(rightWidth, nodeHeight);
-        auto node = CocosUtils::createSubBackground(subSize);
-        node->setPosition(size.width - (primaryEdge.x + subSize.width / 2), primaryEdge.y + subSize.height / 2);
-        _background->addChild(node);
-        
-        if (!_cardPreview) {
-            _cardPreview = new (nothrow) CardPreview(_featureType, node, this);
-        }
+    if (_background && node && !_cardPreview) {
+        _cardPreview = new (nothrow) CardPreview(_featureType, node, this);
     }
 }
 
@@ -409,7 +401,9 @@ void BattleDeckLayer::updateAverageElixir()
 #pragma mark - Info
 void BattleDeckLayer::showInfo(int cardId)
 {
-    
+    auto layer = CardInfoLayer::create(cardId);
+    layer->registerObserver(this);
+    addChild(layer);
 }
 
 #pragma mark - Move cards
@@ -419,15 +413,15 @@ void BattleDeckLayer::beginEdit(int cardId)
     _isEditing = true;
     
     // create mask
-    if (!_deckEditMask) {
-        const auto& size(_background->getContentSize());
-        const Size subSize(rightWidth, nodeHeight);
-        const Point point(size.width - (primaryEdge.x + subSize.width), primaryEdge.y);
-        
-        _deckEditMask = DeckEditMask::create(subSize);
-        _deckEditMask->registerObserver(this);
-        _deckEditMask->setPosition(point);
-        _background->addChild(_deckEditMask);
+    if (_background && !_deckEditMask) {
+        auto node(_background->getSubNode(1));
+        if (node) {
+            const auto& size(node->getContentSize());
+            _deckEditMask = DeckEditMask::create(size);
+            _deckEditMask->registerObserver(this);
+            _deckEditMask->setPosition(node->getPosition() - Point(size.width / 2, size.height / 2));
+            _background->addChild(_deckEditMask);
+        }
     }
     
     // create card

@@ -12,9 +12,11 @@
 #include "DeckCard.h"
 #include "DeckEditMask.h"
 #include "CardPreview.h"
+#include "CardInfoLayer.h"
 
 #define DECKLAYER_ENABLE_TYPE_FILTER    (0)
 
+class UniversalBoard;
 class TabButton;
 
 #if DECKLAYER_ENABLE_TYPE_FILTER
@@ -38,6 +40,7 @@ class BattleDeckLayer
 , public DeckCardObserver
 , public DeckEditMaskObserver
 , public CardPreviewObserver
+, public CardInfoLayerObserver
 {
 public:
     static BattleDeckLayer* create();
@@ -63,9 +66,13 @@ protected:
     virtual AbstractCard* onCardPreviewCreateCard(int cardId) override;
     virtual void onCardPreviewClickedOpButton(DeckCardOpType type, int cardId) override;
     
+    // CardInfoLayerObserver
+    virtual void onCardInfoLayerReturn(Node* pSender) override;
+    virtual void onCardInfoLayerExit(Node* pSender) override;
+    
     // -------- UI --------
-    void createLeftNode();
-    void createRightNode();
+    void createLeftNode(Node* node);
+    void createRightNode(Node* node);
     DeckCard* createCard(int card);
     Node* createLine(bool isHero) const;
     void updateAverageElixir();
@@ -102,7 +109,7 @@ private:
     BattleDeckLayerObserver *_observer;
     
     // UI
-    Node* _background;
+    UniversalBoard* _background;
     std::unordered_map<int, TabButton*> _deckTabButtons;
     Label* _averageElixirLabel;
     CardPreview* _cardPreview;

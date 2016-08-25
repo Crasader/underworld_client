@@ -19,20 +19,20 @@ class UniversalBoard: public Sprite
 public:
     typedef std::function<void()> Callback;
     
-    static UniversalBoard* create();
+    static UniversalBoard* create(int blocks);
     virtual ~UniversalBoard();
     
     void setTitle(const std::string& title);
     void setExitCallback(const Callback& callback);
     
-    Node* getSubNode() const;
+    Node* getSubNode(int idx) const;
     
 protected:
     UniversalBoard();
-    virtual bool init() override;
+    bool init(int blocks);
     
 private:
-    Node* _subNode;
+    std::vector<Node*> _subNodes;
     Label* _title;
     ui::Button* _exitButton;
     Callback _callback;

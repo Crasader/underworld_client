@@ -11,10 +11,10 @@
 
 using namespace std;
 
-UniversalBoard* UniversalBoard::create()
+UniversalBoard* UniversalBoard::create(int blocks)
 {
     auto ret = new (nothrow) UniversalBoard();
-    if (ret && ret->init()) {
+    if (ret && ret->init(blocks)) {
         ret->autorelease();
         return ret;
     }
@@ -24,8 +24,7 @@ UniversalBoard* UniversalBoard::create()
 }
 
 UniversalBoard::UniversalBoard()
-:_subNode(nullptr)
-,_title(nullptr)
+:_title(nullptr)
 ,_exitButton(nullptr)
 ,_callback(nullptr) {}
 
@@ -34,18 +33,42 @@ UniversalBoard::~UniversalBoard()
     removeAllChildren();
 }
 
-bool UniversalBoard::init()
+bool UniversalBoard::init(int blocks)
 {
     if (Sprite::init()) {
         setTexture(CocosUtils::getResourcePath("ui_background_5.png"));
         
         const auto& size(getContentSize());
         static const Size subSize(992, 513);
-        auto subNode = CocosUtils::createSubBackground(subSize);
-        addChild(subNode);
         const float edge((size.width - subSize.width) / 2);
-        subNode->setPosition(Point(size.width / 2, subSize.height / 2 + edge));
-        _subNode = subNode;
+        const float posY(subSize.height / 2 + edge);
+        
+        if (blocks > 0) {
+            vector<float> widths = vector<float>();
+            if (1 == blocks) {
+                widths.push_back(subSize.width);
+            } else if (2 == blocks) {
+                widths.push_back(366);
+                widths.push_back(612);
+            }
+            
+            float totalWidth(0);
+            for (float width : widths) {
+                totalWidth += width;
+            }
+            
+            const float space(blocks > 1 ? MAX(0, (subSize.width - totalWidth) / (blocks - 1)) : 0);
+            float x(edge);
+            for (int i = 0; i < widths.size(); ++i) {
+                const float width(widths.at(i));
+                auto subNode = CocosUtils::createSubBackground(Size(width, subSize.height));
+                subNode->setPosition(x + width / 2, posY);
+                addChild(subNode);
+                _subNodes.push_back(subNode);
+                
+                x += width + space;
+            }
+        }
         
         _exitButton = CocosUtils::createRedExitButton(this, [this]() {
             if (_callback) {
@@ -83,7 +106,11 @@ void UniversalBoard::setExitCallback(const Callback& callback)
     }
 }
 
-Node* UniversalBoard::getSubNode() const
+Node* UniversalBoard::getSubNode(int idx) const
 {
-    return _subNode;
+    if (_subNodes.size() > idx) {
+        return _subNodes.at(idx);
+    }
+    
+    return nullptr;
 }

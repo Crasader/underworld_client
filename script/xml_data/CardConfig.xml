@@ -2,8 +2,8 @@
 <root>
 	<!-- 第一版法术 -->
 	<item id="23100" icon="icon_baofengxue"/>
-	<item id="23101" icon="icon_huoqiusu"/>
-   	<item id="23102" icon="icon_yiliaosu"/>
+	<item id="23101" icon="icon_huoqiushu"/>
+   	<item id="23102" icon="icon_huifushu"/>
 	<item id="23103" icon="icon_chenmosu"/>
    	<item id="23104" icon="icon_xiaoqusan"/>
 	<item id="23105" icon="icon_daqusan"/>

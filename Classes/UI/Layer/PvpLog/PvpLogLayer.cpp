@@ -58,12 +58,12 @@ bool PvpLogLayer::init()
 {
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR)) {
         const auto& winSize(Director::getInstance()->getWinSize());
-        auto board = UniversalBoard::create();
+        auto board = UniversalBoard::create(1);
         board->setTitle(LocalHelper::getString("ui_log_title"));
         board->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(board);
         
-        createTable(board->getSubNode());
+        createTable(board->getSubNode(0));
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);

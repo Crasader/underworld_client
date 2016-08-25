@@ -11,6 +11,7 @@
 
 #include "DevelopCard.h"
 #include "CardPreview.h"
+#include "CardInfoLayer.h"
 
 USING_NS_CC;
 
@@ -24,6 +25,7 @@ class DevelopLayer
 : public LayerColor
 , public DevelopCardObserver
 , public CardPreviewObserver
+, public CardInfoLayerObserver
 {
 public:
     static DevelopLayer* create();
@@ -44,6 +46,10 @@ protected:
     // CardPreviewObserver
     virtual AbstractCard* onCardPreviewCreateCard(int cardId) override;
     virtual void onCardPreviewClickedOpButton(DeckCardOpType type, int cardId) override;
+    
+    // CardInfoLayerObserver
+    virtual void onCardInfoLayerReturn(Node* pSender) override;
+    virtual void onCardInfoLayerExit(Node* pSender) override;
     
 private:
     DevelopLayerObserver *_observer;
