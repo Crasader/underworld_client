@@ -483,6 +483,7 @@ void ClientTCPNetwork::onReceiveTCPResponse(TCPClient* client, TCPResponse* resp
         
         std::vector<NetworkMessage*> msgs;
         parseResponse2Msg(response, msgs);
+        response->release();
         for (int i = 0; i < msgs.size(); ++i) {
             if (M_INSTANCE_OF(msgs[i], NetworkMessageLaunch2C*) && _status == ClientStatus::Launching) {
                 if (_launchListener) {
