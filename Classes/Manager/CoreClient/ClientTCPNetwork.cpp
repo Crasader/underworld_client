@@ -479,7 +479,10 @@ void ClientTCPNetwork::send(NetworkMessage* msg) {
 
 void ClientTCPNetwork::onReceiveTCPResponse(TCPClient* client, TCPResponse* response) {
     Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
-        if(_tcpClient != client) return;
+        if(_tcpClient != client) {
+            response->release();
+            return;
+        }
         
         std::vector<NetworkMessage*> msgs;
         parseResponse2Msg(response, msgs);
