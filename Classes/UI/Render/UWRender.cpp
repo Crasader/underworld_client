@@ -39,7 +39,10 @@ void UWRender::init(const Game *game, Commander *commander) {
     if (_worldRender) _worldRender->init(game->getWorld(), this);
 
     if (!_gui) assert(_gui = createGui(game->getGameMode()));
-    if (_gui) _gui->init(game, commander, _worldRender);
+    if (_gui) {
+        _gui->init(game, commander, _worldRender);
+        _gui->setRenderListener(_listener);
+    }
     
     if (_scene) {
         const cocos2d::Size& winSize = cocos2d::Director::getInstance()->getWinSize();
@@ -81,6 +84,11 @@ void UWRender::render(const Game *game) {
         
     if (_worldRender) _worldRender->render(game->getWorld());
     if (_gui) _gui->render(game);
+}
+    
+void UWRender::setRenderListener(RenderListener* listener) {
+    _listener = listener;
+    if (_gui) _gui->setRenderListener(_listener);
 }
     
 // ===================== override ScrollViewDelegate ========================

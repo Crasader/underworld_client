@@ -9,7 +9,7 @@
 #ifndef GameManager_h
 #define GameManager_h
 
-#include "GameRender.h"
+#include "cocos2d.h"
 #include "ExternalInterface.h"
 #include "ClientTCPNetwork.h"
 
@@ -37,7 +37,8 @@ enum GameState {
 };
 
 
-class GameClient : public ClientTCPNetwork::LaunchListener
+class GameClient : public ClientTCPNetwork::LaunchListener,
+    public UnderWorld::Core::AbstractRender::RenderListener
 {
 public:
     GameClient();
@@ -69,6 +70,11 @@ private:
     
     // override ClientTCPNetwork::LaunchListener
     virtual void onLaunched(const NetworkMessageLaunch2C& l2c) override;
+    
+    // override AbstractRender::RenderListener
+    virtual void onExitRequest() override;
+    virtual bool onPauseRequest() override;
+    virtual bool onResumeRequest() override;
 
 public:
     static void loadCommonMapSetting(int mapId, UnderWorld::Core::MapSetting& output);
@@ -90,10 +96,10 @@ private:
     UnderWorld::Core::AbstractRender* _render;
     GameScheduler* _gameScheduler;
     ClientTCPNetwork* _network;
-    GameLooper* _looper;
+    UnderWorld::Core::GameLooper* _looper;
     BattleContent* _battleContent;
-    GameSettings* _settings;
-    GameModeHMMSetting* _hmmSettings;
+    UnderWorld::Core::GameSettings* _settings;
+    UnderWorld::Core::GameModeHMMSetting* _hmmSettings;
 };
 
 class GameManager {

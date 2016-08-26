@@ -27,6 +27,7 @@
 #include "GameLooper.h"
 
 using namespace std;
+using namespace UnderWorld::Core;
 
 static void parseUserInfo(const std::string& dataStr, UnderWorld::Core::GameModeHMMSetting& hmm, int index)
 {
@@ -188,6 +189,7 @@ void GameClient::createInstance()
 
     // 2. render
     _render = new (nothrow) UWRender(_scene);
+    _render->setRenderListener(this);
     
     // 3. scheduler
     _gameScheduler = new (nothrow) GameScheduler();
@@ -445,10 +447,28 @@ void GameClient::onLaunched(const NetworkMessageLaunch2C& l2c) {
     }
     
     _looper->init("mofish", *_settings, new GameModeHMM(),
-                  _hmmSettings, _gameScheduler, _render, _network);
+        _hmmSettings, _gameScheduler, _render, _network);
     _looper->start();
     _state = kPlaying;
+}
 
+void GameClient::onExitRequest() {
+    if (_state != kPlaying) return;
+    
+    exitGame();
+    CocosUtils::replaceScene(MainScene::create(), true);
+}
+
+bool GameClient::onPauseRequest() {
+    if (_state != kPlaying || !_looper) return false;
+    return _looper->pause();
+    
+}
+bool GameClient::onResumeRequest() {
+    if (_state != kPlaying || !_looper) return false;
+    
+    _looper->start();
+    return true;
 }
 
 void GameClient::loadCommonMapSetting(int mapId, UnderWorld::Core::MapSetting& output) {

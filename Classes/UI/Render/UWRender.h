@@ -36,6 +36,7 @@ private:
     /** instance */
     WorldRender* _worldRender;
     Gui* _gui;
+    RenderListener* _listener;
     
     /** refs */
     const Game* _game;
@@ -50,6 +51,7 @@ public:
         _scene(scene),
         _worldRender(nullptr),
         _gui(nullptr),
+        _listener(nullptr),
         _game(nullptr),
         _commader(nullptr),
         _worldScrollView(nullptr) {}
@@ -58,6 +60,7 @@ public:
     /** override AbstractRender */
     virtual void init(const Game* game, Commander* commander) override;
     virtual void render(const Game* game) override;
+    virtual void setRenderListener(RenderListener* listener) override;
     
     /** override ScrollViewDelegate */
     virtual void scrollViewDidScroll(cocos2d::extension::ScrollView* view) override;

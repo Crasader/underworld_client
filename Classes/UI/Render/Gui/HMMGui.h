@@ -46,6 +46,7 @@ private:
     microsec_t _gameDuration;
     
     /** instance */
+    AbstractRender::RenderListener* _renderListener;
     const Unit* _thisCore;
     creatureid_t _thisCoreId;
     const Unit* _enemyCore;
@@ -73,6 +74,8 @@ public:
     /** override Gui */
     virtual void init(const Game* game, Commander* commander, WorldRender* worldRender) override;
     virtual void render(const Game* game) override;
+    virtual void setRenderListener(AbstractRender::RenderListener* renderListener) override;
+
     
     /** override WorldObserver */
     virtual void onNotifyWorldEvents(const std::vector<World::EventLog>& events) override;

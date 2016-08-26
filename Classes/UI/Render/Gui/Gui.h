@@ -10,6 +10,7 @@
 #define Gui_h
 
 #include "cocos2d.h"
+#include "ExternalInterface.h"
 
 namespace UnderWorld{ namespace Core{
 
@@ -28,6 +29,8 @@ public:
     virtual void render(const Game* game) = 0;
     /** getter */
     virtual cocos2d::Node* getGuiView() = 0;
+    /** setter */
+    virtual void setRenderListener(AbstractRender::RenderListener* renderListener) = 0;
 };
 
 }}

@@ -155,8 +155,7 @@ void HMMGui::init(const Game *game, Commander *commander, WorldRender *worldRend
         static const string file("GameImages/battle_ui/ui_exit_button.png");
         MenuItemImage* exitItem = MenuItemImage::create(file, file, [this](Ref*) {
             MessageBoxLayer::getInstance()->show(LocalHelper::getString("hint_exitPve"), MessageBoxType::YesNo, [this](Ref*) {
-                GameManager::getGameClient()->exitGame();
-                CocosUtils::replaceScene(MainScene::create(), true);
+                if (_renderListener) _renderListener->onExitRequest();
             });
 
         });
@@ -203,6 +202,10 @@ void HMMGui::render(const Game *game) {
         //TODO: show game over
         _gameOver = true;
     }
+}
+    
+void HMMGui::setRenderListener(AbstractRender::RenderListener* renderListener) {
+    _renderListener = renderListener;
 }
     
 void HMMGui::onNotifyWorldEvents(const std::vector<World::EventLog>& events) {
