@@ -23,11 +23,12 @@
 #include "CoreUtils.h"
 #include "UWJsonHelper.h"
 
-#define MESSAGE_CODE_LAUNCH_2_S (2)
-#define MESSAGE_CODE_LAUNCH_2_C (3)
-#define MESSAGE_CODE_SYNC_2_S   (4)
-#define MESSAGE_CODE_SYNE_2_C   (5)
+#define MESSAGE_CODE_LAUNCH_2_S      (2)
+#define MESSAGE_CODE_LAUNCH_2_C      (3)
+#define MESSAGE_CODE_SYNC_2_S        (4)
+#define MESSAGE_CODE_SYNC_2_C        (5)
 #define MESSAGE_CODE_RECONNECT_2_S   (6)
+#define MESSAGE_CODE_FINISH_2_S      (8)
 
 #define MESSAGE_KEY_CODE         ("code")
 #define MESSAGE_KEY_CARDS        ("cards")
@@ -170,6 +171,27 @@ static std::string parseSync2SMsg(
     root.AddMember(MESSAGE_KEY_UID, uidJson, allocator);
     root.AddMember(MESSAGE_KEY_FRAME, msgFrame, allocator);
     root.AddMember(MESSAGE_KEY_COMMANDS, commands, allocator);
+    
+    rapidjson::StringBuffer buffer;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+    root.Accept(writer);
+    return buffer.GetString();
+    //return DataManager::getInstance()->getBinaryJsonTool()->encode(root);
+}
+
+static std::string parseFinish2SMsg(const NetworkMessageFinish2S* msg, int uid) {
+    rapidjson::Document document;
+    rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+    rapidjson::Value root(rapidjson::kObjectType);
+    
+    rapidjson::Value reqCode(rapidjson::kNumberType);
+    reqCode.SetInt(MESSAGE_CODE_FINISH_2_S);
+    
+    rapidjson::Value uidJson(rapidjson::kNumberType);
+    uidJson.SetInt(uid);
+    
+    root.AddMember(MESSAGE_KEY_CODE, reqCode, allocator);
+    root.AddMember(MESSAGE_KEY_UID, uidJson, allocator);
     
     rapidjson::StringBuffer buffer;
     rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
@@ -356,11 +378,11 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
     output.push_back(msg);
 }
 
-static bool parseSync2CMsg(const rapidjson::Value& root,
+static void parseSync2CMsg(const rapidjson::Value& root,
     std::vector<NetworkMessage *> &output, int& battleid) {
     if (!UWJsonHelper::checkObjectExist_json(root, MESSAGE_KEY_START_FRAME)
         || !UWJsonHelper::checkObjectExist_json(root, MESSAGE_KEY_END_FRAME)) {
-        return false;
+        return;
     }
     
     int startFrame = UWJsonHelper::getIntValue_json(root, MESSAGE_KEY_START_FRAME, 0);
@@ -407,17 +429,16 @@ static bool parseSync2CMsg(const rapidjson::Value& root,
         output.push_back(syncMsgs[i]);
     }
     
-    //TODO: server finished,client do not reconnect
     bool finished = UWJsonHelper::getBooleanValue_json(root, MESSAGE_KEY_FINISHED, false);
-    if (finished) {
-        battleid = INVALID_VALUE;
+    if (finished && !syncMsgs.empty()) {
+        syncMsgs.back()->setFinished(finished);
     }
-    return finished;
 }
 
 ClientTCPNetwork::~ClientTCPNetwork() {
     destroyTCPClient();
     cleanSyncInstance();
+    M_SAFE_DELETE(_launchMsg);
 }
 
 void ClientTCPNetwork::destroyTCPClient() {
@@ -452,6 +473,16 @@ void ClientTCPNetwork::launchGame(LaunchListener* launchListener,
     msg->setCards(cards);
     msg->setInitUnits(initList);
     msg->setUnitPool(unitPool);
+    if (_launchMsg) M_SAFE_DELETE(_launchMsg);
+    _launchMsg = dynamic_cast<NetworkMessageLaunch2S*>(msg->clone());
+    send(msg);
+}
+
+void ClientTCPNetwork::closeGame() {
+    if ((_status != ClientStatus::Fighting && _status != ClientStatus::Finished)
+        || !_tcpClient) return;
+    
+    NetworkMessageFinish2S* msg = new NetworkMessageFinish2S();
     send(msg);
 }
 
@@ -502,6 +533,9 @@ void ClientTCPNetwork::onReceiveTCPResponse(TCPClient* client, TCPResponse* resp
                 _status = ClientStatus::Fighting;
             } else if (M_INSTANCE_OF(msgs[i], NetworkMessageSync*) && _status == ClientStatus::Fighting) {
                 _incomeNetworkMessages.push_back(msgs[i]->clone());
+                if (dynamic_cast<NetworkMessageSync*>(msgs[i])->isFinished()) {
+                    _status = ClientStatus::Finished;
+                }
             }
         }
         
@@ -520,17 +554,13 @@ void ClientTCPNetwork::onReconncected(TCPClient* client) {
         if (_status == ClientStatus::Finished) {
             return;
         }
-        std::string reqContent;
+        
         if (_status == ClientStatus::Idle) {
             //TODO need to resend battle user info
-        } else {
-            reqContent = parseReconnect2SMsg(_uid, _battleid);
-        }
-        TCPRequest* ret = nullptr;
-        if (!reqContent.empty()) {
-            ret = new TCPRequest();
-            ret->setRequestData(reqContent.c_str(), reqContent.size());
-            _tcpClient->send(ret);
+        } else if (_status == ClientStatus::Fighting) {
+            send(new NetworkMessageReconnect2S());
+        } else if (_status == ClientStatus::Launching) {
+            if (_launchMsg) send(_launchMsg->clone());
         }
     });
 }
@@ -546,6 +576,11 @@ TCPRequest* ClientTCPNetwork::parseMsg2Request(
         const NetworkMessageSync* sync =
             dynamic_cast<const NetworkMessageSync*>(msg);
         reqContent = parseSync2SMsg(sync, _uid);
+    } else if (dynamic_cast<const NetworkMessageFinish2S*>(msg)) {
+        const NetworkMessageFinish2S* f2s = dynamic_cast<const NetworkMessageFinish2S*>(msg);
+        reqContent = parseFinish2SMsg(f2s, _uid);
+    } else if (dynamic_cast<const NetworkMessageReconnect2S*>(msg)) {
+        reqContent = parseReconnect2SMsg(_uid, _battleid);
     }
     
     TCPRequest* ret = nullptr;
@@ -578,10 +613,8 @@ void ClientTCPNetwork::parseResponse2Msg(
     
     if (respCode == MESSAGE_CODE_LAUNCH_2_C) {
         parseLaunch2CMsg(document, output, _battleid);
-    } else if (respCode == MESSAGE_CODE_SYNE_2_C) {
-        if(parseSync2CMsg(document, output, _battleid)) {
-            _status = ClientStatus::Finished;
-        }
+    } else if (respCode == MESSAGE_CODE_SYNC_2_C) {
+        parseSync2CMsg(document, output, _battleid);
     }
 }
 
@@ -669,4 +702,6 @@ NetworkMessage* NetworkMessageSync::clone() const {
     }
     return instance;
 }
+
+
 

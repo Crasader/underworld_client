@@ -24,6 +24,7 @@ namespace UnderWorld { namespace Core {
 
 class NetworkMessage;
 class NetworkMessageLaunch2C;
+class NetworkMessageLaunch2S;
 
 class ClientTCPNetwork : public UnderWorld::Core::AbstractNetwork {
 public:
@@ -53,6 +54,7 @@ private:
     
     // launch
     LaunchListener* _launchListener;
+    NetworkMessageLaunch2S* _launchMsg;
     
     // sync
     std::vector<NetworkMessage*> _incomeNetworkMessages;
@@ -71,6 +73,7 @@ public:
     , _battleid(INVALID_VALUE)
     , _status(ClientStatus::Idle)
     , _launchListener(nullptr)
+    , _launchMsg(nullptr)
     , _safeFrame(0)
     , _lastSafeFrame(0) {}
     virtual ~ClientTCPNetwork();
@@ -82,6 +85,7 @@ public:
         const std::vector<int>& cards,
         const UnderWorld::Core::GameModeHMMSetting::InitUnitList& initList,
         const vector<UnderWorld::Core::UnitSetting>& unitPool);
+    void closeGame();
 
     /** override AbstractNetwork */
     virtual void init() override;
@@ -192,9 +196,10 @@ class NetworkMessageSync : public NetworkMessage {
 private:
     int _frame;
     std::vector<UnderWorld::Core::CmdFramePair> _commands;
+    bool _finished;
     
 public:
-    NetworkMessageSync(int frame) : _frame(frame) {};
+    NetworkMessageSync(int frame) : _frame(frame), _finished(false) {};
     virtual ~NetworkMessageSync();
     NetworkMessage* clone() const;
     
@@ -203,15 +208,23 @@ public:
     int getCommandCount() const                          {return (int)_commands.size();}
     const UnderWorld::Core::CmdFramePair& getCommand(int index) const
                                                          {return _commands[index];}
+    bool isFinished() const                              {return _finished;}
     
     /** setters */
     void addCommand(UnderWorld::Core::OutsideCommand* cmd, int frame)
                                                          {_commands.push_back(std::make_pair(cmd, frame));}
+    void setFinished(bool finished)                      {_finished = finished;}
 };
 
+class NetworkMessageReconnect2S : public NetworkMessage {
+public:
+    NetworkMessage* clone() const override    {return new NetworkMessageReconnect2S(*this);}
+};
 
-
-
+class NetworkMessageFinish2S : public NetworkMessage {
+public:
+    NetworkMessage* clone() const override    {return new NetworkMessageFinish2S(*this);}
+};
 
 
 #endif /* ClientTCPNetworkProxy_h */

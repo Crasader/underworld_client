@@ -170,6 +170,10 @@ void GameClient::launchGame()
 
 void GameClient::exitGame()
 {
+    if (_mode == kPvp && _state == kPlaying && _network) {
+        _network->closeGame();
+    }
+    
     purgeInstance();
     FrameLoader::getInstance()->removeCachedFrames();
     CocosUtils::cleanMemory();
