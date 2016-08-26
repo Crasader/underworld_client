@@ -234,7 +234,4 @@ bool VictoryLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
     return true;
 }
 
-void VictoryLayer::onTouchEnded(Touch *touch, Event *unused_event)
-{
-    
-}
+void VictoryLayer::onTouchEnded(Touch *touch, Event *unused_event) {}

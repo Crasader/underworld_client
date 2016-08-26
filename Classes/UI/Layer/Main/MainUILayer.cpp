@@ -252,10 +252,7 @@ bool MainUILayer::onTouchBegan(Touch *pTouch, Event *pEvent)
     return false;
 }
 
-void MainUILayer::onTouchEnded(Touch *touch, Event *unused_event)
-{
-    
-}
+void MainUILayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 
 #pragma mark - ChatLayerObserver
 void MainUILayer::onChatLayerTouchedButton(Button* button, Widget::TouchEventType type)

@@ -366,10 +366,7 @@ bool ChatLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
     return false;
 }
 
-void ChatLayer::onTouchEnded(Touch *touch, Event *unused_event)
-{
-    
-}
+void ChatLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 
 #pragma mark - TableViewDelegate
 Size ChatLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)

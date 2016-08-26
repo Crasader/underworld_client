@@ -44,6 +44,23 @@ void DeckManager::purge()
     }
 }
 
+DeckManager::CardType DeckManager::getCardType(int cardId)
+{
+    const int remainder((cardId / 1000) % 10);
+    if (1 == remainder) {
+        return CardType::Hero;
+    } else if (2 == remainder) {
+        return CardType::Soldier;
+    } else if (3 == remainder) {
+        return CardType::Spell;
+    } else if (4 == remainder) {
+        return CardType::Building;
+    }
+    
+    CC_ASSERT(false);
+    return CardType::Soldier;
+}
+
 // TODO: remove the test method
 CardSimpleData* createFakeData(int card, int level)
 {
@@ -68,7 +85,7 @@ DeckManager::DeckManager()
         _sortTypes.insert(make_pair(ft, st));
     }
     
-    static const string fake("21110;21111|22001;22003;22004;22012;22013;22014;22015;22016");
+    static const string fake("21110;21111;21100|22001;22003;22004;22012;22013;22014");
     
     for (int i = 0; i < DecksMaxCount; ++i) {
         const auto& string = UserDefaultsDataManager::getStringForKey(getDeckKey(i).c_str(), fake);

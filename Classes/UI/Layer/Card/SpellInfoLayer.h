@@ -1,13 +1,13 @@
 //
-//  CardInfoLayer.h
+//  SpellInfoLayer.h
 //  Underworld_Client
 //
-//  Created by Andy on 16/8/19.
+//  Created by Andy on 16/8/26.
 //  Copyright (c) 2016 Mofish Studio. All rights reserved.
 //
 
-#ifndef CardInfoLayer_h
-#define CardInfoLayer_h
+#ifndef SpellInfoLayer_h
+#define SpellInfoLayer_h
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
@@ -18,25 +18,24 @@ class DevelopCard;
 class CardPropertyNode;
 class CardSimpleData;
 
-class CardInfoLayerObserver
+class SpellInfoLayerObserver
 {
 public:
-    virtual ~CardInfoLayerObserver() {}
-    virtual void onCardInfoLayerReturn(Node* pSender) = 0;
-    virtual void onCardInfoLayerExit(Node* pSender) = 0;
+    virtual ~SpellInfoLayerObserver() {}
+    virtual void onSpellInfoLayerExit(Node* pSender) = 0;
 };
 
-class CardInfoLayer : public LayerColor
+class SpellInfoLayer : public LayerColor
 {
 public:
-    static CardInfoLayer* create(int cardId);
-    virtual ~CardInfoLayer();
-    void registerObserver(CardInfoLayerObserver *observer);
+    static SpellInfoLayer* create(int cardId);
+    virtual ~SpellInfoLayer();
+    void registerObserver(SpellInfoLayerObserver *observer);
     
     int getCard() const;
     
 private:
-    CardInfoLayer();
+    SpellInfoLayer();
     
     // LayerColor
     bool init(int cardId);
@@ -44,13 +43,11 @@ private:
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
 private:
-    CardInfoLayerObserver* _observer;
+    SpellInfoLayerObserver* _observer;
     DevelopCard* _icon;
-    Label* _level;
-    Label* _profession;
     Label* _description;
     std::vector<CardPropertyNode*> _properties;
     const CardSimpleData* _data;
 };
 
-#endif /* CardInfoLayer_h */
+#endif /* SpellInfoLayer_h */

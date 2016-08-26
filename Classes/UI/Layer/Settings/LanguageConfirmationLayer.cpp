@@ -12,7 +12,7 @@
 #include "SettingUI.h"
 #include "LocalHelper.h"
 #include "UniversalButton.h"
-#include "PureScale9Sprite.h"
+#include "SmallBoard.h"
 
 using namespace std;
 
@@ -49,27 +49,15 @@ bool LanguageConfirmationLayer::init(ssize_t idx)
         _idx = idx;
         
         const auto& winSize(Director::getInstance()->getWinSize());
-        auto bg = Sprite::create(CocosUtils::getResourcePath("ui_background_4.png"));
+        auto bg = SmallBoard::create();
+        bg->setTitle(LocalHelper::getString("ui_language_title"));
         bg->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(bg);
         
-        static const Size subNodeSize(359, 174);
-        auto subNode = PureScale9Sprite::create(PureScale9Sprite::Type::BlueLight);
-        subNode->setContentSize(subNodeSize);
-        bg->addChild(subNode);
-        
+        auto subNode = bg->getSubNode();
         const auto& size(bg->getContentSize());
+        const auto& subNodeSize(subNode->getContentSize());
         const float edge((size.width - subNodeSize.width) / 2);
-        subNode->setPosition(Point(size.width / 2, subNodeSize.height / 2 + edge));
-        
-        CocosUtils::createRedExitButton(bg, [this]() {
-            removeFromParent();
-        });
-        
-        auto title = CocosUtils::createLabel(LocalHelper::getString("ui_language_title"), TITLE_FONT_SIZE);
-        title->setAnchorPoint(Point::ANCHOR_MIDDLE);
-        title->setPosition(Point(size.width / 2, (size.height + subNodeSize.height + edge) / 2));
-        bg->addChild(title);
         
         auto cancel = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Red, LocalHelper::getString("hint_cancel"));
         cancel->setCallback([this](Ref*) {
@@ -119,7 +107,4 @@ bool LanguageConfirmationLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
     return true;
 }
 
-void LanguageConfirmationLayer::onTouchEnded(Touch *touch, Event *unused_event)
-{
-    
-}
+void LanguageConfirmationLayer::onTouchEnded(Touch *touch, Event *unused_event) {}

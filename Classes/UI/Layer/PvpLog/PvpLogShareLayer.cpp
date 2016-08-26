@@ -12,7 +12,7 @@
 #include "PvpLogUI.h"
 #include "LocalHelper.h"
 #include "UniversalButton.h"
-#include "PureScale9Sprite.h"
+#include "SmallBoard.h"
 
 using namespace std;
 using namespace ui;
@@ -50,31 +50,20 @@ bool PvpLogShareLayer::init()
 {
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR)) {
         const auto& winSize(Director::getInstance()->getWinSize());
-        
-        auto bg = Sprite::create(CocosUtils::getResourcePath("ui_background_4.png"));
+        auto bg = SmallBoard::create();
+        bg->setTitle(LocalHelper::getString("ui_logShare_title"));
         bg->setPosition(Point(winSize.width / 2, winSize.height / 2));
-        addChild(bg);
-        _background = bg;
-        
-        static const Size subNodeSize(359, 174);
-        auto subNode = PureScale9Sprite::create(PureScale9Sprite::Type::BlueLight);
-        subNode->setContentSize(subNodeSize);
-        bg->addChild(subNode);
-        
-        const auto& size(bg->getContentSize());
-        const float edge((size.width - subNodeSize.width) / 2);
-        subNode->setPosition(Point(size.width / 2, subNodeSize.height / 2 + edge));
-        
-        CocosUtils::createRedExitButton(bg, [this]() {
+        bg->setExitCallback([this]() {
             if (_observer) {
                 _observer->onPvpLogShareLayerClickedExitButton(this);
             }
         });
+        addChild(bg);
+        _background = bg;
         
-        auto title = CocosUtils::createLabel(LocalHelper::getString("ui_logShare_title"), TITLE_FONT_SIZE);
-        title->setAnchorPoint(Point::ANCHOR_MIDDLE);
-        title->setPosition(Point(size.width / 2, (size.height + subNodeSize.height + edge) / 2));
-        bg->addChild(title);
+        auto subNode = bg->getSubNode();
+        const auto& size(bg->getContentSize());
+        const auto& subNodeSize(subNode->getContentSize());
         
         auto subTitleBg = Sprite::create(PvpLogUI::getResourcePath("ui_tiao_12.png"));
         subNode->addChild(subTitleBg);
@@ -138,10 +127,7 @@ bool PvpLogShareLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
     return true;
 }
 
-void PvpLogShareLayer::onTouchEnded(Touch *touch, Event *unused_event)
-{
-    
-}
+void PvpLogShareLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 
 #pragma mark - EditBoxDelegate
 void PvpLogShareLayer::editBoxReturn(EditBox* editBox)

@@ -86,6 +86,29 @@ UniversalButton* UniversalButton::create(BSize size, BType type, const string& t
     return nullptr;
 }
 
+UniversalButton* UniversalButton::createReturnButton(Node* parent, const Vec2& offset, const function<void()>& callback)
+{
+    if (parent) {
+        auto button = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Blue, "");
+        parent->addChild(button);
+        
+        const auto& size(button->getContentSize());
+        auto icon = Sprite::create(CocosUtils::getResourcePath("icon_jiantou.png"));
+        icon->setPosition(Point(size.width / 2, size.height / 2));
+        button->addChild(icon);
+        
+        const auto& pSize(parent->getContentSize());
+        button->setPosition(Point(offset.x + size.width / 2, pSize.height - (offset.y + size.height / 2)));
+        button->setCallback([callback](Ref*) {
+            if (callback) { callback(); }
+        });
+        
+        return button;
+    }
+    
+    return nullptr;
+}
+
 bool UniversalButton::init(BSize size, BType type, const string& title)
 {
     if (Node::init()) {

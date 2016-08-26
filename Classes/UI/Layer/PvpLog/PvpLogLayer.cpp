@@ -12,7 +12,7 @@
 #include "PvpLogUI.h"
 #include "PvpManager.h"
 #include "LocalHelper.h"
-#include "UniversalBoard.h"
+#include "Board.h"
 #include "XTableViewCell.h"
 
 using namespace std;
@@ -58,7 +58,7 @@ bool PvpLogLayer::init()
 {
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR)) {
         const auto& winSize(Director::getInstance()->getWinSize());
-        auto board = UniversalBoard::create(1);
+        auto board = Board::create(1);
         board->setTitle(LocalHelper::getString("ui_log_title"));
         board->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(board);
@@ -82,10 +82,7 @@ bool PvpLogLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
     return true;
 }
 
-void PvpLogLayer::onTouchEnded(Touch *touch, Event *unused_event)
-{
-    
-}
+void PvpLogLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 
 #pragma mark - TableViewDataSource
 Size PvpLogLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)

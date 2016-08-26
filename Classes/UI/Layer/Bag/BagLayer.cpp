@@ -151,10 +151,7 @@ bool BagLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
     return true;
 }
 
-void BagLayer::onTouchEnded(Touch *touch, Event *unused_event)
-{
-    
-}
+void BagLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 
 #pragma mark - TableViewDelegate
 Size BagLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)

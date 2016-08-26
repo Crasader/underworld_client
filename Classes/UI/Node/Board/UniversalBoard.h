@@ -2,7 +2,7 @@
 //  UniversalBoard.h
 //  Underworld_Client
 //
-//  Created by Andy on 16/8/23.
+//  Created by Andy on 16/8/26.
 //  Copyright (c) 2016 Mofish Studio. All rights reserved.
 //
 
@@ -19,23 +19,20 @@ class UniversalBoard: public Sprite
 public:
     typedef std::function<void()> Callback;
     
-    static UniversalBoard* create(int blocks);
+    static UniversalBoard* create(const std::string& file);
     virtual ~UniversalBoard();
     
     void setTitle(const std::string& title);
     void setExitCallback(const Callback& callback);
     
-    Node* getSubNode(int idx) const;
-    
 protected:
     UniversalBoard();
-    bool init(int blocks);
+    bool init(const std::string& file);
     
-private:
-    std::vector<Node*> _subNodes;
+protected:
     Label* _title;
     ui::Button* _exitButton;
-    Callback _callback;
+    Callback _exitCallback;
 };
 
 #endif /* UniversalBoard_h */

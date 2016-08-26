@@ -106,7 +106,7 @@ void DeckCard::update(int cardId)
                 _icon->setTexture(cd->getIcon());
             }
             
-            _costNode->setVisible(!data->isHero());
+            _costNode->setVisible(DeckManager::CardType::Hero != DeckManager::getCardType(cardId));
             _cost->setString(StringUtils::format("%d", data->getCost()));
         }
     }

@@ -202,7 +202,6 @@
 		A19B1AB41D6C186E0010D129 /* DevelopLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19B1AB21D6C186E0010D129 /* DevelopLayer.cpp */; };
 		A19B1ABD1D6C25F00010D129 /* DevelopCard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19B1ABB1D6C25F00010D129 /* DevelopCard.cpp */; };
 		A19B1AC01D6C26300010D129 /* DevelopUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19B1ABE1D6C26300010D129 /* DevelopUI.cpp */; };
-		A19B1AC81D6C2A980010D129 /* UniversalBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19B1AC41D6C2A980010D129 /* UniversalBoard.cpp */; };
 		A19B1AC91D6C2A980010D129 /* XTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19B1AC61D6C2A980010D129 /* XTableViewCell.cpp */; };
 		A19EE96D1C1C0F1300E46D77 /* LevelLocalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19EE96B1C1C0F1300E46D77 /* LevelLocalData.cpp */; };
 		A1A05B3C1C9668FB006FE03B /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A05B3B1C9668FB006FE03B /* GCDAsyncSocket.m */; };
@@ -230,6 +229,17 @@
 		A1B4AE301C200521005906A6 /* QuestManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B4AE281C200521005906A6 /* QuestManager.cpp */; };
 		A1B4AE311C200521005906A6 /* UserManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B4AE2A1C200521005906A6 /* UserManager.cpp */; };
 		A1B5588F1BCB65A100D30D6A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B5588E1BCB65A100D30D6A /* StoreKit.framework */; };
+		A1B66A0B1D702CEB009A8D55 /* CardPropertyNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B66A091D702CEB009A8D55 /* CardPropertyNode.cpp */; };
+		A1B66A0E1D702E08009A8D55 /* SpellInfoLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B66A0C1D702E08009A8D55 /* SpellInfoLayer.cpp */; };
+		A1B66A1E1D703767009A8D55 /* Board.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B66A181D703767009A8D55 /* Board.cpp */; };
+		A1B66A1F1D703767009A8D55 /* MediumBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B66A1A1D703767009A8D55 /* MediumBoard.cpp */; };
+		A1B66A201D703767009A8D55 /* SmallBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B66A1C1D703767009A8D55 /* SmallBoard.cpp */; };
+		A1B66A231D70383D009A8D55 /* UniversalBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B66A211D70383D009A8D55 /* UniversalBoard.cpp */; };
+		A1B66A2A1D70430A009A8D55 /* RuneBagLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B66A281D70430A009A8D55 /* RuneBagLayer.cpp */; };
+		A1B66A2E1D7045BF009A8D55 /* RuneData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B66A2C1D7045BF009A8D55 /* RuneData.cpp */; };
+		A1B66A311D7045E1009A8D55 /* RuneGroupData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B66A2F1D7045E1009A8D55 /* RuneGroupData.cpp */; };
+		A1B66A341D704779009A8D55 /* RuneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B66A321D704779009A8D55 /* RuneManager.cpp */; };
+		A1B66A371D704ABF009A8D55 /* RuneNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B66A351D704ABF009A8D55 /* RuneNode.cpp */; };
 		A1C124DC1BF58AF700F3FDD2 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = A1C124DB1BF58AF700F3FDD2 /* sounds */; };
 		A1CA35E91D45BDE200584C9D /* NoticeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1CA35E71D45BDE200584C9D /* NoticeNode.cpp */; };
 		A1CA35EF1D45BF2600584C9D /* SpellRingNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1CA35ED1D45BF2600584C9D /* SpellRingNode.cpp */; };
@@ -756,8 +766,6 @@
 		A19B1ABC1D6C25F00010D129 /* DevelopCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DevelopCard.h; sourceTree = "<group>"; };
 		A19B1ABE1D6C26300010D129 /* DevelopUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DevelopUI.cpp; sourceTree = "<group>"; };
 		A19B1ABF1D6C26300010D129 /* DevelopUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DevelopUI.h; sourceTree = "<group>"; };
-		A19B1AC41D6C2A980010D129 /* UniversalBoard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UniversalBoard.cpp; sourceTree = "<group>"; };
-		A19B1AC51D6C2A980010D129 /* UniversalBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniversalBoard.h; sourceTree = "<group>"; };
 		A19B1AC61D6C2A980010D129 /* XTableViewCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XTableViewCell.cpp; sourceTree = "<group>"; };
 		A19B1AC71D6C2A980010D129 /* XTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTableViewCell.h; sourceTree = "<group>"; };
 		A19EE96B1C1C0F1300E46D77 /* LevelLocalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelLocalData.cpp; sourceTree = "<group>"; };
@@ -813,6 +821,28 @@
 		A1B4AE2A1C200521005906A6 /* UserManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserManager.cpp; sourceTree = "<group>"; };
 		A1B4AE2B1C200521005906A6 /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserManager.h; sourceTree = "<group>"; };
 		A1B5588E1BCB65A100D30D6A /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
+		A1B66A091D702CEB009A8D55 /* CardPropertyNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardPropertyNode.cpp; sourceTree = "<group>"; };
+		A1B66A0A1D702CEB009A8D55 /* CardPropertyNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardPropertyNode.h; sourceTree = "<group>"; };
+		A1B66A0C1D702E08009A8D55 /* SpellInfoLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpellInfoLayer.cpp; sourceTree = "<group>"; };
+		A1B66A0D1D702E08009A8D55 /* SpellInfoLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpellInfoLayer.h; sourceTree = "<group>"; };
+		A1B66A181D703767009A8D55 /* Board.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Board.cpp; sourceTree = "<group>"; };
+		A1B66A191D703767009A8D55 /* Board.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Board.h; sourceTree = "<group>"; };
+		A1B66A1A1D703767009A8D55 /* MediumBoard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MediumBoard.cpp; sourceTree = "<group>"; };
+		A1B66A1B1D703767009A8D55 /* MediumBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediumBoard.h; sourceTree = "<group>"; };
+		A1B66A1C1D703767009A8D55 /* SmallBoard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SmallBoard.cpp; sourceTree = "<group>"; };
+		A1B66A1D1D703767009A8D55 /* SmallBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmallBoard.h; sourceTree = "<group>"; };
+		A1B66A211D70383D009A8D55 /* UniversalBoard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UniversalBoard.cpp; sourceTree = "<group>"; };
+		A1B66A221D70383D009A8D55 /* UniversalBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniversalBoard.h; sourceTree = "<group>"; };
+		A1B66A281D70430A009A8D55 /* RuneBagLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RuneBagLayer.cpp; sourceTree = "<group>"; };
+		A1B66A291D70430A009A8D55 /* RuneBagLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuneBagLayer.h; sourceTree = "<group>"; };
+		A1B66A2C1D7045BF009A8D55 /* RuneData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RuneData.cpp; sourceTree = "<group>"; };
+		A1B66A2D1D7045BF009A8D55 /* RuneData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuneData.h; sourceTree = "<group>"; };
+		A1B66A2F1D7045E1009A8D55 /* RuneGroupData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RuneGroupData.cpp; sourceTree = "<group>"; };
+		A1B66A301D7045E1009A8D55 /* RuneGroupData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuneGroupData.h; sourceTree = "<group>"; };
+		A1B66A321D704779009A8D55 /* RuneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RuneManager.cpp; sourceTree = "<group>"; };
+		A1B66A331D704779009A8D55 /* RuneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuneManager.h; sourceTree = "<group>"; };
+		A1B66A351D704ABF009A8D55 /* RuneNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RuneNode.cpp; sourceTree = "<group>"; };
+		A1B66A361D704ABF009A8D55 /* RuneNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuneNode.h; sourceTree = "<group>"; };
 		A1C124DB1BF58AF700F3FDD2 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sounds; sourceTree = "<group>"; };
 		A1CA35E71D45BDE200584C9D /* NoticeNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NoticeNode.cpp; sourceTree = "<group>"; };
 		A1CA35E81D45BDE200584C9D /* NoticeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeNode.h; sourceTree = "<group>"; };
@@ -1678,6 +1708,7 @@
 				A1F395EC1C23BBA800B75923 /* Object */,
 				A1FB5D0B1D4F278900CD2622 /* Pvp */,
 				A1E830611C1EA50200FE01B8 /* Quest */,
+				A1B66A2B1D7043DF009A8D55 /* Rune */,
 				A16BF2991C31432800E91458 /* Skill */,
 				A16BF27E1C313D6D00E91458 /* Soldier */,
 				A16BF27F1C313D6D00E91458 /* Tower */,
@@ -1701,8 +1732,12 @@
 				A14660521D6DBE1A008AFD14 /* CardOpNode.h */,
 				A14660531D6DBE1A008AFD14 /* CardPreview.cpp */,
 				A14660541D6DBE1A008AFD14 /* CardPreview.h */,
+				A1B66A091D702CEB009A8D55 /* CardPropertyNode.cpp */,
+				A1B66A0A1D702CEB009A8D55 /* CardPropertyNode.h */,
 				A14660551D6DBE1A008AFD14 /* CardSet.cpp */,
 				A14660561D6DBE1A008AFD14 /* CardSet.h */,
+				A1B66A0C1D702E08009A8D55 /* SpellInfoLayer.cpp */,
+				A1B66A0D1D702E08009A8D55 /* SpellInfoLayer.h */,
 			);
 			path = Card;
 			sourceTree = "<group>";
@@ -1815,6 +1850,7 @@
 			isa = PBXGroup;
 			children = (
 				A1D91BE51C4E087C00C778F4 /* BattleUI */,
+				A1B66A171D70374A009A8D55 /* Board */,
 				A1AAA8621D50949600EB7AEB /* Card */,
 				A103F4561BE37E2A007F9A83 /* Unit */,
 				A12C60A11D50774C003FCF0D /* User */,
@@ -1836,8 +1872,6 @@
 				A1720E961BCCE41A00217E98 /* ScrollBar.h */,
 				A1DF50EB1C229488001CCFF2 /* TabButton.cpp */,
 				A1DF50EC1C229488001CCFF2 /* TabButton.h */,
-				A19B1AC41D6C2A980010D129 /* UniversalBoard.cpp */,
-				A19B1AC51D6C2A980010D129 /* UniversalBoard.h */,
 				A12DE76A1D4868AC0012D127 /* UniversalButton.cpp */,
 				A12DE76B1D4868AC0012D127 /* UniversalButton.h */,
 				A19B1AC61D6C2A980010D129 /* XTableViewCell.cpp */,
@@ -1966,6 +2000,7 @@
 				A1F3D22C1D1D05CD00EB5C17 /* Public */,
 				A1FB5CFD1D4F18B700CD2622 /* PvpLog */,
 				A18524C91C1AE3E800BE261D /* Quest */,
+				A1B66A271D70430A009A8D55 /* Rune */,
 				A1CA35F21D45F28D00584C9D /* Settings */,
 			);
 			path = Layer;
@@ -2135,6 +2170,8 @@
 				A1B4AE291C200521005906A6 /* QuestManager.h */,
 				A18885681C438F1800C9586F /* ResourceManager.cpp */,
 				A18885691C438F1800C9586F /* ResourceManager.h */,
+				A1B66A321D704779009A8D55 /* RuneManager.cpp */,
+				A1B66A331D704779009A8D55 /* RuneManager.h */,
 				A18885651C43843800C9586F /* SoldierManager.cpp */,
 				A18885661C43843800C9586F /* SoldierManager.h */,
 				A18885781C43BA1C00C9586F /* TowerManager.cpp */,
@@ -2143,6 +2180,43 @@
 				A1B4AE2B1C200521005906A6 /* UserManager.h */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		A1B66A171D70374A009A8D55 /* Board */ = {
+			isa = PBXGroup;
+			children = (
+				A1B66A181D703767009A8D55 /* Board.cpp */,
+				A1B66A191D703767009A8D55 /* Board.h */,
+				A1B66A1A1D703767009A8D55 /* MediumBoard.cpp */,
+				A1B66A1B1D703767009A8D55 /* MediumBoard.h */,
+				A1B66A1C1D703767009A8D55 /* SmallBoard.cpp */,
+				A1B66A1D1D703767009A8D55 /* SmallBoard.h */,
+				A1B66A211D70383D009A8D55 /* UniversalBoard.cpp */,
+				A1B66A221D70383D009A8D55 /* UniversalBoard.h */,
+			);
+			path = Board;
+			sourceTree = "<group>";
+		};
+		A1B66A271D70430A009A8D55 /* Rune */ = {
+			isa = PBXGroup;
+			children = (
+				A1B66A281D70430A009A8D55 /* RuneBagLayer.cpp */,
+				A1B66A291D70430A009A8D55 /* RuneBagLayer.h */,
+				A1B66A351D704ABF009A8D55 /* RuneNode.cpp */,
+				A1B66A361D704ABF009A8D55 /* RuneNode.h */,
+			);
+			path = Rune;
+			sourceTree = "<group>";
+		};
+		A1B66A2B1D7043DF009A8D55 /* Rune */ = {
+			isa = PBXGroup;
+			children = (
+				A1B66A2C1D7045BF009A8D55 /* RuneData.cpp */,
+				A1B66A2D1D7045BF009A8D55 /* RuneData.h */,
+				A1B66A2F1D7045E1009A8D55 /* RuneGroupData.cpp */,
+				A1B66A301D7045E1009A8D55 /* RuneGroupData.h */,
+			);
+			path = Rune;
 			sourceTree = "<group>";
 		};
 		A1CA35F21D45F28D00584C9D /* Settings */ = {
@@ -2645,6 +2719,7 @@
 				30FD55641C2CFDE80078EC3C /* Passive.cpp in Sources */,
 				3087FF081C9FD0CB004E31F6 /* Magic.cpp in Sources */,
 				A1E7B1E91C81513100CE65B4 /* BattleSmallResourceNode.cpp in Sources */,
+				A1B66A0E1D702E08009A8D55 /* SpellInfoLayer.cpp in Sources */,
 				A188856A1C438F1800C9586F /* ResourceManager.cpp in Sources */,
 				A16BF28F1C313E8E00E91458 /* SoldierUpgradeData.cpp in Sources */,
 				A1720E7A1BCCE0F000217E98 /* CCShake.cpp in Sources */,
@@ -2657,11 +2732,14 @@
 				30F840731D50B3BF0050C976 /* HMMCardView.cpp in Sources */,
 				A1720E971BCCE41A00217E98 /* ScrollBar.cpp in Sources */,
 				A1FB5D0E1D4F279500CD2622 /* PvpLogData.cpp in Sources */,
+				A1B66A311D7045E1009A8D55 /* RuneGroupData.cpp in Sources */,
 				A18524D01C1AE42000BE261D /* BagLayer.cpp in Sources */,
 				A1E7BAE21C2149E800CE2A85 /* Constants.cpp in Sources */,
+				A1B66A371D704ABF009A8D55 /* RuneNode.cpp in Sources */,
 				A173A6BE1D2CDA4A00F9485B /* AnimationParameter.cpp in Sources */,
 				A16BF2A41C314E5100E91458 /* AttributeData.cpp in Sources */,
 				A1B4AE301C200521005906A6 /* QuestManager.cpp in Sources */,
+				A1B66A2A1D70430A009A8D55 /* RuneBagLayer.cpp in Sources */,
 				30F840771D50B3E30050C976 /* DisplayBar.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				A1720EB91BCD2D2E00217E98 /* KeychainItemWrapper.m in Sources */,
@@ -2713,6 +2791,7 @@
 				A1F5BF9F1C1FD508007C08CB /* AchievementLocalData.cpp in Sources */,
 				A1DF50ED1C229488001CCFF2 /* TabButton.cpp in Sources */,
 				A1E8305C1C1E75BB00FE01B8 /* ChatLayer.cpp in Sources */,
+				A1B66A0B1D702CEB009A8D55 /* CardPropertyNode.cpp in Sources */,
 				A103F45C1BE37E2A007F9A83 /* UnitNode.cpp in Sources */,
 				A1211B291C0BF68E00C27CCC /* GameConstants.cpp in Sources */,
 				301C1B7A1C0EA67200B378A6 /* Effect.cpp in Sources */,
@@ -2733,6 +2812,7 @@
 				0451170B1BCFBA53002AA721 /* Unit.cpp in Sources */,
 				A1FF13BC1D3DFCF6007D2C08 /* GameCenterManager.m in Sources */,
 				045117061BCFBA53002AA721 /* Buff.cpp in Sources */,
+				A1B66A1E1D703767009A8D55 /* Board.cpp in Sources */,
 				A18524CC1C1AE3E800BE261D /* QuestLayer.cpp in Sources */,
 				A1F395F21C23BBC500B75923 /* ObjectData.cpp in Sources */,
 				A1CA35EF1D45BF2600584C9D /* SpellRingNode.cpp in Sources */,
@@ -2742,6 +2822,7 @@
 				A1720E901BCCE19300217E98 /* MD5Verifier.cpp in Sources */,
 				A1FB5D001D4F18C500CD2622 /* PvpLogLayer.cpp in Sources */,
 				047CBF8A1CAFE6AB0035DAF9 /* InstanceHelper.cpp in Sources */,
+				A1B66A231D70383D009A8D55 /* UniversalBoard.cpp in Sources */,
 				A1DA08CC1CB61CEA00846300 /* BRConfigData.cpp in Sources */,
 				A1720EBA1BCD2D2E00217E98 /* RMStore.m in Sources */,
 				047228B01C193A4D00E7F71B /* Geometry.cpp in Sources */,
@@ -2792,6 +2873,7 @@
 				A19AE2101D59D41400D109AD /* LanguageConfirmationLayer.cpp in Sources */,
 				045116F51BCFBA44002AA721 /* CommandType.cpp in Sources */,
 				3070302B1CD1E6D70077D357 /* ProduceType.cpp in Sources */,
+				A1B66A1F1D703767009A8D55 /* MediumBoard.cpp in Sources */,
 				308B84661BE3853C00377802 /* AIBody.cpp in Sources */,
 				300098D01BD0CD5900B6E284 /* Resource.cpp in Sources */,
 				A1F6A1171C4506A3005DC0CC /* HeroSpellHandler.cpp in Sources */,
@@ -2834,6 +2916,8 @@
 				A1D461651C3E478F00E8E60B /* AbstractData.cpp in Sources */,
 				CBD778C71C29390B0070D293 /* AnnouncementNode.cpp in Sources */,
 				A18885771C43ACFB00C9586F /* ArtifactData.cpp in Sources */,
+				A1B66A2E1D7045BF009A8D55 /* RuneData.cpp in Sources */,
+				A1B66A341D704779009A8D55 /* RuneManager.cpp in Sources */,
 				A10E8F951D5C21D300320B3D /* DeckData.cpp in Sources */,
 				A146605A1D6DBE1A008AFD14 /* CardPreview.cpp in Sources */,
 				3087FF3F1CABD3DF004E31F6 /* GameScheduler.cpp in Sources */,
@@ -2842,6 +2926,7 @@
 				A1D461441C3E111B00E8E60B /* UserSimpleData.cpp in Sources */,
 				A1FB5D061D4F18E700CD2622 /* PvpLogUI.cpp in Sources */,
 				A188857A1C43BA1C00C9586F /* TowerManager.cpp in Sources */,
+				A1B66A201D703767009A8D55 /* SmallBoard.cpp in Sources */,
 				045116E21BCFBA39002AA721 /* Clock.cpp in Sources */,
 				A1720E931BCCE1D900217E98 /* LocalHelper.cpp in Sources */,
 				A1CA78001C892D4E0060F71A /* CardConfigData.cpp in Sources */,

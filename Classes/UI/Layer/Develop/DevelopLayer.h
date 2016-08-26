@@ -12,6 +12,7 @@
 #include "DevelopCard.h"
 #include "CardPreview.h"
 #include "CardInfoLayer.h"
+#include "SpellInfoLayer.h"
 
 USING_NS_CC;
 
@@ -26,6 +27,7 @@ class DevelopLayer
 , public DevelopCardObserver
 , public CardPreviewObserver
 , public CardInfoLayerObserver
+, public SpellInfoLayerObserver
 {
 public:
     static DevelopLayer* create();
@@ -50,6 +52,9 @@ protected:
     // CardInfoLayerObserver
     virtual void onCardInfoLayerReturn(Node* pSender) override;
     virtual void onCardInfoLayerExit(Node* pSender) override;
+    
+    // SpellInfoLayerObserver
+    virtual void onSpellInfoLayerExit(Node* pSender) override;
     
 private:
     DevelopLayerObserver *_observer;

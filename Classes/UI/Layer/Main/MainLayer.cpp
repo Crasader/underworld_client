@@ -108,10 +108,7 @@ bool MainLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
     return true;
 }
 
-void MainLayer::onTouchEnded(Touch *touch, Event *unused_event)
-{
-    
-}
+void MainLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 
 void MainLayer::addLevelButtons()
 {

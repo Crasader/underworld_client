@@ -82,10 +82,7 @@ bool LanguageLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
     return false;
 }
 
-void LanguageLayer::onTouchEnded(Touch *touch, Event *unused_event)
-{
-    
-}
+void LanguageLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 
 #pragma mark - TableViewDataSource
 Size LanguageLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)

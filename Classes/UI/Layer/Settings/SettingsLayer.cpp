@@ -265,7 +265,7 @@ bool SettingsLayer::init()
         title->setPosition(Point(size.width / 2, (size.height + subBgSize.height + edge) / 2));
         bg->addChild(title);
         
-        _returnButton = createReturnButton(bg, Vec2(8.0f, 10.0f), [this]() {
+        _returnButton = UniversalButton::createReturnButton(bg, Vec2(8.0f, 10.0f), [this]() {
             if (_languageLayer) {
                 _languageLayer->setVisible(false);
             }
@@ -310,10 +310,7 @@ bool SettingsLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
     return true;
 }
 
-void SettingsLayer::onTouchEnded(Touch *touch, Event *unused_event)
-{
-    
-}
+void SettingsLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 
 #pragma mark - LanguageLayerObserver
 void SettingsLayer::onLanguageLayerSelected(ssize_t idx)
@@ -334,29 +331,6 @@ void SettingsLayer::onRenameLayerRename(Node* pSender, const string& name)
             pSender->removeFromParent();
         }
     }
-}
-
-Node* SettingsLayer::createReturnButton(Node* parent, const Vec2& offset, const function<void()>& callback) const
-{
-    if (parent) {
-        auto button = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Blue, "");
-        parent->addChild(button);
-        
-        const auto& size(button->getContentSize());
-        auto icon = Sprite::create(SettingUI::getResourcePath("icon_jiantou.png"));
-        icon->setPosition(Point(size.width / 2, size.height / 2));
-        button->addChild(icon);
-        
-        const auto& pSize(parent->getContentSize());
-        button->setPosition(Point(offset.x + size.width / 2, pSize.height - (offset.y + size.height / 2)));
-        button->setCallback([callback](Ref*) {
-            if (callback) { callback(); }
-        });
-        
-        return button;
-    }
-    
-    return nullptr;
 }
 
 void SettingsLayer::createContent()

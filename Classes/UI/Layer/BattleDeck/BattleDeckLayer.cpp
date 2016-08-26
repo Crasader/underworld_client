@@ -13,7 +13,7 @@
 #include "BattleDeckUI.h"
 #include "DeckData.h"
 #include "CardSimpleData.h"
-#include "UniversalBoard.h"
+#include "Board.h"
 #include "PureScale9Sprite.h"
 #include "TabButton.h"
 #include "UniversalButton.h"
@@ -75,7 +75,7 @@ bool BattleDeckLayer::init()
 {
     if (LayerColor::initWithColor(LAYER_MASK_COLOR)) {
         const auto& winSize(Director::getInstance()->getWinSize());
-        auto board = UniversalBoard::create(2);
+        auto board = Board::create(2);
         board->setTitle(LocalHelper::getString("ui_deck_battleDeck"));
         board->setExitCallback([this]() {
             DeckManager::getInstance()->saveThisDeckData();
@@ -224,6 +224,14 @@ void BattleDeckLayer::onCardInfoLayerExit(Node* pSender)
     removeFromParent();
 }
 
+#pragma mark - SpellInfoLayerObserver
+void BattleDeckLayer::onSpellInfoLayerExit(Node* pSender)
+{
+    if (pSender) {
+        pSender->removeFromParent();
+    }
+}
+
 #pragma mark - UI
 void BattleDeckLayer::createLeftNode(Node* node)
 {
@@ -231,7 +239,7 @@ void BattleDeckLayer::createLeftNode(Node* node)
         node->setLocalZOrder(zorder_top);
         
         const auto& subSize(node->getContentSize());
-        static const Size topBarSize(subSize.width - secondaryEdge.x * 2, 60);
+        const Size topBarSize(subSize.width - secondaryEdge.x * 2, 60);
         
         // top
         {
@@ -279,16 +287,16 @@ void BattleDeckLayer::createLeftNode(Node* node)
             
             static const float spaceLineCard(13);
             static const int column(DeckData::HeroCount);
+            const float cardSpaceX((subSize.width - column * DeckCard::Width) / (column + 1));
+            const float basePosX(cardSpaceX);
             for (int i = 0; i < column; ++i) {
-                static const float cardSpaceX(20);
-                static const float basePosX((subSize.width - (column * DeckCard::Width + (column - 1) * cardSpaceX)) / 2);
                 const float x = basePosX + (i + 0.5) * DeckCard::Width + i * cardSpaceX;
                 const float y = line->getPositionY() - (line->getContentSize().height / 2 + spaceLineCard + DeckCard::Height / 2);
                 node->addChild(initDeckCard(Point(x, y)));
             }
         }
         
-        static const Size bottomBarSize(topBarSize.width, 36);
+        const Size bottomBarSize(topBarSize.width, 36);
         
         //
         {
@@ -322,16 +330,16 @@ void BattleDeckLayer::createLeftNode(Node* node)
             static const int column((DeckData::SoldierCount - 1) / row + 1);
             static const float cardSpaceY(13);
             
-            static float posY(secondaryEdge.y + bottomBarSize.height + row * DeckCard::Height + (row - 1) * cardSpaceY + spaceLineCard + spaceBarCard);
+            float posY(secondaryEdge.y + bottomBarSize.height + row * DeckCard::Height + (row - 1) * cardSpaceY + spaceLineCard + spaceBarCard);
             auto line = createLine(false);
             line->setPosition(subSize.width / 2, posY);
             node->addChild(line);
             
+            const float basePosY(posY - spaceLineCard);
+            const float cardSpaceX((subSize.width - column * DeckCard::Width) / (column + 1));
+            const float basePosX(cardSpaceX);
             for (int i = 0; i < row; ++i) {
-                static const float basePosY(posY - spaceLineCard);
                 for (int j = 0; j < column; ++j) {
-                    static const float cardSpaceX(5);
-                    static const float basePosX((subSize.width - (column * DeckCard::Width + (column - 1) * cardSpaceX)) / 2);
                     const float x = basePosX + (j + 0.5) * DeckCard::Width + j * cardSpaceX;
                     const float y = basePosY - (i + 0.5) * DeckCard::Height - i * cardSpaceY;
                     node->addChild(initDeckCard(Point(x, y)));
@@ -397,9 +405,15 @@ void BattleDeckLayer::updateAverageElixir()
 #pragma mark - Info
 void BattleDeckLayer::showInfo(int cardId)
 {
-    auto layer = CardInfoLayer::create(cardId);
-    layer->registerObserver(this);
-    addChild(layer);
+    if (DeckManager::CardType::Spell == DeckManager::getCardType(cardId)) {
+        auto layer = SpellInfoLayer::create(cardId);
+        layer->registerObserver(this);
+        addChild(layer);
+    } else {
+        auto layer = CardInfoLayer::create(cardId);
+        layer->registerObserver(this);
+        addChild(layer);
+    }
 }
 
 #pragma mark - Move cards
@@ -427,22 +441,19 @@ void BattleDeckLayer::beginEdit(int cardId)
         BattleDeckUI::readdChild(_deckCards.front()->getParent(), _usedCard);
         _usedCardPoint = _usedCard->getPosition();
         
-        auto dm(DeckManager::getInstance());
-        auto ud(dm->getCardData(_usedCard->getCardId()));
-        if (ud) {
-            vector<DeckCard*> temp;
-            if (ud->isHero()) {
-                for (int i = 0; i < DeckData::HeroCount; ++i) {
-                    temp.push_back(_deckCards.at(i));
-                }
-            } else {
-                for (int i = DeckData::HeroCount; i < _deckCards.size(); ++i) {
-                    temp.push_back(_deckCards.at(i));
-                }
+        vector<DeckCard*> temp;
+        DeckManager::CardType type(DeckManager::getCardType(_usedCard->getCardId()));
+        if (DeckManager::CardType::Hero == type) {
+            for (int i = 0; i < DeckData::HeroCount; ++i) {
+                temp.push_back(_deckCards.at(i));
             }
-            temp.push_back(_usedCard);
-            shake(temp);
-        } else { CC_ASSERT(false); }
+        } else {
+            for (int i = DeckData::HeroCount; i < _deckCards.size(); ++i) {
+                temp.push_back(_deckCards.at(i));
+            }
+        }
+        temp.push_back(_usedCard);
+        shake(temp);
     } else {
         shake({_deckCards});
     }
@@ -475,18 +486,14 @@ void BattleDeckLayer::exchangeCard(int idxFrom, int idxTo)
         auto dm(DeckManager::getInstance());
         auto from(_deckCards.at(idxFrom));
         auto to(_deckCards.at(idxTo));
-        auto fd(dm->getCardData(from->getCardId()));
-        auto td(dm->getCardData(to->getCardId()));
-        if (fd && td) {
-            if (fd->isHero() == td->isHero()) {
-                DeckManager::getInstance()->exchangeCard(from->getCardId(), to->getCardId());
-                moveToDeck(from, idxTo);
-                moveToDeck(to, idxFrom);
-            } else {
-                exchangeCardCancelled(idxFrom);
-                MessageBox("英雄与士兵卡牌无法互换", nullptr);
-            }
-        } else { CC_ASSERT(false); }
+        if (dm->getCardType(from->getCardId()) == dm->getCardType(to->getCardId())) {
+            DeckManager::getInstance()->exchangeCard(from->getCardId(), to->getCardId());
+            moveToDeck(from, idxTo);
+            moveToDeck(to, idxFrom);
+        } else {
+            exchangeCardCancelled(idxFrom);
+            MessageBox("英雄与士兵卡牌无法互换", nullptr);
+        }
     }
 }
 
@@ -505,34 +512,30 @@ void BattleDeckLayer::useCard(int idx, bool fromDeck)
         const auto uid(_usedCard->getCardId());
         const auto rid(replaced->getCardId());
         auto dm(DeckManager::getInstance());
-        auto ud(dm->getCardData(uid));
-        auto rd(dm->getCardData(rid));
-        if (ud && rd) {
-            if (ud->isHero() == rd->isHero()) {
-                if (_cardPreview) {
-                    _cardPreview->readdToScrollView(replaced);
-                }
-                
-                endEdit();
-                
-                DeckManager::getInstance()->useCard(uid, rid);
-                moveToDeck(_usedCard, idx);
-                if (_cardPreview) {
-                    _cardPreview->removeFoundCard(uid, false);
-                    _cardPreview->insertFoundCard(rid, replaced);
-                    // this function will move the replaced card
-                    _cardPreview->sortAndRealign();
-                }
-                
-                updateAverageElixir();
-            } else {
-                if (fromDeck) {
-                    exchangeCardCancelled(idx);
-                } else {
-                    useCardCancelled();
-                }
-                MessageBox("英雄与士兵卡牌无法互换", nullptr);
+        if (dm->getCardType(uid) == dm->getCardType(rid)) {
+            if (_cardPreview) {
+                _cardPreview->readdToScrollView(replaced);
             }
+            
+            endEdit();
+            
+            DeckManager::getInstance()->useCard(uid, rid);
+            moveToDeck(_usedCard, idx);
+            if (_cardPreview) {
+                _cardPreview->removeFoundCard(uid, false);
+                _cardPreview->insertFoundCard(rid, replaced);
+                // this function will move the replaced card
+                _cardPreview->sortAndRealign();
+            }
+            
+            updateAverageElixir();
+        } else {
+            if (fromDeck) {
+                exchangeCardCancelled(idx);
+            } else {
+                useCardCancelled();
+            }
+            MessageBox("英雄与士兵卡牌无法互换", nullptr);
         }
     }
 }

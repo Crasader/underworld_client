@@ -33,6 +33,7 @@ public:
     
 public:
     static UniversalButton* create(BSize size, BType type, const std::string& title);
+    static UniversalButton* createReturnButton(Node* parent, const Vec2& offset, const std::function<void()>& callback);
     virtual ~UniversalButton();
     
     void setType(BType type);

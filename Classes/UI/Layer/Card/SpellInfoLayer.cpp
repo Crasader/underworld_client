@@ -1,26 +1,27 @@
 //
-//  CardInfoLayer.cpp
+//  SpellInfoLayer.cpp
 //  Underworld_Client
 //
-//  Created by Andy on 16/8/19.
+//  Created by Andy on 16/8/26.
 //  Copyright (c) 2016 Mofish Studio. All rights reserved.
 //
 
-#include "CardInfoLayer.h"
+#include "SpellInfoLayer.h"
 #include "DevelopCard.h"
 #include "CardPropertyNode.h"
 #include "DeckManager.h"
-#include "Board.h"
+#include "MediumBoard.h"
 #include "UniversalButton.h"
 #include "CocosGlobal.h"
+#include "LocalHelper.h"
 #include "CardSimpleData.h"
 
 using namespace std;
 
-#pragma mark - CardInfoLayer
-CardInfoLayer* CardInfoLayer::create(int cardId)
+#pragma mark - SpellInfoLayer
+SpellInfoLayer* SpellInfoLayer::create(int cardId)
 {
-    auto ret = new (nothrow) CardInfoLayer();
+    auto ret = new (nothrow) SpellInfoLayer();
     if (ret && ret->init(cardId)) {
         ret->autorelease();
         return ret;
@@ -30,45 +31,41 @@ CardInfoLayer* CardInfoLayer::create(int cardId)
     return nullptr;
 }
 
-CardInfoLayer::CardInfoLayer()
+SpellInfoLayer::SpellInfoLayer()
 :_observer(nullptr)
 ,_icon(nullptr)
-,_level(nullptr)
-,_profession(nullptr)
 ,_description(nullptr)
 ,_data(nullptr) {}
 
-CardInfoLayer::~CardInfoLayer()
+SpellInfoLayer::~SpellInfoLayer()
 {
     removeAllChildren();
 }
 
-bool CardInfoLayer::init(int cardId)
+bool SpellInfoLayer::init(int cardId)
 {
     if (LayerColor::initWithColor(LAYER_MASK_COLOR)) {
         _data = DeckManager::getInstance()->getCardData(cardId);
         
         const auto& winSize(Director::getInstance()->getWinSize());
-        auto board = Board::create(2);
+        auto board = MediumBoard::create();
         board->setTitle(_data->getName());
         board->setExitCallback([this]() {
             if (_observer) {
-                _observer->onCardInfoLayerExit(this);
+                _observer->onSpellInfoLayerExit(this);
             }
+        });
+        board->setButtonTitle(LocalHelper::getString("Upgrade"));
+        board->setButtonCallback([this]() {
+            
         });
         board->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(board);
         
-        UniversalButton::createReturnButton(board, Vec2(8.0f, 10.0f), [this]() {
-            if (_observer) {
-                _observer->onCardInfoLayerReturn(this);
-            }
-        });
-        
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
-        eventListener->onTouchBegan = CC_CALLBACK_2(CardInfoLayer::onTouchBegan, this);
-        eventListener->onTouchEnded = CC_CALLBACK_2(CardInfoLayer::onTouchEnded, this);
+        eventListener->onTouchBegan = CC_CALLBACK_2(SpellInfoLayer::onTouchBegan, this);
+        eventListener->onTouchEnded = CC_CALLBACK_2(SpellInfoLayer::onTouchEnded, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
         
         return true;
@@ -77,26 +74,19 @@ bool CardInfoLayer::init(int cardId)
     return false;
 }
 
-bool CardInfoLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
+bool SpellInfoLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
-    const auto& point(pTouch->getLocation());
-    Rect rect(getBoundingBox());
-    rect.origin = getParent()->convertToWorldSpace(rect.origin);
-    if (rect.containsPoint(point)) {
-        return true;
-    }
-    
-    return false;
+    return true;
 }
 
-void CardInfoLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
+void SpellInfoLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 
-void CardInfoLayer::registerObserver(CardInfoLayerObserver *observer)
+void SpellInfoLayer::registerObserver(SpellInfoLayerObserver *observer)
 {
     _observer = observer;
 }
 
-int CardInfoLayer::getCard() const
+int SpellInfoLayer::getCard() const
 {
     if (_icon) {
         return _icon->getCardId();

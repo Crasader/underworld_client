@@ -234,7 +234,4 @@ bool DefeatLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
     return true;
 }
 
-void DefeatLayer::onTouchEnded(Touch *touch, Event *unused_event)
-{
-    
-}
+void DefeatLayer::onTouchEnded(Touch *touch, Event *unused_event) {}

@@ -1,20 +1,20 @@
 //
-//  UniversalBoard.cpp
+//  Board.cpp
 //  Underworld_Client
 //
 //  Created by Andy on 16/8/23.
 //  Copyright (c) 2016 Mofish Studio. All rights reserved.
 //
 
-#include "UniversalBoard.h"
+#include "Board.h"
 #include "CocosUtils.h"
 #include "PureScale9Sprite.h"
 
 using namespace std;
 
-UniversalBoard* UniversalBoard::create(int blocks)
+Board* Board::create(int blocks)
 {
-    auto ret = new (nothrow) UniversalBoard();
+    auto ret = new (nothrow) Board();
     if (ret && ret->init(blocks)) {
         ret->autorelease();
         return ret;
@@ -24,21 +24,13 @@ UniversalBoard* UniversalBoard::create(int blocks)
     return nullptr;
 }
 
-UniversalBoard::UniversalBoard()
-:_title(nullptr)
-,_exitButton(nullptr)
-,_callback(nullptr) {}
+Board::Board() {}
 
-UniversalBoard::~UniversalBoard()
-{
-    removeAllChildren();
-}
+Board::~Board() {}
 
-bool UniversalBoard::init(int blocks)
+bool Board::init(int blocks)
 {
-    if (Sprite::init()) {
-        setTexture(CocosUtils::getResourcePath("ui_background_5.png"));
-        
+    if (UniversalBoard::init("ui_background_5.png")) {
         const auto& size(getContentSize());
         static const Size subSize(992, 513);
         const float edge((size.width - subSize.width) / 2);
@@ -72,43 +64,13 @@ bool UniversalBoard::init(int blocks)
             }
         }
         
-        _exitButton = CocosUtils::createRedExitButton(this, [this]() {
-            if (_callback) {
-                _callback();
-            } else if (_parent) {
-                _parent->removeFromParent();
-            } else {
-                removeFromParent();
-            }
-        });
-        
-        auto title = CocosUtils::createLabel("Untitled", TITLE_FONT_SIZE);
-        title->setAnchorPoint(Point::ANCHOR_MIDDLE);
-        title->setPosition(Point(size.width / 2, (size.height + subSize.height + edge) / 2));
-        addChild(title);
-        _title = title;
-        
         return true;
     }
     
     return false;
 }
 
-void UniversalBoard::setTitle(const string& title)
-{
-    if (_title) {
-        _title->setString(title);
-    }
-}
-
-void UniversalBoard::setExitCallback(const Callback& callback)
-{
-    if (_exitButton) {
-        _callback = callback;
-    }
-}
-
-Node* UniversalBoard::getSubNode(int idx) const
+Node* Board::getSubNode(int idx) const
 {
     if (_subNodes.size() > idx) {
         return _subNodes.at(idx);

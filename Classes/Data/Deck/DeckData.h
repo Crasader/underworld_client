@@ -16,8 +16,8 @@
 class DeckData
 {
 public:
-    static constexpr int HeroCount = 2;
-    static constexpr int SoldierCount = 8;
+    static constexpr int HeroCount = 3;
+    static constexpr int SoldierCount = 6;
     DeckData(const std::string& serializedString);
     virtual ~DeckData();
     

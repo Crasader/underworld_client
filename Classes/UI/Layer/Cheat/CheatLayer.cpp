@@ -114,10 +114,7 @@ bool CheatLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
     return false;
 }
 
-void CheatLayer::onTouchEnded(Touch *touch, Event *unused_event)
-{
-    
-}
+void CheatLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 
 void CheatLayer::setNodePosition(int idx, Node* node)
 {

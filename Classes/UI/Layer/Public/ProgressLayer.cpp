@@ -89,7 +89,4 @@ bool ProgressLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
     return true;
 }
 
-void ProgressLayer::onTouchEnded(Touch *touch, Event *unused_event)
-{
-    
-}
+void ProgressLayer::onTouchEnded(Touch *touch, Event *unused_event) {}

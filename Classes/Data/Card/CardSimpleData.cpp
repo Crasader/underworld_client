@@ -71,11 +71,6 @@ int CardSimpleData::getQuality() const
     return 0;
 }
 
-bool CardSimpleData::isHero() const
-{
-    return getCost() <= 0;
-}
-
 static const string emptyString("");
 
 const string& CardSimpleData::getName() const

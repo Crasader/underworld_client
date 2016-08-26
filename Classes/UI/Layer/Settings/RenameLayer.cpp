@@ -12,7 +12,7 @@
 #include "SettingUI.h"
 #include "LocalHelper.h"
 #include "UniversalButton.h"
-#include "PureScale9Sprite.h"
+#include "MediumBoard.h"
 
 using namespace std;
 using namespace ui;
@@ -48,18 +48,19 @@ bool RenameLayer::init()
 {
     if (LayerColor::initWithColor(LAYER_MASK_COLOR)) {
         const auto& winSize(Director::getInstance()->getWinSize());
-        auto bg = Sprite::create(SettingUI::getResourcePath("ui_background_3.png"));
+        auto bg = MediumBoard::create();
+        bg->setTitle(LocalHelper::getString("ui_rename_title"));
+        bg->setButtonTitle(LocalHelper::getString("ui_rename_buttonTitle"));
+        bg->setButtonCallback([this]() {
+            if (_observer) {
+                _observer->onRenameLayerRename(this, _editBox->getText());
+            }
+        });
         bg->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(bg);
         
-        auto subNode = PureScale9Sprite::create(PureScale9Sprite::Type::BlueLight);
-        subNode->setContentSize(Size(579, 202));
-        bg->addChild(subNode);
-        
-        const auto& size(bg->getContentSize());
+        auto subNode = bg->getSubNode();
         const auto& subBgSize(subNode->getContentSize());
-        const float edge((size.height - subBgSize.height) / 2);
-        subNode->setPosition(Point(size.width / 2, subBgSize.height / 2 + edge));
         
         // sub node
         static const float edgeY(10.0f);
@@ -101,24 +102,6 @@ bool RenameLayer::init()
             _editBox = eb;
         }
         
-        CocosUtils::createRedExitButton(bg, [this]() {
-            removeFromParent();
-        });
-        
-        auto title = CocosUtils::createLabel(LocalHelper::getString("ui_rename_title"), TITLE_FONT_SIZE);
-        title->setAnchorPoint(Point::ANCHOR_MIDDLE);
-        title->setPosition(Point(size.width / 2, (size.height + subBgSize.height + edge) / 2));
-        bg->addChild(title);
-        
-        auto button = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Blue, LocalHelper::getString("ui_rename_buttonTitle"));
-        button->setCallback([this](Ref*) {
-            if (_observer) {
-                _observer->onRenameLayerRename(this, _editBox->getText());
-            }
-        });
-        button->setPosition(Point(size.width / 2, edge / 2));
-        bg->addChild(button);
-        
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
         eventListener->onTouchBegan = CC_CALLBACK_2(RenameLayer::onTouchBegan, this);
@@ -136,10 +119,7 @@ bool RenameLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
     return true;
 }
 
-void RenameLayer::onTouchEnded(Touch *touch, Event *unused_event)
-{
-    
-}
+void RenameLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 
 #pragma mark - EditBoxDelegate
 void RenameLayer::editBoxReturn(EditBox* editBox)

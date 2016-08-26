@@ -11,7 +11,7 @@
 #include "CocosUtils.h"
 #include "DevelopUI.h"
 #include "LocalHelper.h"
-#include "UniversalBoard.h"
+#include "Board.h"
 
 using namespace std;
 using namespace ui;
@@ -49,7 +49,7 @@ bool DevelopLayer::init()
 {
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR)) {
         const auto& winSize(Director::getInstance()->getWinSize());
-        auto board = UniversalBoard::create(1);
+        auto board = Board::create(1);
         board->setTitle(LocalHelper::getString("ui_develop_title"));
         board->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(board);
@@ -75,10 +75,7 @@ bool DevelopLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
     return true;
 }
 
-void DevelopLayer::onTouchEnded(Touch *touch, Event *unused_event)
-{
-    
-}
+void DevelopLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 
 #pragma mark - DevelopCardObserver
 void DevelopLayer::onDevelopCardClicked(DevelopCard* pSender, bool canUpgrade)
@@ -105,9 +102,15 @@ void DevelopLayer::onCardPreviewClickedOpButton(DeckCardOpType type, int cardId)
     if (DeckCardOpType::Upgrade == type) {
         
     } else if (DeckCardOpType::Info == type) {
-        auto layer = CardInfoLayer::create(cardId);
-        layer->registerObserver(this);
-        addChild(layer);
+        if (DeckManager::CardType::Spell == DeckManager::getCardType(cardId)) {
+            auto layer = SpellInfoLayer::create(cardId);
+            layer->registerObserver(this);
+            addChild(layer);
+        } else {
+            auto layer = CardInfoLayer::create(cardId);
+            layer->registerObserver(this);
+            addChild(layer);
+        }
     }
 }
 
@@ -126,4 +129,12 @@ void DevelopLayer::onCardInfoLayerExit(Node* pSender)
     }
     
     removeFromParent();
+}
+
+#pragma mark - SpellInfoLayerObserver
+void DevelopLayer::onSpellInfoLayerExit(Node* pSender)
+{
+    if (pSender) {
+        pSender->removeFromParent();
+    }
 }

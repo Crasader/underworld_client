@@ -23,6 +23,13 @@ class DeckManager
 public:
     static constexpr int DecksMaxCount = 3;
     
+    enum class CardType {
+        Hero,
+        Soldier,
+        Spell,
+        Building,
+    };
+    
     enum class FeatureType {
         Develop,
         Deck
@@ -37,6 +44,8 @@ public:
     
     static DeckManager* getInstance();
     static void purge();
+    
+    static CardType getCardType(int cardId);
     
     void parse(const rapidjson::Value& jsonDict);
     
