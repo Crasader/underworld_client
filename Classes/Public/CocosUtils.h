@@ -47,14 +47,6 @@ namespace CocosUtils
     
     void cleanMemory();
     
-    // test
-    cocos2d::Sprite* createPureColorSprite(const cocos2d::Size& size, const cocos2d::Color4B& color);
-    
-    // pure background
-    cocos2d::Node* createBackground(const cocos2d::Size& size);
-    cocos2d::Node* createSubBackground(const cocos2d::Size& size);
-    cocos2d::Node* createPureBar(const cocos2d::Size& size);
-    
     // animation
     cocos2d::Node* getAnimationNode(const std::string& file, int idx);
     float playAnimation(cocos2d::Node* node,

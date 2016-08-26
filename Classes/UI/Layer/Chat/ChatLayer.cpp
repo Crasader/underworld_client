@@ -13,6 +13,8 @@
 #include "LocalHelper.h"
 #include "SoundManager.h"
 #include "LocalHelper.h"
+#include "PureNode.h"
+#include "PureScale9Sprite.h"
 #include "XTableViewCell.h"
 #include "TabButton.h"
 
@@ -73,7 +75,8 @@ bool ChatLayer::TableNode::init(TableViewDataSource* source, const Size& size)
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         setContentSize(size);
         
-        auto background = CocosUtils::createSubBackground(size);
+        auto background = PureScale9Sprite::create(PureScale9Sprite::Type::BlueLight);
+        background->setContentSize(size);
         background->setPosition(Point(size.width / 2, size.height / 2));
         addChild(background);
         
@@ -312,7 +315,7 @@ bool ChatLayer::init()
         });
         
         // 2. background
-        _background = CocosUtils::createBackground(size);
+        _background = PureNode::create(PureNode::Type::Black, size);
         _background->setPosition(Point(viewWidth / 2, winSize.height / 2));
         addChild(_background);
         

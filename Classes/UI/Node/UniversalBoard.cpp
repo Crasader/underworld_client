@@ -8,6 +8,7 @@
 
 #include "UniversalBoard.h"
 #include "CocosUtils.h"
+#include "PureScale9Sprite.h"
 
 using namespace std;
 
@@ -61,7 +62,8 @@ bool UniversalBoard::init(int blocks)
             float x(edge);
             for (int i = 0; i < widths.size(); ++i) {
                 const float width(widths.at(i));
-                auto subNode = CocosUtils::createSubBackground(Size(width, subSize.height));
+                auto subNode = PureScale9Sprite::create(PureScale9Sprite::Type::BlueLight);
+                subNode->setContentSize(Size(width, subSize.height));
                 subNode->setPosition(x + width / 2, posY);
                 addChild(subNode);
                 _subNodes.push_back(subNode);

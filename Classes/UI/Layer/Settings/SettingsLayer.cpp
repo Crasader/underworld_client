@@ -14,6 +14,7 @@
 #include "LocalHelper.h"
 #include "SoundManager.h"
 #include "UniversalButton.h"
+#include "PureScale9Sprite.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "ApiBridge.h"
 #endif
@@ -245,7 +246,8 @@ bool SettingsLayer::init()
         bg->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(bg);
         
-        auto subNode = CocosUtils::createSubBackground(subNodeSize);
+        auto subNode = PureScale9Sprite::create(PureScale9Sprite::Type::BlueLight);
+        subNode->setContentSize(subNodeSize);
         bg->addChild(subNode);
         _subNode = subNode;
         

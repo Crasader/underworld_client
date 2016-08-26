@@ -12,6 +12,7 @@
 #include "SettingUI.h"
 #include "LocalHelper.h"
 #include "UniversalButton.h"
+#include "PureScale9Sprite.h"
 
 using namespace std;
 
@@ -53,7 +54,8 @@ bool LanguageConfirmationLayer::init(ssize_t idx)
         addChild(bg);
         
         static const Size subNodeSize(359, 174);
-        auto subNode = CocosUtils::createSubBackground(subNodeSize);
+        auto subNode = PureScale9Sprite::create(PureScale9Sprite::Type::BlueLight);
+        subNode->setContentSize(subNodeSize);
         bg->addChild(subNode);
         
         const auto& size(bg->getContentSize());

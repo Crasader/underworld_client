@@ -11,6 +11,7 @@
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "UnitCardDeck.h"
+#include "PureNode.h"
 #include "SoundManager.h"
 
 using namespace std;
@@ -404,7 +405,7 @@ void MapUILayer::createUserInfo(bool left, const string& account)
 {
     const Size& winSize = Director::getInstance()->getWinSize();
     
-    Sprite* nameBg = CocosUtils::createPureColorSprite(Size(163, 26), LAYER_MASK_COLOR);
+    auto nameBg = PureNode::create(PureNode::Type::Gray, Size(163, 26));
     addChild(nameBg);
     
     const Size& nameBgSize = nameBg->getContentSize();

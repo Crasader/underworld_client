@@ -14,6 +14,7 @@
 #include "DeckData.h"
 #include "CardSimpleData.h"
 #include "UniversalBoard.h"
+#include "PureScale9Sprite.h"
 #include "TabButton.h"
 #include "UniversalButton.h"
 
@@ -234,7 +235,8 @@ void BattleDeckLayer::createLeftNode(Node* node)
         
         // top
         {
-            auto bar = CocosUtils::createPureBar(topBarSize);
+            auto bar = PureScale9Sprite::create(PureScale9Sprite::Type::BlueDeep);
+            bar->setContentSize(topBarSize);
             bar->setPosition(subSize.width / 2, subSize.height - (secondaryEdge.y + topBarSize.height / 2));
             node->addChild(bar);
             
@@ -290,7 +292,8 @@ void BattleDeckLayer::createLeftNode(Node* node)
         
         //
         {
-            auto bar = CocosUtils::createPureBar(bottomBarSize);
+            auto bar = PureScale9Sprite::create(PureScale9Sprite::Type::BlueDeep);
+            bar->setContentSize(bottomBarSize);
             bar->setPosition(subSize.width / 2, bottomBarSize.height / 2 + secondaryEdge.y);
             node->addChild(bar, zorder_top);
             

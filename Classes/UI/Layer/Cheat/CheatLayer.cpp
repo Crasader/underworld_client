@@ -9,6 +9,7 @@
 #include "CheatLayer.h"
 #include "CocosUtils.h"
 #include "CheatConfiguration.h"
+#include "PureNode.h"
 
 using namespace std;
 
@@ -62,7 +63,7 @@ bool CheatLayer::init(const function<void(Ref*)>& callback)
 {
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR)) {
         setContentSize(size);
-        auto bg = CocosUtils::createBackground(size);
+        auto bg = PureNode::create(PureNode::Type::Black, size);
         bg->setPosition(size.width / 2, size.height / 2);
         addChild(bg);
         _bg = bg;

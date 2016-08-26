@@ -12,6 +12,7 @@
 #include "SettingUI.h"
 #include "LocalHelper.h"
 #include "UniversalButton.h"
+#include "PureScale9Sprite.h"
 
 using namespace std;
 using namespace ui;
@@ -51,7 +52,8 @@ bool RenameLayer::init()
         bg->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(bg);
         
-        auto subNode = CocosUtils::createSubBackground(Size(579, 202));
+        auto subNode = PureScale9Sprite::create(PureScale9Sprite::Type::BlueLight);
+        subNode->setContentSize(Size(579, 202));
         bg->addChild(subNode);
         
         const auto& size(bg->getContentSize());

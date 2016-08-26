@@ -9,6 +9,7 @@
 #include "CardPreview.h"
 #include "AbstractCard.h"
 #include "UniversalButton.h"
+#include "PureScale9Sprite.h"
 #include "CardSet.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
@@ -74,13 +75,14 @@ CardPreview::CardPreview(DeckManager::FeatureType type, Node* parent, CardPrevie
     }
     
     const auto& size(parent->getContentSize());
-    const Size barSize(size.width - 6, 60);
+    const Size barSize(size.width - secondaryEdge.x * 2, 60);
     auto dm(DeckManager::getInstance());
     _sortIdx = getSortTypeIdx(dm->getSortType(type));
     
     // top
     {
-        auto bar = CocosUtils::createPureBar(barSize);
+        auto bar = PureScale9Sprite::create(PureScale9Sprite::Type::BlueDeep);
+        bar->setContentSize(barSize);
         bar->setPosition(size.width / 2, size.height - (secondaryEdge.y + barSize.height / 2));
         parent->addChild(bar);
         
