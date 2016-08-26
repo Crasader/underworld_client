@@ -21,6 +21,7 @@
 #include "DataManager.h"
 #include "BinaryJsonTool.h"
 #include "CoreUtils.h"
+#include "UWJsonHelper.h"
 
 #define MESSAGE_CODE_LAUNCH_2_S (2)
 #define MESSAGE_CODE_LAUNCH_2_C (3)
@@ -213,19 +214,19 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
     NetworkMessageLaunch2C* msg = new NetworkMessageLaunch2C();
     
     /** 0. battle Id */
-    battleid = cocostudio::DICTOOL->getIntValue_json(root, MESSAGE_KEY_BATTLE_ID, INVALID_VALUE);
+    battleid = UWJsonHelper::getIntValue_json(root, MESSAGE_KEY_BATTLE_ID, INVALID_VALUE);
     
     /** 0. map Id */
-    int mapId = cocostudio::DICTOOL->getIntValue_json(root, MESSAGE_KEY_MAP_ID, 0);
+    int mapId = UWJsonHelper::getIntValue_json(root, MESSAGE_KEY_MAP_ID, 0);
     msg->setMapId(mapId);
     
     /** 1. faction count */
     FactionSetting fs;
-    int factionCount = cocostudio::DICTOOL->getIntValue_json(root, MESSAGE_KEY_FAC_COUNT, 0);
+    int factionCount = UWJsonHelper::getIntValue_json(root, MESSAGE_KEY_FAC_COUNT, 0);
     fs.setFactionCount(factionCount);
     
     /** 2. this faction */
-    int thisFaction = cocostudio::DICTOOL->getIntValue_json(root, MESSAGE_KEY_FAC_INDEX, 0);
+    int thisFaction = UWJsonHelper::getIntValue_json(root, MESSAGE_KEY_FAC_INDEX, 0);
     fs.setThisFactionIndex(thisFaction);
     
     /** 3. faction control type */
@@ -235,9 +236,9 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
     }
     
     /** 4. teams */
-    if (cocostudio::DICTOOL->checkObjectExist_json(root, MESSAGE_KEY_TEAMS)) {
+    if (UWJsonHelper::checkObjectExist_json(root, MESSAGE_KEY_TEAMS)) {
         std::string teamString =
-            cocostudio::DICTOOL->getStringValue_json(root, MESSAGE_KEY_TEAMS);
+            UWJsonHelper::getStringValue_json(root, MESSAGE_KEY_TEAMS);
         if (!teamString.empty()) {
             std::vector<string> teamVec;
             ::Utils::split(teamVec, teamString, "_");
@@ -248,12 +249,12 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
     }
     
     /** 5. map Indexs */
-    if (cocostudio::DICTOOL->checkObjectExist_json(root, MESSAGE_KEY_MAP_INDEXS)) {
+    if (UWJsonHelper::checkObjectExist_json(root, MESSAGE_KEY_MAP_INDEXS)) {
         std::string mapIndexs =
-            cocostudio::DICTOOL->getStringValue_json(root, MESSAGE_KEY_MAP_INDEXS);
+            UWJsonHelper::getStringValue_json(root, MESSAGE_KEY_MAP_INDEXS);
         if (!mapIndexs.empty()) {
             std::vector<string> mapIndexsVec;
-            ::Utils::split(mapIndexsVec, mapIndexs, "_");
+            UnderWorldCoreUtils::split(mapIndexsVec, mapIndexs, "_");
             for (int i = 0; i < mapIndexsVec.size(); ++i) {
                 fs.setMapIndex(i, atoi(mapIndexsVec[i].c_str()));
             }
@@ -264,9 +265,11 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
     std::vector<std::vector<int> > cardNames;
     std::vector<GameModeHMMSetting::InitUnitList> initUnits;
     std::vector<std::vector<UnitSetting> > unitPools;
-    if (DICTOOL->checkObjectExist_json(root, MESSAGE_KEY_PLAYERS)) {
+    if (UWJsonHelper::checkObjectExist_json(root, MESSAGE_KEY_PLAYERS)
+        && UWJsonHelper::getSubDictionary_json(root, MESSAGE_KEY_PLAYERS).IsArray()) {
         const rapidjson::Value& players =
-            DICTOOL->getSubDictionary_json(root, MESSAGE_KEY_PLAYERS);
+            UWJsonHelper::getSubDictionary_json(root, MESSAGE_KEY_PLAYERS);
+        
         cardNames.resize(players.Size());
         initUnits.resize(players.Size());
         unitPools.resize(players.Size());
@@ -275,8 +278,8 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
             GameContentSetting gcs;
             
             /** 6.1 player's cards */
-            if (DICTOOL->checkObjectExist_json(player, MESSAGE_KEY_CARDS)) {
-                std::string cards = DICTOOL->getStringValue_json(player, MESSAGE_KEY_CARDS);
+            if (UWJsonHelper::checkObjectExist_json(player, MESSAGE_KEY_CARDS)) {
+                std::string cards = UWJsonHelper::getStringValue_json(player, MESSAGE_KEY_CARDS);
                 if (!cards.empty()) {
                     std::vector<std::string> cardsVes;
                     UnderWorldCoreUtils::split(cardsVes, cards, "|");
@@ -289,8 +292,8 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
             }
             
             /** 6.2 player's init units */
-            if (DICTOOL->checkObjectExist_json(player, MESSAGE_KEY_INIT_UNITS)) {
-                std::string initUnitsString = DICTOOL->getStringValue_json(player, MESSAGE_KEY_INIT_UNITS);
+            if (UWJsonHelper::checkObjectExist_json(player, MESSAGE_KEY_INIT_UNITS)) {
+                std::string initUnitsString = UWJsonHelper::getStringValue_json(player, MESSAGE_KEY_INIT_UNITS);
                 if (!initUnitsString.empty()) {
                     static std::vector<std::string> initUnitsVec;
                     initUnitsVec.clear();
@@ -310,8 +313,8 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
             }
             
             /** 6.3 player's unit pool */
-            if (DICTOOL->checkObjectExist_json(player, MESSAGE_KEY_UNIT_POOL)) {
-                std::string unitPoolString = DICTOOL->getStringValue_json(player, MESSAGE_KEY_UNIT_POOL);
+            if (UWJsonHelper::checkObjectExist_json(player, MESSAGE_KEY_UNIT_POOL)) {
+                std::string unitPoolString = UWJsonHelper::getStringValue_json(player, MESSAGE_KEY_UNIT_POOL);
                 if (!unitPoolString.empty()) {
                     static std::vector<std::string> unitPoolVec;
                     unitPoolVec.clear();
@@ -355,13 +358,13 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
 
 static bool parseSync2CMsg(const rapidjson::Value& root,
     std::vector<NetworkMessage *> &output, int& battleid) {
-    if (!DICTOOL->checkObjectExist_json(root, MESSAGE_KEY_START_FRAME)
-        || !DICTOOL->checkObjectExist_json(root, MESSAGE_KEY_END_FRAME)) {
+    if (!UWJsonHelper::checkObjectExist_json(root, MESSAGE_KEY_START_FRAME)
+        || !UWJsonHelper::checkObjectExist_json(root, MESSAGE_KEY_END_FRAME)) {
         return false;
     }
     
-    int startFrame = DICTOOL->getIntValue_json(root, MESSAGE_KEY_START_FRAME, 0);
-    int endFrame = DICTOOL->getIntValue_json(root, MESSAGE_KEY_END_FRAME, 0);
+    int startFrame = UWJsonHelper::getIntValue_json(root, MESSAGE_KEY_START_FRAME, 0);
+    int endFrame = UWJsonHelper::getIntValue_json(root, MESSAGE_KEY_END_FRAME, 0);
     
     assert(GameConstants::isKeyFrame(startFrame)
         && GameConstants::isKeyFrame(endFrame)
@@ -374,21 +377,25 @@ static bool parseSync2CMsg(const rapidjson::Value& root,
         syncMsgs.push_back(new NetworkMessageSync(i));
     }
     
-    if (DICTOOL->checkObjectExist_json(root, MESSAGE_KEY_COMMANDS)) {
-        const rapidjson::Value& commands = DICTOOL->getSubDictionary_json(root, MESSAGE_KEY_COMMANDS);
+    if (UWJsonHelper::checkObjectExist_json(root, MESSAGE_KEY_COMMANDS)
+        && UWJsonHelper::getSubDictionary_json(root, MESSAGE_KEY_COMMANDS).IsArray()) {
+        const rapidjson::Value& commands = UWJsonHelper::getSubDictionary_json(root, MESSAGE_KEY_COMMANDS);
         for (int i = 0; i < commands.Size(); ++i) {
-            int frame = DICTOOL->getIntValue_json(commands[i], MESSAGE_KEY_FRAME);
-            int type = DICTOOL->getIntValue_json(commands[i], MESSAGE_KEY_TYPE);
+            int frame = UWJsonHelper::getIntValue_json(commands[i], MESSAGE_KEY_FRAME);
+            int type = UWJsonHelper::getIntValue_json(commands[i], MESSAGE_KEY_TYPE);
             
             assert(frame <= endFrame && frame >= startFrame);
             //Temp code
-            int handIndex = DICTOOL->getIntValue_json(commands[i], MESSAGE_KEY_HAND_INDEX, 0);
-            int factionIndex = DICTOOL->getIntValue_json(commands[i], MESSAGE_KEY_FAC_INDEX, 0);
+            int handIndex = UWJsonHelper::getIntValue_json(commands[i], MESSAGE_KEY_HAND_INDEX, 0);
+            int factionIndex = UWJsonHelper::getIntValue_json(commands[i], MESSAGE_KEY_FAC_INDEX, 0);
             Coordinate32 pos;
-            if (DICTOOL->checkObjectExist_json(commands[i], MESSAGE_KEY_POS)) {
-                std::string posString = DICTOOL->getStringValue_json(commands[i], MESSAGE_KEY_POS);
-                pos.x = atoi(posString.substr(0, posString.find("_")).c_str());
-                pos.y = atoi(posString.substr(posString.find("_") + 1).c_str());
+            if (UWJsonHelper::checkObjectExist_json(commands[i], MESSAGE_KEY_POS)) {
+                std::string posString = UWJsonHelper::getStringValue_json(commands[i], MESSAGE_KEY_POS);
+                std::string::size_type index = posString.find("_");
+                if (index != std::string::npos && index != posString.size() - 1) {
+                    pos.x = atoi(posString.substr(0, posString.find("_")).c_str());
+                    pos.y = atoi(posString.substr(posString.find("_") + 1).c_str());
+                }
             }
             OutsideHMMCommand* cmd = new OutsideHMMCommand(handIndex,
                 factionIndex, pos);
@@ -401,7 +408,7 @@ static bool parseSync2CMsg(const rapidjson::Value& root,
     }
     
     //TODO: server finished,client do not reconnect
-    bool finished = DICTOOL->getBooleanValue_json(root, MESSAGE_KEY_FINISHED, false);
+    bool finished = UWJsonHelper::getBooleanValue_json(root, MESSAGE_KEY_FINISHED, false);
     if (finished) {
         battleid = INVALID_VALUE;
     }
@@ -563,11 +570,11 @@ void ClientTCPNetwork::parseResponse2Msg(
     document.Parse<rapidjson::kParseNoFlags>(data.c_str());
     //DataManager::getInstance()->getBinaryJsonTool()->decode(data, document);
     
-    if (!cocostudio::DICTOOL->checkObjectExist_json(document, MESSAGE_KEY_CODE)) {
+    if (!UWJsonHelper::checkObjectExist_json(document, MESSAGE_KEY_CODE)) {
         return;
     }
     
-    int respCode = cocostudio::DICTOOL->getIntValue_json(document, MESSAGE_KEY_CODE);
+    int respCode = UWJsonHelper::getIntValue_json(document, MESSAGE_KEY_CODE);
     
     if (respCode == MESSAGE_CODE_LAUNCH_2_C) {
         parseLaunch2CMsg(document, output, _battleid);
