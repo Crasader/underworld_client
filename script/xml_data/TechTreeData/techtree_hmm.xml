@@ -28,6 +28,9 @@
 	<card name="酸雾术lv1" card_class="spell" cost="木头:20" spell_name="实际效果酸雾" recover_span="1800" id="23108">
 		<custom_unit_setting/>
 	</card>
+	<card name="狂暴术lv1" card_class="spell" cost="木头:40" spell_name="狂暴术lv1" recover_span="900" id="23109">
+		<custom_unit_setting/>
+	</card>
 <!-- 第一版单位：小兵部分 -->
 	<card name="人族盾牌兵" card_class="summon" cost="木头:40" unit_id="12005" summon_count="1" recover_span="0" id="22000">
 		<custom_unit_setting unit_setting_id="12005"/>
