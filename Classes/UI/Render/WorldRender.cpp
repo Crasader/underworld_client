@@ -174,8 +174,9 @@ void WorldRender::showHMMCardRegionTips(const HMMCardType* cardType,
     
     hideHMMCardRegionTips();
     if (cardType->getCardClass() == kHMMCardClass_Summon
-        || cardType->getCardClass() == kHMMCardClass_Tower) {
-        const Rect32& region = cardType->getCardClass() == kHMMCardClass_Summon ? summonRegion : towerRegion;
+        || cardType->getCardClass() == kHMMCardClass_Tower
+        || cardType->getCardClass() == kHMMCardClass_Hero) {
+        const Rect32& region = cardType->getCardClass() == kHMMCardClass_Tower ? towerRegion : summonRegion;
         static string file("GameImages/test/ui_hongse.png");
         static const Rect rect(0, 0, 326, 326);
         static const Rect capInsets(160, 160, 6, 6);

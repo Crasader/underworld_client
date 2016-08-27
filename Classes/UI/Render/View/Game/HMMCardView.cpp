@@ -115,6 +115,7 @@ bool HMMCardView::init(const HMMCardType* cardType) {
         int cost = iter == _cardType->getCost().end() ? 0 : GameConstants::microres2Res(iter->second);
         _resourceNode->setCount(cost);
         _resourceNode->check(cost);
+        _resourceNode->setVisible(cost != 0);
     }
     
     if (_shiningSprite) {

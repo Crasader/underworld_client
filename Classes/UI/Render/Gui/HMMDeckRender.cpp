@@ -54,6 +54,7 @@ bool HMMDeckRender::init(const HMMDeck* deck, Commander* commander,
     static const float card_interval_horizontal(8.f);
     static const float resource_2_card_margin(8.f);
     static const float card_region_height(124.f);
+    static const float hero_2_normal_margin(80.f);
     
     /**1. init ref */
     _commander = commander;
@@ -88,6 +89,10 @@ bool HMMDeckRender::init(const HMMDeck* deck, Commander* commander,
     _resourceProgress2 = nullptr;
     _resourceLabel = nullptr;
     _cardViews.clear();
+    int heroCardCount = 0;
+    for (; heroCardCount < deck->getHandCount(); ++heroCardCount) {
+        if (deck->getHandCard(heroCardCount)->getCardType()->getCardClass() != kHMMCardClass_Hero) break;
+    }
     
     // 3b. card views
     for (int i = 0; i < _cardRenders.size(); ++i) {
@@ -129,17 +134,28 @@ bool HMMDeckRender::init(const HMMDeck* deck, Commander* commander,
     }
     
     // 3d. contentSize
-    float x = 0.f, y = card_region_height;
-    x += card_region_padding * 2;
-    x += resourceViewSize.width;
-    x += resource_2_card_margin;
-    if (_cardViews.size() > 0) {
-        x += (_cardViews.size() - 1) * card_interval_horizontal;
-    }
-    for (int i = 0; i < _cardViews.size(); ++i) {
-        if (_cardViews[i]) x+= _cardViews[i]->getContentSize().width;
+    float x = 0.f, x_normal = 0.f, x_hero = 0.f, y = card_region_height;
+    
+    if (heroCardCount > 0) {
+        x_hero += card_region_padding * 2;
+        x_hero += (heroCardCount - 1) * card_interval_horizontal;
+        for (int i = 0; i < heroCardCount; ++i) {
+            if (_cardViews[i]) x_hero+= _cardViews[i]->getContentSize().width;
+        }
     }
     
+    x_normal += card_region_padding * 2;
+    x_normal += resourceViewSize.width;
+    x_normal += resource_2_card_margin;
+    if (_cardViews.size() - heroCardCount > 0) {
+        x_normal += (_cardViews.size() - heroCardCount - 1) * card_interval_horizontal;
+    }
+    for (int i = heroCardCount; i < _cardViews.size(); ++i) {
+        if (_cardViews[i]) x_normal += _cardViews[i]->getContentSize().width;
+    }
+    
+    x += x_normal;
+    if (heroCardCount > 0) x += hero_2_normal_margin + x_hero;
     const cocos2d::Size contentSize(x, y);
     _cardRegion->setContentSize(contentSize);
     
@@ -148,24 +164,39 @@ bool HMMDeckRender::init(const HMMDeck* deck, Commander* commander,
     cocos2d::Rect capInsetsRect(108, 62, 1, 1);
     _background = cocos2d::ui::Scale9Sprite::create("GameImages/battle_ui/ui_deck_bg.png", rect, capInsetsRect);
     _background->setAnchorPoint(cocos2d::Vec2::ANCHOR_BOTTOM_LEFT);
-    _background->setContentSize(contentSize);
+    _background->setContentSize(cocos2d::Size(x_normal, y));
+    _background->setPosition(cocos2d::Vec2(x - x_normal, 0));
     _cardRegion->addChild(_background, BACKGROUND_ZORDER);
     
     // 3f. add card views
-    float offestX = card_region_padding + resourceViewSize.width + resource_2_card_margin;
-    for (int i = 0; i < _cardViews.size(); ++i) {
+    float offsetX = 0.f;
+    if (heroCardCount > 0) {
+        offsetX += card_region_padding;
+        for (int i = 0; i < heroCardCount; ++i) {
+            if (_cardViews[i]) {
+                _cardViews[i]->setAnchorPoint(cocos2d::Vec2::ANCHOR_BOTTOM_LEFT);
+                _cardViews[i]->setPosition(offsetX, card_region_padding);
+                _cardRegion->addChild(_cardViews[i], CARD_ZORDER);
+                offsetX += _cardViews[i]->getContentSize().width;
+                offsetX += card_interval_horizontal;
+            }
+            
+        }
+        offsetX += hero_2_normal_margin;
+    }
+    offsetX += card_region_padding + resourceViewSize.width + resource_2_card_margin;
+    for (int i = heroCardCount; i < _cardViews.size(); ++i) {
         if (_cardViews[i]) {
             _cardViews[i]->setAnchorPoint(cocos2d::Vec2::ANCHOR_BOTTOM_LEFT);
-            _cardViews[i]->setPosition(offestX, card_region_padding);
+            _cardViews[i]->setPosition(offsetX, card_region_padding);
             _cardRegion->addChild(_cardViews[i], CARD_ZORDER);
-            offestX += _cardViews[i]->getContentSize().width;
+            offsetX += _cardViews[i]->getContentSize().width;
+            offsetX += card_interval_horizontal;
         }
-        
-        offestX += card_interval_horizontal;
     }
     
     // 3g. add resource views
-    _resourceBackground->setPosition(card_region_padding + resourceViewSize.width / 2, card_region_height / 2);
+    _resourceBackground->setPosition(x - x_normal + card_region_padding + resourceViewSize.width / 2, card_region_height / 2);
     _cardRegion->addChild(_resourceBackground, RESOURCE_ZORDER);
     
     // 3h. register event
@@ -346,7 +377,8 @@ void HMMDeckRender::try2UseCard(int cardIndex, const cocos2d::Vec2 &pos) {
     corePos.x = m_clampi(corePos.x, 0, _game->getWorld()->getMap()->getMapElementWidth());
     corePos.y = m_clampi(corePos.y, 0, _game->getWorld()->getMap()->getMapElementHeight());
     if (card->getCardType()->getCardClass() == kHMMCardClass_Summon
-        || card->getCardType()->getCardClass() == kHMMCardClass_Tower) {
+        || card->getCardType()->getCardClass() == kHMMCardClass_Tower
+        || card->getCardType()->getCardClass() == kHMMCardClass_Hero) {
         const Rect32& rect = card->getCardType()->getCardClass() == kHMMCardClass_Tower ? _deck->getTowerRegion() : _deck->getSummonRegion();
         
         corePos.x = m_clampi(corePos.x, rect.getMinX(), rect.getMaxX());

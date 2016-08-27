@@ -120,10 +120,10 @@
 	<card name="魔族梦魇精华" card_class="summon" cost="木头:0" unit_id="11009" recover_span="0" id="21109">
 		<custom_unit_setting unit_setting_id="11009"/>
 	</card>
-	<card name="中立兽族斧王" card_class="summon" cost="木头:0" unit_id="11010" recover_span="0" id="21110">
+	<card name="中立兽族斧王" card_class="hero" cost="木头:0" unit_id="11010" recover_span="0" id="21110">
 		<custom_unit_setting unit_setting_id="11010"/>
 	</card>
-	<card name="中立兽族食人鬼王" card_class="summon" cost="木头:0" unit_id="11011" recover_span="0" id="21111">
+	<card name="中立兽族食人鬼王" card_class="hero" cost="木头:0" unit_id="11011" recover_span="0" id="21111">
 		<custom_unit_setting unit_setting_id="11011"/>
 	</card>
 	
