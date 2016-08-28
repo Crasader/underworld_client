@@ -268,7 +268,8 @@ void BulletRender::renderFlyingAnimation() {
     // set params
     if (_body) {
         _body->setRotation(_rotation);
-        _body->setScaleX(_scale);
+        _body->setScaleX(_scale * _configData->getScaleX());
+        _body->setScaleY(_configData->getScaleY());
     }
     
     // create shadow
@@ -279,7 +280,8 @@ void BulletRender::renderFlyingAnimation() {
     
     if (_shadow) {
         _shadow->setRotation(_rotation);
-        _shadow->setScaleX(_scale);
+        _shadow->setScaleX(_scale * _configData->getScaleX());
+        _shadow->setScaleY(_configData->getScaleY());
     }
     
 }

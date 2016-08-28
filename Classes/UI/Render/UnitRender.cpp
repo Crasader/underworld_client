@@ -324,7 +324,7 @@ void UnitRender::renderPosition(bool init) {
     cocos2d::Vec2 mainPoint = _worldRender->worldCoordinate2CocosPoint(_unit->getCenterPos(), mainNodeLayer);
     //use unit's rightUp pos to calculate zorder, overlap will cover unit
     int size = _unit->getUnitBase().getSize();
-    int mainZorder = _worldRender->worldCoordinate2Zorder(_unit->getPos() + Coordinate32(size, size), mainNodeLayer);
+    int mainZorder = _worldRender->worldCoordinate2Zorder(_unit->getPos() + Coordinate32(size, 0), mainNodeLayer);
     _mainNode->setPosition(mainPoint);
     _mainNode->setLocalZOrder(mainZorder);
 }

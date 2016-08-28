@@ -24,6 +24,8 @@ public:
     const std::string& getShadowResource() const;
     const std::string& getExplodeResource() const;
     const std::string& getExplodeSound() const;
+    float getScaleX() const;
+    float getScaleY() const;
     
 private:
     std::string _name;
@@ -31,6 +33,8 @@ private:
     std::string _shadowResource;
     std::string _explodeResource;
     std::string _explodeSound;
+    float _scaleX;
+    float _scaleY;
 };
 
 #endif /* BRConfigData_h */

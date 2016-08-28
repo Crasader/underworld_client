@@ -173,7 +173,7 @@
 	<skill bullet_name="人族大法师" cd="45" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="80" min_damage="80" name="中立兽族巨魔巫医" perform="0" preperform="35" range="160"/>
 	<skill cd="50" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="652" min_damage="652" name="中立兽族斧王" perform="0" preperform="45" range="32"/>
 	<skill cd="55" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="686" min_damage="686" name="中立兽族食人鬼王" perform="0" preperform="45" range="32"/>
-	<skill bullet_name="魔族梦魇" cd="45" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="382" min_damage="382" name="中立龙族黑龙" perform="0" preperform="40" range="96"/>
+	<skill bullet_name="龙族子弹" cd="45" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="382" min_damage="382" name="中立龙族黑龙" perform="0" preperform="40" range="96"/>
 	<skill bullet_name="枪械子弹" cd="120" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="918" min_damage="918" name="中立矮人族火枪手" perform="0" preperform="50" range="224"/>
 	<skill bullet_name="人族弓箭手" cd="40" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="240" min_damage="240" name="中立精灵族弓箭手" perform="0" preperform="40" range="192"/>
 	<skill cd="110" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="311" min_damage="311" name="人族盾牌兵" perform="0" preperform="40" range="32"/>
@@ -445,6 +445,7 @@
 	<bullet name="月之骑士" render_key="箭" speed="450"/>
 	<bullet name="枪械子弹" render_key="火枪子弹" speed="500"/>
 	<bullet name="牧师子弹" render_key="牧师子弹" speed="250"/>
+	<bullet name="龙族子弹" render_key="黑龙子弹" speed="300"/>
 	<passive addon_types="人族弓箭手三重射击" alias="多重射击" desc="攻击时可额外攻击2个敌人" id="1000" level="1" name="人族弓箭手三重射击"/>
 	<passive addon_types="魔族梦魇攻击效果" alias="按比例移除生命" desc="攻击时移除目标5%当前生命" id="1001" level="1" name="魔族梦魇攻击效果"/>
 	<passive addon_types="魔族战车溅射效果" alias="溅射" desc="溅射少量伤害" id="1002" level="1" name="魔族战车溅射效果"/>

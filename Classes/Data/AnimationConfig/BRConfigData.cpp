@@ -13,6 +13,8 @@
 using namespace std;
 
 BRConfigData::BRConfigData(tinyxml2::XMLElement *xmlElement)
+: _scaleX(1.0f)
+, _scaleY(1.0f)
 {
     if (xmlElement) {
         _name = xmlElement->Attribute("render_key");
@@ -38,6 +40,18 @@ BRConfigData::BRConfigData(tinyxml2::XMLElement *xmlElement)
             const char *data = xmlElement->Attribute("explode_sound");
             if (data && strlen(data) > 0) {
                 _explodeSound = data;
+            }
+        }
+        {
+            const char *data = xmlElement->Attribute("scaleX");
+            if (data && strlen(data) > 0) {
+                _scaleX = atof(data);
+            }
+        }
+        {
+            const char *data = xmlElement->Attribute("scaleY");
+            if (data && strlen(data) > 0) {
+                _scaleY = atof(data);
             }
         }
 
@@ -73,3 +87,14 @@ const string& BRConfigData::getExplodeSound() const
 {
     return _explodeSound;
 }
+
+float BRConfigData::getScaleX() const
+{
+    return _scaleX;
+}
+
+float BRConfigData::getScaleY() const
+{
+    return _scaleY;
+}
+
