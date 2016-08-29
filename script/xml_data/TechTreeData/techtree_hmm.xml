@@ -96,40 +96,40 @@
 		<custom_unit_setting unit_setting_id="12018"/>
 	</card>
 <!-- 第一版单位：英雄部分 -->
-	<card name="人族盾牌队长" card_class="summon" cost="木头:0" unit_id="11000" recover_span="0" id="21100">
+	<card name="人族盾牌队长" card_class="hero" cost="木头:0" unit_id="11000" recover_span="0" id="21100">
 		<custom_unit_setting unit_setting_id="11000"/>
 	</card>
-	<card name="人族剑士队长" card_class="summon" cost="木头:0" unit_id="11001" recover_span="0" id="21101">
+	<card name="人族剑士队长" card_class="hero" cost="木头:0" unit_id="11001" recover_span="0" id="21101">
 		<custom_unit_setting unit_setting_id="11001"/>
 	</card>
-	<card name="人族弓箭队长" card_class="summon" cost="木头:0" unit_id="11002" recover_span="0" id="21102">
+	<card name="人族弓箭队长" card_class="hero" cost="木头:0" unit_id="11002" recover_span="0" id="21102">
 		<custom_unit_setting unit_setting_id="11002"/>
 	</card>
-	<card name="人族大法师" card_class="summon" cost="木头:0" unit_id="11003" recover_span="0" id="21103">
+	<card name="人族大法师" card_class="hero" cost="木头:0" unit_id="11003" recover_span="0" id="21103">
 		<custom_unit_setting unit_setting_id="11003"/>
 	</card>
-	<card name="人族秘法大师" card_class="summon" cost="木头:0" unit_id="11004" recover_span="0" id="21104">
+	<card name="人族秘法大师" card_class="hero" cost="木头:0" unit_id="11004" recover_span="0" id="21104">
 		<custom_unit_setting unit_setting_id="11004"/>
 	</card>
-	<card name="魔族骷髅王子" card_class="summon" cost="木头:0" unit_id="11005" recover_span="0" id="21105">
+	<card name="魔族骷髅王子" card_class="hero" cost="木头:0" unit_id="11005" recover_span="0" id="21105">
 		<custom_unit_setting unit_setting_id="11005"/>
 	</card>
-	<card name="魔族食尸鬼王" card_class="summon" cost="木头:0" unit_id="11006" recover_span="0" id="21106">
+	<card name="魔族食尸鬼王" card_class="hero" cost="木头:0" unit_id="11006" recover_span="0" id="21106">
 		<custom_unit_setting unit_setting_id="11006"/>
 	</card>
-	<card name="魔族地狱战舰" card_class="summon" cost="木头:0" unit_id="11007" recover_span="0" id="21107">
+	<card name="魔族地狱战舰" card_class="hero" cost="木头:0" unit_id="11007" recover_span="0" id="21107">
 		<custom_unit_setting unit_setting_id="11008"/>
 	</card>
-	<card name="魔族黑传教士" card_class="summon" cost="木头:0" unit_id="11008" recover_span="0" id="21108">
+	<card name="魔族黑传教士" card_class="hero" cost="木头:0" unit_id="11008" recover_span="0" id="21108">
 		<custom_unit_setting unit_setting_id="11008"/>
 	</card>
-	<card name="魔族梦魇精华" card_class="summon" cost="木头:0" unit_id="11009" recover_span="0" id="21109">
+	<card name="魔族梦魇精华" card_class="hero" cost="木头:0" unit_id="11009" recover_span="0" id="21109">
 		<custom_unit_setting unit_setting_id="11009"/>
 	</card>
-	<card name="中立兽族斧王" card_class="summon" cost="木头:0" unit_id="11010" recover_span="0" id="21110">
+	<card name="中立兽族斧王" card_class="hero" cost="木头:0" unit_id="11010" recover_span="0" id="21110">
 		<custom_unit_setting unit_setting_id="11010"/>
 	</card>
-	<card name="中立兽族食人鬼王" card_class="summon" cost="木头:0" unit_id="11011" recover_span="0" id="21111">
+	<card name="中立兽族食人鬼王" card_class="hero" cost="木头:0" unit_id="11011" recover_span="0" id="21111">
 		<custom_unit_setting unit_setting_id="11011"/>
 	</card>
 	
