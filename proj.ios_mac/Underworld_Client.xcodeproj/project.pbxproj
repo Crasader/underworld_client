@@ -241,6 +241,8 @@
 		A1B66A341D704779009A8D55 /* RuneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B66A321D704779009A8D55 /* RuneManager.cpp */; };
 		A1B66A371D704ABF009A8D55 /* RuneNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B66A351D704ABF009A8D55 /* RuneNode.cpp */; };
 		A1C124DC1BF58AF700F3FDD2 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = A1C124DB1BF58AF700F3FDD2 /* sounds */; };
+		A1C1A6651D741CD000B15E3F /* UpgradeCard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1C1A6631D741CD000B15E3F /* UpgradeCard.cpp */; };
+		A1C1A6691D7439E600B15E3F /* RuneCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1C1A6671D7439E600B15E3F /* RuneCircle.cpp */; };
 		A1CA35E91D45BDE200584C9D /* NoticeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1CA35E71D45BDE200584C9D /* NoticeNode.cpp */; };
 		A1CA35EF1D45BF2600584C9D /* SpellRingNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1CA35ED1D45BF2600584C9D /* SpellRingNode.cpp */; };
 		A1CA35F51D45F29D00584C9D /* SettingsLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1CA35F31D45F29D00584C9D /* SettingsLayer.cpp */; };
@@ -844,6 +846,10 @@
 		A1B66A351D704ABF009A8D55 /* RuneNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RuneNode.cpp; sourceTree = "<group>"; };
 		A1B66A361D704ABF009A8D55 /* RuneNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuneNode.h; sourceTree = "<group>"; };
 		A1C124DB1BF58AF700F3FDD2 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sounds; sourceTree = "<group>"; };
+		A1C1A6631D741CD000B15E3F /* UpgradeCard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UpgradeCard.cpp; sourceTree = "<group>"; };
+		A1C1A6641D741CD000B15E3F /* UpgradeCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpgradeCard.h; sourceTree = "<group>"; };
+		A1C1A6671D7439E600B15E3F /* RuneCircle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RuneCircle.cpp; sourceTree = "<group>"; };
+		A1C1A6681D7439E600B15E3F /* RuneCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuneCircle.h; sourceTree = "<group>"; };
 		A1CA35E71D45BDE200584C9D /* NoticeNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NoticeNode.cpp; sourceTree = "<group>"; };
 		A1CA35E81D45BDE200584C9D /* NoticeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeNode.h; sourceTree = "<group>"; };
 		A1CA35ED1D45BF2600584C9D /* SpellRingNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpellRingNode.cpp; sourceTree = "<group>"; };
@@ -1738,6 +1744,8 @@
 				A14660561D6DBE1A008AFD14 /* CardSet.h */,
 				A1B66A0C1D702E08009A8D55 /* SpellInfoLayer.cpp */,
 				A1B66A0D1D702E08009A8D55 /* SpellInfoLayer.h */,
+				A1C1A6631D741CD000B15E3F /* UpgradeCard.cpp */,
+				A1C1A6641D741CD000B15E3F /* UpgradeCard.h */,
 			);
 			path = Card;
 			sourceTree = "<group>";
@@ -2202,6 +2210,8 @@
 			children = (
 				A1B66A281D70430A009A8D55 /* RuneBagLayer.cpp */,
 				A1B66A291D70430A009A8D55 /* RuneBagLayer.h */,
+				A1C1A6671D7439E600B15E3F /* RuneCircle.cpp */,
+				A1C1A6681D7439E600B15E3F /* RuneCircle.h */,
 				A1B66A351D704ABF009A8D55 /* RuneNode.cpp */,
 				A1B66A361D704ABF009A8D55 /* RuneNode.h */,
 			);
@@ -2840,6 +2850,7 @@
 				30F8406B1D50B37F0050C976 /* HMMGui.cpp in Sources */,
 				A103F45B1BE37E2A007F9A83 /* BulletNode.cpp in Sources */,
 				A16BF2951C313EAF00E91458 /* TowerUpgradeData.cpp in Sources */,
+				A1C1A6691D7439E600B15E3F /* RuneCircle.cpp in Sources */,
 				A1D461611C3E251000E8E60B /* URConfigData.cpp in Sources */,
 				A1FB5D091D4F197F00CD2622 /* PvpLogShareLayer.cpp in Sources */,
 				A188856F1C43921700C9586F /* PieceManager.cpp in Sources */,
@@ -2883,6 +2894,7 @@
 				A1720EBD1BCD309A00217E98 /* NetworkController.cpp in Sources */,
 				A1D4615F1C3E251000E8E60B /* MapParticleConfigData.cpp in Sources */,
 				A12C60AD1D50784B003FCF0D /* GuildSimpleNode.cpp in Sources */,
+				A1C1A6651D741CD000B15E3F /* UpgradeCard.cpp in Sources */,
 				044229441D70134C002F32BE /* UWJsonHelper.cpp in Sources */,
 				A1D592271C9ABE7E009B9E8C /* Scheduler.cpp in Sources */,
 				A1720EA41BCD29FF00217E98 /* GameData.cpp in Sources */,

@@ -1,44 +1,43 @@
 //
 //  ResourceButton.h
-//  ZombiePop
+//  Underworld_Client
 //
 //  Created by Andy on 15/7/14.
-//
+//  Copyright (c) 2015 Mofish Studio. All rights reserved.
 //
 
-#ifndef ResourceButton__
-#define ResourceButton__
+#ifndef ResourceButton_h
+#define ResourceButton_h
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 #include "CocosGlobal.h"
 
 USING_NS_CC;
-using namespace ui;
+
+class UniversalButton;
 
 class ResourceButton : public Node
 {
 public:
-    static ResourceButton* create(bool isBigSize, bool animated, bool needResize, ResourceType type, int count, const Color4B& color, const Button::ccWidgetClickCallback& callback);
+    static ResourceButton* create(bool isBigSize, bool animated, ResourceType type, int count, const Color4B& color, const ui::Widget::ccWidgetClickCallback& callback);
     virtual ~ResourceButton();
     ResourceType getType() const;
     int getCount() const;
     void setType(ResourceType type);
     void setCount(int count);
     void setEnabled(bool enable);
-    void setTouchEventListener(const Button::ccWidgetTouchCallback& callback);
-    void setClickEventListener(const Button::ccWidgetClickCallback& callback);
+    void setClickEventListener(const ui::Widget::ccWidgetClickCallback& callback);
     
 protected:
     ResourceButton();
-    bool init(bool isBigSize, bool animated, bool needResize, ResourceType type, int count, const Color4B& color, const Button::ccWidgetClickCallback& callback);
+    bool init(bool isBigSize, bool animated, ResourceType type, int count, const Color4B& color, const ui::Widget::ccWidgetClickCallback& callback);
     void addIconNode(ResourceType type);
     void resize();
     
 private:
     bool _isBigSize;
     bool _animated;
-    bool _needResize;
     bool _enabled;
     ResourceType _type;
     int _count;
@@ -46,7 +45,7 @@ private:
     Sprite *_icon;
     Node* _iconNode;
     Label *_countLabel;
-    Button *_button;
+    UniversalButton *_button;
 };
 
-#endif /* defined(__ZombiePop__ResourceButton__) */
+#endif /* ResourceButton_h */

@@ -11,6 +11,7 @@
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
+#include "RuneCircle.h"
 
 USING_NS_CC;
 
@@ -26,7 +27,9 @@ public:
     virtual void onCardInfoLayerExit(Node* pSender) = 0;
 };
 
-class CardInfoLayer : public LayerColor
+class CardInfoLayer
+: public LayerColor
+, public RuneCircleObserver
 {
 public:
     static CardInfoLayer* create(int cardId);
@@ -42,6 +45,9 @@ private:
     bool init(int cardId);
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
+    
+    // RuneCircleObserver
+    virtual void onRuneCircleClicked(const RuneData* data) override;
     
     // -------- UI --------
     void createLeftNode(Node* node);

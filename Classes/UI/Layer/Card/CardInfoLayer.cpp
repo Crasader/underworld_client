@@ -8,14 +8,18 @@
 
 #include "CardInfoLayer.h"
 #include "DevelopCard.h"
+#include "UpgradeCard.h"
 #include "CardPropertyNode.h"
 #include "DeckManager.h"
 #include "Board.h"
 #include "UniversalButton.h"
+#include "ResourceButton.h"
+#include "PureNode.h"
 #include "PureScale9Sprite.h"
 #include "DevelopCard.h"
 #include "CocosGlobal.h"
 #include "CardSimpleData.h"
+#include "RuneData.h"
 #include "CocosUtils.h"
 
 using namespace std;
@@ -97,6 +101,12 @@ bool CardInfoLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 }
 
 void CardInfoLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
+
+#pragma mark - RuneCircleObserver
+void CardInfoLayer::onRuneCircleClicked(const RuneData* data)
+{
+    
+}
 
 void CardInfoLayer::registerObserver(CardInfoLayerObserver *observer)
 {
@@ -230,10 +240,118 @@ void CardInfoLayer::createLeftNode(Node* node)
         label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
         label->setPosition(edgeX, barSize.height / 2);
         bar->addChild(label);
+        
+        auto button = ResourceButton::create(true, false, ResourceType::Gold, 3000, Color4B::BLACK, [this](Ref*) {
+            // TODO
+        });
+        button->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
+        button->setPosition(barSize.width / 2, 0);
+        bar->addChild(button);
     }
 }
 
 void CardInfoLayer::createRightNode(Node* node)
 {
+    static const Vec2 secondaryEdge(10, 5);
+    const auto& size(node->getContentSize());
     
+    auto skillTitle = CocosUtils::createLabel("Hero Skills", DEFAULT_FONT_SIZE);
+    skillTitle->setTextColor(Color4B::BLACK);
+    skillTitle->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
+    skillTitle->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+    node->addChild(skillTitle);
+    
+    const auto& stsize(skillTitle->getContentSize());
+    skillTitle->setPosition(secondaryEdge.x, size.height - (stsize.height / 2 + secondaryEdge.y));
+    
+    static const float cardHintSpace(5);
+    const float cardBasePosY(size.height - (secondaryEdge.y + stsize.height + cardHintSpace));
+    static const int skillsCount(4);
+    Size cardSize(Size::ZERO);
+    float spaceX(0);
+    for (int i = 0; i < skillsCount; ++i) {
+        auto card = UpgradeCard::create(0);
+        node->addChild(card);
+        
+        if (0 == i) {
+            cardSize = card->getContentSize();
+            spaceX = (size.width - cardSize.width * skillsCount) / (skillsCount + 1);
+        }
+        
+        card->setPosition(Point((spaceX + cardSize.width) * (i + 1) - cardSize.width / 2, cardBasePosY - cardSize.height / 2));
+    }
+    
+    static const float cardLineSpace(10);
+    static const float lineEdgeX(5);
+    static const float lineHeight(2);
+    auto line = PureNode::createLine(Size(size.width - lineEdgeX * 2, lineHeight));
+    line->setPosition(size.width / 2, cardBasePosY - (cardSize.height + cardLineSpace + lineHeight / 2));
+    node->addChild(line);
+    
+    auto runeTitle = CocosUtils::createLabel("Hero Runes", DEFAULT_FONT_SIZE);
+    runeTitle->setTextColor(Color4B::BLACK);
+    runeTitle->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
+    runeTitle->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+    node->addChild(runeTitle);
+    
+    const auto& rtsize(runeTitle->getContentSize());
+    runeTitle->setPosition(secondaryEdge.x, line->getPositionY() - ((lineHeight + rtsize.height) / 2 + secondaryEdge.y));
+    
+    {
+        auto circle = RuneCircle::create();
+        circle->registerObserver(this);
+        node->addChild(circle);
+        
+        static const Vec2 circleEdge(40, 10);
+        const auto& csize(circle->getContentSize());
+        circle->setPosition(circleEdge.x + csize.width / 2, circleEdge.y + csize.height / 2);
+        
+        static const vector<const RuneData*> runeDatas = {nullptr, nullptr, nullptr};
+        circle->setData(runeDatas);
+        
+        static const float spaceY(10);
+        for (int i = 0; i < runeDatas.size(); ++i) {
+            Color4B color;
+            if (i % 2 == 0) {
+                color = PURE_WHITE;
+            } else {
+                color = PURE_GRAY;
+            }
+            
+            static const Size bgSize(308, 41);
+            auto bg = PureNode::create(color, bgSize);
+            bg->setPosition(size.width - (secondaryEdge.x + bgSize.width / 2), line->getPositionY() - (lineHeight / 2 + (spaceY + bgSize.height) * (i + 1) - bgSize.height / 2));
+            node->addChild(bg);
+            
+            auto data(runeDatas.at(i));
+            if (data) {
+                auto label = CocosUtils::createLabel(data->getDescription(), DEFAULT_FONT_SIZE);
+                label->setTextColor(Color4B::BLACK);
+                label->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
+                label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+                label->setPosition(10, bgSize.height / 2);
+                bg->addChild(label);
+            }
+        }
+    }
+    
+    {
+        static const Vec2 edge(20, 10);
+        auto unload = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, "Unload");
+        unload->setCallback([this](Ref*) {
+            
+        });
+        node->addChild(unload);
+        const auto& usize(unload->getContentSize());
+        unload->setPosition(size.width - (edge.x + usize.width / 2), edge.y + usize.height / 2);
+        
+        auto change = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, "Change");
+        change->setCallback([this](Ref*) {
+            
+        });
+        node->addChild(change);
+        
+        const auto& csize(change->getContentSize());
+        change->setPosition(size.width - (edge.x * 2 + usize.width + csize.width / 2), unload->getPositionY());
+    }
 }

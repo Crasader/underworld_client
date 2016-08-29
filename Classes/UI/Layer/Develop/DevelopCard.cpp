@@ -102,7 +102,9 @@ void DevelopCard::update(int cardId)
         _icon->update(cardId);
     }
     
-    updateAmount(cardId);
+    if (getCardId() != cardId) {
+        updateAmount(cardId);
+    }
 }
 
 int DevelopCard::getCardId() const
@@ -113,7 +115,6 @@ int DevelopCard::getCardId() const
     
     return 0;
 }
-
 
 void DevelopCard::updateAmount(int cardId)
 {
