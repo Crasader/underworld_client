@@ -405,7 +405,7 @@ void MapUILayer::createUserInfo(bool left, const string& account)
 {
     const Size& winSize = Director::getInstance()->getWinSize();
     
-    auto nameBg = PureNode::create(PureNode::Type::Gray, Size(163, 26));
+    auto nameBg = PureNode::create(PURE_GRAY, Size(163, 26));
     addChild(nameBg);
     
     const Size& nameBgSize = nameBg->getContentSize();
@@ -558,8 +558,7 @@ void MapUILayer::addResourceNode()
         node->setContentSize(size);
         node->setPosition(size.width / 2, size.height / 2);
         
-        auto line = Sprite::create(CocosUtils::getResourcePath("ui_line.png"));
-        line->setScaleX(size.width / line->getContentSize().width);
+        auto line = PureNode::createLine(Size(size.width, 2));
         line->setPosition(size.width / 2, size.height / 2);
         node->addChild(line);
         

@@ -14,6 +14,7 @@
 #include "LocalHelper.h"
 #include "SoundManager.h"
 #include "UniversalButton.h"
+#include "PureNode.h"
 #include "PureScale9Sprite.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "ApiBridge.h"
@@ -347,8 +348,7 @@ void SettingsLayer::createContent()
         static const float edgeTop(edge.x);
         const auto& size(parent->getContentSize());
         
-        auto line = Sprite::create(CocosUtils::getResourcePath("ui_line.png"));
-        line->setScaleX(size.width - edge.x * 2);
+        auto line = PureNode::createLine(Size(size.width - edge.x * 2, 2));
         line->setPosition(Point(size.width / 2, size.height / 2));
         parent->addChild(line);
         

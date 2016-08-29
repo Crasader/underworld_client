@@ -63,7 +63,7 @@ bool CheatLayer::init(const function<void(Ref*)>& callback)
 {
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR)) {
         setContentSize(size);
-        auto bg = PureNode::create(PureNode::Type::Black, size);
+        auto bg = PureNode::create(PURE_BLACK, size);
         bg->setPosition(size.width / 2, size.height / 2);
         addChild(bg);
         _bg = bg;

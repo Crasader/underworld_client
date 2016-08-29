@@ -23,6 +23,7 @@ class SpellInfoLayerObserver
 public:
     virtual ~SpellInfoLayerObserver() {}
     virtual void onSpellInfoLayerExit(Node* pSender) = 0;
+    virtual void onSpellInfoLayerUpgrade(int cardId) = 0;
 };
 
 class SpellInfoLayer : public LayerColor
@@ -41,6 +42,8 @@ private:
     bool init(int cardId);
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
+    
+    void createNode(Node* node);
     
 private:
     SpellInfoLayerObserver* _observer;

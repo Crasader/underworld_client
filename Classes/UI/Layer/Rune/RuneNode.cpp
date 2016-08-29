@@ -53,7 +53,6 @@ bool RuneNode::init(const RuneData* data)
         bg->setPosition(size.width / 2, size.height / 2);
         
         _icon = Sprite::create(DevelopUI::getResourcePath("icon_fuwen_2.png"));
-        _icon->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
         _icon->setPosition(size.width / 2, size.height / 2);
         bg->addChild(_icon);
         
@@ -98,14 +97,20 @@ void RuneNode::update(const RuneData* data)
     if (_data != data) {
         _data = data;
         
-        if (data) {
-            _level->setString(StringUtils::format("LV.%d", data->getLevel()));
-            
-            auto groupData(dynamic_cast<const RuneGroupData*>(data));
-            _amount->setVisible(groupData);
-            if (groupData) {
-                auto amount(groupData->getAmount());
-                _amount->setString(StringUtils::format("x %d", amount));
+        if (_level) {
+            _level->setString(data ? StringUtils::format("LV.%d", data->getLevel()) : "");
+        }
+        
+        if (_amount) {
+            if (data) {
+                auto groupData(dynamic_cast<const RuneGroupData*>(data));
+                _amount->setVisible(groupData);
+                if (groupData) {
+                    auto amount(groupData->getAmount());
+                    _amount->setString(StringUtils::format("x %d", amount));
+                }
+            } else {
+                _amount->setString("");
             }
         }
     }

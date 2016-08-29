@@ -21,6 +21,9 @@ public:
     int getDbIdx() const;
     int getIdx() const;
     int getLevel() const;
+    const std::string& getName() const;
+    const std::string& getDescription() const;
+    const std::string& getEffect() const;
     
 protected:
     int _dbIdx;

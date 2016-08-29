@@ -138,3 +138,8 @@ void DevelopLayer::onSpellInfoLayerExit(Node* pSender)
         pSender->removeFromParent();
     }
 }
+
+void DevelopLayer::onSpellInfoLayerUpgrade(int cardId)
+{
+    
+}

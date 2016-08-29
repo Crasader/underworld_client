@@ -10,6 +10,7 @@
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "SoundManager.h"
+#include "PureNode.h"
 #include "XTableViewCell.h"
 #include "TabButton.h"
 #include "DataManager.h"
@@ -261,10 +262,9 @@ void QuestLayer::createTabButtons(const Point& position)
     width -= offset.x;
     
     // add lines
-    vector<Sprite*> lines;
+    vector<Node*> lines;
     for (int i = 0; i < 2; ++i) {
-        auto line = Sprite::create(CocosUtils::getResourcePath("ui_line.png"));
-        line->setScaleX(width / line->getContentSize().width);
+        auto line = PureNode::createLine(Size(width, 2));
         addChild(line);
         
         lines.push_back(line);

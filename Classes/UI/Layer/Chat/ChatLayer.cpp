@@ -315,7 +315,7 @@ bool ChatLayer::init()
         });
         
         // 2. background
-        _background = PureNode::create(PureNode::Type::Black, size);
+        _background = PureNode::create(PURE_BLACK, size);
         _background->setPosition(Point(viewWidth / 2, winSize.height / 2));
         addChild(_background);
         

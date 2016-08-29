@@ -74,6 +74,7 @@ protected:
     
     // SpellInfoLayerObserver
     virtual void onSpellInfoLayerExit(Node* pSender) override;
+    virtual void onSpellInfoLayerUpgrade(int cardId) override;
     
     // -------- UI --------
     void createLeftNode(Node* node);

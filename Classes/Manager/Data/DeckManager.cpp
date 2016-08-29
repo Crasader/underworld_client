@@ -61,6 +61,11 @@ DeckManager::CardType DeckManager::getCardType(int cardId)
     return CardType::Soldier;
 }
 
+bool DeckManager::isHero(int cardId)
+{
+    return CardType::Hero == getCardType(cardId);
+}
+
 // TODO: remove the test method
 CardSimpleData* createFakeData(int card, int level)
 {

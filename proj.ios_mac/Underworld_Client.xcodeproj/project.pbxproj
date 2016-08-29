@@ -2884,7 +2884,6 @@
 				A1D4615F1C3E251000E8E60B /* MapParticleConfigData.cpp in Sources */,
 				A12C60AD1D50784B003FCF0D /* GuildSimpleNode.cpp in Sources */,
 				044229441D70134C002F32BE /* UWJsonHelper.cpp in Sources */,
-				A19B1AC81D6C2A980010D129 /* UniversalBoard.cpp in Sources */,
 				A1D592271C9ABE7E009B9E8C /* Scheduler.cpp in Sources */,
 				A1720EA41BCD29FF00217E98 /* GameData.cpp in Sources */,
 				A11649021D5AFB0100D03985 /* MainLayer.cpp in Sources */,

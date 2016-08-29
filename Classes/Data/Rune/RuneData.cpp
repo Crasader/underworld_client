@@ -38,3 +38,20 @@ int RuneData::getLevel() const
 {
     return _level;
 }
+
+static const string empty("");
+
+const string& RuneData::getName() const
+{
+    return empty;
+}
+
+const string& RuneData::getDescription() const
+{
+    return empty;
+}
+
+const string& RuneData::getEffect() const
+{
+    return empty;
+}

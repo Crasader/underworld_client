@@ -16,25 +16,19 @@ USING_NS_CC;
 class PureNode: public Node
 {
 public:
-    enum class Type {
-        White,
-        Gray,
-        Black
-    };
-    
-    static PureNode* create(Type type, const Size& size);
+    static PureNode* create(const Color4B& color, const Size& size);
+    static PureNode* createLine(const Size& size);
     virtual ~PureNode();
     
-    void setType(Type type);
+    void setColor(const Color4B& color);
     void setSize(const Size& size);
     
 private:
     PureNode();
-    bool init(Type type, const Size& size);
-    std::string getResourceFile(Type type) const;
+    bool init(const Color4B& color, const Size& size);
     
 private:
-    Type _type;
+    Color4B _color;
     Sprite* _sprite;
 };
 

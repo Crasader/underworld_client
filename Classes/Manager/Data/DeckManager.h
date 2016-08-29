@@ -46,6 +46,7 @@ public:
     static void purge();
     
     static CardType getCardType(int cardId);
+    static bool isHero(int cardId);
     
     void parse(const rapidjson::Value& jsonDict);
     

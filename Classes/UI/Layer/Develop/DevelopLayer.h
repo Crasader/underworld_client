@@ -55,6 +55,7 @@ protected:
     
     // SpellInfoLayerObserver
     virtual void onSpellInfoLayerExit(Node* pSender) override;
+    virtual void onSpellInfoLayerUpgrade(int cardId) override;
     
 private:
     DevelopLayerObserver *_observer;

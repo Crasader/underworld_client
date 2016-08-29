@@ -43,6 +43,10 @@ private:
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
+    // -------- UI --------
+    void createLeftNode(Node* node);
+    void createRightNode(Node* node);
+    
 private:
     CardInfoLayerObserver* _observer;
     DevelopCard* _icon;

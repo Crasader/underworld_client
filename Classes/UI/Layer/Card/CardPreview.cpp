@@ -9,6 +9,7 @@
 #include "CardPreview.h"
 #include "AbstractCard.h"
 #include "UniversalButton.h"
+#include "PureNode.h"
 #include "PureScale9Sprite.h"
 #include "CardSet.h"
 #include "CocosGlobal.h"
@@ -329,8 +330,7 @@ Node* CardPreview::createUnfoundLine() const
 {
     auto node = Node::create();
     
-    auto line = Sprite::create(CocosUtils::getResourcePath("ui_line.png"));
-    line->setScaleX(_scrollViewMinSize.width / line->getContentSize().width);
+    auto line = PureNode::createLine(Size(_scrollViewMinSize.width, 2));
     node->addChild(line);
     
     auto label = CocosUtils::createLabel(LocalHelper::getString("ui_deck_unfoundCards"), SMALL_FONT_SIZE);

@@ -30,6 +30,10 @@
 #define LAYER_DEFAULT_COLOR (cocos2d::Color4B(0, 0, 0, 0))
 #define LAYER_MASK_COLOR    (cocos2d::Color4B(0, 0, 0, 128))
 
+#define PURE_WHITE  (cocos2d::Color4B(253, 255, 254, 255))
+#define PURE_GRAY   (cocos2d::Color4B(191, 210, 217, 255))
+#define PURE_BLACK  (cocos2d::Color4B(58, 58, 58, 255))
+
 #define TOUCH_CANCEL_BY_MOVING_DISTANCE (40.0f)
 
 #define DEFAULT_MAP_ID              (2)

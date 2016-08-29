@@ -7,13 +7,14 @@
 //
 
 #include "CardPropertyNode.h"
+#include "PureNode.h"
 
 using namespace std;
 
-CardPropertyNode* CardPropertyNode::create()
+CardPropertyNode* CardPropertyNode::create(const Color4B& color)
 {
     auto ret = new (nothrow) CardPropertyNode();
-    if (ret && ret->init()) {
+    if (ret && ret->init(color)) {
         ret->autorelease();
         return ret;
     }
@@ -23,7 +24,8 @@ CardPropertyNode* CardPropertyNode::create()
 }
 
 CardPropertyNode::CardPropertyNode()
-:_icon(nullptr)
+:_background(nullptr)
+,_icon(nullptr)
 ,_name(nullptr)
 ,_data(nullptr) {}
 
@@ -32,14 +34,28 @@ CardPropertyNode::~CardPropertyNode()
     removeAllChildren();
 }
 
-bool CardPropertyNode::init()
+bool CardPropertyNode::init(const Color4B& color)
 {
     if (Node::init()) {
+        static const Size size(154, 38);
         setAnchorPoint(Point::ANCHOR_MIDDLE);
+        setContentSize(size);
+        
+        _background = PureNode::create(color, size);
+        _background->setPosition(size.width / 2, size.height / 2);
+        addChild(_background);
+        
         return true;
     }
     
     return false;
+}
+
+void CardPropertyNode::setColor(const Color4B& color)
+{
+    if (_background) {
+        _background->setColor(color);
+    }
 }
 
 void CardPropertyNode::setProperty()

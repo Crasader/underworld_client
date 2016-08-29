@@ -21,7 +21,6 @@
 using namespace std;
 
 static const int zorder_top(1);
-static const Vec2 secondaryEdge(5, 5);
 
 #if DECKLAYER_ENABLE_TYPE_FILTER
 static const vector<DeckTabType> cardTabs = {
@@ -232,12 +231,18 @@ void BattleDeckLayer::onSpellInfoLayerExit(Node* pSender)
     }
 }
 
+void BattleDeckLayer::onSpellInfoLayerUpgrade(int cardId)
+{
+    
+}
+
 #pragma mark - UI
 void BattleDeckLayer::createLeftNode(Node* node)
 {
     if (_background && node) {
         node->setLocalZOrder(zorder_top);
         
+        static const Vec2 secondaryEdge(5, 5);
         const auto& subSize(node->getContentSize());
         const Size topBarSize(subSize.width - secondaryEdge.x * 2, 60);
         
@@ -442,8 +447,7 @@ void BattleDeckLayer::beginEdit(int cardId)
         _usedCardPoint = _usedCard->getPosition();
         
         vector<DeckCard*> temp;
-        DeckManager::CardType type(DeckManager::getCardType(_usedCard->getCardId()));
-        if (DeckManager::CardType::Hero == type) {
+        if (DeckManager::isHero(_usedCard->getCardId())) {
             for (int i = 0; i < DeckData::HeroCount; ++i) {
                 temp.push_back(_deckCards.at(i));
             }
@@ -486,7 +490,7 @@ void BattleDeckLayer::exchangeCard(int idxFrom, int idxTo)
         auto dm(DeckManager::getInstance());
         auto from(_deckCards.at(idxFrom));
         auto to(_deckCards.at(idxTo));
-        if (dm->getCardType(from->getCardId()) == dm->getCardType(to->getCardId())) {
+        if (dm->isHero(from->getCardId()) == dm->isHero(to->getCardId())) {
             DeckManager::getInstance()->exchangeCard(from->getCardId(), to->getCardId());
             moveToDeck(from, idxTo);
             moveToDeck(to, idxFrom);
@@ -512,7 +516,7 @@ void BattleDeckLayer::useCard(int idx, bool fromDeck)
         const auto uid(_usedCard->getCardId());
         const auto rid(replaced->getCardId());
         auto dm(DeckManager::getInstance());
-        if (dm->getCardType(uid) == dm->getCardType(rid)) {
+        if (dm->isHero(uid) == dm->isHero(rid)) {
             if (_cardPreview) {
                 _cardPreview->readdToScrollView(replaced);
             }
