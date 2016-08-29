@@ -1,51 +1,53 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <root>
-	<!-- 第一版法术 -->
-	<item id="23100" icon="icon_baofengxue"/>
-	<item id="23101" icon="icon_huoqiushu"/>
-   	<item id="23102" icon="icon_huifushu"/>
-	<item id="23103" icon="icon_chenmosu"/>
-   	<item id="23104" icon="icon_xiaoqusan"/>
-	<item id="23105" icon="icon_daqusan"/>
-   	<item id="23106" icon="icon_zhenyunsu"/>
-	<item id="23107" icon="icon_jinzusu"/>
-	<item id="23108" icon="icon_suanwusu"/>
-	<item id="23109" icon="kk"/>
+	<!-- 第一版法术 :后面是注释-->
+	<item id="23100" icon="icon_baofengxue"/>   <!--暴风雪  -->
+	<item id="23101" icon="icon_huoqiushu"/><!--火球术  -->
+   	<item id="23102" icon="icon_huifushu"/><!--医疗术  -->
+	<item id="23103" icon="icon_chenmosu"/><!--沉默法术  -->
+   	<item id="23104" icon="icon_xiaoqusan"/><!--小型驱散  -->
+	<item id="23105" icon="icon_daqusan"/><!--大型驱散  -->
+   	<item id="23106" icon="icon_zhenyunsu"/><!--震晕法术  -->
+	<item id="23107" icon="icon_jinzusu"/><!--禁足术  -->
+	<item id="23108" icon="icon_suanwusu"/><!--酸雾  -->
+	<item id="23109" icon="kk"/><!--狂暴法术  -->
+	<item id="23110" icon="mm"/><!--缴械法术  -->
+	<item id="23111" icon="ll"/><!--恐惧法术  -->
 <!-- 第一版单位：小兵部分 -->	
-	<item id="22000" icon="icon_w_renzudunbing"/>
-	<item id="22001" icon="icon_renleizhanshi"/>
-	<item id="22002" icon="icon_w_renzugongshou"/>
-	<item id="22003" icon="icon_mushi"/>
-	<item id="22004" icon="icon_fashi"/>
-	<item id="22005" icon="icon_w_renzushijiu"/>
-	<item id="22006" icon="icon_w_kuloudunpaibing"/>
-	<item id="22007" icon="icon_w_shishigui"/>
-	<item id="22008" icon="icon_w_kulougongjianshou"/>
-	<item id="22009" icon="icon_w_mozuchuanjiaoshi"/>
-	<item id="22010" icon="icon_w_mengyan"/>
-	<item id="22011" icon="icon_w_shixianggui"/>
+	<item id="22000" icon="icon_w_renzudunbing"/><!--人族盾兵  -->
+	<item id="22001" icon="icon_renleizhanshi"/><!--人族剑士  -->
+	<item id="22002" icon="icon_w_renzugongshou"/><!--人族弓箭手  -->
+	<item id="22003" icon="icon_mushi"/><!--人族牧师  -->
+	<item id="22004" icon="icon_fashi"/><!--人族法师  -->
+	<item id="22005" icon="icon_w_renzushijiu"/><!--人族狮鹫  -->
+	<item id="22006" icon="icon_w_kuloudunpaibing"/><!--骷髅盾牌兵  -->
+	<item id="22007" icon="icon_w_shishigui"/><!--食尸鬼  -->
+	<item id="22008" icon="icon_w_kulougongjianshou"/><!--骷髅弓箭手  -->
+	<item id="22009" icon="icon_w_mozuchuanjiaoshi"/><!--魔族传教士  -->
+	<item id="22010" icon="icon_w_mengyan"/><!--魔族梦魇  -->
+	<item id="22011" icon="icon_w_shixianggui"/><!--石像鬼  -->
 
-	<item id="22012" icon="icon_niutou"/>
-	<item id="22013" icon="icon_jumo"/>
-	<item id="22014" icon="icon_feilong"/>
-	<item id="22015" icon="icon_huoqiang"/>
-	<item id="22016" icon="icon_jingling"/>
-	<item id="22017" icon="hh"/>
-	<item id="22018" icon="ii"/>
+	<item id="22012" icon="icon_niutou"/><!--牛头兵  -->
+	<item id="22013" icon="icon_jumo"/><!--巨魔巫医  -->
+	<item id="22014" icon="icon_feilong"/><!--红龙  -->
+	<item id="22015" icon="icon_huoqiang"/><!--火枪手  -->
+	<item id="22016" icon="icon_jingling"/><!--精灵弓箭手  -->
+	<item id="22017" icon="hh"/><!--兽族战车  -->
+	<item id="22018" icon="ii"/><!--弹射兵  -->
 <!-- 第一版单位：英雄部分 -->
-    <item id="21100" icon="A"/>
-    <item id="21101" icon="B"/>
-	<item id="21102" icon="C"/>
-	<item id="21103" icon="D"/>
-	<item id="21104" icon="E"/>
-	<item id="21105" icon="F"/>
-	<item id="21106" icon="G"/>
-	<item id="21107" icon="H"/>
-	<item id="21108" icon="I"/>
-	<item id="21109" icon="J"/>
+    <item id="21100" icon="B"/><!--盾牌队长  -->
+    <item id="21101" icon="A"/><!--剑士队长  -->
+	<item id="21102" icon="C"/><!--弓箭手队长  -->
+	<item id="21103" icon="D"/><!--人族大法师  -->
+	<item id="21104" icon="E"/><!--人族秘法大师  -->
+	<item id="21105" icon="F"/><!--魔族骷髅王子  -->
+	<item id="21106" icon="G"/><!--魔族食尸鬼王  -->
+	<item id="21107" icon="H"/><!--魔族地狱战舰  -->
+	<item id="21108" icon="I"/><!--魔族黑传教士  -->
+	<item id="21109" icon="J"/><!--魔族梦魇精华  -->
 	
-	<item id="21110" icon="icon_saer"/>
-	<item id="21111" icon="icon_shirenmo"/>
+	<item id="21110" icon="icon_saer"/><!--中立兽族斧王  -->
+	<item id="21111" icon="icon_shirenmo"/><!--中立兽族食人鬼王  -->
    
 	
    
