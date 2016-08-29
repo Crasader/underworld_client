@@ -198,25 +198,12 @@ cocos2d::Node* UnitRender::addEffect(const std::string &renderKey, bool loop) {
         const std::string& file = data->getFgResource();
         if (file.empty()) break;
         
-        //check file name
-        const size_t found = file.find_last_of(".");
-        if (found == string::npos) break;
-        
-        const string& suffix = file.substr(found + 1);
-        if ("csb" == suffix) {
-            function<void(Node*)> callback = nullptr;
-            if (!loop) {
-                callback = [](Node* sender) { if (sender) sender->removeFromParent(); };
-            }
-            ret = CocosUtils::playAnimation(file, 0.f, loop, 0, -1, callback);
-        } else if ("plist" == suffix) {
-            ParticleSystemQuad *particle = ParticleSystemQuad::create(file);
-            if (particle) {
-                if (!loop) particle->setAutoRemoveOnFinish(true);
-                ret = particle;
-            }
+        function<void(Node*)> callback = nullptr;
+        if (!loop) {
+            callback = [](Node* sender) { if (sender) sender->removeFromParent(); };
         }
-
+        ret = CocosUtils::playAnimation(file, DEFAULT_FRAME_DELAY, loop, 0, -1, callback);
+        
     } while (0);
     
     // attach node
@@ -236,13 +223,12 @@ cocos2d::Node* UnitRender::addEffect(const std::string &renderKey, bool loop) {
         }
         
         ret->setPosition(pos);
-        ret->setScale(_configData->getEffectScale());
+        ret->setScale(_configData->getEffectScale() * data->getScale());
         if (data->getSpellPosition() == SpellConfigData::kFoot) {
             _groundNode->addChild(ret, foregourndZorder);
         } else {
             _mainNode->addChild(ret, foregourndZorder);
         }
-        
     }
     
     return ret;
@@ -271,7 +257,8 @@ void UnitRender::handleEvents() {
             if (iter != _usefulHoldAuraLogs.end()) _usefulHoldAuraLogs.erase(iter);
             
         } else if (_events[i]._type == Unit::kEventLogType_FeatureTakeEffect
-            || _events[i]._type == Unit::kEventLogType_ResourceOutput) {
+            || _events[i]._type == Unit::kEventLogType_ResourceOutput
+            || _events[i]._type == Unit::kEventLogType_CastSpell) {
             _featureLogs.push_back(i);
         } else if (_events[i]._type == Unit::kEventLogType_DamageInupt
             && _events[i]._damageNature == kDamageNature_Heal) {
@@ -345,6 +332,7 @@ void UnitRender::renderHp(bool init) {
         justCreatedHpbar = true;
         if (_hpBar) {
             _hpBar->setPosition(calculateHpBarPosition());
+            _hpBar->setScaleX(_configData->getHpBarScaleX());
             _mainNode->addChild(_hpBar, IN_MAIN_HP_BAR_ZORDER);
         }
     }
@@ -435,6 +423,10 @@ void UnitRender::renderEffects() {
         } else if (log._type == Unit::kEventLogType_DamageInupt) {
             if (log._damageNature == kDamageNature_Heal && log._damage > 0 && !healed) {
                 healed = true;
+            }
+        } else if (log._type == Unit::kEventLogType_CastSpell) {
+            if (log._spellType && !log._spellType->getRenderKey().empty()) {
+                addEffect(log._spellType->getRenderKey(), false);
             }
         }
     }

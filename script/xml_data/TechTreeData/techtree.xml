@@ -71,7 +71,7 @@
 	<armor_rule armor_base_negative="100" armor_base_positive="100" armor_factor_positive="p:100"/>
 	<unit armor="15" armor_type="城甲" attack_sight="300" attack_type="英雄" class="core" field="0" height="0" hp="10000" id="10000" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="狼人基地" occupy="1" profession="no_one" render_key="基地" reward="金子:0" size="80" skill_names="单位停止;死亡移除碰撞;狼人基地"/>
 	<unit armor="15" armor_type="城甲" attack_sight="300" attack_type="英雄" class="core" field="0" height="0" hp="10000" id="10001" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="吸血鬼基地" occupy="1" profession="no_one" render_key="基地" reward="金子:0" size="80" skill_names="单位停止;死亡移除碰撞;吸血鬼基地"/>
-	<unit armor="0" armor_type="重甲" attack_sight="300" attack_type="普通" class="warrior" field="0" height="0" hp="9999" id="12800" magical_defense="25" max_level="0" max_quality="0" max_talent_level="0" name="木桩单位" occupy="1" profession="no_one" render_key="狼人步兵" reward="金子:9" size="32" skill_names="单位停止;移动速度0;死亡移除碰撞"/>
+	<unit armor="0" armor_type="重甲" attack_sight="300" attack_type="普通" class="warrior" field="0" height="0" hp="99999999" id="12800" magical_defense="25" max_level="0" max_quality="0" max_talent_level="0" name="木桩单位" occupy="1" profession="no_one" render_key="狼人步兵" reward="金子:9" size="32" skill_names="单位停止;移动速度0;死亡移除碰撞"/>
 	<unit armor="6" armor_type="重甲" attack_sight="300" attack_type="普通" class="warrior" field="0" height="0" hp="720" id="12801" magical_defense="1" max_level="0" max_quality="0" max_talent_level="0" name="测试人族剑士" occupy="1" profession="no_one" race="人族" rarity="0" render_key="狼人步兵" reward="金子:10" size="32" skill_names="单位停止;移动速度100;死亡移除碰撞;人族剑士"/>
 	<unit armor="0" armor_type="无甲" attack_sight="400" attack_type="普通" class="warrior" field="0" height="0" hp="350" id="12802" magical_defense="5" max_level="0" max_quality="0" max_talent_level="0" name="人族法师" occupy="1" profession="no_one" race="人族" rarity="0" render_key="狼人巫师" reward="金子:11" size="32" skill_names="单位停止;移动速度100;死亡移除碰撞;人族法师" spell_names="人族法师暴风雨"/>
 	<unit armor="2" armor_type="中甲" attack_sight="400" attack_type="普通" class="warrior" field="0" height="0" hp="420" id="12803" magical_defense="3" max_level="0" max_quality="0" max_talent_level="0" name="人族弓箭手" occupy="1" passive_names="人族弓箭手三重射击" profession="no_one" race="人族" rarity="0" render_key="狼人射手" reward="金子:12" size="32" skill_names="单位停止;移动速度100;死亡移除碰撞;人族弓箭手"/>
@@ -228,7 +228,7 @@
 	<spell alias="食人鬼王重生" cast_distance="-1" cast_type="self" cd="900" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" id="1031" immediate_elements="0,食人鬼王重生,1" level="1" perform="0" preperform="30" spell_name="食人鬼王重生" to_dead="0"/>
 	<spell ai="战斗过程AI" alias="中立兽族巫医诅咒" cast_distance="240" cast_type="unit" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" id="1032" immediate_elements="0,中立兽族巫医诅咒,1" level="1" perform="0" preperform="30" spell_name="中立兽族巫医诅咒" to_dead="0"/>
 	<spell ai="战斗过程AI" alias="中立兽族巫医恢复术" cast_distance="-1" cast_type="self" cd="900" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" id="1033" immediate_elements="0,中立兽族巫医恢复术,1" level="1" perform="0" preperform="30" spell_name="中立兽族巫医恢复术" to_dead="0"/>
-	<spell ai="战斗过程AI" alias="中立兽族斧王旋风斩" cast_distance="-1" cast_type="self" cd="600" class="cast" conditions=" " deliver_class="physical" deliver_natures="ally" id="1034" immediate_elements="0,中立兽族斧王旋风斩,1" level="1" perform="0" preperform="40" spell_name="中立兽族斧王旋风斩" to_dead="0"/>
+	<spell ai="战斗过程AI" alias="中立兽族斧王旋风斩" cast_distance="-1" cast_type="self" cd="600" class="cast" conditions=" " deliver_class="physical" deliver_natures="ally" id="1034" immediate_elements="0,中立兽族斧王旋风斩,1" level="1" perform="0" preperform="40" spell_name="中立兽族斧王旋风斩" to_dead="0" render_key="旋风斩_法术施放效果"/>
 	<spell ai="战斗过程AI" alias="中立兽族斧王恐怖嚎叫" cast_distance="-1" cast_type="self" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" id="1035" immediate_elements="0,中立兽族斧王恐怖嚎叫,1" level="1" perform="0" preperform="40" spell_name="中立兽族斧王恐怖嚎叫" to_dead="0"/>
 	<spell alias="中立兽族食人鬼王嗜血术" cast_distance="300" cast_type="unit" cd="900" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" id="1036" immediate_elements="0,中立兽族食人鬼王嗜血术,1" level="1" perform="0" preperform="50" spell_name="中立兽族食人鬼王嗜血术" to_dead="0"/>
 	<spell ai="战斗过程AI" alias="中立龙族黑龙火海" cast_distance="128" cast_type="unit" cd="900" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" id="1037" immediate_elements="0,中立龙族黑龙火海,1" level="1" perform="0" preperform="40" spell_name="中立龙族黑龙火海" to_dead="0"/>
@@ -292,7 +292,7 @@
 	<spell_pattern class="target_position_circle" conditions="type:unit_class;target:opposite;condition:not:building,core" content_name="内容全局技能复活" count="3" deliver_natures="ally" name="元素全局技能复活" radius="50"/>
 	<spell_pattern class="target_position_circle" conditions=" " content_name="法师队长暴风雪" count="3" deliver_natures="enemy" name="法师队长暴风雪" radius="50"/>
 	<spell_pattern class="target_position_circle" conditions=" " content_name="内容实际效果全局技能暴风雪lv1" count="100" deliver_natures="enemy" name="实际效果全局技能暴风雪lv1" radius="80"/>
-	<spell_pattern class="target_position_circle" conditions=" " content_name="内容实际效果全局技能火球术lv1" count="100" deliver_natures="enemy" name="实际效果全局技能火球术lv1" radius="32"/>
+	<spell_pattern class="target" conditions=" " content_name="内容实际效果全局技能火球术lv1" count="100" deliver_natures="enemy" name="实际效果全局技能火球术lv1"/>
 	<spell_pattern class="target_position_circle" conditions=" " content_name="内容实际效果全局技能医疗术lv1" count="100" deliver_natures="ally" name="实际效果全局技能医疗术lv1" radius="108"/>
 	<spell_pattern class="target_position_circle" conditions=" " content_name="内容实际效果全局技能沉默术lv1" deliver_natures="enemy" name="实际效果全局技能沉默术lv1" radius="112"/>
 	<spell_pattern class="target_position_circle" conditions=" " content_name="内容实际效果全局技能小型驱散术lv1" deliver_natures="neutral" name="实际效果全局技能小型驱散术lv1" radius="160"/>
@@ -346,7 +346,7 @@
 	<spell_pattern class="target" conditions=" " content_name="内容全局技能酸雾术lv1" deliver_natures="neutral" name="元素全局技能酸雾术lv1"/>
 	<spell_pattern class="target_position_circle" conditions=" " content_name="内容骷髅群体冥火暴击" count="3" deliver_natures="enemy" name="骷髅群体冥火暴击" radius="80"/>
 	<spell_pattern class="target" conditions=" " content_name="内容人族剑士致命打击" deliver_natures="enemy" name="人族剑士致命打击"/>
-	<spell_pattern class="target_position_circle" conditions="type:field_type;target:opposite;condition:not:air" content_name="内容牛头人战争践踏" deliver_natures="enemy" name="牛头人战争践踏" radius="80"/>
+	<spell_pattern class="target_position_circle" conditions="type:field_type;target:opposite;condition:not:air" content_name="内容牛头人战争践踏" deliver_natures="enemy" name="牛头人战争践踏" radius="80" render_key="战争践踏_法术元素效果"/>
 	<spell_pattern class="target" conditions="type:field_type;target:opposite;condition:not:air" content_name="内容被触发的穿透弹" deliver_natures="enemy" name="被触发的穿透弹"/>
 	<spell_pattern class="target" content_name="骷髅盾牌兵死亡云雾施法" name="骷髅盾牌兵死亡云雾施法"/>
 	<spell_pattern class="target_position_circle" conditions=" " content_name="梦魇nova主伤害" deliver_natures="enemy" name="梦魇nova主伤害" radius="16"/>
@@ -365,7 +365,7 @@
 	<spell_content name="内容全局技能复活" spell_content_class="revive"/>
 	<spell_content name="法师队长暴风雪" spell_content_class="damage" spell_content_damage_name="法师队长暴风雪伤害"/>
 	<spell_content name="内容实际效果全局技能暴风雪lv1" spell_content_class="damage" spell_content_damage_name="效果全局技能暴风雪lv1"/>
-	<spell_content name="内容实际效果全局技能火球术lv1" spell_content_bullet_name="火球术弹道" spell_content_class="bullet" spell_content_damage_name="效果全局技能火球术lv1"/>
+	<spell_content name="内容实际效果全局技能火球术lv1" spell_content_bullet_name="火球术弹道" spell_content_class="bullet" spell_content_damage_name="效果全局技能火球术lv1" to_position="1"/>
 	<spell_content name="内容实际效果全局技能医疗术lv1" spell_content_class="damage" spell_content_damage_name="效果全局技能医疗术lv1"/>
 	<spell_content name="内容实际效果全局技能沉默术lv1" spell_content_class="damage" spell_content_damage_name="效果全局技能沉默术lv1"/>
 	<spell_content name="内容实际效果全局技能小型驱散术lv1" spell_content_class="damage" spell_content_damage_name="效果全局技能小型驱散术lv1"/>
@@ -435,7 +435,7 @@
 	<bullet name="中立巨鹰" render_key="箭" speed="200"/>
 	<bullet name="中立仙女龙" render_key="狼人基地子弹" speed="500"/>
 	<bullet deliver_nature="ally" name="中立仙女龙医疗波" render_key="箭" speed="400"/>
-	<bullet name="火球术弹道" render_key="狼人基地子弹" speed="300" target_class="unit"/>
+	<bullet name="火球术弹道" render_key="火球术" speed="200" target_class="position" explode_radius="32" height="30"/>
 	<bullet flying_distance="350" name="穿透箭弹道" radius="16" render_key="箭" speed="500" sweep_on_the_way="1" target_class="unlimited"/>
 	<bullet name="人族大法师" render_key="狼人基地子弹" speed="400"/>
 	<bullet flying_distance="400" name="蜂群弹道" radius="64" render_key="箭" speed="400" sweep_on_the_way="1" target_class="unlimited"/>

@@ -216,33 +216,19 @@ cocos2d::Node* WorldRender::addEffect(const std::string &renderKey, bool loop,
         const std::string& file = data->getFgResource();
         if (file.empty()) break;
         
-        //check file name
-        const size_t found = file.find_last_of(".");
-        if (found == string::npos) break;
-        
-        const string& suffix = file.substr(found + 1);
-        if ("csb" == suffix) {
-            function<void(Node*)> callback = nullptr;
-            if (!loop) {
-                callback = [](Node* sender) { if (sender) sender->removeFromParent(); };
-            }
-            ret = CocosUtils::playAnimation(file, 0.f , loop, 0, -1, callback);
-        } else if ("plist" == suffix) {
-            ParticleSystemQuad *particle = ParticleSystemQuad::create(file);
-            if (particle) {
-                if (!loop) particle->setAutoRemoveOnFinish(true);
-                ret = particle;
-            }
+        function<void(Node*)> callback = nullptr;
+        if (!loop) {
+            callback = [](Node* sender) { if (sender) sender->removeFromParent(); };
         }
-        
+        ret = CocosUtils::playAnimation(file, DEFAULT_FRAME_DELAY, loop, 0, -1, callback);
     } while (0);
     
     // attach node
     if (ret) {
-        //TODO: postiion and order
         int zorder = worldCoordinate2Zorder(pos, (RenderLayer)data->getSpellRenderLayer(), data->getSpellHeight());
         cocos2d::Vec2 position = worldCoordinate2CocosPoint(pos, (RenderLayer)data->getSpellRenderLayer(), data->getSpellHeight());
         ret->setPosition(position);
+        ret->setScale(data->getScale());
         _worldContainer->addChild(ret, zorder);
     }
     

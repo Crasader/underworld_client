@@ -13,4 +13,5 @@
 	<item render_key="火枪子弹" resource="Rifleman-zidan.csb" shadow_resource="" explode_resource="" explode_sound=""/>
 	<item render_key="牧师子弹" resource="Mage-bullet.csb" shadow_resource="" explode_resource="" explode_sound=""/>
 	<item render_key="法师子弹3" resource="Priest-bullet.csb" shadow_resource="" explode_resource="" explode_sound=""/>
+	<item render_key="火球术" resource="Fireball.csb" shadow_resource="" explode_resource="Fireball-Blast" explode_sound=""/>
  </root>

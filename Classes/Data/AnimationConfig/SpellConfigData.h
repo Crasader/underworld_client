@@ -52,6 +52,7 @@ public:
     const std::string& getFgResource() const       {return _foregroundResource;}
     const std::string& getBgResource() const       {return _backgroundResource;}
     const std::string& effectSound() const         {return _effectSound;}
+    float getScale() const                         {return _scale;}
     
 private:
     std::string _renderKey;
@@ -68,6 +69,7 @@ private:
     std::string _foregroundResource;
     std::string _backgroundResource;
     std::string _effectSound;
+    float _scale;
 };
 
 #endif /* SpellConfigData_h */

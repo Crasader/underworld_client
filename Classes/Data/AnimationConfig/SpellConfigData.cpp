@@ -20,6 +20,7 @@ SpellConfigData::SpellConfigData(tinyxml2::XMLElement *xmlElement)
 , _spellRenderLayer(0)
 , _spellHeight(0)
 , _loop(true)
+, _scale(1.f)
 {
     if (xmlElement) {
         {
@@ -96,6 +97,13 @@ SpellConfigData::SpellConfigData(tinyxml2::XMLElement *xmlElement)
                 _effectSound = data;
             }
         }
+        {
+            const char *data = xmlElement->Attribute("scale");
+            if (data && strlen(data) > 0) {
+                _scale = atof(data);
+            }
+        }
+
     }
 }
 
