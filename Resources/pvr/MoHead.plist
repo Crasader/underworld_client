@@ -1579,7 +1579,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>MoHead/run/body/0/10008).png</key>
+            <key>MoHead/run/body/0/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1744,7 +1744,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>MoHead/run/body/1/10008).png</key>
+            <key>MoHead/run/body/1/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -1909,7 +1909,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>MoHead/run/body/2/10008).png</key>
+            <key>MoHead/run/body/2/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2074,7 +2074,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>MoHead/run/body/3/10008).png</key>
+            <key>MoHead/run/body/3/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2239,7 +2239,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>MoHead/run/body/4/10008).png</key>
+            <key>MoHead/run/body/4/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2404,7 +2404,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>MoHead/run/body/5/10008).png</key>
+            <key>MoHead/run/body/5/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -2569,7 +2569,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>MoHead/run/body/6/10008).png</key>
+            <key>MoHead/run/body/6/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -7576,7 +7576,7 @@
             <key>size</key>
             <string>{2048,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:57913be4532429e790cd42b5a7de8c1d:c1dacf8d01e34551b1f66089444c8e02:814f370895518c6d9f532490af5e1d32$</string>
+            <string>$TexturePacker:SmartUpdate:a40e0788ad62fc1bc291ec539efc08aa:c1dacf8d01e34551b1f66089444c8e02:814f370895518c6d9f532490af5e1d32$</string>
             <key>textureFileName</key>
             <string>MoHead.pvr.ccz</string>
         </dict>
