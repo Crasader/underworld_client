@@ -120,7 +120,7 @@
 	<unit armor="20" armor_type="无甲" attack_sight="300" attack_type="魔法" class="warrior" field="0" height="0" hp="3750" id="12015" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="梦魇" occupy="1" profession="mage" race="魔族" rarity="0" render_key="时光法师" reward="金子:0" size="24" skill_names="单位停止;移动速度40;死亡移除碰撞;梦魇" spell_names="梦魇nova"/>
 	<unit armor="30" armor_type="无甲" attack_sight="300" attack_type="穿刺" class="warrior" field="1" height="0" hp="5490" id="12016" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="石像鬼" occupy="1" passive_names="石像鬼减甲" profession="archer" race="魔族" rarity="0" render_key="石像鬼" reward="金子:0" size="16" skill_names="单位停止;移动速度50;死亡移除碰撞;石像鬼对地;石像鬼对空"/>
 	<unit armor="30" armor_type="重甲" attack_sight="300" attack_type="穿刺" class="warrior" field="0" height="0" hp="5000" id="12017" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="兽族攻城车" occupy="1" passive_names="攻城车穿透弹" profession="archer" race="中立" rarity="0" render_key="机械甲虫" reward="金子:0" size="32" skill_names="单位停止;移动速度40;死亡移除碰撞;兽族攻城车"/>
-	<unit armor="100000" armor_type="中甲" attack_sight="300" attack_type="穿刺" class="warrior" field="0" height="0" hp="200" id="12018" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="月之骑士" occupy="1" passive_names="月之骑士月刃" profession="archer" race="中立" rarity="0" render_key="吸血鬼骑士" reward="金子:0" size="24" skill_names="单位停止;移动速度50;死亡移除碰撞;月之骑士"/>
+	<unit armor="100000" armor_type="中甲" attack_sight="300" attack_type="穿刺" class="warrior" field="0" height="0" hp="200" id="12018" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="月之骑士" occupy="1" passive_names="月之骑士月刃" profession="archer" race="中立" rarity="0" render_key="吸血鬼骑士" reward="金子:0" size="24" skill_names="单位停止;移动速度50;死亡移除碰撞;月之骑士" spell_names="月之骑士闪现"/>
 	<skill cd="0" class="stop" name="单位停止" perform="0" preperform="0"/>
 	<skill cd="0" class="die" name="死亡移除碰撞" occupy="0" perform="300" preperform="0"/>
 	<skill cd="0" class="die" name="死亡不移除碰撞" occupy="1" perform="300" preperform="0"/>
@@ -228,8 +228,8 @@
 	<spell alias="食人鬼王重生" cast_distance="-1" cast_type="self" cd="900" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" id="1031" immediate_elements="0,食人鬼王重生,1" level="1" perform="0" preperform="30" spell_name="食人鬼王重生" to_dead="0"/>
 	<spell ai="战斗过程AI" alias="中立兽族巫医诅咒" cast_distance="240" cast_type="unit" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" id="1032" immediate_elements="0,中立兽族巫医诅咒,1" level="1" perform="0" preperform="30" spell_name="中立兽族巫医诅咒" to_dead="0"/>
 	<spell ai="战斗过程AI" alias="中立兽族巫医恢复术" cast_distance="-1" cast_type="self" cd="900" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" id="1033" immediate_elements="0,中立兽族巫医恢复术,1" level="1" perform="0" preperform="30" spell_name="中立兽族巫医恢复术" to_dead="0"/>
-	<spell ai="战斗过程AI" alias="中立兽族斧王旋风斩" cast_distance="-1" cast_type="self" cd="600" class="cast" conditions=" " deliver_class="physical" deliver_natures="ally" id="1034" immediate_elements="0,中立兽族斧王旋风斩,1" level="1" perform="0" preperform="40" render_key="旋风斩_法术施放效果" spell_name="中立兽族斧王旋风斩" to_dead="0"/>
-	<spell ai="战斗过程AI" alias="中立兽族斧王恐怖嚎叫" cast_distance="-1" cast_type="self" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" id="1035" immediate_elements="0,中立兽族斧王恐怖嚎叫,1" level="1" perform="0" preperform="40" spell_name="中立兽族斧王恐怖嚎叫" to_dead="0"/>
+	<spell ai="战斗过程AI" alias="中立兽族斧王旋风斩" cast_distance="48" cast_type="unit" cd="600" class="cast" conditions=" " deliver_class="physical" deliver_natures="enemy" id="1034" immediate_elements="1,中立兽族斧王旋风斩,1" level="1" perform="0" preperform="40" render_key="旋风斩_法术施放效果" spell_name="中立兽族斧王旋风斩" to_dead="0"/>
+	<spell ai="战斗过程AI" alias="中立兽族斧王恐怖嚎叫" cast_distance="48" cast_type="unit" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" id="1035" immediate_elements="1,中立兽族斧王恐怖嚎叫,1" level="1" perform="0" preperform="40" spell_name="中立兽族斧王恐怖嚎叫" to_dead="0"/>
 	<spell alias="中立兽族食人鬼王嗜血术" cast_distance="300" cast_type="unit" cd="900" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" id="1036" immediate_elements="0,中立兽族食人鬼王嗜血术,1" level="1" perform="0" preperform="50" spell_name="中立兽族食人鬼王嗜血术" to_dead="0"/>
 	<spell ai="战斗过程AI" alias="中立龙族黑龙火海" cast_distance="128" cast_type="unit" cd="900" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" id="1037" immediate_elements="0,中立龙族黑龙火海,1" level="1" perform="0" preperform="40" spell_name="中立龙族黑龙火海" to_dead="0"/>
 	<spell ai="战斗过程AI" alias="中立机械族火枪手冲锋枪" cast_distance="-1" cast_type="self" cd="900" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" id="1038" immediate_elements="0,中立机械族火枪手冲锋枪,1" level="1" perform="0" preperform="45" spell_name="中立机械族火枪手冲锋枪" to_dead="0"/>
@@ -263,6 +263,7 @@
 	<spell alias="剑士队长清除自身负面状态" cast_distance="-1" cast_type="self" cd="300" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" id="1066" immediate_elements="0,剑士队长清除自身负面状态,1" level="1" perform="0" preperform="30" spell_name="剑士队长清除自身负面状态" to_dead="0"/>
 	<spell ai="战斗过程AI" alias="魔族巫妖王霜之哀伤" cast_distance="48" cast_type="unit" cd="600" class="cast" conditions="type:unit_class;target:opposite;condition:not:building,core" deliver_class="magical" deliver_natures="enemy" id="1067" immediate_elements="0,魔族巫妖王霜之哀伤,1" is_on_building="0" level="1" perform="0" preperform="30" spell_name="魔族巫妖王霜之哀伤" to_dead="0"/>
 	<spell ai="魔族巫妖王死亡契约ai" alias="魔族巫妖王死亡契约" cast_distance="240" cast_type="unit" cd="600" class="cast" conditions="type:unit_race;target:opposite;condition:is:魔族&amp;type:unit_class;target:opposite;condition:not:building,core,hero" deliver_class="magical" deliver_natures="ally" id="1068" immediate_elements="0,魔族巫妖王死亡契约之击杀友方,1;1,魔族巫妖王死亡契约之buff团队,1" is_on_building="0" level="1" perform="0" preperform="30" spell_name="魔族巫妖王死亡契约" to_dead="0"/>
+	<spell ai="月之骑士闪现ai" alias="月之骑士闪现" cast_distance="300" cast_type="unit" cd="60" class="cast" conditions="type:unit_profession;target:opposite;condition:is:mage|type:unit_profession;target:opposite;condition:is:archer" deliver_class="physical" deliver_natures="enemy|enemy" id="1069" immediate_elements="0,月之骑士闪现,1" is_on_building="0" level="1" perform="0" preperform="0" spell_name="月之骑士闪现" to_dead="0"/>
 	<spell_ai_description conditions=" " deliver_natures="enemy" heuristic_element_names="人族法师暴风雨启发" name="人族法师暴风雨ai" scenario="in_battle"/>
 	<spell_ai_description conditions="type:unit_lose_hp;target:opposite;condition:&gt;200" deliver_natures="ally" heuristic_element_names="中立仙女龙医疗波启发" name="中立仙女龙医疗波ai" scenario="all"/>
 	<spell_ai_description conditions=" " deliver_natures="enemy" heuristic_element_names="法师队长暴风雪启发" name="法师队长暴风雪ai" scenario="in_battle"/>
@@ -370,6 +371,7 @@
 	<spell_pattern class="target_position_circle" conditions="type:unit_class;target:opposite;condition:not:building,core" content_name="魔族巫妖王霜之哀伤减速内容" deliver_natures="enemy" name="魔族巫妖王霜之哀伤" radius="128"/>
 	<spell_pattern class="target" conditions="type:unit_race;target:opposite;condition:is:魔族&amp;type:unit_class;target:opposite;condition:not:building,core,hero" content_name="魔族巫妖王死亡契约之击杀友方" deliver_natures="ally" name="魔族巫妖王死亡契约之击杀友方"/>
 	<spell_pattern class="target_position_circle" conditions="type:unit_class;target:opposite;condition:not:building,core" content_name="魔族巫妖王死亡契约之buff团队" deliver_natures="ally" name="魔族巫妖王死亡契约之buff团队" radius="300"/>
+	<spell_pattern class="target" content_name="月之骑士闪现" name="月之骑士闪现"/>
 	<spell_content name="人族法师暴风雨" spell_content_class="damage" spell_content_damage_name="人族法师暴风雨伤害"/>
 	<spell_content name="中立鱼人召唤鱼人" spell_content_class="summon" summon_count="2" unit_setting_id="14005"/>
 	<spell_content name="中立仙女龙医疗波" spell_content_bullet_name="中立仙女龙医疗波" spell_content_class="bullet" spell_content_damage_name="中立仙女龙医疗波效果"/>
@@ -450,6 +452,7 @@
 	<spell_content name="魔族巫妖王霜之哀伤减速内容" spell_content_class="damage" spell_content_damage_name="魔族巫妖王霜之哀伤减速效果"/>
 	<spell_content name="魔族巫妖王死亡契约之击杀友方" spell_content_class="damage" spell_content_damage_name="魔族巫妖王死亡契约之击杀友方伤害"/>
 	<spell_content name="魔族巫妖王死亡契约之buff团队" spell_content_class="damage" spell_content_damage_name="魔族巫妖王死亡契约之buff团队效果"/>
+	<spell_content name="月之骑士闪现" spell_content_class="blink"/>
 	<bullet name="人族法师" render_key="法师子弹3" speed="300"/>
 	<bullet height="15" name="人族弓箭手" render_key="箭" speed="400"/>
 	<bullet name="魔族战车" render_key="箭" speed="400"/>
@@ -457,7 +460,7 @@
 	<bullet name="中立巨鹰" render_key="箭" speed="200"/>
 	<bullet name="中立仙女龙" render_key="狼人基地子弹" speed="500"/>
 	<bullet deliver_nature="ally" name="中立仙女龙医疗波" render_key="箭" speed="400"/>
-	<bullet explode_radius="32" height="30" name="火球术弹道" render_key="火球术" speed="200" target_class="position"/>
+	<bullet explode_radius="32" height="30" name="火球术弹道" render_key="火球术" speed="400" target_class="position"/>
 	<bullet flying_distance="350" name="穿透箭弹道" radius="32" render_key="箭" speed="500" sweep_on_the_way="1" target_class="unlimited"/>
 	<bullet name="人族大法师" render_key="狼人基地子弹" speed="400"/>
 	<bullet flying_distance="400" name="蜂群弹道" radius="64" render_key="箭" speed="400" sweep_on_the_way="1" target_class="unlimited"/>
