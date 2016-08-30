@@ -107,7 +107,7 @@
 	<unit armor="45" armor_type="英雄" attack_sight="300" attack_type="英雄" class="hero" field="0" height="0" hp="26665" id="11006" magical_defense="67" max_level="10" max_quality="5" max_talent_level="0" name="魔族食尸鬼王" occupy="1" passive_names="食尸鬼王山岭光环" profession="rogue" race="魔族" rarity="0" render_key="威克拉姆国王" reward="金子:0" size="48" skill_names="单位停止;移动速度50;死亡移除碰撞;魔族食尸鬼王" spell_names="食尸鬼王冥火暴击"/>
 	<unit armor="30" armor_type="英雄" attack_sight="300" attack_type="英雄" class="hero" field="0" height="0" hp="8875" id="11007" magical_defense="67" max_level="10" max_quality="5" max_talent_level="0" name="魔族地狱战舰" occupy="1" passive_names="魔族地狱战舰邪恶之箭;地狱战舰腐蚀攻击" profession="archer" race="魔族" rarity="0" render_key="巨龙哨兵" reward="金子:0" size="48" skill_names="单位停止;移动速度40;死亡移除碰撞;魔族地狱战舰"/>
 	<unit armor="28" armor_type="英雄" attack_sight="300" attack_type="英雄" class="hero" field="0" height="0" hp="9000" id="11008" magical_defense="67" max_level="10" max_quality="5" max_talent_level="0" name="魔族黑传教士" occupy="1" passive_names="魔族黑传教士dot法球;魔族黑传教士减魔抗光环" profession="mage" race="魔族" rarity="0" render_key="时光女神" reward="金子:0" size="48" skill_names="单位停止;移动速度40;死亡移除碰撞;魔族黑传教士"/>
-	<unit armor="20" armor_type="英雄" attack_sight="300" attack_type="英雄" class="hero" field="0" height="0" hp="9600" id="11009" magical_defense="67" max_level="10" max_quality="5" max_talent_level="0" name="魔族梦魇精华" occupy="1" profession="mage" race="魔族" rarity="0" render_key="时光法师" reward="金子:0" size="48" skill_names="单位停止;移动速度40;死亡移除碰撞;魔族梦魇精华" spell_names="魔族梦魇精华腐臭蜂群"/>
+	<unit armor="75" armor_type="英雄" attack_sight="300" attack_type="英雄" class="hero" field="0" height="0" hp="22100" id="11009" magical_defense="67" max_level="10" max_quality="5" max_talent_level="0" name="魔族巫妖王" occupy="1" profession="tank" race="魔族" rarity="0" render_key="时光法师" reward="金子:0" size="48" skill_names="单位停止;移动速度50;死亡移除碰撞;魔族巫妖王" spell_names="魔族巫妖王霜之哀伤;魔族巫妖王死亡契约"/>
 	<unit armor="0" armor_type="无甲" attack_sight="300" attack_type="普通" class="summoned" field="0" height="0" hp="1" id="14003" magical_defense="0" max_level="1" max_quality="0" max_talent_level="0" name="中立被召唤治疗守卫" occupy="1" passive_names="治疗守卫光环" profession="no_one" race="中立" rarity="0" render_key="狼人步兵" reward="金子:0" size="4" skill_names="单位停止;移动速度0;死亡移除碰撞" timed="1200"/>
 	<unit armor="80" armor_type="重甲" attack_sight="300" attack_type="普通" class="warrior" field="0" height="0" hp="10390" id="12005" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="人族盾牌兵" occupy="1" passive_names="人族盾牌兵被动反弹伤害" profession="tank" race="人族" rarity="0" render_key="狼人机械狼" reward="金子:0" size="32" skill_names="单位停止;移动速度30;死亡移除碰撞;人族盾牌兵"/>
 	<unit armor="20" armor_type="中甲" attack_sight="300" attack_type="穿刺" class="warrior" field="0" height="0" hp="5620" id="12007" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="人族弓手" occupy="1" passive_names="人族弓手被动多重射击" profession="archer" race="人族" rarity="0" render_key="狼人射手" reward="金子:0" size="24" skill_names="单位停止;移动速度45;死亡移除碰撞;人族弓手"/>
@@ -168,7 +168,7 @@
 	<skill cd="45" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="618" min_damage="618" name="魔族食尸鬼王" perform="0" preperform="45" range="48"/>
 	<skill bullet_name="人族弓箭手" cd="70" class="attack" damage_distance="faraway" deliver_class="physical" fields="1" max_damage="1140" min_damage="1140" name="魔族地狱战舰" perform="0" preperform="25" range="224"/>
 	<skill bullet_name="人族大法师" cd="40" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="840" min_damage="840" name="魔族黑传教士" perform="0" preperform="30" range="192"/>
-	<skill bullet_name="中立仙女龙" cd="45" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="960" min_damage="960" name="魔族梦魇精华" perform="0" preperform="35" range="192"/>
+	<skill cd="75" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="176" min_damage="176" name="魔族巫妖王" perform="0" preperform="35" range="32"/>
 	<skill cd="70" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="456" min_damage="456" name="中立兽族牛头人" perform="0" preperform="40" range="32"/>
 	<skill bullet_name="人族大法师" cd="45" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="80" min_damage="80" name="中立兽族巨魔巫医" perform="0" preperform="35" range="160"/>
 	<skill cd="50" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="652" min_damage="652" name="中立兽族斧王" perform="0" preperform="45" range="32"/>
@@ -261,6 +261,8 @@
 	<spell alias="第一版恐惧法术" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" id="1064" immediate_elements="0,第一版恐惧法术,1" level="1" perform="0" preperform="30" spell_name="恐惧法术lv1" spell_radius="140" to_dead="0"/>
 	<spell ai="战斗过程AI" alias="人族剑士队长致命打击" cast_distance="72" cast_type="unit" cd="450" class="cast" conditions=" " deliver_class="physical" deliver_natures="enemy" id="1065" immediate_elements="0,人族剑士队长致命打击,1" is_on_building="0" level="1" perform="0" preperform="90" spell_name="人族剑士队长致命打击" to_dead="0"/>
 	<spell alias="剑士队长清除自身负面状态" cast_distance="-1" cast_type="self" cd="300" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" id="1066" immediate_elements="0,剑士队长清除自身负面状态,1" level="1" perform="0" preperform="30" spell_name="剑士队长清除自身负面状态" to_dead="0"/>
+	<spell ai="战斗过程AI" alias="魔族巫妖王霜之哀伤" cast_distance="48" cast_type="unit" cd="600" class="cast" conditions="type:unit_class;target:opposite;condition:not:building,core" deliver_class="magical" deliver_natures="enemy" id="1067" immediate_elements="0,魔族巫妖王霜之哀伤,1" is_on_building="0" level="1" perform="0" preperform="30" spell_name="魔族巫妖王霜之哀伤" to_dead="0"/>
+	<spell ai="魔族巫妖王死亡契约ai" alias="魔族巫妖王死亡契约" cast_distance="240" cast_type="unit" cd="600" class="cast" conditions="type:unit_race;target:opposite;condition:is:魔族&amp;type:unit_class;target:opposite;condition:not:building,core,hero" deliver_class="magical" deliver_natures="ally" id="1068" immediate_elements="0,魔族巫妖王死亡契约之击杀友方,1;1,魔族巫妖王死亡契约之buff团队,1" is_on_building="0" level="1" perform="0" preperform="30" spell_name="魔族巫妖王死亡契约" to_dead="0"/>
 	<spell_ai_description conditions=" " deliver_natures="enemy" heuristic_element_names="人族法师暴风雨启发" name="人族法师暴风雨ai" scenario="in_battle"/>
 	<spell_ai_description conditions="type:unit_lose_hp;target:opposite;condition:&gt;200" deliver_natures="ally" heuristic_element_names="中立仙女龙医疗波启发" name="中立仙女龙医疗波ai" scenario="all"/>
 	<spell_ai_description conditions=" " deliver_natures="enemy" heuristic_element_names="法师队长暴风雪启发" name="法师队长暴风雪ai" scenario="in_battle"/>
@@ -277,15 +279,17 @@
 	<spell_ai_description conditions=" " deliver_natures="enemy" name="穿透箭AI" scenario="in_battle"/>
 	<spell_ai_description conditions=" " deliver_natures="neutral" name="全局使用AI" scenario="all"/>
 	<spell_ai_description conditions=" " deliver_natures="neutral" name="战斗过程AI" scenario="in_battle"/>
+	<spell_ai_description conditions="type:unit_race;target:opposite;condition:is:魔族&amp;type:unit_class;target:opposite;condition:not:building,core,hero" deliver_natures="ally" heuristic_element_names="魔族巫妖王死亡契约启发" name="魔族巫妖王死亡契约ai" scenario="in_battle"/>
 	<unit_attack_ai_description conditions=" " deliver_natures="enemy" heuristic_element_names="火枪手攻击筛选启发" name="中立火枪手攻击AI"/>
 	<unit_attack_ai_description conditions="type:unit_profession;target:opposite;condition:is:mage&amp;type:unit_class;target:opposite;condition:not:hero" deliver_natures="enemy" name="中立精灵弓箭手攻击AI"/>
 	<heuristic_element descending="0" heuristic_element_name="人族法师暴风雨启发" ref_value="200" type="less_then_ref_value" value="d:target:opposite;type:hp;v:p:100;template:0"/>
 	<heuristic_element descending="1" heuristic_element_name="中立仙女龙医疗波启发" ref_value="0" type="literal" value="d:target:opposite;type:lose_hp;v:p:100;template:0"/>
 	<heuristic_element descending="0" heuristic_element_name="法师队长暴风雪启发" ref_value="380" type="less_then_ref_value" value="d:target:opposite;type:hp;v:p:100;template:0"/>
 	<heuristic_element descending="1" heuristic_element_name="火箭弹幕启发" ref_value="0" type="literal" value="d:target:opposite;type:hp;v:p:100;template:0"/>
-	<heuristic_element descending="1" heuristic_element_name="人族男巫加血启发" ref_value="0" type="literal" value="d:target:opposite;type:lose_hp;v:p:100;template:0"/>
-	<heuristic_element descending="1" heuristic_element_name="力量强化启发" ref_value="0" type="larger_then_ref_value" value="d:target:opposite;type:attack_damage;v:p:100;template:0"/>
-	<heuristic_element descending="1" heuristic_element_name="火枪手攻击筛选启发" ref_value="0" type="literal" value="d:target:opposite;type:lose_hp;v:p:100;template:0"/>
+	<heuristic_element descending="0" heuristic_element_name="人族男巫加血启发" ref_value="0" type="literal" value="d:target:opposite;type:hp_percentage;v:p:100;template:0"/>
+	<heuristic_element descending="1" heuristic_element_name="力量强化启发" ref_value="0" type="literal" value="d:target:opposite;type:attack_damage;v:p:100;template:0"/>
+	<heuristic_element descending="0" heuristic_element_name="火枪手攻击筛选启发" ref_value="0" type="literal" value="d:target:opposite;type:hp;v:p:100;template:0"/>
+	<heuristic_element descending="0" heuristic_element_name="魔族巫妖王死亡契约启发" ref_value="0" type="literal" value="d:target:opposite;type:hp;v:p:100;template:0"/>
 	<spell_pattern class="target_position_circle" conditions=" " content_name="人族法师暴风雨" count="3" deliver_natures="enemy" name="人族法师暴风雨" radius="50"/>
 	<spell_pattern class="target" conditions=" " content_name="中立鱼人召唤鱼人" deliver_natures="ally" name="中立鱼人召唤鱼人"/>
 	<spell_pattern class="target" conditions=" " content_name="中立仙女龙医疗波" deliver_natures="ally" name="中立仙女龙医疗波"/>
@@ -363,6 +367,9 @@
 	<spell_pattern class="target_position_circle" conditions="type:unit_class;target:opposite;condition:not:building,core" content_name="第一版恐惧法术" deliver_natures="enemy" name="第一版恐惧法术" radius="140"/>
 	<spell_pattern class="target" conditions="type:unit_class;target:opposite;condition:not:building,core" content_name="人族剑士队长致命打击" deliver_natures="enemy" name="人族剑士队长致命打击"/>
 	<spell_pattern class="target" conditions=" " content_name="剑士队长清除自身负面状态" deliver_natures="ally" name="剑士队长清除自身负面状态"/>
+	<spell_pattern class="target_position_circle" conditions="type:unit_class;target:opposite;condition:not:building,core" content_name="魔族巫妖王霜之哀伤减速内容" deliver_natures="enemy" name="魔族巫妖王霜之哀伤" radius="128"/>
+	<spell_pattern class="target" conditions="type:unit_race;target:opposite;condition:is:魔族&amp;type:unit_class;target:opposite;condition:not:building,core,hero" content_name="魔族巫妖王死亡契约之击杀友方" deliver_natures="ally" name="魔族巫妖王死亡契约之击杀友方"/>
+	<spell_pattern class="target_position_circle" conditions="type:unit_class;target:opposite;condition:not:building,core" content_name="魔族巫妖王死亡契约之buff团队" deliver_natures="ally" name="魔族巫妖王死亡契约之buff团队" radius="300"/>
 	<spell_content name="人族法师暴风雨" spell_content_class="damage" spell_content_damage_name="人族法师暴风雨伤害"/>
 	<spell_content name="中立鱼人召唤鱼人" spell_content_class="summon" summon_count="2" unit_setting_id="14005"/>
 	<spell_content name="中立仙女龙医疗波" spell_content_bullet_name="中立仙女龙医疗波" spell_content_class="bullet" spell_content_damage_name="中立仙女龙医疗波效果"/>
@@ -440,6 +447,9 @@
 	<spell_content name="第一版恐惧法术" spell_content_class="damage" spell_content_damage_name="第一版恐惧法术"/>
 	<spell_content name="人族剑士队长致命打击" spell_content_class="damage" spell_content_damage_name="人族剑士队长致命打击"/>
 	<spell_content name="剑士队长清除自身负面状态" spell_content_class="damage" spell_content_damage_name="剑士队长清除自身负面状态"/>
+	<spell_content name="魔族巫妖王霜之哀伤减速内容" spell_content_class="damage" spell_content_damage_name="魔族巫妖王霜之哀伤减速效果"/>
+	<spell_content name="魔族巫妖王死亡契约之击杀友方" spell_content_class="damage" spell_content_damage_name="魔族巫妖王死亡契约之击杀友方伤害"/>
+	<spell_content name="魔族巫妖王死亡契约之buff团队" spell_content_class="damage" spell_content_damage_name="魔族巫妖王死亡契约之buff团队效果"/>
 	<bullet name="人族法师" render_key="法师子弹3" speed="300"/>
 	<bullet height="15" name="人族弓箭手" render_key="箭" speed="400"/>
 	<bullet name="魔族战车" render_key="箭" speed="400"/>
@@ -641,6 +651,8 @@
 	<buff alias="buff食尸鬼王山岭光环反弹效果" buff_effect_names="buff效果食尸鬼王山岭光环反弹效果" deliver_class="physical" deliver_nature="enemy" dispelable="0" id="1065" is_on_building="0" level="1" max_overlay="1" name="buff食尸鬼王山岭光环反弹效果" render_key="强风护盾" span="720" span_type="limited" unique_on_unit="1"/>
 	<buff alias="buff魔族黑传教士dot法球" buff_effect_names="buff效果魔族黑传教士dot法球" deliver_class="magical" deliver_nature="enemy" dispelable="1" id="1066" is_on_building="0" level="1" max_overlay="50" name="buff魔族黑传教士dot法球" render_key="强风护盾" span="1200" span_type="limited" unique_on_unit="1"/>
 	<buff alias="buff中立食人鬼王加护甲技能" buff_effect_names="buff效果中立食人鬼王加护甲技能" deliver_class="physical" deliver_nature="ally" dispelable="1" id="1067" is_on_building="0" level="1" max_overlay="50" name="buff中立食人鬼王加护甲技能" render_key="强风护盾" span="1200" span_type="limited" unique_on_unit="1"/>
+	<buff alias="魔族巫妖王霜之哀伤减速buff" buff_effect_names="魔族巫妖王霜之哀伤减速buff效果" deliver_class="magical" deliver_nature="enemy" dispelable="1" id="1068" is_on_building="0" level="1" max_overlay="1" name="魔族巫妖王霜之哀伤减速buff" render_key="强风护盾" span="450" span_type="limited" unique_on_unit="1"/>
+	<buff alias="魔族巫妖王死亡契约之buff团队效果特性之加攻速buff" buff_effect_names="魔族巫妖王死亡契约之buff团队效果特性之加攻速buff效果" deliver_class="magical" deliver_nature="ally" dispelable="1" id="1069" is_on_building="0" level="1" max_overlay="1" name="魔族巫妖王死亡契约之buff团队效果特性之加攻速buff" render_key="强风护盾" span="450" span_type="limited" unique_on_unit="1"/>
 	<buff_effect buff_effect_condition="immediate" buff_effect_content_name="中立树人反弹光环" buff_effect_name="中立树人反弹光环" is_damage="0"/>
 	<buff_effect buff_effect_condition="immediate" buff_effect_content_name="效果技能强攻" buff_effect_name="buff效果技能强攻" is_damage="0"/>
 	<buff_effect buff_effect_condition="immediate" buff_effect_content_name="效果技能洪流" buff_effect_name="buff效果技能洪流" is_damage="0"/>
@@ -714,6 +726,8 @@
 	<buff_effect buff_effect_condition="immediate" buff_effect_content_name="食尸鬼王山岭光环反弹效果" buff_effect_name="buff效果食尸鬼王山岭光环反弹效果" is_damage="0"/>
 	<buff_effect buff_effect_condition="loop" buff_effect_content_name="魔族黑传教士dot法球" buff_effect_name="buff效果魔族黑传教士dot法球" buff_effect_time="60" is_damage="1"/>
 	<buff_effect buff_effect_condition="immediate" buff_effect_content_name="中立食人鬼王加护甲技能" buff_effect_name="buff效果中立食人鬼王加护甲技能" is_damage="0"/>
+	<buff_effect buff_effect_condition="immediate" buff_effect_content_name="魔族巫妖王霜之哀伤减速buff效果内容" buff_effect_name="魔族巫妖王霜之哀伤减速buff效果" is_damage="0"/>
+	<buff_effect buff_effect_condition="immediate" buff_effect_content_name="魔族巫妖王死亡契约之buff团队效果特性之加攻速buff效果内容" buff_effect_name="魔族巫妖王死亡契约之buff团队效果特性之加攻速buff效果" is_damage="0"/>
 	<damage damage_name="人族法师暴风雨伤害" damage_nature="hurt" damage_value="180" deliver_class="magical" is_on_building="0"/>
 	<damage damage_name="中立仙女龙医疗波效果" damage_nature="heal" damage_value="150" deliver_class="magical" feature_names="中立仙女龙医疗波弹射"/>
 	<damage damage_name="伤害全局技能强攻" damage_nature="heal" damage_value="0" deliver_class="magical" feature_names="效果全局技能强攻"/>
@@ -785,6 +799,9 @@
 	<damage damage_name="人族剑士队长致命打击" damage_nature="hurt" damage_value="d:target:owner;type:attack_damage;v:p:999;template:0" deliver_class="physical" is_on_building="0"/>
 	<damage damage_name="剑士队长清除自身负面状态" damage_nature="heal" damage_value="0" deliver_class="magical" feature_names="清除自身负面状态特性"/>
 	<damage damage_name="魔族黑传教士dot法球" damage_nature="hurt" damage_value="1000" deliver_class="magical" is_on_building="0"/>
+	<damage damage_name="魔族巫妖王霜之哀伤减速效果" damage_nature="hurt" damage_value="0" deliver_class="magical" feature_names="魔族巫妖王霜之哀伤减速特性" is_on_building="0"/>
+	<damage damage_name="魔族巫妖王死亡契约之击杀友方伤害" damage_nature="hurt" damage_value="d:target:opposite;type:max_hp;v:p:10000;template:0" deliver_class="physical"/>
+	<damage damage_name="魔族巫妖王死亡契约之buff团队效果" damage_nature="hurt" damage_value="0" deliver_class="magical" feature_names="魔族巫妖王死亡契约之buff团队效果特性" is_on_building="0"/>
 	<effect alias_name="反弹光环" class="add_feature" effect_name="中立树人反弹光环" feature_name="中立树人反弹光环效果"/>
 	<effect alias_name="效果技能强攻" attr_name="attack_speed" class="alter_attr" effect_name="效果技能强攻" value="60"/>
 	<effect alias_name="效果技能洪流" attr_name="armor" class="alter_attr" effect_name="效果技能洪流" value="-15"/>
@@ -841,6 +858,8 @@
 	<effect alias_name="食尸鬼王山岭光环" class="add_feature" effect_name="食尸鬼王山岭光环" feature_name="食尸鬼王山岭光环反弹效果"/>
 	<effect alias_name="食尸鬼王山岭光环反弹效果" class="set_state" effect_name="食尸鬼王山岭光环反弹效果" state_name="stun"/>
 	<effect alias_name="中立食人鬼王加护甲技能" attr_name="armor" class="alter_attr" effect_name="中立食人鬼王加护甲技能" value="10000"/>
+	<effect alias_name="降低攻速效果" attr_name="attack_speed" class="alter_attr" effect_name="魔族巫妖王霜之哀伤减速buff效果内容" value="-80"/>
+	<effect alias_name="提高攻速效果" attr_name="attack_speed" class="alter_attr" effect_name="魔族巫妖王死亡契约之buff团队效果特性之加攻速buff效果内容" value="200"/>
 	<effect_alias name="反弹光环" unique="0"/>
 	<effect_alias name="效果技能强攻" unique="0"/>
 	<effect_alias name="效果技能洪流" unique="0"/>
@@ -967,6 +986,8 @@
 	<feature_group conditions="type:unit_class;target:opposite;condition:not:building,core" deliver_natures="enemy" determine_timing="be_hit" feature_type_names="食尸鬼王山岭光环反弹特性" name="食尸鬼王山岭光环反弹效果"/>
 	<feature_group conditions="type:unit_class;target:opposite;condition:not:building,core" deliver_natures="enemy" determine_timing="hit" feature_type_names="魔族黑传教士dot法球特性" name="魔族黑传教士dot法球效果"/>
 	<feature_group determine_timing="kill" feature_type_names="中立食人鬼王加护甲技能特性" name="中立食人鬼王加护甲技能效果"/>
+	<feature_group conditions="type:unit_class;target:opposite;condition:not:building,core" deliver_natures="enemy" determine_timing="hit" feature_type_names="魔族巫妖王霜之哀伤减速特性" name="魔族巫妖王霜之哀伤减速特性" probability="100"/>
+	<feature_group conditions="type:unit_class;target:opposite;condition:not:building,core" deliver_natures="ally" determine_timing="hit" feature_type_names="魔族巫妖王死亡契约之buff团队效果特性" name="魔族巫妖王死亡契约之buff团队效果特性" probability="100"/>
 	<feature count="2" effect_timing="attack" feature_name="人族弓箭手三重射击" range="250" render_key="0" type="multiple" value="p:20"/>
 	<feature deliver_class="physical" effect_timing="hit" feature_name="魔族梦魇攻击效果" render_key="0" type="extra_damage" value="d:target:opposite;type:hp;v:p:5;template:0"/>
 	<feature effect_timing="hit" feature_name="魔族战车溅射效果" range="120" render_key="0" type="splash" value="p:25"/>
@@ -1035,7 +1056,7 @@
 	<feature effect_timing="attack" feature_name="人族剑士队长分裂攻击" range="64" type="splash" value="p:40"/>
 	<feature count="2" effect_timing="attack" feature_name="冥火暴击散射效果" range="250" type="multiple" value="p:100"/>
 	<feature effect_timing="be_hit" feature_name="骷髅王子被攻击回血" type="drain" value="700"/>
-	<feature buff_type_name="地狱战舰腐蚀攻击" effect_timing="hit" feature_name="地狱战舰腐蚀攻击" type="add_buff"/>
+	<feature buff_type_name="地狱战舰腐蚀攻击" effect_timing="hit" feature_name="地狱战舰腐蚀攻击" is_to_self="0" overlay="1" type="add_buff"/>
 	<feature buff_type_name="冥火暴击击晕效果" effect_timing="hit" feature_name="冥火暴击击晕效果" type="add_buff"/>
 	<feature effect_timing="heal" feature_name="中立兽族食人鬼王治疗加成" type="damage_enhance" value="p:200"/>
 	<feature buff_type_name="战争践踏晕眩效果" effect_timing="hit" feature_name="战争践踏晕眩效果" type="add_buff"/>
@@ -1065,6 +1086,8 @@
 	<feature buff_type_name="buff食尸鬼王山岭光环反弹效果" effect_timing="be_hit" feature_name="食尸鬼王山岭光环反弹特性" is_to_self="0" overlay="1" type="add_buff"/>
 	<feature buff_type_name="buff魔族黑传教士dot法球" effect_timing="hit" feature_name="魔族黑传教士dot法球特性" is_to_self="0" overlay="1" type="add_buff"/>
 	<feature buff_type_name="buff中立食人鬼王加护甲技能" effect_timing="kill" feature_name="中立食人鬼王加护甲技能特性" is_to_self="1" overlay="1" type="add_buff"/>
+	<feature buff_type_name="魔族巫妖王霜之哀伤减速buff" effect_timing="hit" feature_name="魔族巫妖王霜之哀伤减速特性" is_to_self="0" overlay="1" type="add_buff"/>
+	<feature buff_type_name="魔族巫妖王死亡契约之buff团队效果特性之加攻速buff" effect_timing="hit" feature_name="魔族巫妖王死亡契约之buff团队效果特性" is_to_self="0" overlay="1" type="add_buff"/>
 	<magic aura_names="酸雾降低护甲" magic_effect_names="酸雾持续伤害" name="效果全局技能酸雾术lv1" span="600" span_type="limited"/>
 	<magic magic_effect_names="火海持续伤害" name="黑龙火海效果" span="150" span_type="limited"/>
 	<magic magic_effect_names="实际暴风雪" name="实际效果暴风雪" span="360" span_type="limited"/>
