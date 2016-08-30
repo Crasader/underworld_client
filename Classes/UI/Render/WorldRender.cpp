@@ -178,8 +178,8 @@ void WorldRender::showHMMCardRegionTips(const HMMCardType* cardType,
         || cardType->getCardClass() == kHMMCardClass_Hero) {
         const Rect32& region = cardType->getCardClass() == kHMMCardClass_Tower ? towerRegion : summonRegion;
         static string file("GameImages/test/ui_hongse.png");
-        static const Rect rect(0, 0, 326, 326);
-        static const Rect capInsets(160, 160, 6, 6);
+        static const Rect rect(0, 0, 20, 20);
+        static const Rect capInsets(5, 6, 11, 10);
         _hmmCardRegionTipView = cocos2d::ui::Scale9Sprite::create(file, rect, capInsets);
         if (_hmmCardRegionTipView) {
             int zorder = worldCoordinate2Zorder(region._origin, RenderLayer::Ground);

@@ -55,9 +55,6 @@ void UWRender::init(const Game *game, Commander *commander) {
         _worldScrollView->setViewSize(winSize);
         _worldScrollView->setPosition(cocos2d::Point(0, MAP_OFFSET_Y));
         _worldScrollView->setDelegate(this);
-        
-        
-
         _scene->addChild(_worldScrollView, IN_SCENE_WORLD_RENDER_ZORDER);
         
         //world render

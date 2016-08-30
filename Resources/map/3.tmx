@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="71" height="40" tilewidth="16" tileheight="16" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="71" height="59" tilewidth="16" tileheight="11" nextobjectid="1">
  <tileset firstgid="1" name="mark" tilewidth="16" tileheight="16" tilecount="1">
   <image source="images/mark.png" width="16" height="16"/>
  </tileset>
- <layer name="logic" width="71" height="40">
+ <layer name="logic" width="71" height="59">
   <data encoding="base64" compression="zlib">
-   eJzt2UEKgDAMBMD2/5/26EWxLQkJOAN7E7ruNXOMMUWC86S6U5fYZn0X+9jmdJeuG2V1i5D9v6e9q3fJ6FjdAwAAAAAAgHid71qVt6Lqe2jUWyfd3r7NusnuiOyw27Pq3a7bVObr//+6i4jcuQCXSAPN
+   eJztwQEBAAAAASD+nzZE1QAAAAAAAAAAAAAAAAAAAAD8GYLoAAI=
   </data>
  </layer>
 </map>
