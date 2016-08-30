@@ -14,7 +14,6 @@
 USING_NS_CC;
 
 class DeckCard;
-
 class DeckCardObserver
 {
 public:
@@ -28,28 +27,30 @@ class DeckCard : public AbstractCard
 public:
     static constexpr float Width = 82;
     static constexpr float Height = 104;
-    static DeckCard* create(int cardId);
+    static DeckCard* create(const CardSimpleData* data);
     virtual ~DeckCard();
     void registerObserver(DeckCardObserver *observer);
     
-    void update(int cardId);
-    virtual int getCardId() const override;
+    void update(const CardSimpleData* data);
+    virtual const CardSimpleData* getCardData() const override;
+    int getCardId() const;
     
     void shake();
     void stopShake();
     
 private:
     DeckCard();
-    bool init(int cardId);
+    bool init(const CardSimpleData* data);
     
 private:
     DeckCardObserver* _observer;
     Sprite* _icon;
     Node* _costNode;
     Label* _cost;
-    int _cardId;
+    Sprite* _qualityBox;
+    const CardSimpleData* _data;
     bool _touchInvalid;
-    Point _iconPoint;
+    Point _originalPoint;
 };
 
 #endif /* DeckCard_h */

@@ -44,28 +44,6 @@ void DeckManager::purge()
     }
 }
 
-DeckManager::CardType DeckManager::getCardType(int cardId)
-{
-    const int remainder((cardId / 1000) % 10);
-    if (1 == remainder) {
-        return CardType::Hero;
-    } else if (2 == remainder) {
-        return CardType::Soldier;
-    } else if (3 == remainder) {
-        return CardType::Spell;
-    } else if (4 == remainder) {
-        return CardType::Building;
-    }
-    
-    CC_ASSERT(false);
-    return CardType::Soldier;
-}
-
-bool DeckManager::isHero(int cardId)
-{
-    return CardType::Hero == getCardType(cardId);
-}
-
 // TODO: remove the test method
 CardSimpleData* createFakeData(int card, int level)
 {

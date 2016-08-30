@@ -22,9 +22,9 @@ bool AbstractCard::init()
     return false;
 }
 
-int AbstractCard::getCardId() const
+const CardSimpleData* AbstractCard::getCardData() const
 {
-    return 0;
+    return nullptr;
 }
 
 void AbstractCard::move(const cocos2d::Point& point, const std::function<void()>& callback)

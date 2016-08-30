@@ -47,7 +47,7 @@ protected:
     
     // CardPreviewObserver
     virtual AbstractCard* onCardPreviewCreateCard(int cardId) override;
-    virtual void onCardPreviewClickedOpButton(DeckCardOpType type, int cardId) override;
+    virtual void onCardPreviewClickedOpButton(DeckCardOpType type, const CardSimpleData* data) override;
     
     // CardInfoLayerObserver
     virtual void onCardInfoLayerReturn(Node* pSender) override;
@@ -55,7 +55,7 @@ protected:
     
     // SpellInfoLayerObserver
     virtual void onSpellInfoLayerExit(Node* pSender) override;
-    virtual void onSpellInfoLayerUpgrade(int cardId) override;
+    virtual void onSpellInfoLayerUpgrade(Node* pSender, const CardSimpleData* data) override;
     
 private:
     DevelopLayerObserver *_observer;

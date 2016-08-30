@@ -21,6 +21,7 @@ class RuneBagLayerObserver
 {
 public:
     virtual ~RuneBagLayerObserver() {}
+    virtual void onRuneBagLayerSelected(Node* pSender, const RuneData* data) = 0;
 };
 
 class RuneBagLayer
@@ -28,23 +29,22 @@ class RuneBagLayer
 , public RuneNodeObserver
 {
 public:
-    static RuneBagLayer* create();
+    static RuneBagLayer* create(const RuneData* data);
     virtual ~RuneBagLayer();
     void registerObserver(RuneBagLayerObserver *observer);
-    
-    void update(const RuneData* data);
     
 private:
     RuneBagLayer();
     
     // LayerColor
-    virtual bool init() override;
+    bool init(const RuneData* data);
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
     // RuneNodeObserver
     virtual void onRuneNodeClicked(RuneNode* pSender) override;
     
+    void update(const RuneData* data);
     void initRunes();
     float getHeight(size_t count, float spaceY) const;
     Point getPosition(int row, int column) const;
@@ -55,8 +55,8 @@ private:
     // UI
     Label* _name;
     Label* _description;
-    Label* _effect;
     ui::ScrollView* _scrollView;
+    RuneNode* _selectedRune;
     
     // Data
     const RuneData* _data;

@@ -23,7 +23,7 @@ class CardPreviewObserver
 public:
     virtual ~CardPreviewObserver() {}
     virtual AbstractCard* onCardPreviewCreateCard(int cardId) = 0;
-    virtual void onCardPreviewClickedOpButton(DeckCardOpType type, int cardId) = 0;
+    virtual void onCardPreviewClickedOpButton(DeckCardOpType type, const CardSimpleData* data) = 0;
 };
 
 class CardPreview : public CardOpNodeObserver
@@ -47,7 +47,7 @@ public:
 private:
     // CardOpNodeObserver
     virtual void onCardOpNodeClicked() override;
-    virtual void onCardOpNodeClickedButton(DeckCardOpType type, int cardId) override;
+    virtual void onCardOpNodeClickedButton(DeckCardOpType type, const CardSimpleData* data) override;
     
     void initCards();
     AbstractCard* createCardNode(int cardId);

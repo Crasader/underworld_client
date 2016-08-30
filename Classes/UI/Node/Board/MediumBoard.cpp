@@ -45,7 +45,7 @@ bool MediumBoard::init()
         addChild(subNode);
         _subNode = subNode;
         
-        auto button = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Blue, "Untitled");
+        auto button = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, "Untitled");
         button->setCallback([this](Ref*) {
             if (_buttonCallback) {
                 _buttonCallback();

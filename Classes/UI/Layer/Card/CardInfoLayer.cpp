@@ -10,7 +10,6 @@
 #include "DevelopCard.h"
 #include "UpgradeCard.h"
 #include "CardPropertyNode.h"
-#include "DeckManager.h"
 #include "Board.h"
 #include "UniversalButton.h"
 #include "ResourceButton.h"
@@ -18,6 +17,7 @@
 #include "PureScale9Sprite.h"
 #include "DevelopCard.h"
 #include "CocosGlobal.h"
+#include "LocalHelper.h"
 #include "CardSimpleData.h"
 #include "RuneData.h"
 #include "CocosUtils.h"
@@ -25,10 +25,10 @@
 using namespace std;
 
 #pragma mark - CardInfoLayer
-CardInfoLayer* CardInfoLayer::create(int cardId)
+CardInfoLayer* CardInfoLayer::create(const CardSimpleData* data)
 {
     auto ret = new (nothrow) CardInfoLayer();
-    if (ret && ret->init(cardId)) {
+    if (ret && ret->init(data)) {
         ret->autorelease();
         return ret;
     }
@@ -39,10 +39,12 @@ CardInfoLayer* CardInfoLayer::create(int cardId)
 
 CardInfoLayer::CardInfoLayer()
 :_observer(nullptr)
+,_board(nullptr)
 ,_icon(nullptr)
 ,_level(nullptr)
 ,_profession(nullptr)
 ,_description(nullptr)
+,_selectedRune(nullptr)
 ,_data(nullptr) {}
 
 CardInfoLayer::~CardInfoLayer()
@@ -50,14 +52,12 @@ CardInfoLayer::~CardInfoLayer()
     removeAllChildren();
 }
 
-bool CardInfoLayer::init(int cardId)
+bool CardInfoLayer::init(const CardSimpleData* data)
 {
     if (LayerColor::initWithColor(LAYER_MASK_COLOR)) {
-        _data = DeckManager::getInstance()->getCardData(cardId);
-        
         const auto& winSize(Director::getInstance()->getWinSize());
         auto board = Board::create(2);
-        board->setTitle(_data->getName());
+        board->setTitle("untitled");
         board->setExitCallback([this]() {
             if (_observer) {
                 _observer->onCardInfoLayerExit(this);
@@ -65,6 +65,7 @@ bool CardInfoLayer::init(int cardId)
         });
         board->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(board);
+        _board = board;
         
         UniversalButton::createReturnButton(board, Vec2(8.0f, 10.0f), [this]() {
             if (_observer) {
@@ -74,6 +75,8 @@ bool CardInfoLayer::init(int cardId)
         
         createLeftNode(board->getSubNode(0));
         createRightNode(board->getSubNode(1));
+        
+        update(data);
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -103,23 +106,56 @@ bool CardInfoLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 void CardInfoLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 
 #pragma mark - RuneCircleObserver
-void CardInfoLayer::onRuneCircleClicked(const RuneData* data)
+void CardInfoLayer::onRuneCircleClicked(RuneNode* node)
+{
+    if (_selectedRune) {
+        _selectedRune->select(false);
+    }
+    
+    node->select(true);
+    _selectedRune = node;
+}
+
+#pragma mark - RuneBagLayerObserver
+void CardInfoLayer::onRuneBagLayerSelected(Node* pSender, const RuneData* data)
+{
+    if (pSender) {
+        pSender->removeFromParent();
+    }
+}
+
+#pragma mark - UpgradeCardObserver
+void CardInfoLayer::onUpgradeCardInfo(UpgradeCard* pSender)
+{
+    auto layer = SpellInfoLayer::create(pSender->getCardData());
+    layer->registerObserver(this);
+    addChild(layer);
+}
+
+void CardInfoLayer::onUpgradeCardUpgrade(UpgradeCard* pSender)
 {
     
 }
 
+#pragma mark - SpellInfoLayerObserver
+void CardInfoLayer::onSpellInfoLayerExit(Node* pSender)
+{
+    if (pSender) {
+        pSender->removeFromParent();
+    }
+}
+
+void CardInfoLayer::onSpellInfoLayerUpgrade(Node* pSender, const CardSimpleData* data)
+{
+    if (pSender) {
+        pSender->removeFromParent();
+    }
+}
+
+#pragma mark - public
 void CardInfoLayer::registerObserver(CardInfoLayerObserver *observer)
 {
     _observer = observer;
-}
-
-int CardInfoLayer::getCard() const
-{
-    if (_icon) {
-        return _icon->getCardId();
-    }
-    
-    return 0;
 }
 
 #pragma mark - UI
@@ -131,20 +167,23 @@ void CardInfoLayer::createLeftNode(Node* node)
     
     // top bar
     {
-        auto bar = PureScale9Sprite::create(PureScale9Sprite::Type::Purple);
+        PureScale9Sprite::Type type;
+        // TODO:
+        type = PureScale9Sprite::Type::Purple;
+        auto bar = PureScale9Sprite::create(type);
         bar->setContentSize(barSize);
         bar->setPosition(size.width / 2, size.height - (secondaryEdge.y + barSize.height / 2));
         node->addChild(bar);
         
         static const float edgeX(5);
-        auto label = CocosUtils::createLabel("Lv.1", DEFAULT_FONT_SIZE);
+        auto label = CocosUtils::createLabel("level", DEFAULT_FONT_SIZE);
         label->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
         label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
         label->setPosition(edgeX, barSize.height / 2);
         bar->addChild(label);
         _level = label;
         
-        label = CocosUtils::createLabel("Warrior", DEFAULT_FONT_SIZE);
+        label = CocosUtils::createLabel("profession", DEFAULT_FONT_SIZE);
         label->setAlignment(TextHAlignment::RIGHT, TextVAlignment::CENTER);
         label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
         label->setPosition(barSize.width - edgeX, barSize.height / 2);
@@ -186,7 +225,7 @@ void CardInfoLayer::createLeftNode(Node* node)
     
     // line
     {
-        auto label = CocosUtils::createLabel("properties", DEFAULT_FONT_SIZE);
+        auto label = CocosUtils::createLabel(LocalHelper::getString("ui_cardInfo_property"), DEFAULT_FONT_SIZE);
         label->setTextColor(Color4B::BLACK);
         label->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
         label->setAnchorPoint(Point::ANCHOR_MIDDLE);
@@ -199,7 +238,7 @@ void CardInfoLayer::createLeftNode(Node* node)
     // properties
     {
         static const int columnCount(2);
-        static const float spaceY(5);
+        static const float spaceY(6);
         float spaceX(0);
         Size propertySize(Size::ZERO);
         for (int i = 0; i < 10; ++i) {
@@ -235,7 +274,7 @@ void CardInfoLayer::createLeftNode(Node* node)
         node->addChild(bar);
         
         static const float edgeX(5);
-        auto label = CocosUtils::createLabel("Upgrade", DEFAULT_FONT_SIZE);
+        auto label = CocosUtils::createLabel(LocalHelper::getString("ui_cardInfo_upgrade"), DEFAULT_FONT_SIZE);
         label->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
         label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
         label->setPosition(edgeX, barSize.height / 2);
@@ -255,7 +294,7 @@ void CardInfoLayer::createRightNode(Node* node)
     static const Vec2 secondaryEdge(10, 5);
     const auto& size(node->getContentSize());
     
-    auto skillTitle = CocosUtils::createLabel("Hero Skills", DEFAULT_FONT_SIZE);
+    auto skillTitle = CocosUtils::createLabel(LocalHelper::getString("ui_cardInfo_skill"), BIG_FONT_SIZE);
     skillTitle->setTextColor(Color4B::BLACK);
     skillTitle->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
     skillTitle->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
@@ -264,13 +303,14 @@ void CardInfoLayer::createRightNode(Node* node)
     const auto& stsize(skillTitle->getContentSize());
     skillTitle->setPosition(secondaryEdge.x, size.height - (stsize.height / 2 + secondaryEdge.y));
     
-    static const float cardHintSpace(5);
+    static const float cardHintSpace(15);
     const float cardBasePosY(size.height - (secondaryEdge.y + stsize.height + cardHintSpace));
     static const int skillsCount(4);
     Size cardSize(Size::ZERO);
     float spaceX(0);
     for (int i = 0; i < skillsCount; ++i) {
         auto card = UpgradeCard::create(0);
+        card->registerObserver(this);
         node->addChild(card);
         
         if (0 == i) {
@@ -282,27 +322,29 @@ void CardInfoLayer::createRightNode(Node* node)
     }
     
     static const float cardLineSpace(10);
-    static const float lineEdgeX(5);
+    static const float lineEdgeX(25);
     static const float lineHeight(2);
     auto line = PureNode::createLine(Size(size.width - lineEdgeX * 2, lineHeight));
     line->setPosition(size.width / 2, cardBasePosY - (cardSize.height + cardLineSpace + lineHeight / 2));
     node->addChild(line);
     
-    auto runeTitle = CocosUtils::createLabel("Hero Runes", DEFAULT_FONT_SIZE);
-    runeTitle->setTextColor(Color4B::BLACK);
-    runeTitle->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
-    runeTitle->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
-    node->addChild(runeTitle);
-    
-    const auto& rtsize(runeTitle->getContentSize());
-    runeTitle->setPosition(secondaryEdge.x, line->getPositionY() - ((lineHeight + rtsize.height) / 2 + secondaryEdge.y));
+    {
+        auto title = CocosUtils::createLabel(LocalHelper::getString("ui_cardInfo_rune"), BIG_FONT_SIZE);
+        title->setTextColor(Color4B::BLACK);
+        title->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
+        title->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+        node->addChild(title);
+        
+        const auto& tsize(title->getContentSize());
+        title->setPosition(secondaryEdge.x, line->getPositionY() - ((lineHeight + tsize.height) / 2 + secondaryEdge.y));
+    }
     
     {
         auto circle = RuneCircle::create();
         circle->registerObserver(this);
         node->addChild(circle);
         
-        static const Vec2 circleEdge(40, 10);
+        static const Vec2 circleEdge(40, 18);
         const auto& csize(circle->getContentSize());
         circle->setPosition(circleEdge.x + csize.width / 2, circleEdge.y + csize.height / 2);
         
@@ -335,23 +377,70 @@ void CardInfoLayer::createRightNode(Node* node)
         }
     }
     
-    {
-        static const Vec2 edge(20, 10);
-        auto unload = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, "Unload");
-        unload->setCallback([this](Ref*) {
+    createOpButtons(node);
+}
+
+static const int opButtonsCount(2);
+void CardInfoLayer::createOpButtons(Node* node)
+{
+    if (!node) {
+        return;
+    }
+    
+    const auto& size(node->getContentSize());
+    static const Vec2 edge(20, 10);
+    static const string opButtonsTitles[opButtonsCount] = {
+        LocalHelper::getString("ui_cardInfo_unload"),
+        LocalHelper::getString("ui_cardInfo_change"),
+    };
+    
+    for (int i = 0; i < opButtonsCount; ++i) {
+        auto button = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, opButtonsTitles[i]);
+        button->setCallback([this, i](Ref*) { onOpButtonClicked(i); });
+        node->addChild(button);
+        const auto& bsize(button->getContentSize());
+        button->setPosition(size.width - ((edge.x + bsize.width) * (i + 1) - bsize.width / 2), edge.y + bsize.height / 2);
+    }
+}
+
+void CardInfoLayer::onOpButtonClicked(int idx)
+{
+    if (!_selectedRune) {
+        MessageBox("请选择一个符文", nullptr);
+    } else if (idx < opButtonsCount) {
+        if (0 == idx) {
             
-        });
-        node->addChild(unload);
-        const auto& usize(unload->getContentSize());
-        unload->setPosition(size.width - (edge.x + usize.width / 2), edge.y + usize.height / 2);
+        } else if (1 == idx) {
+            auto layer = RuneBagLayer::create(_selectedRune->getData());
+            layer->registerObserver(this);
+            addChild(layer);
+        }
+    }
+}
+
+void CardInfoLayer::update(const CardSimpleData* data)
+{
+    if (_data != data) {
+        _data = data;
         
-        auto change = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, "Change");
-        change->setCallback([this](Ref*) {
-            
-        });
-        node->addChild(change);
+        if (_board) {
+            _board->setTitle(data ? data->getName() : "");
+        }
         
-        const auto& csize(change->getContentSize());
-        change->setPosition(size.width - (edge.x * 2 + usize.width + csize.width / 2), unload->getPositionY());
+        if (_icon) {
+            _icon->update(data);
+        }
+        
+        if (_level) {
+            _level->setString(data ? StringUtils::format("LV.%d", data->getLevel()) : "");
+        }
+        
+        if (_profession) {
+            _profession->setString(data ? "" : "");
+        }
+        
+        if (_description) {
+            _description->setString(data ? data->getDescription() : "");
+        }
     }
 }

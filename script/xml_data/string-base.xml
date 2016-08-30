@@ -120,6 +120,19 @@
     <!-- 养成 -->
     <item key="ui_develop_title" value="养成界面"/>
     
+    <!-- 卡牌信息 -->
+    <item key="ui_cardInfo_property" value="属性"/>
+    <item key="ui_cardInfo_upgrade" value="升级："/>
+    <item key="ui_cardInfo_skill" value="技能："/>
+    <item key="ui_cardInfo_rune" value="符文："/>
+    <item key="ui_cardInfo_change" value="替换符文"/>
+    <item key="ui_cardInfo_unload" value="卸下符文"/>
+    
+    <!-- 符文 -->
+    <item key="ui_rune_title" value="符文背包"/>
+    <item key="ui_rune_pick" value="选取"/>
+    <item key="ui_rune_currentEffect" value="当前符文属性："/>
+    
     <!-- 提示 -->
     <item key="hint_selectNoCard" value="卡牌尚未选择！"/>
 	<item key="hint_exitPve" value="您确定结束战斗并退出该关卡吗？"/>

@@ -26,19 +26,18 @@ public:
 class DevelopCard : public AbstractCard
 {
 public:
-    static DevelopCard* create(int cardId);
+    static DevelopCard* create(const CardSimpleData* data);
     virtual ~DevelopCard();
     void registerObserver(DevelopCardObserver* observer);
     
-    void update(int cardId);
+    void update(const CardSimpleData* data);
     
     // AbstractCard
-    virtual int getCardId() const override;
+    virtual const CardSimpleData* getCardData() const override;
     
 private:
     DevelopCard();
-    bool init(int cardId);
-    void updateAmount(int cardId);
+    bool init(const CardSimpleData* data);
     
 private:
     DevelopCardObserver* _observer;
@@ -46,6 +45,8 @@ private:
     bool _touchInvalid;
     ProgressTimer* _pt;
     Label* _amount;
+    Sprite* _arrow;
+    const CardSimpleData* _data;
 };
 
 #endif /* DevelopCard_h */

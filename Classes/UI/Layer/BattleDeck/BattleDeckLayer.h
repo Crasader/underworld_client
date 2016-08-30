@@ -66,7 +66,7 @@ protected:
     
     // CardPreviewObserver
     virtual AbstractCard* onCardPreviewCreateCard(int cardId) override;
-    virtual void onCardPreviewClickedOpButton(DeckCardOpType type, int cardId) override;
+    virtual void onCardPreviewClickedOpButton(DeckCardOpType type, const CardSimpleData* data) override;
     
     // CardInfoLayerObserver
     virtual void onCardInfoLayerReturn(Node* pSender) override;
@@ -74,7 +74,7 @@ protected:
     
     // SpellInfoLayerObserver
     virtual void onSpellInfoLayerExit(Node* pSender) override;
-    virtual void onSpellInfoLayerUpgrade(int cardId) override;
+    virtual void onSpellInfoLayerUpgrade(Node* pSender, const CardSimpleData* data) override;
     
     // -------- UI --------
     void createLeftNode(Node* node);
@@ -84,10 +84,10 @@ protected:
     void updateAverageElixir();
     
     // Info
-    void showInfo(int cardId);
+    void showInfo(const CardSimpleData* data);
     
     // Move cards
-    void beginEdit(int cardId);
+    void beginEdit(const CardSimpleData* data);
     void endEdit();
     DeckCard* getFoundCard(int cardId) const;
     void exchangeCard(int idxFrom, int idxTo);

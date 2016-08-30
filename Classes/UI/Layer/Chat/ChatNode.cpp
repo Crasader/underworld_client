@@ -96,23 +96,31 @@ bool ChatNode::init(float width, const ChatData* data)
 
 void ChatNode::update(const ChatData* data)
 {
-    _data = data;
-    
-    if (false) {
-        createDialog(true);
-    }
-    
-    if (data) {
-        _user->setString(data->getUser());
-        _content->setString(data->getMessage());
-        _time->setString(data->getFormattedTime());
+    if (_data != data) {
+        _data = data;
+        
+        if (false) {
+            createDialog(true);
+        }
+        
+        if (_user) {
+            _user->setString(data ? data->getUser() : "");
+        }
+        
+        if (_content) {
+            _content->setString(data ? data->getMessage() : "");
+        }
+        
+        if (_time) {
+            _time->setString(data ? data->getFormattedTime() : "");
+        }
         
         if (_avatar) {
-            _avatar->setAvatar(data->getIcon());
+            _avatar->setAvatar(data ? data->getIcon() : 0);
         }
+        
+        adjust(true);
     }
-    
-    adjust(true);
 }
 
 void ChatNode::createDialog(bool isMe)

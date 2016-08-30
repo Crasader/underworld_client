@@ -21,7 +21,9 @@ public:
         White,
         Purple,
         BlueLight,
-        BlueDeep
+        BlueDeep,
+        Blue,
+        Orange,
     };
     
     static PureScale9Sprite* create(Type type);

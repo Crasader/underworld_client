@@ -169,9 +169,10 @@ void BattleDeckLayer::onDeckCardClicked(DeckCard* pSender)
             useCard(pSender->getTag(), false);
         }
     } else if (pSender) {
-        const int cardId(pSender->getCardId());
+        auto data(pSender->getCardData());
+        auto cardId(pSender->getCardId());
         if (!DeckManager::getInstance()->isFound(cardId)) {
-            showInfo(cardId);
+            showInfo(data);
         } else if (_cardPreview) {
             const bool isCandidate(getFoundCard(cardId));
             vector<DeckCardOpType> types = {DeckCardOpType::Info};
@@ -197,12 +198,13 @@ AbstractCard* BattleDeckLayer::onCardPreviewCreateCard(int cardId)
     return createCard(cardId);
 }
 
-void BattleDeckLayer::onCardPreviewClickedOpButton(DeckCardOpType type, int cardId)
+void BattleDeckLayer::onCardPreviewClickedOpButton(DeckCardOpType type, const CardSimpleData* data)
 {
+    CC_ASSERT(data);
     if (DeckCardOpType::Use == type) {
-        beginEdit(cardId);
+        beginEdit(data);
     } else if (DeckCardOpType::Info == type) {
-        showInfo(cardId);
+        showInfo(data);
     }
 }
 
@@ -231,9 +233,11 @@ void BattleDeckLayer::onSpellInfoLayerExit(Node* pSender)
     }
 }
 
-void BattleDeckLayer::onSpellInfoLayerUpgrade(int cardId)
+void BattleDeckLayer::onSpellInfoLayerUpgrade(Node* pSender, const CardSimpleData* data)
 {
-    
+    if (pSender) {
+        pSender->removeFromParent();
+    }
 }
 
 #pragma mark - UI
@@ -320,7 +324,10 @@ void BattleDeckLayer::createLeftNode(Node* node)
             auto button = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Purple, LocalHelper::getString("ui_deck_move"));
             button->setCallback([this](Ref*) {
                 if (!_isEditing) {
-                    beginEdit(0);
+                    if (_cardPreview) {
+                        _cardPreview->hideOpNode();
+                    }
+                    beginEdit(nullptr);
                 }
             });
             button->setPosition(bottomBarSize.width - button->getContentSize().width / 2, bottomBarSize.height / 2);
@@ -363,7 +370,7 @@ void BattleDeckLayer::createRightNode(Node* node)
 
 DeckCard* BattleDeckLayer::createCard(int card)
 {
-    auto node = DeckCard::create(card);
+    auto node = DeckCard::create(DeckManager::getInstance()->getCardData(card));
     node->registerObserver(this);
     return node;
 }
@@ -408,21 +415,21 @@ void BattleDeckLayer::updateAverageElixir()
 }
 
 #pragma mark - Info
-void BattleDeckLayer::showInfo(int cardId)
+void BattleDeckLayer::showInfo(const CardSimpleData* data)
 {
-    if (DeckManager::CardType::Spell == DeckManager::getCardType(cardId)) {
-        auto layer = SpellInfoLayer::create(cardId);
+    if (UnderWorld::Core::HMMCardClass::kHMMCardClass_Spell == data->getCardClass()) {
+        auto layer = SpellInfoLayer::create(data);
         layer->registerObserver(this);
         addChild(layer);
     } else {
-        auto layer = CardInfoLayer::create(cardId);
+        auto layer = CardInfoLayer::create(data);
         layer->registerObserver(this);
         addChild(layer);
     }
 }
 
 #pragma mark - Move cards
-void BattleDeckLayer::beginEdit(int cardId)
+void BattleDeckLayer::beginEdit(const CardSimpleData* data)
 {
     CC_ASSERT(!_isEditing);
     _isEditing = true;
@@ -440,6 +447,7 @@ void BattleDeckLayer::beginEdit(int cardId)
     }
     
     // create card
+    const int cardId(data ? data->getIdx() : 0);
     _usedCard = getFoundCard(cardId);
     
     if (_usedCard) {
@@ -447,7 +455,7 @@ void BattleDeckLayer::beginEdit(int cardId)
         _usedCardPoint = _usedCard->getPosition();
         
         vector<DeckCard*> temp;
-        if (DeckManager::isHero(_usedCard->getCardId())) {
+        if (data->isHero()) {
             for (int i = 0; i < DeckData::HeroCount; ++i) {
                 temp.push_back(_deckCards.at(i));
             }
@@ -487,11 +495,13 @@ DeckCard* BattleDeckLayer::getFoundCard(int cardId) const
 void BattleDeckLayer::exchangeCard(int idxFrom, int idxTo)
 {
     if (isIdxValid(idxFrom) && isIdxValid(idxTo)) {
-        auto dm(DeckManager::getInstance());
         auto from(_deckCards.at(idxFrom));
         auto to(_deckCards.at(idxTo));
-        if (dm->isHero(from->getCardId()) == dm->isHero(to->getCardId())) {
-            DeckManager::getInstance()->exchangeCard(from->getCardId(), to->getCardId());
+        auto fdata(from->getCardData());
+        auto tdata(to->getCardData());
+        CC_ASSERT(fdata && tdata);
+        if (fdata->isHero() == tdata->isHero()) {
+            DeckManager::getInstance()->exchangeCard(fdata->getIdx(), tdata->getIdx());
             moveToDeck(from, idxTo);
             moveToDeck(to, idxFrom);
         } else {
@@ -513,16 +523,18 @@ void BattleDeckLayer::useCard(int idx, bool fromDeck)
     CC_ASSERT(_usedCard);
     if (_usedCard && isIdxValid(idx)) {
         auto replaced(_deckCards.at(idx));
-        const auto uid(_usedCard->getCardId());
-        const auto rid(replaced->getCardId());
-        auto dm(DeckManager::getInstance());
-        if (dm->isHero(uid) == dm->isHero(rid)) {
+        auto udata(_usedCard->getCardData());
+        auto rdata(replaced->getCardData());
+        CC_ASSERT(udata && rdata);
+        if (udata->isHero() == rdata->isHero()) {
             if (_cardPreview) {
                 _cardPreview->readdToScrollView(replaced);
             }
             
             endEdit();
             
+            const auto uid(udata->getIdx());
+            const auto rid(rdata->getIdx());
             DeckManager::getInstance()->useCard(uid, rid);
             moveToDeck(_usedCard, idx);
             if (_cardPreview) {
@@ -693,7 +705,7 @@ void BattleDeckLayer::loadDeck(int idx)
         for (int i = 0; i < cards.size(); ++i) {
             if (i < _deckCards.size()) {
                 const auto cardId(cards.at(i));
-                _deckCards.at(i)->update(cardId);
+                _deckCards.at(i)->update(dm->getCardData(cardId));
                 if (_cardPreview) {
                     _cardPreview->removeFoundCard(cardId, true);
                 }

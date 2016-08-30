@@ -10,15 +10,14 @@
 #include "DevelopCard.h"
 #include "ResourceButton.h"
 #include "CocosUtils.h"
-#include "DeckManager.h"
 #include "CardSimpleData.h"
 
 using namespace std;
 
-UpgradeCard* UpgradeCard::create(int cardId)
+UpgradeCard* UpgradeCard::create(const CardSimpleData* data)
 {
     auto ret = new (nothrow) UpgradeCard();
-    if (ret && ret->init(cardId)) {
+    if (ret && ret->init(data)) {
         ret->autorelease();
         return ret;
     }
@@ -32,14 +31,15 @@ UpgradeCard::UpgradeCard()
 ,_icon(nullptr)
 ,_touchInvalid(false)
 ,_name(nullptr)
-,_button(nullptr) {}
+,_button(nullptr)
+,_data(nullptr) {}
 
 UpgradeCard::~UpgradeCard()
 {
     removeAllChildren();
 }
 
-bool UpgradeCard::init(int cardId)
+bool UpgradeCard::init(const CardSimpleData* data)
 {
     if (ui::Widget::init()) {
         setAnchorPoint(Point::ANCHOR_MIDDLE);
@@ -47,12 +47,13 @@ bool UpgradeCard::init(int cardId)
         setSwallowTouches(false);
         CocosUtils::fixWidgetTouchEvent(this, _touchInvalid, nullptr, nullptr);
         
-        auto card = DevelopCard::create(cardId);
+        auto card = DevelopCard::create(nullptr);
         addChild(card);
         _icon = card;
         
         auto label = CocosUtils::createLabel("name", DEFAULT_FONT_SIZE);
         label->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
+        label->setTextColor(Color4B::BLACK);
         addChild(label);
         _name = label;
         
@@ -67,13 +68,14 @@ bool UpgradeCard::init(int cardId)
         const auto& isize(_icon->getContentSize());
         const auto& nsize(_name->getContentSize());
         const auto& bsize(_button->getContentSize());
-        static const float spaceY(3);
-        const float height(isize.height + nsize.height + bsize.height + spaceY * 2);
+        static const float nameSpaceY(15);
+        static const float buttonSpaceY(8);
+        const float height(isize.height + nsize.height + bsize.height + nameSpaceY + buttonSpaceY);
         const float width = MAX(MAX(isize.width, nsize.width), bsize.width);
         setContentSize(Size(width, height));
         
         _button->setPosition(width / 2, bsize.height / 2);
-        _icon->setPosition(Point(width / 2, bsize.height + spaceY + isize.height / 2));
+        _icon->setPosition(Point(width / 2, bsize.height + buttonSpaceY + isize.height / 2));
         _name->setPosition(width / 2, height - nsize.height / 2);
         
         {
@@ -91,7 +93,7 @@ bool UpgradeCard::init(int cardId)
             info->setPosition(Point(isize.width - (size.width / 2 + edge), isize.height - (size.height / 2 + edge)));
         }
         
-        updateOthers(cardId);
+        update(data);
         
         return true;
     }
@@ -104,30 +106,22 @@ void UpgradeCard::registerObserver(UpgradeCardObserver *observer)
     _observer = observer;
 }
 
-void UpgradeCard::update(int cardId)
+void UpgradeCard::update(const CardSimpleData* data)
 {
-    if (_icon) {
-        _icon->update(cardId);
-    }
-    
-    if (getCardId() != cardId) {
-        updateOthers(cardId);
+    if (_data != data) {
+        _data = data;
+        
+        if (_icon) {
+            _icon->update(data);
+        }
+        
+        if (_name) {
+            _name->setString(data ? data->getName() : "");
+        }
     }
 }
 
-int UpgradeCard::getCardId() const
+const CardSimpleData* UpgradeCard::getCardData() const
 {
-    if (_icon) {
-        return _icon->getCardId();
-    }
-    
-    return 0;
-}
-
-void UpgradeCard::updateOthers(int cardId)
-{
-    auto data = DeckManager::getInstance()->getCardData(cardId);
-    if (_name) {
-        _name->setString(data ? data->getName() : "");
-    }
+    return _data;
 }

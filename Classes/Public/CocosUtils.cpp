@@ -467,7 +467,7 @@ static Button* createExitButton(Node* parent, const function<void()>& callback, 
     });
     parent->addChild(button);
     
-    static const Vec2 offset(5.0f, 5.0f);
+    static const Vec2 offset(8.0f, 8.0f);
     const auto& size = button->getContentSize();
     button->setPosition(Point(psize.width - size.width / 2, psize.height - size.height / 2) - offset);
     

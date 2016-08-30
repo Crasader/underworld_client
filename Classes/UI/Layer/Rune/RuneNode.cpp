@@ -31,6 +31,7 @@ RuneNode::RuneNode()
 ,_icon(nullptr)
 ,_level(nullptr)
 ,_amount(nullptr)
+,_shiningSprite(nullptr)
 ,_data(nullptr)
 ,_touchInvalid(false) {}
 
@@ -79,6 +80,14 @@ bool RuneNode::init(const RuneData* data)
             }
         });
         
+        {
+            auto sprite = Sprite::create(CocosUtils::getResourcePath("ui_kuang_18.png"));
+            sprite->setVisible(false);
+            sprite->setPosition(size.width / 2, size.height / 2);
+            bg->addChild(sprite);
+            _shiningSprite = sprite;
+        }
+        
         update(data);
         
         return true;
@@ -119,4 +128,11 @@ void RuneNode::update(const RuneData* data)
 const RuneData* RuneNode::getData() const
 {
     return _data;
+}
+
+void RuneNode::select(bool selected)
+{
+    if (_shiningSprite) {
+        _shiningSprite->setVisible(selected);
+    }
 }

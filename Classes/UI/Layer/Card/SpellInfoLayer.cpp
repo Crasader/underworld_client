@@ -16,15 +16,14 @@
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "CardSimpleData.h"
-#include "DeckManager.h"
 
 using namespace std;
 
 #pragma mark - SpellInfoLayer
-SpellInfoLayer* SpellInfoLayer::create(int cardId)
+SpellInfoLayer* SpellInfoLayer::create(const CardSimpleData* data)
 {
     auto ret = new (nothrow) SpellInfoLayer();
-    if (ret && ret->init(cardId)) {
+    if (ret && ret->init(data)) {
         ret->autorelease();
         return ret;
     }
@@ -35,6 +34,7 @@ SpellInfoLayer* SpellInfoLayer::create(int cardId)
 
 SpellInfoLayer::SpellInfoLayer()
 :_observer(nullptr)
+,_board(nullptr)
 ,_icon(nullptr)
 ,_description(nullptr)
 ,_data(nullptr) {}
@@ -44,27 +44,29 @@ SpellInfoLayer::~SpellInfoLayer()
     removeAllChildren();
 }
 
-bool SpellInfoLayer::init(int cardId)
+bool SpellInfoLayer::init(const CardSimpleData* data)
 {
     if (LayerColor::initWithColor(LAYER_MASK_COLOR)) {
-        _data = DeckManager::getInstance()->getCardData(cardId);
-        
         const auto& winSize(Director::getInstance()->getWinSize());
         auto board = MediumBoard::create();
-        board->setTitle(_data->getName());
+        board->setTitle("untitled");
         board->setExitCallback([this]() {
             if (_observer) {
                 _observer->onSpellInfoLayerExit(this);
             }
         });
-        board->setButtonTitle(LocalHelper::getString("Upgrade"));
+        board->setButtonTitle(LocalHelper::getString("ui_cardInfo_upgrade"));
         board->setButtonCallback([this]() {
-            
+            if (_observer) {
+                _observer->onSpellInfoLayerUpgrade(this, _data);
+            }
         });
         board->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(board);
+        _board = board;
         
         createNode(board->getSubNode());
+        update(data);
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -90,31 +92,23 @@ void SpellInfoLayer::registerObserver(SpellInfoLayerObserver *observer)
     _observer = observer;
 }
 
-int SpellInfoLayer::getCard() const
-{
-    if (_icon) {
-        return _icon->getCardId();
-    }
-    
-    return 0;
-}
-
 void SpellInfoLayer::createNode(Node* node)
 {
-    if (!node || !_data) {
+    if (!node) {
         return;
     }
     
-    static const Vec2 secondaryEdge(10, 5);
     const auto& size(node->getContentSize());
     
-    auto card = DevelopCard::create(_data->getIdx());
+    static const float cardEdgeX(20);
+    auto card = DevelopCard::create(nullptr);
     const auto& cardSize(card->getContentSize());
-    card->setPosition(Point(secondaryEdge.x + cardSize.width / 2, size.height - (secondaryEdge.y + cardSize.height / 2)));
+    card->setPosition(Point(cardEdgeX + cardSize.width / 2, size.height / 2));
     node->addChild(card);
     _icon = card;
     
     // description
+    static const Vec2 secondaryEdge(10, 5);
     static const Size descSize(442, 90);
     {
         auto descBg = PureScale9Sprite::create(PureScale9Sprite::Type::White);
@@ -123,7 +117,7 @@ void SpellInfoLayer::createNode(Node* node)
         node->addChild(descBg);
         
         static const float edge(5);
-        auto label = CocosUtils::createLabel(_data->getDescription(), DEFAULT_FONT_SIZE);
+        auto label = CocosUtils::createLabel("description", DEFAULT_FONT_SIZE);
         label->setDimensions(descSize.width - edge * 2, descSize.height - edge * 2);
         label->setAlignment(TextHAlignment::LEFT, TextVAlignment::TOP);
         label->setTextColor(Color4B::BLACK);
@@ -162,6 +156,32 @@ void SpellInfoLayer::createNode(Node* node)
                 edgeY = (baseY - (propertySize.height + spaceY) * rowCount + spaceY) / 2;
             }
             property->setPosition(size.width - (secondaryEdge.x + (columnCount - column) * (propertySize.width + spaceX) - propertySize.width / 2), baseY - edgeY - ((propertySize.height + spaceY) * row + propertySize.height / 2));
+        }
+    }
+}
+
+void SpellInfoLayer::update(const CardSimpleData* data)
+{
+    if (_data != data) {
+        _data = data;
+        
+        if (_board) {
+            _board->setTitle(data ? data->getName() : "");
+        }
+        
+        if (_icon) {
+            _icon->update(data);
+        }
+        
+        if (_description) {
+            _description->setString(data ? data->getDescription() : "");
+        }
+        
+        for (int i = 0; i < _properties.size(); ++i) {
+            auto property(_properties.at(i));
+            if (property) {
+                // TODO: property
+            }
         }
     }
 }

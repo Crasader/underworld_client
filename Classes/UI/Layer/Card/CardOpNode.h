@@ -16,13 +16,14 @@
 USING_NS_CC;
 
 class DeckCard;
+class CardSimpleData;
 
 class CardOpNodeObserver
 {
 public:
     virtual ~CardOpNodeObserver() {}
     virtual void onCardOpNodeClicked() = 0;
-    virtual void onCardOpNodeClickedButton(DeckCardOpType type, int cardId) = 0;
+    virtual void onCardOpNodeClickedButton(DeckCardOpType type, const CardSimpleData* data) = 0;
 };
 
 class CardOpNode : public ui::Widget
@@ -31,9 +32,9 @@ public:
     static CardOpNode* create();
     virtual ~CardOpNode();
     void registerObserver(CardOpNodeObserver* observer);
-    void setCard(int cardId);
+    void setCard(const CardSimpleData* data);
     void setTypes(const std::vector<DeckCardOpType>& types);
-    int getCardId() const;
+    const CardSimpleData* getCardData() const;
     
 private:
     CardOpNode();

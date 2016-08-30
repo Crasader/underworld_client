@@ -66,13 +66,12 @@ bool CardSimpleNode::init(const CardSimpleData* data)
 #pragma mark - public
 void CardSimpleNode::update(const CardSimpleData* data)
 {
-    _data = data;
-    
-    // update info
-    if (data) {
+    if (_data != data) {
+        _data = data;
         
-    } else {
-        
+        if (_icon) {
+            // TODO:
+        }
     }
 }
 

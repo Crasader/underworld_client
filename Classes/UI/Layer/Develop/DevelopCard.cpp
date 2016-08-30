@@ -10,15 +10,14 @@
 #include "CocosUtils.h"
 #include "DevelopUI.h"
 #include "DeckCard.h"
-#include "DeckManager.h"
 #include "CardSimpleData.h"
 
 using namespace std;
 
-DevelopCard* DevelopCard::create(int cardId)
+DevelopCard* DevelopCard::create(const CardSimpleData* data)
 {
     auto ret = new (nothrow) DevelopCard();
-    if (ret && ret->init(cardId)) {
+    if (ret && ret->init(data)) {
         ret->autorelease();
         return ret;
     }
@@ -32,14 +31,16 @@ DevelopCard::DevelopCard()
 ,_icon(nullptr)
 ,_touchInvalid(false)
 ,_pt(nullptr)
-,_amount(nullptr) {}
+,_amount(nullptr)
+,_arrow(nullptr)
+,_data(nullptr) {}
 
 DevelopCard::~DevelopCard()
 {
     removeAllChildren();
 }
 
-bool DevelopCard::init(int cardId)
+bool DevelopCard::init(const CardSimpleData* data)
 {
     if (ui::Widget::init()) {
         setAnchorPoint(Point::ANCHOR_MIDDLE);
@@ -51,7 +52,7 @@ bool DevelopCard::init(int cardId)
             }
         });
         
-        _icon = DeckCard::create(cardId);
+        _icon = DeckCard::create(0);
         addChild(_icon);
         
         auto ptbg = Sprite::create(DevelopUI::getResourcePath("ui_tiao_27.png"));
@@ -83,7 +84,12 @@ bool DevelopCard::init(int cardId)
         _icon->setPosition(Point(size.width / 2, size.height - DeckCard::Height / 2));
         ptbg->setPosition(Point(size.width / 2, psize.height / 2));
         
-        updateAmount(cardId);
+        auto arrow = Sprite::create(DevelopUI::getResourcePath("icon_jiantou_4.png"));
+        arrow->setPosition(ptbg->getPosition() - Point(psize.width / 2, 0));
+        addChild(arrow);
+        _arrow = arrow;
+        
+        update(data);
         
         return true;
     }
@@ -96,37 +102,32 @@ void DevelopCard::registerObserver(DevelopCardObserver *observer)
     _observer = observer;
 }
 
-void DevelopCard::update(int cardId)
+void DevelopCard::update(const CardSimpleData* data)
 {
-    if (_icon) {
-        _icon->update(cardId);
-    }
-    
-    if (getCardId() != cardId) {
-        updateAmount(cardId);
-    }
-}
-
-int DevelopCard::getCardId() const
-{
-    if (_icon) {
-        return _icon->getCardId();
-    }
-    
-    return 0;
-}
-
-void DevelopCard::updateAmount(int cardId)
-{
-    auto data = DeckManager::getInstance()->getCardData(cardId);
-    if (data) {
-        const auto amount(data->getAmount());
+    if (_data != data) {
+        _data = data;
+        
+        if (_icon) {
+            _icon->update(data);
+        }
+        
+        static const int total(100);
+        const auto amount(data ? data->getAmount() : 0);
         if (_pt) {
-            _pt->setPercentage(100.0f * amount / 100.0f);
+            _pt->setPercentage(100.0f * amount / total);
         }
         
         if (_amount) {
-            _amount->setString(StringUtils::format("%d/%d", amount, 100));
+            _amount->setString(StringUtils::format("%d/%d", amount, total));
+        }
+        
+        if (_arrow) {
+            _arrow->setVisible(amount >= total);
         }
     }
+}
+
+const CardSimpleData* DevelopCard::getCardData() const
+{
+    return _data;
 }

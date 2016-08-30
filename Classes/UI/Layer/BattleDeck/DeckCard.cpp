@@ -17,10 +17,10 @@
 
 using namespace std;
 
-DeckCard* DeckCard::create(int cardId)
+DeckCard* DeckCard::create(const CardSimpleData* data)
 {
     auto ret = new (nothrow) DeckCard();
-    if (ret && ret->init(cardId)) {
+    if (ret && ret->init(data)) {
         ret->autorelease();
         return ret;
     }
@@ -34,27 +34,33 @@ DeckCard::DeckCard()
 ,_icon(nullptr)
 ,_costNode(nullptr)
 ,_cost(nullptr)
-,_cardId(0)
+,_qualityBox(nullptr)
+,_data(nullptr)
 ,_touchInvalid(false)
-,_iconPoint(Point::ZERO) {}
+,_originalPoint(Point::ZERO) {}
 
 DeckCard::~DeckCard()
 {
     removeAllChildren();
 }
 
-bool DeckCard::init(int cardId)
+bool DeckCard::init(const CardSimpleData* data)
 {
     if (Widget::init())
     {
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         setContentSize(Size(Width, Height));
         
+        auto box = Sprite::create(CocosUtils::getResourcePath("ui_quality_box_blue.png"));
+        box->setPosition(Width / 2, Height / 2);
+        addChild(box);
+        _qualityBox = box;
+        _originalPoint = box->getPosition();
+        
         _icon = Sprite::create("GameImages/icons/unit/icon_fashi.png");
         _icon->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
-        _icon->setPosition(Width / 2, 0);
-        _iconPoint = _icon->getPosition();
-        addChild(_icon);
+        _icon->setPosition(box->getContentSize().width / 2, 8);
+        box->addChild(_icon);
         
         static const float offsetY(4);
         _costNode = Sprite::create(CocosUtils::getResourcePath("ui_qiu.png"));
@@ -81,7 +87,7 @@ bool DeckCard::init(int cardId)
             }
         });
         
-        update(cardId);
+        update(data);
         
         return true;
     }
@@ -94,27 +100,34 @@ void DeckCard::registerObserver(DeckCardObserver *observer)
     _observer = observer;
 }
 
-void DeckCard::update(int cardId)
+void DeckCard::update(const CardSimpleData* data)
 {
-    if (_cardId != cardId) {
-        _cardId = cardId;
+    if (_data != data) {
+        _data = data;
         
-        auto data = DeckManager::getInstance()->getCardData(cardId);
-        if (data) {
-            auto cd(DataManager::getInstance()->getCardConfigData(data->getIdx()));
-            if (cd && _icon) {
-                _icon->setTexture(cd->getIcon());
-            }
-            
-            _costNode->setVisible(DeckManager::CardType::Hero != DeckManager::getCardType(cardId));
-            _cost->setString(StringUtils::format("%d", data->getCost()));
+        const int cardId(getCardId());
+        auto cd(DataManager::getInstance()->getCardConfigData(cardId));
+        if (cd && _icon) {
+            _icon->setTexture(cd->getIcon());
+        }
+        
+        _costNode->setVisible(data ? !data->isHero() : false);
+        _cost->setString(data ? StringUtils::format("%d", data->getCost()) : "");
+        
+        if (false) {
+            _qualityBox->setTexture(CocosUtils::getResourcePath("ui_quality_box_blue.png"));
         }
     }
 }
 
+const CardSimpleData* DeckCard::getCardData() const
+{
+    return _data;
+}
+
 int DeckCard::getCardId() const
 {
-    return _cardId;
+    return _data ? _data->getIdx() : 0;
 }
 
 static float shake_action_tag = 2016;
@@ -123,15 +136,15 @@ void DeckCard::shake()
     static float shake_duration = 0.2f;
     static float shake_strength = 1.0f;
     
-    auto action = RepeatForever::create(CCShake::actionWithDuration(shake_duration, shake_strength, _iconPoint));
+    auto action = RepeatForever::create(CCShake::actionWithDuration(shake_duration, shake_strength, _originalPoint));
     action->setTag(shake_action_tag);
-    _icon->runAction(action);
+    _qualityBox->runAction(action);
 }
 
 void DeckCard::stopShake()
 {
-    if (_icon->getActionByTag(shake_action_tag)) {
-        _icon->stopActionByTag(shake_action_tag);
-        _icon->setPosition(_iconPoint);
+    if (_qualityBox->getActionByTag(shake_action_tag)) {
+        _qualityBox->stopActionByTag(shake_action_tag);
+        _qualityBox->setPosition(_originalPoint);
     }
 }

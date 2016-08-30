@@ -18,16 +18,16 @@
 
 using namespace std;
 
-static int column(4);
+static const int column(4);
 static const float nodeSpaceY(15);
 static const float scrollViewSpaceTop(10);
 static const float scrollViewSpaceBottom(10);
 
 #pragma mark - RuneBagLayer
-RuneBagLayer* RuneBagLayer::create()
+RuneBagLayer* RuneBagLayer::create(const RuneData* data)
 {
     auto ret = new (nothrow) RuneBagLayer();
-    if (ret && ret->init()) {
+    if (ret && ret->init(data)) {
         ret->autorelease();
         return ret;
     }
@@ -40,8 +40,8 @@ RuneBagLayer::RuneBagLayer()
 :_observer(nullptr)
 ,_name(nullptr)
 ,_description(nullptr)
-,_effect(nullptr)
 ,_scrollView(nullptr)
+,_selectedRune(nullptr)
 ,_data(nullptr)
 ,_nodeSize(Size::ZERO)
 ,_nodeSpaceX(0)
@@ -52,15 +52,17 @@ RuneBagLayer::~RuneBagLayer()
     removeAllChildren();
 }
 
-bool RuneBagLayer::init()
+bool RuneBagLayer::init(const RuneData* data)
 {
     if (LayerColor::initWithColor(LAYER_MASK_COLOR)) {
         const auto& winSize(Director::getInstance()->getWinSize());
         auto board = MediumBoard::create();
-        board->setTitle("Rune bag");
-        board->setButtonTitle(LocalHelper::getString("OK"));
+        board->setTitle(LocalHelper::getString("ui_rune_title"));
+        board->setButtonTitle(LocalHelper::getString("ui_rune_pick"));
         board->setButtonCallback([this]() {
-            
+            if (_observer) {
+                _observer->onRuneBagLayerSelected(this, _data);
+            }
         });
         board->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(board);
@@ -100,7 +102,7 @@ bool RuneBagLayer::init()
         
         // effect
         {
-            auto et = CocosUtils::createLabel("effect:", DEFAULT_FONT_SIZE);
+            auto et = CocosUtils::createLabel(LocalHelper::getString("ui_rune_currentEffect"), DEFAULT_FONT_SIZE);
             et->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
             et->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
             et->setTextColor(Color4B::BLACK);
@@ -113,7 +115,6 @@ bool RuneBagLayer::init()
             label->setTextColor(Color4B::BLACK);
             label->setPosition(descEdge + descSize.width, et->getPositionY());
             node->addChild(label);
-            _effect = label;
         }
         
         // runes
@@ -165,7 +166,13 @@ void RuneBagLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 void RuneBagLayer::onRuneNodeClicked(RuneNode* pSender)
 {
     if (pSender) {
+        if (_selectedRune) {
+            _selectedRune->select(false);
+        }
+        
+        pSender->select(true);
         update(pSender->getData());
+        _selectedRune = pSender;
     }
 }
 
@@ -174,6 +181,7 @@ void RuneBagLayer::registerObserver(RuneBagLayerObserver *observer)
     _observer = observer;
 }
 
+#pragma mark - private
 void RuneBagLayer::update(const RuneData* data)
 {
     if (_data != data) {
@@ -186,14 +194,9 @@ void RuneBagLayer::update(const RuneData* data)
         if (_description) {
             _description->setString(data ? data->getDescription() : "");
         }
-        
-        if (_effect) {
-            _effect->setString(data ? data->getEffect() : "");
-        }
     }
 }
 
-#pragma mark - private
 void RuneBagLayer::initRunes()
 {
     if (!_scrollView) {
@@ -207,6 +210,7 @@ void RuneBagLayer::initRunes()
     
     for (int i = 0; i < cnt; ++i) {
         auto node = RuneNode::create(rm->getRuneGroup(i));
+        node->registerObserver(this);
         _scrollView->addChild(node);
         
         auto point = getPosition(i / column, i % column);

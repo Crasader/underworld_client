@@ -60,6 +60,10 @@ string PureScale9Sprite::getResourceFile(Type type) const
             return CocosUtils::getResourcePath("ui_scaleable_bluelight.png");
         case Type::BlueDeep:
             return CocosUtils::getResourcePath("ui_scaleable_bluedeep.png");
+        case Type::Blue:
+            return CocosUtils::getResourcePath("ui_scaleable_blue.png");
+        case Type::Orange:
+            return CocosUtils::getResourcePath("ui_scaleable_orange.png");
         default:
             return "";
     }

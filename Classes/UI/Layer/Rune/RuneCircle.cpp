@@ -96,7 +96,7 @@ void RuneCircle::setData(const vector<const RuneData*>& datas)
 #pragma mark - RuneNodeObserver
 void RuneCircle::onRuneNodeClicked(RuneNode* pSender)
 {
-    if (pSender && _observer) {
-        _observer->onRuneCircleClicked(pSender->getData());
+    if (_observer) {
+        _observer->onRuneCircleClicked(pSender);
     }
 }

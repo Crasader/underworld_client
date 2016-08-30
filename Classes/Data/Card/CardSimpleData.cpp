@@ -9,7 +9,6 @@
 #include "CardSimpleData.h"
 #include "cocostudio/CocoStudio.h"
 #include "DataManager.h"
-#include "GameModeHMM.h"
 #include "GameConstants.h"
 
 using namespace std;
@@ -37,6 +36,20 @@ bool CardSimpleData::operator==(const CardSimpleData& c) const
 int CardSimpleData::getIdx() const
 {
     return _idx;
+}
+
+UnderWorld::Core::HMMCardClass CardSimpleData::getCardClass() const
+{
+    if (_cardType) {
+        return _cardType->getCardClass();
+    }
+    
+    return UnderWorld::Core::HMMCardClass::HHMCARD_CLASS_COUNT;
+}
+
+bool CardSimpleData::isHero() const
+{
+    return UnderWorld::Core::HMMCardClass::kHMMCardClass_Hero == getCardClass();
 }
 
 int CardSimpleData::getLevel() const

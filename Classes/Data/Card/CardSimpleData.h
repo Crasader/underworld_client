@@ -11,6 +11,7 @@
 
 #include <string>
 #include "json/document.h"
+#include "GameModeHMM.h"
 
 namespace UnderWorld {
     namespace Core {
@@ -27,6 +28,8 @@ public:
     bool operator==(const CardSimpleData& instance) const;
     
     int getIdx() const;
+    UnderWorld::Core::HMMCardClass getCardClass() const;
+    bool isHero() const;
     int getLevel() const;
     int getAmount() const;
     int getCost() const;

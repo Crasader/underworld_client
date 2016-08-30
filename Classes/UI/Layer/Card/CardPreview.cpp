@@ -129,7 +129,7 @@ CardPreview::CardPreview(DeckManager::FeatureType type, Node* parent, CardPrevie
         _scrollView->setScrollBarEnabled(false);
         _scrollView->addEventListener([this](Ref*, ui::ScrollView::EventType type) {
             if (ui::ScrollView::EventType::SCROLLING == type) {
-                if (_opNode && _opNode->isVisible() && _foundCards->getCard(_opNode->getCardId())) {
+                if (_opNode && _opNode->isVisible() && _foundCards->getCard(_opNode->getCardData()->getIdx())) {
                     hideOpNode();
                 }
             }
@@ -197,8 +197,8 @@ void CardPreview::showOpNode(AbstractCard* card, const vector<DeckCardOpType>& t
             _opNode->setVisible(true);
         }
         
-        const int cardId(card->getCardId());
-        _opNode->setCard(cardId);
+        auto data(card->getCardData());
+        _opNode->setCard(data);
         
         auto parent(card->getParent());
         BattleDeckUI::readdChild(parent, _opNode);
@@ -206,7 +206,7 @@ void CardPreview::showOpNode(AbstractCard* card, const vector<DeckCardOpType>& t
         _opNode->setTypes(types);
         setOpNodePosition(card);
         
-        if (_foundCards->getCard(cardId)) {
+        if (_foundCards->getCard(data->getIdx())) {
             fullyDisplayCard(card);
         }
     }
@@ -241,12 +241,12 @@ void CardPreview::onCardOpNodeClicked()
     hideOpNode();
 }
 
-void CardPreview::onCardOpNodeClickedButton(DeckCardOpType type, int cardId)
+void CardPreview::onCardOpNodeClickedButton(DeckCardOpType type, const CardSimpleData* data)
 {
     hideOpNode();
     
     if (_observer) {
-        _observer->onCardPreviewClickedOpButton(type, cardId);
+        _observer->onCardPreviewClickedOpButton(type, data);
     }
 }
 
@@ -472,5 +472,5 @@ void CardPreview::fullyDisplayCard(AbstractCard* card)
 
 bool CardPreview::isOpNodeOnCard(AbstractCard* card) const
 {
-    return card && _opNode && _opNode->isVisible() && _opNode->getCardId() == card->getCardId();
+    return card && _opNode && _opNode->isVisible() && _opNode->getCardData() == card->getCardData();
 }

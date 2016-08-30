@@ -10,7 +10,6 @@
 #include "DeckCard.h"
 #include "CocosUtils.h"
 #include "UniversalButton.h"
-#include "CardSimpleData.h"
 
 using namespace std;
 
@@ -77,9 +76,11 @@ void CardOpNode::registerObserver(CardOpNodeObserver *observer)
     _observer = observer;
 }
 
-void CardOpNode::setCard(int cardId)
+void CardOpNode::setCard(const CardSimpleData* data)
 {
-    _icon->update(cardId);
+    if (_icon) {
+        _icon->update(data);
+    }
 }
 
 void CardOpNode::setTypes(const vector<DeckCardOpType>& types)
@@ -98,7 +99,7 @@ void CardOpNode::setTypes(const vector<DeckCardOpType>& types)
             } else {
                 auto button = BattleDeckUI::createButton(type, [this, type]() {
                     if (_observer) {
-                        _observer->onCardOpNodeClickedButton(type, getCardId());
+                        _observer->onCardOpNodeClickedButton(type, getCardData());
                     }
                 });
                 _hint->addChild(button);
@@ -110,13 +111,13 @@ void CardOpNode::setTypes(const vector<DeckCardOpType>& types)
     }
 }
 
-int CardOpNode::getCardId() const
+const CardSimpleData* CardOpNode::getCardData() const
 {
     if (_icon) {
-        return _icon->getCardId();
+        return _icon->getCardData();
     }
     
-    return 0;
+    return nullptr;
 }
 
 void CardOpNode::resetPositions()
