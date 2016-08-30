@@ -7,10 +7,7 @@
 //
 
 #include "AbstractLocalData.h"
-#include "ObjectBriefData.h"
 #include "tinyxml2/tinyxml2.h"
-#include "Utils.h"
-#include "AttributeData.h"
 
 using namespace std;
 

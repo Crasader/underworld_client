@@ -13,14 +13,9 @@
 using namespace std;
 using namespace cocostudio;
 
-ResourceManager::ResourceManager()
-{
-}
+ResourceManager::ResourceManager() {}
 
-ResourceManager::~ResourceManager()
-{
-    
-}
+ResourceManager::~ResourceManager() {}
 
 void ResourceManager::init(const rapidjson::Value& jsonDict)
 {
@@ -29,8 +24,7 @@ void ResourceManager::init(const rapidjson::Value& jsonDict)
 
 int ResourceManager::getResourceCount(ResourceType type) const
 {
-    if (_resources.find(type) != _resources.end())
-    {
+    if (_resources.find(type) != end(_resources)) {
         return _resources.at(type);
     }
     
@@ -39,24 +33,29 @@ int ResourceManager::getResourceCount(ResourceType type) const
 
 void ResourceManager::updateGemInfo(const rapidjson::Value& jsonDict)
 {
-    if (DICTOOL->checkObjectExist_json(jsonDict, "gemCount"))
-    {
-        _resources[ResourceType::Gem] = DICTOOL->getIntValue_json(jsonDict, "gemCount");
+    static ResourceType type(ResourceType::Gem);
+    static const char* key("gemCount");
+    if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
+        auto amount = DICTOOL->getIntValue_json(jsonDict, key);
+        if (_resources.find(type) != end(_resources)) {
+            _resources.at(type) = amount;
+        } else {
+            _resources.insert(make_pair(type, amount));
+        }
     }
 }
 
 void ResourceManager::updateResources(const rapidjson::Value& jsonDict, const char* key)
 {
-    if (DICTOOL->checkObjectExist_json(jsonDict, key))
-    {
-        const rapidjson::Value& resource = DICTOOL->getSubDictionary_json(jsonDict, key);
-        for (int type = static_cast<int>(ResourceType::Gem); type < static_cast<int>(ResourceType::MAX); ++type)
-        {
-            const char *key = Utils::format("%d", type).c_str();
-            if (DICTOOL->checkObjectExist_json(resource, key))
-            {
-                int count = DICTOOL->getIntValue_json(resource, key, 0);
-                _resources[static_cast<ResourceType>(type)] = count;
+    if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
+        for (int i = 0; i < DICTOOL->getArrayCount_json(jsonDict, key); ++i) {
+            const auto& value = DICTOOL->getDictionaryFromArray_json(jsonDict, key, i);
+            auto type = static_cast<ResourceType>(DICTOOL->getIntValue_json(value, "id"));
+            auto amount = DICTOOL->getIntValue_json(value, "amount");
+            if (_resources.find(type) != end(_resources)) {
+                _resources.at(type) = amount;
+            } else {
+                _resources.insert(make_pair(type, amount));
             }
         }
     }

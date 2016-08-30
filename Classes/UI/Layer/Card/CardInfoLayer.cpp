@@ -274,7 +274,7 @@ void CardInfoLayer::createLeftNode(Node* node)
         node->addChild(bar);
         
         static const float edgeX(5);
-        auto label = CocosUtils::createLabel(LocalHelper::getString("ui_cardInfo_upgrade"), DEFAULT_FONT_SIZE);
+        auto label = CocosUtils::createLabel(LocalHelper::getString("ui_cardInfo_upgrade_x"), DEFAULT_FONT_SIZE);
         label->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
         label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
         label->setPosition(edgeX, barSize.height / 2);

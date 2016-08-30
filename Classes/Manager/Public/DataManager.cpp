@@ -16,30 +16,13 @@
 #include "QuestLocalData.h"
 #include "AchievementLocalData.h"
 #include "ObjectLocalData.h"
-#include "GearLocalData.h"
-#include "GearUpgradeData.h"
-#include "GearAttributeData.h"
-#include "GearSetLocalData.h"
 #include "UAConfigData.h"
 #include "CardConfigData.h"
 #include "URConfigData.h"
 #include "BRConfigData.h"
 #include "MapParticleConfigData.h"
 #include "SpellConfigData.h"
-#include "ArtifactLocalData.h"
-#include "ArtifactUpgradeData.h"
-#include "AttributeLocalData.h"
-#include "HeroLocalData.h"
-#include "HeroPieceData.h"
-#include "HeroUpgradeData.h"
 #include "SkillLocalData.h"
-#include "SoldierLocalData.h"
-#include "SoldierPieceData.h"
-#include "SoldierUpgradeData.h"
-#include "SoldierQualityData.h"
-#include "SoldierTalentData.h"
-#include "TowerLocalData.h"
-#include "TowerUpgradeData.h"
 #include "BinaryJsonTool.h"
 #include "TechTree.h"
 #include "GameModeHMM.h"
@@ -115,10 +98,6 @@ DataManager::~DataManager()
     
     Utils::clearMap(_achievements);
     Utils::clearMap(_objects);
-    Utils::clearMap(_gears);
-    Utils::clearMap(_gearUpgradeDatas);
-    Utils::clearMap(_gearAttributeDatas);
-    Utils::clearMap(_gearSets);
     Utils::clearMap(_animationParameters);
     Utils::clearMap(_cardConfigData);
     Utils::clearMap(_urConfigData);
@@ -129,21 +108,7 @@ DataManager::~DataManager()
     }
     _mapParticleConfigData.clear();
     Utils::clearMap(_spellConfigData);
-    
-    Utils::clearMap(_artifacts);
-    Utils::clearMap(_artifactUpgradeData);
-    Utils::clearMap(_attributes);
-    Utils::clearMap(_heroes);
-    Utils::clearMap(_heroPieceDatas);
-    Utils::clearMap(_heroUpgradeDatas);
     Utils::clearMap(_skills);
-    Utils::clearMap(_soldiers);
-    Utils::clearMap(_soldierPieceDatas);
-    Utils::clearMap(_soldierUpgradeDatas);
-    Utils::clearMap(_soldierQualityDatas);
-    Utils::clearMap(_soldierTalentDatas);
-    Utils::clearMap(_towers);
-    Utils::clearMap(_towerUpgradeDatas);
     
     CC_SAFE_DELETE(_binaryJsonTool);
     CC_SAFE_DELETE(_techTree);
@@ -160,30 +125,13 @@ void DataManager::init()
     parseQuestData();
     parseAchievementData();
     parseObjectData();
-    parseGearData();
-    parseGearUpgradeData();
-    parseGearAttributeData();
-    parseGearSetData();
     parseAnimationConfigData();
     parseCardConfigData();
     parseURConfigData();
     parseBRConfigData();
     parseMapParticleConfigData();
     parseSpellConfigData();
-    parseArtifactData();
-    parseArtifactUpgradeData();
-    parseAttributeData();
-    parseHeroData();
-    parseHeroPieceData();
-    parseHeroUpgradeData();
     parseSkillData();
-    parseSoldierData();
-    parseSoldierPieceData();
-    parseSoldierUpgradeData();
-    parseSoldierQualityData();
-    parseSoldierTalentData();
-    parseTowerData();
-    parseTowerUpgradeData();
     parseBinaryjsonTemplates();
 }
 
@@ -254,28 +202,6 @@ const ObjectLocalData* DataManager::getObjectData(int objectId) const
     return getMapValue(_objects, objectId);
 }
 
-const GearLocalData* DataManager::getGearData(int gearId) const
-{
-    return getMapValue(_gears, gearId);
-}
-
-const GearUpgradeData* DataManager::getGearUpgradeData(int id, int level) const
-{
-    auto key = StringUtils::format("%d_%d", id, level);
-    return getMapValue(_gearUpgradeDatas, key);
-}
-
-const GearAttributeData* DataManager::getGearAttributeData(int id, int level, int attributeId) const
-{
-    auto key = StringUtils::format("%d_%d_%d", id, level, attributeId);
-    return getMapValue(_gearAttributeDatas, key);
-}
-
-const GearSetLocalData* DataManager::getGearSetData(int id) const
-{
-    return getMapValue(_gearSets, id);
-}
-
 const AnimationParameter* DataManager::getAnimationParameter(const string& name, UnderWorld::Core::SkillClass skillClass, UnderWorld::Core::Unit::Direction direction) const
 {
     auto key = name + StringUtils::format("_%d", skillClass);
@@ -319,80 +245,9 @@ const SpellConfigData* DataManager::getSpellConfigData(const string& name) const
     return getMapValue(_spellConfigData, name);
 }
 
-const ArtifactLocalData* DataManager::getArtifactData(int id) const
-{
-    return getMapValue(_artifacts, id);
-}
-
-const ArtifactUpgradeData* DataManager::getArtifactUpgradeData(int id, int level) const
-{
-    auto key = StringUtils::format("%d_%d", id, level);
-    return getMapValue(_artifactUpgradeData, key);
-}
-
-const AttributeLocalData* DataManager::getAttributeData(int id) const
-{
-    return getMapValue(_attributes, id);
-}
-
-const HeroLocalData* DataManager::getHeroData(int id) const
-{
-    return getMapValue(_heroes, id);
-}
-
-const HeroPieceData* DataManager::getHeroPieceData(int id) const
-{
-    return getMapValue(_heroPieceDatas, id);
-}
-
-const HeroUpgradeData* DataManager::getHeroUpgradeData(int id, int level) const
-{
-    auto key = StringUtils::format("%d_%d", id, level);
-    return getMapValue(_heroUpgradeDatas, key);
-}
-
 const SkillLocalData* DataManager::getSkillData(int id) const
 {
     return getMapValue(_skills, id);
-}
-
-const SoldierLocalData* DataManager::getSoldierData(int id) const
-{
-    return getMapValue(_soldiers, id);
-}
-
-const SoldierPieceData* DataManager::getSoldierPieceData(int id) const
-{
-    return getMapValue(_soldierPieceDatas, id);
-}
-
-const SoldierUpgradeData* DataManager::getSoldierUpgradeData(int id, int level) const
-{
-    auto key = StringUtils::format("%d_%d", id, level);
-    return getMapValue(_soldierUpgradeDatas, key);
-}
-
-const SoldierQualityData* DataManager::getSoldierQualityData(int id, int level) const
-{
-    auto key = StringUtils::format("%d_%d", id, level);
-    return getMapValue(_soldierQualityDatas, key);
-}
-
-const SoldierTalentData* DataManager::getSoldierTalentData(int id, int level) const
-{
-    auto key = StringUtils::format("%d_%d", id, level);
-    return getMapValue(_soldierTalentDatas, key);
-}
-
-const TowerLocalData* DataManager::getTowerData(int id) const
-{
-    return getMapValue(_towers, id);
-}
-
-const TowerUpgradeData* DataManager::getTowerUpgradeData(int id, int level) const
-{
-    auto key = StringUtils::format("%d_%d", id, level);
-    return getMapValue(_towerUpgradeDatas, key);
 }
 
 #pragma mark - parsers
@@ -504,40 +359,6 @@ void DataManager::parseObjectData()
     });
 }
 
-void DataManager::parseGearData()
-{
-    parseData("EquipProperty.xml", [this](tinyxml2::XMLElement* item) {
-        auto data = new (nothrow) GearLocalData(item);
-        setMapValue(_gears, data->getId(), data);
-    });
-}
-
-void DataManager::parseGearUpgradeData()
-{
-    parseData("GearUpgradeData.xml", [this](tinyxml2::XMLElement* item) {
-        auto data = new (nothrow) GearUpgradeData(item);
-        auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-        setMapValue(_gearUpgradeDatas, key, data);
-    });
-}
-
-void DataManager::parseGearAttributeData()
-{
-    parseData("GearAttributeData.xml", [this](tinyxml2::XMLElement* item) {
-        auto data = new (nothrow) GearAttributeData(item);
-        auto key = StringUtils::format("%d_%d_%d", data->getId(), data->getLevel(), data->getAttributeId());
-        setMapValue(_gearAttributeDatas, key, data);
-    });
-}
-
-void DataManager::parseGearSetData()
-{
-    parseData("GearSetData.xml", [this](tinyxml2::XMLElement* item) {
-        auto data = new (nothrow) GearSetLocalData(item);
-        setMapValue(_gearSets, data->getId(), data);
-    });
-}
-
 void DataManager::parseAnimationConfigData()
 {
     parseData("AnimationConfig.xml", [this](tinyxml2::XMLElement* item) {
@@ -598,121 +419,11 @@ void DataManager::parseSpellConfigData()
     });
 }
 
-void DataManager::parseArtifactData()
-{
-    parseData("ArtifactData.xml", [this](tinyxml2::XMLElement* item) {
-        auto data = new (nothrow) ArtifactLocalData(item);
-        setMapValue(_artifacts, data->getId(), data);
-    });
-}
-
-void DataManager::parseArtifactUpgradeData()
-{
-    parseData("ArtifactUpgradeData.xml", [this](tinyxml2::XMLElement* item) {
-        auto data = new (nothrow) ArtifactUpgradeData(item);
-        auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-        setMapValue(_artifactUpgradeData, key, data);
-    });
-}
-
-void DataManager::parseAttributeData()
-{
-    parseData("AttributeData.xml", [this](tinyxml2::XMLElement* item) {
-        auto data = new (nothrow) AttributeLocalData(item);
-        setMapValue(_attributes, data->getId(), data);
-    });
-}
-
-void DataManager::parseHeroData()
-{
-    parseData("HeroData.xml", [this](tinyxml2::XMLElement* item) {
-        auto data = new (nothrow) HeroLocalData(item);
-        setMapValue(_heroes, data->getId(), data);
-    });
-}
-
-void DataManager::parseHeroPieceData()
-{
-    parseData("HeroPieceData.xml", [this](tinyxml2::XMLElement* item) {
-        auto data = new (nothrow) HeroPieceData(item);
-        setMapValue(_heroPieceDatas, data->getId(), data);
-    });
-}
-
-void DataManager::parseHeroUpgradeData()
-{
-    parseData("HeroUpgradeData.xml", [this](tinyxml2::XMLElement* item) {
-        auto data = new (nothrow) HeroUpgradeData(item);
-        auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-        setMapValue(_heroUpgradeDatas, key, data);
-    });
-}
-
 void DataManager::parseSkillData()
 {
     parseData("SkillData.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) SkillLocalData(item);
         setMapValue(_skills, data->getId(), data);
-    });
-}
-
-void DataManager::parseSoldierData()
-{
-    parseData("SoldierData.xml", [this](tinyxml2::XMLElement* item) {
-        auto data = new (nothrow) SoldierLocalData(item);
-        setMapValue(_soldiers, data->getId(), data);
-    });
-}
-
-void DataManager::parseSoldierPieceData()
-{
-    parseData("SoldierPieceData.xml", [this](tinyxml2::XMLElement* item) {
-        auto data = new (nothrow) SoldierPieceData(item);
-        setMapValue(_soldierPieceDatas, data->getId(), data);
-    });
-}
-
-void DataManager::parseSoldierUpgradeData()
-{
-    parseData("SoldierUpgradeData.xml", [this](tinyxml2::XMLElement* item) {
-        auto data = new (nothrow) SoldierUpgradeData(item);
-        auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-        setMapValue(_soldierUpgradeDatas, key, data);
-    });
-}
-
-void DataManager::parseSoldierQualityData()
-{
-    parseData("SoldierQualityData.xml", [this](tinyxml2::XMLElement* item) {
-        auto data = new (nothrow) SoldierQualityData(item);
-        auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-        setMapValue(_soldierQualityDatas, key, data);
-    });
-}
-
-void DataManager::parseSoldierTalentData()
-{
-    parseData("SoldierTalentData.xml", [this](tinyxml2::XMLElement* item) {
-        auto data = new (nothrow) SoldierTalentData(item);
-        auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-        setMapValue(_soldierTalentDatas, key, data);
-    });
-}
-
-void DataManager::parseTowerData()
-{
-    parseData("TowerData.xml", [this](tinyxml2::XMLElement* item) {
-        auto data = new (nothrow) TowerLocalData(item);
-        setMapValue(_towers, data->getId(), data);
-    });
-}
-
-void DataManager::parseTowerUpgradeData()
-{
-    parseData("TowerUpgradeData.xml", [this](tinyxml2::XMLElement* item) {
-        auto data = new (nothrow) TowerUpgradeData(item);
-        auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-        setMapValue(_towerUpgradeDatas, key, data);
     });
 }
 

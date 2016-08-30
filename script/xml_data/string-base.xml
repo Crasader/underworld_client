@@ -122,7 +122,8 @@
     
     <!-- 卡牌信息 -->
     <item key="ui_cardInfo_property" value="属性"/>
-    <item key="ui_cardInfo_upgrade" value="升级："/>
+    <item key="ui_cardInfo_upgrade" value="升级"/>
+    <item key="ui_cardInfo_upgrade_x" value="升级："/>
     <item key="ui_cardInfo_skill" value="技能："/>
     <item key="ui_cardInfo_rune" value="符文："/>
     <item key="ui_cardInfo_change" value="替换符文"/>
