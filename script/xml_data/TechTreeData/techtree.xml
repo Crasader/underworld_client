@@ -856,7 +856,7 @@
 	<faction name="魔族"/>
 	<faction name="中立"/>
 	<resource class="consumable" max="100" name="金子"/>
-	<resource class="consumable" max="250" name="木头"/>
+	<resource class="consumable" max="100" name="木头"/>
 	<attack name="普通"/>
 	<attack name="穿刺"/>
 	<attack name="魔法"/>
