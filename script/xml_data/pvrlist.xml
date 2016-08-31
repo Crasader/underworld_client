@@ -1,12 +1,16 @@
 <?xml version="1.0" ?>
 <root>
 	<item name="pvr/Alsace.plist"/>
+	<item name="pvr/Ann-shadows.plist"/>
+	<item name="pvr/Ann.plist"/>
 	<item name="pvr/Character-effects.plist"/>
 	<item name="pvr/Dragon-shadows.plist"/>
 	<item name="pvr/Dragon.plist"/>
 	<item name="pvr/Fat-equipment.plist"/>
 	<item name="pvr/Fat-shadows.plist"/>
 	<item name="pvr/Fat.plist"/>
+	<item name="pvr/Ghoul-shadows.plist"/>
+	<item name="pvr/Ghoul.plist"/>
 	<item name="pvr/HumanPriest.plist"/>
 	<item name="pvr/HumanWarrior-shadows.plist"/>
 	<item name="pvr/HumanWarrior.plist"/>
@@ -16,6 +20,7 @@
 	<item name="pvr/Niutoubing.plist"/>
 	<item name="pvr/Rifleman-shadows.plist"/>
 	<item name="pvr/Rifleman.plist"/>
+	<item name="pvr/Shield-soldier.plist"/>
 	<item name="pvr/soldier-Archer-shadows.plist"/>
 	<item name="pvr/soldier-Archer.plist"/>
 	<item name="pvr/TerranMage-shadows.plist"/>
