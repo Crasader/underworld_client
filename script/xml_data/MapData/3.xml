@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <root>
-    <map map_name="1" />
-    <location_setting index="0" core_location="40,320" />
+    <map map_name="1" game_duration="10800"/>
+    <location_setting index="0" core_location="40,320"/>
     <location_setting index="1" core_location="1016,320"/>
     <schedule_events>
 		<event>
