@@ -881,7 +881,7 @@
 	<effect alias_name="食尸鬼王山岭光环" class="add_feature" effect_name="食尸鬼王山岭光环" feature_name="食尸鬼王山岭光环反弹效果"/>
 	<effect alias_name="食尸鬼王山岭光环反弹效果" class="set_state" effect_name="食尸鬼王山岭光环反弹效果" state_name="stun"/>
 	<effect alias_name="中立食人鬼王加护甲技能" attr_name="armor" class="alter_attr" effect_name="中立食人鬼王加护甲技能" value="10"/>
-	<effect alias_name="降低攻速效果" attr_name="attack_speed" class="alter_attr" effect_name="魔族巫妖王霜之哀伤减速buff效果内容" value="-50"/>
+	<effect alias_name="降低攻速效果" attr_name="attack_speed" class="alter_attr" effect_name="魔族巫妖王霜之哀伤减速buff效果内容" value="-30"/>
 	<effect alias_name="提高攻速效果" attr_name="attack_speed" class="alter_attr" effect_name="魔族巫妖王死亡契约之buff团队效果特性之加攻速buff效果内容" value="100"/>
 	<effect alias_name="降低攻速效果" attr_name="attack_speed" class="alter_attr" effect_name="震荡法术降低攻速效果" value="-70"/>
 	<effect alias_name="降低移动效果" attr_name="move_speed" class="alter_attr" effect_name="震荡法术降低移动效果" value="p:-70"/>
