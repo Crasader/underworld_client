@@ -72,7 +72,6 @@ private:
     void generateUUID();
     // login
     void requestLogin(const httpRequestCallback& success, const httpErrorCallback& failed);
-    void handleLoginResponse(cocos2d::network::HttpResponse* response, const httpRequestCallback& success, const httpErrorCallback& failed);
     void reloadGame();
     
 private:

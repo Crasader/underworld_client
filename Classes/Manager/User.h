@@ -20,7 +20,7 @@
 class User
 {
 public:
-    User(const rapidjson::Document& jsonDict);
+    User(const rapidjson::Value& jsonDict);
     virtual ~User();
     
     // getters
@@ -49,7 +49,7 @@ private:
     void init();
     
     //------------------------------ NETWORKING BEGIN ------------------------------//
-    void parseUserInfo(const rapidjson::Document& jsonDict);
+    void parseUserInfo(const rapidjson::Value& jsonDict);
     //------------------------------ NETWORKING END ------------------------------//
 private:
     bool _isNewUser;

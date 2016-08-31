@@ -20,12 +20,14 @@ public:
     CardData(const rapidjson::Value& jsonDict);
     virtual ~CardData();
     
+    void update(const rapidjson::Value& jsonDict);
+    void updateRune(int idx, const rapidjson::Value& jsonDict);
     const std::vector<SkillData*>& getSkills() const;
-    const std::vector<RuneData*>& getRunes() const;
+    const RuneData* getRune(int idx) const;
     
 protected:
     std::vector<SkillData*> _skills;
-    std::vector<RuneData*> _runes;
+    std::unordered_map<int, RuneData*> _runes;
 };
 
 #endif /* CardData_h */

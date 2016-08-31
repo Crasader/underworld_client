@@ -17,6 +17,7 @@ public:
     SkillBookData(const rapidjson::Value& jsonDict);
     virtual ~SkillBookData();
     
+    void update(const rapidjson::Value& jsonDict);
     int getId() const;
     int getAmount() const;
     

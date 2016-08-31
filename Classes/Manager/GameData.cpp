@@ -126,16 +126,11 @@ void GameData::autoLogin(const httpRequestCallback& success, const httpErrorCall
 #endif
     const string token = cocostudio::DICTOOL->getStringValue_json(document, kAuth, "");
     // 2. if the token is saved in local
-    if (token.length() == USER_TOKEN_LENGTH)
-    {
+    if (token.length() == USER_TOKEN_LENGTH) {
         _user = new (std::nothrow) User(document);
         _user->loadUserInfo(_deviceToken, success, failed);
-    }
-    else
-    {
-        if (failed) {
-            failed(InvalidTokenErrorCode);
-        }
+    } else if (failed) {
+        failed(InvalidTokenErrorCode);
     }
 }
 
@@ -286,33 +281,20 @@ void GameData::generateUUID()
 
 void GameData::requestLogin(const httpRequestCallback& success, const httpErrorCallback& failed)
 {
-    if (false == isLoggedIn())
-    {
-        NetworkApi::login([=](cocos2d::network::HttpClient* client, cocos2d::network::HttpResponse* response) {
-            handleLoginResponse(response, success, failed);
-        });
-    }
-}
-
-void GameData::handleLoginResponse(cocos2d::network::HttpResponse* response, const httpRequestCallback& success, const httpErrorCallback& failed)
-{
-    if (NetworkApi::isSuccessfulResponse(response))
-    {
-        rapidjson::Document jsonDict;
-        NetworkApi::parseResponseData(response->getResponseData(), jsonDict);
-        _user = new (std::nothrow) User(jsonDict);
+    if (!isLoggedIn()) {
+        NetworkApi::login([=](long code, const rapidjson::Value& jsonDict) {
+            if (HttpSuccessCode == code) {
+                _user = new (std::nothrow) User(jsonDict);
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-        iOSApi::saveAnonymousUser(_user);
+                iOSApi::saveAnonymousUser(_user);
 #else
-        saveAnonymousUser(_user);
+                saveAnonymousUser(_user);
 #endif
-        _user->loadUserInfo(_deviceToken, success, failed);
-    }
-    else
-    {
-        if (failed) {
-            failed(InvalidTokenErrorCode);
-        }
+                _user->loadUserInfo(_deviceToken, success, failed);
+            } else if (failed) {
+                failed(InvalidTokenErrorCode);
+            }
+        });
     }
 }
 
@@ -352,16 +334,10 @@ void GameData::heartBeat(float dt)
 
 void GameData::heartBeatRequest(bool showLoadingView)
 {
-    NetworkApi::heartBeat([this](cocos2d::network::HttpClient* client, cocos2d::network::HttpResponse* response) {
-        if (NetworkApi::isSuccessfulResponse(response))
-        {
-            rapidjson::Document jsonDict;
-            NetworkApi::parseResponseData(response->getResponseData(), jsonDict);
-            bool online = cocostudio::DICTOOL->getBooleanValue_json(jsonDict, "online");
-            if (false == online)
-            {
-                onUserIsOffline();
-            }
+    NetworkApi::heartBeat([this](long, const rapidjson::Value& jsonDict) {
+        bool online = cocostudio::DICTOOL->getBooleanValue_json(jsonDict, "online");
+        if (!online) {
+            onUserIsOffline();
         }
     }, showLoadingView);
 }

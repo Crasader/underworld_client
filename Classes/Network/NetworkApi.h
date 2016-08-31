@@ -25,59 +25,38 @@ class ChatMark;
 
 namespace NetworkApi
 {
-    // basic    
-    bool isSuccessfulResponse(cocos2d::network::HttpResponse* response);
-    
-    void parseResponseData(const std::vector<char>* responseData, rapidjson::Document& jsonDict);
+    typedef const std::function<void(long, const rapidjson::Value&)> HttpCallback;
     
     // ======================= Game =======================
-    void login(const cocos2d::network::ccHttpRequestCallback& callback);
-    
-    void loadUserInfo(const std::string& deviceToken, const cocos2d::network::ccHttpRequestCallback& callback);
-    
-    void heartBeat(const cocos2d::network::ccHttpRequestCallback& callback, bool showLoadingView);
+    void login(const HttpCallback& callback);
+    void loadUserInfo(const std::string& deviceToken, const HttpCallback& callback);
+    void heartBeat(const HttpCallback& callback, bool showLoadingView);
     
     // ======================= Quest =======================
-    void getDailyQuestProgress(const cocos2d::network::ccHttpRequestCallback& callback);
-    void getLifeQuestProgress(const cocos2d::network::ccHttpRequestCallback& callback);
-    void finishQuest(QuestType type, int questId, const cocos2d::network::ccHttpRequestCallback& callback);
+    void getDailyQuestProgress(const HttpCallback& callback);
+    void getLifeQuestProgress(const HttpCallback& callback);
+    void finishQuest(QuestType type, int questId, const HttpCallback& callback);
     
     // ======================= Guild =======================
     
     
-    // ======================= Hero =======================
-    void getHeroesList(const cocos2d::network::ccHttpRequestCallback& callback);
-    void getHeroDetail(int id, const cocos2d::network::ccHttpRequestCallback& callback);
-    void upgradeHero(int id, const cocos2d::network::ccHttpRequestCallback& callback);
-    void setArtifact(int heroId, int artifactId, const cocos2d::network::ccHttpRequestCallback& callback);
-    void upgradeArtifact(int heroId, int artifactId, const cocos2d::network::ccHttpRequestCallback& callback);
-    void sellArtifact(int artifactId, const cocos2d::network::ccHttpRequestCallback& callback);
-    void composeHero(int id, const cocos2d::network::ccHttpRequestCallback& callback);
-    void sellHeroPiece(int id, int count, const cocos2d::network::ccHttpRequestCallback& callback);
+    // ======================= Card =======================
+    void getCardList(const HttpCallback& callback);
+    void getCardDetail(int cardDbId, const HttpCallback& callback);
+    void upgradeCard(int cardDbId, int level, const HttpCallback& callback);
+    void upgradeCardSkill(int cardDbId, int level, int skillIdx, const HttpCallback& callback);
+    void getRunesList(const HttpCallback& callback);
+    void imbedRune(int cardDbId, int runeIdx, int runeDbId, const HttpCallback& callback);
+    void unloadRune(int cardDbId, int runeIdx, const HttpCallback& callback);
+    void upgradeRune(int runeDbId, int level, const HttpCallback& callback);
+    void compoundRune(int runeDbId, const HttpCallback& callback);
     
-    // ======================= Soldier =======================
-    void getSoldiersList(const cocos2d::network::ccHttpRequestCallback& callback);
-    void getSoldierDetail(int id, const cocos2d::network::ccHttpRequestCallback& callback);
-    void upgradeSoldier(int id, const cocos2d::network::ccHttpRequestCallback& callback);
-    void recastSoldier(int id, const cocos2d::network::ccHttpRequestCallback& callback);
-    void switchSoldierTalent(int soldierId, int talentId, const cocos2d::network::ccHttpRequestCallback& callback);
-    void setGear(int soldierId, int gearId, const cocos2d::network::ccHttpRequestCallback& callback);
-    void upgradeGear(int gearId, const cocos2d::network::ccHttpRequestCallback& callback);
-    void sellGear(int gearId, const cocos2d::network::ccHttpRequestCallback& callback);
-    void composeSoldier(int id, const cocos2d::network::ccHttpRequestCallback& callback);
-    void sellSoldierPiece(int id, int count, const cocos2d::network::ccHttpRequestCallback& callback);
-    
-    // ======================= Tower =======================
-    void getTowersList(const cocos2d::network::ccHttpRequestCallback& callback);
-    void getTowerDetail(int id, const cocos2d::network::ccHttpRequestCallback& callback);
-    void upgradeTower(int id, const cocos2d::network::ccHttpRequestCallback& callback);
     // ======================= Chat =======================
-    void sendMessage(const ChatMark* mark, ChatType type, int contactor, const std::string& message, const cocos2d::network::ccHttpRequestCallback& callback);
-    void recieveMessages(const ChatMark* mark, const cocos2d::network::ccHttpRequestCallback& callback);
+    void sendMessage(const ChatMark* mark, ChatType type, int contactor, const std::string& message, const HttpCallback& callback);
+    void recieveMessages(const ChatMark* mark, const HttpCallback& callback);
     
     // ======================= IAP =======================
-    void iap(bool isSandBox, const std::string& receiptData, const cocos2d::network::ccHttpRequestCallback& callback);
+    void iap(bool isSandBox, const std::string& receiptData, const HttpCallback& callback);
 }
-
 
 #endif /* NetworkApi_h */

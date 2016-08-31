@@ -129,7 +129,7 @@ CardPreview::CardPreview(DeckManager::FeatureType type, Node* parent, CardPrevie
         _scrollView->setScrollBarEnabled(false);
         _scrollView->addEventListener([this](Ref*, ui::ScrollView::EventType type) {
             if (ui::ScrollView::EventType::SCROLLING == type) {
-                if (_opNode && _opNode->isVisible() && _foundCards->getCard(_opNode->getCardData()->getIdx())) {
+                if (_opNode && _opNode->isVisible() && _foundCards->getCard(_opNode->getCardData()->getCardId())) {
                     hideOpNode();
                 }
             }
@@ -206,7 +206,7 @@ void CardPreview::showOpNode(AbstractCard* card, const vector<DeckCardOpType>& t
         _opNode->setTypes(types);
         setOpNodePosition(card);
         
-        if (_foundCards->getCard(data->getIdx())) {
+        if (_foundCards->getCard(data->getCardId())) {
             fullyDisplayCard(card);
         }
     }

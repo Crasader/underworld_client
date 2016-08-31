@@ -15,27 +15,39 @@ using namespace std;
 using namespace cocostudio;
 
 CardSimpleData::CardSimpleData(const rapidjson::Value& jsonDict)
-:_idx(0)
+:_dbId(0)
+,_cardId(0)
 ,_level(0)
 ,_amount(0)
 ,_cardType(nullptr)
 {
-    _idx = DICTOOL->getIntValue_json(jsonDict, "id");
-    _level = DICTOOL->getIntValue_json(jsonDict, "level");
-    _amount = DICTOOL->getIntValue_json(jsonDict, "amount");
-    _cardType = DataManager::getInstance()->getGameModeHMM()->findCardTypeById(_idx);
+    update(jsonDict);
 }
 
 CardSimpleData::~CardSimpleData() {}
 
 bool CardSimpleData::operator==(const CardSimpleData& c) const
 {
-    return ((*this) == c || _idx == c._idx);
+    return ((*this) == c || _cardId == c._cardId);
 }
 
-int CardSimpleData::getIdx() const
+void CardSimpleData::update(const rapidjson::Value& jsonDict)
 {
-    return _idx;
+    _dbId = DICTOOL->getIntValue_json(jsonDict, "db");
+    _cardId = DICTOOL->getIntValue_json(jsonDict, "id");
+    _level = DICTOOL->getIntValue_json(jsonDict, "level");
+    _amount = DICTOOL->getIntValue_json(jsonDict, "amount");
+    _cardType = DataManager::getInstance()->getGameModeHMM()->findCardTypeById(_cardId);
+}
+
+int CardSimpleData::getDbId() const
+{
+    return _dbId;
+}
+
+int CardSimpleData::getCardId() const
+{
+    return _cardId;
 }
 
 UnderWorld::Core::HMMCardClass CardSimpleData::getCardClass() const

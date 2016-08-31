@@ -12,6 +12,11 @@
 #include "UserDefaultsDataManager.h"
 #include "DeckData.h"
 #include "CardSimpleData.h"
+#include "CardData.h"
+#include "RuneData.h"
+#include "RuneGroupData.h"
+#include "NetworkApi.h"
+#include "ResourceManager.h"
 
 using namespace std;
 using namespace cocostudio;
@@ -85,8 +90,8 @@ DeckManager::DeckManager()
         _allCards.insert(make_pair(cardId, createFakeData(cardId, 1)));
     }
     
-//    _unfoundCards = {23100, 23101};
-    for (auto iter = begin(_unfoundCards); iter != end(_unfoundCards); ++iter) {
+//    _allUnfoundCards = {23100, 23101};
+    for (auto iter = begin(_allUnfoundCards); iter != end(_allUnfoundCards); ++iter) {
         const int cardId(*iter);
         _allCards.insert(make_pair(cardId, createFakeData(cardId, 0)));
     }
@@ -103,14 +108,193 @@ DeckManager::~DeckManager()
     for (auto iter = begin(_allCards); iter != end(_allCards); ++iter) {
         CC_SAFE_DELETE(iter->second);
     }
+    
+    for (auto iter = begin(_cardDetails); iter != end(_cardDetails); ++iter) {
+        CC_SAFE_DELETE(iter->second);
+    }
+    
+    for (auto iter = begin(_runeGroups); iter != end(_runeGroups); ++iter) {
+        CC_SAFE_DELETE(iter->second);
+    }
 }
 
 #pragma mark - public
-void DeckManager::parse(const rapidjson::Value& jsonDict)
+#pragma mark - network request
+void DeckManager::getCardList(const function<void()>& callback)
 {
-    
+    if (_allCards.empty()) {
+        NetworkApi::getCardList([this, callback](long, const rapidjson::Value& jsonDict) {
+            {
+                static const char* key("cards");
+                if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
+                    for (int i = 0; i < DICTOOL->getArrayCount_json(jsonDict, key); ++i) {
+                        const auto& value = DICTOOL->getDictionaryFromArray_json(jsonDict, key, i);
+                        auto data = new (nothrow) CardSimpleData(value);
+                        auto cardId(data->getCardId());
+                        _allCards.insert(make_pair(cardId, data));
+                        _allFoundCards.push_back(cardId);
+                    }
+                }
+            }
+            
+            {
+                static const char* key("ncards");
+                if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
+                    for (int i = 0; i < DICTOOL->getArrayCount_json(jsonDict, key); ++i) {
+                        const auto& value = DICTOOL->getDictionaryFromArray_json(jsonDict, key, i);
+                        auto data = new (nothrow) CardSimpleData(value);
+                        auto cardId(data->getCardId());
+                        _allCards.insert(make_pair(cardId, data));
+                        _allUnfoundCards.push_back(cardId);
+                    }
+                }
+            }
+            
+            if (callback) {
+                callback();
+            }
+        });
+    } else if (callback) {
+        callback();
+    }
 }
 
+void DeckManager::getCardDetail(int cardId, const function<void(const CardData*)>& callback)
+{
+    auto data(getCardData(cardId));
+    if (data) {
+        NetworkApi::getCardDetail(data->getDbId(), [this, callback](long, const rapidjson::Value& jsonDict) {
+            auto data = updateCardData(jsonDict);
+            if (callback) {
+                callback(data);
+            }
+        });
+    }
+}
+
+void DeckManager::upgradeCard(int cardId, const function<void(const CardData*)>& callback)
+{
+    auto data(getCardData(cardId));
+    if (data) {
+        NetworkApi::upgradeCard(data->getDbId(), data->getLevel(), [this, callback](long, const rapidjson::Value& jsonDict) {
+            ResourceManager::getInstance()->updateResources(jsonDict);
+            auto data = updateCardData(jsonDict);
+            if (callback) {
+                callback(data);
+            }
+        });
+    }
+}
+
+void DeckManager::upgradeCardSkill(int cardId, int skillIdx, const function<void(const CardData*)>& callback)
+{
+    auto data(getCardDetail(cardId));
+    if (data && data->getSkills().size() > skillIdx) {
+        NetworkApi::upgradeCardSkill(data->getDbId(), data->getLevel(), skillIdx, [this, callback](long, const rapidjson::Value& jsonDict) {
+            ResourceManager::getInstance()->updateResources(jsonDict);
+            auto data = updateCardData(jsonDict);
+            if (callback) {
+                callback(data);
+            }
+        });
+    }
+}
+
+void DeckManager::getRunesList(const std::function<void()>& callback)
+{
+    if (_runeGroups.empty()) {
+        NetworkApi::getRunesList([=](long, const rapidjson::Value& jsonDict) {
+            static const char* key("runepacks");
+            if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
+                for (int i = 0; i < DICTOOL->getArrayCount_json(jsonDict, key); ++i) {
+                    const auto& value = DICTOOL->getDictionaryFromArray_json(jsonDict, key, i);
+                    auto data = new (nothrow) RuneGroupData(value);
+                    auto dbId(data->getDbId());
+                    _runeGroups.insert(make_pair(dbId, data));
+                }
+            }
+            
+            if (callback) {
+                callback();
+            }
+        });
+    } else if (callback) {
+        callback();
+    }
+}
+
+void DeckManager::imbedRune(int cardId, int runeIdx, int runeGroupIdx, const function<void()>& callback)
+{
+    auto data(getCardDetail(cardId));
+    if (data && _sortedRuneGroups.size() > runeGroupIdx) {
+        NetworkApi::imbedRune(data->getDbId(), runeIdx, _sortedRuneGroups.at(runeGroupIdx)->getDbId(), [=](long, const rapidjson::Value& jsonDict) {
+            updateRune(cardId, runeIdx, jsonDict);
+            updateRuneGroups(jsonDict);
+            
+            if (callback) {
+                callback();
+            }
+        });
+    }
+}
+
+void DeckManager::unloadRune(int cardId, int runeIdx, const function<void()>& callback)
+{
+    auto data(getCardDetail(cardId));
+    if (data) {
+        NetworkApi::unloadRune(data->getDbId(), runeIdx, [=](long, const rapidjson::Value& jsonDict) {
+            static const char* key("runepack");
+            if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
+                const auto& value = DICTOOL->getSubDictionary_json(jsonDict, key);
+                updateRuneGroup(value);
+            }
+            
+            if (callback) {
+                callback();
+            }
+        });
+    }
+}
+
+void DeckManager::upgradeRune(int cardId, int runeIdx, const function<void()>& callback)
+{
+    auto data(getCardDetail(cardId));
+    if (data) {
+        auto rune(data->getRune(runeIdx));
+        if (rune) {
+            NetworkApi::upgradeRune(rune->getDbId(), rune->getLevel(), [=](long, const rapidjson::Value& jsonDict) {
+                ResourceManager::getInstance()->updateResources(jsonDict);
+                updateRune(cardId, runeIdx, jsonDict);
+                static const char* key("runepack");
+                if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
+                    const auto& value = DICTOOL->getSubDictionary_json(jsonDict, key);
+                    updateRuneGroup(value);
+                }
+                
+                if (callback) {
+                    callback();
+                }
+            });
+        }
+    }
+}
+
+void DeckManager::compoundRune(int runeGroupIdx, const function<void()>& callback)
+{
+    if (_sortedRuneGroups.size() > runeGroupIdx) {
+        auto data(_sortedRuneGroups.at(runeGroupIdx));
+        NetworkApi::compoundRune(data->getDbId(), [=](long, const rapidjson::Value& jsonDict) {
+            ResourceManager::getInstance()->updateResources(jsonDict);
+            updateRuneGroups(jsonDict);
+            
+            if (callback) {
+                callback();
+            }
+        });
+    }
+}
+
+#pragma mark - sort
 DeckManager::SortType DeckManager::getSortType(FeatureType type) const
 {
     if (_sortTypes.find(type) != end(_sortTypes)) {
@@ -137,6 +321,7 @@ void DeckManager::setSortType(FeatureType ft, SortType st)
     }
 }
 
+#pragma mark - deck
 int DeckManager::getThisDeckId() const
 {
     return _defaultId;
@@ -166,6 +351,7 @@ size_t DeckManager::getAllCardsCount() const
     return _allCards.size();
 }
 
+#pragma mark - card
 size_t DeckManager::getAllFoundCardsCount() const
 {
     return _allFoundCards.size();
@@ -180,10 +366,19 @@ const CardSimpleData* DeckManager::getCardData(int card) const
     return nullptr;
 }
 
+const CardData* DeckManager::getCardDetail(int card) const
+{
+    if (_cardDetails.find(card) != end(_cardDetails)) {
+        return _cardDetails.at(card);
+    }
+    
+    return nullptr;
+}
+
 bool DeckManager::isFound(int card) const
 {
-    auto iter(_allCards.find(card));
-    if (iter != end(_allCards) && iter->second->getLevel() > 0) {
+    auto data(getCardData(card));
+    if (data && data->getLevel() > 0) {
         return true;
     }
     
@@ -192,17 +387,24 @@ bool DeckManager::isFound(int card) const
 
 const vector<int>& DeckManager::getFoundCards(FeatureType type) const
 {
-    return (FeatureType::Deck == type) ? _foundCards : _allFoundCards;
+    return (FeatureType::Deck == type) ? _offDeckFoundCards : _allFoundCards;
 }
 
 const vector<int>& DeckManager::getUnfoundCards() const
 {
-    return _unfoundCards;
+    return _allUnfoundCards;
 }
 
+#pragma mark - rune
+const vector<const RuneGroupData*>& DeckManager::getRuneGroups() const
+{
+    return _sortedRuneGroups;
+}
+
+#pragma mark - offline functions
 void DeckManager::useCard(int used, int replaced)
 {
-    auto& foundCards(_foundCards);
+    auto& foundCards(_offDeckFoundCards);
     for (auto iter = begin(foundCards); iter != end(foundCards); ++iter) {
         if (used == (*iter)) {
             foundCards.erase(iter);
@@ -227,15 +429,15 @@ void DeckManager::exchangeCard(int from, int to)
 
 void DeckManager::findCard(int card)
 {
-    for (auto iter = begin(_unfoundCards); iter != end(_unfoundCards); ++iter) {
+    for (auto iter = begin(_allUnfoundCards); iter != end(_allUnfoundCards); ++iter) {
         if (card == (*iter)) {
-            _unfoundCards.erase(iter);
+            _allUnfoundCards.erase(iter);
             break;
         }
     }
     
     _allFoundCards.push_back(card);
-    _foundCards.push_back(card);
+    _offDeckFoundCards.push_back(card);
 }
 
 #pragma mark - private
@@ -252,7 +454,7 @@ void DeckManager::loadThisDeck()
 {
     _defaultDeckData = getDeckData(_defaultId);
     
-    _foundCards.clear();
+    _offDeckFoundCards.clear();
     
     unordered_set<int> container;
     for (auto card : _allFoundCards) {
@@ -264,7 +466,7 @@ void DeckManager::loadThisDeck()
     }
     
     for (auto card : container) {
-        _foundCards.push_back(card);
+        _offDeckFoundCards.push_back(card);
     }
     
     sortAllCards(FeatureType::Deck, false);
@@ -329,8 +531,66 @@ void DeckManager::sortCards(SortType type, vector<int>& cards) const
 void DeckManager::sortAllCards(FeatureType type, bool sortUnfound)
 {
     auto st(getSortType(type));
-    sortCards(st, (FeatureType::Deck == type) ? _foundCards : _allFoundCards);
+    sortCards(st, (FeatureType::Deck == type) ? _offDeckFoundCards : _allFoundCards);
     if (sortUnfound) {
-        sortCards(st, _unfoundCards);
+        sortCards(st, _allUnfoundCards);
     }
+}
+
+const CardData* DeckManager::updateCardData(const rapidjson::Value& jsonDict)
+{
+    const auto& value = DICTOOL->getSubDictionary_json(jsonDict, "cards");
+    auto cardId(DICTOOL->getIntValue_json(value, "id"));
+    if (_cardDetails.find(cardId) != end(_cardDetails)) {
+        _cardDetails.at(cardId)->update(value);
+    } else {
+        _cardDetails.insert(make_pair(cardId, new (nothrow) CardData(value)));
+    }
+    
+    return _cardDetails.at(cardId);
+}
+
+void DeckManager::updateRune(int cardId, int runeIdx, const rapidjson::Value& jsonDict)
+{
+    static const char* key("rune");
+    if (_cardDetails.find(cardId) != end(_cardDetails) && DICTOOL->checkObjectExist_json(jsonDict, key)) {
+        auto data(_cardDetails.at(cardId));
+        if (data) {
+            const auto& value = DICTOOL->getSubDictionary_json(jsonDict, key);
+            data->updateRune(runeIdx, value);
+        }
+    }
+}
+
+void DeckManager::updateRuneGroup(const rapidjson::Value& jsonDict)
+{
+    static const char* key("db");
+    if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
+        auto dbId(DICTOOL->getIntValue_json(jsonDict, key));
+        if (_runeGroups.find(dbId) != end(_runeGroups)) {
+            _runeGroups.at(dbId)->update(jsonDict);
+        } else {
+            _runeGroups.insert(make_pair(dbId, new (nothrow) RuneGroupData(jsonDict)));
+        }
+    }
+}
+
+void DeckManager::updateRuneGroups(const rapidjson::Value& jsonDict)
+{
+    static const char* key("runepacks");
+    if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
+        for (int i = 0; i < DICTOOL->getArrayCount_json(jsonDict, key); ++i) {
+            const auto& value = DICTOOL->getDictionaryFromArray_json(jsonDict, key, i);
+            updateRuneGroup(value);
+        }
+    }
+}
+
+const RuneGroupData* DeckManager::getRuneGroupData(int dbId) const
+{
+    if (_runeGroups.find(dbId) != end(_runeGroups)) {
+        return _runeGroups.at(dbId);
+    }
+    
+    return nullptr;
 }

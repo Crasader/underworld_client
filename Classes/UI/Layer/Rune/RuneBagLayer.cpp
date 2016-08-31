@@ -14,7 +14,7 @@
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "RuneGroupData.h"
-#include "RuneManager.h"
+#include "DeckManager.h"
 
 using namespace std;
 
@@ -203,13 +203,13 @@ void RuneBagLayer::initRunes()
         return;
     }
     
-    auto rm(RuneManager::getInstance());
-    const auto cnt(rm->getRuneGroupsCount());
+    const auto& runes(DeckManager::getInstance()->getRuneGroups());
+    const auto cnt(runes.size());
     const float height = MAX(_scrollViewMinSize.height, getHeight(cnt, nodeSpaceY) + scrollViewSpaceTop + scrollViewSpaceBottom);
     _scrollView->setInnerContainerSize(Size(_scrollViewMinSize.width, height));
     
     for (int i = 0; i < cnt; ++i) {
-        auto node = RuneNode::create(rm->getRuneGroup(i));
+        auto node = RuneNode::create(runes.at(i));
         node->registerObserver(this);
         _scrollView->addChild(node);
         

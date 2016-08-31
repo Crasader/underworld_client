@@ -17,6 +17,7 @@ public:
     RuneGroupData(const rapidjson::Value& jsonDict);
     virtual ~RuneGroupData();
     
+    void update(const rapidjson::Value& jsonDict);
     int getAmount() const;
     
 private:

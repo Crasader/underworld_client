@@ -27,7 +27,9 @@ public:
     
     bool operator==(const CardSimpleData& instance) const;
     
-    int getIdx() const;
+    void update(const rapidjson::Value& jsonDict);
+    int getDbId() const;
+    int getCardId() const;
     UnderWorld::Core::HMMCardClass getCardClass() const;
     bool isHero() const;
     int getLevel() const;
@@ -39,7 +41,8 @@ public:
     const std::string& getUnlockInfo() const;
     
 private:
-    int _idx;
+    int _dbId;
+    int _cardId;
     int _level;
     int _amount;
     const UnderWorld::Core::HMMCardType* _cardType;

@@ -447,7 +447,7 @@ void BattleDeckLayer::beginEdit(const CardSimpleData* data)
     }
     
     // create card
-    const int cardId(data ? data->getIdx() : 0);
+    const int cardId(data ? data->getCardId() : 0);
     _usedCard = getFoundCard(cardId);
     
     if (_usedCard) {
@@ -501,7 +501,7 @@ void BattleDeckLayer::exchangeCard(int idxFrom, int idxTo)
         auto tdata(to->getCardData());
         CC_ASSERT(fdata && tdata);
         if (fdata->isHero() == tdata->isHero()) {
-            DeckManager::getInstance()->exchangeCard(fdata->getIdx(), tdata->getIdx());
+            DeckManager::getInstance()->exchangeCard(fdata->getCardId(), tdata->getCardId());
             moveToDeck(from, idxTo);
             moveToDeck(to, idxFrom);
         } else {
@@ -533,8 +533,8 @@ void BattleDeckLayer::useCard(int idx, bool fromDeck)
             
             endEdit();
             
-            const auto uid(udata->getIdx());
-            const auto rid(rdata->getIdx());
+            const auto uid(udata->getCardId());
+            const auto rid(rdata->getCardId());
             DeckManager::getInstance()->useCard(uid, rid);
             moveToDeck(_usedCard, idx);
             if (_cardPreview) {

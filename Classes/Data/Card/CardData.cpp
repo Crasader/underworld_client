@@ -17,6 +17,23 @@ using namespace cocostudio;
 CardData::CardData(const rapidjson::Value& jsonDict)
 :CardSimpleData(jsonDict)
 {
+    update(jsonDict);
+}
+
+CardData::~CardData()
+{
+    for (auto data : _skills) {
+        CC_SAFE_DELETE(data);
+    }
+    
+    for (auto iter = begin(_runes); iter != end(_runes); ++iter) {
+        CC_SAFE_DELETE(iter->second);
+    }
+}
+
+void CardData::update(const rapidjson::Value& jsonDict)
+{
+    CardSimpleData::update(jsonDict);
     {
         static const char* key("skills");
         if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
@@ -32,20 +49,34 @@ CardData::CardData(const rapidjson::Value& jsonDict)
         if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
             for (int i = 0; i < DICTOOL->getArrayCount_json(jsonDict, key); ++i) {
                 const auto& value = DICTOOL->getDictionaryFromArray_json(jsonDict, key, i);
-                _runes.push_back(new (nothrow) RuneData(value));
+                auto data = new (nothrow) RuneData(value);
+                if (_runes.find(i) == end(_runes)) {
+                    _runes.insert(make_pair(i, data));
+                }
             }
         }
     }
 }
 
-CardData::~CardData() {}
+void CardData::updateRune(int idx, const rapidjson::Value& jsonDict)
+{
+    if (_runes.find(idx) != end(_runes)) {
+        _runes.at(idx)->update(jsonDict);
+    } else {
+        _runes.insert(make_pair(idx, new (nothrow) RuneData(jsonDict)));
+    }
+}
 
 const vector<SkillData*>& CardData::getSkills() const
 {
     return _skills;
 }
 
-const vector<RuneData*>& CardData::getRunes() const
+const RuneData* CardData::getRune(int idx) const
 {
-    return _runes;
+    if (_runes.find(idx) != end(_runes)) {
+        return _runes.at(idx);
+    }
+    
+    return nullptr;
 }

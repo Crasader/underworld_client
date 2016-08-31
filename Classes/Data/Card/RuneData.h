@@ -18,16 +18,17 @@ public:
     RuneData(const rapidjson::Value& jsonDict);
     virtual ~RuneData();
     
-    int getDbIdx() const;
-    int getIdx() const;
+    void update(const rapidjson::Value& jsonDict);
+    int getDbId() const;
+    int getId() const;
     int getLevel() const;
     const std::string& getName() const;
     const std::string& getDescription() const;
     const std::string& getEffect() const;
     
 protected:
-    int _dbIdx;
-    int _idx;
+    int _dbId;
+    int _id;
     int _level;
 };
 

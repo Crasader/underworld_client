@@ -13,25 +13,30 @@ using namespace std;
 using namespace cocostudio;
 
 RuneData::RuneData(const rapidjson::Value& jsonDict)
-:_dbIdx(0)
-,_idx(0)
+:_dbId(0)
+,_id(0)
 ,_level(0)
 {
-    _dbIdx = DICTOOL->getIntValue_json(jsonDict, "db");
-    _idx = DICTOOL->getIntValue_json(jsonDict, "id");
-    _level = DICTOOL->getIntValue_json(jsonDict, "level");
+    update(jsonDict);
 }
 
 RuneData::~RuneData() {}
 
-int RuneData::getDbIdx() const
+void RuneData::update(const rapidjson::Value& jsonDict)
 {
-    return _dbIdx;
+    _dbId = DICTOOL->getIntValue_json(jsonDict, "db");
+    _id = DICTOOL->getIntValue_json(jsonDict, "id");
+    _level = DICTOOL->getIntValue_json(jsonDict, "level");
 }
 
-int RuneData::getIdx() const
+int RuneData::getDbId() const
 {
-    return _idx;
+    return _dbId;
+}
+
+int RuneData::getId() const
+{
+    return _id;
 }
 
 int RuneData::getLevel() const

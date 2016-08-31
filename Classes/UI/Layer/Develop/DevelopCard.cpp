@@ -72,7 +72,7 @@ bool DevelopCard::init(const CardSimpleData* data)
         auto label = CocosUtils::createLabel("20/100", DEFAULT_FONT_SIZE);
         label->setAnchorPoint(Point::ANCHOR_MIDDLE);
         label->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
-        label->setTextColor(Color4B::BLACK);
+        label->setTextColor(Color4B::WHITE);
         label->setPosition(psize.width / 2, psize.height / 2);
         ptbg->addChild(label);
         _amount = label;

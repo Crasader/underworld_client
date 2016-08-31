@@ -15,20 +15,18 @@ static const int ProgressLayerTag = 20150;
 
 void ProgressLayer::showSingleton()
 {
-    Scene *runningScene = cocos2d::Director::getInstance()->getRunningScene();
-    if (runningScene)
-    {
-        ProgressLayer* layer = ProgressLayer::create();
+    auto runningScene = Director::getInstance()->getRunningScene();
+    if (runningScene) {
+        auto layer = ProgressLayer::create();
         runningScene->addChild(layer, 20000, ProgressLayerTag);
     }
 }
 
 void ProgressLayer::hideSingleton()
 {
-    Scene *runningScene = cocos2d::Director::getInstance()->getRunningScene();
-    if (runningScene)
-    {
-        Node* child = runningScene->getChildByTag(ProgressLayerTag);
+    auto runningScene = Director::getInstance()->getRunningScene();
+    if (runningScene) {
+        auto child = runningScene->getChildByTag(ProgressLayerTag);
         if (child) {
             runningScene->removeChild(child);
         }
@@ -37,17 +35,14 @@ void ProgressLayer::hideSingleton()
 
 ProgressLayer * ProgressLayer::create()
 {
-    ProgressLayer *ret = new (std::nothrow) ProgressLayer();
-    if (ret && ret->init())
-    {
+    auto ret = new (std::nothrow) ProgressLayer();
+    if (ret && ret->init()) {
         ret->autorelease();
         return ret;
     }
-    else
-    {
-        CC_SAFE_DELETE(ret);
-        return nullptr;
-    }
+    
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 void ProgressLayer::destroy(ProgressLayer* layer)
@@ -55,9 +50,7 @@ void ProgressLayer::destroy(ProgressLayer* layer)
     CC_SAFE_DELETE(layer);
 }
 
-ProgressLayer::ProgressLayer()
-{
-}
+ProgressLayer::ProgressLayer() {}
 
 ProgressLayer::~ProgressLayer()
 {
@@ -68,10 +61,10 @@ bool ProgressLayer::init()
 {
     if (LayerColor::initWithColor(LAYER_MASK_COLOR))
     {
-        const Size& winSize = Director::getInstance()->getWinSize();
-        Node* loadingNode = CocosUtils::playAnimation(resourceFile, 0, true);
-        loadingNode->setPosition(winSize.width / 2, winSize.height / 2);
-        addChild(loadingNode);
+        const auto& winSize = Director::getInstance()->getWinSize();
+        auto node = CocosUtils::playAnimation(resourceFile, 0, true);
+        node->setPosition(winSize.width / 2, winSize.height / 2);
+        addChild(node);
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);

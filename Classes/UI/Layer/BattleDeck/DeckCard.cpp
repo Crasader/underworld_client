@@ -127,7 +127,7 @@ const CardSimpleData* DeckCard::getCardData() const
 
 int DeckCard::getCardId() const
 {
-    return _data ? _data->getIdx() : 0;
+    return _data ? _data->getCardId() : 0;
 }
 
 static float shake_action_tag = 2016;

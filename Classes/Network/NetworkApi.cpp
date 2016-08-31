@@ -25,7 +25,7 @@ USING_NS_CC;
 using namespace cocos2d::network;
 
 #if COCOS2D_DEBUG
-static const string kApiHost = "http://192.168.31.222:8080/";
+static const string kApiHost = "http://192.168.31.100:8080/";
 #else
 static const string kApiHost = "http://203.88.170.234/";
 #endif
@@ -35,103 +35,67 @@ static const string kContentType = "application/x-www-form-urlencoded";
 static const string kSignHeader = "X-Auth-Signature";
 static const string kSignParam = "sign";
 
-static const string kServerPrefix = "Underworld_Server/";
+static const string kServerPrefix = "underworld_server/";
 
-static const string kGuestLogin         = kServerPrefix + "guest.json";
-static const string kUserInfo           = kServerPrefix + "user/info.json";
-static const string kHeartBeat          = kServerPrefix + "user/online.json";
-static const string kDailyQuestProgress = kServerPrefix + "quest/dailyList.json";
-static const string kLifeQuestProgress  = kServerPrefix + "quest/lifeList.json";
-static const string kFinishQuest        = kServerPrefix + "quest/finish.json";
-static const string kiOSIAP             = kServerPrefix + "iosiap.json";
+#pragma mark - private
+namespace NetworkApi {
+    void parseResponseData(const vector<char>* responseData, rapidjson::Document& jsonDict);
+    string headerString(const string& key, const string& value);
+    string queryString(const unordered_map<string, string>& params, const string& key);
+    string responseDataToString(const vector<char>* data);
+    void request(const string&, const ccHttpRequestCallback&, const unordered_map<string, string>*, HttpRequest::Type, bool, bool, bool, int);
+    void request(const string&, const HttpCallback&, const unordered_map<string, string>*, HttpRequest::Type, bool, bool, bool, int);
+}
 
-// ======================= Hero =======================
-static const string kGetHeroesList      = kServerPrefix + "hero/list.json";
-static const string kGetHeroDetail      = kServerPrefix + "hero/detail.json";
-static const string kUpgradeHero        = kServerPrefix + "hero/upgrade.json";
-static const string kSetArtifact        = kServerPrefix + "hero/equip.json";
-static const string kUpgradeArtifact    = kServerPrefix + "hero/upgradeEquip.json";
-static const string kSellArtifact       = kServerPrefix + "hero/decomposeEquip.json";
-static const string kComposeHero        = kServerPrefix + "hero/compose.json";
-static const string kSellHeroPiece      = kServerPrefix + "hero/sellPiece.json";
-
-// ======================= Soldier =======================
-static const string kGetSoldiersList    = kServerPrefix + "soldier/list.json";
-static const string kGetSoldierDetail   = kServerPrefix + "soldier/detail.json";
-static const string kUpgradeSoldier     = kServerPrefix + "soldier/upgrade.json";
-static const string kRecastSoldier      = kServerPrefix + "soldier/evolve.json";
-static const string kSwitchSoldierTalent= kServerPrefix + "soldier/switchSkill.json";
-static const string kSetGear            = kServerPrefix + "soldier/equip.json";
-static const string kUpgradeGear        = kServerPrefix + "soldier/upgradeEquip.json";
-static const string kSellGear           = kServerPrefix + "soldier/decomposeEquip.json";
-static const string kComposeSoldier     = kServerPrefix + "soldier/compose.json";
-static const string kSellSoldierPiece   = kServerPrefix + "soldier/sellPiece.json";
-
-// ======================= Tower =======================
-static const string kGetTowersList      = kServerPrefix + "building/list.json";
-static const string kGetTowerDetail     = kServerPrefix + "building/detail.json";
-static const string kUpgradeTower       = kServerPrefix + "building/upgrade.json";
-
-// ======================= Chat =======================
-static const string kChatSend      = kServerPrefix + "chat/send.json";
-static const string kChatRecieve     = kServerPrefix + "chat/recieve.json";
-
-static string headerString(const string& key, const string& value)
+string NetworkApi::headerString(const string& key, const string& value)
 {
     return StringUtils::format("%s:%s", key.c_str(), value.c_str());
 }
 
-static string queryString(const unordered_map<string, string>& params, const string& key)
+string NetworkApi::queryString(const unordered_map<string, string>& params, const string& key)
 {
     string result;
     string digestData;
-    for (auto iter = params.begin(); iter != params.end(); ++iter)
-    {
-        if (result.length() == 0)
-        {
+    for (auto iter = begin(params); iter != end(params); ++iter) {
+        if (result.empty()) {
             result = StringUtils::format("%s=%s", iter->first.c_str(), CocosUtils::urlEncode(iter->second).c_str());
             digestData.append(iter->first + "=" + iter->second);
-        }
-        else
-        {
+        } else {
             result = StringUtils::format("%s&%s=%s", result.c_str(), iter->first.c_str(), CocosUtils::urlEncode(iter->second).c_str());
             digestData.append("&" + iter->first + "=" + iter->second);
         }
     }
-    if(result.length() > 0) {
+    if(!result.empty()) {
         result.append("&");
     }
     result.append(kSignParam + "=" + MD5Verifier::getInstance()->digest(digestData, key));
     return result;
 }
 
-static string responseDataToString(const vector<char>* data)
+string NetworkApi::responseDataToString(const vector<char>* data)
 {
     string dataString;
     dataString.assign(data->begin(), data->end());
     return dataString;
 }
 
-static void request(const string& path,
-                    const ccHttpRequestCallback& callback,
-                    const unordered_map<string, string> * params = nullptr,
-                    HttpRequest::Type type = HttpRequest::Type::POST,
-                    bool isLocalTest = false,
-                    bool showLoadingView = true,
-                    bool isImmediate = true,
-                    int timeout = TimeoutDuration)
+void NetworkApi::request(const string& path,
+                         const ccHttpRequestCallback& callback,
+                         const unordered_map<string, string> * params = nullptr,
+                         HttpRequest::Type type = HttpRequest::Type::POST,
+                         bool isLocalTest = false,
+                         bool showLoadingView = true,
+                         bool isImmediate = true,
+                         int timeout = TimeoutDuration)
 {
-    if (isLocalTest)
-    {
-        string fullPath = StringUtils::format("fake_network_response/%s", path.c_str());
-        FileUtils *fileUtils = FileUtils::getInstance();
-        if (fileUtils->isFileExist(fullPath))
-        {
+    if (isLocalTest) {
+        auto fullPath = StringUtils::format("fake_network_response/%s", path.c_str());
+        auto fileUtils = FileUtils::getInstance();
+        if (fileUtils->isFileExist(fullPath)) {
             // ignore all parameters, only return a fake "HttpResponse"
-            HttpResponse *fakeResponse = new (nothrow) HttpResponse(nullptr);
-            
-            string content = fileUtils->getStringFromFile(fullPath);
-            vector<char> *data = new (nothrow) vector<char>;
+            auto fakeResponse = new (nothrow) HttpResponse(nullptr);
+            auto content = fileUtils->getStringFromFile(fullPath);
+            auto data = new (nothrow) vector<char>;
             data->assign(content.begin(), content.end());
             fakeResponse->setResponseData(data);
             fakeResponse->setSucceed(true);
@@ -140,21 +104,17 @@ static void request(const string& path,
             
             callback(nullptr, fakeResponse);
             delete fakeResponse;
-        }
-        else
-        {
+        } else {
             CCLOG("Local network request failed, \"%s\" not exist.", path.c_str());
-            HttpResponse *fakeResponse = new (nothrow) HttpResponse(nullptr);
+            auto fakeResponse = new (nothrow) HttpResponse(nullptr);
             fakeResponse->setSucceed(true);
             fakeResponse->setResponseCode(HttpSuccessCode);
             
             callback(nullptr, fakeResponse);
             delete fakeResponse;
         }
-    }
-    else
-    {
-        HttpRequest* request = new (nothrow) HttpRequest();
+    } else {
+        auto request = new (nothrow) HttpRequest();
         request->setUrl(StringUtils::format("%s%s", kApiHost.c_str(), path.c_str()).c_str());
         request->setRequestType(type);
         
@@ -162,8 +122,7 @@ static void request(const string& path,
         // Headers
         vector<string> headers;
         headers.push_back(headerString("Content-Type", kContentType));
-        if (GameData::getInstance()->isLoggedIn() && type == HttpRequest::Type::POST)
-        {
+        if (GameData::getInstance()->isLoggedIn() && type == HttpRequest::Type::POST) {
             // Token
 #if TARGET_IPHONE_SIMULATOR
             token = GameData::getInstance()->currentUser()->getToken();
@@ -184,7 +143,7 @@ static void request(const string& path,
 #endif  // CC_TARGET_PLATFORM == CC_PLATFORM_IOS
         
         // 2. version
-        string versionId = GameData::getInstance()->getVersionId();
+        auto versionId = GameData::getInstance()->getVersionId();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         versionId += "b" + iOSApi::getBuildId();
 #else
@@ -198,49 +157,38 @@ static void request(const string& path,
             }
         }
         
-        string dataString = queryString(fullParams, token);
+        auto dataString = queryString(fullParams, token);
         
-        if (dataString.length() > 0)
-        {
+        if (dataString.length() > 0) {
             request->setRequestData(dataString.c_str(), dataString.length());
         }
         
         // Callback
         request->setResponseCallback([=](HttpClient* client, HttpResponse* response) {
-            if (showLoadingView)
-            {
+            if (showLoadingView) {
                 NetworkController::getInstance()->popRequest();
-                if (NetworkController::getInstance()->isEmpty())
-                {
+                if (NetworkController::getInstance()->isEmpty()) {
                     ProgressLayer::hideSingleton();
                 }
             }
             
             const long code = response->getResponseCode();
-            GameData *gameData = GameData::getInstance();
+            auto gameData = GameData::getInstance();
             
-            if (code == OfflineCode)
-            {
+            if (code == OfflineCode) {
                 gameData->onUserIsOffline();
-            }
-            else if (code == VersionErrorCode)
-            {
+            } else if (code == VersionErrorCode) {
                 gameData->onVersionError();
-            }
-            else
-            {
-                if (token.length() > 0)
-                {
+            } else {
+                if (token.length() > 0) {
                     gameData->onUserIsOnline();
                 }
                 
-                if (code != HttpSuccessCode)
-                {
+                if (code != HttpSuccessCode) {
                     gameData->onNetworkResponseFailed(code, path);
                 }
                 
-                if (callback)
-                {
+                if (callback) {
                     callback(client, response);
                 }
             }
@@ -250,23 +198,18 @@ static void request(const string& path,
         HttpClient::getInstance()->setTimeoutForConnect(10);
         HttpClient::getInstance()->setTimeoutForRead(timeout);
         
-        if (isImmediate)
-        {
-            string tag = StringUtils::format("%d isImmediate : %s", type, path.c_str());
+        if (isImmediate) {
+            auto tag = StringUtils::format("%d isImmediate : %s", type, path.c_str());
             request->setTag(tag.c_str());
             HttpClient::getInstance()->sendImmediate(request);
-        }
-        else
-        {
-            string tag = StringUtils::format("%d : %s", type, path.c_str());
+        } else {
+            auto tag = StringUtils::format("%d : %s", type, path.c_str());
             request->setTag(tag.c_str());
             HttpClient::getInstance()->send(request);
         }
         
-        if (showLoadingView)
-        {
-            if (NetworkController::getInstance()->isEmpty())
-            {
+        if (showLoadingView) {
+            if (NetworkController::getInstance()->isEmpty()) {
                 ProgressLayer::showSingleton();
             }
             NetworkController::getInstance()->pushRequest(request);
@@ -276,231 +219,183 @@ static void request(const string& path,
     }
 }
 
-bool NetworkApi::isSuccessfulResponse(cocos2d::network::HttpResponse* response) { return (response->isSucceed() && response->getResponseCode() == HttpSuccessCode);
+void NetworkApi::request(const string& path,
+                         const HttpCallback& callback,
+                         const unordered_map<string, string> * params = nullptr,
+                         HttpRequest::Type type = HttpRequest::Type::POST,
+                         bool isLocalTest = false,
+                         bool showLoadingView = true,
+                         bool isImmediate = true,
+                         int timeout = TimeoutDuration)
+{
+    request(path, [callback](HttpClient* client, HttpResponse* response) {
+        auto code(response->getResponseCode());
+        rapidjson::Document jsonDict;
+        if (response->isSucceed() && HttpSuccessCode == code) {
+            parseResponseData(response->getResponseData(), jsonDict);
+        }
+        if (callback) {
+            callback(code, jsonDict);
+        }
+    }, params, type, isLocalTest, showLoadingView, isImmediate, timeout);
 }
 
 void NetworkApi::parseResponseData(const vector<char>* responseData, rapidjson::Document& jsonDict)
 {
     string data = responseDataToString(responseData);
     jsonDict.Parse<0>(data.c_str());
-    if (jsonDict.HasParseError())
-    {
+    if (jsonDict.HasParseError()) {
         CCLOG("GetParseError %d\n",jsonDict.GetParseError());
     }
 }
 
-void NetworkApi::login(const ccHttpRequestCallback& callback)
+#pragma mark - public
+void NetworkApi::login(const HttpCallback& callback)
 {
-    request(kGuestLogin, callback);
+    static const string path(kServerPrefix + "guest.json");
+    request(path, callback);
 }
 
-void NetworkApi::loadUserInfo(const string& deviceToken, const ccHttpRequestCallback& callback)
+void NetworkApi::loadUserInfo(const string& deviceToken, const HttpCallback& callback)
 {
+    static const string path(kServerPrefix + "user/info.json");
     unordered_map<string, string> params;
     params.insert(make_pair("iostoken", deviceToken));
-    request(kUserInfo, callback, &params);
+    request(path, callback, &params);
 }
 
-void NetworkApi::heartBeat(const ccHttpRequestCallback& callback, bool showLoadingView)
+void NetworkApi::heartBeat(const HttpCallback& callback, bool showLoadingView)
 {
-    request(kHeartBeat, callback, nullptr, HttpRequest::Type::POST, false, showLoadingView);
+    static const string path(kServerPrefix + "user/online.json");
+    request(path, callback, nullptr, HttpRequest::Type::POST, false, showLoadingView);
 }
 
 #pragma mark - Quest
-void NetworkApi::getDailyQuestProgress(const ccHttpRequestCallback& callback)
+void NetworkApi::getDailyQuestProgress(const HttpCallback& callback)
 {
-    request(kDailyQuestProgress, callback);
+    static const string path(kServerPrefix + "quest/dailyList.json");
+    request(path, callback);
 }
 
-void NetworkApi::getLifeQuestProgress(const ccHttpRequestCallback& callback)
+void NetworkApi::getLifeQuestProgress(const HttpCallback& callback)
 {
-    request(kLifeQuestProgress, callback);
+    static const string path(kServerPrefix + "quest/lifeList.json");
+    request(path, callback);
 }
 
-void NetworkApi::finishQuest(QuestType type, int questId, const ccHttpRequestCallback& callback)
+void NetworkApi::finishQuest(QuestType type, int questId, const HttpCallback& callback)
 {
+    static const string path(kServerPrefix + "quest/finish.json");
     unordered_map<string, string> params;
     params.insert(make_pair("type", StringUtils::format("%d", type)));
     params.insert(make_pair("qid", StringUtils::format("%d", questId)));
-    request(kFinishQuest, callback, &params);
+    request(path, callback, &params);
+}
+
+#pragma mark - Card
+void NetworkApi::getCardList(const HttpCallback& callback)
+{
+    static const string path(kServerPrefix + "card/list.json");
+    request(path, callback, nullptr);
+}
+
+void NetworkApi::getCardDetail(int cardDbId, const HttpCallback& callback)
+{
+    static const string path(kServerPrefix + "card/detail.json");
+    unordered_map<string, string> params;
+    params.insert(make_pair("card", StringUtils::format("%d", cardDbId)));
+    request(path, callback, &params);
+}
+
+void NetworkApi::upgradeCard(int cardDbId, int level, const HttpCallback& callback)
+{
+    static const string path(kServerPrefix + "card/upgrade.json");
+    unordered_map<string, string> params;
+    params.insert(make_pair("card", StringUtils::format("%d", cardDbId)));
+    params.insert(make_pair("level", StringUtils::format("%d", level)));
+    request(path, callback, &params);
+}
+
+void NetworkApi::upgradeCardSkill(int cardDbId, int level, int skillIdx, const HttpCallback& callback)
+{
+    static const string path(kServerPrefix + "card/upgradeskill.json");
+    unordered_map<string, string> params;
+    params.insert(make_pair("card", StringUtils::format("%d", cardDbId)));
+    params.insert(make_pair("level", StringUtils::format("%d", level)));
+    params.insert(make_pair("skill", StringUtils::format("%d", skillIdx)));
+    request(path, callback, &params);
+}
+
+void NetworkApi::getRunesList(const HttpCallback& callback)
+{
+    static const string path(kServerPrefix + "card/runepacklist.json");
+    request(path, callback, nullptr);
+}
+
+void NetworkApi::imbedRune(int cardDbId, int runeIdx, int runeDbId, const HttpCallback& callback)
+{
+    static const string path(kServerPrefix + "card/imbedrune.json");
+    unordered_map<string, string> params;
+    params.insert(make_pair("card", StringUtils::format("%d", cardDbId)));
+    params.insert(make_pair("runeindex", StringUtils::format("%d", runeIdx)));
+    params.insert(make_pair("runepack", StringUtils::format("%d", runeDbId)));
+    request(path, callback, &params);
+}
+
+void NetworkApi::unloadRune(int cardDbId, int runeIdx, const HttpCallback& callback)
+{
+    static const string path(kServerPrefix + "card/removerune.json");
+    unordered_map<string, string> params;
+    params.insert(make_pair("card", StringUtils::format("%d", cardDbId)));
+    params.insert(make_pair("runeindex", StringUtils::format("%d", runeIdx)));
+    request(path, callback, &params);
+}
+
+void NetworkApi::upgradeRune(int runeDbId, int level, const HttpCallback& callback)
+{
+    static const string path(kServerPrefix + "card/upgraderune.json");
+    unordered_map<string, string> params;
+    params.insert(make_pair("rune", StringUtils::format("%d", runeDbId)));
+    params.insert(make_pair("level", StringUtils::format("%d", level)));
+    request(path, callback, &params);
+}
+
+void NetworkApi::compoundRune(int runeDbId, const HttpCallback& callback)
+{
+    static const string path(kServerPrefix + "card/compoundrune.json");
+    unordered_map<string, string> params;
+    params.insert(make_pair("runepack", StringUtils::format("%d", runeDbId)));
+    request(path, callback, &params);
 }
 
 #pragma mark - Guild
 
-
-#pragma mark - Hero
-void NetworkApi::getHeroesList(const cocos2d::network::ccHttpRequestCallback& callback)
-{
-    request(kGetHeroesList, callback);
-}
-
-void NetworkApi::getHeroDetail(int id, const cocos2d::network::ccHttpRequestCallback& callback)
-{
-    unordered_map<string, string> params;
-    params.insert(make_pair("id", StringUtils::format("%d", id)));
-    request(kGetHeroDetail, callback, &params);
-}
-
-void NetworkApi::upgradeHero(int id, const cocos2d::network::ccHttpRequestCallback& callback)
-{
-    unordered_map<string, string> params;
-    params.insert(make_pair("id", StringUtils::format("%d", id)));
-    request(kUpgradeHero, callback, &params);
-}
-
-void NetworkApi::setArtifact(int heroId, int artifactId, const cocos2d::network::ccHttpRequestCallback& callback)
-{
-    unordered_map<string, string> params;
-    params.insert(make_pair("suid", StringUtils::format("%d", heroId)));
-    params.insert(make_pair("euid", StringUtils::format("%d", artifactId)));
-    request(kSetArtifact, callback, &params);
-}
-
-void NetworkApi::upgradeArtifact(int heroId, int artifactId, const cocos2d::network::ccHttpRequestCallback& callback)
-{
-    unordered_map<string, string> params;
-    params.insert(make_pair("id", StringUtils::format("%d", heroId)));
-    params.insert(make_pair("index", StringUtils::format("%d", artifactId)));
-    request(kUpgradeArtifact, callback, &params);
-}
-
-void NetworkApi::sellArtifact(int artifactId, const cocos2d::network::ccHttpRequestCallback& callback)
-{
-    unordered_map<string, string> params;
-    params.insert(make_pair("euid", StringUtils::format("%d", artifactId)));
-    request(kSellArtifact, callback, &params);
-}
-
-void NetworkApi::composeHero(int id, const cocos2d::network::ccHttpRequestCallback& callback)
-{
-    unordered_map<string, string> params;
-    params.insert(make_pair("puid", StringUtils::format("%d", id)));
-    request(kComposeHero, callback, &params);
-}
-
-void NetworkApi::sellHeroPiece(int id, int count, const cocos2d::network::ccHttpRequestCallback& callback)
-{
-    unordered_map<string, string> params;
-    params.insert(make_pair("puid", StringUtils::format("%d", id)));
-    params.insert(make_pair("amount", StringUtils::format("%d", count)));
-    request(kSellHeroPiece, callback, &params);
-}
-
-#pragma mark - Soldier
-void NetworkApi::getSoldiersList(const cocos2d::network::ccHttpRequestCallback& callback)
-{
-    request(kGetSoldiersList, callback);
-}
-
-void NetworkApi::getSoldierDetail(int id, const cocos2d::network::ccHttpRequestCallback& callback)
-{
-    unordered_map<string, string> params;
-    params.insert(make_pair("id", StringUtils::format("%d", id)));
-    request(kGetSoldierDetail, callback, &params);
-}
-
-void NetworkApi::upgradeSoldier(int id, const cocos2d::network::ccHttpRequestCallback& callback)
-{
-    unordered_map<string, string> params;
-    params.insert(make_pair("id", StringUtils::format("%d", id)));
-    request(kUpgradeSoldier, callback, &params);
-}
-
-void NetworkApi::recastSoldier(int id, const cocos2d::network::ccHttpRequestCallback& callback)
-{
-    unordered_map<string, string> params;
-    params.insert(make_pair("id", StringUtils::format("%d", id)));
-    request(kRecastSoldier, callback, &params);
-}
-
-void NetworkApi::switchSoldierTalent(int soldierId, int talentId, const cocos2d::network::ccHttpRequestCallback& callback)
-{
-    unordered_map<string, string> params;
-    params.insert(make_pair("id", StringUtils::format("%d", soldierId)));
-    params.insert(make_pair("index", StringUtils::format("%d", talentId)));
-    request(kSwitchSoldierTalent, callback, &params);
-}
-
-void NetworkApi::setGear(int soldierId, int gearId, const cocos2d::network::ccHttpRequestCallback& callback)
-{
-    unordered_map<string, string> params;
-    params.insert(make_pair("suid", StringUtils::format("%d", soldierId)));
-    params.insert(make_pair("euid", StringUtils::format("%d", gearId)));
-    request(kSetGear, callback, &params);
-}
-
-void NetworkApi::upgradeGear(int gearId, const cocos2d::network::ccHttpRequestCallback& callback)
-{
-    unordered_map<string, string> params;
-    params.insert(make_pair("euid", StringUtils::format("%d", gearId)));
-    request(kUpgradeGear, callback, &params);
-}
-
-void NetworkApi::sellGear(int gearId, const cocos2d::network::ccHttpRequestCallback& callback)
-{
-    unordered_map<string, string> params;
-    params.insert(make_pair("euid", StringUtils::format("%d", gearId)));
-    request(kSellGear, callback, &params);
-}
-
-void NetworkApi::composeSoldier(int id, const cocos2d::network::ccHttpRequestCallback& callback)
-{
-    unordered_map<string, string> params;
-    params.insert(make_pair("puid", StringUtils::format("%d", id)));
-    request(kComposeSoldier, callback, &params);
-}
-
-void NetworkApi::sellSoldierPiece(int id, int count, const cocos2d::network::ccHttpRequestCallback& callback)
-{
-    unordered_map<string, string> params;
-    params.insert(make_pair("puid", StringUtils::format("%d", id)));
-    params.insert(make_pair("amount", StringUtils::format("%d", count)));
-    request(kSellSoldierPiece, callback, &params);
-}
-
-#pragma mark - Tower
-void NetworkApi::getTowersList(const cocos2d::network::ccHttpRequestCallback& callback)
-{
-    request(kGetTowersList, callback);
-}
-
-void NetworkApi::getTowerDetail(int id, const cocos2d::network::ccHttpRequestCallback& callback)
-{
-    unordered_map<string, string> params;
-    params.insert(make_pair("id", StringUtils::format("%d", id)));
-    request(kGetTowerDetail, callback, &params);
-}
-
-void NetworkApi::upgradeTower(int id, const cocos2d::network::ccHttpRequestCallback& callback)
-{
-    unordered_map<string, string> params;
-    params.insert(make_pair("id", StringUtils::format("%d", id)));
-    request(kUpgradeTower, callback, &params);
-}
-
 #pragma mark - Chat
-void NetworkApi::sendMessage(const ChatMark* mark, ChatType type, int contactor, const std::string& message, const cocos2d::network::ccHttpRequestCallback& callback)
+void NetworkApi::sendMessage(const ChatMark* mark, ChatType type, int contactor, const string& message, const HttpCallback& callback)
 {
+    static const string path(kServerPrefix + "chat/send.json");
     unordered_map<string, string> params;
     mark->toMap(params);
     params.insert(make_pair("channel", StringUtils::format("%d", type)));
     params.insert(make_pair("to", StringUtils::format("%d", contactor)));
     params.insert(make_pair("content", message));
-    request(kChatSend, callback, &params);
+    request(path, callback, &params);
 }
 
-void NetworkApi::recieveMessages(const ChatMark* mark, const cocos2d::network::ccHttpRequestCallback& callback)
+void NetworkApi::recieveMessages(const ChatMark* mark, const HttpCallback& callback)
 {
+    static const string path(kServerPrefix + "chat/recieve.json");
     unordered_map<string, string> params;
     mark->toMap(params);
-    request(kChatRecieve, callback, &params);
+    request(path, callback, &params);
 }
 
 #pragma mark - IAP
-void NetworkApi::iap(bool isSandBox, const string& receiptData, const ccHttpRequestCallback& callback)
+void NetworkApi::iap(bool isSandBox, const string& receiptData, const HttpCallback& callback)
 {
+    static const string path(kServerPrefix + "iosiap.json");
     unordered_map<string, string> params;
     params.insert(make_pair("receiptData", receiptData));
     params.insert(make_pair("sandbox", isSandBox ? "1" : "0"));
-    request(kiOSIAP, callback, &params, HttpRequest::Type::POST, false, false, true, 900);
+    request(path, callback, &params, HttpRequest::Type::POST, false, false, true, 900);
 }

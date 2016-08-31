@@ -87,17 +87,13 @@ GameCenterManagerDelegate
     NSData *receipt = [rawData base64EncodedDataWithOptions:0];
 #endif
     string receiptData = [[NSString alloc] initWithData:receipt encoding:NSUTF8StringEncoding].stdString;
-    NetworkApi::iap(sandbox, receiptData, [=](cocos2d::network::HttpClient* client, cocos2d::network::HttpResponse* response) {
-        if (NetworkApi::isSuccessfulResponse(response)) {
-            rapidjson::Document jsonDict;
-            NetworkApi::parseResponseData(response->getResponseData(), jsonDict);
+    NetworkApi::iap(sandbox, receiptData, [=](long code, const rapidjson::Value& jsonDict) {
+        if (HttpSuccessCode == code) {
             GameData::getInstance()->currentUser()->parseResources(jsonDict, "resources");
-            
             if (successBlock) {
                 successBlock();
             }
-        }
-        else if (failureBlock) {
+        } else if (failureBlock) {
             NSString *domain = [NSBundle mainBundle].bundleIdentifier;
             NSError *error = [NSError errorWithDomain:domain code:RMStoreErrorCodeUnableToCompleteVerification userInfo:nil];
             failureBlock(error);

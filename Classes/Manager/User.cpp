@@ -18,7 +18,7 @@ static inline const char* getFirstLoginKey() { return "first_entry"; }
 static inline string getFinishedTutorialKey(int idx)
 { return cocos2d::StringUtils::format("tutorial_%d", idx); }
 
-User::User(const rapidjson::Document& jsonDict)
+User::User(const rapidjson::Value& jsonDict)
 :_isFirstLogin(true)
 ,_finishedTutorialsMaxIdx(-1)
 {
@@ -102,20 +102,14 @@ void User::parseResources(const rapidjson::Value& root, const char* key, bool si
 
 void User::loadUserInfo(const string& deviceToken, const httpRequestCallback& success, const httpErrorCallback& onError)
 {
-    NetworkApi::loadUserInfo(deviceToken, [=](cocos2d::network::HttpClient* client, cocos2d::network::HttpResponse* response) {
-        if (NetworkApi::isSuccessfulResponse(response)) {
-            rapidjson::Document jsonDict;
-            NetworkApi::parseResponseData(response->getResponseData(), jsonDict);
+    NetworkApi::loadUserInfo(deviceToken, [=](long code, const rapidjson::Value& jsonDict) {
+        if (HttpSuccessCode == code) {
             parseUserInfo(jsonDict);
-            
             if (success) {
                 success();
             }
-        } else {
-            const long code = response->getResponseCode();
-            if (onError) {
-                onError(code);
-            }
+        } else if (onError) {
+            onError(code);
         }
     });
 }
@@ -133,7 +127,7 @@ void User::init()
     }
 }
 
-void User::parseUserInfo(const rapidjson::Document& jsonDict)
+void User::parseUserInfo(const rapidjson::Value& jsonDict)
 {
     
 }

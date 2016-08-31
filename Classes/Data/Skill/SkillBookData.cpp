@@ -16,11 +16,16 @@ SkillBookData::SkillBookData(const rapidjson::Value& jsonDict)
 :_id(0)
 ,_amount(0)
 {
-    _id = DICTOOL->getIntValue_json(jsonDict, "id");
-    _amount = DICTOOL->getIntValue_json(jsonDict, "amount");
+    update(jsonDict);
 }
 
 SkillBookData::~SkillBookData() {}
+
+void SkillBookData::update(const rapidjson::Value& jsonDict)
+{
+    _id = DICTOOL->getIntValue_json(jsonDict, "id");
+    _amount = DICTOOL->getIntValue_json(jsonDict, "amount");
+}
 
 int SkillBookData::getId() const
 {
