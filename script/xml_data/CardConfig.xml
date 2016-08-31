@@ -13,6 +13,8 @@
 	<item id="23109" icon="kk"/><!--狂暴法术  -->
 	<item id="23110" icon="mm"/><!--缴械法术  -->
 	<item id="23111" icon="ll"/><!--恐惧法术  -->
+	<item id="23112" icon="nn"/><!--磁场法术  -->
+	<item id="23113" icon="oo"/><!--震荡法术  -->
 <!-- 第一版单位：小兵部分 -->	
 	<item id="22000" icon="icon_w_renzudunbing"/><!--人族盾兵  -->
 	<item id="22001" icon="icon_renleizhanshi"/><!--人族剑士  -->
