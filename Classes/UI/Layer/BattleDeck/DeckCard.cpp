@@ -17,7 +17,7 @@
 
 using namespace std;
 
-DeckCard* DeckCard::create(const CardSimpleData* data)
+DeckCard* DeckCard::create(const AbstractData* data)
 {
     auto ret = new (nothrow) DeckCard();
     if (ret && ret->init(data)) {
@@ -44,7 +44,7 @@ DeckCard::~DeckCard()
     removeAllChildren();
 }
 
-bool DeckCard::init(const CardSimpleData* data)
+bool DeckCard::init(const AbstractData* data)
 {
     if (Widget::init())
     {
@@ -100,7 +100,7 @@ void DeckCard::registerObserver(DeckCardObserver *observer)
     _observer = observer;
 }
 
-void DeckCard::update(const CardSimpleData* data)
+void DeckCard::update(const AbstractData* data)
 {
     if (_data != data) {
         _data = data;
@@ -111,8 +111,13 @@ void DeckCard::update(const CardSimpleData* data)
             _icon->setTexture(cd->getIcon());
         }
         
-        _costNode->setVisible(data ? !data->isHero() : false);
-        _cost->setString(data ? StringUtils::format("%d", data->getCost()) : "");
+        auto csData(dynamic_cast<const CardSimpleData*>(data));
+        if (csData) {
+            _costNode->setVisible(data ? !csData->isHero() : false);
+            _cost->setString(data ? StringUtils::format("%d", csData->getCost()) : "");
+        } else {
+            _cost->setVisible(false);
+        }
         
         if (false) {
             _qualityBox->setTexture(CocosUtils::getResourcePath("ui_quality_box_blue.png"));
@@ -120,14 +125,14 @@ void DeckCard::update(const CardSimpleData* data)
     }
 }
 
-const CardSimpleData* DeckCard::getCardData() const
+const AbstractData* DeckCard::getCardData() const
 {
     return _data;
 }
 
 int DeckCard::getCardId() const
 {
-    return _data ? _data->getCardId() : 0;
+    return _data ? _data->getId() : 0;
 }
 
 static float shake_action_tag = 2016;

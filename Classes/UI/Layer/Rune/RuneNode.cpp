@@ -33,6 +33,7 @@ RuneNode::RuneNode()
 ,_amount(nullptr)
 ,_shiningSprite(nullptr)
 ,_data(nullptr)
+,_idx(-1)
 ,_touchInvalid(false) {}
 
 RuneNode::~RuneNode()
@@ -53,19 +54,19 @@ bool RuneNode::init(const RuneData* data)
         setContentSize(size);
         bg->setPosition(size.width / 2, size.height / 2);
         
-        _icon = Sprite::create(DevelopUI::getResourcePath("icon_fuwen_2.png"));
+        _icon = Sprite::create();
         _icon->setPosition(size.width / 2, size.height / 2);
         bg->addChild(_icon);
         
         static const float ledge(3);
-        auto label = CocosUtils::createLabel("1", DEFAULT_FONT_SIZE, DEFAULT_NUMBER_FONT);
+        auto label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE, DEFAULT_NUMBER_FONT);
         label->setAlignment(TextHAlignment::RIGHT, TextVAlignment::CENTER);
         label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
         label->setPosition(size.width - ledge, ledge + label->getContentSize().height / 2);
         bg->addChild(label);
         _level = label;
         
-        label = CocosUtils::createLabel("1", DEFAULT_FONT_SIZE, DEFAULT_NUMBER_FONT);
+        label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE, DEFAULT_NUMBER_FONT);
         label->setAlignment(TextHAlignment::RIGHT, TextVAlignment::CENTER);
         label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
         label->setPosition(size.width - ledge, size.height - (ledge + label->getContentSize().height / 2));
@@ -106,6 +107,10 @@ void RuneNode::update(const RuneData* data)
     if (_data != data) {
         _data = data;
         
+        if (_icon && data) {
+            _icon->setTexture(DevelopUI::getResourcePath("icon_fuwen_2.png"));
+        }
+        
         if (_level) {
             _level->setString(data ? StringUtils::format("LV.%d", data->getLevel()) : "");
         }
@@ -135,4 +140,14 @@ void RuneNode::select(bool selected)
     if (_shiningSprite) {
         _shiningSprite->setVisible(selected);
     }
+}
+
+void RuneNode::setIdx(int idx)
+{
+    _idx = idx;
+}
+
+int RuneNode::getIdx() const
+{
+    return _idx;
 }

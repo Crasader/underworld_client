@@ -12,13 +12,13 @@
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 
-class CardSimpleData;
+class AbstractData;
 
 class AbstractCard : public cocos2d::ui::Widget
 {
 public:
     virtual ~AbstractCard() = 0;
-    virtual const CardSimpleData* getCardData() const;
+    virtual const AbstractData* getCardData() const;
     void move(const cocos2d::Point& point, const std::function<void()>& callback);
     
 protected:

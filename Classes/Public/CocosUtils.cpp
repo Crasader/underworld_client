@@ -77,11 +77,12 @@ void CocosUtils::getFileLists(const string& folder, const string& prefix, const 
 #pragma mark - labels
 Label *CocosUtils::createLabel(const string& text, float fontSize, const string& fontName, const Size& dimensions, TextHAlignment hAlignment, TextVAlignment vAlignment)
 {
+    const string msg(text.empty() ? " " : text);
 #if true
-    Label *ret = Label::createWithSystemFont(text, fontName, fontSize, dimensions, hAlignment, vAlignment);
+    Label *ret = Label::createWithSystemFont(msg, fontName, fontSize, dimensions, hAlignment, vAlignment);
 #else
     static const string fontName("fonts/Font.ttf");
-    Label *ret = Label::createWithTTF(text, fontName, fontSize, dimensions, hAlignment, vAlignment);
+    Label *ret = Label::createWithTTF(msg, fontName, fontSize, dimensions, hAlignment, vAlignment);
     float posOffset = MIN(5.0f, MAX(1.0f, fontSize * 0.05f));
     ret->enableShadow(Color4B::BLACK, Size(.0f, -posOffset));
     ret->enableOutline(Color4B::BLACK, 1);

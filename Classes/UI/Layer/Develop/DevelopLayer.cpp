@@ -12,7 +12,7 @@
 #include "DevelopUI.h"
 #include "LocalHelper.h"
 #include "Board.h"
-#include "CardSimpleData.h"
+#include "CardData.h"
 
 using namespace std;
 using namespace ui;
@@ -98,20 +98,22 @@ AbstractCard* DevelopLayer::onCardPreviewCreateCard(int cardId)
     return card;
 }
 
-void DevelopLayer::onCardPreviewClickedOpButton(DeckCardOpType type, const CardSimpleData* data)
+void DevelopLayer::onCardPreviewClickedOpButton(DeckCardOpType type, const AbstractData* data)
 {
     if (DeckCardOpType::Upgrade == type) {
         
     } else if (DeckCardOpType::Info == type) {
-        if (UnderWorld::Core::HMMCardClass::kHMMCardClass_Spell == data->getCardClass()) {
-            auto layer = SpellInfoLayer::create(data);
-            layer->registerObserver(this);
-            addChild(layer);
-        } else {
-            auto layer = CardInfoLayer::create(data);
-            layer->registerObserver(this);
-            addChild(layer);
-        }
+        DeckManager::getInstance()->getCardDetail(data->getId(), [this](const CardData* data) {
+            if (UnderWorld::Core::HMMCardClass::kHMMCardClass_Spell == data->getCardClass()) {
+                auto layer = SpellInfoLayer::create(data);
+                layer->registerObserver(this);
+                addChild(layer);
+            } else {
+                auto layer = CardInfoLayer::create(data);
+                layer->registerObserver(this);
+                addChild(layer);
+            }
+        });
     }
 }
 
@@ -140,7 +142,7 @@ void DevelopLayer::onSpellInfoLayerExit(Node* pSender)
     }
 }
 
-void DevelopLayer::onSpellInfoLayerUpgrade(Node* pSender, const CardSimpleData* data)
+void DevelopLayer::onSpellInfoLayerUpgrade(Node* pSender, const AbstractData* data)
 {
     if (pSender) {
         pSender->removeFromParent();

@@ -27,12 +27,12 @@ class DeckCard : public AbstractCard
 public:
     static constexpr float Width = 82;
     static constexpr float Height = 104;
-    static DeckCard* create(const CardSimpleData* data);
+    static DeckCard* create(const AbstractData* data);
     virtual ~DeckCard();
     void registerObserver(DeckCardObserver *observer);
     
-    void update(const CardSimpleData* data);
-    virtual const CardSimpleData* getCardData() const override;
+    void update(const AbstractData* data);
+    virtual const AbstractData* getCardData() const override;
     int getCardId() const;
     
     void shake();
@@ -40,7 +40,7 @@ public:
     
 private:
     DeckCard();
-    bool init(const CardSimpleData* data);
+    bool init(const AbstractData* data);
     
 private:
     DeckCardObserver* _observer;
@@ -48,7 +48,7 @@ private:
     Node* _costNode;
     Label* _cost;
     Sprite* _qualityBox;
-    const CardSimpleData* _data;
+    const AbstractData* _data;
     bool _touchInvalid;
     Point _originalPoint;
 };

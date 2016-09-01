@@ -10,15 +10,13 @@
 #include "cocostudio/CocoStudio.h"
 #include "DataManager.h"
 #include "GameConstants.h"
+#include "CardProperty.h"
 
 using namespace std;
 using namespace cocostudio;
 
 CardSimpleData::CardSimpleData(const rapidjson::Value& jsonDict)
-:_dbId(0)
-,_cardId(0)
-,_level(0)
-,_amount(0)
+:AbstractData(jsonDict)
 ,_cardType(nullptr)
 {
     update(jsonDict);
@@ -28,26 +26,13 @@ CardSimpleData::~CardSimpleData() {}
 
 bool CardSimpleData::operator==(const CardSimpleData& c) const
 {
-    return ((*this) == c || _cardId == c._cardId);
+    return ((*this) == c || _id == c._id);
 }
 
 void CardSimpleData::update(const rapidjson::Value& jsonDict)
 {
-    _dbId = DICTOOL->getIntValue_json(jsonDict, "db");
-    _cardId = DICTOOL->getIntValue_json(jsonDict, "id");
-    _level = DICTOOL->getIntValue_json(jsonDict, "level");
-    _amount = DICTOOL->getIntValue_json(jsonDict, "amount");
-    _cardType = DataManager::getInstance()->getGameModeHMM()->findCardTypeById(_cardId);
-}
-
-int CardSimpleData::getDbId() const
-{
-    return _dbId;
-}
-
-int CardSimpleData::getCardId() const
-{
-    return _cardId;
+    AbstractData::update(jsonDict);
+    _cardType = DataManager::getInstance()->getGameModeHMM()->findCardTypeById(_id);
 }
 
 UnderWorld::Core::HMMCardClass CardSimpleData::getCardClass() const
@@ -62,16 +47,6 @@ UnderWorld::Core::HMMCardClass CardSimpleData::getCardClass() const
 bool CardSimpleData::isHero() const
 {
     return UnderWorld::Core::HMMCardClass::kHMMCardClass_Hero == getCardClass();
-}
-
-int CardSimpleData::getLevel() const
-{
-    return _level;
-}
-
-int CardSimpleData::getAmount() const
-{
-    return _amount;
 }
 
 int CardSimpleData::getCost() const
@@ -123,4 +98,9 @@ const string& CardSimpleData::getUnlockInfo() const
     }
     
     return emptyString;
+}
+
+const AbstractProperty* CardSimpleData::getProperty() const
+{
+    return DataManager::getInstance()->getCardProperty(_id);
 }

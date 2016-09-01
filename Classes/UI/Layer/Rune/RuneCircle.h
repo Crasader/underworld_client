@@ -21,7 +21,7 @@ class RuneCircleObserver
 {
 public:
     virtual ~RuneCircleObserver() {}
-    virtual void onRuneCircleClicked(RuneNode* node) = 0;
+    virtual void onRuneCircleClicked(RuneNode* node, int idx) = 0;
 };
 
 class RuneCircle

@@ -18,14 +18,14 @@
 #include "DevelopCard.h"
 #include "CocosGlobal.h"
 #include "LocalHelper.h"
-#include "CardSimpleData.h"
+#include "CardData.h"
 #include "RuneData.h"
 #include "CocosUtils.h"
 
 using namespace std;
 
 #pragma mark - CardInfoLayer
-CardInfoLayer* CardInfoLayer::create(const CardSimpleData* data)
+CardInfoLayer* CardInfoLayer::create(const CardData* data)
 {
     auto ret = new (nothrow) CardInfoLayer();
     if (ret && ret->init(data)) {
@@ -52,7 +52,7 @@ CardInfoLayer::~CardInfoLayer()
     removeAllChildren();
 }
 
-bool CardInfoLayer::init(const CardSimpleData* data)
+bool CardInfoLayer::init(const CardData* data)
 {
     if (LayerColor::initWithColor(LAYER_MASK_COLOR)) {
         const auto& winSize(Director::getInstance()->getWinSize());
@@ -106,7 +106,7 @@ bool CardInfoLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 void CardInfoLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 
 #pragma mark - RuneCircleObserver
-void CardInfoLayer::onRuneCircleClicked(RuneNode* node)
+void CardInfoLayer::onRuneCircleClicked(RuneNode* node, int idx)
 {
     if (_selectedRune) {
         _selectedRune->select(false);
@@ -117,11 +117,15 @@ void CardInfoLayer::onRuneCircleClicked(RuneNode* node)
 }
 
 #pragma mark - RuneBagLayerObserver
-void CardInfoLayer::onRuneBagLayerSelected(Node* pSender, const RuneData* data)
+void CardInfoLayer::onRuneBagLayerSelected(Node* pSender, RuneNode* node)
 {
     if (pSender) {
         pSender->removeFromParent();
     }
+    
+    DeckManager::getInstance()->imbedRune(_data->getId(), _selectedRune->getIdx(), node->getIdx(), [=]() {
+        _selectedRune->update(node->getData());
+    });
 }
 
 #pragma mark - UpgradeCardObserver
@@ -145,7 +149,7 @@ void CardInfoLayer::onSpellInfoLayerExit(Node* pSender)
     }
 }
 
-void CardInfoLayer::onSpellInfoLayerUpgrade(Node* pSender, const CardSimpleData* data)
+void CardInfoLayer::onSpellInfoLayerUpgrade(Node* pSender, const AbstractData* data)
 {
     if (pSender) {
         pSender->removeFromParent();
@@ -409,7 +413,9 @@ void CardInfoLayer::onOpButtonClicked(int idx)
         MessageBox("请选择一个符文", nullptr);
     } else if (idx < opButtonsCount) {
         if (0 == idx) {
-            
+            DeckManager::getInstance()->unloadRune(_data->getId(), _selectedRune->getIdx(), [this]() {
+                _selectedRune->update(nullptr);
+            });
         } else if (1 == idx) {
             auto layer = RuneBagLayer::create(_selectedRune->getData());
             layer->registerObserver(this);
@@ -418,7 +424,7 @@ void CardInfoLayer::onOpButtonClicked(int idx)
     }
 }
 
-void CardInfoLayer::update(const CardSimpleData* data)
+void CardInfoLayer::update(const CardData* data)
 {
     if (_data != data) {
         _data = data;

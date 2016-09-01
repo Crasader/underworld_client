@@ -42,7 +42,6 @@ RuneBagLayer::RuneBagLayer()
 ,_description(nullptr)
 ,_scrollView(nullptr)
 ,_selectedRune(nullptr)
-,_data(nullptr)
 ,_nodeSize(Size::ZERO)
 ,_nodeSpaceX(0)
 ,_scrollViewMinSize(Size::ZERO) {}
@@ -61,7 +60,7 @@ bool RuneBagLayer::init(const RuneData* data)
         board->setButtonTitle(LocalHelper::getString("ui_rune_pick"));
         board->setButtonCallback([this]() {
             if (_observer) {
-                _observer->onRuneBagLayerSelected(this, _data);
+                _observer->onRuneBagLayerSelected(this, _selectedRune);
             }
         });
         board->setPosition(Point(winSize.width / 2, winSize.height / 2));
@@ -109,7 +108,7 @@ bool RuneBagLayer::init(const RuneData* data)
             et->setPosition(descEdge, (size.height - descSize.height) / 4);
             node->addChild(et);
             
-            auto label = CocosUtils::createLabel("power", DEFAULT_FONT_SIZE);
+            auto label = CocosUtils::createLabel(data->getEffect(), DEFAULT_FONT_SIZE);
             label->setAlignment(TextHAlignment::RIGHT, TextVAlignment::CENTER);
             label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
             label->setTextColor(Color4B::BLACK);
@@ -165,7 +164,7 @@ void RuneBagLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 #pragma mark - RuneNodeObserver
 void RuneBagLayer::onRuneNodeClicked(RuneNode* pSender)
 {
-    if (pSender) {
+    if (pSender && _selectedRune != pSender) {
         if (_selectedRune) {
             _selectedRune->select(false);
         }
@@ -184,16 +183,12 @@ void RuneBagLayer::registerObserver(RuneBagLayerObserver *observer)
 #pragma mark - private
 void RuneBagLayer::update(const RuneData* data)
 {
-    if (_data != data) {
-        _data = data;
-        
-        if (_name) {
-            _name->setString(data ? data->getName() : "");
-        }
-        
-        if (_description) {
-            _description->setString(data ? data->getDescription() : "");
-        }
+    if (_name) {
+        _name->setString(data ? data->getName() : "");
+    }
+    
+    if (_description) {
+        _description->setString(data ? data->getDescription() : "");
     }
 }
 
@@ -211,6 +206,7 @@ void RuneBagLayer::initRunes()
     for (int i = 0; i < cnt; ++i) {
         auto node = RuneNode::create(runes.at(i));
         node->registerObserver(this);
+        node->setIdx(i);
         _scrollView->addChild(node);
         
         auto point = getPosition(i / column, i % column);

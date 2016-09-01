@@ -21,7 +21,7 @@ class RuneBagLayerObserver
 {
 public:
     virtual ~RuneBagLayerObserver() {}
-    virtual void onRuneBagLayerSelected(Node* pSender, const RuneData* data) = 0;
+    virtual void onRuneBagLayerSelected(Node* pSender, RuneNode* node) = 0;
 };
 
 class RuneBagLayer
@@ -59,7 +59,6 @@ private:
     RuneNode* _selectedRune;
     
     // Data
-    const RuneData* _data;
     Size _nodeSize;
     float _nodeSpaceX;
     Size _scrollViewMinSize;

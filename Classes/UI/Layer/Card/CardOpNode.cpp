@@ -76,7 +76,7 @@ void CardOpNode::registerObserver(CardOpNodeObserver *observer)
     _observer = observer;
 }
 
-void CardOpNode::setCard(const CardSimpleData* data)
+void CardOpNode::setCard(const AbstractData* data)
 {
     if (_icon) {
         _icon->update(data);
@@ -111,7 +111,7 @@ void CardOpNode::setTypes(const vector<DeckCardOpType>& types)
     }
 }
 
-const CardSimpleData* CardOpNode::getCardData() const
+const AbstractData* CardOpNode::getCardData() const
 {
     if (_icon) {
         return _icon->getCardData();

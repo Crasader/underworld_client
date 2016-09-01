@@ -22,7 +22,7 @@ bool AbstractCard::init()
     return false;
 }
 
-const CardSimpleData* AbstractCard::getCardData() const
+const AbstractData* AbstractCard::getCardData() const
 {
     return nullptr;
 }

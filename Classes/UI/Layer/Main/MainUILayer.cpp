@@ -70,12 +70,12 @@ private:
                 {ButtonType::Achievement,   {"ui_kuang_1", "icon_xingxing"}},
                 {ButtonType::Settings,      {"ui_kuang_1", "icon_shezhi"}},
                 {ButtonType::Chat,          {"ui_liaotian", ""}},
-                {ButtonType::Quest,       {"ui_kuang_3", "icon_haoyou"}},
+                {ButtonType::Quest,         {"ui_kuang_3", "icon_haoyou"}},
                 {ButtonType::BattleLog,     {"ui_kuang_3", "icon_zhanji"}},
                 {ButtonType::Guild,         {"ui_kuang_3", "icon_lianmeng"}},
                 {ButtonType::Battle,        {"ui_kuang_2", "icon_pvp"}},
                 {ButtonType::Train,         {"ui_kuang_3", "icon_zhujue"}},
-                {ButtonType::Prepare,         {"ui_kuang_3", "icon_renwu"}},
+                {ButtonType::Prepare,       {"ui_kuang_3", "icon_renwu"}},
                 {ButtonType::Shop,          {"ui_kuang_2", "icon_shangdian"}},
             };
             

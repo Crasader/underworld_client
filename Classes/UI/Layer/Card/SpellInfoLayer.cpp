@@ -15,12 +15,12 @@
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
-#include "CardSimpleData.h"
+#include "AbstractData.h"
 
 using namespace std;
 
 #pragma mark - SpellInfoLayer
-SpellInfoLayer* SpellInfoLayer::create(const CardSimpleData* data)
+SpellInfoLayer* SpellInfoLayer::create(const AbstractData* data)
 {
     auto ret = new (nothrow) SpellInfoLayer();
     if (ret && ret->init(data)) {
@@ -44,7 +44,7 @@ SpellInfoLayer::~SpellInfoLayer()
     removeAllChildren();
 }
 
-bool SpellInfoLayer::init(const CardSimpleData* data)
+bool SpellInfoLayer::init(const AbstractData* data)
 {
     if (LayerColor::initWithColor(LAYER_MASK_COLOR)) {
         const auto& winSize(Director::getInstance()->getWinSize());
@@ -160,7 +160,7 @@ void SpellInfoLayer::createNode(Node* node)
     }
 }
 
-void SpellInfoLayer::update(const CardSimpleData* data)
+void SpellInfoLayer::update(const AbstractData* data)
 {
     if (_data != data) {
         _data = data;

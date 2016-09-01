@@ -12,7 +12,7 @@
 #include "LocalHelper.h"
 #include "BattleDeckUI.h"
 #include "DeckData.h"
-#include "CardSimpleData.h"
+#include "CardData.h"
 #include "Board.h"
 #include "PureScale9Sprite.h"
 #include "TabButton.h"
@@ -169,10 +169,12 @@ void BattleDeckLayer::onDeckCardClicked(DeckCard* pSender)
             useCard(pSender->getTag(), false);
         }
     } else if (pSender) {
-        auto data(pSender->getCardData());
         auto cardId(pSender->getCardId());
-        if (!DeckManager::getInstance()->isFound(cardId)) {
-            showInfo(data);
+        auto dm(DeckManager::getInstance());
+        if (!dm->isFound(cardId)) {
+            dm->getCardDetail(cardId, [this](const CardData* data) {
+                showInfo(data);
+            });
         } else if (_cardPreview) {
             const bool isCandidate(getFoundCard(cardId));
             vector<DeckCardOpType> types = {DeckCardOpType::Info};
@@ -198,13 +200,16 @@ AbstractCard* BattleDeckLayer::onCardPreviewCreateCard(int cardId)
     return createCard(cardId);
 }
 
-void BattleDeckLayer::onCardPreviewClickedOpButton(DeckCardOpType type, const CardSimpleData* data)
+void BattleDeckLayer::onCardPreviewClickedOpButton(DeckCardOpType type, const AbstractData* data)
 {
     CC_ASSERT(data);
+    auto dm(DeckManager::getInstance());
     if (DeckCardOpType::Use == type) {
-        beginEdit(data);
+        beginEdit(dm->getCardData(data->getId()));
     } else if (DeckCardOpType::Info == type) {
-        showInfo(data);
+        dm->getCardDetail(data->getId(), [this](const CardData* data) {
+            showInfo(data);
+        });
     }
 }
 
@@ -233,7 +238,7 @@ void BattleDeckLayer::onSpellInfoLayerExit(Node* pSender)
     }
 }
 
-void BattleDeckLayer::onSpellInfoLayerUpgrade(Node* pSender, const CardSimpleData* data)
+void BattleDeckLayer::onSpellInfoLayerUpgrade(Node* pSender, const AbstractData* data)
 {
     if (pSender) {
         pSender->removeFromParent();
@@ -415,7 +420,7 @@ void BattleDeckLayer::updateAverageElixir()
 }
 
 #pragma mark - Info
-void BattleDeckLayer::showInfo(const CardSimpleData* data)
+void BattleDeckLayer::showInfo(const CardData* data)
 {
     if (UnderWorld::Core::HMMCardClass::kHMMCardClass_Spell == data->getCardClass()) {
         auto layer = SpellInfoLayer::create(data);
@@ -447,7 +452,7 @@ void BattleDeckLayer::beginEdit(const CardSimpleData* data)
     }
     
     // create card
-    const int cardId(data ? data->getCardId() : 0);
+    const int cardId(data ? data->getId() : 0);
     _usedCard = getFoundCard(cardId);
     
     if (_usedCard) {
@@ -497,11 +502,11 @@ void BattleDeckLayer::exchangeCard(int idxFrom, int idxTo)
     if (isIdxValid(idxFrom) && isIdxValid(idxTo)) {
         auto from(_deckCards.at(idxFrom));
         auto to(_deckCards.at(idxTo));
-        auto fdata(from->getCardData());
-        auto tdata(to->getCardData());
+        auto fdata(dynamic_cast<const CardSimpleData*>(from->getCardData()));
+        auto tdata(dynamic_cast<const CardSimpleData*>(to->getCardData()));
         CC_ASSERT(fdata && tdata);
         if (fdata->isHero() == tdata->isHero()) {
-            DeckManager::getInstance()->exchangeCard(fdata->getCardId(), tdata->getCardId());
+            DeckManager::getInstance()->exchangeCard(fdata->getId(), tdata->getId());
             moveToDeck(from, idxTo);
             moveToDeck(to, idxFrom);
         } else {
@@ -523,8 +528,8 @@ void BattleDeckLayer::useCard(int idx, bool fromDeck)
     CC_ASSERT(_usedCard);
     if (_usedCard && isIdxValid(idx)) {
         auto replaced(_deckCards.at(idx));
-        auto udata(_usedCard->getCardData());
-        auto rdata(replaced->getCardData());
+        auto udata(dynamic_cast<const CardSimpleData*>(_usedCard->getCardData()));
+        auto rdata(dynamic_cast<const CardSimpleData*>(replaced->getCardData()));
         CC_ASSERT(udata && rdata);
         if (udata->isHero() == rdata->isHero()) {
             if (_cardPreview) {
@@ -533,8 +538,8 @@ void BattleDeckLayer::useCard(int idx, bool fromDeck)
             
             endEdit();
             
-            const auto uid(udata->getCardId());
-            const auto rid(rdata->getCardId());
+            const auto uid(udata->getId());
+            const auto rid(rdata->getId());
             DeckManager::getInstance()->useCard(uid, rid);
             moveToDeck(_usedCard, idx);
             if (_cardPreview) {

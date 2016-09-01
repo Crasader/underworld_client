@@ -92,6 +92,7 @@ private:
     void sortAllCards(FeatureType type, bool sortUnfound);
     
     const CardData* updateCardData(const rapidjson::Value& jsonDict);
+    void removeRune(int cardId, int runeIdx);
     void updateRune(int cardId, int runeIdx, const rapidjson::Value& jsonDict);
     void updateRuneGroup(const rapidjson::Value& jsonDict);
     void updateRuneGroups(const rapidjson::Value& jsonDict);

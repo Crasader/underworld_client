@@ -10,11 +10,11 @@
 #include "CocosUtils.h"
 #include "DevelopUI.h"
 #include "DeckCard.h"
-#include "CardSimpleData.h"
+#include "AbstractData.h"
 
 using namespace std;
 
-DevelopCard* DevelopCard::create(const CardSimpleData* data)
+DevelopCard* DevelopCard::create(const AbstractData* data)
 {
     auto ret = new (nothrow) DevelopCard();
     if (ret && ret->init(data)) {
@@ -40,7 +40,7 @@ DevelopCard::~DevelopCard()
     removeAllChildren();
 }
 
-bool DevelopCard::init(const CardSimpleData* data)
+bool DevelopCard::init(const AbstractData* data)
 {
     if (ui::Widget::init()) {
         setAnchorPoint(Point::ANCHOR_MIDDLE);
@@ -102,7 +102,7 @@ void DevelopCard::registerObserver(DevelopCardObserver *observer)
     _observer = observer;
 }
 
-void DevelopCard::update(const CardSimpleData* data)
+void DevelopCard::update(const AbstractData* data)
 {
     if (_data != data) {
         _data = data;
@@ -127,7 +127,7 @@ void DevelopCard::update(const CardSimpleData* data)
     }
 }
 
-const CardSimpleData* DevelopCard::getCardData() const
+const AbstractData* DevelopCard::getCardData() const
 {
     return _data;
 }

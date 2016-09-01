@@ -9,8 +9,8 @@
 #ifndef CardSimpleData_h
 #define CardSimpleData_h
 
+#include "AbstractData.h"
 #include <string>
-#include "json/document.h"
 #include "GameModeHMM.h"
 
 namespace UnderWorld {
@@ -19,7 +19,7 @@ namespace UnderWorld {
     }
 }
 
-class CardSimpleData
+class CardSimpleData : public AbstractData
 {
 public:
     CardSimpleData(const rapidjson::Value& jsonDict);
@@ -28,23 +28,17 @@ public:
     bool operator==(const CardSimpleData& instance) const;
     
     void update(const rapidjson::Value& jsonDict);
-    int getDbId() const;
-    int getCardId() const;
     UnderWorld::Core::HMMCardClass getCardClass() const;
     bool isHero() const;
-    int getLevel() const;
-    int getAmount() const;
     int getCost() const;
     int getQuality() const;
-    const std::string& getName() const;
-    const std::string& getDescription() const;
+    virtual const std::string& getName() const override;
+    virtual const std::string& getDescription() const override;
     const std::string& getUnlockInfo() const;
     
+    virtual const AbstractProperty* getProperty() const override;
+    
 private:
-    int _dbId;
-    int _cardId;
-    int _level;
-    int _amount;
     const UnderWorld::Core::HMMCardType* _cardType;
 };
 

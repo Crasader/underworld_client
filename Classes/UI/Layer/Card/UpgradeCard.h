@@ -28,18 +28,18 @@ public:
 class UpgradeCard : public AbstractCard
 {
 public:
-    static UpgradeCard* create(const CardSimpleData* data);
+    static UpgradeCard* create(const AbstractData* data);
     virtual ~UpgradeCard();
     void registerObserver(UpgradeCardObserver* observer);
     
-    void update(const CardSimpleData* data);
+    void update(const AbstractData* data);
     
     // AbstractCard
-    virtual const CardSimpleData* getCardData() const override;
+    virtual const AbstractData* getCardData() const override;
     
 private:
     UpgradeCard();
-    bool init(const CardSimpleData* data);
+    bool init(const AbstractData* data);
     
 private:
     UpgradeCardObserver* _observer;
@@ -47,7 +47,7 @@ private:
     bool _touchInvalid;
     Label* _name;
     ResourceButton* _button;
-    const CardSimpleData* _data;
+    const AbstractData* _data;
 };
 
 #endif /* UpgradeCard_h */

@@ -64,6 +64,7 @@ void RuneCircle::setData(const vector<const RuneData*>& datas)
     for (int i = 0; i < datas.size(); ++i) {
         auto node = RuneNode::create(datas.at(i));
         node->registerObserver(this);
+        node->setIdx(i);
         _circle->addChild(node);
         _nodes.push_back(node);
     }
@@ -97,6 +98,6 @@ void RuneCircle::setData(const vector<const RuneData*>& datas)
 void RuneCircle::onRuneNodeClicked(RuneNode* pSender)
 {
     if (_observer) {
-        _observer->onRuneCircleClicked(pSender);
+        _observer->onRuneCircleClicked(pSender, pSender->getIdx());
     }
 }

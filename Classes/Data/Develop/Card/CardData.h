@@ -21,6 +21,7 @@ public:
     virtual ~CardData();
     
     void update(const rapidjson::Value& jsonDict);
+    void removeRune(int idx);
     void updateRune(int idx, const rapidjson::Value& jsonDict);
     const std::vector<SkillData*>& getSkills() const;
     const RuneData* getRune(int idx) const;

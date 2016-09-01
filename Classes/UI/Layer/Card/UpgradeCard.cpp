@@ -10,11 +10,11 @@
 #include "DevelopCard.h"
 #include "ResourceButton.h"
 #include "CocosUtils.h"
-#include "CardSimpleData.h"
+#include "AbstractData.h"
 
 using namespace std;
 
-UpgradeCard* UpgradeCard::create(const CardSimpleData* data)
+UpgradeCard* UpgradeCard::create(const AbstractData* data)
 {
     auto ret = new (nothrow) UpgradeCard();
     if (ret && ret->init(data)) {
@@ -39,7 +39,7 @@ UpgradeCard::~UpgradeCard()
     removeAllChildren();
 }
 
-bool UpgradeCard::init(const CardSimpleData* data)
+bool UpgradeCard::init(const AbstractData* data)
 {
     if (ui::Widget::init()) {
         setAnchorPoint(Point::ANCHOR_MIDDLE);
@@ -106,7 +106,7 @@ void UpgradeCard::registerObserver(UpgradeCardObserver *observer)
     _observer = observer;
 }
 
-void UpgradeCard::update(const CardSimpleData* data)
+void UpgradeCard::update(const AbstractData* data)
 {
     if (_data != data) {
         _data = data;
@@ -121,7 +121,7 @@ void UpgradeCard::update(const CardSimpleData* data)
     }
 }
 
-const CardSimpleData* UpgradeCard::getCardData() const
+const AbstractData* UpgradeCard::getCardData() const
 {
     return _data;
 }

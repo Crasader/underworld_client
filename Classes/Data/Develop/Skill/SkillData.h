@@ -9,18 +9,19 @@
 #ifndef SkillData_h
 #define SkillData_h
 
-#include "json/document.h"
+#include "AbstractData.h"
 
-class SkillData
+class SkillData : public AbstractData
 {
 public:
-    SkillData(int level);
+    SkillData(int skillId, int level);
     virtual ~SkillData();
-
-    int getLevel() const;
     
-private:
-    int _level;
+    virtual const AbstractProperty* getProperty() const override;
+    
+    // TODO: remove test code
+    virtual const std::string& getName() const override;
+    virtual const std::string& getDescription() const override;
 };
 
 #endif /* SkillData_h */

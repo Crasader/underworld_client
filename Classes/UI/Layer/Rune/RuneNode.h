@@ -34,6 +34,8 @@ public:
     void update(const RuneData* data);
     const RuneData* getData() const;
     void select(bool selected);
+    void setIdx(int idx);
+    int getIdx() const;
     
 private:
     RuneNode();
@@ -46,6 +48,7 @@ private:
     Label* _amount;
     Sprite* _shiningSprite;
     const RuneData* _data;
+    int _idx;
     bool _touchInvalid;
 };
 

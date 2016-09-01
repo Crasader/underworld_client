@@ -21,7 +21,7 @@ USING_NS_CC;
 class UniversalBoard;
 class DevelopCard;
 class CardPropertyNode;
-class CardSimpleData;
+class CardData;
 
 class CardInfoLayerObserver
 {
@@ -39,7 +39,7 @@ class CardInfoLayer
 , public SpellInfoLayerObserver
 {
 public:
-    static CardInfoLayer* create(const CardSimpleData* data);
+    static CardInfoLayer* create(const CardData* data);
     virtual ~CardInfoLayer();
     void registerObserver(CardInfoLayerObserver *observer);
     
@@ -47,15 +47,15 @@ private:
     CardInfoLayer();
     
     // LayerColor
-    bool init(const CardSimpleData* data);
+    bool init(const CardData* data);
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
     // RuneCircleObserver
-    virtual void onRuneCircleClicked(RuneNode* node) override;
+    virtual void onRuneCircleClicked(RuneNode* node, int idx) override;
     
     // RuneBagLayerObserver
-    virtual void onRuneBagLayerSelected(Node* pSender, const RuneData* data) override;
+    virtual void onRuneBagLayerSelected(Node* pSender, RuneNode* node) override;
     
     // UpgradeCardObserver
     virtual void onUpgradeCardInfo(UpgradeCard* pSender) override;
@@ -63,14 +63,14 @@ private:
     
     // SpellInfoLayerObserver
     virtual void onSpellInfoLayerExit(Node* pSender) override;
-    virtual void onSpellInfoLayerUpgrade(Node* pSender, const CardSimpleData* data) override;
+    virtual void onSpellInfoLayerUpgrade(Node* pSender, const AbstractData* data) override;
     
     // -------- UI --------
     void createLeftNode(Node* node);
     void createRightNode(Node* node);
     void createOpButtons(Node* node);
     void onOpButtonClicked(int idx);
-    void update(const CardSimpleData* data);
+    void update(const CardData* data);
     
 private:
     CardInfoLayerObserver* _observer;
@@ -81,7 +81,7 @@ private:
     Label* _description;
     RuneNode* _selectedRune;
     std::vector<CardPropertyNode*> _properties;
-    const CardSimpleData* _data;
+    const CardData* _data;
 };
 
 #endif /* CardInfoLayer_h */

@@ -39,7 +39,7 @@ void CardData::update(const rapidjson::Value& jsonDict)
         if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
             for (int i = 0; i < DICTOOL->getArrayCount_json(jsonDict, key); ++i) {
                 auto value = DICTOOL->getIntValueFromArray_json(jsonDict, key, i);
-                _skills.push_back(new (nothrow) SkillData(value));
+                _skills.push_back(new (nothrow) SkillData(0, value));
             }
         }
     }
@@ -55,6 +55,13 @@ void CardData::update(const rapidjson::Value& jsonDict)
                 }
             }
         }
+    }
+}
+
+void CardData::removeRune(int idx)
+{
+    if (_runes.find(idx) != end(_runes)) {
+        _runes.erase(idx);
     }
 }
 
