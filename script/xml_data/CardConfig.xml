@@ -36,6 +36,7 @@
 	<item id="22016" icon="icon_jingling"/><!--精灵弓箭手  -->
 	<item id="22017" icon="hh"/><!--兽族战车  -->
 	<item id="22018" icon="ii"/><!--弹射兵  -->
+	<item id="22019" icon="icon_v_gongchengche"/><!--攻城单位  -->
 <!-- 第一版单位：英雄部分 -->
     <item id="21100" icon="B"/><!--盾牌队长  -->
     <item id="21101" icon="A"/><!--剑士队长  -->
