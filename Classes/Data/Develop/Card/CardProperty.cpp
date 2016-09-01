@@ -40,6 +40,17 @@ CardProperty::CardProperty(tinyxml2::XMLElement *xmlElement)
     attribute2Int(xmlElement, "point", _donatePoint);
     
     {
+        auto data = xmlElement->Attribute("skills");
+        if (data) {
+            std::vector<std::string> splits;
+            Utils::split(splits, data, ";");
+            for (int i = 0; i < splits.size(); ++i) {
+                _skills.push_back(atoi(splits.at(i).c_str()));
+            }
+        }
+    }
+    
+    {
         auto data = xmlElement->Attribute("runes");
         if (data) {
             std::vector<std::string> splits;
@@ -89,6 +100,11 @@ int CardProperty::getDonateExp() const
 int CardProperty::getDonatePoint() const
 {
     return _donatePoint;
+}
+
+const std::vector<int>& CardProperty::getSkills() const
+{
+    return _skills;
 }
 
 RuneType CardProperty::getRuneType(int idx) const

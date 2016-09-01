@@ -17,10 +17,10 @@ public:
     SkillUpgradeProperty(tinyxml2::XMLElement *xmlElement);
     virtual ~SkillUpgradeProperty();
     
-    int getBookCost() const;
+    const std::pair<int, int>& getBookCost() const;
     
 private:
-    int _bookCost;
+    std::pair<int, int> _bookCost;
 };
 
 #endif /* SkillUpgradeProperty_h */

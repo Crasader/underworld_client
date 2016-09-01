@@ -11,6 +11,7 @@
 
 #include "AbstractProperty.h"
 #include "CocosGlobal.h"
+#include <vector>
 #include <unordered_map>
 
 class CardProperty : public AbstractProperty
@@ -26,6 +27,7 @@ public:
     const std::pair<ResourceType, int>& getDonateReward() const;
     int getDonateExp() const;
     int getDonatePoint() const;
+    const std::vector<int>& getSkills() const;
     RuneType getRuneType(int idx) const;
     
 private:
@@ -36,6 +38,7 @@ private:
     std::pair<ResourceType, int> _donateReward;
     int _donateExp;
     int _donatePoint;
+    std::vector<int> _skills;
     std::unordered_map<int, RuneType> _runeTypes;
 };
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<root>
+	<item book="90001_5" gold="320" id="70001" level="1" name="死亡缠绕"/>
+	<item book="90001_10" gold="360" id="70001" level="2" name="死亡缠绕"/>
+	<item book="90001_15" gold="400" id="70001" level="3" name="死亡缠绕"/>
+	<item book="90001_20" gold="440" id="70001" level="4" name="死亡缠绕"/>
+	<item book="90001_25" gold="480" id="70001" level="5" name="死亡缠绕"/>
+	<item book="90005_5" gold="550" id="71001" level="1" name="邪恶光环"/>
+	<item book="90005_10" gold="600" id="71001" level="2" name="邪恶光环"/>
+	<item book="90005_15" gold="650" id="71001" level="3" name="邪恶光环"/>
+	<item book="90005_20" gold="700" id="71001" level="4" name="邪恶光环"/>
+	<item book="90009_9" gold="999" id="72001" level="1" name="召唤死尸"/>
+	<item book="90009_18" gold="1099" id="72001" level="2" name="召唤死尸"/>
+	<item book="90009_27" gold="1199" id="72001" level="3" name="召唤死尸"/>
+</root>

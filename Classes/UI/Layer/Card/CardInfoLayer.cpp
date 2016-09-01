@@ -18,9 +18,13 @@
 #include "DevelopCard.h"
 #include "CocosGlobal.h"
 #include "LocalHelper.h"
+#include "DataManager.h"
+#include "CardUpgradeProperty.h"
 #include "CardData.h"
+#include "SkillData.h"
 #include "RuneData.h"
 #include "CocosUtils.h"
+#include "DeckManager.h"
 
 using namespace std;
 
@@ -45,6 +49,7 @@ CardInfoLayer::CardInfoLayer()
 ,_profession(nullptr)
 ,_description(nullptr)
 ,_selectedRune(nullptr)
+,_upgradeButton(nullptr)
 ,_data(nullptr) {}
 
 CardInfoLayer::~CardInfoLayer()
@@ -180,14 +185,14 @@ void CardInfoLayer::createLeftNode(Node* node)
         node->addChild(bar);
         
         static const float edgeX(5);
-        auto label = CocosUtils::createLabel("level", DEFAULT_FONT_SIZE);
+        auto label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
         label->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
         label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
         label->setPosition(edgeX, barSize.height / 2);
         bar->addChild(label);
         _level = label;
         
-        label = CocosUtils::createLabel("profession", DEFAULT_FONT_SIZE);
+        label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
         label->setAlignment(TextHAlignment::RIGHT, TextVAlignment::CENTER);
         label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
         label->setPosition(barSize.width - edgeX, barSize.height / 2);
@@ -213,7 +218,7 @@ void CardInfoLayer::createLeftNode(Node* node)
         node->addChild(descBg);
         
         static const float edge(5);
-        auto label = CocosUtils::createLabel("description", DEFAULT_FONT_SIZE);
+        auto label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
         label->setDimensions(descSize.width - edge * 2, descSize.height - edge * 2);
         label->setAlignment(TextHAlignment::LEFT, TextVAlignment::TOP);
         label->setTextColor(Color4B::BLACK);
@@ -285,11 +290,14 @@ void CardInfoLayer::createLeftNode(Node* node)
         bar->addChild(label);
         
         auto button = ResourceButton::create(true, false, ResourceType::Gold, 3000, Color4B::BLACK, [this](Ref*) {
-            // TODO
+            DeckManager::getInstance()->upgradeCard(_data->getId(), [this](const CardData* data) {
+                update(data);
+            });
         });
         button->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
         button->setPosition(barSize.width / 2, 0);
         bar->addChild(button);
+        _upgradeButton = button;
     }
 }
 
@@ -316,6 +324,7 @@ void CardInfoLayer::createRightNode(Node* node)
         auto card = UpgradeCard::create(0);
         card->registerObserver(this);
         node->addChild(card);
+        _skillCards.push_back(card);
         
         if (0 == i) {
             cardSize = card->getContentSize();
@@ -417,9 +426,11 @@ void CardInfoLayer::onOpButtonClicked(int idx)
                 _selectedRune->update(nullptr);
             });
         } else if (1 == idx) {
-            auto layer = RuneBagLayer::create(_selectedRune->getData());
-            layer->registerObserver(this);
-            addChild(layer);
+            DeckManager::getInstance()->getRunesList([this]() {
+                auto layer = RuneBagLayer::create(_selectedRune->getData());
+                layer->registerObserver(this);
+                addChild(layer);
+            });
         }
     }
 }
@@ -433,20 +444,52 @@ void CardInfoLayer::update(const CardData* data)
             _board->setTitle(data ? data->getName() : "");
         }
         
-        if (_icon) {
-            _icon->update(data);
-        }
-        
-        if (_level) {
-            _level->setString(data ? StringUtils::format("LV.%d", data->getLevel()) : "");
-        }
-        
         if (_profession) {
             _profession->setString(data ? "" : "");
         }
         
         if (_description) {
             _description->setString(data ? data->getDescription() : "");
+        }
+    }
+    
+    // always update these params
+    if (_icon) {
+        _icon->update(data);
+    }
+    
+    if (_level) {
+        _level->setString(data ? StringUtils::format("LV.%d", data->getLevel()) : "");
+    }
+    
+    if (data) {
+        const auto& skills(data->getSkills());
+        int cnt((int)skills.size());
+        for (int i = 0; i < cnt; ++i) {
+            if (i < _skillCards.size()) {
+                auto card(_skillCards.at(i));
+                card->setVisible(true);
+                card->update(skills.at(i));
+            }
+        }
+        
+        for (int i = cnt; i < _skillCards.size(); ++i) {
+            _skillCards.at(i)->setVisible(false);
+        }
+        
+        auto up(DataManager::getInstance()->getCardUpgradeProperty(data->getId(), data->getLevel()));
+        if (up) {
+            const auto& pair(up->getResourceCost());
+            if (pair.first != ResourceType::MAX) {
+                _upgradeButton->setType(pair.first);
+                _upgradeButton->setCount(pair.second);
+            } else {
+                CC_ASSERT(false);
+            }
+        }
+    } else {
+        for (auto node : _skillCards) {
+            node->setVisible(false);
         }
     }
 }

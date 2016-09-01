@@ -80,7 +80,7 @@ bool RuneBagLayer::init(const RuneData* data)
             node->addChild(descBg);
             
             static const float edge(5);
-            auto label = CocosUtils::createLabel("description", DEFAULT_FONT_SIZE);
+            auto label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
             label->setDimensions(descSize.width - edge * 2, descSize.height - edge * 2);
             label->setAlignment(TextHAlignment::LEFT, TextVAlignment::TOP);
             label->setTextColor(Color4B::BLACK);
@@ -91,7 +91,7 @@ bool RuneBagLayer::init(const RuneData* data)
         
         // name
         {
-            auto label = CocosUtils::createLabel("name", DEFAULT_FONT_SIZE);
+            auto label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
             label->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
             label->setTextColor(Color4B::BLACK);
             label->setPosition(descEdge + descSize.width / 2, size.height - (size.height - descSize.height) / 4);

@@ -41,13 +41,13 @@ int AbstractUpgradeProperty::getLevel() const
     return _level;
 }
 
-int AbstractUpgradeProperty::getResourceCost(ResourceType type) const
+pair<ResourceType, int> AbstractUpgradeProperty::getResourceCost() const
 {
-    if (_cost.find(type) != end(_cost)) {
-        return _cost.at(type);
+    if (_cost.size() > 0) {
+        return *(_cost.begin());
     }
     
-    return 99999;
+    return make_pair(ResourceType::MAX, 0);
 }
 
 void AbstractUpgradeProperty::attribute2Int(tinyxml2::XMLElement* xmlElement, const char* key, int& output) const

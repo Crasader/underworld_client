@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<root>
+	<item gold="320" id="80001" level="1" rune="12"/>
+	<item gold="360" id="80001" level="2" rune="15"/>
+	<item gold="400" id="80001" level="3" rune="18"/>
+	<item gold="440" id="80001" level="4" rune="21"/>
+	<item gold="480" id="80001" level="5" rune="24"/>
+	<item gold="550" id="81001" level="1" rune="16"/>
+	<item gold="600" id="81001" level="2" rune="20"/>
+	<item gold="650" id="81001" level="3" rune="24"/>
+	<item gold="700" id="81001" level="4" rune="28"/>
+	<item gold="999" id="82001" level="1" rune="9"/>
+	<item gold="1099" id="82001" level="2" rune="15"/>
+	<item gold="1199" id="82001" level="3" rune="21"/>
+</root>

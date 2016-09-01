@@ -10,7 +10,10 @@
 #include "CocosUtils.h"
 #include "DevelopUI.h"
 #include "DeckCard.h"
+#include "DataManager.h"
 #include "AbstractData.h"
+#include "CardUpgradeProperty.h"
+#include "SkillUpgradeProperty.h"
 
 using namespace std;
 
@@ -32,8 +35,7 @@ DevelopCard::DevelopCard()
 ,_touchInvalid(false)
 ,_pt(nullptr)
 ,_amount(nullptr)
-,_arrow(nullptr)
-,_data(nullptr) {}
+,_arrow(nullptr) {}
 
 DevelopCard::~DevelopCard()
 {
@@ -104,30 +106,47 @@ void DevelopCard::registerObserver(DevelopCardObserver *observer)
 
 void DevelopCard::update(const AbstractData* data)
 {
-    if (_data != data) {
-        _data = data;
-        
-        if (_icon) {
-            _icon->update(data);
-        }
-        
-        static const int total(100);
-        const auto amount(data ? data->getAmount() : 0);
-        if (_pt) {
-            _pt->setPercentage(100.0f * amount / total);
-        }
-        
-        if (_amount) {
-            _amount->setString(StringUtils::format("%d/%d", amount, total));
-        }
-        
-        if (_arrow) {
-            _arrow->setVisible(amount >= total);
+    if (_icon) {
+        _icon->update(data);
+    }
+    
+    int total(0);
+    if (data) {
+        auto cardUp(DataManager::getInstance()->getCardUpgradeProperty(data->getId(), data->getLevel()));
+        if (cardUp) {
+            total = cardUp->getCardCost();
+        } else {
+            auto skillUp(DataManager::getInstance()->getSkillUpgradeProperty(data->getId(), data->getLevel()));
+            if (skillUp) {
+                total = skillUp->getBookCost().second;
+            }
         }
     }
+    
+    const auto amount(data ? data->getAmount() : 0);
+    if (_pt) {
+        _pt->setPercentage(100.0f * amount / total);
+    }
+    
+    if (_amount) {
+        _amount->setString(StringUtils::format("%d/%d", amount, total));
+    }
+    
+    if (_arrow) {
+        _arrow->setVisible(amount >= total);
+    }
+}
+
+bool DevelopCard::canUpgrade() const
+{
+    return _pt->getPercentage() >= 100.0f;
 }
 
 const AbstractData* DevelopCard::getCardData() const
 {
-    return _data;
+    if (_icon) {
+        return _icon->getCardData();
+    }
+    
+    return nullptr;
 }

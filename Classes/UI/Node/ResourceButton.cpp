@@ -56,6 +56,7 @@ bool ResourceButton::init(bool isBigSize, bool animated, ResourceType type, int 
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         
         auto button = UniversalButton::create(isBigSize ? UniversalButton::BSize::Big : UniversalButton::BSize::Small, UniversalButton::BType::Blue, "");
+        button->setCallback(callback);
         addChild(button);
         _button = button;
         
@@ -172,6 +173,9 @@ void ResourceButton::addIconNode(ResourceType type)
 
 void ResourceButton::resize()
 {
+    // TODO:
+    return;
+    
     const float buttonWidth = _button->getContentSize().width;
     const float iconWidth = _icon->getContentSize().width;
     const float labelWidth = _countLabel->getContentSize().width;

@@ -100,9 +100,7 @@ AbstractCard* DevelopLayer::onCardPreviewCreateCard(int cardId)
 
 void DevelopLayer::onCardPreviewClickedOpButton(DeckCardOpType type, const AbstractData* data)
 {
-    if (DeckCardOpType::Upgrade == type) {
-        
-    } else if (DeckCardOpType::Info == type) {
+    if (DeckCardOpType::Upgrade == type || DeckCardOpType::Info == type) {
         DeckManager::getInstance()->getCardDetail(data->getId(), [this](const CardData* data) {
             if (UnderWorld::Core::HMMCardClass::kHMMCardClass_Spell == data->getCardClass()) {
                 auto layer = SpellInfoLayer::create(data);

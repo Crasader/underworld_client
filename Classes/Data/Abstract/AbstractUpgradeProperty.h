@@ -22,7 +22,7 @@ public:
     
     int getId() const;
     int getLevel() const;
-    int getResourceCost(ResourceType type) const;
+    std::pair<ResourceType, int> getResourceCost() const;
     
 protected:
     void attribute2Int(tinyxml2::XMLElement* xmlElement, const char* key, int& output) const;

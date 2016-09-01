@@ -117,7 +117,7 @@ void SpellInfoLayer::createNode(Node* node)
         node->addChild(descBg);
         
         static const float edge(5);
-        auto label = CocosUtils::createLabel("description", DEFAULT_FONT_SIZE);
+        auto label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
         label->setDimensions(descSize.width - edge * 2, descSize.height - edge * 2);
         label->setAlignment(TextHAlignment::LEFT, TextVAlignment::TOP);
         label->setTextColor(Color4B::BLACK);

@@ -10,6 +10,7 @@
 #include "cocostudio/CocoStudio.h"
 #include "SkillData.h"
 #include "RuneData.h"
+#include "CardProperty.h"
 
 using namespace std;
 using namespace cocostudio;
@@ -37,9 +38,15 @@ void CardData::update(const rapidjson::Value& jsonDict)
     {
         static const char* key("skills");
         if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
-            for (int i = 0; i < DICTOOL->getArrayCount_json(jsonDict, key); ++i) {
-                auto value = DICTOOL->getIntValueFromArray_json(jsonDict, key, i);
-                _skills.push_back(new (nothrow) SkillData(0, value));
+            auto property(dynamic_cast<const CardProperty*>(getProperty()));
+            if (property) {
+                const auto& skills(property->getSkills());
+                for (int i = 0; i < DICTOOL->getArrayCount_json(jsonDict, key); ++i) {
+                    if (i < skills.size()) {
+                        auto value = DICTOOL->getIntValueFromArray_json(jsonDict, key, i);
+                        _skills.push_back(new (nothrow) SkillData(skills.at(i), value));
+                    }
+                }
             }
         }
     }

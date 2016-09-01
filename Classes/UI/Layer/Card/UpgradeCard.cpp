@@ -10,7 +10,10 @@
 #include "DevelopCard.h"
 #include "ResourceButton.h"
 #include "CocosUtils.h"
+#include "DataManager.h"
 #include "AbstractData.h"
+#include "CardUpgradeProperty.h"
+#include "SkillUpgradeProperty.h"
 
 using namespace std;
 
@@ -117,6 +120,23 @@ void UpgradeCard::update(const AbstractData* data)
         
         if (_name) {
             _name->setString(data ? data->getName() : "");
+        }
+        
+        if (data) {
+            const AbstractUpgradeProperty* up(DataManager::getInstance()->getCardUpgradeProperty(data->getId(), data->getLevel()));
+            if (!up) {
+                up = DataManager::getInstance()->getSkillUpgradeProperty(data->getId(), data->getLevel());
+            }
+            
+            if (up) {
+                const auto& pair(up->getResourceCost());
+                if (pair.first != ResourceType::MAX) {
+                    _button->setType(pair.first);
+                    _button->setCount(pair.second);
+                } else {
+                    CC_ASSERT(false);
+                }
+            }
         }
     }
 }

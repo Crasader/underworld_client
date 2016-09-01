@@ -80,7 +80,9 @@ private:
     Label* _profession;
     Label* _description;
     RuneNode* _selectedRune;
+    ResourceButton* _upgradeButton;
     std::vector<CardPropertyNode*> _properties;
+    std::vector<UpgradeCard*> _skillCards;
     const CardData* _data;
 };
 

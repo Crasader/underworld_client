@@ -116,7 +116,7 @@ void DeckCard::update(const AbstractData* data)
             _costNode->setVisible(data ? !csData->isHero() : false);
             _cost->setString(data ? StringUtils::format("%d", csData->getCost()) : "");
         } else {
-            _cost->setVisible(false);
+            _costNode->setVisible(false);
         }
         
         if (false) {

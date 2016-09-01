@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<root>
+	<item id="70001" name="死亡缠绕" unlock="5"/>
+	<item id="71001" name="邪恶光环" unlock="10"/>
+	<item id="72001" name="召唤死尸" unlock="15"/>
+</root>

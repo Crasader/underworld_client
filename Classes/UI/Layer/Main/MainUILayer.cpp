@@ -398,11 +398,15 @@ void MainUILayer::onFunctionButtonClicked(ButtonType type)
             break;
             
         case ButtonType::Train:
-            runningScene->addChild(DevelopLayer::create());
+            DeckManager::getInstance()->getCardList([runningScene]() {
+                runningScene->addChild(DevelopLayer::create());
+            });
             break;
             
         case ButtonType::Prepare:
-            runningScene->addChild(BattleDeckLayer::create());
+            DeckManager::getInstance()->getCardList([runningScene]() {
+                runningScene->addChild(BattleDeckLayer::create());
+            });
             break;
             
         case ButtonType::Settings:

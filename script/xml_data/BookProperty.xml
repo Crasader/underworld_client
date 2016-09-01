@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<root>
+	<item desc="死亡缠绕技能书" id="90001" unlock="10"/>
+	<item desc="邪恶光环技能书" id="91001" unlock="12"/>
+	<item desc="召唤死尸技能书" id="92001" unlock="14"/>
+</root>

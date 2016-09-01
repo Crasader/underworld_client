@@ -31,6 +31,7 @@ public:
     void registerObserver(DevelopCardObserver* observer);
     
     void update(const AbstractData* data);
+    bool canUpgrade() const;
     
     // AbstractCard
     virtual const AbstractData* getCardData() const override;
@@ -46,7 +47,6 @@ private:
     ProgressTimer* _pt;
     Label* _amount;
     Sprite* _arrow;
-    const AbstractData* _data;
 };
 
 #endif /* DevelopCard_h */
