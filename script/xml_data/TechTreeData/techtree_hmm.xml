@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <root>
 	<!-- 第一版法术 -->
-	<card name="暴风雪lv1" card_class="spell" cost="木头:40" spell_name="实际效果暴风雪" recover_span="1000" id="23100">
+	<card name="暴风雪lv1" card_class="spell" cost="木头:40" spell_name="实际效果暴风雪" recover_span="900" id="23100">
 		<custom_unit_setting/>
 	</card>
-	<card name="火球术lv1" card_class="spell" cost="木头:40" spell_name="实际效果火球术" recover_span="1000" id="23101">
+	<card name="火球术lv1" card_class="spell" cost="木头:40" spell_name="实际效果火球术" recover_span="900" id="23101">
 		<custom_unit_setting/>
 	</card>
-	<card name="医疗术lv1" card_class="spell" cost="木头:30" spell_name="实际效果医疗术" recover_span="1000" id="23102">
+	<card name="医疗术lv1" card_class="spell" cost="木头:30" spell_name="实际效果医疗术" recover_span="900" id="23102">
 		<custom_unit_setting/>
 	</card>
 	<card name="沉默术lv1" card_class="spell" cost="木头:10" spell_name="实际效果沉默术" recover_span="1800" id="23103">
 		<custom_unit_setting/>
 	</card>
-	<card name="小型驱散术lv1" card_class="spell" cost="木头:10" spell_name="实际效果小型驱散" recover_span="1000" id="23104">
+	<card name="小型驱散术lv1" card_class="spell" cost="木头:10" spell_name="实际效果小型驱散" recover_span="300" id="23104">
 		<custom_unit_setting/>
 	</card>
-	<card name="大型驱散术lv1" card_class="spell" cost="木头:10" spell_name="实际效果大型驱散" recover_span="1000" id="23105">
+	<card name="大型驱散术lv1" card_class="spell" cost="木头:10" spell_name="实际效果大型驱散" recover_span="300" id="23105">
 		<custom_unit_setting/>
 	</card>
-	<card name="震晕法术lv1" card_class="spell" cost="木头:30" spell_name="实际效果震晕法术" recover_span="1800" id="23106">
+	<card name="震晕法术lv1" card_class="spell" cost="木头:30" spell_name="实际效果震晕法术" recover_span="1200" id="23106">
 		<custom_unit_setting/>
 	</card>
 	<card name="禁足术lv1" card_class="spell" cost="木头:20" spell_name="实际效果禁足术" recover_span="1800" id="23107">
 		<custom_unit_setting/>
 	</card>
-	<card name="酸雾术lv1" card_class="spell" cost="木头:20" spell_name="实际效果酸雾" recover_span="1800" id="23108">
+	<card name="酸雾术lv1" card_class="spell" cost="木头:20" spell_name="实际效果酸雾" recover_span="1200" id="23108">
 		<custom_unit_setting/>
 	</card>
-	<card name="狂暴术lv1" card_class="spell" cost="木头:30" spell_name="狂暴术lv1" recover_span="900" id="23109">
+	<card name="狂暴术lv1" card_class="spell" cost="木头:30" spell_name="狂暴术lv1" recover_span="1200" id="23109">
 		<custom_unit_setting/>
 	</card>
-	<card name="缴械法术lv1" card_class="spell" cost="木头:30" spell_name="缴械法术lv1" recover_span="900" id="23110">
+	<card name="缴械法术lv1" card_class="spell" cost="木头:30" spell_name="缴械法术lv1" recover_span="1200" id="23110">
 		<custom_unit_setting/>
 	</card>
-	<card name="恐惧法术lv1" card_class="spell" cost="木头:30" spell_name="恐惧法术lv1" recover_span="900" id="23111">
+	<card name="恐惧法术lv1" card_class="spell" cost="木头:30" spell_name="恐惧法术lv1" recover_span="1800" id="23111">
 		<custom_unit_setting/>
 	</card>
-	<card name="磁场法术lv1" card_class="spell" cost="木头:30" spell_name="磁场法术lv1" recover_span="960" id="23112">
+	<card name="磁场法术lv1" card_class="spell" cost="木头:30" spell_name="磁场法术lv1" recover_span="1200" id="23112">
 		<custom_unit_setting/>
 	</card>
 	<card name="震荡法术lv1" card_class="spell" cost="木头:30" spell_name="震荡法术lv1" recover_span="960" id="23113">
