@@ -10,19 +10,23 @@
 #include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
 #include "LocalHelper.h"
-#include "LevelLocalData.h"
-#include "CardUpgradeData.h"
-#include "TalentUpgradeData.h"
-#include "QuestLocalData.h"
-#include "AchievementLocalData.h"
-#include "ObjectLocalData.h"
+#include "LevelProperty.h"
+#include "CardProperty.h"
+#include "CardUpgradeProperty.h"
+#include "RuneProperty.h"
+#include "RuneUpgradeProperty.h"
+#include "SkillProperty.h"
+#include "SkillUpgradeProperty.h"
+#include "SkillBookProperty.h"
+#include "QuestProperty.h"
+#include "AchievementProperty.h"
+#include "ObjectProperty.h"
 #include "UAConfigData.h"
 #include "CardConfigData.h"
 #include "URConfigData.h"
 #include "BRConfigData.h"
 #include "MapParticleConfigData.h"
 #include "SpellConfigData.h"
-#include "SkillLocalData.h"
 #include "BinaryJsonTool.h"
 #include "TechTree.h"
 #include "GameModeHMM.h"
@@ -88,8 +92,13 @@ DataManager::DataManager()
 DataManager::~DataManager()
 {
     Utils::clearMap(_levels);
-    Utils::clearMap(_cardUpgradeDatas);
-    Utils::clearMap(_talentUpgradeDatas);
+    Utils::clearMap(_cards);
+    Utils::clearMap(_cardUpgradeProperties);
+    Utils::clearMap(_runes);
+    Utils::clearMap(_runeUpgradeProperties);
+    Utils::clearMap(_skills);
+    Utils::clearMap(_skillUpgradeProperties);
+    Utils::clearMap(_skillBooks);
     
     for (auto iter = _quests.begin(); iter != end(_quests); ++iter) {
         Utils::clearMap(iter->second);
@@ -118,20 +127,24 @@ DataManager::~DataManager()
 void DataManager::init()
 {
     parsePvrFiles();
-    parseLevelData();
+    parseLevelProperty();
     parseCardDecks();
-    parseCardUpgradeData();
-    parseTalentUpgradeData();
-    parseQuestData();
-    parseAchievementData();
-    parseObjectData();
+    parseCardProperty();
+    parseCardUpgradeProperty();
+    parseRuneProperty();
+    parseRuneUpgradeProperty();
+    parseSkillProperty();
+    parseSkillUpgradeProperty();
+    parseSkillBookProperty();
+    parseQuestProperty();
+    parseAchievementProperty();
+    parseObjectProperty();
     parseAnimationConfigData();
     parseCardConfigData();
     parseURConfigData();
     parseBRConfigData();
     parseMapParticleConfigData();
     parseSpellConfigData();
-    parseSkillData();
     parseBinaryjsonTemplates();
 }
 
@@ -161,7 +174,7 @@ const vector<string>& DataManager::getPVRFiles() const
     return _pvrFiles;
 }
 
-const LevelLocalData* DataManager::getLevelData(int levelId) const
+const LevelProperty* DataManager::getLevelProperty(int levelId) const
 {
     return getMapValue(_levels, levelId);
 }
@@ -171,19 +184,46 @@ const set<int>& DataManager::getCardDecks() const
     return _cardDecks;
 }
 
-const CardUpgradeData* DataManager::getCardUpgradeData(int idx, int level) const
+#pragma mark development
+const CardProperty* DataManager::getCardProperty(int cardId) const
 {
-    auto key = StringUtils::format("%d_%d", idx, level);
-    return getMapValue(_cardUpgradeDatas, key);
+    return getMapValue(_cards, cardId);
 }
 
-const TalentUpgradeData* DataManager::getTalentUpgradeData(int idx, int level) const
+const CardUpgradeProperty* DataManager::getCardUpgradeProperty(int cardId, int level) const
 {
-    auto key = StringUtils::format("%d_%d", idx, level);
-    return getMapValue(_talentUpgradeDatas, key);
+    auto key = StringUtils::format("%d_%d", cardId, level);
+    return getMapValue(_cardUpgradeProperties, key);
 }
 
-const QuestLocalData* DataManager::getQuestData(QuestType type, int questId) const
+const RuneProperty* DataManager::getRuneProperty(int runeId) const
+{
+    return getMapValue(_runes, runeId);
+}
+
+const RuneUpgradeProperty* DataManager::getRuneUpgradeProperty(int runeId, int level) const
+{
+    auto key = StringUtils::format("%d_%d", runeId, level);
+    return getMapValue(_runeUpgradeProperties, key);
+}
+
+const SkillProperty* DataManager::getSkillProperty(int skillId) const
+{
+    return getMapValue(_skills, skillId);
+}
+
+const SkillUpgradeProperty* DataManager::getSkillUpgradeProperty(int skillId, int level) const
+{
+    auto key = StringUtils::format("%d_%d", skillId, level);
+    return getMapValue(_skillUpgradeProperties, key);
+}
+
+const SkillBookProperty* DataManager::getSkillBookProperty(int bookId) const
+{
+    return getMapValue(_skillBooks, bookId);
+}
+
+const QuestProperty* DataManager::getQuestProperty(QuestType type, int questId) const
 {
     if (_quests.find(type) != end(_quests)) {
         return getMapValue(_quests.at(type), questId);
@@ -192,12 +232,12 @@ const QuestLocalData* DataManager::getQuestData(QuestType type, int questId) con
     return nullptr;
 }
 
-const AchievementLocalData* DataManager::getAchievementData(int achievementId) const
+const AchievementProperty* DataManager::getAchievementProperty(int achievementId) const
 {
     return getMapValue(_achievements, achievementId);
 }
 
-const ObjectLocalData* DataManager::getObjectData(int objectId) const
+const ObjectProperty* DataManager::getObjectProperty(int objectId) const
 {
     return getMapValue(_objects, objectId);
 }
@@ -245,11 +285,6 @@ const SpellConfigData* DataManager::getSpellConfigData(const string& name) const
     return getMapValue(_spellConfigData, name);
 }
 
-const SkillLocalData* DataManager::getSkillData(int id) const
-{
-    return getMapValue(_skills, id);
-}
-
 #pragma mark - parsers
 string DataManager::getFileData(const string& file) const
 {
@@ -284,10 +319,10 @@ void DataManager::parsePvrFiles()
     });
 }
 
-void DataManager::parseLevelData()
+void DataManager::parseLevelProperty()
 {
-    parseData("LevelData.xml", [this](tinyxml2::XMLElement* item) {
-        auto data = new (nothrow) LevelLocalData(item);
+    parseData("LevelProperty.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) LevelProperty(item);
         setMapValue(_levels, data->getLevel(), data);
     });
 }
@@ -299,25 +334,66 @@ void DataManager::parseCardDecks()
     });
 }
 
-void DataManager::parseCardUpgradeData()
+void DataManager::parseCardProperty()
 {
-    parseData("CardUpgradeData.xml", [this](tinyxml2::XMLElement* item) {
-        auto data = new (nothrow) CardUpgradeData(item);
-        auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-        setMapValue(_cardUpgradeDatas, key, data);
+    parseData("CardProperty.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) CardProperty(item);
+        setMapValue(_cards, data->getId(), data);
     });
 }
 
-void DataManager::parseTalentUpgradeData()
+void DataManager::parseCardUpgradeProperty()
 {
-    parseData("TalentUpgradeData.xml", [this](tinyxml2::XMLElement* item) {
-        auto data = new (nothrow) TalentUpgradeData(item);
+    parseData("CardUpgradeProperty.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) CardUpgradeProperty(item);
         auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
-        setMapValue(_talentUpgradeDatas, key, data);
+        setMapValue(_cardUpgradeProperties, key, data);
     });
 }
 
-void DataManager::parseQuestData()
+void DataManager::parseRuneProperty()
+{
+    parseData("RuneProperty.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) RuneProperty(item);
+        setMapValue(_runes, data->getId(), data);
+    });
+}
+
+void DataManager::parseRuneUpgradeProperty()
+{
+    parseData("RuneUpgradeProperty.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) RuneUpgradeProperty(item);
+        auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
+        setMapValue(_runeUpgradeProperties, key, data);
+    });
+}
+
+void DataManager::parseSkillProperty()
+{
+    parseData("SkillProperty.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) SkillProperty(item);
+        setMapValue(_skills, data->getId(), data);
+    });
+}
+
+void DataManager::parseSkillUpgradeProperty()
+{
+    parseData("SkillUpgradeProperty.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) SkillUpgradeProperty(item);
+        auto key = StringUtils::format("%d_%d", data->getId(), data->getLevel());
+        setMapValue(_skillUpgradeProperties, key, data);
+    });
+}
+
+void DataManager::parseSkillBookProperty()
+{
+    parseData("BookProperty.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) SkillBookProperty(item);
+        setMapValue(_skillBooks, data->getId(), data);
+    });
+}
+
+void DataManager::parseQuestProperty()
 {
     map<QuestType, string> quests = {
         {QuestType::Main, "MainQuestProperty.xml"},
@@ -333,28 +409,28 @@ void DataManager::parseQuestData()
         if (_quests.find(type) != end(_quests)) {
             Utils::clearMap(_quests.at(type));
         } else {
-            _quests.insert(make_pair(type, unordered_map<int, QuestLocalData*>()));
+            _quests.insert(make_pair(type, unordered_map<int, QuestProperty*>()));
         }
         
         parseData(iter->second, [this, type](tinyxml2::XMLElement* item) {
-            auto data = new (nothrow) QuestLocalData(item);
+            auto data = new (nothrow) QuestProperty(item);
             setMapValue(_quests.at(type), data->getId(), data);
         });
     }
 }
 
-void DataManager::parseAchievementData()
+void DataManager::parseAchievementProperty()
 {
-    parseData("EquipProperty.xml", [this](tinyxml2::XMLElement* item) {
-        auto data = new (nothrow) AchievementLocalData(item);
+    parseData("AchievementProperty.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) AchievementProperty(item);
         setMapValue(_achievements, data->getId(), data);
     });
 }
 
-void DataManager::parseObjectData()
+void DataManager::parseObjectProperty()
 {
     parseData("ObjectProperty.xml", [this](tinyxml2::XMLElement* item) {
-        auto data = new (nothrow) ObjectLocalData(item);
+        auto data = new (nothrow) ObjectProperty(item);
         setMapValue(_objects, data->getId(), data);
     });
 }
@@ -416,14 +492,6 @@ void DataManager::parseSpellConfigData()
     parseData("SpellConfig.xml", [this](tinyxml2::XMLElement* item) {
         auto data = new (nothrow) SpellConfigData(item);
         setMapValue(_spellConfigData, data->getRenderKey(), data);
-    });
-}
-
-void DataManager::parseSkillData()
-{
-    parseData("SkillData.xml", [this](tinyxml2::XMLElement* item) {
-        auto data = new (nothrow) SkillLocalData(item);
-        setMapValue(_skills, data->getId(), data);
     });
 }
 

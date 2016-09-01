@@ -9,7 +9,7 @@
 #include "QuestData.h"
 #include "DataManager.h"
 #include "cocostudio/CocoStudio.h"
-#include "QuestLocalData.h"
+#include "QuestProperty.h"
 
 using namespace cocostudio;
 
@@ -39,9 +39,9 @@ int QuestData::getId() const
     return _id;
 }
 
-const QuestLocalData* QuestData::getLocalData() const
+const QuestProperty* QuestData::getProperty() const
 {
-    return DataManager::getInstance()->getQuestData(_type, _id);
+    return DataManager::getInstance()->getQuestProperty(_type, _id);
 }
 
 int QuestData::getProgress() const

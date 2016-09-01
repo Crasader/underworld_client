@@ -12,7 +12,7 @@
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "SoundManager.h"
-#include "QuestLocalData.h"
+#include "QuestProperty.h"
 #include "QuestData.h"
 #include "ContentData.h"
 
@@ -74,13 +74,13 @@ void QuestNode::update(const QuestData* data, ssize_t idx)
         _data = data;
         _idx = idx;
         
-        const QuestLocalData* localData = _data->getLocalData();
+        const QuestProperty* property = _data->getProperty();
         if (_nameLabel) {
-            _nameLabel->setString(localData ? localData->getName() : "");
+            _nameLabel->setString(property ? property->getName() : "");
         }
         
         if (_descriptionLabel) {
-            _descriptionLabel->setString(localData ? localData->getDescription() : "");
+            _descriptionLabel->setString(property ? property->getDescription() : "");
         }
         
         updateProgress();
@@ -90,8 +90,8 @@ void QuestNode::update(const QuestData* data, ssize_t idx)
 void QuestNode::updateProgress()
 {
     if (_data) {
-        const QuestLocalData* localData = _data->getLocalData();
-        const vector<ContentData*>& contents = localData->getContents();
+        const QuestProperty* property = _data->getProperty();
+        const vector<ContentData*>& contents = property->getContents();
         if (contents.size() > 0) {
             const int progress = _data->getProgress();
             const int total = contents.at(0)->getCount(0);

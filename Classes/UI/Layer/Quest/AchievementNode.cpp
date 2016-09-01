@@ -11,7 +11,7 @@
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "SoundManager.h"
-#include "AchievementLocalData.h"
+#include "AchievementProperty.h"
 #include "AchievementData.h"
 #include "ContentData.h"
 
@@ -73,13 +73,13 @@ void AchievementNode::update(const AchievementData* data, ssize_t idx)
         _data = data;
         _idx = idx;
         
-        const AchievementLocalData* localData = _data->getLocalData();
+        const AchievementProperty* property = _data->getProperty();
         if (_nameLabel) {
-            _nameLabel->setString(localData ? localData->getName() : "");
+            _nameLabel->setString(property ? property->getName() : "");
         }
         
         if (_descriptionLabel) {
-            _descriptionLabel->setString(localData ? localData->getDescription() : "");
+            _descriptionLabel->setString(property ? property->getDescription() : "");
         }
         
         updateProgress();
@@ -89,8 +89,8 @@ void AchievementNode::update(const AchievementData* data, ssize_t idx)
 void AchievementNode::updateProgress()
 {
     if (_data) {
-        const AchievementLocalData* localData = _data->getLocalData();
-        const vector<ContentData*>& contents = localData->getContents();
+        const AchievementProperty* property = _data->getProperty();
+        const vector<ContentData*>& contents = property->getContents();
         if (contents.size() > 0) {
             const int progress = _data->getProgress();
             const int total = contents.at(0)->getCount(0);

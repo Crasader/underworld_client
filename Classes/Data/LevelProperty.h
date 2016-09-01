@@ -1,24 +1,24 @@
 //
-//  LevelLocalData.h
+//  LevelProperty.h
 //  Underworld_Client
 //
 //  Created by Andy on 15/12/12.
 //  Copyright (c) 2015 Mofish Studio. All rights reserved.
 //
 
-#ifndef LevelLocalData_h
-#define LevelLocalData_h
+#ifndef LevelProperty_h
+#define LevelProperty_h
 
 #include <iostream>
 #include <vector>
 
 namespace tinyxml2 { class XMLElement; }
 
-class LevelLocalData
+class LevelProperty
 {
 public:
-    LevelLocalData(tinyxml2::XMLElement *xmlElement);
-    virtual ~LevelLocalData();
+    LevelProperty(tinyxml2::XMLElement *xmlElement);
+    virtual ~LevelProperty();
     
     int getLevel() const;
     int getExp() const;
@@ -38,4 +38,4 @@ private:
     std::vector<int> _quests;
 };
 
-#endif /* LevelLocalData_h */
+#endif /* LevelProperty_h */

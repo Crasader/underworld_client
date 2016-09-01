@@ -81,12 +81,12 @@ string NetworkApi::responseDataToString(const vector<char>* data)
 
 void NetworkApi::request(const string& path,
                          const ccHttpRequestCallback& callback,
-                         const unordered_map<string, string> * params = nullptr,
-                         HttpRequest::Type type = HttpRequest::Type::POST,
-                         bool isLocalTest = false,
-                         bool showLoadingView = true,
-                         bool isImmediate = true,
-                         int timeout = TimeoutDuration)
+                         const unordered_map<string, string> * params,
+                         HttpRequest::Type type,
+                         bool isLocalTest,
+                         bool showLoadingView,
+                         bool isImmediate,
+                         int timeout)
 {
     if (isLocalTest) {
         auto fullPath = StringUtils::format("fake_network_response/%s", path.c_str());

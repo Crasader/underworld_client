@@ -12,7 +12,7 @@
 #include "json/document.h"
 #include "CocosGlobal.h"
 
-class QuestLocalData;
+class QuestProperty;
 
 class QuestData
 {
@@ -22,7 +22,7 @@ public:
     
     QuestType getType() const;
     int getId() const;
-    const QuestLocalData* getLocalData() const;
+    const QuestProperty* getProperty() const;
     int getProgress() const;
     int getStatus() const;
     

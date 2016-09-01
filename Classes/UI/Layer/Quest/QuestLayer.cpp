@@ -15,7 +15,7 @@
 #include "TabButton.h"
 #include "DataManager.h"
 #include "QuestData.h"
-#include "QuestLocalData.h"
+#include "QuestProperty.h"
 #include "LocalHelper.h"
 
 using namespace std;

@@ -1,18 +1,18 @@
 //
-//  LevelLocalData.cpp
+//  LevelProperty.cpp
 //  Underworld_Client
 //
 //  Created by Andy on 15/12/12.
 //  Copyright (c) 2015 Mofish Studio. All rights reserved.
 //
 
-#include "LevelLocalData.h"
+#include "LevelProperty.h"
 #include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
 
 using namespace std;
 
-LevelLocalData::LevelLocalData(tinyxml2::XMLElement *xmlElement)
+LevelProperty::LevelProperty(tinyxml2::XMLElement *xmlElement)
 :_level(0)
 ,_exp(0)
 ,_hp(0)
@@ -71,39 +71,39 @@ LevelLocalData::LevelLocalData(tinyxml2::XMLElement *xmlElement)
     }
 }
 
-LevelLocalData::~LevelLocalData() {}
+LevelProperty::~LevelProperty() {}
 
-int LevelLocalData::getLevel() const
+int LevelProperty::getLevel() const
 {
     return _level;
 }
 
-int LevelLocalData::getExp() const
+int LevelProperty::getExp() const
 {
     return _exp;
 }
 
-int LevelLocalData::getHp() const
+int LevelProperty::getHp() const
 {
     return _hp;
 }
 
-int LevelLocalData::getDefence() const
+int LevelProperty::getDefence() const
 {
     return _defence;
 }
 
-const vector<int>& LevelLocalData::unlockedStages() const
+const vector<int>& LevelProperty::unlockedStages() const
 {
     return _stages;
 }
 
-const vector<int>& LevelLocalData::unlockedIcons() const
+const vector<int>& LevelProperty::unlockedIcons() const
 {
     return _icons;
 }
 
-const vector<int>& LevelLocalData::unlockedQuests() const
+const vector<int>& LevelProperty::unlockedQuests() const
 {
     return _quests;
 }

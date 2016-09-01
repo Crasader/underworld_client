@@ -101,14 +101,9 @@ enum class ChatType {
     Notice,
 };
 
-enum class GearType {
-    Weapon = 1,
-    Armor,
-    Accessory,
-};
-
-enum class GearQuality {
-    White = 0,
+enum class RuneType {
+    None = 0,
+    White,
     Blue,
     Purple,
     Orange,

@@ -11,7 +11,7 @@
 
 #include "json/document.h"
 
-class AchievementLocalData;
+class AchievementProperty;
 
 class AchievementData
 {
@@ -20,7 +20,7 @@ public:
     virtual ~AchievementData();
     
     int getId() const;
-    const AchievementLocalData* getLocalData() const;
+    const AchievementProperty* getProperty() const;
     int getProgress() const;
     int getStatus() const;
     

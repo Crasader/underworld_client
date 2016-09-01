@@ -9,7 +9,7 @@
 #include "AchievementData.h"
 #include "DataManager.h"
 #include "cocostudio/CocoStudio.h"
-#include "AchievementLocalData.h"
+#include "AchievementProperty.h"
 
 using namespace cocostudio;
 
@@ -33,9 +33,9 @@ int AchievementData::getId() const
     return _id;
 }
 
-const AchievementLocalData* AchievementData::getLocalData() const
+const AchievementProperty* AchievementData::getProperty() const
 {
-    return DataManager::getInstance()->getAchievementData(_id);
+    return DataManager::getInstance()->getAchievementProperty(_id);
 }
 
 int AchievementData::getProgress() const

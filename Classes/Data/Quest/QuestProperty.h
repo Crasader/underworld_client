@@ -1,26 +1,26 @@
 //
-//  QuestLocalData.h
+//  QuestProperty.h
 //  Underworld_Client
 //
 //  Created by Andy on 15/11/19.
 //  Copyright (c) 2015 Mofish Studio. All rights reserved.
 //
 
-#ifndef QuestLocalData_h
-#define QuestLocalData_h
+#ifndef QuestProperty_h
+#define QuestProperty_h
 
-#include "AbstractLocalData.h"
+#include "AbstractProperty.h"
 #include <vector>
 
 class ConditionData;
 class ContentData;
 class ObjectBriefData;
 
-class QuestLocalData : public AbstractLocalData
+class QuestProperty : public AbstractProperty
 {
 public:
-    QuestLocalData(tinyxml2::XMLElement *xmlElement);
-    virtual ~QuestLocalData();
+    QuestProperty(tinyxml2::XMLElement *xmlElement);
+    virtual ~QuestProperty();
     
     int getRace() const;
     const std::vector<ConditionData*>& getConditions() const;
@@ -34,4 +34,4 @@ private:
     std::vector<ObjectBriefData*> _rewards;
 };
 
-#endif /* QuestLocalData_h */
+#endif /* QuestProperty_h */

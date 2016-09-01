@@ -14,7 +14,7 @@
 #include "XTableViewCell.h"
 #include "DataManager.h"
 #include "AchievementData.h"
-#include "AchievementLocalData.h"
+#include "AchievementProperty.h"
 
 using namespace std;
 using namespace ui;
