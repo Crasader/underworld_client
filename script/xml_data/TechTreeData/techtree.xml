@@ -890,7 +890,7 @@
 	<attack_armor_rule armor_type="轻甲" attack_type="null" name="nullto轻甲" value="p:100"/>
 	<attack_armor_rule armor_type="重甲" attack_type="普通" name="普通to重甲" value="p:100"/>
 	<attack_armor_rule armor_type="重甲" attack_type="穿刺" name="穿刺to重甲" value="p:100"/>
-	<attack_armor_rule armor_type="重甲" attack_type="魔法" name="魔法to重甲" value="p:450"/>
+	<attack_armor_rule armor_type="重甲" attack_type="魔法" name="魔法to重甲" value="p:350"/>
 	<attack_armor_rule armor_type="重甲" attack_type="攻城" name="攻城to重甲" value="p:100"/>
 	<attack_armor_rule armor_type="重甲" attack_type="英雄" name="英雄to重甲" value="p:200"/>
 	<attack_armor_rule armor_type="重甲" attack_type="混乱" name="混乱to重甲" value="p:100"/>
@@ -903,13 +903,13 @@
 	<attack_armor_rule armor_type="城甲" attack_type="混乱" name="混乱to城甲" value="p:100"/>
 	<attack_armor_rule armor_type="城甲" attack_type="null" name="nullto城甲" value="p:100"/>
 	<attack_armor_rule armor_type="无甲" attack_type="普通" name="普通to无甲" value="p:100"/>
-	<attack_armor_rule armor_type="无甲" attack_type="穿刺" name="穿刺to无甲" value="p:300"/>
+	<attack_armor_rule armor_type="无甲" attack_type="穿刺" name="穿刺to无甲" value="p:225"/>
 	<attack_armor_rule armor_type="无甲" attack_type="魔法" name="魔法to无甲" value="p:100"/>
 	<attack_armor_rule armor_type="无甲" attack_type="攻城" name="攻城to无甲" value="p:150"/>
 	<attack_armor_rule armor_type="无甲" attack_type="英雄" name="英雄to无甲" value="p:200"/>
 	<attack_armor_rule armor_type="无甲" attack_type="混乱" name="混乱to无甲" value="p:100"/>
 	<attack_armor_rule armor_type="无甲" attack_type="null" name="nullto无甲" value="p:100"/>
-	<attack_armor_rule armor_type="中甲" attack_type="普通" name="普通to中甲" value="p:300"/>
+	<attack_armor_rule armor_type="中甲" attack_type="普通" name="普通to中甲" value="p:225"/>
 	<attack_armor_rule armor_type="中甲" attack_type="穿刺" name="穿刺to中甲" value="p:75"/>
 	<attack_armor_rule armor_type="中甲" attack_type="魔法" name="魔法to中甲" value="p:75"/>
 	<attack_armor_rule armor_type="中甲" attack_type="攻城" name="攻城to中甲" value="p:50"/>
