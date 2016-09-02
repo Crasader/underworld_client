@@ -9,8 +9,6 @@
 #ifndef CardInfoLayer_h
 #define CardInfoLayer_h
 
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
 #include "RuneCircle.h"
 #include "RuneBagLayer.h"
 #include "UpgradeCard.h"
@@ -21,6 +19,7 @@ USING_NS_CC;
 class UniversalBoard;
 class DevelopCard;
 class CardPropertyNode;
+class PureNode;
 class CardData;
 
 class CardInfoLayerObserver
@@ -79,9 +78,11 @@ private:
     Label* _level;
     Label* _profession;
     Label* _description;
+    RuneCircle* _runeCircle;
     RuneNode* _selectedRune;
     ResourceButton* _upgradeButton;
-    std::vector<CardPropertyNode*> _properties;
+    std::vector<CardPropertyNode*> _cardProperties;
+    std::vector<Label*> _runeProperties;
     std::vector<UpgradeCard*> _skillCards;
     const CardData* _data;
 };

@@ -15,7 +15,9 @@ using namespace std;
 using namespace ui;
 
 ResourceButton::ResourceButton()
-:_animated(false)
+:_isBigSize(false)
+,_animated(false)
+,_resourceEnough(true)
 ,_enabled(true)
 ,_type(ResourceType::Gold)
 ,_count(INVALID_VALUE)
@@ -23,10 +25,7 @@ ResourceButton::ResourceButton()
 ,_icon(nullptr)
 ,_iconNode(nullptr)
 ,_countLabel(nullptr)
-,_button(nullptr)
-{
-    
-}
+,_button(nullptr) {}
 
 ResourceButton::~ResourceButton()
 {
@@ -35,9 +34,8 @@ ResourceButton::~ResourceButton()
 
 ResourceButton* ResourceButton::create(bool isBigSize, bool animated, ResourceType type, int count, const Color4B& color, const Widget::ccWidgetClickCallback& callback)
 {
-    ResourceButton *p = new (std::nothrow) ResourceButton();
-    if(p && p->init(isBigSize, animated, type, count, color, callback))
-    {
+    auto p = new (std::nothrow) ResourceButton();
+    if(p && p->init(isBigSize, animated, type, count, color, callback)) {
         p->autorelease();
         return p;
     }
@@ -48,8 +46,7 @@ ResourceButton* ResourceButton::create(bool isBigSize, bool animated, ResourceTy
 
 bool ResourceButton::init(bool isBigSize, bool animated, ResourceType type, int count, const Color4B& color, const Widget::ccWidgetClickCallback& callback)
 {
-    if(Node::init())
-    {
+    if(Node::init()) {
         _isBigSize = isBigSize;
         _animated = animated;
         _color = color;
@@ -92,6 +89,16 @@ int ResourceButton::getCount() const
     return _count;
 }
 
+bool ResourceButton::isResourceEnough() const
+{
+    return _resourceEnough;
+}
+
+bool ResourceButton::isEnabled() const
+{
+    return _enabled;
+}
+
 void ResourceButton::setType(ResourceType type)
 {
     _type = type;
@@ -105,11 +112,18 @@ void ResourceButton::setCount(int count)
 {
     _count = count;
     
-    if (_countLabel)
-    {
+    if (_countLabel) {
         _countLabel->setString(StringUtils::format("%d", count));
     }
     resize();
+}
+
+void ResourceButton::setResourceEnough(bool enable)
+{
+    if (_countLabel && _enabled && _resourceEnough != enable) {
+        _resourceEnough = enable;
+        _countLabel->setTextColor(getEnabledColor());
+    }
 }
 
 void ResourceButton::setEnabled(bool enable)
@@ -117,8 +131,18 @@ void ResourceButton::setEnabled(bool enable)
     if (_enabled != enable) {
         _enabled = enable;
         
-        const Color4B color = enable ? _color : Color4B::RED;
-        _countLabel->setTextColor(color);
+        if (_button) {
+            _button->setEnabled(enable);
+        }
+        
+        if (_countLabel) {
+            if (enable) {
+                _countLabel->setTextColor(getEnabledColor());
+            } else {
+                static const Color4B disabledColor(Color4B::WHITE);
+                _countLabel->setTextColor(disabledColor);
+            }
+        }
     }
 }
 
@@ -169,6 +193,11 @@ void ResourceButton::addIconNode(ResourceType type)
             _button->addChild(_icon);
         }
     }
+}
+
+const Color4B& ResourceButton::getEnabledColor() const
+{
+    return _resourceEnough ? _color : Color4B::RED;
 }
 
 void ResourceButton::resize()

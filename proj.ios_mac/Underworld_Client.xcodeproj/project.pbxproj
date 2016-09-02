@@ -617,6 +617,7 @@
 		A12DE76A1D4868AC0012D127 /* UniversalButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UniversalButton.cpp; sourceTree = "<group>"; };
 		A12DE76B1D4868AC0012D127 /* UniversalButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniversalButton.h; sourceTree = "<group>"; };
 		A13108A41C046BF900EAAD90 /* particle */ = {isa = PBXFileReference; lastKnownFileType = folder; path = particle; sourceTree = "<group>"; };
+		A13E39371D793364007D907A /* ObjectUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectUtils.h; sourceTree = "<group>"; };
 		A146604D1D6DBE1A008AFD14 /* AbstractCard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AbstractCard.cpp; sourceTree = "<group>"; };
 		A146604E1D6DBE1A008AFD14 /* AbstractCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractCard.h; sourceTree = "<group>"; };
 		A146604F1D6DBE1A008AFD14 /* CardInfoLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardInfoLayer.cpp; sourceTree = "<group>"; };
@@ -1974,6 +1975,7 @@
 				A1E7BAE11C2149E800CE2A85 /* Constants.h */,
 				A1720E911BCCE1D900217E98 /* LocalHelper.cpp */,
 				A1720E921BCCE1D900217E98 /* LocalHelper.h */,
+				A13E39371D793364007D907A /* ObjectUtils.h */,
 				A1A4BA471BCE096300175E8A /* Utils.cpp */,
 				A1A4BA481BCE096300175E8A /* Utils.h */,
 			);

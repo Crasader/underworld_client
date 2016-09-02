@@ -69,6 +69,8 @@ typedef std::function<void(long errorCode)> httpErrorCallback;
 
 #define JSON_KEY ("code")
 
+#define CARD_RUNES_COUNT    (3)
+
 // Global Notifications
 #define AppDidEnterBackgroundNotification   ("UWDidEnterBackgroundNotification")
 #define AppWillEnterForegroundNotification  ("UWWillEnterForegroundNotification")
@@ -99,14 +101,6 @@ enum class ChatType {
     Group,
     Mail,
     Notice,
-};
-
-enum class RuneType {
-    None = 0,
-    White,
-    Blue,
-    Purple,
-    Orange,
 };
 
 static ResourceType core_resource_type_key_2_ui_resource_type(const std::string& key) {

@@ -16,12 +16,6 @@ class SkillData : public AbstractData
 public:
     SkillData(int skillId, int level);
     virtual ~SkillData();
-    
-    virtual const AbstractProperty* getProperty() const override;
-    
-    // TODO: remove test code
-    virtual const std::string& getName() const override;
-    virtual const std::string& getDescription() const override;
 };
 
 #endif /* SkillData_h */

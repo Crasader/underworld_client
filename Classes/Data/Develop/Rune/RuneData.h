@@ -9,27 +9,15 @@
 #ifndef RuneData_h
 #define RuneData_h
 
-#include <string>
-#include "json/document.h"
+#include "AbstractData.h"
 
-class RuneData
+class RuneData : public AbstractData
 {
 public:
     RuneData(const rapidjson::Value& jsonDict);
     virtual ~RuneData();
     
     void update(const rapidjson::Value& jsonDict);
-    int getDbId() const;
-    int getId() const;
-    int getLevel() const;
-    const std::string& getName() const;
-    const std::string& getDescription() const;
-    const std::string& getEffect() const;
-    
-protected:
-    int _dbId;
-    int _id;
-    int _level;
 };
 
 #endif /* RuneData_h */

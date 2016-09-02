@@ -14,6 +14,7 @@
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "RuneGroupData.h"
+#include "AbstractProperty.h"
 #include "DeckManager.h"
 
 using namespace std;
@@ -24,10 +25,10 @@ static const float scrollViewSpaceTop(10);
 static const float scrollViewSpaceBottom(10);
 
 #pragma mark - RuneBagLayer
-RuneBagLayer* RuneBagLayer::create(const RuneData* data)
+RuneBagLayer* RuneBagLayer::create(ObjectUtils::RuneType type, const RuneData* data)
 {
     auto ret = new (nothrow) RuneBagLayer();
-    if (ret && ret->init(data)) {
+    if (ret && ret->init(type, data)) {
         ret->autorelease();
         return ret;
     }
@@ -51,9 +52,10 @@ RuneBagLayer::~RuneBagLayer()
     removeAllChildren();
 }
 
-bool RuneBagLayer::init(const RuneData* data)
+bool RuneBagLayer::init(ObjectUtils::RuneType type, const RuneData* data)
 {
     if (LayerColor::initWithColor(LAYER_MASK_COLOR)) {
+        CC_ASSERT(!data || data->getId() <= 0 || type == ObjectUtils::getRuneType(data->getId()));
         const auto& winSize(Director::getInstance()->getWinSize());
         auto board = MediumBoard::create();
         board->setTitle(LocalHelper::getString("ui_rune_title"));
@@ -108,7 +110,7 @@ bool RuneBagLayer::init(const RuneData* data)
             et->setPosition(descEdge, (size.height - descSize.height) / 4);
             node->addChild(et);
             
-            auto label = CocosUtils::createLabel(data->getEffect(), DEFAULT_FONT_SIZE);
+            auto label = CocosUtils::createLabel(data ? data->getName() : "", DEFAULT_FONT_SIZE);
             label->setAlignment(TextHAlignment::RIGHT, TextVAlignment::CENTER);
             label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
             label->setTextColor(Color4B::BLACK);
@@ -140,7 +142,7 @@ bool RuneBagLayer::init(const RuneData* data)
             _scrollView = sv;
         }
         
-        initRunes();
+        initRunes(type);
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -188,17 +190,26 @@ void RuneBagLayer::update(const RuneData* data)
     }
     
     if (_description) {
-        _description->setString(data ? data->getDescription() : "");
+        _description->setString(data ? data->getProperty()->getDescription() : "");
     }
 }
 
-void RuneBagLayer::initRunes()
+void RuneBagLayer::initRunes(ObjectUtils::RuneType type)
 {
     if (!_scrollView) {
         return;
     }
     
-    const auto& runes(DeckManager::getInstance()->getRuneGroups());
+    const auto& allRunes(DeckManager::getInstance()->getRuneGroups());
+    vector<const RuneGroupData*> runes;
+    if (ObjectUtils::RuneType::NONE != type) {
+        for (auto iter = begin(allRunes); iter != end(allRunes); ++iter) {
+            auto data(iter->second);
+            if (data->getAmount() > 0 && type == ObjectUtils::getRuneType(data->getId())) {
+                runes.push_back(data);
+            }
+        }
+    }
     const auto cnt(runes.size());
     const float height = MAX(_scrollViewMinSize.height, getHeight(cnt, nodeSpaceY) + scrollViewSpaceTop + scrollViewSpaceBottom);
     _scrollView->setInnerContainerSize(Size(_scrollViewMinSize.width, height));

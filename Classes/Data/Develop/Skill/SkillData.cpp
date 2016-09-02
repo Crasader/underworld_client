@@ -24,19 +24,3 @@ SkillData::SkillData(int skillId, int level)
 :AbstractData(createFakeData(skillId, level)) {}
 
 SkillData::~SkillData() {}
-
-const AbstractProperty* SkillData::getProperty() const
-{
-    return DataManager::getInstance()->getSkillProperty(_id);
-}
-
-static const std::string emptyString("");
-const std::string& SkillData::getName() const
-{
-    return emptyString;
-}
-
-const std::string& SkillData::getDescription() const
-{
-    return emptyString;
-}

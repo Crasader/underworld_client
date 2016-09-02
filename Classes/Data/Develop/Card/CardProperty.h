@@ -11,6 +11,7 @@
 
 #include "AbstractProperty.h"
 #include "CocosGlobal.h"
+#include "ObjectUtils.h"
 #include <vector>
 #include <unordered_map>
 
@@ -28,7 +29,7 @@ public:
     int getDonateExp() const;
     int getDonatePoint() const;
     const std::vector<int>& getSkills() const;
-    RuneType getRuneType(int idx) const;
+    ObjectUtils::RuneType getRuneType(int idx) const;
     
 private:
     int _rarity;
@@ -39,7 +40,7 @@ private:
     int _donateExp;
     int _donatePoint;
     std::vector<int> _skills;
-    std::unordered_map<int, RuneType> _runeTypes;
+    std::unordered_map<int, ObjectUtils::RuneType> _runeTypes;
 };
 
 #endif /* CardProperty_h */

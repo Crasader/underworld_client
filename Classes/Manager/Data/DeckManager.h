@@ -47,10 +47,10 @@ public:
     void upgradeCard(int cardId, const std::function<void(const CardData*)>& callback);
     void upgradeCardSkill(int cardId, int skillIdx, const std::function<void(const CardData*)>& callback);
     void getRunesList(const std::function<void()>& callback);
-    void imbedRune(int cardId, int runeIdx, int runeGroupIdx, const std::function<void()>& callback);
+    void imbedRune(int cardId, int runeIdx, int dbId, const std::function<void()>& callback);
     void unloadRune(int cardId, int runeIdx, const std::function<void()>& callback);
     void upgradeRune(int cardId, int runeIdx, const std::function<void()>& callback);
-    void compoundRune(int runeGroupIdx, const std::function<void()>& callback);
+    void compoundRune(int dbId, const std::function<void()>& callback);
     
     // sort
     SortType getSortType(FeatureType type) const;
@@ -72,7 +72,7 @@ public:
     const std::vector<int>& getUnfoundCards() const;
     
     // rune
-    const std::vector<const RuneGroupData*>& getRuneGroups() const;
+    const std::unordered_map<int, RuneGroupData*>& getRuneGroups() const;
     
     // offline functions
     void useCard(int used, int replaced);
@@ -96,7 +96,6 @@ private:
     void updateRune(int cardId, int runeIdx, const rapidjson::Value& jsonDict);
     void updateRuneGroup(const rapidjson::Value& jsonDict);
     void updateRuneGroups(const rapidjson::Value& jsonDict);
-    const RuneGroupData* getRuneGroupData(int dbId) const;
     
 private:
     int _defaultId;
@@ -109,7 +108,6 @@ private:
     std::vector<int> _allUnfoundCards;
     std::vector<int> _offDeckFoundCards;
     std::unordered_map<int, RuneGroupData*> _runeGroups;
-    std::vector<const RuneGroupData*> _sortedRuneGroups;
 };
 
 #endif /* DeckManager_h */

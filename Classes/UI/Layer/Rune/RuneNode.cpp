@@ -8,8 +8,8 @@
 
 #include "RuneNode.h"
 #include "RuneData.h"
-#include "RuneGroupData.h"
 #include "CocosUtils.h"
+#include "ObjectUtils.h"
 #include "DevelopUI.h"
 
 using namespace std;
@@ -107,25 +107,21 @@ void RuneNode::update(const RuneData* data)
     if (_data != data) {
         _data = data;
         
-        if (_icon && data) {
-            _icon->setTexture(DevelopUI::getResourcePath("icon_fuwen_2.png"));
-        }
-        
-        if (_level) {
-            _level->setString(data ? StringUtils::format("LV.%d", data->getLevel()) : "");
+        if (_icon) {
+            if (data) {
+                const string file(StringUtils::format("icon_fuwen_%d.png", static_cast<int>(ObjectUtils::getRuneType(data->getId())) + 1));
+                _icon->setTexture(DevelopUI::getResourcePath(file));
+            } else {
+                _icon->initWithTexture(nullptr, Rect::ZERO);
+            }
         }
         
         if (_amount) {
-            if (data) {
-                auto groupData(dynamic_cast<const RuneGroupData*>(data));
-                _amount->setVisible(groupData);
-                if (groupData) {
-                    auto amount(groupData->getAmount());
-                    _amount->setString(StringUtils::format("x %d", amount));
-                }
-            } else {
-                _amount->setString("");
-            }
+            _amount->setString(data && data->getAmount() > 0 ? StringUtils::format("x %d", data->getAmount()) : "");
+        }
+        
+        if (_level) {
+            _level->setString(data && data->getId() > 0 ? StringUtils::format("LV.%d", data->getLevel()) : "");
         }
     }
 }
@@ -139,6 +135,13 @@ void RuneNode::select(bool selected)
 {
     if (_shiningSprite) {
         _shiningSprite->setVisible(selected);
+    }
+}
+
+void RuneNode::showAmount(bool show)
+{
+    if (_amount) {
+        _amount->setVisible(show);
     }
 }
 

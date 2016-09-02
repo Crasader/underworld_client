@@ -10,7 +10,7 @@
 #include "cocostudio/CocoStudio.h"
 #include "DataManager.h"
 #include "GameConstants.h"
-#include "CardProperty.h"
+#include "AbstractProperty.h"
 
 using namespace std;
 using namespace cocostudio;
@@ -71,36 +71,11 @@ int CardSimpleData::getQuality() const
     return 0;
 }
 
-static const string emptyString("");
-
 const string& CardSimpleData::getName() const
 {
     if (_cardType) {
         return _cardType->getName();
     }
     
-    return emptyString;
-}
-
-const string& CardSimpleData::getDescription() const
-{
-    if (_cardType) {
-        
-    }
-    
-    return emptyString;
-}
-
-const string& CardSimpleData::getUnlockInfo() const
-{
-    if (_cardType) {
-        
-    }
-    
-    return emptyString;
-}
-
-const AbstractProperty* CardSimpleData::getProperty() const
-{
-    return DataManager::getInstance()->getCardProperty(_id);
+    return AbstractProperty::EmptyString;
 }

@@ -9,8 +9,6 @@
 #ifndef RuneCircle_h
 #define RuneCircle_h
 
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
 #include "RuneNode.h"
 
 USING_NS_CC;
@@ -33,11 +31,13 @@ public:
     virtual ~RuneCircle();
     void registerObserver(RuneCircleObserver *observer);
     
-    void setData(const std::vector<const RuneData*>& datas);
+    void setData(int idx, const RuneData* data);
     
 private:
     RuneCircle();
     virtual bool init() override;
+    
+    void createNodes();
     
     // RuneNodeObserver
     virtual void onRuneNodeClicked(RuneNode* pSender) override;

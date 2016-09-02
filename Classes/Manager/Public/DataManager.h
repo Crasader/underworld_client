@@ -21,6 +21,8 @@ namespace UnderWorld { namespace Core {
 }}
 
 class LevelProperty;
+class AbstractProperty;
+class AbstractUpgradeProperty;
 class CardProperty;
 class CardUpgradeProperty;
 class RuneProperty;
@@ -57,6 +59,10 @@ public:
     const std::set<int>& getCardDecks() const;
     
     // ========== development ==========
+    const AbstractProperty* getProperty(int oid) const;
+    const AbstractUpgradeProperty* getUpgradeProperty(int oid, int level) const;
+    
+protected:
     // ---------- card ----------
     const CardProperty* getCardProperty(int cardId) const;
     const CardUpgradeProperty* getCardUpgradeProperty(int cardId, int level) const;
@@ -70,6 +76,7 @@ public:
     const SkillUpgradeProperty* getSkillUpgradeProperty(int skillId, int level) const;
     const SkillBookProperty* getSkillBookProperty(int bookId) const;
     
+public:
     const QuestProperty* getQuestProperty(QuestType type, int questId) const;
     const AchievementProperty* getAchievementProperty(int achievementId) const;
     const ObjectProperty* getObjectProperty(int objectId) const;

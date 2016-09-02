@@ -56,8 +56,8 @@ CardProperty::CardProperty(tinyxml2::XMLElement *xmlElement)
             std::vector<std::string> splits;
             Utils::split(splits, data, ";");
             for (int i = 0; i < splits.size(); ++i) {
-                auto type = static_cast<RuneType>(atoi(splits.at(i).c_str()));
-                if (RuneType::None != type) {
+                auto type = static_cast<ObjectUtils::RuneType>(atoi(splits.at(i).c_str()));
+                if (ObjectUtils::RuneType::NONE != type) {
                     _runeTypes.insert(std::make_pair(i, type));
                 }
             }
@@ -107,11 +107,11 @@ const std::vector<int>& CardProperty::getSkills() const
     return _skills;
 }
 
-RuneType CardProperty::getRuneType(int idx) const
+ObjectUtils::RuneType CardProperty::getRuneType(int idx) const
 {
     if (_runeTypes.find(idx) != end(_runeTypes)) {
         return _runeTypes.at(idx);
     }
     
-    return RuneType::None;
+    return ObjectUtils::RuneType::NONE;
 }

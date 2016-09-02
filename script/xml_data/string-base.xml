@@ -140,5 +140,13 @@
 	<item key="hint_confirm" value="确定"/>
     <item key="hint_cancel" value="取消"/>
     <item key="hint_level" value="%d级"/>
+    
+    <!-- 网络提示 -->
+    <item key="networkResponse_errorTitle" value="网络错误！"/>
+    <item key="networkResponse_errorCode" value="错误码：%d
+    %s"/>
+    <item key="networkResponse_error" value="网络异常，请稍后再试！"/>
+    <item key="networkResponse_oldVersion" value="当前版本太旧，请更新至最新版本并重新登录"/>
+    <item key="networkResponse_isOffline" value="您已下线，请重新登录"/>
 	 
 </root>

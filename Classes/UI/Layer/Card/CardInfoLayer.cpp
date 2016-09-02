@@ -18,8 +18,9 @@
 #include "DevelopCard.h"
 #include "CocosGlobal.h"
 #include "LocalHelper.h"
-#include "DataManager.h"
-#include "CardUpgradeProperty.h"
+#include "AbstractProperty.h"
+#include "AbstractUpgradeProperty.h"
+#include "CardProperty.h"
 #include "CardData.h"
 #include "SkillData.h"
 #include "RuneData.h"
@@ -48,6 +49,7 @@ CardInfoLayer::CardInfoLayer()
 ,_level(nullptr)
 ,_profession(nullptr)
 ,_description(nullptr)
+,_runeCircle(nullptr)
 ,_selectedRune(nullptr)
 ,_upgradeButton(nullptr)
 ,_data(nullptr) {}
@@ -128,8 +130,9 @@ void CardInfoLayer::onRuneBagLayerSelected(Node* pSender, RuneNode* node)
         pSender->removeFromParent();
     }
     
-    DeckManager::getInstance()->imbedRune(_data->getId(), _selectedRune->getIdx(), node->getIdx(), [=]() {
-        _selectedRune->update(node->getData());
+    auto data(node->getData());
+    DeckManager::getInstance()->imbedRune(_data->getId(), _selectedRune->getIdx(), data->getDbId(), [=]() {
+        _selectedRune->update(data);
     });
 }
 
@@ -200,10 +203,10 @@ void CardInfoLayer::createLeftNode(Node* node)
         _profession = label;
     }
     
-    static const float spaceBarCard(15);
+    static const Vec2 spaceBarCard(12, 15);
     auto card = DevelopCard::create(0);
     const auto& cardSize(card->getContentSize());
-    card->setPosition(Point(secondaryEdge.x + cardSize.width / 2, size.height - (secondaryEdge.y + barSize.height + spaceBarCard + cardSize.height / 2)));
+    card->setPosition(Point(secondaryEdge.x + spaceBarCard.x + cardSize.width / 2, size.height - (secondaryEdge.y + barSize.height + spaceBarCard.y + cardSize.height / 2)));
     node->addChild(card);
     _icon = card;
     
@@ -211,7 +214,7 @@ void CardInfoLayer::createLeftNode(Node* node)
     {
         static const float spaceBarDesc(5);
         static const float spaceCardDesc(20);
-        const Size descSize(barSize.width - (cardSize.width + spaceCardDesc), spaceBarCard + cardSize.height - spaceBarDesc);
+        const Size descSize(barSize.width - (cardSize.width + spaceBarCard.x + spaceCardDesc), spaceBarCard.y + cardSize.height - spaceBarDesc);
         auto descBg = PureScale9Sprite::create(PureScale9Sprite::Type::White);
         descBg->setContentSize(descSize);
         descBg->setPosition(size.width - (secondaryEdge.x + descSize.width / 2), size.height - (secondaryEdge.y + barSize.height + spaceBarDesc + descSize.height / 2));
@@ -262,7 +265,7 @@ void CardInfoLayer::createLeftNode(Node* node)
             
             auto property = CardPropertyNode::create(color);
             node->addChild(property);
-            _properties.push_back(property);
+            _cardProperties.push_back(property);
             
             // calculate space first
             if (0 == i) {
@@ -289,10 +292,17 @@ void CardInfoLayer::createLeftNode(Node* node)
         label->setPosition(edgeX, barSize.height / 2);
         bar->addChild(label);
         
-        auto button = ResourceButton::create(true, false, ResourceType::Gold, 3000, Color4B::BLACK, [this](Ref*) {
-            DeckManager::getInstance()->upgradeCard(_data->getId(), [this](const CardData* data) {
-                update(data);
-            });
+        auto button = ResourceButton::create(true, false, ResourceType::Gold, 0, Color4B::BLACK, [this](Ref* pSender) {
+            auto button(dynamic_cast<ResourceButton*>(pSender));
+            if (button) {
+                if (button->isResourceEnough()) {
+                    DeckManager::getInstance()->upgradeCard(_data->getId(), [this](const CardData* data) {
+                        update(data);
+                    });
+                } else {
+                    MessageBox("资源不足", nullptr);
+                }
+            }
         });
         button->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
         button->setPosition(barSize.width / 2, 0);
@@ -356,16 +366,14 @@ void CardInfoLayer::createRightNode(Node* node)
         auto circle = RuneCircle::create();
         circle->registerObserver(this);
         node->addChild(circle);
+        _runeCircle = circle;
         
         static const Vec2 circleEdge(40, 18);
         const auto& csize(circle->getContentSize());
         circle->setPosition(circleEdge.x + csize.width / 2, circleEdge.y + csize.height / 2);
         
-        static const vector<const RuneData*> runeDatas = {nullptr, nullptr, nullptr};
-        circle->setData(runeDatas);
-        
         static const float spaceY(10);
-        for (int i = 0; i < runeDatas.size(); ++i) {
+        for (int i = 0; i < CARD_RUNES_COUNT; ++i) {
             Color4B color;
             if (i % 2 == 0) {
                 color = PURE_WHITE;
@@ -378,14 +386,14 @@ void CardInfoLayer::createRightNode(Node* node)
             bg->setPosition(size.width - (secondaryEdge.x + bgSize.width / 2), line->getPositionY() - (lineHeight / 2 + (spaceY + bgSize.height) * (i + 1) - bgSize.height / 2));
             node->addChild(bg);
             
-            auto data(runeDatas.at(i));
-            if (data) {
-                auto label = CocosUtils::createLabel(data->getDescription(), DEFAULT_FONT_SIZE);
+            if (true) {
+                auto label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
                 label->setTextColor(Color4B::BLACK);
                 label->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
                 label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
                 label->setPosition(10, bgSize.height / 2);
                 bg->addChild(label);
+                _runeProperties.push_back(label);
             }
         }
     }
@@ -427,7 +435,8 @@ void CardInfoLayer::onOpButtonClicked(int idx)
             });
         } else if (1 == idx) {
             DeckManager::getInstance()->getRunesList([this]() {
-                auto layer = RuneBagLayer::create(_selectedRune->getData());
+                auto property(dynamic_cast<const CardProperty*>(_data->getProperty()));
+                auto layer = RuneBagLayer::create(property->getRuneType(_selectedRune->getIdx()), _selectedRune->getData());
                 layer->registerObserver(this);
                 addChild(layer);
             });
@@ -449,7 +458,7 @@ void CardInfoLayer::update(const CardData* data)
         }
         
         if (_description) {
-            _description->setString(data ? data->getDescription() : "");
+            _description->setString(data ? data->getProperty()->getDescription() : "");
         }
     }
     
@@ -477,14 +486,24 @@ void CardInfoLayer::update(const CardData* data)
             _skillCards.at(i)->setVisible(false);
         }
         
-        auto up(DataManager::getInstance()->getCardUpgradeProperty(data->getId(), data->getLevel()));
+        auto up(data->getUpgradeProperty());
         if (up) {
             const auto& pair(up->getResourceCost());
             if (pair.first != ResourceType::MAX) {
                 _upgradeButton->setType(pair.first);
                 _upgradeButton->setCount(pair.second);
+                _upgradeButton->setEnabled(_icon ? _icon->canUpgrade() : false);
+                static const bool enoughResource(true);
+                _upgradeButton->setResourceEnough(enoughResource);
+                
             } else {
                 CC_ASSERT(false);
+            }
+        }
+        
+        if (_runeCircle) {
+            for (int i = 0; i < CARD_RUNES_COUNT; ++i) {
+                _runeCircle->setData(i, data->getRune(i));
             }
         }
     } else {

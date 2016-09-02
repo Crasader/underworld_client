@@ -14,7 +14,6 @@ using namespace cocostudio;
 
 RuneGroupData::RuneGroupData(const rapidjson::Value& jsonDict)
 :RuneData(jsonDict)
-,_amount(0)
 {
     update(jsonDict);
 }
@@ -24,10 +23,4 @@ RuneGroupData::~RuneGroupData() {}
 void RuneGroupData::update(const rapidjson::Value& jsonDict)
 {
     RuneData::update(jsonDict);
-    _amount = DICTOOL->getIntValue_json(jsonDict, "amount");
-}
-
-int RuneGroupData::getAmount() const
-{
-    return _amount;
 }

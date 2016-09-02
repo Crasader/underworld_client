@@ -10,10 +10,8 @@
 #include "DevelopCard.h"
 #include "ResourceButton.h"
 #include "CocosUtils.h"
-#include "DataManager.h"
 #include "AbstractData.h"
-#include "CardUpgradeProperty.h"
-#include "SkillUpgradeProperty.h"
+#include "AbstractUpgradeProperty.h"
 
 using namespace std;
 
@@ -54,15 +52,22 @@ bool UpgradeCard::init(const AbstractData* data)
         addChild(card);
         _icon = card;
         
-        auto label = CocosUtils::createLabel("name", DEFAULT_FONT_SIZE);
+        auto label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
         label->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
         label->setTextColor(Color4B::BLACK);
         addChild(label);
         _name = label;
         
-        auto button = ResourceButton::create(true, false, ResourceType::Gold, 3000, Color4B::BLACK, [this](Ref*) {
-            if (_observer) {
-                _observer->onUpgradeCardUpgrade(this);
+        auto button = ResourceButton::create(true, false, ResourceType::Gold, 0, Color4B::BLACK, [this](Ref* pSender) {
+            auto button(dynamic_cast<ResourceButton*>(pSender));
+            if (button) {
+                if (button->isResourceEnough()) {
+                    if (_observer) {
+                        _observer->onUpgradeCardUpgrade(this);
+                    }
+                } else {
+                    MessageBox("资源不足", nullptr);
+                }
             }
         });
         addChild(button);
@@ -121,21 +126,21 @@ void UpgradeCard::update(const AbstractData* data)
         if (_name) {
             _name->setString(data ? data->getName() : "");
         }
-        
-        if (data) {
-            const AbstractUpgradeProperty* up(DataManager::getInstance()->getCardUpgradeProperty(data->getId(), data->getLevel()));
-            if (!up) {
-                up = DataManager::getInstance()->getSkillUpgradeProperty(data->getId(), data->getLevel());
-            }
-            
-            if (up) {
-                const auto& pair(up->getResourceCost());
-                if (pair.first != ResourceType::MAX) {
-                    _button->setType(pair.first);
-                    _button->setCount(pair.second);
-                } else {
-                    CC_ASSERT(false);
-                }
+    }
+    
+    if (data) {
+        auto up(data->getUpgradeProperty());
+        if (up) {
+            const auto& pair(up->getResourceCost());
+            if (pair.first != ResourceType::MAX) {
+                _button->setType(pair.first);
+                _button->setCount(pair.second);
+                _button->setEnabled(_icon ? _icon->canUpgrade() : false);
+                // TODO: if has enough resource
+                static const bool enoughResource(true);
+                _button->setResourceEnough(enoughResource);
+            } else {
+                CC_ASSERT(false);
             }
         }
     }
@@ -143,5 +148,9 @@ void UpgradeCard::update(const AbstractData* data)
 
 const AbstractData* UpgradeCard::getCardData() const
 {
-    return _data;
+    if (_icon) {
+        return _icon->getCardData();
+    }
+    
+    return nullptr;
 }

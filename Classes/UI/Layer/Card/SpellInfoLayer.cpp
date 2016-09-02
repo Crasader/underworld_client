@@ -16,6 +16,7 @@
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "AbstractData.h"
+#include "AbstractProperty.h"
 
 using namespace std;
 
@@ -174,7 +175,7 @@ void SpellInfoLayer::update(const AbstractData* data)
         }
         
         if (_description) {
-            _description->setString(data ? data->getDescription() : "");
+            _description->setString(data ? data->getProperty()->getDescription() : "");
         }
         
         for (int i = 0; i < _properties.size(); ++i) {

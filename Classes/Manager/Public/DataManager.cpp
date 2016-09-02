@@ -9,8 +9,11 @@
 #include "DataManager.h"
 #include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
+#include "ObjectUtils.h"
 #include "LocalHelper.h"
 #include "LevelProperty.h"
+#include "AbstractProperty.h"
+#include "AbstractUpgradeProperty.h"
 #include "CardProperty.h"
 #include "CardUpgradeProperty.h"
 #include "RuneProperty.h"
@@ -59,8 +62,7 @@ static DataManager *s_pSharedInstance = nullptr;
 
 DataManager* DataManager::getInstance()
 {
-    if (!s_pSharedInstance)
-    {
+    if (!s_pSharedInstance) {
         s_pSharedInstance = new (nothrow) DataManager();
         CCASSERT(s_pSharedInstance, "FATAL: Not enough memory");
     }
@@ -70,11 +72,7 @@ DataManager* DataManager::getInstance()
 
 void DataManager::purge()
 {
-    if (s_pSharedInstance)
-    {
-        delete s_pSharedInstance;
-        s_pSharedInstance = nullptr;
-    }
+    CC_SAFE_DELETE(s_pSharedInstance);
 }
 
 DataManager::DataManager()
@@ -185,6 +183,38 @@ const set<int>& DataManager::getCardDecks() const
 }
 
 #pragma mark development
+const AbstractProperty* DataManager::getProperty(int oid) const
+{
+    auto type(ObjectUtils::getType(oid));
+    switch (type) {
+        case ObjectUtils::Type::CARD:
+            return getCardProperty(oid);
+        case ObjectUtils::Type::SKILL:
+            return getSkillProperty(oid);
+        case ObjectUtils::Type::RUNE:
+            return getRuneProperty(oid);
+        case ObjectUtils::Type::BOOK:
+            return getSkillBookProperty(oid);
+        default:
+            return nullptr;
+    }
+}
+
+const AbstractUpgradeProperty* DataManager::getUpgradeProperty(int oid, int level) const
+{
+    auto type(ObjectUtils::getType(oid));
+    switch (type) {
+        case ObjectUtils::Type::CARD:
+            return getCardUpgradeProperty(oid, level);
+        case ObjectUtils::Type::SKILL:
+            return getSkillUpgradeProperty(oid, level);
+        case ObjectUtils::Type::RUNE:
+            return getRuneUpgradeProperty(oid, level);
+        default:
+            return nullptr;
+    }
+}
+
 const CardProperty* DataManager::getCardProperty(int cardId) const
 {
     return getMapValue(_cards, cardId);

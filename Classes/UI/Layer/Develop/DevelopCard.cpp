@@ -10,7 +10,6 @@
 #include "CocosUtils.h"
 #include "DevelopUI.h"
 #include "DeckCard.h"
-#include "DataManager.h"
 #include "AbstractData.h"
 #include "CardUpgradeProperty.h"
 #include "SkillUpgradeProperty.h"
@@ -112,14 +111,22 @@ void DevelopCard::update(const AbstractData* data)
     
     int total(0);
     if (data) {
-        auto cardUp(DataManager::getInstance()->getCardUpgradeProperty(data->getId(), data->getLevel()));
-        if (cardUp) {
-            total = cardUp->getCardCost();
-        } else {
-            auto skillUp(DataManager::getInstance()->getSkillUpgradeProperty(data->getId(), data->getLevel()));
-            if (skillUp) {
-                total = skillUp->getBookCost().second;
+        switch (data->getType()) {
+            case ObjectUtils::Type::CARD: {
+                auto up(dynamic_cast<const CardUpgradeProperty*>(data->getUpgradeProperty()));
+                if (up) {
+                    total = up->getCardCost();
+                }
             }
+                break;
+            case ObjectUtils::Type::SKILL: {
+                auto up(dynamic_cast<const SkillUpgradeProperty*>(data->getUpgradeProperty()));
+                if (up) {
+                    total = up->getBookCost().second;
+                }
+            }
+            default:
+                break;
         }
     }
     

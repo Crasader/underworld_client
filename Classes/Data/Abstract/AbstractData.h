@@ -11,8 +11,10 @@
 
 #include "json/document.h"
 #include <string>
+#include "ObjectUtils.h"
 
 class AbstractProperty;
+class AbstractUpgradeProperty;
 
 class AbstractData
 {
@@ -22,16 +24,17 @@ public:
     
     void update(const rapidjson::Value& jsonDict);
     
+    ObjectUtils::Type getType() const;
     int getDbId() const;
     int getId() const;
     int getLevel() const;
     int getAmount() const;
-    
-    virtual const AbstractProperty* getProperty() const = 0;
+    const AbstractProperty* getProperty() const;
+    const AbstractUpgradeProperty* getUpgradeProperty() const;
+    const AbstractUpgradeProperty* getNextLevelUpgradeProperty() const;
     
     // TODO: remove test code
-    virtual const std::string& getName() const = 0;
-    virtual const std::string& getDescription() const = 0;
+    virtual const std::string& getName() const;
     
 protected:
     void json2Int(const rapidjson::Value& jsonDict, const char* key, int& output);

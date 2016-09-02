@@ -9,9 +9,8 @@
 #ifndef RuneBagLayer_h
 #define RuneBagLayer_h
 
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
 #include "RuneNode.h"
+#include "ObjectUtils.h"
 
 USING_NS_CC;
 
@@ -29,7 +28,7 @@ class RuneBagLayer
 , public RuneNodeObserver
 {
 public:
-    static RuneBagLayer* create(const RuneData* data);
+    static RuneBagLayer* create(ObjectUtils::RuneType type, const RuneData* data);
     virtual ~RuneBagLayer();
     void registerObserver(RuneBagLayerObserver *observer);
     
@@ -37,7 +36,7 @@ private:
     RuneBagLayer();
     
     // LayerColor
-    bool init(const RuneData* data);
+    bool init(ObjectUtils::RuneType type, const RuneData* data);
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
@@ -45,7 +44,7 @@ private:
     virtual void onRuneNodeClicked(RuneNode* pSender) override;
     
     void update(const RuneData* data);
-    void initRunes();
+    void initRunes(ObjectUtils::RuneType type);
     float getHeight(size_t count, float spaceY) const;
     Point getPosition(int row, int column) const;
     

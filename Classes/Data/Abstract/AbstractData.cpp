@@ -8,6 +8,9 @@
 
 #include "AbstractData.h"
 #include "cocostudio/CocoStudio.h"
+#include "DataManager.h"
+#include "AbstractProperty.h"
+#include "AbstractUpgradeProperty.h"
 
 using namespace cocostudio;
 
@@ -30,6 +33,11 @@ void AbstractData::update(const rapidjson::Value& jsonDict)
     json2Int(jsonDict, "amount", _amount);
 }
 
+ObjectUtils::Type AbstractData::getType() const
+{
+    return ObjectUtils::getType(_id);
+}
+
 int AbstractData::getDbId() const
 {
     return _dbId;
@@ -48,6 +56,31 @@ int AbstractData::getLevel() const
 int AbstractData::getAmount() const
 {
     return _amount;
+}
+
+const AbstractProperty* AbstractData::getProperty() const
+{
+    return DataManager::getInstance()->getProperty(_id);
+}
+
+const AbstractUpgradeProperty* AbstractData::getUpgradeProperty() const
+{
+    return DataManager::getInstance()->getUpgradeProperty(_id, _level);
+}
+
+const AbstractUpgradeProperty* AbstractData::getNextLevelUpgradeProperty() const
+{
+    return DataManager::getInstance()->getUpgradeProperty(_id, _level + 1);
+}
+
+const std::string& AbstractData::getName() const
+{
+    auto property(getProperty());
+    if (property) {
+        return property->getName();
+    }
+    
+    return AbstractProperty::EmptyString;
 }
 
 void AbstractData::json2Int(const rapidjson::Value& jsonDict, const char* key, int& output)

@@ -34,6 +34,7 @@ public:
     void update(const RuneData* data);
     const RuneData* getData() const;
     void select(bool selected);
+    void showAmount(bool show);
     void setIdx(int idx);
     int getIdx() const;
     

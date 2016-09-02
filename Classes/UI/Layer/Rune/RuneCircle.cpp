@@ -48,6 +48,8 @@ bool RuneCircle::init()
         setContentSize(size);
         bg->setPosition(size.width / 2, size.height / 2);
         
+        createNodes();
+        
         return true;
     }
     
@@ -59,10 +61,18 @@ void RuneCircle::registerObserver(RuneCircleObserver *observer)
     _observer = observer;
 }
 
-void RuneCircle::setData(const vector<const RuneData*>& datas)
+void RuneCircle::setData(int idx, const RuneData* data)
 {
-    for (int i = 0; i < datas.size(); ++i) {
-        auto node = RuneNode::create(datas.at(i));
+    if (_nodes.size() > idx) {
+        _nodes.at(idx)->update(data);
+    }
+}
+
+void RuneCircle::createNodes()
+{
+    for (int i = 0; i < CARD_RUNES_COUNT; ++i) {
+        auto node = RuneNode::create(nullptr);
+        node->showAmount(false);
         node->registerObserver(this);
         node->setIdx(i);
         _circle->addChild(node);

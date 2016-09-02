@@ -32,11 +32,8 @@ public:
     bool isHero() const;
     int getCost() const;
     int getQuality() const;
+    // TODO: remove test code
     virtual const std::string& getName() const override;
-    virtual const std::string& getDescription() const override;
-    const std::string& getUnlockInfo() const;
-    
-    virtual const AbstractProperty* getProperty() const override;
     
 private:
     const UnderWorld::Core::HMMCardType* _cardType;

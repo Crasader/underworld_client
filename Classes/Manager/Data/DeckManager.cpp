@@ -164,12 +164,17 @@ void DeckManager::getCardDetail(int cardId, const function<void(const CardData*)
     if (data) {
         auto detail(getCardDetail(cardId));
         if (!detail) {
-            NetworkApi::getCardDetail(data->getDbId(), [this, callback](long code, const rapidjson::Value& jsonDict) {
-                auto data = updateCardData(jsonDict);
-                if (callback) {
-                    callback(data);
-                }
-            });
+            // the card not found
+            if (data->getLevel() > 1 || data->getAmount() > 0) {
+                NetworkApi::getCardDetail(data->getDbId(), [this, callback](long code, const rapidjson::Value& jsonDict) {
+                    auto data = updateCardData(jsonDict);
+                    if (callback) {
+                        callback(data);
+                    }
+                });
+            } else {
+                
+            }
         } else if (callback) {
             callback(detail);
         }
@@ -215,7 +220,6 @@ void DeckManager::getRunesList(const std::function<void()>& callback)
                     auto data = new (nothrow) RuneGroupData(value);
                     auto dbId(data->getDbId());
                     _runeGroups.insert(make_pair(dbId, data));
-                    _sortedRuneGroups.push_back(data);
                 }
             }
             
@@ -228,11 +232,12 @@ void DeckManager::getRunesList(const std::function<void()>& callback)
     }
 }
 
-void DeckManager::imbedRune(int cardId, int runeIdx, int runeGroupIdx, const function<void()>& callback)
+void DeckManager::imbedRune(int cardId, int runeIdx, int dbId, const function<void()>& callback)
 {
     auto data(getCardDetail(cardId));
-    if (data && _sortedRuneGroups.size() > runeGroupIdx) {
-        NetworkApi::imbedRune(data->getDbId(), runeIdx, _sortedRuneGroups.at(runeGroupIdx)->getDbId(), [=](long code, const rapidjson::Value& jsonDict) {
+    if (data) {
+        CC_ASSERT(_runeGroups.find(dbId) != end(_runeGroups));
+        NetworkApi::imbedRune(data->getDbId(), runeIdx, dbId, [=](long code, const rapidjson::Value& jsonDict) {
             updateRune(cardId, runeIdx, jsonDict);
             updateRuneGroups(jsonDict);
             
@@ -286,19 +291,17 @@ void DeckManager::upgradeRune(int cardId, int runeIdx, const function<void()>& c
     }
 }
 
-void DeckManager::compoundRune(int runeGroupIdx, const function<void()>& callback)
+void DeckManager::compoundRune(int dbId, const function<void()>& callback)
 {
-    if (_sortedRuneGroups.size() > runeGroupIdx) {
-        auto data(_sortedRuneGroups.at(runeGroupIdx));
-        NetworkApi::compoundRune(data->getDbId(), [=](long code, const rapidjson::Value& jsonDict) {
-            ResourceManager::getInstance()->updateResources(jsonDict);
-            updateRuneGroups(jsonDict);
-            
-            if (callback) {
-                callback();
-            }
-        });
-    }
+    CC_ASSERT(_runeGroups.find(dbId) != end(_runeGroups));
+    NetworkApi::compoundRune(dbId, [=](long code, const rapidjson::Value& jsonDict) {
+        ResourceManager::getInstance()->updateResources(jsonDict);
+        updateRuneGroups(jsonDict);
+        
+        if (callback) {
+            callback();
+        }
+    });
 }
 
 #pragma mark - sort
@@ -403,9 +406,9 @@ const vector<int>& DeckManager::getUnfoundCards() const
 }
 
 #pragma mark - rune
-const vector<const RuneGroupData*>& DeckManager::getRuneGroups() const
+const unordered_map<int, RuneGroupData*>& DeckManager::getRuneGroups() const
 {
-    return _sortedRuneGroups;
+    return _runeGroups;
 }
 
 #pragma mark - offline functions
@@ -582,7 +585,11 @@ void DeckManager::updateRuneGroup(const rapidjson::Value& jsonDict)
     if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
         auto dbId(DICTOOL->getIntValue_json(jsonDict, key));
         if (_runeGroups.find(dbId) != end(_runeGroups)) {
-            _runeGroups.at(dbId)->update(jsonDict);
+            auto data(_runeGroups.at(dbId));
+            data->update(jsonDict);
+            if (data->getAmount() <= 0) {
+                _runeGroups.erase(dbId);
+            }
         } else {
             _runeGroups.insert(make_pair(dbId, new (nothrow) RuneGroupData(jsonDict)));
         }
@@ -598,13 +605,4 @@ void DeckManager::updateRuneGroups(const rapidjson::Value& jsonDict)
             updateRuneGroup(value);
         }
     }
-}
-
-const RuneGroupData* DeckManager::getRuneGroupData(int dbId) const
-{
-    if (_runeGroups.find(dbId) != end(_runeGroups)) {
-        return _runeGroups.at(dbId);
-    }
-    
-    return nullptr;
 }
