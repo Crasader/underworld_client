@@ -10,6 +10,8 @@
 #define CardData_h
 
 #include "CardSimpleData.h"
+#include <vector>
+#include <unordered_map>
 
 class SkillData;
 class RuneData;
@@ -18,6 +20,7 @@ class CardData : public CardSimpleData
 {
 public:
     CardData(const rapidjson::Value& jsonDict);
+    CardData(const CardSimpleData& instance);
     virtual ~CardData();
     
     void update(const rapidjson::Value& jsonDict);

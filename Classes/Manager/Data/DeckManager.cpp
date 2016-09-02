@@ -14,6 +14,7 @@
 #include "CardData.h"
 #include "RuneData.h"
 #include "RuneGroupData.h"
+#include "CardProperty.h"
 #include "NetworkApi.h"
 #include "ResourceManager.h"
 
@@ -164,8 +165,7 @@ void DeckManager::getCardDetail(int cardId, const function<void(const CardData*)
     if (data) {
         auto detail(getCardDetail(cardId));
         if (!detail) {
-            // the card not found
-            if (data->getLevel() > 1 || data->getAmount() > 0) {
+            if (data->isValid()) {
                 NetworkApi::getCardDetail(data->getDbId(), [this, callback](long code, const rapidjson::Value& jsonDict) {
                     auto data = updateCardData(jsonDict);
                     if (callback) {
@@ -173,7 +173,12 @@ void DeckManager::getCardDetail(int cardId, const function<void(const CardData*)
                     }
                 });
             } else {
-                
+                // the card not found
+                auto detail = new (nothrow) CardData(*data);
+                _cardDetails.insert(make_pair(cardId, detail));
+                if (callback) {
+                    callback(detail);
+                }
             }
         } else if (callback) {
             callback(detail);
@@ -507,8 +512,8 @@ void DeckManager::sortCards(SortType type, vector<int>& cards) const
     static const auto elixirSort = [this](int c1, int c2) {
         auto d1 = getCardData(c1);
         auto d2 = getCardData(c2);
-        auto cost1 = d1 ? d1->getCost() : 0;
-        auto cost2 = d2 ? d2->getCost() : 0;
+        auto cost1 = d1 ? dynamic_cast<const CardProperty*>(d1->getProperty())->getCost() : 0;
+        auto cost2 = d2 ? dynamic_cast<const CardProperty*>(d2->getProperty())->getCost() : 0;
         if (cost1 == cost2) {
             return defaultSort(c1, c2);
         }

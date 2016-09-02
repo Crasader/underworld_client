@@ -9,9 +9,12 @@
 #include "CardProperty.h"
 #include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
+#include "DataManager.h"
+#include "GameConstants.h"
 
 CardProperty::CardProperty(tinyxml2::XMLElement *xmlElement)
 :AbstractProperty(xmlElement)
+,_cardType(nullptr)
 ,_rarity(0)
 ,_beUnlockedLevel(0)
 ,_beRequiredCount(0)
@@ -19,6 +22,11 @@ CardProperty::CardProperty(tinyxml2::XMLElement *xmlElement)
 ,_donateExp(0)
 ,_donatePoint(0)
 {
+    _cardType = DataManager::getInstance()->getGameModeHMM()->findCardTypeById(getId());
+    if (_cardType) {
+        _name = _cardType->getName();
+    }
+    
     attribute2Int(xmlElement, "grade", _rarity);
     attribute2Int(xmlElement, "unlock", _beUnlockedLevel);
     attribute2Int(xmlElement, "require", _beRequiredCount);
@@ -66,6 +74,33 @@ CardProperty::CardProperty(tinyxml2::XMLElement *xmlElement)
 }
 
 CardProperty::~CardProperty() {}
+
+UnderWorld::Core::HMMCardClass CardProperty::getCardClass() const
+{
+    if (_cardType) {
+        return _cardType->getCardClass();
+    }
+    
+    return UnderWorld::Core::HMMCardClass::HHMCARD_CLASS_COUNT;
+}
+
+bool CardProperty::isHero() const
+{
+    return UnderWorld::Core::HMMCardClass::kHMMCardClass_Hero == getCardClass();
+}
+
+int CardProperty::getCost() const
+{
+    if (_cardType) {
+        const auto& costs(_cardType->getCost());
+        auto iter(costs.find(RES_NAME_WOOD));
+        if (iter != end(costs)) {
+            return UnderWorld::Core::GameConstants::microres2Res(iter->second);
+        }
+    }
+    
+    return 0;
+}
 
 int CardProperty::getRarity() const
 {

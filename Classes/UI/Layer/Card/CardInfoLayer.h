@@ -20,6 +20,7 @@ class UniversalBoard;
 class DevelopCard;
 class CardPropertyNode;
 class PureNode;
+class UniversalButton;
 class CardData;
 
 class CardInfoLayerObserver
@@ -84,6 +85,7 @@ private:
     std::vector<CardPropertyNode*> _cardProperties;
     std::vector<Label*> _runeProperties;
     std::vector<UpgradeCard*> _skillCards;
+    std::vector<UniversalButton*> _opButtons;
     const CardData* _data;
 };
 

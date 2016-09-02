@@ -115,12 +115,14 @@ void CardInfoLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 #pragma mark - RuneCircleObserver
 void CardInfoLayer::onRuneCircleClicked(RuneNode* node, int idx)
 {
-    if (_selectedRune) {
-        _selectedRune->select(false);
+    if (_data && _data->isValid()) {
+        if (_selectedRune) {
+            _selectedRune->select(false);
+        }
+        
+        node->select(true);
+        _selectedRune = node;
     }
-    
-    node->select(true);
-    _selectedRune = node;
 }
 
 #pragma mark - RuneBagLayerObserver
@@ -421,6 +423,7 @@ void CardInfoLayer::createOpButtons(Node* node)
         node->addChild(button);
         const auto& bsize(button->getContentSize());
         button->setPosition(size.width - ((edge.x + bsize.width) * (i + 1) - bsize.width / 2), edge.y + bsize.height / 2);
+        _opButtons.push_back(button);
     }
 }
 
@@ -450,7 +453,7 @@ void CardInfoLayer::update(const CardData* data)
         _data = data;
         
         if (_board) {
-            _board->setTitle(data ? data->getName() : "");
+            _board->setTitle(data ? data->getProperty()->getName() : "");
         }
         
         if (_profession) {
@@ -471,7 +474,8 @@ void CardInfoLayer::update(const CardData* data)
         _level->setString(data ? StringUtils::format("LV.%d", data->getLevel()) : "");
     }
     
-    if (data) {
+    const bool show(data && data->isValid());
+    if (show) {
         const auto& skills(data->getSkills());
         int cnt((int)skills.size());
         for (int i = 0; i < cnt; ++i) {
@@ -500,15 +504,23 @@ void CardInfoLayer::update(const CardData* data)
                 CC_ASSERT(false);
             }
         }
-        
-        if (_runeCircle) {
-            for (int i = 0; i < CARD_RUNES_COUNT; ++i) {
-                _runeCircle->setData(i, data->getRune(i));
-            }
-        }
     } else {
         for (auto node : _skillCards) {
             node->setVisible(false);
         }
+        
+        if (_upgradeButton) {
+            _upgradeButton->setEnabled(false);
+        }
+    }
+    
+    if (_runeCircle) {
+        for (int i = 0; i < CARD_RUNES_COUNT; ++i) {
+            _runeCircle->setData(i, show ? data->getRune(i) : nullptr);
+        }
+    }
+    
+    for (auto button : _opButtons) {
+        button->setEnabled(show);
     }
 }

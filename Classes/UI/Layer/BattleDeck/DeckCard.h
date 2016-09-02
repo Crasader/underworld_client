@@ -47,6 +47,7 @@ private:
     Sprite* _icon;
     Node* _costNode;
     Label* _cost;
+    Label* _level;
     Sprite* _qualityBox;
     const AbstractData* _data;
     bool _touchInvalid;

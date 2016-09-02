@@ -9,8 +9,6 @@
 #include "AbstractData.h"
 #include "cocostudio/CocoStudio.h"
 #include "DataManager.h"
-#include "AbstractProperty.h"
-#include "AbstractUpgradeProperty.h"
 
 using namespace cocostudio;
 
@@ -58,6 +56,11 @@ int AbstractData::getAmount() const
     return _amount;
 }
 
+bool AbstractData::isValid() const
+{
+    return (_level > 1 || _amount > 0 || (ObjectUtils::Type::CARD != getType()));
+}
+
 const AbstractProperty* AbstractData::getProperty() const
 {
     return DataManager::getInstance()->getProperty(_id);
@@ -71,16 +74,6 @@ const AbstractUpgradeProperty* AbstractData::getUpgradeProperty() const
 const AbstractUpgradeProperty* AbstractData::getNextLevelUpgradeProperty() const
 {
     return DataManager::getInstance()->getUpgradeProperty(_id, _level + 1);
-}
-
-const std::string& AbstractData::getName() const
-{
-    auto property(getProperty());
-    if (property) {
-        return property->getName();
-    }
-    
-    return AbstractProperty::EmptyString;
 }
 
 void AbstractData::json2Int(const rapidjson::Value& jsonDict, const char* key, int& output)

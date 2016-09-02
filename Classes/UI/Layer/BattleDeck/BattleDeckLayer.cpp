@@ -13,6 +13,7 @@
 #include "BattleDeckUI.h"
 #include "DeckData.h"
 #include "CardData.h"
+#include "CardProperty.h"
 #include "Board.h"
 #include "PureScale9Sprite.h"
 #include "TabButton.h"
@@ -410,7 +411,7 @@ void BattleDeckLayer::updateAverageElixir()
             if (card) {
                 auto data = DeckManager::getInstance()->getCardData(card->getCardId());
                 if (data) {
-                    total += data->getCost();
+                    total += dynamic_cast<const CardProperty*>(data->getProperty())->getCost();
                 }
             }
         }
@@ -422,7 +423,7 @@ void BattleDeckLayer::updateAverageElixir()
 #pragma mark - Info
 void BattleDeckLayer::showInfo(const CardData* data)
 {
-    if (UnderWorld::Core::HMMCardClass::kHMMCardClass_Spell == data->getCardClass()) {
+    if (UnderWorld::Core::HMMCardClass::kHMMCardClass_Spell == dynamic_cast<const CardProperty*>(data->getProperty())->getCardClass()) {
         auto layer = SpellInfoLayer::create(data);
         layer->registerObserver(this);
         addChild(layer);
@@ -460,7 +461,7 @@ void BattleDeckLayer::beginEdit(const CardSimpleData* data)
         _usedCardPoint = _usedCard->getPosition();
         
         vector<DeckCard*> temp;
-        if (data->isHero()) {
+        if (dynamic_cast<const CardProperty*>(data->getProperty())->isHero()) {
             for (int i = 0; i < DeckData::HeroCount; ++i) {
                 temp.push_back(_deckCards.at(i));
             }
@@ -502,8 +503,8 @@ void BattleDeckLayer::exchangeCard(int idxFrom, int idxTo)
     if (isIdxValid(idxFrom) && isIdxValid(idxTo)) {
         auto from(_deckCards.at(idxFrom));
         auto to(_deckCards.at(idxTo));
-        auto fdata(dynamic_cast<const CardSimpleData*>(from->getCardData()));
-        auto tdata(dynamic_cast<const CardSimpleData*>(to->getCardData()));
+        auto fdata(dynamic_cast<const CardProperty*>(from->getCardData()->getProperty()));
+        auto tdata(dynamic_cast<const CardProperty*>(to->getCardData()->getProperty()));
         CC_ASSERT(fdata && tdata);
         if (fdata->isHero() == tdata->isHero()) {
             DeckManager::getInstance()->exchangeCard(fdata->getId(), tdata->getId());
@@ -528,8 +529,8 @@ void BattleDeckLayer::useCard(int idx, bool fromDeck)
     CC_ASSERT(_usedCard);
     if (_usedCard && isIdxValid(idx)) {
         auto replaced(_deckCards.at(idx));
-        auto udata(dynamic_cast<const CardSimpleData*>(_usedCard->getCardData()));
-        auto rdata(dynamic_cast<const CardSimpleData*>(replaced->getCardData()));
+        auto udata(dynamic_cast<const CardProperty*>(_usedCard->getCardData()->getProperty()));
+        auto rdata(dynamic_cast<const CardProperty*>(replaced->getCardData()->getProperty()));
         CC_ASSERT(udata && rdata);
         if (udata->isHero() == rdata->isHero()) {
             if (_cardPreview) {

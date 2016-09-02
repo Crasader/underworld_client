@@ -13,6 +13,7 @@
 #include "DataManager.h"
 #include "CardConfigData.h"
 #include "CardSimpleData.h"
+#include "CardProperty.h"
 #include "CCShake.h"
 
 using namespace std;
@@ -34,6 +35,7 @@ DeckCard::DeckCard()
 ,_icon(nullptr)
 ,_costNode(nullptr)
 ,_cost(nullptr)
+,_level(nullptr)
 ,_qualityBox(nullptr)
 ,_data(nullptr)
 ,_touchInvalid(false)
@@ -74,6 +76,14 @@ bool DeckCard::init(const AbstractData* data)
         _cost->setPosition(csize.width / 2, csize.height / 2 + offsetY / 2);
         _costNode->addChild(_cost);
         
+        auto label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE, DEFAULT_NUMBER_FONT);
+        label->setTextColor(Color4B::ORANGE);
+        label->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
+        label->setAnchorPoint(Point::ANCHOR_MIDDLE);
+        label->setPosition(Width / 2, label->getContentSize().height / 2 + offsetY);
+        _icon->addChild(label);
+        _level = label;
+        
         setTouchEnabled(true);
         setSwallowTouches(false);
         CocosUtils::fixWidgetTouchEvent(this, _touchInvalid, [this](Ref*, ui::Widget::TouchEventType type) {
@@ -111,16 +121,20 @@ void DeckCard::update(const AbstractData* data)
             _icon->setTexture(cd->getIcon());
         }
         
-        auto csData(dynamic_cast<const CardSimpleData*>(data));
-        if (csData) {
-            _costNode->setVisible(data ? !csData->isHero() : false);
-            _cost->setString(data ? StringUtils::format("%d", csData->getCost()) : "");
+        auto property(dynamic_cast<const CardProperty*>(data->getProperty()));
+        if (property) {
+            _costNode->setVisible(data ? !property->isHero() : false);
+            _cost->setString(data ? StringUtils::format("%d", property->getCost()) : "");
         } else {
             _costNode->setVisible(false);
         }
         
         if (false) {
             _qualityBox->setTexture(CocosUtils::getResourcePath("ui_quality_box_blue.png"));
+        }
+        
+        if (_level) {
+            _level->setString((data && data->isValid()) ? StringUtils::format("LV.%d", data->getLevel()) : "");
         }
     }
 }

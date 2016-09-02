@@ -12,8 +12,15 @@
 #include "AbstractProperty.h"
 #include "CocosGlobal.h"
 #include "ObjectUtils.h"
+#include "GameModeHMM.h"
 #include <vector>
 #include <unordered_map>
+
+namespace UnderWorld {
+    namespace Core {
+        class HMMCardType;
+    }
+}
 
 class CardProperty : public AbstractProperty
 {
@@ -21,6 +28,9 @@ public:
     CardProperty(tinyxml2::XMLElement *xmlElement);
     virtual ~CardProperty();
     
+    UnderWorld::Core::HMMCardClass getCardClass() const;
+    bool isHero() const;
+    int getCost() const;
     int getRarity() const;
     int getBeUnlockedLevel() const;
     int getBeRequiredCount() const;
@@ -32,6 +42,7 @@ public:
     ObjectUtils::RuneType getRuneType(int idx) const;
     
 private:
+    const UnderWorld::Core::HMMCardType* _cardType;
     int _rarity;
     int _beUnlockedLevel;
     int _beRequiredCount;

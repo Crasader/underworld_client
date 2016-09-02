@@ -44,6 +44,7 @@ private:
     DevelopCardObserver* _observer;
     DeckCard* _icon;
     bool _touchInvalid;
+    Node* _ptBackground;
     ProgressTimer* _pt;
     Label* _amount;
     Sprite* _arrow;

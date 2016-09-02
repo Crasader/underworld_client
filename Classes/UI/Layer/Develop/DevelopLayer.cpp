@@ -13,6 +13,7 @@
 #include "LocalHelper.h"
 #include "Board.h"
 #include "CardData.h"
+#include "CardProperty.h"
 
 using namespace std;
 using namespace ui;
@@ -102,7 +103,7 @@ void DevelopLayer::onCardPreviewClickedOpButton(DeckCardOpType type, const Abstr
 {
     if (DeckCardOpType::Upgrade == type || DeckCardOpType::Info == type) {
         DeckManager::getInstance()->getCardDetail(data->getId(), [this](const CardData* data) {
-            if (UnderWorld::Core::HMMCardClass::kHMMCardClass_Spell == data->getCardClass()) {
+            if (UnderWorld::Core::HMMCardClass::kHMMCardClass_Spell == dynamic_cast<const CardProperty*>(data->getProperty())->getCardClass()) {
                 auto layer = SpellInfoLayer::create(data);
                 layer->registerObserver(this);
                 addChild(layer);

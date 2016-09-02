@@ -16,8 +16,6 @@ namespace tinyxml2 { class XMLElement; }
 class AbstractProperty
 {
 public:
-    static std::string EmptyString;
-    
     AbstractProperty(tinyxml2::XMLElement* xmlElement);
     virtual ~AbstractProperty() = 0;
     
@@ -31,6 +29,9 @@ protected:
     
 private:
     int _id;
+    
+    // TODO: change "protected" to "private"
+protected:
     std::string _name;
     std::string _description;
 };

@@ -10,14 +10,6 @@
 #define CardSimpleData_h
 
 #include "AbstractData.h"
-#include <string>
-#include "GameModeHMM.h"
-
-namespace UnderWorld {
-    namespace Core {
-        class HMMCardType;
-    }
-}
 
 class CardSimpleData : public AbstractData
 {
@@ -28,15 +20,6 @@ public:
     bool operator==(const CardSimpleData& instance) const;
     
     void update(const rapidjson::Value& jsonDict);
-    UnderWorld::Core::HMMCardClass getCardClass() const;
-    bool isHero() const;
-    int getCost() const;
-    int getQuality() const;
-    // TODO: remove test code
-    virtual const std::string& getName() const override;
-    
-private:
-    const UnderWorld::Core::HMMCardType* _cardType;
 };
 
 #endif /* CardSimpleData_h */

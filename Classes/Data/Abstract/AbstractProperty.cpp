@@ -11,8 +11,6 @@
 
 using namespace std;
 
-string AbstractProperty::EmptyString = "";
-
 AbstractProperty::AbstractProperty(tinyxml2::XMLElement *xmlElement)
 :_id(0)
 {

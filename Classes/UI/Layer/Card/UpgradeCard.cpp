@@ -11,6 +11,7 @@
 #include "ResourceButton.h"
 #include "CocosUtils.h"
 #include "AbstractData.h"
+#include "AbstractProperty.h"
 #include "AbstractUpgradeProperty.h"
 
 using namespace std;
@@ -32,8 +33,7 @@ UpgradeCard::UpgradeCard()
 ,_icon(nullptr)
 ,_touchInvalid(false)
 ,_name(nullptr)
-,_button(nullptr)
-,_data(nullptr) {}
+,_button(nullptr) {}
 
 UpgradeCard::~UpgradeCard()
 {
@@ -116,31 +116,38 @@ void UpgradeCard::registerObserver(UpgradeCardObserver *observer)
 
 void UpgradeCard::update(const AbstractData* data)
 {
-    if (_data != data) {
-        _data = data;
-        
-        if (_icon) {
-            _icon->update(data);
-        }
-        
-        if (_name) {
-            _name->setString(data ? data->getName() : "");
-        }
+    if (_icon) {
+        _icon->update(data);
     }
     
-    if (data) {
-        auto up(data->getUpgradeProperty());
-        if (up) {
-            const auto& pair(up->getResourceCost());
-            if (pair.first != ResourceType::MAX) {
-                _button->setType(pair.first);
-                _button->setCount(pair.second);
-                _button->setEnabled(_icon ? _icon->canUpgrade() : false);
-                // TODO: if has enough resource
-                static const bool enoughResource(true);
-                _button->setResourceEnough(enoughResource);
-            } else {
-                CC_ASSERT(false);
+    const bool show(data ? data->isValid() : false);
+    if (_name) {
+        _name->setVisible(show);
+    }
+    
+    if (_button) {
+        _button->setVisible(show);
+    }
+    
+    if (show) {
+        if (_name) {
+            _name->setString(data ? data->getProperty()->getName() : "");
+        }
+        
+        if (data) {
+            auto up(data->getUpgradeProperty());
+            if (up) {
+                const auto& pair(up->getResourceCost());
+                if (pair.first != ResourceType::MAX) {
+                    _button->setType(pair.first);
+                    _button->setCount(pair.second);
+                    _button->setEnabled(_icon ? _icon->canUpgrade() : false);
+                    // TODO: if has enough resource
+                    static const bool enoughResource(true);
+                    _button->setResourceEnough(enoughResource);
+                } else {
+                    CC_ASSERT(false);
+                }
             }
         }
     }

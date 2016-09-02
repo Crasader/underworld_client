@@ -32,6 +32,7 @@ DevelopCard::DevelopCard()
 :_observer(nullptr)
 ,_icon(nullptr)
 ,_touchInvalid(false)
+,_ptBackground(nullptr)
 ,_pt(nullptr)
 ,_amount(nullptr)
 ,_arrow(nullptr) {}
@@ -58,6 +59,7 @@ bool DevelopCard::init(const AbstractData* data)
         
         auto ptbg = Sprite::create(DevelopUI::getResourcePath("ui_tiao_27.png"));
         addChild(ptbg);
+        _ptBackground = ptbg;
         
         auto pt = ProgressTimer::create(Sprite::create(DevelopUI::getResourcePath("ui_tiao_28.png")));
         pt->setType(ProgressTimer::Type::BAR);
@@ -86,8 +88,8 @@ bool DevelopCard::init(const AbstractData* data)
         ptbg->setPosition(Point(size.width / 2, psize.height / 2));
         
         auto arrow = Sprite::create(DevelopUI::getResourcePath("icon_jiantou_4.png"));
-        arrow->setPosition(ptbg->getPosition() - Point(psize.width / 2, 0));
-        addChild(arrow);
+        arrow->setPosition(0, psize.height / 2);
+        ptbg->addChild(arrow);
         _arrow = arrow;
         
         update(data);
@@ -109,38 +111,45 @@ void DevelopCard::update(const AbstractData* data)
         _icon->update(data);
     }
     
-    int total(0);
-    if (data) {
-        switch (data->getType()) {
-            case ObjectUtils::Type::CARD: {
-                auto up(dynamic_cast<const CardUpgradeProperty*>(data->getUpgradeProperty()));
-                if (up) {
-                    total = up->getCardCost();
+    const bool show(data ? data->isValid() : false);
+    if (_ptBackground) {
+        _ptBackground->setVisible(show);
+    }
+    
+    if (show) {
+        int total(0);
+        if (data) {
+            switch (data->getType()) {
+                case ObjectUtils::Type::CARD: {
+                    auto up(dynamic_cast<const CardUpgradeProperty*>(data->getUpgradeProperty()));
+                    if (up) {
+                        total = up->getCardCost();
+                    }
                 }
-            }
-                break;
-            case ObjectUtils::Type::SKILL: {
-                auto up(dynamic_cast<const SkillUpgradeProperty*>(data->getUpgradeProperty()));
-                if (up) {
-                    total = up->getBookCost().second;
+                    break;
+                case ObjectUtils::Type::SKILL: {
+                    auto up(dynamic_cast<const SkillUpgradeProperty*>(data->getUpgradeProperty()));
+                    if (up) {
+                        total = up->getBookCost().second;
+                    }
                 }
+                default:
+                    break;
             }
-            default:
-                break;
         }
-    }
-    
-    const auto amount(data ? data->getAmount() : 0);
-    if (_pt) {
-        _pt->setPercentage(100.0f * amount / total);
-    }
-    
-    if (_amount) {
-        _amount->setString(StringUtils::format("%d/%d", amount, total));
-    }
-    
-    if (_arrow) {
-        _arrow->setVisible(amount >= total);
+        
+        const auto amount(data ? data->getAmount() : 0);
+        if (_pt) {
+            _pt->setPercentage(100.0f * amount / total);
+        }
+        
+        if (_amount) {
+            _amount->setString(StringUtils::format("%d/%d", amount, total));
+        }
+        
+        if (_arrow) {
+            _arrow->setVisible(amount >= total);
+        }
     }
 }
 

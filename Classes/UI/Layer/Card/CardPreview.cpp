@@ -206,7 +206,7 @@ void CardPreview::showOpNode(AbstractCard* card, const vector<DeckCardOpType>& t
         _opNode->setTypes(types);
         setOpNodePosition(card);
         
-        if (_foundCards->getCard(data->getId())) {
+        if (_foundCards && _foundCards->getCard(data->getId())) {
             fullyDisplayCard(card);
         }
     }

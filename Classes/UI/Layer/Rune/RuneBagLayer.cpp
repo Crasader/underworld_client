@@ -110,7 +110,7 @@ bool RuneBagLayer::init(ObjectUtils::RuneType type, const RuneData* data)
             et->setPosition(descEdge, (size.height - descSize.height) / 4);
             node->addChild(et);
             
-            auto label = CocosUtils::createLabel(data ? data->getName() : "", DEFAULT_FONT_SIZE);
+            auto label = CocosUtils::createLabel(data ? data->getProperty()->getName() : "", DEFAULT_FONT_SIZE);
             label->setAlignment(TextHAlignment::RIGHT, TextVAlignment::CENTER);
             label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
             label->setTextColor(Color4B::BLACK);
@@ -186,7 +186,7 @@ void RuneBagLayer::registerObserver(RuneBagLayerObserver *observer)
 void RuneBagLayer::update(const RuneData* data)
 {
     if (_name) {
-        _name->setString(data ? data->getName() : "");
+        _name->setString(data ? data->getProperty()->getName() : "");
     }
     
     if (_description) {

@@ -167,7 +167,7 @@ void SpellInfoLayer::update(const AbstractData* data)
         _data = data;
         
         if (_board) {
-            _board->setTitle(data ? data->getName() : "");
+            _board->setTitle(data ? data->getProperty()->getName() : "");
         }
         
         if (_icon) {

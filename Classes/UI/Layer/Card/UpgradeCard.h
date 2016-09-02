@@ -47,7 +47,6 @@ private:
     bool _touchInvalid;
     Label* _name;
     ResourceButton* _button;
-    const AbstractData* _data;
 };
 
 #endif /* UpgradeCard_h */

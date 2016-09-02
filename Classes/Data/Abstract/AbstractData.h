@@ -29,12 +29,10 @@ public:
     int getId() const;
     int getLevel() const;
     int getAmount() const;
+    bool isValid() const;
     const AbstractProperty* getProperty() const;
     const AbstractUpgradeProperty* getUpgradeProperty() const;
     const AbstractUpgradeProperty* getNextLevelUpgradeProperty() const;
-    
-    // TODO: remove test code
-    virtual const std::string& getName() const;
     
 protected:
     void json2Int(const rapidjson::Value& jsonDict, const char* key, int& output);
