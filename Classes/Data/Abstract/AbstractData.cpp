@@ -9,8 +9,14 @@
 #include "AbstractData.h"
 #include "cocostudio/CocoStudio.h"
 #include "DataManager.h"
+#include "ObjectUtils.h"
 
 using namespace cocostudio;
+
+int AbstractData::getCardId(const AbstractData* data)
+{
+    return data ? data->getId() : 0;
+}
 
 AbstractData::AbstractData(const rapidjson::Value& jsonDict)
 :_dbId(0)
@@ -31,11 +37,6 @@ void AbstractData::update(const rapidjson::Value& jsonDict)
     json2Int(jsonDict, "amount", _amount);
 }
 
-ObjectUtils::Type AbstractData::getType() const
-{
-    return ObjectUtils::getType(_id);
-}
-
 int AbstractData::getDbId() const
 {
     return _dbId;
@@ -54,11 +55,6 @@ int AbstractData::getLevel() const
 int AbstractData::getAmount() const
 {
     return _amount;
-}
-
-bool AbstractData::isValid() const
-{
-    return (_level > 1 || _amount > 0 || (ObjectUtils::Type::CARD != getType()));
 }
 
 const AbstractProperty* AbstractData::getProperty() const

@@ -11,16 +11,17 @@
 
 #include "RuneCircle.h"
 #include "RuneBagLayer.h"
-#include "UpgradeCard.h"
+#include "BaseCard.h"
 #include "SpellInfoLayer.h"
 
 USING_NS_CC;
 
 class UniversalBoard;
-class DevelopCard;
+class JuniorCard;
+class SeniorCard;
 class CardPropertyNode;
-class PureNode;
 class UniversalButton;
+class ResourceButton;
 class CardData;
 
 class CardInfoLayerObserver
@@ -35,11 +36,11 @@ class CardInfoLayer
 : public LayerColor
 , public RuneCircleObserver
 , public RuneBagLayerObserver
-, public UpgradeCardObserver
+, public BaseCardObserver
 , public SpellInfoLayerObserver
 {
 public:
-    static CardInfoLayer* create(const CardData* data);
+    static CardInfoLayer* create(int cardId, const CardData* data);
     virtual ~CardInfoLayer();
     void registerObserver(CardInfoLayerObserver *observer);
     
@@ -47,7 +48,7 @@ private:
     CardInfoLayer();
     
     // LayerColor
-    bool init(const CardData* data);
+    bool init(int cardId, const CardData* data);
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
@@ -57,9 +58,9 @@ private:
     // RuneBagLayerObserver
     virtual void onRuneBagLayerSelected(Node* pSender, RuneNode* node) override;
     
-    // UpgradeCardObserver
-    virtual void onUpgradeCardInfo(UpgradeCard* pSender) override;
-    virtual void onUpgradeCardUpgrade(UpgradeCard* pSender) override;
+    // BaseCardObserver
+    virtual void onBaseCardInfo(BaseCard* pSender) override;
+    virtual void onBaseCardUpgrade(BaseCard* pSender) override;
     
     // SpellInfoLayerObserver
     virtual void onSpellInfoLayerExit(Node* pSender) override;
@@ -70,12 +71,13 @@ private:
     void createRightNode(Node* node);
     void createOpButtons(Node* node);
     void onOpButtonClicked(int idx);
-    void update(const CardData* data);
+    void updateProperty(const AbstractProperty* property);
+    void updateData(const CardData* data);
     
 private:
     CardInfoLayerObserver* _observer;
     UniversalBoard* _board;
-    DevelopCard* _icon;
+    JuniorCard* _icon;
     Label* _level;
     Label* _profession;
     Label* _description;
@@ -84,7 +86,7 @@ private:
     ResourceButton* _upgradeButton;
     std::vector<CardPropertyNode*> _cardProperties;
     std::vector<Label*> _runeProperties;
-    std::vector<UpgradeCard*> _skillCards;
+    std::vector<SeniorCard*> _skillCards;
     std::vector<UniversalButton*> _opButtons;
     const CardData* _data;
 };

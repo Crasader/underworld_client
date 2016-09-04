@@ -17,28 +17,28 @@ string BattleDeckUI::getResourcePath(const string& file)
     return "GameImages/battle_deck_ui/" + file;
 }
 
-UniversalButton* BattleDeckUI::createButton(DeckCardOpType opType, const function<void()>& callback)
+UniversalButton* BattleDeckUI::createButton(CardOpType opType, const function<void()>& callback)
 {
     static const UniversalButton::BSize size(UniversalButton::BSize::Small);
     
     UniversalButton::BType type(UniversalButton::BType::Blue);
     string title;
     switch (opType) {
-        case DeckCardOpType::Upgrade: {
+        case CardOpType::Upgrade: {
             type = UniversalButton::BType::Green;
             title = LocalHelper::getString("ui_deck_upgrade");
         }
             break;
-        case DeckCardOpType::Use: {
+        case CardOpType::Use: {
             type = UniversalButton::BType::Green;
             title = LocalHelper::getString("ui_deck_use");
         }
             break;
-        case DeckCardOpType::Info: {
+        case CardOpType::Info: {
             title = LocalHelper::getString("ui_deck_info");
         }
             break;
-        case DeckCardOpType::Move: {
+        case CardOpType::Move: {
             type = UniversalButton::BType::Green;
             title = LocalHelper::getString("ui_deck_move");
         }

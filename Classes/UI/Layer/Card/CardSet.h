@@ -13,26 +13,26 @@
 
 USING_NS_CC;
 
-class AbstractCard;
+class BaseCard;
 
 class CardSet
 {
 public:
     virtual ~CardSet();
     
-    void insertCard(int cardId, AbstractCard* card);
+    void insertCard(int cardId, BaseCard* card);
     void removeCard(int cardId, bool cleanup);
     void pushPosition(const Point& point);
     void clear();
     
     size_t getCardsCount() const;
-    AbstractCard* getCard(int cardId) const;
+    BaseCard* getCard(int cardId) const;
     
     size_t getPositionsCount() const;
     const Point& getPosition(size_t idx) const;
     
 private:
-    std::unordered_map<int, AbstractCard*> _cards;
+    std::unordered_map<int, BaseCard*> _cards;
     std::vector<Point> _positions;
 };
 

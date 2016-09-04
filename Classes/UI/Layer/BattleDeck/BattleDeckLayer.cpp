@@ -11,6 +11,7 @@
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "BattleDeckUI.h"
+#include "DataManager.h"
 #include "DeckData.h"
 #include "CardData.h"
 #include "CardProperty.h"
@@ -130,8 +131,8 @@ void BattleDeckLayer::onTouchEnded(Touch *touch, Event *unused_event)
     }
 }
 
-#pragma mark - DeckCardObserver
-void BattleDeckLayer::onDeckCardTouched(DeckCard* touchedCard, ui::Widget::TouchEventType type)
+#pragma mark - BaseCardObserver
+void BattleDeckLayer::onBaseCardTouched(BaseCard* touchedCard, ui::Widget::TouchEventType type)
 {
     if (touchedCard && _isEditing) {
         if (ui::Widget::TouchEventType::BEGAN == type) {
@@ -163,26 +164,24 @@ void BattleDeckLayer::onDeckCardTouched(DeckCard* touchedCard, ui::Widget::Touch
     }
 }
 
-void BattleDeckLayer::onDeckCardClicked(DeckCard* pSender)
+void BattleDeckLayer::onBaseCardClicked(BaseCard* pSender)
 {
     if (_isEditing) {
         if (_usedCard && pSender != _usedCard) {
             useCard(pSender->getTag(), false);
         }
     } else if (pSender) {
-        auto cardId(pSender->getCardId());
-        auto dm(DeckManager::getInstance());
-        if (!dm->isFound(cardId)) {
-            dm->getCardDetail(cardId, [this](const CardData* data) {
-                showInfo(data);
-            });
-        } else if (_cardPreview) {
+        auto data(pSender->getCardData());
+        if (data && _cardPreview) {
+            auto cardId(data->getId());
             const bool isCandidate(getFoundCard(cardId));
-            vector<DeckCardOpType> types = {DeckCardOpType::Info};
+            vector<CardOpType> types = {CardOpType::Info};
             if (isCandidate) {
-                types.push_back(DeckCardOpType::Use);
+                types.push_back(CardOpType::Use);
             }
             _cardPreview->showOpNode(pSender, types);
+        } else {
+            showInfo(pSender->getCardId(), nullptr);
         }
     }
 }
@@ -196,20 +195,20 @@ void BattleDeckLayer::onDeckEditMaskTouched(const Point& point)
 }
 
 #pragma mark - CardPreviewObserver
-AbstractCard* BattleDeckLayer::onCardPreviewCreateCard(int cardId)
+BaseCard* BattleDeckLayer::onCardPreviewCreateCard(int cardId)
 {
     return createCard(cardId);
 }
 
-void BattleDeckLayer::onCardPreviewClickedOpButton(DeckCardOpType type, const AbstractData* data)
+void BattleDeckLayer::onCardPreviewClickedOpButton(CardOpType type, const AbstractData* data)
 {
     CC_ASSERT(data);
     auto dm(DeckManager::getInstance());
-    if (DeckCardOpType::Use == type) {
+    if (CardOpType::Use == type) {
         beginEdit(dm->getCardData(data->getId()));
-    } else if (DeckCardOpType::Info == type) {
+    } else if (CardOpType::Info == type) {
         dm->getCardDetail(data->getId(), [this](const CardData* data) {
-            showInfo(data);
+            showInfo(data->getId(), data);
         });
     }
 }
@@ -302,12 +301,12 @@ void BattleDeckLayer::createLeftNode(Node* node)
             
             static const float spaceLineCard(13);
             static const int column(DeckData::HeroCount);
-            const float cardSpaceX((subSize.width - column * DeckCard::Width) / (column + 1));
+            const float cardSpaceX((subSize.width - column * BaseCard::Width) / (column + 1));
             const float basePosX(cardSpaceX);
             for (int i = 0; i < column; ++i) {
-                const float x = basePosX + (i + 0.5) * DeckCard::Width + i * cardSpaceX;
-                const float y = line->getPositionY() - (line->getContentSize().height / 2 + spaceLineCard + DeckCard::Height / 2);
-                node->addChild(initDeckCard(Point(x, y)));
+                const float x = basePosX + (i + 0.5) * BaseCard::Width + i * cardSpaceX;
+                const float y = line->getPositionY() - (line->getContentSize().height / 2 + spaceLineCard + BaseCard::Height / 2);
+                node->addChild(initBaseCard(Point(x, y)));
             }
         }
         
@@ -348,19 +347,19 @@ void BattleDeckLayer::createLeftNode(Node* node)
             static const int column((DeckData::SoldierCount - 1) / row + 1);
             static const float cardSpaceY(13);
             
-            float posY(secondaryEdge.y + bottomBarSize.height + row * DeckCard::Height + (row - 1) * cardSpaceY + spaceLineCard + spaceBarCard);
+            float posY(secondaryEdge.y + bottomBarSize.height + row * BaseCard::Height + (row - 1) * cardSpaceY + spaceLineCard + spaceBarCard);
             auto line = createLine(false);
             line->setPosition(subSize.width / 2, posY);
             node->addChild(line);
             
             const float basePosY(posY - spaceLineCard);
-            const float cardSpaceX((subSize.width - column * DeckCard::Width) / (column + 1));
+            const float cardSpaceX((subSize.width - column * BaseCard::Width) / (column + 1));
             const float basePosX(cardSpaceX);
             for (int i = 0; i < row; ++i) {
                 for (int j = 0; j < column; ++j) {
-                    const float x = basePosX + (j + 0.5) * DeckCard::Width + j * cardSpaceX;
-                    const float y = basePosY - (i + 0.5) * DeckCard::Height - i * cardSpaceY;
-                    node->addChild(initDeckCard(Point(x, y)));
+                    const float x = basePosX + (j + 0.5) * BaseCard::Width + j * cardSpaceX;
+                    const float y = basePosY - (i + 0.5) * BaseCard::Height - i * cardSpaceY;
+                    node->addChild(initBaseCard(Point(x, y)));
                 }
             }
         }
@@ -374,10 +373,11 @@ void BattleDeckLayer::createRightNode(Node* node)
     }
 }
 
-DeckCard* BattleDeckLayer::createCard(int card)
+BaseCard* BattleDeckLayer::createCard(int card)
 {
-    auto node = DeckCard::create(DeckManager::getInstance()->getCardData(card));
+    auto node = BaseCard::create();
     node->registerObserver(this);
+    node->update(card, DeckManager::getInstance()->getCardData(card));
     return node;
 }
 
@@ -409,9 +409,9 @@ void BattleDeckLayer::updateAverageElixir()
         float total(0);
         for (auto card : _deckCards) {
             if (card) {
-                auto data = DeckManager::getInstance()->getCardData(card->getCardId());
-                if (data) {
-                    total += dynamic_cast<const CardProperty*>(data->getProperty())->getCost();
+                auto property(dynamic_cast<const CardProperty*>(card->getCardData()->getProperty()));
+                if (property) {
+                    total += property->getCost();
                 }
             }
         }
@@ -421,16 +421,21 @@ void BattleDeckLayer::updateAverageElixir()
 }
 
 #pragma mark - Info
-void BattleDeckLayer::showInfo(const CardData* data)
+void BattleDeckLayer::showInfo(int cardId, const CardData* data)
 {
-    if (UnderWorld::Core::HMMCardClass::kHMMCardClass_Spell == dynamic_cast<const CardProperty*>(data->getProperty())->getCardClass()) {
-        auto layer = SpellInfoLayer::create(data);
-        layer->registerObserver(this);
-        addChild(layer);
+    auto property(dynamic_cast<const CardProperty*>(DataManager::getInstance()->getProperty(cardId)));
+    if (property) {
+        if (UnderWorld::Core::HMMCardClass::kHMMCardClass_Spell == property->getCardClass()) {
+            auto layer = SpellInfoLayer::create(cardId, data);
+            layer->registerObserver(this);
+            addChild(layer);
+        } else {
+            auto layer = CardInfoLayer::create(cardId, data);
+            layer->registerObserver(this);
+            addChild(layer);
+        }
     } else {
-        auto layer = CardInfoLayer::create(data);
-        layer->registerObserver(this);
-        addChild(layer);
+        CC_ASSERT(false);
     }
 }
 
@@ -460,7 +465,7 @@ void BattleDeckLayer::beginEdit(const CardSimpleData* data)
         BattleDeckUI::readdChild(_deckCards.front()->getParent(), _usedCard);
         _usedCardPoint = _usedCard->getPosition();
         
-        vector<DeckCard*> temp;
+        vector<BaseCard*> temp;
         if (dynamic_cast<const CardProperty*>(data->getProperty())->isHero()) {
             for (int i = 0; i < DeckData::HeroCount; ++i) {
                 temp.push_back(_deckCards.at(i));
@@ -489,10 +494,10 @@ void BattleDeckLayer::endEdit()
     stopShake();
 }
 
-DeckCard* BattleDeckLayer::getFoundCard(int cardId) const
+BaseCard* BattleDeckLayer::getFoundCard(int cardId) const
 {
     if (_cardPreview) {
-        return dynamic_cast<DeckCard*>(_cardPreview->getFoundCard(cardId));
+        return dynamic_cast<BaseCard*>(_cardPreview->getFoundCard(cardId));
     }
     
     return nullptr;
@@ -501,10 +506,11 @@ DeckCard* BattleDeckLayer::getFoundCard(int cardId) const
 void BattleDeckLayer::exchangeCard(int idxFrom, int idxTo)
 {
     if (isIdxValid(idxFrom) && isIdxValid(idxTo)) {
+        auto dm(DataManager::getInstance());
         auto from(_deckCards.at(idxFrom));
         auto to(_deckCards.at(idxTo));
-        auto fdata(dynamic_cast<const CardProperty*>(from->getCardData()->getProperty()));
-        auto tdata(dynamic_cast<const CardProperty*>(to->getCardData()->getProperty()));
+        auto fdata(dynamic_cast<const CardProperty*>(dm->getProperty(from->getCardId())));
+        auto tdata(dynamic_cast<const CardProperty*>(dm->getProperty(to->getCardId())));
         CC_ASSERT(fdata && tdata);
         if (fdata->isHero() == tdata->isHero()) {
             DeckManager::getInstance()->exchangeCard(fdata->getId(), tdata->getId());
@@ -528,9 +534,10 @@ void BattleDeckLayer::useCard(int idx, bool fromDeck)
 {
     CC_ASSERT(_usedCard);
     if (_usedCard && isIdxValid(idx)) {
+        auto dm(DataManager::getInstance());
         auto replaced(_deckCards.at(idx));
-        auto udata(dynamic_cast<const CardProperty*>(_usedCard->getCardData()->getProperty()));
-        auto rdata(dynamic_cast<const CardProperty*>(replaced->getCardData()->getProperty()));
+        auto udata(dynamic_cast<const CardProperty*>(dm->getProperty(_usedCard->getCardId())));
+        auto rdata(dynamic_cast<const CardProperty*>(dm->getProperty(replaced->getCardId())));
         CC_ASSERT(udata && rdata);
         if (udata->isHero() == rdata->isHero()) {
             if (_cardPreview) {
@@ -590,7 +597,7 @@ bool BattleDeckLayer::isIdxValid(int idx) const
     return idx >= 0 && idx < _deckPositions.size();
 }
 
-DeckCard* BattleDeckLayer::initDeckCard(const Point& point)
+BaseCard* BattleDeckLayer::initBaseCard(const Point& point)
 {
     auto card = createCard(0);
     card->setPosition(point);
@@ -600,7 +607,7 @@ DeckCard* BattleDeckLayer::initDeckCard(const Point& point)
     return card;
 }
 
-void BattleDeckLayer::moveToDeck(DeckCard* card, int idx)
+void BattleDeckLayer::moveToDeck(BaseCard* card, int idx)
 {
     if (card && isIdxValid(idx)) {
         card->move(_deckPositions.at(idx), nullptr);
@@ -609,7 +616,7 @@ void BattleDeckLayer::moveToDeck(DeckCard* card, int idx)
     }
 }
 
-void BattleDeckLayer::shake(const vector<DeckCard*>& nodes) const
+void BattleDeckLayer::shake(const vector<BaseCard*>& nodes) const
 {
     for (auto node : nodes) {
         if (node) {
@@ -620,7 +627,7 @@ void BattleDeckLayer::shake(const vector<DeckCard*>& nodes) const
 
 void BattleDeckLayer::stopShake()
 {
-    vector<vector<DeckCard*>> nodes = {
+    vector<vector<BaseCard*>> nodes = {
         _deckCards, {_usedCard}
     };
     
@@ -635,7 +642,7 @@ void BattleDeckLayer::stopShake()
     }
 }
 
-DeckCard* BattleDeckLayer::getIntersectedCard(const DeckCard* touchedCard) const
+BaseCard* BattleDeckLayer::getIntersectedCard(const BaseCard* touchedCard) const
 {
     if (touchedCard) {
         auto card = getIntersectedCard(touchedCard, _deckCards);
@@ -649,13 +656,13 @@ DeckCard* BattleDeckLayer::getIntersectedCard(const DeckCard* touchedCard) const
     return nullptr;
 }
 
-DeckCard* BattleDeckLayer::getIntersectedCard(const DeckCard* touchedCard, const vector<DeckCard*>& cards) const
+BaseCard* BattleDeckLayer::getIntersectedCard(const BaseCard* touchedCard, const vector<BaseCard*>& cards) const
 {
     if (nullptr == touchedCard || 0 == cards.size()) {
         return nullptr;
     }
     
-    DeckCard* ret(nullptr);
+    BaseCard* ret(nullptr);
     float intersectedArea(INT_MAX);
     const auto& rect(getWorldBoundingBox(touchedCard));
     for (auto iter = begin(cards); iter != end(cards); ++iter) {
@@ -711,7 +718,7 @@ void BattleDeckLayer::loadDeck(int idx)
         for (int i = 0; i < cards.size(); ++i) {
             if (i < _deckCards.size()) {
                 const auto cardId(cards.at(i));
-                _deckCards.at(i)->update(dm->getCardData(cardId));
+                _deckCards.at(i)->update(cardId, dm->getCardData(cardId));
                 if (_cardPreview) {
                     _cardPreview->removeFoundCard(cardId, true);
                 }

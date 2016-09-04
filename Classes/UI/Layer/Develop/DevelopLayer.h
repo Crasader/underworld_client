@@ -9,7 +9,7 @@
 #ifndef DevelopLayer_h
 #define DevelopLayer_h
 
-#include "DevelopCard.h"
+#include "BaseCard.h"
 #include "CardPreview.h"
 #include "CardInfoLayer.h"
 #include "SpellInfoLayer.h"
@@ -24,7 +24,7 @@ public:
 
 class DevelopLayer
 : public LayerColor
-, public DevelopCardObserver
+, public BaseCardObserver
 , public CardPreviewObserver
 , public CardInfoLayerObserver
 , public SpellInfoLayerObserver
@@ -42,12 +42,12 @@ protected:
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
-    // DevelopCardObserver
-    virtual void onDevelopCardClicked(DevelopCard* pSender, bool canUpgrade) override;
+    // BaseCardObserver
+    virtual void onBaseCardClicked(BaseCard* pSender) override;
     
     // CardPreviewObserver
-    virtual AbstractCard* onCardPreviewCreateCard(int cardId) override;
-    virtual void onCardPreviewClickedOpButton(DeckCardOpType type, const AbstractData* data) override;
+    virtual BaseCard* onCardPreviewCreateCard(int cardId) override;
+    virtual void onCardPreviewClickedOpButton(CardOpType type, const AbstractData* data) override;
     
     // CardInfoLayerObserver
     virtual void onCardInfoLayerReturn(Node* pSender) override;

@@ -67,7 +67,6 @@ public:
     size_t getAllFoundCardsCount() const;
     const CardSimpleData* getCardData(int card) const;
     const CardData* getCardDetail(int card) const;
-    bool isFound(int card) const;
     const std::vector<int>& getFoundCards(FeatureType type) const;
     const std::vector<int>& getUnfoundCards() const;
     

@@ -7,14 +7,14 @@
 //
 
 #include "CardSet.h"
-#include "AbstractCard.h"
+#include "BaseCard.h"
 
 CardSet::~CardSet()
 {
     clear();
 }
 
-void CardSet::insertCard(int cardId, AbstractCard* card)
+void CardSet::insertCard(int cardId, BaseCard* card)
 {
     if (_cards.find(cardId) == end(_cards)) {
         _cards.insert(std::make_pair(cardId, card));
@@ -53,7 +53,7 @@ size_t CardSet::getCardsCount() const
     return _cards.size();
 }
 
-AbstractCard* CardSet::getCard(int cardId) const
+BaseCard* CardSet::getCard(int cardId) const
 {
     if (_cards.find(cardId) != end(_cards)) {
         return _cards.at(cardId);

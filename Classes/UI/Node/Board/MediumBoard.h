@@ -20,6 +20,7 @@ public:
     virtual ~MediumBoard();
     
     void setButtonVisible(bool visible);
+    void setButtonEnabled(bool enabled);
     void setButtonTitle(const std::string& title);
     void setButtonCallback(const Callback& callback);
     

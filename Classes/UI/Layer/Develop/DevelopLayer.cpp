@@ -12,6 +12,7 @@
 #include "DevelopUI.h"
 #include "LocalHelper.h"
 #include "Board.h"
+#include "JuniorCard.h"
 #include "CardData.h"
 #include "CardProperty.h"
 
@@ -79,36 +80,40 @@ bool DevelopLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 
 void DevelopLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 
-#pragma mark - DevelopCardObserver
-void DevelopLayer::onDevelopCardClicked(DevelopCard* pSender, bool canUpgrade)
+#pragma mark - BaseCardObserver
+void DevelopLayer::onBaseCardClicked(BaseCard* pSender)
 {
     if (_cardPreview) {
-        if (canUpgrade) {
-            _cardPreview->showOpNode(pSender, {DeckCardOpType::Upgrade});
-        } else {
-            _cardPreview->showOpNode(pSender, {DeckCardOpType::Info});
+        auto card(dynamic_cast<JuniorCard*>(pSender));
+        if (card) {
+            if (card->canUpgrade()) {
+                _cardPreview->showOpNode(pSender, {CardOpType::Upgrade});
+            } else {
+                _cardPreview->showOpNode(pSender, {CardOpType::Info});
+            }
         }
     }
 }
 
 #pragma mark - CardPreviewObserver
-AbstractCard* DevelopLayer::onCardPreviewCreateCard(int cardId)
+BaseCard* DevelopLayer::onCardPreviewCreateCard(int cardId)
 {
-    auto card = DevelopCard::create(DeckManager::getInstance()->getCardData(cardId));
+    auto card = JuniorCard::create();
     card->registerObserver(this);
+    card->update(cardId, DeckManager::getInstance()->getCardData(cardId));
     return card;
 }
 
-void DevelopLayer::onCardPreviewClickedOpButton(DeckCardOpType type, const AbstractData* data)
+void DevelopLayer::onCardPreviewClickedOpButton(CardOpType type, const AbstractData* data)
 {
-    if (DeckCardOpType::Upgrade == type || DeckCardOpType::Info == type) {
+    if (CardOpType::Upgrade == type || CardOpType::Info == type) {
         DeckManager::getInstance()->getCardDetail(data->getId(), [this](const CardData* data) {
             if (UnderWorld::Core::HMMCardClass::kHMMCardClass_Spell == dynamic_cast<const CardProperty*>(data->getProperty())->getCardClass()) {
-                auto layer = SpellInfoLayer::create(data);
+                auto layer = SpellInfoLayer::create(data->getId(), data);
                 layer->registerObserver(this);
                 addChild(layer);
             } else {
-                auto layer = CardInfoLayer::create(data);
+                auto layer = CardInfoLayer::create(data->getId(), nullptr);
                 layer->registerObserver(this);
                 addChild(layer);
             }

@@ -7,7 +7,7 @@
 //
 
 #include "SpellInfoLayer.h"
-#include "DevelopCard.h"
+#include "JuniorCard.h"
 #include "CardPropertyNode.h"
 #include "MediumBoard.h"
 #include "UniversalButton.h"
@@ -15,16 +15,17 @@
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
+#include "DataManager.h"
 #include "AbstractData.h"
 #include "AbstractProperty.h"
 
 using namespace std;
 
 #pragma mark - SpellInfoLayer
-SpellInfoLayer* SpellInfoLayer::create(const AbstractData* data)
+SpellInfoLayer* SpellInfoLayer::create(int cardId, const AbstractData* data)
 {
     auto ret = new (nothrow) SpellInfoLayer();
-    if (ret && ret->init(data)) {
+    if (ret && ret->init(cardId, data)) {
         ret->autorelease();
         return ret;
     }
@@ -37,15 +38,14 @@ SpellInfoLayer::SpellInfoLayer()
 :_observer(nullptr)
 ,_board(nullptr)
 ,_icon(nullptr)
-,_description(nullptr)
-,_data(nullptr) {}
+,_description(nullptr) {}
 
 SpellInfoLayer::~SpellInfoLayer()
 {
     removeAllChildren();
 }
 
-bool SpellInfoLayer::init(const AbstractData* data)
+bool SpellInfoLayer::init(int cardId, const AbstractData* data)
 {
     if (LayerColor::initWithColor(LAYER_MASK_COLOR)) {
         const auto& winSize(Director::getInstance()->getWinSize());
@@ -59,7 +59,7 @@ bool SpellInfoLayer::init(const AbstractData* data)
         board->setButtonTitle(LocalHelper::getString("ui_cardInfo_upgrade"));
         board->setButtonCallback([this]() {
             if (_observer) {
-                _observer->onSpellInfoLayerUpgrade(this, _data);
+                _observer->onSpellInfoLayerUpgrade(this, _icon->getCardData());
             }
         });
         board->setPosition(Point(winSize.width / 2, winSize.height / 2));
@@ -67,7 +67,14 @@ bool SpellInfoLayer::init(const AbstractData* data)
         _board = board;
         
         createNode(board->getSubNode());
-        update(data);
+        
+        if (_icon) {
+            if (_icon->update(cardId, data)) {
+                updateProperty(DataManager::getInstance()->getProperty(cardId));
+            }
+        }
+        
+        updateData(data);
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -102,7 +109,7 @@ void SpellInfoLayer::createNode(Node* node)
     const auto& size(node->getContentSize());
     
     static const float cardEdgeX(20);
-    auto card = DevelopCard::create(nullptr);
+    auto card = JuniorCard::create();
     const auto& cardSize(card->getContentSize());
     card->setPosition(Point(cardEdgeX + cardSize.width / 2, size.height / 2));
     node->addChild(card);
@@ -161,28 +168,25 @@ void SpellInfoLayer::createNode(Node* node)
     }
 }
 
-void SpellInfoLayer::update(const AbstractData* data)
+void SpellInfoLayer::updateProperty(const AbstractProperty* property)
 {
-    if (_data != data) {
-        _data = data;
-        
-        if (_board) {
-            _board->setTitle(data ? data->getProperty()->getName() : "");
-        }
-        
-        if (_icon) {
-            _icon->update(data);
-        }
-        
-        if (_description) {
-            _description->setString(data ? data->getProperty()->getDescription() : "");
-        }
-        
-        for (int i = 0; i < _properties.size(); ++i) {
-            auto property(_properties.at(i));
-            if (property) {
-                // TODO: property
-            }
+    if (_board) {
+        _board->setTitle(property ? property->getName() : "");
+    }
+    
+    if (_description) {
+        _description->setString(property ? property->getDescription() : "");
+    }
+    
+    for (int i = 0; i < _properties.size(); ++i) {
+        auto property(_properties.at(i));
+        if (property) {
+            // TODO: property
         }
     }
+}
+
+void SpellInfoLayer::updateData(const AbstractData* data)
+{
+    // TODO:
 }

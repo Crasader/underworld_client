@@ -9,7 +9,7 @@
 #ifndef BattleDeckLayer_h
 #define BattleDeckLayer_h
 
-#include "DeckCard.h"
+#include "BaseCard.h"
 #include "DeckEditMask.h"
 #include "CardPreview.h"
 #include "CardInfoLayer.h"
@@ -38,7 +38,7 @@ public:
 
 class BattleDeckLayer
 : public LayerColor
-, public DeckCardObserver
+, public BaseCardObserver
 , public DeckEditMaskObserver
 , public CardPreviewObserver
 , public CardInfoLayerObserver
@@ -57,16 +57,16 @@ protected:
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
-    // DeckCardObserver
-    virtual void onDeckCardTouched(DeckCard* touchedCard, ui::Widget::TouchEventType type) override;
-    virtual void onDeckCardClicked(DeckCard* pSender) override;
+    // BaseCardObserver
+    virtual void onBaseCardTouched(BaseCard* touchedCard, ui::Widget::TouchEventType type) override;
+    virtual void onBaseCardClicked(BaseCard* pSender) override;
     
     // DeckEditMaskObserver
     virtual void onDeckEditMaskTouched(const Point& point) override;
     
     // CardPreviewObserver
-    virtual AbstractCard* onCardPreviewCreateCard(int cardId) override;
-    virtual void onCardPreviewClickedOpButton(DeckCardOpType type, const AbstractData* data) override;
+    virtual BaseCard* onCardPreviewCreateCard(int cardId) override;
+    virtual void onCardPreviewClickedOpButton(CardOpType type, const AbstractData* data) override;
     
     // CardInfoLayerObserver
     virtual void onCardInfoLayerReturn(Node* pSender) override;
@@ -79,17 +79,17 @@ protected:
     // -------- UI --------
     void createLeftNode(Node* node);
     void createRightNode(Node* node);
-    DeckCard* createCard(int card);
+    BaseCard* createCard(int card);
     Node* createLine(bool isHero) const;
     void updateAverageElixir();
     
     // Info
-    void showInfo(const CardData* data);
+    void showInfo(int cardId, const CardData* data);
     
     // Move cards
     void beginEdit(const CardSimpleData* data);
     void endEdit();
-    DeckCard* getFoundCard(int cardId) const;
+    BaseCard* getFoundCard(int cardId) const;
     void exchangeCard(int idxFrom, int idxTo);
     void exchangeCardCancelled(int idx);
     void useCard(int idx, bool fromDeck);
@@ -97,12 +97,12 @@ protected:
     
     // Universal Methods
     bool isIdxValid(int idx) const;
-    DeckCard* initDeckCard(const Point& point);
-    void moveToDeck(DeckCard* card, int idx);
-    void shake(const std::vector<DeckCard*>& nodes) const;
+    BaseCard* initBaseCard(const Point& point);
+    void moveToDeck(BaseCard* card, int idx);
+    void shake(const std::vector<BaseCard*>& nodes) const;
     void stopShake();
-    DeckCard* getIntersectedCard(const DeckCard* touchedCard) const;
-    DeckCard* getIntersectedCard(const DeckCard* touchedCard, const std::vector<DeckCard*>& cards) const;
+    BaseCard* getIntersectedCard(const BaseCard* touchedCard) const;
+    BaseCard* getIntersectedCard(const BaseCard* touchedCard, const std::vector<BaseCard*>& cards) const;
     Rect getWorldBoundingBox(const Node* node) const;
     
     // Functions
@@ -123,10 +123,10 @@ private:
     Label* _averageElixirLabel;
     CardPreview* _cardPreview;
     DeckEditMask* _deckEditMask;
-    DeckCard* _usedCard;
+    BaseCard* _usedCard;
     Point _usedCardPoint;
     
-    std::vector<DeckCard*> _deckCards;
+    std::vector<BaseCard*> _deckCards;
     std::vector<Point> _deckPositions;
     
     // Data

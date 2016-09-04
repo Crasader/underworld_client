@@ -68,6 +68,13 @@ void MediumBoard::setButtonVisible(bool visible)
     }
 }
 
+void MediumBoard::setButtonEnabled(bool enabled)
+{
+    if (_button) {
+        _button->setEnabled(enabled);
+    }
+}
+
 void MediumBoard::setButtonTitle(const std::string& title)
 {
     if (_button) {

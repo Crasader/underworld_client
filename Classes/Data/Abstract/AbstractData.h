@@ -11,7 +11,6 @@
 
 #include "json/document.h"
 #include <string>
-#include "ObjectUtils.h"
 
 class AbstractProperty;
 class AbstractUpgradeProperty;
@@ -19,17 +18,16 @@ class AbstractUpgradeProperty;
 class AbstractData
 {
 public:
+    static int getCardId(const AbstractData* data);
     AbstractData(const rapidjson::Value& jsonDict);
     virtual ~AbstractData() = 0;
     
     void update(const rapidjson::Value& jsonDict);
     
-    ObjectUtils::Type getType() const;
     int getDbId() const;
     int getId() const;
     int getLevel() const;
     int getAmount() const;
-    bool isValid() const;
     const AbstractProperty* getProperty() const;
     const AbstractUpgradeProperty* getUpgradeProperty() const;
     const AbstractUpgradeProperty* getNextLevelUpgradeProperty() const;

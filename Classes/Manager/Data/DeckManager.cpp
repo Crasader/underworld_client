@@ -90,11 +90,7 @@ DeckManager::DeckManager()
         _allCards.insert(make_pair(cardId, createFakeData(cardId, 1)));
     }
     
-//    _allUnfoundCards = {23100, 23101};
-    for (auto iter = begin(_allUnfoundCards); iter != end(_allUnfoundCards); ++iter) {
-        const int cardId(*iter);
-        _allCards.insert(make_pair(cardId, createFakeData(cardId, 0)));
-    }
+    _allUnfoundCards = {23100, 23101};
     
     loadThisDeck();
 }
@@ -144,8 +140,8 @@ void DeckManager::getCardList(const function<void()>& callback)
                         const auto& value = DICTOOL->getDictionaryFromArray_json(jsonDict, key, i);
                         auto data = new (nothrow) CardSimpleData(value);
                         auto cardId(data->getId());
-                        _allCards.insert(make_pair(cardId, data));
                         _allUnfoundCards.push_back(cardId);
+                        CC_SAFE_DELETE(data);
                     }
                 }
             }
@@ -165,24 +161,17 @@ void DeckManager::getCardDetail(int cardId, const function<void(const CardData*)
     if (data) {
         auto detail(getCardDetail(cardId));
         if (!detail) {
-            if (data->isValid()) {
-                NetworkApi::getCardDetail(data->getDbId(), [this, callback](long code, const rapidjson::Value& jsonDict) {
-                    auto data = updateCardData(jsonDict);
-                    if (callback) {
-                        callback(data);
-                    }
-                });
-            } else {
-                // the card not found
-                auto detail = new (nothrow) CardData(*data);
-                _cardDetails.insert(make_pair(cardId, detail));
+            NetworkApi::getCardDetail(data->getDbId(), [this, callback](long code, const rapidjson::Value& jsonDict) {
+                auto data = updateCardData(jsonDict);
                 if (callback) {
-                    callback(detail);
+                    callback(data);
                 }
-            }
+            });
         } else if (callback) {
             callback(detail);
         }
+    } else if (callback) {
+        callback(nullptr);
     }
 }
 
@@ -390,16 +379,6 @@ const CardData* DeckManager::getCardDetail(int card) const
     return nullptr;
 }
 
-bool DeckManager::isFound(int card) const
-{
-    auto data(getCardData(card));
-    if (data && data->getLevel() > 0) {
-        return true;
-    }
-    
-    return false;
-}
-
 const vector<int>& DeckManager::getFoundCards(FeatureType type) const
 {
     return (FeatureType::Deck == type) ? _offDeckFoundCards : _allFoundCards;
@@ -510,10 +489,11 @@ void DeckManager::sortCards(SortType type, vector<int>& cards) const
         return defaultSort(c1, c2);
     };
     static const auto elixirSort = [this](int c1, int c2) {
-        auto d1 = getCardData(c1);
-        auto d2 = getCardData(c2);
-        auto cost1 = d1 ? dynamic_cast<const CardProperty*>(d1->getProperty())->getCost() : 0;
-        auto cost2 = d2 ? dynamic_cast<const CardProperty*>(d2->getProperty())->getCost() : 0;
+        auto dm(DataManager::getInstance());
+        auto p1(dynamic_cast<const CardProperty*>(dm->getProperty(c1)));
+        auto p2(dynamic_cast<const CardProperty*>(dm->getProperty(c2)));
+        auto cost1 = p1 ? p1->getCost() : 0;
+        auto cost2 = p2 ? p2->getCost() : 0;
         if (cost1 == cost2) {
             return defaultSort(c1, c2);
         }

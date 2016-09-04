@@ -14,7 +14,7 @@
 
 USING_NS_CC;
 
-class AbstractCard;
+class BaseCard;
 class UniversalButton;
 class CardSet;
 
@@ -22,8 +22,8 @@ class CardPreviewObserver
 {
 public:
     virtual ~CardPreviewObserver() {}
-    virtual AbstractCard* onCardPreviewCreateCard(int cardId) = 0;
-    virtual void onCardPreviewClickedOpButton(DeckCardOpType type, const AbstractData* data) = 0;
+    virtual BaseCard* onCardPreviewCreateCard(int cardId) = 0;
+    virtual void onCardPreviewClickedOpButton(CardOpType type, const AbstractData* data) = 0;
 };
 
 class CardPreview : public CardOpNodeObserver
@@ -34,23 +34,23 @@ public:
     
     void sortAndRealign();
     
-    void readdToScrollView(AbstractCard* card);
-    AbstractCard* getFoundCard(int cardId) const;
+    void readdToScrollView(BaseCard* card);
+    BaseCard* getFoundCard(int cardId) const;
     void removeFoundCard(int cardId, bool cleanup);
-    void insertFoundCard(int cardId, AbstractCard* card);
+    void insertFoundCard(int cardId, BaseCard* card);
     
     // Oprations Node
-    void showOpNode(AbstractCard* card, const std::vector<DeckCardOpType>& types);
+    void showOpNode(BaseCard* card, const std::vector<CardOpType>& types);
     void hideOpNode();
-    bool setOpNodePosition(AbstractCard* card);
+    bool setOpNodePosition(BaseCard* card);
     
 private:
     // CardOpNodeObserver
     virtual void onCardOpNodeClicked() override;
-    virtual void onCardOpNodeClickedButton(DeckCardOpType type, const AbstractData* data) override;
+    virtual void onCardOpNodeClickedButton(CardOpType type, const AbstractData* data) override;
     
     void initCards();
-    AbstractCard* createCardNode(int cardId);
+    BaseCard* createCardNode(int cardId);
     Node* createUnfoundLine() const;
     std::string getSortTypeName(int idx) const;
     void setNextSortType();
@@ -59,8 +59,8 @@ private:
     float getHeight(size_t count, float spaceY) const;
     Point getPosition(int row, int column) const;
     void updateCardsCount();
-    void fullyDisplayCard(AbstractCard* card);
-    bool isOpNodeOnCard(AbstractCard* card) const;
+    void fullyDisplayCard(BaseCard* card);
+    bool isOpNodeOnCard(BaseCard* card) const;
     
 private:
     CardPreviewObserver *_observer;

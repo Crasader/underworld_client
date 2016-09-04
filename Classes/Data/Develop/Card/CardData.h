@@ -20,7 +20,6 @@ class CardData : public CardSimpleData
 {
 public:
     CardData(const rapidjson::Value& jsonDict);
-    CardData(const CardSimpleData& instance);
     virtual ~CardData();
     
     void update(const rapidjson::Value& jsonDict);

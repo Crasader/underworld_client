@@ -7,17 +7,17 @@
 //
 
 #include "CardInfoLayer.h"
-#include "DevelopCard.h"
-#include "UpgradeCard.h"
+#include "SeniorCard.h"
 #include "CardPropertyNode.h"
 #include "Board.h"
 #include "UniversalButton.h"
 #include "ResourceButton.h"
 #include "PureNode.h"
 #include "PureScale9Sprite.h"
-#include "DevelopCard.h"
 #include "CocosGlobal.h"
 #include "LocalHelper.h"
+#include "DeckManager.h"
+#include "DataManager.h"
 #include "AbstractProperty.h"
 #include "AbstractUpgradeProperty.h"
 #include "CardProperty.h"
@@ -25,15 +25,14 @@
 #include "SkillData.h"
 #include "RuneData.h"
 #include "CocosUtils.h"
-#include "DeckManager.h"
 
 using namespace std;
 
 #pragma mark - CardInfoLayer
-CardInfoLayer* CardInfoLayer::create(const CardData* data)
+CardInfoLayer* CardInfoLayer::create(int cardId, const CardData* data)
 {
     auto ret = new (nothrow) CardInfoLayer();
-    if (ret && ret->init(data)) {
+    if (ret && ret->init(cardId, data)) {
         ret->autorelease();
         return ret;
     }
@@ -59,7 +58,7 @@ CardInfoLayer::~CardInfoLayer()
     removeAllChildren();
 }
 
-bool CardInfoLayer::init(const CardData* data)
+bool CardInfoLayer::init(int cardId, const CardData* data)
 {
     if (LayerColor::initWithColor(LAYER_MASK_COLOR)) {
         const auto& winSize(Director::getInstance()->getWinSize());
@@ -83,7 +82,13 @@ bool CardInfoLayer::init(const CardData* data)
         createLeftNode(board->getSubNode(0));
         createRightNode(board->getSubNode(1));
         
-        update(data);
+        if (_icon) {
+            if (_icon->update(cardId, data)) {
+                updateProperty(DataManager::getInstance()->getProperty(cardId));
+            }
+        }
+        
+        updateData(data);
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -115,7 +120,7 @@ void CardInfoLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 #pragma mark - RuneCircleObserver
 void CardInfoLayer::onRuneCircleClicked(RuneNode* node, int idx)
 {
-    if (_data && _data->isValid()) {
+    if (_data) {
         if (_selectedRune) {
             _selectedRune->select(false);
         }
@@ -138,15 +143,15 @@ void CardInfoLayer::onRuneBagLayerSelected(Node* pSender, RuneNode* node)
     });
 }
 
-#pragma mark - UpgradeCardObserver
-void CardInfoLayer::onUpgradeCardInfo(UpgradeCard* pSender)
+#pragma mark - BaseCardObserver
+void CardInfoLayer::onBaseCardInfo(BaseCard* pSender)
 {
-    auto layer = SpellInfoLayer::create(pSender->getCardData());
+    auto layer = SpellInfoLayer::create(pSender->getCardId(), pSender->getCardData());
     layer->registerObserver(this);
     addChild(layer);
 }
 
-void CardInfoLayer::onUpgradeCardUpgrade(UpgradeCard* pSender)
+void CardInfoLayer::onBaseCardUpgrade(BaseCard* pSender)
 {
     
 }
@@ -206,7 +211,7 @@ void CardInfoLayer::createLeftNode(Node* node)
     }
     
     static const Vec2 spaceBarCard(12, 15);
-    auto card = DevelopCard::create(0);
+    auto card = JuniorCard::create();
     const auto& cardSize(card->getContentSize());
     card->setPosition(Point(secondaryEdge.x + spaceBarCard.x + cardSize.width / 2, size.height - (secondaryEdge.y + barSize.height + spaceBarCard.y + cardSize.height / 2)));
     node->addChild(card);
@@ -299,7 +304,7 @@ void CardInfoLayer::createLeftNode(Node* node)
             if (button) {
                 if (button->isResourceEnough()) {
                     DeckManager::getInstance()->upgradeCard(_data->getId(), [this](const CardData* data) {
-                        update(data);
+                        updateData(data);
                     });
                 } else {
                     MessageBox("资源不足", nullptr);
@@ -333,7 +338,7 @@ void CardInfoLayer::createRightNode(Node* node)
     Size cardSize(Size::ZERO);
     float spaceX(0);
     for (int i = 0; i < skillsCount; ++i) {
-        auto card = UpgradeCard::create(0);
+        auto card = SeniorCard::create();
         card->registerObserver(this);
         node->addChild(card);
         _skillCards.push_back(card);
@@ -447,47 +452,56 @@ void CardInfoLayer::onOpButtonClicked(int idx)
     }
 }
 
-void CardInfoLayer::update(const CardData* data)
+void CardInfoLayer::updateProperty(const AbstractProperty* property)
 {
-    if (_data != data) {
-        _data = data;
-        
-        if (_board) {
-            _board->setTitle(data ? data->getProperty()->getName() : "");
-        }
-        
-        if (_profession) {
-            _profession->setString(data ? "" : "");
-        }
-        
-        if (_description) {
-            _description->setString(data ? data->getProperty()->getDescription() : "");
-        }
+    if (_board) {
+        _board->setTitle(property ? property->getName() : "");
     }
     
-    // always update these params
-    if (_icon) {
-        _icon->update(data);
+    if (_profession) {
+        _profession->setString(property ? "" : "");
     }
     
-    if (_level) {
-        _level->setString(data ? StringUtils::format("LV.%d", data->getLevel()) : "");
+    if (_description) {
+        _description->setString(property ? property->getDescription() : "");
     }
     
-    const bool show(data && data->isValid());
-    if (show) {
-        const auto& skills(data->getSkills());
+    auto cp(dynamic_cast<const CardProperty*>(property));
+    if (cp) {
+        const auto& skills(cp->getSkills());
         int cnt((int)skills.size());
         for (int i = 0; i < cnt; ++i) {
             if (i < _skillCards.size()) {
                 auto card(_skillCards.at(i));
                 card->setVisible(true);
-                card->update(skills.at(i));
+                card->update(skills.at(i), nullptr);
             }
         }
         
         for (int i = cnt; i < _skillCards.size(); ++i) {
             _skillCards.at(i)->setVisible(false);
+        }
+    }
+}
+
+void CardInfoLayer::updateData(const CardData* data)
+{
+    _data = data;
+    
+    // always update these params
+    if (_level) {
+        _level->setString(data ? StringUtils::format("LV.%d", data->getLevel()) : "");
+    }
+    
+    const bool show(nullptr != data);
+    if (show) {
+        const auto& skills(data->getSkills());
+        int cnt((int)skills.size());
+        for (int i = 0; i < cnt; ++i) {
+            if (i < _skillCards.size()) {
+                auto skill(skills.at(i));
+                _skillCards.at(i)->update(skill->getId(), skill);
+            }
         }
         
         auto up(data->getUpgradeProperty());
@@ -504,14 +518,10 @@ void CardInfoLayer::update(const CardData* data)
                 CC_ASSERT(false);
             }
         }
-    } else {
-        for (auto node : _skillCards) {
-            node->setVisible(false);
-        }
-        
-        if (_upgradeButton) {
-            _upgradeButton->setEnabled(false);
-        }
+    }
+    
+    if (_upgradeButton) {
+        _upgradeButton->setEnabled(show);
     }
     
     if (_runeCircle) {

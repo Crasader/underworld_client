@@ -14,10 +14,11 @@
 
 USING_NS_CC;
 
-class UniversalBoard;
-class DevelopCard;
+class MediumBoard;
+class JuniorCard;
 class CardPropertyNode;
 class AbstractData;
+class AbstractProperty;
 
 class SpellInfoLayerObserver
 {
@@ -30,7 +31,7 @@ public:
 class SpellInfoLayer : public LayerColor
 {
 public:
-    static SpellInfoLayer* create(const AbstractData* data);
+    static SpellInfoLayer* create(int cardId, const AbstractData* data);
     virtual ~SpellInfoLayer();
     void registerObserver(SpellInfoLayerObserver *observer);
     
@@ -38,20 +39,20 @@ private:
     SpellInfoLayer();
     
     // LayerColor
-    bool init(const AbstractData* data);
+    bool init(int cardId, const AbstractData* data);
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
     void createNode(Node* node);
-    void update(const AbstractData* data);
+    void updateProperty(const AbstractProperty* property);
+    void updateData(const AbstractData* data);
     
 private:
     SpellInfoLayerObserver* _observer;
-    UniversalBoard* _board;
-    DevelopCard* _icon;
+    MediumBoard* _board;
+    JuniorCard* _icon;
     Label* _description;
     std::vector<CardPropertyNode*> _properties;
-    const AbstractData* _data;
 };
 
 #endif /* SpellInfoLayer_h */

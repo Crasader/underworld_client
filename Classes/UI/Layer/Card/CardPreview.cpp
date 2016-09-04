@@ -7,7 +7,7 @@
 //
 
 #include "CardPreview.h"
-#include "AbstractCard.h"
+#include "BaseCard.h"
 #include "UniversalButton.h"
 #include "PureNode.h"
 #include "PureScale9Sprite.h"
@@ -158,12 +158,12 @@ void CardPreview::sortAndRealign()
     realignCards(dm->getUnfoundCards(), _unfoundCards);
 }
 
-void CardPreview::readdToScrollView(AbstractCard* card)
+void CardPreview::readdToScrollView(BaseCard* card)
 {
     BattleDeckUI::readdChild(_scrollView, card);
 }
 
-AbstractCard* CardPreview::getFoundCard(int cardId) const
+BaseCard* CardPreview::getFoundCard(int cardId) const
 {
     if (_foundCards) {
         return _foundCards->getCard(cardId);
@@ -179,7 +179,7 @@ void CardPreview::removeFoundCard(int cardId, bool cleanup)
     }
 }
 
-void CardPreview::insertFoundCard(int cardId, AbstractCard* card)
+void CardPreview::insertFoundCard(int cardId, BaseCard* card)
 {
     if (_foundCards) {
         _foundCards->insertCard(cardId, card);
@@ -187,7 +187,7 @@ void CardPreview::insertFoundCard(int cardId, AbstractCard* card)
 }
 
 #pragma mark - Oprations Node
-void CardPreview::showOpNode(AbstractCard* card, const vector<DeckCardOpType>& types)
+void CardPreview::showOpNode(BaseCard* card, const vector<CardOpType>& types)
 {
     if (!isOpNodeOnCard(card)) {
         if (!_opNode) {
@@ -219,7 +219,7 @@ void CardPreview::hideOpNode()
     }
 }
 
-bool CardPreview::setOpNodePosition(AbstractCard* card)
+bool CardPreview::setOpNodePosition(BaseCard* card)
 {
     if (isOpNodeOnCard(card)) {
         const auto& cpoint(card->getPosition());
@@ -241,7 +241,7 @@ void CardPreview::onCardOpNodeClicked()
     hideOpNode();
 }
 
-void CardPreview::onCardOpNodeClickedButton(DeckCardOpType type, const AbstractData* data)
+void CardPreview::onCardOpNodeClickedButton(CardOpType type, const AbstractData* data)
 {
     hideOpNode();
     
@@ -317,7 +317,7 @@ void CardPreview::initCards()
     }
 }
 
-AbstractCard* CardPreview::createCardNode(int cardId)
+BaseCard* CardPreview::createCardNode(int cardId)
 {
     if (_observer) {
         return _observer->onCardPreviewCreateCard(cardId);
@@ -439,7 +439,7 @@ void CardPreview::updateCardsCount()
     }
 }
 
-void CardPreview::fullyDisplayCard(AbstractCard* card)
+void CardPreview::fullyDisplayCard(BaseCard* card)
 {
     if (card && card->getParent()) {
         const auto& cpoint(card->getPosition());
@@ -470,7 +470,7 @@ void CardPreview::fullyDisplayCard(AbstractCard* card)
     }
 }
 
-bool CardPreview::isOpNodeOnCard(AbstractCard* card) const
+bool CardPreview::isOpNodeOnCard(BaseCard* card) const
 {
     return card && _opNode && _opNode->isVisible() && _opNode->getCardData() == card->getCardData();
 }

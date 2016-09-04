@@ -21,9 +21,6 @@ CardData::CardData(const rapidjson::Value& jsonDict)
     update(jsonDict);
 }
 
-CardData::CardData(const CardSimpleData& instance)
-:CardSimpleData(instance) {}
-
 CardData::~CardData()
 {
     for (auto data : _skills) {

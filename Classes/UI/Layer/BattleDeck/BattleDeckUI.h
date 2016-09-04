@@ -13,7 +13,7 @@
 
 USING_NS_CC;
 
-enum class DeckCardOpType {
+enum class CardOpType {
     Upgrade,
     Use,
     Info,
@@ -25,7 +25,7 @@ class UniversalButton;
 namespace BattleDeckUI
 {
     std::string getResourcePath(const std::string& file);
-    UniversalButton* createButton(DeckCardOpType opType, const std::function<void()>& callback);
+    UniversalButton* createButton(CardOpType opType, const std::function<void()>& callback);
     void readdChild(Node* parent, Node* child);
 }
 

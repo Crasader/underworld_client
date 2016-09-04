@@ -15,7 +15,7 @@
 
 USING_NS_CC;
 
-class DeckCard;
+class BaseCard;
 class AbstractData;
 
 class CardOpNodeObserver
@@ -23,7 +23,7 @@ class CardOpNodeObserver
 public:
     virtual ~CardOpNodeObserver() {}
     virtual void onCardOpNodeClicked() = 0;
-    virtual void onCardOpNodeClickedButton(DeckCardOpType type, const AbstractData* data) = 0;
+    virtual void onCardOpNodeClickedButton(CardOpType type, const AbstractData* data) = 0;
 };
 
 class CardOpNode : public ui::Widget
@@ -33,7 +33,7 @@ public:
     virtual ~CardOpNode();
     void registerObserver(CardOpNodeObserver* observer);
     void setCard(const AbstractData* data);
-    void setTypes(const std::vector<DeckCardOpType>& types);
+    void setTypes(const std::vector<CardOpType>& types);
     const AbstractData* getCardData() const;
     
 private:
@@ -43,11 +43,11 @@ private:
     
 private:
     CardOpNodeObserver* _observer;
-    DeckCard* _icon;
+    BaseCard* _icon;
     ui::Scale9Sprite* _hint;
     static Size _hintMinSize;
-    std::vector<DeckCardOpType> _opTypes;
-    std::map<DeckCardOpType, UniversalButton*> _buttons;
+    std::vector<CardOpType> _opTypes;
+    std::map<CardOpType, UniversalButton*> _buttons;
     bool _touchInvalid;
 };
 

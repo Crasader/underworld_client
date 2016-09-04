@@ -7,8 +7,9 @@
 //
 
 #include "CardOpNode.h"
-#include "DeckCard.h"
+#include "BaseCard.h"
 #include "CocosUtils.h"
+#include "AbstractData.h"
 #include "UniversalButton.h"
 
 using namespace std;
@@ -16,7 +17,7 @@ using namespace std;
 static const float edgeX(5);
 static const float edgeTop(12);
 static const float edgeBottom(8);
-Size CardOpNode::_hintMinSize = Size(DeckCard::Width + edgeX * 2, DeckCard::Height + edgeTop + edgeBottom);
+Size CardOpNode::_hintMinSize = Size(BaseCard::Width + edgeX * 2, BaseCard::Height + edgeTop + edgeBottom);
 
 CardOpNode* CardOpNode::create()
 {
@@ -53,7 +54,7 @@ bool CardOpNode::init()
         _hint = ui::Scale9Sprite::create(BattleDeckUI::getResourcePath("ui_kuang_11.png"), Rect(Point::ZERO, size), capInset);
         addChild(_hint);
         
-        _icon = DeckCard::create(0);
+        _icon = BaseCard::create();
         _hint->addChild(_icon);
         
         resetPositions();
@@ -79,11 +80,11 @@ void CardOpNode::registerObserver(CardOpNodeObserver *observer)
 void CardOpNode::setCard(const AbstractData* data)
 {
     if (_icon) {
-        _icon->update(data);
+        _icon->update(data->getId(), data);
     }
 }
 
-void CardOpNode::setTypes(const vector<DeckCardOpType>& types)
+void CardOpNode::setTypes(const vector<CardOpType>& types)
 {
     if (_opTypes != types) {
         _opTypes = types;
