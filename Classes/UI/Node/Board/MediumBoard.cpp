@@ -27,8 +27,8 @@ MediumBoard* MediumBoard::create()
 
 MediumBoard::MediumBoard()
 :_subNode(nullptr)
-,_button(nullptr)
-,_buttonCallback(nullptr) {}
+,_midBottomChild(nullptr)
+,_midBottomPoint(Point::ZERO) {}
 
 MediumBoard::~MediumBoard() {}
 
@@ -45,15 +45,7 @@ bool MediumBoard::init()
         addChild(subNode);
         _subNode = subNode;
         
-        auto button = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, "Untitled");
-        button->setCallback([this](Ref*) {
-            if (_buttonCallback) {
-                _buttonCallback();
-            }
-        });
-        button->setPosition(Point(size.width / 2, edge / 2));
-        addChild(button);
-        _button = button;
+        _midBottomPoint = Point(size.width / 2, edge / 2);
         
         return true;
     }
@@ -61,35 +53,24 @@ bool MediumBoard::init()
     return false;
 }
 
-void MediumBoard::setButtonVisible(bool visible)
-{
-    if (_button) {
-        _button->setVisible(visible);
-    }
-}
-
-void MediumBoard::setButtonEnabled(bool enabled)
-{
-    if (_button) {
-        _button->setEnabled(enabled);
-    }
-}
-
-void MediumBoard::setButtonTitle(const std::string& title)
-{
-    if (_button) {
-        _button->setTitle(title);
-    }
-}
-
-void MediumBoard::setButtonCallback(const Callback& callback)
-{
-    if (_button) {
-        _buttonCallback = callback;
-    }
-}
-
 Node* MediumBoard::getSubNode() const
 {
     return _subNode;
+}
+
+void MediumBoard::addChildToMidBottom(Node *child)
+{
+    if (_midBottomChild) {
+        _midBottomChild->removeFromParent();
+    }
+    
+    _midBottomChild = child;
+    
+    if (child) {
+        CC_SAFE_RETAIN(child);
+        child->removeFromParent();
+        child->setPosition(_midBottomPoint);
+        addChild(child);
+        CC_SAFE_RELEASE(child);
+    }
 }

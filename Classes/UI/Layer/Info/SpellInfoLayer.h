@@ -9,16 +9,7 @@
 #ifndef SpellInfoLayer_h
 #define SpellInfoLayer_h
 
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
-
-USING_NS_CC;
-
-class MediumBoard;
-class JuniorCard;
-class CardPropertyNode;
-class AbstractData;
-class AbstractProperty;
+#include "AbstractInfoLayer.h"
 
 class SpellInfoLayerObserver
 {
@@ -28,7 +19,7 @@ public:
     virtual void onSpellInfoLayerUpgrade(Node* pSender, const AbstractData* data) = 0;
 };
 
-class SpellInfoLayer : public LayerColor
+class SpellInfoLayer : public AbstractInfoLayer
 {
 public:
     static SpellInfoLayer* create(int cardId, const AbstractData* data);
@@ -38,21 +29,13 @@ public:
 private:
     SpellInfoLayer();
     
-    // LayerColor
-    bool init(int cardId, const AbstractData* data);
-    virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
-    virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
-    
     void createNode(Node* node);
-    void updateProperty(const AbstractProperty* property);
-    void updateData(const AbstractData* data);
+    virtual void initUI() final;
+    virtual void updateProperty(const AbstractProperty* property) final;
+    virtual void updateData(const AbstractData* data) final;
     
 private:
     SpellInfoLayerObserver* _observer;
-    MediumBoard* _board;
-    JuniorCard* _icon;
-    Label* _description;
-    std::vector<CardPropertyNode*> _properties;
 };
 
 #endif /* SpellInfoLayer_h */

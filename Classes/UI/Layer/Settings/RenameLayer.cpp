@@ -48,18 +48,20 @@ bool RenameLayer::init()
 {
     if (LayerColor::initWithColor(LAYER_MASK_COLOR)) {
         const auto& winSize(Director::getInstance()->getWinSize());
-        auto bg = MediumBoard::create();
-        bg->setTitle(LocalHelper::getString("ui_rename_title"));
-        bg->setButtonTitle(LocalHelper::getString("ui_rename_buttonTitle"));
-        bg->setButtonCallback([this]() {
+        auto board = MediumBoard::create();
+        board->setTitle(LocalHelper::getString("ui_rename_title"));
+        board->setPosition(Point(winSize.width / 2, winSize.height / 2));
+        addChild(board);
+        
+        auto button = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, LocalHelper::getString("ui_rename_buttonTitle"));
+        button->setCallback([this](Ref*) {
             if (_observer) {
                 _observer->onRenameLayerRename(this, _editBox->getText());
             }
         });
-        bg->setPosition(Point(winSize.width / 2, winSize.height / 2));
-        addChild(bg);
+        board->addChildToMidBottom(button);
         
-        auto subNode = bg->getSubNode();
+        auto subNode = board->getSubNode();
         const auto& subBgSize(subNode->getContentSize());
         
         // sub node

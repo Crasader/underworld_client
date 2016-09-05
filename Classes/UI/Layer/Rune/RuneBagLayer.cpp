@@ -10,6 +10,7 @@
 #include "MediumBoard.h"
 #include "PureNode.h"
 #include "PureScale9Sprite.h"
+#include "UniversalButton.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
@@ -59,14 +60,16 @@ bool RuneBagLayer::init(ObjectUtils::RuneType type, const RuneData* data)
         const auto& winSize(Director::getInstance()->getWinSize());
         auto board = MediumBoard::create();
         board->setTitle(LocalHelper::getString("ui_rune_title"));
-        board->setButtonTitle(LocalHelper::getString("ui_rune_pick"));
-        board->setButtonCallback([this]() {
+        board->setPosition(Point(winSize.width / 2, winSize.height / 2));
+        addChild(board);
+        
+        auto button = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, LocalHelper::getString("ui_rune_pick"));
+        button->setCallback([this](Ref*) {
             if (_observer) {
                 _observer->onRuneBagLayerSelected(this, _selectedRune);
             }
         });
-        board->setPosition(Point(winSize.width / 2, winSize.height / 2));
-        addChild(board);
+        board->addChildToMidBottom(button);
         
         auto node(board->getSubNode());
         const auto& size(node->getContentSize());

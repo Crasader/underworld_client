@@ -9,13 +9,8 @@
 #ifndef BaseCard_h
 #define BaseCard_h
 
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
+#include "AbstractCard.h"
 
-USING_NS_CC;
-
-class AbstractData;
-class AbstractProperty;
 class BaseCard;
 
 class BaseCardObserver
@@ -28,7 +23,7 @@ public:
     virtual void onBaseCardUpgrade(BaseCard* pSender) {}
 };
 
-class BaseCard : public ui::Widget
+class BaseCard : public AbstractCard
 {
 public:
     static constexpr float Width = 82;
@@ -37,10 +32,6 @@ public:
     virtual ~BaseCard();
     void registerObserver(BaseCardObserver *observer);
     
-    bool update(int cardId, const AbstractData* data);
-    int getCardId() const;
-    const AbstractData* getCardData() const;
-    
     void shake();
     void stopShake();
     void move(const Point& point, const std::function<void()>& callback);
@@ -48,20 +39,15 @@ public:
 protected:
     BaseCard();
     virtual bool init() override;
-    virtual void updateProperty(const AbstractProperty* property);
-    virtual void updateData(const AbstractData* data);
+    virtual void updateProperty(const AbstractProperty* property) override;
+    virtual void updateData(const AbstractData* data) override;
     void resetPositions(const Point& offset);
     
 protected:
     BaseCardObserver* _observer;
-    Sprite* _icon;
     Node* _costNode;
     Label* _cost;
-    Label* _level;
-    Sprite* _qualityBox;
     ui::Button* _infoButton;
-    int _cardId;
-    const AbstractData* _data;
     bool _touchInvalid;
     Point _originalPoint;
 };

@@ -12,7 +12,7 @@
 #include "DeckManager.h"
 #include "DataManager.h"
 #include "CardConfigData.h"
-#include "CardSimpleData.h"
+#include "AbstractData.h"
 #include "CardProperty.h"
 #include "CCShake.h"
 
@@ -32,14 +32,9 @@ BaseCard* BaseCard::create()
 
 BaseCard::BaseCard()
 :_observer(nullptr)
-,_icon(nullptr)
 ,_costNode(nullptr)
 ,_cost(nullptr)
-,_level(nullptr)
-,_qualityBox(nullptr)
 ,_infoButton(nullptr)
-,_cardId(0)
-,_data(nullptr)
 ,_touchInvalid(false)
 ,_originalPoint(Point::ZERO) {}
 
@@ -50,7 +45,7 @@ BaseCard::~BaseCard()
 
 bool BaseCard::init()
 {
-    if (Widget::init())
+    if (AbstractCard::init())
     {
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         setContentSize(Size(Width, Height));
@@ -127,36 +122,6 @@ void BaseCard::registerObserver(BaseCardObserver *observer)
     _observer = observer;
 }
 
-bool BaseCard::update(int cardId, const AbstractData* data)
-{
-    bool ret(false);
-    if (cardId != _cardId) {
-        if (data) {
-            _cardId = data->getId();
-        } else {
-            _cardId = cardId;
-        }
-        
-        updateProperty(DataManager::getInstance()->getProperty(cardId));
-        
-        ret = true;
-    }
-    
-    updateData(data);
-    
-    return ret;
-}
-
-int BaseCard::getCardId() const
-{
-    return _cardId;
-}
-
-const AbstractData* BaseCard::getCardData() const
-{
-    return _data;
-}
-
 static float shake_action_tag = 2016;
 void BaseCard::shake()
 {
@@ -228,10 +193,7 @@ void BaseCard::updateProperty(const AbstractProperty* property)
 
 void BaseCard::updateData(const AbstractData* data)
 {
-    _data = data;
-    if (_level) {
-        _level->setString(data ? StringUtils::format("LV.%d", data->getLevel()) : "");
-    }
+    AbstractCard::updateData(data);
 }
 
 void BaseCard::resetPositions(const Point& offset)

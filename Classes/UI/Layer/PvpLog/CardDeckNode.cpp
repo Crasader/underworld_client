@@ -7,8 +7,8 @@
 //
 
 #include "CardDeckNode.h"
-#include "CardSimpleNode.h"
-#include "CardSimpleData.h"
+#include "TinyCard.h"
+#include "AbstractData.h"
 
 using namespace std;
 
@@ -43,11 +43,11 @@ bool CardDeckNode::init(const Size& size, size_t column, size_t row)
         setContentSize(size);
         
         if (column > 1) {
-            _space.x = MAX(0, (size.width - column * CardSimpleNode::Width) / (column - 1));
+            _space.x = MAX(0, (size.width - column * TinyCard::Width) / (column - 1));
         }
         
         if (row > 1) {
-            _space.y = MAX(0, (size.height - row * CardSimpleNode::Height) / (row - 1));
+            _space.y = MAX(0, (size.height - row * TinyCard::Height) / (row - 1));
         }
         
         return true;
@@ -56,7 +56,7 @@ bool CardDeckNode::init(const Size& size, size_t column, size_t row)
     return false;
 }
 
-void CardDeckNode::update(const vector<CardSimpleData*>& vec)
+void CardDeckNode::update(const vector<AbstractData*>& vec)
 {
     // remove redundant nodes
     if (vec.size() < _nodes.size()) {
@@ -67,21 +67,22 @@ void CardDeckNode::update(const vector<CardSimpleData*>& vec)
         _nodes.erase(begin(_nodes) + i, end(_nodes));
     }
     
-    static const float w(CardSimpleNode::Width);
-    static const float h(CardSimpleNode::Height);
+    static const float w(TinyCard::Width);
+    static const float h(TinyCard::Height);
     for (int i = 0; i < _row; ++i) {
         bool loop(true);
         for (int j = 0; j < _column; ++j) {
             const size_t index(i * _column + j);
             if (vec.size() > index) {
-                if (_nodes.size() > index) {
-                    _nodes.at(index)->update(vec.at(index));
-                } else {
-                    auto node = CardSimpleNode::create(vec.at(index));
+                if (_nodes.size() <= index) {
+                    auto node = TinyCard::create();
                     addChild(node);
-                    node->setPosition((w + _space.x) * j + w / 2, (h + _space.y) * (_row - (i + 1)) + h / 2);
+                    node->setPosition(Point((w + _space.x) * j + w / 2, (h + _space.y) * (_row - (i + 1)) + h / 2));
                     _nodes.push_back(node);
                 }
+                
+                const auto data(vec.at(index));
+                _nodes.at(index)->update(AbstractData::getCardId(data), data);
             } else {
                 loop = false;
                 break;

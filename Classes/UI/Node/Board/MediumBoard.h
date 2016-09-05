@@ -19,12 +19,8 @@ public:
     static MediumBoard* create();
     virtual ~MediumBoard();
     
-    void setButtonVisible(bool visible);
-    void setButtonEnabled(bool enabled);
-    void setButtonTitle(const std::string& title);
-    void setButtonCallback(const Callback& callback);
-    
     Node* getSubNode() const;
+    void addChildToMidBottom(Node *child);
     
 protected:
     MediumBoard();
@@ -32,8 +28,8 @@ protected:
     
 private:
     Node* _subNode;
-    UniversalButton* _button;
-    Callback _buttonCallback;
+    Node* _midBottomChild;
+    Point _midBottomPoint;
 };
 
 #endif /* MediumBoard_h */

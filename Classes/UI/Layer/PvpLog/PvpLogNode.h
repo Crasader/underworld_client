@@ -15,8 +15,6 @@
 USING_NS_CC;
 
 class PvpLogData;
-class UserSimpleData;
-class CardSimpleData;
 class PvpResultNode;
 class TrophyGapNode;
 

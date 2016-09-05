@@ -28,8 +28,7 @@
 
 using namespace std;
 
-#pragma mark - CardInfoLayer
-CardInfoLayer* CardInfoLayer::create(int cardId, const CardData* data)
+CardInfoLayer* CardInfoLayer::create(int cardId, const AbstractData* data)
 {
     auto ret = new (nothrow) CardInfoLayer();
     if (ret && ret->init(cardId, data)) {
@@ -43,79 +42,15 @@ CardInfoLayer* CardInfoLayer::create(int cardId, const CardData* data)
 
 CardInfoLayer::CardInfoLayer()
 :_observer(nullptr)
-,_board(nullptr)
-,_icon(nullptr)
 ,_level(nullptr)
 ,_profession(nullptr)
-,_description(nullptr)
 ,_runeCircle(nullptr)
-,_selectedRune(nullptr)
-,_upgradeButton(nullptr)
-,_data(nullptr) {}
+,_selectedRune(nullptr) {}
 
 CardInfoLayer::~CardInfoLayer()
 {
     removeAllChildren();
 }
-
-bool CardInfoLayer::init(int cardId, const CardData* data)
-{
-    if (LayerColor::initWithColor(LAYER_MASK_COLOR)) {
-        const auto& winSize(Director::getInstance()->getWinSize());
-        auto board = Board::create(2);
-        board->setTitle("untitled");
-        board->setExitCallback([this]() {
-            if (_observer) {
-                _observer->onCardInfoLayerExit(this);
-            }
-        });
-        board->setPosition(Point(winSize.width / 2, winSize.height / 2));
-        addChild(board);
-        _board = board;
-        
-        UniversalButton::createReturnButton(board, Vec2(8.0f, 10.0f), [this]() {
-            if (_observer) {
-                _observer->onCardInfoLayerReturn(this);
-            }
-        });
-        
-        createLeftNode(board->getSubNode(0));
-        createRightNode(board->getSubNode(1));
-        
-        if (_icon) {
-            if (_icon->update(cardId, data)) {
-                updateProperty(DataManager::getInstance()->getProperty(cardId));
-            }
-        }
-        
-        updateData(data);
-        
-        auto eventListener = EventListenerTouchOneByOne::create();
-        eventListener->setSwallowTouches(true);
-        eventListener->onTouchBegan = CC_CALLBACK_2(CardInfoLayer::onTouchBegan, this);
-        eventListener->onTouchEnded = CC_CALLBACK_2(CardInfoLayer::onTouchEnded, this);
-        _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
-        
-        return true;
-    }
-    
-    return false;
-}
-
-#pragma mark - LayerColor
-bool CardInfoLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
-{
-    const auto& point(pTouch->getLocation());
-    Rect rect(getBoundingBox());
-    rect.origin = getParent()->convertToWorldSpace(rect.origin);
-    if (rect.containsPoint(point)) {
-        return true;
-    }
-    
-    return false;
-}
-
-void CardInfoLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 
 #pragma mark - RuneCircleObserver
 void CardInfoLayer::onRuneCircleClicked(RuneNode* node, int idx)
@@ -272,7 +207,7 @@ void CardInfoLayer::createLeftNode(Node* node)
             
             auto property = CardPropertyNode::create(color);
             node->addChild(property);
-            _cardProperties.push_back(property);
+            _properties.push_back(property);
             
             // calculate space first
             if (0 == i) {
@@ -452,18 +387,36 @@ void CardInfoLayer::onOpButtonClicked(int idx)
     }
 }
 
+void CardInfoLayer::initUI()
+{
+    const auto& winSize(Director::getInstance()->getWinSize());
+    auto board = Board::create(2);
+    board->setTitle("untitled");
+    board->setExitCallback([this]() {
+        if (_observer) {
+            _observer->onCardInfoLayerExit(this);
+        }
+    });
+    board->setPosition(Point(winSize.width / 2, winSize.height / 2));
+    addChild(board);
+    _board = board;
+    
+    UniversalButton::createReturnButton(board, Vec2(8.0f, 10.0f), [this]() {
+        if (_observer) {
+            _observer->onCardInfoLayerReturn(this);
+        }
+    });
+    
+    createLeftNode(board->getSubNode(0));
+    createRightNode(board->getSubNode(1));
+}
+
 void CardInfoLayer::updateProperty(const AbstractProperty* property)
 {
-    if (_board) {
-        _board->setTitle(property ? property->getName() : "");
-    }
+    AbstractInfoLayer::updateProperty(property);
     
     if (_profession) {
         _profession->setString(property ? "" : "");
-    }
-    
-    if (_description) {
-        _description->setString(property ? property->getDescription() : "");
     }
     
     auto cp(dynamic_cast<const CardProperty*>(property));
@@ -484,18 +437,20 @@ void CardInfoLayer::updateProperty(const AbstractProperty* property)
     }
 }
 
-void CardInfoLayer::updateData(const CardData* data)
+void CardInfoLayer::updateData(const AbstractData* data)
 {
-    _data = data;
+    AbstractInfoLayer::updateData(data);
     
     // always update these params
     if (_level) {
         _level->setString(data ? StringUtils::format("LV.%d", data->getLevel()) : "");
     }
     
+    auto cardData = dynamic_cast<const CardData*>(data);
+    
     const bool show(nullptr != data);
     if (show) {
-        const auto& skills(data->getSkills());
+        const auto& skills(cardData->getSkills());
         int cnt((int)skills.size());
         for (int i = 0; i < cnt; ++i) {
             if (i < _skillCards.size()) {
@@ -503,30 +458,11 @@ void CardInfoLayer::updateData(const CardData* data)
                 _skillCards.at(i)->update(skill->getId(), skill);
             }
         }
-        
-        auto up(data->getUpgradeProperty());
-        if (up) {
-            const auto& pair(up->getResourceCost());
-            if (pair.first != ResourceType::MAX) {
-                _upgradeButton->setType(pair.first);
-                _upgradeButton->setCount(pair.second);
-                _upgradeButton->setEnabled(_icon ? _icon->canUpgrade() : false);
-                static const bool enoughResource(true);
-                _upgradeButton->setResourceEnough(enoughResource);
-                
-            } else {
-                CC_ASSERT(false);
-            }
-        }
-    }
-    
-    if (_upgradeButton) {
-        _upgradeButton->setEnabled(show);
     }
     
     if (_runeCircle) {
         for (int i = 0; i < CARD_RUNES_COUNT; ++i) {
-            _runeCircle->setData(i, show ? data->getRune(i) : nullptr);
+            _runeCircle->setData(i, show ? cardData->getRune(i) : nullptr);
         }
     }
     

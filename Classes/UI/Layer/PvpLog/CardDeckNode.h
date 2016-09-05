@@ -13,22 +13,22 @@
 
 USING_NS_CC;
 
-class CardSimpleData;
-class CardSimpleNode;
+class AbstractData;
+class TinyCard;
 
 class CardDeckNode : public Node
 {
 public:
     static CardDeckNode* create(const Size& size, size_t column, size_t row);
     virtual ~CardDeckNode();
-    void update(const std::vector<CardSimpleData*>& vec);
+    void update(const std::vector<AbstractData*>& vec);
     
 private:
     CardDeckNode();
     bool init(const Size& size, size_t column, size_t row);
     
 private:
-    std::vector<CardSimpleNode*> _nodes;
+    std::vector<TinyCard*> _nodes;
     size_t _column;
     size_t _row;
     Vec2 _space;

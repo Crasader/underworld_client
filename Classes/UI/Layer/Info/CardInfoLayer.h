@@ -9,20 +9,14 @@
 #ifndef CardInfoLayer_h
 #define CardInfoLayer_h
 
+#include "AbstractInfoLayer.h"
 #include "RuneCircle.h"
 #include "RuneBagLayer.h"
 #include "BaseCard.h"
 #include "SpellInfoLayer.h"
 
-USING_NS_CC;
-
-class UniversalBoard;
-class JuniorCard;
 class SeniorCard;
-class CardPropertyNode;
 class UniversalButton;
-class ResourceButton;
-class CardData;
 
 class CardInfoLayerObserver
 {
@@ -33,24 +27,19 @@ public:
 };
 
 class CardInfoLayer
-: public LayerColor
+: public AbstractInfoLayer
 , public RuneCircleObserver
 , public RuneBagLayerObserver
 , public BaseCardObserver
 , public SpellInfoLayerObserver
 {
 public:
-    static CardInfoLayer* create(int cardId, const CardData* data);
+    static CardInfoLayer* create(int cardId, const AbstractData* data);
     virtual ~CardInfoLayer();
     void registerObserver(CardInfoLayerObserver *observer);
     
 private:
     CardInfoLayer();
-    
-    // LayerColor
-    bool init(int cardId, const CardData* data);
-    virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
-    virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
     // RuneCircleObserver
     virtual void onRuneCircleClicked(RuneNode* node, int idx) override;
@@ -71,24 +60,21 @@ private:
     void createRightNode(Node* node);
     void createOpButtons(Node* node);
     void onOpButtonClicked(int idx);
-    void updateProperty(const AbstractProperty* property);
-    void updateData(const CardData* data);
+    
+    // AbstractInfoLayer
+    virtual void initUI() final;
+    virtual void updateProperty(const AbstractProperty* property) final;
+    virtual void updateData(const AbstractData* data) final;
     
 private:
     CardInfoLayerObserver* _observer;
-    UniversalBoard* _board;
-    JuniorCard* _icon;
     Label* _level;
     Label* _profession;
-    Label* _description;
     RuneCircle* _runeCircle;
     RuneNode* _selectedRune;
-    ResourceButton* _upgradeButton;
-    std::vector<CardPropertyNode*> _cardProperties;
     std::vector<Label*> _runeProperties;
     std::vector<SeniorCard*> _skillCards;
     std::vector<UniversalButton*> _opButtons;
-    const CardData* _data;
 };
 
 #endif /* CardInfoLayer_h */

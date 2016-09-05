@@ -10,7 +10,7 @@
 #include "CocosUtils.h"
 #include "PvpLogData.h"
 #include "UserSimpleData.h"
-#include "CardSimpleData.h"
+#include "AbstractData.h"
 #include "PvpLogUI.h"
 #include "LocalHelper.h"
 #include "PvpResultNode.h"
@@ -260,7 +260,7 @@ void PvpLogNode::createBottomNode()
         static const size_t row(2);
         for (auto iter = begin(_userInfos); iter != end(_userInfos); ++iter) {
             auto deck(CardDeckNode::create(deckSize, column, row));
-            vector<CardSimpleData*> vec;
+            vector<AbstractData*> vec;
             for (int i = 0; i < 10; ++i) {
                 vec.push_back(nullptr);
             }
