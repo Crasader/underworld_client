@@ -7,7 +7,6 @@
 //
 
 #include "NetworkApi.h"
-#include "cocostudio/CocoStudio.h"
 #include "CocosUtils.h"
 #include "MD5Verifier.h"
 #include "GameData.h"

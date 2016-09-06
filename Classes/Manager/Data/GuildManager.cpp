@@ -7,10 +7,9 @@
 //
 
 #include "GuildManager.h"
-#include "cocostudio/CocoStudio.h"
+#include "JSonUtils.h"
 
 using namespace std;
-using namespace cocostudio;
 
 GuildManager::GuildManager()
 {

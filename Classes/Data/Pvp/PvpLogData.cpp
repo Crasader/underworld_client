@@ -9,11 +9,10 @@
 #include "PvpLogData.h"
 #include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
-#include "cocostudio/CocoStudio.h"
+#include "JSonUtils.h"
 #include "UserSimpleData.h"
 
 using namespace std;
-using namespace cocostudio;
 
 PvpLogData::PvpLogData(const rapidjson::Value& jsonDict)
 :_isHomeWinner(false)

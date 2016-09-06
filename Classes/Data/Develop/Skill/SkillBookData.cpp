@@ -7,32 +7,8 @@
 //
 
 #include "SkillBookData.h"
-#include "cocostudio/CocoStudio.h"
-
-using namespace std;
-using namespace cocostudio;
 
 SkillBookData::SkillBookData(const rapidjson::Value& jsonDict)
-:_id(0)
-,_amount(0)
-{
-    update(jsonDict);
-}
+:AbstractData(jsonDict){}
 
 SkillBookData::~SkillBookData() {}
-
-void SkillBookData::update(const rapidjson::Value& jsonDict)
-{
-    _id = DICTOOL->getIntValue_json(jsonDict, "id");
-    _amount = DICTOOL->getIntValue_json(jsonDict, "amount");
-}
-
-int SkillBookData::getId() const
-{
-    return _id;
-}
-
-int SkillBookData::getAmount() const
-{
-    return _amount;
-}

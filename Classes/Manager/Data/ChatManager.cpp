@@ -7,12 +7,11 @@
 //
 
 #include "ChatManager.h"
-#include "cocostudio/CocoStudio.h"
+#include "JSonUtils.h"
 #include "ChatData.h"
 #include "ChatMark.h"
 
 using namespace std;
-using namespace cocostudio;
 
 static ChatManager* s_pInstance(nullptr);
 ChatManager* ChatManager::getInstance()
@@ -58,7 +57,7 @@ void ChatManager::clear()
 
 void ChatManager::parseChannel(ChatType type, const rapidjson::Value& messages, const char* key)
 {
-    if (DICTOOL->checkObjectExist_json(messages, key)) {
+    if (JSonUtils::isExist(messages, key)) {
         vector<ChatData*> vec;
         const rapidjson::Value& world = DICTOOL->getSubDictionary_json(messages, key);
         const int cnt = DICTOOL->getArrayCount_json(messages, key);
@@ -76,7 +75,7 @@ void ChatManager::parseChannel(ChatType type, const rapidjson::Value& messages, 
 void ChatManager::parse(const rapidjson::Value& jsonDict)
 {
     clear();
-    if(DICTOOL->checkObjectExist_json(jsonDict, "messages"))
+    if(JSonUtils::isExist(jsonDict, "messages"))
     {
         const rapidjson::Value& messages = DICTOOL->getSubDictionary_json(jsonDict, "messages");
         parseChannel(ChatType::World, messages, "world");
@@ -86,14 +85,14 @@ void ChatManager::parse(const rapidjson::Value& jsonDict)
         
     }
     
-    if(DICTOOL->checkObjectExist_json(jsonDict, "mark"))
+    if(JSonUtils::isExist(jsonDict, "mark"))
     {
-        const rapidjson::Value& mark = DICTOOL->getSubDictionary_json(jsonDict, "mark");
-        _mark->_groupId = DICTOOL->getIntValue_json(mark, "group", INVALID_VALUE);
-        _mark->_wid = DICTOOL->getIntValue_json(mark, "w", INVALID_VALUE);
-        _mark->_pid = DICTOOL->getIntValue_json(mark, "p", INVALID_VALUE);
-        _mark->_gid = DICTOOL->getIntValue_json(mark, "g", INVALID_VALUE);
-        _mark->_tid = DICTOOL->getIntValue_json(mark, "t", INVALID_VALUE);
+        const auto& mark = DICTOOL->getSubDictionary_json(jsonDict, "mark");
+        JSonUtils::parse(_mark->_groupId, mark, "group", INVALID_VALUE);
+        JSonUtils::parse(_mark->_wid, mark, "w", INVALID_VALUE);
+        JSonUtils::parse(_mark->_pid, mark, "p", INVALID_VALUE);
+        JSonUtils::parse(_mark->_gid, mark, "g", INVALID_VALUE);
+        JSonUtils::parse(_mark->_tid, mark, "t", INVALID_VALUE);
     }
 }
 

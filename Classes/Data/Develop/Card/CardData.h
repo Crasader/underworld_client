@@ -9,14 +9,14 @@
 #ifndef CardData_h
 #define CardData_h
 
-#include "CardSimpleData.h"
+#include "AbstractData.h"
 #include <vector>
 #include <unordered_map>
 
 class SkillData;
 class RuneData;
 
-class CardData : public CardSimpleData
+class CardData : public AbstractData
 {
 public:
     CardData(const rapidjson::Value& jsonDict);

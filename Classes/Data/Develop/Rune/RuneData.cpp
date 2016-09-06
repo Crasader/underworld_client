@@ -7,10 +7,9 @@
 //
 
 #include "RuneData.h"
-#include "cocostudio/CocoStudio.h"
+#include "JSonUtils.h"
 
 using namespace std;
-using namespace cocostudio;
 
 RuneData::RuneData(const rapidjson::Value& jsonDict)
 :AbstractData(jsonDict)

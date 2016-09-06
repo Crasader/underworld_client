@@ -9,27 +9,45 @@
 #include "UserSimpleData.h"
 #include "Utils.h"
 #include "CocosUtils.h"
-#include "cocostudio/CocoStudio.h"
-#include "CardSimpleData.h"
-
-using namespace std;
-using namespace cocostudio;
+#include "JSonUtils.h"
+#include "UserArenaData.h"
+#include "UserGuildData.h"
+#include "CardData.h"
 
 UserSimpleData::UserSimpleData(const rapidjson::Value& jsonDict)
 :_uid(0)
 ,_icon(0)
 ,_level(0)
 ,_exp(0)
-,_trophy(0)
-,_guildIdx(0)
+,_arenaData(nullptr)
+,_guildData(nullptr)
 {
-    
+    update(jsonDict);
 }
 
 UserSimpleData::~UserSimpleData()
 {
+    CC_SAFE_DELETE(_arenaData);
+    CC_SAFE_DELETE(_guildData);
     for (auto data : _cards) {
         CC_SAFE_DELETE(data);
+    }
+}
+
+void UserSimpleData::update(const rapidjson::Value& jsonDict)
+{
+    JSonUtils::parse(_uid, jsonDict, "id");
+    JSonUtils::parse(_name, jsonDict, "jointype");
+    JSonUtils::parse(_icon, jsonDict, "icon");
+    JSonUtils::parse(_level, jsonDict, "name");
+    JSonUtils::parse(_exp, jsonDict, "notice");
+    
+    if (JSonUtils::isExist(jsonDict, "guildinfo")) {
+        _guildData = new (std::nothrow) UserGuildData(DICTOOL->getSubDictionary_json(jsonDict, "guildinfo"));
+    }
+    
+    if (JSonUtils::isExist(jsonDict, "pvp")) {
+        _arenaData = new (std::nothrow) UserArenaData(DICTOOL->getSubDictionary_json(jsonDict, "pvp"));
     }
 }
 
@@ -38,9 +56,9 @@ int UserSimpleData::getUid() const
     return _uid;
 }
 
-const string& UserSimpleData::getUser() const
+const std::string& UserSimpleData::getName() const
 {
-    return _user;
+    return _name;
 }
 
 int UserSimpleData::getIcon() const
@@ -58,22 +76,17 @@ int UserSimpleData::getExp() const
     return _exp;
 }
 
-int UserSimpleData::getTrophy() const
+const UserArenaData* UserSimpleData::getArenaData() const
 {
-    return _trophy;
+    return _arenaData;
 }
 
-int UserSimpleData::getGuildIdx() const
+const UserGuildData* UserSimpleData::getGuildData() const
 {
-    return _guildIdx;
+    return _guildData;
 }
 
-const string& UserSimpleData::getGuildName() const
-{
-    return _guildName;
-}
-
-const vector<CardSimpleData*>& UserSimpleData::getCards() const
+const std::vector<CardData*>& UserSimpleData::getCards() const
 {
     return _cards;
 }

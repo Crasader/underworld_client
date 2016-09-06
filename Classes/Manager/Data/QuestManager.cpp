@@ -7,13 +7,12 @@
 //
 
 #include "QuestManager.h"
-#include "cocostudio/CocoStudio.h"
+#include "JSonUtils.h"
 #include "Utils.h"
 #include "DataManager.h"
 #include "QuestData.h"
 
 using namespace std;
-using namespace cocostudio;
 
 QuestManager::QuestManager()
 {
@@ -36,7 +35,7 @@ void QuestManager::initQuest(QuestType type, const rapidjson::Value& jsonDict)
     }
     
     vector<QuestData*>& questDataVector = _quests.at(type);
-    if (DICTOOL->checkObjectExist_json(jsonDict, "data"))
+    if (JSonUtils::isExist(jsonDict, "data"))
     {
         const rapidjson::Value& quests = DICTOOL->getSubDictionary_json(jsonDict, "data");
         const int cnt = DICTOOL->getArrayCount_json(jsonDict, "data");

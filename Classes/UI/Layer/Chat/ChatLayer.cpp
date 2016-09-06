@@ -513,8 +513,8 @@ void ChatLayer::createTabButtons(const Vec2& edge)
     Size bsize(Size::ZERO);
     float space(0);
     for (int i = 0; i < tablesCount; ++i) {
-        static const string normal(ChatUI::getResourcePath("button_fenye_1.png"));
-        static const string select(ChatUI::getResourcePath("button_fenye.png"));
+        static const string normal(CocosUtils::getResourcePath("button_fenye_1.png"));
+        static const string select(CocosUtils::getResourcePath("button_fenye.png"));
         auto type(tableTypes[i]);
         auto button = TabButton::create(getTableName(type), normal, select, [=](Ref*) {
             setTableType(type);

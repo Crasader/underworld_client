@@ -9,21 +9,13 @@
 #ifndef SkillBookData_h
 #define SkillBookData_h
 
-#include "json/document.h"
+#include "AbstractData.h"
 
-class SkillBookData
+class SkillBookData : public AbstractData
 {
 public:
     SkillBookData(const rapidjson::Value& jsonDict);
     virtual ~SkillBookData();
-    
-    void update(const rapidjson::Value& jsonDict);
-    int getId() const;
-    int getAmount() const;
-    
-private:
-    int _id;
-    int _amount;
 };
 
 #endif /* SkillBookData_h */

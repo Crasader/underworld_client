@@ -9,11 +9,10 @@
 #include "ChatData.h"
 #include "Utils.h"
 #include "CocosUtils.h"
-#include "cocostudio/CocoStudio.h"
+#include "JSonUtils.h"
 #include "ObjectBriefData.h"
 
 using namespace std;
-using namespace cocostudio;
 
 ChatData::ChatData(ChatType type, const rapidjson::Value& jsonDict)
 :_id(0)
@@ -22,26 +21,19 @@ ChatData::ChatData(ChatType type, const rapidjson::Value& jsonDict)
 ,_icon(0)
 ,_time(0)
 {
-    _uid = DICTOOL->getIntValue_json(jsonDict, "uid");
-    _user = DICTOOL->getStringValue_json(jsonDict, "user");
+    JSonUtils::parse(_uid, jsonDict, "uid");
+    JSonUtils::parse(_user, jsonDict, "user");
+    JSonUtils::parse(_time, jsonDict, "time");
+    _formattedTime = CocosUtils::getFormattedTime(_time);
+    JSonUtils::parse(_message, jsonDict, "content");
     
-    if (DICTOOL->checkObjectExist_json(jsonDict, "time")) {
-        _time = DICTOOL->getIntValue_json(jsonDict, "time");
-        _formattedTime = CocosUtils::getFormattedTime(_time);
-    }
-    
-    if (DICTOOL->checkObjectExist_json(jsonDict, "content")) {
-        _message = DICTOOL->getStringValue_json(jsonDict, "content");
-    }
-    
-    if (DICTOOL->checkObjectExist_json(jsonDict, "rewards")) {
-        auto s = DICTOOL->getStringValue_json(jsonDict, "rewards");
-        vector<string> result;
-        Utils::split(result, s, ";", "");
-        for (int i = 0; i < result.size(); ++i) {
-            auto data = new ObjectBriefData(result.at(i));
-            _rewards.push_back(data);
-        }
+    string rewards;
+    JSonUtils::parse(rewards, jsonDict, "rewards");
+    vector<string> result;
+    Utils::split(result, rewards, ";", "");
+    for (int i = 0; i < result.size(); ++i) {
+        auto data = new ObjectBriefData(result.at(i));
+        _rewards.push_back(data);
     }
 }
 

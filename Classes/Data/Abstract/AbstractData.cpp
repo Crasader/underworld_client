@@ -7,11 +7,8 @@
 //
 
 #include "AbstractData.h"
-#include "cocostudio/CocoStudio.h"
+#include "JSonUtils.h"
 #include "DataManager.h"
-#include "ObjectUtils.h"
-
-using namespace cocostudio;
 
 int AbstractData::getCardId(const AbstractData* data)
 {
@@ -31,10 +28,10 @@ AbstractData::~AbstractData() {}
 
 void AbstractData::update(const rapidjson::Value& jsonDict)
 {
-    json2Int(jsonDict, "db", _dbId);
-    json2Int(jsonDict, "id", _id);
-    json2Int(jsonDict, "level", _level);
-    json2Int(jsonDict, "amount", _amount);
+    JSonUtils::parse(_dbId, jsonDict, "db");
+    JSonUtils::parse(_id, jsonDict, "id");
+    JSonUtils::parse(_level, jsonDict, "level");
+    JSonUtils::parse(_amount, jsonDict, "amount");
 }
 
 int AbstractData::getDbId() const
@@ -70,11 +67,4 @@ const AbstractUpgradeProperty* AbstractData::getUpgradeProperty() const
 const AbstractUpgradeProperty* AbstractData::getNextLevelUpgradeProperty() const
 {
     return DataManager::getInstance()->getUpgradeProperty(_id, _level + 1);
-}
-
-void AbstractData::json2Int(const rapidjson::Value& jsonDict, const char* key, int& output)
-{
-    if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
-        output = DICTOOL->getIntValue_json(jsonDict, key);
-    }
 }

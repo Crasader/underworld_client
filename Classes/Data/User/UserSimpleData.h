@@ -9,11 +9,13 @@
 #ifndef UserSimpleData_h
 #define UserSimpleData_h
 
+#include "json/document.h"
 #include <string>
 #include <vector>
-#include "json/document.h"
 
-class CardSimpleData;
+class UserArenaData;
+class UserGuildData;
+class CardData;
 
 class UserSimpleData
 {
@@ -21,26 +23,26 @@ public:
     UserSimpleData(const rapidjson::Value& jsonDict);
     virtual ~UserSimpleData();
     
+    void update(const rapidjson::Value& jsonDict);
+    
     int getUid() const;
-    const std::string& getUser() const;
+    const std::string& getName() const;
     int getIcon() const;
     int getLevel() const;
     int getExp() const;
-    int getTrophy() const;
-    int getGuildIdx() const;
-    const std::string& getGuildName() const;
-    const std::vector<CardSimpleData*>& getCards() const;
+    const UserArenaData* getArenaData() const;
+    const UserGuildData* getGuildData() const;
+    const std::vector<CardData*>& getCards() const;
     
 private:
     int _uid;
-    std::string _user;
+    std::string _name;
     int _icon;
     int _level;
     int _exp;
-    int _trophy;
-    int _guildIdx;
-    std::string _guildName;
-    std::vector<CardSimpleData*> _cards;
+    UserArenaData* _arenaData;
+    UserGuildData* _guildData;
+    std::vector<CardData*> _cards;
 };
 
 #endif /* UserSimpleData_h */

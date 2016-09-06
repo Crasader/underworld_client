@@ -7,16 +7,15 @@
 //
 
 #include "CardData.h"
-#include "cocostudio/CocoStudio.h"
+#include "JSonUtils.h"
 #include "SkillData.h"
 #include "RuneData.h"
 #include "CardProperty.h"
 
 using namespace std;
-using namespace cocostudio;
 
 CardData::CardData(const rapidjson::Value& jsonDict)
-:CardSimpleData(jsonDict)
+:AbstractData(jsonDict)
 {
     update(jsonDict);
 }
@@ -34,10 +33,10 @@ CardData::~CardData()
 
 void CardData::update(const rapidjson::Value& jsonDict)
 {
-    CardSimpleData::update(jsonDict);
+    AbstractData::update(jsonDict);
     {
         static const char* key("skills");
-        if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
+        if (JSonUtils::isExist(jsonDict, key)) {
             auto property(dynamic_cast<const CardProperty*>(getProperty()));
             if (property) {
                 const auto& skills(property->getSkills());
@@ -53,7 +52,7 @@ void CardData::update(const rapidjson::Value& jsonDict)
     
     {
         static const char* key("runes");
-        if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
+        if (JSonUtils::isExist(jsonDict, key)) {
             for (int i = 0; i < DICTOOL->getArrayCount_json(jsonDict, key); ++i) {
                 const auto& value = DICTOOL->getDictionaryFromArray_json(jsonDict, key, i);
                 auto data = new (nothrow) RuneData(value);

@@ -10,7 +10,6 @@
 #define AbstractData_h
 
 #include "json/document.h"
-#include <string>
 
 class AbstractProperty;
 class AbstractUpgradeProperty;
@@ -31,9 +30,6 @@ public:
     const AbstractProperty* getProperty() const;
     const AbstractUpgradeProperty* getUpgradeProperty() const;
     const AbstractUpgradeProperty* getNextLevelUpgradeProperty() const;
-    
-protected:
-    void json2Int(const rapidjson::Value& jsonDict, const char* key, int& output);
     
 protected:
     int _dbId;

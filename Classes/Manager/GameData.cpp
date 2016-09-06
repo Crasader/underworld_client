@@ -7,7 +7,7 @@
 //
 
 #include "GameData.h"
-#include "cocostudio/CocoStudio.h"
+#include "JSonUtils.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "ApiBridge.h"
 #include "TargetConditionals.h"
@@ -23,7 +23,6 @@
 #include "NetworkApi.h"
 
 using namespace std;
-using namespace cocostudio;
 
 static const string heartbeatScheduleKey("heartbeatScheduleKey");
 static const float heartbeatInterval = 2 * 60.0f;
@@ -124,7 +123,7 @@ void GameData::autoLogin(const httpRequestCallback& success, const httpErrorCall
 #else
     loadAnonymousUser(document);
 #endif
-    const string token = cocostudio::DICTOOL->getStringValue_json(document, kAuth, "");
+    const string token = JSonUtils::parse<string>(document, kAuth);
     // 2. if the token is saved in local
     if (token.length() == USER_TOKEN_LENGTH) {
         _user = new (std::nothrow) User(document);
@@ -143,7 +142,7 @@ void GameData::login(const httpRequestCallback& success, const httpErrorCallback
 #else
     loadAnonymousUser(document);
 #endif
-    const string token = cocostudio::DICTOOL->getStringValue_json(document, kAuth, "");
+    const string token = JSonUtils::parse<string>(document, kAuth);
     // 2. if the token is saved in local
     if (token.length() == USER_TOKEN_LENGTH)
     {
@@ -335,7 +334,7 @@ void GameData::heartBeat(float dt)
 void GameData::heartBeatRequest(bool showLoadingView)
 {
     NetworkApi::heartBeat([this](long, const rapidjson::Value& jsonDict) {
-        bool online = cocostudio::DICTOOL->getBooleanValue_json(jsonDict, "online");
+        auto online = JSonUtils::parse<bool>(jsonDict, "online");
         if (!online) {
             onUserIsOffline();
         }

@@ -7,13 +7,12 @@
 //
 
 #include "AchievementManager.h"
-#include "cocostudio/CocoStudio.h"
+#include "JSonUtils.h"
 #include "Utils.h"
 #include "DataManager.h"
 #include "AchievementData.h"
 
 using namespace std;
-using namespace cocostudio;
 
 AchievementManager::AchievementManager()
 {
@@ -27,7 +26,7 @@ AchievementManager::~AchievementManager()
 
 void AchievementManager::init(const rapidjson::Value& jsonDict)
 {
-    if (DICTOOL->checkObjectExist_json(jsonDict, "data"))
+    if (JSonUtils::isExist(jsonDict, "data"))
     {
         const rapidjson::Value& quests = DICTOOL->getSubDictionary_json(jsonDict, "data");
         const int cnt = DICTOOL->getArrayCount_json(jsonDict, "data");

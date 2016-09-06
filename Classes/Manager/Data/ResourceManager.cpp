@@ -7,12 +7,11 @@
 //
 
 #include "ResourceManager.h"
-#include "cocostudio/CocoStudio.h"
+#include "JSonUtils.h"
 #include "Utils.h"
 #include "SkillBookData.h"
 
 using namespace std;
-using namespace cocostudio;
 
 static ResourceManager* s_pInstance(nullptr);
 ResourceManager* ResourceManager::getInstance()
@@ -51,15 +50,12 @@ int ResourceManager::getResourceCount(ResourceType type) const
 
 void ResourceManager::updateGemInfo(const rapidjson::Value& jsonDict)
 {
+    auto amount(JSonUtils::parse<int>(jsonDict, "gemCount"));
     static ResourceType type(ResourceType::Gem);
-    static const char* key("gemCount");
-    if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
-        auto amount = DICTOOL->getIntValue_json(jsonDict, key);
-        if (_resources.find(type) != end(_resources)) {
-            _resources.at(type) = amount;
-        } else {
-            _resources.insert(make_pair(type, amount));
-        }
+    if (_resources.find(type) != end(_resources)) {
+        _resources.at(type) = amount;
+    } else {
+        _resources.insert(make_pair(type, amount));
     }
 }
 
@@ -67,11 +63,11 @@ void ResourceManager::updateResources(const rapidjson::Value& jsonDict)
 {
     {
         static const char* key("resources");
-        if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
+        if (JSonUtils::isExist(jsonDict, key)) {
             for (int i = 0; i < DICTOOL->getArrayCount_json(jsonDict, key); ++i) {
                 const auto& value = DICTOOL->getDictionaryFromArray_json(jsonDict, key, i);
-                auto type = static_cast<ResourceType>(DICTOOL->getIntValue_json(value, "id"));
-                auto amount = DICTOOL->getIntValue_json(value, "amount");
+                auto type(JSonUtils::parse<ResourceType>(value, "id"));
+                auto amount(JSonUtils::parse<int>(value, "amount"));
                 if (_resources.find(type) != end(_resources)) {
                     _resources.at(type) = amount;
                 } else {
@@ -83,9 +79,9 @@ void ResourceManager::updateResources(const rapidjson::Value& jsonDict)
     
     {
         static const char* key("book");
-        if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
+        if (JSonUtils::isExist(jsonDict, key)) {
             const auto& value = DICTOOL->getSubDictionary_json(jsonDict, key);
-            auto bookId(DICTOOL->getIntValue_json(value, "id"));
+            auto bookId(JSonUtils::parse<int>(value, "id"));
             if (_books.find(bookId) != end(_books)) {
                 _books.at(bookId)->update(value);
             } else {

@@ -440,7 +440,7 @@ void BattleDeckLayer::showInfo(int cardId, const CardData* data)
 }
 
 #pragma mark - Move cards
-void BattleDeckLayer::beginEdit(const CardSimpleData* data)
+void BattleDeckLayer::beginEdit(const AbstractData* data)
 {
     CC_ASSERT(!_isEditing);
     _isEditing = true;

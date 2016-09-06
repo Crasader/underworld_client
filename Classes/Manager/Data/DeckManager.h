@@ -11,12 +11,12 @@
 
 #include "json/document.h"
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 #include <map>
 #include <functional>
 
 class DeckData;
-class CardSimpleData;
 class CardData;
 class RuneData;
 class RuneGroupData;
@@ -65,8 +65,7 @@ public:
     // card
     size_t getAllCardsCount() const;
     size_t getAllFoundCardsCount() const;
-    const CardSimpleData* getCardData(int card) const;
-    const CardData* getCardDetail(int card) const;
+    const CardData* getCardData(int card) const;
     const std::vector<int>& getFoundCards(FeatureType type) const;
     const std::vector<int>& getUnfoundCards() const;
     
@@ -100,8 +99,8 @@ private:
     int _defaultId;
     DeckData* _defaultDeckData;
     std::unordered_map<int, DeckData*> _decks;
-    std::unordered_map<int, CardSimpleData*> _allCards;
-    std::unordered_map<int, CardData*> _cardDetails;
+    std::unordered_map<int, CardData*> _allCards;
+    std::unordered_set<int> _cardDetails;
     std::map<FeatureType, SortType> _sortTypes;
     std::vector<int> _allFoundCards;
     std::vector<int> _allUnfoundCards;

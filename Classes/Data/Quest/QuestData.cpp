@@ -8,10 +8,8 @@
 
 #include "QuestData.h"
 #include "DataManager.h"
-#include "cocostudio/CocoStudio.h"
+#include "JSonUtils.h"
 #include "QuestProperty.h"
-
-using namespace cocostudio;
 
 QuestData::QuestData(const rapidjson::Value& jsonDict)
 :_type(QuestType::Daily)
@@ -19,9 +17,9 @@ QuestData::QuestData(const rapidjson::Value& jsonDict)
 ,_progress(0)
 ,_status(0)
 {
-    _id = DICTOOL->getIntValue_json(jsonDict, "qid");
-    _progress = DICTOOL->getIntValue_json(jsonDict, "progress");
-    _status = DICTOOL->getIntValue_json(jsonDict, "status");
+    JSonUtils::parse(_id, jsonDict, "qid");
+    JSonUtils::parse(_progress, jsonDict, "progress");
+    JSonUtils::parse(_status, jsonDict, "status");
 }
 
 QuestData::~QuestData()
@@ -53,4 +51,3 @@ int QuestData::getStatus() const
 {
     return _status;
 }
-

@@ -7,7 +7,7 @@
 //
 
 #include "DeckManager.h"
-#include "cocostudio/CocoStudio.h"
+#include "JSonUtils.h"
 #include "DataManager.h"
 #include "UserDefaultsDataManager.h"
 #include "DeckData.h"
@@ -19,7 +19,6 @@
 #include "ResourceManager.h"
 
 using namespace std;
-using namespace cocostudio;
 
 static inline string getDeckKey(int idx)
 { return cocos2d::StringUtils::format("deck_%d", idx); }
@@ -50,7 +49,7 @@ void DeckManager::purge()
 }
 
 // TODO: remove the test method
-CardSimpleData* createFakeData(int card, int level)
+CardData* createFakeData(int card, int level)
 {
     rapidjson::Document document;
     document.SetObject();
@@ -58,7 +57,7 @@ CardSimpleData* createFakeData(int card, int level)
     document.AddMember("id", card, allocator);
     document.AddMember("level", level, allocator);
     document.AddMember("amount", 50, allocator);
-    return new (nothrow) CardSimpleData(document);
+    return new (nothrow) CardData(document);
 }
 
 DeckManager::DeckManager()
@@ -105,10 +104,6 @@ DeckManager::~DeckManager()
         CC_SAFE_DELETE(iter->second);
     }
     
-    for (auto iter = begin(_cardDetails); iter != end(_cardDetails); ++iter) {
-        CC_SAFE_DELETE(iter->second);
-    }
-    
     for (auto iter = begin(_runeGroups); iter != end(_runeGroups); ++iter) {
         CC_SAFE_DELETE(iter->second);
     }
@@ -122,10 +117,10 @@ void DeckManager::getCardList(const function<void()>& callback)
         NetworkApi::getCardList([this, callback](long code, const rapidjson::Value& jsonDict) {
             {
                 static const char* key("cards");
-                if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
+                if (JSonUtils::isExist(jsonDict, key)) {
                     for (int i = 0; i < DICTOOL->getArrayCount_json(jsonDict, key); ++i) {
                         const auto& value = DICTOOL->getDictionaryFromArray_json(jsonDict, key, i);
-                        auto data = new (nothrow) CardSimpleData(value);
+                        auto data = new (nothrow) CardData(value);
                         auto cardId(data->getId());
                         _allCards.insert(make_pair(cardId, data));
                         _allFoundCards.push_back(cardId);
@@ -135,10 +130,10 @@ void DeckManager::getCardList(const function<void()>& callback)
             
             {
                 static const char* key("ncards");
-                if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
+                if (JSonUtils::isExist(jsonDict, key)) {
                     for (int i = 0; i < DICTOOL->getArrayCount_json(jsonDict, key); ++i) {
                         const auto& value = DICTOOL->getDictionaryFromArray_json(jsonDict, key, i);
-                        auto data = new (nothrow) CardSimpleData(value);
+                        auto data = new (nothrow) CardData(value);
                         auto cardId(data->getId());
                         _allUnfoundCards.push_back(cardId);
                         CC_SAFE_DELETE(data);
@@ -159,8 +154,7 @@ void DeckManager::getCardDetail(int cardId, const function<void(const CardData*)
 {
     auto data(getCardData(cardId));
     if (data) {
-        auto detail(getCardDetail(cardId));
-        if (!detail) {
+        if (_cardDetails.find(cardId) == end(_cardDetails)) {
             NetworkApi::getCardDetail(data->getDbId(), [this, callback](long code, const rapidjson::Value& jsonDict) {
                 auto data = updateCardData(jsonDict);
                 if (callback) {
@@ -168,7 +162,7 @@ void DeckManager::getCardDetail(int cardId, const function<void(const CardData*)
                 }
             });
         } else if (callback) {
-            callback(detail);
+            callback(data);
         }
     } else if (callback) {
         callback(nullptr);
@@ -191,7 +185,7 @@ void DeckManager::upgradeCard(int cardId, const function<void(const CardData*)>&
 
 void DeckManager::upgradeCardSkill(int cardId, int skillIdx, const function<void(const CardData*)>& callback)
 {
-    auto data(getCardDetail(cardId));
+    auto data(getCardData(cardId));
     if (data && data->getSkills().size() > skillIdx) {
         NetworkApi::upgradeCardSkill(data->getDbId(), data->getLevel(), skillIdx, [this, callback](long code, const rapidjson::Value& jsonDict) {
             ResourceManager::getInstance()->updateResources(jsonDict);
@@ -208,7 +202,7 @@ void DeckManager::getRunesList(const std::function<void()>& callback)
     if (_runeGroups.empty()) {
         NetworkApi::getRunesList([=](long code, const rapidjson::Value& jsonDict) {
             static const char* key("runepacks");
-            if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
+            if (JSonUtils::isExist(jsonDict, key)) {
                 for (int i = 0; i < DICTOOL->getArrayCount_json(jsonDict, key); ++i) {
                     const auto& value = DICTOOL->getDictionaryFromArray_json(jsonDict, key, i);
                     auto data = new (nothrow) RuneGroupData(value);
@@ -228,7 +222,7 @@ void DeckManager::getRunesList(const std::function<void()>& callback)
 
 void DeckManager::imbedRune(int cardId, int runeIdx, int dbId, const function<void()>& callback)
 {
-    auto data(getCardDetail(cardId));
+    auto data(getCardData(cardId));
     if (data) {
         CC_ASSERT(_runeGroups.find(dbId) != end(_runeGroups));
         NetworkApi::imbedRune(data->getDbId(), runeIdx, dbId, [=](long code, const rapidjson::Value& jsonDict) {
@@ -244,11 +238,11 @@ void DeckManager::imbedRune(int cardId, int runeIdx, int dbId, const function<vo
 
 void DeckManager::unloadRune(int cardId, int runeIdx, const function<void()>& callback)
 {
-    auto data(getCardDetail(cardId));
+    auto data(getCardData(cardId));
     if (data) {
         NetworkApi::unloadRune(data->getDbId(), runeIdx, [=](long code, const rapidjson::Value& jsonDict) {
             static const char* key("runepack");
-            if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
+            if (JSonUtils::isExist(jsonDict, key)) {
                 const auto& value = DICTOOL->getSubDictionary_json(jsonDict, key);
                 updateRuneGroup(value);
             }
@@ -264,7 +258,7 @@ void DeckManager::unloadRune(int cardId, int runeIdx, const function<void()>& ca
 
 void DeckManager::upgradeRune(int cardId, int runeIdx, const function<void()>& callback)
 {
-    auto data(getCardDetail(cardId));
+    auto data(getCardData(cardId));
     if (data) {
         auto rune(data->getRune(runeIdx));
         if (rune) {
@@ -272,7 +266,7 @@ void DeckManager::upgradeRune(int cardId, int runeIdx, const function<void()>& c
                 ResourceManager::getInstance()->updateResources(jsonDict);
                 updateRune(cardId, runeIdx, jsonDict);
                 static const char* key("runepack");
-                if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
+                if (JSonUtils::isExist(jsonDict, key)) {
                     const auto& value = DICTOOL->getSubDictionary_json(jsonDict, key);
                     updateRuneGroup(value);
                 }
@@ -361,19 +355,10 @@ size_t DeckManager::getAllFoundCardsCount() const
     return _allFoundCards.size();
 }
 
-const CardSimpleData* DeckManager::getCardData(int card) const
+const CardData* DeckManager::getCardData(int card) const
 {
     if (_allCards.find(card) != end(_allCards)) {
         return _allCards.at(card);
-    }
-    
-    return nullptr;
-}
-
-const CardData* DeckManager::getCardDetail(int card) const
-{
-    if (_cardDetails.find(card) != end(_cardDetails)) {
-        return _cardDetails.at(card);
     }
     
     return nullptr;
@@ -535,28 +520,29 @@ void DeckManager::sortAllCards(FeatureType type, bool sortUnfound)
 const CardData* DeckManager::updateCardData(const rapidjson::Value& jsonDict)
 {
     const auto& value = DICTOOL->getSubDictionary_json(jsonDict, "card");
-    auto cardId(DICTOOL->getIntValue_json(value, "id"));
-    if (_cardDetails.find(cardId) != end(_cardDetails)) {
-        _cardDetails.at(cardId)->update(value);
+    auto cardId(JSonUtils::parse<int>(value, "id"));
+    _cardDetails.insert(cardId);
+    if (_allCards.find(cardId) != end(_allCards)) {
+        _allCards.at(cardId)->update(value);
     } else {
-        _cardDetails.insert(make_pair(cardId, new (nothrow) CardData(value)));
+        _allCards.insert(make_pair(cardId, new (nothrow) CardData(value)));
     }
     
-    return _cardDetails.at(cardId);
+    return _allCards.at(cardId);
 }
 
 void DeckManager::removeRune(int cardId, int runeIdx)
 {
-    if (_cardDetails.find(cardId) != end(_cardDetails)) {
-        _cardDetails.at(cardId)->removeRune(runeIdx);
+    if (_allCards.find(cardId) != end(_allCards)) {
+        _allCards.at(cardId)->removeRune(runeIdx);
     }
 }
 
 void DeckManager::updateRune(int cardId, int runeIdx, const rapidjson::Value& jsonDict)
 {
     static const char* key("rune");
-    if (_cardDetails.find(cardId) != end(_cardDetails) && DICTOOL->checkObjectExist_json(jsonDict, key)) {
-        auto data(_cardDetails.at(cardId));
+    if (_allCards.find(cardId) != end(_allCards) && JSonUtils::isExist(jsonDict, key)) {
+        auto data(_allCards.at(cardId));
         if (data) {
             const auto& value = DICTOOL->getSubDictionary_json(jsonDict, key);
             data->updateRune(runeIdx, value);
@@ -567,8 +553,8 @@ void DeckManager::updateRune(int cardId, int runeIdx, const rapidjson::Value& js
 void DeckManager::updateRuneGroup(const rapidjson::Value& jsonDict)
 {
     static const char* key("db");
-    if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
-        auto dbId(DICTOOL->getIntValue_json(jsonDict, key));
+    if (JSonUtils::isExist(jsonDict, key)) {
+        auto dbId(JSonUtils::parse<int>(jsonDict, key));
         if (_runeGroups.find(dbId) != end(_runeGroups)) {
             auto data(_runeGroups.at(dbId));
             data->update(jsonDict);
@@ -584,7 +570,7 @@ void DeckManager::updateRuneGroup(const rapidjson::Value& jsonDict)
 void DeckManager::updateRuneGroups(const rapidjson::Value& jsonDict)
 {
     static const char* key("runepacks");
-    if (DICTOOL->checkObjectExist_json(jsonDict, key)) {
+    if (JSonUtils::isExist(jsonDict, key)) {
         for (int i = 0; i < DICTOOL->getArrayCount_json(jsonDict, key); ++i) {
             const auto& value = DICTOOL->getDictionaryFromArray_json(jsonDict, key, i);
             updateRuneGroup(value);

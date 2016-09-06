@@ -120,6 +120,7 @@
 		A10C1D571D61795300B81896 /* DeckEditMask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10C1D551D61795300B81896 /* DeckEditMask.cpp */; };
 		A10D742F1D5083B1009674F9 /* AvatarNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10D742D1D5083B1009674F9 /* AvatarNode.cpp */; };
 		A10E8F911D5C1FFA00320B3D /* DeckManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10E8F8F1D5C1FFA00320B3D /* DeckManager.cpp */; };
+		A11009501D7D5A0A00376283 /* GuildData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A110094E1D7D5A0A00376283 /* GuildData.cpp */; };
 		A11469FE1C9FE9EC00E64125 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A11469F91C9FE9EC00E64125 /* libevent.a */; };
 		A11469FF1C9FE9EC00E64125 /* libevent_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A11469FA1C9FE9EC00E64125 /* libevent_core.a */; };
 		A1146A001C9FE9EC00E64125 /* libevent_extra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A11469FB1C9FE9EC00E64125 /* libevent_extra.a */; };
@@ -184,7 +185,6 @@
 		A1A4BA491BCE096300175E8A /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A4BA471BCE096300175E8A /* Utils.cpp */; };
 		A1A7A2621D76ED8A00D7B3B1 /* CardData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A7A2461D76ED8A00D7B3B1 /* CardData.cpp */; };
 		A1A7A2631D76ED8A00D7B3B1 /* CardProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A7A2481D76ED8A00D7B3B1 /* CardProperty.cpp */; };
-		A1A7A2641D76ED8A00D7B3B1 /* CardSimpleData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A7A24A1D76ED8A00D7B3B1 /* CardSimpleData.cpp */; };
 		A1A7A2651D76ED8A00D7B3B1 /* CardUpgradeProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A7A24C1D76ED8A00D7B3B1 /* CardUpgradeProperty.cpp */; };
 		A1A7A2661D76ED8A00D7B3B1 /* DeckData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A7A24E1D76ED8A00D7B3B1 /* DeckData.cpp */; };
 		A1A7A2671D76ED8A00D7B3B1 /* RuneData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A7A2511D76ED8A00D7B3B1 /* RuneData.cpp */; };
@@ -231,13 +231,14 @@
 		A1D25C2F1C8588A100A84EB6 /* UnitCardDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D25C2D1C8588A100A84EB6 /* UnitCardDeck.cpp */; };
 		A1D45C4A1BEB3B1400D1E921 /* ResourceButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D45C481BEB3B1400D1E921 /* ResourceButton.cpp */; };
 		A1D45C4C1BEB594800D1E921 /* GameImages in Resources */ = {isa = PBXBuildFile; fileRef = A1D45C4B1BEB594800D1E921 /* GameImages */; };
-		A1D461431C3E111B00E8E60B /* UserData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D4613F1C3E111B00E8E60B /* UserData.cpp */; };
 		A1D461441C3E111B00E8E60B /* UserSimpleData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D461411C3E111B00E8E60B /* UserSimpleData.cpp */; };
 		A1D461521C3E166900E8E60B /* AbstractProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D4614E1C3E166900E8E60B /* AbstractProperty.cpp */; };
 		A1D461561C3E1C9200E8E60B /* AbstractUpgradeProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D461541C3E1C9200E8E60B /* AbstractUpgradeProperty.cpp */; };
 		A1D4615F1C3E251000E8E60B /* MapParticleConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D461591C3E251000E8E60B /* MapParticleConfigData.cpp */; };
 		A1D461601C3E251000E8E60B /* UAConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D4615B1C3E251000E8E60B /* UAConfigData.cpp */; };
 		A1D461611C3E251000E8E60B /* URConfigData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D4615D1C3E251000E8E60B /* URConfigData.cpp */; };
+		A1D4B7F71D7EBC7F000DB3CD /* UserArenaData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D4B7F31D7EBC7F000DB3CD /* UserArenaData.cpp */; };
+		A1D4B7F81D7EBC7F000DB3CD /* UserGuildData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D4B7F51D7EBC7F000DB3CD /* UserGuildData.cpp */; };
 		A1D592271C9ABE7E009B9E8C /* Scheduler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D592251C9ABE7E009B9E8C /* Scheduler.cpp */; };
 		A1D745C01C1AB7C40020BC1C /* DefeatLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D745B71C1AB7C40020BC1C /* DefeatLayer.cpp */; };
 		A1D745C11C1AB7C40020BC1C /* MapLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1D745B91C1AB7C40020BC1C /* MapLayer.cpp */; };
@@ -551,6 +552,9 @@
 		A10D742E1D5083B1009674F9 /* AvatarNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvatarNode.h; sourceTree = "<group>"; };
 		A10E8F8F1D5C1FFA00320B3D /* DeckManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DeckManager.cpp; sourceTree = "<group>"; };
 		A10E8F901D5C1FFA00320B3D /* DeckManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckManager.h; sourceTree = "<group>"; };
+		A110094E1D7D5A0A00376283 /* GuildData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuildData.cpp; sourceTree = "<group>"; };
+		A110094F1D7D5A0A00376283 /* GuildData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuildData.h; sourceTree = "<group>"; };
+		A11009521D7D5EDF00376283 /* JSonUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSonUtils.h; sourceTree = "<group>"; };
 		A11469D91C9FE9EC00E64125 /* evdns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = evdns.h; sourceTree = "<group>"; };
 		A11469DA1C9FE9EC00E64125 /* event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = event.h; sourceTree = "<group>"; };
 		A11469DC1C9FE9EC00E64125 /* buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buffer.h; sourceTree = "<group>"; };
@@ -709,8 +713,6 @@
 		A1A7A2471D76ED8A00D7B3B1 /* CardData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardData.h; sourceTree = "<group>"; };
 		A1A7A2481D76ED8A00D7B3B1 /* CardProperty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardProperty.cpp; sourceTree = "<group>"; };
 		A1A7A2491D76ED8A00D7B3B1 /* CardProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardProperty.h; sourceTree = "<group>"; };
-		A1A7A24A1D76ED8A00D7B3B1 /* CardSimpleData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardSimpleData.cpp; sourceTree = "<group>"; };
-		A1A7A24B1D76ED8A00D7B3B1 /* CardSimpleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardSimpleData.h; sourceTree = "<group>"; };
 		A1A7A24C1D76ED8A00D7B3B1 /* CardUpgradeProperty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardUpgradeProperty.cpp; sourceTree = "<group>"; };
 		A1A7A24D1D76ED8A00D7B3B1 /* CardUpgradeProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardUpgradeProperty.h; sourceTree = "<group>"; };
 		A1A7A24E1D76ED8A00D7B3B1 /* DeckData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DeckData.cpp; sourceTree = "<group>"; };
@@ -800,8 +802,6 @@
 		A1D45C481BEB3B1400D1E921 /* ResourceButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResourceButton.cpp; sourceTree = "<group>"; };
 		A1D45C491BEB3B1400D1E921 /* ResourceButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceButton.h; sourceTree = "<group>"; };
 		A1D45C4B1BEB594800D1E921 /* GameImages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = GameImages; sourceTree = "<group>"; };
-		A1D4613F1C3E111B00E8E60B /* UserData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserData.cpp; sourceTree = "<group>"; };
-		A1D461401C3E111B00E8E60B /* UserData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserData.h; sourceTree = "<group>"; };
 		A1D461411C3E111B00E8E60B /* UserSimpleData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserSimpleData.cpp; sourceTree = "<group>"; };
 		A1D461421C3E111B00E8E60B /* UserSimpleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserSimpleData.h; sourceTree = "<group>"; };
 		A1D4614E1C3E166900E8E60B /* AbstractProperty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AbstractProperty.cpp; sourceTree = "<group>"; };
@@ -814,6 +814,10 @@
 		A1D4615C1C3E251000E8E60B /* UAConfigData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAConfigData.h; sourceTree = "<group>"; };
 		A1D4615D1C3E251000E8E60B /* URConfigData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = URConfigData.cpp; sourceTree = "<group>"; };
 		A1D4615E1C3E251000E8E60B /* URConfigData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URConfigData.h; sourceTree = "<group>"; };
+		A1D4B7F31D7EBC7F000DB3CD /* UserArenaData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserArenaData.cpp; sourceTree = "<group>"; };
+		A1D4B7F41D7EBC7F000DB3CD /* UserArenaData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserArenaData.h; sourceTree = "<group>"; };
+		A1D4B7F51D7EBC7F000DB3CD /* UserGuildData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserGuildData.cpp; sourceTree = "<group>"; };
+		A1D4B7F61D7EBC7F000DB3CD /* UserGuildData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserGuildData.h; sourceTree = "<group>"; };
 		A1D592251C9ABE7E009B9E8C /* Scheduler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scheduler.cpp; sourceTree = "<group>"; };
 		A1D592261C9ABE7E009B9E8C /* Scheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scheduler.h; sourceTree = "<group>"; };
 		A1D745B71C1AB7C40020BC1C /* DefeatLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DefeatLayer.cpp; sourceTree = "<group>"; };
@@ -1888,8 +1892,6 @@
 				A1A7A2471D76ED8A00D7B3B1 /* CardData.h */,
 				A1A7A2481D76ED8A00D7B3B1 /* CardProperty.cpp */,
 				A1A7A2491D76ED8A00D7B3B1 /* CardProperty.h */,
-				A1A7A24A1D76ED8A00D7B3B1 /* CardSimpleData.cpp */,
-				A1A7A24B1D76ED8A00D7B3B1 /* CardSimpleData.h */,
 				A1A7A24C1D76ED8A00D7B3B1 /* CardUpgradeProperty.cpp */,
 				A1A7A24D1D76ED8A00D7B3B1 /* CardUpgradeProperty.h */,
 				A1A7A24E1D76ED8A00D7B3B1 /* DeckData.cpp */,
@@ -1941,6 +1943,7 @@
 				A1720E6E1BCCDF9100217E98 /* CocosUtils.h */,
 				A1E7BAE01C2149E800CE2A85 /* Constants.cpp */,
 				A1E7BAE11C2149E800CE2A85 /* Constants.h */,
+				A11009521D7D5EDF00376283 /* JSonUtils.h */,
 				A1720E911BCCE1D900217E98 /* LocalHelper.cpp */,
 				A1720E921BCCE1D900217E98 /* LocalHelper.h */,
 				A13E39371D793364007D907A /* ObjectUtils.h */,
@@ -2053,8 +2056,10 @@
 		A1D4613E1C3E111B00E8E60B /* User */ = {
 			isa = PBXGroup;
 			children = (
-				A1D4613F1C3E111B00E8E60B /* UserData.cpp */,
-				A1D461401C3E111B00E8E60B /* UserData.h */,
+				A1D4B7F31D7EBC7F000DB3CD /* UserArenaData.cpp */,
+				A1D4B7F41D7EBC7F000DB3CD /* UserArenaData.h */,
+				A1D4B7F51D7EBC7F000DB3CD /* UserGuildData.cpp */,
+				A1D4B7F61D7EBC7F000DB3CD /* UserGuildData.h */,
 				A1D461411C3E111B00E8E60B /* UserSimpleData.cpp */,
 				A1D461421C3E111B00E8E60B /* UserSimpleData.h */,
 			);
@@ -2330,6 +2335,8 @@
 		A1FF0E991D7D51FB00C32040 /* Guild */ = {
 			isa = PBXGroup;
 			children = (
+				A110094E1D7D5A0A00376283 /* GuildData.cpp */,
+				A110094F1D7D5A0A00376283 /* GuildData.h */,
 			);
 			path = Guild;
 			sourceTree = "<group>";
@@ -2530,6 +2537,7 @@
 				63CCBFDA1CC5BA1B00590513 /* BinaryJsonTool.cpp in Sources */,
 				0487A66C1CC8A90D005FE8D0 /* GameModeHMM.cpp in Sources */,
 				A1FF13BE1D3DFCF6007D2C08 /* NSDataAES256.m in Sources */,
+				A1D4B7F81D7EBC7F000DB3CD /* UserGuildData.cpp in Sources */,
 				A1FF0E8B1D7D46CC00C32040 /* CardOpNode.cpp in Sources */,
 				A1D461601C3E251000E8E60B /* UAConfigData.cpp in Sources */,
 				A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */,
@@ -2637,7 +2645,7 @@
 				A18524CC1C1AE3E800BE261D /* QuestLayer.cpp in Sources */,
 				A1A7A2651D76ED8A00D7B3B1 /* CardUpgradeProperty.cpp in Sources */,
 				A1CA35EF1D45BF2600584C9D /* SpellRingNode.cpp in Sources */,
-				A1D461431C3E111B00E8E60B /* UserData.cpp in Sources */,
+				A1D4B7F71D7EBC7F000DB3CD /* UserArenaData.cpp in Sources */,
 				A14B5EFB1C311908006FB0DB /* Addon.cpp in Sources */,
 				0404BE771D1BC7A300B46BAA /* WorldObject.cpp in Sources */,
 				A1720E901BCCE19300217E98 /* MD5Verifier.cpp in Sources */,
@@ -2661,6 +2669,7 @@
 				A1A4BA381BCDF81500175E8A /* IapObject.cpp in Sources */,
 				3019BABC1C99668E003258DB /* Aura.cpp in Sources */,
 				A1D11BC91CBE0C840060584A /* CardDeck.cpp in Sources */,
+				A11009501D7D5A0A00376283 /* GuildData.cpp in Sources */,
 				30F8406B1D50B37F0050C976 /* HMMGui.cpp in Sources */,
 				A103F45B1BE37E2A007F9A83 /* BulletNode.cpp in Sources */,
 				A1C1A6691D7439E600B15E3F /* RuneCircle.cpp in Sources */,
@@ -2746,7 +2755,6 @@
 				045116E21BCFBA39002AA721 /* Clock.cpp in Sources */,
 				A1720E931BCCE1D900217E98 /* LocalHelper.cpp in Sources */,
 				A1CA78001C892D4E0060F71A /* CardConfigData.cpp in Sources */,
-				A1A7A2641D76ED8A00D7B3B1 /* CardSimpleData.cpp in Sources */,
 				045117091BCFBA53002AA721 /* Faction.cpp in Sources */,
 				3087FF361CA825CD004E31F6 /* Damage.cpp in Sources */,
 				A12CFF871D77D43D007E25CB /* SkillBookProperty.cpp in Sources */,

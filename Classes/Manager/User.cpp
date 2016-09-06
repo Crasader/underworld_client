@@ -7,12 +7,11 @@
 //
 
 #include "User.h"
-#include "cocostudio/CocoStudio.h"
+#include "JSonUtils.h"
 #include "UserDefaultsDataManager.h"
 #include "NetworkApi.h"
 
 using namespace std;
-using namespace cocostudio;
 
 static inline const char* getFirstLoginKey() { return "first_entry"; }
 static inline string getFinishedTutorialKey(int idx)
@@ -23,9 +22,9 @@ User::User(const rapidjson::Value& jsonDict)
 ,_finishedTutorialsMaxIdx(-1)
 {
     // parse with the data from network
-    _uid = DICTOOL->getIntValue_json(jsonDict, kUID);
-    _token = DICTOOL->getStringValue_json(jsonDict, kAuth, "");
-    _isNewUser = DICTOOL->getBooleanValue_json(jsonDict, kNew);
+    JSonUtils::parse(_uid, jsonDict, kUID);
+    JSonUtils::parse(_token, jsonDict, kAuth);
+    JSonUtils::parse(_isNewUser, jsonDict, kNew);
     
     init();
 }

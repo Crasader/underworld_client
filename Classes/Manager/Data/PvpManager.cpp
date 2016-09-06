@@ -7,7 +7,7 @@
 //
 
 #include "PvpManager.h"
-#include "cocostudio/CocoStudio.h"
+#include "JSonUtils.h"
 #include "PvpLogData.h"
 
 using namespace std;
