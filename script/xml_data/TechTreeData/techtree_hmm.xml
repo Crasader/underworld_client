@@ -135,6 +135,7 @@
 	<card name="半羊人" card_class="summon" cost="木头:20" unit_id="12019" recover_span="0" id="22029">
 		<custom_unit_setting unit_setting_id="12019"/>
 	</card>
+     -->
 	
 <!-- 第一版单位：英雄部分 -->
 	<card name="人族盾牌队长" card_class="hero" cost="木头:0" unit_id="11000" recover_span="0" id="21100">
@@ -207,4 +208,5 @@
 	<card name="凤凰" card_class="summon" cost="木头:20" unit_id="12019" recover_span="0" id="21122">
 		<custom_unit_setting unit_setting_id="12019"/>
 	</card>
+     -->
 </root>
