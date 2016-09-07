@@ -18,6 +18,8 @@
 #include "BattleDeckLayer.h"
 #include "SettingsLayer.h"
 #include "PvpLogLayer.h"
+#include "GuildLayer.h"
+#include "GuildSearchLayer.h"
 #include "CheatLayer.h"
 
 using namespace std;
@@ -415,6 +417,11 @@ void MainUILayer::onFunctionButtonClicked(ButtonType type)
             
         case ButtonType::BattleLog:
             runningScene->addChild(PvpLogLayer::create());
+            break;
+            
+        case ButtonType::Guild:
+            runningScene->addChild(GuildSearchLayer::create());
+//            runningScene->addChild(GuildLayer::create());
             break;
             
         default:

@@ -55,8 +55,11 @@ bool RenameLayer::init()
         
         auto button = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, LocalHelper::getString("ui_rename_buttonTitle"));
         button->setCallback([this](Ref*) {
-            if (_observer) {
-                _observer->onRenameLayerRename(this, _editBox->getText());
+            if (_observer && _editBox) {
+                const char* name(_editBox->getText());
+                if (name && strlen(name) > 0) {
+                    _observer->onRenameLayerRename(this, name);
+                }
             }
         });
         board->addChildToMidBottom(button);
@@ -89,7 +92,7 @@ bool RenameLayer::init()
         {
             static const Size rs(347, 53);
             static const float capInsets(5.0f);
-            auto s = ui::Scale9Sprite::create(SettingUI::getResourcePath("ui_kuang_6.png"), Rect(0, 0, rs.width, rs.height), Rect(capInsets, capInsets, rs.width - capInsets * 2, rs.height - capInsets * 2));
+            auto s = ui::Scale9Sprite::create(CocosUtils::getResourcePath("ui_kuang_6.png"), Rect(0, 0, rs.width, rs.height), Rect(capInsets, capInsets, rs.width - capInsets * 2, rs.height - capInsets * 2));
             auto eb = ui::EditBox::create(rs, s);
             eb->setDelegate(this);
             eb->setMaxLength(rs.width);

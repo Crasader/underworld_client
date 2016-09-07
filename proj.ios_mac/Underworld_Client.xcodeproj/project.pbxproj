@@ -111,6 +111,12 @@
 		6308F93B1CA02098009D2BFC /* TCPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6308F9371CA02098009D2BFC /* TCPClient.cpp */; };
 		63CCBFDA1CC5BA1B00590513 /* BinaryJsonTool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63CCBFD81CC5BA1B00590513 /* BinaryJsonTool.cpp */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
+		A101EDEE1D7FDB80003D3A41 /* GuildLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A101EDEC1D7FDB80003D3A41 /* GuildLayer.cpp */; };
+		A101EDF71D7FE1EB003D3A41 /* GuildInfoLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A101EDF51D7FE1EB003D3A41 /* GuildInfoLayer.cpp */; };
+		A101EDFD1D7FE237003D3A41 /* GuildUIDonateNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A101EDFB1D7FE237003D3A41 /* GuildUIDonateNode.cpp */; };
+		A101EE001D7FE251003D3A41 /* GuildUIInfoNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A101EDFE1D7FE251003D3A41 /* GuildUIInfoNode.cpp */; };
+		A101EE061D7FE9BB003D3A41 /* GuildUIInteractNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A101EE041D7FE9BB003D3A41 /* GuildUIInteractNode.cpp */; };
+		A101EE091D7FEA3A003D3A41 /* GuildNoticeLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A101EE071D7FEA3A003D3A41 /* GuildNoticeLayer.cpp */; };
 		A103F45B1BE37E2A007F9A83 /* BulletNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F4571BE37E2A007F9A83 /* BulletNode.cpp */; };
 		A103F45C1BE37E2A007F9A83 /* UnitNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F4591BE37E2A007F9A83 /* UnitNode.cpp */; };
 		A103F45F1BE38112007F9A83 /* GameRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A103F45D1BE38112007F9A83 /* GameRender.cpp */; };
@@ -216,6 +222,7 @@
 		A1B66A231D70383D009A8D55 /* UniversalBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B66A211D70383D009A8D55 /* UniversalBoard.cpp */; };
 		A1B66A2A1D70430A009A8D55 /* RuneBagLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B66A281D70430A009A8D55 /* RuneBagLayer.cpp */; };
 		A1B66A371D704ABF009A8D55 /* RuneNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B66A351D704ABF009A8D55 /* RuneNode.cpp */; };
+		A1BB445A1D7ECCA600213275 /* GuildSearchLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1BB44581D7ECCA600213275 /* GuildSearchLayer.cpp */; };
 		A1C124DC1BF58AF700F3FDD2 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = A1C124DB1BF58AF700F3FDD2 /* sounds */; };
 		A1C1A6691D7439E600B15E3F /* RuneCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1C1A6671D7439E600B15E3F /* RuneCircle.cpp */; };
 		A1CA35E91D45BDE200584C9D /* NoticeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1CA35E71D45BDE200584C9D /* NoticeNode.cpp */; };
@@ -534,6 +541,18 @@
 		63CCBFD81CC5BA1B00590513 /* BinaryJsonTool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BinaryJsonTool.cpp; sourceTree = "<group>"; };
 		63CCBFD91CC5BA1B00590513 /* BinaryJsonTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BinaryJsonTool.h; sourceTree = "<group>"; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		A101EDEC1D7FDB80003D3A41 /* GuildLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuildLayer.cpp; sourceTree = "<group>"; };
+		A101EDED1D7FDB80003D3A41 /* GuildLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuildLayer.h; sourceTree = "<group>"; };
+		A101EDF51D7FE1EB003D3A41 /* GuildInfoLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuildInfoLayer.cpp; sourceTree = "<group>"; };
+		A101EDF61D7FE1EB003D3A41 /* GuildInfoLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuildInfoLayer.h; sourceTree = "<group>"; };
+		A101EDFB1D7FE237003D3A41 /* GuildUIDonateNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuildUIDonateNode.cpp; sourceTree = "<group>"; };
+		A101EDFC1D7FE237003D3A41 /* GuildUIDonateNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuildUIDonateNode.h; sourceTree = "<group>"; };
+		A101EDFE1D7FE251003D3A41 /* GuildUIInfoNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuildUIInfoNode.cpp; sourceTree = "<group>"; };
+		A101EDFF1D7FE251003D3A41 /* GuildUIInfoNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuildUIInfoNode.h; sourceTree = "<group>"; };
+		A101EE041D7FE9BB003D3A41 /* GuildUIInteractNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuildUIInteractNode.cpp; sourceTree = "<group>"; };
+		A101EE051D7FE9BB003D3A41 /* GuildUIInteractNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuildUIInteractNode.h; sourceTree = "<group>"; };
+		A101EE071D7FEA3A003D3A41 /* GuildNoticeLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuildNoticeLayer.cpp; sourceTree = "<group>"; };
+		A101EE081D7FEA3A003D3A41 /* GuildNoticeLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuildNoticeLayer.h; sourceTree = "<group>"; };
 		A103F4571BE37E2A007F9A83 /* BulletNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BulletNode.cpp; sourceTree = "<group>"; };
 		A103F4581BE37E2A007F9A83 /* BulletNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BulletNode.h; sourceTree = "<group>"; };
 		A103F4591BE37E2A007F9A83 /* UnitNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UnitNode.cpp; sourceTree = "<group>"; };
@@ -774,6 +793,8 @@
 		A1B66A291D70430A009A8D55 /* RuneBagLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuneBagLayer.h; sourceTree = "<group>"; };
 		A1B66A351D704ABF009A8D55 /* RuneNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RuneNode.cpp; sourceTree = "<group>"; };
 		A1B66A361D704ABF009A8D55 /* RuneNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuneNode.h; sourceTree = "<group>"; };
+		A1BB44581D7ECCA600213275 /* GuildSearchLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuildSearchLayer.cpp; sourceTree = "<group>"; };
+		A1BB44591D7ECCA600213275 /* GuildSearchLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuildSearchLayer.h; sourceTree = "<group>"; };
 		A1C124DB1BF58AF700F3FDD2 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sounds; sourceTree = "<group>"; };
 		A1C1A6671D7439E600B15E3F /* RuneCircle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RuneCircle.cpp; sourceTree = "<group>"; };
 		A1C1A6681D7439E600B15E3F /* RuneCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuneCircle.h; sourceTree = "<group>"; };
@@ -1796,6 +1817,7 @@
 				A1E830531C1E758E00FE01B8 /* Chat */,
 				A1AC97211D53187200FCEF5D /* Cheat */,
 				A19B1AB11D6C18200010D129 /* Develop */,
+				A1BB44571D7ECA1300213275 /* Guild */,
 				A1FF0E6C1D7D469D00C32040 /* Info */,
 				A11648FD1D5AFB0100D03985 /* Main */,
 				A1F3D22C1D1D05CD00EB5C17 /* Public */,
@@ -2032,6 +2054,27 @@
 				A1B66A361D704ABF009A8D55 /* RuneNode.h */,
 			);
 			path = Rune;
+			sourceTree = "<group>";
+		};
+		A1BB44571D7ECA1300213275 /* Guild */ = {
+			isa = PBXGroup;
+			children = (
+				A101EDF51D7FE1EB003D3A41 /* GuildInfoLayer.cpp */,
+				A101EDF61D7FE1EB003D3A41 /* GuildInfoLayer.h */,
+				A101EDEC1D7FDB80003D3A41 /* GuildLayer.cpp */,
+				A101EDED1D7FDB80003D3A41 /* GuildLayer.h */,
+				A101EE071D7FEA3A003D3A41 /* GuildNoticeLayer.cpp */,
+				A101EE081D7FEA3A003D3A41 /* GuildNoticeLayer.h */,
+				A1BB44581D7ECCA600213275 /* GuildSearchLayer.cpp */,
+				A1BB44591D7ECCA600213275 /* GuildSearchLayer.h */,
+				A101EDFB1D7FE237003D3A41 /* GuildUIDonateNode.cpp */,
+				A101EDFC1D7FE237003D3A41 /* GuildUIDonateNode.h */,
+				A101EDFE1D7FE251003D3A41 /* GuildUIInfoNode.cpp */,
+				A101EDFF1D7FE251003D3A41 /* GuildUIInfoNode.h */,
+				A101EE041D7FE9BB003D3A41 /* GuildUIInteractNode.cpp */,
+				A101EE051D7FE9BB003D3A41 /* GuildUIInteractNode.h */,
+			);
+			path = Guild;
 			sourceTree = "<group>";
 		};
 		A1CA35F21D45F28D00584C9D /* Settings */ = {
@@ -2535,9 +2578,11 @@
 				A1D026D01D475A07005BA42C /* SettingUI.cpp in Sources */,
 				A11649061D5AFB3700D03985 /* MainScene.cpp in Sources */,
 				63CCBFDA1CC5BA1B00590513 /* BinaryJsonTool.cpp in Sources */,
+				A101EE001D7FE251003D3A41 /* GuildUIInfoNode.cpp in Sources */,
 				0487A66C1CC8A90D005FE8D0 /* GameModeHMM.cpp in Sources */,
 				A1FF13BE1D3DFCF6007D2C08 /* NSDataAES256.m in Sources */,
 				A1D4B7F81D7EBC7F000DB3CD /* UserGuildData.cpp in Sources */,
+				A101EDEE1D7FDB80003D3A41 /* GuildLayer.cpp in Sources */,
 				A1FF0E8B1D7D46CC00C32040 /* CardOpNode.cpp in Sources */,
 				A1D461601C3E251000E8E60B /* UAConfigData.cpp in Sources */,
 				A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */,
@@ -2575,6 +2620,7 @@
 				A1E7BAE21C2149E800CE2A85 /* Constants.cpp in Sources */,
 				A1B66A371D704ABF009A8D55 /* RuneNode.cpp in Sources */,
 				A173A6BE1D2CDA4A00F9485B /* AnimationParameter.cpp in Sources */,
+				A101EDF71D7FE1EB003D3A41 /* GuildInfoLayer.cpp in Sources */,
 				A1B4AE301C200521005906A6 /* QuestManager.cpp in Sources */,
 				A1B66A2A1D70430A009A8D55 /* RuneBagLayer.cpp in Sources */,
 				30F840771D50B3E30050C976 /* DisplayBar.cpp in Sources */,
@@ -2584,6 +2630,7 @@
 				A12DE76C1D4868AC0012D127 /* UniversalButton.cpp in Sources */,
 				045117101BCFBA5F002AA721 /* Game.cpp in Sources */,
 				A1FF0E981D7D4B9B00C32040 /* AbstractCard.cpp in Sources */,
+				A101EE061D7FE9BB003D3A41 /* GuildUIInteractNode.cpp in Sources */,
 				A19B1AB41D6C186E0010D129 /* DevelopLayer.cpp in Sources */,
 				3028EBC31BFF0CBD00511C51 /* DynamicValue.cpp in Sources */,
 				A1CA35F51D45F29D00584C9D /* SettingsLayer.cpp in Sources */,
@@ -2602,6 +2649,7 @@
 				045116F71BCFBA44002AA721 /* SkllType.cpp in Sources */,
 				A160E0981D6FF24E002E44A9 /* PureScale9Sprite.cpp in Sources */,
 				A1B4AE021C200480005906A6 /* UserDefaultsDataManager.cpp in Sources */,
+				A101EDFD1D7FE237003D3A41 /* GuildUIDonateNode.cpp in Sources */,
 				E63DE5051D50E27E00735E88 /* TrophyGapNode.cpp in Sources */,
 				A1D461521C3E166900E8E60B /* AbstractProperty.cpp in Sources */,
 				A1E830561C1E75A700FE01B8 /* ChatNode.cpp in Sources */,
@@ -2710,11 +2758,13 @@
 				308B84661BE3853C00377802 /* AIBody.cpp in Sources */,
 				300098D01BD0CD5900B6E284 /* Resource.cpp in Sources */,
 				A1FB5D031D4F18D800CD2622 /* PvpLogNode.cpp in Sources */,
+				A101EE091D7FEA3A003D3A41 /* GuildNoticeLayer.cpp in Sources */,
 				30B83D5E1CEEC25500195004 /* WorldTest.cpp in Sources */,
 				A1720EBD1BCD309A00217E98 /* NetworkController.cpp in Sources */,
 				A1D4615F1C3E251000E8E60B /* MapParticleConfigData.cpp in Sources */,
 				A1FF0E951D7D47A700C32040 /* TinyCard.cpp in Sources */,
 				A12C60AD1D50784B003FCF0D /* GuildSimpleNode.cpp in Sources */,
+				A1BB445A1D7ECCA600213275 /* GuildSearchLayer.cpp in Sources */,
 				044229441D70134C002F32BE /* UWJsonHelper.cpp in Sources */,
 				A12CFF8E1D77FBB6007E25CB /* AbstractData.cpp in Sources */,
 				A1D592271C9ABE7E009B9E8C /* Scheduler.cpp in Sources */,
