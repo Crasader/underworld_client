@@ -34,6 +34,10 @@
 	<item desc="兽族攻城车" donate="7" experience="550" grade="0" id="22017" name="兽族攻城车" point="555" require="3" reward="15_32" runes="0;1;2" skills="70001;71001" unlock="3"/>
 	<item desc="月之骑士" donate="8" experience="650" grade="0" id="22018" name="月之骑士" point="555" require="3" reward="15_33" runes="0;1;2" skills="70001;71001" unlock="4"/>
 	<item desc="攻城单位" donate="9" experience="750" grade="1" id="22019" name="攻城单位" point="555" require="3" reward="15_34" runes="0;1;2" skills="70001;71001" unlock="5"/>
+	<item desc="火炮兵" donate="6" experience="450" grade="0" id="22023" name="火炮兵" point="555" require="3" reward="15_31" runes="0;1;2" skills="70001" unlock="2"/>
+	<item desc="地雷工兵" donate="7" experience="550" grade="0" id="22025" name="地雷工兵" point="555" require="3" reward="15_32" runes="0;1;2" skills="70001;71001" unlock="3"/>
+	<item desc="娜迦战士" donate="8" experience="650" grade="0" id="22026" name="娜迦战士" point="555" require="3" reward="15_33" runes="0;1;2" skills="70001;71001" unlock="4"/>
+	<item desc="狼人刺客" donate="9" experience="750" grade="1" id="22028" name="狼人刺客" point="555" require="3" reward="15_34" runes="0;1;2" skills="70001;71001" unlock="5"/>
 	<item desc="人族盾牌队长" donate="10" experience="850" grade="1" id="21100" name="人族盾牌队长" point="555" require="3" reward="15_35" runes="0;1;2" skills="72001" unlock="6"/>
 	<item desc="人族剑士队长" donate="11" experience="950" grade="1" id="21101" name="人族剑士队长" point="555" require="3" reward="15_36" runes="0;1;2" skills="72001" unlock="7"/>
 	<item desc="人族弓箭队长" donate="12" experience="1050" grade="1" id="21102" name="人族弓箭队长" point="555" require="3" reward="15_37" runes="0;1;2" skills="72001" unlock="8"/>

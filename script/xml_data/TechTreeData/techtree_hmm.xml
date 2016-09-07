@@ -104,6 +104,18 @@
 	<card name="攻城单位" card_class="summon" cost="木头:20" unit_id="12019" recover_span="0" id="22019">
 		<custom_unit_setting unit_setting_id="12019"/>
 	</card>
+	<card name="火炮兵" card_class="summon" cost="木头:20" unit_id="12020" recover_span="0" id="22023">
+		<custom_unit_setting unit_setting_id="12020"/>
+	</card>
+	<card name="地雷工兵" card_class="summon" cost="木头:20" unit_id="12021" recover_span="0" id="22025">
+		<custom_unit_setting unit_setting_id="12021"/>
+	</card>
+	<card name="娜迦战士" card_class="summon" cost="木头:20" unit_id="12022" recover_span="0" id="22026">
+		<custom_unit_setting unit_setting_id="12022"/>
+	</card>
+	<card name="狼人刺客" card_class="summon" cost="木头:20" unit_id="12023" recover_span="0" id="22028">
+		<custom_unit_setting unit_setting_id="12023"/>
+	</card>
 	<!--注释：额外的card
 	<card name="精灵祭祀" card_class="summon" cost="木头:20" unit_id="12019" recover_span="0" id="22020">
 		<custom_unit_setting unit_setting_id="12019"/>
@@ -175,37 +187,37 @@
 		<custom_unit_setting unit_setting_id="11011"/>
 	</card>
 	<!--注释：额外的card
-	<card name="伊利丹" card_class="summon" cost="木头:20" unit_id="12019" recover_span="0" id="21112">
+	<card name="伊利丹" card_class="hero" cost="木头:20" unit_id="12019" recover_span="0" id="21112">
 		<custom_unit_setting unit_setting_id="12019"/>
 	</card>
-	<card name="泰兰德" card_class="summon" cost="木头:20" unit_id="12019" recover_span="0" id="21113">
+	<card name="泰兰德" card_class="hero" cost="木头:20" unit_id="12019" recover_span="0" id="21113">
 		<custom_unit_setting unit_setting_id="12019"/>
 	</card>
-	<card name="玛法里奥" card_class="summon" cost="木头:20" unit_id="12019" recover_span="0" id="21114">
+	<card name="玛法里奥" card_class="hero" cost="木头:20" unit_id="12019" recover_span="0" id="21114">
 		<custom_unit_setting unit_setting_id="12019"/>
 	</card>
-	<card name="希尔瓦娜斯" card_class="summon" cost="木头:20" unit_id="12019" recover_span="0" id="21115">
+	<card name="希尔瓦娜斯" card_class="hero" cost="木头:20" unit_id="12019" recover_span="0" id="21115">
 		<custom_unit_setting unit_setting_id="12019"/>
 	</card>
-	<card name="装甲车" card_class="summon" cost="木头:20" unit_id="12019" recover_span="0" id="21116">
+	<card name="装甲车" card_class="hero" cost="木头:20" unit_id="12019" recover_span="0" id="21116">
 		<custom_unit_setting unit_setting_id="12019"/>
 	</card>
-	<card name="山丘之王" card_class="summon" cost="木头:20" unit_id="12019" recover_span="0" id="21117">
+	<card name="山丘之王" card_class="hero" cost="木头:20" unit_id="12019" recover_span="0" id="21117">
 		<custom_unit_setting unit_setting_id="12019"/>
 	</card>
-	<card name="直升飞机" card_class="summon" cost="木头:20" unit_id="12019" recover_span="0" id="21118">
+	<card name="直升飞机" card_class="hero" cost="木头:20" unit_id="12019" recover_span="0" id="21118">
 		<custom_unit_setting unit_setting_id="12019"/>
 	</card>
-	<card name="爆裂鱼人" card_class="summon" cost="木头:20" unit_id="12019" recover_span="0" id="21119">
+	<card name="爆裂鱼人" card_class="hero" cost="木头:20" unit_id="12019" recover_span="0" id="21119">
 		<custom_unit_setting unit_setting_id="12019"/>
 	</card>
-	<card name="萨尔" card_class="summon" cost="木头:20" unit_id="12019" recover_span="0" id="21120">
+	<card name="萨尔" card_class="hero" cost="木头:20" unit_id="12019" recover_span="0" id="21120">
 		<custom_unit_setting unit_setting_id="12019"/>
 	</card>
-	<card name="熊猫人" card_class="summon" cost="木头:20" unit_id="12019" recover_span="0" id="21121">
+	<card name="熊猫人" card_class="hero" cost="木头:20" unit_id="12019" recover_span="0" id="21121">
 		<custom_unit_setting unit_setting_id="12019"/>
 	</card>
-	<card name="凤凰" card_class="summon" cost="木头:20" unit_id="12019" recover_span="0" id="21122">
+	<card name="凤凰" card_class="hero" cost="木头:20" unit_id="12019" recover_span="0" id="21122">
 		<custom_unit_setting unit_setting_id="12019"/>
 	</card>
      -->
