@@ -1,20 +1,20 @@
 //
-//  GuildSearchLayer.cpp
+//  ChestInfoLayer.cpp
 //  Underworld_Client
 //
-//  Created by Andy on 16/9/6.
+//  Created by Andy on 16/9/7.
 //  Copyright (c) 2016 Mofish Studio. All rights reserved.
 //
 
-#include "GuildSearchLayer.h"
+#include "ChestInfoLayer.h"
 #include "CocosGlobal.h"
-#include "Board.h"
+#include "SmallBoard.h"
 
 using namespace std;
 
-GuildSearchLayer* GuildSearchLayer::create()
+ChestInfoLayer* ChestInfoLayer::create()
 {
-    auto ret = new (nothrow) GuildSearchLayer();
+    auto ret = new (nothrow) ChestInfoLayer();
     if (ret && ret->init()) {
         ret->autorelease();
         return ret;
@@ -24,24 +24,25 @@ GuildSearchLayer* GuildSearchLayer::create()
     return nullptr;
 }
 
-GuildSearchLayer::GuildSearchLayer()
+ChestInfoLayer::ChestInfoLayer()
 :_observer(nullptr) {}
 
-GuildSearchLayer::~GuildSearchLayer()
+ChestInfoLayer::~ChestInfoLayer()
 {
     removeAllChildren();
 }
 
-void GuildSearchLayer::registerObserver(GuildSearchLayerObserver *observer)
+void ChestInfoLayer::registerObserver(ChestInfoLayerObserver *observer)
 {
     _observer = observer;
 }
 
-bool GuildSearchLayer::init()
+#pragma mark - LayerColor
+bool ChestInfoLayer::init()
 {
     if (LayerColor::initWithColor(LAYER_MASK_COLOR)) {
         const auto& winSize(Director::getInstance()->getWinSize());
-        auto board = Board::create(1);
+        auto board = SmallBoard::create();
         board->setTitle("untitled");
         board->setExitCallback([this]() {
             removeFromParent();
@@ -51,8 +52,8 @@ bool GuildSearchLayer::init()
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
-        eventListener->onTouchBegan = CC_CALLBACK_2(GuildSearchLayer::onTouchBegan, this);
-        eventListener->onTouchEnded = CC_CALLBACK_2(GuildSearchLayer::onTouchEnded, this);
+        eventListener->onTouchBegan = CC_CALLBACK_2(ChestInfoLayer::onTouchBegan, this);
+        eventListener->onTouchEnded = CC_CALLBACK_2(ChestInfoLayer::onTouchEnded, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
         
         return true;
@@ -61,9 +62,9 @@ bool GuildSearchLayer::init()
     return false;
 }
 
-bool GuildSearchLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
+bool ChestInfoLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
     return true;
 }
 
-void GuildSearchLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
+void ChestInfoLayer::onTouchEnded(Touch *touch, Event *unused_event) {}

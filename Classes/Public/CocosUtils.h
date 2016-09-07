@@ -43,6 +43,7 @@ namespace CocosUtils
     void jumpNumber(cocos2d::Label *label, int toNumer, float duration);
     
     float getFitScreenScale(cocos2d::Node *root);
+    void readdChild(cocos2d::Node* parent, cocos2d::Node* child);
     void replaceScene(cocos2d::Scene* scene, bool animated);
     
     void cleanMemory();

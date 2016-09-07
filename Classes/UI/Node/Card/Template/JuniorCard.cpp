@@ -9,7 +9,6 @@
 #include "JuniorCard.h"
 #include "CocosUtils.h"
 #include "ObjectUtils.h"
-#include "DevelopUI.h"
 #include "AbstractData.h"
 #include "CardUpgradeProperty.h"
 #include "SkillUpgradeProperty.h"
@@ -42,12 +41,12 @@ JuniorCard::~JuniorCard()
 bool JuniorCard::init()
 {
     if (BaseCard::init()) {
-        auto ptbg = Sprite::create(DevelopUI::getResourcePath("ui_tiao_27.png"));
+        auto ptbg = Sprite::create(CocosUtils::getResourcePath("ui_tiao_27.png"));
         addChild(ptbg);
         _ptBackground = ptbg;
         
         const auto& psize(ptbg->getContentSize());
-        auto pt = ProgressTimer::create(Sprite::create(DevelopUI::getResourcePath("ui_tiao_28.png")));
+        auto pt = ProgressTimer::create(Sprite::create(CocosUtils::getResourcePath("ui_tiao_28.png")));
         pt->setType(ProgressTimer::Type::BAR);
         pt->setBarChangeRate(Vec2(1.0f, 0.0f));
         pt->setMidpoint(Vec2::ANCHOR_BOTTOM_LEFT);
@@ -72,7 +71,7 @@ bool JuniorCard::init()
         resetPositions(size - originalSize);
         ptbg->setPosition(Point(size.width / 2, psize.height / 2));
         
-        auto arrow = Sprite::create(DevelopUI::getResourcePath("icon_jiantou_4.png"));
+        auto arrow = Sprite::create(CocosUtils::getResourcePath("icon_jiantou_4.png"));
         arrow->setPosition(0, psize.height / 2);
         ptbg->addChild(arrow);
         _arrow = arrow;

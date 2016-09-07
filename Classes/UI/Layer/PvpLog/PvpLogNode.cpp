@@ -11,7 +11,6 @@
 #include "PvpLogData.h"
 #include "UserSimpleData.h"
 #include "AbstractData.h"
-#include "PvpLogUI.h"
 #include "LocalHelper.h"
 #include "PvpResultNode.h"
 #include "TrophyGapNode.h"
@@ -83,7 +82,7 @@ bool PvpLogNode::init(const PvpLogData* data, bool expand)
     if (Node::init()) {
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         
-        static const string file(PvpLogUI::getResourcePath("ui_tiao_10.png"));
+        static const string file(CocosUtils::getResourcePath("ui_tiao_10.png"));
         static const Size size(975, 131);
         static const float offset(6);
         static const Rect capInsets(offset, offset, size.width - offset * 2, size.height - offset * 2);
@@ -91,7 +90,7 @@ bool PvpLogNode::init(const PvpLogData* data, bool expand)
         _background->setAnchorPoint(Point::ANCHOR_MIDDLE);
         addChild(_background);
         
-        static const auto efile(PvpLogUI::getResourcePath("icon_jiantou_3.png"));
+        static const auto efile(CocosUtils::getResourcePath("icon_jiantou_3.png"));
         _expandButton = Button::create(efile, efile);
         _expandButton->addClickEventListener([this](Ref*) {
             show();
@@ -115,7 +114,7 @@ void PvpLogNode::update(const PvpLogData* data, bool expand)
     _data = data;
     _isExpanded = expand;
     static bool win(true);
-    const string file(PvpLogUI::getResourcePath(win ? "ui_tiao_9.png" : "ui_tiao_10.png"));
+    const string file(CocosUtils::getResourcePath(win ? "ui_tiao_9.png" : "ui_tiao_10.png"));
     _background->setSpriteFrame(Sprite::create(file)->getSpriteFrame());
     _result->setResult(win);
     _userInfos.at(win)->tower->setWin(win);
@@ -193,7 +192,7 @@ void PvpLogNode::createTopNode()
         // middle
         {
             const float midPos((edgeDefault + userInfoWidth) / 2);
-            auto icon = Sprite::create(PvpLogUI::getResourcePath("icon_pvp_1.png"));
+            auto icon = Sprite::create(CocosUtils::getResourcePath("icon_pvp_1.png"));
             node->addChild(icon);
             icon->setPosition(midPos, size.height / 2);
         }

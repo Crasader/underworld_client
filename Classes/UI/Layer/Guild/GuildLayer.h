@@ -32,6 +32,7 @@ class GuildLayer
 public:
     static GuildLayer* create();
     virtual ~GuildLayer();
+    void registerObserver(GuildLayerObserver *observer);
     
 private:
     GuildLayer();
@@ -52,6 +53,7 @@ private:
     // GuildUIDonateNodeObserver
     
 private:
+    GuildLayerObserver* _observer;
     Node* _rightBackground;
     GuildUIInfoNode* _infoUINode;
     GuildUIInteractNode* _redEnvelopeUINode;

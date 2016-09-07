@@ -10,7 +10,7 @@
 #include "BaseCard.h"
 #include "CocosUtils.h"
 #include "AbstractData.h"
-#include "UniversalButton.h"
+#include "CardOpButton.h"
 
 using namespace std;
 
@@ -51,7 +51,7 @@ bool CardOpNode::init()
         static const Size size(110, 233);
         static const float capInsets(18.0f);
         static Rect capInset(capInsets, capInsets, size.width - capInsets * 2, size.height - capInsets * 2);
-        _hint = ui::Scale9Sprite::create(BattleDeckUI::getResourcePath("ui_kuang_11.png"), Rect(Point::ZERO, size), capInset);
+        _hint = ui::Scale9Sprite::create(CocosUtils::getResourcePath("ui_kuang_11.png"), Rect(Point::ZERO, size), capInset);
         addChild(_hint);
         
         _icon = BaseCard::create();
@@ -98,7 +98,8 @@ void CardOpNode::setTypes(const vector<CardOpType>& types)
             if (_buttons.find(type) != end(_buttons)) {
                 _buttons.at(type)->setVisible(true);
             } else {
-                auto button = BattleDeckUI::createButton(type, [this, type]() {
+                auto button = CardOpButton::create(type);
+                button->setCallback([this, type](Ref*) {
                     if (_observer) {
                         _observer->onCardOpNodeClickedButton(type, getCardData());
                     }

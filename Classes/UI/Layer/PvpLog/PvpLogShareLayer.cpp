@@ -9,7 +9,6 @@
 #include "PvpLogShareLayer.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
-#include "PvpLogUI.h"
 #include "LocalHelper.h"
 #include "UniversalButton.h"
 #include "SmallBoard.h"
@@ -65,7 +64,7 @@ bool PvpLogShareLayer::init()
         const auto& size(bg->getContentSize());
         const auto& subNodeSize(subNode->getContentSize());
         
-        auto subTitleBg = Sprite::create(PvpLogUI::getResourcePath("ui_tiao_12.png"));
+        auto subTitleBg = Sprite::create(CocosUtils::getResourcePath("ui_tiao_12.png"));
         subNode->addChild(subTitleBg);
         
         const auto& stbgsize(subTitleBg->getContentSize());
@@ -73,13 +72,13 @@ bool PvpLogShareLayer::init()
         subTitle->setPosition(stbgsize.width / 2, stbgsize.height / 2);
         subTitleBg->addChild(subTitle);
         
-        auto contentBg = Sprite::create(PvpLogUI::getResourcePath("ui_tiao_11.png"));
+        auto contentBg = Sprite::create(CocosUtils::getResourcePath("ui_tiao_11.png"));
         subNode->addChild(contentBg);
         
         static const Size ebBgSize(289, 38);
         static const float capInsetsOffset(6);
         Rect capInsets(capInsetsOffset, capInsetsOffset, ebBgSize.width - capInsetsOffset * 2, ebBgSize.height - capInsetsOffset * 2);
-        auto s = Scale9Sprite::create(PvpLogUI::getResourcePath("ui_shuruzikuang.png"), Rect(0, 0, ebBgSize.width, ebBgSize.height), capInsets);
+        auto s = Scale9Sprite::create(CocosUtils::getResourcePath("ui_shuruzikuang.png"), Rect(0, 0, ebBgSize.width, ebBgSize.height), capInsets);
         
         const auto& cbgsize(contentBg->getContentSize());
         static const Vec2 editBoxEdge(5, 10);

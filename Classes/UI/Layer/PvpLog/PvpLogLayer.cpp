@@ -9,7 +9,6 @@
 #include "PvpLogLayer.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
-#include "PvpLogUI.h"
 #include "PvpManager.h"
 #include "LocalHelper.h"
 #include "Board.h"

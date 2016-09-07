@@ -10,7 +10,6 @@
 #include "CocosUtils.h"
 #include "ChatData.h"
 #include "ObjectBriefData.h"
-#include "ChatUI.h"
 #include "LocalHelper.h"
 #include "ObjectBriefNode.h"
 #include "UniversalButton.h"
@@ -65,7 +64,7 @@ bool NoticeNode::init(ChatType type, float width, const ChatData* data)
         
         static const Size size(348, 206);
         static const float capInsets(11.0f);
-        _bg = Scale9Sprite::create(ChatUI::getResourcePath("ui_kuang_5.png"), Rect(0, 0, size.width, size.height), Rect(capInsets, capInsets, size.width - capInsets * 2, size.height - capInsets * 2));
+        _bg = Scale9Sprite::create(CocosUtils::getResourcePath("ui_kuang_5.png"), Rect(0, 0, size.width, size.height), Rect(capInsets, capInsets, size.width - capInsets * 2, size.height - capInsets * 2));
         addChild(_bg);
         
         _user = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
@@ -88,7 +87,7 @@ bool NoticeNode::init(ChatType type, float width, const ChatData* data)
         _bg->addChild(_time);
         
         if (ChatType::Mail == type) {
-            _resourceBg = Sprite::create(ChatUI::getResourcePath("ui_tiao_5.png"));
+            _resourceBg = Sprite::create(CocosUtils::getResourcePath("ui_tiao_5.png"));
             _bg->addChild(_resourceBg);
             
             for (int i = 0; i < resourceMaxCount; ++i) {

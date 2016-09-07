@@ -8,7 +8,6 @@
 
 #include "ChatLayer.h"
 #include "CocosUtils.h"
-#include "ChatUI.h"
 #include "ChatManager.h"
 #include "LocalHelper.h"
 #include "SoundManager.h"
@@ -166,7 +165,7 @@ bool ChatLayer::EditBoxNode::init(float width, EditBoxDelegate* delegate, const 
     if (Node::init()) {
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         
-        static const string file(ChatUI::getResourcePath("button_liaotian.png"));
+        static const string file(CocosUtils::getResourcePath("button_liaotian.png"));
         _button = Button::create(file, file);
         _button->addClickEventListener([callback](Ref*) {
             if (callback) {
@@ -182,7 +181,7 @@ bool ChatLayer::EditBoxNode::init(float width, EditBoxDelegate* delegate, const 
         static const Size ebBgSize(289, 38);
         static const float capInsetsOffset(6);
         Rect capInsets(capInsetsOffset, capInsetsOffset, ebBgSize.width - capInsetsOffset * 2, ebBgSize.height - capInsetsOffset * 2);
-        auto s = ui::Scale9Sprite::create(ChatUI::getResourcePath("ui_kuang_7.png"), Rect(0, 0, ebBgSize.width, ebBgSize.height), capInsets);
+        auto s = ui::Scale9Sprite::create(CocosUtils::getResourcePath("ui_kuang_7.png"), Rect(0, 0, ebBgSize.width, ebBgSize.height), capInsets);
         
         static const float space(3);
         static const float eEdgeY(3);
@@ -294,14 +293,14 @@ bool ChatLayer::init()
         setContentSize(size);
         
         // 1. button
-        static const string file(ChatUI::getResourcePath("button_liaotian_1.png"));
+        static const string file(CocosUtils::getResourcePath("button_liaotian_1.png"));
         auto button = Button::create(file, file);
         static const float bOffsetX(2);
         const auto& bsize(button->getContentSize());
         button->setPosition(Point(size.width + bsize.width / 2 - bOffsetX, size.height / 2));
         addChild(button);
         
-        _buttonIcon = Sprite::create(ChatUI::getResourcePath("icon_jiantou_1.png"));
+        _buttonIcon = Sprite::create(CocosUtils::getResourcePath("icon_jiantou_1.png"));
         _buttonIcon->setPosition(Point(bOffsetX + _buttonIcon->getContentSize().width / 2, bsize.height / 2));
         button->addChild(_buttonIcon);
         button->setPressedActionEnabled(true);

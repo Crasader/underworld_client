@@ -1,20 +1,21 @@
 //
-//  GuildInfoLayer.cpp
+//  ChestLayer.cpp
 //  Underworld_Client
 //
 //  Created by Andy on 16/9/7.
 //  Copyright (c) 2016 Mofish Studio. All rights reserved.
 //
 
-#include "GuildInfoLayer.h"
+#include "ChestLayer.h"
+#include "BigBoard.h"
 #include "CocosGlobal.h"
-#include "Board.h"
+#include "LocalHelper.h"
 
 using namespace std;
 
-GuildInfoLayer* GuildInfoLayer::create()
+ChestLayer* ChestLayer::create()
 {
-    auto ret = new (nothrow) GuildInfoLayer();
+    auto ret = new (nothrow) ChestLayer();
     if (ret && ret->init()) {
         ret->autorelease();
         return ret;
@@ -24,36 +25,34 @@ GuildInfoLayer* GuildInfoLayer::create()
     return nullptr;
 }
 
-GuildInfoLayer::GuildInfoLayer()
-:_observer(nullptr) {}
+ChestLayer::ChestLayer()
+:_observer(nullptr)
+,_scrollView(nullptr) {}
 
-GuildInfoLayer::~GuildInfoLayer()
+ChestLayer::~ChestLayer()
 {
     removeAllChildren();
 }
 
-void GuildInfoLayer::registerObserver(GuildInfoLayerObserver *observer)
+void ChestLayer::registerObserver(ChestLayerObserver *observer)
 {
     _observer = observer;
 }
 
 #pragma mark - LayerColor
-bool GuildInfoLayer::init()
+bool ChestLayer::init()
 {
     if (LayerColor::initWithColor(LAYER_MASK_COLOR)) {
         const auto& winSize(Director::getInstance()->getWinSize());
-        auto board = Board::create(1);
-        board->setTitle("untitled");
-        board->setExitCallback([this]() {
-            removeFromParent();
-        });
+        auto board = BigBoard::create();
+        board->setTitle(LocalHelper::getString("ui_setting_title"));
         board->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(board);
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
-        eventListener->onTouchBegan = CC_CALLBACK_2(GuildInfoLayer::onTouchBegan, this);
-        eventListener->onTouchEnded = CC_CALLBACK_2(GuildInfoLayer::onTouchEnded, this);
+        eventListener->onTouchBegan = CC_CALLBACK_2(ChestLayer::onTouchBegan, this);
+        eventListener->onTouchEnded = CC_CALLBACK_2(ChestLayer::onTouchEnded, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
         
         return true;
@@ -62,9 +61,11 @@ bool GuildInfoLayer::init()
     return false;
 }
 
-bool GuildInfoLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
+bool ChestLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
     return true;
 }
 
-void GuildInfoLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
+void ChestLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
+
+#pragma mark - ChestNodeObserver

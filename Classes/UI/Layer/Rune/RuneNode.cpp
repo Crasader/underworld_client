@@ -10,7 +10,6 @@
 #include "RuneData.h"
 #include "CocosUtils.h"
 #include "ObjectUtils.h"
-#include "DevelopUI.h"
 
 using namespace std;
 
@@ -47,7 +46,7 @@ bool RuneNode::init(const RuneData* data)
     {
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         
-        auto bg = Sprite::create(DevelopUI::getResourcePath("ui_kuang_17.png"));
+        auto bg = Sprite::create(CocosUtils::getResourcePath("ui_kuang_17.png"));
         addChild(bg);
         
         const auto& size(bg->getContentSize());
@@ -109,8 +108,8 @@ void RuneNode::update(const RuneData* data)
         
         if (_icon) {
             if (data) {
-                const string file(StringUtils::format("icon_fuwen_%d.png", static_cast<int>(ObjectUtils::getRuneType(data->getId())) + 1));
-                _icon->setTexture(DevelopUI::getResourcePath(file));
+                const string file(StringUtils::format("GameImages/icons/rune/icon_fuwen_%d.png", static_cast<int>(ObjectUtils::getRuneType(data->getId())) + 1));
+                _icon->setTexture(file);
             } else {
                 _icon->initWithTexture(nullptr, Rect::ZERO);
             }

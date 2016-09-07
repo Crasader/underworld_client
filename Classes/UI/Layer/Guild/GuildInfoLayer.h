@@ -25,15 +25,17 @@ class GuildInfoLayer : public LayerColor
 public:
     static GuildInfoLayer* create();
     virtual ~GuildInfoLayer();
+    void registerObserver(GuildInfoLayerObserver *observer);
     
 private:
     GuildInfoLayer();
+    // LayerColor
     virtual bool init() override;
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
 private:
-    
+    GuildInfoLayerObserver* _observer;
 };
 
 #endif /* GuildInfoLayer_h */

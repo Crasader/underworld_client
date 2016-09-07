@@ -10,9 +10,9 @@
 #include "ui/CocosGUI.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
-#include "SettingUI.h"
 #include "LocalHelper.h"
 #include "SoundManager.h"
+#include "BigBoard.h"
 #include "UniversalButton.h"
 #include "PureNode.h"
 #include "PureScale9Sprite.h"
@@ -242,31 +242,14 @@ bool SettingsLayer::init()
 {
     if (LayerColor::initWithColor(LAYER_MASK_COLOR)) {
         const auto& winSize(Director::getInstance()->getWinSize());
+        auto board = BigBoard::create();
+        board->setTitle(LocalHelper::getString("ui_setting_title"));
+        board->setPosition(Point(winSize.width / 2, winSize.height / 2));
+        addChild(board);
         
-        auto bg = Sprite::create(SettingUI::getResourcePath("ui_background_2.png"));
-        bg->setPosition(Point(winSize.width / 2, winSize.height / 2));
-        addChild(bg);
+        _subNode = board->getSubNode();
         
-        auto subNode = PureScale9Sprite::create(PureScale9Sprite::Type::BlueLight);
-        subNode->setContentSize(subNodeSize);
-        bg->addChild(subNode);
-        _subNode = subNode;
-        
-        const auto& size(bg->getContentSize());
-        const auto& subBgSize(subNode->getContentSize());
-        const float edge((size.width - subBgSize.width) / 2);
-        subNode->setPosition(Point(size.width / 2, subBgSize.height / 2 + edge));
-        
-        CocosUtils::createRedExitButton(bg, [this]() {
-            removeFromParent();
-        });
-        
-        auto title = CocosUtils::createLabel(LocalHelper::getString("ui_setting_title"), TITLE_FONT_SIZE);
-        title->setAnchorPoint(Point::ANCHOR_MIDDLE);
-        title->setPosition(Point(size.width / 2, (size.height + subBgSize.height + edge) / 2));
-        bg->addChild(title);
-        
-        _returnButton = UniversalButton::createReturnButton(bg, Vec2(8.0f, 10.0f), [this]() {
+        _returnButton = UniversalButton::createReturnButton(board, Vec2(8.0f, 10.0f), [this]() {
             if (_languageLayer) {
                 _languageLayer->setVisible(false);
             }
@@ -372,7 +355,7 @@ void SettingsLayer::createContent()
             
         // bottom
         {
-            auto notice = Sprite::create(SettingUI::getResourcePath("ui_tiao_6.png"));
+            auto notice = Sprite::create(CocosUtils::getResourcePath("ui_tiao_6.png"));
             parent->addChild(notice);
             
             const auto& noticeSize(notice->getContentSize());

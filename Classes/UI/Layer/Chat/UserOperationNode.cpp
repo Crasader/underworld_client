@@ -8,7 +8,6 @@
 
 #include "UserOperationNode.h"
 #include "CocosUtils.h"
-#include "ChatUI.h"
 #include "LocalHelper.h"
 #include "UniversalButton.h"
 
@@ -56,7 +55,7 @@ bool UserOperationNode::init(int uid)
         static const Size s(164, 260);
         static const float cx(22);
         static const float cy(10);
-        _bg = Scale9Sprite::create(ChatUI::getResourcePath("ui_kuang_4.png"), Rect(0, 0, s.width, s.height), Rect(cx, cy, s.width - (cx + cy), s.height - cy * 2));
+        _bg = Scale9Sprite::create(CocosUtils::getResourcePath("ui_kuang_4.png"), Rect(0, 0, s.width, s.height), Rect(cx, cy, s.width - (cx + cy), s.height - cy * 2));
         addChild(_bg);
         
         static const float edge(3);

@@ -284,6 +284,29 @@ float CocosUtils::getFitScreenScale(Node *root)
     return ((scaleX < 1.0f || scaleY < 1.0f) ? MIN(scaleX, scaleY) : 1.0f);
 }
 
+void CocosUtils::readdChild(Node* parent, Node* child)
+{
+    if (child && parent) {
+        auto cp(child->getParent());
+        if (cp != parent) {
+            Point worldPoint(child->getPosition());
+            if (cp) {
+                child->retain();
+                worldPoint = cp->convertToWorldSpace(worldPoint);
+                child->removeFromParent();
+            }
+            parent->addChild(child);
+            
+            // reset position after "addChild",
+            // because the parent of "child" may not be "parent"
+            if (cp) {
+                child->setPosition(child->getParent()->convertToNodeSpace(worldPoint));
+                child->release();
+            }
+        }
+    }
+}
+
 void CocosUtils::replaceScene(Scene* scene, bool animated)
 {
     if (scene) {

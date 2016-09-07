@@ -10,7 +10,6 @@
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
-#include "BattleDeckUI.h"
 #include "DataManager.h"
 #include "DeckData.h"
 #include "CardData.h"
@@ -462,7 +461,7 @@ void BattleDeckLayer::beginEdit(const AbstractData* data)
     _usedCard = getFoundCard(cardId);
     
     if (_usedCard) {
-        BattleDeckUI::readdChild(_deckCards.front()->getParent(), _usedCard);
+        CocosUtils::readdChild(_deckCards.front()->getParent(), _usedCard);
         _usedCardPoint = _usedCard->getPosition();
         
         vector<BaseCard*> temp;

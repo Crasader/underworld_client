@@ -8,7 +8,6 @@
 
 #include "LanguageNode.h"
 #include "CocosUtils.h"
-#include "SettingUI.h"
 
 using namespace std;
 
@@ -46,7 +45,7 @@ bool LanguageNode::init()
 {
     if (Node::init())
     {
-        static const string file(SettingUI::getResourcePath("ui_tiao_7.png"));
+        static const string file(CocosUtils::getResourcePath("ui_tiao_7.png"));
         auto button = ui::Button::create(file, file);
         addChild(button);
         
@@ -56,7 +55,7 @@ bool LanguageNode::init()
         button->setPosition(Point(size.width / 2, size.height / 2));
         
         static const float space(3);
-        _tick = Sprite::create(SettingUI::getResourcePath("icon_duihao.png"));
+        _tick = Sprite::create(CocosUtils::getResourcePath("icon_duihao.png"));
         const auto& tsize(_tick->getContentSize());
         _tick->setPosition(Point(space + tsize.width / 2, size.height / 2));
         _tick->setVisible(false);

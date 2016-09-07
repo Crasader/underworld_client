@@ -160,7 +160,7 @@ void CardPreview::sortAndRealign()
 
 void CardPreview::readdToScrollView(BaseCard* card)
 {
-    BattleDeckUI::readdChild(_scrollView, card);
+    CocosUtils::readdChild(_scrollView, card);
 }
 
 BaseCard* CardPreview::getFoundCard(int cardId) const
@@ -201,7 +201,7 @@ void CardPreview::showOpNode(BaseCard* card, const vector<CardOpType>& types)
         _opNode->setCard(data);
         
         auto parent(card->getParent());
-        BattleDeckUI::readdChild(parent, _opNode);
+        CocosUtils::readdChild(parent, _opNode);
         _opNode->setLocalZOrder(2);
         _opNode->setTypes(types);
         setOpNodePosition(card);

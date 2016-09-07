@@ -25,6 +25,7 @@ class GuildSearchLayer : public LayerColor
 public:
     static GuildSearchLayer* create();
     virtual ~GuildSearchLayer();
+    void registerObserver(GuildSearchLayerObserver *observer);
     
 private:
     GuildSearchLayer();
@@ -33,7 +34,7 @@ private:
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
 private:
-    
+    GuildSearchLayerObserver* _observer;
 };
 
 #endif /* GuildSearchLayer_h */

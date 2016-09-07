@@ -9,7 +9,6 @@
 #include "ChatNode.h"
 #include "CocosUtils.h"
 #include "ChatData.h"
-#include "ChatUI.h"
 #include "AvatarNode.h"
 
 using namespace std;
@@ -131,9 +130,9 @@ void ChatNode::createDialog(bool isMe)
     static const float height(8);
     Rect capInsets(offset, size.height - (offset + height), size.width - (offset * 2 + dialogArrowWidth), height);
     if (isMe) {
-        file.assign(ChatUI::getResourcePath("ui_liaotiankuang.png"));
+        file.assign(CocosUtils::getResourcePath("ui_liaotiankuang.png"));
     } else {
-        file.assign(ChatUI::getResourcePath("ui_liaotiankuang_1.png"));
+        file.assign(CocosUtils::getResourcePath("ui_liaotiankuang_1.png"));
         capInsets.origin.x += dialogArrowWidth;
     }
     

@@ -8,7 +8,6 @@
 
 #include "RuneCircle.h"
 #include "RuneData.h"
-#include "DevelopUI.h"
 #include "CocosUtils.h"
 
 using namespace std;
@@ -40,7 +39,7 @@ bool RuneCircle::init()
     {
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         
-        auto bg = Sprite::create(DevelopUI::getResourcePath("ui_line_3.png"));
+        auto bg = Sprite::create(CocosUtils::getResourcePath("ui_line_3.png"));
         addChild(bg);
         _circle = bg;
         

@@ -9,7 +9,6 @@
 #include "DevelopLayer.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
-#include "DevelopUI.h"
 #include "LocalHelper.h"
 #include "Board.h"
 #include "JuniorCard.h"

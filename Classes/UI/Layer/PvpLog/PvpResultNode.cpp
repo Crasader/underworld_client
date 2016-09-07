@@ -8,7 +8,6 @@
 
 #include "PvpResultNode.h"
 #include "CocosUtils.h"
-#include "PvpLogUI.h"
 #include "LocalHelper.h"
 
 using namespace std;
@@ -39,7 +38,7 @@ bool PvpResultNode::init()
     if (Node::init()) {
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         
-        auto bg = Sprite::create(PvpLogUI::getResourcePath("ui_tiao_17.png"));
+        auto bg = Sprite::create(CocosUtils::getResourcePath("ui_tiao_17.png"));
         addChild(bg);
         _bg = bg;
         
@@ -63,7 +62,7 @@ bool PvpResultNode::init()
 void PvpResultNode::setResult(bool win)
 {
     if (_bg) {
-        const string& file(PvpLogUI::getResourcePath(win ? "ui_tiao_17.png" : "ui_tiao_18.png"));
+        const string& file(CocosUtils::getResourcePath(win ? "ui_tiao_17.png" : "ui_tiao_18.png"));
         _bg->setTexture(file);
     }
     

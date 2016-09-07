@@ -9,7 +9,6 @@
 #include "LanguageConfirmationLayer.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
-#include "SettingUI.h"
 #include "LocalHelper.h"
 #include "UniversalButton.h"
 #include "SmallBoard.h"

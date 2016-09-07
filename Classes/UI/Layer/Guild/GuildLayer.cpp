@@ -26,7 +26,8 @@ GuildLayer* GuildLayer::create()
 }
 
 GuildLayer::GuildLayer()
-:_rightBackground(nullptr)
+:_observer(nullptr)
+,_rightBackground(nullptr)
 ,_infoUINode(nullptr)
 ,_redEnvelopeUINode(nullptr)
 ,_donateUINode(nullptr) {}
@@ -34,6 +35,11 @@ GuildLayer::GuildLayer()
 GuildLayer::~GuildLayer()
 {
     removeAllChildren();
+}
+
+void GuildLayer::registerObserver(GuildLayerObserver *observer)
+{
+    _observer = observer;
 }
 
 #pragma mark - LayerColor
@@ -76,7 +82,7 @@ bool GuildLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 
 void GuildLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 
-#pragma mark - GuildUIInfoNodeObserverGuildUIInfoNodeObserver
+#pragma mark - GuildUIInfoNodeObserver
 void GuildLayer::onGuildUIInfoNodeDetail()
 {
     

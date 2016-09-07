@@ -9,7 +9,6 @@
 #include "RenameLayer.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
-#include "SettingUI.h"
 #include "LocalHelper.h"
 #include "UniversalButton.h"
 #include "MediumBoard.h"
@@ -70,7 +69,7 @@ bool RenameLayer::init()
         // sub node
         static const float edgeY(10.0f);
         {
-            auto s = Sprite::create(SettingUI::getResourcePath("ui_tiao_8.png"));
+            auto s = Sprite::create(CocosUtils::getResourcePath("ui_tiao_8.png"));
             const auto& size(s->getContentSize());
             s->setPosition(Point(subBgSize.width / 2, subBgSize.height - (size.height / 2 + edgeY)));
             subNode->addChild(s);

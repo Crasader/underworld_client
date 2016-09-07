@@ -11,12 +11,13 @@
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-#include "BattleDeckUI.h"
+#include "CocosGlobal.h"
 
 USING_NS_CC;
 
 class BaseCard;
 class AbstractData;
+class CardOpButton;
 
 class CardOpNodeObserver
 {
@@ -47,7 +48,7 @@ private:
     ui::Scale9Sprite* _hint;
     static Size _hintMinSize;
     std::vector<CardOpType> _opTypes;
-    std::map<CardOpType, UniversalButton*> _buttons;
+    std::map<CardOpType, CardOpButton*> _buttons;
     bool _touchInvalid;
 };
 

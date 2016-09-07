@@ -8,7 +8,6 @@
 
 #include "BaseCard.h"
 #include "CocosUtils.h"
-#include "BattleDeckUI.h"
 #include "DeckManager.h"
 #include "DataManager.h"
 #include "CardConfigData.h"

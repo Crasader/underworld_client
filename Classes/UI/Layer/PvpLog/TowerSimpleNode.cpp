@@ -9,7 +9,6 @@
 #include "TowerSimpleNode.h"
 #include "CocosUtils.h"
 #include "CocosGlobal.h"
-#include "PvpLogUI.h"
 
 using namespace std;
 
@@ -38,7 +37,7 @@ bool TowerSimpleNode::init()
     if (Node::init()) {
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         
-        auto icon = Sprite::create(PvpLogUI::getResourcePath("icon_chengbao.png"));
+        auto icon = Sprite::create(CocosUtils::getResourcePath("icon_chengbao.png"));
         addChild(icon);
         
         auto label = CocosUtils::createLabel("30%", DEFAULT_FONT_SIZE);
