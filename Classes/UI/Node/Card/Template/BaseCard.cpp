@@ -49,7 +49,7 @@ bool BaseCard::init()
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         setContentSize(Size(Width, Height));
         
-        auto box = Sprite::create(CocosUtils::getResourcePath("ui_quality_box_blue.png"));
+        auto box = Sprite::create(CocosUtils::getResourcePath("ui_quality_box_0.png"));
         box->setPosition(Width / 2, Height / 2);
         addChild(box);
         _qualityBox = box;
@@ -181,12 +181,9 @@ void BaseCard::updateProperty(const AbstractProperty* property)
     if (cp) {
         _costNode->setVisible(!cp->isHero());
         _cost->setString(StringUtils::format("%d", cp->getCost()));
+        _qualityBox->setTexture(CocosUtils::getResourcePath(StringUtils::format("ui_quality_box_%d.png", cp->getRarity())));
     } else {
         _costNode->setVisible(false);
-    }
-    
-    if (false) {
-        _qualityBox->setTexture(CocosUtils::getResourcePath("ui_quality_box_blue.png"));
     }
 }
 
