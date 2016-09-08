@@ -37,7 +37,7 @@
 	<unit armor="10" armor_type="中甲" attack_ai="攻城单位AI" attack_sight="500" attack_type="攻城" class="warrior" field="0" height="0" hp="3930" id="12020" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="火炮兵" occupy="1" profession="archer" race="中立" rarity="0" render_key="机械甲虫" reward="金子:0" size="24" skill_names="单位停止;移动速度50;死亡移除碰撞;火炮兵"/>
 	<unit armor="0" armor_type="重甲" attack_sight="300" attack_type="攻城" class="warrior" field="0" height="0" hp="5000" id="12021" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="地雷兵" occupy="1" passive_names="地雷兵死亡自爆" profession="tank" race="中立" rarity="0" render_key="吸血鬼骑士" reward="金子:0" size="24" skill_names="单位停止;移动速度50;死亡移除碰撞;地雷兵"/>
 	<unit armor="60" armor_type="重甲" attack_sight="300" attack_type="普通" class="warrior" field="0" height="0" hp="16200" id="12022" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="鲛人战士" occupy="1" passive_names="鲛人战士分裂攻击" profession="tank" race="中立" rarity="0" render_key="狼人步兵" reward="金子:0" size="24" skill_names="单位停止;移动速度50;死亡移除碰撞;鲛人战士"/>
-	<unit armor="40" armor_type="中甲" attack_sight="300" attack_type="普通" class="warrior" field="0" height="0" hp="6808" id="12023" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="狼人刺客" occupy="1" profession="rogue" race="中立" rarity="0" render_key="腐化吸血鬼" reward="金子:0" size="16" skill_names="单位停止;移动速度50;死亡移除碰撞;狼人刺客" spell_names="狼人刺客闪烁攻击"/>
+	<unit armor="40" armor_type="中甲" attack_sight="300" attack_type="普通" class="warrior" field="0" height="0" hp="4250" id="12023" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="狼人刺客" occupy="1" passive_names="狼人刺客之法师杀手" profession="rogue" race="中立" rarity="0" render_key="腐化吸血鬼" reward="金子:0" size="16" skill_names="单位停止;移动速度50;死亡移除碰撞;狼人刺客" spell_names="狼人刺客闪烁攻击"/>
 	<unit armor="0" armor_type="重甲" attack_sight="300" attack_type="普通" class="warrior" field="0" height="0" hp="99999999" id="12800" magical_defense="25" max_level="0" max_quality="0" max_talent_level="0" name="木桩单位" occupy="1" profession="no_one" race="中立" rarity="0" render_key="狼人步兵" reward="金子:9" size="32" skill_names="单位停止;移动速度0;死亡移除碰撞"/>
 	<unit armor="100" armor_type="重甲" attack_sight="300" attack_type="普通" class="summoned" field="0" height="0" hp="7200" id="14000" magical_defense="0" max_level="1" max_quality="0" max_talent_level="0" name="人族被召唤水元素" occupy="1" profession="archer" race="人族" rarity="0" render_key="机械甲虫" reward="金子:0" size="16" skill_names="单位停止;移动速度60;死亡移除碰撞;人族被召唤水元素" timed="1800"/>
 	<unit armor="0" armor_type="重甲" attack_sight="300" attack_type="普通" class="summoned" field="0" height="0" hp="2400" id="14001" magical_defense="0" max_level="1" max_quality="0" max_talent_level="0" name="人族被召唤火元素" occupy="1" passive_names="火元素死亡爆炸" profession="rogue" race="人族" rarity="0" render_key="吸血鬼骑士" reward="金子:0" size="16" skill_names="单位停止;移动速度55;死亡移除碰撞;人族被召唤火元素" timed="1800"/>
@@ -104,7 +104,7 @@
 	<skill bullet_name="攻城车弹道" cd="70" class="attack" damage_distance="faraway" deliver_class="physical" fields="1" max_damage="825" min_damage="825" name="火炮兵" perform="0" preperform="40" range="480"/>
 	<skill cd="30" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="500" min_damage="500" name="地雷兵" perform="0" preperform="30" range="32"/>
 	<skill cd="60" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="648" min_damage="648" name="鲛人战士" perform="0" preperform="30" range="32"/>
-	<skill cd="35" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="288" min_damage="288" name="狼人刺客" perform="0" preperform="35" range="32"/>
+	<skill cd="35" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="348" min_damage="348" name="狼人刺客" perform="0" preperform="35" range="32"/>
 	<skill bullet_name="中立仙女龙" cd="70" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="500" min_damage="500" name="人族被召唤水元素" perform="0" preperform="50" range="64"/>
 	<skill bullet_name="中立仙女龙" cd="70" class="attack" damage_distance="nearby" deliver_class="physical" fields="3" max_damage="320" min_damage="320" name="人族被召唤火元素" perform="0" preperform="50" range="32"/>
 	<skill cd="60" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="75" min_damage="75" name="魔族被召唤骷髅" perform="0" preperform="30" range="32"/>
@@ -316,7 +316,7 @@
 	<bullet name="中立巨鹰" render_key="箭" speed="200"/>
 	<bullet name="中立仙女龙" render_key="狼人基地子弹" speed="500"/>
 	<bullet deliver_nature="ally" name="中立仙女龙医疗波" render_key="箭" speed="400"/>
-	<bullet explode_radius="32" height="30" name="火球术弹道" render_key="火球术" speed="200" target_class="position"/>
+	<bullet explode_radius="48" height="30" name="火球术弹道" render_key="火球术" speed="200" target_class="position"/>
 	<bullet flying_distance="400" name="穿透箭弹道" radius="16" render_key="箭" speed="400" sweep_on_the_way="1" target_class="unlimited"/>
 	<bullet name="人族大法师" render_key="狼人基地子弹" speed="400"/>
 	<bullet flying_distance="400" name="蜂群弹道" radius="64" render_key="箭" speed="400" sweep_on_the_way="1" target_class="unlimited"/>
@@ -327,7 +327,7 @@
 	<bullet name="枪械子弹" render_key="火枪子弹" speed="500"/>
 	<bullet name="牧师子弹" render_key="牧师子弹" speed="250"/>
 	<bullet name="龙族子弹" render_key="黑龙子弹" speed="300"/>
-	<bullet height="15" name="攻城车弹道" render_key="黑龙子弹" speed="250" target_class="position"/>
+	<bullet explode_radius="16" height="15" name="攻城车弹道" render_key="黑龙子弹" speed="250" target_class="position"/>
 	<bullet height="0" name="基地子弹" render_key="箭" speed="400"/>
 	<passive addon_types="人族弓箭手三重射击" alias="多重射击" desc="攻击时可额外攻击2个敌人" id="1901" level="1" name="人族弓箭手三重射击"/>
 	<passive addon_types="魔族梦魇攻击效果" alias="按比例移除生命" desc="攻击时移除目标5%当前生命" id="1902" level="1" name="魔族梦魇攻击效果"/>
@@ -389,6 +389,7 @@
 	<passive alias="治疗守卫光环" aura_types="治疗守卫光环" id="1214" level="1" name="治疗守卫光环"/>
 	<passive addon_types="地雷兵死亡自爆" alias="地雷兵死亡自爆" id="1215" level="1" name="地雷兵死亡自爆"/>
 	<passive addon_types="鲛人战士分裂攻击" alias="鲛人战士分裂攻击" id="1216" level="1" name="鲛人战士分裂攻击"/>
+	<passive addon_types="狼人刺客之法师杀手" alias="狼人刺客之法师杀手" desc="普攻对法师单位造成双倍伤害" id="1217" level="1" name="狼人刺客之法师杀手"/>
 	<addon feature_addons="人族弓箭手三重射击" name="人族弓箭手三重射击"/>
 	<addon feature_addons="魔族梦魇攻击效果" name="魔族梦魇攻击效果"/>
 	<addon feature_addons="魔族战车溅射效果" name="魔族战车溅射效果"/>
@@ -435,6 +436,7 @@
 	<addon feature_addons="火元素死亡爆炸" name="火元素死亡爆炸"/>
 	<addon feature_addons="地雷兵死亡自爆" name="地雷兵死亡自爆"/>
 	<addon feature_addons="鲛人战士分裂攻击" name="鲛人战士分裂攻击"/>
+	<addon feature_addons="狼人刺客之法师杀手" name="狼人刺客之法师杀手"/>
 	<aura buff_name="回血光环" conditions="type:unit_class;target:opposite;condition:is:summoned" deliver_natures="ally" name="人族秘法大师回血光环" radius="500"/>
 	<aura buff_name="耐久光环" conditions=" " deliver_natures="ally" name="骷髅王子耐久光环" radius="300"/>
 	<aura buff_name="酸雾护甲降低" conditions="type:field_type;target:opposite;condition:is:land" deliver_natures="enemy" name="酸雾降低护甲" radius="80"/>
@@ -776,6 +778,7 @@
 	<feature_group determine_timing="be_killed" feature_type_names="火元素死亡爆炸" name="火元素死亡爆炸"/>
 	<feature_group determine_timing="be_killed" feature_type_names="地雷兵死亡自爆" name="地雷兵死亡自爆"/>
 	<feature_group conditions="type:unit_class;target:opposite;condition:not:building,core" deliver_natures="enemy" determine_timing="attack" feature_type_names="鲛人战士分裂攻击" name="鲛人战士分裂攻击"/>
+	<feature_group conditions="type:unit_profession;target:opposite;condition:is:mage" deliver_natures="enemy" determine_timing="settle_attack_damage_r1" feature_type_names="狼人刺客之法师杀手特性" name="狼人刺客之法师杀手"/>
 	<feature effect_timing="be_killed" feature_name="中立兽族食人鬼王重生" type="drain" value="d:target:owner;type:max_hp;v:p:100;template:0"/>
 	<feature effect_timing="be_hurt" feature_name="中立黑龙伤害减免特性" type="damage_reduce" value="p:10"/>
 	<feature effect_timing="be_attack" feature_name="中立精灵族弓箭手闪避" type="miss"/>
@@ -854,6 +857,7 @@
 	<feature effect_timing="be_killed" feature_name="火元素死亡爆炸" spell_name="火元素被触发的爆炸" type="cast_spell"/>
 	<feature effect_timing="be_killed" feature_name="地雷兵死亡自爆" spell_name="地雷兵被触发的爆炸" type="cast_spell"/>
 	<feature effect_timing="attack" feature_name="鲛人战士分裂攻击" range="80" type="splash" value="p:60"/>
+	<feature effect_timing="settle_attack_damage_r1" feature_name="狼人刺客之法师杀手特性" type="damage_enhance" value="p:125"/>
 	<magic aura_names="酸雾降低护甲" magic_effect_names="酸雾持续伤害" name="效果全局技能酸雾术lv1" span="600" span_type="limited"/>
 	<magic magic_effect_names="黑龙火海持续伤害" name="黑龙火海效果" span="150" span_type="limited"/>
 	<magic magic_effect_names="实际暴风雪" name="实际效果暴风雪" span="360" span_type="limited"/>
