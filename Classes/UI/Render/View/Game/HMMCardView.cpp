@@ -114,7 +114,7 @@ bool HMMCardView::init(const HMMCardType* cardType) {
     //TODO: rarity in cardType
     int rarity = 0;
     if (_cardType && _qualitySprite) {
-        _qualitySprite->setTexture(CocosUtils::getResourcePath("ui_quality_box_blue.png"));
+        _qualitySprite->setTexture(CocosUtils::getResourcePath("ui_quality_box_0.png"));
     }
     
     if (_resourceNode && _cardType) {

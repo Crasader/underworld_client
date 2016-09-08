@@ -27,6 +27,19 @@ const int HMMDeckRender::CARD_ZORDER = 3;
 const std::string HMMDeckRender::BATTLE_RESOURCE_NAME = RES_NAME_WOOD;
 const float HMMDeckRender::TOUCH_MOVE_THRESHOLD = 20.f;
     
+const std::string HMMDeckRender::LONG_PRESS_CARD_SCHEDULE_KEY("hmm_deck_render_card_long_press_schedule_key");
+const float HMMDeckRender::LONG_PRESS_CARD_SCHEDULE_DELAY = 0.2f;
+const int HMMDeckRender::LONG_PRESS_ACTION_TAG = 0;
+const float HMMDeckRender::LONG_PRESS_SCALE_DOWN_DURATION = 0.1f;
+const float HMMDeckRender::LONG_PRESS_SCALE_DOWN = 0.9f;
+const float HMMDeckRender::LONG_PRESS_SCALE_UP_DURATION = 0.2f;
+const float HMMDeckRender::LONG_PRESS_SCALE_UP = 1.1f;
+    
+ const int HMMDeckRender::SELECT_ACTION_TAG = 1;
+ const float HMMDeckRender::SELECT_ACTION_DURATION = 1.f;
+ const float HMMDeckRender::SELECT_MOVE_DISTANCE = 10.f;
+ const float HMMDeckRender::SELECT_MOVE_WAVE_OFFSET = 3.f;
+    
 HMMDeckRender* HMMDeckRender::create(const HMMDeck* deck, Commander* commander,
     const Game* game, WorldRender* worldRender) {
     HMMDeckRender* ret = new (std::nothrow) HMMDeckRender();
@@ -44,6 +57,7 @@ HMMDeckRender::~HMMDeckRender() {
     }
     _cardRenders.clear();
     
+    cancelLongPressSchedule();
 }
 
 bool HMMDeckRender::init(const HMMDeck* deck, Commander* commander,
@@ -177,8 +191,8 @@ bool HMMDeckRender::init(const HMMDeck* deck, Commander* commander,
         offsetX += card_region_padding_horizontal;
         for (int i = 0; i < heroCardCount; ++i) {
             if (_cardViews[i]) {
-                _cardViews[i]->setAnchorPoint(cocos2d::Vec2::ANCHOR_BOTTOM_LEFT);
-                _cardViews[i]->setPosition(offsetX, card_region_padding_vertical);
+                _cardViews[i]->setAnchorPoint(cocos2d::Vec2::ANCHOR_MIDDLE);
+                _cardViews[i]->setPosition(offsetX + _cardViews[i]->getContentSize().width / 2, card_region_padding_vertical + _cardViews[i]->getContentSize().height / 2);
                 _cardRegion->addChild(_cardViews[i], CARD_ZORDER);
                 offsetX += _cardViews[i]->getContentSize().width;
                 offsetX += card_interval_horizontal;
@@ -190,8 +204,8 @@ bool HMMDeckRender::init(const HMMDeck* deck, Commander* commander,
     offsetX += card_region_padding_horizontal + resourceViewSize.width + resource_2_card_margin;
     for (int i = heroCardCount; i < _cardViews.size(); ++i) {
         if (_cardViews[i]) {
-            _cardViews[i]->setAnchorPoint(cocos2d::Vec2::ANCHOR_BOTTOM_LEFT);
-            _cardViews[i]->setPosition(offsetX, card_region_padding_vertical);
+            _cardViews[i]->setAnchorPoint(cocos2d::Vec2::ANCHOR_MIDDLE);
+            _cardViews[i]->setPosition(offsetX + _cardViews[i]->getContentSize().width / 2, card_region_padding_vertical + _cardViews[i]->getContentSize().height / 2);
             _cardRegion->addChild(_cardViews[i], CARD_ZORDER);
             offsetX += _cardViews[i]->getContentSize().width;
             offsetX += card_interval_horizontal;
@@ -215,7 +229,7 @@ bool HMMDeckRender::init(const HMMDeck* deck, Commander* commander,
     _selectedCardIndex = CARD_INDEX_INVALID;
     for (int i = 0; i < _cardViews.size(); ++i) {
         _cardOriginPos.push_back(_cardViews[i]->getPosition());
-        _cardSelectedPos.push_back(_cardViews[i]->getPosition() + cocos2d::Vec2(0.f, 10.f));
+        _cardSelectedPos.push_back(_cardViews[i]->getPosition() + cocos2d::Vec2(0.f, SELECT_MOVE_DISTANCE));
     }
     
     /**5. init render */
@@ -277,6 +291,7 @@ bool HMMDeckRender::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_e
     _pressingCardIndex = calculatePositionOnWhichCard(_cardRegion->convertToNodeSpace(this->convertToWorldSpace(_touchBeginPos)));
     if (_pressingCardIndex != CARD_INDEX_INVALID) {
         _pressingCardOriginPos = _cardViews[_pressingCardIndex]->getPosition();
+        startLongPressSchedule();
         
         ret = true;
     } else if (_selectedCardIndex != CARD_INDEX_INVALID && !calculatePositionInCardRegion(_touchBeginPos)) {
@@ -284,7 +299,6 @@ bool HMMDeckRender::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_e
         ret = true;
     }
     
-
     return ret;
 }
     
@@ -306,6 +320,13 @@ void HMMDeckRender::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_e
                 selectCard(_pressingCardIndex);
             }
         }
+        
+        if (_longPressing) {
+            longPressEnd();
+        } else {
+            cancelLongPressSchedule();
+        }
+        
     } else if (_placingCard && _selectedCardIndex != CARD_INDEX_INVALID && !calculatePositionInCardRegion(touch->getLocation())) {
         try2UseCard(_selectedCardIndex, touch->getLocation());
     }
@@ -317,6 +338,8 @@ HMMDeckRender::HMMDeckRender()
 , _pressingCardIndex(CARD_INDEX_INVALID)
 , _draggingCard(false)
 , _placingCard(false)
+, _longPressing(false)
+, _selectedCardIndex(CARD_INDEX_INVALID)
 , _commander(nullptr)
 , _worldRender(nullptr)
 , _deck(nullptr)
@@ -329,6 +352,7 @@ void HMMDeckRender::resetTouchEventStatus() {
     _pressingCardOriginPos.set(0.f, 0.f);
     _draggingCard = false;
     _placingCard = false;
+    _longPressing = false;
 }
     
 int HMMDeckRender::calculatePositionOnWhichCard(const cocos2d::Vec2& pos) {
@@ -346,27 +370,94 @@ bool HMMDeckRender::calculatePositionInCardRegion(const cocos2d::Vec2& pos) {
     return _cardRegion && _cardRegion->getBoundingBox().containsPoint(pos);
 }
     
+void HMMDeckRender::startLongPressSchedule() {
+    this->schedule(std::bind(&HMMDeckRender::longPressBegin, this, std::placeholders::_1), 0.f, false, LONG_PRESS_CARD_SCHEDULE_DELAY, LONG_PRESS_CARD_SCHEDULE_KEY);
+}
+    
+void HMMDeckRender::cancelLongPressSchedule() {
+    this->unschedule(LONG_PRESS_CARD_SCHEDULE_KEY);
+}
+    
+void HMMDeckRender::longPressBegin(float dt) {
+    _longPressing = true;
+    if (_pressingCardIndex != CARD_INDEX_INVALID) {
+        _cardViews[_pressingCardIndex]->stopActionByTag(LONG_PRESS_ACTION_TAG);
+        
+        cocos2d::Action* scaleDown = cocos2d::EaseSineIn::create(cocos2d::ScaleTo::create(LONG_PRESS_SCALE_DOWN_DURATION, LONG_PRESS_SCALE_DOWN));
+        scaleDown->setTag(LONG_PRESS_ACTION_TAG);
+        
+        _cardViews[_pressingCardIndex]->runAction(scaleDown);
+    }
+}
+    
+void HMMDeckRender::longPressEnd() {
+    _longPressing = false;
+    if (_pressingCardIndex != CARD_INDEX_INVALID) {
+        _cardViews[_pressingCardIndex]->stopActionByTag(LONG_PRESS_ACTION_TAG);
+        
+        cocos2d::Action* scaleUp = cocos2d::Sequence::create(
+            cocos2d::EaseSineIn::create(cocos2d::ScaleTo::create(LONG_PRESS_SCALE_UP_DURATION / 3 * 2, LONG_PRESS_SCALE_UP)),
+            cocos2d::EaseSineIn::create(cocos2d::ScaleTo::create(LONG_PRESS_SCALE_UP_DURATION / 3, 1.f)),
+            nullptr);
+        scaleUp->setTag(LONG_PRESS_ACTION_TAG);
+        
+        _cardViews[_pressingCardIndex]->runAction(scaleUp);
+    }
+}
+    
 void HMMDeckRender::selectCard(int index) {
-    if (_selectedCardIndex == index) return;
-    
-    if (_selectedCardIndex != CARD_INDEX_INVALID) {
-        _cardViews[_selectedCardIndex]->setSelected(false);
-    }
-    _selectedCardIndex = index;
-    if (_selectedCardIndex != CARD_INDEX_INVALID) {
-        _cardViews[_selectedCardIndex]->setSelected(true);
-    }
-    
-    if (!_worldRender) return;
-    
-    if (_selectedCardIndex == CARD_INDEX_INVALID) {
-        _worldRender->hideHMMCardRegionTips();
+    if (_selectedCardIndex == index) {
+        playSelectAnim(_selectedCardIndex);
     } else {
-        _worldRender->showHMMCardRegionTips(
-            _cardViews[_selectedCardIndex]->getCardType(),
-            _summonRegion,
-            _towerRegion);
+        if (_selectedCardIndex != CARD_INDEX_INVALID) {
+            _cardViews[_selectedCardIndex]->setSelected(false);
+            playUnselectAnim(_selectedCardIndex);
+        }
+        _selectedCardIndex = index;
+        if (_selectedCardIndex != CARD_INDEX_INVALID) {
+            _cardViews[_selectedCardIndex]->setSelected(true);
+            playSelectAnim(_selectedCardIndex);
+        }
+        
+        if (!_worldRender) return;
+        
+        if (_selectedCardIndex == CARD_INDEX_INVALID) {
+            _worldRender->hideHMMCardRegionTips();
+        } else {
+            _worldRender->showHMMCardRegionTips(
+                _cardViews[_selectedCardIndex]->getCardType(),
+                _summonRegion,
+                _towerRegion);
+        }
     }
+}
+    
+void HMMDeckRender::playSelectAnim(int index) {
+    _cardViews[index]->stopActionByTag(SELECT_ACTION_TAG);
+    
+    cocos2d::Action* moveUp = cocos2d::Sequence::create(
+        cocos2d::EaseSineIn::create(cocos2d::MoveTo::create(SELECT_ACTION_DURATION / 4, _cardSelectedPos[index] + cocos2d::Vec2(0.f, SELECT_MOVE_WAVE_OFFSET))),
+        cocos2d::EaseSineIn::create(cocos2d::MoveTo::create(SELECT_ACTION_DURATION / 4, _cardSelectedPos[index] + cocos2d::Vec2(0.f, SELECT_MOVE_WAVE_OFFSET / 2 * -1))),
+        cocos2d::EaseSineIn::create(cocos2d::MoveTo::create(SELECT_ACTION_DURATION / 4, _cardSelectedPos[index] + cocos2d::Vec2(0.f, SELECT_MOVE_WAVE_OFFSET / 2))),
+        cocos2d::EaseSineIn::create(cocos2d::MoveTo::create(SELECT_ACTION_DURATION / 4, _cardSelectedPos[index]))
+        ,NULL);
+    moveUp->setTag(SELECT_ACTION_TAG);
+    
+    _cardViews[index]->runAction(moveUp);
+}
+    
+void HMMDeckRender::playUnselectAnim(int index) {
+    _cardViews[index]->stopActionByTag(SELECT_ACTION_TAG);
+    
+    cocos2d::Action* moveDown = cocos2d::Sequence::create(
+        cocos2d::EaseSineIn::create(cocos2d::MoveTo::create(SELECT_ACTION_DURATION / 4, _cardOriginPos[index] + cocos2d::Vec2(0.f, SELECT_MOVE_WAVE_OFFSET * -1))),
+        cocos2d::EaseSineIn::create(cocos2d::MoveTo::create(SELECT_ACTION_DURATION / 4, _cardOriginPos[index] + cocos2d::Vec2(0.f, SELECT_MOVE_WAVE_OFFSET / 2))),
+        cocos2d::EaseSineIn::create(cocos2d::MoveTo::create(SELECT_ACTION_DURATION / 4, _cardOriginPos[index] + cocos2d::Vec2(0.f, SELECT_MOVE_WAVE_OFFSET / 2 * -1))),
+        cocos2d::EaseSineIn::create(cocos2d::MoveTo::create(SELECT_ACTION_DURATION / 4, _cardOriginPos[index]))
+        ,NULL);
+    moveDown->setTag(SELECT_ACTION_TAG);
+    
+    _cardViews[index]->runAction(moveDown);
 }
 
 void HMMDeckRender::try2UseCard(int cardIndex, const cocos2d::Vec2 &pos) {

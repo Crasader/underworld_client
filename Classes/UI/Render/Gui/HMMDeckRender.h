@@ -36,6 +36,19 @@ public:
     static const int CARD_INDEX_INVALID = -1;
     static const float TOUCH_MOVE_THRESHOLD;
     
+    static const std::string LONG_PRESS_CARD_SCHEDULE_KEY;
+    static const float LONG_PRESS_CARD_SCHEDULE_DELAY;
+    static const int LONG_PRESS_ACTION_TAG;
+    static const float LONG_PRESS_SCALE_DOWN_DURATION;
+    static const float LONG_PRESS_SCALE_DOWN;
+    static const float LONG_PRESS_SCALE_UP_DURATION;
+    static const float LONG_PRESS_SCALE_UP;
+    
+    static const int SELECT_ACTION_TAG;
+    static const float SELECT_ACTION_DURATION;
+    static const float SELECT_MOVE_DISTANCE;
+    static const float SELECT_MOVE_WAVE_OFFSET;
+    
 private:
     /** instance */
     std::vector<HMMCardRender*> _cardRenders;
@@ -59,6 +72,7 @@ private:
     cocos2d::Vec2 _pressingCardOriginPos;
     bool _draggingCard;
     bool _placingCard;
+    bool _longPressing;
     
     /** status */
     int _selectedCardIndex;
@@ -103,9 +117,15 @@ private:
     void resetTouchEventStatus();
     int calculatePositionOnWhichCard(const cocos2d::Vec2& pos);
     bool calculatePositionInCardRegion(const cocos2d::Vec2& pos);
+    void startLongPressSchedule();
+    void cancelLongPressSchedule();
+    void longPressBegin(float dt);
+    void longPressEnd();
     
     /** misc */
     void selectCard(int index);
+    void playSelectAnim(int index);
+    void playUnselectAnim(int index);
     void try2UseCard(int cardIndex, const cocos2d::Vec2& pos);
     
 
