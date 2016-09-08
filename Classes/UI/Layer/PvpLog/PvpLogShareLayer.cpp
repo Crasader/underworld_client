@@ -10,8 +10,9 @@
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
-#include "UniversalButton.h"
+#include "XButton.h"
 #include "SmallBoard.h"
+#include "XEditBox.h"
 
 using namespace std;
 using namespace ui;
@@ -76,31 +77,22 @@ bool PvpLogShareLayer::init()
         subNode->addChild(contentBg);
         
         static const Size ebBgSize(289, 38);
-        static const float capInsetsOffset(6);
-        Rect capInsets(capInsetsOffset, capInsetsOffset, ebBgSize.width - capInsetsOffset * 2, ebBgSize.height - capInsetsOffset * 2);
-        auto s = Scale9Sprite::create(CocosUtils::getResourcePath("ui_shuruzikuang.png"), Rect(0, 0, ebBgSize.width, ebBgSize.height), capInsets);
-        
         const auto& cbgsize(contentBg->getContentSize());
         static const Vec2 editBoxEdge(5, 10);
         const Size esize(cbgsize.width - editBoxEdge.x * 2, cbgsize.height - editBoxEdge.y);
-        _editBox = EditBox::create(esize, s);
+        _editBox = XEditBox::create(esize);
         _editBox->setDelegate(this);
-        _editBox->setMaxLength(esize.width);
-        _editBox->setReturnType(EditBox::KeyboardReturnType::SEND);
-        _editBox->setInputMode(EditBox::InputMode::ANY);
         _editBox->setFontSize(DEFAULT_FONT_SIZE);
-        _editBox->setFontColor(Color4B::BLACK);
         _editBox->setText(LocalHelper::getString("ui_logShare_hint").c_str());
+        _editBox->setPosition(Point(cbgsize.width / 2, (cbgsize.height + editBoxEdge.y) / 2));
         contentBg->addChild(_editBox);
-        
-        const auto& cbsize(contentBg->getContentSize());
-        _editBox->setPosition(Point(cbsize.width / 2, cbsize.height / 2 + editBoxEdge.y));
         
         const float gapY((subNodeSize.height - (stbgsize.height + cbgsize.height)) / 3);
         subTitleBg->setPosition(Point(subNodeSize.width / 2, subNodeSize.height - (gapY + stbgsize.height / 2)));
         contentBg->setPosition(Point(subNodeSize.width / 2, gapY + cbgsize.height / 2));
         
-        auto button = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, LocalHelper::getString("ui_logShare_share"));
+        auto button = XButton::create(XButton::BSize::Big, XButton::BType::Blue);
+        button->setTitleText(LocalHelper::getString("ui_logShare_share"));
         button->setCallback([this](Ref*) {
             if (_observer) {
                 _observer->onPvpLogShareLayerClickedShareButton(this, _editBox->getText());

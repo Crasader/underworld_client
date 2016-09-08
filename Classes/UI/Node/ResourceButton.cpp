@@ -8,7 +8,7 @@
 
 #include "ResourceButton.h"
 #include "CocosUtils.h"
-#include "UniversalButton.h"
+#include "XButton.h"
 #include "SoundManager.h"
 
 using namespace std;
@@ -52,14 +52,14 @@ bool ResourceButton::init(bool isBigSize, bool animated, ResourceType type, int 
         _color = color;
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         
-        auto button = UniversalButton::create(isBigSize ? UniversalButton::BSize::Big : UniversalButton::BSize::Small, UniversalButton::BType::Blue, "");
+        auto button = XButton::create(isBigSize ? XButton::BSize::Big : XButton::BSize::Small, XButton::BType::Blue);
         button->setCallback(callback);
         addChild(button);
         _button = button;
         
         const auto& size(button->getContentSize());
         setContentSize(size);
-        button->setPosition(size.width / 2, size.height / 2);
+        button->setPosition(Point(size.width / 2, size.height / 2));
         
         addIconNode(type);
         const string& message = StringUtils::format("%d", count);

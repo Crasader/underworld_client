@@ -12,7 +12,7 @@
 #include "ObjectBriefData.h"
 #include "LocalHelper.h"
 #include "ObjectBriefNode.h"
-#include "UniversalButton.h"
+#include "XButton.h"
 
 using namespace std;
 using namespace ui;
@@ -96,7 +96,7 @@ bool NoticeNode::init(ChatType type, float width, const ChatData* data)
                 _resourceNodes.push_back(node);
             }
             
-            _button = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Blue, "");
+            _button = XButton::create(XButton::BSize::Small, XButton::BType::Blue);
             _resourceBg->addChild(_button);
             
             const auto& bsize(_button->getContentSize());
@@ -123,16 +123,16 @@ void NoticeNode::update(const ChatData* data)
             const auto& rewards(data->getRewards());
             auto cnt(rewards.size());
             if (cnt > 0) {
-                _button->setType(UniversalButton::BType::Blue);
-                _button->setTitle(LocalHelper::getString("ui_chat_mail_get"));
+                _button->setType(XButton::BType::Blue);
+                _button->setTitleText(LocalHelper::getString("ui_chat_mail_get"));
                 _button->setCallback([this](Ref*) {
                     if (_observer) {
                         _observer->onNoticeNodeGet(_data);
                     }
                 });
             } else {
-                _button->setType(UniversalButton::BType::Red);
-                _button->setTitle(LocalHelper::getString("ui_chat_mail_delete"));
+                _button->setType(XButton::BType::Red);
+                _button->setTitleText(LocalHelper::getString("ui_chat_mail_delete"));
                 _button->setCallback([this](Ref*) {
                     if (_observer) {
                         _observer->onNoticeNodeDelete(_data);

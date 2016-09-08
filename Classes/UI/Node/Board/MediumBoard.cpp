@@ -9,7 +9,7 @@
 #include "MediumBoard.h"
 #include "CocosUtils.h"
 #include "PureScale9Sprite.h"
-#include "UniversalButton.h"
+#include "XButton.h"
 
 using namespace std;
 

@@ -10,7 +10,7 @@
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
-#include "UniversalButton.h"
+#include "XButton.h"
 #include "SmallBoard.h"
 
 using namespace std;
@@ -58,14 +58,16 @@ bool LanguageConfirmationLayer::init(ssize_t idx)
         const auto& subNodeSize(subNode->getContentSize());
         const float edge((size.width - subNodeSize.width) / 2);
         
-        auto cancel = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Red, LocalHelper::getString("hint_cancel"));
+        auto cancel = XButton::create(XButton::BSize::Small, XButton::BType::Red);
+        cancel->setTitleText(LocalHelper::getString("hint_cancel"));
         cancel->setCallback([this](Ref*) {
             removeFromParent();
         });
         cancel->setPosition(Point(size.width / 2, edge / 2));
         subNode->addChild(cancel);
         
-        auto confirm = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Blue, LocalHelper::getString("hint_confirm"));
+        auto confirm = XButton::create(XButton::BSize::Small, XButton::BType::Blue);
+        confirm->setTitleText(LocalHelper::getString("hint_confirm"));
         confirm->setCallback([this](Ref*) {
             if (_observer) {
                 _observer->onLanguageConfirmationLayerConfirm(this, _idx);
@@ -77,8 +79,8 @@ bool LanguageConfirmationLayer::init(ssize_t idx)
         static const Vec2 buttonEdge(75, 16);
         const auto& cancelSize(cancel->getContentSize());
         const auto& confirmSize(confirm->getContentSize());
-        cancel->setPosition(buttonEdge.x + cancelSize.width / 2, buttonEdge.y + cancelSize.height / 2);
-        confirm->setPosition(subNodeSize.width - (buttonEdge.x + confirmSize.width / 2), buttonEdge.y + confirmSize.height / 2);
+        cancel->setPosition(Point(buttonEdge.x + cancelSize.width / 2, buttonEdge.y + cancelSize.height / 2));
+        confirm->setPosition(Point(subNodeSize.width - (buttonEdge.x + confirmSize.width / 2), buttonEdge.y + confirmSize.height / 2));
         
         auto hint = CocosUtils::createLabel(LocalHelper::getString("ui_language_hint"), DEFAULT_FONT_SIZE);
         hint->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);

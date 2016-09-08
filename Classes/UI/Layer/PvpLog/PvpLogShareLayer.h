@@ -14,6 +14,8 @@
 
 USING_NS_CC;
 
+class XEditBox;
+
 class PvpLogShareLayerObserver
 {
 public:
@@ -45,7 +47,7 @@ protected:
 private:
     PvpLogShareLayerObserver *_observer;
     Sprite* _background;
-    ui::EditBox* _editBox;
+    XEditBox* _editBox;
 };
 
 #endif /* PvpLogShareLayer_h */

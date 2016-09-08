@@ -9,10 +9,10 @@
 #ifndef CardOpButton_h
 #define CardOpButton_h
 
-#include "UniversalButton.h"
+#include "XButton.h"
 #include "CocosGlobal.h"
 
-class CardOpButton : public UniversalButton
+class CardOpButton : public XButton
 {
 public:
     static CardOpButton* create(CardOpType opType);

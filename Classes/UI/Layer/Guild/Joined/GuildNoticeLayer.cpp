@@ -10,7 +10,7 @@
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
-#include "UniversalButton.h"
+#include "XButton.h"
 #include "MediumBoard.h"
 
 using namespace std;
@@ -53,7 +53,8 @@ bool GuildNoticeLayer::init()
         board->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(board);
         
-        auto button = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, "Send");
+        auto button = XButton::create(XButton::BSize::Big, XButton::BType::Blue);
+        button->setTitleText("Send");
         button->setCallback([this](Ref*) {
             if (_observer && _noticeTitle && _notice) {
                 const char* title(_noticeTitle->getText());

@@ -30,16 +30,16 @@ CardOpButton::~CardOpButton()
 
 bool CardOpButton::init(CardOpType opType)
 {
-    UniversalButton::BType type(UniversalButton::BType::Blue);
+    XButton::BType type(XButton::BType::Blue);
     std::string title;
     switch (opType) {
         case CardOpType::Upgrade: {
-            type = UniversalButton::BType::Green;
+            type = XButton::BType::Green;
             title = LocalHelper::getString("ui_deck_upgrade");
         }
             break;
         case CardOpType::Use: {
-            type = UniversalButton::BType::Green;
+            type = XButton::BType::Green;
             title = LocalHelper::getString("ui_deck_use");
         }
             break;
@@ -48,7 +48,7 @@ bool CardOpButton::init(CardOpType opType)
         }
             break;
         case CardOpType::Move: {
-            type = UniversalButton::BType::Green;
+            type = XButton::BType::Green;
             title = LocalHelper::getString("ui_deck_move");
         }
             break;
@@ -56,7 +56,8 @@ bool CardOpButton::init(CardOpType opType)
             break;
     }
     
-    if (UniversalButton::init(UniversalButton::BSize::Small, type, title)) {
+    if (XButton::init(XButton::BSize::Small, type)) {
+        setTitleText(title);
         return true;
     }
     

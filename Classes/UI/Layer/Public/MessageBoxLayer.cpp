@@ -7,7 +7,7 @@
 //
 
 #include "MessageBoxLayer.h"
-#include "UniversalButton.h"
+#include "XButton.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "SoundManager.h"
@@ -125,8 +125,8 @@ void MessageBoxLayer::show(const std::string& message, MessageBoxType type, cons
         hide();
     }
     
-    _confirmButton->setTitle(confirmString);
-    _cancelButton->setTitle(cancelString);
+    _confirmButton->setTitleText(confirmString);
+    _cancelButton->setTitleText(cancelString);
     
     if (_messageLabel)
     {

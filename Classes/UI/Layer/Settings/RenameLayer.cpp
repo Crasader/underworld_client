@@ -10,8 +10,9 @@
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
-#include "UniversalButton.h"
+#include "XButton.h"
 #include "MediumBoard.h"
+#include "XEditBox.h"
 
 using namespace std;
 using namespace ui;
@@ -52,7 +53,8 @@ bool RenameLayer::init()
         board->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(board);
         
-        auto button = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, LocalHelper::getString("ui_rename_buttonTitle"));
+        auto button = XButton::create(XButton::BSize::Big, XButton::BType::Blue);
+        button->setTitleText(LocalHelper::getString("ui_rename_buttonTitle"));
         button->setCallback([this](Ref*) {
             if (_observer && _editBox) {
                 const char* name(_editBox->getText());
@@ -90,17 +92,10 @@ bool RenameLayer::init()
         
         {
             static const Size rs(347, 53);
-            static const float capInsets(5.0f);
-            auto s = ui::Scale9Sprite::create(CocosUtils::getResourcePath("ui_kuang_6.png"), Rect(0, 0, rs.width, rs.height), Rect(capInsets, capInsets, rs.width - capInsets * 2, rs.height - capInsets * 2));
-            auto eb = ui::EditBox::create(rs, s);
+            auto eb = XEditBox::create(rs);
             eb->setDelegate(this);
-            eb->setMaxLength(rs.width);
-            eb->setReturnType(EditBox::KeyboardReturnType::SEND);
-            eb->setInputMode(EditBox::InputMode::ANY);
             eb->setFontSize(DEFAULT_FONT_SIZE);
-            eb->setFontColor(Color4B::BLACK);
-            const auto& size(eb->getContentSize());
-            eb->setPosition(Point(subBgSize.width / 2, size.height / 2 + edgeY));
+            eb->setPosition(Point(subBgSize.width / 2, rs.height / 2 + edgeY));
             subNode->addChild(eb);
             
             _editBox = eb;

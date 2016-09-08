@@ -49,14 +49,14 @@ bool ResourceNode::init(ResourceType type, int count, const Callback& callback)
         
         Sprite* background(nullptr);
         if (ResourceType::Stamina == type) {
-            background = Sprite::create("GameImages/main_ui/ui_tiao_3.png");
+            background = Sprite::create(CocosUtils::getResourcePath("ui_tiao_3.png"));
             
-            auto inside = Sprite::create("GameImages/main_ui/ui_tiao_3_3.png");
+            auto inside = Sprite::create(CocosUtils::getResourcePath("ui_tiao_3_3.png"));
             const auto& size(background->getContentSize());
             inside->setPosition(Point(size.width / 2, size.height / 2) + Point(-3, 2));
             background->addChild(inside);
         } else {
-            background = Sprite::create("GameImages/main_ui/ui_tiao_4.png");
+            background = Sprite::create(CocosUtils::getResourcePath("ui_tiao_4.png"));
         }
         
         if (background) {
@@ -71,7 +71,7 @@ bool ResourceNode::init(ResourceType type, int count, const Callback& callback)
             
             Button* button(nullptr);
             if (nullptr != callback) {
-                static const string file("GameImages/main_ui/button_lvse.png");
+                static const string file(CocosUtils::getResourcePath("button_lvse.png"));
                 button = Button::create(file, file);
                 button->setPressedActionEnabled(true);
                 button->addClickEventListener([this](Ref*) {

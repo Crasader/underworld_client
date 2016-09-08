@@ -25,10 +25,6 @@
 using namespace std;
 using namespace ui;
 
-static const string getResourcePath(const string& file) {
-    return "GameImages/main_ui/" + file;
-}
-
 enum class MainUILayer::ButtonType {
     Rank,
     Achievement,
@@ -83,7 +79,7 @@ private:
             
             if (ButtonInfos.find(type) != end(ButtonInfos)) {
                 const auto& pair = ButtonInfos.at(type);
-                const auto file = getResourcePath(StringUtils::format("%s.png", pair.first.c_str()));
+                const auto file = CocosUtils::getResourcePath(StringUtils::format("%s.png", pair.first.c_str()));
                 auto button = Button::create(file, file);
                 addChild(button);
                 button->setPressedActionEnabled(true);
@@ -95,7 +91,7 @@ private:
                 
                 const auto& size(button->getContentSize());
                 if (!pair.second.empty()) {
-                    const auto iconFile = getResourcePath(StringUtils::format("%s.png", pair.second.c_str()));
+                    const auto iconFile = CocosUtils::getResourcePath(StringUtils::format("%s.png", pair.second.c_str()));
                     auto icon = Sprite::create(iconFile);
                     button->addChild(icon);
                     icon->setPosition(Point(size.width / 2, size.height / 2));

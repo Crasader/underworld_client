@@ -15,7 +15,7 @@
 USING_NS_CC;
 
 class BaseCard;
-class UniversalButton;
+class XButton;
 class CardSet;
 
 class CardPreviewObserver
@@ -67,7 +67,7 @@ private:
     
     // UI
     Label* _cardsCountLabel;
-    UniversalButton* _sortTypeButton;
+    XButton* _sortTypeButton;
     ui::ScrollView* _scrollView;
     Node* _unfoundLine;
     CardSet* _foundCards;

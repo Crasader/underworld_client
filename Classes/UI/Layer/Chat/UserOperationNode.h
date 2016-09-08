@@ -14,7 +14,7 @@
 
 USING_NS_CC;
 
-class UniversalButton;
+class XButton;
 
 class UserOperationNodeObserver
 {
@@ -40,7 +40,7 @@ private:
     UserOperationNodeObserver* _observer;
     ui::Scale9Sprite* _bg;
     int _uid;
-    std::vector<UniversalButton*> _buttons;
+    std::vector<XButton*> _buttons;
 };
 
 #endif /* UserOperationNode_h */

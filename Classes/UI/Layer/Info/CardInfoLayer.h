@@ -16,7 +16,7 @@
 #include "SpellInfoLayer.h"
 
 class SeniorCard;
-class UniversalButton;
+class XButton;
 
 class CardInfoLayerObserver
 {
@@ -74,7 +74,7 @@ private:
     RuneNode* _selectedRune;
     std::vector<Label*> _runeProperties;
     std::vector<SeniorCard*> _skillCards;
-    std::vector<UniversalButton*> _opButtons;
+    std::vector<XButton*> _opButtons;
 };
 
 #endif /* CardInfoLayer_h */

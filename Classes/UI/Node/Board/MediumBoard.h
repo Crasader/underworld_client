@@ -11,7 +11,7 @@
 
 #include "UniversalBoard.h"
 
-class UniversalButton;
+class XButton;
 
 class MediumBoard: public UniversalBoard
 {

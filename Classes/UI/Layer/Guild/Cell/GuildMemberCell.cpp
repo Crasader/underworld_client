@@ -47,7 +47,7 @@ void GuildMemberCell::registerObserver(GuildMemberCellObserver *observer)
     _observer = observer;
 }
 
-bool GuildMemberCell::update(const UserGuildData* data)
+void GuildMemberCell::update(const UserGuildData* data)
 {
     
 }

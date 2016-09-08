@@ -10,7 +10,7 @@
 #include "SeniorCard.h"
 #include "CardPropertyNode.h"
 #include "Board.h"
-#include "UniversalButton.h"
+#include "XButton.h"
 #include "ResourceButton.h"
 #include "PureNode.h"
 #include "PureScale9Sprite.h"
@@ -358,11 +358,12 @@ void CardInfoLayer::createOpButtons(Node* node)
     };
     
     for (int i = 0; i < opButtonsCount; ++i) {
-        auto button = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, opButtonsTitles[i]);
+        auto button = XButton::create(XButton::BSize::Big, XButton::BType::Blue);
+        button->setTitleText(opButtonsTitles[i]);
         button->setCallback([this, i](Ref*) { onOpButtonClicked(i); });
         node->addChild(button);
         const auto& bsize(button->getContentSize());
-        button->setPosition(size.width - ((edge.x + bsize.width) * (i + 1) - bsize.width / 2), edge.y + bsize.height / 2);
+        button->setPosition(Point(size.width - ((edge.x + bsize.width) * (i + 1) - bsize.width / 2), edge.y + bsize.height / 2));
         _opButtons.push_back(button);
     }
 }
@@ -401,12 +402,12 @@ void CardInfoLayer::initUI()
     addChild(board);
     _board = board;
     
-    UniversalButton::createReturnButton(board, Vec2(8.0f, 10.0f), [this]() {
+    auto button = XButton::createReturnButton(board, Vec2(8.0f, 10.0f));
+    button->setCallback([this](Ref*) {
         if (_observer) {
             _observer->onCardInfoLayerReturn(this);
         }
     });
-    
     createLeftNode(board->getSubNode(0));
     createRightNode(board->getSubNode(1));
 }

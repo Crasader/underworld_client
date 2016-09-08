@@ -12,11 +12,14 @@
 #include "GuildGenericCell.h"
 
 class GuildData;
+class AvatarNode;
+class GuildTorphyNode;
 
 class GuildCellObserver
 {
 public:
     virtual ~GuildCellObserver() {}
+    virtual void onGuildCellTouched(const GuildData* data) = 0;
 };
 
 class GuildCell : public GuildGenericCell
@@ -26,7 +29,7 @@ public:
     virtual ~GuildCell();
     void registerObserver(GuildCellObserver *observer);
     
-    bool update(const GuildData* data);
+    void update(const GuildData* data);
     
 protected:
     GuildCell();
@@ -34,6 +37,12 @@ protected:
     
 protected:
     GuildCellObserver* _observer;
+    const GuildData* _data;
+    AvatarNode* _avatar;
+    Label* _name;
+    Label* _type;
+    Label* _members;
+    GuildTorphyNode* _trophy;
 };
 
 #endif /* GuildCell_h */

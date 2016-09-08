@@ -14,6 +14,8 @@
 
 USING_NS_CC;
 
+class TabButton;
+
 class GuildSearchLayerObserver
 {
 public:
@@ -29,12 +31,18 @@ public:
     
 private:
     GuildSearchLayer();
+    
+    // LayerColor
     virtual bool init() override;
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
+    void setTabButtonSelected(int idx);
+    
 private:
     GuildSearchLayerObserver* _observer;
+    std::vector<TabButton*> _tabButtons;
+    std::vector<Node*> _subNodes;
 };
 
 #endif /* GuildSearchLayer_h */

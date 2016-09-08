@@ -14,6 +14,7 @@
 #include "LocalHelper.h"
 #include "PureNode.h"
 #include "PureScale9Sprite.h"
+#include "XEditBox.h"
 #include "XTableViewCell.h"
 #include "TabButton.h"
 
@@ -135,7 +136,7 @@ private:
     bool init(float width, EditBoxDelegate* delegate, const function<void()>& callback);
     
 private:
-    ui::EditBox* _editBox;
+    XEditBox* _editBox;
     Button* _button;
 };
 
@@ -179,24 +180,16 @@ bool ChatLayer::EditBoxNode::init(float width, EditBoxDelegate* delegate, const 
         setContentSize(size);
         
         static const Size ebBgSize(289, 38);
-        static const float capInsetsOffset(6);
-        Rect capInsets(capInsetsOffset, capInsetsOffset, ebBgSize.width - capInsetsOffset * 2, ebBgSize.height - capInsetsOffset * 2);
-        auto s = ui::Scale9Sprite::create(CocosUtils::getResourcePath("ui_kuang_7.png"), Rect(0, 0, ebBgSize.width, ebBgSize.height), capInsets);
-        
         static const float space(3);
         static const float eEdgeY(3);
         const Size esize(width - (bsize.width + space), bsize.height - eEdgeY * 2);
-        _editBox = ui::EditBox::create(esize, s);
+        _editBox = XEditBox::create(esize);
         _editBox->setDelegate(delegate);
-        _editBox->setMaxLength(esize.width);
-        _editBox->setReturnType(ui::EditBox::KeyboardReturnType::SEND);
-        _editBox->setInputMode(ui::EditBox::InputMode::ANY);
-        _editBox->setFontColor(Color4B::BLACK);
         _editBox->setPlaceholderFontSize(16);
         _editBox->setPlaceHolder(LocalHelper::getString("ui_chat_placeholder").c_str());
+        _editBox->setPosition(Point(esize.width / 2, size.height / 2));
         addChild(_editBox);
         
-        _editBox->setPosition(Point(esize.width / 2, size.height / 2));
         _button->setPosition(Point(size.width - bsize.width / 2, size.height / 2));
         
         return true;
@@ -512,10 +505,8 @@ void ChatLayer::createTabButtons(const Vec2& edge)
     Size bsize(Size::ZERO);
     float space(0);
     for (int i = 0; i < tablesCount; ++i) {
-        static const string normal(CocosUtils::getResourcePath("button_fenye_1.png"));
-        static const string select(CocosUtils::getResourcePath("button_fenye.png"));
         auto type(tableTypes[i]);
-        auto button = TabButton::create(getTableName(type), normal, select, [=](Ref*) {
+        auto button = TabButton::create(getTableName(type), [=](Ref*) {
             setTableType(type);
             setFocus(true);
         });

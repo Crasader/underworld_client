@@ -15,7 +15,7 @@
 USING_NS_CC;
 using namespace ui;
 
-class UniversalButton;
+class XButton;
 
 class MessageBoxBaseLayer : public LayerColor
 {
@@ -26,8 +26,8 @@ protected:
     
 protected:
     Sprite* _background;
-    UniversalButton* _confirmButton;
-    UniversalButton* _cancelButton;
+    XButton* _confirmButton;
+    XButton* _cancelButton;
     Point _confirmButtonPosition;
     Point _cancelButtonPosition;
 };

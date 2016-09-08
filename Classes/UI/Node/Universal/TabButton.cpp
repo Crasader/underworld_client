@@ -11,13 +11,11 @@
 #include "SoundManager.h"
 
 using namespace std;
-using namespace ui;
 
 static const auto& normalTextColor(Color3B::WHITE);
 static const auto& touchedTextColor(Color3B::ORANGE);
 
-TabButton::TabButton()
-:_button(nullptr) {}
+TabButton::TabButton() {}
 
 TabButton::~TabButton()
 {
@@ -50,21 +48,12 @@ TabButton* TabButton::create(const string& title, const Button::ccWidgetClickCal
 
 bool TabButton::init(const string& title, const string& normal, const string& selected, const Button::ccWidgetClickCallback& callback)
 {
-    if(Node::init())
-    {
-        _button = Button::create(normal, normal, selected);
-        _button->addClickEventListener(callback);
-        addChild(_button);
-        
-        _button->setTitleFontName(DEFAULT_FONT);
-        _button->setTitleFontSize(DEFAULT_FONT_SIZE);
-        _button->setTitleColor(normalTextColor);
-        _button->setTitleText(title);
-        
-        const auto& size = _button->getContentSize();
-        setAnchorPoint(Point::ANCHOR_MIDDLE);
-        setContentSize(size);
-        _button->setPosition(Point(size.width / 2, size.height / 2));
+    if(ui::Button::init(normal, normal, selected)) {
+        setTitleFontName(DEFAULT_FONT);
+        setTitleFontSize(DEFAULT_FONT_SIZE);
+        setTitleColor(normalTextColor);
+        setTitleText(title);
+        addClickEventListener(callback);
         
         return true;
     }
@@ -74,20 +63,13 @@ bool TabButton::init(const string& title, const string& normal, const string& se
 
 bool TabButton::init(const string& title, const Button::ccWidgetClickCallback& callback)
 {
-    static const auto normal(CocosUtils::getResourcePath("button_white_1.png"));
-    static const auto selected(CocosUtils::getResourcePath("button_black_1.png"));
+    static const auto normal(CocosUtils::getResourcePath("button_fenye_1.png"));
+    static const auto selected(CocosUtils::getResourcePath("button_fenye.png"));
     return init(title, normal, selected, callback);
 }
 
 void TabButton::setEnabled(bool enabled)
 {
-    if (_button) {
-        _button->setEnabled(enabled);
-        
-        if (enabled) {
-            _button->setTitleColor(normalTextColor);
-        } else {
-            _button->setTitleColor(touchedTextColor);
-        }
-    }
+    ui::Button::setEnabled(enabled);
+    setTitleColor(enabled ? normalTextColor : touchedTextColor);
 }

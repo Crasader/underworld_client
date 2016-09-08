@@ -9,7 +9,7 @@
 #include "UserOperationNode.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
-#include "UniversalButton.h"
+#include "XButton.h"
 
 using namespace std;
 using namespace ui;
@@ -65,7 +65,8 @@ bool UserOperationNode::init(int uid)
         const auto cnt(buttonTitles.size());
         for (int i = 0; i < cnt; ++i) {
             const auto& t(buttonTitles.at(i));
-            auto button = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, t);
+            auto button = XButton::create(XButton::BSize::Big, XButton::BType::Blue);
+            button->setTitleText(t);
             button->setCallback([this, i](Ref*) {
                 onButtonClicked(i);
             });

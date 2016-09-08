@@ -26,7 +26,7 @@ public:
     virtual ~GuildMemberOpCell();
     void registerObserver(GuildMemberOpCellObserver *observer);
     
-    bool update(const UserGuildData* data);
+    void update(const UserGuildData* data);
     
 protected:
     GuildMemberOpCell();

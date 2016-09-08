@@ -17,7 +17,7 @@
 #include "Board.h"
 #include "PureScale9Sprite.h"
 #include "TabButton.h"
-#include "UniversalButton.h"
+#include "XButton.h"
 
 using namespace std;
 
@@ -284,7 +284,7 @@ void BattleDeckLayer::createLeftNode(Node* node)
                 _deckTabButtons.insert(make_pair(idx, button));
                 
                 const auto& size = button->getContentSize();
-                button->setPosition(topBarSize.width - (x + size.width / 2), topBarSize.height / 2);
+                button->setPosition(Point(topBarSize.width - (x + size.width / 2), topBarSize.height / 2));
                 
                 static const float spaceX(10);
                 x += size.width + spaceX;
@@ -325,7 +325,8 @@ void BattleDeckLayer::createLeftNode(Node* node)
             bar->addChild(label);
             _averageElixirLabel = label;
             
-            auto button = UniversalButton::create(UniversalButton::BSize::Small, UniversalButton::BType::Purple, LocalHelper::getString("ui_deck_move"));
+            auto button = XButton::create(XButton::BSize::Small, XButton::BType::Purple);
+            button->setTitleText(LocalHelper::getString("ui_deck_move"));
             button->setCallback([this](Ref*) {
                 if (!_isEditing) {
                     if (_cardPreview) {
@@ -334,7 +335,7 @@ void BattleDeckLayer::createLeftNode(Node* node)
                     beginEdit(nullptr);
                 }
             });
-            button->setPosition(bottomBarSize.width - button->getContentSize().width / 2, bottomBarSize.height / 2);
+            button->setPosition(Point(bottomBarSize.width - button->getContentSize().width / 2, bottomBarSize.height / 2));
             bar->addChild(button);
         }
         

@@ -17,7 +17,7 @@ USING_NS_CC;
 
 class ChatData;
 class ObjectBriefNode;
-class UniversalButton;
+class XButton;
 
 class NoticeNodeObserver
 {
@@ -50,7 +50,7 @@ private:
     Label* _content;
     Label* _time;
     Sprite* _resourceBg;
-    UniversalButton* _button;
+    XButton* _button;
     std::vector<ObjectBriefNode*> _resourceNodes;
 };
 

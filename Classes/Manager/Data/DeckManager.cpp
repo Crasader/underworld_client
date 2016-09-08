@@ -519,16 +519,21 @@ void DeckManager::sortAllCards(FeatureType type, bool sortUnfound)
 
 const CardData* DeckManager::updateCardData(const rapidjson::Value& jsonDict)
 {
-    const auto& value = DICTOOL->getSubDictionary_json(jsonDict, "card");
-    auto cardId(JSonUtils::parse<int>(value, "id"));
-    _cardDetails.insert(cardId);
-    if (_allCards.find(cardId) != end(_allCards)) {
-        _allCards.at(cardId)->update(value);
-    } else {
-        _allCards.insert(make_pair(cardId, new (nothrow) CardData(value)));
+    static const char* key("card");
+    if (JSonUtils::isExist(jsonDict, key)) {
+        const auto& value = DICTOOL->getSubDictionary_json(jsonDict, key);
+        auto cardId(JSonUtils::parse<int>(value, "id"));
+        _cardDetails.insert(cardId);
+        if (_allCards.find(cardId) != end(_allCards)) {
+            _allCards.at(cardId)->update(value);
+        } else {
+            _allCards.insert(make_pair(cardId, new (nothrow) CardData(value)));
+        }
+        
+        return _allCards.at(cardId);
     }
     
-    return _allCards.at(cardId);
+    return nullptr;
 }
 
 void DeckManager::removeRune(int cardId, int runeIdx)

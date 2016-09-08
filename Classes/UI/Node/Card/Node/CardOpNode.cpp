@@ -143,7 +143,7 @@ void CardOpNode::resetPositions()
     for (auto iter = _opTypes.rbegin(); iter != _opTypes.rend(); ++iter) {
         auto button = _buttons.at(*iter);
         const float height(button->getContentSize().height);
-        button->setPosition(x, y + height / 2);
+        button->setPosition(Point(x, y + height / 2));
         y += height + space;
     }
     

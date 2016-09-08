@@ -7,7 +7,7 @@
 //
 
 #include "MessageBoxBaseLayer.h"
-#include "UniversalButton.h"
+#include "XButton.h"
 #include "CocosGlobal.h"
 #include "LocalHelper.h"
 
@@ -35,10 +35,12 @@ bool MessageBoxBaseLayer::init()
         _background->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(_background);
         
-        _confirmButton = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Green, LocalHelper::getString("hint_confirm"));
+        _confirmButton = XButton::create(XButton::BSize::Big, XButton::BType::Green);
+        _confirmButton->setTitleText(LocalHelper::getString("hint_confirm"));
         _background->addChild(_confirmButton);
         
-        _cancelButton = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, LocalHelper::getString("hint_cancel"));
+        _cancelButton = XButton::create(XButton::BSize::Big, XButton::BType::Blue);
+        _cancelButton->setTitleText(LocalHelper::getString("hint_cancel"));
         _background->addChild(_cancelButton);
         
         const auto& size = _background->getContentSize();

@@ -14,6 +14,8 @@
 
 USING_NS_CC;
 
+class XEditBox;
+
 class RenameLayerObserver
 {
 public:
@@ -43,7 +45,7 @@ protected:
     
 private:
     RenameLayerObserver* _observer;
-    ui::EditBox* _editBox;
+    XEditBox* _editBox;
 };
 
 #endif /* RenameLayer_h */

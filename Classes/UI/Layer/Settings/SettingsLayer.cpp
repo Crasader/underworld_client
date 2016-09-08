@@ -13,7 +13,7 @@
 #include "LocalHelper.h"
 #include "SoundManager.h"
 #include "BigBoard.h"
-#include "UniversalButton.h"
+#include "XButton.h"
 #include "PureNode.h"
 #include "PureScale9Sprite.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
@@ -73,7 +73,7 @@ private:
     Callback _callback;
     bool _isSwitch;
     bool _isOn;
-    UniversalButton* _button;
+    XButton* _button;
 };
 
 SettingNode* SettingNode::create(SettingType type, const Callback& callback, bool isOn) {
@@ -137,8 +137,9 @@ bool SettingNode::init(SettingType type, const Callback& callback, bool isOn) {
                 bTitle.assign(title);
             }
             
-            auto bType(isOn ? UniversalButton::BType::Blue : UniversalButton::BType::Red);
-            _button = UniversalButton::create(UniversalButton::BSize::Small, bType, bTitle);
+            auto bType(isOn ? XButton::BType::Blue : XButton::BType::Red);
+            _button = XButton::create(XButton::BSize::Small, bType);
+            _button->setTitleText(bTitle);
             _button->setPressedActionEnabled(true);
             _button->setCallback([this](Ref*) {
                 if (_callback) {
@@ -188,7 +189,7 @@ void SettingNode::toggle(bool isOn) {
         _isOn = isOn;
         
         if (_button) {
-            auto bType(isOn ? UniversalButton::BType::Blue : UniversalButton::BType::Red);
+            auto bType(isOn ? XButton::BType::Blue : XButton::BType::Red);
             auto bTitle(isOn ? LocalHelper::getString("ui_setting_on") : LocalHelper::getString("ui_setting_off"));
             _button->setType(bType);
             setTitle(bTitle);
@@ -204,7 +205,7 @@ void SettingNode::setEnabled(bool enabled) {
 
 void SettingNode::setTitle(const string& title) {
     if (_button) {
-        _button->setTitle(title);
+        _button->setTitleText(title);
     }
 }
 
@@ -249,7 +250,8 @@ bool SettingsLayer::init()
         
         _subNode = board->getSubNode();
         
-        _returnButton = UniversalButton::createReturnButton(board, Vec2(8.0f, 10.0f), [this]() {
+        auto button = XButton::createReturnButton(board, Vec2(8.0f, 10.0f));
+        button->setCallback([this](Ref*) {
             if (_languageLayer) {
                 _languageLayer->setVisible(false);
             }
@@ -262,7 +264,8 @@ bool SettingsLayer::init()
             
             setCurrentLanguage();
         });
-        _returnButton->setVisible(false);
+        button->setVisible(false);
+        _returnButton = button;
         
         createContent();
         setCurrentLanguage();

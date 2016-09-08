@@ -8,7 +8,7 @@
 
 #include "CardPreview.h"
 #include "BaseCard.h"
-#include "UniversalButton.h"
+#include "XButton.h"
 #include "PureNode.h"
 #include "PureScale9Sprite.h"
 #include "CardSet.h"
@@ -71,7 +71,7 @@ CardPreview::CardPreview(DeckManager::FeatureType type, Node* parent, CardPrevie
         column = 6;
         unfoundSpaceBottom = 115.0f;
     } else {
-        column = 10;
+        column = 9;
         unfoundSpaceBottom = 50.0f;
     }
     
@@ -99,7 +99,8 @@ CardPreview::CardPreview(DeckManager::FeatureType type, Node* parent, CardPrevie
         }
         
         {
-            _sortTypeButton = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, getSortTypeName(_sortIdx));
+            _sortTypeButton = XButton::create(XButton::BSize::Big, XButton::BType::Blue);
+            _sortTypeButton->setTitleText(getSortTypeName(_sortIdx));
             _sortTypeButton->setCallback([this](Ref*) {
                 setNextSortType();
             });
@@ -114,7 +115,7 @@ CardPreview::CardPreview(DeckManager::FeatureType type, Node* parent, CardPrevie
             label->setAlignment(TextHAlignment::RIGHT, TextVAlignment::CENTER);
             label->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
             label->setPosition(barSize.width - (thirdEdge.x + ssize.width + space), y);
-            _sortTypeButton->setPosition(barSize.width - (thirdEdge.x + ssize.width / 2), y);
+            _sortTypeButton->setPosition(Point(barSize.width - (thirdEdge.x + ssize.width / 2), y));
         }
     }
     
@@ -380,7 +381,7 @@ void CardPreview::setNextSortType()
     _sortIdx = nextIdx;
     
     if (_sortTypeButton) {
-        _sortTypeButton->setTitle(getSortTypeName(_sortIdx));
+        _sortTypeButton->setTitleText(getSortTypeName(_sortIdx));
     }
     
     sortAndRealign();

@@ -10,7 +10,7 @@
 #include "JuniorCard.h"
 #include "CardPropertyNode.h"
 #include "MediumBoard.h"
-#include "UniversalButton.h"
+#include "XButton.h"
 #include "ResourceButton.h"
 #include "PureScale9Sprite.h"
 #include "CocosGlobal.h"

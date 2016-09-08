@@ -15,7 +15,7 @@
 
 USING_NS_CC;
 
-class UniversalButton;
+class XButton;
 
 class ResourceButton : public Node
 {
@@ -52,7 +52,7 @@ private:
     Sprite* _icon;
     Node* _iconNode;
     Label* _countLabel;
-    UniversalButton *_button;
+    XButton *_button;
 };
 
 #endif /* ResourceButton_h */

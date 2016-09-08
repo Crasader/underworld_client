@@ -10,7 +10,7 @@
 #include "MediumBoard.h"
 #include "PureNode.h"
 #include "PureScale9Sprite.h"
-#include "UniversalButton.h"
+#include "XButton.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
@@ -63,7 +63,8 @@ bool RuneBagLayer::init(ObjectUtils::RuneType type, const RuneData* data)
         board->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(board);
         
-        auto button = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, LocalHelper::getString("ui_rune_pick"));
+        auto button = XButton::create(XButton::BSize::Big, XButton::BType::Blue);
+        button->setTitleText(LocalHelper::getString("ui_rune_pick"));
         button->setCallback([this](Ref*) {
             if (_observer) {
                 _observer->onRuneBagLayerSelected(this, _selectedRune);

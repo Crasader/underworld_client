@@ -17,7 +17,7 @@
 #include "UserSimpleNode.h"
 #include "TowerSimpleNode.h"
 #include "CardDeckNode.h"
-#include "UniversalButton.h"
+#include "XButton.h"
 #include "SoundManager.h"
 
 using namespace std;
@@ -137,7 +137,8 @@ void PvpLogNode::createTopNode()
         const auto& size(node->getContentSize());
         
         // replay
-        auto replay = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Green, LocalHelper::getString("ui_log_replay"));
+        auto replay = XButton::create(XButton::BSize::Big, XButton::BType::Green);
+        replay->setTitleText(LocalHelper::getString("ui_log_replay"));
         replay->setCallback([this](Ref*) {
             if (_observer) {
                 _observer->onPvpLogNodeReplay(_data);
@@ -145,10 +146,11 @@ void PvpLogNode::createTopNode()
         });
         node->addChild(replay);
         const auto& rsize(replay->getContentSize());
-        replay->setPosition(size.width - (edgeDefault + rsize.width / 2), size.height - (edgeDefault + rsize.height / 2));
+        replay->setPosition(Point(size.width - (edgeDefault + rsize.width / 2), size.height - (edgeDefault + rsize.height / 2)));
         
         // share
-        auto share = UniversalButton::create(UniversalButton::BSize::Big, UniversalButton::BType::Blue, LocalHelper::getString("ui_log_share"));
+        auto share = XButton::create(XButton::BSize::Big, XButton::BType::Blue);
+        share->setTitleText(LocalHelper::getString("ui_log_share"));
         share->setCallback([this](Ref*) {
             if (_observer) {
                 _observer->onPvpLogNodeShare(_data);
@@ -156,7 +158,7 @@ void PvpLogNode::createTopNode()
         });
         node->addChild(share);
         const auto& ssize(share->getContentSize());
-        share->setPosition(size.width - (edgeDefault + ssize.width / 2), edgeBottom + ssize.height / 2);
+        share->setPosition(Point(size.width - (edgeDefault + ssize.width / 2), edgeBottom + ssize.height / 2));
         
         static const float spaceRight(8);
         userInfoWidth = size.width - (edgeDefault + MAX(rsize.width, ssize.width) + spaceRight);

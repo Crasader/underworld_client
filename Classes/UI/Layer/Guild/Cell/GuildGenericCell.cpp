@@ -7,8 +7,10 @@
 //
 
 #include "GuildGenericCell.h"
+#include "CocosUtils.h"
 
-GuildGenericCell::GuildGenericCell() {}
+GuildGenericCell::GuildGenericCell()
+:_touchInvalid(false) {}
 
 GuildGenericCell::~GuildGenericCell()
 {
@@ -17,8 +19,10 @@ GuildGenericCell::~GuildGenericCell()
 
 bool GuildGenericCell::init()
 {
-    if (ui::Button::init()) {
-        
+    static const auto& file(CocosUtils::getResourcePath("ui_tiao_15.png"));
+    if (ui::Button::init(file, file)) {
+        setScale9Enabled(true);
+        setSwallowTouches(false);
         return true;
     }
     

@@ -22,6 +22,9 @@ public:
 protected:
     GuildGenericCell();
     virtual bool init() override;
+    
+protected:
+    bool _touchInvalid;
 };
 
 #endif /* GuildGenericCell_h */
