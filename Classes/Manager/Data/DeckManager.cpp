@@ -470,9 +470,6 @@ void DeckManager::sortCards(SortType type, vector<int>& cards) const
     static const auto defaultSort = [](int c1, int c2) {
         return c1 < c2;
     };
-    static const auto raritySort = [](int c1, int c2) {
-        return defaultSort(c1, c2);
-    };
     static const auto elixirSort = [this](int c1, int c2) {
         auto dm(DataManager::getInstance());
         auto p1(dynamic_cast<const CardProperty*>(dm->getProperty(c1)));
@@ -485,8 +482,20 @@ void DeckManager::sortCards(SortType type, vector<int>& cards) const
         
         return cost1 < cost2;
     };
+    static const auto raritySort = [](int c1, int c2) {
+        auto dm(DataManager::getInstance());
+        auto p1(dynamic_cast<const CardProperty*>(dm->getProperty(c1)));
+        auto p2(dynamic_cast<const CardProperty*>(dm->getProperty(c2)));
+        auto r1 = p1 ? p1->getRarity() : 0;
+        auto r2 = p2 ? p2->getRarity() : 0;
+        if (r1 == r2) {
+            return elixirSort(c1, c2);
+        }
+        
+        return r1 < r2;
+    };
     static const auto dungeonSort = [](int c1, int c2) {
-        return c1 < c2;
+        return defaultSort(c1, c2);
     };
     
     switch (type) {
