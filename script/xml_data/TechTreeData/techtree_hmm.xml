@@ -104,16 +104,16 @@
 	<card name="攻城单位" card_class="summon" cost="木头:20" unit_id="12019" recover_span="0" id="22019">
 		<custom_unit_setting unit_setting_id="12019"/>
 	</card>
-	<card name="火炮兵" card_class="summon" cost="木头:20" unit_id="12020" recover_span="0" id="22023">
+	<card name="火炮兵" card_class="summon" cost="木头:40" unit_id="12020" recover_span="0" id="22023">
 		<custom_unit_setting unit_setting_id="12020"/>
 	</card>
-	<card name="地雷工兵" card_class="summon" cost="木头:20" unit_id="12021" recover_span="0" id="22025">
+	<card name="地雷工兵" card_class="summon" cost="木头:30" unit_id="12021" recover_span="0" id="22025">
 		<custom_unit_setting unit_setting_id="12021"/>
 	</card>
-	<card name="娜迦战士" card_class="summon" cost="木头:20" unit_id="12022" recover_span="0" id="22026">
+	<card name="娜迦战士" card_class="summon" cost="木头:80" unit_id="12022" recover_span="0" id="22026">
 		<custom_unit_setting unit_setting_id="12022"/>
 	</card>
-	<card name="狼人刺客" card_class="summon" cost="木头:20" unit_id="12023" recover_span="0" id="22028">
+	<card name="狼人刺客" card_class="summon" cost="木头:30" unit_id="12023" recover_span="0" id="22028">
 		<custom_unit_setting unit_setting_id="12023"/>
 	</card>
 	<!--注释：额外的card
