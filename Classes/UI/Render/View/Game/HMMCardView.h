@@ -31,10 +31,10 @@ private:
     const CardConfigData* _configData;
     
     /** cocos */
-    cocos2d::Sprite *_iconSprite;
-    cocos2d::Sprite *_qualitySprite;
+    cocos2d::Sprite* _iconSprite;
+    cocos2d::Sprite* _qualitySprite;
     BattleSmallResourceNode* _resourceNode;
-    cocos2d::Sprite *_shiningSprite;
+    cocos2d::Sprite* _shiningSprite;
     cocos2d::ProgressTimer* _coldDownProgress;
     std::string _currentIconFile;
     

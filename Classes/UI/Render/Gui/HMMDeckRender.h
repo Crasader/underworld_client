@@ -62,6 +62,8 @@ private:
     
     /** status */
     int _selectedCardIndex;
+    std::vector<cocos2d::Vec2> _cardOriginPos;
+    std::vector<cocos2d::Vec2> _cardSelectedPos;
     
     /** refs */
     Commander* _commander;

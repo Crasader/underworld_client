@@ -37,10 +37,11 @@ bool HMMCardView::init(const HMMCardType* cardType) {
     static const float card_width = 80.f;
     static const float card_height = 105.f;
     
-    static const int icon_zorder = 1;
-    static const int progress_zorder = 2;
-    static const int shining_zorder = 3;
-    static const int resource_zorder = 4;
+    static const int quality_zorder = 1;
+    static const int icon_zorder = 2;
+    static const int progress_zorder = 3;
+    static const int shining_zorder = 4;
+    static const int resource_zorder = 5;
     
     if (!cocos2d::Node::init()) return false;
     
@@ -63,6 +64,12 @@ bool HMMCardView::init(const HMMCardType* cardType) {
     //2. init views
     this->setCascadeOpacityEnabled(true);
     this->setContentSize(cocos2d::Size(card_width, card_height));
+    
+    //quality
+    //TODO: add quality in card type
+    _qualitySprite = cocos2d::Sprite::create();
+    _qualitySprite->setPosition(cocos2d::Vec2(card_width / 2, card_height / 2));
+    this->addChild(_qualitySprite, quality_zorder);
     
     // icon
     _iconSprite = cocos2d::Sprite::create();
@@ -107,7 +114,7 @@ bool HMMCardView::init(const HMMCardType* cardType) {
     //TODO: rarity in cardType
     int rarity = 0;
     if (_cardType && _qualitySprite) {
-        _qualitySprite->setTexture("GameImages/test/ui_kuang_"+ UnderWorldCoreUtils::to_string(rarity + 1) + ".png");
+        _qualitySprite->setTexture(CocosUtils::getResourcePath("ui_quality_box_blue.png"));
     }
     
     if (_resourceNode && _cardType) {
