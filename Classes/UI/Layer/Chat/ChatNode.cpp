@@ -8,6 +8,7 @@
 
 #include "ChatNode.h"
 #include "CocosUtils.h"
+#include "GameData.h"
 #include "ChatData.h"
 #include "AvatarNode.h"
 
@@ -76,9 +77,10 @@ bool ChatNode::init(float width, const ChatData* data)
         
         _content = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
         _content->setTextColor(Color4B::BLACK);
-        _content->setHorizontalAlignment(TextHAlignment::LEFT);
+        _content->setAlignment(TextHAlignment::LEFT, TextVAlignment::TOP);
         _content->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
-        _content->setMaxLineWidth(_dialogWidth - (dialogEdge * 2 + dialogArrowWidth));
+        _content->setWidth(_dialogWidth - (dialogEdge * 2 + dialogArrowWidth));
+//        _content->setMaxLineWidth(_dialogWidth - (dialogEdge * 2 + dialogArrowWidth));
         _dialogBg->addChild(_content);
         
         _time = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
@@ -98,9 +100,8 @@ void ChatNode::update(const ChatData* data)
     if (_data != data) {
         _data = data;
         
-        if (false) {
-            createDialog(true);
-        }
+        const bool isMe(GameData::getInstance()->getUUID() == data->getUid());
+        createDialog(isMe);
         
         if (_user) {
             _user->setString(data ? data->getUser() : "");
@@ -118,7 +119,7 @@ void ChatNode::update(const ChatData* data)
             _avatar->setAvatar(data ? data->getIcon() : 0);
         }
         
-        adjust(true);
+        adjust(isMe);
     }
 }
 
@@ -136,11 +137,12 @@ void ChatNode::createDialog(bool isMe)
         capInsets.origin.x += dialogArrowWidth;
     }
     
+    auto frame(Sprite::create(file)->getSpriteFrame());
     if (_dialogBg) {
-        _dialogBg->setSpriteFrame(nullptr);
+        _dialogBg->setSpriteFrame(frame);
         _dialogBg->setCapInsets(capInsets);
     } else {
-        _dialogBg = ui::Scale9Sprite::create(file, Rect(0, 0, size.width, size.height), capInsets);
+        _dialogBg = ui::Scale9Sprite::createWithSpriteFrame(frame, capInsets);
         _dialogBg->setAnchorPoint(Point::ANCHOR_MIDDLE);
         addChild(_dialogBg);
     }

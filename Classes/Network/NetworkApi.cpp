@@ -12,7 +12,6 @@
 #include "GameData.h"
 #include "NetworkController.h"
 #include "ProgressLayer.h"
-#include "ChatMark.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "ApiBridge.h"
@@ -370,23 +369,20 @@ void NetworkApi::compoundRune(int runeDbId, const HttpCallback& callback)
 #pragma mark - Guild
 
 #pragma mark - Chat
-void NetworkApi::sendMessage(const ChatMark* mark, ChatType type, int contactor, const string& message, const HttpCallback& callback)
+void NetworkApi::sendMessage(ChatType type, int contactor, const string& message, const HttpCallback& callback)
 {
     static const string path(kServerPrefix + "chat/send.json");
     unordered_map<string, string> params;
-    mark->toMap(params);
     params.insert(make_pair("channel", StringUtils::format("%d", type)));
     params.insert(make_pair("to", StringUtils::format("%d", contactor)));
     params.insert(make_pair("content", message));
     request(path, callback, &params);
 }
 
-void NetworkApi::recieveMessages(const ChatMark* mark, const HttpCallback& callback)
+void NetworkApi::recieveMessages(const HttpCallback& callback)
 {
     static const string path(kServerPrefix + "chat/recieve.json");
-    unordered_map<string, string> params;
-    mark->toMap(params);
-    request(path, callback, &params);
+    request(path, callback, nullptr);
 }
 
 #pragma mark - IAP

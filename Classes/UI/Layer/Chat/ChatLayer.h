@@ -15,6 +15,7 @@
 #include "CocosGlobal.h"
 #include "ChatNode.h"
 #include "NoticeNode.h"
+#include "ChatTCPClientObserver.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -36,6 +37,7 @@ class ChatLayer
 , public ui::EditBoxDelegate
 , public ChatNodeObserver
 , public NoticeNodeObserver
+, public ChatTCPClientObserver
 {
 public:
     static ChatLayer* create();
@@ -70,6 +72,13 @@ protected:
     // NoticeNodeObserver
     virtual void onNoticeNodeGet(const ChatData* data) override;
     virtual void onNoticeNodeDelete(const ChatData* data) override;
+    
+    // ChatTCPClientObserver
+    virtual void onChatTCPClientConnected() override;
+    virtual void onChatTCPClientReconnected() override;
+    virtual void onChatTCPClientSent(const ChatData* data) override;
+    virtual void onChatTCPClientReceived(const ChatData* data) override;
+    virtual void onChatTCPClientError(int code) override;
     
     // table
     void createTableNode(ChatType type, float height, const Point& topLeft);

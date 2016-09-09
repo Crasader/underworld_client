@@ -12,11 +12,13 @@
 #include "LocalHelper.h"
 #include "SoundManager.h"
 #include "LocalHelper.h"
+#include "ChatData.h"
 #include "PureNode.h"
 #include "PureScale9Sprite.h"
 #include "XEditBox.h"
 #include "XTableViewCell.h"
 #include "TabButton.h"
+#include "ProgressLayer.h"
 
 using namespace std;
 using namespace ui;
@@ -252,6 +254,7 @@ ChatLayer::ChatLayer()
 
 ChatLayer::~ChatLayer()
 {
+    ChatManager::getInstance()->removeObserver(this);
     removeAllChildren();
 }
 
@@ -335,6 +338,8 @@ bool ChatLayer::init()
         }
         
         setTableType(ChatType::World);
+        
+        ChatManager::getInstance()->addObserver(this);
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -444,6 +449,50 @@ void ChatLayer::onNoticeNodeDelete(const ChatData* data)
     if (data) {
         
     }
+}
+
+#pragma mark - ChatTCPClientObserver
+void ChatLayer::onChatTCPClientConnected()
+{
+    
+}
+
+void ChatLayer::onChatTCPClientReconnected()
+{
+    
+}
+
+void ChatLayer::onChatTCPClientSent(const ChatData* data)
+{
+    ProgressLayer::hideSingleton();
+    
+    if (data) {
+        _editBoxNode->setText("");
+    }
+    
+    onChatTCPClientReceived(data);
+}
+
+void ChatLayer::onChatTCPClientReceived(const ChatData* data)
+{
+    auto type(data->getType());
+    if (_tableNodes.find(type) != end(_tableNodes)) {
+        auto table = _tableNodes.at(type)->getTable();
+        auto cnt(getCellsCount(table));
+        if (cnt > 0) {
+            const auto& offset = table->getContentOffset();
+            table->reloadData();
+            table->setContentOffset(offset);
+            table->reloadData();
+        } else {
+            CC_ASSERT(false);
+        }
+    }
+}
+
+void ChatLayer::onChatTCPClientError(int code)
+{
+    
 }
 
 #pragma mark - table
@@ -642,23 +691,9 @@ string ChatLayer::getTableName(ChatType type) const
 void ChatLayer::sendMessage()
 {
     if (_editBoxNode) {
+        ProgressLayer::showSingleton();
         static const auto type(ChatType::World);
         const char* text = _editBoxNode->getText();
-        ChatManager::getInstance()->sendMessage(type, 1, text, [=](const char* msg) {
-            _editBoxNode->setText("");
-            
-            if (_tableNodes.find(type) != end(_tableNodes)) {
-                auto table = _tableNodes.at(type)->getTable();
-                auto cnt(getCellsCount(table));
-                if (cnt > 0) {
-                    const auto& offset = table->getContentOffset();
-                    table->reloadData();
-                    table->setContentOffset(offset);
-                    table->reloadData();
-                } else {
-                    CC_ASSERT(false);
-                }
-            }
-        });
+        ChatManager::getInstance()->sendMessage(type, 1, text);
     }
 }

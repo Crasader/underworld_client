@@ -14,17 +14,22 @@
 
 using namespace std;
 
-ChatData::ChatData(ChatType type, const rapidjson::Value& jsonDict)
+ChatData::ChatData(const rapidjson::Value& jsonDict)
 :_id(0)
-,_type(type)
+,_type(ChatType::None)
 ,_uid(0)
 ,_icon(0)
 ,_time(0)
 {
-    JSonUtils::parse(_uid, jsonDict, "uid");
-    JSonUtils::parse(_user, jsonDict, "user");
+    if (JSonUtils::isExist(jsonDict, "from")) {
+        const auto& value = DICTOOL->getSubDictionary_json(jsonDict, "from");
+        JSonUtils::parse(_uid, value, "id");
+        JSonUtils::parse(_user, value, "name");
+    }
+    
     JSonUtils::parse(_time, jsonDict, "time");
     _formattedTime = CocosUtils::getFormattedTime(_time);
+    JSonUtils::parse(_type, jsonDict, "channel");
     JSonUtils::parse(_message, jsonDict, "content");
     
     string rewards;

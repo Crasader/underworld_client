@@ -208,7 +208,6 @@
 		A1B4AE021C200480005906A6 /* UserDefaultsDataManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B4ADF01C200480005906A6 /* UserDefaultsDataManager.cpp */; };
 		A1B4AE0B1C2004AB005906A6 /* User.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B4AE091C2004AB005906A6 /* User.cpp */; };
 		A1B4AE2C1C200521005906A6 /* AchievementManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B4AE201C200521005906A6 /* AchievementManager.cpp */; };
-		A1B4AE2D1C200521005906A6 /* ChatManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B4AE221C200521005906A6 /* ChatManager.cpp */; };
 		A1B4AE2F1C200521005906A6 /* GuildManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B4AE261C200521005906A6 /* GuildManager.cpp */; };
 		A1B4AE301C200521005906A6 /* QuestManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B4AE281C200521005906A6 /* QuestManager.cpp */; };
 		A1B4AE311C200521005906A6 /* UserManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B4AE2A1C200521005906A6 /* UserManager.cpp */; };
@@ -257,6 +256,7 @@
 		A1E830681C1EA50200FE01B8 /* ConditionData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E830621C1EA50200FE01B8 /* ConditionData.cpp */; };
 		A1E830691C1EA50200FE01B8 /* QuestProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E830641C1EA50200FE01B8 /* QuestProperty.cpp */; };
 		A1E8306D1C1EA55D00FE01B8 /* ContentData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E8306B1C1EA55D00FE01B8 /* ContentData.cpp */; };
+		A1E8EE811D8287D0008F7237 /* ChatManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E8EE7F1D8287D0008F7237 /* ChatManager.cpp */; };
 		A1E947C21D48A3A400BD7A27 /* UserOperationNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E947C01D48A3A400BD7A27 /* UserOperationNode.cpp */; };
 		A1ED7F901D811E440017B960 /* FixedLabelAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1ED7F801D811E440017B960 /* FixedLabelAtlas.cpp */; };
 		A1ED7F911D811E440017B960 /* PureNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1ED7F821D811E440017B960 /* PureNode.cpp */; };
@@ -321,7 +321,6 @@
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		CB3EC8971C4E4D1200447FE3 /* ChatData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB3EC8961C4E4D1200447FE3 /* ChatData.cpp */; };
-		CB3EC89A1C4E4DA600447FE3 /* ChatMark.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB3EC8981C4E4DA600447FE3 /* ChatMark.cpp */; };
 		CBD778C71C29390B0070D293 /* AnnouncementNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBD778C51C29390B0070D293 /* AnnouncementNode.cpp */; };
 		CBDBD2131BD7B3B9004706A8 /* map in Resources */ = {isa = PBXBuildFile; fileRef = CBDBD2121BD7B3B9004706A8 /* map */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
@@ -777,8 +776,6 @@
 		A1B4AE0A1C2004AB005906A6 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		A1B4AE201C200521005906A6 /* AchievementManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AchievementManager.cpp; sourceTree = "<group>"; };
 		A1B4AE211C200521005906A6 /* AchievementManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementManager.h; sourceTree = "<group>"; };
-		A1B4AE221C200521005906A6 /* ChatManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChatManager.cpp; sourceTree = "<group>"; };
-		A1B4AE231C200521005906A6 /* ChatManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatManager.h; sourceTree = "<group>"; };
 		A1B4AE261C200521005906A6 /* GuildManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuildManager.cpp; sourceTree = "<group>"; };
 		A1B4AE271C200521005906A6 /* GuildManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuildManager.h; sourceTree = "<group>"; };
 		A1B4AE281C200521005906A6 /* QuestManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuestManager.cpp; sourceTree = "<group>"; };
@@ -871,6 +868,9 @@
 		A1E830651C1EA50200FE01B8 /* QuestProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestProperty.h; sourceTree = "<group>"; };
 		A1E8306B1C1EA55D00FE01B8 /* ContentData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ContentData.cpp; sourceTree = "<group>"; };
 		A1E8306C1C1EA55D00FE01B8 /* ContentData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentData.h; sourceTree = "<group>"; };
+		A1E8EE7F1D8287D0008F7237 /* ChatManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChatManager.cpp; sourceTree = "<group>"; };
+		A1E8EE801D8287D0008F7237 /* ChatManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatManager.h; sourceTree = "<group>"; };
+		A1E8EE831D8287E9008F7237 /* ChatTCPClientObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTCPClientObserver.h; sourceTree = "<group>"; };
 		A1E947C01D48A3A400BD7A27 /* UserOperationNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserOperationNode.cpp; sourceTree = "<group>"; };
 		A1E947C11D48A3A400BD7A27 /* UserOperationNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserOperationNode.h; sourceTree = "<group>"; };
 		A1ED7F801D811E440017B960 /* FixedLabelAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FixedLabelAtlas.cpp; sourceTree = "<group>"; };
@@ -992,8 +992,6 @@
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CB3EC8951C4E4D1200447FE3 /* ChatData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatData.h; path = Chat/ChatData.h; sourceTree = "<group>"; };
 		CB3EC8961C4E4D1200447FE3 /* ChatData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ChatData.cpp; path = Chat/ChatData.cpp; sourceTree = "<group>"; };
-		CB3EC8981C4E4DA600447FE3 /* ChatMark.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ChatMark.cpp; path = Chat/ChatMark.cpp; sourceTree = "<group>"; };
-		CB3EC8991C4E4DA600447FE3 /* ChatMark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatMark.h; path = Chat/ChatMark.h; sourceTree = "<group>"; };
 		CBD778C51C29390B0070D293 /* AnnouncementNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnnouncementNode.cpp; sourceTree = "<group>"; };
 		CBD778C61C29390B0070D293 /* AnnouncementNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnnouncementNode.h; sourceTree = "<group>"; };
 		CBDBD2121BD7B3B9004706A8 /* map */ = {isa = PBXFileReference; lastKnownFileType = folder; path = map; sourceTree = "<group>"; };
@@ -2065,10 +2063,9 @@
 		A1B4AE1F1C200521005906A6 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				A1E8EE7E1D8287D0008F7237 /* Chat */,
 				A1B4AE201C200521005906A6 /* AchievementManager.cpp */,
 				A1B4AE211C200521005906A6 /* AchievementManager.h */,
-				A1B4AE221C200521005906A6 /* ChatManager.cpp */,
-				A1B4AE231C200521005906A6 /* ChatManager.h */,
 				A10E8F8F1D5C1FFA00320B3D /* DeckManager.cpp */,
 				A10E8F901D5C1FFA00320B3D /* DeckManager.h */,
 				A1B4AE261C200521005906A6 /* GuildManager.cpp */,
@@ -2281,6 +2278,16 @@
 				A1E830651C1EA50200FE01B8 /* QuestProperty.h */,
 			);
 			path = Quest;
+			sourceTree = "<group>";
+		};
+		A1E8EE7E1D8287D0008F7237 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				A1E8EE7F1D8287D0008F7237 /* ChatManager.cpp */,
+				A1E8EE801D8287D0008F7237 /* ChatManager.h */,
+				A1E8EE831D8287E9008F7237 /* ChatTCPClientObserver.h */,
+			);
+			path = Chat;
 			sourceTree = "<group>";
 		};
 		A1ED7F7F1D8114C80017B960 /* Universal */ = {
@@ -2508,8 +2515,6 @@
 			children = (
 				CB3EC8961C4E4D1200447FE3 /* ChatData.cpp */,
 				CB3EC8951C4E4D1200447FE3 /* ChatData.h */,
-				CB3EC8981C4E4DA600447FE3 /* ChatMark.cpp */,
-				CB3EC8991C4E4DA600447FE3 /* ChatMark.h */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -2737,7 +2742,6 @@
 				A19B1AB41D6C186E0010D129 /* DevelopLayer.cpp in Sources */,
 				3028EBC31BFF0CBD00511C51 /* DynamicValue.cpp in Sources */,
 				A1CA35F51D45F29D00584C9D /* SettingsLayer.cpp in Sources */,
-				CB3EC89A1C4E4DA600447FE3 /* ChatMark.cpp in Sources */,
 				A1FF13BF1D3DFCF6007D2C08 /* Reachability.m in Sources */,
 				CB3EC8971C4E4D1200447FE3 /* ChatData.cpp in Sources */,
 				045117081BCFBA53002AA721 /* Command.cpp in Sources */,
@@ -2777,6 +2781,7 @@
 				A103F45C1BE37E2A007F9A83 /* UnitNode.cpp in Sources */,
 				A1211B291C0BF68E00C27CCC /* GameConstants.cpp in Sources */,
 				301C1B7A1C0EA67200B378A6 /* Effect.cpp in Sources */,
+				A1E8EE811D8287D0008F7237 /* ChatManager.cpp in Sources */,
 				A1211B231C0BF55200C27CCC /* LiteralValue.cpp in Sources */,
 				A1ED7F931D811E440017B960 /* ScrollBar.cpp in Sources */,
 				A1B4AE2C1C200521005906A6 /* AchievementManager.cpp in Sources */,
@@ -2814,7 +2819,6 @@
 				3075346D1BF324340057DCED /* EventTriggers.cpp in Sources */,
 				A1B4AE011C200480005906A6 /* SoundManager.cpp in Sources */,
 				A1CA35FB1D45F5B100584C9D /* LanguageNode.cpp in Sources */,
-				A1B4AE2D1C200521005906A6 /* ChatManager.cpp in Sources */,
 				A1FF0E731D7D469D00C32040 /* AbstractInfoLayer.cpp in Sources */,
 				307534691BF1B2F20057DCED /* Commander.cpp in Sources */,
 				A1ED7FC41D8143D40017B960 /* GuildLayer.cpp in Sources */,

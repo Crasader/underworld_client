@@ -21,8 +21,6 @@
 #define VersionErrorCode        (888)
 #define OfflineCode             (999)
 
-class ChatMark;
-
 namespace NetworkApi
 {
     typedef const std::function<void(long, const rapidjson::Value&)> HttpCallback;
@@ -52,8 +50,8 @@ namespace NetworkApi
     void compoundRune(int runeDbId, const HttpCallback& callback);
     
     // ======================= Chat =======================
-    void sendMessage(const ChatMark* mark, ChatType type, int contactor, const std::string& message, const HttpCallback& callback);
-    void recieveMessages(const ChatMark* mark, const HttpCallback& callback);
+    void sendMessage(ChatType type, int contactor, const std::string& message, const HttpCallback& callback);
+    void recieveMessages(const HttpCallback& callback);
     
     // ======================= IAP =======================
     void iap(bool isSandBox, const std::string& receiptData, const HttpCallback& callback);

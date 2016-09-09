@@ -9,7 +9,7 @@
 #ifndef CocosGlobal_h
 #define CocosGlobal_h
 
-#include <iostream>
+#include <string>
 #include <functional>
 
 #define INVALID_VALUE   (-1)
@@ -94,8 +94,8 @@ enum class QuestType {
 };
 
 enum class ChatType {
-    None,
-    World,
+    None = -1,
+    World = 0,
     Private,
     Guild,
     Group,
