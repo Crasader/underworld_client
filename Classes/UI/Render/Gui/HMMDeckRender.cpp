@@ -36,7 +36,7 @@ const float HMMDeckRender::LONG_PRESS_SCALE_UP_DURATION = 0.2f;
 const float HMMDeckRender::LONG_PRESS_SCALE_UP = 1.1f;
     
  const int HMMDeckRender::SELECT_ACTION_TAG = 1;
- const float HMMDeckRender::SELECT_ACTION_DURATION = 1.f;
+ const float HMMDeckRender::SELECT_ACTION_DURATION = 0.75f;
  const float HMMDeckRender::SELECT_MOVE_DISTANCE = 10.f;
  const float HMMDeckRender::SELECT_MOVE_WAVE_OFFSET = 3.f;
     
@@ -295,6 +295,8 @@ bool HMMDeckRender::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_e
         
         ret = true;
     } else if (_selectedCardIndex != CARD_INDEX_INVALID && !calculatePositionInCardRegion(_touchBeginPos)) {
+        placeCardTouch(_selectedCardIndex, _touchBeginPos);
+        
         _placingCard = true;
         ret = true;
     }
@@ -303,17 +305,15 @@ bool HMMDeckRender::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_e
 }
     
 void HMMDeckRender::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
-    if (_placingCard
-        && _touchBeginPos.distance(touch->getLocation()) > TOUCH_MOVE_THRESHOLD) {
-        _placingCard = false;
+    if (_placingCard && _selectedCardIndex != CARD_INDEX_INVALID) {
+        placeCardTouch(_selectedCardIndex, touch->getLocation());
     }
-    
 }
 
 void HMMDeckRender::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
     
     if (_pressingCardIndex != CARD_INDEX_INVALID) {
-        if (_cardViews[_pressingCardIndex]->getBoundingBox().containsPoint(_cardRegion->convertToNodeSpace(this->convertToWorldSpace(touch->getLocation())))) {
+        if (_longPressing || _cardViews[_pressingCardIndex]->getBoundingBox().containsPoint(_cardRegion->convertToNodeSpace(this->convertToWorldSpace(touch->getLocation())))) {
             if (_selectedCardIndex == _pressingCardIndex) {
                 selectCard(CARD_INDEX_INVALID);
             } else {
@@ -327,8 +327,8 @@ void HMMDeckRender::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_e
             cancelLongPressSchedule();
         }
         
-    } else if (_placingCard && _selectedCardIndex != CARD_INDEX_INVALID && !calculatePositionInCardRegion(touch->getLocation())) {
-        try2UseCard(_selectedCardIndex, touch->getLocation());
+    } else if (_placingCard && _selectedCardIndex != CARD_INDEX_INVALID) {
+        placeCardTouchEnd(_selectedCardIndex, touch->getLocation());
     }
 }
 
@@ -405,6 +405,29 @@ void HMMDeckRender::longPressEnd() {
     }
 }
     
+void HMMDeckRender::placeCardTouch(int index, const cocos2d::Vec2 &location) {
+    if (calculatePositionInCardRegion(location)) {
+        _worldRender->hideHMMCardPlaceTips();
+    } else {
+        const HMMCard* card = _deck->getHandCard(index);
+        if (card) {
+            Coordinate32 pos = transformAndValidateLoction2WorldCoordinate(location, card->getCardType());
+            
+            _worldRender->showHMMCardPlaceTips(card->getCardType(), pos, true);
+        }
+    }
+}
+    
+void HMMDeckRender::placeCardTouchEnd(int index, const cocos2d::Vec2 &location) {
+    _worldRender->hideHMMCardPlaceTips();
+    
+    if (calculatePositionInCardRegion(location)) return;
+    
+    try2UseCard(_selectedCardIndex, location);
+}
+    
+
+    
 void HMMDeckRender::selectCard(int index) {
     if (_selectedCardIndex == index) {
         playSelectAnim(_selectedCardIndex);
@@ -471,20 +494,47 @@ void HMMDeckRender::try2UseCard(int cardIndex, const cocos2d::Vec2 &pos) {
     if (!card->isCardReady()) return;
     
     // vaildate core pos
-    Coordinate32 corePos = _worldRender->cocosPoint2WorldCoordinate(_worldRender->getWorldContainer()->convertToNodeSpace(this->convertToWorldSpace(pos)));
-    corePos.x = m_clampi(corePos.x, 0, _game->getWorld()->getMap()->getMapElementWidth());
-    corePos.y = m_clampi(corePos.y, 0, _game->getWorld()->getMap()->getMapElementHeight());
-    if (card->getCardType()->getCardClass() == kHMMCardClass_Summon
-        || card->getCardType()->getCardClass() == kHMMCardClass_Tower
-        || card->getCardType()->getCardClass() == kHMMCardClass_Hero) {
-        const Rect32& rect = card->getCardType()->getCardClass() == kHMMCardClass_Tower ? _deck->getTowerRegion() : _deck->getSummonRegion();
-        
-        corePos.x = m_clampi(corePos.x, rect.getMinX(), rect.getMaxX());
-        corePos.y = m_clampi(corePos.y, rect.getMinY(), rect.getMaxY());
-    }
-    
+    Coordinate32 corePos = transformAndValidateLoction2WorldCoordinate(pos, card->getCardType());
     // give command
     _commander->addCommandFromLocal(new OutsideHMMCommand(cardIndex, _deck->getFactionIndex(), corePos));
+}
+    
+Coordinate32 HMMDeckRender::transformAndValidateLoction2WorldCoordinate(const cocos2d::Vec2& location, const HMMCardType* cardType) {
+    Coordinate32 ret = _worldRender->cocosPoint2WorldCoordinate(_worldRender->getWorldContainer()->convertToNodeSpace(this->convertToWorldSpace(location)));
+    
+    Rect32 legalRegion(0, 0,
+        _game->getWorld()->getMap()->getMapElementWidth(),
+        _game->getWorld()->getMap()->getMapElementHeight());
+    
+    if (cardType) {
+        if (cardType->getCardClass() == kHMMCardClass_Tower) {
+            legalRegion = _deck->getTowerRegion();
+        } else if (cardType->getCardClass() == kHMMCardClass_Hero
+            || cardType->getCardClass() == kHMMCardClass_Summon) {
+            legalRegion = _deck->getSummonRegion();
+        } else if (cardType->getCardClass() == kHMMCardClass_Spell) {
+            legalRegion.setRect(0, 0,
+                _game->getWorld()->getMap()->getMapElementWidth(),
+                _game->getWorld()->getMap()->getMapElementHeight());
+        }
+        
+        if (cardType->getCardClass() == kHMMCardClass_Tower
+            || cardType->getCardClass() == kHMMCardClass_Summon
+            || cardType->getCardClass() == kHMMCardClass_Hero) {
+            const UnitType* ut = _game->getWorld()->getTechTree()->findUnitTypeById(cardType->getUnitId());
+            
+            if (ut) {
+                int size = ut->getSize();
+                legalRegion.setRect(legalRegion.getMinX(), legalRegion.getMinY(), M_MAX(legalRegion._width - size, 0), M_MAX(legalRegion._height - size, 0));
+            }
+        }
+    }
+    
+    ret.x = m_clampi(ret.x, legalRegion.getMinX(), legalRegion.getMaxX());
+    ret.y = m_clampi(ret.y, legalRegion.getMinY(), legalRegion.getMaxY());
+    
+    
+    return ret;
 }
     
     

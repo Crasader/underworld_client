@@ -53,7 +53,10 @@ WorldRender::WorldRender()
 , _worldLayer(nullptr)
 , _worldContainer(nullptr)
 , _tiledMap(nullptr)
-, _hmmCardRegionTipView(nullptr){
+, _hmmCardRegionTipView(nullptr)
+, _hmmCardPlaceTipView(nullptr)
+, _hmmCardPlaceTipViewShadow(nullptr)
+, _tipCardType(nullptr) {
 }
     
     
@@ -199,6 +202,70 @@ void WorldRender::hideHMMCardRegionTips() {
         _hmmCardRegionTipView->removeFromParent();
         _hmmCardRegionTipView = nullptr;
     }
+}
+    
+void WorldRender::showHMMCardPlaceTips(const HMMCardType* cardType, const Coordinate32& pos, bool enable) {
+    if (!cardType) return;
+    
+    if (_hmmCardPlaceTipView && (!_tipCardType || _tipCardType != cardType)) {
+        hideHMMCardPlaceTips();
+    }
+    
+    if (!_hmmCardPlaceTipView) {
+        _tipCardType = cardType;
+        createHMMCardPlaceTipsView(_tipCardType, _world,
+            _hmmCardPlaceTipView, _hmmCardPlaceTipViewShadow);
+        
+        if (_hmmCardPlaceTipView) {
+            this->getWorldContainer()->addChild(_hmmCardPlaceTipView);
+            if (_hmmCardPlaceTipViewShadow) this->getWorldContainer()->addChild(_hmmCardPlaceTipViewShadow);
+        }
+    }
+    
+    if (_hmmCardPlaceTipView) {
+        if (_tipCardType->getCardClass() == kHMMCardClass_Hero
+            || _tipCardType->getCardClass() == kHMMCardClass_Summon
+            || _tipCardType->getCardClass() == kHMMCardClass_Tower) {
+            const UnitType* ut = _world->getTechTree()->findUnitTypeById(_tipCardType->getUnitId());
+            int size = ut->getSize();
+            Coordinate32 centerPos = pos + Coordinate32(size / 2, size / 2);
+            
+            WorldRender::RenderLayer renderLayer(WorldRender::RenderLayer::Land);
+            if (ut->getDefaultField() == kFieldType_Land) {
+                renderLayer = WorldRender::RenderLayer::Land;
+            } else if (ut->getDefaultField() == kFieldType_Air) {
+                renderLayer = WorldRender::RenderLayer::Air;
+            }
+            
+            int zorder = this->worldCoordinate2Zorder(pos + Coordinate32(size, 0), renderLayer);
+            cocos2d::Vec2 point = this->worldCoordinate2CocosPoint(centerPos, renderLayer);
+            
+            _hmmCardPlaceTipView->setLocalZOrder(zorder);
+            _hmmCardPlaceTipView->setPosition(point);
+            
+            if (_hmmCardPlaceTipViewShadow) {
+                int shadowZorder = this->worldCoordinate2Zorder(centerPos, WorldRender::RenderLayer::Shadow);
+                cocos2d::Vec2 shadowPoint = this->worldCoordinate2CocosPoint(centerPos, WorldRender::RenderLayer::Shadow);
+                
+                _hmmCardPlaceTipViewShadow->setLocalZOrder(shadowZorder);
+                _hmmCardPlaceTipViewShadow->setPosition(shadowPoint);
+            }
+        }
+    }
+}
+
+void WorldRender::hideHMMCardPlaceTips() {
+    if (_hmmCardPlaceTipView) {
+        _hmmCardPlaceTipView->removeFromParent();
+        _hmmCardPlaceTipView = nullptr;
+    }
+    
+    if (_hmmCardPlaceTipViewShadow) {
+        _hmmCardPlaceTipViewShadow->removeFromParent();
+        _hmmCardPlaceTipViewShadow = nullptr;
+    }
+    
+    _tipCardType = nullptr;
 }
     
 cocos2d::Node* WorldRender::addEffect(const std::string &renderKey, bool loop,
@@ -358,6 +425,25 @@ void WorldRender::renderSpellPattern(const SpellPattern* sp,
     } else if (sp->getClass() == kSpellPatternClass_All
         || sp->getClass() == kSpellPatternClass_TargetPositionCircle) {
         addEffect(sp->getRenderKey(), false, pos);
+    }
+}
+    
+void WorldRender::createHMMCardPlaceTipsView(const HMMCardType *cardType, const World* world, cocos2d::Node*& outputTipsView, cocos2d::Node*& outputShadowView) {
+    if (cardType->getCardClass() == kHMMCardClass_Hero
+        || cardType->getCardClass() == kHMMCardClass_Summon
+        || cardType->getCardClass() == kHMMCardClass_Tower) {
+        const UnitType* ut = world->getTechTree()->findUnitTypeById(cardType->getUnitId());
+        if (ut) {
+            UnitView* uv = UnitView::create(ut);
+            uv->setBodyAnimationPose(UnitAnimationPose::Stand);
+            uv->setDirection(Unit::Direction::kDirection_Up);
+            uv->setIsAlly(true);
+            uv->buildAnimation();
+            uv->setOpacity(UNIT_PLACE_TIPS_VIEW_OPACITY);
+            uv->runAnimation(true, nullptr);
+            outputTipsView = uv->getBodyNode();
+            outputShadowView = uv->getShadowNode();
+        }
     }
 }
     

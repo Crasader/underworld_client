@@ -55,6 +55,7 @@ public:
     static const int RENDER_LAYER_AIR_HEIGHT_IN_MAP_SIZE = 65;
     static const int CAMERA_ANGEL_DEGREES = 45;
     static const int EFFECT_RENDER_DELAY_THRESHOLD_IN_SECOND = 1;
+    static const int UNIT_PLACE_TIPS_VIEW_OPACITY = 150;
 
     
 private:
@@ -84,6 +85,9 @@ private:
     cocos2d::experimental::TMXTiledMap* _tiledMap;
     std::unordered_set<cocos2d::ParticleSystemQuad*> _mapParticles;
     cocos2d::Node* _hmmCardRegionTipView;
+    cocos2d::Node* _hmmCardPlaceTipView;
+    cocos2d::Node* _hmmCardPlaceTipViewShadow;
+    const HMMCardType* _tipCardType;
     
     
 public:
@@ -112,6 +116,8 @@ public:
     void showHMMCardRegionTips(const HMMCardType* cardType,
         const Rect32& summonRegion, const Rect32& towerRegion);
     void hideHMMCardRegionTips();
+    void showHMMCardPlaceTips(const HMMCardType* cardType, const Coordinate32& pos, bool enable);
+    void hideHMMCardPlaceTips();
     
     
     /** getter */
@@ -130,6 +136,7 @@ protected:
     const cocos2d::Size& getWorldSizeInTile();
     const cocos2d::Size& getTile2PixelScale();
     virtual void renderSpellPattern(const SpellPattern* sp, creatureid_t targetId, const Coordinate32& pos);
+    static void createHMMCardPlaceTipsView(const HMMCardType* cardType, const World* world, cocos2d::Node*& outputTipsView, cocos2d::Node*& outputShadowView);
     
     /** resources */
     void getWorldBgFile(int mapId, std::vector<std::string>& output);

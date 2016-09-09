@@ -64,7 +64,7 @@ bool UnitView::init(const UnitType* unitType, bool isAlly) {
     /** init cocos */
     if (!_shadowNode) _shadowNode = cocos2d::Node::create();
     if (_shadowNode) _shadowNode->retain();
-
+    this->setCascadeOpacityEnabled(true);
     return true;
 }
     

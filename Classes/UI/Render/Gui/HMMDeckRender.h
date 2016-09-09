@@ -22,6 +22,7 @@ class HMMDeck;
 class HMMCardView;
 class HMMCardRender;
 class WorldRender;
+class HMMCardType;
     
 class HMMDeckRender : public cocos2d::LayerColor {
 public:
@@ -121,12 +122,15 @@ private:
     void cancelLongPressSchedule();
     void longPressBegin(float dt);
     void longPressEnd();
+    void placeCardTouch(int index, const cocos2d::Vec2& location);
+    void placeCardTouchEnd(int index, const cocos2d::Vec2& location);
     
     /** misc */
     void selectCard(int index);
     void playSelectAnim(int index);
     void playUnselectAnim(int index);
-    void try2UseCard(int cardIndex, const cocos2d::Vec2& pos);
+    void try2UseCard(int cardIndex, const cocos2d::Vec2& location);
+    Coordinate32 transformAndValidateLoction2WorldCoordinate(const cocos2d::Vec2& location, const HMMCardType* cardType);
     
 
 };
