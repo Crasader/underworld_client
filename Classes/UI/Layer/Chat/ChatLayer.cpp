@@ -37,12 +37,13 @@ class ChatLayer::TableNode : public Node {
 public:
     static TableNode* create(TableViewDataSource* source, const Size& size);
     virtual ~TableNode();
-    void refresh(float height, bool reload);
+    void reloadData();
     TableView* getTable() const;
     
 private:
     TableNode();
     bool init(TableViewDataSource* source, const Size& size);
+    void refresh(float height, bool reload);
     
 private:
     Point _tableBasePosition;
@@ -112,10 +113,17 @@ void ChatLayer::TableNode::refresh(float height, bool reload)
         _table->setPosition(_tableBasePosition - Point(0, size.height));
         
         if (reload) {
-            const auto& offset(_table->getContentOffset());
-            _table->reloadData();
-            _table->setContentOffset(offset);
+            reloadData();
         }
+    }
+}
+
+void ChatLayer::TableNode::reloadData()
+{
+    if (_table) {
+        const auto& offset(_table->getContentOffset());
+        _table->reloadData();
+        _table->setContentOffset(offset);
     }
 }
 
@@ -468,24 +476,33 @@ void ChatLayer::onChatTCPClientSent(const ChatData* data)
     
     if (data) {
         _editBoxNode->setText("");
+        auto type(data->getType());
+        if (_tableNodes.find(type) != end(_tableNodes)) {
+            auto node(_tableNodes.at(type));
+            auto table(node->getTable());
+            auto cnt(getCellsCount(table));
+            if (cnt > 0) {
+                node->reloadData();
+                table->setContentOffset(Vec2::ZERO);
+            } else {
+                CC_ASSERT(false);
+            }
+        }
     }
-    
-    onChatTCPClientReceived(data);
 }
 
 void ChatLayer::onChatTCPClientReceived(const ChatData* data)
 {
-    auto type(data->getType());
-    if (_tableNodes.find(type) != end(_tableNodes)) {
-        auto table = _tableNodes.at(type)->getTable();
-        auto cnt(getCellsCount(table));
-        if (cnt > 0) {
-            const auto& offset = table->getContentOffset();
-            table->reloadData();
-            table->setContentOffset(offset);
-            table->reloadData();
-        } else {
-            CC_ASSERT(false);
+    if (data) {
+        auto type(data->getType());
+        if (_tableNodes.find(type) != end(_tableNodes)) {
+            auto node(_tableNodes.at(type));
+            auto cnt(getCellsCount(node->getTable()));
+            if (cnt > 0) {
+                node->reloadData();
+            } else {
+                CC_ASSERT(false);
+            }
         }
     }
 }
@@ -518,7 +535,7 @@ void ChatLayer::createTableNode(ChatType type, float height, const Point& topLef
     }
     
     // 2. refresh table
-    node->refresh(640, true);
+    node->reloadData();
     
     const auto& size(node->getContentSize());
     node->setPosition(topLeft + Point(size.width / 2, - size.height / 2));

@@ -27,8 +27,9 @@ ChatData::ChatData(const rapidjson::Value& jsonDict)
         JSonUtils::parse(_user, value, "name");
     }
     
-    JSonUtils::parse(_time, jsonDict, "time");
-    _formattedTime = CocosUtils::getFormattedTime(_time);
+    string timeString = JSonUtils::parse<string>(jsonDict, "time");
+    _time = atol(timeString.c_str());
+    _formattedTime = CocosUtils::getTimeString(_time);
     JSonUtils::parse(_type, jsonDict, "channel");
     JSonUtils::parse(_message, jsonDict, "content");
     
