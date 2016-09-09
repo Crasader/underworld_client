@@ -101,7 +101,7 @@
 	<skill bullet_name="兽族攻城车" cd="60" class="attack" damage_distance="faraway" deliver_class="physical" fields="1" max_damage="50" min_damage="50" name="兽族攻城车" perform="0" preperform="60" range="96"/>
 	<skill bullet_name="月之骑士" cd="40" class="attack" damage_distance="faraway" deliver_class="physical" fields="1" max_damage="100" min_damage="100" name="月之骑士" perform="0" preperform="50" range="96"/>
 	<skill bullet_name="攻城车弹道" cd="60" class="attack" damage_distance="faraway" deliver_class="physical" fields="1" max_damage="650" min_damage="650" name="攻城单位" perform="0" preperform="60" range="240"/>
-	<skill bullet_name="攻城车弹道" cd="80" class="attack" damage_distance="faraway" deliver_class="physical" fields="1" max_damage="720" min_damage="720" name="火炮兵" perform="0" preperform="40" range="240" unit_classes="1000"/>
+	<skill bullet_name="攻城车弹道" cd="80" class="attack" damage_distance="faraway" deliver_class="physical" fields="1" max_damage="720" min_damage="720" name="火炮兵" perform="0" preperform="40" range="240" unit_classes="10000"/>
 	<skill cd="30" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="500" min_damage="500" name="地雷兵" perform="0" preperform="30" range="32"/>
 	<skill cd="60" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="648" min_damage="648" name="鲛人战士" perform="0" preperform="30" range="32"/>
 	<skill cd="35" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="348" min_damage="348" name="狼人刺客" perform="0" preperform="35" range="32"/>
