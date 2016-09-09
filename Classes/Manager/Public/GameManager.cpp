@@ -18,7 +18,6 @@
 #include "DeckManager.h"
 #include "DeckData.h"
 #include "CocosUtils.h"
-#include "CheatConfiguration.h"
 #include "LocalHelper.h"
 #include "BattleScene.h"
 #include "MainScene.h"
@@ -152,17 +151,7 @@ void GameClient::launchGame()
     if (loadBattleContent()) {
         _state = kLaunchingPVR;
         createInstance();
-        if (CheatConfiguration::getInstance()->loadPVR) {
-            auto loader(FrameLoader::getInstance());
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-            loader->addAllFramesAsync([this]() { onPVRLoaded(); });
-#else
-            loader->addAllFrames();
-            onPVRLoaded();
-#endif
-        } else {
-            onPVRLoaded();
-        }
+        onPVRLoaded();
     } else {
         MessageBoxLayer::getInstance()->show(LocalHelper::getString("hint_selectNoCard"));
     }

@@ -13,6 +13,7 @@
 #include "GameManager.h"
 #include "SoundManager.h"
 #include "MainUILayer.h"
+#include "LoadingLayer.h"
 
 using namespace std;
 using namespace ui;
@@ -128,7 +129,11 @@ void MainLayer::addLevelButtons()
             
             auto widget = dynamic_cast<ui::Widget*>(pSender);
             auto mapId(widget->getTag() + 1);
-            GameManager::getGameClient()->launchPve(mapId);
+            auto layer(LoadingLayer::create([mapId](Node* pSender) {
+                pSender->removeFromParent();
+                GameManager::getGameClient()->launchPve(mapId);
+            }));
+            addChild(layer);
         });
     }
 }

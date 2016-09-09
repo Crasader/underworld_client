@@ -17,6 +17,8 @@ using namespace cocostudio;
 
 namespace JSonUtils
 {
+    inline bool isExist(const rapidjson::Value& json, const char* key);
+    
     // ========================= sub modules =========================
     
     // ------------------------- bool -------------------------
@@ -34,7 +36,17 @@ namespace JSonUtils
     }
     
     // ------------------------- integers & enum-------------------------
-    template<class T> typename std::enable_if<(std::is_integral<T>::value || std::is_enum<T>::value) && !std::is_same<T, bool>::value, T>::type
+    template<class T> typename std::enable_if<sizeof(T) == 8, T>::type
+    __json_to_value(const rapidjson::Value& json, const char* key)
+    {
+        if (isExist(json, key)) {
+            return static_cast<T>(json[key].GetInt64());
+        }
+        
+        return 0;
+    }
+    
+    template<class T> typename std::enable_if<(std::is_integral<T>::value && !std::is_same<T, bool>::value && sizeof(T) != 8) || std::is_enum<T>::value, T>::type
     __json_to_value(const rapidjson::Value& json, const char* key)
     {
         return static_cast<T>(DICTOOL->getIntValue_json(json, key));

@@ -257,6 +257,7 @@
 		A1E830691C1EA50200FE01B8 /* QuestProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E830641C1EA50200FE01B8 /* QuestProperty.cpp */; };
 		A1E8306D1C1EA55D00FE01B8 /* ContentData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E8306B1C1EA55D00FE01B8 /* ContentData.cpp */; };
 		A1E8EE811D8287D0008F7237 /* ChatManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E8EE7F1D8287D0008F7237 /* ChatManager.cpp */; };
+		A1E8EE881D82C2D2008F7237 /* LoadingLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E8EE861D82C2D2008F7237 /* LoadingLayer.cpp */; };
 		A1E947C21D48A3A400BD7A27 /* UserOperationNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E947C01D48A3A400BD7A27 /* UserOperationNode.cpp */; };
 		A1ED7F901D811E440017B960 /* FixedLabelAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1ED7F801D811E440017B960 /* FixedLabelAtlas.cpp */; };
 		A1ED7F911D811E440017B960 /* PureNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1ED7F821D811E440017B960 /* PureNode.cpp */; };
@@ -871,6 +872,8 @@
 		A1E8EE7F1D8287D0008F7237 /* ChatManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChatManager.cpp; sourceTree = "<group>"; };
 		A1E8EE801D8287D0008F7237 /* ChatManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatManager.h; sourceTree = "<group>"; };
 		A1E8EE831D8287E9008F7237 /* ChatTCPClientObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTCPClientObserver.h; sourceTree = "<group>"; };
+		A1E8EE861D82C2D2008F7237 /* LoadingLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoadingLayer.cpp; sourceTree = "<group>"; };
+		A1E8EE871D82C2D2008F7237 /* LoadingLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingLayer.h; sourceTree = "<group>"; };
 		A1E947C01D48A3A400BD7A27 /* UserOperationNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserOperationNode.cpp; sourceTree = "<group>"; };
 		A1E947C11D48A3A400BD7A27 /* UserOperationNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserOperationNode.h; sourceTree = "<group>"; };
 		A1ED7F801D811E440017B960 /* FixedLabelAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FixedLabelAtlas.cpp; sourceTree = "<group>"; };
@@ -1839,6 +1842,7 @@
 				A19B1AB11D6C18200010D129 /* Develop */,
 				A1BB44571D7ECA1300213275 /* Guild */,
 				A1FF0E6C1D7D469D00C32040 /* Info */,
+				A1E8EE851D82C2C0008F7237 /* Loading */,
 				A11648FD1D5AFB0100D03985 /* Main */,
 				A1F3D22C1D1D05CD00EB5C17 /* Public */,
 				A1FB5CFD1D4F18B700CD2622 /* PvpLog */,
@@ -2288,6 +2292,15 @@
 				A1E8EE831D8287E9008F7237 /* ChatTCPClientObserver.h */,
 			);
 			path = Chat;
+			sourceTree = "<group>";
+		};
+		A1E8EE851D82C2C0008F7237 /* Loading */ = {
+			isa = PBXGroup;
+			children = (
+				A1E8EE861D82C2D2008F7237 /* LoadingLayer.cpp */,
+				A1E8EE871D82C2D2008F7237 /* LoadingLayer.h */,
+			);
+			path = Loading;
 			sourceTree = "<group>";
 		};
 		A1ED7F7F1D8114C80017B960 /* Universal */ = {
@@ -2855,6 +2868,7 @@
 				A1CA35FE1D45F7A000584C9D /* RenameLayer.cpp in Sources */,
 				30F840741D50B3BF0050C976 /* UnitView.cpp in Sources */,
 				A16BFBB21CA905E90089C4F2 /* CCParabola.cpp in Sources */,
+				A1E8EE881D82C2D2008F7237 /* LoadingLayer.cpp in Sources */,
 				A1A05B6C1C96B6A0006FE03B /* DDLog.m in Sources */,
 				A1DF81761D759B3D003AC6D4 /* ObjectBriefData.cpp in Sources */,
 				30F840681D50B37F0050C976 /* Gui.cpp in Sources */,

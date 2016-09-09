@@ -708,9 +708,11 @@ string ChatLayer::getTableName(ChatType type) const
 void ChatLayer::sendMessage()
 {
     if (_editBoxNode) {
-        ProgressLayer::showSingleton();
         static const auto type(ChatType::World);
         const char* text = _editBoxNode->getText();
-        ChatManager::getInstance()->sendMessage(type, 1, text);
+        if (text && strlen(text) > 0) {
+            ProgressLayer::showSingleton();
+            ChatManager::getInstance()->sendMessage(type, 1, text);
+        }
     }
 }
