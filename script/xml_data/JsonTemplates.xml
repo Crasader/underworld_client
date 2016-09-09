@@ -3,6 +3,8 @@
 {"code":4,"uid":944945370,"frame":3534,"commands":[{"frame":3534,"handIndex":1,"factionIndex":1,"pos":"1843_623"}]}
 {"code":5,"startFrame":2,"endFrame":2,"commands":[{"frame":2,"type":1,"handIndex":1,"factionIndex":1,"pos":""}],"finished":false}
 {"code":6,"uid":123,"battleid":256,"frame":5}
+{"code":8,"uid":123}
+{"code":10,"uid":123}
 {"code":100,"uid":123}
 {"code":101,"uid":123,"channel":1,"to":231,"content":"how are you?"}
 {"code":102,"from":{"id":123,"name":"player1"},"channel":1,"to":{"id":231,"name":"player2"},"content":"how are you?"}
