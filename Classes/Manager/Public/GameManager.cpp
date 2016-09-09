@@ -199,8 +199,8 @@ void GameClient::createInstance()
     _gameScheduler = new (nothrow) GameScheduler();
     
     // 4. network
-    static const pair<string, int> host = {"192.168.31.139", 9999};
-//    static const pair<string, int> host = {"123.57.221.242", 8888};
+//    static const pair<string, int> host = {"192.168.31.139", 9999};
+    static const pair<string, int> host = {"123.57.221.242", 8888};
     _network = new (nothrow) ClientTCPNetwork(host.first, host.second, "mofish", GameData::getInstance()->getUUID());
     
     // 5. looper
