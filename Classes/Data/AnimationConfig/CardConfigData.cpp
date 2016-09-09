@@ -25,6 +25,11 @@ CardConfigData::CardConfigData(tinyxml2::XMLElement *xmlElement)
             _smallIcon = prefix + data + "_1" + suffix;
             _disabledIcon = prefix + data + "_2" + suffix;
         }
+        
+        data = xmlElement->Attribute("tips");
+        if (data && strlen(data) > 0) {
+            _tips = data;
+        }
     }
 }
 
@@ -51,4 +56,9 @@ const string& CardConfigData::getSmallIcon() const
 const string& CardConfigData::getDisabledIcon() const
 {
     return _disabledIcon;
+}
+
+const string& CardConfigData::getTips() const
+{
+    return _tips;
 }

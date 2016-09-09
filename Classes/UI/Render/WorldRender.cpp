@@ -23,6 +23,7 @@
 #include "SpellType.h"
 #include "SpellConfigData.h"
 #include "GameModeHMM.h"
+#include "CardConfigData.h"
 
 USING_NS_CC;
 
@@ -250,6 +251,11 @@ void WorldRender::showHMMCardPlaceTips(const HMMCardType* cardType, const Coordi
                 _hmmCardPlaceTipViewShadow->setLocalZOrder(shadowZorder);
                 _hmmCardPlaceTipViewShadow->setPosition(shadowPoint);
             }
+        } else if (_tipCardType->getCardClass() == kHMMCardClass_Spell) {
+            int zorder = this->worldCoordinate2Zorder(pos, WorldRender::RenderLayer::Ground);
+            cocos2d::Vec2 point = this->worldCoordinate2CocosPoint(pos, WorldRender::RenderLayer::Ground);
+            _hmmCardPlaceTipView->setLocalZOrder(zorder);
+            _hmmCardPlaceTipView->setPosition(point);
         }
     }
 }
@@ -429,6 +435,8 @@ void WorldRender::renderSpellPattern(const SpellPattern* sp,
 }
     
 void WorldRender::createHMMCardPlaceTipsView(const HMMCardType *cardType, const World* world, cocos2d::Node*& outputTipsView, cocos2d::Node*& outputShadowView) {
+    if (!cardType) return;
+    
     if (cardType->getCardClass() == kHMMCardClass_Hero
         || cardType->getCardClass() == kHMMCardClass_Summon
         || cardType->getCardClass() == kHMMCardClass_Tower) {
@@ -443,6 +451,13 @@ void WorldRender::createHMMCardPlaceTipsView(const HMMCardType *cardType, const 
             uv->runAnimation(true, nullptr);
             outputTipsView = uv->getBodyNode();
             outputShadowView = uv->getShadowNode();
+        }
+    } else if (cardType->getCardClass() == kHMMCardClass_Spell) {
+        const CardConfigData* ccd = DataManager::getInstance()->getCardConfigData(cardType->getId());
+        
+        if (ccd && !ccd->getTips().empty()) {
+            outputTipsView = CocosUtils::playAnimation(ccd->getTips(), DEFAULT_FRAME_DELAY, true);
+            outputShadowView = nullptr;
         }
     }
 }

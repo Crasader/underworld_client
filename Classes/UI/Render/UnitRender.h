@@ -100,6 +100,10 @@ public:
     static const std::string ROLL_SCHEDULE_KEY_PREFIX;
     static const float ROLL_NEXT_DELAY_IN_SECOND;
     static const float DUARTION_SCALE_MAX;
+    static const float INIT_ANIM_DURATION;
+    static const float INIT_MOVE_DOWN_OFFSET;
+    static const float INIT_SCALE_Y_OFFSET;
+    static const float INIT_SCALE_X_OFFSET;
     
 private:
     
@@ -150,6 +154,7 @@ private:
     UnitStatus _lastStatus;
     std::unordered_map<creatureid_t, std::string> _renderBufs;     //bufId vs renderKey
     std::unordered_map<std::string, BuffAnimation> _bufAnimations; //renderKey vs animation obj
+    bool _inited;
     
     /** events*/
     std::vector<Unit::EventLog> _events;
@@ -161,6 +166,7 @@ private:
     
     /** cocos */
     cocos2d::Node* _mainNode;
+    cocos2d::Node* _bodyNode;
     cocos2d::Node* _groundNode;
     UnitView* _unitView;
     DisplayBar* _hpBar;
@@ -193,6 +199,7 @@ private:
     void renderSkill();
     void renderBuffAndAura();
     void renderEffects();
+    void renderInit();
     void initRenderSkill();
     void initBuffAndAura();
     

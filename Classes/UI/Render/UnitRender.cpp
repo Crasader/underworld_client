@@ -58,13 +58,19 @@ const std::string UnitRender::HEAL_EFFECT_RENDER_KEY = "";
 const std::string UnitRender::ROLL_SCHEDULE_KEY_PREFIX = "unit_roll_schedule_prefix";
 const float UnitRender::ROLL_NEXT_DELAY_IN_SECOND = .2f;
 const float UnitRender::DUARTION_SCALE_MAX = 100.f;
+const float UnitRender::INIT_ANIM_DURATION = 0.5f;
+const float UnitRender::INIT_MOVE_DOWN_OFFSET = 40.f;
+const float UnitRender::INIT_SCALE_Y_OFFSET = 0.2f;
+const float UnitRender::INIT_SCALE_X_OFFSET = 0.2f;
     
 UnitRender::UnitRender()
 : _unit(nullptr)
 , _unitType(nullptr)
 , _configData(nullptr)
+, _inited(false)
 , _mainNode(nullptr)
 , _groundNode(nullptr)
+, _bodyNode(nullptr)
 , _unitView(nullptr)
 , _hpBar(nullptr) {
 }
@@ -72,6 +78,7 @@ UnitRender::UnitRender()
 UnitRender::~UnitRender() {
     CC_SAFE_RELEASE(_mainNode);
     CC_SAFE_RELEASE(_groundNode);
+    CC_SAFE_RELEASE(_bodyNode);
     CC_SAFE_DELETE(_unitView);
     while (!_rollNodes.empty()) {
         CC_SAFE_RELEASE(_rollNodes.front());
@@ -106,6 +113,7 @@ bool UnitRender::init(const WorldObject *object, WorldRender *worldRender) {
 
     _renderBufs.clear();
     _bufAnimations.clear();
+    _inited = false;
     
     // init cocos
     if (!_mainNode) {
@@ -118,6 +126,12 @@ bool UnitRender::init(const WorldObject *object, WorldRender *worldRender) {
         _groundNode->retain();
     }
     _groundNode->removeAllChildren();
+    if (!_bodyNode) {
+        _bodyNode = cocos2d::Node::create();
+        _bodyNode->retain();
+        _mainNode->addChild(_bodyNode);
+    }
+    _bodyNode->removeAllChildren();
     _unitView = nullptr;
     _hpBar = nullptr;
     while (!_rollNodes.empty()) {
@@ -158,6 +172,7 @@ void UnitRender::render() {
     renderHp();
     renderBuffAndAura();
     renderEffects();
+    renderInit();
     
     // clean all input event
     // cause of don't want to copy event, keep the log list until render over
@@ -435,6 +450,25 @@ void UnitRender::renderEffects() {
     _featureLogs.clear();
 }
     
+void UnitRender::renderInit() {
+    if (!_inited) {
+        if (_unit->isIniting() && _bodyNode) {
+            cocos2d::Vec2 originPos = _bodyNode->getPosition();
+            
+            _bodyNode->setPosition(originPos + cocos2d::Vec2(0, INIT_MOVE_DOWN_OFFSET));
+            _bodyNode->setScale(1.f - INIT_SCALE_X_OFFSET, 1.f + INIT_SCALE_Y_OFFSET);
+            
+            cocos2d::FiniteTimeAction* moveDown =
+                cocos2d::EaseSineOut::create(cocos2d::MoveTo::create(INIT_ANIM_DURATION / 4, originPos));
+            cocos2d::FiniteTimeAction* scale1 =
+                cocos2d::EaseSineIn::create(cocos2d::ScaleTo::create(INIT_ANIM_DURATION / 4, 1.f, 1.f));
+            cocos2d::Action* seq = cocos2d::Sequence::create(moveDown, scale1, NULL);
+            _bodyNode->runAction(seq);
+        }
+        _inited = true;
+    }
+}
+    
 void UnitRender::initRenderSkill() {
     BodyAnimationPoseBundle currentPoseBundle;
     getCurrentPoseBundle(currentPoseBundle);
@@ -614,7 +648,7 @@ void UnitRender::buildAndPlayBodyAnimWithCurrentStatus(BodyAnimationPoseBundle& 
         if (!_unitView) return;
         
         _unitView->retain();
-        _mainNode->addChild(_unitView->getBodyNode(), IN_MAIN_BODY_NODE_ZORDER);
+        _bodyNode->addChild(_unitView->getBodyNode(), IN_MAIN_BODY_NODE_ZORDER);
         _groundNode->addChild(_unitView->getShadowNode());
     }
     
