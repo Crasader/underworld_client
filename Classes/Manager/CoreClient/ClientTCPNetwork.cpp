@@ -114,11 +114,11 @@ static std::string parseLaunch2SMsg(
     root.AddMember(MESSAGE_KEY_INIT_UNITS, initUnitsJson, allocator);
     root.AddMember(MESSAGE_KEY_UNIT_POOL, unitPoolJson, allocator);
     
-    rapidjson::StringBuffer buffer;
-    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-    root.Accept(writer);
-    return buffer.GetString();
-//    return DataManager::getInstance()->getBinaryJsonTool()->encode(root);
+//    rapidjson::StringBuffer buffer;
+//    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+//    root.Accept(writer);
+//    return buffer.GetString();
+    return DataManager::getInstance()->getBinaryJsonTool()->encode(root);
 }
 
 static std::string parseSync2SMsg(
@@ -172,11 +172,11 @@ static std::string parseSync2SMsg(
     root.AddMember(MESSAGE_KEY_FRAME, msgFrame, allocator);
     root.AddMember(MESSAGE_KEY_COMMANDS, commands, allocator);
     
-    rapidjson::StringBuffer buffer;
-    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-    root.Accept(writer);
-    return buffer.GetString();
-    //return DataManager::getInstance()->getBinaryJsonTool()->encode(root);
+//    rapidjson::StringBuffer buffer;
+//    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+//    root.Accept(writer);
+//    return buffer.GetString();
+    return DataManager::getInstance()->getBinaryJsonTool()->encode(root);
 }
 
 static std::string parseFinish2SMsg(const NetworkMessageFinish2S* msg, int uid) {
@@ -193,11 +193,11 @@ static std::string parseFinish2SMsg(const NetworkMessageFinish2S* msg, int uid) 
     root.AddMember(MESSAGE_KEY_CODE, reqCode, allocator);
     root.AddMember(MESSAGE_KEY_UID, uidJson, allocator);
     
-    rapidjson::StringBuffer buffer;
-    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-    root.Accept(writer);
-    return buffer.GetString();
-    //return DataManager::getInstance()->getBinaryJsonTool()->encode(root);
+//    rapidjson::StringBuffer buffer;
+//    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+//    root.Accept(writer);
+//    return buffer.GetString();
+    return DataManager::getInstance()->getBinaryJsonTool()->encode(root);
 }
 
 static std::string parseReconnect2SMsg(int uid, int battleid) {
@@ -223,11 +223,11 @@ static std::string parseReconnect2SMsg(int uid, int battleid) {
     root.AddMember(MESSAGE_KEY_BATTLE_ID, battleidJson, allocator);
     root.AddMember(MESSAGE_KEY_FRAME, msgFrame, allocator);
     
-    rapidjson::StringBuffer buffer;
-    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-    root.Accept(writer);
-    return buffer.GetString();
-//    return DataManager::getInstance()->getBinaryJsonTool()->encode(root);
+//    rapidjson::StringBuffer buffer;
+//    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+//    root.Accept(writer);
+//    return buffer.GetString();
+    return DataManager::getInstance()->getBinaryJsonTool()->encode(root);
 }
 
 
@@ -602,8 +602,8 @@ void ClientTCPNetwork::parseResponse2Msg(
     CCLOG("[server]%s", data.c_str());
     
     rapidjson::Document document;
-    document.Parse<rapidjson::kParseNoFlags>(data.c_str());
-    //DataManager::getInstance()->getBinaryJsonTool()->decode(data, document);
+//    document.Parse<rapidjson::kParseNoFlags>(data.c_str());
+    DataManager::getInstance()->getBinaryJsonTool()->decode(data, document);
     
     if (!UWJsonHelper::checkObjectExist_json(document, MESSAGE_KEY_CODE)) {
         return;
