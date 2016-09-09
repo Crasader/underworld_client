@@ -38,11 +38,12 @@
 	<unit armor="0" armor_type="重甲" attack_sight="300" attack_type="攻城" class="warrior" field="0" height="0" hp="5000" id="12021" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="地雷兵" occupy="1" passive_names="地雷兵死亡自爆" profession="tank" race="中立" rarity="0" render_key="吸血鬼骑士" reward="金子:0" size="24" skill_names="单位停止;移动速度50;死亡移除碰撞;地雷兵"/>
 	<unit armor="60" armor_type="重甲" attack_sight="300" attack_type="普通" class="warrior" field="0" height="0" hp="16200" id="12022" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="鲛人战士" occupy="1" passive_names="鲛人战士分裂攻击" profession="tank" race="中立" rarity="0" render_key="狼人步兵" reward="金子:0" size="24" skill_names="单位停止;移动速度50;死亡移除碰撞;鲛人战士"/>
 	<unit armor="40" armor_type="中甲" attack_sight="300" attack_type="普通" class="warrior" field="0" height="0" hp="4250" id="12023" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="狼人刺客" occupy="1" passive_names="狼人刺客之法师杀手" profession="rogue" race="中立" rarity="0" render_key="腐化吸血鬼" reward="金子:0" size="16" skill_names="单位停止;移动速度70;死亡移除碰撞;狼人刺客" spell_names="狼人刺客闪烁攻击"/>
-	<unit armor="0" armor_type="重甲" attack_sight="300" attack_type="普通" class="warrior" field="0" height="0" hp="99999999" id="12800" magical_defense="25" max_level="0" max_quality="0" max_talent_level="0" name="木桩单位" occupy="1" profession="no_one" race="中立" rarity="0" render_key="狼人步兵" reward="金子:9" size="32" skill_names="单位停止;移动速度0;死亡移除碰撞"/>
+	<unit armor="0" armor_type="重甲" attack_sight="300" attack_type="普通" class="warrior" field="0" height="0" hp="999999" id="12800" magical_defense="25" max_level="0" max_quality="0" max_talent_level="0" name="木桩单位" occupy="1" profession="no_one" race="中立" rarity="0" render_key="狼人步兵" reward="金子:9" size="32" skill_names="单位停止;移动速度0;死亡移除碰撞"/>
 	<unit armor="100" armor_type="重甲" attack_sight="300" attack_type="普通" class="summoned" field="0" height="0" hp="7200" id="14000" magical_defense="0" max_level="1" max_quality="0" max_talent_level="0" name="人族被召唤水元素" occupy="1" profession="archer" race="人族" rarity="0" render_key="机械甲虫" reward="金子:0" size="16" skill_names="单位停止;移动速度60;死亡移除碰撞;人族被召唤水元素" timed="1800"/>
 	<unit armor="0" armor_type="重甲" attack_sight="300" attack_type="普通" class="summoned" field="0" height="0" hp="2400" id="14001" magical_defense="0" max_level="1" max_quality="0" max_talent_level="0" name="人族被召唤火元素" occupy="1" passive_names="火元素死亡爆炸" profession="rogue" race="人族" rarity="0" render_key="吸血鬼骑士" reward="金子:0" size="16" skill_names="单位停止;移动速度55;死亡移除碰撞;人族被召唤火元素" timed="1800"/>
 	<unit armor="0" armor_type="无甲" attack_sight="300" attack_type="普通" class="building" field="0" height="0" hp="1" id="14003" magical_defense="0" max_level="1" max_quality="0" max_talent_level="0" name="中立被召唤治疗守卫" occupy="1" passive_names="治疗守卫光环" profession="no_one" race="中立" rarity="0" render_key="狼人步兵" reward="金子:0" size="4" skill_names="单位停止;移动速度0;死亡移除碰撞" timed="1200"/>
 	<unit armor="0" armor_type="无甲" attack_sight="300" attack_type="普通" class="summoned" field="0" height="0" hp="240" id="14004" magical_defense="0" max_level="0" max_quality="0" max_talent_level="0" name="魔族被召唤骷髅" occupy="1" profession="rogue" race="魔族" rarity="0" render_key="腐化吸血鬼" reward="金子:0" size="12" skill_names="单位停止;移动速度55;死亡移除碰撞;魔族被召唤骷髅" timed="900"/>
+	<unit armor="10" armor_type="城甲" attack_sight="999" attack_type="普通" class="summoned" field="0" height="0" hp="5000" id="14005" magical_defense="10" max_level="0" max_quality="0" max_talent_level="0" name="法术卡被召唤死亡守卫" occupy="1" profession="no_one" race="中立" rarity="0" render_key="石像鬼" reward="金子:0" size="16" skill_names="单位停止;移动速度0;死亡移除碰撞" spell_names="法术卡被召唤死亡守卫秒杀"/>
 	<skill cd="0" class="stop" name="单位停止" perform="0" preperform="0"/>
 	<skill cd="0" class="die" name="死亡移除碰撞" occupy="0" perform="300" preperform="0"/>
 	<skill cd="0" class="die" name="死亡不移除碰撞" occupy="1" perform="300" preperform="0"/>
@@ -132,6 +133,7 @@
 	<spell alias="第一版恐惧法术" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" id="1919" immediate_elements="0,第一版恐惧法术,1" level="1" perform="0" preperform="30" spell_name="恐惧法术lv1" spell_radius="140" to_dead="0"/>
 	<spell alias="第一版磁场法术" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" id="1920" immediate_elements="0,第一版磁场法术,1" is_on_building="0" level="1" perform="0" preperform="30" spell_name="磁场法术lv1" spell_radius="80" to_dead="0"/>
 	<spell alias="第一版震荡法术" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" id="1921" immediate_elements="0,第一版震荡法术,1" is_on_building="0" level="1" perform="0" preperform="30" spell_name="震荡法术lv1" spell_radius="120" to_dead="0"/>
+	<spell alias="第一版秒杀法术" cast_distance="9999" cast_type="position" cd="600" class="cast" deliver_class="magical" id="1922" immediate_elements="0,第一版秒杀法术,1" level="1" perform="0" preperform="30" spell_name="秒杀法术lv1" spell_radius="32" to_dead="0"/>
 	<spell ai="战斗过程AI" alias="人族盾牌队长坚守" cast_distance="96" cast_type="unit" cd="600" class="cast" conditions="type:unit_class;target:opposite;condition:not:core" deliver_class="magical" deliver_natures="enemy" id="1001" immediate_elements="1,人族盾牌队长坚守,1" level="1" perform="0" preperform="40" spell_name="人族盾牌队长坚守" spell_radius="80" to_dead="0"/>
 	<spell ai="战斗过程AI" alias="人族剑士队长致命打击" cast_distance="48" cast_type="unit" cd="600" class="cast" conditions=" " deliver_class="physical" deliver_natures="enemy" id="1002" immediate_elements="0,人族剑士队长致命打击,1" is_on_building="0" level="1" perform="0" preperform="40" spell_name="人族剑士队长致命打击" to_dead="0"/>
 	<spell alias="剑士队长清除自身负面状态" cast_distance="-1" cast_type="self" cd="300" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" id="1003" immediate_elements="0,剑士队长清除自身负面状态,1" level="1" perform="0" preperform="30" spell_name="剑士队长清除自身负面状态" to_dead="0"/>
@@ -162,6 +164,7 @@
 	<spell alias="火元素被触发的爆炸" cast_distance="200" cast_type="self" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" id="1216" immediate_elements="0,火元素被触发的爆炸,1" is_on_building="0" level="1" perform="0" preperform="30" spell_name="火元素被触发的爆炸" to_dead="0"/>
 	<spell alias="地雷兵被触发的爆炸" cast_distance="200" cast_type="self" cd="600" class="cast" conditions=" " deliver_class="physical" deliver_natures="ally" id="1217" immediate_elements="0,地雷兵被触发的爆炸,1" level="1" perform="0" preperform="30" spell_name="地雷兵被触发的爆炸" to_dead="0"/>
 	<spell alias="狼人刺客闪烁攻击" cast_distance="224" cast_type="unit" cd="1800" class="cast" conditions="type:unit_profession;target:opposite;condition:is:mage|type:unit_profession;target:opposite;condition:is:archer" deliver_class="physical" deliver_natures="enemy|enemy" id="1218" immediate_elements="0,狼人刺客闪烁攻击,1" is_on_building="0" level="1" perform="0" preperform="0" spell_name="狼人刺客闪烁攻击" to_dead="0"/>
+	<spell alias="法术卡被召唤死亡守卫秒杀" cast_distance="9999" cast_type="unit" cd="720" class="cast" conditions="type:unit_class;target:opposite;condition:not:core,hero,summoned" deliver_class="physical" deliver_natures="enemy" id="1219" immediate_elements="0,法术卡被召唤死亡守卫秒杀,1" level="1" perform="0" preperform="180" spell_name="法术卡被召唤死亡守卫秒杀" to_dead="0"/>
 	<spell_ai_description conditions=" " deliver_natures="enemy" heuristic_element_names="人族法师暴风雨启发" name="人族法师暴风雨ai" scenario="in_battle"/>
 	<spell_ai_description conditions="type:unit_lose_hp;target:opposite;condition:&gt;200" deliver_natures="ally" heuristic_element_names="中立仙女龙医疗波启发" name="中立仙女龙医疗波ai" scenario="all"/>
 	<spell_ai_description conditions=" " deliver_natures="enemy" heuristic_element_names="法师队长暴风雪启发" name="法师队长暴风雪ai" scenario="in_battle"/>
@@ -210,6 +213,7 @@
 	<spell_pattern class="target_position_circle" conditions="type:unit_class;target:opposite;condition:not:building,core" content_name="第一版恐惧法术" deliver_natures="enemy" name="第一版恐惧法术" radius="80"/>
 	<spell_pattern class="target" conditions=" " content_name="第一版磁场法术" deliver_natures="neutral" name="第一版磁场法术"/>
 	<spell_pattern class="target_position_circle" conditions=" " content_name="第一版震荡法术" deliver_natures="enemy" name="第一版震荡法术" radius="120"/>
+	<spell_pattern class="target" content_name="第一版秒杀法术" name="第一版秒杀法术"/>
 	<spell_pattern class="target_position_circle" conditions="type:field_type;target:opposite;condition:not:air" content_name="内容人族盾牌队长坚守" deliver_natures="ally" name="人族盾牌队长坚守" radius="96"/>
 	<spell_pattern class="target" conditions="type:unit_class;target:opposite;condition:not:building,core" content_name="人族剑士队长致命打击" deliver_natures="enemy" name="人族剑士队长致命打击"/>
 	<spell_pattern class="target" conditions=" " content_name="剑士队长清除自身负面状态" deliver_natures="ally" name="剑士队长清除自身负面状态"/>
@@ -248,6 +252,7 @@
 	<spell_pattern class="target_position_circle" conditions="type:unit_class;target:opposite;condition:not:building,core" content_name="火元素被触发的爆炸" deliver_natures="enemy" name="火元素被触发的爆炸" radius="96"/>
 	<spell_pattern class="target_position_circle" conditions=" " content_name="地雷兵被触发的爆炸" deliver_natures="enemy" name="地雷兵被触发的爆炸" radius="96"/>
 	<spell_pattern class="target" content_name="狼人刺客闪烁攻击" name="狼人刺客闪烁攻击"/>
+	<spell_pattern class="target" conditions="type:unit_class;target:opposite;condition:not:core,hero,summoned" content_name="法术卡被召唤死亡守卫秒杀" deliver_natures="enemy" name="法术卡被召唤死亡守卫秒杀"/>
 	<spell_content magic_name="实际效果暴风雪" name="内容全局技能暴风雪lv1" spell_content_class="magic"/>
 	<spell_content magic_name="实际效果医疗术" name="内容全局技能医疗术lv1" spell_content_class="magic"/>
 	<spell_content magic_name="实际效果沉默术" name="内容全局技能沉默术lv1" spell_content_class="magic"/>
@@ -271,6 +276,7 @@
 	<spell_content name="第一版恐惧法术" spell_content_class="damage" spell_content_damage_name="第一版恐惧法术"/>
 	<spell_content magic_name="磁场法术效果" name="第一版磁场法术" spell_content_class="magic"/>
 	<spell_content name="第一版震荡法术" spell_content_class="damage" spell_content_damage_name="震荡法术伤害"/>
+	<spell_content name="第一版秒杀法术" spell_content_class="summon" summon_count="1" unit_setting_id="14005"/>
 	<spell_content name="内容人族盾牌队长坚守" spell_content_class="damage" spell_content_damage_name="效果人族盾牌队长坚守"/>
 	<spell_content name="人族剑士队长致命打击" spell_content_class="damage" spell_content_damage_name="人族剑士队长致命打击"/>
 	<spell_content name="剑士队长清除自身负面状态" spell_content_class="damage" spell_content_damage_name="剑士队长清除自身负面状态"/>
@@ -309,6 +315,7 @@
 	<spell_content name="火元素被触发的爆炸" spell_content_class="damage" spell_content_damage_name="火元素被触发的爆炸伤害"/>
 	<spell_content name="地雷兵被触发的爆炸" spell_content_class="damage" spell_content_damage_name="地雷兵被触发的爆炸伤害"/>
 	<spell_content name="狼人刺客闪烁攻击" spell_content_class="blink"/>
+	<spell_content name="法术卡被召唤死亡守卫秒杀" spell_content_class="damage" spell_content_damage_name="法术卡被召唤死亡守卫秒杀"/>
 	<bullet name="人族法师" render_key="法师子弹3" speed="300"/>
 	<bullet height="15" name="人族弓箭手" render_key="箭" speed="400"/>
 	<bullet name="魔族战车" render_key="箭" speed="400"/>
@@ -618,6 +625,7 @@
 	<damage damage_name="伤害被触发的穿透弹" damage_nature="hurt" damage_value="500" deliver_class="magical" is_on_building="0"/>
 	<damage damage_name="火元素被触发的爆炸伤害" damage_nature="hurt" damage_value="400" deliver_class="magical" is_on_building="0"/>
 	<damage damage_name="地雷兵被触发的爆炸伤害" damage_nature="hurt" damage_value="d:target:owner;type:max_hp;v:p:150;template:0" deliver_class="physical" is_on_building="0"/>
+	<damage damage_name="法术卡被召唤死亡守卫秒杀" damage_nature="hurt" damage_value="d:target:opposite;type:max_hp;v:p:250;template:0" deliver_class="physical" is_on_building="0"/>
 	<effect class="set_state" effect_name="沉默效果" state_name="silence"/>
 	<effect class="set_state" effect_name="击晕效果" state_name="stun"/>
 	<effect class="set_state" effect_name="无法移动效果" state_name="unmoveable"/>

@@ -13,7 +13,8 @@
 	<item desc="缴械法术lv1" donate="7" experience="550" grade="0" id="23110" name="缴械法术lv1" point="555" require="3" reward="15_32" unlock="3"/>
 	<item desc="恐惧法术lv1" donate="8" experience="650" grade="0" id="23111" name="恐惧法术lv1" point="555" require="3" reward="15_33" unlock="4"/>
 	<item desc="磁场法术lv1" donate="7" experience="550" grade="0" id="23112" name="磁场法术lv1" point="555" require="3" reward="15_32" unlock="3"/>
-	<item desc="震荡法术lv1" donate="8" experience="650" grade="0" id="23113" name="震荡法术lv1" point="555" require="3" reward="15_33" unlock="4"/>
+	<item desc="震荡法术lv1" donate="8" experience="550" grade="0" id="23113" name="震荡法术lv1" point="555" require="3" reward="15_33" unlock="4"/>
+	<item desc="秒杀法术lv1" donate="5" experience="650" grade="0" id="23114" name="秒杀法术lv1" point="555" require="3" reward="15_33" unlock="3"/>
 	<item desc="人族盾牌兵" donate="5" experience="350" grade="0" id="22000" name="人族盾牌兵" point="555" require="3" reward="15_30" runes="0;1;2" skills="70001" unlock="1"/>
 	<item desc="人族剑士" donate="6" experience="450" grade="0" id="22001" name="人族剑士" point="555" require="3" reward="15_31" runes="0;1;2" skills="70001" unlock="2"/>
 	<item desc="人族弓手" donate="7" experience="550" grade="0" id="22002" name="人族弓手" point="555" require="3" reward="15_32" runes="0;1;2" skills="70001;71001" unlock="3"/>
