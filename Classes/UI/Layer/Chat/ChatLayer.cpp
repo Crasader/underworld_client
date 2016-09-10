@@ -23,8 +23,7 @@
 using namespace std;
 using namespace ui;
 
-static const size_t tableColumnCount(1);
-static const Vec2 nodeGapOnTable(0, 10);
+static const float tableNodeGapY(10);
 static const ChatType tableTypes[] = {
     ChatType::World,
     ChatType::Mail,
@@ -379,7 +378,7 @@ Size ChatLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
     auto size = getCellSize(getTableType(table), idx);
     auto cnt = getCellsCount(table);
     if (0 == idx || (cnt - 1) == idx) {
-        return size + Size(0, nodeGapOnTable.y / 2);
+        return size + Size(0, tableNodeGapY / 2);
     }
     
     return size;
@@ -393,28 +392,25 @@ TableViewCell* ChatLayer::tableCellAtIndex(TableView *table, ssize_t idx)
     }
     
     auto type = getTableType(table);
-    auto maxCnt(getDataCount(type));
     auto cnt = getCellsCount(table);
-    for (int i = 0; i < tableColumnCount; ++i) {
-        auto index = idx * tableColumnCount + i;
-        auto node(cell->getNode(i));
-        if (index < maxCnt) {
-            if (!node) {
-                node = createCellNode(type, index);
-                cell->addChild(node);
-                cell->setNode(node, i);
-            } else {
-                updateCellNode(node, type, index);
-            }
-            
-            // we must update the position when the table was reloaded
-            const auto& nodeSize(node->getContentSize());
-            const Point point(nodeSize.width * (i + 0.5f) + nodeGapOnTable.x / 2, nodeSize.height * 0.5f + nodeGapOnTable.y / 2);
-            node->setPosition(point + Point(0, (idx == cnt - 1) ? nodeGapOnTable.y / 2 : 0));
-        } else if (node) {
-            node->removeFromParent();
-            cell->resetNode(i);
+    static const float nodeIdx(0);
+    auto node(cell->getNode(nodeIdx));
+    if (idx < cnt) {
+        if (!node) {
+            node = createCellNode(type, idx);
+            cell->addChild(node);
+            cell->setNode(node, nodeIdx);
+        } else {
+            updateCellNode(node, type, idx);
         }
+        
+        // we must update the position when the table was reloaded
+        const auto& nodeSize(node->getContentSize());
+        const Point point(nodeSize.width / 2, (nodeSize.height + tableNodeGapY) / 2);
+        node->setPosition(point + Point(0, (idx == cnt - 1) ? tableNodeGapY / 2 : 0));
+    } else if (node) {
+        node->removeFromParent();
+        cell->resetNode(nodeIdx);
     }
     
     return cell;
@@ -428,7 +424,11 @@ ssize_t ChatLayer::numberOfCellsInTableView(TableView *table)
 #pragma mark - EditBoxDelegate
 void ChatLayer::editBoxTextChanged(ui::EditBox* editBox, const string& text)
 {
-    
+    static const int maxLength(200);
+    if (text.size() > maxLength) {
+        auto replaced = text.substr(0, maxLength);
+        editBox->setText(replaced.c_str());
+    }
 }
 
 void ChatLayer::editBoxReturn(ui::EditBox* editBox)
@@ -543,13 +543,7 @@ void ChatLayer::createTableNode(ChatType type, float height, const Point& topLef
 
 ssize_t ChatLayer::getCellsCount(TableView* table) const
 {
-    auto type = getTableType(table);
-    auto cnt = getDataCount(type);
-    if (cnt > 0) {
-        return (cnt - 1) / tableColumnCount + 1;
-    }
-    
-    return 0;
+    return ChatManager::getInstance()->getChatData(getTableType(table)).size();
 }
 
 Rect ChatLayer::getBoundingBox(Node* node) const
@@ -603,7 +597,7 @@ Size ChatLayer::getCellSize(ChatType type, size_t idx)
     auto node = createCellNode(type, idx);
     if (node) {
         auto size(node->getContentSize());
-        return size + Size(nodeGapOnTable.x, nodeGapOnTable.y);
+        return size + Size(0, tableNodeGapY);
     }
     
     return Size::ZERO;
@@ -613,16 +607,14 @@ Node* ChatLayer::createCellNode(ChatType type, size_t idx)
 {
     const auto& data = ChatManager::getInstance()->getChatData(type);
     if (data.size() > idx) {
-        static const float edgeX(3);
-        static const float width(subViewWidth - edgeX * 2);
         auto chatData(data.at(idx));
         if (ChatType::World == type) {
-            auto cn = ChatNode::create(width, chatData);
+            auto cn = ChatNode::create(subViewWidth, chatData);
             cn->registerObserver(this);
             return cn;
         } else if (ChatType::Mail == type ||
                    ChatType::Notice == type) {
-            auto nn = NoticeNode::create(type, width, chatData);
+            auto nn = NoticeNode::create(type, subViewWidth, chatData);
             nn->registerObserver(this);
             return nn;
         }
@@ -648,11 +640,6 @@ void ChatLayer::updateCellNode(Node* node, ChatType type, size_t idx)
             }
         }
     }
-}
-
-size_t ChatLayer::getDataCount(ChatType type) const
-{
-    return ChatManager::getInstance()->getChatData(type).size();
 }
 
 ChatType ChatLayer::getTableType(TableView* table) const

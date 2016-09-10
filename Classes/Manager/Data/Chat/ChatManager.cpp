@@ -58,7 +58,7 @@ ChatManager::ChatManager()
         rapidjson::Document document;
         document.SetObject();
         rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
-        document.AddMember("time", 213123123, allocator);
+        document.AddMember("time", "213123123", allocator);
         document.AddMember("channel", 1, allocator);
         document.AddMember("content", rapidjson::Value("this is a test messagethis is a test messagethis is a test messagethis is a test messagethis is a test messagethis is a test message", allocator), allocator);
         
@@ -69,7 +69,7 @@ ChatManager::ChatManager()
         rapidjson::Document document;
         document.SetObject();
         rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
-        document.AddMember("time", 213123123, allocator);
+        document.AddMember("time", "213123123", allocator);
         document.AddMember("channel", 4, allocator);
         document.AddMember("content", rapidjson::Value("this is a test mail\nthis is a test mail\nthis is a test mail", allocator), allocator);
         if (i % 2 == 0) {
@@ -83,7 +83,7 @@ ChatManager::ChatManager()
         rapidjson::Document document;
         document.SetObject();
         rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
-        document.AddMember("time", 213123123, allocator);
+        document.AddMember("time", "213123123", allocator);
         document.AddMember("channel", 5, allocator);
         document.AddMember("content", rapidjson::Value("this is a test notice", allocator), allocator);
         

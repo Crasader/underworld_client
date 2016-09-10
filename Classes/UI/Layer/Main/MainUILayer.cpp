@@ -20,6 +20,7 @@
 #include "PvpLogLayer.h"
 #include "GuildLayer.h"
 #include "GuildSearchLayer.h"
+#include "LoadingLayer.h"
 #include "CheatLayer.h"
 
 using namespace std;
@@ -392,7 +393,9 @@ void MainUILayer::onFunctionButtonClicked(ButtonType type)
     auto runningScene(Director::getInstance()->getRunningScene());
     switch (type) {
         case ButtonType::Battle:
-            GameManager::getGameClient()->launchPvp();
+            LoadingLayer::show(true, [](Node*) {
+                GameManager::getGameClient()->launchPvp();
+            });
             break;
             
         case ButtonType::Train:

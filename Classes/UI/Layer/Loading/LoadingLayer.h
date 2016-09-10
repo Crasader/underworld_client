@@ -18,14 +18,15 @@ class LoadingLayer : public LayerColor
 public:
     typedef std::function<void(Node*)> Callback;
     
-    static LoadingLayer* create(const Callback& callback);
+    static void show(bool pvp, const Callback& callback);
+    
+private:
+    static LoadingLayer* create(bool pvp, const Callback& callback);
+    LoadingLayer();
     virtual ~LoadingLayer();
     
-protected:
-    LoadingLayer();
-    
     // LayerColor
-    bool init(const Callback& callback);
+    bool init(bool pvp, const Callback& callback);
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
@@ -36,6 +37,7 @@ protected:
 private:
     ProgressTimer* _progressTimer;
     Label* _hint;
+    bool _pvp;
     Callback _callback;
     bool _isLoading;
     int _loaded;

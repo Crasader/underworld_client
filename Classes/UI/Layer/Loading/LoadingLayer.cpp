@@ -13,10 +13,18 @@
 #include "FrameLoader.h"
 #include "DataManager.h"
 
-LoadingLayer* LoadingLayer::create(const Callback& callback)
+void LoadingLayer::show(bool pvp, const Callback& callback)
+{
+    auto scene(Director::getInstance()->getRunningScene());
+    if (scene) {
+        scene->addChild(LoadingLayer::create(pvp, callback));
+    }
+}
+
+LoadingLayer* LoadingLayer::create(bool pvp, const Callback& callback)
 {
     auto ret = new (std::nothrow) LoadingLayer();
-    if (ret && ret->init(callback)) {
+    if (ret && ret->init(pvp, callback)) {
         ret->autorelease();
         return ret;
     }
@@ -28,6 +36,7 @@ LoadingLayer* LoadingLayer::create(const Callback& callback)
 LoadingLayer::LoadingLayer()
 :_progressTimer(nullptr)
 ,_hint(nullptr)
+,_pvp(false)
 ,_callback(nullptr)
 ,_isLoading(false)
 ,_loaded(0) {}
@@ -37,9 +46,10 @@ LoadingLayer::~LoadingLayer()
     removeAllChildren();
 }
 
-bool LoadingLayer::init(const Callback& callback)
+bool LoadingLayer::init(bool pvp, const Callback& callback)
 {
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR)) {
+        _pvp = pvp;
         _callback = callback;
         
         const auto& winSize(Director::getInstance()->getWinSize());
@@ -58,7 +68,7 @@ bool LoadingLayer::init(const Callback& callback)
         pt->setType(ProgressTimer::Type::BAR);
         pt->setBarChangeRate(Vec2(1.0f, 0.0f));
         pt->setMidpoint(Point::ANCHOR_BOTTOM_LEFT);
-        pt->setPercentage(60);
+        pt->setPercentage(0);
         pt->setPosition(psize.width / 2, psize.height / 2);
         bg->addChild(pt);
         _progressTimer = pt;
@@ -128,5 +138,7 @@ void LoadingLayer::onResourcesLoaded()
     _loaded = 0;
     if (_callback) {
         _callback(this);
+    } else {
+        removeFromParent();
     }
 }

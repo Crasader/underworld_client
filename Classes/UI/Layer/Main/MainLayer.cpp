@@ -129,11 +129,9 @@ void MainLayer::addLevelButtons()
             
             auto widget = dynamic_cast<ui::Widget*>(pSender);
             auto mapId(widget->getTag() + 1);
-            auto layer(LoadingLayer::create([mapId](Node* pSender) {
-                pSender->removeFromParent();
+            LoadingLayer::show(false, [mapId](Node*) {
                 GameManager::getGameClient()->launchPve(mapId);
-            }));
-            addChild(layer);
+            });
         });
     }
 }

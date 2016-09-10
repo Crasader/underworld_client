@@ -14,8 +14,9 @@
 
 using namespace std;
 
+static const float edgeX(5);
 static const float dialogArrowWidth(16);
-static const float dialogEdge(3);
+static const float dialogEdge(5);
 static const float dialogBottomEdge(6);
 static const Size iconSize(68, 68);
 
@@ -59,7 +60,7 @@ bool ChatNode::init(float width, const ChatData* data)
         
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         static const float nodeSpace(3);
-        _dialogWidth = width - (iconSize.width + nodeSpace);
+        _dialogWidth = width - (iconSize.width + nodeSpace + edgeX * 2);
         
         createDialog(true);
         
@@ -184,10 +185,10 @@ void ChatNode::adjust(bool isMe)
     setContentSize(size);
     
     if (isMe) {
-        _dialogBg->setPosition(Point(_dialogWidth / 2, size.height / 2));
-        _avatar->setPosition(Point(_width - isize.width / 2, size.height - isize.height / 2));
+        _dialogBg->setPosition(Point(_dialogWidth / 2 + edgeX, size.height / 2));
+        _avatar->setPosition(Point(_width - (isize.width / 2 + edgeX), size.height - isize.height / 2));
     } else {
-        _dialogBg->setPosition(Point(_width - _dialogWidth / 2, size.height / 2));
-        _avatar->setPosition(Point(isize.width / 2, size.height - isize.height / 2));
+        _dialogBg->setPosition(Point(_width - (_dialogWidth / 2 + edgeX), size.height / 2));
+        _avatar->setPosition(Point(isize.width / 2 + edgeX, size.height - isize.height / 2));
     }
 }

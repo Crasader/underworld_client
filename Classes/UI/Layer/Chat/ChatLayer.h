@@ -91,7 +91,6 @@ protected:
     Node* createCellNode(ChatType type, size_t idx);
     void updateCellNode(Node* node, ChatType type, size_t idx);
     
-    size_t getDataCount(ChatType type) const;
     ChatType getTableType(TableView* table) const;
     void setTableType(ChatType type);
     std::string getTableName(ChatType type) const;
