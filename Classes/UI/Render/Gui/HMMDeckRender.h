@@ -50,6 +50,10 @@ public:
     static const float SELECT_MOVE_DISTANCE;
     static const float SELECT_MOVE_WAVE_OFFSET;
     
+    static const float ACTIVE_HERO_MOVE_DURATION;
+    static const float ACTIVE_HERO_FATE_DURATION;
+    static const float ACTIVE_HERO_MOVE_WAVE_OFFEST;
+    
 private:
     /** instance */
     std::vector<HMMCardRender*> _cardRenders;
@@ -66,6 +70,7 @@ private:
     cocos2d::Label* _resourceLabel;
     cocos2d::Node* _cardRegion;
     std::vector<HMMCardView*> _cardViews;
+    float _heroRegionWidth;
     
     /** touch event */
     cocos2d::Vec2 _touchBeginPos;
@@ -79,6 +84,8 @@ private:
     int _selectedCardIndex;
     std::vector<cocos2d::Vec2> _cardOriginPos;
     std::vector<cocos2d::Vec2> _cardSelectedPos;
+    int _activeHeroIndex;
+    bool _lockDeck;
     
     /** refs */
     Commander* _commander;
@@ -101,6 +108,7 @@ public:
     /** upate */
     void render(const HMMDeck* deck, const Game* game);
     void updateBattleResource(microres_t amount, microres_t max);
+    void updateActiveHero(int index);
     void markObjectReleased();
     
     /** touch event */
@@ -131,6 +139,7 @@ private:
     void playUnselectAnim(int index);
     void try2UseCard(int cardIndex, const cocos2d::Vec2& location);
     Coordinate32 transformAndValidateLoction2WorldCoordinate(const cocos2d::Vec2& location, const HMMCardType* cardType);
+    
     
 
 };

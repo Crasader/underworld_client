@@ -134,6 +134,9 @@ bool HMMCardView::init(const HMMCardType* cardType) {
         _coldDownProgress->setVisible(false);
     }
     
+    //4. setup
+    this->setCascadeOpacityEnabled(true);
+    
     return true;
 }
     
