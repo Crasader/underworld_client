@@ -460,6 +460,16 @@ void WorldRender::createHMMCardPlaceTipsView(const HMMCardType *cardType, const 
             outputShadowView = nullptr;
         }
     }
+    
+    // add label
+    if (outputTipsView) {
+        cocos2d::Node* wrapper = cocos2d::Node::create();
+        wrapper->addChild(outputTipsView);
+        cocos2d::Label* label = CocosUtils::createLabel(cardType->getName(), DEFAULT_FONT_SIZE);
+        label->setPosition(0.f, 75.f);
+        wrapper->addChild(label);
+        outputTipsView = wrapper;
+    }
 }
     
 // ===================== resources ========================
