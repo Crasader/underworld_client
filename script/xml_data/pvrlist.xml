@@ -3,7 +3,8 @@
 	<item name="pvr/Alsace.plist"/>
 	<item name="pvr/Ann-shadows.plist"/>
 	<item name="pvr/Ann.plist"/>
-	<item name="pvr/Character-effects.plist"/>
+	<item name="pvr/CharacterSkills-1.plist"/>
+	<item name="pvr/CharacterSkills-2.plist"/>
 	<item name="pvr/Dragon-shadows.plist"/>
 	<item name="pvr/Dragon.plist"/>
 	<item name="pvr/Fat-equipment.plist"/>
@@ -33,9 +34,4 @@
 	<item name="pvr/Tower.plist"/>
 	<item name="pvr/Troll-shadows.plist"/>
 	<item name="pvr/Troll.plist"/>
-	<item name="pvr/effect/effect-1.plist"/>
-	<item name="pvr/effect/effect-2.plist"/>
-	<item name="pvr/effect/jian-test.plist"/>
-	<item name="pvr/effect/jian.plist"/>
-	<item name="pvr/effect/xeffect-1.plist"/>
 </root>

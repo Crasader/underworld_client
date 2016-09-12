@@ -70,6 +70,8 @@ private:
     cocos2d::Label* _resourceLabel;
     cocos2d::Node* _cardRegion;
     std::vector<HMMCardView*> _cardViews;
+    HMMCardView* _activeHeroView;
+    std::vector<cocos2d::Sprite*> _manualSpellViews;
     float _heroRegionWidth;
     
     /** touch event */
@@ -79,6 +81,7 @@ private:
     bool _draggingCard;
     bool _placingCard;
     bool _longPressing;
+    int _pressingSpellIndex;
     
     /** status */
     int _selectedCardIndex;
@@ -125,6 +128,7 @@ private:
     /** touch event */
     void resetTouchEventStatus();
     int calculatePositionOnWhichCard(const cocos2d::Vec2& pos);
+    int calculatePositionOnWhichSpell(const cocos2d::Vec2& pos);
     bool calculatePositionInCardRegion(const cocos2d::Vec2& pos);
     void startLongPressSchedule();
     void cancelLongPressSchedule();
@@ -138,7 +142,9 @@ private:
     void playSelectAnim(int index);
     void playUnselectAnim(int index);
     void try2UseCard(int cardIndex, const cocos2d::Vec2& location);
+    void try2CastManualSpell(int spellIndex, const cocos2d::Vec2& loaction);
     Coordinate32 transformAndValidateLoction2WorldCoordinate(const cocos2d::Vec2& location, const HMMCardType* cardType);
+    
     
     
 

@@ -18,6 +18,7 @@
 #include "Commander.h"
 #include "WorldRender.h"
 #include "CocosUtils.h"
+#include "Spell.h"
 
 namespace UnderWorld{ namespace Core{
     
@@ -108,6 +109,8 @@ bool HMMDeckRender::init(const HMMDeck* deck, Commander* commander,
     _resourceProgress2 = nullptr;
     _resourceLabel = nullptr;
     _cardViews.clear();
+    _activeHeroView = nullptr;
+    _manualSpellViews.clear();
     _cardOriginPos.clear();
     _cardSelectedPos.clear();
     int heroCardCount = 0;
@@ -314,6 +317,12 @@ void HMMDeckRender::updateActiveHero(int index) {
             NULL);
         
         _cardViews[_activeHeroIndex]->runAction(seq);
+        _activeHeroView = nullptr;
+        for (int i = 0; i < _manualSpellViews.size(); ++i) {
+            _manualSpellViews[i]->removeFromParent();
+        }
+        _manualSpellViews.clear();
+
         
         // fade
         for (int i = 0; i < _cardViews.size(); ++i) {
@@ -352,6 +361,21 @@ void HMMDeckRender::updateActiveHero(int index) {
             cocos2d::CallFunc::create([this](){ this->_lockDeck = false; }),
             NULL);
         _cardViews[index]->runAction(seq);
+        _activeHeroView = _cardViews[index];
+        float offestX = targetPos.x + _activeHeroView->getContentSize().width / 2;
+        for (int i = 0; i < _deck->getHandCard(index)->getManualSpellCount(); ++i) {
+            cocos2d::Sprite* spellIcon = cocos2d::Sprite::create();
+            
+            const Spell* spell = _deck->getHandCard(index)->getManualSpell(i);
+            if (spell && spell->getSpellType()) {
+                spellIcon->setTexture(spell->getSpellType()->getSpellIcon());
+            }
+            spellIcon->setPosition(cocos2d::Vec2(offestX + spellIcon->getContentSize().width / 2, targetPos.y));
+            _cardRegion->addChild(spellIcon, CARD_ZORDER);
+            _manualSpellViews.push_back(spellIcon);
+            offestX += spellIcon->getContentSize().width;
+
+        }
         
         _lockDeck = true;
     }
@@ -373,6 +397,7 @@ bool HMMDeckRender::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_e
     
     _touchBeginPos = touch->getLocation();
     _pressingCardIndex = calculatePositionOnWhichCard(_cardRegion->convertToNodeSpace(this->convertToWorldSpace(_touchBeginPos)));
+    _pressingSpellIndex = calculatePositionOnWhichSpell(_cardRegion->convertToNodeSpace(this->convertToWorldSpace(_touchBeginPos)));
     if (_pressingCardIndex != CARD_INDEX_INVALID) {
         _pressingCardOriginPos = _cardViews[_pressingCardIndex]->getPosition();
         startLongPressSchedule();
@@ -382,6 +407,8 @@ bool HMMDeckRender::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_e
         placeCardTouch(_selectedCardIndex, _touchBeginPos);
         
         _placingCard = true;
+        ret = true;
+    } else if (_pressingSpellIndex != CARD_INDEX_INVALID) {
         ret = true;
     }
     
@@ -413,6 +440,8 @@ void HMMDeckRender::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_e
         
     } else if (_placingCard && _selectedCardIndex != CARD_INDEX_INVALID) {
         placeCardTouchEnd(_selectedCardIndex, touch->getLocation());
+    } else if (_pressingSpellIndex != CARD_INDEX_INVALID) {
+        this->try2CastManualSpell(_pressingSpellIndex, touch->getLocation());
     }
 }
 
@@ -423,11 +452,13 @@ HMMDeckRender::HMMDeckRender()
 , _resourceProgress2(nullptr)
 , _resourceLabel(nullptr)
 , _cardRegion(nullptr)
+, _activeHeroView(nullptr)
 , _heroRegionWidth(0.f)
 , _pressingCardIndex(CARD_INDEX_INVALID)
 , _draggingCard(false)
 , _placingCard(false)
 , _longPressing(false)
+, _pressingSpellIndex(CARD_INDEX_INVALID)
 , _selectedCardIndex(CARD_INDEX_INVALID)
 , _activeHeroIndex(CARD_INDEX_INVALID)
 , _lockDeck(true)
@@ -444,6 +475,7 @@ void HMMDeckRender::resetTouchEventStatus() {
     _draggingCard = false;
     _placingCard = false;
     _longPressing = false;
+    _pressingSpellIndex = CARD_INDEX_INVALID;
 }
     
 int HMMDeckRender::calculatePositionOnWhichCard(const cocos2d::Vec2& pos) {
@@ -456,6 +488,17 @@ int HMMDeckRender::calculatePositionOnWhichCard(const cocos2d::Vec2& pos) {
         }
         
         if (_cardViews[i] && _cardViews[i]->getBoundingBox().containsPoint(pos)) {
+            ret = i;
+            break;
+        }
+    }
+    return ret;
+}
+    
+int HMMDeckRender::calculatePositionOnWhichSpell(const cocos2d::Vec2& pos) {
+    int ret = CARD_INDEX_INVALID;
+    for (int i = 0; i < _manualSpellViews.size(); ++i) {
+        if (_manualSpellViews[i] && _manualSpellViews[i]->getBoundingBox().containsPoint(pos)) {
             ret = i;
             break;
         }
@@ -596,6 +639,18 @@ void HMMDeckRender::try2UseCard(int cardIndex, const cocos2d::Vec2 &pos) {
     Coordinate32 corePos = transformAndValidateLoction2WorldCoordinate(pos, card->getCardType());
     // give command
     _commander->addCommandFromLocal(new OutsideHMMCommand(cardIndex, _deck->getFactionIndex(), corePos));
+}
+    
+void HMMDeckRender::try2CastManualSpell(int spellIndex, const cocos2d::Vec2& loaction) {
+    
+    if (!_worldRender || !_deck || !_game || !_commander) return;
+    
+    int handIndex = _deck->getHandCount() + spellIndex;
+    
+    // check card ready
+    if (!_deck->isCardReady(handIndex)) return;
+    
+    _commander->addCommandFromLocal(new OutsideHMMCommand(handIndex, _deck->getFactionIndex(), Coordinate32::ZERO));
 }
     
 Coordinate32 HMMDeckRender::transformAndValidateLoction2WorldCoordinate(const cocos2d::Vec2& location, const HMMCardType* cardType) {
