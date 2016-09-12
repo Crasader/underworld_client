@@ -305,7 +305,7 @@
 	<spell_content name="人族女巫减速" spell_content_class="damage" spell_content_damage_name="人族女巫减速效果"/>
 	<spell_content name="内容人族狮鹫引雷击" spell_content_bullet_name="人族弓箭手" spell_content_class="damage" spell_content_damage_name="人族狮鹫引雷击伤害"/>
 	<spell_content magic_name="骷髅盾牌兵死亡云雾魔法实例" name="骷髅盾牌兵死亡云雾施法" spell_content_class="magic"/>
-	<spell_content name="魔族传教士召唤骷髅" spell_content_class="summon" summon_count="8" unit_setting_id="14004"/>
+	<spell_content name="魔族传教士召唤骷髅" spell_content_class="summon" summon_count="6" unit_setting_id="14004"/>
 	<spell_content name="魔族传教士吞噬友军" spell_content_class="damage" spell_content_damage_name="魔族传教士吞噬友军"/>
 	<spell_content name="魔族传教士吞噬敌军" spell_content_class="damage" spell_content_damage_name="魔族传教士吞噬敌军"/>
 	<spell_content name="梦魇nova主伤害" spell_content_class="damage" spell_content_damage_name="梦魇nova主伤害"/>
