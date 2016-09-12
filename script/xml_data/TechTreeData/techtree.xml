@@ -608,7 +608,7 @@
 	<damage damage_name="掉血光环" damage_nature="hurt" damage_value="100" deliver_class="magical" is_on_building="0"/>
 	<damage damage_name="伤害牛头人战争践踏" damage_nature="hurt" damage_value="50" deliver_class="magical" feature_names="牛头人战争践踏晕眩效果" is_on_building="0"/>
 	<damage damage_name="伤害中立兽族巫医诅咒" damage_nature="hurt" damage_value="0" deliver_class="magical" feature_names="巫医诅咒降低护甲" is_on_building="0"/>
-	<damage damage_name="治疗守卫回血光环" damage_nature="heal" damage_value="50" deliver_class="magical" feature_names=" " is_on_building="0"/>
+	<damage damage_name="治疗守卫回血光环" damage_nature="heal" damage_value="100" deliver_class="magical" feature_names=" " is_on_building="0"/>
 	<damage damage_name="回血光环" damage_nature="heal" damage_value="10" deliver_class="magical" is_on_building="0"/>
 	<damage damage_name="黑龙火海持续伤害" damage_nature="hurt" damage_value="60" deliver_class="magical" is_on_building="0"/>
 	<damage damage_name="伤害人族剑士致命打击" damage_nature="hurt" damage_value="d:target:owner;type:attack_damage;v:p:800;template:0" deliver_class="physical" is_on_building="0"/>
@@ -678,7 +678,7 @@
 	<effect alias_name="梦魇nova减速" attr_name="move_speed" class="alter_attr" effect_name="梦魇nova减速" value="p:-40"/>
 	<effect alias_name="梦魇nova冰冻" class="set_state" effect_name="梦魇nova冰冻" state_name="unmoveable"/>
 	<effect alias_name="石像鬼减甲" attr_name="armor" class="alter_attr" effect_name="石像鬼减甲" value="p:-40"/>
-	<effect alias_name="增加攻击效果" attr_name="attack_damage" class="alter_attr" effect_name="狼人刺客闪烁后增加攻击" value="p:100"/>
+	<effect alias_name="增加攻击效果" attr_name="attack_damage" class="alter_attr" effect_name="狼人刺客闪烁后增加攻击" value="p:50"/>
 	<effect_alias name="反弹光环" unique="0"/>
 	<effect_alias name="效果技能强攻" unique="0"/>
 	<effect_alias name="效果技能洪流" unique="0"/>
@@ -726,8 +726,6 @@
 	<feature_group determine_timing="hit" feature_type_names="石像鬼减速特性" name="石像鬼减速效果"/>
 	<feature_group determine_timing="hit" feature_type_names="石像鬼毒素特性" name="石像鬼毒素效果"/>
 	<feature_group conditions="type:unit_class;target:opposite;condition:not:core" deliver_natures="enemy" determine_timing="attack" feature_type_names="人族剑士队长分裂攻击" name="人族剑士队长分裂攻击"/>
-	<feature_group determine_timing="hit" feature_type_names="梦魇nova减速特性" name="梦魇nova减速效果"/>
-	<feature_group determine_timing="hit" feature_type_names="梦魇nova冰冻特性" name="梦魇nova冰冻效果"/>
 	<feature_group determine_timing="attack" feature_type_names="黑龙溅射攻击" name="黑龙溅射攻击"/>
 	<feature_group conditions=" " deliver_natures="neutral" determine_timing="kill" feature_type_names="中立兽族斧王战斗饥渴" name="中立兽族斧王战斗饥渴"/>
 	<feature_group conditions=" " deliver_natures="neutral" determine_timing="be_killed" feature_type_names="中立兽族食人鬼王重生" name="中立兽族食人鬼王重生"/>
@@ -795,6 +793,8 @@
 	<feature_group conditions="type:unit_class;target:opposite;condition:not:building,core" deliver_natures="enemy" determine_timing="attack" feature_type_names="鲛人战士分裂攻击" name="鲛人战士分裂攻击"/>
 	<feature_group conditions="type:unit_profession;target:opposite;condition:is:mage" deliver_natures="enemy" determine_timing="settle_attack_damage_r1" feature_type_names="狼人刺客之法师杀手特性" name="狼人刺客之法师杀手"/>
 	<feature_group determine_timing="hit" feature_type_names="狼人刺客闪烁后增益状态" name="狼人刺客闪烁后增益状态"/>
+	<feature_group determine_timing="hit" feature_type_names="梦魇nova减速特性" name="梦魇nova减速效果"/>
+	<feature_group determine_timing="hit" feature_type_names="梦魇nova冰冻特性" name="梦魇nova冰冻效果"/>
 	<feature effect_timing="be_killed" feature_name="中立兽族食人鬼王重生" type="drain" value="d:target:owner;type:max_hp;v:p:100;template:0"/>
 	<feature effect_timing="be_hurt" feature_name="中立黑龙伤害减免特性" type="damage_reduce" value="p:10"/>
 	<feature effect_timing="be_attack" feature_name="中立精灵族弓箭手闪避" type="miss"/>
@@ -875,6 +875,8 @@
 	<feature effect_timing="attack" feature_name="鲛人战士分裂攻击" range="80" type="splash" value="p:60"/>
 	<feature effect_timing="settle_attack_damage_r1" feature_name="狼人刺客之法师杀手特性" type="damage_enhance" value="p:125"/>
 	<feature buff_type_name="狼人刺客闪烁后增益状态" effect_timing="hit" feature_name="狼人刺客闪烁后增益状态" is_to_self="1" type="add_buff"/>
+	<feature buff_type_name="buff梦魇nova减速" effect_timing="hit" feature_name="梦魇nova减速特性" is_to_self="0" overlay="1" type="add_buff"/>
+	<feature buff_type_name="buff梦魇nova冰冻" effect_timing="hit" feature_name="梦魇nova冰冻特性" is_to_self="0" overlay="1" type="add_buff"/>
 	<magic aura_names="酸雾降低护甲" magic_effect_names="酸雾持续伤害" name="效果全局技能酸雾术lv1" span="600" span_type="limited"/>
 	<magic magic_effect_names="黑龙火海持续伤害" name="黑龙火海效果" span="150" span_type="limited"/>
 	<magic magic_effect_names="实际暴风雪" name="实际效果暴风雪" span="360" span_type="limited"/>
