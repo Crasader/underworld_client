@@ -6,11 +6,11 @@
     <schedule_events>
 		<event>
 			<event_trigger class="schedule" time="0" />
-			<event_effect class="alter_resource" map_index="0" resource_name="木头" amount="80"/>
+			<event_effect class="alter_resource" map_index="0" resource_name="木头" amount="160"/>
 		</event>
 		<event>
 			<event_trigger class="schedule" time="0" />
-			<event_effect class="alter_resource" map_index="1" resource_name="木头" amount="80"/>
+			<event_effect class="alter_resource" map_index="1" resource_name="木头" amount="160"/>
 		</event>
 		
 		
