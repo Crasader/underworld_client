@@ -95,6 +95,8 @@ static AppDelegate s_sharedApplication;
     [[UIApplication sharedApplication] setStatusBarHidden:true];
 
     // IMPORTANT: Setting the GLView should be done after creating the RootViewController
+    // set some configurations before init CCDirector
+    cocos2d::Configuration::getInstance()->setValue("cocos2d.x.texture.pvrv2_has_alpha_premultiplied", cocos2d::Value(true));
     cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView((__bridge void *)eaglView);
     cocos2d::Director::getInstance()->setOpenGLView(glview);
 
