@@ -14,6 +14,7 @@
 #include "ChatData.h"
 #include "TCPClient.h"
 #include "ChatTCPClientObserver.h"
+#include "TestConfiguration.h"
 
 using namespace std;
 
@@ -42,54 +43,52 @@ ChatManager::ChatManager()
 :_client(nullptr)
 ,_port(0)
 {
-#if true
-    static const pair<string, int> host = {"123.57.221.242", 7777};
-//    static const pair<string, int> host = {"192.168.31.100", 7777};
-    connect(host.first, host.second);
-    ready();
-    
-    // TODO: remove test data
-#else
-    _chatData.insert(make_pair(ChatType::World, vector<ChatData*>()));
-    _chatData.insert(make_pair(ChatType::Mail, vector<ChatData*>()));
-    _chatData.insert(make_pair(ChatType::Notice, vector<ChatData*>()));
-    
-    for (int i = 0; i < 10; ++i) {
-        rapidjson::Document document;
-        document.SetObject();
-        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
-        document.AddMember("time", "213123123", allocator);
-        document.AddMember("channel", 1, allocator);
-        document.AddMember("content", rapidjson::Value("this is a test messagethis is a test messagethis is a test messagethis is a test messagethis is a test messagethis is a test message", allocator), allocator);
+    if (TestConfiguration::getInstance()->isOnlineChatEnabled()) {
+        static const pair<string, int> host = {"123.57.221.242", 7777};
+//        static const pair<string, int> host = {"192.168.31.100", 7777};
+        connect(host.first, host.second);
+        ready();
+    } else {
+        _chatData.insert(make_pair(ChatType::World, vector<ChatData*>()));
+        _chatData.insert(make_pair(ChatType::Mail, vector<ChatData*>()));
+        _chatData.insert(make_pair(ChatType::Notice, vector<ChatData*>()));
         
-        _chatData.at(ChatType::World).push_back(new (nothrow) ChatData(document));
-    }
-    
-    for (int i = 0; i < 10; ++i) {
-        rapidjson::Document document;
-        document.SetObject();
-        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
-        document.AddMember("time", "213123123", allocator);
-        document.AddMember("channel", 4, allocator);
-        document.AddMember("content", rapidjson::Value("this is a test mail\nthis is a test mail\nthis is a test mail", allocator), allocator);
-        if (i % 2 == 0) {
-            document.AddMember("rewards", rapidjson::Value("101_1;102_2;103_3", allocator), allocator);
+        for (int i = 0; i < 10; ++i) {
+            rapidjson::Document document;
+            document.SetObject();
+            rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+            document.AddMember("time", "213123123", allocator);
+            document.AddMember("channel", 1, allocator);
+            document.AddMember("content", rapidjson::Value("this is a test messagethis is a test messagethis is a test messagethis is a test messagethis is a test messagethis is a test message", allocator), allocator);
+            
+            _chatData.at(ChatType::World).push_back(new (nothrow) ChatData(document));
         }
         
-        _chatData.at(ChatType::Mail).push_back(new (nothrow) ChatData(document));
-    }
-    
-    for (int i = 0; i < 10; ++i) {
-        rapidjson::Document document;
-        document.SetObject();
-        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
-        document.AddMember("time", "213123123", allocator);
-        document.AddMember("channel", 5, allocator);
-        document.AddMember("content", rapidjson::Value("this is a test notice", allocator), allocator);
+        for (int i = 0; i < 10; ++i) {
+            rapidjson::Document document;
+            document.SetObject();
+            rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+            document.AddMember("time", "213123123", allocator);
+            document.AddMember("channel", 4, allocator);
+            document.AddMember("content", rapidjson::Value("this is a test mail\nthis is a test mail\nthis is a test mail", allocator), allocator);
+            if (i % 2 == 0) {
+                document.AddMember("rewards", rapidjson::Value("101_1;102_2;103_3", allocator), allocator);
+            }
+            
+            _chatData.at(ChatType::Mail).push_back(new (nothrow) ChatData(document));
+        }
         
-        _chatData.at(ChatType::Notice).push_back(new (nothrow) ChatData(document));
+        for (int i = 0; i < 10; ++i) {
+            rapidjson::Document document;
+            document.SetObject();
+            rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+            document.AddMember("time", "213123123", allocator);
+            document.AddMember("channel", 5, allocator);
+            document.AddMember("content", rapidjson::Value("this is a test notice", allocator), allocator);
+            
+            _chatData.at(ChatType::Notice).push_back(new (nothrow) ChatData(document));
+        }
     }
-#endif
 }
 
 ChatManager::~ChatManager()

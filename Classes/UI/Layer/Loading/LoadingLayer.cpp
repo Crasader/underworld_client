@@ -9,7 +9,7 @@
 #include "LoadingLayer.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
-#include "CheatConfiguration.h"
+#include "TestConfiguration.h"
 #include "FrameLoader.h"
 #include "DataManager.h"
 
@@ -101,13 +101,13 @@ void LoadingLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 
 void LoadingLayer::loadResources()
 {
-    if (CheatConfiguration::getInstance()->loadPVR && !_isLoading) {
+    if (TestConfiguration::getInstance()->isPVREnabled() && !_isLoading) {
         _isLoading = true;
         _loaded = 0;
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
         loadResource();
 #else
-        DataManager::getInstance()->addAllFrames();
+        FrameLoader::getInstance()->addAllFrames();
         onResourcesLoaded();
 #endif
     } else {

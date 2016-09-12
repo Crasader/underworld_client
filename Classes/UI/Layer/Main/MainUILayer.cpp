@@ -21,7 +21,7 @@
 #include "GuildLayer.h"
 #include "GuildSearchLayer.h"
 #include "LoadingLayer.h"
-#include "CheatLayer.h"
+#include "TestLayer.h"
 
 using namespace std;
 using namespace ui;
@@ -243,7 +243,7 @@ bool MainUILayer::init()
 void MainUILayer::onEnter()
 {
     LayerColor::onEnter();
-    CheatLayer::getInstance()->show(this);
+    TestLayer::getInstance()->show(this);
 }
 
 bool MainUILayer::onTouchBegan(Touch *pTouch, Event *pEvent)
