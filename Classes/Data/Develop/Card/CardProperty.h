@@ -25,7 +25,7 @@ namespace UnderWorld {
 class CardProperty : public AbstractProperty
 {
 public:
-    CardProperty(tinyxml2::XMLElement *xmlElement);
+    explicit CardProperty(tinyxml2::XMLElement *xmlElement);
     virtual ~CardProperty();
     
     UnderWorld::Core::HMMCardClass getCardClass() const;

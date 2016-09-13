@@ -11,6 +11,7 @@
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "GameManager.h"
+#include "BillboardManager.h"
 #include "SoundManager.h"
 #include "ResourceNode.h"
 #include "UserSimpleNode.h"
@@ -21,6 +22,7 @@
 #include "GuildLayer.h"
 #include "GuildSearchLayer.h"
 #include "LoadingLayer.h"
+#include "BillboardLayer.h"
 #include "TestLayer.h"
 
 using namespace std;
@@ -259,7 +261,7 @@ void MainUILayer::onChatLayerTouchedButton(Button* button, Widget::TouchEventTyp
     if (Widget::TouchEventType::MOVED == type) {
         const float x(button->getTouchMovePosition().x - button->getTouchBeganPosition().x);
         const auto& basePoint(getChatLayerDefaultPosition(_isChatLayerFolded));
-        if (_isChatLayerFolded ^ (x < 0)) {
+        if (_isChatLayerFolded != (x < 0)) {
             const float offsetX(MAX(MIN(abs(x), _chatLayer->getContentSize().width), 0));
             _chatLayer->setPosition(basePoint + Point((x > 0) ? offsetX : -offsetX, 0));
         } else {
@@ -271,10 +273,10 @@ void MainUILayer::onChatLayerTouchedButton(Button* button, Widget::TouchEventTyp
         const float x(endPoint.x - button->getTouchBeganPosition().x);
         if (0 == x) {
             moveChatLayer(!_isChatLayerFolded, true);
-        } else if (_isChatLayerFolded ^ (x < 0)) {
+        } else if (_isChatLayerFolded != (x < 0)) {
             const float width(_chatLayer->getContentSize().width);
             const float offsetX(MAX(MIN(abs(x), width), 0));
-            const bool changed(_isChatLayerFolded ^ (offsetX > width / 2));
+            const bool changed(_isChatLayerFolded != (offsetX > width / 2));
             moveChatLayer(changed, true);
         } else {
             moveChatLayer(_isChatLayerFolded, true);
@@ -418,9 +420,20 @@ void MainUILayer::onFunctionButtonClicked(ButtonType type)
             runningScene->addChild(PvpLogLayer::create());
             break;
             
-        case ButtonType::Guild:
-            runningScene->addChild(GuildSearchLayer::create());
-//            runningScene->addChild(GuildLayer::create());
+        case ButtonType::Guild: {
+            if (true) {
+                runningScene->addChild(GuildSearchLayer::create());
+            } else {
+                runningScene->addChild(GuildLayer::create());
+            }
+        }
+            break;
+            
+        case ButtonType::Rank: {
+            BillboardManager::getInstance()->getList([runningScene]() {
+                runningScene->addChild(BillboardLayer::create());
+            });
+        }
             break;
             
         default:

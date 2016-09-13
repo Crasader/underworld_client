@@ -16,7 +16,7 @@ class AchievementProperty;
 class AchievementData
 {
 public:
-    AchievementData(const rapidjson::Value& jsonDict);
+    explicit AchievementData(const rapidjson::Value& jsonDict);
     virtual ~AchievementData();
     
     int getId() const;

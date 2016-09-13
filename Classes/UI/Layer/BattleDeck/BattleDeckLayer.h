@@ -87,7 +87,7 @@ protected:
     void showInfo(int cardId, const CardData* data);
     
     // Move cards
-    void beginEdit(const AbstractData* data);
+    void beginEdit(int cardId);
     void endEdit();
     BaseCard* getFoundCard(int cardId) const;
     void exchangeCard(int idxFrom, int idxTo);

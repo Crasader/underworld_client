@@ -14,7 +14,7 @@
 class ObjectBriefData
 {
 public:
-    ObjectBriefData(const std::string& content);
+    explicit ObjectBriefData(const std::string& content);
     virtual ~ObjectBriefData();
     
     int getPercentage() const;

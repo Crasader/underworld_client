@@ -20,7 +20,7 @@
 class User
 {
 public:
-    User(const rapidjson::Value& jsonDict);
+    explicit User(const rapidjson::Value& jsonDict);
     virtual ~User();
     
     // getters

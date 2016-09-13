@@ -16,7 +16,7 @@ namespace tinyxml2 { class XMLElement; }
 class MapParticleConfigData
 {
 public:
-    MapParticleConfigData(tinyxml2::XMLElement *xmlElement);
+    explicit MapParticleConfigData(tinyxml2::XMLElement *xmlElement);
     virtual ~MapParticleConfigData();
     
     const std::string& getName() const;

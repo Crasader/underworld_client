@@ -17,7 +17,7 @@ class QuestProperty;
 class QuestData
 {
 public:
-    QuestData(const rapidjson::Value& jsonDict);
+    explicit QuestData(const rapidjson::Value& jsonDict);
     virtual ~QuestData();
     
     QuestType getType() const;

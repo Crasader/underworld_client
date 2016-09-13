@@ -14,7 +14,7 @@
 class SkillProperty : public AbstractProperty
 {
 public:
-    SkillProperty(tinyxml2::XMLElement *xmlElement);
+    explicit SkillProperty(tinyxml2::XMLElement *xmlElement);
     virtual ~SkillProperty();
     
     int getBeUnlockedLevel() const;

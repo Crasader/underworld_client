@@ -25,7 +25,7 @@ enum class UnitAnimationType {
 class URConfigData
 {
 public:
-    URConfigData(tinyxml2::XMLElement *xmlElement);
+    explicit URConfigData(tinyxml2::XMLElement *xmlElement);
     virtual ~URConfigData();
     
     const std::string& getName() const;

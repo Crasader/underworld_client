@@ -43,7 +43,11 @@ void CardData::update(const rapidjson::Value& jsonDict)
                 for (int i = 0; i < DICTOOL->getArrayCount_json(jsonDict, key); ++i) {
                     if (i < skills.size()) {
                         auto value = DICTOOL->getIntValueFromArray_json(jsonDict, key, i);
-                        _skills.push_back(new (nothrow) SkillData(skills.at(i), value));
+                        if (_skills.size() > i) {
+                            _skills.at(i)->update(value);
+                        } else {
+                            _skills.push_back(new (nothrow) SkillData(skills.at(i), value));
+                        }
                     }
                 }
             }
@@ -55,10 +59,7 @@ void CardData::update(const rapidjson::Value& jsonDict)
         if (JSonUtils::isExist(jsonDict, key)) {
             for (int i = 0; i < DICTOOL->getArrayCount_json(jsonDict, key); ++i) {
                 const auto& value = DICTOOL->getDictionaryFromArray_json(jsonDict, key, i);
-                auto data = new (nothrow) RuneData(value);
-                if (_runes.find(i) == end(_runes)) {
-                    _runes.insert(make_pair(i, data));
-                }
+                updateRune(i, value);
             }
         }
     }

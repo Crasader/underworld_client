@@ -19,7 +19,7 @@ public:
     static void purge();
     
     void pushRequest(cocos2d::network::HttpRequest* request);
-    cocos2d::network::HttpRequest* popRequest();
+    void popRequest();
     bool isEmpty() const;
     
 private:

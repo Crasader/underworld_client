@@ -17,7 +17,7 @@ namespace tinyxml2 { class XMLElement; }
 class LevelProperty
 {
 public:
-    LevelProperty(tinyxml2::XMLElement *xmlElement);
+    explicit LevelProperty(tinyxml2::XMLElement *xmlElement);
     virtual ~LevelProperty();
     
     int getLevel() const;

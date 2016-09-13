@@ -24,3 +24,8 @@ SkillData::SkillData(int skillId, int level)
 :AbstractData(createFakeData(skillId, level)) {}
 
 SkillData::~SkillData() {}
+
+void SkillData::update(int level)
+{
+    _level = level;
+}

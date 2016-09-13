@@ -14,7 +14,7 @@
 class SkillUpgradeProperty : public AbstractUpgradeProperty
 {
 public:
-    SkillUpgradeProperty(tinyxml2::XMLElement *xmlElement);
+    explicit SkillUpgradeProperty(tinyxml2::XMLElement *xmlElement);
     virtual ~SkillUpgradeProperty();
     
     const std::pair<int, int>& getBookCost() const;

@@ -14,7 +14,7 @@
 class SkillBookData : public AbstractData
 {
 public:
-    SkillBookData(const rapidjson::Value& jsonDict);
+    explicit SkillBookData(const rapidjson::Value& jsonDict);
     virtual ~SkillBookData();
 };
 

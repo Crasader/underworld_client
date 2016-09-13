@@ -14,7 +14,7 @@
 class RuneGroupData : public RuneData
 {
 public:
-    RuneGroupData(const rapidjson::Value& jsonDict);
+    explicit RuneGroupData(const rapidjson::Value& jsonDict);
     virtual ~RuneGroupData();
     
     void update(const rapidjson::Value& jsonDict);

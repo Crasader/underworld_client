@@ -19,7 +19,7 @@ class ObjectBriefData;
 class QuestProperty : public AbstractProperty
 {
 public:
-    QuestProperty(tinyxml2::XMLElement *xmlElement);
+    explicit QuestProperty(tinyxml2::XMLElement *xmlElement);
     virtual ~QuestProperty();
     
     int getRace() const;

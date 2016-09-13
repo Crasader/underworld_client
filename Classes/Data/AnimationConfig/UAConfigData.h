@@ -21,7 +21,7 @@ class AnimationParameter;
 class UAConfigData
 {
 public:
-    UAConfigData(tinyxml2::XMLElement *xmlElement);
+    explicit UAConfigData(tinyxml2::XMLElement *xmlElement);
     virtual ~UAConfigData();
     
     const std::string& getName() const;

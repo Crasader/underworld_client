@@ -14,6 +14,9 @@
 
 USING_NS_CC;
 
+class AvatarNode;
+class GuildTorphyNode;
+
 class GuildGenericCell: public ui::Button
 {
 public:
@@ -22,9 +25,15 @@ public:
 protected:
     GuildGenericCell();
     virtual bool init() override;
+    void setAvatarEdgeX(float x);
     
 protected:
     bool _touchInvalid;
+    AvatarNode* _avatar;
+    Label* _name;
+    Label* _description;
+    Label* _hint;
+    GuildTorphyNode* _trophy;
 };
 
 #endif /* GuildGenericCell_h */

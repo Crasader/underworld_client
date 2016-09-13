@@ -24,7 +24,8 @@ BigBoard* BigBoard::create()
     return nullptr;
 }
 
-BigBoard::BigBoard() {}
+BigBoard::BigBoard()
+:_subNode(nullptr) {}
 
 BigBoard::~BigBoard() {}
 

@@ -18,7 +18,10 @@ static inline string getFinishedTutorialKey(int idx)
 { return cocos2d::StringUtils::format("tutorial_%d", idx); }
 
 User::User(const rapidjson::Value& jsonDict)
-:_isFirstLogin(true)
+:_isNewUser(false)
+,_isGuest(false)
+,_uid(0)
+,_isFirstLogin(true)
 ,_finishedTutorialsMaxIdx(-1)
 {
     // parse with the data from network

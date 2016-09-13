@@ -169,10 +169,12 @@ void LocalHelper::init() {
     if (value >= 0) {
         type = static_cast<LocalType>(value);
     } else {
+#if false
         type = getLocalTypeFromLanguage();
-        
+#else
         // test
         type = LocalType::CHINESE;
+#endif
     }
     
     setLocalType(type);

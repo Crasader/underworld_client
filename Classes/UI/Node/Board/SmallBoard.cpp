@@ -24,7 +24,8 @@ SmallBoard* SmallBoard::create()
     return nullptr;
 }
 
-SmallBoard::SmallBoard() {}
+SmallBoard::SmallBoard()
+:_subNode(nullptr) {}
 
 SmallBoard::~SmallBoard() {}
 

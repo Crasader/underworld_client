@@ -19,7 +19,10 @@ UserGuildData::UserGuildData(const rapidjson::Value& jsonDict)
     update(jsonDict);
 }
 
-UserGuildData::~UserGuildData() {}
+UserGuildData::~UserGuildData()
+{
+    CC_SAFE_DELETE(_guildData);
+}
 
 void UserGuildData::update(const rapidjson::Value& jsonDict)
 {
@@ -28,7 +31,12 @@ void UserGuildData::update(const rapidjson::Value& jsonDict)
     JSonUtils::parse(_countdown, jsonDict, "cardrequire");
     
     if (JSonUtils::isExist(jsonDict, "guild")) {
-        _guildData = new (std::nothrow) GuildData(DICTOOL->getSubDictionary_json(jsonDict, "guild"));
+        const auto& value(DICTOOL->getSubDictionary_json(jsonDict, "guild"));
+        if (_guildData) {
+            _guildData->update(value);
+        } else {
+            _guildData = new (std::nothrow) GuildData(value);
+        }
     }
 }
 

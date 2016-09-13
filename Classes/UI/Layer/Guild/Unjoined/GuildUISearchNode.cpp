@@ -115,7 +115,7 @@ TableViewCell* GuildUISearchNode::tableCellAtIndex(TableView *table, ssize_t idx
             cell->setNode(node, nodeIdx);
         }
         
-        if (idx < _guilds.size()) {
+        if (idx < cnt) {
             node->update(_guilds.at(idx));
         }
         

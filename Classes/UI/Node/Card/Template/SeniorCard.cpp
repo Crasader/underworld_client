@@ -70,7 +70,7 @@ bool SeniorCard::init()
         setContentSize(Size(width, height));
         
         resetPositions(Point((width - originalSize.width) / 2, bsize.height + buttonSpaceY));
-        _button->setPosition(width / 2, bsize.height / 2);
+        _button->setPosition(Point(width / 2, bsize.height / 2));
         _name->setPosition(width / 2, height - nsize.height / 2);
         _infoButton->setVisible(true);
         

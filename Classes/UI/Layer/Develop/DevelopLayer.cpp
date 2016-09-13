@@ -12,6 +12,7 @@
 #include "LocalHelper.h"
 #include "Board.h"
 #include "JuniorCard.h"
+#include "DataManager.h"
 #include "CardData.h"
 #include "CardProperty.h"
 
@@ -106,13 +107,13 @@ BaseCard* DevelopLayer::onCardPreviewCreateCard(int cardId)
 void DevelopLayer::onCardPreviewClickedOpButton(CardOpType type, const AbstractData* data)
 {
     if (CardOpType::Upgrade == type || CardOpType::Info == type) {
-        DeckManager::getInstance()->getCardDetail(data->getId(), [this](const CardData* data) {
-            if (UnderWorld::Core::HMMCardClass::kHMMCardClass_Spell == dynamic_cast<const CardProperty*>(data->getProperty())->getCardClass()) {
-                auto layer = SpellInfoLayer::create(data->getId(), data);
+        DeckManager::getInstance()->getCardDetail(data->getId(), [this](int cardId, const CardData* data) {
+            if (UnderWorld::Core::HMMCardClass::kHMMCardClass_Spell == dynamic_cast<const CardProperty*>(DataManager::getInstance()->getProperty(cardId))->getCardClass()) {
+                auto layer = SpellInfoLayer::create(cardId, data);
                 layer->registerObserver(this);
                 addChild(layer);
             } else {
-                auto layer = CardInfoLayer::create(data->getId(), nullptr);
+                auto layer = CardInfoLayer::create(cardId, nullptr);
                 layer->registerObserver(this);
                 addChild(layer);
             }

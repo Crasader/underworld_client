@@ -45,6 +45,7 @@ protected:
     ResourceButton* _upgradeButton;
     std::vector<CardPropertyNode*> _properties;
     const AbstractData* _data;
+    const AbstractProperty* _property;
 };
 
 #endif /* AbstractInfoLayer_h */

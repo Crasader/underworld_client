@@ -204,10 +204,10 @@ void BattleDeckLayer::onCardPreviewClickedOpButton(CardOpType type, const Abstra
     CC_ASSERT(data);
     auto dm(DeckManager::getInstance());
     if (CardOpType::Use == type) {
-        beginEdit(dm->getCardData(data->getId()));
+        beginEdit(data->getId());
     } else if (CardOpType::Info == type) {
-        dm->getCardDetail(data->getId(), [this](const CardData* data) {
-            showInfo(data->getId(), data);
+        dm->getCardDetail(data->getId(), [this](int cardId, const CardData* data) {
+            showInfo(cardId, data);
         });
     }
 }
@@ -332,7 +332,7 @@ void BattleDeckLayer::createLeftNode(Node* node)
                     if (_cardPreview) {
                         _cardPreview->hideOpNode();
                     }
-                    beginEdit(nullptr);
+                    beginEdit(0);
                 }
             });
             button->setPosition(Point(bottomBarSize.width - button->getContentSize().width / 2, bottomBarSize.height / 2));
@@ -409,7 +409,7 @@ void BattleDeckLayer::updateAverageElixir()
         float total(0);
         for (auto card : _deckCards) {
             if (card) {
-                auto property(dynamic_cast<const CardProperty*>(card->getCardData()->getProperty()));
+                auto property(dynamic_cast<const CardProperty*>(DataManager::getInstance()->getProperty(card->getCardId())));
                 if (property) {
                     total += property->getCost();
                 }
@@ -440,7 +440,7 @@ void BattleDeckLayer::showInfo(int cardId, const CardData* data)
 }
 
 #pragma mark - Move cards
-void BattleDeckLayer::beginEdit(const AbstractData* data)
+void BattleDeckLayer::beginEdit(int cardId)
 {
     CC_ASSERT(!_isEditing);
     _isEditing = true;
@@ -458,7 +458,6 @@ void BattleDeckLayer::beginEdit(const AbstractData* data)
     }
     
     // create card
-    const int cardId(data ? data->getId() : 0);
     _usedCard = getFoundCard(cardId);
     
     if (_usedCard) {
@@ -466,7 +465,7 @@ void BattleDeckLayer::beginEdit(const AbstractData* data)
         _usedCardPoint = _usedCard->getPosition();
         
         vector<BaseCard*> temp;
-        if (dynamic_cast<const CardProperty*>(data->getProperty())->isHero()) {
+        if (dynamic_cast<const CardProperty*>(DataManager::getInstance()->getProperty(cardId))->isHero()) {
             for (int i = 0; i < DeckData::HeroCount; ++i) {
                 temp.push_back(_deckCards.at(i));
             }

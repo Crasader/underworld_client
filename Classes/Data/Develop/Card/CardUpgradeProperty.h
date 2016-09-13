@@ -14,7 +14,7 @@
 class CardUpgradeProperty : public AbstractUpgradeProperty
 {
 public:
-    CardUpgradeProperty(tinyxml2::XMLElement *xmlElement);
+    explicit CardUpgradeProperty(tinyxml2::XMLElement *xmlElement);
     virtual ~CardUpgradeProperty();
     
     int getCardCost() const;

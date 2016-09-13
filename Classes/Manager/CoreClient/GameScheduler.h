@@ -18,7 +18,7 @@ USING_NS_CC;
 class GameScheduler: public UnderWorld::Core::AbstractScheduler
 {
 public:
-    GameScheduler(Scheduler* cocosScheduler = Director::getInstance()->getScheduler());
+    explicit GameScheduler(Scheduler* cocosScheduler = Director::getInstance()->getScheduler());
     virtual ~GameScheduler();
     /** schedule a function call */
     virtual void schedule(int fps,

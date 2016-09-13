@@ -44,11 +44,11 @@ void NetworkController::pushRequest(cocos2d::network::HttpRequest* request)
     _httpRequests.push_back(request);
 }
 
-cocos2d::network::HttpRequest* NetworkController::popRequest()
+void NetworkController::popRequest()
 {
-    auto first = _httpRequests.begin();
-    _httpRequests.erase(first);
-    return *first;
+    if (!isEmpty()) {
+        _httpRequests.erase(_httpRequests.begin());
+    }
 }
 
 bool NetworkController::isEmpty() const

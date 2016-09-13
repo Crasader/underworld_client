@@ -21,7 +21,7 @@ public:
         Closed
     };
     
-    GuildData(const rapidjson::Value& jsonDict);
+    explicit GuildData(const rapidjson::Value& jsonDict);
     virtual ~GuildData();
     
     void update(const rapidjson::Value& jsonDict);

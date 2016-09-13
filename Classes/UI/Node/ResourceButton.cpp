@@ -8,7 +8,6 @@
 
 #include "ResourceButton.h"
 #include "CocosUtils.h"
-#include "XButton.h"
 #include "SoundManager.h"
 
 using namespace std;
@@ -18,14 +17,12 @@ ResourceButton::ResourceButton()
 :_isBigSize(false)
 ,_animated(false)
 ,_resourceEnough(true)
-,_enabled(true)
 ,_type(ResourceType::Gold)
 ,_count(INVALID_VALUE)
 ,_color(Color4B::WHITE)
 ,_icon(nullptr)
 ,_iconNode(nullptr)
-,_countLabel(nullptr)
-,_button(nullptr) {}
+,_countLabel(nullptr) {}
 
 ResourceButton::~ResourceButton()
 {
@@ -46,20 +43,11 @@ ResourceButton* ResourceButton::create(bool isBigSize, bool animated, ResourceTy
 
 bool ResourceButton::init(bool isBigSize, bool animated, ResourceType type, int count, const Color4B& color, const Widget::ccWidgetClickCallback& callback)
 {
-    if(Node::init()) {
+    if(XButton::init(isBigSize ? XButton::BSize::Big : XButton::BSize::Small, XButton::BType::Blue)) {
         _isBigSize = isBigSize;
         _animated = animated;
         _color = color;
-        setAnchorPoint(Point::ANCHOR_MIDDLE);
-        
-        auto button = XButton::create(isBigSize ? XButton::BSize::Big : XButton::BSize::Small, XButton::BType::Blue);
-        button->setCallback(callback);
-        addChild(button);
-        _button = button;
-        
-        const auto& size(button->getContentSize());
-        setContentSize(size);
-        button->setPosition(Point(size.width / 2, size.height / 2));
+        setCallback(callback);
         
         addIconNode(type);
         const string& message = StringUtils::format("%d", count);
@@ -67,8 +55,9 @@ bool ResourceButton::init(bool isBigSize, bool animated, ResourceType type, int 
         _countLabel = CocosUtils::createLabel(message, fontSize);
         _countLabel->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
         _countLabel->setTextColor(color);
-        button->addChild(_countLabel);
+        addChild(_countLabel);
         
+        const auto& size(getContentSize());
         Node* icon = _animated ? _iconNode : _icon;
         icon->setPosition(Point(size.width / 4, size.height / 2));
         _countLabel->setPosition(Point(size.width * 3 / 4, size.height / 2));
@@ -126,35 +115,26 @@ void ResourceButton::setResourceEnough(bool enable)
     }
 }
 
-void ResourceButton::setEnabled(bool enable)
+void ResourceButton::setEnabled(bool enabled)
 {
-    if (_enabled != enable) {
-        _enabled = enable;
-        
-        if (_button) {
-            _button->setEnabled(enable);
-        }
-        
-        if (_countLabel) {
-            if (enable) {
-                _countLabel->setTextColor(getEnabledColor());
-            } else {
-                static const Color4B disabledColor(Color4B::WHITE);
-                _countLabel->setTextColor(disabledColor);
-            }
+    XButton::setEnabled(enabled);
+    
+    if (_countLabel) {
+        if (enabled) {
+            _countLabel->setTextColor(getEnabledColor());
+        } else {
+            static const Color4B disabledColor(Color4B::WHITE);
+            _countLabel->setTextColor(disabledColor);
         }
     }
 }
 
 void ResourceButton::setClickEventListener(const Button::ccWidgetClickCallback& callback)
 {
-    if (_button)
-    {
-        _button->setCallback([=](Ref *pSender) {
-            SoundManager::getInstance()->playButtonSound();
-            callback(pSender);
-        });
-    }
+    setCallback([=](Ref *pSender) {
+        SoundManager::getInstance()->playButtonSound();
+        callback(pSender);
+    });
 }
 
 void ResourceButton::addIconNode(ResourceType type)
@@ -173,7 +153,7 @@ void ResourceButton::addIconNode(ResourceType type)
         
         const string& file(StringUtils::format("%d.csb", type));
         _iconNode = CocosUtils::playAnimation(file, 0, true);
-        _button->addChild(_iconNode);
+        addChild(_iconNode);
         
         if (pos.x > 0) {
             _iconNode->setPosition(pos);
@@ -190,7 +170,7 @@ void ResourceButton::addIconNode(ResourceType type)
             _icon->setTexture(file);
         } else {
             _icon = Sprite::create(file);
-            _button->addChild(_icon);
+            addChild(_icon);
         }
     }
 }
@@ -205,7 +185,7 @@ void ResourceButton::resize()
     // TODO:
     return;
     
-    const float buttonWidth = _button->getContentSize().width;
+    const float buttonWidth = getContentSize().width;
     const float iconWidth = _icon->getContentSize().width;
     const float labelWidth = _countLabel->getContentSize().width;
     const float x = buttonWidth / 2 - labelWidth / 2;

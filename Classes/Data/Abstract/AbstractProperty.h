@@ -16,7 +16,7 @@ namespace tinyxml2 { class XMLElement; }
 class AbstractProperty
 {
 public:
-    AbstractProperty(tinyxml2::XMLElement* xmlElement);
+    explicit AbstractProperty(tinyxml2::XMLElement* xmlElement);
     virtual ~AbstractProperty() = 0;
     
     int getId() const;

@@ -16,7 +16,7 @@ namespace tinyxml2 { class XMLElement; }
 class CardConfigData
 {
 public:
-    CardConfigData(tinyxml2::XMLElement *xmlElement);
+    explicit CardConfigData(tinyxml2::XMLElement *xmlElement);
     virtual ~CardConfigData();
     
     int getId() const;

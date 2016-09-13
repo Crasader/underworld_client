@@ -15,7 +15,7 @@
 class ContentData
 {
 public:
-    ContentData(const std::string& content);
+    explicit ContentData(const std::string& content);
     virtual ~ContentData();
     
     int getType() const;

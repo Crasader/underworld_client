@@ -18,7 +18,7 @@ class DeckData
 public:
     static constexpr int HeroCount = 3;
     static constexpr int SoldierCount = 6;
-    DeckData(const std::string& serializedString);
+    explicit DeckData(const std::string& serializedString);
     virtual ~DeckData();
     
     const std::vector<int>& getCards() const;

@@ -14,7 +14,7 @@
 class SkillBookProperty : public AbstractProperty
 {
 public:
-    SkillBookProperty(tinyxml2::XMLElement *xmlElement);
+    explicit SkillBookProperty(tinyxml2::XMLElement *xmlElement);
     virtual ~SkillBookProperty();
     
     int getBeUnlockedLevel() const;

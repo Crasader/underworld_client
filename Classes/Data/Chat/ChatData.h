@@ -19,7 +19,7 @@ class ObjectBriefData;
 class ChatData
 {
 public:
-    ChatData(const rapidjson::Value& jsonDict);
+    explicit ChatData(const rapidjson::Value& jsonDict);
     virtual ~ChatData();
     
     int getId() const;

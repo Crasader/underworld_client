@@ -51,7 +51,8 @@ void TestLayer::show(Node* parent)
     }
 }
 
-TestLayer::TestLayer() {}
+TestLayer::TestLayer()
+:_bg(nullptr) {}
 
 TestLayer::~TestLayer()
 {

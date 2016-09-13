@@ -22,7 +22,8 @@ AbstractInfoLayer::AbstractInfoLayer()
 ,_icon(nullptr)
 ,_description(nullptr)
 ,_upgradeButton(nullptr)
-,_data(nullptr) {}
+,_data(nullptr)
+,_property(nullptr) {}
 
 AbstractInfoLayer::~AbstractInfoLayer()
 {
@@ -65,6 +66,8 @@ void AbstractInfoLayer::update(int cardId, const AbstractData* data)
 
 void AbstractInfoLayer::updateProperty(const AbstractProperty* property)
 {
+    _property = property;
+    
     if (_board) {
         _board->setTitle(property ? property->getName() : "");
     }

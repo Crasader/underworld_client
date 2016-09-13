@@ -9,15 +9,10 @@
 #ifndef ResourceButton_h
 #define ResourceButton_h
 
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
+#include "XButton.h"
 #include "CocosGlobal.h"
 
-USING_NS_CC;
-
-class XButton;
-
-class ResourceButton : public Node
+class ResourceButton : public XButton
 {
 public:
     static ResourceButton* create(bool isBigSize, bool animated, ResourceType type, int count, const Color4B& color, const ui::Widget::ccWidgetClickCallback& callback);
@@ -31,7 +26,7 @@ public:
     void setType(ResourceType type);
     void setCount(int count);
     void setResourceEnough(bool enable);
-    void setEnabled(bool enable);
+    virtual void setEnabled(bool enabled) override;
     void setClickEventListener(const ui::Widget::ccWidgetClickCallback& callback);
     
 protected:
@@ -45,14 +40,12 @@ private:
     bool _isBigSize;
     bool _animated;
     bool _resourceEnough;
-    bool _enabled;
     ResourceType _type;
     int _count;
     Color4B _color;
     Sprite* _icon;
     Node* _iconNode;
     Label* _countLabel;
-    XButton *_button;
 };
 
 #endif /* ResourceButton_h */

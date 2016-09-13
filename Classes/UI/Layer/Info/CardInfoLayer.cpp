@@ -247,7 +247,7 @@ void CardInfoLayer::createLeftNode(Node* node)
             }
         });
         button->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
-        button->setPosition(barSize.width / 2, 0);
+        button->setPosition(Point(barSize.width / 2, 0));
         bar->addChild(button);
         _upgradeButton = button;
     }
@@ -379,7 +379,7 @@ void CardInfoLayer::onOpButtonClicked(int idx)
             });
         } else if (1 == idx) {
             DeckManager::getInstance()->getRunesList([this]() {
-                auto property(dynamic_cast<const CardProperty*>(_data->getProperty()));
+                auto property(dynamic_cast<const CardProperty*>(_property));
                 auto layer = RuneBagLayer::create(property->getRuneType(_selectedRune->getIdx()), _selectedRune->getData());
                 layer->registerObserver(this);
                 addChild(layer);

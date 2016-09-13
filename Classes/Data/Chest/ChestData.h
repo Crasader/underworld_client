@@ -14,7 +14,7 @@
 class ChestData
 {
 public:
-    ChestData(const rapidjson::Value& jsonDict);
+    explicit ChestData(const rapidjson::Value& jsonDict);
     virtual ~ChestData();
     
     void update(const rapidjson::Value& jsonDict);

@@ -150,22 +150,22 @@ void DeckManager::getCardList(const function<void()>& callback)
     }
 }
 
-void DeckManager::getCardDetail(int cardId, const function<void(const CardData*)>& callback)
+void DeckManager::getCardDetail(int cardId, const function<void(int cardId, const CardData*)>& callback)
 {
     auto data(getCardData(cardId));
     if (data) {
         if (_cardDetails.find(cardId) == end(_cardDetails)) {
-            NetworkApi::getCardDetail(data->getDbId(), [this, callback](long code, const rapidjson::Value& jsonDict) {
-                auto data = updateCardData(jsonDict);
+            NetworkApi::getCardDetail(data->getDbId(), [=](long code, const rapidjson::Value& jsonDict) {
+                auto detail = updateCardData(jsonDict);
                 if (callback) {
-                    callback(data);
+                    callback(cardId, detail);
                 }
             });
         } else if (callback) {
-            callback(data);
+            callback(cardId, data);
         }
     } else if (callback) {
-        callback(nullptr);
+        callback(cardId, nullptr);
     }
 }
 

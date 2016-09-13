@@ -16,7 +16,7 @@ namespace tinyxml2 { class XMLElement; }
 class BRConfigData
 {
 public:
-    BRConfigData(tinyxml2::XMLElement *xmlElement);
+    explicit BRConfigData(tinyxml2::XMLElement *xmlElement);
     virtual ~BRConfigData();
     
     const std::string& getName() const;

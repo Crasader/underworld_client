@@ -15,7 +15,7 @@
 class UserArenaData
 {
 public:
-    UserArenaData(const rapidjson::Value& jsonDict);
+    explicit UserArenaData(const rapidjson::Value& jsonDict);
     virtual ~UserArenaData();
     
     void update(const rapidjson::Value& jsonDict);

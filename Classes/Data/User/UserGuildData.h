@@ -10,7 +10,6 @@
 #define UserGuildData_h
 
 #include "json/document.h"
-#include <string>
 
 class GuildData;
 
@@ -25,7 +24,7 @@ public:
         Leader,
     };
     
-    UserGuildData(const rapidjson::Value& jsonDict);
+    explicit UserGuildData(const rapidjson::Value& jsonDict);
     virtual ~UserGuildData();
     
     void update(const rapidjson::Value& jsonDict);

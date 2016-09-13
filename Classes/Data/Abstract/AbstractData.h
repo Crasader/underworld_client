@@ -18,7 +18,7 @@ class AbstractData
 {
 public:
     static int getCardId(const AbstractData* data);
-    AbstractData(const rapidjson::Value& jsonDict);
+    explicit AbstractData(const rapidjson::Value& jsonDict);
     virtual ~AbstractData() = 0;
     
     void update(const rapidjson::Value& jsonDict);

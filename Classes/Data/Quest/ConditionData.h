@@ -14,7 +14,7 @@
 class ConditionData
 {
 public:
-    ConditionData(const std::string& content);
+    explicit ConditionData(const std::string& content);
     virtual ~ConditionData();
     
     int getId() const;

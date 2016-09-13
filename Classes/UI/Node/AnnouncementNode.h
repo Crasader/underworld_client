@@ -19,12 +19,11 @@ struct BlockConfig {
     float _fontSize;
     int _color;
     std::string _content;
-    BlockConfig(int newLine, float fontSize, int color, const std::string& content) {
-        _newLine = newLine;
-        _fontSize = fontSize;
-        _color = color;
-        _content = content;
-    }
+    BlockConfig(int newLine, float fontSize, int color, const std::string& content)
+    :_newLine(newLine)
+    ,_fontSize(fontSize)
+    ,_color(color)
+    ,_content(content) {}
 };
 
 /**

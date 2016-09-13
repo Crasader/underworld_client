@@ -14,7 +14,7 @@
 class RuneProperty : public AbstractProperty
 {
 public:
-    RuneProperty(tinyxml2::XMLElement *xmlElement);
+    explicit RuneProperty(tinyxml2::XMLElement *xmlElement);
     virtual ~RuneProperty();
     
 private:

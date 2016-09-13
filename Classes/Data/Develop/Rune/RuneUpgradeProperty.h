@@ -14,7 +14,7 @@
 class RuneUpgradeProperty : public AbstractUpgradeProperty
 {
 public:
-    RuneUpgradeProperty(tinyxml2::XMLElement *xmlElement);
+    explicit RuneUpgradeProperty(tinyxml2::XMLElement *xmlElement);
     virtual ~RuneUpgradeProperty();
     
     int getRuneCost() const;

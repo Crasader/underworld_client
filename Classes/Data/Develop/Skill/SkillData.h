@@ -14,8 +14,10 @@
 class SkillData : public AbstractData
 {
 public:
-    SkillData(int skillId, int level);
+    explicit SkillData(int skillId, int level);
     virtual ~SkillData();
+    
+    void update(int level);
 };
 
 #endif /* SkillData_h */

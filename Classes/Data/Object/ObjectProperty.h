@@ -14,7 +14,7 @@
 class ObjectProperty : public AbstractProperty
 {
 public:
-    ObjectProperty(tinyxml2::XMLElement *xmlElement);
+    explicit ObjectProperty(tinyxml2::XMLElement *xmlElement);
     virtual ~ObjectProperty();
 };
 

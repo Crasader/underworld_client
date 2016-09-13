@@ -17,7 +17,7 @@ namespace tinyxml2 { class XMLElement; }
 class AbstractUpgradeProperty
 {
 public:
-    AbstractUpgradeProperty(tinyxml2::XMLElement *xmlElement);
+    explicit AbstractUpgradeProperty(tinyxml2::XMLElement *xmlElement);
     virtual ~AbstractUpgradeProperty() = 0;
     
     int getId() const;

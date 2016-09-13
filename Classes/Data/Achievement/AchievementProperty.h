@@ -14,7 +14,7 @@
 class AchievementProperty : public QuestProperty
 {
 public:
-    AchievementProperty(tinyxml2::XMLElement *xmlElement);
+    explicit AchievementProperty(tinyxml2::XMLElement *xmlElement);
     virtual ~AchievementProperty();
 };
 

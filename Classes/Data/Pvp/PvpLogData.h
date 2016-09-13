@@ -18,7 +18,7 @@ class UserSimpleData;
 class PvpLogData
 {
 public:
-    PvpLogData(const rapidjson::Value& jsonDict);
+    explicit PvpLogData(const rapidjson::Value& jsonDict);
     virtual ~PvpLogData();
     
     bool isHomeWinner() const;

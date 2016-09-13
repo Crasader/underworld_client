@@ -35,7 +35,7 @@ public:
     typedef UnderWorld::Core::mapsize_t uw_mapsize_t;
     
 public:
-    SpellConfigData(tinyxml2::XMLElement *xmlElement);
+    explicit SpellConfigData(tinyxml2::XMLElement *xmlElement);
     virtual ~SpellConfigData();
     
     // key

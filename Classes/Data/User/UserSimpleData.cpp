@@ -43,11 +43,21 @@ void UserSimpleData::update(const rapidjson::Value& jsonDict)
     JSonUtils::parse(_exp, jsonDict, "notice");
     
     if (JSonUtils::isExist(jsonDict, "guildinfo")) {
-        _guildData = new (std::nothrow) UserGuildData(DICTOOL->getSubDictionary_json(jsonDict, "guildinfo"));
+        const auto& value(DICTOOL->getSubDictionary_json(jsonDict, "guildinfo"));
+        if (_guildData) {
+            _guildData->update(value);
+        } else {
+            _guildData = new (std::nothrow) UserGuildData(value);
+        }
     }
     
     if (JSonUtils::isExist(jsonDict, "pvp")) {
-        _arenaData = new (std::nothrow) UserArenaData(DICTOOL->getSubDictionary_json(jsonDict, "pvp"));
+        const auto& value(DICTOOL->getSubDictionary_json(jsonDict, "pvp"));
+        if (_arenaData) {
+            _arenaData->update(value);
+        } else {
+            _arenaData = new (std::nothrow) UserArenaData(value);
+        }
     }
 }
 

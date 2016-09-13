@@ -94,7 +94,7 @@ bool LoadingLayer::init(bool pvp, const Callback& callback)
 
 bool LoadingLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
-    return false;
+    return true;
 }
 
 void LoadingLayer::onTouchEnded(Touch *touch, Event *unused_event) {}

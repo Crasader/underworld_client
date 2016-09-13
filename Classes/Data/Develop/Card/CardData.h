@@ -19,7 +19,7 @@ class RuneData;
 class CardData : public AbstractData
 {
 public:
-    CardData(const rapidjson::Value& jsonDict);
+    explicit CardData(const rapidjson::Value& jsonDict);
     virtual ~CardData();
     
     void update(const rapidjson::Value& jsonDict);

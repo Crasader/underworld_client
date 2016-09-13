@@ -12,7 +12,7 @@
 class AnimationParameter
 {
 public:
-    AnimationParameter(const AnimationParameter* instance);
+    explicit AnimationParameter(const AnimationParameter* instance);
     virtual ~AnimationParameter();
     
     float scale;

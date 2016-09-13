@@ -114,6 +114,10 @@
 		A108A7B31D25253700987658 /* AchievementNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A108A7B11D25253700987658 /* AchievementNode.cpp */; };
 		A108A7B61D25254600987658 /* AchievementLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A108A7B41D25254600987658 /* AchievementLayer.cpp */; };
 		A10C1D571D61795300B81896 /* DeckEditMask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10C1D551D61795300B81896 /* DeckEditMask.cpp */; };
+		A10D68151D87DF9600D26BE9 /* BillboardLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10D68131D87DF9600D26BE9 /* BillboardLayer.cpp */; };
+		A10D68191D87DFE800D26BE9 /* BillboardData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10D68171D87DFE800D26BE9 /* BillboardData.cpp */; };
+		A10D681D1D87E9D400D26BE9 /* BillboardCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10D681B1D87E9D400D26BE9 /* BillboardCell.cpp */; };
+		A10D68201D87EB6A00D26BE9 /* BillboardManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10D681E1D87EB6A00D26BE9 /* BillboardManager.cpp */; };
 		A10D742F1D5083B1009674F9 /* AvatarNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10D742D1D5083B1009674F9 /* AvatarNode.cpp */; };
 		A10E8F911D5C1FFA00320B3D /* DeckManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10E8F8F1D5C1FFA00320B3D /* DeckManager.cpp */; };
 		A11009501D7D5A0A00376283 /* GuildData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A110094E1D7D5A0A00376283 /* GuildData.cpp */; };
@@ -546,6 +550,14 @@
 		A108A7B51D25254600987658 /* AchievementLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementLayer.h; sourceTree = "<group>"; };
 		A10C1D551D61795300B81896 /* DeckEditMask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DeckEditMask.cpp; sourceTree = "<group>"; };
 		A10C1D561D61795300B81896 /* DeckEditMask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckEditMask.h; sourceTree = "<group>"; };
+		A10D68131D87DF9600D26BE9 /* BillboardLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BillboardLayer.cpp; sourceTree = "<group>"; };
+		A10D68141D87DF9600D26BE9 /* BillboardLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BillboardLayer.h; sourceTree = "<group>"; };
+		A10D68171D87DFE800D26BE9 /* BillboardData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BillboardData.cpp; sourceTree = "<group>"; };
+		A10D68181D87DFE800D26BE9 /* BillboardData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BillboardData.h; sourceTree = "<group>"; };
+		A10D681B1D87E9D400D26BE9 /* BillboardCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BillboardCell.cpp; sourceTree = "<group>"; };
+		A10D681C1D87E9D400D26BE9 /* BillboardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BillboardCell.h; sourceTree = "<group>"; };
+		A10D681E1D87EB6A00D26BE9 /* BillboardManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BillboardManager.cpp; sourceTree = "<group>"; };
+		A10D681F1D87EB6A00D26BE9 /* BillboardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BillboardManager.h; sourceTree = "<group>"; };
 		A10D742D1D5083B1009674F9 /* AvatarNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AvatarNode.cpp; sourceTree = "<group>"; };
 		A10D742E1D5083B1009674F9 /* AvatarNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvatarNode.h; sourceTree = "<group>"; };
 		A10E8F8F1D5C1FFA00320B3D /* DeckManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DeckManager.cpp; sourceTree = "<group>"; };
@@ -1512,6 +1524,26 @@
 			path = BinaryJson;
 			sourceTree = "<group>";
 		};
+		A10D68121D87DF8C00D26BE9 /* Billboard */ = {
+			isa = PBXGroup;
+			children = (
+				A10D681B1D87E9D400D26BE9 /* BillboardCell.cpp */,
+				A10D681C1D87E9D400D26BE9 /* BillboardCell.h */,
+				A10D68131D87DF9600D26BE9 /* BillboardLayer.cpp */,
+				A10D68141D87DF9600D26BE9 /* BillboardLayer.h */,
+			);
+			path = Billboard;
+			sourceTree = "<group>";
+		};
+		A10D68161D87DFCC00D26BE9 /* Billboard */ = {
+			isa = PBXGroup;
+			children = (
+				A10D68171D87DFE800D26BE9 /* BillboardData.cpp */,
+				A10D68181D87DFE800D26BE9 /* BillboardData.h */,
+			);
+			path = Billboard;
+			sourceTree = "<group>";
+		};
 		A11469D71C9FE9EC00E64125 /* Libevent */ = {
 			isa = PBXGroup;
 			children = (
@@ -1614,6 +1646,7 @@
 				A1D4614D1C3E166900E8E60B /* Abstract */,
 				A1F5BF9C1C1FD508007C08CB /* Achievement */,
 				A1D461581C3E251000E8E60B /* AnimationConfig */,
+				A10D68161D87DFCC00D26BE9 /* Billboard */,
 				CB3EC8941C4E4CBC00447FE3 /* Chat */,
 				A1A552A51D7FFBD6009FF922 /* Chest */,
 				A1A7A2441D76ED8A00D7B3B1 /* Develop */,
@@ -1793,6 +1826,7 @@
 			children = (
 				A1D745B41C1AB7C40020BC1C /* Battle */,
 				A1DFAACA1D10FC2800817E69 /* BattleDeck */,
+				A10D68121D87DF8C00D26BE9 /* Billboard */,
 				A1E830531C1E758E00FE01B8 /* Chat */,
 				A1A5529B1D7FFB71009FF922 /* Chest */,
 				A19B1AB11D6C18200010D129 /* Develop */,
@@ -2000,9 +2034,11 @@
 		A1B4AE1F1C200521005906A6 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				A1E8EE7E1D8287D0008F7237 /* Chat */,
 				A1B4AE201C200521005906A6 /* AchievementManager.cpp */,
 				A1B4AE211C200521005906A6 /* AchievementManager.h */,
+				A10D681E1D87EB6A00D26BE9 /* BillboardManager.cpp */,
+				A10D681F1D87EB6A00D26BE9 /* BillboardManager.h */,
+				A1E8EE7E1D8287D0008F7237 /* Chat */,
 				A10E8F8F1D5C1FFA00320B3D /* DeckManager.cpp */,
 				A10E8F901D5C1FFA00320B3D /* DeckManager.h */,
 				A1B4AE261C200521005906A6 /* GuildManager.cpp */,
@@ -2672,6 +2708,7 @@
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				A1720EB91BCD2D2E00217E98 /* KeychainItemWrapper.m in Sources */,
 				A1720E8B1BCCE19300217E98 /* aes_core.c in Sources */,
+				A10D68201D87EB6A00D26BE9 /* BillboardManager.cpp in Sources */,
 				045117101BCFBA5F002AA721 /* Game.cpp in Sources */,
 				A1FF0E981D7D4B9B00C32040 /* AbstractCard.cpp in Sources */,
 				A19B1AB41D6C186E0010D129 /* DevelopLayer.cpp in Sources */,
@@ -2692,6 +2729,7 @@
 				A1B4AE021C200480005906A6 /* UserDefaultsDataManager.cpp in Sources */,
 				A1ED7F941D811E440017B960 /* TabButton.cpp in Sources */,
 				E63DE5051D50E27E00735E88 /* TrophyGapNode.cpp in Sources */,
+				A10D681D1D87E9D400D26BE9 /* BillboardCell.cpp in Sources */,
 				A1D461521C3E166900E8E60B /* AbstractProperty.cpp in Sources */,
 				A1E830561C1E75A700FE01B8 /* ChatNode.cpp in Sources */,
 				A1F5BFA21C1FD519007C08CB /* AchievementData.cpp in Sources */,
@@ -2746,6 +2784,7 @@
 				A1B66A231D70383D009A8D55 /* UniversalBoard.cpp in Sources */,
 				A1DA08CC1CB61CEA00846300 /* BRConfigData.cpp in Sources */,
 				A1720EBA1BCD2D2E00217E98 /* RMStore.m in Sources */,
+				A10D68151D87DF9600D26BE9 /* BillboardLayer.cpp in Sources */,
 				047228B01C193A4D00E7F71B /* Geometry.cpp in Sources */,
 				A1ED7F901D811E440017B960 /* FixedLabelAtlas.cpp in Sources */,
 				A1FF0E921D7D46CC00C32040 /* SeniorCard.cpp in Sources */,
@@ -2759,6 +2798,7 @@
 				3019BABC1C99668E003258DB /* Aura.cpp in Sources */,
 				A1ED7F961D811E440017B960 /* XEditBox.cpp in Sources */,
 				A11009501D7D5A0A00376283 /* GuildData.cpp in Sources */,
+				A10D68191D87DFE800D26BE9 /* BillboardData.cpp in Sources */,
 				A1ED7FD71D816C130017B960 /* GuildTorphyNode.cpp in Sources */,
 				30F8406B1D50B37F0050C976 /* HMMGui.cpp in Sources */,
 				A1C1A6691D7439E600B15E3F /* RuneCircle.cpp in Sources */,

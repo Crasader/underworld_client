@@ -12,8 +12,6 @@
 #include "GuildGenericCell.h"
 
 class GuildData;
-class AvatarNode;
-class GuildTorphyNode;
 
 class GuildCellObserver
 {
@@ -38,11 +36,7 @@ protected:
 protected:
     GuildCellObserver* _observer;
     const GuildData* _data;
-    AvatarNode* _avatar;
-    Label* _name;
-    Label* _type;
     Label* _members;
-    GuildTorphyNode* _trophy;
 };
 
 #endif /* GuildCell_h */
