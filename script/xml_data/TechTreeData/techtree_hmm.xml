@@ -83,16 +83,16 @@
 	<card name="石像鬼" card_class="summon" cost="木头:30" unit_id="12016" summon_count="1" recover_span="0" id="22011">
 		<custom_unit_setting unit_setting_id="12016"/>
 	</card>
-    <card name="中立兽族牛头人" card_class="summon" cost="木头:40" unit_id="12000" recover_span="0" id="22012">
+    <card name="中立兽族牛头人" card_class="summon" cost="木头:80" unit_id="12000" recover_span="0" id="22012">
 		<custom_unit_setting unit_setting_id="12000"/>
 	</card>
-	<card name="中立兽族巨魔巫医" card_class="summon" cost="木头:20" unit_id="12001" recover_span="0" id="22013">
+	<card name="中立兽族巨魔巫医" card_class="summon" cost="木头:60" unit_id="12001" recover_span="0" id="22013">
 		<custom_unit_setting unit_setting_id="12001"/>
 	</card>
 	<card name="中立龙族黑龙" card_class="summon" cost="木头:60" unit_id="12002" recover_span="0" id="22014">
 		<custom_unit_setting unit_setting_id="12002"/>
 	</card>
-	<card name="中立矮人族火枪手" card_class="summon" cost="木头:30" unit_id="12003" recover_span="0" id="22015">
+	<card name="中立矮人族火枪手" card_class="summon" cost="木头:60" unit_id="12003" recover_span="0" id="22015">
 		<custom_unit_setting unit_setting_id="12003"/>
 	</card>
 	<card name="中立精灵族弓箭手" card_class="summon" cost="木头:20" unit_id="12004" recover_span="0" id="22016">
