@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <root>
 	<!-- 第一版法术 :后面是注释-->
-	<item id="23100" icon="icon_baofengxue"/>   <!--暴风雪  -->
-	<item id="23101" icon="icon_huoqiushu"/><!--火球术  -->
+	<item id="23100" icon="icon_baofengxue" tips="Card-Snow-circle"/>   <!--暴风雪  -->
+	<item id="23101" icon="icon_huoqiushu" tips="Card-Fireball-circle"/><!--火球术  -->
    	<item id="23102" icon="icon_huifushu"/><!--医疗术  -->
 	<item id="23103" icon="icon_chenmosu"/><!--沉默法术  -->
    	<item id="23104" icon="icon_xiaoqusan"/><!--小型驱散  -->

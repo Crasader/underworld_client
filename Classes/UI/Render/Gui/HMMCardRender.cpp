@@ -35,7 +35,11 @@ void HMMCardRender::init(const HMMCard* card) {
 void HMMCardRender::render(const HMMCard *card) {
     if (!_cardview || !card) return;
     
-    _cardview->setCardUseable(card->isCardReady());
+    if (card->getCardType()->getCardClass() == kHMMCardClass_Hero && card->getHeroCardState() == HMMCard::HeroCardState::Active) {
+        _cardview->setCardUseable(true);
+    } else {
+        _cardview->setCardUseable(card->isCardReady());
+    }
     
     if (card->getFaction()) {
         const Resource* r = card->getFaction()->getResource(HMMCardView::DISPLAY_RESOURCE_KEY);

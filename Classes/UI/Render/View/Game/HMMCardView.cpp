@@ -38,9 +38,9 @@ bool HMMCardView::init(const HMMCardType* cardType) {
     static const float card_height = 105.f;
     
     static const int quality_zorder = 1;
-    static const int icon_zorder = 2;
-    static const int progress_zorder = 3;
-    static const int shining_zorder = 4;
+    static const int shining_zorder = 2;
+    static const int icon_zorder = 3;
+    static const int progress_zorder = 4;
     static const int resource_zorder = 5;
     
     if (!cocos2d::Node::init()) return false;

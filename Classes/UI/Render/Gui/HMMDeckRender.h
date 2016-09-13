@@ -21,6 +21,8 @@ class Game;
 class HMMDeck;
 class HMMCardView;
 class HMMCardRender;
+class HMMManualSpellView;
+class HMMManualSpellRender;
 class WorldRender;
 class HMMCardType;
     
@@ -55,8 +57,18 @@ public:
     static const float ACTIVE_HERO_MOVE_WAVE_OFFEST;
     
 private:
+    enum class TouchMode {
+        SelectCard,
+        PlaceCard,
+        CastManualSpell,
+        
+        None
+    };
+    
+private:
     /** instance */
     std::vector<HMMCardRender*> _cardRenders;
+    std::vector<HMMManualSpellRender*> _manualSpellRenders;
     
     /** data */
     Rect32 _summonRegion;
@@ -71,15 +83,14 @@ private:
     cocos2d::Node* _cardRegion;
     std::vector<HMMCardView*> _cardViews;
     HMMCardView* _activeHeroView;
-    std::vector<cocos2d::Sprite*> _manualSpellViews;
+    std::vector<HMMManualSpellView*> _manualSpellViews;
     float _heroRegionWidth;
     
     /** touch event */
+    TouchMode _touchMode;
     cocos2d::Vec2 _touchBeginPos;
     int _pressingCardIndex;
     cocos2d::Vec2 _pressingCardOriginPos;
-    bool _draggingCard;
-    bool _placingCard;
     bool _longPressing;
     int _pressingSpellIndex;
     
@@ -144,10 +155,9 @@ private:
     void try2UseCard(int cardIndex, const cocos2d::Vec2& location);
     void try2CastManualSpell(int spellIndex, const cocos2d::Vec2& loaction);
     Coordinate32 transformAndValidateLoction2WorldCoordinate(const cocos2d::Vec2& location, const HMMCardType* cardType);
+    void buildManualSpellViews(int activeIndex);
+    void destroyManualSpellViews();
     
-    
-    
-
 };
 
     

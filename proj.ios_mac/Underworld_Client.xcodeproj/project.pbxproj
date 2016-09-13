@@ -32,6 +32,8 @@
 		0487A6671CC897F9005FE8D0 /* GameMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0487A6651CC897F9005FE8D0 /* GameMode.cpp */; };
 		0487A66C1CC8A90D005FE8D0 /* GameModeHMM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0487A66A1CC8A90D005FE8D0 /* GameModeHMM.cpp */; };
 		04CE7CBC1D645BD60000B391 /* GameLooper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04CE7CBA1D645BD60000B391 /* GameLooper.cpp */; };
+		04CF0AE91D87F5C800117DA6 /* HMMManualSpellRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04CF0AE71D87F5C800117DA6 /* HMMManualSpellRender.cpp */; };
+		04CF0AEC1D87F76500117DA6 /* HMMManualSpellView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04CF0AEA1D87F76500117DA6 /* HMMManualSpellView.cpp */; };
 		1AC6FB21180E996B004C840B /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FAF9180E9839004C840B /* libcocos2d Mac.a */; };
 		1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FB07180E9839004C840B /* libcocos2d iOS.a */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -410,6 +412,10 @@
 		0487A66B1CC8A90D005FE8D0 /* GameModeHMM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameModeHMM.h; path = Core/Game/GameModes/GameModeHMM.h; sourceTree = "<group>"; };
 		04CE7CBA1D645BD60000B391 /* GameLooper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameLooper.cpp; path = Core/External/GameLooper.cpp; sourceTree = "<group>"; };
 		04CE7CBB1D645BD60000B391 /* GameLooper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameLooper.h; path = Core/External/GameLooper.h; sourceTree = "<group>"; };
+		04CF0AE71D87F5C800117DA6 /* HMMManualSpellRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HMMManualSpellRender.cpp; path = Render/Gui/HMMManualSpellRender.cpp; sourceTree = "<group>"; };
+		04CF0AE81D87F5C800117DA6 /* HMMManualSpellRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMMManualSpellRender.h; path = Render/Gui/HMMManualSpellRender.h; sourceTree = "<group>"; };
+		04CF0AEA1D87F76500117DA6 /* HMMManualSpellView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HMMManualSpellView.cpp; path = Render/View/Game/HMMManualSpellView.cpp; sourceTree = "<group>"; };
+		04CF0AEB1D87F76500117DA6 /* HMMManualSpellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMMManualSpellView.h; path = Render/View/Game/HMMManualSpellView.h; sourceTree = "<group>"; };
 		04FF24601C4A497100A66D71 /* GameSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameSettings.cpp; path = Core/Game/GameSettings.cpp; sourceTree = "<group>"; };
 		1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
@@ -1404,6 +1410,8 @@
 				30F840651D50B37F0050C976 /* HMMDeckRender.h */,
 				30F840661D50B37F0050C976 /* HMMGui.cpp */,
 				30F840671D50B37F0050C976 /* HMMGui.h */,
+				04CF0AE71D87F5C800117DA6 /* HMMManualSpellRender.cpp */,
+				04CF0AE81D87F5C800117DA6 /* HMMManualSpellRender.h */,
 			);
 			name = Gui;
 			sourceTree = "<group>";
@@ -1442,6 +1450,8 @@
 				30F840701D50B3BF0050C976 /* HMMCardView.h */,
 				30F840711D50B3BF0050C976 /* UnitView.cpp */,
 				30F840721D50B3BF0050C976 /* UnitView.h */,
+				04CF0AEA1D87F76500117DA6 /* HMMManualSpellView.cpp */,
+				04CF0AEB1D87F76500117DA6 /* HMMManualSpellView.h */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -2855,6 +2865,7 @@
 				A1A552A81D7FFBE0009FF922 /* ChestData.cpp in Sources */,
 				A19EE96D1C1C0F1300E46D77 /* LevelProperty.cpp in Sources */,
 				A1720EAD1BCD2A8400217E98 /* NetworkApi.cpp in Sources */,
+				04CF0AEC1D87F76500117DA6 /* HMMManualSpellView.cpp in Sources */,
 				A1FF0E8C1D7D46CC00C32040 /* CardPropertyNode.cpp in Sources */,
 				A1F3D2361D1D05CD00EB5C17 /* MessageBoxBaseLayer.cpp in Sources */,
 				300098D31BD0CDB000B6E284 /* ResourceType.cpp in Sources */,
@@ -2895,6 +2906,7 @@
 				045116F31BCFBA44002AA721 /* BuffType.cpp in Sources */,
 				A1FF13BD1D3DFCF6007D2C08 /* GCMMultiplayer.m in Sources */,
 				A10C1D571D61795300B81896 /* DeckEditMask.cpp in Sources */,
+				04CF0AE91D87F5C800117DA6 /* HMMManualSpellRender.cpp in Sources */,
 				A1FF0E8F1D7D46CC00C32040 /* BaseCard.cpp in Sources */,
 				3087FF051C9F9D92004E31F6 /* MagicType.cpp in Sources */,
 			);
