@@ -53,6 +53,7 @@
 		30236FF71C5B6AFA00FB1802 /* PathFinderInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30236FF61C5B6AFA00FB1802 /* PathFinderInterface.cpp */; };
 		3028EBC31BFF0CBD00511C51 /* DynamicValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3028EBC11BFF0CBD00511C51 /* DynamicValue.cpp */; };
 		3028EBC61BFF0D4800511C51 /* Condition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3028EBC41BFF0D4700511C51 /* Condition.cpp */; };
+		302CA3251D88ECC900D0404D /* RenderHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 302CA3231D88ECC900D0404D /* RenderHelper.cpp */; };
 		3031641A1CFD99AF00DBAB04 /* Heuristic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 303164181CFD99AF00DBAB04 /* Heuristic.cpp */; };
 		3070302B1CD1E6D70077D357 /* ProduceType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 307030291CD1E6D60077D357 /* ProduceType.cpp */; };
 		3070302E1CD3253B0077D357 /* Produce.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3070302C1CD3253B0077D357 /* Produce.cpp */; };
@@ -448,6 +449,8 @@
 		3028EBC21BFF0CBD00511C51 /* DynamicValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DynamicValue.h; path = Core/Unit/Element/DynamicValue.h; sourceTree = "<group>"; };
 		3028EBC41BFF0D4700511C51 /* Condition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Condition.cpp; path = Core/Unit/Element/Condition.cpp; sourceTree = "<group>"; };
 		3028EBC51BFF0D4700511C51 /* Condition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Condition.h; path = Core/Unit/Element/Condition.h; sourceTree = "<group>"; };
+		302CA3231D88ECC900D0404D /* RenderHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RenderHelper.cpp; path = Render/RenderHelper.cpp; sourceTree = "<group>"; };
+		302CA3241D88ECC900D0404D /* RenderHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RenderHelper.h; path = Render/RenderHelper.h; sourceTree = "<group>"; };
 		303164181CFD99AF00DBAB04 /* Heuristic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Heuristic.cpp; path = Core/Unit/Element/Heuristic.cpp; sourceTree = "<group>"; };
 		303164191CFD99AF00DBAB04 /* Heuristic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Heuristic.h; path = Core/Unit/Element/Heuristic.h; sourceTree = "<group>"; };
 		307030291CD1E6D60077D357 /* ProduceType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ProduceType.cpp; path = Core/Unit/Type/ProduceType.cpp; sourceTree = "<group>"; };
@@ -1385,6 +1388,8 @@
 		30F8404B1D50B1AB0050C976 /* Render */ = {
 			isa = PBXGroup;
 			children = (
+				302CA3241D88ECC900D0404D /* RenderHelper.h */,
+				302CA3231D88ECC900D0404D /* RenderHelper.cpp */,
 				30F840511D50B3370050C976 /* BulletRender.cpp */,
 				30F840521D50B3370050C976 /* BulletRender.h */,
 				30F840531D50B3370050C976 /* UnitRender.cpp */,
@@ -2762,6 +2767,7 @@
 				A1ABD4D61D38945600141E6A /* FrameLoader.cpp in Sources */,
 				A12C60A41D50774C003FCF0D /* UserSimpleNode.cpp in Sources */,
 				A1B4AE2F1C200521005906A6 /* GuildManager.cpp in Sources */,
+				302CA3251D88ECC900D0404D /* RenderHelper.cpp in Sources */,
 				046D9E631D34FD5D0093A745 /* ConfigChecker.cpp in Sources */,
 				A1E947C21D48A3A400BD7A27 /* UserOperationNode.cpp in Sources */,
 				A1F5BF9F1C1FD508007C08CB /* AchievementProperty.cpp in Sources */,
