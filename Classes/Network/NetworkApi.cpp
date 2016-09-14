@@ -23,7 +23,7 @@ USING_NS_CC;
 using namespace cocos2d::network;
 
 #if COCOS2D_DEBUG
-static const string kApiHost = "http://192.168.31.100:8080/";
+static const string kApiHost = "http://123.57.221.242:8080/";
 #else
 static const string kApiHost = "http://203.88.170.234/";
 #endif

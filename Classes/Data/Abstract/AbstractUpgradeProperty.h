@@ -24,9 +24,6 @@ public:
     int getLevel() const;
     std::pair<ResourceType, int> getResourceCost() const;
     
-protected:
-    void attribute2Int(tinyxml2::XMLElement* xmlElement, const char* key, int& output) const;
-    
 private:
     int _id;
     int _level;

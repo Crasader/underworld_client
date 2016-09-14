@@ -39,6 +39,11 @@ public:
     int getDonateExp() const;
     int getDonatePoint() const;
     const std::vector<int>& getSkills() const;
+    const std::map<ObjectUtils::CardAttributeType, float>& getAttributes() const;
+    float getAttribute(ObjectUtils::CardAttributeType type);
+    ObjectUtils::AttackType getAttackType() const;
+    ObjectUtils::ArmorType getArmorType() const;
+    const std::vector<ObjectUtils::TargetType>& getTargetTypes() const;
     ObjectUtils::RuneType getRuneType(int idx) const;
     
 private:
@@ -51,6 +56,10 @@ private:
     int _donateExp;
     int _donatePoint;
     std::vector<int> _skills;
+    std::map<ObjectUtils::CardAttributeType, float> _attributes;
+    ObjectUtils::AttackType _attackType;
+    ObjectUtils::ArmorType _armorType;
+    std::vector<ObjectUtils::TargetType> _targetTypes;
     std::unordered_map<int, ObjectUtils::RuneType> _runeTypes;
 };
 

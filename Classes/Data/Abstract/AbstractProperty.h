@@ -23,10 +23,6 @@ public:
     const std::string& getName() const;
     const std::string& getDescription() const;
     
-protected:
-    void attribute2Int(tinyxml2::XMLElement* xmlElement, const char* key, int& output) const;
-    void attribute2String(tinyxml2::XMLElement* xmlElement, const char* key, std::string& output) const;
-    
 private:
     int _id;
     

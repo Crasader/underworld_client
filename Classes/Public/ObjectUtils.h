@@ -33,6 +33,41 @@ namespace ObjectUtils
         
         return RuneType::NONE;
     }
+    
+    enum class CardAttributeType {
+        HP,
+        SPEED,
+        ARMOR,
+        GROUND_DAMAGE,
+        HIT_SPEED,
+        RANGE,
+        AIR_DAMAGE,
+        
+        PROPERTY_MAX,
+    };
+    
+    enum class AttackType {
+        NORMAL,
+        PIERCING,
+        SIEGE,
+        CHAOS,
+        MAGIC,
+        HERO,
+    };
+    
+    enum class ArmorType {
+        UNARMORED,
+        LIGHT,
+        MEDIUM,
+        HEAVY,
+        HERO,
+        FORTIFIED
+    };
+    
+    enum class TargetType {
+        GROUND,
+        AIR,
+    };
 }
 
 #endif /* ObjectUtils_h */

@@ -7,7 +7,7 @@
 //
 
 #include "AbstractProperty.h"
-#include "tinyxml2/tinyxml2.h"
+#include "XMLUtils.h"
 
 using namespace std;
 
@@ -15,9 +15,9 @@ AbstractProperty::AbstractProperty(tinyxml2::XMLElement *xmlElement)
 :_id(0)
 {
     if (xmlElement) {
-        attribute2Int(xmlElement, "id", _id);
-        attribute2String(xmlElement, "name", _name);
-        attribute2String(xmlElement, "desc", _description);
+        XMLUtils::parse(xmlElement, "id", _id);
+        XMLUtils::parse(xmlElement, "name", _name);
+        XMLUtils::parse(xmlElement, "desc", _description);
     }
 }
 
@@ -36,24 +36,4 @@ const string& AbstractProperty::getName() const
 const string& AbstractProperty::getDescription() const
 {
     return _description;
-}
-
-void AbstractProperty::attribute2Int(tinyxml2::XMLElement* xmlElement, const char* key, int& output) const
-{
-    if (xmlElement && key && strlen(key) > 0) {
-        const char* data(xmlElement->Attribute(key));
-        if (data) {
-            output = atoi(data);
-        }
-    }
-}
-
-void AbstractProperty::attribute2String(tinyxml2::XMLElement* xmlElement, const char* key, string& output) const
-{
-    if (xmlElement && key && strlen(key) > 0) {
-        const char* data(xmlElement->Attribute(key));
-        if (data) {
-            output.assign(data);
-        }
-    }
 }

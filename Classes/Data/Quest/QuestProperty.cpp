@@ -7,8 +7,8 @@
 //
 
 #include "QuestProperty.h"
-#include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
+#include "XMLUtils.h"
 #include "ConditionData.h"
 #include "ContentData.h"
 #include "ObjectBriefData.h"
@@ -20,28 +20,24 @@ QuestProperty::QuestProperty(tinyxml2::XMLElement *xmlElement)
 ,_race(0)
 {
     if (xmlElement) {
-        attribute2Int(xmlElement, "race", _race);
+        XMLUtils::parse(xmlElement, "race", _race);
         
         {
-            const char *data = xmlElement->Attribute("cond");
-            if (data) {
-                vector<string> result;
-                Utils::split(result, data, ",", "");
-                for (int i = 0; i < result.size(); ++i) {
-                    ConditionData* cd = new (nothrow) ConditionData(result.at(i));
-                    _conditions.push_back(cd);
-                }
+            auto data = XMLUtils::parse<std::string>(xmlElement, "cond");
+            vector<string> result;
+            Utils::split(result, data, ",", "");
+            for (int i = 0; i < result.size(); ++i) {
+                ConditionData* cd = new (nothrow) ConditionData(result.at(i));
+                _conditions.push_back(cd);
             }
         }
         {
-            const char *data = xmlElement->Attribute("content");
-            if (data) {
-                vector<string> result;
-                Utils::split(result, data, ",", "");
-                for (int i = 0; i < result.size(); ++i) {
-                    ContentData* cd = new (nothrow) ContentData(result.at(i));
-                    _contents.push_back(cd);
-                }
+            auto data = XMLUtils::parse<std::string>(xmlElement, "content");
+            vector<string> result;
+            Utils::split(result, data, ",", "");
+            for (int i = 0; i < result.size(); ++i) {
+                ContentData* cd = new (nothrow) ContentData(result.at(i));
+                _contents.push_back(cd);
             }
         }
         {

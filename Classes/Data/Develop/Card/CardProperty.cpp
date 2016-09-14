@@ -7,8 +7,8 @@
 //
 
 #include "CardProperty.h"
-#include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
+#include "XMLUtils.h"
 #include "DataManager.h"
 #include "GameConstants.h"
 
@@ -21,53 +21,53 @@ CardProperty::CardProperty(tinyxml2::XMLElement *xmlElement)
 ,_maxDonateCount(0)
 ,_donateExp(0)
 ,_donatePoint(0)
+,_attackType(ObjectUtils::AttackType::NORMAL)
+,_armorType(ObjectUtils::ArmorType::UNARMORED)
 {
     _cardType = DataManager::getInstance()->getGameModeHMM()->findCardTypeById(getId());
     if (_cardType) {
         _name = _cardType->getName();
     }
     
-    attribute2Int(xmlElement, "grade", _rarity);
-    attribute2Int(xmlElement, "unlock", _beUnlockedLevel);
-    attribute2Int(xmlElement, "require", _beRequiredCount);
-    attribute2Int(xmlElement, "donate", _maxDonateCount);
-    
-    {
-        auto data = xmlElement->Attribute("reward");
-        if (data) {
-            std::vector<std::string> splits;
-            Utils::split(splits, data, "_");
-            if (splits.size() > 1) {
-                _donateReward.first = static_cast<ResourceType>(atoi(splits.at(0).c_str()));
-                _donateReward.second = atoi(splits.at(1).c_str());
-            }
+    XMLUtils::parse(xmlElement, "grade", _rarity);
+    XMLUtils::parse(xmlElement, "unlock", _beUnlockedLevel);
+    XMLUtils::parse(xmlElement, "require", _beRequiredCount);
+    XMLUtils::parse(xmlElement, "donate", _maxDonateCount);
+    XMLUtils::parseString(xmlElement, "reward", "_", [this](int idx, const std::string& split) {
+        if (0 == idx) {
+            _donateReward.first = static_cast<ResourceType>(atoi(split.c_str()));
+        } else if (1 == idx) {
+            _donateReward.second = atoi(split.c_str());
         }
-    }
-    
-    attribute2Int(xmlElement, "experience", _donateExp);
-    attribute2Int(xmlElement, "point", _donatePoint);
-    
-    {
-        auto data = xmlElement->Attribute("skills");
-        if (data) {
-            std::vector<std::string> splits;
-            Utils::split(splits, data, ";");
-            for (int i = 0; i < splits.size(); ++i) {
-                _skills.push_back(atoi(splits.at(i).c_str()));
-            }
+    });
+    XMLUtils::parse(xmlElement, "experience", _donateExp);
+    XMLUtils::parse(xmlElement, "point", _donatePoint);
+    XMLUtils::parseString(xmlElement, "skills", ";", [this](int idx, const std::string& split) {
+        _skills.push_back(atoi(split.c_str()));
+    });
+    XMLUtils::parseString(xmlElement, "runes", ";", [this](int idx, const std::string& split) {
+        auto type = static_cast<ObjectUtils::RuneType>(atoi(split.c_str()));
+        if (ObjectUtils::RuneType::NONE != type) {
+            _runeTypes.insert(std::make_pair(idx, type));
         }
-    }
+    });
     
     {
-        auto data = xmlElement->Attribute("runes");
-        if (data) {
-            std::vector<std::string> splits;
-            Utils::split(splits, data, ";");
-            for (int i = 0; i < splits.size(); ++i) {
-                auto type = static_cast<ObjectUtils::RuneType>(atoi(splits.at(i).c_str()));
-                if (ObjectUtils::RuneType::NONE != type) {
-                    _runeTypes.insert(std::make_pair(i, type));
-                }
+        static const std::map<ObjectUtils::CardAttributeType, std::string> AttributeKeys {
+            {ObjectUtils::CardAttributeType::HP, "hp"},
+            {ObjectUtils::CardAttributeType::SPEED, "speed"},
+            {ObjectUtils::CardAttributeType::ARMOR, "armor"},
+            {ObjectUtils::CardAttributeType::GROUND_DAMAGE, "damage1"},
+            {ObjectUtils::CardAttributeType::HIT_SPEED, "hitspeed"},
+            {ObjectUtils::CardAttributeType::RANGE, "range"},
+            {ObjectUtils::CardAttributeType::AIR_DAMAGE, "damage2"},
+        };
+        
+        for (auto iter = begin(AttributeKeys); iter != end(AttributeKeys); ++iter) {
+            auto key(iter->second.c_str());
+            auto value = XMLUtils::parse<float>(xmlElement, key);
+            if (value != 0) {
+                _attributes.insert(make_pair(iter->first, value));
             }
         }
     }
@@ -140,6 +140,35 @@ int CardProperty::getDonatePoint() const
 const std::vector<int>& CardProperty::getSkills() const
 {
     return _skills;
+}
+
+const std::map<ObjectUtils::CardAttributeType, float>& CardProperty::getAttributes() const
+{
+    return _attributes;
+}
+
+float CardProperty::getAttribute(ObjectUtils::CardAttributeType type)
+{
+    if (_attributes.find(type) != end(_attributes)) {
+        return _attributes.at(type);
+    }
+    
+    return 0.0f;
+}
+
+ObjectUtils::AttackType CardProperty::getAttackType() const
+{
+    return _attackType;
+}
+
+ObjectUtils::ArmorType CardProperty::getArmorType() const
+{
+    return _armorType;
+}
+
+const std::vector<ObjectUtils::TargetType>& CardProperty::getTargetTypes() const
+{
+    return _targetTypes;
 }
 
 ObjectUtils::RuneType CardProperty::getRuneType(int idx) const

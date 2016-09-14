@@ -7,13 +7,13 @@
 //
 
 #include "CardUpgradeProperty.h"
-#include "tinyxml2/tinyxml2.h"
+#include "XMLUtils.h"
 
 CardUpgradeProperty::CardUpgradeProperty(tinyxml2::XMLElement *xmlElement)
 :AbstractUpgradeProperty(xmlElement)
 ,_cardCost(0)
 {
-    attribute2Int(xmlElement, "card", _cardCost);
+    XMLUtils::parse(xmlElement, "card", _cardCost);
 }
 
 CardUpgradeProperty::~CardUpgradeProperty() {}

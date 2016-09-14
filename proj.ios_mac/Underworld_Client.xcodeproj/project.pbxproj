@@ -113,6 +113,7 @@
 		6308F93B1CA02098009D2BFC /* TCPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6308F9371CA02098009D2BFC /* TCPClient.cpp */; };
 		63CCBFDA1CC5BA1B00590513 /* BinaryJsonTool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63CCBFD81CC5BA1B00590513 /* BinaryJsonTool.cpp */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
+		A1085D131D8944D400F916C7 /* XMLUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1085D121D8944D400F916C7 /* XMLUtils.cpp */; };
 		A108A7B31D25253700987658 /* AchievementNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A108A7B11D25253700987658 /* AchievementNode.cpp */; };
 		A108A7B61D25254600987658 /* AchievementLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A108A7B41D25254600987658 /* AchievementLayer.cpp */; };
 		A10C1D571D61795300B81896 /* DeckEditMask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A10C1D551D61795300B81896 /* DeckEditMask.cpp */; };
@@ -550,6 +551,7 @@
 		63CCBFD81CC5BA1B00590513 /* BinaryJsonTool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BinaryJsonTool.cpp; sourceTree = "<group>"; };
 		63CCBFD91CC5BA1B00590513 /* BinaryJsonTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BinaryJsonTool.h; sourceTree = "<group>"; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		A1085D121D8944D400F916C7 /* XMLUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XMLUtils.cpp; sourceTree = "<group>"; };
 		A108A7B11D25253700987658 /* AchievementNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AchievementNode.cpp; sourceTree = "<group>"; };
 		A108A7B21D25253700987658 /* AchievementNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementNode.h; sourceTree = "<group>"; };
 		A108A7B41D25254600987658 /* AchievementLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AchievementLayer.cpp; sourceTree = "<group>"; };
@@ -635,6 +637,7 @@
 		A12CFF8D1D77FBB6007E25CB /* AbstractData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractData.h; sourceTree = "<group>"; };
 		A13108A41C046BF900EAAD90 /* particle */ = {isa = PBXFileReference; lastKnownFileType = folder; path = particle; sourceTree = "<group>"; };
 		A13E39371D793364007D907A /* ObjectUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectUtils.h; sourceTree = "<group>"; };
+		A14580991D890E2100792251 /* XMLUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLUtils.h; sourceTree = "<group>"; };
 		A14B5EF91C311908006FB0DB /* Addon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Addon.cpp; path = Core/Unit/Type/Addon.cpp; sourceTree = "<group>"; };
 		A14B5EFA1C311908006FB0DB /* Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Addon.h; path = Core/Unit/Type/Addon.h; sourceTree = "<group>"; };
 		A15698D31C3A95B300B94345 /* SpellType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SpellType.cpp; path = Core/Unit/Type/SpellType.cpp; sourceTree = "<group>"; };
@@ -2018,6 +2021,8 @@
 				A13E39371D793364007D907A /* ObjectUtils.h */,
 				A1A4BA471BCE096300175E8A /* Utils.cpp */,
 				A1A4BA481BCE096300175E8A /* Utils.h */,
+				A1085D121D8944D400F916C7 /* XMLUtils.cpp */,
+				A14580991D890E2100792251 /* XMLUtils.h */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -2862,6 +2867,7 @@
 				A11649021D5AFB0100D03985 /* MainLayer.cpp in Sources */,
 				A12C60B01D50785A003FCF0D /* ExpNode.cpp in Sources */,
 				045116F61BCFBA44002AA721 /* FactionType.cpp in Sources */,
+				A1085D131D8944D400F916C7 /* XMLUtils.cpp in Sources */,
 				A1A552A81D7FFBE0009FF922 /* ChestData.cpp in Sources */,
 				A19EE96D1C1C0F1300E46D77 /* LevelProperty.cpp in Sources */,
 				A1720EAD1BCD2A8400217E98 /* NetworkApi.cpp in Sources */,

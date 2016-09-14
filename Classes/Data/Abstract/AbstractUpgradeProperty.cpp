@@ -7,8 +7,8 @@
 //
 
 #include "AbstractUpgradeProperty.h"
-#include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
+#include "XMLUtils.h"
 #include "ObjectBriefData.h"
 
 using namespace std;
@@ -18,11 +18,10 @@ AbstractUpgradeProperty::AbstractUpgradeProperty(tinyxml2::XMLElement *xmlElemen
 ,_level(0)
 {
     if (xmlElement) {
-        attribute2Int(xmlElement, "id", _id);
-        attribute2Int(xmlElement, "level", _level);
+        XMLUtils::parse(xmlElement, "id", _id);
+        XMLUtils::parse(xmlElement, "level", _level);
         
-        int gold(0);
-        attribute2Int(xmlElement, "gold", gold);
+        auto gold = XMLUtils::parse<int>(xmlElement, "gold");
         if (gold > 0) {
             _cost.insert(make_pair(ResourceType::Gold, gold));
         }
@@ -48,14 +47,4 @@ pair<ResourceType, int> AbstractUpgradeProperty::getResourceCost() const
     }
     
     return make_pair(ResourceType::MAX, 0);
-}
-
-void AbstractUpgradeProperty::attribute2Int(tinyxml2::XMLElement* xmlElement, const char* key, int& output) const
-{
-    if (xmlElement && key && strlen(key) > 0) {
-        const char* data(xmlElement->Attribute(key));
-        if (data) {
-            output = atoi(data);
-        }
-    }
 }

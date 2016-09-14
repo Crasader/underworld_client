@@ -7,13 +7,13 @@
 //
 
 #include "RuneUpgradeProperty.h"
-#include "tinyxml2/tinyxml2.h"
+#include "XMLUtils.h"
 
 RuneUpgradeProperty::RuneUpgradeProperty(tinyxml2::XMLElement *xmlElement)
 :AbstractUpgradeProperty(xmlElement)
 ,_runeCost(0)
 {
-    attribute2Int(xmlElement, "rune", _runeCost);
+    XMLUtils::parse(xmlElement, "rune", _runeCost);
 }
 
 RuneUpgradeProperty::~RuneUpgradeProperty() {}

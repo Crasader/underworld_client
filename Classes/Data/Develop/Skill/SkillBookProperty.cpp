@@ -7,13 +7,13 @@
 //
 
 #include "SkillBookProperty.h"
-#include "tinyxml2/tinyxml2.h"
+#include "XMLUtils.h"
 
 SkillBookProperty::SkillBookProperty(tinyxml2::XMLElement *xmlElement)
 :AbstractProperty(xmlElement)
 ,_beUnlockedLevel(0)
 {
-    attribute2Int(xmlElement, "unlock", _beUnlockedLevel);
+    XMLUtils::parse(xmlElement, "unlock", _beUnlockedLevel);
 }
 
 SkillBookProperty::~SkillBookProperty() {}
