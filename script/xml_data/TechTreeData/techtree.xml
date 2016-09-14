@@ -645,7 +645,7 @@
 	<damage damage_name="地雷兵被触发的爆炸伤害" damage_nature="hurt" damage_value="d:target:owner;type:max_hp;v:p:150;template:0" deliver_class="physical" is_on_building="0"/>
 	<damage damage_name="法术卡被召唤死亡守卫秒杀" damage_nature="hurt" damage_value="d:target:opposite;type:max_hp;v:p:250;template:0" deliver_class="physical" is_on_building="0"/>
 	<damage damage_name="狼人刺客闪烁后增益状态" damage_nature="hurt" damage_value="0" deliver_class="magical" feature_names="狼人刺客闪烁后增益状态" is_on_building="0"/>
-	<damage damage_name="骷髅王减血加攻击" damage_nature="hurt" damage_value="d:target:opposite;type:hp;v:p:50;template:0" deliver_class="magical" feature_names="骷髅王减血加攻击特性" is_on_building="0"/>
+	<damage damage_name="骷髅王减血加攻击" damage_nature="hurt" damage_value="d:target:opposite;type:hp;v:p:20;template:0" deliver_class="magical" feature_names="骷髅王减血加攻击特性" is_on_building="0"/>
 	<damage damage_name="人族剑士队长狂暴大招" damage_nature="heal" damage_value="0" deliver_class="magical" feature_names="人族剑士队长狂暴大招特性" is_on_building="0"/>
 	<effect class="set_state" effect_name="沉默效果" state_name="silence"/>
 	<effect class="set_state" effect_name="击晕效果" state_name="stun"/>
