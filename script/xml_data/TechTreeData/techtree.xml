@@ -645,7 +645,7 @@
 	<damage damage_name="地雷兵被触发的爆炸伤害" damage_nature="hurt" damage_value="d:target:owner;type:max_hp;v:p:150;template:0" deliver_class="physical" is_on_building="0"/>
 	<damage damage_name="法术卡被召唤死亡守卫秒杀" damage_nature="hurt" damage_value="d:target:opposite;type:max_hp;v:p:250;template:0" deliver_class="physical" is_on_building="0"/>
 	<damage damage_name="狼人刺客闪烁后增益状态" damage_nature="hurt" damage_value="0" deliver_class="magical" feature_names="狼人刺客闪烁后增益状态" is_on_building="0"/>
-	<damage damage_name="骷髅王减血加攻击" damage_nature="heal" damage_value="0" deliver_class="magical" feature_names="骷髅王减血加攻击特性" is_on_building="0"/>
+	<damage damage_name="骷髅王减血加攻击" damage_nature="hurt" damage_value="d:target:opposite;type:hp;v:p:50;template:0" deliver_class="magical" feature_names="骷髅王减血加攻击特性" is_on_building="0"/>
 	<damage damage_name="人族剑士队长狂暴大招" damage_nature="heal" damage_value="0" deliver_class="magical" feature_names="人族剑士队长狂暴大招特性" is_on_building="0"/>
 	<effect class="set_state" effect_name="沉默效果" state_name="silence"/>
 	<effect class="set_state" effect_name="击晕效果" state_name="stun"/>
@@ -815,7 +815,7 @@
 	<feature_group determine_timing="hit" feature_type_names="狼人刺客闪烁后增益状态" name="狼人刺客闪烁后增益状态"/>
 	<feature_group determine_timing="hit" feature_type_names="梦魇nova减速特性" name="梦魇nova减速效果"/>
 	<feature_group determine_timing="hit" feature_type_names="梦魇nova冰冻特性" name="梦魇nova冰冻效果"/>
-	<feature_group determine_timing="heal" feature_type_names="骷髅王减血效果;骷髅王加攻击效果" name="骷髅王减血加攻击特性"/>
+	<feature_group determine_timing="hurt" feature_type_names="骷髅王加攻击效果" name="骷髅王减血加攻击特性"/>
 	<feature_group determine_timing="heal" feature_type_names="人族剑士队长狂暴大招加攻速效果;人族剑士队长狂暴大招加吸血效果" name="人族剑士队长狂暴大招特性"/>
 	<feature_group determine_timing="attack" feature_type_names="人族剑士队长狂暴大招吸血效果" name="人族剑士队长狂暴大招吸血效果"/>
 	<feature effect_timing="be_killed" feature_name="中立兽族食人鬼王重生" type="drain" value="d:target:owner;type:max_hp;v:p:100;template:0"/>
@@ -900,8 +900,8 @@
 	<feature buff_type_name="狼人刺客闪烁后增益状态" effect_timing="hit" feature_name="狼人刺客闪烁后增益状态" is_to_self="1" type="add_buff"/>
 	<feature buff_type_name="buff梦魇nova减速" effect_timing="hit" feature_name="梦魇nova减速特性" is_to_self="0" overlay="1" type="add_buff"/>
 	<feature buff_type_name="buff梦魇nova冰冻" effect_timing="hit" feature_name="梦魇nova冰冻特性" is_to_self="0" overlay="1" type="add_buff"/>
-	<feature buff_type_name="buff骷髅王减血" effect_timing="heal" feature_name="骷髅王减血效果" type="add_buff"/>
-	<feature buff_type_name="buff骷髅王加攻击" effect_timing="heal" feature_name="骷髅王加攻击效果" type="add_buff"/>
+	<feature buff_type_name="buff骷髅王减血" effect_timing="hurt" feature_name="骷髅王减血效果" type="add_buff"/>
+	<feature buff_type_name="buff骷髅王加攻击" effect_timing="hurt" feature_name="骷髅王加攻击效果" type="add_buff"/>
 	<feature buff_type_name="buff人族剑士队长狂暴大招加攻速" effect_timing="heal" feature_name="人族剑士队长狂暴大招加攻速效果" is_to_self="1" overlay="1" type="add_buff"/>
 	<feature buff_type_name="buff人族剑士队长狂暴大招加吸血" effect_timing="heal" feature_name="人族剑士队长狂暴大招加吸血效果" is_to_self="1" overlay="1" type="add_buff"/>
 	<feature effect_timing="hurt" feature_name="人族剑士队长狂暴大招吸血效果" type="drain" value="d:target:owner;type:attack_damage;v:p:200;template:0"/>
