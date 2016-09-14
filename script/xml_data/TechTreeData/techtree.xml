@@ -695,7 +695,7 @@
 	<effect alias_name="梦魇nova冰冻" class="set_state" effect_name="梦魇nova冰冻" state_name="unmoveable"/>
 	<effect alias_name="石像鬼减甲" attr_name="armor" class="alter_attr" effect_name="石像鬼减甲" value="p:-40"/>
 	<effect alias_name="增加攻击效果" attr_name="attack_damage" class="alter_attr" effect_name="狼人刺客闪烁后增加攻击" value="p:50"/>
-	<effect alias_name="骷髅王减血" attr_name="hp" class="alter_attr" effect_name="骷髅王减血" value="p:-20"/>
+	<effect alias_name="骷髅王减血" attr_name="max_hp" class="alter_attr" effect_name="骷髅王减血" value="p:-20"/>
 	<effect alias_name="骷髅王加攻击" attr_name="attack_damage" class="alter_attr" effect_name="骷髅王加攻击" value="p:50"/>
 	<effect attr_name="attack_speed" class="alter_attr" effect_name="人族剑士队长狂暴大招加攻速" value="100"/>
 	<effect alias_name="人族剑士队长狂暴大招加吸血" class="add_feature" effect_name="人族剑士队长狂暴大招加吸血" feature_name="人族剑士队长狂暴大招吸血效果"/>
