@@ -20,6 +20,7 @@
 #include "UWRender.h"
 #include "Skill.h"
 #include "CocosUtils.h"
+#include "RenderHelper.h"
 
 namespace UnderWorld{ namespace Core{
     
@@ -209,15 +210,7 @@ cocos2d::Node* UnitRender::addEffect(const std::string &renderKey, bool loop) {
         // check data
         if (!data) break;
         
-        // check file
-        const std::string& file = data->getFgResource();
-        if (file.empty()) break;
-        
-        function<void(Node*)> callback = nullptr;
-        if (!loop) {
-            callback = [](Node* sender) { if (sender) sender->removeFromParent(); };
-        }
-        ret = CocosUtils::playAnimation(file, DEFAULT_FRAME_DELAY, loop, 0, -1, callback);
+        ret = RenderHelper::buildEffectNode(data->getFgResource(), loop, nullptr);
         
     } while (0);
     
@@ -225,7 +218,7 @@ cocos2d::Node* UnitRender::addEffect(const std::string &renderKey, bool loop) {
     if (ret) {
         //TODO: consider effect direction
         int foregourndZorder = IN_MAIN_BODY_EFFECT_FOREGROUND_ZORDER;
-        cocos2d::Vec2 pos;
+        cocos2d::Vec2 pos(0.f, 0.f);
         if (data->getSpellPosition() == SpellConfigData::kHead) {
             if (_configData) pos.set(_configData->getHeadEffectPosX(), _configData->getHeadEffectPosY());
             foregourndZorder = IN_MAIN_BODY_EFFECT_FOREGROUND_ZORDER;
@@ -233,12 +226,11 @@ cocos2d::Node* UnitRender::addEffect(const std::string &renderKey, bool loop) {
             if (_configData) pos.set(_configData->getBodyEffectPosX(), _configData->getBodyEffectPosY());
             foregourndZorder = IN_MAIN_BODY_EFFECT_FOREGROUND_ZORDER;
         } else if (data->getSpellPosition() == SpellConfigData::kFoot) {
-            pos.set(0.f, 0.f);
             foregourndZorder = IN_MAIN_FOOT_EFFECT_FOREGROUND_ZORDER;
         }
         
         ret->setPosition(pos);
-        ret->setScale(_configData->getEffectScale() * data->getScale());
+        ret->setScale(_configData->getEffectScale() * ret->getScale());
         if (data->getSpellPosition() == SpellConfigData::kFoot) {
             _groundNode->addChild(ret, foregourndZorder);
         } else {

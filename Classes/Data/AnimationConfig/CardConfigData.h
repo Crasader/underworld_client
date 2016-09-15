@@ -11,6 +11,8 @@
 
 #include <iostream>
 
+#include "EffectData.h"
+
 namespace tinyxml2 { class XMLElement; }
 
 class CardConfigData
@@ -23,14 +25,14 @@ public:
     const std::string& getIcon() const;
     const std::string& getSmallIcon() const;
     const std::string& getDisabledIcon() const;
-    const std::string& getTips() const;
+    const EffectData& getTips() const;
     
 private:
     int _cardId;
     std::string _icon;
     std::string _smallIcon;
     std::string _disabledIcon;
-    std::string _tips;
+    EffectData _tips;
 };
 
 #endif /* CardConfigData_h */

@@ -12,6 +12,7 @@
 #include "DataManager.h"
 #include "WorldRender.h"
 #include "CocosUtils.h"
+#include "RenderHelper.h"
 
 namespace UnderWorld{ namespace Core{
     
@@ -174,28 +175,8 @@ void BulletRender::onNotifyBulletEvents(const std::vector<Bullet::EventLog>& eve
     }
 }
     
-cocos2d::Node* BulletRender::addEffect(const std::string&file, bool loop, bool toBody, const std::function<void ()>& callback) {
-    cocos2d::Node* ret = nullptr;
-    
-    // create node
-    do {
-        // check file
-        if (file.empty()) break;
-        
-        function<void(cocos2d::Node*)> func = nullptr;
-        if (!loop) {
-            func = [callback](cocos2d::Node* sender) {
-                if (sender) {
-                    sender->removeFromParent();
-                }
-                //TODO: check if this bug, sender->removeFromParent() cause sender release
-                // check whether func is release with sender
-                callback();
-            };
-        }
-        
-        ret = CocosUtils::playAnimation(file, DEFAULT_FRAME_DELAY, loop, 0, -1, func);
-    } while (0);
+cocos2d::Node* BulletRender::addEffect(const EffectData& effectData, bool loop, bool toBody, const std::function<void ()>& callback) {
+    cocos2d::Node* ret = RenderHelper::buildEffectNode(effectData, loop, callback);
     
     // attach node
     if (ret) {
@@ -261,27 +242,25 @@ void BulletRender::renderPosition(const Coordinate32& currentPos) {
 void BulletRender::renderFlyingAnimation() {
     // create bodyNode
     if (!_body) {
-        const std::string& file = _configData->getResource();
-        _body = addEffect(file, true, true);
+        _body = addEffect(_configData->getResource(), true, true);
     }
     
     // set params
     if (_body) {
         _body->setRotation(_rotation);
-        _body->setScaleX(_scale * _configData->getScaleX());
-        _body->setScaleY(_configData->getScaleY());
+        _body->setScaleX(_scale * _configData->getResource().getScale());
+        _body->setScaleY(_configData->getResource().getScale());
     }
     
     // create shadow
     if (!_shadow) {
-        const std::string& file = _configData->getShadowResource();
-        _shadow = addEffect(file, true, false);
+        _shadow = addEffect(_configData->getShadowResource(), true, false);
     }
     
     if (_shadow) {
         _shadow->setRotation(_rotation);
-        _shadow->setScaleX(_scale * _configData->getScaleX());
-        _shadow->setScaleY(_configData->getScaleY());
+        _shadow->setScaleX(_scale * _configData->getShadowResource().getScale());
+        _shadow->setScaleY(_configData->getShadowResource().getScale());
     }
     
 }
@@ -297,11 +276,7 @@ void BulletRender::renderExplodeAnimation() {
         _shadow = nullptr;
     }
     
-    std::string file;
-    if (_configData) {
-        file = _configData->getExplodeResource();
-    }
-    auto ret = addEffect(file, false, true, std::bind(&BulletRender::explodeCallback, this));
+    auto ret = addEffect(_configData->getExplodeResource(), false, true, std::bind(&BulletRender::explodeCallback, this));
     
     if (!ret) explodeCallback();
 }

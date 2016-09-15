@@ -18,6 +18,8 @@
 #include "Bullet.h"
 #include "Coordinate.h"
 
+class EffectData;
+
 namespace UnderWorld{ namespace Core{
     
 class BulletRender : public AbstractWorldObjectRender, public BulletObserver {
@@ -82,7 +84,7 @@ public:
     virtual void onNotifyBulletEvents(const std::vector<Bullet::EventLog>& events) override;
     
     /** interface */
-    cocos2d::Node* addEffect(const std::string& file, bool loop, bool toBody, const std::function<void ()>& callback = nullptr);
+    cocos2d::Node* addEffect(const EffectData& effectData, bool loop, bool toBody, const std::function<void ()>& callback = nullptr);
     
 private:
     void updateParams(const Coordinate32& currentPos,

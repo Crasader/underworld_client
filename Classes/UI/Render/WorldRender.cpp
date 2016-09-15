@@ -24,6 +24,7 @@
 #include "SpellConfigData.h"
 #include "GameModeHMM.h"
 #include "CardConfigData.h"
+#include "RenderHelper.h"
 
 USING_NS_CC;
 
@@ -285,15 +286,7 @@ cocos2d::Node* WorldRender::addEffect(const std::string &renderKey, bool loop,
         // check data
         if (!data) break;
         
-        // check file
-        const std::string& file = data->getFgResource();
-        if (file.empty()) break;
-        
-        function<void(Node*)> callback = nullptr;
-        if (!loop) {
-            callback = [](Node* sender) { if (sender) sender->removeFromParent(); };
-        }
-        ret = CocosUtils::playAnimation(file, DEFAULT_FRAME_DELAY, loop, 0, -1, callback);
+        ret = RenderHelper::buildEffectNode(data->getFgResource(), loop, nullptr);
     } while (0);
     
     // attach node
@@ -301,7 +294,6 @@ cocos2d::Node* WorldRender::addEffect(const std::string &renderKey, bool loop,
         int zorder = worldCoordinate2Zorder(pos, (RenderLayer)data->getSpellRenderLayer(), data->getSpellHeight());
         cocos2d::Vec2 position = worldCoordinate2CocosPoint(pos, (RenderLayer)data->getSpellRenderLayer(), data->getSpellHeight());
         ret->setPosition(position);
-        ret->setScale(data->getScale());
         _worldContainer->addChild(ret, zorder);
     }
     
@@ -455,8 +447,8 @@ void WorldRender::createHMMCardPlaceTipsView(const HMMCardType *cardType, const 
     } else if (cardType->getCardClass() == kHMMCardClass_Spell) {
         const CardConfigData* ccd = DataManager::getInstance()->getCardConfigData(cardType->getId());
         
-        if (ccd && !ccd->getTips().empty()) {
-            outputTipsView = CocosUtils::playAnimation(ccd->getTips(), DEFAULT_FRAME_DELAY, true);
+        if (ccd) {
+            outputTipsView = RenderHelper::buildEffectNode(ccd->getTips(), true, nullptr);
             outputShadowView = nullptr;
         }
     }

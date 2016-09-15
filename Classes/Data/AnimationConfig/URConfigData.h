@@ -11,6 +11,8 @@
 
 #include "cocos2d.h"
 
+#include "EffectData.h"
+
 USING_NS_CC;
 
 namespace tinyxml2 { class XMLElement; }

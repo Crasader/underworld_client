@@ -13,28 +13,14 @@
 
 #include "cocos2d.h"
 
-class SpellConfigData;
+class EffectData;
 
 namespace UnderWorld{ namespace Core{
 
 class RenderHelper {
 public:
-    class SpellEffectBundle {
-    public:
-        const SpellConfigData* _spellConfigData;
-        cocos2d::Node* _foregroundNode;
-        cocos2d::Node* _backgroundNode;
-        
-    public:
-        SpellEffectBundle() :
-            _spellConfigData(nullptr),
-            _foregroundNode(nullptr),
-            _backgroundNode(nullptr) {}
-    };
-    
-public:
-    static SpellEffectBundle buildSpellEffect(
-        const std::string& renderKey,
+    static cocos2d::Node* buildEffectNode(
+        const EffectData& effectData,
         bool loop,
         const std::function<void ()>& callback);
 

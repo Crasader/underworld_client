@@ -20,7 +20,6 @@ SpellConfigData::SpellConfigData(tinyxml2::XMLElement *xmlElement)
 , _spellRenderLayer(0)
 , _spellHeight(0)
 , _loop(true)
-, _scale(1.f)
 {
     if (xmlElement) {
         {
@@ -72,23 +71,13 @@ SpellConfigData::SpellConfigData(tinyxml2::XMLElement *xmlElement)
         {
             const char *data = xmlElement->Attribute("foreground_resource");
             if (data && strlen(data) > 0) {
-                const size_t found = std::string(data).find(PILIST_SUFFIX);
-                if (found != string::npos) {
-                    _foregroundResource = std::string("particle/") + data;
-                } else {
-                    _foregroundResource = data;
-                }
+                _foregroundResource.init(data);
             }
         }
         {
             const char *data = xmlElement->Attribute("background_resource");
             if (data && strlen(data) > 0) {
-                const size_t found = std::string(data).find(PILIST_SUFFIX);
-                if (found != string::npos) {
-                    _backgroundResource = std::string("particle/") + data;
-                } else {
-                    _backgroundResource = data;
-                }
+                _backgroundResource.init(data);
             }
         }
         {
@@ -97,13 +86,6 @@ SpellConfigData::SpellConfigData(tinyxml2::XMLElement *xmlElement)
                 _effectSound = data;
             }
         }
-        {
-            const char *data = xmlElement->Attribute("scale");
-            if (data && strlen(data) > 0) {
-                _scale = atof(data);
-            }
-        }
-
     }
 }
 

@@ -14,6 +14,7 @@
 #include <unordered_map>
 
 #include "GameConstants.h"
+#include "EffectData.h"
 
 namespace tinyxml2 { class XMLElement; }
 
@@ -49,10 +50,9 @@ public:
     
     // resource
     bool isLoop() const                            {return _loop;}
-    const std::string& getFgResource() const       {return _foregroundResource;}
-    const std::string& getBgResource() const       {return _backgroundResource;}
+    const EffectData& getFgResource() const        {return _foregroundResource;}
+    const EffectData& getBgResource() const        {return _backgroundResource;}
     const std::string& effectSound() const         {return _effectSound;}
-    float getScale() const                         {return _scale;}
     
 private:
     std::string _renderKey;
@@ -66,10 +66,9 @@ private:
     UnderWorld::Core::mapsize_t _spellHeight;
     
     bool _loop;
-    std::string _foregroundResource;
-    std::string _backgroundResource;
+    EffectData _foregroundResource;
+    EffectData _backgroundResource;
     std::string _effectSound;
-    float _scale;
 };
 
 #endif /* SpellConfigData_h */
