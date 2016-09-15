@@ -12,13 +12,18 @@
 	<item name="pvr/Fat.plist"/>
 	<item name="pvr/Ghoul-shadows.plist"/>
 	<item name="pvr/Ghoul.plist"/>
+	<item name="pvr/HumanPriest-shadows.plist"/>
 	<item name="pvr/HumanPriest.plist"/>
+	<item name="pvr/HumanWarrior-shadows-win.plist"/>
 	<item name="pvr/HumanWarrior-shadows.plist"/>
+	<item name="pvr/HumanWarrior-win.plist"/>
 	<item name="pvr/HumanWarrior.plist"/>
 	<item name="pvr/MoHead-shadows-win.plist"/>
 	<item name="pvr/MoHead-shadows.plist"/>
 	<item name="pvr/MoHead.plist"/>
+	<item name="pvr/Niutoubing-shadows-sw.plist"/>
 	<item name="pvr/Niutoubing-shadows.plist"/>
+	<item name="pvr/Niutoubing-sw.plist"/>
 	<item name="pvr/Niutoubing.plist"/>
 	<item name="pvr/Rifleman-shadows.plist"/>
 	<item name="pvr/Rifleman.plist"/>
@@ -28,6 +33,7 @@
 	<item name="pvr/soldier-Archer.plist"/>
 	<item name="pvr/TerranMage-shadows.plist"/>
 	<item name="pvr/TerranMage.plist"/>
+	<item name="pvr/Thrall-shadows-win.plist"/>
 	<item name="pvr/Thrall-shadows.plist"/>
 	<item name="pvr/Thrall-skill.plist"/>
 	<item name="pvr/Thrall.plist"/>

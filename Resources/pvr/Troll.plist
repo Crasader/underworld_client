@@ -15,9 +15,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{627,1391},{74,98}}</string>
+                <string>{{453,327},{74,98}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/attack/body/0/10002.png</key>
             <dict>
@@ -26,11 +26,11 @@
                 <key>spriteOffset</key>
                 <string>{2,27}</string>
                 <key>spriteSize</key>
-                <string>{72,86}</string>
+                <string>{70,86}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1069,1601},{72,86}}</string>
+                <string>{{757,433},{70,86}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -39,13 +39,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{6,6}</string>
+                <string>{6,5}</string>
                 <key>spriteSize</key>
                 <string>{88,100}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{367,1289},{88,100}}</string>
+                <string>{{291,839},{88,100}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -60,9 +60,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{87,523},{116,70}}</string>
+                <string>{{1115,1},{116,70}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/attack/body/0/10005.png</key>
             <dict>
@@ -75,24 +75,24 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,1},{56,138}}</string>
+                <string>{{729,1},{56,138}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/attack/body/0/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-4,50}</string>
+                <string>{-4,49}</string>
                 <key>spriteSize</key>
-                <string>{50,116}</string>
+                <string>{50,114}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,887},{50,116}}</string>
+                <string>{{235,87},{50,114}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/attack/body/0/10007.png</key>
             <dict>
@@ -105,7 +105,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{129,1997},{50,88}}</string>
+                <string>{{149,433},{50,88}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -120,7 +120,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{61,1679},{62,104}}</string>
+                <string>{{655,143},{62,104}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -135,24 +135,24 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1035,1417},{70,88}}</string>
+                <string>{{833,521},{70,88}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/attack/body/1/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{10,14}</string>
+                <string>{10,15}</string>
                 <key>spriteSize</key>
-                <string>{80,98}</string>
+                <string>{80,100}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{669,203},{80,98}}</string>
+                <string>{{405,671},{80,100}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/attack/body/1/10004.png</key>
             <dict>
@@ -165,9 +165,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{975,891},{90,80}}</string>
+                <string>{{553,327},{90,80}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/attack/body/1/10005.png</key>
             <dict>
@@ -180,7 +180,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,141},{92,128}}</string>
+                <string>{{1,119},{92,128}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -191,11 +191,11 @@
                 <key>spriteOffset</key>
                 <string>{-2,48}</string>
                 <key>spriteSize</key>
-                <string>{60,116}</string>
+                <string>{58,116}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{201,243},{60,116}}</string>
+                <string>{{95,239},{58,116}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -210,7 +210,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{943,1541},{62,90}}</string>
+                <string>{{1493,475},{62,90}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -225,7 +225,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,1463},{58,110}}</string>
+                <string>{{143,599},{58,110}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -240,9 +240,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{613,1099},{68,96}}</string>
+                <string>{{595,837},{68,96}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/attack/body/2/10003.png</key>
             <dict>
@@ -255,24 +255,24 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{857,1449},{88,90}}</string>
+                <string>{{1791,325},{88,90}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/attack/body/2/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{3,33}</string>
+                <string>{4,33}</string>
                 <key>spriteSize</key>
                 <string>{60,94}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{737,1891},{60,94}}</string>
+                <string>{{693,847},{60,94}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/attack/body/2/10005.png</key>
             <dict>
@@ -285,7 +285,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,769},{116,116}}</string>
+                <string>{{1,1},{116,116}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -300,9 +300,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{75,399},{78,122}}</string>
+                <string>{{605,1},{78,122}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/attack/body/2/10007.png</key>
             <dict>
@@ -315,7 +315,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{613,1697},{72,100}}</string>
+                <string>{{155,331},{72,100}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -330,9 +330,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{159,491},{66,112}}</string>
+                <string>{{467,89},{66,112}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/attack/body/3/10002.png</key>
             <dict>
@@ -345,9 +345,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{395,801},{70,102}}</string>
+                <string>{{729,521},{70,102}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/attack/body/3/10003.png</key>
             <dict>
@@ -360,9 +360,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{461,1493},{82,100}}</string>
+                <string>{{507,671},{82,100}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/attack/body/3/10004.png</key>
             <dict>
@@ -375,9 +375,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{841,1},{70,96}}</string>
+                <string>{{483,991},{70,96}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/attack/body/3/10005.png</key>
             <dict>
@@ -390,9 +390,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,1123},{114,100}}</string>
+                <string>{{119,1},{114,100}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/attack/body/3/10006.png</key>
             <dict>
@@ -405,9 +405,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{59,1},{84,126}}</string>
+                <string>{{235,1},{84,126}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/attack/body/3/10007.png</key>
             <dict>
@@ -420,9 +420,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{143,883},{78,112}}</string>
+                <string>{{1351,1},{78,112}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/attack/body/4/10001.png</key>
             <dict>
@@ -435,9 +435,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{299,977},{80,104}}</string>
+                <string>{{409,499},{80,104}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/attack/body/4/10002.png</key>
             <dict>
@@ -450,9 +450,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{411,693},{68,102}}</string>
+                <string>{{789,845},{68,102}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/attack/body/4/10003.png</key>
             <dict>
@@ -465,9 +465,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{589,1901},{72,100}}</string>
+                <string>{{591,763},{72,100}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/attack/body/4/10004.png</key>
             <dict>
@@ -480,22 +480,22 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{465,1391},{100,82}}</string>
+                <string>{{381,935},{100,82}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/attack/body/4/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-18,26}</string>
+                <string>{-19,26}</string>
                 <key>spriteSize</key>
                 <string>{92,90}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1093,95},{92,90}}</string>
+                <string>{{755,1073},{92,90}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -510,7 +510,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,271},{76,126}}</string>
+                <string>{{1,495},{76,126}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -525,7 +525,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{229,1},{76,118}}</string>
+                <string>{{1,749},{76,118}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -534,13 +534,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-9,31}</string>
+                <string>{-9,30}</string>
                 <key>spriteSize</key>
-                <string>{80,94}</string>
+                <string>{80,92}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{799,605},{80,94}}</string>
+                <string>{{609,669},{80,92}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -551,13 +551,13 @@
                 <key>spriteOffset</key>
                 <string>{1,31}</string>
                 <key>spriteSize</key>
-                <string>{76,94}</string>
+                <string>{74,94}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{769,1045},{76,94}}</string>
+                <string>{{559,157},{74,94}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/attack/body/5/10003.png</key>
             <dict>
@@ -570,7 +570,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{927,1953},{82,92}}</string>
+                <string>{{1639,427},{82,92}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -579,28 +579,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-35,25}</string>
+                <string>{-35,26}</string>
                 <key>spriteSize</key>
-                <string>{120,82}</string>
+                <string>{120,84}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{145,1},{120,82}}</string>
+                <string>{{363,1},{120,84}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/attack/body/5/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-5,28}</string>
+                <string>{-6,29}</string>
                 <key>spriteSize</key>
-                <string>{50,88}</string>
+                <string>{50,90}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{545,1339},{50,88}}</string>
+                <string>{{331,1019},{50,90}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -615,9 +615,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{79,271},{54,122}}</string>
+                <string>{{869,1},{54,122}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/attack/body/5/10007.png</key>
             <dict>
@@ -630,7 +630,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,649},{58,118}}</string>
+                <string>{{95,119},{58,118}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -639,13 +639,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-5,34}</string>
+                <string>{-4,34}</string>
                 <key>spriteSize</key>
-                <string>{76,90}</string>
+                <string>{74,90}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{987,681},{76,90}}</string>
+                <string>{{827,247},{74,90}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -660,7 +660,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{805,1235},{68,92}}</string>
+                <string>{{823,339},{68,92}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -669,15 +669,15 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-11,32}</string>
+                <string>{-11,33}</string>
                 <key>spriteSize</key>
-                <string>{86,86}</string>
+                <string>{86,88}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1049,1163},{86,86}}</string>
+                <string>{{993,433},{86,88}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/attack/body/6/10004.png</key>
             <dict>
@@ -690,7 +690,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,525},{122,84}}</string>
+                <string>{{1,371},{122,84}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -699,15 +699,15 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{6,30}</string>
+                <string>{6,31}</string>
                 <key>spriteSize</key>
-                <string>{60,82}</string>
+                <string>{60,84}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1073,1897},{60,82}}</string>
+                <string>{{1477,749},{60,84}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/attack/body/6/10006.png</key>
             <dict>
@@ -720,9 +720,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,1005},{50,116}}</string>
+                <string>{{729,59},{50,116}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/attack/body/6/10007.png</key>
             <dict>
@@ -735,7 +735,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{227,475},{50,112}}</string>
+                <string>{{79,495},{50,112}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -750,9 +750,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{547,1107},{64,98}}</string>
+                <string>{{999,217},{64,98}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/run/body/0/10002.png</key>
             <dict>
@@ -765,7 +765,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1137,1689},{64,84}}</string>
+                <string>{{1199,233},{64,84}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -776,41 +776,41 @@
                 <key>spriteOffset</key>
                 <string>{-1,23}</string>
                 <key>spriteSize</key>
-                <string>{64,80}</string>
+                <string>{62,80}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1073,1981},{64,80}}</string>
+                <string>{{1493,567},{62,80}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/run/body/0/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{1,30}</string>
+                <string>{1,31}</string>
                 <key>spriteSize</key>
-                <string>{60,86}</string>
+                <string>{60,88}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1137,1143},{60,86}}</string>
+                <string>{{1563,845},{60,88}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/run/body/0/10005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-2,24}</string>
+                <string>{-1,24}</string>
                 <key>spriteSize</key>
-                <string>{64,82}</string>
+                <string>{62,82}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1185,1231},{64,82}}</string>
+                <string>{{1643,343},{62,82}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -825,7 +825,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1199,1143},{64,82}}</string>
+                <string>{{1083,1083},{64,82}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -840,9 +840,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{689,735},{64,96}}</string>
+                <string>{{1289,729},{64,96}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/run/body/1/10002.png</key>
             <dict>
@@ -855,9 +855,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1177,1339},{70,82}}</string>
+                <string>{{923,521},{70,82}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/run/body/1/10003.png</key>
             <dict>
@@ -870,7 +870,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1227,1563},{74,72}}</string>
+                <string>{{925,171},{74,72}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -879,13 +879,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-4,28}</string>
+                <string>{-4,29}</string>
                 <key>spriteSize</key>
                 <string>{72,86}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1081,1507},{72,86}}</string>
+                <string>{{919,433},{72,86}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -900,7 +900,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1203,1679},{76,78}}</string>
+                <string>{{1653,905},{76,78}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -909,13 +909,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{1,25}</string>
+                <string>{0,25}</string>
                 <key>spriteSize</key>
                 <string>{74,82}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1155,1479},{74,82}}</string>
+                <string>{{939,1083},{74,82}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -930,7 +930,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1063,1811},{84,82}}</string>
+                <string>{{1707,341},{84,82}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -945,9 +945,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1135,1897},{80,76}}</string>
+                <string>{{1361,321},{80,76}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/run/body/2/10003.png</key>
             <dict>
@@ -960,9 +960,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1045,1301},{88,70}}</string>
+                <string>{{291,941},{88,70}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/run/body/2/10004.png</key>
             <dict>
@@ -975,9 +975,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{713,1165},{94,78}}</string>
+                <string>{{1265,315},{94,78}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/run/body/2/10005.png</key>
             <dict>
@@ -986,13 +986,13 @@
                 <key>spriteOffset</key>
                 <string>{4,26}</string>
                 <key>spriteSize</key>
-                <string>{88,70}</string>
+                <string>{88,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1047,1073},{88,70}}</string>
+                <string>{{1387,729},{88,68}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/run/body/2/10006.png</key>
             <dict>
@@ -1005,7 +1005,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1147,1775},{80,76}}</string>
+                <string>{{1211,1079},{80,76}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -1020,39 +1020,39 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{645,311},{98,82}}</string>
+                <string>{{1099,219},{98,82}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/run/body/3/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-11,26}</string>
+                <string>{-11,27}</string>
                 <key>spriteSize</key>
-                <string>{92,82}</string>
+                <string>{92,84}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{793,1141},{92,82}}</string>
+                <string>{{1853,239},{92,84}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/run/body/3/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{1,23}</string>
+                <string>{1,24}</string>
                 <key>spriteSize</key>
-                <string>{92,74}</string>
+                <string>{92,76}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1055,283},{92,74}}</string>
+                <string>{{633,249},{92,76}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/run/body/3/10004.png</key>
             <dict>
@@ -1061,11 +1061,11 @@
                 <key>spriteOffset</key>
                 <string>{2,31}</string>
                 <key>spriteSize</key>
-                <string>{100,68}</string>
+                <string>{98,68}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{499,549},{100,68}}</string>
+                <string>{{1649,709},{98,68}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -1080,9 +1080,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{795,1449},{92,60}}</string>
+                <string>{{1793,657},{92,60}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/run/body/3/10006.png</key>
             <dict>
@@ -1095,7 +1095,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{985,783},{90,78}}</string>
+                <string>{{903,247},{90,78}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -1104,28 +1104,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-22,35}</string>
+                <string>{-22,36}</string>
                 <key>spriteSize</key>
                 <string>{106,88}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{223,869},{106,88}}</string>
+                <string>{{233,139},{106,88}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/run/body/4/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-17,27}</string>
+                <string>{-16,27}</string>
                 <key>spriteSize</key>
-                <string>{92,92}</string>
+                <string>{90,92}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{799,1887},{92,92}}</string>
+                <string>{{541,233},{90,92}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1140,9 +1140,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{947,1421},{88,86}}</string>
+                <string>{{829,433},{88,86}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/run/body/4/10004.png</key>
             <dict>
@@ -1155,9 +1155,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{795,1355},{92,72}}</string>
+                <string>{{691,689},{92,72}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/run/body/4/10005.png</key>
             <dict>
@@ -1170,9 +1170,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{991,1633},{88,76}}</string>
+                <string>{{1473,811},{88,76}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/run/body/4/10006.png</key>
             <dict>
@@ -1185,7 +1185,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1119,1055},{86,84}}</string>
+                <string>{{1945,803},{86,84}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -1194,15 +1194,15 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-13,32}</string>
+                <string>{-13,33}</string>
                 <key>spriteSize</key>
-                <string>{92,90}</string>
+                <string>{92,92}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1095,1},{92,90}}</string>
+                <string>{{213,1073},{92,92}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/run/body/5/10002.png</key>
             <dict>
@@ -1215,7 +1215,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{459,1139},{86,98}}</string>
+                <string>{{1113,593},{86,98}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1224,30 +1224,30 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-12,24}</string>
+                <string>{-13,25}</string>
                 <key>spriteSize</key>
                 <string>{76,90}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1027,581},{76,90}}</string>
+                <string>{{1401,563},{76,90}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/run/body/5/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-10,32}</string>
+                <string>{-10,33}</string>
                 <key>spriteSize</key>
                 <string>{76,88}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{977,1725},{76,88}}</string>
+                <string>{{1793,499},{76,88}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/run/body/5/10005.png</key>
             <dict>
@@ -1260,9 +1260,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{967,1099},{78,88}}</string>
+                <string>{{1793,577},{78,88}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/run/body/5/10006.png</key>
             <dict>
@@ -1275,7 +1275,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1143,1595},{82,82}}</string>
+                <string>{{1947,719},{82,82}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1290,9 +1290,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{737,1987},{60,94}}</string>
+                <string>{{1883,801},{60,94}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/run/body/6/10002.png</key>
             <dict>
@@ -1305,7 +1305,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{659,971},{68,96}}</string>
+                <string>{{1723,427},{68,96}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1320,7 +1320,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1107,1391},{68,86}}</string>
+                <string>{{1723,623},{68,86}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1335,9 +1335,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{881,593},{64,94}}</string>
+                <string>{{1541,409},{64,94}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/run/body/6/10005.png</key>
             <dict>
@@ -1350,7 +1350,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{833,1981},{66,92}}</string>
+                <string>{{831,179},{66,92}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -1365,7 +1365,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{909,1729},{66,90}}</string>
+                <string>{{1811,895},{66,90}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1376,13 +1376,13 @@
                 <key>spriteOffset</key>
                 <string>{0,37}</string>
                 <key>spriteSize</key>
-                <string>{76,98}</string>
+                <string>{74,98}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{549,1391},{76,98}}</string>
+                <string>{{1443,323},{74,98}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/0/10002.png</key>
             <dict>
@@ -1395,24 +1395,24 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{373,1737},{80,102}}</string>
+                <string>{{787,763},{80,102}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/0/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-1,35}</string>
+                <string>{-1,36}</string>
                 <key>spriteSize</key>
-                <string>{72,92}</string>
+                <string>{72,94}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1099,189},{72,92}}</string>
+                <string>{{1557,907},{72,94}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/0/10004.png</key>
             <dict>
@@ -1425,9 +1425,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{837,817},{66,94}}</string>
+                <string>{{1079,365},{66,94}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/0/10005.png</key>
             <dict>
@@ -1440,22 +1440,22 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{521,435},{66,100}}</string>
+                <string>{{891,57},{66,100}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/0/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-5,32}</string>
+                <string>{-6,32}</string>
                 <key>spriteSize</key>
                 <string>{60,86}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1011,1903},{60,86}}</string>
+                <string>{{1149,1079},{60,86}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1464,15 +1464,15 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-11,42}</string>
+                <string>{-11,41}</string>
                 <key>spriteSize</key>
-                <string>{64,108}</string>
+                <string>{64,106}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{61,1463},{64,108}}</string>
+                <string>{{1797,95},{64,106}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/0/10008.png</key>
             <dict>
@@ -1485,9 +1485,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{507,1},{64,104}}</string>
+                <string>{{1905,97},{64,104}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/0/10009.png</key>
             <dict>
@@ -1500,7 +1500,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{645,1591},{74,98}}</string>
+                <string>{{1543,243},{74,98}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1515,9 +1515,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{61,1785},{62,104}}</string>
+                <string>{{1579,97},{62,104}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/1/10002.png</key>
             <dict>
@@ -1530,9 +1530,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{437,339},{76,104}}</string>
+                <string>{{623,501},{76,104}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/1/10003.png</key>
             <dict>
@@ -1545,7 +1545,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{809,1543},{58,92}}</string>
+                <string>{{1887,619},{58,92}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1560,9 +1560,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{325,1989},{58,100}}</string>
+                <string>{{1175,365},{58,100}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/skill/body/1/10005.png</key>
             <dict>
@@ -1575,9 +1575,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{223,1443},{56,104}}</string>
+                <string>{{785,705},{56,104}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/1/10006.png</key>
             <dict>
@@ -1586,11 +1586,11 @@
                 <key>spriteOffset</key>
                 <string>{-10,34}</string>
                 <key>spriteSize</key>
-                <string>{58,88}</string>
+                <string>{58,86}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1091,965},{58,88}}</string>
+                <string>{{1887,713},{58,86}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1605,22 +1605,22 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{119,767},{54,114}}</string>
+                <string>{{351,87},{54,114}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/1/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-5,38}</string>
+                <string>{-6,38}</string>
                 <key>spriteSize</key>
                 <string>{50,110}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,1911},{50,110}}</string>
+                <string>{{155,823},{50,110}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1635,9 +1635,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{125,1679},{62,104}}</string>
+                <string>{{1685,97},{62,104}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/2/10001.png</key>
             <dict>
@@ -1650,7 +1650,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,1575},{58,110}}</string>
+                <string>{{145,711},{58,110}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1665,9 +1665,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{281,587},{70,106}}</string>
+                <string>{{1453,99},{70,106}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/2/10003.png</key>
             <dict>
@@ -1680,7 +1680,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{761,1791},{60,94}}</string>
+                <string>{{1381,1071},{60,94}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1695,7 +1695,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{483,113},{70,104}}</string>
+                <string>{{891,699},{70,104}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1710,9 +1710,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{53,1911},{74,108}}</string>
+                <string>{{449,157},{74,108}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/2/10006.png</key>
             <dict>
@@ -1725,7 +1725,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1117,1251},{66,86}}</string>
+                <string>{{1015,1079},{66,86}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1734,15 +1734,15 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-10,31}</string>
+                <string>{-11,31}</string>
                 <key>spriteSize</key>
                 <string>{68,116}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{155,373},{68,116}}</string>
+                <string>{{1233,1},{68,116}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/2/10008.png</key>
             <dict>
@@ -1755,7 +1755,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,1239},{64,110}}</string>
+                <string>{{79,737},{64,110}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1770,9 +1770,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{307,1},{60,112}}</string>
+                <string>{{605,81},{60,112}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/3/10001.png</key>
             <dict>
@@ -1785,9 +1785,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{225,361},{66,112}}</string>
+                <string>{{719,111},{66,112}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/3/10002.png</key>
             <dict>
@@ -1800,7 +1800,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{183,1337},{84,104}}</string>
+                <string>{{205,685},{84,104}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1815,9 +1815,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{749,101},{78,98}}</string>
+                <string>{{1443,243},{78,98}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/3/10004.png</key>
             <dict>
@@ -1830,9 +1830,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{457,1289},{86,100}}</string>
+                <string>{{383,753},{86,100}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/3/10005.png</key>
             <dict>
@@ -1845,9 +1845,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{209,997},{88,106}}</string>
+                <string>{{341,143},{88,106}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/3/10006.png</key>
             <dict>
@@ -1860,9 +1860,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{875,1235},{90,88}}</string>
+                <string>{{499,581},{90,88}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/skill/body/3/10007.png</key>
             <dict>
@@ -1875,9 +1875,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{249,719},{78,106}}</string>
+                <string>{{515,499},{78,106}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/3/10008.png</key>
             <dict>
@@ -1886,11 +1886,11 @@
                 <key>spriteOffset</key>
                 <string>{-11,31}</string>
                 <key>spriteSize</key>
-                <string>{78,100}</string>
+                <string>{76,100}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{545,1493},{78,100}}</string>
+                <string>{{1211,693},{76,100}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1905,7 +1905,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{219,605},{60,112}}</string>
+                <string>{{87,371},{60,112}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1920,7 +1920,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{313,827},{80,104}}</string>
+                <string>{{645,327},{80,104}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -1929,15 +1929,15 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-11,23}</string>
+                <string>{-10,23}</string>
                 <key>spriteSize</key>
-                <string>{88,90}</string>
+                <string>{86,90}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{869,1329},{88,90}}</string>
+                <string>{{1083,433},{86,90}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/4/10003.png</key>
             <dict>
@@ -1950,24 +1950,24 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{61,1573},{94,104}}</string>
+                <string>{{1691,1},{94,104}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/4/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{0,28}</string>
+                <string>{0,29}</string>
                 <key>spriteSize</key>
                 <string>{102,96}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{269,1321},{102,96}}</string>
+                <string>{{229,229},{102,96}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/skill/body/4/10005.png</key>
             <dict>
@@ -1980,9 +1980,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{555,107},{100,98}}</string>
+                <string>{{343,395},{100,98}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/skill/body/4/10006.png</key>
             <dict>
@@ -1995,24 +1995,24 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{573,1},{100,94}}</string>
+                <string>{{445,403},{100,94}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/skill/body/4/10007.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-8,24}</string>
+                <string>{-8,25}</string>
                 <key>spriteSize</key>
                 <string>{82,88}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{965,1211},{82,88}}</string>
+                <string>{{1793,415},{82,88}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/4/10008.png</key>
             <dict>
@@ -2025,7 +2025,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{721,1261},{82,92}}</string>
+                <string>{{1947,447},{82,92}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2040,7 +2040,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{293,357},{72,110}}</string>
+                <string>{{81,849},{72,110}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2055,7 +2055,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{839,497},{80,94}}</string>
+                <string>{{1361,225},{80,94}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2070,7 +2070,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1011,983},{78,88}}</string>
+                <string>{{1731,899},{78,88}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2085,9 +2085,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{279,475},{94,110}}</string>
+                <string>{{1579,1},{94,110}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/5/10004.png</key>
             <dict>
@@ -2100,9 +2100,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{161,1107},{92,106}}</string>
+                <string>{{1797,1},{92,106}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/5/10005.png</key>
             <dict>
@@ -2115,22 +2115,22 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{655,103},{92,98}}</string>
+                <string>{{113,1073},{92,98}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/5/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-8,34}</string>
+                <string>{-8,33}</string>
                 <key>spriteSize</key>
-                <string>{90,100}</string>
+                <string>{90,98}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{367,1187},{90,100}}</string>
+                <string>{{291,739},{90,98}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2145,7 +2145,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1057,875},{78,88}}</string>
+                <string>{{1879,897},{78,88}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2160,9 +2160,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{905,797},{78,92}}</string>
+                <string>{{1557,981},{78,92}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/5/10009.png</key>
             <dict>
@@ -2175,7 +2175,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{537,1697},{74,100}}</string>
+                <string>{{1219,795},{74,100}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2190,24 +2190,24 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1067,481},{76,90}}</string>
+                <string>{{1465,979},{76,90}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/6/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-2,32}</string>
+                <string>{-2,33}</string>
                 <key>spriteSize</key>
-                <string>{80,86}</string>
+                <string>{80,88}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1055,1723},{80,86}}</string>
+                <string>{{1557,667},{80,88}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/skill/body/6/10003.png</key>
             <dict>
@@ -2220,7 +2220,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{141,641},{76,112}}</string>
+                <string>{{155,103},{76,112}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2235,7 +2235,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{331,235},{68,110}}</string>
+                <string>{{91,961},{68,110}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2250,7 +2250,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{157,1565},{62,104}}</string>
+                <string>{{927,593},{62,104}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2265,7 +2265,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{579,323},{64,100}}</string>
+                <string>{{1199,131},{64,100}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2274,13 +2274,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{6,21}</string>
+                <string>{6,22}</string>
                 <key>spriteSize</key>
-                <string>{64,90}</string>
+                <string>{64,92}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{925,1633},{64,90}}</string>
+                <string>{{1959,891},{64,92}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2295,7 +2295,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{839,701},{66,94}}</string>
+                <string>{{1653,809},{66,94}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2304,15 +2304,15 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-3,33}</string>
+                <string>{-3,34}</string>
                 <key>spriteSize</key>
-                <string>{74,92}</string>
+                <string>{74,94}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{999,387},{74,92}}</string>
+                <string>{{1859,163},{74,94}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/0/10001.png</key>
             <dict>
@@ -2321,13 +2321,13 @@
                 <key>spriteOffset</key>
                 <string>{0,37}</string>
                 <key>spriteSize</key>
-                <string>{76,98}</string>
+                <string>{74,98}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{625,1491},{76,98}}</string>
+                <string>{{1759,161},{74,98}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/0/10002.png</key>
             <dict>
@@ -2340,7 +2340,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{617,1799},{72,100}}</string>
+                <string>{{1223,897},{72,100}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2355,9 +2355,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{433,1037},{70,100}}</string>
+                <string>{{1007,521},{70,100}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/0/10004.png</key>
             <dict>
@@ -2370,9 +2370,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{457,905},{70,100}}</string>
+                <string>{{1109,521},{70,100}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/0/10005.png</key>
             <dict>
@@ -2385,24 +2385,24 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{467,797},{70,100}}</string>
+                <string>{{1443,171},{70,100}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/0/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-1,38}</string>
+                <string>{-2,38}</string>
                 <key>spriteSize</key>
                 <string>{72,100}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{663,1901},{72,100}}</string>
+                <string>{{1235,395},{72,100}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/0/10007.png</key>
             <dict>
@@ -2415,9 +2415,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{569,1595},{74,100}}</string>
+                <string>{{1337,399},{74,100}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/1/10001.png</key>
             <dict>
@@ -2430,7 +2430,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{125,1785},{62,104}}</string>
+                <string>{{963,699},{62,104}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2445,7 +2445,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{221,1565},{60,104}}</string>
+                <string>{{967,805},{60,104}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2460,22 +2460,22 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{219,1989},{58,104}}</string>
+                <string>{{973,911},{58,104}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/stand/body/1/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-5,42}</string>
+                <string>{-5,41}</string>
                 <key>spriteSize</key>
-                <string>{58,104}</string>
+                <string>{58,102}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{313,1777},{58,104}}</string>
+                <string>{{1087,699},{58,102}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2490,7 +2490,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{317,1883},{58,104}}</string>
+                <string>{{991,593},{58,104}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2501,11 +2501,11 @@
                 <key>spriteOffset</key>
                 <string>{-5,42}</string>
                 <key>spriteSize</key>
-                <string>{60,104}</string>
+                <string>{58,104}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{189,1777},{60,104}}</string>
+                <string>{{1027,699},{58,104}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2520,7 +2520,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{193,1883},{60,104}}</string>
+                <string>{{1029,805},{60,104}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2535,7 +2535,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,1687},{58,110}}</string>
+                <string>{{161,935},{58,110}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2550,9 +2550,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{65,1351},{58,108}}</string>
+                <string>{{485,837},{58,108}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/2/10003.png</key>
             <dict>
@@ -2561,13 +2561,13 @@
                 <key>spriteOffset</key>
                 <string>{-2,40}</string>
                 <key>spriteSize</key>
-                <string>{56,108}</string>
+                <string>{58,108}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{125,1349},{56,108}}</string>
+                <string>{{221,1013},{58,108}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/2/10004.png</key>
             <dict>
@@ -2580,9 +2580,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{67,1239},{58,108}}</string>
+                <string>{{993,67},{58,108}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/2/10005.png</key>
             <dict>
@@ -2595,9 +2595,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{103,1117},{56,108}}</string>
+                <string>{{1103,73},{56,108}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/2/10006.png</key>
             <dict>
@@ -2610,9 +2610,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{151,997},{56,108}}</string>
+                <string>{{1233,71},{56,108}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/2/10007.png</key>
             <dict>
@@ -2625,9 +2625,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{127,1227},{56,108}}</string>
+                <string>{{1343,81},{56,108}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/3/10001.png</key>
             <dict>
@@ -2640,7 +2640,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{263,243},{66,112}}</string>
+                <string>{{131,485},{66,112}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2655,9 +2655,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{401,227},{66,110}}</string>
+                <string>{{229,327},{66,110}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/3/10003.png</key>
             <dict>
@@ -2670,9 +2670,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{415,113},{66,110}}</string>
+                <string>{{341,327},{66,110}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/3/10004.png</key>
             <dict>
@@ -2681,13 +2681,13 @@
                 <key>spriteOffset</key>
                 <string>{-5,36}</string>
                 <key>spriteSize</key>
-                <string>{68,110}</string>
+                <string>{66,110}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{345,115},{68,110}}</string>
+                <string>{{293,671},{66,110}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/3/10005.png</key>
             <dict>
@@ -2700,7 +2700,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{369,1},{68,110}}</string>
+                <string>{{221,897},{68,110}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2711,13 +2711,13 @@
                 <key>spriteOffset</key>
                 <string>{-4,36}</string>
                 <key>spriteSize</key>
-                <string>{68,110}</string>
+                <string>{66,110}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{367,347},{68,110}}</string>
+                <string>{{719,179},{66,110}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/3/10007.png</key>
             <dict>
@@ -2730,9 +2730,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{439,1},{66,110}}</string>
+                <string>{{645,433},{66,110}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/4/10001.png</key>
             <dict>
@@ -2745,24 +2745,24 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{329,695},{80,104}}</string>
+                <string>{{485,755},{80,104}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/4/10002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-7,33}</string>
+                <string>{-8,33}</string>
                 <key>spriteSize</key>
                 <string>{80,104}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{353,587},{80,104}}</string>
+                <string>{{579,907},{80,104}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/4/10003.png</key>
             <dict>
@@ -2775,9 +2775,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{405,1633},{80,102}}</string>
+                <string>{{685,909},{80,102}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/4/10004.png</key>
             <dict>
@@ -2790,9 +2790,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{377,1841},{80,102}}</string>
+                <string>{{789,915},{80,102}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/4/10005.png</key>
             <dict>
@@ -2805,9 +2805,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{455,1737},{80,102}}</string>
+                <string>{{581,989},{80,102}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/4/10006.png</key>
             <dict>
@@ -2820,9 +2820,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{427,1945},{80,102}}</string>
+                <string>{{685,991},{80,102}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/4/10007.png</key>
             <dict>
@@ -2835,7 +2835,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{255,1105},{82,104}}</string>
+                <string>{{207,791},{82,104}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2850,7 +2850,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{853,395},{80,94}}</string>
+                <string>{{1557,475},{80,94}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2859,13 +2859,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-9,30}</string>
+                <string>{-9,31}</string>
                 <key>spriteSize</key>
-                <string>{78,92}</string>
+                <string>{78,94}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{907,689},{78,92}}</string>
+                <string>{{1643,521},{78,94}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2880,7 +2880,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{927,195},{78,94}}</string>
+                <string>{{1721,803},{78,94}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2895,7 +2895,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{947,587},{78,92}}</string>
+                <string>{{1651,985},{78,92}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2910,7 +2910,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{987,487},{78,92}}</string>
+                <string>{{1731,989},{78,92}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2921,11 +2921,11 @@
                 <key>spriteOffset</key>
                 <string>{-8,30}</string>
                 <key>spriteSize</key>
-                <string>{80,92}</string>
+                <string>{78,92}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{847,1025},{80,92}}</string>
+                <string>{{1893,987},{78,92}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2934,15 +2934,15 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-9,30}</string>
+                <string>{-8,30}</string>
                 <key>spriteSize</key>
-                <string>{80,92}</string>
+                <string>{78,92}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{893,913},{80,92}}</string>
+                <string>{{1251,999},{78,92}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/6/10001.png</key>
             <dict>
@@ -2955,9 +2955,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1075,377},{76,90}}</string>
+                <string>{{1289,1079},{76,90}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/6/10002.png</key>
             <dict>
@@ -2970,7 +2970,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1173,189},{74,90}}</string>
+                <string>{{1955,163},{74,90}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -2979,13 +2979,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-3,34}</string>
+                <string>{-4,34}</string>
                 <key>spriteSize</key>
                 <string>{72,90}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1187,1},{72,90}}</string>
+                <string>{{1719,711},{72,90}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3000,9 +3000,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{851,1637},{72,90}}</string>
+                <string>{{1159,1005},{72,90}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/6/10005.png</key>
             <dict>
@@ -3015,7 +3015,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{869,1541},{72,90}}</string>
+                <string>{{1443,1057},{72,90}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3024,15 +3024,15 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-3,33}</string>
+                <string>{-3,34}</string>
                 <key>spriteSize</key>
-                <string>{72,88}</string>
+                <string>{72,90}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1007,1511},{72,88}}</string>
+                <string>{{1517,1061},{72,90}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/stand/body/6/10007.png</key>
             <dict>
@@ -3045,7 +3045,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1185,95},{74,90}}</string>
+                <string>{{1647,617},{74,90}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3060,7 +3060,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{687,1691},{74,98}}</string>
+                <string>{{1619,243},{74,98}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3075,9 +3075,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{185,1215},{84,104}}</string>
+                <string>{{303,495},{84,104}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/win/body/0/10003.png</key>
             <dict>
@@ -3090,9 +3090,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{375,1391},{100,88}}</string>
+                <string>{{397,581},{100,88}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/win/body/0/10004.png</key>
             <dict>
@@ -3105,9 +3105,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{339,1083},{102,92}}</string>
+                <string>{{333,233},{102,92}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/win/body/0/10005.png</key>
             <dict>
@@ -3120,9 +3120,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{281,1425},{102,92}}</string>
+                <string>{{437,233},{102,92}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/win/body/0/10006.png</key>
             <dict>
@@ -3135,9 +3135,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{505,1007},{98,86}}</string>
+                <string>{{1099,131},{98,86}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/win/body/0/10007.png</key>
             <dict>
@@ -3150,9 +3150,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{127,1459},{94,104}}</string>
+                <string>{{1905,1},{94,104}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/win/body/0/10008.png</key>
             <dict>
@@ -3165,9 +3165,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{529,899},{98,86}}</string>
+                <string>{{979,345},{98,86}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/win/body/0/10009.png</key>
             <dict>
@@ -3180,9 +3180,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{721,1577},{92,86}}</string>
+                <string>{{1759,237},{92,86}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/win/body/0/10010.png</key>
             <dict>
@@ -3195,7 +3195,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{817,299},{94,90}}</string>
+                <string>{{399,1071},{94,90}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -3210,7 +3210,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{635,1293},{94,84}}</string>
+                <string>{{1557,571},{94,84}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -3225,9 +3225,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{271,1211},{102,94}}</string>
+                <string>{{239,395},{102,94}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/win/body/0/10013.png</key>
             <dict>
@@ -3240,7 +3240,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{53,887},{88,114}}</string>
+                <string>{{1,987},{88,114}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3255,7 +3255,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{129,1891},{62,104}}</string>
+                <string>{{1033,911},{62,104}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3270,9 +3270,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{53,1003},{96,112}}</string>
+                <string>{{1465,1},{96,112}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/win/body/1/10003.png</key>
             <dict>
@@ -3285,7 +3285,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{823,1765},{84,92}}</string>
+                <string>{{893,339},{84,92}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3300,9 +3300,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{913,1},{86,94}}</string>
+                <string>{{1381,641},{86,94}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/win/body/1/10005.png</key>
             <dict>
@@ -3315,7 +3315,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{837,199},{88,94}}</string>
+                <string>{{573,1071},{88,94}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3324,13 +3324,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-19,30}</string>
+                <string>{-18,30}</string>
                 <key>spriteSize</key>
                 <string>{90,92}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1001,95},{90,92}}</string>
+                <string>{{307,1073},{90,92}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3345,9 +3345,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{569,537},{84,98}}</string>
+                <string>{{1343,139},{84,98}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/win/body/1/10008.png</key>
             <dict>
@@ -3360,7 +3360,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{683,1069},{94,84}}</string>
+                <string>{{1563,749},{94,84}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -3375,7 +3375,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{703,1389},{92,90}}</string>
+                <string>{{847,1073},{92,90}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -3390,9 +3390,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{911,99},{94,88}}</string>
+                <string>{{1265,225},{94,88}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/win/body/1/10011.png</key>
             <dict>
@@ -3405,7 +3405,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{703,1483},{92,90}}</string>
+                <string>{{1289,635},{92,90}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -3420,9 +3420,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{655,525},{88,96}}</string>
+                <string>{{547,409},{88,96}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/win/body/1/10013.png</key>
             <dict>
@@ -3435,9 +3435,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{189,123},{86,118}}</string>
+                <string>{{485,1},{86,118}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/win/body/2/10001.png</key>
             <dict>
@@ -3450,7 +3450,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,1799},{58,110}}</string>
+                <string>{{785,593},{58,110}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3465,7 +3465,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{95,129},{92,120}}</string>
+                <string>{{1,249},{92,120}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3480,9 +3480,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{541,1799},{74,100}}</string>
+                <string>{{1439,399},{74,100}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/win/body/2/10004.png</key>
             <dict>
@@ -3495,9 +3495,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{381,933},{74,102}}</string>
+                <string>{{789,997},{74,102}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/win/body/2/10005.png</key>
             <dict>
@@ -3510,7 +3510,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{509,1945},{78,102}}</string>
+                <string>{{893,911},{78,102}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3525,7 +3525,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{761,1},{78,98}}</string>
+                <string>{{1477,649},{78,98}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3540,7 +3540,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{815,929},{76,94}}</string>
+                <string>{{1265,129},{76,94}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3551,13 +3551,13 @@
                 <key>spriteOffset</key>
                 <string>{-6,34}</string>
                 <key>spriteSize</key>
-                <string>{82,94}</string>
+                <string>{80,92}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{753,833},{82,94}}</string>
+                <string>{{1793,719},{80,92}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/win/body/2/10009.png</key>
             <dict>
@@ -3570,9 +3570,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{545,1239},{78,98}}</string>
+                <string>{{1659,161},{78,98}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/win/body/2/10010.png</key>
             <dict>
@@ -3585,7 +3585,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{589,425},{82,98}}</string>
+                <string>{{1295,795},{82,98}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3594,13 +3594,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-5,31}</string>
+                <string>{-6,31}</string>
                 <key>spriteSize</key>
                 <string>{86,96}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{673,411},{86,96}}</string>
+                <string>{{1211,469},{86,96}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3615,7 +3615,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{459,1841},{80,102}}</string>
+                <string>{{491,1063},{80,102}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3630,7 +3630,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{61,649},{78,116}}</string>
+                <string>{{1,869},{78,116}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3645,7 +3645,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{277,121},{66,112}}</string>
+                <string>{{75,623},{66,112}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3660,7 +3660,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,399},{72,124}}</string>
+                <string>{{1,623},{72,124}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3669,13 +3669,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{13,33}</string>
+                <string>{12,33}</string>
                 <key>spriteSize</key>
                 <string>{62,102}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{435,565},{62,102}}</string>
+                <string>{{1091,803},{62,102}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3690,9 +3690,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{251,1777},{60,104}}</string>
+                <string>{{983,283},{60,104}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/win/body/3/10005.png</key>
             <dict>
@@ -3705,7 +3705,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{255,1883},{60,104}}</string>
+                <string>{{1051,593},{60,104}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3714,13 +3714,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{10,33}</string>
+                <string>{9,33}</string>
                 <key>spriteSize</key>
                 <string>{60,102}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{543,219},{60,102}}</string>
+                <string>{{1097,907},{60,102}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3729,15 +3729,15 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{10,41}</string>
+                <string>{10,40}</string>
                 <key>spriteSize</key>
-                <string>{60,98}</string>
+                <string>{60,96}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{627,751},{60,98}}</string>
+                <string>{{1609,1079},{60,96}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/win/body/3/10008.png</key>
             <dict>
@@ -3750,7 +3750,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{457,445},{62,102}}</string>
+                <string>{{1147,693},{62,102}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3761,11 +3761,11 @@
                 <key>spriteOffset</key>
                 <string>{9,22}</string>
                 <key>spriteSize</key>
-                <string>{62,104}</string>
+                <string>{62,102}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{189,1671},{62,104}}</string>
+                <string>{{1155,797},{62,102}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3774,15 +3774,15 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{7,9}</string>
+                <string>{7,10}</string>
                 <key>spriteSize</key>
                 <string>{70,100}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{481,669},{70,100}}</string>
+                <string>{{1299,563},{70,100}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/win/body/3/10011.png</key>
             <dict>
@@ -3791,11 +3791,11 @@
                 <key>spriteOffset</key>
                 <string>{9,31}</string>
                 <key>spriteSize</key>
-                <string>{62,100}</string>
+                <string>{62,98}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{605,209},{62,100}}</string>
+                <string>{{1695,241},{62,98}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3810,9 +3810,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{253,1671},{60,104}}</string>
+                <string>{{1089,303},{60,104}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/win/body/3/10013.png</key>
             <dict>
@@ -3825,7 +3825,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{175,755},{72,112}}</string>
+                <string>{{155,217},{72,112}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3840,7 +3840,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{375,459},{80,104}}</string>
+                <string>{{845,593},{80,104}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3855,9 +3855,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{135,251},{64,120}}</string>
+                <string>{{993,1},{64,120}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/win/body/4/10003.png</key>
             <dict>
@@ -3870,7 +3870,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{683,851},{68,96}}</string>
+                <string>{{1723,525},{68,96}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3885,9 +3885,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{593,999},{64,98}}</string>
+                <string>{{1543,343},{64,98}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/win/body/4/10005.png</key>
             <dict>
@@ -3896,11 +3896,11 @@
                 <key>spriteOffset</key>
                 <string>{6,34}</string>
                 <key>spriteSize</key>
-                <string>{64,98}</string>
+                <string>{62,98}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{617,871},{64,98}}</string>
+                <string>{{1883,325},{62,98}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3915,7 +3915,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{735,623},{62,96}}</string>
+                <string>{{1883,425},{62,96}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3926,13 +3926,13 @@
                 <key>spriteOffset</key>
                 <string>{1,39}</string>
                 <key>spriteSize</key>
-                <string>{62,94}</string>
+                <string>{60,94}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{935,391},{62,94}}</string>
+                <string>{{1707,1083},{60,94}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/win/body/4/10008.png</key>
             <dict>
@@ -3945,7 +3945,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{515,331},{62,102}}</string>
+                <string>{{1159,901},{62,102}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -3956,13 +3956,13 @@
                 <key>spriteOffset</key>
                 <string>{15,25}</string>
                 <key>spriteSize</key>
-                <string>{64,94}</string>
+                <string>{64,92}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{921,491},{64,94}}</string>
+                <string>{{1811,1081},{64,92}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/win/body/4/10010.png</key>
             <dict>
@@ -3975,9 +3975,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{729,303},{86,96}}</string>
+                <string>{{1299,475},{86,96}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/win/body/4/10011.png</key>
             <dict>
@@ -3990,7 +3990,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{991,291},{62,94}}</string>
+                <string>{{1883,523},{62,94}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -4005,7 +4005,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{691,1791},{68,98}}</string>
+                <string>{{1201,593},{68,98}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -4020,7 +4020,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{469,225},{72,104}}</string>
+                <string>{{893,805},{72,104}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -4029,13 +4029,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-9,31}</string>
+                <string>{-9,30}</string>
                 <key>spriteSize</key>
-                <string>{80,94}</string>
+                <string>{80,92}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{909,295},{80,94}}</string>
+                <string>{{1801,801},{80,92}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -4050,37 +4050,37 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1,1351},{62,110}}</string>
+                <string>{{1,1103},{62,110}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/win/body/5/10003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{13,36}</string>
+                <string>{13,37}</string>
                 <key>spriteSize</key>
                 <string>{96,92}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{641,637},{96,92}}</string>
+                <string>{{381,841},{96,92}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/win/body/5/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{4,36}</string>
+                <string>{4,38}</string>
                 <key>spriteSize</key>
-                <string>{92,92}</string>
+                <string>{92,94}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1001,1},{92,92}}</string>
+                <string>{{691,593},{92,94}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -4089,28 +4089,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{6,37}</string>
+                <string>{6,38}</string>
                 <key>spriteSize</key>
-                <string>{90,94}</string>
+                <string>{92,94}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{761,401},{90,94}}</string>
+                <string>{{483,897},{92,94}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/win/body/5/10006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{14,36}</string>
+                <string>{14,37}</string>
                 <key>spriteSize</key>
                 <string>{90,92}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1007,189},{90,92}}</string>
+                <string>{{663,1073},{90,92}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -4119,13 +4119,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-13,41}</string>
+                <string>{-13,42}</string>
                 <key>spriteSize</key>
-                <string>{80,90}</string>
+                <string>{80,92}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{929,1007},{80,90}}</string>
+                <string>{{1811,987},{80,92}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -4134,13 +4134,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{15,32}</string>
+                <string>{15,33}</string>
                 <key>spriteSize</key>
                 <string>{82,94}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{755,721},{82,94}}</string>
+                <string>{{1947,255},{82,94}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -4155,7 +4155,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{979,1815},{82,86}}</string>
+                <string>{{1947,631},{82,86}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -4166,13 +4166,13 @@
                 <key>spriteOffset</key>
                 <string>{18,25}</string>
                 <key>spriteSize</key>
-                <string>{92,84}</string>
+                <string>{92,82}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{893,1859},{92,84}}</string>
+                <string>{{693,763},{92,82}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/win/body/5/10011.png</key>
             <dict>
@@ -4181,11 +4181,11 @@
                 <key>spriteOffset</key>
                 <string>{12,34}</string>
                 <key>spriteSize</key>
-                <string>{84,88}</string>
+                <string>{82,88}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{959,1327},{84,88}}</string>
+                <string>{{1947,541},{82,88}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -4194,45 +4194,45 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{9,36}</string>
+                <string>{9,37}</string>
                 <key>spriteSize</key>
                 <string>{94,92}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{745,509},{94,92}}</string>
+                <string>{{727,339},{94,92}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/win/body/5/10013.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-10,38}</string>
+                <string>{-10,39}</string>
                 <key>spriteSize</key>
                 <string>{80,96}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{829,101},{80,96}}</string>
+                <string>{{1561,161},{80,96}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/win/body/6/10001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-5,34}</string>
+                <string>{-4,34}</string>
                 <key>spriteSize</key>
-                <string>{76,90}</string>
+                <string>{74,90}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{1131,283},{76,90}}</string>
+                <string>{{1345,995},{74,90}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>Troll/win/body/6/10002.png</key>
             <dict>
@@ -4241,11 +4241,11 @@
                 <key>spriteOffset</key>
                 <string>{-7,44}</string>
                 <key>spriteSize</key>
-                <string>{80,100}</string>
+                <string>{80,98}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{487,1595},{80,100}}</string>
+                <string>{{1297,895},{80,98}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -4254,30 +4254,30 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{11,39}</string>
+                <string>{11,40}</string>
                 <key>spriteSize</key>
-                <string>{98,86}</string>
+                <string>{98,88}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{539,771},{98,86}}</string>
+                <string>{{591,579},{98,88}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/win/body/6/10004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{3,39}</string>
+                <string>{3,40}</string>
                 <key>spriteSize</key>
-                <string>{102,86}</string>
+                <string>{102,88}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{373,1529},{102,86}}</string>
+                <string>{{199,491},{102,88}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/win/body/6/10005.png</key>
             <dict>
@@ -4290,7 +4290,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{283,1529},{102,88}}</string>
+                <string>{{203,581},{102,88}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -4299,15 +4299,15 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{15,39}</string>
+                <string>{15,40}</string>
                 <key>spriteSize</key>
-                <string>{98,86}</string>
+                <string>{98,88}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{553,651},{98,86}}</string>
+                <string>{{999,127},{98,88}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/win/body/6/10007.png</key>
             <dict>
@@ -4320,52 +4320,52 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{625,1197},{94,86}}</string>
+                <string>{{1397,475},{94,86}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/win/body/6/10008.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{15,37}</string>
+                <string>{14,37}</string>
                 <key>spriteSize</key>
                 <string>{98,90}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{669,1},{98,90}}</string>
+                <string>{{727,247},{98,90}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/win/body/6/10009.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{23,39}</string>
+                <string>{23,40}</string>
                 <key>spriteSize</key>
-                <string>{92,86}</string>
+                <string>{92,88}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{763,1671},{92,86}}</string>
+                <string>{{1379,799},{92,88}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/win/body/6/10010.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{26,38}</string>
+                <string>{26,37}</string>
                 <key>spriteSize</key>
-                <string>{94,84}</string>
+                <string>{94,82}</string>
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{729,949},{94,84}}</string>
+                <string>{{1947,351},{94,82}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -4380,7 +4380,7 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{751,201},{96,84}}</string>
+                <string>{{1379,889},{96,84}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -4395,9 +4395,9 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{315,1633},{102,88}}</string>
+                <string>{{293,581},{102,88}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>Troll/win/body/6/10013.png</key>
             <dict>
@@ -4410,23 +4410,25 @@
                 <key>spriteSourceSize</key>
                 <string>{512,512}</string>
                 <key>textureRect</key>
-                <string>{{877,1119},{90,88}}</string>
+                <string>{{1465,889},{90,88}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
         </dict>
         <key>metadata</key>
         <dict>
             <key>format</key>
             <integer>3</integer>
+            <key>pixelFormat</key>
+            <string>RGBA8888</string>
             <key>premultiplyAlpha</key>
-            <false/>
+            <true/>
             <key>realTextureFileName</key>
             <string>Troll.pvr.ccz</string>
             <key>size</key>
-            <string>{2048,2048}</string>
+            <string>{2030,1166}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:b2febc07c8613f2d39107c6934d1c84e:fbb5f9591dbedf36fd7879f97f09fcfc:75de611c518b8fa4d744d449cf865d81$</string>
+            <string>$TexturePacker:SmartUpdate:0dd0ce545906f420ddbc5ef7edcc1413:f3bdfc52834470c8c8634daeeacc2ecd:75de611c518b8fa4d744d449cf865d81$</string>
             <key>textureFileName</key>
             <string>Troll.pvr.ccz</string>
         </dict>
