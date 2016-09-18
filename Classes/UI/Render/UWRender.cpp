@@ -61,12 +61,16 @@ void UWRender::init(const Game *game, Commander *commander) {
         if (_worldRender && _worldRender->getWorldLayer()) {
             _worldScrollView->addChild(_worldRender->getWorldLayer());
             
+            // world scroll scale
             const cocos2d::Size &worldSize = _worldRender->getWorldLayer()->getContentSize();
             float scale = RESOLUTION_HEIGHT / worldSize.height;
             _worldScrollView->setContentSize(worldSize);
             _worldScrollView->setMaxScale(0);
             _worldScrollView->setMinScale(scale);
             _worldScrollView->setZoomScale(scale);
+            
+            // world scroll swap
+            _worldScrollView->setScaleX(game->isThisFactionOnLeft() ? 1.f : -1.f);
         }
         
         //gui
