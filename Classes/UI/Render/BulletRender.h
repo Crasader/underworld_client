@@ -59,6 +59,11 @@ private:
     bool _renderingExplode;
     bool _initing;
     
+    //tail gas
+    Coordinate32 _lastTailGasPos;
+    int _tailGasIndex;
+    
+    
     /** events */
     std::vector<Bullet::EventLog> _eventLogs;
     Bullet::EventLog* _explodeLog;
@@ -68,6 +73,9 @@ private:
     cocos2d::Node* _shadowNode;
     cocos2d::Node* _body;
     cocos2d::Node* _shadow;
+    
+    /** ref */
+    WorldRender* _worldRender;
     
 public:
     /** init */
@@ -90,7 +98,7 @@ private:
     void updateParams(const Coordinate32& currentPos,
         const Coordinate32& targetPos, bool init = false);
     void renderPosition(const Coordinate32& currentPos);
-    void renderFlyingAnimation();
+    void renderFlyingAnimation(const Coordinate32& currentPos);
     void renderExplodeAnimation();
     void explodeCallback();
 };

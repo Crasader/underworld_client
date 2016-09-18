@@ -39,7 +39,8 @@ BulletRender::BulletRender()
 , _mainNode(nullptr)
 , _shadowNode(nullptr)
 , _body(nullptr)
-, _shadow(nullptr) {
+, _shadow(nullptr)
+, _worldRender(nullptr) {
 }
     
 BulletRender::~BulletRender() {
@@ -49,6 +50,9 @@ BulletRender::~BulletRender() {
     
 bool BulletRender::init(const WorldObject *object, WorldRender *worldRender) {
     if (!AbstractWorldObjectRender::init(object, worldRender)) return false;
+    
+    // init ref
+    _worldRender = worldRender;
     
     // init data
     _bullet = dynamic_cast<const Bullet*>(object);
@@ -88,6 +92,10 @@ bool BulletRender::init(const WorldObject *object, WorldRender *worldRender) {
     _bulletExploded = false;
     _renderingExplode = false;
     _initing = true;
+    
+    // init tail gas
+    _lastTailGasPos = getPos();
+    _tailGasIndex = 0;
 
     // init events
     _eventLogs.clear();
@@ -147,7 +155,7 @@ void BulletRender::render() {
             renderExplodeAnimation();
         }
     } else {
-        renderFlyingAnimation();
+        renderFlyingAnimation(*currentPos);
     }
     
     _eventLogs.clear();
@@ -239,7 +247,7 @@ void BulletRender::renderPosition(const Coordinate32& currentPos) {
     _mainNode->setLocalZOrder(mainZorder);
 }
     
-void BulletRender::renderFlyingAnimation() {
+void BulletRender::renderFlyingAnimation(const Coordinate32& currentPos) {
     // create bodyNode
     if (!_body) {
         _body = addEffect(_configData->getResource(), true, true);
@@ -247,9 +255,11 @@ void BulletRender::renderFlyingAnimation() {
     
     // set params
     if (_body) {
-        _body->setRotation(_rotation);
-        _body->setScaleX(_scale * _configData->getResource().getScale());
-        _body->setScaleY(_configData->getResource().getScale());
+        if (_configData->getBulletMeterial() == BulletMaterial::Arrow) {
+            _body->setRotation(_rotation);
+            _body->setScaleX(_scale * _configData->getResource().getScale());
+            _body->setScaleY(_configData->getResource().getScale());
+        }
     }
     
     // create shadow
@@ -258,11 +268,21 @@ void BulletRender::renderFlyingAnimation() {
     }
     
     if (_shadow) {
-        _shadow->setRotation(_rotation);
-        _shadow->setScaleX(_scale * _configData->getShadowResource().getScale());
-        _shadow->setScaleY(_configData->getShadowResource().getScale());
+        if (_configData->getBulletMeterial() == BulletMaterial::Arrow) {
+            _shadow->setRotation(_rotation);
+            _shadow->setScaleX(_scale * _configData->getShadowResource().getScale());
+            _shadow->setScaleY(_configData->getShadowResource().getScale());
+        }
     }
     
+    // create tail gas
+    if (!_configData->getTailGasResource().empty()
+        && currentPos.distance(_lastTailGasPos) > _configData->getTailGasInterval()) {
+        const EffectData& res = _configData->getTailGasResource()[_tailGasIndex];
+        _worldRender->addEffect(res, false, currentPos, _renderLayer, _currentHeight);
+        _tailGasIndex = (_tailGasIndex + 1) % _configData->getTailGasResource().size();
+        _lastTailGasPos = currentPos;
+    }
 }
     
 void BulletRender::renderExplodeAnimation() {

@@ -408,7 +408,11 @@ void HMMDeckRender::markObjectReleased() {
 bool HMMDeckRender::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
     bool ret = false;
     
+    // deck locked
     if (_lockDeck) return ret;
+    
+    //object released
+    if (!_deck) return ret;
     
     resetTouchEventStatus();
     

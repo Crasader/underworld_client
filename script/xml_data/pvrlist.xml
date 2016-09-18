@@ -1,6 +1,7 @@
 <?xml version="1.0" ?>
 <root>
 	<item name="pvr/Alsace.plist"/>
+	<item name="pvr/Ann-shadows-win.plist"/>
 	<item name="pvr/Ann-shadows.plist"/>
 	<item name="pvr/Ann.plist"/>
 	<item name="pvr/CharacterSkills-1.plist"/>
@@ -40,4 +41,5 @@
 	<item name="pvr/Tower.plist"/>
 	<item name="pvr/Troll-shadows.plist"/>
 	<item name="pvr/Troll.plist"/>
+	<item name="pvr/tuowei.plist"/>
 </root>

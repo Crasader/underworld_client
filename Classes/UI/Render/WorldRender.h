@@ -17,6 +17,7 @@
 #include "World.h"
 #include "Coordinate.h"
 #include "Geometry.h"
+#include "EffectData.h"
 
 class MapParticleConfigData;
 
@@ -113,6 +114,12 @@ public:
     Coordinate32 cocosPoint2WorldCoordinate(const cocos2d::Vec2& pos);
     cocos2d::Node* addEffect(const std::string& renderKey, bool loop,
         const Coordinate32& pos);
+    cocos2d::Node* addEffect(const EffectData& data,
+        bool loop,
+        const Coordinate32& pos,
+        RenderLayer renderLayer,
+        int32_t height = 0);
+    
     void showHMMCardRegionTips(const HMMCardType* cardType,
         const Rect32& summonRegion, const Rect32& towerRegion);
     void hideHMMCardRegionTips();

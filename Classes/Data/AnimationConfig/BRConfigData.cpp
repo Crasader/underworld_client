@@ -9,10 +9,14 @@
 #include "BRConfigData.h"
 #include "tinyxml2/tinyxml2.h"
 #include "CocosGlobal.h"
+#include "CoreUtils.h"
 
 using namespace std;
 
+const std::string BRConfigData::TAIL_GAS_SPLITOR("|");
+
 BRConfigData::BRConfigData(tinyxml2::XMLElement *xmlElement)
+: _tailGasInterval(0)
 {
     if (xmlElement) {
         _name = xmlElement->Attribute("render_key");
@@ -39,6 +43,37 @@ BRConfigData::BRConfigData(tinyxml2::XMLElement *xmlElement)
             if (data && strlen(data) > 0) {
                 _explodeSound = data;
             }
+        }
+        {
+            _material = BulletMaterial::Arrow;
+            const char* data = xmlElement->Attribute("material");
+            if (data && strlen(data) > 0) {
+                if (data == std::string("arrow")) {
+                    _material = BulletMaterial::Arrow;
+                } else if (data == std::string("cannon")) {
+                    _material = BulletMaterial::Cannon;
+                }
+            }
+        }
+        {
+            _tailGas.clear();
+            const char* data = xmlElement->Attribute("tail_gas");
+            if (data && strlen(data) > 0) {
+                std::vector<std::string> tailGasVec;
+                UnderWorld::Core::UnderWorldCoreUtils::split(tailGasVec, data, TAIL_GAS_SPLITOR);
+                
+                for (int i = 0; i < tailGasVec.size(); ++i) {
+                    _tailGas.push_back(EffectData());
+                    _tailGas.back().init(tailGasVec[i]);
+                }
+            }
+        }
+        {
+            const char* data = xmlElement->Attribute("tail_gas_interval");
+            if (data && strlen(data) > 0) {
+                _tailGasInterval = atoi(data);
+            }
+            
         }
     }
 }
@@ -71,4 +106,16 @@ const EffectData& BRConfigData::getExplodeResource() const
 const string& BRConfigData::getExplodeSound() const
 {
     return _explodeSound;
+}
+
+BulletMaterial BRConfigData::getBulletMeterial() const {
+    return _material;
+}
+
+const std::vector<EffectData>& BRConfigData::getTailGasResource() const {
+    return _tailGas;
+}
+
+int BRConfigData::getTailGasInterval() const {
+    return _tailGasInterval;
 }

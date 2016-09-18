@@ -300,6 +300,26 @@ cocos2d::Node* WorldRender::addEffect(const std::string &renderKey, bool loop,
     return ret;
 }
     
+cocos2d::Node* WorldRender::addEffect(const EffectData& data,
+    bool loop,
+    const Coordinate32& pos,
+    RenderLayer renderLayer,
+    int32_t height) {
+    cocos2d::Node* ret = nullptr;
+    
+    ret = RenderHelper::buildEffectNode(data, loop, nullptr);
+    
+    if (ret) {
+        int zorder = worldCoordinate2Zorder(pos, renderLayer, height);
+        cocos2d::Vec2 position = worldCoordinate2CocosPoint(pos, renderLayer, height);
+        ret->setPosition(position);
+        _worldContainer->addChild(ret, zorder);
+
+    }
+    
+    return ret;
+}
+    
 // ===================== private ========================
 
 // ===================== inner interface ========================
