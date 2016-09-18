@@ -136,6 +136,7 @@
 	<spell alias="第一版磁场法术" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" id="1920" immediate_elements="0,第一版磁场法术,1" is_on_building="0" level="1" perform="0" preperform="30" spell_name="磁场法术lv1" spell_radius="80" to_dead="0"/>
 	<spell alias="第一版震荡法术" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" id="1921" immediate_elements="0,第一版震荡法术,1" is_on_building="0" level="1" perform="0" preperform="30" spell_name="震荡法术lv1" spell_radius="120" to_dead="0"/>
 	<spell alias="第一版秒杀法术" cast_distance="9999" cast_type="position" cd="600" class="cast" deliver_class="magical" id="1922" immediate_elements="0,第一版秒杀法术,1" level="1" perform="0" preperform="30" spell_name="秒杀法术lv1" spell_radius="32" to_dead="0"/>
+	<spell alias="第一版无敌药水" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" id="1923" immediate_elements="0,第一版无敌药水,1" level="1" perform="0" preperform="30" spell_name="无敌药水lv1" spell_radius="32" to_dead="0"/>
 	<spell ai="战斗过程AI" alias="人族盾牌队长坚守" cast_distance="96" cast_type="unit" cd="600" class="cast" conditions="type:unit_class;target:opposite;condition:not:core" deliver_class="magical" deliver_natures="enemy" id="1001" immediate_elements="1,人族盾牌队长坚守,1" level="1" perform="0" preperform="40" spell_name="人族盾牌队长坚守" spell_radius="80" to_dead="0"/>
 	<spell ai="战斗过程AI" alias="人族剑士队长致命打击" cast_distance="48" cast_type="unit" cd="600" class="cast" conditions=" " deliver_class="physical" deliver_natures="enemy" id="1002" immediate_elements="0,人族剑士队长致命打击,1" is_on_building="0" level="1" perform="0" preperform="40" spell_name="人族剑士队长致命打击" to_dead="0"/>
 	<spell alias="剑士队长清除自身负面状态" cast_distance="-1" cast_type="self" cd="300" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" id="1003" immediate_elements="0,剑士队长清除自身负面状态,1" level="1" perform="0" preperform="30" spell_name="剑士队长清除自身负面状态" to_dead="0"/>
@@ -219,6 +220,7 @@
 	<spell_pattern class="target" conditions=" " content_name="第一版磁场法术" deliver_natures="neutral" name="第一版磁场法术"/>
 	<spell_pattern class="target_position_circle" conditions=" " content_name="第一版震荡法术" deliver_natures="enemy" name="第一版震荡法术" radius="120"/>
 	<spell_pattern class="target" content_name="第一版秒杀法术" name="第一版秒杀法术"/>
+	<spell_pattern class="target_position_circle" conditions="type:unit_class;target:opposite;condition:is:hero" content_name="第一版无敌药水" count="1" deliver_natures="ally" name="第一版无敌药水" radius="32"/>
 	<spell_pattern class="target_position_circle" conditions="type:field_type;target:opposite;condition:not:air" content_name="内容人族盾牌队长坚守" deliver_natures="ally" name="人族盾牌队长坚守" radius="128"/>
 	<spell_pattern class="target" conditions="type:unit_class;target:opposite;condition:not:building,core" content_name="人族剑士队长致命打击" deliver_natures="enemy" name="人族剑士队长致命打击"/>
 	<spell_pattern class="target" conditions=" " content_name="剑士队长清除自身负面状态" deliver_natures="ally" name="剑士队长清除自身负面状态"/>
@@ -286,6 +288,7 @@
 	<spell_content magic_name="磁场法术效果" name="第一版磁场法术" spell_content_class="magic"/>
 	<spell_content name="第一版震荡法术" spell_content_class="damage" spell_content_damage_name="震荡法术伤害"/>
 	<spell_content name="第一版秒杀法术" spell_content_class="summon" summon_count="1" unit_setting_id="14005"/>
+	<spell_content name="第一版无敌药水" spell_content_class="damage" spell_content_damage_name="第一版无敌药水"/>
 	<spell_content name="内容人族盾牌队长坚守" spell_content_class="damage" spell_content_damage_name="效果人族盾牌队长坚守"/>
 	<spell_content name="人族剑士队长致命打击" spell_content_class="damage" spell_content_damage_name="人族剑士队长致命打击"/>
 	<spell_content name="剑士队长清除自身负面状态" spell_content_class="damage" spell_content_damage_name="剑士队长清除自身负面状态"/>
@@ -484,6 +487,7 @@
 	<buff alias="恐惧法术增加buff" buff_effect_names="恐惧法术增加buff" deliver_class="physical" deliver_nature="enemy" dispelable="1" id="1910" is_on_building="0" level="1" max_overlay="1" name="恐惧法术增加buff" span="1200" span_type="limited" unique_on_unit="1"/>
 	<buff alias="震荡法术减速效果" buff_effect_names="震荡法术降低攻速效果;震荡法术降低移动效果" deliver_class="magical" deliver_nature="enemy" dispelable="0" id="1911" is_on_building="0" level="1" max_overlay="1" name="震荡法术减速效果" span="420" span_type="limited" unique_on_unit="1"/>
 	<buff alias="磁场法术增加闪避效果" buff_effect_names="磁场法术增加闪避效果" deliver_class="physical" deliver_nature="ally" dispelable="0" id="1912" is_on_building="0" level="1" max_overlay="1" name="磁场法术增加闪避效果" span_type="eternal" unique_on_unit="1"/>
+	<buff alias="无敌药水buff" buff_effect_names="无敌药水buff" deliver_class="physical" deliver_nature="ally" dispelable="0" id="1913" is_on_building="0" level="1" max_overlay="1" name="无敌药水buff" render_key="心灵之火" span="300" span_type="eternal" unique_on_unit="1"/>
 	<buff alias="人族盾牌队长坚守状态" buff_effect_names="人族盾牌队长坚守增加护甲" deliver_class="physical" deliver_nature="ally" dispelable="1" id="1001" is_on_building="0" level="1" max_overlay="1" name="人族盾牌队长坚守状态" span="480" span_type="limited" unique_on_unit="1"/>
 	<buff alias="人族盾牌队长坚韧守护buff" buff_effect_names="人族盾牌队长坚韧守护buff" deliver_class="physical" deliver_nature="ally" dispelable="0" id="1002" is_on_building="0" level="1" max_overlay="1" name="人族盾牌队长坚韧守护buff" span_type="eternal" unique_on_unit="1"/>
 	<buff alias="人族剑士队长杀戮冲锋加速" buff_effect_names="人族剑士队长杀戮冲锋加速buff" deliver_class="magical" deliver_nature="ally" dispelable="0" id="1003" level="1" max_overlay="1" name="人族剑士队长杀戮冲锋加速buff" span="300" span_type="limited" unique_on_unit="1"/>
@@ -546,6 +550,7 @@
 	<buff_effect buff_effect_condition="immediate" buff_effect_content_name="震荡法术降低攻速效果" buff_effect_name="震荡法术降低攻速效果" is_damage="0"/>
 	<buff_effect buff_effect_condition="immediate" buff_effect_content_name="震荡法术降低移动效果" buff_effect_name="震荡法术降低移动效果" is_damage="0"/>
 	<buff_effect buff_effect_condition="immediate" buff_effect_content_name="磁场法术增加闪避效果" buff_effect_name="磁场法术增加闪避效果" is_damage="0"/>
+	<buff_effect buff_effect_condition="immediate" buff_effect_content_name="无敌药水buff" buff_effect_name="无敌药水buff" is_damage="0"/>
 	<buff_effect buff_effect_condition="immediate" buff_effect_content_name="人族盾牌队长坚守增加护甲" buff_effect_name="人族盾牌队长坚守增加护甲" is_damage="0"/>
 	<buff_effect buff_effect_condition="immediate" buff_effect_content_name="人族盾牌队长坚韧守护buff" buff_effect_name="人族盾牌队长坚韧守护buff" is_damage="0"/>
 	<buff_effect buff_effect_condition="immediate" buff_effect_content_name="人族剑士队长杀戮冲锋加速buff" buff_effect_name="人族剑士队长杀戮冲锋加速buff" is_damage="0"/>
@@ -611,6 +616,7 @@
 	<damage damage_name="第一版缴械法术" damage_nature="hurt" damage_value="0" deliver_class="magical" feature_names="缴械法术增加buff" is_on_building="0"/>
 	<damage damage_name="第一版恐惧法术" damage_nature="hurt" damage_value="0" deliver_class="magical" feature_names="恐惧法术增加buff" is_on_building="0"/>
 	<damage damage_name="震荡法术伤害" damage_nature="hurt" damage_value="300" deliver_class="physical" feature_names="震荡法术减速效果;震荡法术移除一定生命" is_on_building="0"/>
+	<damage damage_name="第一版无敌药水" damage_nature="heal" damage_value="0" deliver_class="magical" feature_names="无敌药水buff" is_on_building="0"/>
 	<damage damage_name="效果人族盾牌队长坚守" damage_nature="heal" damage_value="0" deliver_class="magical" feature_names="人族盾牌队长坚守状态特性" is_on_building="0"/>
 	<damage damage_name="人族剑士队长致命打击" damage_nature="hurt" damage_value="d:target:owner;type:attack_damage;v:p:800;template:0" deliver_class="physical" is_on_building="0"/>
 	<damage damage_name="剑士队长清除自身负面状态" damage_nature="heal" damage_value="0" deliver_class="magical" feature_names="清除自身负面状态特性"/>
@@ -663,6 +669,7 @@
 	<effect alias_name="降低攻速效果" attr_name="attack_speed" class="alter_attr" effect_name="震荡法术降低攻速效果" value="-70"/>
 	<effect alias_name="降低移动效果" attr_name="move_speed" class="alter_attr" effect_name="震荡法术降低移动效果" value="p:-70"/>
 	<effect alias_name="增加闪避效果" class="add_feature" effect_name="磁场法术增加闪避效果" feature_name="磁场法术增加闪避特性"/>
+	<effect class="set_state" effect_name="无敌药水buff" state_name="holly"/>
 	<effect alias_name="增加护甲效果" attr_name="armor" class="alter_attr" effect_name="人族盾牌队长坚守增加护甲" value="60"/>
 	<effect alias_name="减免伤害效果" class="add_feature" effect_name="人族盾牌队长坚韧守护buff" feature_name="人族盾牌队长坚韧守护特性"/>
 	<effect alias_name="提高移动效果" attr_name="move_speed" class="alter_attr" effect_name="人族剑士队长杀戮冲锋加速buff" value="60"/>
@@ -779,6 +786,7 @@
 	<feature_group determine_timing="be_attack" feature_type_names="磁场法术增加闪避特性" name="磁场法术增加闪避特性" probability="50"/>
 	<feature_group conditions="type:unit_class;target:opposite;condition:not:building,core" deliver_natures="enemy" determine_timing="hit" feature_type_names="震荡法术减速效果" name="震荡法术减速效果"/>
 	<feature_group conditions="type:unit_class;target:opposite;condition:not:building,core" deliver_natures="enemy" determine_timing="hit" feature_type_names="震荡法术移除一定生命" name="震荡法术移除一定生命"/>
+	<feature_group determine_timing="heal" feature_type_names="无敌药水buff" name="无敌药水buff"/>
 	<feature_group conditions=" " deliver_natures="neutral" determine_timing="heal" feature_type_names="人族盾牌队长坚守状态特性" name="人族盾牌队长坚守状态特性"/>
 	<feature_group determine_timing="be_hit" feature_type_names="人族盾牌队长坚韧守护特性" name="人族盾牌队长坚韧守护特性"/>
 	<feature_group determine_timing="kill" feature_type_names="人族剑士队长杀戮冲锋移除负面状态;人族剑士队长杀戮冲锋增加移动速度" name="人族剑士队长杀戮冲锋"/>
@@ -862,6 +870,7 @@
 	<feature effect_timing="be_attack" feature_name="磁场法术增加闪避特性" type="miss"/>
 	<feature buff_type_name="震荡法术减速效果" effect_timing="hit" feature_name="震荡法术减速效果" type="add_buff"/>
 	<feature deliver_class="physical" effect_timing="hit" feature_name="震荡法术移除一定生命" type="extra_damage" value="d:target:opposite;type:hp;v:p:25;template:0"/>
+	<feature buff_type_name="无敌药水buff" effect_timing="heal" feature_name="无敌药水buff" type="add_buff"/>
 	<feature buff_type_name="人族盾牌队长坚守状态" effect_timing="heal" feature_name="人族盾牌队长坚守状态特性" type="add_buff"/>
 	<feature effect_timing="settle_hurt_damage_r1" feature_name="人族盾牌队长坚韧守护特性" type="damage_reduce" value="p:20"/>
 	<feature effect_timing="kill" feature_name="人族剑士队长杀戮冲锋移除负面状态" is_to_self="1" spell_name="剑士队长清除自身负面状态" type="cast_spell"/>

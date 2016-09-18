@@ -15,6 +15,7 @@
 	<item card="2" gold="200" id="23112" level="1" name="磁场法术lv1"/>
 	<item card="2" gold="200" id="23113" level="1" name="震荡法术lv1"/>
 	<item card="2" gold="200" id="23114" level="1" name="秒杀法术lv1"/>
+	<item card="2" gold="200" id="23115" level="1" name="无敌药水lv1"/>
 	<item card="3" gold="300" id="23100" level="2" name="暴风雪lv1"/>
 	<item card="3" gold="300" id="23101" level="2" name="火球术lv1"/>
 	<item card="3" gold="300" id="23102" level="2" name="医疗术lv1"/>
@@ -30,6 +31,7 @@
 	<item card="3" gold="300" id="23112" level="2" name="磁场法术lv1"/>
 	<item card="3" gold="300" id="23113" level="2" name="震荡法术lv1"/>
 	<item card="3" gold="300" id="23114" level="2" name="秒杀法术lv1"/>
+	<item card="3" gold="300" id="23115" level="2" name="无敌药水lv1"/>
 	<item card="3" gold="150" id="22000" level="1" name="人族盾牌兵"/>
 	<item card="3" gold="150" id="22001" level="1" name="人族剑士"/>
 	<item card="3" gold="150" id="22002" level="1" name="人族弓手"/>

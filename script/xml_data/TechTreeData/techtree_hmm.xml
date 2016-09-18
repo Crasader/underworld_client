@@ -46,6 +46,9 @@
 	<card name="秒杀法术lv1" card_class="spell" cost="木头:100" spell_name="秒杀法术lv1" recover_span="3000" id="23114">
 		<custom_unit_setting/>
 	</card>
+	<card name="无敌药水lv1" card_class="spell" cost="木头:30" spell_name="无敌药水lv1" recover_span="1800" id="23115">
+		<custom_unit_setting/>
+	</card>
 <!-- 第一版单位：小兵部分 -->
 	<card name="人族盾牌兵" card_class="summon" cost="木头:40" unit_id="12005" summon_count="1" recover_span="0" id="22000">
 		<custom_unit_setting unit_setting_id="12005"/>
