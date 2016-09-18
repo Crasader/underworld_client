@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <root>
-    <map map_name="1" game_duration="14400"/>
+    <map map_name="1" game_duration="10800"/>
     <location_setting index="0" core_location="40,536"/>
     <location_setting index="1" core_location="1016,536"/>
     <schedule_events>
@@ -31,27 +31,19 @@
 		
 		  <event>
             <event_trigger class="loop" time="60" start_time="1800" end_time="7200"/>
-            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="6"/>
+            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="9"/>
         </event>
         <event>
             <event_trigger class="loop" time="60" start_time="1800" end_time="7200"/>
-            <event_effect class="alter_resource" map_index="1" resource_name="木头" amount="6"/>
+            <event_effect class="alter_resource" map_index="1" resource_name="木头" amount="9"/>
         </event>
 		
 		<event>
             <event_trigger class="loop" time="60" start_time="7200" end_time="10800"/>
-            <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="9"/>
-        </event>
-        <event>
-            <event_trigger class="loop" time="60" start_time="7200" end_time="10800"/>
-            <event_effect class="alter_resource" map_index="1" resource_name="木头" amount="9"/>
-        </event>
-        <event>
-            <event_trigger class="loop" time="60" start_time="10800" end_time="14400"/>
             <event_effect class="alter_resource" map_index="0" resource_name="木头" amount="15"/>
         </event>
         <event>
-            <event_trigger class="loop" time="60" start_time="10800" end_time="14400"/>
+            <event_trigger class="loop" time="60" start_time="7200" end_time="10800"/>
             <event_effect class="alter_resource" map_index="1" resource_name="木头" amount="15"/>
         </event>
 		
