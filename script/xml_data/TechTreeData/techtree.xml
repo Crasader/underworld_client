@@ -136,7 +136,7 @@
 	<spell alias="第一版磁场法术" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" id="1920" immediate_elements="0,第一版磁场法术,1" is_on_building="0" level="1" perform="0" preperform="30" spell_name="磁场法术lv1" spell_radius="80" to_dead="0"/>
 	<spell alias="第一版震荡法术" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" id="1921" immediate_elements="0,第一版震荡法术,1" is_on_building="0" level="1" perform="0" preperform="30" spell_name="震荡法术lv1" spell_radius="120" to_dead="0"/>
 	<spell alias="第一版秒杀法术" cast_distance="9999" cast_type="position" cd="600" class="cast" deliver_class="magical" id="1922" immediate_elements="0,第一版秒杀法术,1" level="1" perform="0" preperform="30" spell_name="秒杀法术lv1" spell_radius="32" to_dead="0"/>
-	<spell alias="第一版无敌药水" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" id="1923" immediate_elements="0,第一版无敌药水,1" level="1" perform="0" preperform="30" spell_name="无敌药水lv1" spell_radius="32" to_dead="0"/>
+	<spell alias="第一版无敌药水" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" id="1923" immediate_elements="0,第一版无敌药水,1" level="1" perform="0" preperform="30" spell_name="无敌药水lv1" spell_radius="64" to_dead="0"/>
 	<spell ai="战斗过程AI" alias="人族盾牌队长坚守" cast_distance="96" cast_type="unit" cd="600" class="cast" conditions="type:unit_class;target:opposite;condition:not:core" deliver_class="magical" deliver_natures="enemy" id="1001" immediate_elements="1,人族盾牌队长坚守,1" level="1" perform="0" preperform="40" spell_name="人族盾牌队长坚守" spell_radius="80" to_dead="0"/>
 	<spell ai="战斗过程AI" alias="人族剑士队长致命打击" cast_distance="48" cast_type="unit" cd="600" class="cast" conditions=" " deliver_class="physical" deliver_natures="enemy" id="1002" immediate_elements="0,人族剑士队长致命打击,1" is_on_building="0" level="1" perform="0" preperform="40" spell_name="人族剑士队长致命打击" to_dead="0"/>
 	<spell alias="剑士队长清除自身负面状态" cast_distance="-1" cast_type="self" cd="300" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" id="1003" immediate_elements="0,剑士队长清除自身负面状态,1" level="1" perform="0" preperform="30" spell_name="剑士队长清除自身负面状态" to_dead="0"/>
@@ -220,7 +220,7 @@
 	<spell_pattern class="target" conditions=" " content_name="第一版磁场法术" deliver_natures="neutral" name="第一版磁场法术"/>
 	<spell_pattern class="target_position_circle" conditions=" " content_name="第一版震荡法术" deliver_natures="enemy" name="第一版震荡法术" radius="120"/>
 	<spell_pattern class="target" content_name="第一版秒杀法术" name="第一版秒杀法术"/>
-	<spell_pattern class="target_position_circle" conditions="type:unit_class;target:opposite;condition:is:hero" content_name="第一版无敌药水" count="1" deliver_natures="ally" name="第一版无敌药水" radius="32"/>
+	<spell_pattern class="target_position_circle" conditions="type:unit_class;target:opposite;condition:is:hero" content_name="第一版无敌药水" count="1" deliver_natures="ally" name="第一版无敌药水" radius="64"/>
 	<spell_pattern class="target_position_circle" conditions="type:field_type;target:opposite;condition:not:air" content_name="内容人族盾牌队长坚守" deliver_natures="ally" name="人族盾牌队长坚守" radius="128"/>
 	<spell_pattern class="target" conditions="type:unit_class;target:opposite;condition:not:building,core" content_name="人族剑士队长致命打击" deliver_natures="enemy" name="人族剑士队长致命打击"/>
 	<spell_pattern class="target" conditions=" " content_name="剑士队长清除自身负面状态" deliver_natures="ally" name="剑士队长清除自身负面状态"/>
@@ -484,10 +484,12 @@
 	<buff alias="暴风雪后续伤害buff" buff_effect_names="暴风雪后续伤害buff" deliver_class="magical" deliver_nature="enemy" dispelable="0" id="1907" is_on_building="0" level="1" max_overlay="1" name="暴风雪后续伤害buff" span="180" span_type="limited" unique_on_unit="1"/>
 	<buff alias="狂暴法术增加buff" buff_effect_names="狂暴法术增加移动buff;狂暴法术增加攻击buff" deliver_class="physical" deliver_nature="ally" dispelable="1" id="1908" is_on_building="0" level="1" max_overlay="1" name="狂暴法术增加buff" span="600" span_type="limited" unique_on_unit="1"/>
 	<buff alias="缴械法术增加buff" buff_effect_names="缴械法术增加buff" deliver_class="physical" deliver_nature="enemy" dispelable="1" id="1909" is_on_building="0" level="1" max_overlay="1" name="缴械法术增加buff" span="600" span_type="limited" unique_on_unit="1"/>
-	<buff alias="恐惧法术增加buff" buff_effect_names="恐惧法术增加buff" deliver_class="physical" deliver_nature="enemy" dispelable="1" id="1910" is_on_building="0" level="1" max_overlay="1" name="恐惧法术增加buff" span="1200" span_type="limited" unique_on_unit="1"/>
-	<buff alias="震荡法术减速效果" buff_effect_names="震荡法术降低攻速效果;震荡法术降低移动效果" deliver_class="magical" deliver_nature="enemy" dispelable="0" id="1911" is_on_building="0" level="1" max_overlay="1" name="震荡法术减速效果" span="420" span_type="limited" unique_on_unit="1"/>
-	<buff alias="磁场法术增加闪避效果" buff_effect_names="磁场法术增加闪避效果" deliver_class="physical" deliver_nature="ally" dispelable="0" id="1912" is_on_building="0" level="1" max_overlay="1" name="磁场法术增加闪避效果" span_type="eternal" unique_on_unit="1"/>
-	<buff alias="无敌药水buff" buff_effect_names="无敌药水buff" deliver_class="physical" deliver_nature="ally" dispelable="0" id="1913" is_on_building="0" level="1" max_overlay="1" name="无敌药水buff" render_key="心灵之火" span="300" span_type="eternal" unique_on_unit="1"/>
+	<buff alias="缴械法术对英雄增加buff" buff_effect_names="缴械法术增加buff" deliver_class="physical" deliver_nature="enemy" dispelable="1" id="1910" is_on_building="0" level="1" max_overlay="1" name="缴械法术对英雄增加buff" span="200" span_type="limited" unique_on_unit="1"/>
+	<buff alias="恐惧法术增加buff" buff_effect_names="恐惧法术增加buff" deliver_class="physical" deliver_nature="enemy" dispelable="1" id="1911" is_on_building="0" level="1" max_overlay="1" name="恐惧法术增加buff" span="1200" span_type="limited" unique_on_unit="1"/>
+	<buff alias="恐惧法术对英雄增加buff" buff_effect_names="恐惧法术增加buff" deliver_class="physical" deliver_nature="enemy" dispelable="1" id="1912" is_on_building="0" level="1" max_overlay="1" name="恐惧法术对英雄增加buff" span="400" span_type="limited" unique_on_unit="1"/>
+	<buff alias="震荡法术减速效果" buff_effect_names="震荡法术降低攻速效果;震荡法术降低移动效果" deliver_class="magical" deliver_nature="enemy" dispelable="0" id="1913" is_on_building="0" level="1" max_overlay="1" name="震荡法术减速效果" span="420" span_type="limited" unique_on_unit="1"/>
+	<buff alias="磁场法术增加闪避效果" buff_effect_names="磁场法术增加闪避效果" deliver_class="physical" deliver_nature="ally" dispelable="0" id="1914" is_on_building="0" level="1" max_overlay="1" name="磁场法术增加闪避效果" span_type="eternal" unique_on_unit="1"/>
+	<buff alias="无敌药水buff" buff_effect_names="无敌药水buff" deliver_class="physical" deliver_nature="ally" dispelable="0" id="1915" is_on_building="0" level="1" max_overlay="1" name="无敌药水buff" render_key="心灵之火" span="300" span_type="limited" unique_on_unit="1"/>
 	<buff alias="人族盾牌队长坚守状态" buff_effect_names="人族盾牌队长坚守增加护甲" deliver_class="physical" deliver_nature="ally" dispelable="1" id="1001" is_on_building="0" level="1" max_overlay="1" name="人族盾牌队长坚守状态" span="480" span_type="limited" unique_on_unit="1"/>
 	<buff alias="人族盾牌队长坚韧守护buff" buff_effect_names="人族盾牌队长坚韧守护buff" deliver_class="physical" deliver_nature="ally" dispelable="0" id="1002" is_on_building="0" level="1" max_overlay="1" name="人族盾牌队长坚韧守护buff" span_type="eternal" unique_on_unit="1"/>
 	<buff alias="人族剑士队长杀戮冲锋加速" buff_effect_names="人族剑士队长杀戮冲锋加速buff" deliver_class="magical" deliver_nature="ally" dispelable="0" id="1003" level="1" max_overlay="1" name="人族剑士队长杀戮冲锋加速buff" span="300" span_type="limited" unique_on_unit="1"/>
@@ -613,8 +615,8 @@
 	<damage damage_name="禁足持续伤害" damage_nature="hurt" damage_value="75" deliver_class="magical" is_on_building="0"/>
 	<damage damage_name="酸雾单次伤害" damage_nature="hurt" damage_value="30" deliver_class="physical" is_on_building="0"/>
 	<damage damage_name="第一版狂暴法术" damage_nature="heal" damage_value="0" deliver_class="magical" feature_names="狂暴法术增加buff" is_on_building="0"/>
-	<damage damage_name="第一版缴械法术" damage_nature="hurt" damage_value="0" deliver_class="magical" feature_names="缴械法术增加buff" is_on_building="0"/>
-	<damage damage_name="第一版恐惧法术" damage_nature="hurt" damage_value="0" deliver_class="magical" feature_names="恐惧法术增加buff" is_on_building="0"/>
+	<damage damage_name="第一版缴械法术" damage_nature="hurt" damage_value="0" deliver_class="magical" feature_names="缴械法术增加buff;缴械法术对英雄增加buff" is_on_building="0"/>
+	<damage damage_name="第一版恐惧法术" damage_nature="hurt" damage_value="0" deliver_class="magical" feature_names="恐惧法术增加buff;恐惧法术对英雄增加buff" is_on_building="0"/>
 	<damage damage_name="震荡法术伤害" damage_nature="hurt" damage_value="300" deliver_class="physical" feature_names="震荡法术减速效果;震荡法术移除一定生命" is_on_building="0"/>
 	<damage damage_name="第一版无敌药水" damage_nature="heal" damage_value="0" deliver_class="magical" feature_names="无敌药水buff" is_on_building="0"/>
 	<damage damage_name="效果人族盾牌队长坚守" damage_nature="heal" damage_value="0" deliver_class="magical" feature_names="人族盾牌队长坚守状态特性" is_on_building="0"/>
@@ -781,8 +783,10 @@
 	<feature_group conditions="type:unit_class;target:opposite;condition:not:core" deliver_natures="neutral" determine_timing="hit" feature_type_names="禁足持续伤害" name="禁足持续伤害"/>
 	<feature_group conditions="type:unit_class;target:opposite;condition:not:core" deliver_natures="neutral" determine_timing="hit" feature_type_names="火球术燃烧特性" name="火球术燃烧特性"/>
 	<feature_group conditions="type:unit_class;target:opposite;condition:not:core" deliver_natures="ally" determine_timing="heal" feature_type_names="狂暴法术增加buff" name="狂暴法术增加buff"/>
-	<feature_group conditions="type:unit_class;target:opposite;condition:not:building,core" deliver_natures="enemy" determine_timing="hit" feature_type_names="缴械法术增加buff" name="缴械法术增加buff"/>
-	<feature_group conditions="type:unit_class;target:opposite;condition:not:building,core" deliver_natures="enemy" determine_timing="hit" feature_type_names="恐惧法术增加buff" name="恐惧法术增加buff"/>
+	<feature_group conditions="type:unit_class;target:opposite;condition:not:building,core,hero" deliver_natures="enemy" determine_timing="hit" feature_type_names="缴械法术增加buff" name="缴械法术增加buff"/>
+	<feature_group conditions="type:unit_class;target:opposite;condition:is:hero" deliver_natures="enemy" determine_timing="hit" feature_type_names="缴械法术对英雄增加buff" name="缴械法术对英雄增加buff"/>
+	<feature_group conditions="type:unit_class;target:opposite;condition:not:building,core,hero" deliver_natures="enemy" determine_timing="hit" feature_type_names="恐惧法术增加buff" name="恐惧法术增加buff"/>
+	<feature_group conditions="type:unit_class;target:opposite;condition:is:hero" deliver_natures="enemy" determine_timing="hit" feature_type_names="恐惧法术对英雄增加buff" name="恐惧法术对英雄增加buff"/>
 	<feature_group determine_timing="be_attack" feature_type_names="磁场法术增加闪避特性" name="磁场法术增加闪避特性" probability="50"/>
 	<feature_group conditions="type:unit_class;target:opposite;condition:not:building,core" deliver_natures="enemy" determine_timing="hit" feature_type_names="震荡法术减速效果" name="震荡法术减速效果"/>
 	<feature_group conditions="type:unit_class;target:opposite;condition:not:building,core" deliver_natures="enemy" determine_timing="hit" feature_type_names="震荡法术移除一定生命" name="震荡法术移除一定生命"/>
@@ -799,7 +803,7 @@
 	<feature_group conditions=" " deliver_natures="neutral" determine_timing="be_killed" feature_type_names="死亡产生分裂箭" name="死亡产生分裂箭"/>
 	<feature_group determine_timing="hit" feature_type_names="地狱战舰腐蚀攻击" name="地狱战舰腐蚀攻击"/>
 	<feature_group conditions=" " deliver_natures="neutral" determine_timing="hit" feature_type_names="霜冻新星范围减速" name="霜冻新星范围减速"/>
-	<feature_group conditions="type:unit_class;target:opposite;condition:not:building,core" deliver_natures="enemy" determine_timing="hit" feature_type_names="魔族黑传教士dot法球特性" name="魔族黑传教士dot法球效果"/>
+	<feature_group conditions="type:unit_class;target:opposite;condition:not:building,core" deliver_natures="enemy" determine_timing="attack" feature_type_names="魔族黑传教士dot法球特性" name="魔族黑传教士dot法球效果"/>
 	<feature_group conditions="type:unit_class;target:opposite;condition:not:building,core" deliver_natures="enemy" determine_timing="hit" feature_type_names="魔族巫妖王霜之哀伤减速特性" name="魔族巫妖王霜之哀伤减速特性" probability="100"/>
 	<feature_group conditions="type:unit_class;target:opposite;condition:not:building,core" deliver_natures="ally" determine_timing="hit" feature_type_names="魔族巫妖王死亡契约之buff团队效果特性" name="魔族巫妖王死亡契约之buff团队效果特性" probability="100"/>
 	<feature_group conditions="type:unit_class;target:opposite;condition:not:core" deliver_natures="neutral" determine_timing="hit" feature_type_names="中立斧王恐怖嚎叫降低护甲" name="中立斧王恐怖嚎叫降低护甲"/>
@@ -866,7 +870,9 @@
 	<feature buff_type_name="火球术燃烧状态" effect_timing="hit" feature_name="火球术燃烧特性" type="add_buff"/>
 	<feature buff_type_name="狂暴法术增加buff" effect_timing="heal" feature_name="狂暴法术增加buff" type="add_buff"/>
 	<feature buff_type_name="缴械法术增加buff" effect_timing="hit" feature_name="缴械法术增加buff" type="add_buff"/>
+	<feature buff_type_name="缴械法术对英雄增加buff" effect_timing="hit" feature_name="缴械法术对英雄增加buff" type="add_buff"/>
 	<feature buff_type_name="恐惧法术增加buff" effect_timing="hit" feature_name="恐惧法术增加buff" type="add_buff"/>
+	<feature buff_type_name="恐惧法术对英雄增加buff" effect_timing="hit" feature_name="恐惧法术对英雄增加buff" type="add_buff"/>
 	<feature effect_timing="be_attack" feature_name="磁场法术增加闪避特性" type="miss"/>
 	<feature buff_type_name="震荡法术减速效果" effect_timing="hit" feature_name="震荡法术减速效果" type="add_buff"/>
 	<feature deliver_class="physical" effect_timing="hit" feature_name="震荡法术移除一定生命" type="extra_damage" value="d:target:opposite;type:hp;v:p:25;template:0"/>
