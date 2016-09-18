@@ -497,7 +497,7 @@
 	<buff alias="骷髅王吸血光环" buff_effect_names="骷髅王吸血光环" deliver_class="physical" deliver_nature="ally" dispelable="0" id="1007" is_on_building="0" level="1" max_overlay="1" name="骷髅王吸血光环" span_type="eternal" unique_on_unit="1"/>
 	<buff alias="冥火暴击击晕效果" buff_effect_names="冥火暴击击晕效果" deliver_class="magical" deliver_nature="enemy" dispelable="0" id="1008" is_on_building="0" level="1" max_overlay="1" name="冥火暴击击晕效果" span="240" span_type="limited" unique_on_unit="1"/>
 	<buff alias="buff食尸鬼王山岭光环" buff_effect_names="buff效果食尸鬼王山岭光环" deliver_class="physical" deliver_nature="ally" dispelable="0" id="1009" is_on_building="0" level="1" max_overlay="1" name="buff食尸鬼王山岭光环" span_type="eternal" unique_on_unit="1"/>
-	<buff alias="buff食尸鬼王山岭光环反弹效果" buff_effect_names="buff效果食尸鬼王山岭光环反弹效果" deliver_class="physical" deliver_nature="enemy" dispelable="0" id="1010" is_on_building="0" level="1" max_overlay="1" name="buff食尸鬼王山岭光环反弹效果" span="180" span_type="limited" unique_on_unit="1"/>
+	<buff alias="buff食尸鬼王山岭光环反弹效果" buff_effect_names="buff效果食尸鬼王山岭光环反弹效果" deliver_class="physical" deliver_nature="enemy" dispelable="0" id="1010" is_on_building="0" level="1" max_overlay="1" name="buff食尸鬼王山岭光环反弹效果" render_key="心灵之火" span="180" span_type="limited" unique_on_unit="1"/>
 	<buff alias="黑暗之箭状态" buff_effect_names="黑暗之箭状态" deliver_class="magical" deliver_nature="enemy" dispelable="0" id="1011" is_on_building="0" level="1" max_overlay="1" name="黑暗之箭状态" span="120" span_type="limited" unique_on_unit="1"/>
 	<buff alias="地狱战舰腐蚀攻击" buff_effect_names="地狱战舰腐蚀攻击" deliver_class="magical" deliver_nature="enemy" dispelable="0" id="1012" is_on_building="0" level="1" max_overlay="3" name="地狱战舰腐蚀攻击" span="240" span_type="limited" unique_on_unit="1"/>
 	<buff alias="buff魔族黑传教士dot法球" buff_effect_names="buff效果魔族黑传教士dot法球" deliver_class="magical" deliver_nature="enemy" dispelable="1" id="1013" is_on_building="0" level="1" max_overlay="8" name="buff魔族黑传教士dot法球" span="180" span_type="limited" unique_on_unit="1"/>
@@ -792,7 +792,7 @@
 	<feature_group determine_timing="kill" feature_type_names="人族剑士队长杀戮冲锋移除负面状态;人族剑士队长杀戮冲锋增加移动速度" name="人族剑士队长杀戮冲锋"/>
 	<feature_group determine_timing="heal" feature_type_names="清除自身负面状态特性" name="清除自身负面状态特性"/>
 	<feature_group conditions="type:unit_class;target:opposite;condition:not:core" deliver_natures="enemy" determine_timing="hit" feature_type_names="食尸鬼王冥火暴击击晕效果" name="食尸鬼王冥火暴击击晕效果"/>
-	<feature_group conditions="type:unit_class;target:opposite;condition:not:building,core" deliver_natures="enemy" determine_timing="be_hit" feature_type_names="食尸鬼王山岭光环反弹特性" name="食尸鬼王山岭光环反弹效果" probability="20"/>
+	<feature_group conditions="type:unit_class;target:opposite;condition:not:building,core" deliver_natures="enemy" determine_timing="be_attack" feature_type_names="食尸鬼王山岭光环反弹特性" name="食尸鬼王山岭光环反弹效果" probability="20"/>
 	<feature_group determine_timing="attack" feature_type_names="骷髅王吸血光环" name="骷髅王吸血光环"/>
 	<feature_group conditions="type:unit_class;target:opposite;condition:not:core" deliver_natures="neutral" determine_timing="settle_attack_damage_r1" feature_type_names="骷髅王盛宴效果" name="骷髅王盛宴"/>
 	<feature_group conditions="type:unit_class;target:opposite;condition:not:core" deliver_natures="neutral" determine_timing="attack" feature_type_names="攻击添加黑暗之箭BUFF" name="魔族地狱战舰邪恶之箭"/>
@@ -877,7 +877,7 @@
 	<feature effect_timing="heal" feature_name="清除自身负面状态特性" type="dispel"/>
 	<feature buff_type_name="人族剑士队长杀戮冲锋加速buff" effect_timing="kill" feature_name="人族剑士队长杀戮冲锋增加移动速度" is_to_self="1" type="add_buff"/>
 	<feature buff_type_name="冥火暴击击晕效果" effect_timing="hit" feature_name="食尸鬼王冥火暴击击晕效果" type="add_buff"/>
-	<feature buff_type_name="buff食尸鬼王山岭光环反弹效果" effect_timing="be_hit" feature_name="食尸鬼王山岭光环反弹特性" is_to_self="0" overlay="1" type="add_buff"/>
+	<feature buff_type_name="buff食尸鬼王山岭光环反弹效果" effect_timing="be_attack" feature_name="食尸鬼王山岭光环反弹特性" is_to_self="0" overlay="1" type="add_buff"/>
 	<feature effect_timing="hurt" feature_name="骷髅王吸血光环" type="drain" value="d:target:owner;type:attack_damage;v:p:60;template:0"/>
 	<feature deliver_class="physical" effect_timing="settle_attack_damage_r1" feature_name="骷髅王盛宴效果" render_key="0" type="extra_damage" value="d:target:opposite;type:hp;v:p:3;template:0"/>
 	<feature buff_type_name="黑暗之箭状态" effect_timing="hit" feature_name="攻击添加黑暗之箭BUFF" type="add_buff"/>
