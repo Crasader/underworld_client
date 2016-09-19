@@ -8,7 +8,7 @@
 
 #include "CardInfoLayer.h"
 #include "SeniorCard.h"
-#include "CardPropertyNode.h"
+#include "CardAttributeNode.h"
 #include "Board.h"
 #include "XButton.h"
 #include "ResourceButton.h"
@@ -205,9 +205,9 @@ void CardInfoLayer::createLeftNode(Node* node)
                 color = PURE_WHITE;
             }
             
-            auto property = CardPropertyNode::create(color);
+            auto property = CardAttributeNode::create(color);
             node->addChild(property);
-            _properties.push_back(property);
+            _attributes.push_back(property);
             
             // calculate space first
             if (0 == i) {
@@ -422,18 +422,35 @@ void CardInfoLayer::updateProperty(const AbstractProperty* property)
     
     auto cp(dynamic_cast<const CardProperty*>(property));
     if (cp) {
-        const auto& skills(cp->getSkills());
-        int cnt((int)skills.size());
-        for (int i = 0; i < cnt; ++i) {
-            if (i < _skillCards.size()) {
-                auto card(_skillCards.at(i));
-                card->setVisible(true);
-                card->update(skills.at(i), nullptr);
+        if (true) {
+            for (int i = 0; i < _attributes.size(); ++i) {
+                auto node(_attributes.at(i));
+                node->setVisible(i < cp->getAttributes().size());
+            }
+            
+            for (int i = 0; i < static_cast<int>(ObjectUtils::CardAttributeType::PROPERTY_MAX); ++i) {
+                if (i < _attributes.size()) {
+                    auto node(_attributes.at(i));
+                    const auto type(static_cast<ObjectUtils::CardAttributeType>(i));
+                    node->setAttribute(type, cp->getAttributes().at(type));
+                }
             }
         }
         
-        for (int i = cnt; i < _skillCards.size(); ++i) {
-            _skillCards.at(i)->setVisible(false);
+        if (true) {
+            const auto& skills(cp->getSkills());
+            int cnt((int)skills.size());
+            for (int i = 0; i < cnt; ++i) {
+                if (i < _skillCards.size()) {
+                    auto card(_skillCards.at(i));
+                    card->setVisible(true);
+                    card->update(skills.at(i), nullptr);
+                }
+            }
+            
+            for (int i = cnt; i < _skillCards.size(); ++i) {
+                _skillCards.at(i)->setVisible(false);
+            }
         }
     }
 }

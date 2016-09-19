@@ -231,6 +231,7 @@ SettingsLayer::SettingsLayer()
 
 SettingsLayer::~SettingsLayer()
 {
+    _eventDispatcher->removeCustomEventListeners(AppWillEnterForegroundNotification);
     removeAllChildren();
 }
 

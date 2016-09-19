@@ -20,7 +20,7 @@ const char* XMLUtils::getData(tinyxml2::XMLElement* xml, const char* key) {
 
 void XMLUtils::parseString(tinyxml2::XMLElement* xml, const char* key, const std::string& delimit, const std::function<void(int, const std::string&)>& callback)
 {
-    auto data = parse<std::string>(xml, "content");
+    auto data = parse<std::string>(xml, key);
     std::vector<std::string> result;
     Utils::split(result, data, delimit, "");
     for (int i = 0; i < result.size(); ++i) {

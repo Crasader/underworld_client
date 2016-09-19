@@ -11,7 +11,7 @@
 #include "UniversalBoard.h"
 #include "JuniorCard.h"
 #include "ResourceButton.h"
-#include "CardPropertyNode.h"
+#include "CardAttributeNode.h"
 #include "DataManager.h"
 #include "AbstractData.h"
 #include "AbstractProperty.h"
@@ -74,13 +74,6 @@ void AbstractInfoLayer::updateProperty(const AbstractProperty* property)
     
     if (_description) {
         _description->setString(property ? property->getDescription() : "");
-    }
-    
-    for (int i = 0; i < _properties.size(); ++i) {
-        auto property(_properties.at(i));
-        if (property) {
-            // TODO: property
-        }
     }
 }
 

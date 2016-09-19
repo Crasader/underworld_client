@@ -8,7 +8,7 @@
 
 #include "SpellInfoLayer.h"
 #include "JuniorCard.h"
-#include "CardPropertyNode.h"
+#include "CardAttributeNode.h"
 #include "MediumBoard.h"
 #include "XButton.h"
 #include "ResourceButton.h"
@@ -100,9 +100,9 @@ void SpellInfoLayer::createNode(Node* node)
                 color = PURE_WHITE;
             }
             
-            auto property = CardPropertyNode::create(color);
+            auto property = CardAttributeNode::create(color);
             node->addChild(property);
-            _properties.push_back(property);
+            _attributes.push_back(property);
             
             // calculate space first
             if (0 == i) {

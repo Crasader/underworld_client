@@ -146,6 +146,7 @@
 		A12CFF871D77D43D007E25CB /* SkillBookProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12CFF851D77D43D007E25CB /* SkillBookProperty.cpp */; };
 		A12CFF8E1D77FBB6007E25CB /* AbstractData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12CFF8C1D77FBB6007E25CB /* AbstractData.cpp */; };
 		A13108A51C046BF900EAAD90 /* particle in Resources */ = {isa = PBXBuildFile; fileRef = A13108A41C046BF900EAAD90 /* particle */; };
+		A14AA4211D8FCD2E006800F1 /* ObjectUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14AA4201D8FCD2E006800F1 /* ObjectUtils.cpp */; };
 		A14B5EFB1C311908006FB0DB /* Addon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14B5EF91C311908006FB0DB /* Addon.cpp */; };
 		A15698E11C3A96E500B94345 /* DamageType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A15698DF1C3A96E500B94345 /* DamageType.cpp */; };
 		A15A135C1D86535600F24469 /* TestConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A15A13581D86535600F24469 /* TestConfiguration.cpp */; };
@@ -300,7 +301,7 @@
 		A1FF0E741D7D469D00C32040 /* CardInfoLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1FF0E6F1D7D469D00C32040 /* CardInfoLayer.cpp */; };
 		A1FF0E751D7D469D00C32040 /* SpellInfoLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1FF0E711D7D469D00C32040 /* SpellInfoLayer.cpp */; };
 		A1FF0E8B1D7D46CC00C32040 /* CardOpNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1FF0E791D7D46CC00C32040 /* CardOpNode.cpp */; };
-		A1FF0E8C1D7D46CC00C32040 /* CardPropertyNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1FF0E7B1D7D46CC00C32040 /* CardPropertyNode.cpp */; };
+		A1FF0E8C1D7D46CC00C32040 /* CardAttributeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1FF0E7B1D7D46CC00C32040 /* CardAttributeNode.cpp */; };
 		A1FF0E8D1D7D46CC00C32040 /* CardPreview.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1FF0E7E1D7D46CC00C32040 /* CardPreview.cpp */; };
 		A1FF0E8E1D7D46CC00C32040 /* CardSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1FF0E801D7D46CC00C32040 /* CardSet.cpp */; };
 		A1FF0E8F1D7D46CC00C32040 /* BaseCard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1FF0E831D7D46CC00C32040 /* BaseCard.cpp */; };
@@ -644,6 +645,7 @@
 		A13108A41C046BF900EAAD90 /* particle */ = {isa = PBXFileReference; lastKnownFileType = folder; path = particle; sourceTree = "<group>"; };
 		A13E39371D793364007D907A /* ObjectUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectUtils.h; sourceTree = "<group>"; };
 		A14580991D890E2100792251 /* XMLUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLUtils.h; sourceTree = "<group>"; };
+		A14AA4201D8FCD2E006800F1 /* ObjectUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectUtils.cpp; sourceTree = "<group>"; };
 		A14B5EF91C311908006FB0DB /* Addon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Addon.cpp; path = Core/Unit/Type/Addon.cpp; sourceTree = "<group>"; };
 		A14B5EFA1C311908006FB0DB /* Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Addon.h; path = Core/Unit/Type/Addon.h; sourceTree = "<group>"; };
 		A15698D31C3A95B300B94345 /* SpellType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SpellType.cpp; path = Core/Unit/Type/SpellType.cpp; sourceTree = "<group>"; };
@@ -952,8 +954,8 @@
 		A1FF0E721D7D469D00C32040 /* SpellInfoLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpellInfoLayer.h; sourceTree = "<group>"; };
 		A1FF0E791D7D46CC00C32040 /* CardOpNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardOpNode.cpp; sourceTree = "<group>"; };
 		A1FF0E7A1D7D46CC00C32040 /* CardOpNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardOpNode.h; sourceTree = "<group>"; };
-		A1FF0E7B1D7D46CC00C32040 /* CardPropertyNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardPropertyNode.cpp; sourceTree = "<group>"; };
-		A1FF0E7C1D7D46CC00C32040 /* CardPropertyNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardPropertyNode.h; sourceTree = "<group>"; };
+		A1FF0E7B1D7D46CC00C32040 /* CardAttributeNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardAttributeNode.cpp; sourceTree = "<group>"; };
+		A1FF0E7C1D7D46CC00C32040 /* CardAttributeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardAttributeNode.h; sourceTree = "<group>"; };
 		A1FF0E7E1D7D46CC00C32040 /* CardPreview.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardPreview.cpp; sourceTree = "<group>"; };
 		A1FF0E7F1D7D46CC00C32040 /* CardPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardPreview.h; sourceTree = "<group>"; };
 		A1FF0E801D7D46CC00C32040 /* CardSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardSet.cpp; sourceTree = "<group>"; };
@@ -2026,6 +2028,7 @@
 				A11009521D7D5EDF00376283 /* JSonUtils.h */,
 				A1720E911BCCE1D900217E98 /* LocalHelper.cpp */,
 				A1720E921BCCE1D900217E98 /* LocalHelper.h */,
+				A14AA4201D8FCD2E006800F1 /* ObjectUtils.cpp */,
 				A13E39371D793364007D907A /* ObjectUtils.h */,
 				A1A4BA471BCE096300175E8A /* Utils.cpp */,
 				A1A4BA481BCE096300175E8A /* Utils.h */,
@@ -2447,8 +2450,8 @@
 				A1A552C31D80125C009FF922 /* CardOpButton.h */,
 				A1FF0E791D7D46CC00C32040 /* CardOpNode.cpp */,
 				A1FF0E7A1D7D46CC00C32040 /* CardOpNode.h */,
-				A1FF0E7B1D7D46CC00C32040 /* CardPropertyNode.cpp */,
-				A1FF0E7C1D7D46CC00C32040 /* CardPropertyNode.h */,
+				A1FF0E7B1D7D46CC00C32040 /* CardAttributeNode.cpp */,
+				A1FF0E7C1D7D46CC00C32040 /* CardAttributeNode.h */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -2860,6 +2863,7 @@
 				A1ED7FC51D8143D40017B960 /* GuildNoticeLayer.cpp in Sources */,
 				3019BAB91C9953FB003258DB /* AuraType.cpp in Sources */,
 				A19AE2101D59D41400D109AD /* LanguageConfirmationLayer.cpp in Sources */,
+				A14AA4211D8FCD2E006800F1 /* ObjectUtils.cpp in Sources */,
 				045116F51BCFBA44002AA721 /* CommandType.cpp in Sources */,
 				3070302B1CD1E6D70077D357 /* ProduceType.cpp in Sources */,
 				A1B66A1F1D703767009A8D55 /* MediumBoard.cpp in Sources */,
@@ -2884,7 +2888,7 @@
 				A19EE96D1C1C0F1300E46D77 /* LevelProperty.cpp in Sources */,
 				A1720EAD1BCD2A8400217E98 /* NetworkApi.cpp in Sources */,
 				04CF0AEC1D87F76500117DA6 /* HMMManualSpellView.cpp in Sources */,
-				A1FF0E8C1D7D46CC00C32040 /* CardPropertyNode.cpp in Sources */,
+				A1FF0E8C1D7D46CC00C32040 /* CardAttributeNode.cpp in Sources */,
 				A1F3D2361D1D05CD00EB5C17 /* MessageBoxBaseLayer.cpp in Sources */,
 				300098D31BD0CDB000B6E284 /* ResourceType.cpp in Sources */,
 				04CE7CBC1D645BD60000B391 /* GameLooper.cpp in Sources */,

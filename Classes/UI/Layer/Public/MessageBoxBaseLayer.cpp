@@ -56,10 +56,12 @@ bool MessageBoxBaseLayer::init()
         
         _confirmButton = XButton::create(XButton::BSize::Big, XButton::BType::Red);
         _confirmButton->setTitleText(LocalHelper::getString("hint_confirm"));
+        _confirmButton->setTitleColor(Color3B::WHITE);
         _background_1->addChild(_confirmButton);
         
         _cancelButton = XButton::create(XButton::BSize::Big, XButton::BType::Blue);
         _cancelButton->setTitleText(LocalHelper::getString("hint_cancel"));
+        _cancelButton->setTitleColor(Color3B::WHITE);
         _background_1->addChild(_cancelButton);
         
         const auto& sizeg = _confirmButton->getContentSize();

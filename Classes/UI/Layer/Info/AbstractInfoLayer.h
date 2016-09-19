@@ -17,7 +17,7 @@ USING_NS_CC;
 class UniversalBoard;
 class JuniorCard;
 class ResourceButton;
-class CardPropertyNode;
+class CardAttributeNode;
 class AbstractData;
 class AbstractProperty;
 
@@ -43,7 +43,7 @@ protected:
     JuniorCard* _icon;
     Label* _description;
     ResourceButton* _upgradeButton;
-    std::vector<CardPropertyNode*> _properties;
+    std::vector<CardAttributeNode*> _attributes;
     const AbstractData* _data;
     const AbstractProperty* _property;
 };

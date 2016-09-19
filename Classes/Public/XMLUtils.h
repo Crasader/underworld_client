@@ -17,31 +17,20 @@ class XMLUtils {
 private:
     static const char* getData(tinyxml2::XMLElement* xml, const char* key);
     
-    template<class T>
-    static T __parse_iml(const char* data, std::true_type)
-    {
-        if (data) {
-            return static_cast<T>(atof(data));
-        }
-        
-        return 0;
-    }
+    template<class T> static typename std::enable_if<std::is_floating_point<T>::value, T>::type
+    __parse_iml(const char* data) { return static_cast<T>(data ? atof(data) : 0); }
     
-    template<class T>
-    static T __parse_iml(const char* data, std::false_type)
-    {
-        if (data) {
-            return std::string(data);
-        }
-        
-        return "";
-    }
+    template<class T> static typename std::enable_if<std::is_integral<T>::value || std::is_enum<T>::value, T>::type
+    __parse_iml(const char* data) { return static_cast<T>(data ? atoi(data) : 0); }
+    
+    template<class T> static typename std::enable_if<std::is_same<T, std::string>::value, T>::type
+    __parse_iml(const char* data) { return data ? std::string(data) : ""; }
     
 public:
     template<class T>
     static T parse(tinyxml2::XMLElement* xml, const char* key)
     {
-        return __parse_iml<T>(getData(xml, key), std::is_arithmetic<T>());
+        return __parse_iml<T>(getData(xml, key));
     }
     
     template<class T>
@@ -49,7 +38,7 @@ public:
     {
         auto data(getData(xml, key));
         if (data) {
-            output = __parse_iml<T>(data, std::is_arithmetic<T>());
+            output = __parse_iml<T>(data);
         }
     }
     

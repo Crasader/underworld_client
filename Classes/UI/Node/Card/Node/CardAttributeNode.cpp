@@ -1,0 +1,154 @@
+//
+//  CardAttributeNode.cpp
+//  Underworld_Client
+//
+//  Created by Andy on 16/8/26.
+//  Copyright (c) 2016 Mofish Studio. All rights reserved.
+//
+
+#include "CardAttributeNode.h"
+#include "PureNode.h"
+#include "CocosUtils.h"
+#include "LocalHelper.h"
+
+using namespace std;
+
+template <class T>
+static std::string format(const std::string& prefix, const T& n, typename std::enable_if<std::is_enum<T>::value, T>::type* = nullptr) {
+    return LocalHelper::getString(prefix + (std::ostringstream() << static_cast<int>(n)).str());
+}
+
+template <class T>
+static std::string format(const std::string& prefix, const T& n, typename std::enable_if<!std::is_enum<T>::value, T>::type* = nullptr) {
+    return LocalHelper::getString(prefix + (std::ostringstream() << n).str());
+}
+
+CardAttributeNode* CardAttributeNode::create(const Color4B& color)
+{
+    auto ret = new (nothrow) CardAttributeNode();
+    if (ret && ret->init(color)) {
+        ret->autorelease();
+        return ret;
+    }
+    
+    CC_SAFE_DELETE(ret);
+    return nullptr;
+}
+
+CardAttributeNode::CardAttributeNode()
+:_background(nullptr)
+,_icon(nullptr)
+,_name(nullptr)
+,_data(nullptr) {}
+
+CardAttributeNode::~CardAttributeNode()
+{
+    removeAllChildren();
+}
+
+bool CardAttributeNode::init(const Color4B& color)
+{
+    if (Node::init()) {
+        static const Size size(154, 38);
+        setAnchorPoint(Point::ANCHOR_MIDDLE);
+        setContentSize(size);
+        
+        auto bg = PureNode::create(color, size);
+        bg->setPosition(size.width / 2, size.height / 2);
+        addChild(bg);
+        _background = bg;
+        
+        static const float edgeX(2);
+        auto icon = Sprite::create(getIconFile(ObjectUtils::CardAttributeType::HP));
+        icon->setScale(0.4f);
+        const Size isize(icon->getContentSize() * icon->getScale());
+        icon->setPosition(Point(edgeX + isize.width / 2, size.height / 2));
+        bg->addChild(icon);
+        _icon = icon;
+        
+        const auto& ipos(icon->getPosition());
+        static const float inspace(5);
+        static const float spaceY(0);
+        const float leftX(ipos.x + isize.width / 2 + inspace);
+        
+        auto name = CocosUtils::createLabel("", SMALL_FONT_SIZE);
+        name->setTextColor(Color4B::BLACK);
+        name->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
+        name->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+        name->setPosition(leftX, size.height / 2 + (name->getContentSize().height / 2 + spaceY));
+        addChild(name);
+        _name = name;
+        
+        auto data = CocosUtils::createLabel("", 16);
+        data->setTextColor(Color4B::BLACK);
+        data->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
+        data->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+        data->setPosition(leftX, size.height / 2 - (data->getContentSize().height / 2 + spaceY));
+        addChild(data);
+        _data = data;
+        
+        return true;
+    }
+    
+    return false;
+}
+
+void CardAttributeNode::setColor(const Color4B& color)
+{
+    if (_background) {
+        _background->setColor(color);
+    }
+}
+
+void CardAttributeNode::setAttribute(ObjectUtils::CardAttributeType type, float value)
+{
+    const auto& file(getIconFile(type));
+    if (_icon) {
+        _icon->setTexture(file);
+    }
+    
+    if (_name) {
+        _name->setString(format("ui_cardAttr_", type));
+    }
+    
+    if (_data) {
+        string prefix("");
+        if (ObjectUtils::CardAttributeType::ARMOR_TYPE == type) {
+            prefix = "ui_cardArmorType_";
+        } else if (ObjectUtils::CardAttributeType::ATTACK_TYPE == type) {
+            prefix = "ui_cardAttackType_";
+        } else if (ObjectUtils::CardAttributeType::TARGET_TYPE == type) {
+            prefix = "ui_cardTarget_";
+        }
+        
+        _data->setString(format(prefix, value));
+    }
+}
+
+std::string CardAttributeNode::getIconFile(ObjectUtils::CardAttributeType type) const
+{
+    switch (type) {
+        case ObjectUtils::CardAttributeType::HP:
+            return CocosUtils::getResourcePath("icon_hp.png");
+        case ObjectUtils::CardAttributeType::SPEED:
+            return CocosUtils::getResourcePath("icon_sudu.png");
+        case ObjectUtils::CardAttributeType::ARMOR:
+            return CocosUtils::getResourcePath("icon_hujiazhi.png");
+        case ObjectUtils::CardAttributeType::ARMOR_TYPE:
+            return CocosUtils::getResourcePath("icon_hujialeixing.png");
+        case ObjectUtils::CardAttributeType::GROUND_DAMAGE:
+            return CocosUtils::getResourcePath("icon_gongjili.png");
+        case ObjectUtils::CardAttributeType::ATTACK_TYPE:
+            return CocosUtils::getResourcePath("icon_gongjifanwei.png");
+        case ObjectUtils::CardAttributeType::HIT_SPEED:
+            return CocosUtils::getResourcePath("icon_gongjisudu.png");
+        case ObjectUtils::CardAttributeType::RANGE:
+            return CocosUtils::getResourcePath("icon_gongjifanwei.png");
+        case ObjectUtils::CardAttributeType::TARGET_TYPE:
+            return CocosUtils::getResourcePath("icon_gongjileixing.png");
+        case ObjectUtils::CardAttributeType::AIR_DAMAGE:
+            return CocosUtils::getResourcePath("icon_gongjili.png");
+        default:
+            return "";
+    }
+}

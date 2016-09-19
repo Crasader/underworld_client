@@ -129,6 +129,39 @@
     <item key="ui_cardInfo_change" value="替换符文"/>
     <item key="ui_cardInfo_unload" value="卸下符文"/>
     
+    <!-- 卡牌属性 -->
+    <item key="ui_cardAttr_0" value="生命值"/>
+    <item key="ui_cardAttr_1" value="攻击速度"/>
+    <item key="ui_cardAttr_2" value="护甲"/>
+    <item key="ui_cardAttr_3" value="护甲类型"/>
+    <item key="ui_cardAttr_4" value="对地攻击"/>
+    <item key="ui_cardAttr_5" value="攻击类型"/>
+    <item key="ui_cardAttr_6" value="攻击力"/>
+    <item key="ui_cardAttr_7" value="攻击范围"/>
+    <item key="ui_cardAttr_8" value="目标"/>
+    <item key="ui_cardAttr_9" value="对空攻击"/>
+    
+    <!-- 攻击类型 -->
+    <item key="ui_cardAttackType_0" value="普通"/>
+    <item key="ui_cardAttackType_1" value="穿刺"/>
+    <item key="ui_cardAttackType_2" value="魔法"/>
+    <item key="ui_cardAttackType_3" value="英雄"/>
+    <item key="ui_cardAttackType_4" value="攻城"/>
+    <item key="ui_cardAttackType_5" value="混乱"/>
+    
+    <!-- 护甲类型 -->
+    <item key="ui_cardArmorType_0" value="重甲"/>
+    <item key="ui_cardArmorType_1" value="中甲"/>
+    <item key="ui_cardArmorType_2" value="无甲"/>
+    <item key="ui_cardArmorType_3" value="英雄"/>
+    <item key="ui_cardArmorType_4" value="城甲"/>
+    <item key="ui_cardArmorType_5" value="轻甲"/>
+    
+    <!-- 目标类型 -->
+    <item key="ui_cardTarget_0" value="地面目标"/>
+    <item key="ui_cardTarget_1" value="空中目标"/>
+    <item key="ui_cardTarget_2" value="空中和地面目标"/>
+    
     <!-- 符文 -->
     <item key="ui_rune_title" value="符文背包"/>
     <item key="ui_rune_pick" value="选取"/>

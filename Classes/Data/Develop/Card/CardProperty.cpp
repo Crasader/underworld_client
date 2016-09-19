@@ -21,8 +21,6 @@ CardProperty::CardProperty(tinyxml2::XMLElement *xmlElement)
 ,_maxDonateCount(0)
 ,_donateExp(0)
 ,_donatePoint(0)
-,_attackType(ObjectUtils::AttackType::NORMAL)
-,_armorType(ObjectUtils::ArmorType::UNARMORED)
 {
     _cardType = DataManager::getInstance()->getGameModeHMM()->findCardTypeById(getId());
     if (_cardType) {
@@ -57,17 +55,30 @@ CardProperty::CardProperty(tinyxml2::XMLElement *xmlElement)
             {ObjectUtils::CardAttributeType::HP, "hp"},
             {ObjectUtils::CardAttributeType::SPEED, "speed"},
             {ObjectUtils::CardAttributeType::ARMOR, "armor"},
+            {ObjectUtils::CardAttributeType::ARMOR_TYPE, "armortype"},
             {ObjectUtils::CardAttributeType::GROUND_DAMAGE, "damage1"},
+            {ObjectUtils::CardAttributeType::ATTACK_TYPE, "damagetype"},
             {ObjectUtils::CardAttributeType::HIT_SPEED, "hitspeed"},
             {ObjectUtils::CardAttributeType::RANGE, "range"},
+            {ObjectUtils::CardAttributeType::TARGET_TYPE, "target"},
             {ObjectUtils::CardAttributeType::AIR_DAMAGE, "damage2"},
         };
         
         for (auto iter = begin(AttributeKeys); iter != end(AttributeKeys); ++iter) {
             auto key(iter->second.c_str());
             auto value = XMLUtils::parse<float>(xmlElement, key);
-            if (value != 0) {
-                _attributes.insert(make_pair(iter->first, value));
+            const auto type(iter->first);
+            if (ObjectUtils::CardAttributeType::AIR_DAMAGE == type) {
+                if (value == 0 && _attributes.find(ObjectUtils::CardAttributeType::GROUND_DAMAGE) != end(_attributes)) {
+                    _attributes.insert(make_pair(type, _attributes.at(ObjectUtils::CardAttributeType::GROUND_DAMAGE)));
+                } else {
+                    _attributes.insert(make_pair(type, value));
+                }
+            } else if (ObjectUtils::CardAttributeType::ARMOR_TYPE == type ||
+                       ObjectUtils::CardAttributeType::ATTACK_TYPE == type ||
+                       ObjectUtils::CardAttributeType::TARGET_TYPE == type ||
+                       value != 0) {
+                _attributes.insert(make_pair(type, value));
             }
         }
     }
@@ -154,21 +165,6 @@ float CardProperty::getAttribute(ObjectUtils::CardAttributeType type)
     }
     
     return 0.0f;
-}
-
-ObjectUtils::AttackType CardProperty::getAttackType() const
-{
-    return _attackType;
-}
-
-ObjectUtils::ArmorType CardProperty::getArmorType() const
-{
-    return _armorType;
-}
-
-const std::vector<ObjectUtils::TargetType>& CardProperty::getTargetTypes() const
-{
-    return _targetTypes;
 }
 
 ObjectUtils::RuneType CardProperty::getRuneType(int idx) const

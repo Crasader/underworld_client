@@ -18,7 +18,7 @@ namespace ObjectUtils
         RUNE = 8,
         BOOK = 9,
     };
-    inline Type getType(int oid) { return static_cast<Type>(oid / 10000); }
+    Type getType(int oid);
     
     enum class RuneType {
         NONE = -1,
@@ -26,21 +26,18 @@ namespace ObjectUtils
         BLUE,
         GREEN
     };
-    inline RuneType getRuneType(int oid) {
-        if (Type::RUNE == getType(oid)) {
-            return static_cast<RuneType>((oid % 10000) / 1000);
-        }
-        
-        return RuneType::NONE;
-    }
+    RuneType getRuneType(int oid);
     
     enum class CardAttributeType {
         HP,
         SPEED,
         ARMOR,
+        ARMOR_TYPE,
         GROUND_DAMAGE,
+        ATTACK_TYPE,
         HIT_SPEED,
         RANGE,
+        TARGET_TYPE,
         AIR_DAMAGE,
         
         PROPERTY_MAX,
@@ -49,24 +46,25 @@ namespace ObjectUtils
     enum class AttackType {
         NORMAL,
         PIERCING,
-        SIEGE,
-        CHAOS,
         MAGIC,
         HERO,
+        SIEGE,
+        CHAOS,
     };
     
     enum class ArmorType {
-        UNARMORED,
-        LIGHT,
-        MEDIUM,
         HEAVY,
+        MEDIUM,
+        UNARMORED,
         HERO,
-        FORTIFIED
+        FORTIFIED,
+        LIGHT,
     };
     
     enum class TargetType {
         GROUND,
         AIR,
+        BOTH,
     };
 }
 
