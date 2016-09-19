@@ -13,16 +13,6 @@
 
 using namespace std;
 
-template <class T>
-static std::string format(const std::string& prefix, const T& n, typename std::enable_if<std::is_enum<T>::value, T>::type* = nullptr) {
-    return LocalHelper::getString(prefix + (std::ostringstream() << static_cast<int>(n)).str());
-}
-
-template <class T>
-static std::string format(const std::string& prefix, const T& n, typename std::enable_if<!std::is_enum<T>::value, T>::type* = nullptr) {
-    return LocalHelper::getString(prefix + (std::ostringstream() << n).str());
-}
-
 CardAttributeNode* CardAttributeNode::create(const Color4B& color)
 {
     auto ret = new (nothrow) CardAttributeNode();
@@ -108,20 +98,26 @@ void CardAttributeNode::setAttribute(ObjectUtils::CardAttributeType type, float 
     }
     
     if (_name) {
-        _name->setString(format("ui_cardAttr_", type));
+        _name->setString(LocalHelper::getString(StringUtils::format("ui_cardAttr_%d", static_cast<int>(type))));
     }
     
     if (_data) {
-        string prefix("");
-        if (ObjectUtils::CardAttributeType::ARMOR_TYPE == type) {
-            prefix = "ui_cardArmorType_";
-        } else if (ObjectUtils::CardAttributeType::ATTACK_TYPE == type) {
-            prefix = "ui_cardAttackType_";
-        } else if (ObjectUtils::CardAttributeType::TARGET_TYPE == type) {
-            prefix = "ui_cardTarget_";
+        if (ObjectUtils::CardAttributeType::HIT_SPEED == type) {
+            _data->setString(LocalHelper::getString(StringUtils::format("%.1f", value)));
+        } else {
+            string prefix("");
+            if (ObjectUtils::CardAttributeType::ARMOR_TYPE == type) {
+                prefix = "ui_cardArmorType_%d";
+            } else if (ObjectUtils::CardAttributeType::ATTACK_TYPE == type) {
+                prefix = "ui_cardAttackType_%d";
+            } else if (ObjectUtils::CardAttributeType::TARGET_TYPE == type) {
+                prefix = "ui_cardTarget_%d";
+            } else {
+                prefix = "%d";
+            }
+            
+            _data->setString(LocalHelper::getString(StringUtils::format(prefix.c_str(), static_cast<int>(value))));
         }
-        
-        _data->setString(format(prefix, value));
     }
 }
 

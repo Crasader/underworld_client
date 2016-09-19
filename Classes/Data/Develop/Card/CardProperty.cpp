@@ -68,9 +68,14 @@ CardProperty::CardProperty(tinyxml2::XMLElement *xmlElement)
             auto key(iter->second.c_str());
             auto value = XMLUtils::parse<float>(xmlElement, key);
             const auto type(iter->first);
+            if (ObjectUtils::CardAttributeType::HP == type && value <= 0) {
+                break;
+            }
+            
             if (ObjectUtils::CardAttributeType::AIR_DAMAGE == type) {
-                if (value == 0 && _attributes.find(ObjectUtils::CardAttributeType::GROUND_DAMAGE) != end(_attributes)) {
-                    _attributes.insert(make_pair(type, _attributes.at(ObjectUtils::CardAttributeType::GROUND_DAMAGE)));
+                const auto iter(_attributes.find(ObjectUtils::CardAttributeType::GROUND_DAMAGE));
+                if (value == 0 && iter != end(_attributes)) {
+                    _attributes.insert(make_pair(type, iter->second));
                 } else {
                     _attributes.insert(make_pair(type, value));
                 }
