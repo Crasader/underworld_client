@@ -82,5 +82,82 @@
    <!--<item id="21121" icon="pp"/>--><!--熊猫人  -->
    <!--<item id="21122" icon="qq"/>--><!--凤凰  -->
    
+   <!--注释：单位卡牌的技能图标-->
+   <item id="70000" icon="kk"/><!--人族盾兵技能1  -->
+   <item id="71000" icon="kk"/><!--人族盾兵技能2  -->
+   <item id="70001" icon="kk"/><!--人族剑士  -->
+   <item id="71001" icon="kk"/><!--人族剑士  -->
+   <item id="70002" icon="kk"/><!--人族弓箭手  -->
+   <item id="71002" icon="kk"/><!--人族弓箭手  -->
+   <item id="70003" icon="kk"/><!--牧师  -->
+   <item id="71003" icon="kk"/><!--牧师  -->
+   <item id="70004" icon="kk"/><!--人族法师  -->
+   <item id="71004" icon="kk"/><!--人族法师  -->
+   <item id="70005" icon="kk"/><!--人族狮鹫  -->
+   <item id="71005" icon="kk"/><!--人族狮鹫  -->
+   <item id="70006" icon="kk"/><!--骷髅盾牌兵  -->
+   <item id="71006" icon="kk"/><!--骷髅盾牌兵  -->
+   <item id="70007" icon="kk"/><!--食尸鬼  -->
+   <item id="71007" icon="kk"/><!--食尸鬼  -->
+   <item id="70008" icon="kk"/><!--骷髅弓箭手  -->
+   <item id="71008" icon="kk"/><!--骷髅弓箭手  -->
+   <item id="70009" icon="kk"/><!--魔族传教士  -->
+   <item id="71009" icon="kk"/><!--魔族传教士  -->
+   <item id="70010" icon="kk"/><!--魔族梦魇  -->
+   <item id="71010" icon="kk"/><!--魔族梦魇  -->
+   <item id="70011" icon="kk"/><!--石像鬼  -->
+   <item id="71011" icon="kk"/><!--石像鬼  -->
+   
+   <item id="70012" icon="kk"/><!--牛头兵  -->
+   <item id="71012" icon="kk"/><!--牛头兵  -->
+   <item id="70013" icon="kk"/><!--巨魔巫医  -->
+   <item id="71013" icon="kk"/><!--巨魔巫医  -->
+   <item id="70014" icon="kk"/><!--红龙  -->
+   <item id="71014" icon="kk"/><!--红龙  -->
+   <item id="70015" icon="kk"/><!--火枪手  -->
+   <item id="71015" icon="kk"/><!--火枪手  -->
+   <item id="70016" icon="kk"/><!--精灵弓箭手  -->
+   <item id="71016" icon="kk"/><!--精灵弓箭手  -->
+   <item id="70017" icon="kk"/><!--兽族战车  -->
+   <item id="71017" icon="kk"/><!--兽族战车  -->
+   <item id="70018" icon="kk"/><!--弹射兵  -->
+   <item id="71018" icon="kk"/><!--弹射兵  -->
+   <item id="70019" icon="kk"/><!--攻城单位  -->
+   <item id="71019" icon="kk"/><!--攻城单位  -->
+   
+   <item id="70023" icon="kk"/><!--火炮兵  -->
+   <item id="71023" icon="kk"/><!--火炮兵  -->
+   <item id="70025" icon="kk"/><!--地雷工兵  -->
+   <item id="71025" icon="kk"/><!--地雷工兵  -->
+   <item id="70026" icon="kk"/><!--娜迦战士  -->
+   <item id="71026" icon="kk"/><!--娜迦战士  -->
+   <item id="70028" icon="kk"/><!--狼人刺客  -->
+   <item id="71028" icon="kk"/><!--狼人刺客  -->
+   <!--注释：英雄卡牌的技能图标-->
+   <item id="70100" icon="kk"/><!--盾牌队长  -->
+   <item id="71100" icon="kk"/><!--盾牌队长  -->
+   <item id="70101" icon="kk"/><!--剑士队长  -->
+   <item id="71101" icon="kk"/><!--剑士队长  -->
+   <item id="70102" icon="kk"/><!--弓箭手队长  -->
+   <item id="71102" icon="kk"/><!--弓箭手队长  -->
+   <item id="70103" icon="kk"/><!--人族大法师  -->
+   <item id="71103" icon="kk"/><!--人族大法师  -->
+   <item id="70104" icon="kk"/><!--人族秘法大师  -->
+   <item id="71104" icon="kk"/><!--人族秘法大师  -->
+   <item id="70105" icon="kk"/><!--魔族骷髅王子  -->
+   <item id="71105" icon="kk"/><!--魔族骷髅王子  -->
+   <item id="70106" icon="kk"/><!--魔族食尸鬼王  -->
+   <item id="71106" icon="kk"/><!--魔族食尸鬼王  -->
+   <item id="70107" icon="kk"/><!--魔族地狱战舰  -->
+   <item id="71107" icon="kk"/><!--魔族地狱战舰  -->
+   <item id="70108" icon="kk"/><!--魔族黑传教士  -->
+   <item id="71108" icon="kk"/><!--魔族黑传教士  -->
+   <item id="70109" icon="kk"/><!--魔族梦魇精华 巫妖王 -->
+   <item id="71109" icon="kk"/><!--魔族梦魇精华 巫妖王 -->
+   <item id="70110" icon="kk"/><!--中立兽族斧王  -->
+   <item id="71110" icon="kk"/><!--中立兽族斧王  -->
+   <item id="70111" icon="kk"/><!--中立兽族食人鬼王  -->
+   <item id="71111" icon="kk"/><!--中立兽族食人鬼王  -->
+   
 </root>
 
