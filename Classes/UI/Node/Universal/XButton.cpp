@@ -116,7 +116,7 @@ bool XButton::init(BSize size, BType type)
     if (!file.empty() && ui::Button::init(file, file, disabled)) {
         setTitleFontName(DEFAULT_FONT);
         setTitleFontSize(DEFAULT_FONT_SIZE);
-        setTitleColor(Color3B::BLACK);
+        setTitleColor(Color3B::WHITE);
         return true;
     }
     

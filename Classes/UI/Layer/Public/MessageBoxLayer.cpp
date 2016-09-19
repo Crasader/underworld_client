@@ -63,12 +63,14 @@ bool MessageBoxLayer::init()
     if (MessageBoxBaseLayer::init())
     {
         static const Size dimensions(440, 120);
-        _messageLabel = CocosUtils::createLabel("", MESSAGEBOX_DEFAULT_FONT_SIZE, DEFAULT_FONT, dimensions, TextHAlignment::CENTER, TextVAlignment::CENTER);
-        _messageLabel->setTextColor(Color4B::BLACK);
-        _background->addChild(_messageLabel);
+        static const float label_height = 214.f;
         
-        const Size& size = _background->getContentSize();
-        _messageLabelPosition = Point(size.width / 2, 180);
+        _messageLabel = CocosUtils::createLabel("", MESSAGEBOX_DEFAULT_FONT_SIZE, DEFAULT_FONT, dimensions, TextHAlignment::CENTER, TextVAlignment::CENTER);
+        _messageLabel->setTextColor(Color4B::WHITE);
+        _background_1->addChild(_messageLabel);
+        
+        const Size& size = _background_1->getContentSize();
+        _messageLabelPosition = Point(size.width / 2, label_height);
         _messageLabel->setPosition(_messageLabelPosition);
         
         auto eventListener = EventListenerTouchOneByOne::create();
@@ -100,7 +102,7 @@ void MessageBoxLayer::show(const std::string& message, int fontZie)
     
     if (_messageLabel)
     {
-        const Size& size = _background->getContentSize();
+        const Size& size = _background_1->getContentSize();
         _messageLabel->setPosition(Point(size.width / 2, size.height / 2));
         _messageLabel->setString(message);
     }
@@ -181,7 +183,7 @@ bool MessageBoxLayer::onTouchBegan(Touch *touch, Event *unused_event)
 void MessageBoxLayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
     Point point = convertToWorldSpace(touch->getLocation());
-    Rect rs = _background->getBoundingBox();
+    Rect rs = _background_1->getBoundingBox();
     rs.origin = convertToWorldSpace(rs.origin);
     if (_confirmCallback == nullptr)
     {

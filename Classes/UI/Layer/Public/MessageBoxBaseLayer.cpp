@@ -14,7 +14,8 @@
 using namespace std;
 
 MessageBoxBaseLayer::MessageBoxBaseLayer()
-:_background(nullptr)
+:_background_1(nullptr)
+,_background_2(nullptr)
 ,_confirmButton(nullptr)
 ,_confirmButtonPosition(Point::ZERO)
 ,_cancelButton(nullptr)
@@ -29,26 +30,42 @@ bool MessageBoxBaseLayer::init()
 {
     if (LayerColor::initWithColor(LAYER_MASK_COLOR))
     {
+        static cocos2d::Size message_box_size(382.f, 247.f);
+        static cocos2d::Size background_size(360.f, 176.f);
+        static float margin_horizontal(10.f);
+        static float margin_bottom(16.f);
+        static float inner_margin_horizontal(10.f);
+        static float inner_margin_bottom(6.f);
+        
         const auto& winSize = Director::getInstance()->getWinSize();
         
-        _background = Sprite::create("GameImages/messagebox/background.png");
-        _background->setPosition(Point(winSize.width / 2, winSize.height / 2));
-        addChild(_background);
+        cocos2d::Rect rect(0, 0, 56, 56);
+        cocos2d::Rect capInsetsRect(14, 12, 34, 32);
+        _background_1 = cocos2d::ui::Scale9Sprite::create("GameImages/messagebox/background_1.png", rect, capInsetsRect);
+        _background_1->setContentSize(message_box_size);
+        _background_1->setPosition(Point(winSize.width / 2, winSize.height / 2));
+        addChild(_background_1);
         
-        _confirmButton = XButton::create(XButton::BSize::Big, XButton::BType::Green);
+        
+        rect.setRect(0, 0, 56, 56);
+        capInsetsRect.setRect(10, 10, 36, 36);
+        _background_2 = cocos2d::ui::Scale9Sprite::create("GameImages/messagebox/background_2.png", rect, capInsetsRect);
+        _background_2->setContentSize(background_size);
+        _background_2->setPosition(cocos2d::Vec2(margin_horizontal + background_size.width / 2, margin_bottom + background_size.height / 2));
+        _background_1->addChild(_background_2);
+        
+        _confirmButton = XButton::create(XButton::BSize::Big, XButton::BType::Red);
         _confirmButton->setTitleText(LocalHelper::getString("hint_confirm"));
-        _background->addChild(_confirmButton);
+        _background_1->addChild(_confirmButton);
         
         _cancelButton = XButton::create(XButton::BSize::Big, XButton::BType::Blue);
         _cancelButton->setTitleText(LocalHelper::getString("hint_cancel"));
-        _background->addChild(_cancelButton);
+        _background_1->addChild(_cancelButton);
         
-        const auto& size = _background->getContentSize();
         const auto& sizeg = _confirmButton->getContentSize();
         const auto& sizeb = _cancelButton->getContentSize();
-        static const float offsetY = 30.0f;
-        _confirmButtonPosition = Point(size.width * 0.25f, sizeg.height / 2 + offsetY);
-        _cancelButtonPosition = Point(size.width * 0.75f, sizeb.height / 2 + offsetY);
+        _confirmButtonPosition = Point(margin_horizontal + inner_margin_horizontal + sizeg.width / 2, margin_bottom + inner_margin_bottom + sizeg.height / 2);
+        _cancelButtonPosition = Point(message_box_size.width - margin_horizontal - inner_margin_horizontal - sizeb.width / 2, margin_bottom + inner_margin_bottom + sizeb.height / 2);
         _confirmButton->setPosition(_confirmButtonPosition);
         _cancelButton->setPosition(_cancelButtonPosition);
         

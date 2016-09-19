@@ -25,7 +25,8 @@ protected:
     virtual bool init() override;
     
 protected:
-    Sprite* _background;
+    Scale9Sprite* _background_1;
+    Scale9Sprite* _background_2;
     XButton* _confirmButton;
     XButton* _cancelButton;
     Point _confirmButtonPosition;
