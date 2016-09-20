@@ -83,9 +83,9 @@
 	<skill cd="50" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="913" min_damage="913" name="中立兽族斧王" perform="0" preperform="35" range="32"/>
 	<skill cd="55" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="514" min_damage="514" name="中立兽族食人鬼王" perform="0" preperform="45" range="32"/>
 	<skill cd="50" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="576" min_damage="576" name="中立兽族牛头人" perform="0" preperform="30" range="32"/>
-	<skill bullet_name="人族大法师" cd="45" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="336" min_damage="336" name="中立兽族巨魔巫医" perform="0" preperform="35" range="160"/>
+	<skill bullet_name="人族大法师" cd="45" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="384" min_damage="384" name="中立兽族巨魔巫医" perform="0" preperform="35" range="160"/>
 	<skill bullet_name="龙族子弹" cd="45" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="382" min_damage="382" name="中立龙族黑龙" perform="0" preperform="40" range="96"/>
-	<skill bullet_name="枪械子弹" cd="50" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="720" min_damage="720" name="中立矮人族火枪手" perform="0" preperform="30" range="208"/>
+	<skill bullet_name="枪械子弹" cd="50" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="864" min_damage="864" name="中立矮人族火枪手" perform="0" preperform="30" range="208"/>
 	<skill bullet_name="人族弓箭手" cd="40" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="240" min_damage="240" name="中立精灵族弓箭手" perform="0" preperform="40" range="160"/>
 	<skill cd="110" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="311" min_damage="311" name="人族盾牌兵" perform="0" preperform="40" range="32"/>
 	<skill cd="60" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="238" min_damage="238" name="人族剑士" perform="0" preperform="30" range="32"/>
@@ -147,7 +147,7 @@
 	<spell alias="死亡触发的分裂箭" cast_distance="-1" cast_type="self" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" id="1008" immediate_elements="0,死亡触发分裂箭,1" level="1" perform="0" preperform="90" spell_name="死亡触发的分裂箭" to_dead="0"/>
 	<spell ai="战斗过程AI" alias="魔族巫妖王霜之哀伤" cast_distance="96" cast_type="unit" cd="600" class="cast" conditions="type:unit_class;target:opposite;condition:not:building,core" deliver_class="magical" deliver_natures="enemy" id="1009" immediate_elements="0,魔族巫妖王霜之哀伤,1" is_on_building="0" level="1" perform="0" preperform="30" spell_name="魔族巫妖王霜之哀伤" to_dead="0"/>
 	<spell ai="魔族巫妖王死亡契约ai" alias="魔族巫妖王死亡契约" cast_distance="300" cast_type="unit" cd="600" class="cast" conditions="type:unit_race;target:opposite;condition:is:魔族&amp;type:unit_class;target:opposite;condition:not:building,core,hero" deliver_class="magical" deliver_natures="ally" id="1010" immediate_elements="0,魔族巫妖王死亡契约之击杀友方,1;1,魔族巫妖王死亡契约之buff团队,1" is_on_building="0" level="1" perform="0" preperform="30" spell_name="魔族巫妖王死亡契约" to_dead="0"/>
-	<spell ai="战斗过程AI" alias="中立兽族斧王旋风斩" cast_distance="48" cast_type="unit" cd="300" class="cast" conditions=" " deliver_class="physical" deliver_natures="enemy" id="1011" immediate_elements="1,中立兽族斧王旋风斩,1" level="1" perform="0" preperform="40" render_key="旋风斩_法术施放效果" spell_name="中立兽族斧王旋风斩" to_dead="0"/>
+	<spell ai="战斗过程AI" alias="中立兽族斧王旋风斩" cast_distance="48" cast_type="unit" cd="180" class="cast" conditions=" " deliver_class="physical" deliver_natures="enemy" id="1011" immediate_elements="1,中立兽族斧王旋风斩,1" level="1" perform="0" preperform="40" render_key="旋风斩_法术施放效果" spell_name="中立兽族斧王旋风斩" to_dead="0"/>
 	<spell ai="战斗过程AI" alias="中立兽族斧王恐怖嚎叫" cast_distance="48" cast_type="unit" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" icon="renzujianshidazhao.png" id="1012" immediate_elements="1,中立兽族斧王恐怖嚎叫,1" level="1" perform="0" preperform="40" spell_name="中立兽族斧王恐怖嚎叫" to_dead="0"/>
 	<spell ai="战斗过程AI" alias="牛头人战争践踏" cast_distance="48" cast_type="unit" cd="300" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" id="1201" immediate_elements="1,牛头人战争践踏,1" level="1" perform="0" preperform="30" spell_name="牛头人战争践踏" to_dead="0"/>
 	<spell ai="战斗过程AI" alias="中立兽族巫医诅咒" cast_distance="240" cast_type="unit" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" id="1202" immediate_elements="0,中立兽族巫医诅咒,1" level="1" perform="0" preperform="30" spell_name="中立兽族巫医诅咒" to_dead="0"/>
@@ -638,7 +638,7 @@
 	<damage damage_name="魔族巫妖王死亡契约之击杀友方伤害" damage_nature="hurt" damage_value="d:target:opposite;type:max_hp;v:p:10000;template:0" deliver_class="physical"/>
 	<damage damage_name="魔族巫妖王死亡契约之buff团队效果" damage_nature="hurt" damage_value="0" deliver_class="magical" feature_names="魔族巫妖王死亡契约之buff团队效果特性" is_on_building="0"/>
 	<damage damage_name="伤害魔族梦魇精华腐臭蜂群" damage_nature="hurt" damage_value="180" deliver_class="magical"/>
-	<damage damage_name="伤害中立兽族斧王旋风斩" damage_nature="hurt" damage_value="d:target:owner;type:attack_damage;v:p:150;template:0" deliver_class="physical" is_on_building="0"/>
+	<damage damage_name="伤害中立兽族斧王旋风斩" damage_nature="hurt" damage_value="d:target:owner;type:attack_damage;v:p:100;template:0" deliver_class="physical" is_on_building="0"/>
 	<damage damage_name="伤害中立兽族斧王恐怖嚎叫" damage_nature="hurt" damage_value="0" deliver_class="magical" feature_names="中立斧王恐怖嚎叫降低护甲" is_on_building="0"/>
 	<damage damage_name="掉血光环" damage_nature="hurt" damage_value="100" deliver_class="magical" is_on_building="0"/>
 	<damage damage_name="伤害牛头人战争践踏" damage_nature="hurt" damage_value="d:target:owner;type:attack_damage;v:p:100;template:0" deliver_class="magical" feature_names="牛头人战争践踏晕眩效果;牛头人战争践踏对英雄晕眩效果" is_on_building="0"/>
