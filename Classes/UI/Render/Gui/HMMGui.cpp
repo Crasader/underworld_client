@@ -63,11 +63,15 @@ HMMGui::HMMGui()
 }
     
 HMMGui::~HMMGui() {
+    _renderListener = nullptr;
+    
     CC_SAFE_RELEASE(_guiView);
     if (_game) {
         _game->getWorld()->removeWorldObserver(this);
         _game = nullptr;
     }
+    _commander = nullptr;
+    _worldRender = nullptr;
     
     if (_deckRender) {
         _deckRender->markObjectReleased();

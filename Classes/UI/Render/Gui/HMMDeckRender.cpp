@@ -727,7 +727,7 @@ Coordinate32 HMMDeckRender::transformAndValidateLoction2WorldCoordinate(const co
         if (cardType->getCardClass() == kHMMCardClass_Tower
             || cardType->getCardClass() == kHMMCardClass_Summon
             || cardType->getCardClass() == kHMMCardClass_Hero) {
-            const UnitType* ut = _game->getWorld()->getTechTree()->findUnitTypeById(cardType->getUnitId());
+            const UnitType* ut = _game->getWorld()->getTechTree()->findUnitTypeById(cardType->getUnitSetting().getUnitTypeId());
             
             if (ut) {
                 int size = ut->getSize();

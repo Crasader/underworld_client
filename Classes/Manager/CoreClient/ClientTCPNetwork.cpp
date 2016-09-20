@@ -97,14 +97,15 @@ static std::string parseLaunch2SMsg(
     
     rapidjson::Value unitPoolJson(rapidjson::kStringType);
     std::string unitPoolString = "";
-    const std::vector<UnitSetting>& unitPool = msg->getUnitPool();
-    for (int i = 0; i < unitPool.size(); ++i) {
-        unitPoolString.append(UnderWorldCoreUtils::to_string(unitPool[i].getUnitTypeId())).append("|")
-            .append(UnderWorldCoreUtils::to_string(unitPool[i].getLevel())).append("|")
-            .append(UnderWorldCoreUtils::to_string(unitPool[i].getQuality())).append("|")
-            .append(UnderWorldCoreUtils::to_string(unitPool[i].getTalentLevel()));
-        if (i != unitPool.size() - 1) unitPoolString.append(",");
-    }
+    const std::vector<HMMCardSetting>& unitPool = msg->getUnitPool();
+    //TODO: parse card pool string
+//    for (int i = 0; i < unitPool.size(); ++i) {
+//        unitPoolString.append(UnderWorldCoreUtils::to_string(unitPool[i].getUnitTypeId())).append("|")
+//            .append(UnderWorldCoreUtils::to_string(unitPool[i].getLevel())).append("|")
+//            .append(UnderWorldCoreUtils::to_string(unitPool[i].getQuality())).append("|")
+//            .append(UnderWorldCoreUtils::to_string(unitPool[i].getTalentLevel()));
+//        if (i != unitPool.size() - 1) unitPoolString.append(",");
+//    }
     unitPoolJson.SetString(unitPoolString.c_str(), (int)unitPoolString.size(), allocator);
     
     root.AddMember(MESSAGE_KEY_CODE, reqCode, allocator);
@@ -286,7 +287,7 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
     /** 6. players */
     std::vector<std::vector<int> > cardNames;
     std::vector<GameModeHMMSetting::InitUnitList> initUnits;
-    std::vector<std::vector<UnitSetting> > unitPools;
+    std::vector<std::vector<HMMCardSetting> > unitPools;
     if (UWJsonHelper::checkObjectExist_json(root, MESSAGE_KEY_PLAYERS)
         && UWJsonHelper::getSubDictionary_json(root, MESSAGE_KEY_PLAYERS).IsArray()) {
         const rapidjson::Value& players =
@@ -338,24 +339,25 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
             if (UWJsonHelper::checkObjectExist_json(player, MESSAGE_KEY_UNIT_POOL)) {
                 std::string unitPoolString = UWJsonHelper::getStringValue_json(player, MESSAGE_KEY_UNIT_POOL);
                 if (!unitPoolString.empty()) {
-                    static std::vector<std::string> unitPoolVec;
-                    unitPoolVec.clear();
-                    UnderWorldCoreUtils::split(unitPoolVec, unitPoolString, ",");
-                    
-                    for (int j = 0; j < unitPoolVec.size(); ++j) {
-                        static std::vector<std::string> unitVec;
-                        unitVec.clear();
-                        UnderWorldCoreUtils::split(unitVec, unitPoolVec[j], "|");
-                        
-                        if (unitVec.size() == 4) {
-                            UnitSetting us;
-                            us.setUnitTypeId(atoi(unitVec[0].c_str()));
-                            us.setLevel(atoi(unitVec[1].c_str()));
-                            us.setQuality(atoi(unitVec[2].c_str()));
-                            us.setTalentLevel(atoi(unitVec[3].c_str()));
-                            unitPools[i].push_back(us);
-                        }
-                    }
+                    //TODO: parse card pool string
+//                    static std::vector<std::string> unitPoolVec;
+//                    unitPoolVec.clear();
+//                    UnderWorldCoreUtils::split(unitPoolVec, unitPoolString, ",");
+//                    
+//                    for (int j = 0; j < unitPoolVec.size(); ++j) {
+//                        static std::vector<std::string> unitVec;
+//                        unitVec.clear();
+//                        UnderWorldCoreUtils::split(unitVec, unitPoolVec[j], "|");
+//                        
+//                        if (unitVec.size() == 4) {
+//                            UnitSetting us;
+//                            us.setUnitTypeId(atoi(unitVec[0].c_str()));
+//                            us.setLevel(atoi(unitVec[1].c_str()));
+//                            us.setQuality(atoi(unitVec[2].c_str()));
+//                            us.setTalentLevel(atoi(unitVec[3].c_str()));
+//                            unitPools[i].push_back(us);
+//                        }
+//                    }
                 }
             }
             
@@ -463,7 +465,7 @@ void ClientTCPNetwork::launchGame(LaunchListener* launchListener,
     const UnderWorld::Core::GameContentSetting& contentSetting,
     const std::vector<int>& cards,
     const UnderWorld::Core::GameModeHMMSetting::InitUnitList& initList,
-    const vector<UnderWorld::Core::UnitSetting>& unitPool) {
+    const vector<UnderWorld::Core::HMMCardSetting>& unitPool) {
     if (_status != ClientStatus::Idle || !_tcpClient) return;
     
     _status = ClientStatus::Launching;

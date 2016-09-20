@@ -71,24 +71,25 @@ static void parseUserInfo(const std::string& dataStr, UnderWorld::Core::GameMode
     }
     
     if(!poolStr.empty()) {
-        std::vector<string> unitPools;
-        UnderWorld::Core::UnderWorldCoreUtils::split(unitPools, poolStr, ",");
-        {
-            for (auto iter = begin(unitPools); iter != end(unitPools); ++iter) {
-                std::vector<string> vec;
-                UnderWorld::Core::UnderWorldCoreUtils::split(vec, *iter, "|");
-                
-                if (vec.size() != 4) {
-                    continue;
-                }
-                UnderWorld::Core::UnitSetting us;
-                us.setUnitTypeId(atoi(vec[0].c_str()));
-                us.setLevel(atoi(vec[1].c_str()));
-                us.setQuality(atoi(vec[2].c_str()));
-                us.setTalentLevel(atoi(vec[3].c_str()));
-                hmm._unitPools[index].push_back(us);
-            }
-        }
+        //TODO: card settings parse
+//        std::vector<string> unitPools;
+//        UnderWorld::Core::UnderWorldCoreUtils::split(unitPools, poolStr, ",");
+//        {
+//            for (auto iter = begin(unitPools); iter != end(unitPools); ++iter) {
+//                std::vector<string> vec;
+//                UnderWorld::Core::UnderWorldCoreUtils::split(vec, *iter, "|");
+//                
+//                if (vec.size() != 4) {
+//                    continue;
+//                }
+//                UnderWorld::Core::UnitSetting us;
+//                us.setUnitTypeId(atoi(vec[0].c_str()));
+//                us.setLevel(atoi(vec[1].c_str()));
+//                us.setQuality(atoi(vec[2].c_str()));
+//                us.setTalentLevel(atoi(vec[3].c_str()));
+//                hmm._unitPools[index].push_back(us);
+//            }
+//        }
     }
 }
 
@@ -96,7 +97,7 @@ struct GameClient::BattleContent {
     UnderWorld::Core::GameContentSetting contentSetting;
     vector<int> cards;
     GameModeHMMSetting::InitUnitList unitList;
-    vector<UnderWorld::Core::UnitSetting> unitPool;
+    vector<UnderWorld::Core::HMMCardSetting> unitPool;
 };
 
 GameClient::GameClient()
@@ -232,13 +233,10 @@ bool GameClient::loadBattleContent()
             for (auto iter = begin(cards); iter != end(cards); ++iter) {
                 auto cardType = dm->getTechTree()->findUnitTypeById(*iter);
                 if (cardType) {
-                    UnderWorld::Core::UnitSetting us;
-                    us.setUnitTypeId(cardType->getId());
-                    //us.setUnitTypeName(cardType->getName());
-                    us.setLevel(0);
-                    us.setQuality(0);
-                    us.setTalentLevel(0);
-                    _battleContent->unitPool.push_back(us);
+                    UnderWorld::Core::HMMCardSetting cs;
+                    cs._id = cardType->getId();
+                    cs._level = 0;
+                    _battleContent->unitPool.push_back(cs);
                 }
             }
         }

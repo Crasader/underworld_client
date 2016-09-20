@@ -84,7 +84,7 @@ public:
         const UnderWorld::Core::GameContentSetting& contentSetting,
         const std::vector<int>& cards,
         const UnderWorld::Core::GameModeHMMSetting::InitUnitList& initList,
-        const vector<UnderWorld::Core::UnitSetting>& unitPool);
+        const vector<UnderWorld::Core::HMMCardSetting>& unitPool);
     void closeGame();
 
     /** override AbstractNetwork */
@@ -129,7 +129,7 @@ class NetworkMessageLaunch2S : public NetworkMessage {
 private:
     typedef UnderWorld::Core::GameContentSetting ContentSetting;
     typedef UnderWorld::Core::GameModeHMMSetting::InitUnitList InitUnits;
-    typedef std::vector<UnderWorld::Core::UnitSetting> UnitPool;
+    typedef std::vector<UnderWorld::Core::HMMCardSetting> UnitPool;
     
 private:
     ContentSetting _setting;
@@ -158,7 +158,7 @@ private:
     typedef UnderWorld::Core::FactionSetting FactionSetting;
     typedef std::vector<std::vector<int> > Cards;
     typedef std::vector<UnderWorld::Core::GameModeHMMSetting::InitUnitList> InitUnitLists;
-    typedef std::vector<std::vector<UnderWorld::Core::UnitSetting> > UnitPools;
+    typedef std::vector<std::vector<UnderWorld::Core::HMMCardSetting> > UnitPools;
     
 private:
     FactionSetting _factionSetting;

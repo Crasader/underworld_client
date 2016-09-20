@@ -228,7 +228,7 @@ void WorldRender::showHMMCardPlaceTips(const HMMCardType* cardType, const Coordi
         if (_tipCardType->getCardClass() == kHMMCardClass_Hero
             || _tipCardType->getCardClass() == kHMMCardClass_Summon
             || _tipCardType->getCardClass() == kHMMCardClass_Tower) {
-            const UnitType* ut = _world->getTechTree()->findUnitTypeById(_tipCardType->getUnitId());
+            const UnitType* ut = _world->getTechTree()->findUnitTypeById(_tipCardType->getUnitSetting().getUnitTypeId());
             int size = ut->getSize();
             Coordinate32 centerPos = pos + Coordinate32(size / 2, size / 2);
             
@@ -452,7 +452,7 @@ void WorldRender::createHMMCardPlaceTipsView(const HMMCardType *cardType, const 
     if (cardType->getCardClass() == kHMMCardClass_Hero
         || cardType->getCardClass() == kHMMCardClass_Summon
         || cardType->getCardClass() == kHMMCardClass_Tower) {
-        const UnitType* ut = world->getTechTree()->findUnitTypeById(cardType->getUnitId());
+        const UnitType* ut = world->getTechTree()->findUnitTypeById(cardType->getUnitSetting().getUnitTypeId());
         if (ut) {
             UnitView* uv = UnitView::create(ut);
             uv->setBodyAnimationPose(UnitAnimationPose::Stand);
