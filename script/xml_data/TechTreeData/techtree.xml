@@ -72,12 +72,12 @@
 	<skill bullet_name="人族弓箭手" cd="20" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="270" min_damage="270" name="吸血鬼基地" perform="0" preperform="20" range="224"/>
 	<skill cd="60" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="944" min_damage="944" name="人族盾牌队长" perform="0" preperform="50" range="32"/>
 	<skill cd="40" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="900" min_damage="900" name="人族剑士队长" perform="0" preperform="30" range="32"/>
-	<skill bullet_name="人族弓箭手" cd="45" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="525" min_damage="525" name="人族弓箭队长" perform="0" preperform="25" range="224"/>
-	<skill bullet_name="人族大法师" cd="55" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="765" min_damage="765" name="人族大法师" perform="0" preperform="30" range="224"/>
+	<skill bullet_name="人族弓箭手" cd="45" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="525" min_damage="525" name="人族弓箭队长" perform="0" preperform="25" range="208"/>
+	<skill bullet_name="人族大法师" cd="55" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="765" min_damage="765" name="人族大法师" perform="0" preperform="30" range="208"/>
 	<skill bullet_name="人族大法师" cd="50" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="675" min_damage="675" name="人族秘法大师" perform="0" preperform="25" range="192"/>
 	<skill cd="60" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="676" min_damage="676" name="魔族骷髅王子" perform="0" preperform="45" range="32"/>
 	<skill cd="55" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="1074" min_damage="1074" name="魔族食尸鬼王" perform="0" preperform="45" range="32"/>
-	<skill bullet_name="人族弓箭手" cd="70" class="attack" damage_distance="faraway" deliver_class="physical" fields="1" max_damage="1140" min_damage="1140" name="魔族地狱战舰" perform="0" preperform="25" range="224"/>
+	<skill bullet_name="人族弓箭手" cd="70" class="attack" damage_distance="faraway" deliver_class="physical" fields="1" max_damage="1140" min_damage="1140" name="魔族地狱战舰" perform="0" preperform="25" range="208"/>
 	<skill bullet_name="人族大法师" cd="35" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="360" min_damage="360" name="魔族黑传教士" perform="0" preperform="25" range="192"/>
 	<skill cd="45" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="860" min_damage="860" name="魔族巫妖王" perform="0" preperform="35" range="32"/>
 	<skill cd="50" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="913" min_damage="913" name="中立兽族斧王" perform="0" preperform="35" range="32"/>
@@ -85,7 +85,7 @@
 	<skill cd="50" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="576" min_damage="576" name="中立兽族牛头人" perform="0" preperform="30" range="32"/>
 	<skill bullet_name="人族大法师" cd="45" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="336" min_damage="336" name="中立兽族巨魔巫医" perform="0" preperform="35" range="160"/>
 	<skill bullet_name="龙族子弹" cd="45" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="382" min_damage="382" name="中立龙族黑龙" perform="0" preperform="40" range="96"/>
-	<skill bullet_name="枪械子弹" cd="50" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="720" min_damage="720" name="中立矮人族火枪手" perform="0" preperform="30" range="224"/>
+	<skill bullet_name="枪械子弹" cd="50" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="720" min_damage="720" name="中立矮人族火枪手" perform="0" preperform="30" range="208"/>
 	<skill bullet_name="人族弓箭手" cd="40" class="attack" damage_distance="faraway" deliver_class="physical" fields="3" max_damage="240" min_damage="240" name="中立精灵族弓箭手" perform="0" preperform="40" range="160"/>
 	<skill cd="110" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="311" min_damage="311" name="人族盾牌兵" perform="0" preperform="40" range="32"/>
 	<skill cd="60" class="attack" damage_distance="nearby" deliver_class="physical" fields="1" max_damage="238" min_damage="238" name="人族剑士" perform="0" preperform="30" range="32"/>
