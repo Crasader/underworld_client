@@ -1,97 +1,97 @@
 <?xml version="1.0" ?>
 <root>
-	<item id="70000" name="人族盾牌兵技能1" unlock="5"/>
-	<item id="71000" name="人族盾牌兵技能2" unlock="10"/>
-	<item id="70001" name="人族剑士技能1" unlock="5"/>
-	<item id="71001" name="人族剑士技能2" unlock="10"/>
-	<item id="70002" name="人族弓手1" unlock="5"/>
-	<item id="71002" name="人族弓手2" unlock="10"/>
-	<item id="70003" name="人族男巫1" unlock="5"/>
-	<item id="71003" name="人族男巫2" unlock="10"/>
-	<item id="70004" name="人族女巫1" unlock="5"/>
-	<item id="71004" name="人族女巫2" unlock="10"/>
-	<item id="70005" name="人族狮鹫1" unlock="5"/>
-	<item id="71005" name="人族狮鹫2" unlock="10"/>
-	<item id="70006" name="骷髅盾牌兵1" unlock="5"/>
-	<item id="71006" name="骷髅盾牌兵2" unlock="10"/>
-	<item id="70007" name="食尸鬼1" unlock="5"/>
-	<item id="71007" name="食尸鬼2" unlock="10"/>
-	<item id="70008" name="骷髅弓箭手1" unlock="5"/>
-	<item id="71008" name="骷髅弓箭手2" unlock="10"/>
-	<item id="70009" name="魔族传教士1" unlock="5"/>
-	<item id="71009" name="魔族传教士2" unlock="10"/>
-	<item id="70010" name="梦魇1" unlock="5"/>
-	<item id="71010" name="梦魇2" unlock="10"/>
-	<item id="70011" name="石像鬼1" unlock="5"/>
-	<item id="71011" name="石像鬼2" unlock="10"/>
-	<item id="70012" name="中立兽族牛头人1" unlock="5"/>
-	<item id="71012" name="中立兽族牛头人2" unlock="10"/>
-	<item id="70013" name="中立兽族巨魔巫医1" unlock="5"/>
-	<item id="71013" name="中立兽族巨魔巫医2" unlock="10"/>
-	<item id="70014" name="中立龙族黑龙1" unlock="5"/>
-	<item id="71014" name="中立龙族黑龙2" unlock="10"/>
-	<item id="70015" name="中立矮人族火枪手1" unlock="5"/>
-	<item id="71015" name="中立矮人族火枪手2" unlock="10"/>
-	<item id="70016" name="中立精灵族弓箭手1" unlock="5"/>
-	<item id="71016" name="中立精灵族弓箭手2" unlock="10"/>
-	<item id="70017" name="兽族攻城车1" unlock="5"/>
-	<item id="71017" name="兽族攻城车2" unlock="10"/>
-	<item id="70018" name="月之骑士1" unlock="5"/>
-	<item id="71018" name="月之骑士2" unlock="10"/>
-	<item id="70019" name="攻城单位1" unlock="5"/>
-	<item id="71019" name="攻城单位2" unlock="10"/>
-	<item id="70020" name="待定1" unlock="5"/>
-	<item id="71020" name="待定2" unlock="10"/>
-	<item id="70021" name="待定1" unlock="5"/>
-	<item id="71021" name="待定2" unlock="10"/>
-	<item id="70022" name="待定1" unlock="5"/>
-	<item id="71022" name="待定2" unlock="10"/>
-	<item id="70023" name="火炮兵1" unlock="5"/>
-	<item id="71023" name="火炮兵2" unlock="10"/>
-	<item id="70024" name="待定1" unlock="5"/>
-	<item id="71024" name="待定2" unlock="10"/>
-	<item id="70025" name="地雷工兵1" unlock="5"/>
-	<item id="71025" name="地雷工兵2" unlock="10"/>
-	<item id="70026" name="娜迦战士1" unlock="5"/>
-	<item id="71026" name="娜迦战士2" unlock="10"/>
-	<item id="70027" name="待定1" unlock="5"/>
-	<item id="71027" name="待定2" unlock="10"/>
-	<item id="70028" name="狼人刺客1" unlock="5"/>
-	<item id="71028" name="狼人刺客2" unlock="10"/>
-	<item id="70100" name="人族盾牌队长1" unlock="10"/>
-	<item id="71100" name="人族盾牌队长2" unlock="20"/>
-	<item id="72100" name="人族盾牌队长3" unlock="30"/>
-	<item id="70101" name="人族剑士队长1" unlock="10"/>
-	<item id="71101" name="人族剑士队长2" unlock="20"/>
-	<item id="72101" name="人族剑士队长3" unlock="30"/>
-	<item id="70102" name="人族弓箭队长1" unlock="10"/>
-	<item id="71102" name="人族弓箭队长2" unlock="20"/>
-	<item id="72102" name="人族弓箭队长3" unlock="30"/>
-	<item id="70103" name="人族大法师1" unlock="10"/>
-	<item id="71103" name="人族大法师2" unlock="20"/>
-	<item id="72103" name="人族大法师3" unlock="30"/>
-	<item id="70104" name="人族秘法大师1" unlock="10"/>
-	<item id="71104" name="人族秘法大师2" unlock="20"/>
-	<item id="72104" name="人族秘法大师3" unlock="30"/>
-	<item id="70105" name="魔族骷髅王子1" unlock="10"/>
-	<item id="71105" name="魔族骷髅王子2" unlock="20"/>
-	<item id="72105" name="魔族骷髅王子3" unlock="30"/>
-	<item id="70106" name="魔族食尸鬼王1" unlock="10"/>
-	<item id="71106" name="魔族食尸鬼王2" unlock="20"/>
-	<item id="72106" name="魔族食尸鬼王3" unlock="30"/>
-	<item id="70107" name="魔族地狱战舰1" unlock="10"/>
-	<item id="71107" name="魔族地狱战舰2" unlock="20"/>
-	<item id="72107" name="魔族地狱战舰3" unlock="30"/>
-	<item id="70108" name="魔族黑传教士1" unlock="10"/>
-	<item id="71108" name="魔族黑传教士2" unlock="20"/>
-	<item id="72108" name="魔族黑传教士3" unlock="30"/>
-	<item id="70109" name="魔族梦魇精华1" unlock="10"/>
-	<item id="71109" name="魔族梦魇精华2" unlock="20"/>
-	<item id="72109" name="魔族梦魇精华3" unlock="30"/>
-	<item id="70110" name="中立兽族斧王1" unlock="10"/>
-	<item id="71110" name="中立兽族斧王2" unlock="20"/>
-	<item id="72110" name="中立兽族斧王3" unlock="30"/>
-	<item id="70111" name="中立兽族食人鬼王1" unlock="10"/>
-	<item id="71111" name="中立兽族食人鬼王2" unlock="20"/>
-	<item id="72111" name="中立兽族食人鬼王3" unlock="30"/>
+	<item desc="object_desc_70000" hint="人族盾牌兵技能1" id="70000.0" name="object_name_70000" unlock="5.0"/>
+	<item desc="object_desc_71000" hint="人族盾牌兵技能2" id="71000.0" name="object_name_71000" unlock="10.0"/>
+	<item desc="object_desc_70001" hint="人族剑士技能1" id="70001.0" name="object_name_70001" unlock="5.0"/>
+	<item desc="object_desc_71001" hint="人族剑士技能2" id="71001.0" name="object_name_71001" unlock="10.0"/>
+	<item desc="object_desc_70002" hint="人族弓手1" id="70002.0" name="object_name_70002" unlock="5.0"/>
+	<item desc="object_desc_71002" hint="人族弓手2" id="71002.0" name="object_name_71002" unlock="10.0"/>
+	<item desc="object_desc_70003" hint="人族男巫1" id="70003.0" name="object_name_70003" unlock="5.0"/>
+	<item desc="object_desc_71003" hint="人族男巫2" id="71003.0" name="object_name_71003" unlock="10.0"/>
+	<item desc="object_desc_70004" hint="人族女巫1" id="70004.0" name="object_name_70004" unlock="5.0"/>
+	<item desc="object_desc_71004" hint="人族女巫2" id="71004.0" name="object_name_71004" unlock="10.0"/>
+	<item desc="object_desc_70005" hint="人族狮鹫1" id="70005.0" name="object_name_70005" unlock="5.0"/>
+	<item desc="object_desc_71005" hint="人族狮鹫2" id="71005.0" name="object_name_71005" unlock="10.0"/>
+	<item desc="object_desc_70006" hint="骷髅盾牌兵1" id="70006.0" name="object_name_70006" unlock="5.0"/>
+	<item desc="object_desc_71006" hint="骷髅盾牌兵2" id="71006.0" name="object_name_71006" unlock="10.0"/>
+	<item desc="object_desc_70007" hint="食尸鬼1" id="70007.0" name="object_name_70007" unlock="5.0"/>
+	<item desc="object_desc_71007" hint="食尸鬼2" id="71007.0" name="object_name_71007" unlock="10.0"/>
+	<item desc="object_desc_70008" hint="骷髅弓箭手1" id="70008.0" name="object_name_70008" unlock="5.0"/>
+	<item desc="object_desc_71008" hint="骷髅弓箭手2" id="71008.0" name="object_name_71008" unlock="10.0"/>
+	<item desc="object_desc_70009" hint="魔族传教士1" id="70009.0" name="object_name_70009" unlock="5.0"/>
+	<item desc="object_desc_71009" hint="魔族传教士2" id="71009.0" name="object_name_71009" unlock="10.0"/>
+	<item desc="object_desc_70010" hint="梦魇1" id="70010.0" name="object_name_70010" unlock="5.0"/>
+	<item desc="object_desc_71010" hint="梦魇2" id="71010.0" name="object_name_71010" unlock="10.0"/>
+	<item desc="object_desc_70011" hint="石像鬼1" id="70011.0" name="object_name_70011" unlock="5.0"/>
+	<item desc="object_desc_71011" hint="石像鬼2" id="71011.0" name="object_name_71011" unlock="10.0"/>
+	<item desc="object_desc_70012" hint="中立兽族牛头人1" id="70012.0" name="object_name_70012" unlock="5.0"/>
+	<item desc="object_desc_71012" hint="中立兽族牛头人2" id="71012.0" name="object_name_71012" unlock="10.0"/>
+	<item desc="object_desc_70013" hint="中立兽族巨魔巫医1" id="70013.0" name="object_name_70013" unlock="5.0"/>
+	<item desc="object_desc_71013" hint="中立兽族巨魔巫医2" id="71013.0" name="object_name_71013" unlock="10.0"/>
+	<item desc="object_desc_70014" hint="中立龙族黑龙1" id="70014.0" name="object_name_70014" unlock="5.0"/>
+	<item desc="object_desc_71014" hint="中立龙族黑龙2" id="71014.0" name="object_name_71014" unlock="10.0"/>
+	<item desc="object_desc_70015" hint="中立矮人族火枪手1" id="70015.0" name="object_name_70015" unlock="5.0"/>
+	<item desc="object_desc_71015" hint="中立矮人族火枪手2" id="71015.0" name="object_name_71015" unlock="10.0"/>
+	<item desc="object_desc_70016" hint="中立精灵族弓箭手1" id="70016.0" name="object_name_70016" unlock="5.0"/>
+	<item desc="object_desc_71016" hint="中立精灵族弓箭手2" id="71016.0" name="object_name_71016" unlock="10.0"/>
+	<item desc="object_desc_70017" hint="兽族攻城车1" id="70017.0" name="object_name_70017" unlock="5.0"/>
+	<item desc="object_desc_71017" hint="兽族攻城车2" id="71017.0" name="object_name_71017" unlock="10.0"/>
+	<item desc="object_desc_70018" hint="月之骑士1" id="70018.0" name="object_name_70018" unlock="5.0"/>
+	<item desc="object_desc_71018" hint="月之骑士2" id="71018.0" name="object_name_71018" unlock="10.0"/>
+	<item desc="object_desc_70019" hint="攻城单位1" id="70019.0" name="object_name_70019" unlock="5.0"/>
+	<item desc="object_desc_71019" hint="攻城单位2" id="71019.0" name="object_name_71019" unlock="10.0"/>
+	<item desc="object_desc_70020" hint="待定1" id="70020.0" name="object_name_70020" unlock="5.0"/>
+	<item desc="object_desc_71020" hint="待定2" id="71020.0" name="object_name_71020" unlock="10.0"/>
+	<item desc="object_desc_70021" hint="待定1" id="70021.0" name="object_name_70021" unlock="5.0"/>
+	<item desc="object_desc_71021" hint="待定2" id="71021.0" name="object_name_71021" unlock="10.0"/>
+	<item desc="object_desc_70022" hint="待定1" id="70022.0" name="object_name_70022" unlock="5.0"/>
+	<item desc="object_desc_71022" hint="待定2" id="71022.0" name="object_name_71022" unlock="10.0"/>
+	<item desc="object_desc_70023" hint="火炮兵1" id="70023.0" name="object_name_70023" unlock="5.0"/>
+	<item desc="object_desc_71023" hint="火炮兵2" id="71023.0" name="object_name_71023" unlock="10.0"/>
+	<item desc="object_desc_70024" hint="待定1" id="70024.0" name="object_name_70024" unlock="5.0"/>
+	<item desc="object_desc_71024" hint="待定2" id="71024.0" name="object_name_71024" unlock="10.0"/>
+	<item desc="object_desc_70025" hint="地雷工兵1" id="70025.0" name="object_name_70025" unlock="5.0"/>
+	<item desc="object_desc_71025" hint="地雷工兵2" id="71025.0" name="object_name_71025" unlock="10.0"/>
+	<item desc="object_desc_70026" hint="娜迦战士1" id="70026.0" name="object_name_70026" unlock="5.0"/>
+	<item desc="object_desc_71026" hint="娜迦战士2" id="71026.0" name="object_name_71026" unlock="10.0"/>
+	<item desc="object_desc_70027" hint="待定1" id="70027.0" name="object_name_70027" unlock="5.0"/>
+	<item desc="object_desc_71027" hint="待定2" id="71027.0" name="object_name_71027" unlock="10.0"/>
+	<item desc="object_desc_70028" hint="狼人刺客1" id="70028.0" name="object_name_70028" unlock="5.0"/>
+	<item desc="object_desc_71028" hint="狼人刺客2" id="71028.0" name="object_name_71028" unlock="10.0"/>
+	<item desc="object_desc_70100" hint="人族盾牌队长1" id="70100.0" name="object_name_70100" unlock="10.0"/>
+	<item desc="object_desc_71100" hint="人族盾牌队长2" id="71100.0" name="object_name_71100" unlock="20.0"/>
+	<item desc="object_desc_72100" hint="人族盾牌队长3" id="72100.0" name="object_name_72100" unlock="30.0"/>
+	<item desc="object_desc_70101" hint="人族剑士队长1" id="70101.0" name="object_name_70101" unlock="10.0"/>
+	<item desc="object_desc_71101" hint="人族剑士队长2" id="71101.0" name="object_name_71101" unlock="20.0"/>
+	<item desc="object_desc_72101" hint="人族剑士队长3" id="72101.0" name="object_name_72101" unlock="30.0"/>
+	<item desc="object_desc_70102" hint="人族弓箭队长1" id="70102.0" name="object_name_70102" unlock="10.0"/>
+	<item desc="object_desc_71102" hint="人族弓箭队长2" id="71102.0" name="object_name_71102" unlock="20.0"/>
+	<item desc="object_desc_72102" hint="人族弓箭队长3" id="72102.0" name="object_name_72102" unlock="30.0"/>
+	<item desc="object_desc_70103" hint="人族大法师1" id="70103.0" name="object_name_70103" unlock="10.0"/>
+	<item desc="object_desc_71103" hint="人族大法师2" id="71103.0" name="object_name_71103" unlock="20.0"/>
+	<item desc="object_desc_72103" hint="人族大法师3" id="72103.0" name="object_name_72103" unlock="30.0"/>
+	<item desc="object_desc_70104" hint="人族秘法大师1" id="70104.0" name="object_name_70104" unlock="10.0"/>
+	<item desc="object_desc_71104" hint="人族秘法大师2" id="71104.0" name="object_name_71104" unlock="20.0"/>
+	<item desc="object_desc_72104" hint="人族秘法大师3" id="72104.0" name="object_name_72104" unlock="30.0"/>
+	<item desc="object_desc_70105" hint="魔族骷髅王子1" id="70105.0" name="object_name_70105" unlock="10.0"/>
+	<item desc="object_desc_71105" hint="魔族骷髅王子2" id="71105.0" name="object_name_71105" unlock="20.0"/>
+	<item desc="object_desc_72105" hint="魔族骷髅王子3" id="72105.0" name="object_name_72105" unlock="30.0"/>
+	<item desc="object_desc_70106" hint="魔族食尸鬼王1" id="70106.0" name="object_name_70106" unlock="10.0"/>
+	<item desc="object_desc_71106" hint="魔族食尸鬼王2" id="71106.0" name="object_name_71106" unlock="20.0"/>
+	<item desc="object_desc_72106" hint="魔族食尸鬼王3" id="72106.0" name="object_name_72106" unlock="30.0"/>
+	<item desc="object_desc_70107" hint="魔族地狱战舰1" id="70107.0" name="object_name_70107" unlock="10.0"/>
+	<item desc="object_desc_71107" hint="魔族地狱战舰2" id="71107.0" name="object_name_71107" unlock="20.0"/>
+	<item desc="object_desc_72107" hint="魔族地狱战舰3" id="72107.0" name="object_name_72107" unlock="30.0"/>
+	<item desc="object_desc_70108" hint="魔族黑传教士1" id="70108.0" name="object_name_70108" unlock="10.0"/>
+	<item desc="object_desc_71108" hint="魔族黑传教士2" id="71108.0" name="object_name_71108" unlock="20.0"/>
+	<item desc="object_desc_72108" hint="魔族黑传教士3" id="72108.0" name="object_name_72108" unlock="30.0"/>
+	<item desc="object_desc_70109" hint="魔族梦魇精华1" id="70109.0" name="object_name_70109" unlock="10.0"/>
+	<item desc="object_desc_71109" hint="魔族梦魇精华2" id="71109.0" name="object_name_71109" unlock="20.0"/>
+	<item desc="object_desc_72109" hint="魔族梦魇精华3" id="72109.0" name="object_name_72109" unlock="30.0"/>
+	<item desc="object_desc_70110" hint="中立兽族斧王1" id="70110.0" name="object_name_70110" unlock="10.0"/>
+	<item desc="object_desc_71110" hint="中立兽族斧王2" id="71110.0" name="object_name_71110" unlock="20.0"/>
+	<item desc="object_desc_72110" hint="中立兽族斧王3" id="72110.0" name="object_name_72110" unlock="30.0"/>
+	<item desc="object_desc_70111" hint="中立兽族食人鬼王1" id="70111.0" name="object_name_70111" unlock="10.0"/>
+	<item desc="object_desc_71111" hint="中立兽族食人鬼王2" id="71111.0" name="object_name_71111" unlock="20.0"/>
+	<item desc="object_desc_72111" hint="中立兽族食人鬼王3" id="72111.0" name="object_name_72111" unlock="30.0"/>
 </root>

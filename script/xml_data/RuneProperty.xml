@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <root>
-	<item id="80001" name="力量符文"/>
-	<item id="81001" name="敏捷符文"/>
-	<item id="82001" name="智力符文"/>
+	<item id="80001.0" name="力量符文"/>
+	<item id="81001.0" name="敏捷符文"/>
+	<item id="82001.0" name="智力符文"/>
 </root>

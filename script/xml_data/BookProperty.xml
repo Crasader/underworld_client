@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <root>
-	<item desc="死亡缠绕技能书" id="90001" unlock="10"/>
-	<item desc="邪恶光环技能书" id="91001" unlock="12"/>
-	<item desc="召唤死尸技能书" id="92001" unlock="14"/>
+	<item desc="book_desc_90001" id="90001.0" unlock="10.0"/>
+	<item desc="book_desc_91001" id="91001.0" unlock="12.0"/>
+	<item desc="book_desc_92001" id="92001.0" unlock="14.0"/>
 </root>
