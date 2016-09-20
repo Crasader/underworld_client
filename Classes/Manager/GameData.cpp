@@ -365,7 +365,9 @@ void GameData::onNetworkResponseFailed(long code, const string& jsonPath) const
 {
 #if COCOS2D_DEBUG
 #if TARGET_IPHONE_SIMULATOR
+#if false
     MessageBox(StringUtils::format(LocalHelper::getString("networkResponse_errorCode").c_str(), code, jsonPath.c_str()).c_str(), LocalHelper::getString("networkResponse_errorTitle").c_str());
+#endif
 #endif
 #endif
 }

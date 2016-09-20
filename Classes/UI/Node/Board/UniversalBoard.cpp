@@ -11,6 +11,7 @@
 #include "XButton.h"
 
 using namespace std;
+static const int zorder_top(100);
 
 UniversalBoard* UniversalBoard::create(const string& file)
 {
@@ -48,12 +49,13 @@ bool UniversalBoard::init(const string& file)
                 removeFromParent();
             }
         });
+        _exitButton->setLocalZOrder(zorder_top);
         
         const auto& size(getContentSize());
         auto title = CocosUtils::createLabel("Untitled", TITLE_FONT_SIZE);
         title->setAnchorPoint(Point::ANCHOR_MIDDLE);
         title->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
-        addChild(title);
+        addChild(title, zorder_top);
         _title = title;
         
         static const float offsetY(10);
@@ -70,6 +72,13 @@ void UniversalBoard::setTitle(const string& title)
 {
     if (_title) {
         _title->setString(title);
+    }
+}
+
+void UniversalBoard::setExitButtonVisible(bool visible)
+{
+    if (_exitButton) {
+        _exitButton->setVisible(visible);
     }
 }
 

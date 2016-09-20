@@ -8,14 +8,14 @@
 
 #include "MessageBoxBaseLayer.h"
 #include "XButton.h"
+#include "SmallBoard.h"
 #include "CocosGlobal.h"
 #include "LocalHelper.h"
 
 using namespace std;
 
 MessageBoxBaseLayer::MessageBoxBaseLayer()
-:_background_1(nullptr)
-,_background_2(nullptr)
+:_board(nullptr)
 ,_confirmButton(nullptr)
 ,_confirmButtonPosition(Point::ZERO)
 ,_cancelButton(nullptr)
@@ -38,31 +38,25 @@ bool MessageBoxBaseLayer::init()
         static float inner_margin_bottom(6.f);
         
         const auto& winSize = Director::getInstance()->getWinSize();
-        
-        cocos2d::Rect rect(0, 0, 56, 56);
-        cocos2d::Rect capInsetsRect(14, 12, 34, 32);
-        _background_1 = cocos2d::ui::Scale9Sprite::create("GameImages/messagebox/background_1.png", rect, capInsetsRect);
-        _background_1->setContentSize(message_box_size);
-        _background_1->setPosition(Point(winSize.width / 2, winSize.height / 2));
-        addChild(_background_1);
-        
-        
-        rect.setRect(0, 0, 56, 56);
-        capInsetsRect.setRect(10, 10, 36, 36);
-        _background_2 = cocos2d::ui::Scale9Sprite::create("GameImages/messagebox/background_2.png", rect, capInsetsRect);
-        _background_2->setContentSize(background_size);
-        _background_2->setPosition(cocos2d::Vec2(margin_horizontal + background_size.width / 2, margin_bottom + background_size.height / 2));
-        _background_1->addChild(_background_2);
+        auto board = SmallBoard::create();
+        board->setTitle("");
+        board->setExitButtonVisible(false);
+        board->setExitCallback([this]() {
+            removeFromParent();
+        });
+        board->setPosition(Point(winSize.width / 2, winSize.height / 2));
+        addChild(board);
+        _board = board;
         
         _confirmButton = XButton::create(XButton::BSize::Big, XButton::BType::Red);
         _confirmButton->setTitleText(LocalHelper::getString("hint_confirm"));
         _confirmButton->setTitleColor(Color3B::WHITE);
-        _background_1->addChild(_confirmButton);
+        board->addChild(_confirmButton);
         
         _cancelButton = XButton::create(XButton::BSize::Big, XButton::BType::Blue);
         _cancelButton->setTitleText(LocalHelper::getString("hint_cancel"));
         _cancelButton->setTitleColor(Color3B::WHITE);
-        _background_1->addChild(_cancelButton);
+        board->addChild(_cancelButton);
         
         const auto& sizeg = _confirmButton->getContentSize();
         const auto& sizeb = _cancelButton->getContentSize();

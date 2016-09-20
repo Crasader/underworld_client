@@ -16,6 +16,7 @@ USING_NS_CC;
 using namespace ui;
 
 class XButton;
+class SmallBoard;
 
 class MessageBoxBaseLayer : public LayerColor
 {
@@ -25,8 +26,7 @@ protected:
     virtual bool init() override;
     
 protected:
-    Scale9Sprite* _background_1;
-    Scale9Sprite* _background_2;
+    SmallBoard* _board;
     XButton* _confirmButton;
     XButton* _cancelButton;
     Point _confirmButtonPosition;

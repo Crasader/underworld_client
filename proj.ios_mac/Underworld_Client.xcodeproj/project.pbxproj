@@ -153,6 +153,8 @@
 		A15A135C1D86535600F24469 /* TestConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A15A13581D86535600F24469 /* TestConfiguration.cpp */; };
 		A15A135D1D86535600F24469 /* TestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A15A135A1D86535600F24469 /* TestLayer.cpp */; };
 		A15A13651D86835A00F24469 /* 3d in Resources */ = {isa = PBXBuildFile; fileRef = A15A13641D86835A00F24469 /* 3d */; };
+		A170651D1D91429C00B5BAA4 /* BattleResultLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A170651B1D91429C00B5BAA4 /* BattleResultLayer.cpp */; };
+		A17065201D9144FA00B5BAA4 /* BattleRewardNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A170651E1D9144FA00B5BAA4 /* BattleRewardNode.cpp */; };
 		A1720E6F1BCCDF9100217E98 /* CocosUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720E6D1BCCDF9100217E98 /* CocosUtils.cpp */; };
 		A1720E7A1BCCE0F000217E98 /* CCShake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720E761BCCE0F000217E98 /* CCShake.cpp */; };
 		A1720E7B1BCCE0F000217E98 /* NumberJump.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720E781BCCE0F000217E98 /* NumberJump.cpp */; };
@@ -659,6 +661,10 @@
 		A15A135A1D86535600F24469 /* TestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestLayer.cpp; sourceTree = "<group>"; };
 		A15A135B1D86535600F24469 /* TestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestLayer.h; sourceTree = "<group>"; };
 		A15A13641D86835A00F24469 /* 3d */ = {isa = PBXFileReference; lastKnownFileType = folder; path = 3d; sourceTree = "<group>"; };
+		A170651B1D91429C00B5BAA4 /* BattleResultLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattleResultLayer.cpp; sourceTree = "<group>"; };
+		A170651C1D91429C00B5BAA4 /* BattleResultLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BattleResultLayer.h; sourceTree = "<group>"; };
+		A170651E1D9144FA00B5BAA4 /* BattleRewardNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattleRewardNode.cpp; sourceTree = "<group>"; };
+		A170651F1D9144FA00B5BAA4 /* BattleRewardNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BattleRewardNode.h; sourceTree = "<group>"; };
 		A1720E6D1BCCDF9100217E98 /* CocosUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosUtils.cpp; sourceTree = "<group>"; };
 		A1720E6E1BCCDF9100217E98 /* CocosUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosUtils.h; sourceTree = "<group>"; };
 		A1720E761BCCE0F000217E98 /* CCShake.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCShake.cpp; sourceTree = "<group>"; };
@@ -1698,6 +1704,17 @@
 			path = Test;
 			sourceTree = "<group>";
 		};
+		A170651A1D91428A00B5BAA4 /* BattleResult */ = {
+			isa = PBXGroup;
+			children = (
+				A170651B1D91429C00B5BAA4 /* BattleResultLayer.cpp */,
+				A170651C1D91429C00B5BAA4 /* BattleResultLayer.h */,
+				A170651E1D9144FA00B5BAA4 /* BattleRewardNode.cpp */,
+				A170651F1D9144FA00B5BAA4 /* BattleRewardNode.h */,
+			);
+			path = BattleResult;
+			sourceTree = "<group>";
+		};
 		A1720E661BCCDECA00217E98 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -1852,6 +1869,7 @@
 			children = (
 				A1D745B41C1AB7C40020BC1C /* Battle */,
 				A1DFAACA1D10FC2800817E69 /* BattleDeck */,
+				A170651A1D91428A00B5BAA4 /* BattleResult */,
 				A10D68121D87DF8C00D26BE9 /* Billboard */,
 				A1E830531C1E758E00FE01B8 /* Chat */,
 				A1A5529B1D7FFB71009FF922 /* Chest */,
@@ -2734,6 +2752,7 @@
 				A1E7BAE21C2149E800CE2A85 /* Constants.cpp in Sources */,
 				A1B66A371D704ABF009A8D55 /* RuneNode.cpp in Sources */,
 				A173A6BE1D2CDA4A00F9485B /* AnimationParameter.cpp in Sources */,
+				A170651D1D91429C00B5BAA4 /* BattleResultLayer.cpp in Sources */,
 				A1B4AE301C200521005906A6 /* QuestManager.cpp in Sources */,
 				A1B66A2A1D70430A009A8D55 /* RuneBagLayer.cpp in Sources */,
 				A1ED7FCA1D8143D40017B960 /* GuildInfoLayer.cpp in Sources */,
@@ -2756,6 +2775,7 @@
 				A1ED7FC71D8143D40017B960 /* GuildUIInfoNode.cpp in Sources */,
 				A10D742F1D5083B1009674F9 /* AvatarNode.cpp in Sources */,
 				A1AAA85E1D508DAF00EB7AEB /* TowerSimpleNode.cpp in Sources */,
+				A17065201D9144FA00B5BAA4 /* BattleRewardNode.cpp in Sources */,
 				A1FF0E741D7D469D00C32040 /* CardInfoLayer.cpp in Sources */,
 				A1E830681C1EA50200FE01B8 /* ConditionData.cpp in Sources */,
 				045116F71BCFBA44002AA721 /* SkllType.cpp in Sources */,

@@ -115,7 +115,9 @@ void CardAttributeNode::setAttribute(ObjectUtils::CardAttributeType type, float 
                 key = StringUtils::format("ui_cardTarget_%d", static_cast<int>(value));
                 break;
             default:
-                key = (ostringstream() << value).str();
+                ostringstream os;
+                os << value;
+                key = os.str();
                 break;
         }
         

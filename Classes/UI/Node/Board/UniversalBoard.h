@@ -23,6 +23,7 @@ public:
     virtual ~UniversalBoard();
     
     void setTitle(const std::string& title);
+    void setExitButtonVisible(bool visible);
     void setExitCallback(const Callback& callback);
     
 protected:
