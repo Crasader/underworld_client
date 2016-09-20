@@ -76,11 +76,11 @@ void QuestNode::update(const QuestData* data, ssize_t idx)
         
         const QuestProperty* property = _data->getProperty();
         if (_nameLabel) {
-            _nameLabel->setString(property ? property->getName() : "");
+            _nameLabel->setString(property ? LocalHelper::getString(property->getName()) : "");
         }
         
         if (_descriptionLabel) {
-            _descriptionLabel->setString(property ? property->getDescription() : "");
+            _descriptionLabel->setString(property ? LocalHelper::getString(property->getDescription()) : "");
         }
         
         updateProgress();

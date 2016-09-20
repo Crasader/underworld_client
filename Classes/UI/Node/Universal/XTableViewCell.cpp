@@ -30,7 +30,5 @@ void XTableViewCell::setNode(Node* node, int idx)
 
 void XTableViewCell::resetNode(int idx)
 {
-    if (_nodes.find(idx) != _nodes.end()) {
-        _nodes.erase(idx);
-    }
+    _nodes.erase(idx);
 }

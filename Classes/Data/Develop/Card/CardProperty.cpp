@@ -64,31 +64,59 @@ CardProperty::CardProperty(tinyxml2::XMLElement *xmlElement)
             {ObjectUtils::CardAttributeType::AIR_DAMAGE, "damage2"},
         };
         
+        static const std::set<ObjectUtils::CardAttributeType> SpecialKeys {
+            ObjectUtils::CardAttributeType::ARMOR_TYPE,
+            ObjectUtils::CardAttributeType::GROUND_DAMAGE,
+            ObjectUtils::CardAttributeType::ATTACK_TYPE,
+            ObjectUtils::CardAttributeType::TARGET_TYPE,
+            ObjectUtils::CardAttributeType::AIR_DAMAGE,
+        };
+        
         for (auto iter = begin(AttributeKeys); iter != end(AttributeKeys); ++iter) {
-            auto key(iter->second.c_str());
-            if (!xmlElement->Attribute(key)) { continue; }
-            auto value = XMLUtils::parse<float>(xmlElement, key);
             auto type(iter->first);
+            auto key(iter->second.c_str());
+            if (SpecialKeys.find(type) == end(SpecialKeys) && !xmlElement->Attribute(key)) { continue; }
+            
+            auto value = XMLUtils::parse<float>(xmlElement, key);
             CC_BREAK_IF(ObjectUtils::CardAttributeType::HP == type && value <= 0);
             
-            if (ObjectUtils::CardAttributeType::AIR_DAMAGE == type) {
-                do {
-                    auto targetTypeIter(_attributes.find(ObjectUtils::CardAttributeType::TARGET_TYPE));
-                    CC_BREAK_IF(targetTypeIter == end(_attributes));
-                    auto targetType(targetTypeIter->second);
-                    CC_BREAK_IF(targetType == static_cast<float>(ObjectUtils::TargetType::GROUND));
-                    const auto iter(_attributes.find(ObjectUtils::CardAttributeType::GROUND_DAMAGE));
-                    if (value == 0 && iter != end(_attributes)) {
-                        _attributes.insert(make_pair(type, iter->second));
-                    } else {
-                        _attributes.insert(make_pair(type, value));
-                    }
-                } while (false);
-            } else if (ObjectUtils::CardAttributeType::ARMOR_TYPE == type ||
-                       ObjectUtils::CardAttributeType::ATTACK_TYPE == type ||
-                       ObjectUtils::CardAttributeType::TARGET_TYPE == type ||
-                       value != 0) {
+            if (SpecialKeys.find(type) != end(SpecialKeys) || value != 0) {
                 _attributes.insert(make_pair(type, value));
+            }
+        }
+        
+        if (true) {
+            static const auto gkey(ObjectUtils::CardAttributeType::GROUND_DAMAGE);
+            static const auto akey(ObjectUtils::CardAttributeType::AIR_DAMAGE);
+            auto iter(_attributes.find(ObjectUtils::CardAttributeType::TARGET_TYPE));
+            if (iter == end(_attributes)) {
+                _attributes.erase(gkey);
+                _attributes.erase(akey);
+            } else {
+                auto targetType(static_cast<ObjectUtils::TargetType>(iter->second));
+                switch (targetType) {
+                    case ObjectUtils::TargetType::GROUND: {
+                        _attributes.erase(akey);
+                    }
+                        break;
+                    case ObjectUtils::TargetType::AIR: {
+                        _attributes.erase(gkey);
+                    }
+                        break;
+                    case ObjectUtils::TargetType::BOTH: {
+                        if (_attributes.find(gkey) == end(_attributes)) { _attributes.insert(make_pair(gkey, 0)); }
+                        if (_attributes.find(akey) == end(_attributes)) { _attributes.insert(make_pair(akey, 0)); }
+                        
+                        const auto gvalue(_attributes.at(gkey));
+                        const auto avalue(_attributes.at(akey));
+                        if (0 == gvalue) {
+                            _attributes.at(gkey) = avalue;
+                        } else if (0 == avalue) {
+                            _attributes.at(akey) = gvalue;
+                        }
+                    }
+                        break;
+                }
             }
         }
     }

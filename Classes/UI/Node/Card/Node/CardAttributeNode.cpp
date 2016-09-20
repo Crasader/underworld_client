@@ -10,6 +10,7 @@
 #include "PureNode.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
+#include <sstream>
 
 using namespace std;
 
@@ -102,26 +103,27 @@ void CardAttributeNode::setAttribute(ObjectUtils::CardAttributeType type, float 
     }
     
     if (_data) {
-        if (ObjectUtils::CardAttributeType::HIT_SPEED == type) {
-            _data->setString(LocalHelper::getString(StringUtils::format("%.1f", value)));
-        } else {
-            string prefix("");
-            if (ObjectUtils::CardAttributeType::ARMOR_TYPE == type) {
-                prefix = "ui_cardArmorType_%d";
-            } else if (ObjectUtils::CardAttributeType::ATTACK_TYPE == type) {
-                prefix = "ui_cardAttackType_%d";
-            } else if (ObjectUtils::CardAttributeType::TARGET_TYPE == type) {
-                prefix = "ui_cardTarget_%d";
-            } else {
-                prefix = "%d";
-            }
-            
-            _data->setString(LocalHelper::getString(StringUtils::format(prefix.c_str(), static_cast<int>(value))));
+        string key("");
+        switch (type) {
+            case ObjectUtils::CardAttributeType::ARMOR_TYPE:
+                key = StringUtils::format("ui_cardArmorType_%d", static_cast<int>(value));
+                break;
+            case ObjectUtils::CardAttributeType::ATTACK_TYPE:
+                key = StringUtils::format("ui_cardAttackType_%d", static_cast<int>(value));
+                break;
+            case ObjectUtils::CardAttributeType::TARGET_TYPE:
+                key = StringUtils::format("ui_cardTarget_%d", static_cast<int>(value));
+                break;
+            default:
+                key = (ostringstream() << value).str();
+                break;
         }
+        
+        _data->setString(LocalHelper::getString(key));
     }
 }
 
-std::string CardAttributeNode::getIconFile(ObjectUtils::CardAttributeType type) const
+string CardAttributeNode::getIconFile(ObjectUtils::CardAttributeType type) const
 {
     switch (type) {
         case ObjectUtils::CardAttributeType::HP:

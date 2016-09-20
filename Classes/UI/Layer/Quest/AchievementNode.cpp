@@ -75,11 +75,11 @@ void AchievementNode::update(const AchievementData* data, ssize_t idx)
         
         const AchievementProperty* property = _data->getProperty();
         if (_nameLabel) {
-            _nameLabel->setString(property ? property->getName() : "");
+            _nameLabel->setString(property ? LocalHelper::getString(property->getName()) : "");
         }
         
         if (_descriptionLabel) {
-            _descriptionLabel->setString(property ? property->getDescription() : "");
+            _descriptionLabel->setString(property ? LocalHelper::getString(property->getDescription()) : "");
         }
         
         updateProgress();

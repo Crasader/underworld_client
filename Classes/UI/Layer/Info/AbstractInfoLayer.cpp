@@ -12,6 +12,7 @@
 #include "JuniorCard.h"
 #include "ResourceButton.h"
 #include "CardAttributeNode.h"
+#include "LocalHelper.h"
 #include "DataManager.h"
 #include "AbstractData.h"
 #include "AbstractProperty.h"
@@ -69,11 +70,11 @@ void AbstractInfoLayer::updateProperty(const AbstractProperty* property)
     _property = property;
     
     if (_board) {
-        _board->setTitle(property ? property->getName() : "");
+        _board->setTitle(property ? LocalHelper::getString(property->getName()) : "");
     }
     
     if (_description) {
-        _description->setString(property ? property->getDescription() : "");
+        _description->setString(property ? LocalHelper::getString(property->getDescription()) : "");
     }
 }
 

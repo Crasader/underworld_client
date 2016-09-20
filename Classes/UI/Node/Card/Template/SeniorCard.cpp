@@ -9,6 +9,7 @@
 #include "SeniorCard.h"
 #include "ResourceButton.h"
 #include "CocosUtils.h"
+#include "LocalHelper.h"
 #include "AbstractData.h"
 #include "AbstractProperty.h"
 #include "AbstractUpgradeProperty.h"
@@ -84,7 +85,7 @@ void SeniorCard::updateProperty(const AbstractProperty* property)
 {
     JuniorCard::updateProperty(property);
     if (_name) {
-        _name->setString(property ? property->getName() : "");
+        _name->setString(property ? LocalHelper::getString(property->getName()) : "");
     }
 }
 
