@@ -384,7 +384,9 @@ void GameData::onUserIsOnline()
 
 void GameData::onUserIsOffline()
 {
+#if false
     MessageBoxLayer::getInstance()->show(LocalHelper::getString("networkResponse_isOffline"), MessageBoxType::OnlyYes, [this](Ref *) {
         reloadGame();
     });
+#endif
 }

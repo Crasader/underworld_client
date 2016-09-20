@@ -102,6 +102,21 @@ void MainLayer::onEnter()
     if (_scrollView) {
         _scrollView->setContentOffset(Vec2::ZERO);
     }
+
+#if false
+    Size size = Director::getInstance()->getWinSize();
+    auto camera = Camera::createPerspective(30.0f, size.width / size.height, 1.0f, 1000.0f);
+    camera->setPosition3D(Vec3(0.0f, 0.0f, 100.0f));
+    camera->lookAt(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
+    camera->setCameraFlag(CameraFlag::USER1);
+    camera->setDepth(1);
+    addChild(camera);
+    
+    auto rootps = PUParticleSystem3D::create("particle3D/scripts/adb.pu", "particle3D/materials/a.material");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    rootps->startParticleSystem();
+    addChild(rootps);
+#endif
 }
 
 bool MainLayer::onTouchBegan(Touch *pTouch, Event *pEvent)

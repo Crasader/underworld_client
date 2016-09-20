@@ -428,11 +428,13 @@ void CardInfoLayer::updateProperty(const AbstractProperty* property)
                 node->setVisible(i < cp->getAttributes().size());
             }
             
-            for (int i = 0; i < static_cast<int>(ObjectUtils::CardAttributeType::PROPERTY_MAX); ++i) {
-                if (i < _attributes.size()) {
-                    auto node(_attributes.at(i));
-                    const auto type(static_cast<ObjectUtils::CardAttributeType>(i));
-                    node->setAttribute(type, cp->getAttributes().at(type));
+            int idx(0);
+            for (int i = 0; i < static_cast<int>(ObjectUtils::CardAttributeType::ATTRIBUTE_MAX); ++i) {
+                const auto type(static_cast<ObjectUtils::CardAttributeType>(i));
+                auto iter(cp->getAttributes().find(type));
+                if (idx < _attributes.size() && iter != end(cp->getAttributes())) {
+                    _attributes.at(idx)->setAttribute(type, iter->second);
+                    ++ idx;
                 }
             }
         }

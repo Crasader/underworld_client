@@ -135,6 +135,7 @@
 		A11649031D5AFB0100D03985 /* MainUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A11649001D5AFB0100D03985 /* MainUILayer.cpp */; };
 		A11649061D5AFB3700D03985 /* MainScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A11649041D5AFB3700D03985 /* MainScene.cpp */; };
 		A116490A1D5B1B8C00D03985 /* BattleDeckLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A11649081D5B1B8C00D03985 /* BattleDeckLayer.cpp */; };
+		A11E8C601D90F09F00DF97B8 /* particle3D in Resources */ = {isa = PBXBuildFile; fileRef = A11E8C5F1D90F09F00DF97B8 /* particle3D */; };
 		A1208BA51CFFFE34007B25DC /* pvr in Resources */ = {isa = PBXBuildFile; fileRef = A1208BA41CFFFE33007B25DC /* pvr */; };
 		A1211B231C0BF55200C27CCC /* LiteralValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B211C0BF55200C27CCC /* LiteralValue.cpp */; };
 		A1211B271C0BF5CC00C27CCC /* RandomCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B251C0BF5CC00C27CCC /* RandomCreator.cpp */; };
@@ -623,6 +624,7 @@
 		A11649051D5AFB3700D03985 /* MainScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainScene.h; sourceTree = "<group>"; };
 		A11649081D5B1B8C00D03985 /* BattleDeckLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattleDeckLayer.cpp; sourceTree = "<group>"; };
 		A11649091D5B1B8C00D03985 /* BattleDeckLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BattleDeckLayer.h; sourceTree = "<group>"; };
+		A11E8C5F1D90F09F00DF97B8 /* particle3D */ = {isa = PBXFileReference; lastKnownFileType = folder; path = particle3D; sourceTree = "<group>"; };
 		A1208BA41CFFFE33007B25DC /* pvr */ = {isa = PBXFileReference; lastKnownFileType = folder; path = pvr; sourceTree = "<group>"; };
 		A1211B211C0BF55200C27CCC /* LiteralValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LiteralValue.cpp; path = Core/Unit/Element/LiteralValue.cpp; sourceTree = "<group>"; };
 		A1211B221C0BF55200C27CCC /* LiteralValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LiteralValue.h; path = Core/Unit/Element/LiteralValue.h; sourceTree = "<group>"; };
@@ -1479,6 +1481,7 @@
 				A1DEF5E81C59DFB3002F3531 /* Images.xcassets */,
 				CBDBD2121BD7B3B9004706A8 /* map */,
 				A13108A41C046BF900EAAD90 /* particle */,
+				A11E8C5F1D90F09F00DF97B8 /* particle3D */,
 				A1208BA41CFFFE33007B25DC /* pvr */,
 				3EACC98E19EE6D4300EB3C5E /* res */,
 				A1C124DB1BF58AF700F3FDD2 /* sounds */,
@@ -2630,6 +2633,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1A4BA3B1BCE043100175E8A /* InfoPlist.strings in Resources */,
+				A11E8C601D90F09F00DF97B8 /* particle3D in Resources */,
 				A1C124DC1BF58AF700F3FDD2 /* sounds in Resources */,
 				A1FF6E881C16B9890017CAD2 /* configs in Resources */,
 				A1D45C4C1BEB594800D1E921 /* GameImages in Resources */,

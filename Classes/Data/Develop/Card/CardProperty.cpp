@@ -66,19 +66,24 @@ CardProperty::CardProperty(tinyxml2::XMLElement *xmlElement)
         
         for (auto iter = begin(AttributeKeys); iter != end(AttributeKeys); ++iter) {
             auto key(iter->second.c_str());
+            if (!xmlElement->Attribute(key)) { continue; }
             auto value = XMLUtils::parse<float>(xmlElement, key);
-            const auto type(iter->first);
-            if (ObjectUtils::CardAttributeType::HP == type && value <= 0) {
-                break;
-            }
+            auto type(iter->first);
+            CC_BREAK_IF(ObjectUtils::CardAttributeType::HP == type && value <= 0);
             
             if (ObjectUtils::CardAttributeType::AIR_DAMAGE == type) {
-                const auto iter(_attributes.find(ObjectUtils::CardAttributeType::GROUND_DAMAGE));
-                if (value == 0 && iter != end(_attributes)) {
-                    _attributes.insert(make_pair(type, iter->second));
-                } else {
-                    _attributes.insert(make_pair(type, value));
-                }
+                do {
+                    auto targetTypeIter(_attributes.find(ObjectUtils::CardAttributeType::TARGET_TYPE));
+                    CC_BREAK_IF(targetTypeIter == end(_attributes));
+                    auto targetType(targetTypeIter->second);
+                    CC_BREAK_IF(targetType == static_cast<float>(ObjectUtils::TargetType::GROUND));
+                    const auto iter(_attributes.find(ObjectUtils::CardAttributeType::GROUND_DAMAGE));
+                    if (value == 0 && iter != end(_attributes)) {
+                        _attributes.insert(make_pair(type, iter->second));
+                    } else {
+                        _attributes.insert(make_pair(type, value));
+                    }
+                } while (false);
             } else if (ObjectUtils::CardAttributeType::ARMOR_TYPE == type ||
                        ObjectUtils::CardAttributeType::ATTACK_TYPE == type ||
                        ObjectUtils::CardAttributeType::TARGET_TYPE == type ||
