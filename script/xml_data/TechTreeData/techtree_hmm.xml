@@ -83,7 +83,7 @@
 	<card name="梦魇" card_class="summon" cost="木头:20" summon_count="1" recover_span="0" id="22010">
 		<unit_setting unit_setting_id="12015"/>
 	</card>
-	<card name="石像鬼" card_class="summon" cost="木头:30" summon_count="1" recover_span="0" id="22011">
+	<card name="石像鬼" card_class="summon" cost="木头:20" summon_count="1" recover_span="0" id="22011">
 		<unit_setting unit_setting_id="12016"/>
 	</card>
     <card name="中立兽族牛头人" card_class="summon" cost="木头:80" recover_span="0" id="22012">
