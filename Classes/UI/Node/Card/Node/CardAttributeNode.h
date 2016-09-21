@@ -22,11 +22,12 @@ public:
     virtual ~CardAttributeNode();
     void setColor(const Color4B& color);
     void setAttribute(ObjectUtils::CardAttributeType type, float value);
+    void setName(const std::string& name);
     
 private:
     CardAttributeNode();
     bool init(const Color4B& color);
-    std::string getIconFile(ObjectUtils::CardAttributeType type) const;
+    void getInfo(ObjectUtils::CardAttributeType type, std::string& icon, std::string& name) const;
     
 private:
     PureNode* _background;

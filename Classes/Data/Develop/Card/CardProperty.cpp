@@ -111,8 +111,9 @@ CardProperty::CardProperty(tinyxml2::XMLElement *xmlElement)
                         const auto avalue(_attributes.at(akey));
                         if (0 == gvalue) {
                             _attributes.at(gkey) = avalue;
+                            _attributes.erase(akey);
                         } else if (0 == avalue) {
-                            _attributes.at(akey) = gvalue;
+                            _attributes.erase(akey);
                         }
                     }
                         break;

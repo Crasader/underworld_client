@@ -20,8 +20,9 @@ public:
     static BattleRewardNode* create();
     virtual ~BattleRewardNode();
     
-    void setTrophy(int count);
-    void setResource(ResourceType type, int count);
+    void setTrophy();
+    void setResource(ResourceType type);
+    void setCount(int count);
     
 private:
     BattleRewardNode();
@@ -29,6 +30,7 @@ private:
     void resize();
     
 private:
+    int _rewardId;
     Sprite* _icon;
     Label* _count;
 };

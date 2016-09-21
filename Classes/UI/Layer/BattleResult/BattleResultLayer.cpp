@@ -9,8 +9,10 @@
 #include "BattleResultLayer.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
+#include "LocalHelper.h"
 #include "UserSimpleNode.h"
 #include "BattleRewardNode.h"
+#include "XButton.h"
 
 using namespace std;
 
@@ -51,7 +53,7 @@ bool BattleResultLayer::init()
         _result = result;
         
         auto flash = Sprite::create(CocosUtils::getResourcePath("texiao_guang.png"));
-        flash->setPosition(result->getPosition());
+        flash->setPosition(result->getPosition() - Point(0, 75));
         addChild(flash, zorder_bottom);
         
         auto fireworks = Sprite::create(CocosUtils::getResourcePath("texiao_caidan.png"));
@@ -68,11 +70,34 @@ bool BattleResultLayer::init()
         addChild(user);
         _userNode = user;
         
-        for (int i = 0; i < 3; ++i) {
+        static const int rewardsCount(3);
+        for (int i = 0; i < rewardsCount; ++i) {
             auto node = BattleRewardNode::create();
-            node->setPosition(winSize.width / 2, winSize.height / 2);
+            if (0 == i) {
+                node->setTrophy();
+            } else if (1 == i) {
+                node->setResource(ResourceType::Gem);
+            } else if (2 == i) {
+                node->setResource(ResourceType::Gold);
+            }
             addChild(node);
+            _rewards.push_back(node);
         }
+        
+        static const float urspace(20);
+        _rewards.at(0)->setPosition(winSize.width / 2, user->getPositionY() - (usize.height / 2 + urspace + _rewards.at(0)->getContentSize().height / 2));
+        static const Vec2 rspace(80, 80);
+        _rewards.at(1)->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
+        _rewards.at(1)->setPosition(winSize.width / 2 - rspace.x / 2, _rewards.at(0)->getPositionY() - rspace.y);
+        
+        _rewards.at(2)->setPosition(Point::ANCHOR_MIDDLE_LEFT);
+        _rewards.at(2)->setPosition(winSize.width / 2 + rspace.x / 2, _rewards.at(1)->getPositionY());
+        
+        static const float bedge(110);
+        auto button = XButton::create(XButton::BSize::Big, XButton::BType::Blue);
+        button->setTitleText(LocalHelper::getString("hint_confirm"));
+        button->setPosition(Point(winSize.width / 2, bedge + button->getContentSize().height / 2));
+        addChild(button);
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);

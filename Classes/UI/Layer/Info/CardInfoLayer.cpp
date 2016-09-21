@@ -423,17 +423,39 @@ void CardInfoLayer::updateProperty(const AbstractProperty* property)
     auto cp(dynamic_cast<const CardProperty*>(property));
     if (cp) {
         if (true) {
+            const auto& cardAttributes(cp->getAttributes());
+            
             for (int i = 0; i < _attributes.size(); ++i) {
                 auto node(_attributes.at(i));
-                node->setVisible(i < cp->getAttributes().size());
+                node->setVisible(i < cardAttributes.size());
             }
             
+            static const vector<ObjectUtils::CardAttributeType> orders {
+                ObjectUtils::CardAttributeType::HP,
+                ObjectUtils::CardAttributeType::GROUND_DAMAGE,
+                ObjectUtils::CardAttributeType::AIR_DAMAGE,
+                ObjectUtils::CardAttributeType::TARGET_TYPE,
+                ObjectUtils::CardAttributeType::ATTACK_TYPE,
+                ObjectUtils::CardAttributeType::HIT_SPEED,
+                ObjectUtils::CardAttributeType::RANGE,
+                ObjectUtils::CardAttributeType::ARMOR_TYPE,
+                ObjectUtils::CardAttributeType::ARMOR,
+                ObjectUtils::CardAttributeType::SPEED,
+            };
+            
             int idx(0);
-            for (int i = 0; i < static_cast<int>(ObjectUtils::CardAttributeType::ATTRIBUTE_MAX); ++i) {
-                const auto type(static_cast<ObjectUtils::CardAttributeType>(i));
-                auto iter(cp->getAttributes().find(type));
-                if (idx < _attributes.size() && iter != end(cp->getAttributes())) {
-                    _attributes.at(idx)->setAttribute(type, iter->second);
+            auto targetType(static_cast<ObjectUtils::TargetType>(cardAttributes.at(ObjectUtils::CardAttributeType::TARGET_TYPE)));
+            for (int i = 0; i < orders.size(); ++i) {
+                const auto type(orders.at(i));
+                auto iter(cardAttributes.find(type));
+                if (idx < _attributes.size() && iter != end(cardAttributes)) {
+                    auto node(_attributes.at(idx));
+                    node->setAttribute(type, iter->second);
+                    
+                    if ((ObjectUtils::CardAttributeType::GROUND_DAMAGE == type || ObjectUtils::CardAttributeType::AIR_DAMAGE == type) &&
+                        (ObjectUtils::TargetType::BOTH != targetType || cardAttributes.find(ObjectUtils::CardAttributeType::AIR_DAMAGE) == end(cardAttributes))) {
+                            node->setName(LocalHelper::getString("ui_cardAttr_damage"));
+                    }
                     ++ idx;
                 }
             }

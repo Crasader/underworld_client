@@ -11,6 +11,8 @@
 
 using namespace std;
 
+static const int TrophyId(2016920);
+
 BattleRewardNode* BattleRewardNode::create()
 {
     auto ret = new (nothrow) BattleRewardNode();
@@ -24,7 +26,8 @@ BattleRewardNode* BattleRewardNode::create()
 }
 
 BattleRewardNode::BattleRewardNode()
-:_icon(nullptr)
+:_rewardId(0)
+,_icon(nullptr)
 ,_count(nullptr) {}
 
 BattleRewardNode::~BattleRewardNode()
@@ -54,30 +57,38 @@ bool BattleRewardNode::init()
     return false;
 }
 
-void BattleRewardNode::setTrophy(int count)
+void BattleRewardNode::setTrophy()
 {
-    if (_icon) {
-        _icon->setTexture(CocosUtils::getResourcePath("icon_jiangbei.png"));
+    if (_rewardId != TrophyId) {
+        _rewardId = TrophyId;
+        
+        if (_icon) {
+            _icon->setTexture(CocosUtils::getResourcePath("icon_jiangbei.png"));
+            resize();
+        }
     }
-    
-    if (_count) {
-        _count->setString(StringUtils::format("+ %d", count));
-    }
-    
-    resize();
 }
 
-void BattleRewardNode::setResource(ResourceType type, int count)
+void BattleRewardNode::setResource(ResourceType type)
 {
-    if (_icon) {
-        _icon->setTexture(StringUtils::format("GameImages/resources/icon_%dB.png", static_cast<int>(type)));
+    int rewardId(static_cast<int>(type));
+    if (_rewardId != rewardId) {
+        _rewardId = rewardId;
+        
+        if (_icon) {
+            _icon->setTexture(StringUtils::format("GameImages/resources/icon_%dB.png", static_cast<int>(type)));
+            resize();
+        }
     }
-    
+}
+
+void BattleRewardNode::setCount(int count)
+{
     if (_count) {
-        _count->setString(StringUtils::format("x %d", count));
+        const string prefix((_rewardId == TrophyId) ? "+" : "x");
+        _count->setString(prefix + " " + StringUtils::format("%d", count));
+        resize();
     }
-    
-    resize();
 }
 
 void BattleRewardNode::resize()
@@ -86,7 +97,9 @@ void BattleRewardNode::resize()
     auto isize(_icon->getContentSize());
     auto lsize(_count->getContentSize());
     const Size size(isize.width + lsize.width + space, MAX(isize.height, lsize.height));
-    setContentSize(size);
-    _icon->setPosition(isize.width / 2, size.height / 2);
-    _count->setPosition(size.width - lsize.width / 2, size.height / 2);
+    if (!size.equals(_contentSize)) {
+        setContentSize(size);
+        _icon->setPosition(isize.width / 2, size.height / 2);
+        _count->setPosition(size.width - lsize.width / 2, size.height / 2);
+    }
 }

@@ -130,16 +130,17 @@
     <item key="ui_cardInfo_unload" value="卸下符文"/>
     
     <!-- 卡牌属性 -->
-    <item key="ui_cardAttr_0" value="生命值"/>
-    <item key="ui_cardAttr_1" value="移动速度"/>
-    <item key="ui_cardAttr_2" value="护甲"/>
-    <item key="ui_cardAttr_3" value="护甲类型"/>
-    <item key="ui_cardAttr_4" value="对地攻击"/>
-    <item key="ui_cardAttr_5" value="攻击类型"/>
-    <item key="ui_cardAttr_6" value="攻击间隔"/>
-    <item key="ui_cardAttr_7" value="攻击范围"/>
-    <item key="ui_cardAttr_8" value="目标"/>
-    <item key="ui_cardAttr_9" value="对空攻击"/>
+    <item key="ui_cardAttr_hp" value="生命值"/>
+    <item key="ui_cardAttr_damage" value="攻击力"/>
+    <item key="ui_cardAttr_groundDamage" value="对地攻击"/>
+    <item key="ui_cardAttr_airDamage" value="对空攻击"/>
+    <item key="ui_cardAttr_targetType" value="目标"/>
+    <item key="ui_cardAttr_attackType" value="攻击类型"/>
+    <item key="ui_cardAttr_hitSpeed" value="攻击间隔"/>
+    <item key="ui_cardAttr_range" value="攻击范围"/>
+    <item key="ui_cardAttr_armorType" value="护甲类型"/>
+    <item key="ui_cardAttr_armor" value="护甲"/>
+    <item key="ui_cardAttr_speed" value="移动速度"/>
     
     <!-- 攻击类型 -->
     <item key="ui_cardAttackType_0" value="普通"/>

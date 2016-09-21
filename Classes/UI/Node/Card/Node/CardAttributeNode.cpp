@@ -50,7 +50,7 @@ bool CardAttributeNode::init(const Color4B& color)
         _background = bg;
         
         static const float edgeX(2);
-        auto icon = Sprite::create(getIconFile(ObjectUtils::CardAttributeType::HP));
+        auto icon = Sprite::create(CocosUtils::getResourcePath("icon_hp.png"));
         icon->setScale(0.4f);
         const Size isize(icon->getContentSize() * icon->getScale());
         icon->setPosition(Point(edgeX + isize.width / 2, size.height / 2));
@@ -93,14 +93,14 @@ void CardAttributeNode::setColor(const Color4B& color)
 
 void CardAttributeNode::setAttribute(ObjectUtils::CardAttributeType type, float value)
 {
-    const auto& file(getIconFile(type));
+    string icon;
+    string name;
+    getInfo(type, icon, name);
     if (_icon) {
-        _icon->setTexture(file);
+        _icon->setTexture(icon);
     }
     
-    if (_name) {
-        _name->setString(LocalHelper::getString(StringUtils::format("ui_cardAttr_%d", static_cast<int>(type))));
-    }
+    setName(name);
     
     if (_data) {
         string key("");
@@ -125,30 +125,72 @@ void CardAttributeNode::setAttribute(ObjectUtils::CardAttributeType type, float 
     }
 }
 
-string CardAttributeNode::getIconFile(ObjectUtils::CardAttributeType type) const
+void CardAttributeNode::setName(const string& name)
 {
-    switch (type) {
-        case ObjectUtils::CardAttributeType::HP:
-            return CocosUtils::getResourcePath("icon_hp.png");
-        case ObjectUtils::CardAttributeType::SPEED:
-            return CocosUtils::getResourcePath("icon_sudu.png");
-        case ObjectUtils::CardAttributeType::ARMOR:
-            return CocosUtils::getResourcePath("icon_hujiazhi.png");
-        case ObjectUtils::CardAttributeType::ARMOR_TYPE:
-            return CocosUtils::getResourcePath("icon_hujialeixing.png");
-        case ObjectUtils::CardAttributeType::GROUND_DAMAGE:
-            return CocosUtils::getResourcePath("icon_gongjili.png");
-        case ObjectUtils::CardAttributeType::ATTACK_TYPE:
-            return CocosUtils::getResourcePath("icon_gongjifanwei.png");
-        case ObjectUtils::CardAttributeType::HIT_SPEED:
-            return CocosUtils::getResourcePath("icon_gongjisudu.png");
-        case ObjectUtils::CardAttributeType::RANGE:
-            return CocosUtils::getResourcePath("icon_gongjifanwei.png");
-        case ObjectUtils::CardAttributeType::TARGET_TYPE:
-            return CocosUtils::getResourcePath("icon_gongjileixing.png");
-        case ObjectUtils::CardAttributeType::AIR_DAMAGE:
-            return CocosUtils::getResourcePath("icon_gongjili.png");
-        default:
-            return "";
+    if (_name) {
+        _name->setString(name);
     }
+}
+
+void CardAttributeNode::getInfo(ObjectUtils::CardAttributeType type, string& icon, string& name) const
+{
+    string iconFile;
+    string nameSuffix;
+    switch (type) {
+        case ObjectUtils::CardAttributeType::HP: {
+            iconFile = "icon_hp.png";
+            nameSuffix = "hp";
+        }
+            break;
+        case ObjectUtils::CardAttributeType::SPEED: {
+            iconFile = "icon_sudu.png";
+            nameSuffix = "speed";
+        }
+            break;
+        case ObjectUtils::CardAttributeType::ARMOR: {
+            iconFile = "icon_hujiazhi.png";
+            nameSuffix = "armor";
+        }
+            break;
+        case ObjectUtils::CardAttributeType::ARMOR_TYPE: {
+            iconFile = "icon_hujialeixing.png";
+            nameSuffix = "armorType";
+        }
+            break;
+        case ObjectUtils::CardAttributeType::GROUND_DAMAGE: {
+            iconFile = "icon_gongjili.png";
+            nameSuffix = "groundDamage";
+        }
+            break;
+        case ObjectUtils::CardAttributeType::ATTACK_TYPE: {
+            iconFile = "icon_gongjifanwei.png";
+            nameSuffix = "attackType";
+        }
+            break;
+        case ObjectUtils::CardAttributeType::HIT_SPEED: {
+            iconFile = "icon_gongjisudu.png";
+            nameSuffix = "hitSpeed";
+        }
+            break;
+        case ObjectUtils::CardAttributeType::RANGE: {
+            iconFile = "icon_gongjifanwei.png";
+            nameSuffix = "range";
+        }
+            break;
+        case ObjectUtils::CardAttributeType::TARGET_TYPE: {
+            iconFile = "icon_gongjileixing.png";
+            nameSuffix = "targetType";
+        }
+            break;
+        case ObjectUtils::CardAttributeType::AIR_DAMAGE: {
+            iconFile = "icon_gongjili.png";
+            nameSuffix = "airDamage";
+        }
+            break;
+        default:
+            break;
+    }
+    
+    icon.assign(iconFile.empty() ? "" : CocosUtils::getResourcePath(iconFile));
+    name.assign(nameSuffix.empty() ? "" : LocalHelper::getString("ui_cardAttr_" + nameSuffix));
 }

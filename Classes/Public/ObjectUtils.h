@@ -39,8 +39,6 @@ namespace ObjectUtils
         RANGE,
         TARGET_TYPE,
         AIR_DAMAGE,
-        
-        ATTRIBUTE_MAX,
     };
     
     enum class AttackType {
