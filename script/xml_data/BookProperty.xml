@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <root>
-	<item desc="book_desc_90001" id="90001.0" unlock="10.0"/>
-	<item desc="book_desc_91001" id="91001.0" unlock="12.0"/>
-	<item desc="book_desc_92001" id="92001.0" unlock="14.0"/>
+	<item desc="object_desc_90001" id="90001.0" unlock="10.0"/>
+	<item desc="object_desc_91001" id="91001.0" unlock="12.0"/>
+	<item desc="object_desc_92001" id="92001.0" unlock="14.0"/>
 </root>

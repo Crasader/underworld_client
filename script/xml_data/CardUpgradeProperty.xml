@@ -1,107 +1,107 @@
 <?xml version="1.0" ?>
 <root>
-	<item card="2.0" gold="200.0" id="23100.0" level="1.0" name="暴风雪lv1"/>
-	<item card="2.0" gold="200.0" id="23101.0" level="1.0" name="火球术lv1"/>
-	<item card="2.0" gold="200.0" id="23102.0" level="1.0" name="医疗术lv1"/>
-	<item card="2.0" gold="200.0" id="23103.0" level="1.0" name="沉默术lv1"/>
-	<item card="2.0" gold="200.0" id="23104.0" level="1.0" name="小型驱散术lv1"/>
-	<item card="2.0" gold="200.0" id="23105.0" level="1.0" name="大型驱散术lv1"/>
-	<item card="2.0" gold="200.0" id="23106.0" level="1.0" name="震晕法术lv1"/>
-	<item card="2.0" gold="200.0" id="23107.0" level="1.0" name="禁足术lv1"/>
-	<item card="2.0" gold="200.0" id="23108.0" level="1.0" name="酸雾术lv1"/>
-	<item card="2.0" gold="200.0" id="23109.0" level="1.0" name="狂暴术lv1"/>
-	<item card="2.0" gold="200.0" id="23110.0" level="1.0" name="缴械法术lv1"/>
-	<item card="2.0" gold="200.0" id="23111.0" level="1.0" name="恐惧法术lv1"/>
-	<item card="2.0" gold="200.0" id="23112.0" level="1.0" name="磁场法术lv1"/>
-	<item card="2.0" gold="200.0" id="23113.0" level="1.0" name="震荡法术lv1"/>
-	<item card="2.0" gold="200.0" id="23114.0" level="1.0" name="秒杀法术lv1"/>
-	<item card="2.0" gold="200.0" id="23115.0" level="1.0" name="无敌药水lv1"/>
-	<item card="3.0" gold="300.0" id="23100.0" level="2.0" name="暴风雪lv1"/>
-	<item card="3.0" gold="300.0" id="23101.0" level="2.0" name="火球术lv1"/>
-	<item card="3.0" gold="300.0" id="23102.0" level="2.0" name="医疗术lv1"/>
-	<item card="3.0" gold="300.0" id="23103.0" level="2.0" name="沉默术lv1"/>
-	<item card="3.0" gold="300.0" id="23104.0" level="2.0" name="小型驱散术lv1"/>
-	<item card="3.0" gold="300.0" id="23105.0" level="2.0" name="大型驱散术lv1"/>
-	<item card="3.0" gold="300.0" id="23106.0" level="2.0" name="震晕法术lv1"/>
-	<item card="3.0" gold="300.0" id="23107.0" level="2.0" name="禁足术lv1"/>
-	<item card="3.0" gold="300.0" id="23108.0" level="2.0" name="酸雾术lv1"/>
-	<item card="3.0" gold="300.0" id="23109.0" level="2.0" name="狂暴术lv1"/>
-	<item card="3.0" gold="300.0" id="23110.0" level="2.0" name="缴械法术lv1"/>
-	<item card="3.0" gold="300.0" id="23111.0" level="2.0" name="恐惧法术lv1"/>
-	<item card="3.0" gold="300.0" id="23112.0" level="2.0" name="磁场法术lv1"/>
-	<item card="3.0" gold="300.0" id="23113.0" level="2.0" name="震荡法术lv1"/>
-	<item card="3.0" gold="300.0" id="23114.0" level="2.0" name="秒杀法术lv1"/>
-	<item card="3.0" gold="300.0" id="23115.0" level="2.0" name="无敌药水lv1"/>
-	<item card="3.0" gold="150.0" id="22000.0" level="1.0" name="人族盾牌兵"/>
-	<item card="3.0" gold="150.0" id="22001.0" level="1.0" name="人族剑士"/>
-	<item card="3.0" gold="150.0" id="22002.0" level="1.0" name="人族弓手"/>
-	<item card="3.0" gold="150.0" id="22003.0" level="1.0" name="人族男巫"/>
-	<item card="3.0" gold="150.0" id="22004.0" level="1.0" name="人族女巫"/>
-	<item card="3.0" gold="150.0" id="22005.0" level="1.0" name="人族狮鹫"/>
-	<item card="3.0" gold="150.0" id="22006.0" level="1.0" name="骷髅盾牌兵"/>
-	<item card="3.0" gold="150.0" id="22007.0" level="1.0" name="食尸鬼"/>
-	<item card="3.0" gold="150.0" id="22008.0" level="1.0" name="骷髅弓箭手"/>
-	<item card="3.0" gold="150.0" id="22009.0" level="1.0" name="魔族传教士"/>
-	<item card="3.0" gold="150.0" id="22010.0" level="1.0" name="梦魇"/>
-	<item card="3.0" gold="150.0" id="22011.0" level="1.0" name="石像鬼"/>
-	<item card="3.0" gold="150.0" id="22012.0" level="1.0" name="中立兽族牛头人"/>
-	<item card="3.0" gold="150.0" id="22013.0" level="1.0" name="中立兽族巨魔巫医"/>
-	<item card="3.0" gold="150.0" id="22014.0" level="1.0" name="中立龙族黑龙"/>
-	<item card="3.0" gold="150.0" id="22015.0" level="1.0" name="中立矮人族火枪手"/>
-	<item card="3.0" gold="150.0" id="22016.0" level="1.0" name="中立精灵族弓箭手"/>
-	<item card="3.0" gold="150.0" id="22017.0" level="1.0" name="兽族攻城车"/>
-	<item card="3.0" gold="150.0" id="22018.0" level="1.0" name="月之骑士"/>
-	<item card="3.0" gold="150.0" id="22019.0" level="1.0" name="攻城单位"/>
-	<item card="3.0" gold="150.0" id="22023.0" level="1.0" name="火炮兵"/>
-	<item card="3.0" gold="150.0" id="22025.0" level="1.0" name="地雷工兵"/>
-	<item card="3.0" gold="150.0" id="22026.0" level="1.0" name="娜迦战士"/>
-	<item card="3.0" gold="150.0" id="22028.0" level="1.0" name="狼人刺客"/>
-	<item card="5.0" gold="250.0" id="22000.0" level="2.0" name="人族盾牌兵"/>
-	<item card="5.0" gold="250.0" id="22001.0" level="2.0" name="人族剑士"/>
-	<item card="5.0" gold="250.0" id="22002.0" level="2.0" name="人族弓手"/>
-	<item card="5.0" gold="250.0" id="22003.0" level="2.0" name="人族男巫"/>
-	<item card="5.0" gold="250.0" id="22004.0" level="2.0" name="人族女巫"/>
-	<item card="5.0" gold="250.0" id="22005.0" level="2.0" name="人族狮鹫"/>
-	<item card="5.0" gold="250.0" id="22006.0" level="2.0" name="骷髅盾牌兵"/>
-	<item card="5.0" gold="250.0" id="22007.0" level="2.0" name="食尸鬼"/>
-	<item card="5.0" gold="250.0" id="22008.0" level="2.0" name="骷髅弓箭手"/>
-	<item card="5.0" gold="250.0" id="22009.0" level="2.0" name="魔族传教士"/>
-	<item card="5.0" gold="250.0" id="22010.0" level="2.0" name="梦魇"/>
-	<item card="5.0" gold="250.0" id="22011.0" level="2.0" name="石像鬼"/>
-	<item card="5.0" gold="250.0" id="22012.0" level="2.0" name="中立兽族牛头人"/>
-	<item card="5.0" gold="250.0" id="22013.0" level="2.0" name="中立兽族巨魔巫医"/>
-	<item card="5.0" gold="250.0" id="22014.0" level="2.0" name="中立龙族黑龙"/>
-	<item card="5.0" gold="250.0" id="22015.0" level="2.0" name="中立矮人族火枪手"/>
-	<item card="5.0" gold="250.0" id="22016.0" level="2.0" name="中立精灵族弓箭手"/>
-	<item card="5.0" gold="250.0" id="22017.0" level="2.0" name="兽族攻城车"/>
-	<item card="5.0" gold="250.0" id="22018.0" level="2.0" name="月之骑士"/>
-	<item card="5.0" gold="250.0" id="22019.0" level="2.0" name="攻城单位"/>
-	<item card="5.0" gold="250.0" id="22023.0" level="2.0" name="火炮兵"/>
-	<item card="5.0" gold="250.0" id="22025.0" level="2.0" name="地雷工兵"/>
-	<item card="5.0" gold="250.0" id="22026.0" level="2.0" name="娜迦战士"/>
-	<item card="5.0" gold="250.0" id="22028.0" level="2.0" name="狼人刺客"/>
-	<item card="1.0" gold="350.0" id="21100.0" level="1.0" name="人族盾牌队长"/>
-	<item card="1.0" gold="350.0" id="21101.0" level="1.0" name="人族剑士队长"/>
-	<item card="1.0" gold="350.0" id="21102.0" level="1.0" name="人族弓箭队长"/>
-	<item card="1.0" gold="350.0" id="21103.0" level="1.0" name="人族大法师"/>
-	<item card="1.0" gold="350.0" id="21104.0" level="1.0" name="人族秘法大师"/>
-	<item card="1.0" gold="350.0" id="21105.0" level="1.0" name="魔族骷髅王子"/>
-	<item card="1.0" gold="350.0" id="21106.0" level="1.0" name="魔族食尸鬼王"/>
-	<item card="1.0" gold="350.0" id="21107.0" level="1.0" name="魔族地狱战舰"/>
-	<item card="1.0" gold="350.0" id="21108.0" level="1.0" name="魔族黑传教士"/>
-	<item card="1.0" gold="350.0" id="21109.0" level="1.0" name="魔族梦魇精华"/>
-	<item card="1.0" gold="350.0" id="21110.0" level="1.0" name="中立兽族斧王"/>
-	<item card="1.0" gold="350.0" id="21111.0" level="1.0" name="中立兽族食人鬼王"/>
-	<item card="2.0" gold="650.0" id="21100.0" level="2.0" name="人族盾牌队长"/>
-	<item card="2.0" gold="650.0" id="21101.0" level="2.0" name="人族剑士队长"/>
-	<item card="2.0" gold="650.0" id="21102.0" level="2.0" name="人族弓箭队长"/>
-	<item card="2.0" gold="650.0" id="21103.0" level="2.0" name="人族大法师"/>
-	<item card="2.0" gold="650.0" id="21104.0" level="2.0" name="人族秘法大师"/>
-	<item card="2.0" gold="650.0" id="21105.0" level="2.0" name="魔族骷髅王子"/>
-	<item card="2.0" gold="650.0" id="21106.0" level="2.0" name="魔族食尸鬼王"/>
-	<item card="2.0" gold="650.0" id="21107.0" level="2.0" name="魔族地狱战舰"/>
-	<item card="2.0" gold="650.0" id="21108.0" level="2.0" name="魔族黑传教士"/>
-	<item card="2.0" gold="650.0" id="21109.0" level="2.0" name="魔族梦魇精华"/>
-	<item card="2.0" gold="650.0" id="21110.0" level="2.0" name="中立兽族斧王"/>
-	<item card="2.0" gold="650.0" id="21111.0" level="2.0" name="中立兽族食人鬼王"/>
+	<item card="2.0" gold="200.0" hint="暴风雪lv1" id="23100.0" level="1.0" name="object_name_23100"/>
+	<item card="2.0" gold="200.0" hint="火球术lv1" id="23101.0" level="1.0" name="object_name_23101"/>
+	<item card="2.0" gold="200.0" hint="医疗术lv1" id="23102.0" level="1.0" name="object_name_23102"/>
+	<item card="2.0" gold="200.0" hint="沉默术lv1" id="23103.0" level="1.0" name="object_name_23103"/>
+	<item card="2.0" gold="200.0" hint="小型驱散术lv1" id="23104.0" level="1.0" name="object_name_23104"/>
+	<item card="2.0" gold="200.0" hint="大型驱散术lv1" id="23105.0" level="1.0" name="object_name_23105"/>
+	<item card="2.0" gold="200.0" hint="震晕法术lv1" id="23106.0" level="1.0" name="object_name_23106"/>
+	<item card="2.0" gold="200.0" hint="禁足术lv1" id="23107.0" level="1.0" name="object_name_23107"/>
+	<item card="2.0" gold="200.0" hint="酸雾术lv1" id="23108.0" level="1.0" name="object_name_23108"/>
+	<item card="2.0" gold="200.0" hint="狂暴术lv1" id="23109.0" level="1.0" name="object_name_23109"/>
+	<item card="2.0" gold="200.0" hint="缴械法术lv1" id="23110.0" level="1.0" name="object_name_23110"/>
+	<item card="2.0" gold="200.0" hint="恐惧法术lv1" id="23111.0" level="1.0" name="object_name_23111"/>
+	<item card="2.0" gold="200.0" hint="磁场法术lv1" id="23112.0" level="1.0" name="object_name_23112"/>
+	<item card="2.0" gold="200.0" hint="震荡法术lv1" id="23113.0" level="1.0" name="object_name_23113"/>
+	<item card="2.0" gold="200.0" hint="秒杀法术lv1" id="23114.0" level="1.0" name="object_name_23114"/>
+	<item card="2.0" gold="200.0" hint="无敌药水lv1" id="23115.0" level="1.0" name="object_name_23115"/>
+	<item card="3.0" gold="150.0" hint="人族盾牌兵" id="22000.0" level="1.0" name="object_name_22000"/>
+	<item card="3.0" gold="150.0" hint="人族剑士" id="22001.0" level="1.0" name="object_name_22001"/>
+	<item card="3.0" gold="150.0" hint="人族弓手" id="22002.0" level="1.0" name="object_name_22002"/>
+	<item card="3.0" gold="150.0" hint="人族男巫" id="22003.0" level="1.0" name="object_name_22003"/>
+	<item card="3.0" gold="150.0" hint="人族女巫" id="22004.0" level="1.0" name="object_name_22004"/>
+	<item card="3.0" gold="150.0" hint="人族狮鹫" id="22005.0" level="1.0" name="object_name_22005"/>
+	<item card="3.0" gold="150.0" hint="骷髅盾牌兵" id="22006.0" level="1.0" name="object_name_22006"/>
+	<item card="3.0" gold="150.0" hint="食尸鬼" id="22007.0" level="1.0" name="object_name_22007"/>
+	<item card="3.0" gold="150.0" hint="骷髅弓箭手" id="22008.0" level="1.0" name="object_name_22008"/>
+	<item card="3.0" gold="150.0" hint="魔族传教士" id="22009.0" level="1.0" name="object_name_22009"/>
+	<item card="3.0" gold="150.0" hint="梦魇" id="22010.0" level="1.0" name="object_name_22010"/>
+	<item card="3.0" gold="150.0" hint="石像鬼" id="22011.0" level="1.0" name="object_name_22011"/>
+	<item card="3.0" gold="150.0" hint="中立兽族牛头人" id="22012.0" level="1.0" name="object_name_22012"/>
+	<item card="3.0" gold="150.0" hint="中立兽族巨魔巫医" id="22013.0" level="1.0" name="object_name_22013"/>
+	<item card="3.0" gold="150.0" hint="中立龙族黑龙" id="22014.0" level="1.0" name="object_name_22014"/>
+	<item card="3.0" gold="150.0" hint="中立矮人族火枪手" id="22015.0" level="1.0" name="object_name_22015"/>
+	<item card="3.0" gold="150.0" hint="中立精灵族弓箭手" id="22016.0" level="1.0" name="object_name_22016"/>
+	<item card="3.0" gold="150.0" hint="兽族攻城车" id="22017.0" level="1.0" name="object_name_22017"/>
+	<item card="3.0" gold="150.0" hint="月之骑士" id="22018.0" level="1.0" name="object_name_22018"/>
+	<item card="3.0" gold="150.0" hint="攻城单位" id="22019.0" level="1.0" name="object_name_22019"/>
+	<item card="3.0" gold="150.0" hint="火炮兵" id="22023.0" level="1.0" name="object_name_22023"/>
+	<item card="3.0" gold="150.0" hint="地雷工兵" id="22025.0" level="1.0" name="object_name_22025"/>
+	<item card="3.0" gold="150.0" hint="娜迦战士" id="22026.0" level="1.0" name="object_name_22026"/>
+	<item card="3.0" gold="150.0" hint="狼人刺客" id="22028.0" level="1.0" name="object_name_22028"/>
+	<item card="1.0" gold="350.0" hint="人族盾牌队长" id="21100.0" level="1.0" name="object_name_21100"/>
+	<item card="1.0" gold="350.0" hint="人族剑士队长" id="21101.0" level="1.0" name="object_name_21101"/>
+	<item card="1.0" gold="350.0" hint="人族弓箭队长" id="21102.0" level="1.0" name="object_name_21102"/>
+	<item card="1.0" gold="350.0" hint="人族大法师" id="21103.0" level="1.0" name="object_name_21103"/>
+	<item card="1.0" gold="350.0" hint="人族秘法大师" id="21104.0" level="1.0" name="object_name_21104"/>
+	<item card="1.0" gold="350.0" hint="魔族骷髅王子" id="21105.0" level="1.0" name="object_name_21105"/>
+	<item card="1.0" gold="350.0" hint="魔族食尸鬼王" id="21106.0" level="1.0" name="object_name_21106"/>
+	<item card="1.0" gold="350.0" hint="魔族地狱战舰" id="21107.0" level="1.0" name="object_name_21107"/>
+	<item card="1.0" gold="350.0" hint="魔族黑传教士" id="21108.0" level="1.0" name="object_name_21108"/>
+	<item card="1.0" gold="350.0" hint="魔族梦魇精华" id="21109.0" level="1.0" name="object_name_21109"/>
+	<item card="1.0" gold="350.0" hint="中立兽族斧王" id="21110.0" level="1.0" name="object_name_21110"/>
+	<item card="1.0" gold="350.0" hint="中立兽族食人鬼王" id="21111.0" level="1.0" name="object_name_21111"/>
+	<item card="3.0" gold="300.0" hint="暴风雪lv1" id="23100.0" level="2.0" name="object_name_23100"/>
+	<item card="3.0" gold="300.0" hint="火球术lv1" id="23101.0" level="2.0" name="object_name_23101"/>
+	<item card="3.0" gold="300.0" hint="医疗术lv1" id="23102.0" level="2.0" name="object_name_23102"/>
+	<item card="3.0" gold="300.0" hint="沉默术lv1" id="23103.0" level="2.0" name="object_name_23103"/>
+	<item card="3.0" gold="300.0" hint="小型驱散术lv1" id="23104.0" level="2.0" name="object_name_23104"/>
+	<item card="3.0" gold="300.0" hint="大型驱散术lv1" id="23105.0" level="2.0" name="object_name_23105"/>
+	<item card="3.0" gold="300.0" hint="震晕法术lv1" id="23106.0" level="2.0" name="object_name_23106"/>
+	<item card="3.0" gold="300.0" hint="禁足术lv1" id="23107.0" level="2.0" name="object_name_23107"/>
+	<item card="3.0" gold="300.0" hint="酸雾术lv1" id="23108.0" level="2.0" name="object_name_23108"/>
+	<item card="3.0" gold="300.0" hint="狂暴术lv1" id="23109.0" level="2.0" name="object_name_23109"/>
+	<item card="3.0" gold="300.0" hint="缴械法术lv1" id="23110.0" level="2.0" name="object_name_23110"/>
+	<item card="3.0" gold="300.0" hint="恐惧法术lv1" id="23111.0" level="2.0" name="object_name_23111"/>
+	<item card="3.0" gold="300.0" hint="磁场法术lv1" id="23112.0" level="2.0" name="object_name_23112"/>
+	<item card="3.0" gold="300.0" hint="震荡法术lv1" id="23113.0" level="2.0" name="object_name_23113"/>
+	<item card="3.0" gold="300.0" hint="秒杀法术lv1" id="23114.0" level="2.0" name="object_name_23114"/>
+	<item card="3.0" gold="300.0" hint="无敌药水lv1" id="23115.0" level="2.0" name="object_name_23115"/>
+	<item card="5.0" gold="250.0" hint="人族盾牌兵" id="22000.0" level="2.0" name="object_name_22000"/>
+	<item card="5.0" gold="250.0" hint="人族剑士" id="22001.0" level="2.0" name="object_name_22001"/>
+	<item card="5.0" gold="250.0" hint="人族弓手" id="22002.0" level="2.0" name="object_name_22002"/>
+	<item card="5.0" gold="250.0" hint="人族男巫" id="22003.0" level="2.0" name="object_name_22003"/>
+	<item card="5.0" gold="250.0" hint="人族女巫" id="22004.0" level="2.0" name="object_name_22004"/>
+	<item card="5.0" gold="250.0" hint="人族狮鹫" id="22005.0" level="2.0" name="object_name_22005"/>
+	<item card="5.0" gold="250.0" hint="骷髅盾牌兵" id="22006.0" level="2.0" name="object_name_22006"/>
+	<item card="5.0" gold="250.0" hint="食尸鬼" id="22007.0" level="2.0" name="object_name_22007"/>
+	<item card="5.0" gold="250.0" hint="骷髅弓箭手" id="22008.0" level="2.0" name="object_name_22008"/>
+	<item card="5.0" gold="250.0" hint="魔族传教士" id="22009.0" level="2.0" name="object_name_22009"/>
+	<item card="5.0" gold="250.0" hint="梦魇" id="22010.0" level="2.0" name="object_name_22010"/>
+	<item card="5.0" gold="250.0" hint="石像鬼" id="22011.0" level="2.0" name="object_name_22011"/>
+	<item card="5.0" gold="250.0" hint="中立兽族牛头人" id="22012.0" level="2.0" name="object_name_22012"/>
+	<item card="5.0" gold="250.0" hint="中立兽族巨魔巫医" id="22013.0" level="2.0" name="object_name_22013"/>
+	<item card="5.0" gold="250.0" hint="中立龙族黑龙" id="22014.0" level="2.0" name="object_name_22014"/>
+	<item card="5.0" gold="250.0" hint="中立矮人族火枪手" id="22015.0" level="2.0" name="object_name_22015"/>
+	<item card="5.0" gold="250.0" hint="中立精灵族弓箭手" id="22016.0" level="2.0" name="object_name_22016"/>
+	<item card="5.0" gold="250.0" hint="兽族攻城车" id="22017.0" level="2.0" name="object_name_22017"/>
+	<item card="5.0" gold="250.0" hint="月之骑士" id="22018.0" level="2.0" name="object_name_22018"/>
+	<item card="5.0" gold="250.0" hint="攻城单位" id="22019.0" level="2.0" name="object_name_22019"/>
+	<item card="5.0" gold="250.0" hint="火炮兵" id="22023.0" level="2.0" name="object_name_22023"/>
+	<item card="5.0" gold="250.0" hint="地雷工兵" id="22025.0" level="2.0" name="object_name_22025"/>
+	<item card="5.0" gold="250.0" hint="娜迦战士" id="22026.0" level="2.0" name="object_name_22026"/>
+	<item card="5.0" gold="250.0" hint="狼人刺客" id="22028.0" level="2.0" name="object_name_22028"/>
+	<item card="2.0" gold="650.0" hint="人族盾牌队长" id="21100.0" level="2.0" name="object_name_21100"/>
+	<item card="2.0" gold="650.0" hint="人族剑士队长" id="21101.0" level="2.0" name="object_name_21101"/>
+	<item card="2.0" gold="650.0" hint="人族弓箭队长" id="21102.0" level="2.0" name="object_name_21102"/>
+	<item card="2.0" gold="650.0" hint="人族大法师" id="21103.0" level="2.0" name="object_name_21103"/>
+	<item card="2.0" gold="650.0" hint="人族秘法大师" id="21104.0" level="2.0" name="object_name_21104"/>
+	<item card="2.0" gold="650.0" hint="魔族骷髅王子" id="21105.0" level="2.0" name="object_name_21105"/>
+	<item card="2.0" gold="650.0" hint="魔族食尸鬼王" id="21106.0" level="2.0" name="object_name_21106"/>
+	<item card="2.0" gold="650.0" hint="魔族地狱战舰" id="21107.0" level="2.0" name="object_name_21107"/>
+	<item card="2.0" gold="650.0" hint="魔族黑传教士" id="21108.0" level="2.0" name="object_name_21108"/>
+	<item card="2.0" gold="650.0" hint="魔族梦魇精华" id="21109.0" level="2.0" name="object_name_21109"/>
+	<item card="2.0" gold="650.0" hint="中立兽族斧王" id="21110.0" level="2.0" name="object_name_21110"/>
+	<item card="2.0" gold="650.0" hint="中立兽族食人鬼王" id="21111.0" level="2.0" name="object_name_21111"/>
 </root>
