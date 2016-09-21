@@ -200,30 +200,67 @@
 	<Sheet1 key="object_desc_23113" value="移除范围内敌人一定生命，并在短时间内大幅度降低攻击和移动速度。"/>
 	<Sheet1 key="object_desc_23114" value="放置一个死亡守卫，守卫每隔一段时间会秒杀一个敌方单位，不会对英雄或高级单位生效。"/>
 	<Sheet1 key="object_desc_23115" value="使范围内我方英雄短暂无敌持续5秒。"/>
-	<Sheet1 key="object_desc_22000" value="人族的盾牌兵，拥有较强的防御力并能反弹受到的伤害。"/>
-	<Sheet1 key="object_desc_22001" value="人族剑士，每隔一段时间就可以对敌人做出致命打击。"/>
-	<Sheet1 key="object_desc_22002" value="人族射手，能一次射出多支箭矢伤害敌人。"/>
-	<Sheet1 key="object_desc_22003" value="一开始就拥有强大的医疗能力，随后还能学习到驱逐魔法这项技能。"/>
-	<Sheet1 key="object_desc_22004" value="能施放减慢敌人移动和进攻速度的减速魔法。"/>
-	<Sheet1 key="object_desc_22005" value="威力巨大的飞行单位，狮鹫上面骑乘着一个矮人族的锤手。能学到风暴战锤技能。"/>
-	<Sheet1 key="object_desc_22006" value="重型的近战单位。能学习到疾病云雾技能。"/>
-	<Sheet1 key="object_desc_22007" value="基本的地面单位，能学习到食尸鬼狂热技能。"/>
-	<Sheet1 key="object_desc_22008" value="远程攻击单位。能学习到骷髅射手狂热技能。"/>
-	<Sheet1 key="object_desc_22009" value="一种魔法单位。能施放复活死尸技能。"/>
-	<Sheet1 key="object_desc_22010" value="一种神秘的法师，能学习到霜冻新星，和霜冻攻击。"/>
-	<Sheet1 key="object_desc_22011" value="飞行单位。能学习到石像形态技能。"/>
-	<Sheet1 key="object_desc_22012" value="大型的单位，能学习到粉碎技能。"/>
-	<Sheet1 key="object_desc_22013" value="随后这种单位还能学习到静止陷阱和治疗守卫。"/>
-	<Sheet1 key="object_desc_22014" value="重型的远程攻击飞行单位，能吞噬对手并对魔法免疫。"/>
-	<Sheet1 key="object_desc_22015" value="非常适合于对付敌人的空中单位，还能获得长管火枪的升级。"/>
-	<Sheet1 key="object_desc_22016" value="基本的远程攻击单位。拥有艾鲁尼之优雅技能。能学习到射击术，硬弓和驯服角鹰兽这三项技能。"/>
+	<Sheet1 key="object_desc_22000" value="“我们的血肉就是暴风城的城墙。凡是威胁到暴风城存在的生物和非生物——都将被毁灭！”
+
+特点：廉价肉盾 荆棘伤害"/>
+	<Sheet1 key="object_desc_22001" value="“挥出一万剑是成为剑士的第一步。”
+
+特点：近战 平衡 暴击"/>
+	<Sheet1 key="object_desc_22002" value="“弓箭手是贫民窟中孩子最为向往的职业，当然也是我的。肉薄血脆的敌人啊，数量再多也是渣滓而已。”
+
+特点：远程 AOE "/>
+	<Sheet1 key="object_desc_22003" value="“圣光与你同在。”
+
+特点：单体治疗 单体驱散"/>
+	<Sheet1 key="object_desc_22004" value="“法师的血管里流淌着暴风雪，恩，在遇到巫妖的时候，也流淌着冰坨。”
+
+特点：远程 控制"/>
+	<Sheet1 key="object_desc_22005" value="“狮鹫是雷神的宠儿，也是暴风城的最忠实的伙伴。”
+
+特点：空中半远程 控制 弹射
+克制：近战肉盾"/>
+	<Sheet1 key="object_desc_22006" value="“我终将被遗忘，你也……会一样。”
+
+特点：肉盾 AOE 瘟疫 "/>
+	<Sheet1 key="object_desc_22007" value="“不要惹我啊，我疯起来自己都怕。”
+
+特点：近战 攻速叠加 高输出"/>
+	<Sheet1 key="object_desc_22008" value="“骷髅弓手最帅的拉弓搭箭永远是下一次……如果还有下一次的话”
+
+特点：远程 攻击力叠加 高输出"/>
+	<Sheet1 key="object_desc_22009" value="“呵呵~~姐妹们，我们上！”
+
+特点：远程 召唤 "/>
+	<Sheet1 key="object_desc_22010" value="“听，雪化的声音……还有……灵魂冰冻的声音……真美啊，对么？”
+
+特点：远程 控制"/>
+	<Sheet1 key="object_desc_22011" value="“防御已经被打破，你还剩下什么？”
+
+特点：制空单位 破甲"/>
+	<Sheet1 key="object_desc_22012" value="“战锤指引你的方向——就是没有方向。”
+
+特点：近战  AOE 控制 "/>
+	<Sheet1 key="object_desc_22013" value="“愚蠢、谬误、罪恶、贪婪，占据我们的灵魂，折磨我们的肉体，我们哺育我们那令人愉快的悔恨，犹如乞丐养活他们的虱子——绽放吧，罪恶之花。”
+
+特点：远程、群体恢复、破甲"/>
+	<Sheet1 key="object_desc_22014" value="“我嗓子有点儿痒~~咳咳~~哎哎？你怎么烧着了？”
+
+特点：空中单位 AOE 持续伤害"/>
+	<Sheet1 key="object_desc_22015" value="“就是你——啊哈，我就爱血最少的。”
+
+特点：超远程 狙击手"/>
+	<Sheet1 key="object_desc_22016" value="“所有法师都该死——直面命运的审判吧！”
+
+特点：远程 法师杀手"/>
 	<Sheet1 key="object_desc_22017" value="远程攻城武器。对建筑很有效，但缓慢而昂贵。可以学会燃烧之油技能。"/>
 	<Sheet1 key="object_desc_22018" value="灵活的远程攻击单位，能学习到哨兵和月刃技能。"/>
 	<Sheet1 key="object_desc_22019" value="远程攻城武器。对建筑很有效，但缓慢而昂贵。可以学会燃烧之油技能。"/>
 	<Sheet1 key="object_desc_22020" value="待定"/>
 	<Sheet1 key="object_desc_22021" value="待定"/>
 	<Sheet1 key="object_desc_22022" value="待定"/>
-	<Sheet1 key="object_desc_22023" value="远程攻城武器。对建筑很有效，但缓慢而昂贵。可以学会燃烧之油技能。"/>
+	<Sheet1 key="object_desc_22023" value="“我以前也和你一样不戴眼罩的，直到城墙的碎片伤了眼。”
+
+特点：攻城单位"/>
 	<Sheet1 key="object_desc_22024" value="待定"/>
 	<Sheet1 key="object_desc_22025" value="它们特别擅长于对付敌人的建筑物。"/>
 	<Sheet1 key="object_desc_22026" value="极其强大的近战单位，拥有潜水技能，允许该单位藏在水中。"/>
@@ -248,66 +285,66 @@
 	<Sheet1 key="object_desc_91001" value="卷2"/>
 	<Sheet1 key="object_desc_92001" value="卷3"/>
 	<Sheet1 key="object_desc_70000" value="被动：持有尖刺盾牌，可以反弹一定物理伤害，敌人攻击越高，反弹越高。
-伤害反弹量：d%"/>
+伤害反弹量：{1}"/>
 	<Sheet1 key="object_desc_71000" value="人族盾牌兵技能2"/>
 	<Sheet1 key="object_desc_70001" value="主动：人族剑士每隔一段时间就可以打出致命的伤害。
-伤害比率：d%
-冷却时间：d%"/>
+伤害比率：{1}
+冷却时间：{2}"/>
 	<Sheet1 key="object_desc_71001" value="人族剑士技能2"/>
 	<Sheet1 key="object_desc_70002" value="被动：人族弓手每次攻击搭载多支箭矢，对多个敌人造成伤害。
-伤害比率：d%     额外目标数：d%"/>
+伤害比率：{1}     额外目标数：{2}"/>
 	<Sheet1 key="object_desc_71002" value="人族弓手2"/>
 	<Sheet1 key="object_desc_70003" value="主动：牧师为血量较少的友军恢复生命。
-生命恢复：d%
-冷却时间：d%"/>
+生命恢复：{1}
+冷却时间：{2}"/>
 	<Sheet1 key="object_desc_71003" value="主动：移除友军目标负面状态或者敌军目标增益状态。
-冷却时间：d%"/>
+冷却时间：{1}"/>
 	<Sheet1 key="object_desc_70004" value="主动：降低目标敌人的移动速度和攻击速度。持续10秒。
-攻速降低：d%    移动降低：d%
-冷却时间：d%"/>
+攻速降低：{1}    移动降低：{2}
+冷却时间：{3}"/>
 	<Sheet1 key="object_desc_71004" value="人族女巫2"/>
 	<Sheet1 key="object_desc_70005" value="主动：一道天雷，短暂击晕目标敌人并造成魔法伤害。
-施加伤害：d%
-冷却时间：d%"/>
+施加伤害：{1}
+冷却时间：{2}"/>
 	<Sheet1 key="object_desc_71005" value="被动：每次攻击有几率弹射一次。
-触发几率：d%       伤害比率：d%"/>
+触发几率：{1}       伤害比率：{1}"/>
 	<Sheet1 key="object_desc_70006" value="被动：使周围单位感染瘟疫，每秒受到一定魔法伤害。即使瘟疫兵被击杀，这种瘟疫也会短暂持续。
-施加伤害：d%    死亡后持续时间：d%"/>
+施加伤害：{1}    死亡后持续时间：{1}"/>
 	<Sheet1 key="object_desc_71006" value="骷髅盾牌兵2"/>
 	<Sheet1 key="object_desc_70007" value="被动：食尸鬼每次攻击都会更加狂热，增加攻击速度。
-每层增加速度：d%      最大叠加层数：d%"/>
+每层增加速度：{1}      最大叠加层数：{1}"/>
 	<Sheet1 key="object_desc_71007" value="食尸鬼2"/>
 	<Sheet1 key="object_desc_70008" value="被动：骷髅弓箭手每次攻击都会更加致命，增加攻击力。
-每层增加攻击：d%      最大叠加层数：d%"/>
+每层增加攻击：{1}      最大叠加层数：{1}"/>
 	<Sheet1 key="object_desc_71008" value="骷髅弓箭手2"/>
 	<Sheet1 key="object_desc_70009" value="主动：传教士可以召唤数个随从参与战斗。
-召唤单位数量：d%     单位攻击力：d%     单位最大生命：d%
-持续时间：d%       冷却时间：d%"/>
+召唤单位数量：{1}     单位攻击力：{1}     单位最大生命：{1}
+持续时间：{1}       冷却时间：{1}"/>
 	<Sheet1 key="object_desc_71009" value="魔族传教士2"/>
 	<Sheet1 key="object_desc_70010" value="主动：释放霜冻新星对目标及附近敌人造成魔法伤害，并短暂减速。
-主目标伤害：d%     副目标伤害：d%
-移速降低：d%     攻速降低：d%
-持续时间：d%     冷却时间：d%"/>
+主目标伤害：{1}     副目标伤害：{1}
+移速降低：{1}     攻速降低：{1}
+持续时间：{1}     冷却时间：{1}"/>
 	<Sheet1 key="object_desc_71010" value="被动：梦魇普通攻击会冰冻处于减速状态的敌人。
-持续时间：d%"/>
+持续时间：{1}"/>
 	<Sheet1 key="object_desc_70011" value="被动：石像鬼的攻击会降低目标单位的护甲。
-护甲降低比例：d%      持续时间：d%"/>
+护甲降低比例：{1}      持续时间：{1}"/>
 	<Sheet1 key="object_desc_71011" value="石像鬼2"/>
-	<Sheet1 key="object_desc_70012" value="主动：震晕周围的敌人，并造成与攻击力相关的伤害。
-攻击力比例：d%      持续时间：d%
-冷却时间：d%"/>
+	<Sheet1 key="object_desc_70012" value="主动：震晕周围的敌人，并造成与攻击力相关的物理伤害。
+攻击力比例：{1}      持续时间：{1}
+冷却时间：{1}"/>
 	<Sheet1 key="object_desc_71012" value="中立兽族牛头人2"/>
 	<Sheet1 key="object_desc_70013" value="主动：放置一个治疗守卫，提高周围单位的生命恢复。
-每秒恢复生命：d%       持续时间：d%
-冷却时间：d%"/>
+每秒恢复生命：{1}       持续时间：{1}
+冷却时间：{1}"/>
 	<Sheet1 key="object_desc_71013" value="主动：诅咒一个敌方单位，降低其护甲持续一段时间。
-护甲降低值：d%       持续时间：d%
-冷却时间：d%"/>
+护甲降低值：{1}       持续时间：{1}
+冷却时间：{1}"/>
 	<Sheet1 key="object_desc_70014" value="被动：黑龙每次攻击有几率吐出火球，对进入区域的敌人造成持续魔法伤害。
-触发几率：d%     火球范围：d%      施加伤害：d%
-持续时间：d%"/>
+触发几率：{1}     火球范围：{1}      施加伤害：{1}
+持续时间：{1}"/>
 	<Sheet1 key="object_desc_71014" value="被动：黑龙击杀敌人后，会恢复一定生命。
-生命恢复量：d%"/>
+生命恢复量：{1}"/>
 	<Sheet1 key="object_desc_70015" value="被动：火枪手会尽可能寻找视野内生命值较低的单位进行攻击。"/>
 	<Sheet1 key="object_desc_71015" value="中立矮人族火枪手2"/>
 	<Sheet1 key="object_desc_70016" value="被动：精灵弓箭手会尽可能寻找视野内的法师进行攻击。"/>
@@ -331,49 +368,82 @@
 	<Sheet1 key="object_desc_70025" value="地雷工兵1"/>
 	<Sheet1 key="object_desc_71025" value="地雷工兵2"/>
 	<Sheet1 key="object_desc_70026" value="被动：娜迦战士每次攻击都会波及到目标附近的敌人。
-伤害比率：d%    分裂范围：d%"/>
+伤害比率：{1}    分裂范围：{1}"/>
 	<Sheet1 key="object_desc_71026" value="娜迦战士2"/>
 	<Sheet1 key="object_desc_70027" value="待定1"/>
 	<Sheet1 key="object_desc_71027" value="待定2"/>
 	<Sheet1 key="object_desc_70028" value="主动：狼人刺客闪烁到一个法师身边对其进行攻击，并短时间提高自己攻击力。
-释放距离：d%    攻击力提升：d%      持续时间：d%
-冷却时间：d%"/>
+释放距离：{1}    攻击力提升：{1}      持续时间：{1}
+冷却时间：{1}"/>
 	<Sheet1 key="object_desc_71028" value="狼人刺客2"/>
-	<Sheet1 key="object_desc_70100" value="人族盾牌队长1"/>
-	<Sheet1 key="object_desc_71100" value="人族盾牌队长2"/>
+	<Sheet1 key="object_desc_70100" value="主动：使用后大幅度增加我方单位物理防御，持续一段时间。
+作用范围：{1}    护甲提升：{1}    持续时间：{1}
+冷却时间："/>
+	<Sheet1 key="object_desc_71100" value="被动：防御光环降低附近友军受到的伤害。
+作用范围：       伤害降低率："/>
 	<Sheet1 key="object_desc_72100" value="人族盾牌队长3"/>
-	<Sheet1 key="object_desc_70101" value="人族剑士队长1"/>
-	<Sheet1 key="object_desc_71101" value="人族剑士队长2"/>
-	<Sheet1 key="object_desc_72101" value="人族剑士队长3"/>
-	<Sheet1 key="object_desc_70102" value="人族弓箭队长1"/>
-	<Sheet1 key="object_desc_71102" value="人族弓箭队长2"/>
+	<Sheet1 key="object_desc_70101" value="主动：蓄力后对目标造成数倍攻击力的物理伤害。
+伤害倍率：
+冷却时间："/>
+	<Sheet1 key="object_desc_71101" value="被动：剑士队长击杀单位后会产生一些变化。"/>
+	<Sheet1 key="object_desc_72101" value="主动：开启无双状态，大幅度提升自身攻击力和吸血。
+攻击增加率：        吸血增加率："/>
+	<Sheet1 key="object_desc_70102" value="主动：射出多支箭矢穿透，每支箭矢可以对直线上敌人造成伤害。
+箭矢数量：       最大距离：
+冷却时间："/>
+	<Sheet1 key="object_desc_71102" value="被动：提升我方远程单位的攻击力。
+作用范围：       攻击力提升：  "/>
 	<Sheet1 key="object_desc_72102" value="人族弓箭队长3"/>
-	<Sheet1 key="object_desc_70103" value="人族大法师1"/>
-	<Sheet1 key="object_desc_71103" value="人族大法师2"/>
+	<Sheet1 key="object_desc_70103" value="主动：召唤一个强大的狂怒元素参与战斗。
+单位攻击力：{1}     单位最大生命：{1}
+持续时间：{1}       冷却时间：{1}"/>
+	<Sheet1 key="object_desc_71103" value="被动：降低友方法师单位主动技能的冷却。
+作用范围：       冷却速率提升："/>
 	<Sheet1 key="object_desc_72103" value="人族大法师3"/>
-	<Sheet1 key="object_desc_70104" value="人族秘法大师1"/>
-	<Sheet1 key="object_desc_71104" value="人族秘法大师2"/>
+	<Sheet1 key="object_desc_70104" value="主动：召唤三个熔岩元素参与战斗。
+单位攻击力：{1}     单位最大生命：{1}
+持续时间：{1}       冷却时间：{1}"/>
+	<Sheet1 key="object_desc_71104" value="被动：提升友方法师召唤类单位的生命上限。
+作用范围：       生命上限提升："/>
 	<Sheet1 key="object_desc_72104" value="人族秘法大师3"/>
-	<Sheet1 key="object_desc_70105" value="魔族骷髅王子1"/>
-	<Sheet1 key="object_desc_71105" value="魔族骷髅王子2"/>
+	<Sheet1 key="object_desc_70105" value="主动：以损失附近友军生命为代价，大幅度提升他们的攻击速度。
+生命损失比率：    攻击速度提升："/>
+	<Sheet1 key="object_desc_71105" value="被动：友方单位普通攻击时，能将一定伤害转化为生命。
+作用范围：      生命转化比率："/>
 	<Sheet1 key="object_desc_72105" value="魔族骷髅王子3"/>
-	<Sheet1 key="object_desc_70106" value="魔族食尸鬼王1"/>
-	<Sheet1 key="object_desc_71106" value="魔族食尸鬼王2"/>
+	<Sheet1 key="object_desc_70106" value="主动：投出数个火球击晕附近的敌人，并造成一定魔法伤害。
+最大敌人数：       施加伤害："/>
+	<Sheet1 key="object_desc_71106" value="被动：友方单位被攻击时，有几率使攻击者晕眩。
+作用范围：      晕眩几率：     晕眩时间："/>
 	<Sheet1 key="object_desc_72106" value="魔族食尸鬼王3"/>
 	<Sheet1 key="object_desc_70107" value="魔族地狱战舰1"/>
 	<Sheet1 key="object_desc_71107" value="魔族地狱战舰2"/>
 	<Sheet1 key="object_desc_72107" value="魔族地狱战舰3"/>
-	<Sheet1 key="object_desc_70108" value="魔族黑传教士1"/>
-	<Sheet1 key="object_desc_71108" value="魔族黑传教士2"/>
+	<Sheet1 key="object_desc_70108" value="被动：攻击时对目标造成持续魔法伤害。
+最大层数：   每层伤害："/>
+	<Sheet1 key="object_desc_71108" value="被动：降低附近敌方单位的魔法抗性。
+作用范围：    魔法抗性降低："/>
 	<Sheet1 key="object_desc_72108" value="魔族黑传教士3"/>
-	<Sheet1 key="object_desc_70109" value="魔族梦魇精华1"/>
-	<Sheet1 key="object_desc_71109" value="魔族梦魇精华2"/>
-	<Sheet1 key="object_desc_72109" value="魔族梦魇精华3"/>
-	<Sheet1 key="object_desc_70110" value="中立兽族斧王1"/>
-	<Sheet1 key="object_desc_71110" value="中立兽族斧王2"/>
+	<Sheet1 key="object_desc_70109" value="主动：降低范围内敌人的攻击速度。
+作用范围：      攻击速度降低：  
+持续时间：      冷却时间："/>
+	<Sheet1 key="object_desc_71109" value="主动：杀死一个不死族单位，大幅度提升附近友军的攻击速度。
+作用范围：     攻击速度提升：
+持续时间：     冷却时间："/>
+	<Sheet1 key="object_desc_72109" value="主动：召唤数个强化食尸鬼参与战斗。
+召唤单位数量：{1}     单位攻击力：{1}     单位最大生命：{1}
+持续时间：{1}       冷却时间：{1}"/>
+	<Sheet1 key="object_desc_70110" value="主动：对周围的敌人造成与攻击力相关的物理伤害。
+攻击力比例：{1}    冷却时间：{1}"/>
+	<Sheet1 key="object_desc_71110" value="主动：恐怖嚎叫降低周围敌人的护甲。
+作用范围：     护甲降低：
+持续时间：     冷却时间："/>
 	<Sheet1 key="object_desc_72110" value="中立兽族斧王3"/>
-	<Sheet1 key="object_desc_70111" value="中立兽族食人鬼王1"/>
-	<Sheet1 key="object_desc_71111" value="中立兽族食人鬼王2"/>
+	<Sheet1 key="object_desc_70111" value="被动：击杀单位后提升自身护甲。
+每层提供护甲：    叠加层数：
+持续时间："/>
+	<Sheet1 key="object_desc_71111" value="被动：灼烧周围敌人，造成持续魔法伤害。
+作用范围：    施加伤害："/>
 	<Sheet1 key="object_desc_72111" value="中立兽族食人鬼王3"/>
 	<Sheet1 key="object_name_23100" value="暴风雪lv1"/>
 	<Sheet1 key="object_name_23101" value="火球术lv1"/>
@@ -496,40 +566,40 @@
 	<Sheet1 key="object_name_71027" value="待定2"/>
 	<Sheet1 key="object_name_70028" value="闪烁攻击"/>
 	<Sheet1 key="object_name_71028" value="狼人刺客2"/>
-	<Sheet1 key="object_name_70100" value="人族盾牌队长1"/>
-	<Sheet1 key="object_name_71100" value="人族盾牌队长2"/>
+	<Sheet1 key="object_name_70100" value="坚守状态"/>
+	<Sheet1 key="object_name_71100" value="防御阵型"/>
 	<Sheet1 key="object_name_72100" value="人族盾牌队长3"/>
-	<Sheet1 key="object_name_70101" value="人族剑士队长1"/>
-	<Sheet1 key="object_name_71101" value="人族剑士队长2"/>
-	<Sheet1 key="object_name_72101" value="人族剑士队长3"/>
-	<Sheet1 key="object_name_70102" value="人族弓箭队长1"/>
-	<Sheet1 key="object_name_71102" value="人族弓箭队长2"/>
+	<Sheet1 key="object_name_70101" value="致命打击"/>
+	<Sheet1 key="object_name_71101" value="嗜血杀戮"/>
+	<Sheet1 key="object_name_72101" value="无双"/>
+	<Sheet1 key="object_name_70102" value="多重穿云箭"/>
+	<Sheet1 key="object_name_71102" value="强击光环"/>
 	<Sheet1 key="object_name_72102" value="人族弓箭队长3"/>
-	<Sheet1 key="object_name_70103" value="人族大法师1"/>
-	<Sheet1 key="object_name_71103" value="人族大法师2"/>
+	<Sheet1 key="object_name_70103" value="狂怒元素"/>
+	<Sheet1 key="object_name_71103" value="辉煌光环"/>
 	<Sheet1 key="object_name_72103" value="人族大法师3"/>
-	<Sheet1 key="object_name_70104" value="人族秘法大师1"/>
-	<Sheet1 key="object_name_71104" value="人族秘法大师2"/>
+	<Sheet1 key="object_name_70104" value="熔岩元素"/>
+	<Sheet1 key="object_name_71104" value="偃月阵法"/>
 	<Sheet1 key="object_name_72104" value="人族秘法大师3"/>
-	<Sheet1 key="object_name_70105" value="魔族骷髅王子1"/>
-	<Sheet1 key="object_name_71105" value="魔族骷髅王子2"/>
+	<Sheet1 key="object_name_70105" value="战斗仪式"/>
+	<Sheet1 key="object_name_71105" value="吸血光环"/>
 	<Sheet1 key="object_name_72105" value="魔族骷髅王子3"/>
-	<Sheet1 key="object_name_70106" value="魔族食尸鬼王1"/>
-	<Sheet1 key="object_name_71106" value="魔族食尸鬼王2"/>
+	<Sheet1 key="object_name_70106" value="冥火连击"/>
+	<Sheet1 key="object_name_71106" value="崎岖阵法"/>
 	<Sheet1 key="object_name_72106" value="魔族食尸鬼王3"/>
-	<Sheet1 key="object_name_70107" value="魔族地狱战舰1"/>
-	<Sheet1 key="object_name_71107" value="魔族地狱战舰2"/>
+	<Sheet1 key="object_name_70107" value="攻城模式"/>
+	<Sheet1 key="object_name_71107" value="腐蚀攻击"/>
 	<Sheet1 key="object_name_72107" value="魔族地狱战舰3"/>
-	<Sheet1 key="object_name_70108" value="魔族黑传教士1"/>
-	<Sheet1 key="object_name_71108" value="魔族黑传教士2"/>
+	<Sheet1 key="object_name_70108" value="毁灭之球"/>
+	<Sheet1 key="object_name_71108" value="荒芜光环"/>
 	<Sheet1 key="object_name_72108" value="魔族黑传教士3"/>
-	<Sheet1 key="object_name_70109" value="魔族梦魇精华1"/>
-	<Sheet1 key="object_name_71109" value="魔族梦魇精华2"/>
-	<Sheet1 key="object_name_72109" value="魔族梦魇精华3"/>
-	<Sheet1 key="object_name_70110" value="中立兽族斧王1"/>
-	<Sheet1 key="object_name_71110" value="中立兽族斧王2"/>
+	<Sheet1 key="object_name_70109" value="霜冻冲击"/>
+	<Sheet1 key="object_name_71109" value="死亡契约"/>
+	<Sheet1 key="object_name_72109" value="亡灵大军"/>
+	<Sheet1 key="object_name_70110" value="旋风斩"/>
+	<Sheet1 key="object_name_71110" value="恐怖嚎叫"/>
 	<Sheet1 key="object_name_72110" value="中立兽族斧王3"/>
-	<Sheet1 key="object_name_70111" value="中立兽族食人鬼王1"/>
-	<Sheet1 key="object_name_71111" value="中立兽族食人鬼王2"/>
+	<Sheet1 key="object_name_70111" value="大力"/>
+	<Sheet1 key="object_name_71111" value="永久的献祭"/>
 	<Sheet1 key="object_name_72111" value="中立兽族食人鬼王3"/>
 </root>
