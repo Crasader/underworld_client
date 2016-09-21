@@ -25,6 +25,7 @@
 #include "GameModeHMM.h"
 #include "CardConfigData.h"
 #include "RenderHelper.h"
+#include "UWRender.h"
 
 USING_NS_CC;
 
@@ -216,7 +217,7 @@ void WorldRender::showHMMCardPlaceTips(const HMMCardType* cardType, const Coordi
     if (!_hmmCardPlaceTipView) {
         _tipCardType = cardType;
         createHMMCardPlaceTipsView(_tipCardType, _world,
-            _hmmCardPlaceTipView, _hmmCardPlaceTipViewShadow);
+            _hmmCardPlaceTipView, _hmmCardPlaceTipViewShadow, _gameRender->isSwaped());
         
         if (_hmmCardPlaceTipView) {
             this->getWorldContainer()->addChild(_hmmCardPlaceTipView);
@@ -446,7 +447,7 @@ void WorldRender::renderSpellPattern(const SpellPattern* sp,
     }
 }
     
-void WorldRender::createHMMCardPlaceTipsView(const HMMCardType *cardType, const World* world, cocos2d::Node*& outputTipsView, cocos2d::Node*& outputShadowView) {
+void WorldRender::createHMMCardPlaceTipsView(const HMMCardType *cardType, const World* world, cocos2d::Node*& outputTipsView, cocos2d::Node*& outputShadowView, bool swaped) {
     if (!cardType) return;
     
     if (cardType->getCardClass() == kHMMCardClass_Hero
@@ -479,6 +480,7 @@ void WorldRender::createHMMCardPlaceTipsView(const HMMCardType *cardType, const 
         wrapper->addChild(outputTipsView);
         cocos2d::Label* label = CocosUtils::createLabel(cardType->getName(), DEFAULT_FONT_SIZE);
         label->setPosition(0.f, 75.f);
+        label->setScaleX(swaped ? -1.f : 1.f);
         wrapper->addChild(label);
         outputTipsView = wrapper;
     }

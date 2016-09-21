@@ -70,7 +70,8 @@ void UWRender::init(const Game *game, Commander *commander) {
             _worldScrollView->setZoomScale(scale);
             
             // world scroll swap
-            _worldScrollView->setScaleX(game->isThisFactionOnLeft() ? 1.f : -1.f);
+            _swaped = !game->isThisFactionOnLeft();
+            _worldScrollView->setScaleX(_swaped ? -1.f : 1.f);
         }
         
         //gui

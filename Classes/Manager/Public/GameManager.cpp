@@ -205,6 +205,7 @@ void GameClient::purgeInstance()
 {
     CC_SAFE_DELETE(_settings);
     CC_SAFE_DELETE(_hmmSettings);
+    if (_render) { _render->setRenderListener(nullptr); }
     CC_SAFE_DELETE(_render);
     CC_SAFE_DELETE(_looper);
     CC_SAFE_DELETE(_network);

@@ -63,8 +63,6 @@ HMMGui::HMMGui()
 }
     
 HMMGui::~HMMGui() {
-    _renderListener = nullptr;
-    
     CC_SAFE_RELEASE(_guiView);
     if (_game) {
         _game->getWorld()->removeWorldObserver(this);

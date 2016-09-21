@@ -143,7 +143,7 @@ protected:
     const cocos2d::Size& getWorldSizeInTile();
     const cocos2d::Size& getTile2PixelScale();
     virtual void renderSpellPattern(const SpellPattern* sp, creatureid_t targetId, const Coordinate32& pos);
-    static void createHMMCardPlaceTipsView(const HMMCardType* cardType, const World* world, cocos2d::Node*& outputTipsView, cocos2d::Node*& outputShadowView);
+    static void createHMMCardPlaceTipsView(const HMMCardType* cardType, const World* world, cocos2d::Node*& outputTipsView, cocos2d::Node*& outputShadowView, bool swaped);
     
     /** resources */
     void getWorldBgFile(int mapId, std::vector<std::string>& output);

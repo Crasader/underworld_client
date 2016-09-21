@@ -73,7 +73,8 @@ UnitRender::UnitRender()
 , _groundNode(nullptr)
 , _bodyNode(nullptr)
 , _unitView(nullptr)
-, _hpBar(nullptr) {
+, _hpBar(nullptr)
+, _worldRender(nullptr) {
 }
 
 UnitRender::~UnitRender() {
@@ -90,6 +91,9 @@ UnitRender::~UnitRender() {
 
 bool UnitRender::init(const WorldObject *object, WorldRender *worldRender) {
     if (!AbstractWorldObjectRender::init(object, worldRender)) return false;
+    
+    // init refs
+    _worldRender = worldRender;
     
     // init data
     _unit = dynamic_cast<const Unit*>(object);
@@ -339,7 +343,7 @@ void UnitRender::renderHp(bool init) {
         justCreatedHpbar = true;
         if (_hpBar) {
             _hpBar->setPosition(calculateHpBarPosition());
-            _hpBar->setScaleX(_configData->getHpBarScaleX());
+            _hpBar->setScaleX(_configData->getHpBarScaleX() * (_worldRender->getGameRender()->isSwaped() ? -1.f : 1.f));
             _mainNode->addChild(_hpBar, IN_MAIN_HP_BAR_ZORDER);
         }
     }

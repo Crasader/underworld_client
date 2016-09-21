@@ -173,6 +173,9 @@ private:
     std::queue<cocos2d::Node*> _rollNodes;
     std::string _rollScheduleKey;
     
+    /** refs*/
+    WorldRender* _worldRender;
+    
 public:
     /** init */
     UnitRender();

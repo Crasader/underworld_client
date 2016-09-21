@@ -38,6 +38,9 @@ private:
     Gui* _gui;
     RenderListener* _listener;
     
+    /** status */
+    bool _swaped;
+    
     /** refs */
     const Game* _game;
     Commander* _commader;
@@ -52,6 +55,7 @@ public:
         _worldRender(nullptr),
         _gui(nullptr),
         _listener(nullptr),
+        _swaped(false),
         _game(nullptr),
         _commader(nullptr),
         _worldScrollView(nullptr) {}
@@ -68,6 +72,7 @@ public:
     
     /** getters */
     const Game* getGame() const        {return _game;}
+    bool isSwaped() const              {return _swaped;}
     
 private:
     /** creator */
