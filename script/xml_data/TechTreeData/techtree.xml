@@ -809,7 +809,7 @@
 	<feature_group conditions="type:unit_class;target:opposite;condition:is:hero" deliver_natures="enemy" determine_timing="hit" feature_type_names="食尸鬼王冥火暴击对英雄击晕效果" name="食尸鬼王冥火对英雄暴击击晕效果"/>
 	<feature_group conditions="type:unit_class;target:opposite;condition:not:building,core,hero" deliver_natures="enemy" determine_timing="be_attack" feature_type_names="食尸鬼王山岭光环反弹特性" name="食尸鬼王山岭光环反弹效果" probability="10"/>
 	<feature_group conditions="type:unit_class;target:opposite;condition:is:hero" deliver_natures="enemy" determine_timing="be_attack" feature_type_names="食尸鬼王山岭光环对英雄反弹特性" name="食尸鬼王山岭光环对英雄反弹效果" probability="10"/>
-	<feature_group determine_timing="attack" feature_type_names="骷髅王吸血光环" name="骷髅王吸血光环"/>
+	<feature_group conditions="type:unit_class;target:opposite;condition:not:building,core" deliver_natures="enemy" determine_timing="attack" feature_type_names="骷髅王吸血光环" name="骷髅王吸血光环"/>
 	<feature_group conditions="type:unit_class;target:opposite;condition:not:core" deliver_natures="neutral" determine_timing="settle_attack_damage_r1" feature_type_names="骷髅王盛宴效果" name="骷髅王盛宴"/>
 	<feature_group conditions="type:unit_class;target:opposite;condition:not:core" deliver_natures="neutral" determine_timing="attack" feature_type_names="攻击添加黑暗之箭BUFF" name="魔族地狱战舰邪恶之箭"/>
 	<feature_group conditions=" " deliver_natures="neutral" determine_timing="be_killed" feature_type_names="死亡产生分裂箭" name="死亡产生分裂箭"/>
@@ -850,7 +850,7 @@
 	<feature_group conditions="type:unit_class;target:opposite;condition:is:hero" deliver_natures="enemy" determine_timing="hit" feature_type_names="梦魇nova对英雄冰冻特性" name="梦魇nova对英雄冰冻效果"/>
 	<feature_group determine_timing="hurt" feature_type_names="骷髅王加攻击效果" name="骷髅王减血加攻击特性"/>
 	<feature_group determine_timing="heal" feature_type_names="人族剑士队长狂暴大招加攻速效果;人族剑士队长狂暴大招加吸血效果" name="人族剑士队长狂暴大招特性"/>
-	<feature_group determine_timing="attack" feature_type_names="人族剑士队长狂暴大招吸血效果" name="人族剑士队长狂暴大招吸血效果"/>
+	<feature_group conditions="type:unit_class;target:opposite;condition:not:building,core" deliver_natures="enemy" determine_timing="attack" feature_type_names="人族剑士队长狂暴大招吸血效果" name="人族剑士队长狂暴大招吸血效果"/>
 	<feature effect_timing="be_killed" feature_name="中立兽族食人鬼王重生" type="drain" value="d:target:owner;type:max_hp;v:p:100;template:0"/>
 	<feature effect_timing="be_hurt" feature_name="中立黑龙伤害减免特性" type="damage_reduce" value="p:10"/>
 	<feature effect_timing="be_attack" feature_name="中立精灵族弓箭手闪避" type="miss"/>
