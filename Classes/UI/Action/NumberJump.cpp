@@ -7,7 +7,7 @@
 //
 
 #include "NumberJump.h"
-#include "CocosUtils.h"
+#include "Utils.h"
 #include "2d/CCTweenFunction.h"
 
 NumberJump* NumberJump::create(float duration, int startNum, int endNum, std::function<void(std::string)> callback)
@@ -53,6 +53,6 @@ void NumberJump::update(float t)
     {
         float t2 = tweenfunc::expoEaseOut(t);
         int num = _previousNum + floor((_endNum - _startNum) * t2);
-        _callBack(CocosUtils::itoa(num));
+        _callBack(Utils::toString(num));
     }
 }

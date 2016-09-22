@@ -9,6 +9,7 @@
 #include "SettingsLayer.h"
 #include "ui/CocosGUI.h"
 #include "CocosGlobal.h"
+#include "Utils.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "SoundManager.h"
@@ -124,10 +125,7 @@ bool SettingNode::init(SettingType type, const Callback& callback, bool isOn) {
             const auto& pair = SettingNodeInfo.at(type);
             _isSwitch = pair.first;
             string title(pair.second);
-            static const string blankTitle(" ");
-            if (CocosUtils::trim(title).empty()) {
-                title = blankTitle;
-            }
+            Utils::trim(title);
             
             // button
             string bTitle;
@@ -137,9 +135,10 @@ bool SettingNode::init(SettingType type, const Callback& callback, bool isOn) {
                 bTitle.assign(title);
             }
             
+            static const string blankTitle(" ");
             auto bType(isOn ? XButton::BType::Blue : XButton::BType::Red);
             _button = XButton::create(XButton::BSize::Small, bType);
-            _button->setTitleText(bTitle);
+            _button->setTitleText(bTitle.empty() ? blankTitle : bTitle);
             _button->setPressedActionEnabled(true);
             _button->setCallback([this](Ref*) {
                 if (_callback) {

@@ -7,10 +7,10 @@
 //
 
 #include "UserDefaultsDataManager.h"
-#include "CocosUtils.h"
+#include "Utils.h"
 #include "AESCTREncryptor.h"
 #include "MD5Verifier.h"
-#include "Utils.h"
+#include "cocos2d.h"
 
 USING_NS_CC;
 using namespace std;
@@ -44,7 +44,7 @@ string UserDefaultsDataManager::getStringForKey(const char* pKey, const string &
 void UserDefaultsDataManager::setStringForKeyWithAES(const char* pKey, const string & value)
 {
     string enValue = AESCTREncryptor::getInstance()->Encrypt(value);
-    UserDefault::getInstance()->setStringForKey(pKey, MD5Verifier::getInstance()->encrypt(CocosUtils::charToHex(enValue)));
+    UserDefault::getInstance()->setStringForKey(pKey, MD5Verifier::getInstance()->encrypt(Utils::charToHex(enValue)));
 }
 
 string UserDefaultsDataManager::getStringForKeyWithAES(const char* pKey, const string & defaultValue)
@@ -55,7 +55,7 @@ string UserDefaultsDataManager::getStringForKeyWithAES(const char* pKey, const s
     }
     string hexValue;
     if(MD5Verifier::getInstance()->verify(value, hexValue)){
-        string enValue = CocosUtils::hexToChar(hexValue);
+        string enValue = Utils::hexToChar(hexValue);
         return AESCTREncryptor::getInstance()->Decrypt(enValue);
     }
     return defaultValue;
@@ -63,12 +63,12 @@ string UserDefaultsDataManager::getStringForKeyWithAES(const char* pKey, const s
 
 void UserDefaultsDataManager::setIntegerForKey(const char *pKey, int value)
 {
-    setStringForKey(pKey, CocosUtils::itoa(value));
+    setStringForKey(pKey, Utils::toString(value));
 }
 
 int UserDefaultsDataManager::getIntegerForKey(const char *pKey, int defaultValue)
 {
-    string value = getStringForKey(pKey, CocosUtils::itoa(defaultValue));
+    string value = getStringForKey(pKey, Utils::toString(defaultValue));
     return atoi(value.c_str());
 }
 

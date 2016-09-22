@@ -12,6 +12,7 @@
 #include "Game.h"
 #include "TechTree.h"
 #include "GameModeHMM.h"
+#include "Utils.h"
 #include "CocosUtils.h"
 #include "Unit.h"
 #include "BattleSmallResourceNode.h"
@@ -183,7 +184,7 @@ void HMMGui::render(const Game *game) {
     int timeInMicrosec = GameConstants::frame2Microsecond(game->getFrame());
     int timeRemainInSec = GameConstants::microsecond2Sec(m_clampi(_gameDuration - timeInMicrosec, 0, _gameDuration));
     if (_timeLabel) {
-        _timeLabel->setString(CocosUtils::getFormattedTime(timeRemainInSec));
+        _timeLabel->setString(Utils::getFormattedTime(timeRemainInSec));
         
 //        if (timeRemainInSec <= ALERT_REMAIN_TIME_IN_SECOND && _timeLabel->getTextColor() != ALERT_REMAIN_TIME_COLOR) {
 //            _timeLabel->setTextColor(NORMAL_REMAIN_TIME_COLOR);

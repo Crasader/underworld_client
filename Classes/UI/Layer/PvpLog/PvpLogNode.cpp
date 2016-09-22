@@ -7,6 +7,7 @@
 //
 
 #include "PvpLogNode.h"
+#include "Utils.h"
 #include "CocosUtils.h"
 #include "PvpLogData.h"
 #include "UserSimpleData.h"
@@ -181,7 +182,7 @@ void PvpLogNode::createTopNode()
         
         // top-right
         {
-            const auto& time = CocosUtils::getFormattedTime(1234);
+            const auto& time = Utils::getFormattedTime(1234);
             _time = CocosUtils::createLabel(time, SMALL_FONT_SIZE, DEFAULT_NUMBER_FONT);
             _time->setAlignment(cocos2d::TextHAlignment::RIGHT, cocos2d::TextVAlignment::CENTER);
             _time->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);

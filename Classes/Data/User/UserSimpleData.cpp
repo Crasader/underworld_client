@@ -8,7 +8,6 @@
 
 #include "UserSimpleData.h"
 #include "Utils.h"
-#include "CocosUtils.h"
 #include "JSonUtils.h"
 #include "UserArenaData.h"
 #include "UserGuildData.h"

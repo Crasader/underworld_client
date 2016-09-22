@@ -73,26 +73,7 @@ namespace CocosUtils
 #pragma mark - notifications
     void postNotification(const std::string& notification);
     
-#pragma mark - time
-    double getMillSecond();
-    std::string getTimeString(int64_t timeMillSecond);
-    std::string getCurrentTime(const char* format);
-    std::string getFormattedTime(long timeInterval);
-    std::string getBeautyTime(long timeInterval);
-    
-#pragma mark - security
-    int hexCharToInt(char c);
-    void charToHex(const unsigned char *input, int inputLen, unsigned char *output);
-    void hexToChar(const unsigned char *input, int inputLen, unsigned char *output);
-    std::string charToHex(const std::string &input);
-    std::string hexToChar(const std::string &input);
-    
-    std::string itoa(int i);
-    std::string lTrim(const std::string &s);
-    std::string rTrim(const std::string &s);
-    std::string trim(const std::string &s);
     bool sort_by_tag(cocos2d::Node* a, cocos2d::Node* b);
-    std::string urlEncode(const std::string &value);
 }
 
 #endif /* CocosUtils_h */

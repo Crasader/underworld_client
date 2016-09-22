@@ -9,7 +9,6 @@
 #include "SpellConfigData.h"
 #include "tinyxml2/tinyxml2.h"
 #include "Utils.h"
-#include "CocosUtils.h"
 
 using namespace std;
 using namespace UnderWorld::Core;
@@ -89,7 +88,4 @@ SpellConfigData::SpellConfigData(tinyxml2::XMLElement *xmlElement)
     }
 }
 
-SpellConfigData::~SpellConfigData()
-{
-    
-}
+SpellConfigData::~SpellConfigData() {}

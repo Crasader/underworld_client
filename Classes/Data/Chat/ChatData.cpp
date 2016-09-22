@@ -8,7 +8,6 @@
 
 #include "ChatData.h"
 #include "Utils.h"
-#include "CocosUtils.h"
 #include "JSonUtils.h"
 #include "ObjectBriefData.h"
 
@@ -29,7 +28,7 @@ ChatData::ChatData(const rapidjson::Value& jsonDict)
     
     string timeString = JSonUtils::parse<string>(jsonDict, "time");
     _time = atol(timeString.c_str());
-    _formattedTime = CocosUtils::getTimeString(_time);
+    _formattedTime = Utils::getTimeString(_time);
     JSonUtils::parse(_type, jsonDict, "channel");
     JSonUtils::parse(_message, jsonDict, "content");
     

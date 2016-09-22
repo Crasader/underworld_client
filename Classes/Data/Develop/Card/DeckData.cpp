@@ -8,7 +8,7 @@
 
 #include "DeckData.h"
 #include "Utils.h"
-#include "CoreUtils.h"
+#include <cassert>
 
 using namespace std;
 
@@ -82,7 +82,7 @@ void DeckData::serialize(string& output)
         
         const int cardId(_cards.at(i));
         if (cardId > 0) {
-            output += UnderWorld::Core::UnderWorldCoreUtils::to_string(cardId) + ElementSeparator;
+            output += Utils::toString(cardId) + ElementSeparator;
         }
     }
     

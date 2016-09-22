@@ -8,6 +8,7 @@
 
 #include "ContentData.h"
 #include "Utils.h"
+#include <cstdlib>
 #include <cassert>
 
 using namespace std;

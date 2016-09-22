@@ -7,7 +7,7 @@
 //
 
 #include "NetworkApi.h"
-#include "CocosUtils.h"
+#include "Utils.h"
 #include "MD5Verifier.h"
 #include "GameData.h"
 #include "NetworkController.h"
@@ -56,10 +56,10 @@ string NetworkApi::queryString(const unordered_map<string, string>& params, cons
     string digestData;
     for (auto iter = begin(params); iter != end(params); ++iter) {
         if (result.empty()) {
-            result = StringUtils::format("%s=%s", iter->first.c_str(), CocosUtils::urlEncode(iter->second).c_str());
+            result = StringUtils::format("%s=%s", iter->first.c_str(), Utils::urlEncode(iter->second).c_str());
             digestData.append(iter->first + "=" + iter->second);
         } else {
-            result = StringUtils::format("%s&%s=%s", result.c_str(), iter->first.c_str(), CocosUtils::urlEncode(iter->second).c_str());
+            result = StringUtils::format("%s&%s=%s", result.c_str(), iter->first.c_str(), Utils::urlEncode(iter->second).c_str());
             digestData.append("&" + iter->first + "=" + iter->second);
         }
     }

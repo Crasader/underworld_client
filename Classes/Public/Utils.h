@@ -18,10 +18,32 @@
 namespace Utils
 {
     unsigned int bkdrHash(const char *str);
+    
+#pragma mark - string
     template <typename T> std::string toString(const T& n);
     std::string formatWithParams(const std::string& raw, ...);
     std::string format(const char *format, ...);
     void split(std::vector<std::string> &v, const std::string& src, const std::string& delimit, const std::string& null_subst = "", int max = 0);
+    
+    void trimLeft(std::string &s);
+    void trimRight(std::string &s);
+    void trim(std::string &s);
+    
+#pragma mark - security
+    int hexCharToInt(char c);
+    void charToHex(const unsigned char *input, int inputLen, unsigned char *output);
+    void hexToChar(const unsigned char *input, int inputLen, unsigned char *output);
+    std::string charToHex(const std::string &input);
+    std::string hexToChar(const std::string &input);
+    std::string urlEncode(const std::string &value);
+    
+#pragma mark - time
+    long getMillSecond();
+    std::string formatTime(long duration, const char* format);
+    std::string getTimeString(long timeInterval);
+    std::string getCurrentTime(const char* format);
+    std::string getFormattedTime(long timeInterval);
+    std::string getBeautyTime(long timeInterval);
     
     /** template operations */
     template<typename T> void clearVector(std::vector<T> &vec);
