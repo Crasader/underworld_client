@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <root>
 	<!-- 第一版法术 -->
-	<card name="暴风雪lv1" card_class="spell" cost="木头:40" spell_name="实际效果暴风雪" recover_span="900" id="23100">
+	<card name="暴风雪lv1" card_class="spell" cost="木头:40" spell_name="实际效果暴风雪" recover_span="720" id="23100">
 		<unit_setting/>
 	</card>
-	<card name="火球术lv1" card_class="spell" cost="木头:40" spell_name="实际效果火球术" recover_span="900" id="23101">
+	<card name="火球术lv1" card_class="spell" cost="木头:40" spell_name="实际效果火球术" recover_span="600" id="23101">
 		<unit_setting/>
 	</card>
-	<card name="医疗术lv1" card_class="spell" cost="木头:30" spell_name="实际效果医疗术" recover_span="900" id="23102">
+	<card name="医疗术lv1" card_class="spell" cost="木头:30" spell_name="实际效果医疗术" recover_span="720" id="23102">
 		<unit_setting/>
 	</card>
 	<card name="沉默术lv1" card_class="spell" cost="木头:10" spell_name="实际效果沉默术" recover_span="1800" id="23103">
@@ -19,19 +19,19 @@
 	<card name="大型驱散术lv1" card_class="spell" cost="木头:10" spell_name="实际效果大型驱散" recover_span="300" id="23105">
 		<unit_setting/>
 	</card>
-	<card name="震晕法术lv1" card_class="spell" cost="木头:30" spell_name="实际效果震晕法术" recover_span="1200" id="23106">
+	<card name="震晕法术lv1" card_class="spell" cost="木头:30" spell_name="实际效果震晕法术" recover_span="960" id="23106">
 		<unit_setting/>
 	</card>
 	<card name="禁足术lv1" card_class="spell" cost="木头:20" spell_name="实际效果禁足术" recover_span="1800" id="23107">
 		<unit_setting/>
 	</card>
-	<card name="酸雾术lv1" card_class="spell" cost="木头:20" spell_name="实际效果酸雾" recover_span="1200" id="23108">
+	<card name="酸雾术lv1" card_class="spell" cost="木头:20" spell_name="实际效果酸雾" recover_span="1080" id="23108">
 		<unit_setting/>
 	</card>
-	<card name="狂暴术lv1" card_class="spell" cost="木头:30" spell_name="狂暴术lv1" recover_span="1200" id="23109">
+	<card name="狂暴术lv1" card_class="spell" cost="木头:30" spell_name="狂暴术lv1" recover_span="1080" id="23109">
 		<unit_setting/>
 	</card>
-	<card name="缴械法术lv1" card_class="spell" cost="木头:30" spell_name="缴械法术lv1" recover_span="1200" id="23110">
+	<card name="缴械法术lv1" card_class="spell" cost="木头:30" spell_name="缴械法术lv1" recover_span="1080" id="23110">
 		<unit_setting/>
 	</card>
 	<card name="恐惧法术lv1" card_class="spell" cost="木头:30" spell_name="恐惧法术lv1" recover_span="1800" id="23111">
@@ -46,7 +46,7 @@
 	<card name="秒杀法术lv1" card_class="spell" cost="木头:100" spell_name="秒杀法术lv1" recover_span="3000" id="23114">
 		<unit_setting/>
 	</card>
-	<card name="无敌药水lv1" card_class="spell" cost="木头:30" spell_name="无敌药水lv1" recover_span="1800" id="23115">
+	<card name="无敌药水lv1" card_class="spell" cost="木头:30" spell_name="无敌药水lv1" recover_span="1200" id="23115">
 		<unit_setting/>
 	</card>
 <!-- 第一版单位：小兵部分 -->
