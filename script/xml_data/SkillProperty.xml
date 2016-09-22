@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <root>
-	<item desc="object_desc_70000" hint="人族盾牌兵技能1" id="70000.0" name="object_name_70000" param_0="2000_0" unlock="5.0"/>
+	<item desc="object_desc_70000" hint="人族盾牌兵技能1" id="70000.0" name="object_name_70000" param_0="2100_0" unlock="5.0"/>
 	<item desc="object_desc_71000" hint="人族盾牌兵技能2" id="71000.0" name="object_name_71000" unlock="10.0"/>
 	<item desc="object_desc_70001" hint="人族剑士技能1" id="70001.0" name="object_name_70001" param_0="2101_0" param_1="2000_1" unlock="5.0"/>
 	<item desc="object_desc_71001" hint="人族剑士技能2" id="71001.0" name="object_name_71001" unlock="10.0"/>
