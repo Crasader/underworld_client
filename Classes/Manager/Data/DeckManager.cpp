@@ -470,7 +470,7 @@ void DeckManager::sortCards(SortType type, vector<int>& cards) const
     static const auto defaultSort = [](int c1, int c2) {
         return c1 < c2;
     };
-    static const auto elixirSort = [this](int c1, int c2) {
+    static const auto elixirSort = [](int c1, int c2) {
         auto dm(DataManager::getInstance());
         auto p1(dynamic_cast<const CardProperty*>(dm->getProperty(c1)));
         auto p2(dynamic_cast<const CardProperty*>(dm->getProperty(c2)));

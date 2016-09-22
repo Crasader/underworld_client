@@ -10,7 +10,7 @@
 #include "XMLUtils.h"
 
 SkillProperty::SkillProperty(tinyxml2::XMLElement *xmlElement)
-:AbstractProperty(xmlElement)
+:DevelopProperty(xmlElement)
 ,_beUnlockedLevel(0)
 {
     XMLUtils::parse(xmlElement, "unlock", _beUnlockedLevel);

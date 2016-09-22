@@ -8,6 +8,7 @@
 
 #include "ContentData.h"
 #include "Utils.h"
+#include <cassert>
 
 using namespace std;
 
@@ -33,10 +34,7 @@ ContentData::ContentData(const string& content)
     }
 }
 
-ContentData::~ContentData()
-{
-    
-}
+ContentData::~ContentData() {}
 
 int ContentData::getType() const
 {

@@ -14,6 +14,7 @@
 #include "LevelProperty.h"
 #include "AbstractProperty.h"
 #include "AbstractUpgradeProperty.h"
+#include "AttributeProperty.h"
 #include "CardProperty.h"
 #include "CardUpgradeProperty.h"
 #include "RuneProperty.h"
@@ -90,6 +91,7 @@ DataManager::DataManager()
 DataManager::~DataManager()
 {
     Utils::clearMap(_levels);
+    Utils::clearMap(_attributes);
     Utils::clearMap(_cards);
     Utils::clearMap(_cardUpgradeProperties);
     Utils::clearMap(_runes);
@@ -127,6 +129,7 @@ void DataManager::init()
     parsePvrFiles();
     parseLevelProperty();
     parseCardDecks();
+    parseAttributeProperty();
     parseCardProperty();
     parseCardUpgradeProperty();
     parseRuneProperty();
@@ -213,6 +216,11 @@ const AbstractUpgradeProperty* DataManager::getUpgradeProperty(int oid, int leve
         default:
             return nullptr;
     }
+}
+
+const AttributeProperty* DataManager::getAttributeProperty(int aid) const
+{
+    return getMapValue(_attributes, aid);
 }
 
 const CardProperty* DataManager::getCardProperty(int cardId) const
@@ -361,6 +369,14 @@ void DataManager::parseCardDecks()
 {
     parseData("CardDecks.xml", [this](tinyxml2::XMLElement* item) {
         _cardDecks.insert(atoi(item->Attribute("id")));
+    });
+}
+
+void DataManager::parseAttributeProperty()
+{
+    parseData("AttributeProperty.xml", [this](tinyxml2::XMLElement* item) {
+        auto data = new (nothrow) AttributeProperty(item);
+        setMapValue(_attributes, data->getId(), data);
     });
 }
 

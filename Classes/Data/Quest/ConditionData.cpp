@@ -8,6 +8,7 @@
 
 #include "ConditionData.h"
 #include "Utils.h"
+#include <cassert>
 
 using namespace std;
 
@@ -26,10 +27,7 @@ ConditionData::ConditionData(const string& content)
     }
 }
 
-ConditionData::~ConditionData()
-{
-    
-}
+ConditionData::~ConditionData() {}
 
 int ConditionData::getId() const
 {

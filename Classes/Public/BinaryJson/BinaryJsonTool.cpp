@@ -10,6 +10,7 @@
 #include "json/stringbuffer.h"
 #include "json/writer.h"
 #include "Utils.h"
+#include "UWJsonHelper.h"
 
 using namespace std;
 using namespace rapidjson;
@@ -226,7 +227,7 @@ void BinaryJsonTool::initTemplates(const std::string& data, const string& keyFie
 //        {
 //            printf("GetParseError %u\n", jsonDict->GetParseError());
 //        }
-        int code = Utils::getIntValue_json(*jsonDict, keyField.c_str(), -1);
+        int code = UWJsonHelper::getIntValue_json(*jsonDict, keyField.c_str(), -1);
         if (code > 0) {
             templates.insert(make_pair(code, jsonDict));
         }

@@ -31,7 +31,7 @@ private:
     
     void createNode(Node* node);
     virtual void initUI() final;
-    virtual void updateProperty(const AbstractProperty* property) final;
+    virtual void updateProperty(const DevelopProperty* property) final;
     virtual void updateData(const AbstractData* data) final;
     
 private:

@@ -19,7 +19,7 @@ class JuniorCard;
 class ResourceButton;
 class CardAttributeNode;
 class AbstractData;
-class AbstractProperty;
+class DevelopProperty;
 
 class AbstractInfoLayer : public LayerColor
 {
@@ -30,7 +30,7 @@ protected:
     AbstractInfoLayer();
     bool init(int cardId, const AbstractData* data);
     virtual void initUI() = 0;
-    virtual void updateProperty(const AbstractProperty* property);
+    virtual void updateProperty(const DevelopProperty* property);
     virtual void updateData(const AbstractData* data);
     
 private:
@@ -45,7 +45,7 @@ protected:
     ResourceButton* _upgradeButton;
     std::vector<CardAttributeNode*> _attributes;
     const AbstractData* _data;
-    const AbstractProperty* _property;
+    const DevelopProperty* _property;
 };
 
 #endif /* AbstractInfoLayer_h */

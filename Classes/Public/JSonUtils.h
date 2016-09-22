@@ -15,28 +15,25 @@
 
 using namespace cocostudio;
 
-namespace JSonUtils
+class JSonUtils
 {
-    inline bool isExist(const rapidjson::Value& json, const char* key);
-    
-    // ========================= sub modules =========================
-    
+private:
     // ------------------------- bool -------------------------
-    template<class T> typename std::enable_if<std::is_same<T, bool>::value, T>::type
+    template<class T> static typename std::enable_if<std::is_same<T, bool>::value, T>::type
     __json_to_value(const rapidjson::Value& json, const char* key)
     {
         return DICTOOL->getBooleanValue_json(json, key);
     }
     
     // ------------------------- string -------------------------
-    template<class T> typename std::enable_if<std::is_same<T, std::string>::value, T>::type
+    template<class T> static typename std::enable_if<std::is_same<T, std::string>::value, T>::type
     __json_to_value(const rapidjson::Value& json, const char* key)
     {
         return DICTOOL->getStringValue_json(json, key, "");
     }
     
     // ------------------------- integers & enum-------------------------
-    template<class T> typename std::enable_if<sizeof(T) == 8, T>::type
+    template<class T> static typename std::enable_if<sizeof(T) == 8, T>::type
     __json_to_value(const rapidjson::Value& json, const char* key)
     {
         if (isExist(json, key)) {
@@ -46,33 +43,28 @@ namespace JSonUtils
         return 0;
     }
     
-    template<class T> typename std::enable_if<(std::is_integral<T>::value && !std::is_same<T, bool>::value && sizeof(T) != 8) || std::is_enum<T>::value, T>::type
+    template<class T> static typename std::enable_if<(std::is_integral<T>::value && !std::is_same<T, bool>::value && sizeof(T) != 8) || std::is_enum<T>::value, T>::type
     __json_to_value(const rapidjson::Value& json, const char* key)
     {
         return static_cast<T>(DICTOOL->getIntValue_json(json, key));
     }
     
     // ------------------------- floats -------------------------
-    template<class T> typename std::enable_if<std::is_floating_point<T>::value, T>::type
+    template<class T> static typename std::enable_if<std::is_floating_point<T>::value, T>::type
     __json_to_value(const rapidjson::Value& json, const char* key)
     {
         return static_cast<T>(DICTOOL->getFloatValue_json(json, key));
     }
     
-    // ========================= sub modules =========================
+public:
+    static bool isExist(const rapidjson::Value& json, const char* key);
     
-    // generic
-    inline bool isExist(const rapidjson::Value& json, const char* key)
-    {
-        return (!json.IsNull() && DICTOOL->checkObjectExist_json(json, key) && !DICTOOL->getSubDictionary_json(json, key).IsNull());
-    }
-    
-    template<class T> T parse(const rapidjson::Value& json, const char* key)
+    template<class T> static T parse(const rapidjson::Value& json, const char* key)
     {
         return __json_to_value<T>(json, key);
     }
     
-    template<class T> T parse(const rapidjson::Value& json, const char* key, const T& def)
+    template<class T> static T parse(const rapidjson::Value& json, const char* key, const T& def)
     {
         if (isExist(json, key)) {
             return __json_to_value<T>(json, key);
@@ -81,12 +73,12 @@ namespace JSonUtils
         return def;
     }
     
-    template<class T> void parse(T& value, const rapidjson::Value& json, const char* key)
+    template<class T> static void parse(T& value, const rapidjson::Value& json, const char* key)
     {
         value = __json_to_value<T>(json, key);
     }
     
-    template<class T> void parse(T& value, const rapidjson::Value& json, const char* key, const T& def)
+    template<class T> static void parse(T& value, const rapidjson::Value& json, const char* key, const T& def)
     {
         if (isExist(json, key)) {
             value = __json_to_value<T>(json, key);
@@ -94,6 +86,6 @@ namespace JSonUtils
         
         value = def;
     }
-}
+};
 
 #endif /* JSonUtils_h */

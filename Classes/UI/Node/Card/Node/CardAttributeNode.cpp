@@ -8,9 +8,11 @@
 
 #include "CardAttributeNode.h"
 #include "PureNode.h"
+#include "Utils.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
-#include <sstream>
+#include "DataManager.h"
+#include "AttributeProperty.h"
 
 using namespace std;
 
@@ -91,38 +93,31 @@ void CardAttributeNode::setColor(const Color4B& color)
     }
 }
 
-void CardAttributeNode::setAttribute(ObjectUtils::CardAttributeType type, float value)
+void CardAttributeNode::setAttribute(int attribute, float value)
 {
-    string icon;
-    string name;
-    getInfo(type, icon, name);
-    if (_icon) {
-        _icon->setTexture(icon);
-    }
-    
-    setName(name);
-    
-    if (_data) {
-        string key("");
-        switch (type) {
-            case ObjectUtils::CardAttributeType::ARMOR_TYPE:
-                key = StringUtils::format("ui_cardArmorType_%d", static_cast<int>(value));
-                break;
-            case ObjectUtils::CardAttributeType::ATTACK_TYPE:
-                key = StringUtils::format("ui_cardAttackType_%d", static_cast<int>(value));
-                break;
-            case ObjectUtils::CardAttributeType::TARGET_TYPE:
-                key = StringUtils::format("ui_cardTarget_%d", static_cast<int>(value));
-                break;
-            default:
-                ostringstream os;
-                os << value;
-                key = os.str();
-                break;
+    do {
+        auto property(DataManager::getInstance()->getAttributeProperty(attribute));
+        CC_BREAK_IF(!property);
+        if (_icon) {
+            _icon->setTexture(CocosUtils::getResourcePath(property->getIcon()));
         }
-        
-        _data->setString(LocalHelper::getString(key));
-    }
+        setName(LocalHelper::getString(property->getName()));
+        if (_data) {
+            string msg("");
+            switch (property->getType()) {
+                case AttributeProperty::Type::ABSOLUTE:
+                    msg = Utils::toString(value);
+                    break;
+                case AttributeProperty::Type::RELATIVE:
+                    msg = Utils::toString(value) + "%";
+                    break;
+                case AttributeProperty::Type::ENUM:
+                    msg = LocalHelper::getString(property->getEnmuPrefix() + Utils::toString(static_cast<int>(value)));
+                    break;
+            }
+            _data->setString(msg);
+        }
+    } while (false);
 }
 
 void CardAttributeNode::setName(const string& name)
@@ -130,67 +125,4 @@ void CardAttributeNode::setName(const string& name)
     if (_name) {
         _name->setString(name);
     }
-}
-
-void CardAttributeNode::getInfo(ObjectUtils::CardAttributeType type, string& icon, string& name) const
-{
-    string iconFile;
-    string nameSuffix;
-    switch (type) {
-        case ObjectUtils::CardAttributeType::HP: {
-            iconFile = "icon_hp.png";
-            nameSuffix = "hp";
-        }
-            break;
-        case ObjectUtils::CardAttributeType::SPEED: {
-            iconFile = "icon_sudu.png";
-            nameSuffix = "speed";
-        }
-            break;
-        case ObjectUtils::CardAttributeType::ARMOR: {
-            iconFile = "icon_hujiazhi.png";
-            nameSuffix = "armor";
-        }
-            break;
-        case ObjectUtils::CardAttributeType::ARMOR_TYPE: {
-            iconFile = "icon_hujialeixing.png";
-            nameSuffix = "armorType";
-        }
-            break;
-        case ObjectUtils::CardAttributeType::GROUND_DAMAGE: {
-            iconFile = "icon_gongjili.png";
-            nameSuffix = "groundDamage";
-        }
-            break;
-        case ObjectUtils::CardAttributeType::ATTACK_TYPE: {
-            iconFile = "icon_gongjifanwei.png";
-            nameSuffix = "attackType";
-        }
-            break;
-        case ObjectUtils::CardAttributeType::HIT_SPEED: {
-            iconFile = "icon_gongjisudu.png";
-            nameSuffix = "hitSpeed";
-        }
-            break;
-        case ObjectUtils::CardAttributeType::RANGE: {
-            iconFile = "icon_gongjifanwei.png";
-            nameSuffix = "range";
-        }
-            break;
-        case ObjectUtils::CardAttributeType::TARGET_TYPE: {
-            iconFile = "icon_gongjileixing.png";
-            nameSuffix = "targetType";
-        }
-            break;
-        case ObjectUtils::CardAttributeType::AIR_DAMAGE: {
-            iconFile = "icon_gongjili.png";
-            nameSuffix = "airDamage";
-        }
-            break;
-        default:
-            break;
-    }
-    
-    icon.assign(iconFile.empty() ? "" : CocosUtils::getResourcePath(iconFile));
-    name.assign(nameSuffix.empty() ? "" : LocalHelper::getString("ui_cardAttr_" + nameSuffix));
 }

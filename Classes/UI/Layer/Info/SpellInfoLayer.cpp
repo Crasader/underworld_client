@@ -147,7 +147,7 @@ void SpellInfoLayer::initUI()
     createNode(board->getSubNode());
 }
 
-void SpellInfoLayer::updateProperty(const AbstractProperty* property)
+void SpellInfoLayer::updateProperty(const DevelopProperty* property)
 {
     AbstractInfoLayer::updateProperty(property);
 }

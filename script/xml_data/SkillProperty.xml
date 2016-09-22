@@ -1,35 +1,35 @@
 <?xml version="1.0" ?>
 <root>
-	<item desc="object_desc_70000" hint="人族盾牌兵技能1" id="70000.0" name="object_name_70000" unlock="5.0"/>
+	<item desc="object_desc_70000" hint="人族盾牌兵技能1" id="70000.0" name="object_name_70000" param_0="2000_0" unlock="5.0"/>
 	<item desc="object_desc_71000" hint="人族盾牌兵技能2" id="71000.0" name="object_name_71000" unlock="10.0"/>
-	<item desc="object_desc_70001" hint="人族剑士技能1" id="70001.0" name="object_name_70001" unlock="5.0"/>
+	<item desc="object_desc_70001" hint="人族剑士技能1" id="70001.0" name="object_name_70001" param_0="2101_0" param_1="2000_1" unlock="5.0"/>
 	<item desc="object_desc_71001" hint="人族剑士技能2" id="71001.0" name="object_name_71001" unlock="10.0"/>
-	<item desc="object_desc_70002" hint="人族弓手1" id="70002.0" name="object_name_70002" unlock="5.0"/>
+	<item desc="object_desc_70002" hint="人族弓手1" id="70002.0" name="object_name_70002" param_0="2101_0" param_1="2102_1" unlock="5.0"/>
 	<item desc="object_desc_71002" hint="人族弓手2" id="71002.0" name="object_name_71002" unlock="10.0"/>
-	<item desc="object_desc_70003" hint="人族男巫1" id="70003.0" name="object_name_70003" unlock="5.0"/>
-	<item desc="object_desc_71003" hint="人族男巫2" id="71003.0" name="object_name_71003" unlock="10.0"/>
-	<item desc="object_desc_70004" hint="人族女巫1" id="70004.0" name="object_name_70004" unlock="5.0"/>
+	<item desc="object_desc_70003" hint="人族男巫1" id="70003.0" name="object_name_70003" param_0="2103_0" param_1="2000_1" unlock="5.0"/>
+	<item desc="object_desc_71003" hint="人族男巫2" id="71003.0" name="object_name_71003" param_0="2000_1" unlock="10.0"/>
+	<item desc="object_desc_70004" hint="人族女巫1" id="70004.0" name="object_name_70004" param_0="2103_0" param_1="2104_0" param_2="2000_1" unlock="5.0"/>
 	<item desc="object_desc_71004" hint="人族女巫2" id="71004.0" name="object_name_71004" unlock="10.0"/>
-	<item desc="object_desc_70005" hint="人族狮鹫1" id="70005.0" name="object_name_70005" unlock="5.0"/>
-	<item desc="object_desc_71005" hint="人族狮鹫2" id="71005.0" name="object_name_71005" unlock="10.0"/>
-	<item desc="object_desc_70006" hint="骷髅盾牌兵1" id="70006.0" name="object_name_70006" unlock="5.0"/>
+	<item desc="object_desc_70005" hint="人族狮鹫1" id="70005.0" name="object_name_70005" param_0="2005_0" param_1="2000_1" unlock="5.0"/>
+	<item desc="object_desc_71005" hint="人族狮鹫2" id="71005.0" name="object_name_71005" param_0="2004_0" param_1="2101_0" unlock="10.0"/>
+	<item desc="object_desc_70006" hint="骷髅盾牌兵1" id="70006.0" name="object_name_70006" param_0="2005_0" param_1="2106_0" unlock="5.0"/>
 	<item desc="object_desc_71006" hint="骷髅盾牌兵2" id="71006.0" name="object_name_71006" unlock="10.0"/>
-	<item desc="object_desc_70007" hint="食尸鬼1" id="70007.0" name="object_name_70007" unlock="5.0"/>
+	<item desc="object_desc_70007" hint="食尸鬼1" id="70007.0" name="object_name_70007" param_0="2006_0" param_1="2107_0" unlock="5.0"/>
 	<item desc="object_desc_71007" hint="食尸鬼2" id="71007.0" name="object_name_71007" unlock="10.0"/>
-	<item desc="object_desc_70008" hint="骷髅弓箭手1" id="70008.0" name="object_name_70008" unlock="5.0"/>
+	<item desc="object_desc_70008" hint="骷髅弓箭手1" id="70008.0" name="object_name_70008" param_0="2006_0" param_1="2108_0" unlock="5.0"/>
 	<item desc="object_desc_71008" hint="骷髅弓箭手2" id="71008.0" name="object_name_71008" unlock="10.0"/>
-	<item desc="object_desc_70009" hint="魔族传教士1" id="70009.0" name="object_name_70009" unlock="5.0"/>
+	<item desc="object_desc_70009" hint="魔族传教士1" id="70009.0" name="object_name_70009" param_0="2109_0" param_1="2110_0" param_2="2001_0" param_3="2000_0" unlock="5.0"/>
 	<item desc="object_desc_71009" hint="魔族传教士2" id="71009.0" name="object_name_71009" unlock="10.0"/>
-	<item desc="object_desc_70010" hint="梦魇1" id="70010.0" name="object_name_70010" unlock="5.0"/>
-	<item desc="object_desc_71010" hint="梦魇2" id="71010.0" name="object_name_71010" unlock="10.0"/>
-	<item desc="object_desc_70011" hint="石像鬼1" id="70011.0" name="object_name_70011" unlock="5.0"/>
+	<item desc="object_desc_70010" hint="梦魇1" id="70010.0" name="object_name_70010" param_0="2005_0" param_1="2007_0" param_2="2001_0" param_3="2000_0" unlock="5.0"/>
+	<item desc="object_desc_71010" hint="梦魇2" id="71010.0" name="object_name_71010" param_0="2001_0" unlock="10.0"/>
+	<item desc="object_desc_70011" hint="石像鬼1" id="70011.0" name="object_name_70011" param_0="2112_0" param_1="2001_0" unlock="5.0"/>
 	<item desc="object_desc_71011" hint="石像鬼2" id="71011.0" name="object_name_71011" unlock="10.0"/>
-	<item desc="object_desc_70012" hint="中立兽族牛头人1" id="70012.0" name="object_name_70012" unlock="5.0"/>
+	<item desc="object_desc_70012" hint="中立兽族牛头人1" id="70012.0" name="object_name_70012" param_0="2113_0" param_1="2001_0" param_2="2000_0" unlock="5.0"/>
 	<item desc="object_desc_71012" hint="中立兽族牛头人2" id="71012.0" name="object_name_71012" unlock="10.0"/>
-	<item desc="object_desc_70013" hint="中立兽族巨魔巫医1" id="70013.0" name="object_name_70013" unlock="5.0"/>
-	<item desc="object_desc_71013" hint="中立兽族巨魔巫医2" id="71013.0" name="object_name_71013" unlock="10.0"/>
-	<item desc="object_desc_70014" hint="中立龙族黑龙1" id="70014.0" name="object_name_70014" unlock="5.0"/>
-	<item desc="object_desc_71014" hint="中立龙族黑龙2" id="71014.0" name="object_name_71014" unlock="10.0"/>
+	<item desc="object_desc_70013" hint="中立兽族巨魔巫医1" id="70013.0" name="object_name_70013" param_0="2103_0" param_1="2001_0" param_2="2000_0" unlock="5.0"/>
+	<item desc="object_desc_71013" hint="中立兽族巨魔巫医2" id="71013.0" name="object_name_71013" param_0="2112_0" param_1="2001_0" param_2="2000_0" unlock="10.0"/>
+	<item desc="object_desc_70014" hint="中立龙族黑龙1" id="70014.0" name="object_name_70014" param_0="2004_0" param_1="2002_0" param_2="2005_0" param_3="2001_0" unlock="5.0"/>
+	<item desc="object_desc_71014" hint="中立龙族黑龙2" id="71014.0" name="object_name_71014" param_0="2103_0" unlock="10.0"/>
 	<item desc="object_desc_70015" hint="中立矮人族火枪手1" id="70015.0" name="object_name_70015" unlock="5.0"/>
 	<item desc="object_desc_71015" hint="中立矮人族火枪手2" id="71015.0" name="object_name_71015" unlock="10.0"/>
 	<item desc="object_desc_70016" hint="中立精灵族弓箭手1" id="70016.0" name="object_name_70016" unlock="5.0"/>
@@ -52,46 +52,46 @@
 	<item desc="object_desc_71024" hint="待定2" id="71024.0" name="object_name_71024" unlock="10.0"/>
 	<item desc="object_desc_70025" hint="地雷工兵1" id="70025.0" name="object_name_70025" unlock="5.0"/>
 	<item desc="object_desc_71025" hint="地雷工兵2" id="71025.0" name="object_name_71025" unlock="10.0"/>
-	<item desc="object_desc_70026" hint="娜迦战士1" id="70026.0" name="object_name_70026" unlock="5.0"/>
+	<item desc="object_desc_70026" hint="娜迦战士1" id="70026.0" name="object_name_70026" param_0="2101_0" param_1="2002_0" unlock="5.0"/>
 	<item desc="object_desc_71026" hint="娜迦战士2" id="71026.0" name="object_name_71026" unlock="10.0"/>
 	<item desc="object_desc_70027" hint="待定1" id="70027.0" name="object_name_70027" unlock="5.0"/>
 	<item desc="object_desc_71027" hint="待定2" id="71027.0" name="object_name_71027" unlock="10.0"/>
-	<item desc="object_desc_70028" hint="狼人刺客1" id="70028.0" name="object_name_70028" unlock="5.0"/>
+	<item desc="object_desc_70028" hint="狼人刺客1" id="70028.0" name="object_name_70028" param_0="2003_0" param_1="2114_0" param_2="2001_0" param_3="2000_0" unlock="5.0"/>
 	<item desc="object_desc_71028" hint="狼人刺客2" id="71028.0" name="object_name_71028" unlock="10.0"/>
-	<item desc="object_desc_70100" hint="人族盾牌队长1" id="70100.0" name="object_name_70100" unlock="10.0"/>
-	<item desc="object_desc_71100" hint="人族盾牌队长2" id="71100.0" name="object_name_71100" unlock="20.0"/>
+	<item desc="object_desc_70100" hint="人族盾牌队长1" id="70100.0" name="object_name_70100" param_0="2002_0" param_1="2115_0" param_2="2001_0" param_3="2000_0" unlock="10.0"/>
+	<item desc="object_desc_71100" hint="人族盾牌队长2" id="71100.0" name="object_name_71100" param_0="2002_0" param_1="2116_0" unlock="20.0"/>
 	<item desc="object_desc_72100" hint="人族盾牌队长3" id="72100.0" name="object_name_72100" unlock="30.0"/>
-	<item desc="object_desc_70101" hint="人族剑士队长1" id="70101.0" name="object_name_70101" unlock="10.0"/>
+	<item desc="object_desc_70101" hint="人族剑士队长1" id="70101.0" name="object_name_70101" param_0="2101_0" param_1="2000_1" unlock="10.0"/>
 	<item desc="object_desc_71101" hint="人族剑士队长2" id="71101.0" name="object_name_71101" unlock="20.0"/>
-	<item desc="object_desc_72101" hint="人族剑士队长3" id="72101.0" name="object_name_72101" unlock="30.0"/>
-	<item desc="object_desc_70102" hint="人族弓箭队长1" id="70102.0" name="object_name_70102" unlock="10.0"/>
-	<item desc="object_desc_71102" hint="人族弓箭队长2" id="71102.0" name="object_name_71102" unlock="20.0"/>
+	<item desc="object_desc_72101" hint="人族剑士队长3" id="72101.0" name="object_name_72101" param_0="2114_0" param_1="2117_1" unlock="30.0"/>
+	<item desc="object_desc_70102" hint="人族弓箭队长1" id="70102.0" name="object_name_70102" param_0="2122_0" param_1="2003_1" param_2="2000_1" unlock="10.0"/>
+	<item desc="object_desc_71102" hint="人族弓箭队长2" id="71102.0" name="object_name_71102" param_0="2002_0" param_1="2114_1" unlock="20.0"/>
 	<item desc="object_desc_72102" hint="人族弓箭队长3" id="72102.0" name="object_name_72102" unlock="30.0"/>
-	<item desc="object_desc_70103" hint="人族大法师1" id="70103.0" name="object_name_70103" unlock="10.0"/>
-	<item desc="object_desc_71103" hint="人族大法师2" id="71103.0" name="object_name_71103" unlock="20.0"/>
+	<item desc="object_desc_70103" hint="人族大法师1" id="70103.0" name="object_name_70103" param_0="2110_0" param_1="2111_0" param_2="2001_0" param_3="2000_0" unlock="10.0"/>
+	<item desc="object_desc_71103" hint="人族大法师2" id="71103.0" name="object_name_71103" param_0="2002_0" param_1="2118_0" unlock="20.0"/>
 	<item desc="object_desc_72103" hint="人族大法师3" id="72103.0" name="object_name_72103" unlock="30.0"/>
-	<item desc="object_desc_70104" hint="人族秘法大师1" id="70104.0" name="object_name_70104" unlock="10.0"/>
-	<item desc="object_desc_71104" hint="人族秘法大师2" id="71104.0" name="object_name_71104" unlock="20.0"/>
+	<item desc="object_desc_70104" hint="人族秘法大师1" id="70104.0" name="object_name_70104" param_0="2110_0" param_1="2111_0" param_2="2001_0" param_3="2000_0" unlock="10.0"/>
+	<item desc="object_desc_71104" hint="人族秘法大师2" id="71104.0" name="object_name_71104" param_0="2002_0" param_1="2119_0" unlock="20.0"/>
 	<item desc="object_desc_72104" hint="人族秘法大师3" id="72104.0" name="object_name_72104" unlock="30.0"/>
-	<item desc="object_desc_70105" hint="魔族骷髅王子1" id="70105.0" name="object_name_70105" unlock="10.0"/>
-	<item desc="object_desc_71105" hint="魔族骷髅王子2" id="71105.0" name="object_name_71105" unlock="20.0"/>
+	<item desc="object_desc_70105" hint="魔族骷髅王子1" id="70105.0" name="object_name_70105" param_0="2120_0" unlock="10.0"/>
+	<item desc="object_desc_71105" hint="魔族骷髅王子2" id="71105.0" name="object_name_71105" param_0="2002_0" param_1="2121_0" unlock="20.0"/>
 	<item desc="object_desc_72105" hint="魔族骷髅王子3" id="72105.0" name="object_name_72105" unlock="30.0"/>
-	<item desc="object_desc_70106" hint="魔族食尸鬼王1" id="70106.0" name="object_name_70106" unlock="10.0"/>
-	<item desc="object_desc_71106" hint="魔族食尸鬼王2" id="71106.0" name="object_name_71106" unlock="20.0"/>
+	<item desc="object_desc_70106" hint="魔族食尸鬼王1" id="70106.0" name="object_name_70106" param_0="2122_0" param_1="2005_0" unlock="10.0"/>
+	<item desc="object_desc_71106" hint="魔族食尸鬼王2" id="71106.0" name="object_name_71106" param_0="2002_0" param_1="2004_0" param_2="2001_0" unlock="20.0"/>
 	<item desc="object_desc_72106" hint="魔族食尸鬼王3" id="72106.0" name="object_name_72106" unlock="30.0"/>
 	<item desc="object_desc_70107" hint="魔族地狱战舰1" id="70107.0" name="object_name_70107" unlock="10.0"/>
 	<item desc="object_desc_71107" hint="魔族地狱战舰2" id="71107.0" name="object_name_71107" unlock="20.0"/>
 	<item desc="object_desc_72107" hint="魔族地狱战舰3" id="72107.0" name="object_name_72107" unlock="30.0"/>
-	<item desc="object_desc_70108" hint="魔族黑传教士1" id="70108.0" name="object_name_70108" unlock="10.0"/>
-	<item desc="object_desc_71108" hint="魔族黑传教士2" id="71108.0" name="object_name_71108" unlock="20.0"/>
+	<item desc="object_desc_70108" hint="魔族黑传教士1" id="70108.0" name="object_name_70108" param_0="2006_0" param_1="2005_0" unlock="10.0"/>
+	<item desc="object_desc_71108" hint="魔族黑传教士2" id="71108.0" name="object_name_71108" param_0="2002_0" param_1="2112_0" unlock="20.0"/>
 	<item desc="object_desc_72108" hint="魔族黑传教士3" id="72108.0" name="object_name_72108" unlock="30.0"/>
-	<item desc="object_desc_70109" hint="魔族梦魇精华1" id="70109.0" name="object_name_70109" unlock="10.0"/>
-	<item desc="object_desc_71109" hint="魔族梦魇精华2" id="71109.0" name="object_name_71109" unlock="20.0"/>
-	<item desc="object_desc_72109" hint="魔族梦魇精华3" id="72109.0" name="object_name_72109" unlock="30.0"/>
-	<item desc="object_desc_70110" hint="中立兽族斧王1" id="70110.0" name="object_name_70110" unlock="10.0"/>
-	<item desc="object_desc_71110" hint="中立兽族斧王2" id="71110.0" name="object_name_71110" unlock="20.0"/>
+	<item desc="object_desc_70109" hint="魔族梦魇精华1" id="70109.0" name="object_name_70109" param_0="2002_0" param_1="2123_0" param_2="2001_0" param_3="2000_0" unlock="10.0"/>
+	<item desc="object_desc_71109" hint="魔族梦魇精华2" id="71109.0" name="object_name_71109" param_0="2002_0" param_1="2120_0" param_2="2001_0" param_3="2000_0" unlock="20.0"/>
+	<item desc="object_desc_72109" hint="魔族梦魇精华3" id="72109.0" name="object_name_72109" param_0="2109_0" param_1="2110_0" param_2="2001_0" param_3="2000_0" unlock="30.0"/>
+	<item desc="object_desc_70110" hint="中立兽族斧王1" id="70110.0" name="object_name_70110" param_0="2113_0" param_1="2000_0" unlock="10.0"/>
+	<item desc="object_desc_71110" hint="中立兽族斧王2" id="71110.0" name="object_name_71110" param_0="2002_0" param_1="2112_0" param_2="2001_0" param_3="2000_0" unlock="20.0"/>
 	<item desc="object_desc_72110" hint="中立兽族斧王3" id="72110.0" name="object_name_72110" unlock="30.0"/>
-	<item desc="object_desc_70111" hint="中立兽族食人鬼王1" id="70111.0" name="object_name_70111" unlock="10.0"/>
-	<item desc="object_desc_71111" hint="中立兽族食人鬼王2" id="71111.0" name="object_name_71111" unlock="20.0"/>
+	<item desc="object_desc_70111" hint="中立兽族食人鬼王1" id="70111.0" name="object_name_70111" param_0="2124_0" param_1="2006_0" param_2="2001_0" unlock="10.0"/>
+	<item desc="object_desc_71111" hint="中立兽族食人鬼王2" id="71111.0" name="object_name_71111" param_0="2002_0" param_1="2005_0" unlock="20.0"/>
 	<item desc="object_desc_72111" hint="中立兽族食人鬼王3" id="72111.0" name="object_name_72111" unlock="30.0"/>
 </root>

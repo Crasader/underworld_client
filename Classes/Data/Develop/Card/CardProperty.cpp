@@ -13,7 +13,7 @@
 #include "GameConstants.h"
 
 CardProperty::CardProperty(tinyxml2::XMLElement *xmlElement)
-:AbstractProperty(xmlElement)
+:DevelopProperty(xmlElement)
 ,_cardType(nullptr)
 ,_rarity(0)
 ,_beUnlockedLevel(0)
@@ -49,78 +49,6 @@ CardProperty::CardProperty(tinyxml2::XMLElement *xmlElement)
             _runeTypes.insert(std::make_pair(idx, type));
         }
     });
-    
-    {
-        static const std::map<ObjectUtils::CardAttributeType, std::string> AttributeKeys {
-            {ObjectUtils::CardAttributeType::HP, "hp"},
-            {ObjectUtils::CardAttributeType::SPEED, "speed"},
-            {ObjectUtils::CardAttributeType::ARMOR, "armor"},
-            {ObjectUtils::CardAttributeType::ARMOR_TYPE, "armortype"},
-            {ObjectUtils::CardAttributeType::GROUND_DAMAGE, "damage1"},
-            {ObjectUtils::CardAttributeType::ATTACK_TYPE, "damagetype"},
-            {ObjectUtils::CardAttributeType::HIT_SPEED, "hitspeed"},
-            {ObjectUtils::CardAttributeType::RANGE, "range"},
-            {ObjectUtils::CardAttributeType::TARGET_TYPE, "target"},
-            {ObjectUtils::CardAttributeType::AIR_DAMAGE, "damage2"},
-        };
-        
-        static const std::set<ObjectUtils::CardAttributeType> SpecialKeys {
-            ObjectUtils::CardAttributeType::ARMOR_TYPE,
-            ObjectUtils::CardAttributeType::GROUND_DAMAGE,
-            ObjectUtils::CardAttributeType::ATTACK_TYPE,
-            ObjectUtils::CardAttributeType::TARGET_TYPE,
-            ObjectUtils::CardAttributeType::AIR_DAMAGE,
-        };
-        
-        for (auto iter = begin(AttributeKeys); iter != end(AttributeKeys); ++iter) {
-            auto type(iter->first);
-            auto key(iter->second.c_str());
-            if (SpecialKeys.find(type) == end(SpecialKeys) && !xmlElement->Attribute(key)) { continue; }
-            
-            auto value = XMLUtils::parse<float>(xmlElement, key);
-            CC_BREAK_IF(ObjectUtils::CardAttributeType::HP == type && value <= 0);
-            
-            if (SpecialKeys.find(type) != end(SpecialKeys) || value != 0) {
-                _attributes.insert(make_pair(type, value));
-            }
-        }
-        
-        if (true) {
-            static const auto gkey(ObjectUtils::CardAttributeType::GROUND_DAMAGE);
-            static const auto akey(ObjectUtils::CardAttributeType::AIR_DAMAGE);
-            auto iter(_attributes.find(ObjectUtils::CardAttributeType::TARGET_TYPE));
-            if (iter == end(_attributes)) {
-                _attributes.erase(gkey);
-                _attributes.erase(akey);
-            } else {
-                auto targetType(static_cast<ObjectUtils::TargetType>(iter->second));
-                switch (targetType) {
-                    case ObjectUtils::TargetType::GROUND: {
-                        _attributes.erase(akey);
-                    }
-                        break;
-                    case ObjectUtils::TargetType::AIR: {
-                        _attributes.erase(gkey);
-                    }
-                        break;
-                    case ObjectUtils::TargetType::BOTH: {
-                        if (_attributes.find(gkey) == end(_attributes)) { _attributes.insert(make_pair(gkey, 0)); }
-                        if (_attributes.find(akey) == end(_attributes)) { _attributes.insert(make_pair(akey, 0)); }
-                        
-                        const auto gvalue(_attributes.at(gkey));
-                        const auto avalue(_attributes.at(akey));
-                        if (0 == gvalue) {
-                            _attributes.at(gkey) = avalue;
-                            _attributes.erase(akey);
-                        } else if (0 == avalue) {
-                            _attributes.erase(akey);
-                        }
-                    }
-                        break;
-                }
-            }
-        }
-    }
 }
 
 CardProperty::~CardProperty() {}
@@ -190,20 +118,6 @@ int CardProperty::getDonatePoint() const
 const std::vector<int>& CardProperty::getSkills() const
 {
     return _skills;
-}
-
-const std::map<ObjectUtils::CardAttributeType, float>& CardProperty::getAttributes() const
-{
-    return _attributes;
-}
-
-float CardProperty::getAttribute(ObjectUtils::CardAttributeType type)
-{
-    if (_attributes.find(type) != end(_attributes)) {
-        return _attributes.at(type);
-    }
-    
-    return 0.0f;
 }
 
 ObjectUtils::RuneType CardProperty::getRuneType(int idx) const

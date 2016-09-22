@@ -20,19 +20,19 @@ ObjectBriefNode::~ObjectBriefNode()
     removeFromParent();
 }
 
-ObjectBriefNode* ObjectBriefNode::create(const ObjectBriefData* data)
+ObjectBriefNode* ObjectBriefNode::create()
 {
-    ObjectBriefNode *p = new (std::nothrow) ObjectBriefNode();
-    if(p && p->init(data)) {
-        p->autorelease();
-        return p;
+    auto ret = new (std::nothrow) ObjectBriefNode();
+    if(ret && ret->init()) {
+        ret->autorelease();
+        return ret;
     }
     
-    CC_SAFE_DELETE(p);
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
-bool ObjectBriefNode::init(const ObjectBriefData* data)
+bool ObjectBriefNode::init()
 {
     if (Node::init()) {
         setAnchorPoint(Point::ANCHOR_MIDDLE);
@@ -44,8 +44,6 @@ bool ObjectBriefNode::init(const ObjectBriefData* data)
         _count->setHorizontalAlignment(TextHAlignment::LEFT);
         _count->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
         addChild(_count);
-        
-        update(data);
         
         return true;
     }

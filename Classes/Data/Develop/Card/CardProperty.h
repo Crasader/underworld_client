@@ -9,7 +9,7 @@
 #ifndef CardProperty_h
 #define CardProperty_h
 
-#include "AbstractProperty.h"
+#include "DevelopProperty.h"
 #include "CocosGlobal.h"
 #include "ObjectUtils.h"
 #include "GameModeHMM.h"
@@ -22,7 +22,7 @@ namespace UnderWorld {
     }
 }
 
-class CardProperty : public AbstractProperty
+class CardProperty : public DevelopProperty
 {
 public:
     explicit CardProperty(tinyxml2::XMLElement *xmlElement);
@@ -39,8 +39,6 @@ public:
     int getDonateExp() const;
     int getDonatePoint() const;
     const std::vector<int>& getSkills() const;
-    const std::map<ObjectUtils::CardAttributeType, float>& getAttributes() const;
-    float getAttribute(ObjectUtils::CardAttributeType type);
     ObjectUtils::RuneType getRuneType(int idx) const;
     
 private:
@@ -53,7 +51,6 @@ private:
     int _donateExp;
     int _donatePoint;
     std::vector<int> _skills;
-    std::map<ObjectUtils::CardAttributeType, float> _attributes;
     std::unordered_map<int, ObjectUtils::RuneType> _runeTypes;
 };
 

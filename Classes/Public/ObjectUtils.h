@@ -27,43 +27,6 @@ namespace ObjectUtils
         GREEN
     };
     RuneType getRuneType(int oid);
-    
-    enum class CardAttributeType {
-        HP,
-        SPEED,
-        ARMOR,
-        ARMOR_TYPE,
-        GROUND_DAMAGE,
-        ATTACK_TYPE,
-        HIT_SPEED,
-        RANGE,
-        TARGET_TYPE,
-        AIR_DAMAGE,
-    };
-    
-    enum class AttackType {
-        NORMAL,
-        PIERCING,
-        MAGIC,
-        HERO,
-        SIEGE,
-        CHAOS,
-    };
-    
-    enum class ArmorType {
-        HEAVY,
-        MEDIUM,
-        UNARMORED,
-        HERO,
-        FORTIFIED,
-        LIGHT,
-    };
-    
-    enum class TargetType {
-        GROUND,
-        AIR,
-        BOTH,
-    };
 }
 
 #endif /* ObjectUtils_h */

@@ -9,7 +9,6 @@
 #include "AbstractUpgradeProperty.h"
 #include "Utils.h"
 #include "XMLUtils.h"
-#include "ObjectBriefData.h"
 
 using namespace std;
 

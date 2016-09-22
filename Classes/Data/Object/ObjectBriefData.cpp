@@ -8,6 +8,7 @@
 
 #include "ObjectBriefData.h"
 #include "Utils.h"
+#include <cassert>
 
 using namespace std;
 
@@ -32,10 +33,7 @@ ObjectBriefData::ObjectBriefData(const string& content)
     }
 }
 
-ObjectBriefData::~ObjectBriefData()
-{
-    
-}
+ObjectBriefData::~ObjectBriefData() {}
 
 int ObjectBriefData::getPercentage() const
 {

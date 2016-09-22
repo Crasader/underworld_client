@@ -23,6 +23,7 @@ namespace UnderWorld { namespace Core {
 class LevelProperty;
 class AbstractProperty;
 class AbstractUpgradeProperty;
+class AttributeProperty;
 class CardProperty;
 class CardUpgradeProperty;
 class RuneProperty;
@@ -61,6 +62,7 @@ public:
     // ========== development ==========
     const AbstractProperty* getProperty(int oid) const;
     const AbstractUpgradeProperty* getUpgradeProperty(int oid, int level) const;
+    const AttributeProperty* getAttributeProperty(int aid) const;
     
 protected:
     // ---------- card ----------
@@ -106,6 +108,7 @@ protected:
     void parsePvrFiles();
     void parseLevelProperty();
     void parseCardDecks();
+    void parseAttributeProperty();
     void parseCardProperty();
     void parseCardUpgradeProperty();
     void parseRuneProperty();
@@ -129,6 +132,7 @@ private:
     std::vector<std::string> _pvrFiles;
     std::unordered_map<int, LevelProperty*> _levels;
     std::set<int> _cardDecks;
+    std::unordered_map<int, AttributeProperty*> _attributes;
     std::unordered_map<int, CardProperty*> _cards;
     std::unordered_map<std::string, CardUpgradeProperty*> _cardUpgradeProperties;
     std::unordered_map<int, RuneProperty*> _runes;

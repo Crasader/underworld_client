@@ -9,9 +9,9 @@
 #ifndef SkillProperty_h
 #define SkillProperty_h
 
-#include "AbstractProperty.h"
+#include "DevelopProperty.h"
 
-class SkillProperty : public AbstractProperty
+class SkillProperty : public DevelopProperty
 {
 public:
     explicit SkillProperty(tinyxml2::XMLElement *xmlElement);

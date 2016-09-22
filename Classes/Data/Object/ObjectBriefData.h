@@ -9,7 +9,7 @@
 #ifndef ObjectBriefData_h
 #define ObjectBriefData_h
 
-#include <iostream>
+#include <string>
 
 class ObjectBriefData
 {

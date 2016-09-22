@@ -15,7 +15,7 @@
 #include "LocalHelper.h"
 #include "DataManager.h"
 #include "AbstractData.h"
-#include "AbstractProperty.h"
+#include "DevelopProperty.h"
 #include "AbstractUpgradeProperty.h"
 
 AbstractInfoLayer::AbstractInfoLayer()
@@ -59,13 +59,14 @@ bool AbstractInfoLayer::init(int cardId, const AbstractData* data)
 void AbstractInfoLayer::update(int cardId, const AbstractData* data)
 {
     if (_icon && _icon->update(cardId, data)) {
-        updateProperty(DataManager::getInstance()->getProperty(cardId));
+        auto property(dynamic_cast<const DevelopProperty*>(DataManager::getInstance()->getProperty(cardId)));
+        updateProperty(property);
     }
     
     updateData(data);
 }
 
-void AbstractInfoLayer::updateProperty(const AbstractProperty* property)
+void AbstractInfoLayer::updateProperty(const DevelopProperty* property)
 {
     _property = property;
     
@@ -76,6 +77,34 @@ void AbstractInfoLayer::updateProperty(const AbstractProperty* property)
     if (_description) {
         _description->setString(property ? LocalHelper::getString(property->getDescription()) : "");
     }
+    
+    do {
+        const auto& cardAttributes(property->getAttributes());
+        
+        for (int i = 0; i < _attributes.size(); ++i) {
+            auto node(_attributes.at(i));
+            node->setVisible(i < cardAttributes.size());
+        }
+        
+        int idx(0);
+        const auto& orders(property->getOrderedAttributes());
+        for (int i = 0; i < orders.size(); ++i) {
+            const auto type(orders.at(i));
+            auto iter(cardAttributes.find(type));
+            if (idx < _attributes.size() && iter != end(cardAttributes)) {
+                auto node(_attributes.at(idx));
+                node->setAttribute(type, iter->second);
+                
+                if ((ATTR_GROUND_DAMAGE == type || ATTR_AIR_DAMAGE == type) && cardAttributes.find(ATTR_TARGET_TYPE) != end(cardAttributes)) {
+                    auto targetType(static_cast<TargetType>(cardAttributes.at(ATTR_TARGET_TYPE)));
+                    if (TargetType::BOTH != targetType || cardAttributes.find(ATTR_AIR_DAMAGE) == end(cardAttributes)) {
+                        node->setName(LocalHelper::getString("ui_cardAttr_damage"));
+                    }
+                }
+                ++ idx;
+            }
+        }
+    } while (false);
 }
 
 void AbstractInfoLayer::updateData(const AbstractData* data)

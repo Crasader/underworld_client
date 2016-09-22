@@ -10,7 +10,6 @@
 #define ObjectBriefNode_h
 
 #include "cocos2d.h"
-#include "CocosGlobal.h"
 
 USING_NS_CC;
 
@@ -19,7 +18,7 @@ class ObjectBriefData;
 class ObjectBriefNode : public Node
 {
 public:
-    static ObjectBriefNode* create(const ObjectBriefData* data);
+    static ObjectBriefNode* create();
     virtual ~ObjectBriefNode();
     
     void update(const ObjectBriefData* data);
@@ -27,7 +26,7 @@ public:
     
 protected:
     ObjectBriefNode();
-    bool init(const ObjectBriefData* data);
+    virtual bool init() override;
     
 private:
     Sprite* _icon;

@@ -91,7 +91,7 @@ bool NoticeNode::init(ChatType type, float width, const ChatData* data)
             _bg->addChild(_resourceBg);
             
             for (int i = 0; i < resourceMaxCount; ++i) {
-                auto node = ObjectBriefNode::create(nullptr);
+                auto node = ObjectBriefNode::create();
                 _resourceBg->addChild(node);
                 _resourceNodes.push_back(node);
             }

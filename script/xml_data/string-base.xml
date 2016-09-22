@@ -157,7 +157,46 @@
     <item key="ui_cardArmorType_3" value="英雄"/>
     <item key="ui_cardArmorType_4" value="城甲"/>
     <item key="ui_cardArmorType_5" value="轻甲"/>
-    
+	
+    <!-- 技能属性 -->
+    <item key="ui_skillAttr_A" value="冷却时间："/>
+    <item key="ui_skillAttr_B" value="持续时间："/>
+	
+	<item key="ui_skillAttr_C" value="作用范围："/>
+	<item key="ui_skillAttr_D" value="施法距离："/>
+	
+	<item key="ui_skillAttr_E" value="触发几率："/>
+	<item key="ui_skillAttr_F" value="施加伤害："/>
+	<item key="ui_skillAttr_G" value="叠加层数："/>
+	<item key="ui_skillAttr_H" value="额外伤害："/>
+	<item key="ui_skillAttr_I" value="比例伤害："/>
+	
+	<item key="ui_skillAttr_1" value="伤害反弹："/>
+	<item key="ui_skillAttr_2" value="伤害倍率："/>
+	<item key="ui_skillAttr_3" value="额外目标数："/>
+	<item key="ui_skillAttr_4" value="生命恢复："/>
+	<item key="ui_skillAttr_5" value="攻击速度降低："/>
+	<item key="ui_skillAttr_6" value="移动速度降低："/>
+	<item key="ui_skillAttr_7" value="死亡后持续时间："/>
+	<item key="ui_skillAttr_8" value="每层提供速度："/>
+	<item key="ui_skillAttr_9" value="每层提供攻击："/>
+	<item key="ui_skillAttr_10" value="召唤单位数量："/>
+    <item key="ui_skillAttr_11" value="召唤单位攻击："/>
+	<item key="ui_skillAttr_12" value="召唤单位生命："/>
+	<item key="ui_skillAttr_13" value="护甲降低："/>
+	<item key="ui_skillAttr_14" value="攻击力比例："/>
+	<item key="ui_skillAttr_15" value="攻击力提升："/>
+	<item key="ui_skillAttr_16" value="护甲提升："/>
+	<item key="ui_skillAttr_17" value="伤害降低："/>
+	<item key="ui_skillAttr_18" value="吸血提升："/>
+	<item key="ui_skillAttr_19" value="冷却速率提升："/>
+	<item key="ui_skillAttr_20" value="生命上限提升："/>
+	<item key="ui_skillAttr_21" value="攻击速度提升："/>
+	<item key="ui_skillAttr_22" value="吸血："/>
+	<item key="ui_skillAttr_23" value="最大敌人数："/>
+	<item key="ui_skillAttr_24" value="攻击速度降低："/>
+	<item key="ui_skillAttr_25" value="每层提供护甲："/>
+	
     <!-- 目标类型 -->
     <item key="ui_cardTarget_0" value="地面目标"/>
     <item key="ui_cardTarget_1" value="空中目标"/>
