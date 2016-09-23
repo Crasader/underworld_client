@@ -4,7 +4,7 @@
 	<item icon="icon_gongjili.png" id="1001.0" name="ui_cardAttr_damage" priority="0.0" type="0.0"/>
 	<item icon="icon_gongjili.png" id="1002.0" name="ui_cardAttr_groundDamage" priority="0.0" type="0.0"/>
 	<item icon="icon_gongjili.png" id="1003.0" name="ui_cardAttr_airDamage" priority="0.0" type="0.0"/>
-	<item icon="icon_gongjileixing.png" id="1004.0" name="ui_cardAttr_targetType" priority="0.0" type="0.0"/>
+	<item enum_value="ui_cardTarget_" icon="icon_gongjileixing.png" id="1004.0" name="ui_cardAttr_targetType" priority="0.0" type="2.0"/>
 	<item enum_value="ui_cardAttackType_" icon="icon_gongjifanwei.png" id="1005.0" name="ui_cardAttr_attackType" priority="0.0" type="2.0"/>
 	<item icon="icon_gongjisudu.png" id="1006.0" name="ui_cardAttr_hitSpeed" priority="0.0" type="0.0"/>
 	<item icon="icon_gongjifanwei.png" id="1007.0" name="ui_cardAttr_range" priority="0.0" type="0.0"/>
@@ -45,4 +45,5 @@
 	<item icon="icon_hp.png" id="2122.0" name="ui_skillAttr_23" priority="0.0" type="0.0"/>
 	<item icon="icon_hp.png" id="2123.0" name="ui_skillAttr_24" priority="0.0" type="0.0"/>
 	<item icon="icon_hp.png" id="2124.0" name="ui_skillAttr_25" priority="0.0" type="0.0"/>
+	<item icon="icon_hp.png" id="2125.0" name="ui_skillAttr_26" priority="0.0" type="1.0"/>
 </root>

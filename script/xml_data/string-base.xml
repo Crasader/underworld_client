@@ -196,6 +196,7 @@
 	<item key="ui_skillAttr_23" value="最大敌人数："/>
 	<item key="ui_skillAttr_24" value="攻击速度降低："/>
 	<item key="ui_skillAttr_25" value="每层提供护甲："/>
+	<item key="ui_skillAttr_26" value="降低护甲比例："/>
 	
     <!-- 目标类型 -->
     <item key="ui_cardTarget_0" value="地面目标"/>
@@ -305,18 +306,42 @@
 	<Sheet1 key="object_desc_22026" value="极其强大的近战单位，拥有潜水技能，允许该单位藏在水中。"/>
 	<Sheet1 key="object_desc_22027" value="待定"/>
 	<Sheet1 key="object_desc_22028" value="轻型的近战单位。"/>
-	<Sheet1 key="object_desc_21100" value="战士型英雄，特别擅长于保护自己周围的部队，"/>
-	<Sheet1 key="object_desc_21101" value="战士型英雄，特别擅长于冲锋陷阵。"/>
-	<Sheet1 key="object_desc_21102" value="灵巧型的英雄，擅长于与对手周旋。"/>
-	<Sheet1 key="object_desc_21103" value="一位神秘的英雄，擅长于控制魔法能量和远程攻击。"/>
-	<Sheet1 key="object_desc_21104" value="一位神秘的英雄，特别擅长于远程攻击。"/>
-	<Sheet1 key="object_desc_21105" value="一种狡猾的英雄，能学习到腐臭蜂群，睡眠，吸血光环和地狱火技能。"/>
-	<Sheet1 key="object_desc_21106" value="战士型英雄，擅长于控制昆虫进行攻击。"/>
-	<Sheet1 key="object_desc_21107" value="战士型英雄，善于恐吓敌人。"/>
-	<Sheet1 key="object_desc_21108" value="一种神秘的英雄，"/>
-	<Sheet1 key="object_desc_21109" value="一种神秘的英雄，特别擅长于冰系魔法。"/>
-	<Sheet1 key="object_desc_21110" value="一种灵活的英雄，特别擅长于一对一。"/>
-	<Sheet1 key="object_desc_21111" value="战士型英雄，特别擅长于召唤野兽和集合他的盟友。"/>
+	<Sheet1 key="object_desc_21100" value="“您说的都是对的，我的女士——以盾牌的荣誉守卫您的梦想。”
+
+特点：肉盾 防御"/>
+	<Sheet1 key="object_desc_21101" value="“我即正义，我即真理。”
+
+特点：单体、爆发、倍击"/>
+	<Sheet1 key="object_desc_21102" value="“感受群星的愤怒吧！”
+
+特点：远程 AOE "/>
+	<Sheet1 key="object_desc_21103" value="“崇高至可笑只有一步之遥，就像水奴和粥的区别”
+
+特点：召唤法师 "/>
+	<Sheet1 key="object_desc_21104" value="“自由不是放纵，是火一般的梦想。我说的对么，我的勇士？”
+
+特点：召唤法师 高爆发"/>
+	<Sheet1 key="object_desc_21105" value="“鲜血是最好的祭礼。”
+
+特点：近战 吸血"/>
+	<Sheet1 key="object_desc_21106" value="“我才不在乎你是谁。砸晕了，都一样的。”
+
+特点：肉盾 AOE 控制 "/>
+	<Sheet1 key="object_desc_21107" value="“破坏！——然后是毁灭！”
+
+特点：远程 破甲 攻城单位"/>
+	<Sheet1 key="object_desc_21108" value="“跪下”
+
+特点：远程 堆叠输出 降低魔抗"/>
+	<Sheet1 key="object_desc_21109" value="“你们出招的速度只比蜗牛快一点。”
+
+特点：远程 控制 "/>
+	<Sheet1 key="object_desc_21110" value="“我会对昂格的堕落负全责——我会亲手杀了他。在此之前，所有沾过昂格鲜血的双手，都将被剁掉。”
+
+特点：近战 破甲 AOE"/>
+	<Sheet1 key="object_desc_21111" value="“吼！！！死吧！！我将更强大！！”
+
+特点：肉盾 持续伤害"/>
 	<Sheet1 key="object_desc_80001" value="增加英雄3点的力量。"/>
 	<Sheet1 key="object_desc_81001" value="增加英雄3点的敏捷。"/>
 	<Sheet1 key="object_desc_82001" value="增加英雄3点的智力。"/>
@@ -399,7 +424,7 @@
 	<Sheet1 key="object_desc_70105" value="主动：以损失附近友军生命为代价，大幅度提升他们的攻击速度。"/>
 	<Sheet1 key="object_desc_71105" value="被动：友方单位普通攻击时，能将一定伤害转化为生命。"/>
 	<Sheet1 key="object_desc_72105" value="魔族骷髅王子3"/>
-	<Sheet1 key="object_desc_70106" value="主动：投出数个火球击晕附近的敌人，并造成一定魔法伤害。"/>
+	<Sheet1 key="object_desc_70106" value="主动：投出数个火球击晕附近的敌人，并造成一定与敌人生命值相关的魔法伤害。"/>
 	<Sheet1 key="object_desc_71106" value="被动：友方单位被攻击时，有几率使攻击者晕眩。"/>
 	<Sheet1 key="object_desc_72106" value="魔族食尸鬼王3"/>
 	<Sheet1 key="object_desc_70107" value="魔族地狱战舰1"/>
@@ -538,40 +563,40 @@
 	<Sheet1 key="object_name_71027" value="待定2"/>
 	<Sheet1 key="object_name_70028" value="闪烁攻击"/>
 	<Sheet1 key="object_name_71028" value="狼人刺客2"/>
-	<Sheet1 key="object_name_70100" value="坚守状态"/>
-	<Sheet1 key="object_name_71100" value="防御阵型"/>
+	<Sheet1 key="object_name_70100" value="正气如虹"/>
+	<Sheet1 key="object_name_71100" value="同仇敌忾"/>
 	<Sheet1 key="object_name_72100" value="人族盾牌队长3"/>
-	<Sheet1 key="object_name_70101" value="致命打击"/>
-	<Sheet1 key="object_name_71101" value="嗜血杀戮"/>
-	<Sheet1 key="object_name_72101" value="无双"/>
-	<Sheet1 key="object_name_70102" value="多重穿云箭"/>
-	<Sheet1 key="object_name_71102" value="强击光环"/>
+	<Sheet1 key="object_name_70101" value="真理之剑"/>
+	<Sheet1 key="object_name_71101" value="正义击杀"/>
+	<Sheet1 key="object_name_72101" value="圣光降临"/>
+	<Sheet1 key="object_name_70102" value="群星之怒"/>
+	<Sheet1 key="object_name_71102" value="星之轨迹"/>
 	<Sheet1 key="object_name_72102" value="人族弓箭队长3"/>
 	<Sheet1 key="object_name_70103" value="狂怒元素"/>
-	<Sheet1 key="object_name_71103" value="辉煌光环"/>
+	<Sheet1 key="object_name_71103" value="法术精通"/>
 	<Sheet1 key="object_name_72103" value="人族大法师3"/>
 	<Sheet1 key="object_name_70104" value="熔岩元素"/>
-	<Sheet1 key="object_name_71104" value="偃月阵法"/>
+	<Sheet1 key="object_name_71104" value="爱的加持"/>
 	<Sheet1 key="object_name_72104" value="人族秘法大师3"/>
-	<Sheet1 key="object_name_70105" value="战斗仪式"/>
+	<Sheet1 key="object_name_70105" value="公平祭礼"/>
 	<Sheet1 key="object_name_71105" value="吸血光环"/>
 	<Sheet1 key="object_name_72105" value="魔族骷髅王子3"/>
-	<Sheet1 key="object_name_70106" value="冥火连击"/>
-	<Sheet1 key="object_name_71106" value="崎岖阵法"/>
+	<Sheet1 key="object_name_70106" value="炼狱猛击"/>
+	<Sheet1 key="object_name_71106" value="炼狱崇拜"/>
 	<Sheet1 key="object_name_72106" value="魔族食尸鬼王3"/>
 	<Sheet1 key="object_name_70107" value="攻城模式"/>
 	<Sheet1 key="object_name_71107" value="腐蚀攻击"/>
 	<Sheet1 key="object_name_72107" value="魔族地狱战舰3"/>
-	<Sheet1 key="object_name_70108" value="毁灭之球"/>
-	<Sheet1 key="object_name_71108" value="荒芜光环"/>
+	<Sheet1 key="object_name_70108" value="女王鞭挞"/>
+	<Sheet1 key="object_name_71108" value="失宠光环"/>
 	<Sheet1 key="object_name_72108" value="魔族黑传教士3"/>
-	<Sheet1 key="object_name_70109" value="霜冻冲击"/>
+	<Sheet1 key="object_name_70109" value="死亡之握"/>
 	<Sheet1 key="object_name_71109" value="死亡契约"/>
 	<Sheet1 key="object_name_72109" value="亡灵大军"/>
 	<Sheet1 key="object_name_70110" value="旋风斩"/>
 	<Sheet1 key="object_name_71110" value="恐怖嚎叫"/>
 	<Sheet1 key="object_name_72110" value="中立兽族斧王3"/>
-	<Sheet1 key="object_name_70111" value="大力"/>
-	<Sheet1 key="object_name_71111" value="永久的献祭"/>
+	<Sheet1 key="object_name_70111" value="杀戮者"/>
+	<Sheet1 key="object_name_71111" value="凋死术"/>
 	<Sheet1 key="object_name_72111" value="中立兽族食人鬼王3"/>
 </root>
