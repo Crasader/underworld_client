@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <root>
 	<!-- 第一版法术 :后面是注释-->
-	<item id="23100" icon="icon_baofengxue" tips="Card-Snow-circle"/>   <!--暴风雪  -->
-	<item id="23101" icon="icon_huoqiushu" tips="Card-Fireball-circle"/><!--火球术  -->
-   	<item id="23102" icon="icon_huifushu"/><!--医疗术  -->
+	<item id="23100" icon="icon_baofengxue" tips="Card-Snow-circle;1.07"/><!--暴风雪  -->
+	<item id="23101" icon="icon_huoqiushu" tips="Card-Fireball-circle;0.86"/><!--火球术  -->
+   	<item id="23102" icon="icon_huifushu" tips="Card-Snow-circle;1.5"/><!--医疗术  -->
 	<item id="23103" icon="icon_chenmosu"/><!--沉默法术  -->
-   	<item id="23104" icon="icon_xiaoqusan"/><!--小型驱散  -->
+   	<item id="23104" icon="icon_xiaoqusan" tips="Card-Snow-circle;2.13"/><!--小型驱散  -->
 	<item id="23105" icon="icon_daqusan"/><!--大型驱散  -->
-   	<item id="23106" icon="icon_zhenyunsu"/><!--震晕法术  -->
+   	<item id="23106" icon="icon_zhenyunsu" tips="Card-Snow-circle;1.07"/><!--震晕法术  -->
 	<item id="23107" icon="icon_jinzusu"/><!--禁足术  -->
-	<item id="23108" icon="icon_suanwusu"/><!--酸雾  -->
-	<item id="23109" icon="kk"/><!--狂暴法术  -->
-	<item id="23110" icon="mm"/><!--缴械法术  -->
+	<item id="23108" icon="icon_suanwusu" tips="Card-Snow-circle;1.07"/><!--酸雾  -->
+	<item id="23109" icon="kk" tips="Card-Snow-circle;1.07"/><!--狂暴法术  -->
+	<item id="23110" icon="mm" tips="Card-Snow-circle;1.07"/><!--缴械法术  -->
 	<item id="23111" icon="ll"/><!--恐惧法术  -->
 	<item id="23112" icon="nn"/><!--磁场法术  -->
 	<item id="23113" icon="oo"/><!--震荡法术  -->
 	<item id="23114" icon="ZZZZ"/><!--秒杀法术  -->
-	<item id="23115" icon="icon_v_jiaxuefashu"/><!--无敌药水  -->
+	<item id="23115" icon="icon_v_jiaxuefashu" tips="Card-Snow-circle;0.86"/><!--无敌药水  -->
 <!-- 第一版单位：小兵部分 -->	
 	<item id="22000" icon="icon_w_renzudunbing"/><!--人族盾兵  -->
 	<item id="22001" icon="icon_renleizhanshi"/><!--人族剑士  -->
