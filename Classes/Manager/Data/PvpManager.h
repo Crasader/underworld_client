@@ -10,9 +10,7 @@
 #define PvpManager_h
 
 #include "json/document.h"
-#include "CocosGlobal.h"
 #include <vector>
-#include <map>
 #include <functional>
 
 class PvpLogData;
@@ -23,18 +21,20 @@ public:
     static PvpManager* getInstance();
     static void purge();
     
-    void parse(const rapidjson::Value& jsonDict);
-    const std::vector<PvpLogData*>& getPvpLogData() const;
+    // network request
+    void fetchPvpLogs(const std::function<void()>& callback);
+    
+    // data
+    const std::vector<PvpLogData*>& getPvpLogs() const;
     
 private:
     PvpManager();
     virtual ~PvpManager();
-    M_DISALLOW_COPY_AND_ASSIGN(PvpManager);
-    
-    void clear();
+    PvpManager(const PvpManager &) = delete;
+    PvpManager &operator =(const PvpManager &) = delete;
     
 private:
-    std::vector<PvpLogData*> _logData;
+    std::vector<PvpLogData*> _logs;
 };
 
 #endif /* PvpManager_h */

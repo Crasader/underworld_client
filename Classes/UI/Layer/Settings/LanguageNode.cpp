@@ -65,7 +65,6 @@ bool LanguageNode::init()
         button->setTitleFontSize(DEFAULT_FONT_SIZE);
         button->setTitleColor(Color3B::BLACK);
         button->setTitleAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
-        button->setSwallowTouches(false);
         
         CocosUtils::fixWidgetTouchEvent(button, _touchInvalid, nullptr, [this](Ref*) {
             if (_observer) {

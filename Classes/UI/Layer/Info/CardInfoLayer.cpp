@@ -86,7 +86,7 @@ void CardInfoLayer::onBaseCardInfo(BaseCard* pSender)
     addChild(layer);
 }
 
-void CardInfoLayer::onBaseCardUpgrade(BaseCard* pSender)
+void CardInfoLayer::onBaseCardClickedResourceButton(BaseCard* pSender)
 {
     
 }
@@ -378,7 +378,7 @@ void CardInfoLayer::onOpButtonClicked(int idx)
                 _selectedRune->update(nullptr);
             });
         } else if (1 == idx) {
-            DeckManager::getInstance()->getRunesList([this]() {
+            DeckManager::getInstance()->fetchRunesList([this]() {
                 auto property(dynamic_cast<const CardProperty*>(_property));
                 auto layer = RuneBagLayer::create(property->getRuneType(_selectedRune->getIdx()), _selectedRune->getData());
                 layer->registerObserver(this);

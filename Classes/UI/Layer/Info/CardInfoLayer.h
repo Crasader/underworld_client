@@ -49,7 +49,7 @@ private:
     
     // BaseCardObserver
     virtual void onBaseCardInfo(BaseCard* pSender) override;
-    virtual void onBaseCardUpgrade(BaseCard* pSender) override;
+    virtual void onBaseCardClickedResourceButton(BaseCard* pSender) override;
     
     // SpellInfoLayerObserver
     virtual void onSpellInfoLayerExit(Node* pSender) override;

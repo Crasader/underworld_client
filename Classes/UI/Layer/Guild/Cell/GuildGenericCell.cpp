@@ -29,7 +29,6 @@ bool GuildGenericCell::init()
     static const auto& file(CocosUtils::getResourcePath("ui_tiao_15.png"));
     if (ui::Button::init(file, file)) {
         setScale9Enabled(true);
-        setSwallowTouches(false);
         
         auto avatar = AvatarNode::create();
         addChild(avatar);

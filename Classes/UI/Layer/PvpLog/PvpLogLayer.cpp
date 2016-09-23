@@ -222,5 +222,5 @@ float PvpLogLayer::getNodeHeight(ssize_t idx) const
 
 const vector<PvpLogData*>& PvpLogLayer::getData() const
 {
-    return PvpManager::getInstance()->getPvpLogData();
+    return PvpManager::getInstance()->getPvpLogs();
 }

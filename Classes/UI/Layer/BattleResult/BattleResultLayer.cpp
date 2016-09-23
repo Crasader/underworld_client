@@ -97,6 +97,12 @@ bool BattleResultLayer::init()
         auto button = XButton::create(XButton::BSize::Big, XButton::BType::Blue);
         button->setTitleText(LocalHelper::getString("hint_confirm"));
         button->setPosition(Point(winSize.width / 2, bedge + button->getContentSize().height / 2));
+        button->setCallback([this](Ref*) {
+            removeFromParent();
+            if (_observer) {
+                _observer->onBattleResultLayerConfirm(this);
+            }
+        });
         addChild(button);
         
         auto eventListener = EventListenerTouchOneByOne::create();

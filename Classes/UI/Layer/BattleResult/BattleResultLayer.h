@@ -10,17 +10,18 @@
 #define BattleResultLayer_h
 
 #include "cocos2d.h"
-#include "ui/CocosGUI.h"
 
 USING_NS_CC;
 
 class UserSimpleNode;
 class BattleRewardNode;
+class BattleResultLayer;
 
 class BattleResultLayerObserver
 {
 public:
     virtual ~BattleResultLayerObserver() {}
+    virtual void onBattleResultLayerConfirm(BattleResultLayer* pSender) = 0;
 };
 
 class BattleResultLayer : public LayerColor

@@ -464,6 +464,7 @@ void CocosUtils::fixWidgetTouchEvent(Widget* widget, bool& flag, const Widget::c
 {
     if (widget) {
         CC_ASSERT(widget->isTouchEnabled());
+        widget->setSwallowTouches(false);
         widget->addTouchEventListener([=, &flag](Ref* pSender, Widget::TouchEventType type) {
             if (touchedCallback) {
                 touchedCallback(pSender, type);

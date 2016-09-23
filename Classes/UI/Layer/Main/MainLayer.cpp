@@ -135,7 +135,6 @@ void MainLayer::addLevelButtons()
         string file = StringUtils::format("GameImages/icons/guanqia/icon_guanka_%d.png", i + 1);
         auto button = Button::create(file, file);
         button->setPosition(Point(size.width * positions[i].x, size.height * positions[i].y));
-        button->setSwallowTouches(false);
         _mainNode->addChild(button, 0, i);
         
         CocosUtils::fixWidgetTouchEvent(button, _touchInvalid, nullptr, [this](Ref* pSender) {

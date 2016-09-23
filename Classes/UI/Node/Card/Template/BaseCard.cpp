@@ -80,6 +80,7 @@ bool BaseCard::init()
         label->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
         label->setAnchorPoint(Point::ANCHOR_MIDDLE);
         label->setPosition(Width / 2, label->getContentSize().height / 2 + offsetY);
+        label->setVisible(false);
         card->addChild(label);
         _level = label;
         
@@ -98,7 +99,6 @@ bool BaseCard::init()
         _infoButton = info;
         
         setTouchEnabled(true);
-        setSwallowTouches(false);
         CocosUtils::fixWidgetTouchEvent(this, _touchInvalid, [this](Ref*, ui::Widget::TouchEventType type) {
             if (_observer) {
                 _observer->onBaseCardTouched(this, type);

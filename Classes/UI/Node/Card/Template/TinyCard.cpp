@@ -49,7 +49,6 @@ bool TinyCard::init()
         _icon = card;
         
         setTouchEnabled(true);
-        setSwallowTouches(false);
         CocosUtils::fixWidgetTouchEvent(this, _touchInvalid, nullptr, [this](Ref*) {
             if (_callback) {
                 _callback();

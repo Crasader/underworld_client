@@ -140,6 +140,11 @@
 		A1211B231C0BF55200C27CCC /* LiteralValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B211C0BF55200C27CCC /* LiteralValue.cpp */; };
 		A1211B271C0BF5CC00C27CCC /* RandomCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B251C0BF5CC00C27CCC /* RandomCreator.cpp */; };
 		A1211B291C0BF68E00C27CCC /* GameConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1211B281C0BF68E00C27CCC /* GameConstants.cpp */; };
+		A12C279A1D94D7C10040E3A0 /* TradeableCard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12C27981D94D7C10040E3A0 /* TradeableCard.cpp */; };
+		A12C279E1D94DA0D0040E3A0 /* ShopLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12C279C1D94DA0D0040E3A0 /* ShopLayer.cpp */; };
+		A12C27A11D94DA190040E3A0 /* CardShopLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12C279F1D94DA190040E3A0 /* CardShopLayer.cpp */; };
+		A12C27A81D9508130040E3A0 /* CommodityData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12C27A61D9508130040E3A0 /* CommodityData.cpp */; };
+		A12C27AB1D950DD20040E3A0 /* ShopManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12C27A91D950DD20040E3A0 /* ShopManager.cpp */; };
 		A12C60A41D50774C003FCF0D /* UserSimpleNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12C60A21D50774C003FCF0D /* UserSimpleNode.cpp */; };
 		A12C60AD1D50784B003FCF0D /* GuildSimpleNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12C60AB1D50784B003FCF0D /* GuildSimpleNode.cpp */; };
 		A12C60B01D50785A003FCF0D /* ExpNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12C60AE1D50785A003FCF0D /* ExpNode.cpp */; };
@@ -638,6 +643,16 @@
 		A1211B251C0BF5CC00C27CCC /* RandomCreator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RandomCreator.cpp; path = Core/Utils/RandomCreator.cpp; sourceTree = "<group>"; };
 		A1211B261C0BF5CC00C27CCC /* RandomCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RandomCreator.h; path = Core/Utils/RandomCreator.h; sourceTree = "<group>"; };
 		A1211B281C0BF68E00C27CCC /* GameConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameConstants.cpp; path = Core/Game/GameConstants.cpp; sourceTree = "<group>"; };
+		A12C27981D94D7C10040E3A0 /* TradeableCard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TradeableCard.cpp; sourceTree = "<group>"; };
+		A12C27991D94D7C10040E3A0 /* TradeableCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TradeableCard.h; sourceTree = "<group>"; };
+		A12C279C1D94DA0D0040E3A0 /* ShopLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShopLayer.cpp; sourceTree = "<group>"; };
+		A12C279D1D94DA0D0040E3A0 /* ShopLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopLayer.h; sourceTree = "<group>"; };
+		A12C279F1D94DA190040E3A0 /* CardShopLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardShopLayer.cpp; sourceTree = "<group>"; };
+		A12C27A01D94DA190040E3A0 /* CardShopLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardShopLayer.h; sourceTree = "<group>"; };
+		A12C27A61D9508130040E3A0 /* CommodityData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommodityData.cpp; sourceTree = "<group>"; };
+		A12C27A71D9508130040E3A0 /* CommodityData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommodityData.h; sourceTree = "<group>"; };
+		A12C27A91D950DD20040E3A0 /* ShopManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShopManager.cpp; sourceTree = "<group>"; };
+		A12C27AA1D950DD20040E3A0 /* ShopManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopManager.h; sourceTree = "<group>"; };
 		A12C60A21D50774C003FCF0D /* UserSimpleNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserSimpleNode.cpp; sourceTree = "<group>"; };
 		A12C60A31D50774C003FCF0D /* UserSimpleNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserSimpleNode.h; sourceTree = "<group>"; };
 		A12C60AB1D50784B003FCF0D /* GuildSimpleNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuildSimpleNode.cpp; sourceTree = "<group>"; };
@@ -1666,6 +1681,26 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		A12C279B1D94D9FD0040E3A0 /* Shop */ = {
+			isa = PBXGroup;
+			children = (
+				A12C279F1D94DA190040E3A0 /* CardShopLayer.cpp */,
+				A12C27A01D94DA190040E3A0 /* CardShopLayer.h */,
+				A12C279C1D94DA0D0040E3A0 /* ShopLayer.cpp */,
+				A12C279D1D94DA0D0040E3A0 /* ShopLayer.h */,
+			);
+			path = Shop;
+			sourceTree = "<group>";
+		};
+		A12C27A41D9506E60040E3A0 /* Shop */ = {
+			isa = PBXGroup;
+			children = (
+				A12C27A61D9508130040E3A0 /* CommodityData.cpp */,
+				A12C27A71D9508130040E3A0 /* CommodityData.h */,
+			);
+			path = Shop;
+			sourceTree = "<group>";
+		};
 		A12C60A11D50774C003FCF0D /* User */ = {
 			isa = PBXGroup;
 			children = (
@@ -1698,6 +1733,7 @@
 				A1F395EC1C23BBA800B75923 /* Object */,
 				A1FB5D0B1D4F278900CD2622 /* Pvp */,
 				A1E830611C1EA50200FE01B8 /* Quest */,
+				A12C27A41D9506E60040E3A0 /* Shop */,
 				A1D4613E1C3E111B00E8E60B /* User */,
 				A19EE96B1C1C0F1300E46D77 /* LevelProperty.cpp */,
 				A19EE96C1C1C0F1300E46D77 /* LevelProperty.h */,
@@ -1895,6 +1931,7 @@
 				A18524C91C1AE3E800BE261D /* Quest */,
 				A1B66A271D70430A009A8D55 /* Rune */,
 				A1CA35F21D45F28D00584C9D /* Settings */,
+				A12C279B1D94D9FD0040E3A0 /* Shop */,
 				A15A13571D86535600F24469 /* Test */,
 			);
 			path = Layer;
@@ -2110,6 +2147,8 @@
 				A1B4AE291C200521005906A6 /* QuestManager.h */,
 				A18885681C438F1800C9586F /* ResourceManager.cpp */,
 				A18885691C438F1800C9586F /* ResourceManager.h */,
+				A12C27A91D950DD20040E3A0 /* ShopManager.cpp */,
+				A12C27AA1D950DD20040E3A0 /* ShopManager.h */,
 				A1B4AE2A1C200521005906A6 /* UserManager.cpp */,
 				A1B4AE2B1C200521005906A6 /* UserManager.h */,
 			);
@@ -2535,6 +2574,8 @@
 				A1FF0E8A1D7D46CC00C32040 /* SeniorCard.h */,
 				A1FF0E931D7D47A700C32040 /* TinyCard.cpp */,
 				A1FF0E941D7D47A700C32040 /* TinyCard.h */,
+				A12C27981D94D7C10040E3A0 /* TradeableCard.cpp */,
+				A12C27991D94D7C10040E3A0 /* TradeableCard.h */,
 			);
 			path = Template;
 			sourceTree = "<group>";
@@ -2859,6 +2900,7 @@
 				A1FF13BC1D3DFCF6007D2C08 /* GameCenterManager.m in Sources */,
 				045117061BCFBA53002AA721 /* Buff.cpp in Sources */,
 				A1B66A1E1D703767009A8D55 /* Board.cpp in Sources */,
+				A12C279A1D94D7C10040E3A0 /* TradeableCard.cpp in Sources */,
 				A1ED7F971D811E440017B960 /* XTableViewCell.cpp in Sources */,
 				A18524CC1C1AE3E800BE261D /* QuestLayer.cpp in Sources */,
 				A1A7A2651D76ED8A00D7B3B1 /* CardUpgradeProperty.cpp in Sources */,
@@ -2873,6 +2915,7 @@
 				A1C4A8321D928A6E001EFE10 /* JSonUtils.cpp in Sources */,
 				A1FF0E911D7D46CC00C32040 /* JuniorCard.cpp in Sources */,
 				A1B66A231D70383D009A8D55 /* UniversalBoard.cpp in Sources */,
+				A12C279E1D94DA0D0040E3A0 /* ShopLayer.cpp in Sources */,
 				A1DA08CC1CB61CEA00846300 /* BRConfigData.cpp in Sources */,
 				A1720EBA1BCD2D2E00217E98 /* RMStore.m in Sources */,
 				A10D68151D87DF9600D26BE9 /* BillboardLayer.cpp in Sources */,
@@ -2900,6 +2943,7 @@
 				6308F93B1CA02098009D2BFC /* TCPClient.cpp in Sources */,
 				3031641A1CFD99AF00DBAB04 /* Heuristic.cpp in Sources */,
 				308B84691BE3856F00377802 /* AIBrain.cpp in Sources */,
+				A12C27A81D9508130040E3A0 /* CommodityData.cpp in Sources */,
 				A1A7A2691D76ED8A00D7B3B1 /* RuneProperty.cpp in Sources */,
 				A1ED7FD41D815A5E0017B960 /* GuildUICreateNode.cpp in Sources */,
 				A1720E7B1BCCE0F000217E98 /* NumberJump.cpp in Sources */,
@@ -2917,6 +2961,7 @@
 				A1A05B6C1C96B6A0006FE03B /* DDLog.m in Sources */,
 				A1DF81761D759B3D003AC6D4 /* ObjectBriefData.cpp in Sources */,
 				30F840681D50B37F0050C976 /* Gui.cpp in Sources */,
+				A12C27AB1D950DD20040E3A0 /* ShopManager.cpp in Sources */,
 				A1ED7FC81D8143D40017B960 /* GuildUIInteractNode.cpp in Sources */,
 				A1B4AE001C200480005906A6 /* OnlineUpdater.cpp in Sources */,
 				300F25331BFC67550080765C /* FeatureType.cpp in Sources */,
@@ -2934,6 +2979,7 @@
 				A1FB5D031D4F18D800CD2622 /* PvpLogNode.cpp in Sources */,
 				30B83D5E1CEEC25500195004 /* WorldTest.cpp in Sources */,
 				A1720EBD1BCD309A00217E98 /* NetworkController.cpp in Sources */,
+				A12C27A11D94DA190040E3A0 /* CardShopLayer.cpp in Sources */,
 				A1D4615F1C3E251000E8E60B /* MapParticleConfigData.cpp in Sources */,
 				A1FF0E951D7D47A700C32040 /* TinyCard.cpp in Sources */,
 				A12C60AD1D50784B003FCF0D /* GuildSimpleNode.cpp in Sources */,

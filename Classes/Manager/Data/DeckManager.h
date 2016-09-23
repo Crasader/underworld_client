@@ -42,11 +42,11 @@ public:
     static void purge();
     
     // network request
-    void getCardList(const std::function<void()>& callback);
-    void getCardDetail(int cardId, const std::function<void(int cardId, const CardData*)>& callback);
+    void fetchCardList(const std::function<void()>& callback);
+    void fetchCardDetail(int cardId, const std::function<void(int cardId, const CardData*)>& callback);
     void upgradeCard(int cardId, const std::function<void(const CardData*)>& callback);
     void upgradeCardSkill(int cardId, int skillIdx, const std::function<void(const CardData*)>& callback);
-    void getRunesList(const std::function<void()>& callback);
+    void fetchRunesList(const std::function<void()>& callback);
     void imbedRune(int cardId, int runeIdx, int dbId, const std::function<void()>& callback);
     void unloadRune(int cardId, int runeIdx, const std::function<void()>& callback);
     void upgradeRune(int cardId, int runeIdx, const std::function<void()>& callback);

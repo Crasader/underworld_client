@@ -69,7 +69,7 @@ DisplayBar::DisplayBar()
 bool DisplayBar::init(const std::string &background, const std::string &foreground) {
     if (!Node::init()) return false;
 
-    this->removeAllChildren();
+    removeAllChildren();
     _backgroundFile.clear();
     _foregroundFile.clear();
     

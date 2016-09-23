@@ -61,6 +61,6 @@ void AbstractCard::updateData(const AbstractData* data)
 {
     _data = data;
     if (_level) {
-//        _level->setString(data ? StringUtils::format("LV.%d", data->getLevel()) : "");
+        _level->setString(data ? StringUtils::format("LV.%d", data->getLevel()) : "");
     }
 }

@@ -22,9 +22,9 @@ public:
     static void purge();
     
     // network request
-    void getList(const std::function<void()>& callback);
+    void fetchBillboard(const std::function<void()>& callback);
     
-    // billboard
+    // data
     const std::vector<BillboardData*>& getBillboard() const;
     
 private:

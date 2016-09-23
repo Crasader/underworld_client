@@ -64,9 +64,9 @@ typedef std::function<void(long errorCode)> httpErrorCallback;
 #define RES_NAME_WOOD       ("木头")
 
 // Attributes
-#define ATTR_TARGET_TYPE    (1000)
-#define ATTR_GROUND_DAMAGE  (1000)
-#define ATTR_AIR_DAMAGE     (1000)
+#define ATTR_TARGET_TYPE    (1004)
+#define ATTR_GROUND_DAMAGE  (1002)
+#define ATTR_AIR_DAMAGE     (1003)
 enum class TargetType { BOTH = 2 };
 
 #define JSON_KEY ("code")

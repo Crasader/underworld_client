@@ -111,7 +111,7 @@ DeckManager::~DeckManager()
 
 #pragma mark - public
 #pragma mark - network request
-void DeckManager::getCardList(const function<void()>& callback)
+void DeckManager::fetchCardList(const function<void()>& callback)
 {
     if (_allCards.empty()) {
         NetworkApi::getCardList([this, callback](long code, const rapidjson::Value& jsonDict) {
@@ -150,7 +150,7 @@ void DeckManager::getCardList(const function<void()>& callback)
     }
 }
 
-void DeckManager::getCardDetail(int cardId, const function<void(int cardId, const CardData*)>& callback)
+void DeckManager::fetchCardDetail(int cardId, const function<void(int cardId, const CardData*)>& callback)
 {
     auto data(getCardData(cardId));
     if (data) {
@@ -197,7 +197,7 @@ void DeckManager::upgradeCardSkill(int cardId, int skillIdx, const function<void
     }
 }
 
-void DeckManager::getRunesList(const std::function<void()>& callback)
+void DeckManager::fetchRunesList(const std::function<void()>& callback)
 {
     if (_runeGroups.empty()) {
         NetworkApi::getRunesList([=](long code, const rapidjson::Value& jsonDict) {

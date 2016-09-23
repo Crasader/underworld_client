@@ -11,7 +11,9 @@
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "GameManager.h"
+#include "PvpManager.h"
 #include "BillboardManager.h"
+#include "ShopManager.h"
 #include "SoundManager.h"
 #include "ResourceNode.h"
 #include "UserSimpleNode.h"
@@ -23,6 +25,8 @@
 #include "GuildSearchLayer.h"
 #include "LoadingLayer.h"
 #include "BillboardLayer.h"
+#include "BattleResultLayer.h"
+#include "CardShopLayer.h"
 #include "TestLayer.h"
 
 using namespace std;
@@ -401,13 +405,13 @@ void MainUILayer::onFunctionButtonClicked(ButtonType type)
             break;
             
         case ButtonType::Train:
-            DeckManager::getInstance()->getCardList([runningScene]() {
+            DeckManager::getInstance()->fetchCardList([runningScene]() {
                 runningScene->addChild(DevelopLayer::create());
             });
             break;
             
         case ButtonType::Prepare:
-            DeckManager::getInstance()->getCardList([runningScene]() {
+            DeckManager::getInstance()->fetchCardList([runningScene]() {
                 runningScene->addChild(BattleDeckLayer::create());
             });
             break;
@@ -417,7 +421,9 @@ void MainUILayer::onFunctionButtonClicked(ButtonType type)
             break;
             
         case ButtonType::BattleLog:
-            runningScene->addChild(PvpLogLayer::create());
+            PvpManager::getInstance()->fetchPvpLogs([runningScene] {
+                runningScene->addChild(PvpLogLayer::create());
+            });
             break;
             
         case ButtonType::Guild: {
@@ -430,9 +436,21 @@ void MainUILayer::onFunctionButtonClicked(ButtonType type)
             break;
             
         case ButtonType::Rank: {
-            BillboardManager::getInstance()->getList([runningScene]() {
+            BillboardManager::getInstance()->fetchBillboard([runningScene]() {
                 runningScene->addChild(BillboardLayer::create());
             });
+        }
+            break;
+            
+        case ButtonType::Shop: {
+            ShopManager::getInstance()->fetchCardList([runningScene] {
+                runningScene->addChild(CardShopLayer::create());
+            });
+        }
+            break;
+            
+        case ButtonType::Quest: {
+            runningScene->addChild(BattleResultLayer::create());
         }
             break;
             

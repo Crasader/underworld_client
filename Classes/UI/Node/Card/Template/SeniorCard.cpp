@@ -51,7 +51,7 @@ bool SeniorCard::init()
             if (button) {
                 if (button->isResourceEnough()) {
                     if (_observer) {
-                        _observer->onBaseCardUpgrade(this);
+                        _observer->onBaseCardClickedResourceButton(this);
                     }
                 } else {
                     MessageBox("资源不足", nullptr);

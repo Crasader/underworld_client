@@ -41,7 +41,6 @@ bool AvatarNode::init()
         
         static const auto file(CocosUtils::getResourcePath("icon_touxiang_1.png"));
         auto avatar = ui::Button::create(file, file);
-        avatar->setSwallowTouches(false);
         avatar->setPosition(Point(Width / 2, Height / 2));
         addChild(avatar);
         

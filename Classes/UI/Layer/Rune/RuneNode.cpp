@@ -73,7 +73,6 @@ bool RuneNode::init(const RuneData* data)
         _amount = label;
 
         setTouchEnabled(true);
-        setSwallowTouches(false);
         CocosUtils::fixWidgetTouchEvent(this, _touchInvalid, nullptr, [this](Ref*) {
             if (_observer) {
                 _observer->onRuneNodeClicked(this);

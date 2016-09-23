@@ -107,7 +107,7 @@ BaseCard* DevelopLayer::onCardPreviewCreateCard(int cardId)
 void DevelopLayer::onCardPreviewClickedOpButton(CardOpType type, const AbstractData* data)
 {
     if (CardOpType::Upgrade == type || CardOpType::Info == type) {
-        DeckManager::getInstance()->getCardDetail(data->getId(), [this](int cardId, const CardData* data) {
+        DeckManager::getInstance()->fetchCardDetail(data->getId(), [this](int cardId, const CardData* data) {
             if (UnderWorld::Core::HMMCardClass::kHMMCardClass_Spell == dynamic_cast<const CardProperty*>(DataManager::getInstance()->getProperty(cardId))->getCardClass()) {
                 auto layer = SpellInfoLayer::create(cardId, data);
                 layer->registerObserver(this);

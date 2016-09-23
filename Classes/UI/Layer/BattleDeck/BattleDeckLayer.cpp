@@ -206,7 +206,7 @@ void BattleDeckLayer::onCardPreviewClickedOpButton(CardOpType type, const Abstra
     if (CardOpType::Use == type) {
         beginEdit(data->getId());
     } else if (CardOpType::Info == type) {
-        dm->getCardDetail(data->getId(), [this](int cardId, const CardData* data) {
+        dm->fetchCardDetail(data->getId(), [this](int cardId, const CardData* data) {
             showInfo(cardId, data);
         });
     }

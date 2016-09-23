@@ -31,7 +31,7 @@ FixedLabelAtlas* FixedLabelAtlas::create(const std::string &string, const std::s
 
 bool FixedLabelAtlas::initWithString(const std::string& string, const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap) {
     if(LabelAtlas::initWithString(string, charMapFile, itemWidth, itemHeight, startCharMap)){
-        this->setString(string);
+        setString(string);
         return true;
     }
     return false;

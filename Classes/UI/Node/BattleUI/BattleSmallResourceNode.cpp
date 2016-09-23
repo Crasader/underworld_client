@@ -65,7 +65,7 @@ bool BattleSmallResourceNode::init(ResourceType type, int count)
         _countLabel->setPosition(effect->getPosition());
         addChild(_countLabel, 1);
         
-        this->setCascadeOpacityEnabled(true);
+        setCascadeOpacityEnabled(true);
         
         return true;
     }

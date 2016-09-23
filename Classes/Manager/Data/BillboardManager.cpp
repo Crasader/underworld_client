@@ -33,14 +33,14 @@ BillboardManager::BillboardManager() {}
 
 BillboardManager::~BillboardManager()
 {
-    for (int i = 0; i < _list.size(); ++i) {
-        CC_SAFE_DELETE(_list.at(i));
+    for (auto data : _list) {
+        CC_SAFE_DELETE(data);
     }
 }
 
 #pragma mark - public
 #pragma mark - network request
-void BillboardManager::getList(const function<void()>& callback)
+void BillboardManager::fetchBillboard(const function<void()>& callback)
 {
     if (_list.empty()) {
         for (int i = 0; i < 200; ++i) {
@@ -57,7 +57,7 @@ void BillboardManager::getList(const function<void()>& callback)
     }
 }
 
-#pragma mark - billboard
+#pragma mark - data
 const vector<BillboardData*>& BillboardManager::getBillboard() const
 {
     return _list;
