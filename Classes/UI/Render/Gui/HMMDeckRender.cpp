@@ -46,6 +46,7 @@ const float HMMDeckRender::LONG_PRESS_SCALE_UP = 1.1f;
 const float HMMDeckRender::ACTIVE_HERO_MOVE_DURATION = 0.5f;
 const float HMMDeckRender::ACTIVE_HERO_FATE_DURATION = 1.2f;
 const float HMMDeckRender::ACTIVE_HERO_MOVE_WAVE_OFFEST = 15.f;
+const float HMMDeckRender::ACTIVE_HERO_MOVE_WAVE_DISTANCE_THRESHOLD = 10.f;
     
 HMMDeckRender* HMMDeckRender::create(const HMMDeck* deck, Commander* commander,
     const Game* game, WorldRender* worldRender) {
@@ -252,7 +253,7 @@ bool HMMDeckRender::init(const HMMDeck* deck, Commander* commander,
         _cardSelectedPos.push_back(_cardViews[i]->getPosition() + cocos2d::Vec2(0.f, SELECT_MOVE_DISTANCE));
     }
     _activeHeroIndex = CARD_INDEX_INVALID;
-    _lockDeck = false;
+    _lockHeroDeck = false;
     
     /**5. init render */
     render(deck, game);
@@ -325,13 +326,23 @@ void HMMDeckRender::updateActiveHero(int index) {
         // move back
         cocos2d::Vec2 targetPos(_cardOriginPos[_activeHeroIndex].x, _cardViews[_activeHeroIndex]->getPosition().y);
         int direction = targetPos.x > _cardViews[_activeHeroIndex]->getPosition().x ? 1 : -1;
+        bool wave = abs(targetPos.x - _cardViews[_activeHeroIndex]->getPosition().x) >= ACTIVE_HERO_MOVE_WAVE_DISTANCE_THRESHOLD;
         
-        cocos2d::Action* seq = cocos2d::Sequence::create(
-            cocos2d::EaseSineOut::create(cocos2d::MoveTo::create(ACTIVE_HERO_MOVE_DURATION / 2, targetPos + cocos2d::Vec2(ACTIVE_HERO_MOVE_WAVE_OFFEST * direction, 0.f))),
-            cocos2d::EaseSineOut::create(cocos2d::MoveTo::create(ACTIVE_HERO_MOVE_DURATION / 4, targetPos + cocos2d::Vec2(-1 * ACTIVE_HERO_MOVE_WAVE_OFFEST * direction, 0.f))),
-            cocos2d::EaseSineOut::create(cocos2d::MoveTo::create(ACTIVE_HERO_MOVE_DURATION / 4, targetPos)),
-            cocos2d::CallFunc::create([this](){ this->_lockDeck = false; }),
-            NULL);
+        cocos2d::Action* seq = nullptr;
+        
+        if (wave) {
+            seq = cocos2d::Sequence::create(
+                cocos2d::EaseSineOut::create(cocos2d::MoveTo::create(ACTIVE_HERO_MOVE_DURATION / 2, targetPos + cocos2d::Vec2(ACTIVE_HERO_MOVE_WAVE_OFFEST * direction, 0.f))),
+                cocos2d::EaseSineOut::create(cocos2d::MoveTo::create(ACTIVE_HERO_MOVE_DURATION / 4, targetPos + cocos2d::Vec2(-1 * ACTIVE_HERO_MOVE_WAVE_OFFEST * direction, 0.f))),
+                cocos2d::EaseSineOut::create(cocos2d::MoveTo::create(ACTIVE_HERO_MOVE_DURATION / 4, targetPos)),
+                cocos2d::CallFunc::create([this](){ this->_lockHeroDeck = false; }),
+                NULL);
+        } else {
+            seq = cocos2d::Sequence::create(
+                cocos2d::EaseSineOut::create(cocos2d::MoveTo::create(ACTIVE_HERO_MOVE_DURATION, targetPos)),
+                cocos2d::CallFunc::create([this](){ this->_lockHeroDeck = false; }),
+                nullptr);
+        }
         
         _cardViews[_activeHeroIndex]->runAction(seq);
         _activeHeroView = nullptr;
@@ -350,7 +361,7 @@ void HMMDeckRender::updateActiveHero(int index) {
             _cardViews[i]->runAction(fadeIn);
         }
         
-        _lockDeck = true;
+        _lockHeroDeck = true;
     } else {
         // forward
         
@@ -371,14 +382,25 @@ void HMMDeckRender::updateActiveHero(int index) {
         // move 2 center
         cocos2d::Vec2 targetPos(_heroRegionWidth / 2, _cardOriginPos[index].y);
         int direction = targetPos.x > _cardViews[index]->getPosition().x ? 1 : -1;
+        bool wave = abs(targetPos.x - _cardViews[index]->getPosition().x) >= ACTIVE_HERO_MOVE_WAVE_DISTANCE_THRESHOLD;
         
-        cocos2d::Action* seq = cocos2d::Sequence::create(
-            cocos2d::DelayTime::create(ACTIVE_HERO_FATE_DURATION),
-            cocos2d::EaseSineOut::create(cocos2d::MoveTo::create(ACTIVE_HERO_MOVE_DURATION / 2, targetPos + cocos2d::Vec2(ACTIVE_HERO_MOVE_WAVE_OFFEST * direction, 0.f))),
-            cocos2d::EaseSineOut::create(cocos2d::MoveTo::create(ACTIVE_HERO_MOVE_DURATION / 4, targetPos + cocos2d::Vec2(-1 * ACTIVE_HERO_MOVE_WAVE_OFFEST * direction, 0.f))),
-            cocos2d::EaseSineOut::create(cocos2d::MoveTo::create(ACTIVE_HERO_MOVE_DURATION / 4, targetPos)),
-            cocos2d::CallFunc::create([this](){ this->_lockDeck = false; }),
-            NULL);
+        cocos2d::Action* seq = nullptr;
+        if (wave) {
+            seq = cocos2d::Sequence::create(
+                cocos2d::DelayTime::create(ACTIVE_HERO_FATE_DURATION),
+                cocos2d::EaseSineOut::create(cocos2d::MoveTo::create(ACTIVE_HERO_MOVE_DURATION / 2, targetPos + cocos2d::Vec2(ACTIVE_HERO_MOVE_WAVE_OFFEST * direction, 0.f))),
+                cocos2d::EaseSineOut::create(cocos2d::MoveTo::create(ACTIVE_HERO_MOVE_DURATION / 4, targetPos + cocos2d::Vec2(-1 * ACTIVE_HERO_MOVE_WAVE_OFFEST * direction, 0.f))),
+                cocos2d::EaseSineOut::create(cocos2d::MoveTo::create(ACTIVE_HERO_MOVE_DURATION / 4, targetPos)),
+                cocos2d::CallFunc::create([this](){ this->_lockHeroDeck = false; }),
+                NULL);
+        } else {
+            seq = cocos2d::Sequence::create(
+                cocos2d::DelayTime::create(ACTIVE_HERO_FATE_DURATION),
+                cocos2d::EaseSineOut::create(cocos2d::MoveTo::create(ACTIVE_HERO_MOVE_DURATION, targetPos)),
+                cocos2d::CallFunc::create([this](){ this->_lockHeroDeck = false; }),
+                nullptr);
+        }
+        
         _cardViews[index]->runAction(seq);
         _activeHeroView = _cardViews[index];
         buildManualSpellViews(index);
@@ -394,7 +416,7 @@ void HMMDeckRender::updateActiveHero(int index) {
             }
         }
         
-        _lockDeck = true;
+        _lockHeroDeck = true;
     }
     _activeHeroIndex = index;
 }
@@ -407,9 +429,6 @@ void HMMDeckRender::markObjectReleased() {
 
 bool HMMDeckRender::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
     bool ret = false;
-    
-    // deck locked
-    if (_lockDeck) return ret;
     
     //object released
     if (!_deck) return ret;
@@ -494,7 +513,7 @@ HMMDeckRender::HMMDeckRender()
 , _pressingSpellIndex(CARD_INDEX_INVALID)
 , _selectedCardIndex(CARD_INDEX_INVALID)
 , _activeHeroIndex(CARD_INDEX_INVALID)
-, _lockDeck(true)
+, _lockHeroDeck(false)
 , _commander(nullptr)
 , _worldRender(nullptr)
 , _deck(nullptr)
@@ -514,7 +533,7 @@ int HMMDeckRender::calculatePositionOnWhichCard(const cocos2d::Vec2& pos) {
     int ret = CARD_INDEX_INVALID;
     for (int i = 0; i < _cardViews.size(); ++i) {
         if (_cardViews[i]->getCardType()->getCardClass() == kHMMCardClass_Hero
-            && _deck->getHandCard(i)->getHeroCardState() != HMMCard::HeroCardState::Free) {
+            && (_deck->getHandCard(i)->getHeroCardState() != HMMCard::HeroCardState::Free || _lockHeroDeck)) {
             continue;
         }
         
@@ -528,6 +547,9 @@ int HMMDeckRender::calculatePositionOnWhichCard(const cocos2d::Vec2& pos) {
     
 int HMMDeckRender::calculatePositionOnWhichSpell(const cocos2d::Vec2& pos) {
     int ret = CARD_INDEX_INVALID;
+    
+    if (_lockHeroDeck) return ret;
+    
     for (int i = 0; i < _manualSpellViews.size(); ++i) {
         if (_manualSpellViews[i] && _manualSpellViews[i]->getBoundingBox().containsPoint(pos)) {
             ret = i;

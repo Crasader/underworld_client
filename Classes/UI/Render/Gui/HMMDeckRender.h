@@ -55,6 +55,7 @@ public:
     static const float ACTIVE_HERO_MOVE_DURATION;
     static const float ACTIVE_HERO_FATE_DURATION;
     static const float ACTIVE_HERO_MOVE_WAVE_OFFEST;
+    static const float ACTIVE_HERO_MOVE_WAVE_DISTANCE_THRESHOLD;
     
 private:
     enum class TouchMode {
@@ -99,7 +100,7 @@ private:
     std::vector<cocos2d::Vec2> _cardOriginPos;
     std::vector<cocos2d::Vec2> _cardSelectedPos;
     int _activeHeroIndex;
-    bool _lockDeck;
+    bool _lockHeroDeck;
     
     /** refs */
     Commander* _commander;
