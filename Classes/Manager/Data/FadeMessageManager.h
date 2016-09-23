@@ -13,19 +13,19 @@
 
 USING_NS_CC;
 
-class ShopManager
+class FadeMessageManager
 {
 public:
-    static ShopManager* getInstance();
+    static FadeMessageManager* getInstance();
     static void purge();
     
     void show(const std::string& message);
     
 private:
-    ShopManager();
-    virtual ~ShopManager();
-    ShopManager(const ShopManager &) = delete;
-    ShopManager &operator =(const ShopManager &) = delete;
+    FadeMessageManager();
+    virtual ~FadeMessageManager();
+    FadeMessageManager(const FadeMessageManager &) = delete;
+    FadeMessageManager &operator =(const FadeMessageManager &) = delete;
     
 private:
     std::queue<Label*> _labels;

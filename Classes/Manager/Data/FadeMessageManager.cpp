@@ -10,31 +10,31 @@
 
 using namespace std;
 
-static ShopManager* s_pInstance(nullptr);
-ShopManager* ShopManager::getInstance()
+static FadeMessageManager* s_pInstance(nullptr);
+FadeMessageManager* FadeMessageManager::getInstance()
 {
     if (!s_pInstance) {
-        s_pInstance = new (nothrow) ShopManager();
+        s_pInstance = new (nothrow) FadeMessageManager();
     }
     
     return s_pInstance;
 }
 
-void ShopManager::purge()
+void FadeMessageManager::purge()
 {
     if (s_pInstance) {
         CC_SAFE_DELETE(s_pInstance);
     }
 }
 
-ShopManager::ShopManager() {}
+FadeMessageManager::FadeMessageManager() {}
 
-ShopManager::~ShopManager()
+FadeMessageManager::~FadeMessageManager()
 {
     
 }
 
-void ShopManager::show(const std::string& message)
+void FadeMessageManager::show(const std::string& message)
 {
     
 }

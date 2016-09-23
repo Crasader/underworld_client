@@ -153,21 +153,13 @@ string Utils::formatTime(long duration, const char* format)
     const time_t timeT = duration;
     struct tm tm = *localtime(&timeT);
     
-#ifndef PUT_TIME_DISABLED
-#   if defined(__GNUC__) && (__GNUC__ < 5)
-#       if CC_TARGET_PLATFORM != CC_PLATFORM_IOS
-#           define PUT_TIME_DISABLED
-#       endif
-#   endif
-#endif
-    
-#ifdef PUT_TIME_DISABLED
+#if defined(__clang__) || (defined(__GNUC__) && (__GNUC__ >= 5))
+    return Utils::toString(put_time(&tm, format));
+#else
     static const unsigned int maxSize(255);
     char szOut[maxSize];
     auto size = strftime(szOut, maxSize, format, &tm);
     return std::string(szOut, size);
-#else
-    return Utils::toString(put_time(&tm, format));
 #endif
 }
 
