@@ -20,7 +20,7 @@
         </event>
         <event>
             <event_trigger class="schedule" time="7200" />
-            <event_effect class="add_unit" map_index="1" position="936,546">
+            <event_effect class="add_unit" map_index="1" position="986,546">
                 <unit_setting unit_setting_id="12019"/>
             </event_effect>
         </event>
