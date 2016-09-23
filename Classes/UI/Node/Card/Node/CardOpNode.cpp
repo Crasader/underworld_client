@@ -104,6 +104,7 @@ void CardOpNode::setTypes(const vector<CardOpType>& types)
                         _observer->onCardOpNodeClickedButton(type, getCardData());
                     }
                 });
+                button->setSwallowTouches(true);
                 _hint->addChild(button);
                 _buttons.insert(make_pair(type, button));
             }

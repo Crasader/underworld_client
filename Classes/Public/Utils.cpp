@@ -9,6 +9,9 @@
 #include "Utils.h"
 #include "Global.h"
 #include <iomanip>
+#include <algorithm>
+#include <ctime>
+#include <chrono>
 
 using namespace std;
 
@@ -149,7 +152,16 @@ string Utils::formatTime(long duration, const char* format)
 {
     time_t timeT = duration;
     struct tm tm = *localtime(&timeT);
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     return Utils::toString(put_time(&tm, format));
+#else
+    struct timeval tv;
+    gettimeofday(&tv, nullptr);
+    struct tm *tm = localtime(&tv.tv_sec);
+    char currentTime[128];
+    strftime(currentTime, 128, format, tm);
+    return currentTime;
+#endif
 }
 
 string Utils::getTimeString(long timeMillSecond)

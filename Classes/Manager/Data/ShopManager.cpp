@@ -81,3 +81,8 @@ const vector<CommodityData*>& ShopManager::getCardList() const
 {
     return _cardList;
 }
+
+void ShopManager::buyCard(int cardId, const function<void(int cardId)>& callback)
+{
+    
+}
