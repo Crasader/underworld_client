@@ -290,6 +290,7 @@
 		A1ED7FD11D815A440017B960 /* GuildUISearchNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1ED7FCF1D815A440017B960 /* GuildUISearchNode.cpp */; };
 		A1ED7FD41D815A5E0017B960 /* GuildUICreateNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1ED7FD21D815A5E0017B960 /* GuildUICreateNode.cpp */; };
 		A1ED7FD71D816C130017B960 /* GuildTorphyNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1ED7FD51D816C130017B960 /* GuildTorphyNode.cpp */; };
+		A1F189631D953EB300A665BA /* FadeMessageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F189611D953EB300A665BA /* FadeMessageManager.cpp */; };
 		A1F365491C8E89E60084B9B4 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1F365481C8E89E60084B9B4 /* CFNetwork.framework */; };
 		A1F395EF1C23BBA800B75923 /* ObjectProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F395ED1C23BBA800B75923 /* ObjectProperty.cpp */; };
 		A1F3D2361D1D05CD00EB5C17 /* MessageBoxBaseLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1F3D22F1D1D05CD00EB5C17 /* MessageBoxBaseLayer.cpp */; };
@@ -944,6 +945,8 @@
 		A1ED7FD31D815A5E0017B960 /* GuildUICreateNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuildUICreateNode.h; sourceTree = "<group>"; };
 		A1ED7FD51D816C130017B960 /* GuildTorphyNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuildTorphyNode.cpp; sourceTree = "<group>"; };
 		A1ED7FD61D816C130017B960 /* GuildTorphyNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuildTorphyNode.h; sourceTree = "<group>"; };
+		A1F189611D953EB300A665BA /* FadeMessageManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FadeMessageManager.cpp; sourceTree = "<group>"; };
+		A1F189621D953EB300A665BA /* FadeMessageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FadeMessageManager.h; sourceTree = "<group>"; };
 		A1F365481C8E89E60084B9B4 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
 		A1F395ED1C23BBA800B75923 /* ObjectProperty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectProperty.cpp; sourceTree = "<group>"; };
 		A1F395EE1C23BBA800B75923 /* ObjectProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectProperty.h; sourceTree = "<group>"; };
@@ -2139,6 +2142,8 @@
 				A1E8EE7E1D8287D0008F7237 /* Chat */,
 				A10E8F8F1D5C1FFA00320B3D /* DeckManager.cpp */,
 				A10E8F901D5C1FFA00320B3D /* DeckManager.h */,
+				A1F189611D953EB300A665BA /* FadeMessageManager.cpp */,
+				A1F189621D953EB300A665BA /* FadeMessageManager.h */,
 				A1B4AE261C200521005906A6 /* GuildManager.cpp */,
 				A1B4AE271C200521005906A6 /* GuildManager.h */,
 				A1FB5D0F1D4F2B4600CD2622 /* PvpManager.cpp */,
@@ -3039,6 +3044,7 @@
 				04CF0AE91D87F5C800117DA6 /* HMMManualSpellRender.cpp in Sources */,
 				A1FF0E8F1D7D46CC00C32040 /* BaseCard.cpp in Sources */,
 				3087FF051C9F9D92004E31F6 /* MagicType.cpp in Sources */,
+				A1F189631D953EB300A665BA /* FadeMessageManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

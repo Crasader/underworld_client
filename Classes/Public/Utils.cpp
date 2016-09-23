@@ -10,7 +10,7 @@
 #include "Global.h"
 #include <iomanip>
 #include <algorithm>
-#include <ctime>
+#include <sys/time.h>
 #include <chrono>
 
 using namespace std;
@@ -150,17 +150,24 @@ long Utils::getMillSecond()
 
 string Utils::formatTime(long duration, const char* format)
 {
-    time_t timeT = duration;
+    const time_t timeT = duration;
     struct tm tm = *localtime(&timeT);
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-    return Utils::toString(put_time(&tm, format));
+    
+#ifndef PUT_TIME_DISABLED
+#   if defined(__GNUC__) && (__GNUC__ < 5)
+#       if CC_TARGET_PLATFORM != CC_PLATFORM_IOS
+#           define PUT_TIME_DISABLED
+#       endif
+#   endif
+#endif
+    
+#ifdef PUT_TIME_DISABLED
+    static const unsigned int maxSize(255);
+    char szOut[maxSize];
+    auto size = strftime(szOut, maxSize, format, &tm);
+    return std::string(szOut, size);
 #else
-    struct timeval tv;
-    gettimeofday(&tv, nullptr);
-    struct tm *tm = localtime(&tv.tv_sec);
-    char currentTime[128];
-    strftime(currentTime, 128, format, tm);
-    return currentTime;
+    return Utils::toString(put_time(&tm, format));
 #endif
 }
 
