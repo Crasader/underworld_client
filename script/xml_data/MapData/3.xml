@@ -12,7 +12,19 @@
 			<event_trigger class="schedule" time="0" />
 			<event_effect class="alter_resource" map_index="1" resource_name="木头" amount="160"/>
 		</event>
-		
+        <event>
+            <event_trigger class="schedule" time="7200" />
+            <event_effect class="add_unit" map_index="1" position="0,200">
+                <unit_setting unit_setting_id="12019"/>
+            </event_effect>
+        </event>
+        <event>
+            <event_trigger class="schedule" time="7200" />
+            <event_effect class="add_unit" map_index="1" position="976,160">
+                <unit_setting unit_setting_id="12019"/>
+            </event_effect>
+        </event>
+
 		
 	<!--	
 		
