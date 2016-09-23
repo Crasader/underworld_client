@@ -81,7 +81,7 @@ bool MainLayer::init()
         _uiLayer = MainUILayer::create();
         addChild(_uiLayer);
         
-//        addLevelButtons();
+        addLevelButtons();
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);

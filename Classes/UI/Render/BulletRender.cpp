@@ -218,15 +218,26 @@ void BulletRender::updateParams(const Coordinate32& currentPos,
 
     _currentHeight = _parabolaA * pow(distance, 2) + _parabolaB * distance + _parabolaH;
     
+   
     const float beta = atan(2.f * _parabolaA * distance + _parabolaB);
-    if (_targetPos.x == _startPos.x) {
-        _rotation = _targetPos.y > _startPos.y ? -90.f : 90.f;
-        _scale = abs(cos(beta) + sin(beta) / _worldRender->getCameraAngelRadians());
-    } else {
-        int direction1 = _targetPos.x < _startPos.x ? 1 : -1;
-        const float gamma = atan(tan(direction1 == 1 ? -beta : beta)/cos(_alpha)/_worldRender->getCameraAngelRadians() + tan(_alpha));
-        _rotation = gamma * 180 / M_PI * -1;
-        _scale = abs(cos(_alpha) * cos(beta) / cos(gamma)) * direction1 * -1;
+    if (_configData->getBulletMeterial() == BulletMaterial::Arrow) {
+        if (_targetPos.x == _startPos.x) {
+            _rotation = _targetPos.y > _startPos.y ? -90.f : 90.f;
+            _scale = abs(cos(beta) + sin(beta) / _worldRender->getCameraAngelRadians());
+        } else {
+            int direction1 = _targetPos.x < _startPos.x ? 1 : -1;
+            const float gamma = atan(tan(direction1 == 1 ? -beta : beta)/cos(_alpha)/_worldRender->getCameraAngelRadians() + tan(_alpha));
+            _rotation = gamma * 180 / M_PI * -1;
+            _scale = abs(cos(_alpha) * cos(beta) / cos(gamma)) * direction1 * -1;
+        }
+    } else if (_configData->getBulletMeterial() == BulletMaterial::Cannon) {
+        if (_targetPos.x == _startPos.x) {
+            _rotation = _targetPos.y > _startPos.y ? -90.f : 90.f;
+        } else {
+            int direction1 = _targetPos.x < _startPos.x ? 1 : -1;
+            _rotation = _alpha * 180 / M_PI * -1;
+            _scale = direction1 * -1;
+        }
     }
 }
     
@@ -255,11 +266,9 @@ void BulletRender::renderFlyingAnimation(const Coordinate32& currentPos) {
     
     // set params
     if (_body) {
-        if (_configData->getBulletMeterial() == BulletMaterial::Arrow) {
-            _body->setRotation(_rotation);
-            _body->setScaleX(_scale * _configData->getResource().getScale());
-            _body->setScaleY(_configData->getResource().getScale());
-        }
+        _body->setRotation(_rotation);
+        _body->setScaleX(_scale * _configData->getResource().getScale());
+        _body->setScaleY(_configData->getResource().getScale());
     }
     
     // create shadow
@@ -268,11 +277,9 @@ void BulletRender::renderFlyingAnimation(const Coordinate32& currentPos) {
     }
     
     if (_shadow) {
-        if (_configData->getBulletMeterial() == BulletMaterial::Arrow) {
-            _shadow->setRotation(_rotation);
-            _shadow->setScaleX(_scale * _configData->getShadowResource().getScale());
-            _shadow->setScaleY(_configData->getShadowResource().getScale());
-        }
+        _shadow->setRotation(_rotation);
+        _shadow->setScaleX(_scale * _configData->getShadowResource().getScale());
+        _shadow->setScaleY(_configData->getShadowResource().getScale());
     }
     
     // create tail gas
