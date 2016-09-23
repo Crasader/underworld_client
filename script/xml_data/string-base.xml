@@ -199,9 +199,9 @@
 	<item key="ui_skillAttr_26" value="降低护甲比例："/>
 	
     <!-- 目标类型 -->
-    <item key="ui_cardTarget_0" value="地面目标"/>
-    <item key="ui_cardTarget_1" value="空中目标"/>
-    <item key="ui_cardTarget_2" value="空中和地面目标"/>
+    <item key="ui_cardTarget_0" value="地面"/>
+    <item key="ui_cardTarget_1" value="空中"/>
+    <item key="ui_cardTarget_2" value="空中和地面"/>
     
     <!-- 符文 -->
     <item key="ui_rune_title" value="符文背包"/>
@@ -487,18 +487,18 @@
 	<Sheet1 key="object_name_22026" value="娜迦战士"/>
 	<Sheet1 key="object_name_22027" value="待定"/>
 	<Sheet1 key="object_name_22028" value="狼人刺客"/>
-	<Sheet1 key="object_name_21100" value="人族盾牌队长"/>
-	<Sheet1 key="object_name_21101" value="人族剑士队长"/>
-	<Sheet1 key="object_name_21102" value="人族弓箭队长"/>
-	<Sheet1 key="object_name_21103" value="人族大法师"/>
-	<Sheet1 key="object_name_21104" value="人族秘法大师"/>
-	<Sheet1 key="object_name_21105" value="魔族骷髅王子"/>
-	<Sheet1 key="object_name_21106" value="魔族食尸鬼王"/>
-	<Sheet1 key="object_name_21107" value="魔族地狱战舰"/>
-	<Sheet1 key="object_name_21108" value="魔族黑传教士"/>
-	<Sheet1 key="object_name_21109" value="魔族梦魇精华"/>
-	<Sheet1 key="object_name_21110" value="中立兽族斧王"/>
-	<Sheet1 key="object_name_21111" value="中立兽族食人鬼王"/>
+	<Sheet1 key="object_name_21100" value="莫团长·雷诺"/>
+	<Sheet1 key="object_name_21101" value="人族王子·莱恩"/>
+	<Sheet1 key="object_name_21102" value="人族公主·安"/>
+	<Sheet1 key="object_name_21103" value="大法师·安东尼"/>
+	<Sheet1 key="object_name_21104" value="见证者·怀特"/>
+	<Sheet1 key="object_name_21105" value="骷髅王·比格伯恩"/>
+	<Sheet1 key="object_name_21106" value="破坏者·安格"/>
+	<Sheet1 key="object_name_21107" value="地狱战舰·海尔派特"/>
+	<Sheet1 key="object_name_21108" value="黑暗女王·阿瓦瑞塔"/>
+	<Sheet1 key="object_name_21109" value="巫妖王·巫妖王"/>
+	<Sheet1 key="object_name_21110" value="大力王·佐敦"/>
+	<Sheet1 key="object_name_21111" value="勇武者·格莱姆"/>
 	<Sheet1 key="object_name_80001" value="力量符文"/>
 	<Sheet1 key="object_name_81001" value="敏捷符文"/>
 	<Sheet1 key="object_name_82001" value="智力符文"/>

@@ -156,40 +156,40 @@
      -->
 	
 <!-- 第一版单位：英雄部分 -->
-	<card name="人族盾牌队长" card_class="hero" cost="木头:0" recover_span="0" id="21100">
+	<card name="莫团长·雷诺" card_class="hero" cost="木头:0" recover_span="0" id="21100">
 		<unit_setting unit_setting_id="11000"/>
 	</card>
-	<card name="人族剑士队长" card_class="hero" cost="木头:0" recover_span="0" id="21101">
+	<card name="人族王子·莱恩" card_class="hero" cost="木头:0" recover_span="0" id="21101">
 		<unit_setting unit_setting_id="11001"/>
 	</card>
-	<card name="人族弓箭队长" card_class="hero" cost="木头:0" recover_span="0" id="21102">
+	<card name="人族公主·安" card_class="hero" cost="木头:0" recover_span="0" id="21102">
 		<unit_setting unit_setting_id="11002"/>
 	</card>
-	<card name="人族大法师" card_class="hero" cost="木头:0" recover_span="0" id="21103">
+	<card name="大法师·安东尼" card_class="hero" cost="木头:0" recover_span="0" id="21103">
 		<unit_setting unit_setting_id="11003"/>
 	</card>
-	<card name="人族秘法大师" card_class="hero" cost="木头:0" recover_span="0" id="21104">
+	<card name="见证者·怀特" card_class="hero" cost="木头:0" recover_span="0" id="21104">
 		<unit_setting unit_setting_id="11004"/>
 	</card>
-	<card name="魔族骷髅王子" card_class="hero" cost="木头:0" recover_span="0" id="21105">
+	<card name="骷髅王·比格伯恩" card_class="hero" cost="木头:0" recover_span="0" id="21105">
 		<unit_setting unit_setting_id="11005"/>
 	</card>
-	<card name="魔族食尸鬼王" card_class="hero" cost="木头:0" recover_span="0" id="21106">
+	<card name="破坏者·安格" card_class="hero" cost="木头:0" recover_span="0" id="21106">
 		<unit_setting unit_setting_id="11006"/>
 	</card>
-	<card name="魔族地狱战舰" card_class="hero" cost="木头:0" recover_span="0" id="21107">
+	<card name="地狱战舰·海尔派特" card_class="hero" cost="木头:0" recover_span="0" id="21107">
 		<unit_setting unit_setting_id="11008"/>
 	</card>
-	<card name="魔族黑传教士" card_class="hero" cost="木头:0" recover_span="0" id="21108">
+	<card name="黑暗女王·阿瓦瑞塔" card_class="hero" cost="木头:0" recover_span="0" id="21108">
 		<unit_setting unit_setting_id="11008"/>
 	</card>
-	<card name="魔族梦魇精华" card_class="hero" cost="木头:0" recover_span="0" id="21109">
+	<card name="巫妖王·巫妖王" card_class="hero" cost="木头:0" recover_span="0" id="21109">
 		<unit_setting unit_setting_id="11009"/>
 	</card>
-	<card name="中立兽族斧王" card_class="hero" cost="木头:0" recover_span="0" id="21110">
+	<card name="勇武者·格莱姆" card_class="hero" cost="木头:0" recover_span="0" id="21110">
 		<unit_setting unit_setting_id="11010"/>
 	</card>
-	<card name="中立兽族食人鬼王" card_class="hero" cost="木头:0" recover_span="0" id="21111">
+	<card name="大力王·佐敦" card_class="hero" cost="木头:0" recover_span="0" id="21111">
 		<unit_setting unit_setting_id="11011"/>
 	</card>
 	<!--注释：额外的card
