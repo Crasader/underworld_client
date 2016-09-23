@@ -14,13 +14,13 @@
 		</event>
         <event>
             <event_trigger class="schedule" time="7200" />
-            <event_effect class="add_unit" map_index="1" position="0,200">
+            <event_effect class="add_unit" map_index="0" position="120,546">
                 <unit_setting unit_setting_id="12019"/>
             </event_effect>
         </event>
         <event>
             <event_trigger class="schedule" time="7200" />
-            <event_effect class="add_unit" map_index="1" position="976,160">
+            <event_effect class="add_unit" map_index="1" position="936,546">
                 <unit_setting unit_setting_id="12019"/>
             </event_effect>
         </event>
