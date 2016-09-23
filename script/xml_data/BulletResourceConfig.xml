@@ -13,5 +13,5 @@
 	<item render_key="火枪子弹" resource="Rifleman-zidan.csb" shadow_resource="" explode_resource="" explode_sound=""/>
 	<item render_key="牧师子弹" resource="Mage-bullet.csb" shadow_resource="" explode_resource="" explode_sound=""/>
 	<item render_key="法师子弹3" resource="Priest-bullet.csb" shadow_resource="" explode_resource="" explode_sound=""/>
-	<item render_key="火球术" resource="Fireball-1.csb" shadow_resource="" explode_resource="Big-Fireball-Blast" explode_sound="" material="cannon" tail_gas="tuowei-1|tuowei-2|tuowei-3" tail_gas_interval="20"/>
+	<item render_key="火球术" resource="Fireball-1.csb" shadow_resource="" explode_resource="Big-Fireball-Blast" explode_sound="" material="cannon" tail_gas="fire_ball_gas_3.plist|fire_ball_gas_2.plist|fire_ball_gas_1.plist" tail_gas_interval="20"/>
  </root>

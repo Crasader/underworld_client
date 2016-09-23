@@ -6,6 +6,8 @@
 	<item name="pvr/Ann.plist"/>
 	<item name="pvr/CharacterSkills-1.plist"/>
 	<item name="pvr/CharacterSkills-2.plist"/>
+	<item name="pvr/CharacterSkills-3.plist"/>
+	<item name="pvr/CharacterSkills-4.plist"/>
 	<item name="pvr/Dragon-shadows.plist"/>
 	<item name="pvr/Dragon.plist"/>
 	<item name="pvr/Fat-equipment.plist"/>
@@ -42,5 +44,4 @@
 	<item name="pvr/Tower.plist"/>
 	<item name="pvr/Troll-shadows.plist"/>
 	<item name="pvr/Troll.plist"/>
-	<item name="pvr/tuowei.plist"/>
 </root>

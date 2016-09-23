@@ -138,7 +138,7 @@
 	<spell alias="第一版震荡法术" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="enemy" id="1921" immediate_elements="0,第一版震荡法术,1" is_on_building="0" level="1" perform="0" preperform="30" spell_name="震荡法术lv1" spell_radius="120" to_dead="0"/>
 	<spell alias="第一版秒杀法术" cast_distance="9999" cast_type="position" cd="600" class="cast" deliver_class="magical" id="1922" immediate_elements="0,第一版秒杀法术,1" level="1" perform="0" preperform="30" spell_name="秒杀法术lv1" spell_radius="32" to_dead="0"/>
 	<spell alias="第一版无敌药水" cast_distance="9999" cast_type="position" cd="600" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" id="1923" immediate_elements="0,第一版无敌药水,1" level="1" perform="0" preperform="30" spell_name="无敌药水lv1" spell_radius="64" to_dead="0"/>
-	<spell ai="战斗过程AI" alias="人族盾牌队长坚守" cast_distance="96" cast_type="unit" cd="600" class="cast" conditions="type:unit_class;target:opposite;condition:not:core" deliver_class="magical" deliver_natures="enemy" id="1001" immediate_elements="1,人族盾牌队长坚守,1" level="1" perform="0" preperform="40" spell_name="人族盾牌队长坚守" spell_radius="80" to_dead="0"/>
+	<spell ai="战斗过程AI" alias="人族盾牌队长坚守" cast_distance="96" cast_type="unit" cd="600" class="cast" conditions="type:unit_class;target:opposite;condition:not:core" deliver_class="magical" deliver_natures="enemy" id="1001" immediate_elements="1,人族盾牌队长坚守,1" level="1" perform="0" preperform="40" spell_name="人族盾牌队长坚守" spell_radius="80" to_dead="0" render_key="人族盾牌队长坚守_法术释放特效"/>
 	<spell ai="战斗过程AI" alias="人族剑士队长致命打击" cast_distance="48" cast_type="unit" cd="600" class="cast" conditions=" " deliver_class="physical" deliver_natures="enemy" id="1002" immediate_elements="0,人族剑士队长致命打击,1" is_on_building="0" level="1" perform="0" preperform="40" spell_name="人族剑士队长致命打击" to_dead="0"/>
 	<spell alias="剑士队长清除自身负面状态" cast_distance="-1" cast_type="self" cd="300" class="cast" conditions=" " deliver_class="magical" deliver_natures="ally" id="1003" immediate_elements="0,剑士队长清除自身负面状态,1" level="1" perform="0" preperform="30" spell_name="剑士队长清除自身负面状态" to_dead="0"/>
 	<spell ai="穿透箭AI" alias="人族弓箭队长穿透箭" cast_distance="256" cast_type="unit" cd="300" class="cast" conditions="type:unit_class;target:opposite;condition:not:core" deliver_class="magical" deliver_natures="enemy" id="1004" immediate_elements="0,人族弓箭队长穿透箭,1" level="1" perform="0" preperform="40" spell_name="人族弓箭队长穿透箭" to_dead="0"/>
@@ -222,7 +222,7 @@
 	<spell_pattern class="target_position_circle" conditions=" " content_name="第一版震荡法术" deliver_natures="enemy" name="第一版震荡法术" radius="120"/>
 	<spell_pattern class="target" content_name="第一版秒杀法术" name="第一版秒杀法术"/>
 	<spell_pattern class="target_position_circle" conditions="type:unit_class;target:opposite;condition:is:hero" content_name="第一版无敌药水" count="1" deliver_natures="ally" name="第一版无敌药水" radius="64"/>
-	<spell_pattern class="target_position_circle" conditions="type:field_type;target:opposite;condition:not:air" content_name="内容人族盾牌队长坚守" deliver_natures="ally" name="人族盾牌队长坚守" radius="128"/>
+	<spell_pattern class="target_position_circle" conditions="type:field_type;target:opposite;condition:not:air" content_name="内容人族盾牌队长坚守" deliver_natures="ally" name="人族盾牌队长坚守" radius="128" render_key="人族盾牌队长坚守_法术元素特效"/>
 	<spell_pattern class="target" conditions="type:unit_class;target:opposite;condition:not:building,core" content_name="人族剑士队长致命打击" deliver_natures="enemy" name="人族剑士队长致命打击"/>
 	<spell_pattern class="target" conditions=" " content_name="剑士队长清除自身负面状态" deliver_natures="ally" name="剑士队长清除自身负面状态"/>
 	<spell_pattern class="target_position_circle" conditions="type:field_type;target:opposite;condition:not:air" content_name="内容人族弓箭队长穿透箭" count="3" deliver_natures="enemy" name="人族弓箭队长穿透箭" radius="96"/>
@@ -242,9 +242,9 @@
 	<spell_pattern class="target" conditions="type:field_type;target:opposite;condition:not:air" content_name="内容中立龙族黑龙火海" deliver_natures="enemy" name="中立龙族黑龙火海"/>
 	<spell_pattern class="target_position_circle" conditions="type:field_type;target:opposite;condition:not:air" content_name="黑龙火海持续伤害" deliver_natures="enemy" name="黑龙火海持续伤害" radius="80"/>
 	<spell_pattern class="target" conditions=" " content_name="内容人族剑士致命打击" deliver_natures="enemy" name="人族剑士致命打击"/>
-	<spell_pattern class="target" conditions="type:unit_enemy_buff_number;target:opposite;condition:&gt;0" content_name="人族男巫驱散友军" deliver_natures="ally" name="人族男巫驱散友军"/>
-	<spell_pattern class="target" conditions="type:unit_ally_buff_number;target:opposite;condition:&gt;0" content_name="人族男巫驱散敌军" deliver_natures="enemy" name="人族男巫驱散敌军"/>
-	<spell_pattern class="target" conditions="type:unit_class;target:opposite;condition:is:summoned" content_name="人族男巫驱散召唤" deliver_natures="enemy" name="人族男巫驱散召唤"/>
+	<spell_pattern class="target" conditions="type:unit_enemy_buff_number;target:opposite;condition:&gt;0" content_name="人族男巫驱散友军" deliver_natures="ally" name="人族男巫驱散友军" render_key="人族男巫驱散_法术元素效果"/>
+	<spell_pattern class="target" conditions="type:unit_ally_buff_number;target:opposite;condition:&gt;0" content_name="人族男巫驱散敌军" deliver_natures="enemy" name="人族男巫驱散敌军" render_key="人族男巫驱散_法术元素效果"/>
+	<spell_pattern class="target" conditions="type:unit_class;target:opposite;condition:is:summoned" content_name="人族男巫驱散召唤" deliver_natures="enemy" name="人族男巫驱散召唤" render_key="人族男巫驱散_法术元素效果"/>
 	<spell_pattern class="target" conditions=" " content_name="人族男巫加血" deliver_natures="ally" name="人族男巫加血"/>
 	<spell_pattern class="target" conditions=" " content_name="人族女巫减速" deliver_natures="enemy" name="人族女巫减速"/>
 	<spell_pattern class="target" conditions="type:unit_class;target:opposite;condition:not:building,core" content_name="内容人族狮鹫引雷击" deliver_natures="enemy" name="人族狮鹫引雷击"/>
@@ -476,7 +476,7 @@
 	<aura buff_name="buff骷髅盾牌兵瘟疫" conditions=" " deliver_natures="enemy" name="骷髅盾牌兵瘟疫" radius="350"/>
 	<aura buff_name="buff骷髅盾牌兵死亡云雾光环" conditions=" " deliver_natures="enemy" name="骷髅盾牌兵死亡云雾光环" radius="96"/>
 	<aura buff_name="治疗守卫回血光环" conditions="type:unit_class;target:opposite;condition:not:building,core" deliver_natures="ally" name="治疗守卫光环" radius="160"/>
-	<buff alias="沉默状态" buff_effect_names="沉默效果" deliver_class="magical" deliver_nature="enemy" dispelable="1" id="1901" is_on_building="0" level="1" max_overlay="1" name="沉默状态" span="600" span_type="limited" unique_on_unit="1"/>
+	<buff alias="沉默状态" buff_effect_names="沉默效果" deliver_class="magical" deliver_nature="enemy" dispelable="1" id="1901" is_on_building="0" level="1" max_overlay="1" name="沉默状态" span="600" span_type="limited" unique_on_unit="1" render_key="沉默"/>
 	<buff alias="击晕状态" buff_effect_names="击晕效果" deliver_class="magical" deliver_nature="enemy" dispelable="0" id="1902" is_on_building="0" level="1" max_overlay="1" name="击晕状态" span="360" span_type="limited" unique_on_unit="1"/>
 	<buff alias="无法移动状态" buff_effect_names="无法移动效果" deliver_class="magical" deliver_nature="enemy" dispelable="1" id="1903" is_on_building="0" level="1" max_overlay="1" name="无法移动状态" span="600" span_type="limited" unique_on_unit="1"/>
 	<buff alias="禁足持续伤害状态" buff_effect_names="禁足持续伤害效果" deliver_class="magical" deliver_nature="enemy" dispelable="1" id="1904" is_on_building="0" level="1" max_overlay="1" name="禁足持续伤害状态" span="600" span_type="limited" unique_on_unit="1"/>
@@ -491,7 +491,7 @@
 	<buff alias="震荡法术减速效果" buff_effect_names="震荡法术降低攻速效果;震荡法术降低移动效果" deliver_class="magical" deliver_nature="enemy" dispelable="0" id="1913" is_on_building="0" level="1" max_overlay="1" name="震荡法术减速效果" span="420" span_type="limited" unique_on_unit="1"/>
 	<buff alias="磁场法术增加闪避效果" buff_effect_names="磁场法术增加闪避效果" deliver_class="physical" deliver_nature="ally" dispelable="0" id="1914" is_on_building="0" level="1" max_overlay="1" name="磁场法术增加闪避效果" span_type="eternal" unique_on_unit="1"/>
 	<buff alias="无敌药水buff" buff_effect_names="无敌药水buff" deliver_class="physical" deliver_nature="ally" dispelable="0" id="1915" is_on_building="0" level="1" max_overlay="1" name="无敌药水buff" render_key="心灵之火" span="420" span_type="limited" unique_on_unit="1"/>
-	<buff alias="人族盾牌队长坚守状态" buff_effect_names="人族盾牌队长坚守增加护甲" deliver_class="physical" deliver_nature="ally" dispelable="1" id="1001" is_on_building="0" level="1" max_overlay="1" name="人族盾牌队长坚守状态" span="480" span_type="limited" unique_on_unit="1"/>
+	<buff alias="人族盾牌队长坚守状态" buff_effect_names="人族盾牌队长坚守增加护甲" deliver_class="physical" deliver_nature="ally" dispelable="1" id="1001" is_on_building="0" level="1" max_overlay="1" name="人族盾牌队长坚守状态" span="480" span_type="limited" unique_on_unit="1" render_key="人族盾牌队长坚守状态特效"/>
 	<buff alias="人族盾牌队长坚韧守护buff" buff_effect_names="人族盾牌队长坚韧守护buff" deliver_class="physical" deliver_nature="ally" dispelable="0" id="1002" is_on_building="0" level="1" max_overlay="1" name="人族盾牌队长坚韧守护buff" span_type="eternal" unique_on_unit="1"/>
 	<buff alias="人族剑士队长杀戮冲锋加速" buff_effect_names="人族剑士队长杀戮冲锋加速buff" deliver_class="magical" deliver_nature="ally" dispelable="0" id="1003" level="1" max_overlay="1" name="人族剑士队长杀戮冲锋加速buff" span="300" span_type="limited" unique_on_unit="1"/>
 	<buff alias="远程强击光环" buff_effect_names="远程强击光环" deliver_class="physical" deliver_nature="ally" dispelable="0" id="1004" is_on_building="0" level="1" max_overlay="1" name="远程强击光环" span_type="eternal" unique_on_unit="1"/>

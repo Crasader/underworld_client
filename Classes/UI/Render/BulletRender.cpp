@@ -113,6 +113,7 @@ bool BulletRender::init(const WorldObject *object, WorldRender *worldRender) {
     }
     _shadowNode->removeAllChildren();
     _body = nullptr;
+    _tails.clear();
     _shadow = nullptr;
     
     // init render
@@ -262,6 +263,9 @@ void BulletRender::renderFlyingAnimation(const Coordinate32& currentPos) {
     // create bodyNode
     if (!_body) {
         _body = addEffect(_configData->getResource(), true, true);
+        for (int i = 0; i < _configData->getTailGasResource().size(); ++i) {
+            _tails.push_back(addEffect(_configData->getTailGasResource()[i], true, true));
+        }
     }
     
     // set params
@@ -281,15 +285,6 @@ void BulletRender::renderFlyingAnimation(const Coordinate32& currentPos) {
         _shadow->setScaleX(_scale * _configData->getShadowResource().getScale());
         _shadow->setScaleY(_configData->getShadowResource().getScale());
     }
-    
-    // create tail gas
-    if (!_configData->getTailGasResource().empty()
-        && currentPos.distance(_lastTailGasPos) > _configData->getTailGasInterval()) {
-        const EffectData& res = _configData->getTailGasResource()[_tailGasIndex];
-        _worldRender->addEffect(res, false, currentPos, _renderLayer, _currentHeight);
-        _tailGasIndex = (_tailGasIndex + 1) % _configData->getTailGasResource().size();
-        _lastTailGasPos = currentPos;
-    }
 }
     
 void BulletRender::renderExplodeAnimation() {
@@ -297,6 +292,11 @@ void BulletRender::renderExplodeAnimation() {
         _body->removeFromParent();
         _body = nullptr;
     }
+    
+    for (int i = 0; i < _tails.size(); ++i) {
+        if (_tails[i]) _tails[i]->removeFromParent();
+    }
+    _tails.clear();
     
     if (_shadow) {
         _shadow->removeFromParent();

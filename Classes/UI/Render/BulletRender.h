@@ -72,6 +72,7 @@ private:
     cocos2d::Node* _mainNode;
     cocos2d::Node* _shadowNode;
     cocos2d::Node* _body;
+    std::vector<cocos2d::Node*> _tails;
     cocos2d::Node* _shadow;
     
     /** ref */
