@@ -89,7 +89,7 @@ DeckManager::DeckManager()
         _allCards.insert(make_pair(cardId, createFakeData(cardId, 1)));
     }
     
-    _allUnfoundCards = {23100, 23101};
+//    _allUnfoundCards = {23100, 23101};
     
     loadThisDeck();
 }

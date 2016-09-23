@@ -245,7 +245,7 @@ bool MainUILayer::init()
 void MainUILayer::onEnter()
 {
     LayerColor::onEnter();
-    TestLayer::getInstance()->show(this);
+//    TestLayer::getInstance()->show(this);
 }
 
 bool MainUILayer::onTouchBegan(Touch *pTouch, Event *pEvent)
