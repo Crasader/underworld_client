@@ -29,15 +29,12 @@ public:
         Purple
     };
     
-    typedef Widget::ccWidgetClickCallback Callback;
-    
 public:
     static XButton* create(BSize size, BType type);
     static XButton* createReturnButton(Node* parent, const Vec2& offset);
     virtual ~XButton();
     
     void setType(BType type);
-    void setCallback(const Callback& callback);
     
 protected:
     XButton();
@@ -46,8 +43,6 @@ protected:
 private:
     BSize _bSize;
     BType _bType;
-    Callback _callback;
-    bool _touchInvalid;
 };
 
 #endif /* XButton_h */

@@ -9,7 +9,7 @@
 #include "DeckManager.h"
 #include "JSonUtils.h"
 #include "DataManager.h"
-#include "UserDefaultsDataManager.h"
+#include "UserDefaultHelper.h"
 #include "DeckData.h"
 #include "CardData.h"
 #include "RuneData.h"
@@ -64,18 +64,18 @@ DeckManager::DeckManager()
 :_defaultId(0)
 ,_defaultDeckData(nullptr)
 {
-    const int idx = UserDefaultsDataManager::getIntegerForKey(defaultDeckKey.c_str(), 0);
+    const int idx = UserDefaultHelper::getIntegerForKey(defaultDeckKey.c_str(), 0);
     _defaultId = MAX(MIN(DecksMaxCount - 1, idx), 0);
     
     for (auto ft : featureTypes) {
-        auto st = static_cast<SortType>(UserDefaultsDataManager::getIntegerForKey(getSortTypeKey(ft).c_str(), 0));
+        auto st = static_cast<SortType>(UserDefaultHelper::getIntegerForKey(getSortTypeKey(ft).c_str(), 0));
         _sortTypes.insert(make_pair(ft, st));
     }
     
     static const string fake("21110;21111;21100|22001;22003;22004;22012;22013;22014");
     
     for (int i = 0; i < DecksMaxCount; ++i) {
-        const auto& string = UserDefaultsDataManager::getStringForKey(getDeckKey(i).c_str(), fake);
+        const auto& string = UserDefaultHelper::getStringForKey(getDeckKey(i).c_str(), fake);
         if (string.size() > 0) {
             auto data = new (nothrow) DeckData(string);
             _decks.insert(make_pair(i, data));
@@ -314,7 +314,7 @@ void DeckManager::setSortType(FeatureType ft, SortType st)
     }
     
     if (update) {
-        UserDefaultsDataManager::setIntegerForKey(getSortTypeKey(ft).c_str(), static_cast<int>(st));
+        UserDefaultHelper::setIntegerForKey(getSortTypeKey(ft).c_str(), static_cast<int>(st));
         sortAllCards(ft, true);
     }
 }
@@ -329,7 +329,7 @@ void DeckManager::loadDeck(int idx)
 {
     if (_defaultId != idx) {
         _defaultId = idx;
-        UserDefaultsDataManager::setIntegerForKey(defaultDeckKey.c_str(), idx);
+        UserDefaultHelper::setIntegerForKey(defaultDeckKey.c_str(), idx);
         loadThisDeck();
     }
 }
@@ -457,7 +457,7 @@ void DeckManager::saveDeckData(int idx)
         auto data = _decks.at(idx);
         string output;
         data->serialize(output);
-        UserDefaultsDataManager::setStringForKey(getDeckKey(idx).c_str(), output);
+        UserDefaultHelper::setStringForKey(getDeckKey(idx).c_str(), output);
     }
 }
 

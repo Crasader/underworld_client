@@ -13,8 +13,6 @@
 #include "User.h"
 #include "CocosGlobal.h"
 
-class IapObject;
-
 class GameData
 {
 public:
@@ -36,19 +34,6 @@ public:
     // guest account
     void login(const httpRequestCallback& success, const httpErrorCallback& failed);
     bool isLoggedIn() const;
-    
-    // iap
-    bool isTransacting() const;
-    void beginTransaction();
-    void finishTransaction();
-    void fetchIAPInfo(const httpRequestCallback& success, const httpRequestCallback& failed, bool showLoadingLayer);
-    const std::vector<IapObject *>& getIapObjects() const;
-    
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    void loadAnonymousUser(rapidjson::Document& document);
-    void saveAnonymousUser(const User* user);
-    
-#endif  // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     
     // heartbeat
     void startHeartBeatSynchronously();
@@ -74,13 +59,16 @@ private:
     void requestLogin(const httpRequestCallback& success, const httpErrorCallback& failed);
     void reloadGame();
     
+    // user info
+    void loadAnonymousUser(rapidjson::Document& document);
+    void saveAnonymousUser(const User* user);
+    
 private:
     User *_user;
     int _uuid;
+    std::string _uuName;
     std::string _versionId;
     std::string _deviceToken;
-    bool _isTransacting;
-    std::vector<IapObject *> _iapObjects;
 };
 
 #endif /* GameData_h */

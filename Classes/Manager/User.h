@@ -14,8 +14,8 @@
 
 // from login response
 #define kUID    ("uid")
+#define kNAME   ("name")
 #define kAuth   ("auth")
-#define kNew    ("new_user")
 
 class User
 {
@@ -24,11 +24,13 @@ public:
     virtual ~User();
     
     // getters
-    int getUid() const;
     bool isNewUser() const;
     bool isGuest() const;
-    const std::string& getToken() const;
+    int getUid() const;
+    int getIcon() const;
+    int getLevel() const;
     const std::string& getName() const;
+    const std::string& getToken() const;
     
     bool isFirstLogin() const;
     void saveFirstLoginTag();
@@ -37,10 +39,6 @@ public:
     void saveFinishedTutorialTag(int idx);
     
     //------------------------------ NETWORKING BEGIN ------------------------------//
-    void parseGemInfo(const rapidjson::Value& root);
-    void parseResources(const rapidjson::Value& root, const char* key, bool silent = false);
-    
-    // user info
     void loadUserInfo(const std::string& deviceToken, const httpRequestCallback& success, const httpErrorCallback& onError);
     //------------------------------ NETWORKING END ------------------------------//
     
@@ -55,8 +53,11 @@ private:
     bool _isNewUser;
     bool _isGuest;
     int _uid;
-    std::string _token;
+    int _icon;
+    int _level;
     std::string _name;
+    bool _isInBattle;
+    std::string _token;
     
     bool _isFirstLogin;
     int _finishedTutorialsMaxIdx;

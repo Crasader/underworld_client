@@ -152,7 +152,7 @@
         }
         
         // Send the data unreliably to the specified players
-        BOOL success = [self.multiplayerMatch sendData:data toPlayers:players withDataMode:GKMatchSendDataUnreliable error:&error];
+        BOOL success = [self.multiplayerMatch sendData:data toPlayers:players dataMode:GKMatchSendDataUnreliable error:&error];
         if (!success) {
             // There was an error while sending the data
             if (handler != nil) handler(NO, error);
@@ -171,7 +171,7 @@
         }
         
         // Send the data reliably to the specified players
-        BOOL success = [self.multiplayerMatch sendData:data toPlayers:players withDataMode:GKMatchSendDataReliable error:&error];
+        BOOL success = [self.multiplayerMatch sendData:data toPlayers:players dataMode:GKMatchSendDataReliable error:&error];
         if (!success) {
             // There was an error while sending the data
             if (handler != nil) handler(NO, error);
@@ -275,7 +275,11 @@
                 
                 if ([self.multiplayerDelegate respondsToSelector:@selector(gameCenterManager:match:didConnectAllPlayers:)]) {
                     #if TARGET_OS_IOS || (TARGET_OS_IPHONE && !TARGET_OS_TV)
-                    [GKPlayer loadPlayersForIdentifiers:theMatch.playerIDs withCompletionHandler:^(NSArray *players, NSError *error) {
+                    NSMutableArray* ids = [NSMutableArray arrayWithCapacity:[theMatch.players count]];
+                    for (GKPlayer *player in theMatch.players) {
+                        [ids addObject:player.playerID];
+                    }
+                    [GKPlayer loadPlayersForIdentifiers:ids withCompletionHandler:^(NSArray *players, NSError *error) {
                         [self.multiplayerDelegate gameCenterManager:self match:theMatch didConnectAllPlayers:players];
                     }];
                     #endif

@@ -15,14 +15,14 @@
 #include "LocalHelper.h"
 #include "DataManager.h"
 #include "AbstractData.h"
-#include "DevelopProperty.h"
+#include "CardProperty.h"
 #include "AbstractUpgradeProperty.h"
 
 AbstractInfoLayer::AbstractInfoLayer()
 :_board(nullptr)
 ,_icon(nullptr)
 ,_description(nullptr)
-,_upgradeButton(nullptr)
+,_resourceButton(nullptr)
 ,_data(nullptr)
 ,_property(nullptr) {}
 
@@ -70,12 +70,22 @@ void AbstractInfoLayer::updateProperty(const DevelopProperty* property)
 {
     _property = property;
     
+    const bool canUpgrade(_icon && !dynamic_cast<const CardProperty*>(property));
+    
+    if (_icon) {
+        _icon->setProgressBarVisible(canUpgrade);
+    }
+    
     if (_board) {
         _board->setTitle(property ? LocalHelper::getString(property->getName()) : "");
     }
     
     if (_description) {
         _description->setString(property ? LocalHelper::getString(property->getDescription()) : "");
+    }
+    
+    if (_resourceButton) {
+        _resourceButton->setVisible(canUpgrade);
     }
     
     do {
@@ -111,24 +121,19 @@ void AbstractInfoLayer::updateData(const AbstractData* data)
 {
     _data = data;
     
-    if (data) {
+    do {
+        CC_BREAK_IF(!_resourceButton || !_resourceButton->isVisible());
+        _resourceButton->setEnabled(nullptr != data);
+        CC_BREAK_IF(!data);
         auto up(data->getUpgradeProperty());
-        if (up) {
-            const auto& pair(up->getResourceCost());
-            if (pair.first != ResourceType::MAX) {
-                _upgradeButton->setType(pair.first);
-                _upgradeButton->setCount(pair.second);
-                _upgradeButton->setEnabled(_icon ? _icon->canUpgrade() : false);
-                static const bool enoughResource(true);
-                _upgradeButton->setResourceEnough(enoughResource);
-                
-            } else {
-                CC_ASSERT(false);
-            }
-        }
-    }
-    
-    if (_upgradeButton) {
-        _upgradeButton->setEnabled(nullptr != data);
-    }
+        CC_BREAK_IF(!up);
+        const auto& pair(up->getResourceCost());
+        auto type(pair.first);
+        CC_BREAK_IF(type == ResourceType::MAX);
+        _resourceButton->setType(type);
+        _resourceButton->setCount(pair.second);
+        _resourceButton->setEnabled(_icon ? _icon->canUpgrade() : false);
+        static const bool enoughResource(true);
+        _resourceButton->setResourceEnough(enoughResource);
+    } while (false);
 }

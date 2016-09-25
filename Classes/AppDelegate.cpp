@@ -4,7 +4,7 @@
 #include "GameData.h"
 #include "LocalHelper.h"
 #include "SoundManager.h"
-#include "UserDefaultsDataManager.h"
+#include "UserDefaultHelper.h"
 #include "WorldTest.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "ApiBridge.h"
@@ -106,8 +106,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     // set default music and sound, must set here instead of "Utils" (android may crash)
     SoundManager* sm = SoundManager::getInstance();
-    sm->setMusicOn(UserDefaultsDataManager::getMusicOn());
-    sm->setSoundOn(UserDefaultsDataManager::getSoundOn());
+    sm->setMusicOn(UserDefaultHelper::getMusicOn());
+    sm->setSoundOn(UserDefaultHelper::getSoundOn());
     
     // game initialization
     GameData::getInstance()->init();

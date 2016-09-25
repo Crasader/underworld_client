@@ -10,7 +10,7 @@
 #include "cocos2d.h"
 #include "tinyxml2/tinyxml2.h"
 #include "AESCTREncryptor.h"
-#include "UserDefaultsDataManager.h"
+#include "UserDefaultHelper.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "ApiBridge.h"
 #endif
@@ -165,16 +165,16 @@ void LocalHelper::init() {
     parseBaseStrings();
     
     LocalType type;
-    int value = UserDefaultsDataManager::getIntegerForKey(languageKey.c_str(), -1);
+    int value = UserDefaultHelper::getIntegerForKey(languageKey.c_str(), -1);
     if (value >= 0) {
         type = static_cast<LocalType>(value);
     } else {
-#if false
-        type = getLocalTypeFromLanguage();
-#else
-        // test
-        type = LocalType::CHINESE;
-#endif
+        if (/* DISABLES CODE */ (false)) {
+            type = getLocalTypeFromLanguage();
+        } else {
+            // test
+            type = LocalType::CHINESE;
+        }
     }
     
     setLocalType(type);
@@ -256,7 +256,7 @@ LocalType LocalHelper::getLocalType() {
 void LocalHelper::setLocalType(LocalType type) {
     if (_localType != type) {
         _localType = type;
-        UserDefaultsDataManager::setIntegerForKey(languageKey.c_str(), static_cast<int>(type));
+        UserDefaultHelper::setIntegerForKey(languageKey.c_str(), static_cast<int>(type));
         _localizedStrings.clear();
         parseLocalizedStrings(type);
     }

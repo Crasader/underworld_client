@@ -44,7 +44,7 @@ bool AvatarNode::init()
         avatar->setPosition(Point(Width / 2, Height / 2));
         addChild(avatar);
         
-        CocosUtils::fixWidgetTouchEvent(avatar, _touchInvalid, nullptr, [this](Ref*) {
+        CocosUtils::fixWidgetTouchEvent(avatar, _touchInvalid, [this](Ref*) {
             if (_callback) {
                 _callback();
             }

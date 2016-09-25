@@ -52,6 +52,7 @@ PvpLogNode::PvpLogNode()
 :_observer(nullptr)
 ,_isExpanded(false)
 ,_data(nullptr)
+,_touchInvalid(false)
 ,_background(nullptr)
 ,_result(nullptr)
 ,_trophyGap(nullptr)
@@ -140,7 +141,7 @@ void PvpLogNode::createTopNode()
         // replay
         auto replay = XButton::create(XButton::BSize::Big, XButton::BType::Green);
         replay->setTitleText(LocalHelper::getString("ui_log_replay"));
-        replay->setCallback([this](Ref*) {
+        CocosUtils::fixWidgetTouchEvent(replay, _touchInvalid, [this](Ref*) {
             if (_observer) {
                 _observer->onPvpLogNodeReplay(_data);
             }
@@ -152,7 +153,7 @@ void PvpLogNode::createTopNode()
         // share
         auto share = XButton::create(XButton::BSize::Big, XButton::BType::Blue);
         share->setTitleText(LocalHelper::getString("ui_log_share"));
-        share->setCallback([this](Ref*) {
+        CocosUtils::fixWidgetTouchEvent(share, _touchInvalid, [this](Ref*) {
             if (_observer) {
                 _observer->onPvpLogNodeShare(_data);
             }

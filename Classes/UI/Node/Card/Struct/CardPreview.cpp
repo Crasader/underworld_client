@@ -101,7 +101,7 @@ CardPreview::CardPreview(DeckManager::FeatureType type, Node* parent, CardPrevie
         {
             _sortTypeButton = XButton::create(XButton::BSize::Big, XButton::BType::Blue);
             _sortTypeButton->setTitleText(getSortTypeName(_sortIdx));
-            _sortTypeButton->setCallback([this](Ref*) {
+            _sortTypeButton->addClickEventListener([this](Ref*) {
                 setNextSortType();
             });
             bar->addChild(_sortTypeButton);

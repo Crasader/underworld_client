@@ -68,7 +68,7 @@ namespace CocosUtils
     // buttons
     cocos2d::ui::Button* createGrayExitButton(cocos2d::Node* parent, const std::function<void()>& callback);
     cocos2d::ui::Button* createRedExitButton(cocos2d::Node* parent, const std::function<void()>& callback);
-    void fixWidgetTouchEvent(cocos2d::ui::Widget* widget, bool& flag, const cocos2d::ui::Widget::ccWidgetTouchCallback& touchedCallback, const cocos2d::ui::Widget::ccWidgetClickCallback& clickedCallback);
+    void fixWidgetTouchEvent(cocos2d::ui::Widget* widget, bool& flag, const cocos2d::ui::Widget::ccWidgetClickCallback& clickedCallback);
     
 #pragma mark - notifications
     void postNotification(const std::string& notification);

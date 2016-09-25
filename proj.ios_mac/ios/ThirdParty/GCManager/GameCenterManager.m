@@ -362,13 +362,13 @@
 				if (GCMLeaderboards.count > 0) {
 
                     GKLeaderboard *leaderboardRequest;
-                    if(IS_IOS_8_OR_LATER) {
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
                         leaderboardRequest = [[GKLeaderboard alloc] initWithPlayers:[NSArray arrayWithObject:[GKLocalPlayer localPlayer]]];
-                    } else {
+#else
                         #if TARGET_OS_IOS || (TARGET_OS_IPHONE && !TARGET_OS_TV)
                         leaderboardRequest = [[GKLeaderboard alloc] initWithPlayerIDs:[NSArray arrayWithObject:[self localPlayerId]]];
                         #endif
-                    }
+#endif
                     [leaderboardRequest setIdentifier:[(GKLeaderboard *)[GCMLeaderboards objectAtIndex:0] identifier]];
                     
                     [leaderboardRequest loadScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {

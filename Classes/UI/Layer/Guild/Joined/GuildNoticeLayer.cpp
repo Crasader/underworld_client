@@ -55,7 +55,7 @@ bool GuildNoticeLayer::init()
         
         auto button = XButton::create(XButton::BSize::Big, XButton::BType::Blue);
         button->setTitleText("Send");
-        button->setCallback([this](Ref*) {
+        button->addClickEventListener([this](Ref*) {
             if (_observer && _noticeTitle && _notice) {
                 const char* title(_noticeTitle->getText());
                 const char* notice(_notice->getText());

@@ -12,8 +12,6 @@
 #include "ObjectUtils.h"
 #include "LocalHelper.h"
 #include "LevelProperty.h"
-#include "AbstractProperty.h"
-#include "AbstractUpgradeProperty.h"
 #include "AttributeProperty.h"
 #include "CardProperty.h"
 #include "CardUpgradeProperty.h"

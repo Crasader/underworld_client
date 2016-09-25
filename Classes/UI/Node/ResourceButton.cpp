@@ -47,7 +47,7 @@ bool ResourceButton::init(bool isBigSize, bool animated, ResourceType type, int 
         _isBigSize = isBigSize;
         _animated = animated;
         _color = color;
-        setCallback(callback);
+        addClickEventListener(callback);
         
         addIconNode(type);
         const string& message = StringUtils::format("%d", count);
@@ -129,14 +129,6 @@ void ResourceButton::setEnabled(bool enabled)
     }
 }
 
-void ResourceButton::setClickEventListener(const Button::ccWidgetClickCallback& callback)
-{
-    setCallback([=](Ref *pSender) {
-        SoundManager::getInstance()->playButtonSound();
-        callback(pSender);
-    });
-}
-
 void ResourceButton::addIconNode(ResourceType type)
 {
     if (type == ResourceType::MAX) {
@@ -182,13 +174,12 @@ const Color4B& ResourceButton::getEnabledColor() const
 
 void ResourceButton::resize()
 {
-    // TODO:
-    return;
-    
-    const float buttonWidth = getContentSize().width;
-    const float iconWidth = _icon->getContentSize().width;
-    const float labelWidth = _countLabel->getContentSize().width;
-    const float x = buttonWidth / 2 - labelWidth / 2;
-    _icon->setPositionX(x);
-    _countLabel->setPositionX(x + 5.0f + iconWidth / 2 + labelWidth * _countLabel->getAnchorPoint().x);
+    if (/* DISABLES CODE */ (false)) {
+        const float buttonWidth = getContentSize().width;
+        const float iconWidth = _icon->getContentSize().width;
+        const float labelWidth = _countLabel->getContentSize().width;
+        const float x = buttonWidth / 2 - labelWidth / 2;
+        _icon->setPositionX(x);
+        _countLabel->setPositionX(x + 5.0f + iconWidth / 2 + labelWidth * _countLabel->getAnchorPoint().x);
+    }
 }

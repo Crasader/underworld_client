@@ -427,7 +427,7 @@ void MainUILayer::onFunctionButtonClicked(ButtonType type)
             break;
             
         case ButtonType::Guild: {
-            if (true) {
+            if (/* DISABLES CODE */ (true)) {
                 runningScene->addChild(GuildSearchLayer::create());
             } else {
                 runningScene->addChild(GuildLayer::create());

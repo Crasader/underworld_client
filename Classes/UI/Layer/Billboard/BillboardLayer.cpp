@@ -55,7 +55,7 @@ bool BillboardLayer::init()
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR)) {
         const auto& winSize(Director::getInstance()->getWinSize());
         auto board = Board::create(1);
-        board->setTitle("Top Players");
+        board->setTitle(LocalHelper::getString("ui_rank_title"));
         board->setExitCallback([this]() {
             removeFromParent();
         });
@@ -66,7 +66,7 @@ bool BillboardLayer::init()
         static const float edgeTop(45);
         {
             static const float edgeLeft(20);
-            auto hint = CocosUtils::createLabel("My Rank: ", BIG_FONT_SIZE);
+            auto hint = CocosUtils::createLabel(LocalHelper::getString("ui_rank_myRank"), BIG_FONT_SIZE);
             hint->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
             hint->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
             hint->setPosition(edgeLeft, size.height - edgeTop);
@@ -97,7 +97,7 @@ bool BillboardLayer::init()
             board->addChild(sprite);
             
             static const float shOffset(0);
-            auto hint = CocosUtils::createLabel("My Trophy: ", BIG_FONT_SIZE);
+            auto hint = CocosUtils::createLabel(LocalHelper::getString("ui_rank_myTrophy"), BIG_FONT_SIZE);
             const auto& hsize(hint->getContentSize());
             hint->setAlignment(TextHAlignment::RIGHT, TextVAlignment::CENTER);
             hint->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);

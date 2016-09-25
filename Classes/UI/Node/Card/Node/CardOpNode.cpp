@@ -60,7 +60,7 @@ bool CardOpNode::init()
         resetPositions();
         setTouchEnabled(true);
         setSwallowTouches(true);
-        CocosUtils::fixWidgetTouchEvent(this, _touchInvalid, nullptr, [this](Ref*) {
+        addClickEventListener([this](Ref*) {
             if (_observer) {
                 _observer->onCardOpNodeClicked();
             }
@@ -99,12 +99,11 @@ void CardOpNode::setTypes(const vector<CardOpType>& types)
                 _buttons.at(type)->setVisible(true);
             } else {
                 auto button = CardOpButton::create(type);
-                button->setCallback([this, type](Ref*) {
+                button->addClickEventListener([this, type](Ref*) {
                     if (_observer) {
                         _observer->onCardOpNodeClickedButton(type, getCardData());
                     }
                 });
-                button->setSwallowTouches(true);
                 _hint->addChild(button);
                 _buttons.insert(make_pair(type, button));
             }

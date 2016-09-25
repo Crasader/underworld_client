@@ -51,6 +51,7 @@ private:
     Label* _time;
     Sprite* _resourceBg;
     XButton* _button;
+    bool _touchInvalid;
     std::vector<ObjectBriefNode*> _resourceNodes;
 };
 

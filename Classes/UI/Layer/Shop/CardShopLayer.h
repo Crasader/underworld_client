@@ -44,6 +44,7 @@ protected:
     virtual ssize_t numberOfCellsInTableView(TableView *table) override;
     
     // BaseCardObserver
+    virtual void onBaseCardClicked(BaseCard* pSender) override;
     virtual void onBaseCardClickedResourceButton(BaseCard* pSender) override;
     
     // table

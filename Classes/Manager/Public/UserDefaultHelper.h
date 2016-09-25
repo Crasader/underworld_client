@@ -1,17 +1,17 @@
 //
-//  UserDefaultsDataManager.h
+//  UserDefaultHelper.h
 //  Underworld_Client
 //
 //  Created by Andy on 15/10/13.
 //
 //
 
-#ifndef UserDefaultsDataManager_h
-#define UserDefaultsDataManager_h
+#ifndef UserDefaultHelper_h
+#define UserDefaultHelper_h
 
 #include <iostream>
 
-namespace UserDefaultsDataManager
+namespace UserDefaultHelper
 {
     int getIntegerForKey(const char* pKey, int defaultValue);
     void setIntegerForKey(const char* pKey, int value);
@@ -31,4 +31,4 @@ namespace UserDefaultsDataManager
     bool getMusicOn();
 };
 
-#endif /* UserDefaultsDataManager_h */
+#endif /* UserDefaultHelper_h */

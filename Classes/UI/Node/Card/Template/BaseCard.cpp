@@ -55,9 +55,10 @@ bool BaseCard::init()
         _qualityBox = box;
         _originalPoint = box->getPosition();
         
-        auto card = Sprite::create("GameImages/icons/unit/icon_fashi.png");
+        auto card = ui::ImageView::create("GameImages/icons/unit/icon_fashi.png");
         card->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
-        card->setPosition(box->getContentSize().width / 2, 8);
+        card->setPosition(Point(box->getContentSize().width / 2, 8));
+        card->setTouchEnabled(true);
         box->addChild(card);
         _icon = card;
         
@@ -99,12 +100,14 @@ bool BaseCard::init()
         _infoButton = info;
         
         setTouchEnabled(true);
-        CocosUtils::fixWidgetTouchEvent(this, _touchInvalid, [this](Ref*, ui::Widget::TouchEventType type) {
+        addTouchEventListener([this](Ref*, ui::Widget::TouchEventType type) {
             if (_observer) {
                 _observer->onBaseCardTouched(this, type);
             }
-
-        }, [this](Ref*) {
+            
+        });
+        
+        CocosUtils::fixWidgetTouchEvent(card, _touchInvalid, [this](Ref*) {
             if (_observer) {
                 _observer->onBaseCardClicked(this);
             }
@@ -170,10 +173,9 @@ void BaseCard::updateProperty(const AbstractProperty* property)
 {
     if (_icon && property) {
         auto cd(DataManager::getInstance()->getCardConfigData(property->getId()));
+        _icon->setVisible(cd);
         if (cd) {
-            _icon->setTexture(cd->getIcon());
-        } else {
-            _icon->initWithTexture(nullptr, Rect::ZERO);
+            _icon->loadTexture(cd->getIcon());
         }
     }
     

@@ -53,7 +53,7 @@ bool BillboardCell::init()
 {
     if (GuildGenericCell::init())
     {
-        CocosUtils::fixWidgetTouchEvent(this, _touchInvalid, nullptr, [this](Ref*) {
+        CocosUtils::fixWidgetTouchEvent(this, _touchInvalid, [this](Ref*) {
             if (_observer) {
                 _observer->onBillboardCellClicked(_data);
             }

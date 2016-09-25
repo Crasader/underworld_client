@@ -120,6 +120,15 @@
     <!-- 养成 -->
     <item key="ui_develop_title" value="养成界面"/>
     
+    <!-- 商店 -->
+    <item key="ui_cardShop_title" value="卡牌商店"/>
+    <item key="ui_cardShop_hasPurchased" value="您购买了："/>
+    
+    <!-- 排行榜 -->
+    <item key="ui_rank_title" value="顶级玩家"/>
+    <item key="ui_rank_myRank" value="我的排名："/>
+    <item key="ui_rank_myTrophy" value="我的奖杯数："/>
+    
     <!-- 卡牌信息 -->
     <item key="ui_cardInfo_property" value="属性"/>
     <item key="ui_cardInfo_upgrade" value="升级"/>
@@ -157,6 +166,11 @@
     <item key="ui_cardArmorType_3" value="英雄"/>
     <item key="ui_cardArmorType_4" value="城甲"/>
     <item key="ui_cardArmorType_5" value="轻甲"/>
+    
+    <!-- 目标类型 -->
+    <item key="ui_cardTarget_0" value="地面"/>
+    <item key="ui_cardTarget_1" value="空中"/>
+    <item key="ui_cardTarget_2" value="空中和地面"/>
 	
     <!-- 技能属性 -->
     <item key="ui_skillAttr_A" value="冷却时间："/>
@@ -197,11 +211,6 @@
 	<item key="ui_skillAttr_24" value="攻击速度降低："/>
 	<item key="ui_skillAttr_25" value="每层提供护甲："/>
 	<item key="ui_skillAttr_26" value="降低护甲比例："/>
-	
-    <!-- 目标类型 -->
-    <item key="ui_cardTarget_0" value="地面"/>
-    <item key="ui_cardTarget_1" value="空中"/>
-    <item key="ui_cardTarget_2" value="空中和地面"/>
     
     <!-- 符文 -->
     <item key="ui_rune_title" value="符文背包"/>

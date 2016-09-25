@@ -248,10 +248,14 @@ void NetworkApi::parseResponseData(const vector<char>* responseData, rapidjson::
 }
 
 #pragma mark - public
-void NetworkApi::login(const HttpCallback& callback)
+void NetworkApi::login(const string& name, const HttpCallback& callback)
 {
     static const string path(kServerPrefix + "guest.json");
-    request(path, callback);
+    unordered_map<string, string> params;
+    params.insert(make_pair("name", name));
+    params.insert(make_pair("device", "1"));
+    params.insert(make_pair("version", "1"));
+    request(path, callback, &params);
 }
 
 void NetworkApi::loadUserInfo(const string& deviceToken, const HttpCallback& callback)
@@ -259,7 +263,7 @@ void NetworkApi::loadUserInfo(const string& deviceToken, const HttpCallback& cal
     static const string path(kServerPrefix + "user/info.json");
     unordered_map<string, string> params;
     params.insert(make_pair("iostoken", deviceToken));
-    request(path, callback, &params);
+    request(path, callback/*, &params*/);
 }
 
 void NetworkApi::heartBeat(const HttpCallback& callback, bool showLoadingView)

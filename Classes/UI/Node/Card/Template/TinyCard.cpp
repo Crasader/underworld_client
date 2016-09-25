@@ -43,13 +43,13 @@ bool TinyCard::init()
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         setContentSize(Size(Width, Height));
         
-        auto card = Sprite::create(CocosUtils::getResourcePath("icon_kapai.png"));
+        auto card = ui::ImageView::create(CocosUtils::getResourcePath("icon_kapai.png"));
         card->setPosition(Point(Width / 2, Height / 2));
+        card->setTouchEnabled(true);
         addChild(card);
         _icon = card;
         
-        setTouchEnabled(true);
-        CocosUtils::fixWidgetTouchEvent(this, _touchInvalid, nullptr, [this](Ref*) {
+        CocosUtils::fixWidgetTouchEvent(card, _touchInvalid, [this](Ref*) {
             if (_callback) {
                 _callback();
             }
@@ -66,10 +66,9 @@ void TinyCard::updateProperty(const AbstractProperty* property)
 #if false
     if (_icon && property) {
         auto cd(DataManager::getInstance()->getCardConfigData(property->getId()));
+        _icon->setVisible(cd);
         if (cd) {
-            _icon->setTexture(cd->getIcon());
-        } else {
-            _icon->initWithTexture(nullptr, Rect::ZERO);
+            _icon->loadTexture(cd->getIcon());
         }
     }
     

@@ -12,8 +12,6 @@
 #include "BaseCard.h"
 #include "DeckEditMask.h"
 #include "CardPreview.h"
-#include "CardInfoLayer.h"
-#include "SpellInfoLayer.h"
 
 #define DECKLAYER_ENABLE_TYPE_FILTER    (0)
 
@@ -41,8 +39,6 @@ class BattleDeckLayer
 , public BaseCardObserver
 , public DeckEditMaskObserver
 , public CardPreviewObserver
-, public CardInfoLayerObserver
-, public SpellInfoLayerObserver
 {
 public:
     static BattleDeckLayer* create();
@@ -67,14 +63,6 @@ protected:
     // CardPreviewObserver
     virtual BaseCard* onCardPreviewCreateCard(int cardId) override;
     virtual void onCardPreviewClickedOpButton(CardOpType type, const AbstractData* data) override;
-    
-    // CardInfoLayerObserver
-    virtual void onCardInfoLayerReturn(Node* pSender) override;
-    virtual void onCardInfoLayerExit(Node* pSender) override;
-    
-    // SpellInfoLayerObserver
-    virtual void onSpellInfoLayerExit(Node* pSender) override;
-    virtual void onSpellInfoLayerUpgrade(Node* pSender, const AbstractData* data) override;
     
     // -------- UI --------
     void createLeftNode(Node* node);

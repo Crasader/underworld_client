@@ -42,7 +42,7 @@ protected:
     UniversalBoard* _board;
     JuniorCard* _icon;
     Label* _description;
-    ResourceButton* _upgradeButton;
+    ResourceButton* _resourceButton;
     std::vector<CardAttributeNode*> _attributes;
     const AbstractData* _data;
     const DevelopProperty* _property;

@@ -11,6 +11,7 @@
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "DataManager.h"
+#include "UniversalUIHelper.h"
 #include "DeckData.h"
 #include "CardData.h"
 #include "CardProperty.h"
@@ -212,38 +213,6 @@ void BattleDeckLayer::onCardPreviewClickedOpButton(CardOpType type, const Abstra
     }
 }
 
-#pragma mark - CardInfoLayerObserver
-void BattleDeckLayer::onCardInfoLayerReturn(Node* pSender)
-{
-    if (pSender) {
-        pSender->removeFromParent();
-    }
-}
-
-void BattleDeckLayer::onCardInfoLayerExit(Node* pSender)
-{
-    if (pSender) {
-        pSender->removeFromParent();
-    }
-    
-    removeFromParent();
-}
-
-#pragma mark - SpellInfoLayerObserver
-void BattleDeckLayer::onSpellInfoLayerExit(Node* pSender)
-{
-    if (pSender) {
-        pSender->removeFromParent();
-    }
-}
-
-void BattleDeckLayer::onSpellInfoLayerUpgrade(Node* pSender, const AbstractData* data)
-{
-    if (pSender) {
-        pSender->removeFromParent();
-    }
-}
-
 #pragma mark - UI
 void BattleDeckLayer::createLeftNode(Node* node)
 {
@@ -327,7 +296,7 @@ void BattleDeckLayer::createLeftNode(Node* node)
             
             auto button = XButton::create(XButton::BSize::Small, XButton::BType::Purple);
             button->setTitleText(LocalHelper::getString("ui_deck_move"));
-            button->setCallback([this](Ref*) {
+            button->addClickEventListener([this](Ref*) {
                 if (!_isEditing) {
                     if (_cardPreview) {
                         _cardPreview->hideOpNode();
@@ -423,20 +392,7 @@ void BattleDeckLayer::updateAverageElixir()
 #pragma mark - Info
 void BattleDeckLayer::showInfo(int cardId, const CardData* data)
 {
-    auto property(dynamic_cast<const CardProperty*>(DataManager::getInstance()->getProperty(cardId)));
-    if (property) {
-        if (UnderWorld::Core::HMMCardClass::kHMMCardClass_Spell == property->getCardClass()) {
-            auto layer = SpellInfoLayer::create(cardId, data);
-            layer->registerObserver(this);
-            addChild(layer);
-        } else {
-            auto layer = CardInfoLayer::create(cardId, data);
-            layer->registerObserver(this);
-            addChild(layer);
-        }
-    } else {
-        CC_ASSERT(false);
-    }
+    UniversalUIHelper::getInstance()->showCardInfoLayer(this, cardId, data);
 }
 
 #pragma mark - Move cards

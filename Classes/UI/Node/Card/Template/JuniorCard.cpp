@@ -131,3 +131,19 @@ bool JuniorCard::canUpgrade() const
 {
     return _pt->getPercentage() >= 100.0f;
 }
+
+bool JuniorCard::isProgressBarVisible() const
+{
+    if (_ptBackground) {
+        return _ptBackground->isVisible();
+    }
+    
+    return false;
+}
+
+void JuniorCard::setProgressBarVisible(bool visible)
+{
+    if (_ptBackground) {
+        _ptBackground->setVisible(visible);
+    }
+}

@@ -61,32 +61,30 @@ void ResourceManager::updateGemInfo(const rapidjson::Value& jsonDict)
 
 void ResourceManager::updateResources(const rapidjson::Value& jsonDict)
 {
-    {
+    do {
         static const char* key("resources");
-        if (JSonUtils::isExist(jsonDict, key)) {
-            for (int i = 0; i < DICTOOL->getArrayCount_json(jsonDict, key); ++i) {
-                const auto& value = DICTOOL->getDictionaryFromArray_json(jsonDict, key, i);
-                auto type(JSonUtils::parse<ResourceType>(value, "id"));
-                auto amount(JSonUtils::parse<int>(value, "amount"));
-                if (_resources.find(type) != end(_resources)) {
-                    _resources.at(type) = amount;
-                } else {
-                    _resources.insert(make_pair(type, amount));
-                }
-            }
-        }
-    }
-    
-    {
-        static const char* key("book");
-        if (JSonUtils::isExist(jsonDict, key)) {
-            const auto& value = DICTOOL->getSubDictionary_json(jsonDict, key);
-            auto bookId(JSonUtils::parse<int>(value, "id"));
-            if (_books.find(bookId) != end(_books)) {
-                _books.at(bookId)->update(value);
+        CC_BREAK_IF(!JSonUtils::isExist(jsonDict, key));
+        for (int i = 0; i < DICTOOL->getArrayCount_json(jsonDict, key); ++i) {
+            const auto& value = DICTOOL->getDictionaryFromArray_json(jsonDict, key, i);
+            auto type(JSonUtils::parse<ResourceType>(value, "id"));
+            auto amount(JSonUtils::parse<int>(value, "amount"));
+            if (_resources.find(type) != end(_resources)) {
+                _resources.at(type) = amount;
             } else {
-                _books.insert(make_pair(bookId, new (nothrow) SkillBookData(value)));
+                _resources.insert(make_pair(type, amount));
             }
         }
-    }
+    } while (false);
+    
+    do {
+        static const char* key("book");
+        CC_BREAK_IF(!JSonUtils::isExist(jsonDict, key));
+        const auto& value = DICTOOL->getSubDictionary_json(jsonDict, key);
+        auto bookId(JSonUtils::parse<int>(value, "id"));
+        if (_books.find(bookId) != end(_books)) {
+            _books.at(bookId)->update(value);
+        } else {
+            _books.insert(make_pair(bookId, new (nothrow) SkillBookData(value)));
+        }
+    } while (false);
 }

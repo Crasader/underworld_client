@@ -67,7 +67,7 @@ bool UserOperationNode::init(int uid)
             const auto& t(buttonTitles.at(i));
             auto button = XButton::create(XButton::BSize::Big, XButton::BType::Blue);
             button->setTitleText(t);
-            button->setCallback([this, i](Ref*) {
+            button->addClickEventListener([this, i](Ref*) {
                 onButtonClicked(i);
             });
             _bg->addChild(button);

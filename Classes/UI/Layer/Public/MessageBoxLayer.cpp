@@ -158,11 +158,11 @@ void MessageBoxLayer::show(const std::string& message, MessageBoxType type, cons
         _confirmButton->setPosition(_cancelButtonPosition);
     }
     
-    _confirmButton->setCallback([this](Ref *pSender) {
+    _confirmButton->addClickEventListener([this](Ref *pSender) {
         SoundManager::getInstance()->playButtonSound();
         _confirmCallback(pSender);
     });
-    _cancelButton->setCallback([this](Ref *pSender) {
+    _cancelButton->addClickEventListener([this](Ref *pSender) {
         SoundManager::getInstance()->playButtonCancelSound();
         _cancelCallback(pSender);
     });

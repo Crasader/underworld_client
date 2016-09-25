@@ -8,9 +8,11 @@
 //
 
 #include "ApiBridge.h"
-#include "GameData.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
+#include "User.h"
+#include "ShopManager.h"
+#include "ResourceManager.h"
 #include "IapObject.h"
 
 #import "AppController.h"
@@ -89,7 +91,7 @@ GameCenterManagerDelegate
     string receiptData = [[NSString alloc] initWithData:receipt encoding:NSUTF8StringEncoding].stdString;
     NetworkApi::iap(sandbox, receiptData, [=](long code, const rapidjson::Value& jsonDict) {
         if (HttpSuccessCode == code) {
-            GameData::getInstance()->currentUser()->parseResources(jsonDict, "resources");
+            ResourceManager::getInstance()->updateResources(jsonDict);
             if (successBlock) {
                 successBlock();
             }
@@ -114,7 +116,7 @@ GameCenterManagerDelegate
     }
     
     if (isPurchasing) {
-        GameData::getInstance()->beginTransaction();
+        ShopManager::getInstance()->beginTransaction();
     }
 }
 
@@ -153,11 +155,9 @@ void iOSApi::loadAnonymousUser(rapidjson::Document& document)
         static string kAuthString;
         int uid = [[dict objectForKey:[NSString stringWithUTF8String:kUID]] intValue];
         kAuthString.assign([[dict objectForKey:[NSString stringWithUTF8String:kAuth]] UTF8String]);
-        bool isNew = [[dict objectForKey:[NSString stringWithUTF8String:kNew]] boolValue];
         
         document.AddMember(kUID, uid, allocator);
         document.AddMember(kAuth, rapidjson::Value(kAuthString.c_str(), allocator), allocator);
-        document.AddMember(kNew, isNew, allocator);
     }
 }
 
@@ -170,7 +170,6 @@ void iOSApi::saveAnonymousUser(const User* user)
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setValue:[NSString stringWithFormat:@"%d", userId] forKey:[NSString stringWithUTF8String:kUID]];
         [dict setValue:[NSString stringWithUTF8String:token.c_str()] forKey:[NSString stringWithUTF8String:kAuth]];
-        [dict setValue:[NSString stringWithFormat:@"%d", false] forKey:[NSString stringWithUTF8String:kNew]];
         NSData *data = [NSJSONSerialization dataWithJSONObject:dict options:0 error:0];
         
         [_keychain setObject:data forKey:(__bridge id)(kSecValueData)];
@@ -307,40 +306,40 @@ string iOSApi::getLanguage()
 void iOSApi::registerAPNS()
 {
     UIApplication* application = [UIApplication sharedApplication];
-    if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
         [application registerForRemoteNotifications];
         [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil]];
-    } else {
+#else
         [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeBadge)];
-    }
+#endif
 }
 
 bool iOSApi::isAPNSEnabled()
 {
     UIApplication* application = [UIApplication sharedApplication];
-    if ([UIApplication instancesRespondToSelector:@selector(isRegisteredForRemoteNotifications)]) {
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
         return [application isRegisteredForRemoteNotifications];
-    } else {
+#else
         UIRemoteNotificationType type = [application enabledRemoteNotificationTypes];
         if (UIRemoteNotificationTypeNone != type) {
             return true;
         }
         
         return false;
-    }
+#endif
 }
 
 void iOSApi::gotoSettingApp()
 {
-    if (&UIApplicationOpenSettingsURLString != nil) {
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
         UIApplication* application = [UIApplication sharedApplication];
         NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
         if ([application canOpenURL:url]) {
             [application openURL:url];
         }
-    } else {
+#else
         // Present some dialog telling the user to open the settings app.
-    }
+#endif
 }
 
 void iOSApi::setMultipleTouchEnabled(bool enabled)

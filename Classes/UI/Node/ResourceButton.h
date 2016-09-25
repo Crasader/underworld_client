@@ -27,7 +27,6 @@ public:
     void setCount(int count);
     void setResourceEnough(bool enable);
     virtual void setEnabled(bool enabled) override;
-    void setClickEventListener(const ui::Widget::ccWidgetClickCallback& callback);
     
 protected:
     ResourceButton();

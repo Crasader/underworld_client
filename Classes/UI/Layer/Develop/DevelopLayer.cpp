@@ -12,9 +12,9 @@
 #include "LocalHelper.h"
 #include "Board.h"
 #include "JuniorCard.h"
-#include "DataManager.h"
+#include "DeckManager.h"
 #include "CardData.h"
-#include "CardProperty.h"
+#include "UniversalUIHelper.h"
 
 using namespace std;
 using namespace ui;
@@ -85,12 +85,10 @@ void DevelopLayer::onBaseCardClicked(BaseCard* pSender)
 {
     if (_cardPreview) {
         auto card(dynamic_cast<JuniorCard*>(pSender));
-        if (card) {
-            if (card->canUpgrade()) {
-                _cardPreview->showOpNode(pSender, {CardOpType::Upgrade});
-            } else {
-                _cardPreview->showOpNode(pSender, {CardOpType::Info});
-            }
+        if (card && card->canUpgrade()) {
+            _cardPreview->showOpNode(pSender, {CardOpType::Upgrade});
+        } else {
+            _cardPreview->showOpNode(pSender, {CardOpType::Info});
         }
     }
 }
@@ -98,7 +96,7 @@ void DevelopLayer::onBaseCardClicked(BaseCard* pSender)
 #pragma mark - CardPreviewObserver
 BaseCard* DevelopLayer::onCardPreviewCreateCard(int cardId)
 {
-    auto card = JuniorCard::create();
+    auto card = BaseCard::create();
     card->registerObserver(this);
     card->update(cardId, DeckManager::getInstance()->getCardData(cardId));
     return card;
@@ -108,47 +106,7 @@ void DevelopLayer::onCardPreviewClickedOpButton(CardOpType type, const AbstractD
 {
     if (CardOpType::Upgrade == type || CardOpType::Info == type) {
         DeckManager::getInstance()->fetchCardDetail(data->getId(), [this](int cardId, const CardData* data) {
-            if (UnderWorld::Core::HMMCardClass::kHMMCardClass_Spell == dynamic_cast<const CardProperty*>(DataManager::getInstance()->getProperty(cardId))->getCardClass()) {
-                auto layer = SpellInfoLayer::create(cardId, data);
-                layer->registerObserver(this);
-                addChild(layer);
-            } else {
-                auto layer = CardInfoLayer::create(cardId, nullptr);
-                layer->registerObserver(this);
-                addChild(layer);
-            }
+            UniversalUIHelper::getInstance()->showCardInfoLayer(this, cardId, data);
         });
-    }
-}
-
-#pragma mark - CardInfoLayerObserver
-void DevelopLayer::onCardInfoLayerReturn(Node* pSender)
-{
-    if (pSender) {
-        pSender->removeFromParent();
-    }
-}
-
-void DevelopLayer::onCardInfoLayerExit(Node* pSender)
-{
-    if (pSender) {
-        pSender->removeFromParent();
-    }
-    
-    removeFromParent();
-}
-
-#pragma mark - SpellInfoLayerObserver
-void DevelopLayer::onSpellInfoLayerExit(Node* pSender)
-{
-    if (pSender) {
-        pSender->removeFromParent();
-    }
-}
-
-void DevelopLayer::onSpellInfoLayerUpgrade(Node* pSender, const AbstractData* data)
-{
-    if (pSender) {
-        pSender->removeFromParent();
     }
 }

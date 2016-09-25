@@ -29,7 +29,7 @@
 #import "AppDelegate.h"
 #import "RootViewController.h"
 #import "CrashHelper.h"
-#import "DDLog.h"
+#import "DDLogMacros.h"
 #import "DDTTYLogger.h"
 
 @implementation AppController

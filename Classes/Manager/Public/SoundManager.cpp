@@ -8,7 +8,7 @@
 
 #include "SoundManager.h"
 #include "audio/include/SimpleAudioEngine.h"
-#include "UserDefaultsDataManager.h"
+#include "UserDefaultHelper.h"
 
 using namespace std;
 
@@ -57,7 +57,7 @@ void SoundManager::setMusicOn(bool on)
     if (on != _isMusicOn)
     {
         _isMusicOn = on;
-        UserDefaultsDataManager::setMusicOn(on);
+        UserDefaultHelper::setMusicOn(on);
         
         if (on)
         {
@@ -80,7 +80,7 @@ void SoundManager::setSoundOn(bool on)
     if (on != _isSoundOn)
     {
         _isSoundOn = on;
-        UserDefaultsDataManager::setSoundOn(on);
+        UserDefaultHelper::setSoundOn(on);
         
         if (false == on)
         {

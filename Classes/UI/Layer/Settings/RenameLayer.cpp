@@ -55,7 +55,7 @@ bool RenameLayer::init()
         
         auto button = XButton::create(XButton::BSize::Big, XButton::BType::Blue);
         button->setTitleText(LocalHelper::getString("ui_rename_buttonTitle"));
-        button->setCallback([this](Ref*) {
+        button->addClickEventListener([this](Ref*) {
             if (_observer && _editBox) {
                 const char* name(_editBox->getText());
                 if (name && strlen(name) > 0) {

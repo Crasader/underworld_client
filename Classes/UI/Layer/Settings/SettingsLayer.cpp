@@ -140,7 +140,7 @@ bool SettingNode::init(SettingType type, const Callback& callback, bool isOn) {
             _button = XButton::create(XButton::BSize::Small, bType);
             _button->setTitleText(bTitle.empty() ? blankTitle : bTitle);
             _button->setPressedActionEnabled(true);
-            _button->setCallback([this](Ref*) {
+            _button->addClickEventListener([this](Ref*) {
                 if (_callback) {
                     _callback(this, _type);
                 }
@@ -251,7 +251,7 @@ bool SettingsLayer::init()
         _subNode = board->getSubNode();
         
         auto button = XButton::createReturnButton(board, Vec2(8.0f, 10.0f));
-        button->setCallback([this](Ref*) {
+        button->addClickEventListener([this](Ref*) {
             if (_languageLayer) {
                 _languageLayer->setVisible(false);
             }
@@ -424,7 +424,7 @@ void SettingsLayer::checkButtonStatus(SettingType type, bool& isOn, bool& isEnab
         isOn = iOSApi::isAPNSEnabled();
 #endif
     } else if (SettingType::Rename == type) {
-        if (true) {
+        if (/* DISABLES CODE */ (true)) {
             isEnabled = true;
         } else {
             isEnabled = false;

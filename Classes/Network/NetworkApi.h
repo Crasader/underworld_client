@@ -26,7 +26,7 @@ namespace NetworkApi
     typedef const std::function<void(long, const rapidjson::Value&)> HttpCallback;
     
     // ======================= Game =======================
-    void login(const HttpCallback& callback);
+    void login(const std::string& name, const HttpCallback& callback);
     void loadUserInfo(const std::string& deviceToken, const HttpCallback& callback);
     void heartBeat(const HttpCallback& callback, bool showLoadingView);
     

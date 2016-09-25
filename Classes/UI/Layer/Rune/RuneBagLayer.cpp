@@ -65,7 +65,7 @@ bool RuneBagLayer::init(ObjectUtils::RuneType type, const RuneData* data)
         
         auto button = XButton::create(XButton::BSize::Big, XButton::BType::Blue);
         button->setTitleText(LocalHelper::getString("ui_rune_pick"));
-        button->setCallback([this](Ref*) {
+        button->addClickEventListener([this](Ref*) {
             if (_observer) {
                 _observer->onRuneBagLayerSelected(this, _selectedRune);
             }

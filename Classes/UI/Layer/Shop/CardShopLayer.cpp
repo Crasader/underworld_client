@@ -10,10 +10,14 @@
 #include "XTableViewCell.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
+#include "LocalHelper.h"
 #include "TradeableCard.h"
 #include "Board.h"
 #include "CommodityData.h"
 #include "ShopManager.h"
+#include "DataManager.h"
+#include "AbstractProperty.h"
+#include "UniversalUIHelper.h"
 
 using namespace std;
 
@@ -56,7 +60,7 @@ bool CardShopLayer::init()
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR)) {
         const auto& winSize(Director::getInstance()->getWinSize());
         auto board = Board::create(1);
-        board->setTitle("Card Shop");
+        board->setTitle(LocalHelper::getString("ui_cardShop_title"));
         board->setExitCallback([this]() {
             removeFromParent();
         });
@@ -137,10 +141,21 @@ ssize_t CardShopLayer::numberOfCellsInTableView(TableView *table)
 }
 
 #pragma mark - BillboardCellObserver
+void CardShopLayer::onBaseCardClicked(BaseCard* pSender)
+{
+    if (pSender) {
+        UniversalUIHelper::getInstance()->showCardInfoLayer(this, pSender->getCardId(), nullptr);
+    }
+}
+
 void CardShopLayer::onBaseCardClickedResourceButton(BaseCard* pSender)
 {
     if (pSender) {
         ShopManager::getInstance()->buyCard(pSender->getCardId(), [this](int cardId) {
+            auto property(DataManager::getInstance()->getProperty(cardId));
+            if (property && !property->getName().empty()) {
+                UniversalUIHelper::getInstance()->showMessage(LocalHelper::getString("ui_cardShop_hasPurchased") + LocalHelper::getString(property->getName()));
+            }
             refreshTable(true);
         });
     }

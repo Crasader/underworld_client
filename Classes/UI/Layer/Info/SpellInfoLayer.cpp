@@ -81,14 +81,14 @@ void SpellInfoLayer::createNode(Node* node)
         _description = label;
     }
     
-    // properties
+    // attributes
     {
         static const int rowCount(2);
         static const int columnCount(2);
         static const float spaceY(5);
         const float baseY(size.height - (secondaryEdge.y + descSize.height));
         float spaceX(0);
-        Size propertySize(Size::ZERO);
+        Size attributeSize(Size::ZERO);
         float edgeY(0);
         for (int i = 0; i < 4; ++i) {
             const int row(i / columnCount);
@@ -100,17 +100,17 @@ void SpellInfoLayer::createNode(Node* node)
                 color = PURE_WHITE;
             }
             
-            auto property = CardAttributeNode::create(color);
-            node->addChild(property);
-            _attributes.push_back(property);
+            auto attribute = CardAttributeNode::create(color);
+            node->addChild(attribute);
+            _attributes.push_back(attribute);
             
             // calculate space first
             if (0 == i) {
-                propertySize = property->getContentSize();
-                spaceX = (descSize.width - propertySize.width * columnCount) / (columnCount + 1);
-                edgeY = (baseY - (propertySize.height + spaceY) * rowCount + spaceY) / 2;
+                attributeSize = attribute->getContentSize();
+                spaceX = (descSize.width - attributeSize.width * columnCount) / (columnCount + 1);
+                edgeY = (baseY - (attributeSize.height + spaceY) * rowCount + spaceY) / 2;
             }
-            property->setPosition(size.width - (secondaryEdge.x + (columnCount - column) * (propertySize.width + spaceX) - propertySize.width / 2), baseY - edgeY - ((propertySize.height + spaceY) * row + propertySize.height / 2));
+            attribute->setPosition(size.width - (secondaryEdge.x + (columnCount - column) * (attributeSize.width + spaceX) - attributeSize.width / 2), baseY - edgeY - ((attributeSize.height + spaceY) * row + attributeSize.height / 2));
         }
     }
 }
@@ -142,7 +142,7 @@ void SpellInfoLayer::initUI()
         }
     });
     board->addChildToMidBottom(button);
-    _upgradeButton = button;
+    _resourceButton = button;
     
     createNode(board->getSubNode());
 }

@@ -18,6 +18,8 @@ public:
     virtual ~JuniorCard();
     
     bool canUpgrade() const;
+    bool isProgressBarVisible() const;
+    void setProgressBarVisible(bool visible);
     
 protected:
     JuniorCard();

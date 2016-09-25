@@ -9,8 +9,18 @@
 #include "ShopManager.h"
 #include "JSonUtils.h"
 #include "CommodityData.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#include "ApiBridge.h"
+#endif
+#include "IapObject.h"
+#include "ProgressLayer.h"
 
 using namespace std;
+
+static bool sort_by_price(const IapObject *a, const IapObject *b)
+{
+    return a->price() < b->price();
+}
 
 static ShopManager* s_pInstance(nullptr);
 ShopManager* ShopManager::getInstance()
@@ -29,7 +39,9 @@ void ShopManager::purge()
     }
 }
 
-ShopManager::ShopManager() {}
+ShopManager::ShopManager()
+:_isTransacting(nullptr)
+{}
 
 ShopManager::~ShopManager()
 {
@@ -76,13 +88,74 @@ void ShopManager::fetchCardList(const function<void()>& callback)
     }
 }
 
+void ShopManager::buyCard(int cardId, const function<void(int cardId)>& callback)
+{
+    
+}
+
 #pragma mark - data
 const vector<CommodityData*>& ShopManager::getCardList() const
 {
     return _cardList;
 }
 
-void ShopManager::buyCard(int cardId, const function<void(int cardId)>& callback)
+#pragma mark - iap
+bool ShopManager::isTransacting() const
 {
-    
+    return _isTransacting;
+}
+
+void ShopManager::beginTransaction()
+{
+    _isTransacting = true;
+}
+
+void ShopManager::finishTransaction()
+{
+    _isTransacting = false;
+}
+
+void ShopManager::fetchIAPInfo(const function<void()>& success, const function<void()>& failed, bool showLoadingLayer)
+{
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+    if (showLoadingLayer) {
+        ProgressLayer::showSingleton();
+    }
+    iOSApi::getAppleIAPInfo([=](const vector<IapObject *>& objects) {
+        if (showLoadingLayer) {
+            ProgressLayer::hideSingleton();
+        }
+        const ssize_t size = objects.size();
+        if (size > 0) {
+            _iapObjects.clear();
+            for (int i = 0; i < size; ++i)
+            {
+                const IapObject& instance = *(objects.at(i));
+                _iapObjects.push_back(new IapObject(instance));
+            }
+            
+            sort(_iapObjects.begin(), _iapObjects.end(), sort_by_price);
+            for (int i = 0; i < _iapObjects.size(); ++i)
+            {
+                _iapObjects.at(i)->setIndex(i);
+            }
+            
+            if (success) {
+                success();
+            }
+        }
+    }, [=]() {
+        if (showLoadingLayer) {
+            ProgressLayer::hideSingleton();
+        }
+        if (failed) {
+            failed();
+        }
+    });
+#endif
+}
+
+const vector<IapObject *>& ShopManager::getIapObjects() const
+{
+    return _iapObjects;
 }

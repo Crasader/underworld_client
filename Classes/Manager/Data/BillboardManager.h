@@ -21,7 +21,7 @@ public:
     static BillboardManager* getInstance();
     static void purge();
     
-    // network request
+    //------------------------- NETWORKING REQUEST -------------------------//
     void fetchBillboard(const std::function<void()>& callback);
     
     // data

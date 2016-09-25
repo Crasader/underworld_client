@@ -41,7 +41,7 @@ public:
     static DeckManager* getInstance();
     static void purge();
     
-    // network request
+    //------------------------- NETWORKING REQUEST -------------------------//
     void fetchCardList(const std::function<void()>& callback);
     void fetchCardDetail(int cardId, const std::function<void(int cardId, const CardData*)>& callback);
     void upgradeCard(int cardId, const std::function<void(const CardData*)>& callback);

@@ -42,7 +42,8 @@ NoticeNode::NoticeNode()
 ,_content(nullptr)
 ,_time(nullptr)
 ,_resourceBg(nullptr)
-,_button(nullptr) {}
+,_button(nullptr)
+,_touchInvalid(false) {}
 
 NoticeNode::~NoticeNode()
 {
@@ -125,20 +126,20 @@ void NoticeNode::update(const ChatData* data)
             if (cnt > 0) {
                 _button->setType(XButton::BType::Blue);
                 _button->setTitleText(LocalHelper::getString("ui_chat_mail_get"));
-                _button->setCallback([this](Ref*) {
-                    if (_observer) {
-                        _observer->onNoticeNodeGet(_data);
-                    }
-                });
             } else {
                 _button->setType(XButton::BType::Red);
                 _button->setTitleText(LocalHelper::getString("ui_chat_mail_delete"));
-                _button->setCallback([this](Ref*) {
-                    if (_observer) {
+            }
+            
+            CocosUtils::fixWidgetTouchEvent(_button, _touchInvalid, [cnt, this](Ref*) {
+                if (_observer) {
+                    if (cnt > 0) {
+                        _observer->onNoticeNodeGet(_data);
+                    } else {
                         _observer->onNoticeNodeDelete(_data);
                     }
-                });
-            }
+                }
+            });
             
             float x(resourceNodeEdgeX);
             const auto& rsize(_resourceBg->getContentSize());

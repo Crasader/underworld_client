@@ -13,10 +13,6 @@
 #include "FixedLabelAtlas.h"
 #include "NumberJump.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-
-#endif
-
 USING_NS_CC;
 using namespace ui;
 using namespace std;
@@ -460,16 +456,12 @@ Button* CocosUtils::createRedExitButton(Node* parent, const function<void()>& ca
     return createExitButton(parent, callback, getResourcePath("button_hongse.png"));
 }
 
-void CocosUtils::fixWidgetTouchEvent(Widget* widget, bool& flag, const Widget::ccWidgetTouchCallback& touchedCallback, const Widget::ccWidgetClickCallback& clickedCallback)
+void CocosUtils::fixWidgetTouchEvent(Widget* widget, bool& flag, const Widget::ccWidgetClickCallback& clickedCallback)
 {
     if (widget) {
         CC_ASSERT(widget->isTouchEnabled());
         widget->setSwallowTouches(false);
         widget->addTouchEventListener([=, &flag](Ref* pSender, Widget::TouchEventType type) {
-            if (touchedCallback) {
-                touchedCallback(pSender, type);
-            }
-            
             auto widget = dynamic_cast<Widget*>(pSender);
             if (type == Widget::TouchEventType::BEGAN) {
                 flag = false;

@@ -32,7 +32,7 @@ protected:
     virtual void updateData(const AbstractData* data);
     
 protected:
-    Sprite* _icon;
+    ui::ImageView* _icon;
     Label* _level;
     Sprite* _qualityBox;
     int _cardId;

@@ -187,14 +187,14 @@ void CardInfoLayer::createLeftNode(Node* node)
         line->addChild(label);
     }
     
-    static const float spaceLineProperty(20);
+    static const float spaceLineAttribute(20);
     
-    // properties
+    // attributes
     {
         static const int columnCount(2);
         static const float spaceY(6);
         float spaceX(0);
-        Size propertySize(Size::ZERO);
+        Size attributeSize(Size::ZERO);
         for (int i = 0; i < 10; ++i) {
             const int row(i / columnCount);
             const int column(i % columnCount);
@@ -205,23 +205,23 @@ void CardInfoLayer::createLeftNode(Node* node)
                 color = PURE_WHITE;
             }
             
-            auto property = CardAttributeNode::create(color);
-            node->addChild(property);
-            _attributes.push_back(property);
+            auto attribute = CardAttributeNode::create(color);
+            node->addChild(attribute);
+            _attributes.push_back(attribute);
             
             // calculate space first
             if (0 == i) {
-                propertySize = property->getContentSize();
+                attributeSize = attribute->getContentSize();
                 if (columnCount > 1) {
-                    spaceX = (size.width - (secondaryEdge.x * 2 + propertySize.width * columnCount)) / (columnCount - 1);
+                    spaceX = (size.width - (secondaryEdge.x * 2 + attributeSize.width * columnCount)) / (columnCount - 1);
                 }
             }
-            property->setPosition(secondaryEdge.x + (propertySize.width + spaceX) * column + propertySize.width / 2, line->getPositionY() - (spaceLineProperty + (propertySize.height + spaceY) * row + propertySize.height / 2));
+            attribute->setPosition(secondaryEdge.x + (attributeSize.width + spaceX) * column + attributeSize.width / 2, line->getPositionY() - (spaceLineAttribute + (attributeSize.height + spaceY) * row + attributeSize.height / 2));
         }
     }
     
     // bottom bar
-    {
+    if (/* DISABLES CODE */ (false)) {
         auto bar = PureScale9Sprite::create(PureScale9Sprite::Type::BlueDeep);
         bar->setContentSize(barSize);
         bar->setPosition(size.width / 2, secondaryEdge.y + barSize.height / 2);
@@ -249,7 +249,7 @@ void CardInfoLayer::createLeftNode(Node* node)
         button->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
         button->setPosition(Point(barSize.width / 2, 0));
         bar->addChild(button);
-        _upgradeButton = button;
+        _resourceButton = button;
     }
 }
 
@@ -360,7 +360,7 @@ void CardInfoLayer::createOpButtons(Node* node)
     for (int i = 0; i < opButtonsCount; ++i) {
         auto button = XButton::create(XButton::BSize::Big, XButton::BType::Blue);
         button->setTitleText(opButtonsTitles[i]);
-        button->setCallback([this, i](Ref*) { onOpButtonClicked(i); });
+        button->addClickEventListener([this, i](Ref*) { onOpButtonClicked(i); });
         node->addChild(button);
         const auto& bsize(button->getContentSize());
         button->setPosition(Point(size.width - ((edge.x + bsize.width) * (i + 1) - bsize.width / 2), edge.y + bsize.height / 2));
@@ -403,7 +403,7 @@ void CardInfoLayer::initUI()
     _board = board;
     
     auto button = XButton::createReturnButton(board, Vec2(8.0f, 10.0f));
-    button->setCallback([this](Ref*) {
+    button->addClickEventListener([this](Ref*) {
         if (_observer) {
             _observer->onCardInfoLayerReturn(this);
         }

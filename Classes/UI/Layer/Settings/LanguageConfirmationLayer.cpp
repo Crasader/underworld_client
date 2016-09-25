@@ -60,7 +60,7 @@ bool LanguageConfirmationLayer::init(ssize_t idx)
         
         auto cancel = XButton::create(XButton::BSize::Small, XButton::BType::Red);
         cancel->setTitleText(LocalHelper::getString("hint_cancel"));
-        cancel->setCallback([this](Ref*) {
+        cancel->addClickEventListener([this](Ref*) {
             removeFromParent();
         });
         cancel->setPosition(Point(size.width / 2, edge / 2));
@@ -68,7 +68,7 @@ bool LanguageConfirmationLayer::init(ssize_t idx)
         
         auto confirm = XButton::create(XButton::BSize::Small, XButton::BType::Blue);
         confirm->setTitleText(LocalHelper::getString("hint_confirm"));
-        confirm->setCallback([this](Ref*) {
+        confirm->addClickEventListener([this](Ref*) {
             if (_observer) {
                 _observer->onLanguageConfirmationLayerConfirm(this, _idx);
             }

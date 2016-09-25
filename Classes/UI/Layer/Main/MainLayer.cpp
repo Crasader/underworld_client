@@ -137,7 +137,7 @@ void MainLayer::addLevelButtons()
         button->setPosition(Point(size.width * positions[i].x, size.height * positions[i].y));
         _mainNode->addChild(button, 0, i);
         
-        CocosUtils::fixWidgetTouchEvent(button, _touchInvalid, nullptr, [this](Ref* pSender) {
+        CocosUtils::fixWidgetTouchEvent(button, _touchInvalid, [this](Ref* pSender) {
             // TODO:
             SoundManager::getInstance()->playButtonSound();
             

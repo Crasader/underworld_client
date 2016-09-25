@@ -54,6 +54,7 @@ private:
     PvpLogNodeObserver* _observer;
     bool _isExpanded;
     const PvpLogData* _data;
+    bool _touchInvalid;
     ui::Scale9Sprite* _background;
     
     PvpResultNode* _result;

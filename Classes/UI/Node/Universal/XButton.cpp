@@ -64,9 +64,7 @@ static string getButtonFile(XButton::BSize size, XButton::BType type) {
 
 XButton::XButton()
 :_bSize(BSize::Big)
-,_bType(BType::Blue)
-,_callback(nullptr)
-,_touchInvalid(false) {}
+,_bType(BType::Blue) {}
 
 XButton::~XButton()
 {
@@ -131,10 +129,4 @@ void XButton::setType(BType type)
         const auto& file = getButtonFile(_bSize, type);
         loadTextures(file, file);
     }
-}
-
-void XButton::setCallback(const Callback& callback)
-{
-    _callback = callback;
-    CocosUtils::fixWidgetTouchEvent(this, _touchInvalid, nullptr, _callback);
 }

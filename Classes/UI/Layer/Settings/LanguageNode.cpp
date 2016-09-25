@@ -66,7 +66,7 @@ bool LanguageNode::init()
         button->setTitleColor(Color3B::BLACK);
         button->setTitleAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
         
-        CocosUtils::fixWidgetTouchEvent(button, _touchInvalid, nullptr, [this](Ref*) {
+        CocosUtils::fixWidgetTouchEvent(button, _touchInvalid, [this](Ref*) {
             if (_observer) {
                 _observer->onLanguageNodeSelected(_idx);
             }

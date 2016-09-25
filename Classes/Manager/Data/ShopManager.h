@@ -13,6 +13,8 @@
 #include <vector>
 #include <functional>
 
+class IapObject;
+
 class CommodityData;
 
 class ShopManager
@@ -21,12 +23,19 @@ public:
     static ShopManager* getInstance();
     static void purge();
     
-    // network request
+    //------------------------- NETWORKING REQUEST -------------------------//
     void fetchCardList(const std::function<void()>& callback);
     void buyCard(int cardId, const std::function<void(int cardId)>& callback);
     
     // data
     const std::vector<CommodityData*>& getCardList() const;
+    
+    // iap
+    bool isTransacting() const;
+    void beginTransaction();
+    void finishTransaction();
+    void fetchIAPInfo(const std::function<void()>& success, const std::function<void()>& failed, bool showLoadingLayer);
+    const std::vector<IapObject *>& getIapObjects() const;
     
 private:
     ShopManager();
@@ -36,6 +45,8 @@ private:
     
 private:
     std::vector<CommodityData*> _cardList;
+    bool _isTransacting;
+    std::vector<IapObject *> _iapObjects;
 };
 
 #endif /* ShopManager_h */

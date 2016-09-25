@@ -11,8 +11,6 @@
 
 #include "BaseCard.h"
 #include "CardPreview.h"
-#include "CardInfoLayer.h"
-#include "SpellInfoLayer.h"
 
 USING_NS_CC;
 
@@ -26,8 +24,6 @@ class DevelopLayer
 : public LayerColor
 , public BaseCardObserver
 , public CardPreviewObserver
-, public CardInfoLayerObserver
-, public SpellInfoLayerObserver
 {
 public:
     static DevelopLayer* create();
@@ -48,14 +44,6 @@ protected:
     // CardPreviewObserver
     virtual BaseCard* onCardPreviewCreateCard(int cardId) override;
     virtual void onCardPreviewClickedOpButton(CardOpType type, const AbstractData* data) override;
-    
-    // CardInfoLayerObserver
-    virtual void onCardInfoLayerReturn(Node* pSender) override;
-    virtual void onCardInfoLayerExit(Node* pSender) override;
-    
-    // SpellInfoLayerObserver
-    virtual void onSpellInfoLayerExit(Node* pSender) override;
-    virtual void onSpellInfoLayerUpgrade(Node* pSender, const AbstractData* data) override;
     
 private:
     DevelopLayerObserver *_observer;

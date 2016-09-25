@@ -21,7 +21,7 @@ public:
     static PvpManager* getInstance();
     static void purge();
     
-    // network request
+    //------------------------- NETWORKING REQUEST -------------------------//
     void fetchPvpLogs(const std::function<void()>& callback);
     
     // data
