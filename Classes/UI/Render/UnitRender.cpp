@@ -21,6 +21,7 @@
 #include "Skill.h"
 #include "CocosUtils.h"
 #include "RenderHelper.h"
+#include "Aura.h"
 
 namespace UnderWorld{ namespace Core{
     
@@ -55,7 +56,6 @@ const int UnitRender::IN_MAIN_BODY_EFFECT_FOREGROUND_ZORDER = 6;
     
 const float UnitRender::HEALTHY_HP_THRESHOLD = .3f;
 const int UnitRender::MAX_HP_PERCENT = 100;
-const std::string UnitRender::HEAL_EFFECT_RENDER_KEY = "";
 const std::string UnitRender::ROLL_SCHEDULE_KEY_PREFIX = "unit_roll_schedule_prefix";
 const float UnitRender::ROLL_NEXT_DELAY_IN_SECOND = .2f;
 const float UnitRender::DUARTION_SCALE_MAX = 100.f;
@@ -63,6 +63,7 @@ const float UnitRender::INIT_ANIM_DURATION = 0.5f;
 const float UnitRender::INIT_MOVE_DOWN_OFFSET = 40.f;
 const float UnitRender::INIT_SCALE_Y_OFFSET = 0.2f;
 const float UnitRender::INIT_SCALE_X_OFFSET = 0.2f;
+const std::string UnitRender::UNIT_LANDING_EFFECT_RENDER_KEY("UnitLandingEffect");
     
 UnitRender::UnitRender()
 : _unit(nullptr)
@@ -87,6 +88,7 @@ UnitRender::~UnitRender() {
         _rollNodes.pop();
     }
     if (_unit && !isObjectReleased()) _unit->removeUnitObserver(this);
+    cocos2d::Director::getInstance()->getScheduler()->unscheduleAllForTarget(this);
 }
 
 bool UnitRender::init(const WorldObject *object, WorldRender *worldRender) {
@@ -118,6 +120,7 @@ bool UnitRender::init(const WorldObject *object, WorldRender *worldRender) {
 
     _renderBufs.clear();
     _bufAnimations.clear();
+    _renderAuras.clear();
     _inited = false;
     
     // init cocos
@@ -205,7 +208,8 @@ void UnitRender::onNotifyUnitEvents(const std::vector<Unit::EventLog>& events) {
 }
     
 cocos2d::Node* UnitRender::addEffect(const std::string &renderKey, bool loop) {
-    cocos2d::Node* ret = nullptr;
+    cocos2d::Node* fg = nullptr;
+    cocos2d::Node* bg = nullptr;
     
     const SpellConfigData* data = DataManager::getInstance()->getSpellConfigData(renderKey);
     
@@ -214,35 +218,52 @@ cocos2d::Node* UnitRender::addEffect(const std::string &renderKey, bool loop) {
         // check data
         if (!data) break;
         
-        ret = RenderHelper::buildEffectNode(data->getFgResource(), loop, nullptr);
+        fg = RenderHelper::buildEffectNode(data->getFgResource(), loop, nullptr);
+        bg = RenderHelper::buildEffectNode(data->getBgResource(), loop, nullptr);
         
     } while (0);
     
     // attach node
-    if (ret) {
+    if (fg) {
         //TODO: consider effect direction
         int foregourndZorder = IN_MAIN_BODY_EFFECT_FOREGROUND_ZORDER;
+        int backgroundZorder = IN_MAIN_BODY_EFFECT_BACKGROUND_ZORDER;
         cocos2d::Vec2 pos(0.f, 0.f);
         if (data->getSpellPosition() == SpellConfigData::kHead) {
             if (_configData) pos.set(_configData->getHeadEffectPosX(), _configData->getHeadEffectPosY());
             foregourndZorder = IN_MAIN_BODY_EFFECT_FOREGROUND_ZORDER;
+            backgroundZorder = IN_MAIN_BODY_EFFECT_BACKGROUND_ZORDER;
         } else if (data->getSpellPosition() == SpellConfigData::kBody) {
             if (_configData) pos.set(_configData->getBodyEffectPosX(), _configData->getBodyEffectPosY());
             foregourndZorder = IN_MAIN_BODY_EFFECT_FOREGROUND_ZORDER;
+            backgroundZorder = IN_MAIN_BODY_EFFECT_BACKGROUND_ZORDER;
         } else if (data->getSpellPosition() == SpellConfigData::kFoot) {
             foregourndZorder = IN_MAIN_FOOT_EFFECT_FOREGROUND_ZORDER;
+            backgroundZorder = IN_MAIN_FOOT_EFFECT_BACKGROUND_ZORDER;
         }
         
-        ret->setPosition(pos);
-        ret->setScale(_configData->getEffectScale() * ret->getScale());
+        
+        
+        fg->setPosition(pos);
+        fg->setScale(_configData->getEffectScale() * fg->getScale());
         if (data->getSpellPosition() == SpellConfigData::kFoot) {
-            _groundNode->addChild(ret, foregourndZorder);
+            _groundNode->addChild(fg, foregourndZorder);
         } else {
-            _mainNode->addChild(ret, foregourndZorder);
+            _mainNode->addChild(fg, foregourndZorder);
+        }
+        
+        if (bg) {
+            bg->setPosition(pos);
+            bg->setScale(_configData->getEffectScale() * bg->getScale());
+            if (data->getSpellPosition() == SpellConfigData::kFoot) {
+                _groundNode->addChild(bg, backgroundZorder);
+            } else {
+                _mainNode->addChild(bg, backgroundZorder);
+            }
         }
     }
     
-    return ret;
+    return fg;
 }
 
 void UnitRender::handleEvents() {
@@ -272,7 +293,7 @@ void UnitRender::handleEvents() {
             || _events[i]._type == Unit::kEventLogType_CastSpell) {
             _featureLogs.push_back(i);
         } else if (_events[i]._type == Unit::kEventLogType_DamageInupt
-            && _events[i]._damageNature == kDamageNature_Heal) {
+            && !_events[i]._damageInputRenderKey.empty()) {
             _featureLogs.push_back(i);
         }
     }
@@ -404,8 +425,19 @@ void UnitRender::renderBuffAndAura() {
     _usefuleliminateBuffLogs.clear();
     
     /** TODO: render aura */
-    
+    for (auto iter = _usefulHoldAuraLogs.begin();
+         iter != _usefulHoldAuraLogs.end();
+         ++iter) {
+        Unit::EventLog& holdAuraLog = _events[iter->second];
+        if (holdAuraLog._aura) renderAura(holdAuraLog._aura);
+    }
     _usefulHoldAuraLogs.clear();
+    for (auto iter = _usefulUnholdAuraLogs.begin();
+         iter != _usefulUnholdAuraLogs.end();
+         ++iter) {
+        Unit::EventLog& unholdAuraLog = _events[iter->second];
+        stopRenderAura(unholdAuraLog._auraId);
+    }
     _usefulUnholdAuraLogs.clear();
     
 }
@@ -414,7 +446,6 @@ void UnitRender::renderEffects() {
     static frame_t delayThresholdInFrame = GameConstants::second2Frame(WorldRender::EFFECT_RENDER_DELAY_THRESHOLD_IN_SECOND);
     
     frame_t currentFrame = _worldRender->getWorld()->getClock()->getFrameCount();
-    bool healed = false;
     for (int i = 0; i < _featureLogs.size(); ++i) {
         const Unit::EventLog& log = _events[i];
         
@@ -432,8 +463,8 @@ void UnitRender::renderEffects() {
                 if (node) rollNode(node);
             }
         } else if (log._type == Unit::kEventLogType_DamageInupt) {
-            if (log._damageNature == kDamageNature_Heal && log._damage > 0 && !healed) {
-                healed = true;
+            if (!log._damageInputRenderKey.empty()) {
+                addEffect(log._damageInputRenderKey, false);
             }
         } else if (log._type == Unit::kEventLogType_CastSpell) {
             if (log._spellType && !log._spellType->getRenderKey().empty()) {
@@ -442,7 +473,6 @@ void UnitRender::renderEffects() {
         }
     }
     
-    if (healed) addEffect(HEAL_EFFECT_RENDER_KEY, false);
     _featureLogs.clear();
 }
     
@@ -460,6 +490,13 @@ void UnitRender::renderInit() {
                 cocos2d::EaseSineIn::create(cocos2d::ScaleTo::create(INIT_ANIM_DURATION / 4, 1.f, 1.f));
             cocos2d::Action* seq = cocos2d::Sequence::create(moveDown, scale1, NULL);
             _bodyNode->runAction(seq);
+            
+            Coordinate32 landingPos = _status._position;
+            Director::getInstance()->getScheduler()->schedule([this, landingPos](float dt){
+                if (_worldRender) {
+                    _worldRender->addEffect(UNIT_LANDING_EFFECT_RENDER_KEY, false, landingPos);
+                }
+            }, this, 0.f, 0, INIT_ANIM_DURATION / 4, false, "landing_schedule_key");
         }
         _inited = true;
     }
@@ -478,6 +515,12 @@ void UnitRender::initBuffAndAura() {
         const Buff* buf = _unit->getBuff(i);
         
         if (buf) renderBuf(buf);
+    }
+    
+    for (int i = 0; i < _unit->getAuraHolder()->getAuraCount(); ++i) {
+        const Aura* aura = _unit->getAuraHolder()->getAura(i);
+        
+        if (aura) renderAura(aura);
     }
 }
     
@@ -527,6 +570,29 @@ void UnitRender::stopRenderBuf(creatureid_t bufId) {
     // remove bufId record
     _renderBufs.erase(iterA);
     
+}
+    
+void UnitRender::renderAura(const Aura* aura) {
+    // check instance;
+    if (!aura || !aura->getAuraType()) return;
+    
+    // check already exist
+    auto iter = _renderAuras.find(aura->getId());
+    if (iter != _renderAuras.end()) return;
+    
+    // check renderKey;
+    if (!aura->getAuraType()->getRenderKey().empty()) {
+        cocos2d::Node* auraNode = addEffect(aura->getAuraType()->getRenderKey(), true);
+        if (auraNode) _renderAuras.insert(std::make_pair(aura->getId(), auraNode));
+    }
+}
+    
+void UnitRender::stopRenderAura(creatureid_t auraId) {
+    auto iter = _renderAuras.find(auraId);
+    if (iter == _renderAuras.end()) return;
+    
+    if (iter->second) iter->second->removeFromParent();
+    _renderAuras.erase(iter);
 }
     
 void UnitRender::getCurrentPoseBundle(BodyAnimationPoseBundle& output) {

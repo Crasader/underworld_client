@@ -96,7 +96,6 @@ public:
     /** consts */
     static const float HEALTHY_HP_THRESHOLD;
     static const int MAX_HP_PERCENT;
-    static const std::string HEAL_EFFECT_RENDER_KEY;
     static const std::string ROLL_SCHEDULE_KEY_PREFIX;
     static const float ROLL_NEXT_DELAY_IN_SECOND;
     static const float DUARTION_SCALE_MAX;
@@ -104,6 +103,7 @@ public:
     static const float INIT_MOVE_DOWN_OFFSET;
     static const float INIT_SCALE_Y_OFFSET;
     static const float INIT_SCALE_X_OFFSET;
+    static const std::string UNIT_LANDING_EFFECT_RENDER_KEY;
     
 private:
     
@@ -154,6 +154,7 @@ private:
     UnitStatus _lastStatus;
     std::unordered_map<creatureid_t, std::string> _renderBufs;     //bufId vs renderKey
     std::unordered_map<std::string, BuffAnimation> _bufAnimations; //renderKey vs animation obj
+    std::unordered_map<creatureid_t, cocos2d::Node*> _renderAuras;
     bool _inited;
     
     /** events*/
@@ -219,6 +220,10 @@ private:
     /** buf */
     void renderBuf(const Buff* buf);
     void stopRenderBuf(creatureid_t bufId);
+    
+    /** aura */
+    void renderAura(const Aura* aura);
+    void stopRenderAura(creatureid_t auraId);
     
     /** cocos misc */
     void rollNode(cocos2d::Node* node);

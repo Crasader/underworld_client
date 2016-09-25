@@ -26,6 +26,7 @@
 #include "CardConfigData.h"
 #include "RenderHelper.h"
 #include "UWRender.h"
+#include "MagicRender.h"
 
 USING_NS_CC;
 
@@ -278,7 +279,8 @@ void WorldRender::hideHMMCardPlaceTips() {
     
 cocos2d::Node* WorldRender::addEffect(const std::string &renderKey, bool loop,
     const Coordinate32 &pos) {
-    cocos2d::Node* ret = nullptr;
+    cocos2d::Node* fg = nullptr;
+    cocos2d::Node* bg = nullptr;
     
     const SpellConfigData* data = DataManager::getInstance()->getSpellConfigData(renderKey);
     
@@ -287,18 +289,24 @@ cocos2d::Node* WorldRender::addEffect(const std::string &renderKey, bool loop,
         // check data
         if (!data) break;
         
-        ret = RenderHelper::buildEffectNode(data->getFgResource(), loop, nullptr);
+        fg = RenderHelper::buildEffectNode(data->getFgResource(), loop, nullptr);
+        bg = RenderHelper::buildEffectNode(data->getBgResource(), loop, nullptr);
+        
     } while (0);
     
     // attach node
-    if (ret) {
+    if (fg) {
         int zorder = worldCoordinate2Zorder(pos, (RenderLayer)data->getSpellRenderLayer(), data->getSpellHeight());
         cocos2d::Vec2 position = worldCoordinate2CocosPoint(pos, (RenderLayer)data->getSpellRenderLayer(), data->getSpellHeight());
-        ret->setPosition(position);
-        _worldContainer->addChild(ret, zorder);
+        fg->setPosition(position);
+        _worldContainer->addChild(fg, zorder);
+        if (bg) {
+            bg->setPosition(position);
+            _worldContainer->addChild(bg, zorder);
+        }
     }
     
-    return ret;
+    return fg;
 }
     
 cocos2d::Node* WorldRender::addEffect(const EffectData& data,
@@ -338,6 +346,8 @@ void WorldRender::createWorldObjectRender(const WorldObject *object) {
         objectRender = new UnitRender();
     } else if (M_INSTANCE_OF(object, const Bullet*)) {
         objectRender = new BulletRender();
+    } else if (M_INSTANCE_OF(object, const Magic*)) {
+        objectRender = new MagicRender();
     }
     
     if (objectRender && objectRender->init(object, this)) {

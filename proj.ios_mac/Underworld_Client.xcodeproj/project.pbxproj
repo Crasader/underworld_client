@@ -56,11 +56,14 @@
 		302CA3251D88ECC900D0404D /* RenderHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 302CA3231D88ECC900D0404D /* RenderHelper.cpp */; };
 		302CA3291D893F7400D0404D /* EffectData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 302CA3271D893F7400D0404D /* EffectData.cpp */; };
 		3031641A1CFD99AF00DBAB04 /* Heuristic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 303164181CFD99AF00DBAB04 /* Heuristic.cpp */; };
+		30482FB41D985A9500DC84C7 /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 30482FB01D985A9500DC84C7 /* DDLog.m */; };
+		30482FB51D985A9500DC84C7 /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 30482FB31D985A9500DC84C7 /* DDTTYLogger.m */; };
 		3070302B1CD1E6D70077D357 /* ProduceType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 307030291CD1E6D60077D357 /* ProduceType.cpp */; };
 		3070302E1CD3253B0077D357 /* Produce.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3070302C1CD3253B0077D357 /* Produce.cpp */; };
 		307534691BF1B2F20057DCED /* Commander.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 307534671BF1B2F20057DCED /* Commander.cpp */; };
 		3075346D1BF324340057DCED /* EventTriggers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3075346B1BF324340057DCED /* EventTriggers.cpp */; };
 		307534711BF33ECF0057DCED /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3075346F1BF33ECF0057DCED /* Logger.cpp */; };
+		308432E11D97D2D1003B9299 /* MagicRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308432DF1D97D2D1003B9299 /* MagicRender.cpp */; };
 		3087FF051C9F9D92004E31F6 /* MagicType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3087FF031C9F9D92004E31F6 /* MagicType.cpp */; };
 		3087FF081C9FD0CB004E31F6 /* Magic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3087FF061C9FD0CB004E31F6 /* Magic.cpp */; };
 		3087FF0F1CA12A57004E31F6 /* TCPClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3087FF0E1CA12A57004E31F6 /* TCPClient.mm */; };
@@ -185,8 +188,6 @@
 		A19B1AB41D6C186E0010D129 /* DevelopLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19B1AB21D6C186E0010D129 /* DevelopLayer.cpp */; };
 		A19EE96D1C1C0F1300E46D77 /* LevelProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A19EE96B1C1C0F1300E46D77 /* LevelProperty.cpp */; };
 		A1A05B3C1C9668FB006FE03B /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A05B3B1C9668FB006FE03B /* GCDAsyncSocket.m */; };
-		A1A05B6C1C96B6A0006FE03B /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A05B5C1C96B6A0006FE03B /* DDLog.m */; };
-		A1A05B731C96C113006FE03B /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A05B721C96C113006FE03B /* DDTTYLogger.m */; };
 		A1A4BA3B1BCE043100175E8A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A1A4BA391BCE043100175E8A /* InfoPlist.strings */; };
 		A1A4BA3E1BCE043800175E8A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A1A4BA3C1BCE043800175E8A /* Localizable.strings */; };
 		A1A4BA491BCE096300175E8A /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1A4BA471BCE096300175E8A /* Utils.cpp */; };
@@ -470,6 +471,12 @@
 		302CA3281D893F7400D0404D /* EffectData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectData.h; sourceTree = "<group>"; };
 		303164181CFD99AF00DBAB04 /* Heuristic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Heuristic.cpp; path = Core/Unit/Element/Heuristic.cpp; sourceTree = "<group>"; };
 		303164191CFD99AF00DBAB04 /* Heuristic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Heuristic.h; path = Core/Unit/Element/Heuristic.h; sourceTree = "<group>"; };
+		30482FAE1D985A9500DC84C7 /* DDLegacyMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDLegacyMacros.h; path = Lumberjack/DDLegacyMacros.h; sourceTree = "<group>"; };
+		30482FAF1D985A9500DC84C7 /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDLog.h; path = Lumberjack/DDLog.h; sourceTree = "<group>"; };
+		30482FB01D985A9500DC84C7 /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDLog.m; path = Lumberjack/DDLog.m; sourceTree = "<group>"; };
+		30482FB11D985A9500DC84C7 /* DDLogMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDLogMacros.h; path = Lumberjack/DDLogMacros.h; sourceTree = "<group>"; };
+		30482FB21D985A9500DC84C7 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDTTYLogger.h; path = Lumberjack/DDTTYLogger.h; sourceTree = "<group>"; };
+		30482FB31D985A9500DC84C7 /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDTTYLogger.m; path = Lumberjack/DDTTYLogger.m; sourceTree = "<group>"; };
 		307030291CD1E6D60077D357 /* ProduceType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ProduceType.cpp; path = Core/Unit/Type/ProduceType.cpp; sourceTree = "<group>"; };
 		3070302A1CD1E6D60077D357 /* ProduceType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProduceType.h; path = Core/Unit/Type/ProduceType.h; sourceTree = "<group>"; };
 		3070302C1CD3253B0077D357 /* Produce.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Produce.cpp; path = Core/Unit/Instance/Produce.cpp; sourceTree = "<group>"; };
@@ -480,6 +487,8 @@
 		3075346C1BF324340057DCED /* EventTriggers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventTriggers.h; path = Core/Game/EventTriggers.h; sourceTree = "<group>"; };
 		3075346F1BF33ECF0057DCED /* Logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Logger.cpp; path = Core/Test/Logger.cpp; sourceTree = "<group>"; };
 		307534701BF33ECF0057DCED /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Logger.h; path = Core/Test/Logger.h; sourceTree = "<group>"; };
+		308432DF1D97D2D1003B9299 /* MagicRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MagicRender.cpp; path = Render/MagicRender.cpp; sourceTree = "<group>"; };
+		308432E01D97D2D1003B9299 /* MagicRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MagicRender.h; path = Render/MagicRender.h; sourceTree = "<group>"; };
 		3087FF031C9F9D92004E31F6 /* MagicType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MagicType.cpp; path = Core/Unit/Type/MagicType.cpp; sourceTree = "<group>"; };
 		3087FF041C9F9D92004E31F6 /* MagicType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MagicType.h; path = Core/Unit/Type/MagicType.h; sourceTree = "<group>"; };
 		3087FF061C9FD0CB004E31F6 /* Magic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Magic.cpp; path = Core/Unit/Instance/Magic.cpp; sourceTree = "<group>"; };
@@ -737,10 +746,6 @@
 		A19EE96C1C1C0F1300E46D77 /* LevelProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelProperty.h; sourceTree = "<group>"; };
 		A1A05B3A1C9668FB006FE03B /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		A1A05B3B1C9668FB006FE03B /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
-		A1A05B5B1C96B6A0006FE03B /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLog.h; sourceTree = "<group>"; };
-		A1A05B5C1C96B6A0006FE03B /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLog.m; sourceTree = "<group>"; };
-		A1A05B711C96C113006FE03B /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
-		A1A05B721C96C113006FE03B /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTTYLogger.m; sourceTree = "<group>"; };
 		A1A4BA3A1BCE043100175E8A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = ios/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
 		A1A4BA3D1BCE043800175E8A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = ios/en.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
 		A1A4BA3F1BCE044600175E8A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "ios/zh-Hans.lproj/InfoPlist.strings"; sourceTree = SOURCE_ROOT; };
@@ -1035,8 +1040,6 @@
 		E65974DA1D971C7000585E46 /* IapObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IapObject.h; sourceTree = "<group>"; };
 		E686476B1D9770EA003FB4F6 /* UniversalUIHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UniversalUIHelper.cpp; sourceTree = "<group>"; };
 		E686476C1D9770EA003FB4F6 /* UniversalUIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniversalUIHelper.h; sourceTree = "<group>"; };
-		E6BC4C231D963C6900721556 /* DDLogMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDLogMacros.h; sourceTree = "<group>"; };
-		E6BC4C241D963CAB00721556 /* DDLegacyMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDLegacyMacros.h; sourceTree = "<group>"; };
 		ED545A7B1B68A1F400C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
 		ED545A7D1B68A1FA00C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -1388,6 +1391,19 @@
 			name = Element;
 			sourceTree = "<group>";
 		};
+		30482FAD1D985A7900DC84C7 /* Lumberjack */ = {
+			isa = PBXGroup;
+			children = (
+				30482FAE1D985A9500DC84C7 /* DDLegacyMacros.h */,
+				30482FAF1D985A9500DC84C7 /* DDLog.h */,
+				30482FB01D985A9500DC84C7 /* DDLog.m */,
+				30482FB11D985A9500DC84C7 /* DDLogMacros.h */,
+				30482FB21D985A9500DC84C7 /* DDTTYLogger.h */,
+				30482FB31D985A9500DC84C7 /* DDTTYLogger.m */,
+			);
+			name = Lumberjack;
+			sourceTree = "<group>";
+		};
 		3075346E1BF33DEE0057DCED /* Test */ = {
 			isa = PBXGroup;
 			children = (
@@ -1432,6 +1448,8 @@
 		30F8404B1D50B1AB0050C976 /* Render */ = {
 			isa = PBXGroup;
 			children = (
+				308432DF1D97D2D1003B9299 /* MagicRender.cpp */,
+				308432E01D97D2D1003B9299 /* MagicRender.h */,
 				302CA3241D88ECC900D0404D /* RenderHelper.h */,
 				302CA3231D88ECC900D0404D /* RenderHelper.cpp */,
 				30F840511D50B3370050C976 /* BulletRender.cpp */,
@@ -1888,12 +1906,12 @@
 		A1720EB11BCD2D2E00217E98 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				30482FAD1D985A7900DC84C7 /* Lumberjack */,
 				A1A05B391C9668FB006FE03B /* CocoaAsyncSocket */,
 				A1DE80371BD669BA004DEED1 /* CrashReporter */,
 				A1FF13B21D3DFCF6007D2C08 /* GCManager */,
 				A1720EB21BCD2D2E00217E98 /* KeyChain */,
 				A11469D71C9FE9EC00E64125 /* Libevent */,
-				A1A05B4D1C96B6A0006FE03B /* Lumberjack */,
 				A1720EB51BCD2D2E00217E98 /* RMStore */,
 			);
 			name = ThirdParty;
@@ -1974,19 +1992,6 @@
 				A1A05B3B1C9668FB006FE03B /* GCDAsyncSocket.m */,
 			);
 			path = CocoaAsyncSocket;
-			sourceTree = "<group>";
-		};
-		A1A05B4D1C96B6A0006FE03B /* Lumberjack */ = {
-			isa = PBXGroup;
-			children = (
-				E6BC4C241D963CAB00721556 /* DDLegacyMacros.h */,
-				A1A05B5B1C96B6A0006FE03B /* DDLog.h */,
-				A1A05B5C1C96B6A0006FE03B /* DDLog.m */,
-				E6BC4C231D963C6900721556 /* DDLogMacros.h */,
-				A1A05B711C96C113006FE03B /* DDTTYLogger.h */,
-				A1A05B721C96C113006FE03B /* DDTTYLogger.m */,
-			);
-			path = Lumberjack;
 			sourceTree = "<group>";
 		};
 		A1A5529B1D7FFB71009FF922 /* Chest */ = {
@@ -2775,7 +2780,6 @@
 				A1FF0E751D7D469D00C32040 /* SpellInfoLayer.cpp in Sources */,
 				A1FF0E8E1D7D46CC00C32040 /* CardSet.cpp in Sources */,
 				A1D461561C3E1C9200E8E60B /* AbstractUpgradeProperty.cpp in Sources */,
-				A1A05B731C96C113006FE03B /* DDTTYLogger.m in Sources */,
 				A1A4BA491BCE096300175E8A /* Utils.cpp in Sources */,
 				A1D745C61C1AB9F60020BC1C /* BattleScene.cpp in Sources */,
 				30FD55611C2BF57F0078EC3C /* PassiveType.cpp in Sources */,
@@ -2791,6 +2795,7 @@
 				A1FF13BE1D3DFCF6007D2C08 /* NSDataAES256.m in Sources */,
 				A1D4B7F81D7EBC7F000DB3CD /* UserGuildData.cpp in Sources */,
 				A1FF0E8B1D7D46CC00C32040 /* CardOpNode.cpp in Sources */,
+				30482FB51D985A9500DC84C7 /* DDTTYLogger.m in Sources */,
 				A1D461601C3E251000E8E60B /* UAConfigData.cpp in Sources */,
 				A1FC49B41BD8C249005C1B2E /* CrashHelper.m in Sources */,
 				30F8406A1D50B37F0050C976 /* HMMDeckRender.cpp in Sources */,
@@ -2820,6 +2825,7 @@
 				A1E7B1E91C81513100CE65B4 /* BattleSmallResourceNode.cpp in Sources */,
 				A1A7A26C1D76ED8A00D7B3B1 /* SkillData.cpp in Sources */,
 				A188856A1C438F1800C9586F /* ResourceManager.cpp in Sources */,
+				30482FB41D985A9500DC84C7 /* DDLog.m in Sources */,
 				A1720E7A1BCCE0F000217E98 /* CCShake.cpp in Sources */,
 				30DF03C41C0D898E00A1C6EB /* EffectType.cpp in Sources */,
 				307534711BF33ECF0057DCED /* Logger.cpp in Sources */,
@@ -2896,6 +2902,7 @@
 				A1F3D2381D1D05CD00EB5C17 /* ProgressLayer.cpp in Sources */,
 				E63DE5081D50E33300735E88 /* PvpResultNode.cpp in Sources */,
 				30C6C3921C52183500DD1C8F /* AStarNode.cpp in Sources */,
+				308432E11D97D2D1003B9299 /* MagicRender.cpp in Sources */,
 				A1720E8D1BCCE19300217E98 /* AESCTREncryptor.cpp in Sources */,
 				0451170B1BCFBA53002AA721 /* Unit.cpp in Sources */,
 				A1FF13BC1D3DFCF6007D2C08 /* GameCenterManager.m in Sources */,
@@ -2959,7 +2966,6 @@
 				A1CA35FE1D45F7A000584C9D /* RenameLayer.cpp in Sources */,
 				30F840741D50B3BF0050C976 /* UnitView.cpp in Sources */,
 				A1E8EE881D82C2D2008F7237 /* LoadingLayer.cpp in Sources */,
-				A1A05B6C1C96B6A0006FE03B /* DDLog.m in Sources */,
 				A1DF81761D759B3D003AC6D4 /* ObjectBriefData.cpp in Sources */,
 				30F840681D50B37F0050C976 /* Gui.cpp in Sources */,
 				A12C27AB1D950DD20040E3A0 /* ShopManager.cpp in Sources */,
