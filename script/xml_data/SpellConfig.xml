@@ -35,7 +35,7 @@
 	<item render_key="震晕法术_法术元素特效" spell_direction="0" spell_position="0" spell_render_layer="0" spell_height="0" loop="0" foreground_resource="vertigoRelease" background_resource="" scale="0.7"/>
 	<item render_key="暴风雪_法术元素特效" spell_direction="0" spell_position="0" spell_render_layer="2" spell_height="0" loop="0" foreground_resource="snowStorm" background_resource="" scale="0.7"/>
 
-	<item render_key="UnitLandingEffect" spell_direction="0" spell_position="0" spell_render_layer="0" spell_height="0" loop="0" foreground_resource="Landing-front" background_resource="Landing-behind"/>
+	<item render_key="UnitLandingEffect" spell_direction="0" spell_position="0" spell_render_layer="0" spell_height="0" loop="0" foreground_resource="Landing" background_resource=""/>
 	
 	
 	

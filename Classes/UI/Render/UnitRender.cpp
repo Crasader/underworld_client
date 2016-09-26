@@ -207,7 +207,7 @@ void UnitRender::onNotifyUnitEvents(const std::vector<Unit::EventLog>& events) {
     }
 }
     
-cocos2d::Node* UnitRender::addEffect(const std::string &renderKey, bool loop) {
+std::pair<cocos2d::Node*, cocos2d::Node*> UnitRender::addEffect(const std::string &renderKey, bool loop) {
     cocos2d::Node* fg = nullptr;
     cocos2d::Node* bg = nullptr;
     
@@ -224,7 +224,7 @@ cocos2d::Node* UnitRender::addEffect(const std::string &renderKey, bool loop) {
     } while (0);
     
     // attach node
-    if (fg) {
+    if (fg || bg) {
         //TODO: consider effect direction
         int foregourndZorder = IN_MAIN_BODY_EFFECT_FOREGROUND_ZORDER;
         int backgroundZorder = IN_MAIN_BODY_EFFECT_BACKGROUND_ZORDER;
@@ -262,8 +262,8 @@ cocos2d::Node* UnitRender::addEffect(const std::string &renderKey, bool loop) {
             }
         }
     }
-    
-    return fg;
+    std::pair<cocos2d::Node*, cocos2d::Node*> ret = std::make_pair(fg, bg);
+    return ret;
 }
 
 void UnitRender::handleEvents() {
@@ -543,8 +543,8 @@ void UnitRender::renderBuf(const Buff* buf) {
             iter->second.increaseContributors();
             
             // create node
-            cocos2d::Node* bufNode = addEffect(renderKey, true);
-            if (bufNode) iter->second.setNode(bufNode);
+            std::pair<cocos2d::Node*, cocos2d::Node*> bufNode = addEffect(renderKey, true);
+            if (bufNode.first || bufNode.second) iter->second.setNode(bufNode);
         }
     }
     
@@ -562,7 +562,8 @@ void UnitRender::stopRenderBuf(creatureid_t bufId) {
     if (iterB != _bufAnimations.end()) {
         iterB->second.descreaseContributors();
         if (iterB->second.getContributors() == 0) {
-            if (iterB->second.getNode()) iterB->second.getNode()->removeFromParent();
+            if (iterB->second.getNode().first) iterB->second.getNode().first->removeFromParent();
+            if (iterB->second.getNode().second) iterB->second.getNode().second->removeFromParent();
             _bufAnimations.erase(iterB);
         }
     }
@@ -582,8 +583,8 @@ void UnitRender::renderAura(const Aura* aura) {
     
     // check renderKey;
     if (!aura->getAuraType()->getRenderKey().empty()) {
-        cocos2d::Node* auraNode = addEffect(aura->getAuraType()->getRenderKey(), true);
-        if (auraNode) _renderAuras.insert(std::make_pair(aura->getId(), auraNode));
+        std::pair<cocos2d::Node*, cocos2d::Node*> auraNode = addEffect(aura->getAuraType()->getRenderKey(), true);
+        if (auraNode.first || auraNode.second) _renderAuras.insert(std::make_pair(aura->getId(), auraNode));
     }
 }
     
@@ -591,7 +592,8 @@ void UnitRender::stopRenderAura(creatureid_t auraId) {
     auto iter = _renderAuras.find(auraId);
     if (iter == _renderAuras.end()) return;
     
-    if (iter->second) iter->second->removeFromParent();
+    if (iter->second.first) iter->second.first->removeFromParent();
+    if (iter->second.second) iter->second.second->removeFromParent();
     _renderAuras.erase(iter);
 }
     

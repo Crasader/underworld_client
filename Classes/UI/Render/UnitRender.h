@@ -59,19 +59,19 @@ public:
 class BuffAnimation {
 private:
     int _contributors;
-    cocos2d::Node* _node;
+    std::pair<cocos2d::Node*, cocos2d::Node*> _node;
     
 public:
-    BuffAnimation() : _contributors(0), _node(nullptr) {}
+    BuffAnimation() : _contributors(0), _node(nullptr, nullptr) {}
     
     /** getters */
     int getContributors() const                     {return _contributors;}
-    cocos2d::Node* getNode()                        {return _node;}
+    const std::pair<cocos2d::Node*, cocos2d::Node*>& getNode()                        {return _node;}
     
     /** setters */
     void increaseContributors();
     void descreaseContributors();
-    void setNode(cocos2d::Node* node)               {_node = node;}
+    void setNode(const std::pair<cocos2d::Node*, cocos2d::Node*>& node)               {_node = node;}
 
 };
 
@@ -154,7 +154,7 @@ private:
     UnitStatus _lastStatus;
     std::unordered_map<creatureid_t, std::string> _renderBufs;     //bufId vs renderKey
     std::unordered_map<std::string, BuffAnimation> _bufAnimations; //renderKey vs animation obj
-    std::unordered_map<creatureid_t, cocos2d::Node*> _renderAuras;
+    std::unordered_map<creatureid_t, std::pair<cocos2d::Node*, cocos2d::Node*> > _renderAuras;
     bool _inited;
     
     /** events*/
@@ -192,7 +192,7 @@ public:
     virtual void onNotifyUnitEvents(const std::vector<Unit::EventLog>& events) override;
     
     /** interface */
-    cocos2d::Node* addEffect(const std::string& renderKey, bool loop);
+    std::pair<cocos2d::Node*, cocos2d::Node*> addEffect(const std::string& renderKey, bool loop);
     
 private:
     /** sub render */
