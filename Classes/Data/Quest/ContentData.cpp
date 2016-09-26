@@ -20,14 +20,14 @@ ContentData::ContentData(const string& content)
     Utils::split(result, content, "_", "");
     const size_t size = result.size();
     if (size == 3) {
-        _type = stoi(result.at(0));
-        _id = stoi(result.at(2));
+        _type = Utils::stoi(result.at(0));
+        _id = Utils::stoi(result.at(2));
         // parse count
         string& counts = result.at(1);
         vector<string> temp;
         Utils::split(temp, counts, ",");
         for (int i = 0; i < temp.size(); ++i) {
-            _counts.push_back(stoi(temp.at(i)));
+            _counts.push_back(Utils::stoi(temp.at(i)));
         }
     } else {
         assert(false);

@@ -20,8 +20,8 @@ ConditionData::ConditionData(const string& content)
     Utils::split(result, content, "_", "");
     const size_t size = result.size();
     if (size == 2) {
-        _id = stoi(result.at(0));
-        _count = stoi(result.at(1));
+        _id = Utils::stoi(result.at(0));
+        _count = Utils::stoi(result.at(1));
     } else {
         assert(false);
     }

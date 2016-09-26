@@ -9,6 +9,7 @@
 #include "Constants.h"
 #include "tinyxml2/tinyxml2.h"
 #include "Global.h"
+#include "Utils.h"
 #include "LocalHelper.h"
 #include "platform/CCFileUtils.h"
 
@@ -27,8 +28,8 @@ void Constants::init()
             xmlDoc->Parse(content.c_str());
             
             // define
-#define ATOI(name) { const char* data = item->Attribute(#name); if (data) {name = atoi(data);} }
-#define ATOF(name) { const char* data = item->Attribute(#name); if (data) {name = atof(data);} }
+#define ATOI(name) { const char* data = item->Attribute(#name); if (data) {name = Utils::stoi(data);} }
+#define ATOF(name) { const char* data = item->Attribute(#name); if (data) {name = Utils::stof(data);} }
             
             for (tinyxml2::XMLElement* item = xmlDoc->RootElement()->FirstChildElement(); item; item = item->NextSiblingElement()) {
                 if (item) {

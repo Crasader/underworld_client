@@ -68,7 +68,7 @@ void UserDefaultHelper::setIntegerForKey(const char *pKey, int value)
 
 int UserDefaultHelper::getIntegerForKey(const char *pKey, int defaultValue)
 {
-    return stoi(getStringForKey(pKey, Utils::toString(defaultValue)));
+    return Utils::stoi(getStringForKey(pKey, Utils::toString(defaultValue)));
 }
 
 void UserDefaultHelper::setBoolForKey(const char* pKey, bool value)

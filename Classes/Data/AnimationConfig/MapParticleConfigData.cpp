@@ -34,25 +34,25 @@ MapParticleConfigData::MapParticleConfigData(tinyxml2::XMLElement *xmlElement)
         {
             const char *data = xmlElement->Attribute("pos_x");
             if (data && strlen(data) > 0) {
-                _posX = atof(data);
+                _posX = Utils::stof(data);
             }
         }
         {
             const char *data = xmlElement->Attribute("pos_y");
             if (data && strlen(data) > 0) {
-                _posY = atof(data);
+                _posY = Utils::stof(data);
             }
         }
         {
             const char *data = xmlElement->Attribute("scale_x");
             if (data && strlen(data) > 0) {
-                _scaleX = atof(data);
+                _scaleX = Utils::stof(data);
             }
         }
         {
             const char *data = xmlElement->Attribute("scale_y");
             if (data && strlen(data) > 0) {
-                _scaleY = atof(data);
+                _scaleY = Utils::stof(data);
             }
         }
     }

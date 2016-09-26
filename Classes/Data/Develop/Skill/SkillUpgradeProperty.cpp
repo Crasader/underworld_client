@@ -18,8 +18,8 @@ SkillUpgradeProperty::SkillUpgradeProperty(tinyxml2::XMLElement *xmlElement)
         std::vector<std::string> splits;
         Utils::split(splits, data, "_");
         if (splits.size() > 1) {
-            _bookCost.first = stoi(splits.at(0));
-            _bookCost.second = stoi(splits.at(1));
+            _bookCost.first = Utils::stoi(splits.at(0));
+            _bookCost.second = Utils::stoi(splits.at(1));
         }
     }
 }

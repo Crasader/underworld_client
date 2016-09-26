@@ -7,6 +7,7 @@
 //
 
 #include "AttributeProperty.h"
+#include "Utils.h"
 #include "XMLUtils.h"
 
 AttributeProperty::AttributeProperty(tinyxml2::XMLElement *xmlElement)
@@ -24,9 +25,9 @@ AttributeProperty::AttributeProperty(tinyxml2::XMLElement *xmlElement)
         
         XMLUtils::parseString(xmlElement, "relative", ":", [this](int idx, const std::string& split) {
             if (0 == idx) {
-                _relative.first = std::stoi(split);
+                _relative.first = Utils::stoi(split);
             } else if (1 == idx) {
-                _relative.second = std::stoi(split);
+                _relative.second = Utils::stoi(split);
             }
         });
     }

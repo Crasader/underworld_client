@@ -35,7 +35,7 @@ URConfigData::URConfigData(tinyxml2::XMLElement *xmlElement)
         {
             const char *data = xmlElement->Attribute("direction");
             if (data && strlen(data) > 0) {
-                _isFaceRight = (atoi(data) != 0);
+                _isFaceRight = (Utils::stoi(data) != 0);
             } else {
                 _isFaceRight = false;
             }
@@ -43,7 +43,7 @@ URConfigData::URConfigData(tinyxml2::XMLElement *xmlElement)
         {
             const char *data = xmlElement->Attribute("multi_direction");
             if (data && strlen(data) > 0) {
-                _isMultiDirection = (atoi(data) != 0);
+                _isMultiDirection = (Utils::stoi(data) != 0);
             } else {
                 _isMultiDirection = true;
             }
@@ -51,7 +51,7 @@ URConfigData::URConfigData(tinyxml2::XMLElement *xmlElement)
         {
             const char *data = xmlElement->Attribute("transform_on_health");
             if (data && strlen(data) > 0) {
-                _isTransformOnHealth = (atoi(data) != 0);
+                _isTransformOnHealth = (Utils::stoi(data) != 0);
             } else {
                 _isTransformOnHealth = false;
             }
@@ -68,97 +68,81 @@ URConfigData::URConfigData(tinyxml2::XMLElement *xmlElement)
                 }
             }
         }
-        {
+        do {
             const char *data = xmlElement->Attribute("normal_prefix");
-            if (data && strlen(data) > 0) {
-                _normalPrefix = data;
-            }
-        }
-        {
+            CC_BREAK_IF(!data || strlen(data) == 0);
+            _normalPrefix = data;
+        } while (false);
+        do {
             const char *data = xmlElement->Attribute("attck_sound");
-            if (data && strlen(data) > 0) {
-                _attckSound = std::string(AUDIO_PREFIX) + data + AUDIO_SUFFIX;
-            }
-        }
-        {
+            CC_BREAK_IF(!data || strlen(data) == 0);
+            _attckSound = std::string(AUDIO_PREFIX) + data + AUDIO_SUFFIX;
+        } while (false);
+        do {
             const char *data = xmlElement->Attribute("hurt_sound");
-            if (data && strlen(data) > 0) {
-                _hurtSound = std::string(AUDIO_PREFIX) + data + AUDIO_SUFFIX;
-            }
-        }
-        {
+            CC_BREAK_IF(!data || strlen(data) == 0);
+            _hurtSound = std::string(AUDIO_PREFIX) + data + AUDIO_SUFFIX;
+        } while (false);
+        do {
             const char *data = xmlElement->Attribute("die_sound");
-            if (data && strlen(data) > 0) {
-                _dieSound = std::string(AUDIO_PREFIX) + data + AUDIO_SUFFIX;
-            }
-        }
-        {
+            CC_BREAK_IF(!data || strlen(data) == 0);
+            _dieSound = std::string(AUDIO_PREFIX) + data + AUDIO_SUFFIX;
+        } while (false);
+        do {
             const char *data = xmlElement->Attribute("body_scale");
-            if (data) {
-                _bodyScale = atof(data);
-            }
-        }
-        {
+            CC_BREAK_IF(!data || strlen(data) == 0);
+            _bodyScale = Utils::stof(data);
+        } while (false);
+        do {
             const char *data = xmlElement->Attribute("effect_scale");
-            if (data) {
-                _effectScale = atof(data);
-            }
-        }
-        {
+            CC_BREAK_IF(!data || strlen(data) == 0);
+            _effectScale = Utils::stof(data);
+        } while (false);
+        do {
             const char *data = xmlElement->Attribute("body_effect_pos_x");
-            if (data) {
-                _bodyEffectPosX = atof(data);
-            }
-        }
-        {
+            CC_BREAK_IF(!data || strlen(data) == 0);
+            _bodyEffectPosX = Utils::stof(data);
+        } while (false);
+        do {
             const char *data = xmlElement->Attribute("body_effect_pos_y");
-            if (data) {
-                _bodyEffectPosY = atof(data);
-            }
-        }
-        {
+            CC_BREAK_IF(!data || strlen(data) == 0);
+            _bodyEffectPosY = Utils::stof(data);
+        } while (false);
+        do {
             const char *data = xmlElement->Attribute("head_effect_pos_x");
-            if (data) {
-                _headEffectPosX = atof(data);
-            }
-        }
-        {
+            CC_BREAK_IF(!data || strlen(data) == 0);
+            _headEffectPosX = Utils::stof(data);
+        } while (false);
+        do {
             const char *data = xmlElement->Attribute("head_effect_pos_y");
-            if (data) {
-                _headEffectPoxY = atof(data);
-            }
-        }
-        {
+            CC_BREAK_IF(!data || strlen(data) == 0);
+            _headEffectPoxY = Utils::stof(data);
+        } while (false);
+        do {
             const char *data = xmlElement->Attribute("hp_bar_pos_x");
-            if (data) {
-                _hpBarPosX = atof(data);
-            }
-        }
-        {
+            CC_BREAK_IF(!data || strlen(data) == 0);
+            _hpBarPosX = Utils::stof(data);
+        } while (false);
+        do {
             const char *data = xmlElement->Attribute("hp_bar_pos_y");
-            if (data) {
-                _hpBarPosY = atof(data);
-            }
-        }
-        {
+            CC_BREAK_IF(!data || strlen(data) == 0);
+            _hpBarPosY = Utils::stof(data);
+        } while (false);
+        do {
             const char *data = xmlElement->Attribute("hp_bar_scale_x");
-            if (data) {
-                _hpBarScaleX = atof(data);
-            }
-        }
-        {
+            CC_BREAK_IF(!data || strlen(data) == 0);
+            _hpBarScaleX = Utils::stof(data);
+        } while (false);
+        do {
             const char *data = xmlElement->Attribute("move_duration_scale");
-            if (data) {
-                _moveDurationScale = atof(data);
-            }
-        }
-        {
+            CC_BREAK_IF(!data || strlen(data) == 0);
+            _moveDurationScale = Utils::stof(data);
+        } while (false);
+        do {
             const char *data = xmlElement->Attribute("stand_duration_scale");
-            if (data) {
-                _standDuraionScale = atof(data);
-            }
-        }
-
+            CC_BREAK_IF(!data || strlen(data) == 0);
+            _standDuraionScale = Utils::stof(data);
+        } while (false);
     }
 }
 

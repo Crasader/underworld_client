@@ -25,8 +25,8 @@ DevelopProperty::DevelopProperty(tinyxml2::XMLElement *xmlElement)
         std::vector<std::string> splits;
         Utils::split(splits, data, "_", "");
         if (2 == splits.size()) {
-            auto attribute(stoi(splits.at(0)));
-            _attributes.insert(std::make_pair(attribute, stof(splits.at(1))));
+            auto attribute(Utils::stoi(splits.at(0)));
+            _attributes.insert(std::make_pair(attribute, Utils::stof(splits.at(1))));
             _orderedAttributes.push_back(attribute);
         }
     }

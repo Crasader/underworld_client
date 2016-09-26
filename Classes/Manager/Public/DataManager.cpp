@@ -370,7 +370,7 @@ void DataManager::parseLevelProperty()
 void DataManager::parseCardDecks()
 {
     parseData("CardDecks.xml", [this](tinyxml2::XMLElement* item) {
-        _cardDecks.insert(atoi(item->Attribute("id")));
+        _cardDecks.insert(Utils::stoi(item->Attribute("id")));
     });
 }
 

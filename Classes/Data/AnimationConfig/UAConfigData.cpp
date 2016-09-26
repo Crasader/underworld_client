@@ -36,7 +36,7 @@ UAConfigData::UAConfigData(tinyxml2::XMLElement *xmlElement)
 {
     if (xmlElement) {
         _name = xmlElement->Attribute("name");
-        _skill = static_cast<SkillClass>(atoi(xmlElement->Attribute("skill")));
+        _skill = static_cast<SkillClass>(Utils::stoi(xmlElement->Attribute("skill")));
         parse(xmlElement, "scale");
         parse(xmlElement, "speed");
         parse(xmlElement, "atk_separater");
@@ -91,7 +91,7 @@ void UAConfigData::parse(tinyxml2::XMLElement *element, const string& key)
                 }
                 
                 auto ap = _data.at(direction);
-                auto value = stof(v.at(i));
+                auto value = Utils::stof(v.at(i));
                 if ("scale" == key) {
                     ap->scale = value;
                 } else if ("speed" == key) {

@@ -8,6 +8,7 @@
 
 #include "Utils.h"
 #include "Global.h"
+#include <cstdlib>
 #include <iomanip>
 #include <algorithm>
 #include <sys/time.h>
@@ -84,6 +85,24 @@ void Utils::trim(string &s)
 {
     trimLeft(s);
     trimRight(s);
+}
+
+int Utils::stoi(const string& str)
+{
+#if defined(__clang__)
+    return std::stoi(str);
+#else
+    return std::atoi(str.c_str());
+#endif
+}
+
+float Utils::stof(const string& str)
+{
+#if defined(__clang__)
+    return std::stof(str);
+#else
+    return std::atof(str.c_str());
+#endif
 }
 
 #pragma mark - security

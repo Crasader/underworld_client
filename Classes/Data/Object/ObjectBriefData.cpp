@@ -22,12 +22,12 @@ ObjectBriefData::ObjectBriefData(const string& content)
     const size_t size = result.size();
     if (size == 2) {
         _percentage = 100;
-        _id = stoi(result.at(0));
-        _count = stoi(result.at(1));
+        _id = Utils::stoi(result.at(0));
+        _count = Utils::stoi(result.at(1));
     } else if (size == 3) {
-        _percentage = stoi(result.at(0));
-        _id = stoi(result.at(1));
-        _count = stoi(result.at(2));
+        _percentage = Utils::stoi(result.at(0));
+        _id = Utils::stoi(result.at(1));
+        _count = Utils::stoi(result.at(2));
     } else {
         assert(false);
     }

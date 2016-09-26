@@ -19,19 +19,19 @@ LevelProperty::LevelProperty(tinyxml2::XMLElement *xmlElement)
 ,_defence(0)
 {
     if (xmlElement) {
-        _level = atoi(xmlElement->Attribute("level"));
-        _exp = atoi(xmlElement->Attribute("experience"));
+        _level = Utils::stoi(xmlElement->Attribute("level"));
+        _exp = Utils::stoi(xmlElement->Attribute("experience"));
         
         do {
             const char *data = xmlElement->Attribute("hp");
             CC_BREAK_IF(!data || strlen(data) == 0);
-            _hp = atoi(data);
+            _hp = Utils::stoi(data);
         } while (false);
         
         do {
             const char *data = xmlElement->Attribute("defence");
             CC_BREAK_IF(!data || strlen(data) == 0);
-            _defence = atoi(data);
+            _defence = Utils::stoi(data);
         } while (false);
         
         do {
@@ -40,7 +40,7 @@ LevelProperty::LevelProperty(tinyxml2::XMLElement *xmlElement)
             vector<string> result;
             Utils::split(result, data, ",", "");
             for (int i = 0; i < result.size(); ++i) {
-                _stages.push_back(stoi(result.at(i)));
+                _stages.push_back(Utils::stoi(result.at(i)));
             }
         } while (false);
         
@@ -50,7 +50,7 @@ LevelProperty::LevelProperty(tinyxml2::XMLElement *xmlElement)
             vector<string> result;
             Utils::split(result, data, ",", "");
             for (int i = 0; i < result.size(); ++i) {
-                _icons.push_back(stoi(result.at(i)));
+                _icons.push_back(Utils::stoi(result.at(i)));
             }
         } while (false);
         
@@ -60,7 +60,7 @@ LevelProperty::LevelProperty(tinyxml2::XMLElement *xmlElement)
             vector<string> result;
             Utils::split(result, data, ",", "");
             for (int i = 0; i < result.size(); ++i) {
-                _quests.push_back(stoi(result.at(i)));
+                _quests.push_back(Utils::stoi(result.at(i)));
             }
         } while (false);
     }

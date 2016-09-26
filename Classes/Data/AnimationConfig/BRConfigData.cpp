@@ -9,6 +9,7 @@
 #include "BRConfigData.h"
 #include "tinyxml2/tinyxml2.h"
 #include "CocosGlobal.h"
+#include "Utils.h"
 #include "CoreUtils.h"
 
 using namespace std;
@@ -71,7 +72,7 @@ BRConfigData::BRConfigData(tinyxml2::XMLElement *xmlElement)
         {
             const char* data = xmlElement->Attribute("tail_gas_interval");
             if (data && strlen(data) > 0) {
-                _tailGasInterval = atoi(data);
+                _tailGasInterval = Utils::stoi(data);
             }
             
         }

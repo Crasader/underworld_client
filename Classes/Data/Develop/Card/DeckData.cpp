@@ -97,7 +97,7 @@ void DeckData::parse(const string& input)
         vector<string> outputs;
         Utils::split(outputs, input, ElementSeparator);
         for (int i = 0; i < outputs.size(); ++i) {
-            _cards.push_back(stoi(outputs.at(i)));
+            _cards.push_back(Utils::stoi(outputs.at(i)));
         }
     }
 }

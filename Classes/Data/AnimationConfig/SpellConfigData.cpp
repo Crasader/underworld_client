@@ -30,7 +30,7 @@ SpellConfigData::SpellConfigData(tinyxml2::XMLElement *xmlElement)
         {
             const char *data = xmlElement->Attribute("spell_direction");
             if (data && strlen(data) > 0) {
-                _spellDirection = static_cast<Direction>(atoi(data));
+                _spellDirection = static_cast<Direction>(Utils::stoi(data));
             } else {
                 _spellDirection = kNone;
             }
@@ -38,7 +38,7 @@ SpellConfigData::SpellConfigData(tinyxml2::XMLElement *xmlElement)
         {
             const char *data = xmlElement->Attribute("spell_position");
             if (data && strlen(data) > 0) {
-                _spellPosition = static_cast<Position>(atoi(data));
+                _spellPosition = static_cast<Position>(Utils::stoi(data));
             } else {
                 _spellPosition = kBody;
             }
@@ -46,7 +46,7 @@ SpellConfigData::SpellConfigData(tinyxml2::XMLElement *xmlElement)
         {
             const char *data = xmlElement->Attribute("spell_render_layer");
             if (data && strlen(data) > 0) {
-                _spellRenderLayer = atoi(data);
+                _spellRenderLayer = Utils::stoi(data);
             } else {
                 _spellRenderLayer = 0;
             }
@@ -54,7 +54,7 @@ SpellConfigData::SpellConfigData(tinyxml2::XMLElement *xmlElement)
         {
             const char *data = xmlElement->Attribute("spell_height");
             if (data && strlen(data) > 0) {
-                _spellHeight = atoi(data);
+                _spellHeight = Utils::stoi(data);
             } else {
                 _spellHeight = 0;
             }
@@ -62,7 +62,7 @@ SpellConfigData::SpellConfigData(tinyxml2::XMLElement *xmlElement)
         {
             const char *data = xmlElement->Attribute("loop");
             if (data && strlen(data) > 0) {
-                _loop = (atoi(data) != 0);
+                _loop = (Utils::stoi(data) != 0);
             } else {
                 _loop = true;
             }

@@ -29,6 +29,9 @@ namespace Utils
     void trimRight(std::string &s);
     void trim(std::string &s);
     
+    int stoi(const std::string& str);
+    float stof (const std::string& str);
+    
 #pragma mark - security
     int hexCharToInt(char c);
     void charToHex(const unsigned char *input, int inputLen, unsigned char *output);
