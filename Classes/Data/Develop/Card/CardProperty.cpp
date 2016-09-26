@@ -122,8 +122,9 @@ const std::vector<int>& CardProperty::getSkills() const
 
 ObjectUtils::RuneType CardProperty::getRuneType(int idx) const
 {
-    if (_runeTypes.find(idx) != end(_runeTypes)) {
-        return _runeTypes.at(idx);
+    auto iter(_runeTypes.find(idx));
+    if (iter != end(_runeTypes)) {
+        return iter->second;
     }
     
     return ObjectUtils::RuneType::NONE;

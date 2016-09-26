@@ -22,52 +22,47 @@ LevelProperty::LevelProperty(tinyxml2::XMLElement *xmlElement)
         _level = atoi(xmlElement->Attribute("level"));
         _exp = atoi(xmlElement->Attribute("experience"));
         
-        {
+        do {
             const char *data = xmlElement->Attribute("hp");
-            if (data) {
-                _hp = atoi(data);
-            }
-        }
+            CC_BREAK_IF(!data || strlen(data) == 0);
+            _hp = atoi(data);
+        } while (false);
         
-        {
+        do {
             const char *data = xmlElement->Attribute("defence");
-            if (data) {
-                _defence = atoi(data);
-            }
-        }
+            CC_BREAK_IF(!data || strlen(data) == 0);
+            _defence = atoi(data);
+        } while (false);
         
-        {
+        do {
             const char *data = xmlElement->Attribute("stage");
-            if (data) {
-                vector<string> result;
-                Utils::split(result, data, ",", "");
-                for (int i = 0; i < result.size(); ++i) {
-                    _stages.push_back(atoi(result.at(i).c_str()));
-                }
+            CC_BREAK_IF(!data || strlen(data) == 0);
+            vector<string> result;
+            Utils::split(result, data, ",", "");
+            for (int i = 0; i < result.size(); ++i) {
+                _stages.push_back(stoi(result.at(i)));
             }
-        }
+        } while (false);
         
-        {
+        do {
             const char *data = xmlElement->Attribute("icon");
-            if (data) {
-                vector<string> result;
-                Utils::split(result, data, ",", "");
-                for (int i = 0; i < result.size(); ++i) {
-                    _icons.push_back(atoi(result.at(i).c_str()));
-                }
+            CC_BREAK_IF(!data || strlen(data) == 0);
+            vector<string> result;
+            Utils::split(result, data, ",", "");
+            for (int i = 0; i < result.size(); ++i) {
+                _icons.push_back(stoi(result.at(i)));
             }
-        }
+        } while (false);
         
-        {
+        do {
             const char *data = xmlElement->Attribute("quest");
-            if (data) {
-                vector<string> result;
-                Utils::split(result, data, ",", "");
-                for (int i = 0; i < result.size(); ++i) {
-                    _quests.push_back(atoi(result.at(i).c_str()));
-                }
+            CC_BREAK_IF(!data || strlen(data) == 0);
+            vector<string> result;
+            Utils::split(result, data, ",", "");
+            for (int i = 0; i < result.size(); ++i) {
+                _quests.push_back(stoi(result.at(i)));
             }
-        }
+        } while (false);
     }
 }
 

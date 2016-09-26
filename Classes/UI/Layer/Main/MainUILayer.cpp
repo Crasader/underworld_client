@@ -84,8 +84,9 @@ private:
                 {ButtonType::Shop,          {"ui_kuang_2", "icon_shangdian"}},
             };
             
-            if (ButtonInfos.find(type) != end(ButtonInfos)) {
-                const auto& pair = ButtonInfos.at(type);
+            auto iter(ButtonInfos.find(type));
+            if (iter != end(ButtonInfos)) {
+                const auto& pair(iter->second);
                 const auto file = CocosUtils::getResourcePath(StringUtils::format("%s.png", pair.first.c_str()));
                 auto button = Button::create(file, file);
                 addChild(button);

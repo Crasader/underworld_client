@@ -118,9 +118,9 @@ bool AnnouncementNode::init(const std::string &content, float width)
         }
         
         int i = 0;
-        int newLine = atoi(config.at(i++).c_str());
-        float fontSize = atof(config.at(i++).c_str());
-        int color = atoi(config.at(i++).c_str());
+        int newLine = stoi(config.at(i++));
+        float fontSize = stof(config.at(i++));
+        int color = stoi(config.at(i++));
         string content = config.at(i++);
         
         BlockConfig blockConfig(newLine, fontSize, color, content);

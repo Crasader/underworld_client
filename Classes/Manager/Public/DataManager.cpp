@@ -39,7 +39,7 @@ using namespace std;
 template<typename _Key, typename _Value>
 static void setMapValue(unordered_map<_Key, _Value>& m, const _Key& key, const _Value& value)
 {
-    if (m.find(key) != end(m)) {
+    if (1 == m.count(key)) {
         assert(false);
     } else {
         m.insert(make_pair(key, value));
@@ -49,8 +49,9 @@ static void setMapValue(unordered_map<_Key, _Value>& m, const _Key& key, const _
 template<typename _Key, typename _Value>
 static const _Value& getMapValue(const unordered_map<_Key, _Value>& m, const _Key& key)
 {
-    if (m.find(key) != end(m)) {
-        return m.at(key);
+    auto iter(m.find(key));
+    if (iter != end(m)) {
+        return iter->second;
     }
     
     static _Value ret(nullptr);
@@ -261,8 +262,9 @@ const SkillBookProperty* DataManager::getSkillBookProperty(int bookId) const
 
 const QuestProperty* DataManager::getQuestProperty(QuestType type, int questId) const
 {
-    if (_quests.find(type) != end(_quests)) {
-        return getMapValue(_quests.at(type), questId);
+    auto iter(_quests.find(type));
+    if (iter != end(_quests)) {
+        return getMapValue(iter->second, questId);
     }
     
     return nullptr;
@@ -281,8 +283,9 @@ const ObjectProperty* DataManager::getObjectProperty(int objectId) const
 const AnimationParameter* DataManager::getAnimationParameter(const string& name, UnderWorld::Core::SkillClass skillClass, UnderWorld::Core::Unit::Direction direction) const
 {
     auto key = name + StringUtils::format("_%d", skillClass);
-    if (_animationParameters.find(key) != end(_animationParameters)) {
-        auto data = _animationParameters.at(key);
+    auto iter(_animationParameters.find(key));
+    if (iter != end(_animationParameters)) {
+        auto data(iter->second);
         if (data) {
             return data->getAnimationParameter(direction);
         }
@@ -308,8 +311,9 @@ const BRConfigData* DataManager::getBRConfigData(const string& name) const
 
 const vector<MapParticleConfigData*>& DataManager::getMapParticleConfigData(int mapId) const
 {
-    if (_mapParticleConfigData.find(mapId) != end(_mapParticleConfigData)) {
-        return _mapParticleConfigData.at(mapId);
+    auto iter(_mapParticleConfigData.find(mapId));
+    if (iter != end(_mapParticleConfigData)) {
+        return iter->second;
     }
     
     static vector<MapParticleConfigData*> empty;
@@ -450,8 +454,9 @@ void DataManager::parseQuestProperty()
         const auto& type = iter->first;
         
         // clear first
-        if (_quests.find(type) != end(_quests)) {
-            Utils::clearMap(_quests.at(type));
+        auto qiter(_quests.find(type));
+        if (qiter != end(_quests)) {
+            Utils::clearMap(qiter->second);
         } else {
             _quests.insert(make_pair(type, unordered_map<int, QuestProperty*>()));
         }
@@ -516,8 +521,9 @@ void DataManager::parseMapParticleConfigData()
 {
     for (int i = 0; i < 2; ++i) {
         // clear first
-        if (_mapParticleConfigData.find(i) != end(_mapParticleConfigData)) {
-            Utils::clearVector(_mapParticleConfigData.at(i));
+        auto iter(_mapParticleConfigData.find(i));
+        if (iter != end(_mapParticleConfigData)) {
+            Utils::clearVector(iter->second);
         } else {
             _mapParticleConfigData.insert(make_pair(i, vector<MapParticleConfigData*>()));
         }

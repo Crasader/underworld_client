@@ -8,7 +8,6 @@
 
 #include "DeckData.h"
 #include "Utils.h"
-#include <cstdlib>
 #include <cassert>
 
 using namespace std;
@@ -98,7 +97,7 @@ void DeckData::parse(const string& input)
         vector<string> outputs;
         Utils::split(outputs, input, ElementSeparator);
         for (int i = 0; i < outputs.size(); ++i) {
-            _cards.push_back(atoi(outputs.at(i).c_str()));
+            _cards.push_back(stoi(outputs.at(i)));
         }
     }
 }

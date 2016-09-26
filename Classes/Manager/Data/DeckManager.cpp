@@ -154,7 +154,7 @@ void DeckManager::fetchCardDetail(int cardId, const function<void(int cardId, co
 {
     auto data(getCardData(cardId));
     if (data) {
-        if (_cardDetails.find(cardId) == end(_cardDetails)) {
+        if (0 == _cardDetails.count(cardId)) {
             NetworkApi::getCardDetail(data->getDbId(), [=](long code, const rapidjson::Value& jsonDict) {
                 auto detail = updateCardData(jsonDict);
                 if (callback) {
@@ -295,8 +295,9 @@ void DeckManager::compoundRune(int dbId, const function<void()>& callback)
 #pragma mark - sort
 DeckManager::SortType DeckManager::getSortType(FeatureType type) const
 {
-    if (_sortTypes.find(type) != end(_sortTypes)) {
-        return _sortTypes.at(type);
+    auto iter(_sortTypes.find(type));
+    if (iter != end(_sortTypes)) {
+        return iter->second;
     }
     
     return SortType::Default;
@@ -305,12 +306,15 @@ DeckManager::SortType DeckManager::getSortType(FeatureType type) const
 void DeckManager::setSortType(FeatureType ft, SortType st)
 {
     bool update(true);
-    if (_sortTypes.find(ft) == end(_sortTypes)) {
+    if (0 == _sortTypes.count(ft)) {
         _sortTypes.insert(make_pair(ft, st));
-    } else if (st != _sortTypes.at(ft)) {
-        _sortTypes.at(ft) = st;
     } else {
-        update = false;
+        auto iter(_sortTypes.find(ft));
+        if (st != iter->second) {
+            iter->second = st;
+        } else {
+            update = false;
+        }
     }
     
     if (update) {
@@ -357,8 +361,9 @@ size_t DeckManager::getAllFoundCardsCount() const
 
 const CardData* DeckManager::getCardData(int card) const
 {
-    if (_allCards.find(card) != end(_allCards)) {
-        return _allCards.at(card);
+    auto iter(_allCards.find(card));
+    if (iter != end(_allCards)) {
+        return iter->second;
     }
     
     return nullptr;
@@ -533,8 +538,9 @@ const CardData* DeckManager::updateCardData(const rapidjson::Value& jsonDict)
         const auto& value = DICTOOL->getSubDictionary_json(jsonDict, key);
         auto cardId(JSonUtils::parse<int>(value, "id"));
         _cardDetails.insert(cardId);
-        if (_allCards.find(cardId) != end(_allCards)) {
-            _allCards.at(cardId)->update(value);
+        auto iter(_allCards.find(cardId));
+        if (iter != end(_allCards)) {
+            iter->second->update(value);
         } else {
             _allCards.insert(make_pair(cardId, new (nothrow) CardData(value)));
         }
@@ -547,16 +553,18 @@ const CardData* DeckManager::updateCardData(const rapidjson::Value& jsonDict)
 
 void DeckManager::removeRune(int cardId, int runeIdx)
 {
-    if (_allCards.find(cardId) != end(_allCards)) {
-        _allCards.at(cardId)->removeRune(runeIdx);
+    auto iter(_allCards.find(cardId));
+    if (iter != end(_allCards)) {
+        iter->second->removeRune(runeIdx);
     }
 }
 
 void DeckManager::updateRune(int cardId, int runeIdx, const rapidjson::Value& jsonDict)
 {
     static const char* key("rune");
-    if (_allCards.find(cardId) != end(_allCards) && JSonUtils::isExist(jsonDict, key)) {
-        auto data(_allCards.at(cardId));
+    auto iter(_allCards.find(cardId));
+    if (iter != end(_allCards) && JSonUtils::isExist(jsonDict, key)) {
+        auto data(iter->second);
         if (data) {
             const auto& value = DICTOOL->getSubDictionary_json(jsonDict, key);
             data->updateRune(runeIdx, value);
@@ -569,8 +577,9 @@ void DeckManager::updateRuneGroup(const rapidjson::Value& jsonDict)
     static const char* key("db");
     if (JSonUtils::isExist(jsonDict, key)) {
         auto dbId(JSonUtils::parse<int>(jsonDict, key));
-        if (_runeGroups.find(dbId) != end(_runeGroups)) {
-            auto data(_runeGroups.at(dbId));
+        auto iter(_runeGroups.find(dbId));
+        if (iter != end(_runeGroups)) {
+            auto data(iter->second);
             data->update(jsonDict);
             if (data->getAmount() <= 0) {
                 _runeGroups.erase(dbId);

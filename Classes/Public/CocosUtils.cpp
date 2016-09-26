@@ -177,7 +177,7 @@ void CocosUtils::jumpNumber(LabelAtlas *label, int toNumer, float duration)
         int fromNumer = 0;
         string curNumerStr = label->getString();
         if(!curNumerStr.empty()){
-            fromNumer = atoi(curNumerStr.c_str());
+            fromNumer = stoi(curNumerStr);
         }
         if (toNumer == fromNumer) {
             return;
@@ -202,7 +202,7 @@ void CocosUtils::jumpNumber(Label *label, int toNumer, float duration)
         int fromNumer = 0;
         string curNumerStr = label->getString();
         if(!curNumerStr.empty()){
-            fromNumer = atoi(curNumerStr.c_str());
+            fromNumer = stoi(curNumerStr);
         }
         if (toNumer == fromNumer) {
             return;

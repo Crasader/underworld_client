@@ -8,7 +8,6 @@
 
 #include "ConditionData.h"
 #include "Utils.h"
-#include <cstdlib>
 #include <cassert>
 
 using namespace std;
@@ -21,8 +20,8 @@ ConditionData::ConditionData(const string& content)
     Utils::split(result, content, "_", "");
     const size_t size = result.size();
     if (size == 2) {
-        _id = atoi(result.at(0).c_str());
-        _count = atoi(result.at(1).c_str());
+        _id = stoi(result.at(0));
+        _count = stoi(result.at(1));
     } else {
         assert(false);
     }

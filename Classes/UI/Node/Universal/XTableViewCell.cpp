@@ -10,8 +10,9 @@
 
 Node* XTableViewCell::getNode(int idx) const
 {
-    if (_nodes.find(idx) != _nodes.end()) {
-        return _nodes.at(idx);
+    auto iter(_nodes.find(idx));
+    if (iter != _nodes.end()) {
+        return iter->second;
     }
     
     return nullptr;
@@ -20,8 +21,9 @@ Node* XTableViewCell::getNode(int idx) const
 void XTableViewCell::setNode(Node* node, int idx)
 {
     if (node) {
-        if (_nodes.find(idx) != _nodes.end()) {
-            _nodes.at(idx) = node;
+        auto iter(_nodes.find(idx));
+        if (iter != _nodes.end()) {
+            iter->second = node;
         } else {
             _nodes.insert(std::make_pair(idx, node));
         }

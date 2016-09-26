@@ -213,17 +213,21 @@ string LocalHelper::getLocalizedConfigFilePath(const string& fileName) {
 }
 
 string LocalHelper::getString(const string &key) {
-    if (_localizedStrings.find(key) != end(_localizedStrings)) {
-        return _localizedStrings.at(key);
-    } else if (_baseStrings.find(key) != end(_baseStrings)) {
-        return _baseStrings.at(key);
+    auto iter(_localizedStrings.find(key));
+    if (iter != end(_localizedStrings)) {
+        return iter->second;
     } else {
-        // lack value
-        if (key.length() > 0) {
-            return key;
+        auto iter(_baseStrings.find(key));
+        if (iter != end(_baseStrings)) {
+            return iter->second;
+        } else {
+            // lack value
+            if (key.length() > 0) {
+                return key;
+            }
+            
+            return "This label lacks key";
         }
-        
-        return "This label lacks key";
     }
 }
 
@@ -281,8 +285,9 @@ const string& LocalHelper::getLanguageName(LocalType type) {
         {LocalType::ARABIC, "العربية"},
     };
     
-    if (languages.find(type) != end(languages)) {
-        return languages.at(type);
+    auto iter(languages.find(type));
+    if (iter != end(languages)) {
+        return iter->second;
     }
     
     static const string empty("");

@@ -63,8 +63,9 @@ const AnimationParameter* UAConfigData::getAnimationParameter(Unit::Direction di
 {
     auto ret = get(direction);
     if (!ret) {
-        if (FlippedDirections.find(direction) != end(FlippedDirections)) {
-            ret = get(FlippedDirections.at(direction));
+        auto iter(FlippedDirections.find(direction));
+        if (iter != end(FlippedDirections)) {
+            ret = get(iter->second);
         }
         
         if (!ret && _data.size() > 0) {
@@ -85,12 +86,12 @@ void UAConfigData::parse(tinyxml2::XMLElement *element, const string& key)
             for (int i = 0; i < v.size(); ++i) {
                 CC_BREAK_IF(i >= AnimationDirections.size());
                 const auto& direction = AnimationDirections.at(i);
-                if (_data.find(direction) == end(_data)) {
+                if (0 == _data.count(direction)) {
                     _data.insert(make_pair(direction, new (nothrow) AnimationParameter(getEnd())));
                 }
                 
                 auto ap = _data.at(direction);
-                auto value = atof(v.at(i).c_str());
+                auto value = stof(v.at(i));
                 if ("scale" == key) {
                     ap->scale = value;
                 } else if ("speed" == key) {
@@ -107,8 +108,9 @@ void UAConfigData::parse(tinyxml2::XMLElement *element, const string& key)
 
 const AnimationParameter* UAConfigData::get(const Unit::Direction& direction) const
 {
-    if (_data.find(direction) != end(_data)) {
-        return _data.at(direction);
+    auto iter(_data.find(direction));
+    if (iter != end(_data)) {
+        return iter->second;
     }
     
     return nullptr;

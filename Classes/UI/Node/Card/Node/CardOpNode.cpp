@@ -95,8 +95,9 @@ void CardOpNode::setTypes(const vector<CardOpType>& types)
         }
         
         for (const auto& type : types) {
-            if (_buttons.find(type) != end(_buttons)) {
-                _buttons.at(type)->setVisible(true);
+            auto iter(_buttons.find(type));
+            if (iter != end(_buttons)) {
+                iter->second->setVisible(true);
             } else {
                 auto button = CardOpButton::create(type);
                 button->addClickEventListener([this, type](Ref*) {

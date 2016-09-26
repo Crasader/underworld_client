@@ -9,7 +9,7 @@
 #ifndef ContentData_h
 #define ContentData_h
 
-#include <iostream>
+#include <string>
 #include <vector>
 
 class ContentData

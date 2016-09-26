@@ -173,7 +173,7 @@ void QuestLayer::createTable(QuestType type)
     addChild(tableView);
     
     // 1. insert table
-    if (_tables.find(type) == end(_tables)) {
+    if (0 == _tables.count(type)) {
         _tables.insert(make_pair(type, tableView));
     } else {
         assert(false);
@@ -284,14 +284,15 @@ void QuestLayer::reloadAllCandidates()
 
 void QuestLayer::reloadCandidates(QuestType type)
 {
-    if (_candidates.find(type) != end(_candidates)) {
-        _candidates.at(type).clear();
+    auto iter(_candidates.find(type));
+    if (iter != end(_candidates)) {
+        iter->second.clear();
     }
 }
 
 void QuestLayer::insertCandidate(QuestType type, const string& name)
 {
-    if (_candidates.find(type) == end(_candidates)) {
+    if (0 == _candidates.count(type)) {
         _candidates.insert(make_pair(type, vector<string>()));
     }
     
@@ -301,8 +302,9 @@ void QuestLayer::insertCandidate(QuestType type, const string& name)
 
 void QuestLayer::removeCandidate(QuestType type, const string& name)
 {
-    if (_candidates.find(type) != end(_candidates)) {
-        auto& quests = _candidates.at(type);
+    auto iter(_candidates.find(type));
+    if (iter != end(_candidates)) {
+        auto& quests(iter->second);
         for (auto iter = begin(quests); iter != end(quests); ++iter) {
             if (name == *iter) {
                 quests.erase(iter);

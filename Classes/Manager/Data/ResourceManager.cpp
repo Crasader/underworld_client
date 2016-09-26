@@ -41,8 +41,9 @@ void ResourceManager::init(const rapidjson::Value& jsonDict)
 
 int ResourceManager::getResourceCount(ResourceType type) const
 {
-    if (_resources.find(type) != end(_resources)) {
-        return _resources.at(type);
+    auto iter(_resources.find(type));
+    if (iter != end(_resources)) {
+        return iter->second;
     }
     
     return 0;
@@ -52,8 +53,9 @@ void ResourceManager::updateGemInfo(const rapidjson::Value& jsonDict)
 {
     auto amount(JSonUtils::parse<int>(jsonDict, "gemCount"));
     static ResourceType type(ResourceType::Gem);
-    if (_resources.find(type) != end(_resources)) {
-        _resources.at(type) = amount;
+    auto iter(_resources.find(type));
+    if (iter != end(_resources)) {
+        iter->second = amount;
     } else {
         _resources.insert(make_pair(type, amount));
     }
@@ -68,8 +70,9 @@ void ResourceManager::updateResources(const rapidjson::Value& jsonDict)
             const auto& value = DICTOOL->getDictionaryFromArray_json(jsonDict, key, i);
             auto type(JSonUtils::parse<ResourceType>(value, "id"));
             auto amount(JSonUtils::parse<int>(value, "amount"));
-            if (_resources.find(type) != end(_resources)) {
-                _resources.at(type) = amount;
+            auto iter(_resources.find(type));
+            if (iter != end(_resources)) {
+                iter->second = amount;
             } else {
                 _resources.insert(make_pair(type, amount));
             }
@@ -81,8 +84,9 @@ void ResourceManager::updateResources(const rapidjson::Value& jsonDict)
         CC_BREAK_IF(!JSonUtils::isExist(jsonDict, key));
         const auto& value = DICTOOL->getSubDictionary_json(jsonDict, key);
         auto bookId(JSonUtils::parse<int>(value, "id"));
-        if (_books.find(bookId) != end(_books)) {
-            _books.at(bookId)->update(value);
+        auto iter(_books.find(bookId));
+        if (iter != end(_books)) {
+            iter->second->update(value);
         } else {
             _books.insert(make_pair(bookId, new (nothrow) SkillBookData(value)));
         }

@@ -17,19 +17,21 @@ CardConfigData::CardConfigData(tinyxml2::XMLElement *xmlElement)
     if (xmlElement) {
         _cardId = atoi(xmlElement->Attribute("id"));
         
-        const char *data = xmlElement->Attribute("icon");
-        if (data && strlen(data) > 0) {
+        do {
+            const char *data = xmlElement->Attribute("icon");
+            CC_BREAK_IF(!data || strlen(data) == 0);
             static const string suffix(".png");
             static const string prefix("GameImages/icons/unit/");
             _icon = prefix + data + suffix;
             _smallIcon = prefix + data + "_1" + suffix;
             _disabledIcon = prefix + data + "_2" + suffix;
-        }
+        } while (false);
         
-        data = xmlElement->Attribute("tips");
-        if (data && strlen(data) > 0) {
+        do {
+            const char *data = xmlElement->Attribute("tips");
+            CC_BREAK_IF(!data || strlen(data) == 0);
             _tips.init(data);
-        }
+        } while (false);
     }
 }
 

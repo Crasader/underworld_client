@@ -28,8 +28,9 @@ QuestManager::~QuestManager()
 
 void QuestManager::initQuest(QuestType type, const rapidjson::Value& jsonDict)
 {
-    if (_quests.find(type) != _quests.end()) {
-        Utils::clearVector(_quests.at(type));
+    auto iter(_quests.find(type));
+    if (iter != _quests.end()) {
+        Utils::clearVector(iter->second);
     } else {
         _quests.insert(make_pair(type, vector<QuestData*>()));
     }
@@ -60,7 +61,7 @@ void QuestManager::getReward(QuestType type, int questId)
 
 const vector<QuestData*>& QuestManager::getQuestData(QuestType type)
 {
-    if (_quests.find(type) == _quests.end()) {
+    if (0 == _quests.count(type)) {
         _quests.insert(make_pair(type, vector<QuestData*>()));
     }
     
@@ -69,8 +70,9 @@ const vector<QuestData*>& QuestManager::getQuestData(QuestType type)
 
 int QuestManager::getQuestProgress(QuestType type, int questId) const
 {
-    if (_quests.find(type) != _quests.end()) {
-        const vector<QuestData*>& v = _quests.at(type);
+    auto iter(_quests.find(type));
+    if (iter != _quests.end()) {
+        const auto& v(iter->second);
         for (int i = 0; i < v.size(); ++i) {
             QuestData* data = v.at(i);
             if (data->getType() == type && data->getId() == questId) {

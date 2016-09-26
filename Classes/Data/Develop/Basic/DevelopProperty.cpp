@@ -25,8 +25,8 @@ DevelopProperty::DevelopProperty(tinyxml2::XMLElement *xmlElement)
         std::vector<std::string> splits;
         Utils::split(splits, data, "_", "");
         if (2 == splits.size()) {
-            auto attribute(atoi(splits.at(0).c_str()));
-            _attributes.insert(std::make_pair(attribute, atof(splits.at(1).c_str())));
+            auto attribute(stoi(splits.at(0)));
+            _attributes.insert(std::make_pair(attribute, stof(splits.at(1))));
             _orderedAttributes.push_back(attribute);
         }
     }
@@ -53,8 +53,9 @@ const std::unordered_map<int, float>& DevelopProperty::getAttributes() const
 
 float DevelopProperty::getAttribute(int type)
 {
-    if (_attributes.find(type) != end(_attributes)) {
-        return _attributes.at(type);
+    auto iter(_attributes.find(type));
+    if (iter != end(_attributes)) {
+        return iter->second;
     }
     
     return 0.0f;

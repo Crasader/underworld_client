@@ -40,8 +40,9 @@ int PvpLogData::getTrophy() const
 
 int PvpLogData::getTowerHpPercentage(bool isHome) const
 {
-    if (_towerHpPercentages.find(isHome) != end(_towerHpPercentages)) {
-        return _towerHpPercentages.at(isHome);
+    auto iter(_towerHpPercentages.find(isHome));
+    if (iter != end(_towerHpPercentages)) {
+        return iter->second;
     }
     
     return 0;
@@ -49,8 +50,9 @@ int PvpLogData::getTowerHpPercentage(bool isHome) const
 
 const UserSimpleData* PvpLogData::getUserData(bool isHome) const
 {
-    if (_userDatas.find(isHome) != end(_userDatas)) {
-        return _userDatas.at(isHome);
+    auto iter(_userDatas.find(isHome));
+    if (iter != end(_userDatas)) {
+        return iter->second;
     }
     
     return nullptr;

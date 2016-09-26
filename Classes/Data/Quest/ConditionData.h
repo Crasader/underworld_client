@@ -9,7 +9,7 @@
 #ifndef ConditionData_h
 #define ConditionData_h
 
-#include <iostream>
+#include <string>
 
 class ConditionData
 {

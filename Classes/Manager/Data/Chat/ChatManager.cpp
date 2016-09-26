@@ -148,7 +148,7 @@ void ChatManager::disconnect()
 
 const vector<ChatData*>& ChatManager::getChatData(ChatType type)
 {
-    if (_chatData.find(type) == _chatData.end()) {
+    if (0 == _chatData.count(type)) {
         _chatData.insert(make_pair(type, vector<ChatData*>()));
     }
     
@@ -214,7 +214,7 @@ void ChatManager::onReceivedTcpResponse(TCPClient* client, TCPResponse* response
             if (COMMAND_RECEIVED_MSG == code) {
                 auto data = new (nothrow) ChatData(document);
                 auto type(data->getType());
-                if (_chatData.find(type) == _chatData.end()) {
+                if (0 == _chatData.count(type)) {
                     _chatData.insert(make_pair(type, vector<ChatData*>()));
                 }
                 _chatData.at(type).push_back(data);

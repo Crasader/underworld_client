@@ -16,7 +16,7 @@ CardSet::~CardSet()
 
 void CardSet::insertCard(int cardId, BaseCard* card)
 {
-    if (_cards.find(cardId) == end(_cards)) {
+    if (0 == _cards.count(cardId)) {
         _cards.insert(std::make_pair(cardId, card));
     } else { CC_ASSERT(false); }
 }
@@ -55,8 +55,9 @@ size_t CardSet::getCardsCount() const
 
 BaseCard* CardSet::getCard(int cardId) const
 {
-    if (_cards.find(cardId) != end(_cards)) {
-        return _cards.at(cardId);
+    auto iter(_cards.find(cardId));
+    if (iter != end(_cards)) {
+        return iter->second;
     }
     
     return nullptr;

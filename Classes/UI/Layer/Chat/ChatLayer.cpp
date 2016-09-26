@@ -476,9 +476,9 @@ void ChatLayer::onChatTCPClientSent(const ChatData* data)
     
     if (data) {
         _editBoxNode->setText("");
-        auto type(data->getType());
-        if (_tableNodes.find(type) != end(_tableNodes)) {
-            auto node(_tableNodes.at(type));
+        auto iter(_tableNodes.find(data->getType()));
+        if (iter != end(_tableNodes)) {
+            auto node(iter->second);
             auto table(node->getTable());
             auto cnt(getCellsCount(table));
             if (cnt > 0) {
@@ -494,9 +494,9 @@ void ChatLayer::onChatTCPClientSent(const ChatData* data)
 void ChatLayer::onChatTCPClientReceived(const ChatData* data)
 {
     if (data) {
-        auto type(data->getType());
-        if (_tableNodes.find(type) != end(_tableNodes)) {
-            auto node(_tableNodes.at(type));
+        auto iter(_tableNodes.find(data->getType()));
+        if (iter != end(_tableNodes)) {
+            auto node(iter->second);
             auto cnt(getCellsCount(node->getTable()));
             if (cnt > 0) {
                 node->reloadData();
@@ -644,8 +644,9 @@ void ChatLayer::updateCellNode(Node* node, ChatType type, size_t idx)
 
 ChatType ChatLayer::getTableType(TableView* table) const
 {
-    if (table && _tableMappings.find(table) != end(_tableMappings)) {
-        auto node(_tableMappings.at(table));
+    auto iter(_tableMappings.find(table));
+    if (table && iter != end(_tableMappings)) {
+        auto node(iter->second);
         if (node) {
             return static_cast<ChatType>(node->getTag());
         }

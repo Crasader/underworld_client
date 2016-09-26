@@ -8,7 +8,6 @@
 
 #include "ObjectBriefData.h"
 #include "Utils.h"
-#include <cstdlib>
 #include <cassert>
 
 using namespace std;
@@ -23,12 +22,12 @@ ObjectBriefData::ObjectBriefData(const string& content)
     const size_t size = result.size();
     if (size == 2) {
         _percentage = 100;
-        _id = atoi(result.at(0).c_str());
-        _count = atoi(result.at(1).c_str());
+        _id = stoi(result.at(0));
+        _count = stoi(result.at(1));
     } else if (size == 3) {
-        _percentage = atoi(result.at(0).c_str());
-        _id = atoi(result.at(1).c_str());
-        _count = atoi(result.at(2).c_str());
+        _percentage = stoi(result.at(0));
+        _id = stoi(result.at(1));
+        _count = stoi(result.at(2));
     } else {
         assert(false);
     }
