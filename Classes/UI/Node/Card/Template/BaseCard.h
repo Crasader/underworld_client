@@ -17,7 +17,6 @@ class BaseCardObserver
 {
 public:
     virtual ~BaseCardObserver() {}
-    virtual void onBaseCardTouched(BaseCard* pSender, ui::Widget::TouchEventType type) {}
     virtual void onBaseCardClicked(BaseCard* pSender) {}
     virtual void onBaseCardInfo(BaseCard* pSender) {}
     virtual void onBaseCardClickedResourceButton(BaseCard* pSender) {}

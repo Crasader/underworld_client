@@ -1906,12 +1906,12 @@
 		A1720EB11BCD2D2E00217E98 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
-				30482FAD1D985A7900DC84C7 /* Lumberjack */,
 				A1A05B391C9668FB006FE03B /* CocoaAsyncSocket */,
 				A1DE80371BD669BA004DEED1 /* CrashReporter */,
 				A1FF13B21D3DFCF6007D2C08 /* GCManager */,
 				A1720EB21BCD2D2E00217E98 /* KeyChain */,
 				A11469D71C9FE9EC00E64125 /* Libevent */,
+				30482FAD1D985A7900DC84C7 /* Lumberjack */,
 				A1720EB51BCD2D2E00217E98 /* RMStore */,
 			);
 			name = ThirdParty;

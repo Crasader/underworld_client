@@ -54,7 +54,7 @@ protected:
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
     // BaseCardObserver
-    virtual void onBaseCardTouched(BaseCard* touchedCard, ui::Widget::TouchEventType type) override;
+    void onCardTouched(BaseCard* touchedCard, ui::Widget::TouchEventType type);
     virtual void onBaseCardClicked(BaseCard* pSender) override;
     
     // DeckEditMaskObserver

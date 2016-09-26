@@ -99,14 +99,6 @@ bool BaseCard::init()
         addChild(info);
         _infoButton = info;
         
-        setTouchEnabled(true);
-        addTouchEventListener([this](Ref*, ui::Widget::TouchEventType type) {
-            if (_observer) {
-                _observer->onBaseCardTouched(this, type);
-            }
-            
-        });
-        
         CocosUtils::fixWidgetTouchEvent(card, _touchInvalid, [this](Ref*) {
             if (_observer) {
                 _observer->onBaseCardClicked(this);

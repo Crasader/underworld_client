@@ -2,8 +2,8 @@
 <root>
 	<item icon="icon_hp.png" id="1000.0" name="ui_cardAttr_hp" priority="0.0" type="0.0"/>
 	<item icon="icon_gongjili.png" id="1001.0" name="ui_cardAttr_damage" priority="0.0" type="0.0"/>
-	<item icon="icon_gongjili.png" id="1002.0" name="ui_cardAttr_groundDamage" priority="0.0" type="0.0"/>
-	<item icon="icon_gongjili.png" id="1003.0" name="ui_cardAttr_airDamage" priority="0.0" type="0.0"/>
+	<item icon="icon_gongjili.png" id="1002.0" name="ui_cardAttr_groundDamage" priority="0.0" relative="1003:1001" type="0.0"/>
+	<item icon="icon_gongjili.png" id="1003.0" name="ui_cardAttr_airDamage" priority="0.0" relative="1002:1001" type="0.0"/>
 	<item enum_value="ui_cardTarget_" icon="icon_gongjileixing.png" id="1004.0" name="ui_cardAttr_targetType" priority="0.0" type="2.0"/>
 	<item enum_value="ui_cardAttackType_" icon="icon_gongjifanwei.png" id="1005.0" name="ui_cardAttr_attackType" priority="0.0" type="2.0"/>
 	<item icon="icon_gongjisudu.png" id="1006.0" name="ui_cardAttr_hitSpeed" priority="0.0" type="0.0"/>
@@ -11,15 +11,15 @@
 	<item enum_value="ui_cardArmorType_" icon="icon_hujialeixing.png" id="1008.0" name="ui_cardAttr_armorType" priority="0.0" type="2.0"/>
 	<item icon="icon_hujiazhi.png" id="1009.0" name="ui_cardAttr_armor" priority="0.0" type="0.0"/>
 	<item icon="icon_sudu.png" id="1010.0" name="ui_cardAttr_speed" priority="0.0" type="0.0"/>
-	<item icon="icon_hp.png" id="2000.0" name="ui_skillAttr_A" priority="0.0" type="0.0"/>
-	<item icon="icon_hp.png" id="2001.0" name="ui_skillAttr_B" priority="0.0" type="0.0"/>
-	<item icon="icon_hp.png" id="2002.0" name="ui_skillAttr_C" priority="0.0" type="0.0"/>
-	<item icon="icon_hp.png" id="2003.0" name="ui_skillAttr_D" priority="0.0" type="0.0"/>
-	<item icon="icon_hp.png" id="2004.0" name="ui_skillAttr_E" priority="0.0" type="1.0"/>
-	<item icon="icon_hp.png" id="2005.0" name="ui_skillAttr_F" priority="0.0" type="0.0"/>
-	<item icon="icon_hp.png" id="2006.0" name="ui_skillAttr_G" priority="0.0" type="0.0"/>
-	<item icon="icon_hp.png" id="2007.0" name="ui_skillAttr_H" priority="0.0" type="0.0"/>
-	<item icon="icon_hp.png" id="2008.0" name="ui_skillAttr_I" priority="0.0" type="1.0"/>
+	<item icon="icon_hp.png" id="2000.0" name="ui_skillAttr_A" priority="5.0" type="0.0"/>
+	<item icon="icon_hp.png" id="2001.0" name="ui_skillAttr_B" priority="3.0" type="0.0"/>
+	<item icon="icon_hp.png" id="2002.0" name="ui_skillAttr_C" priority="3.0" type="0.0"/>
+	<item icon="icon_hp.png" id="2003.0" name="ui_skillAttr_D" priority="3.0" type="0.0"/>
+	<item icon="icon_hp.png" id="2004.0" name="ui_skillAttr_E" priority="3.0" type="1.0"/>
+	<item icon="icon_hp.png" id="2005.0" name="ui_skillAttr_F" priority="3.0" type="0.0"/>
+	<item icon="icon_hp.png" id="2006.0" name="ui_skillAttr_G" priority="3.0" type="0.0"/>
+	<item icon="icon_hp.png" id="2007.0" name="ui_skillAttr_H" priority="3.0" type="0.0"/>
+	<item icon="icon_hp.png" id="2008.0" name="ui_skillAttr_I" priority="3.0" type="1.0"/>
 	<item icon="icon_hp.png" id="2100.0" name="ui_skillAttr_1" priority="0.0" type="1.0"/>
 	<item icon="icon_hp.png" id="2101.0" name="ui_skillAttr_2" priority="0.0" type="1.0"/>
 	<item icon="icon_hp.png" id="2102.0" name="ui_skillAttr_3" priority="0.0" type="0.0"/>

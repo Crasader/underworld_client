@@ -101,7 +101,9 @@ void CardAttributeNode::setAttribute(int attribute, float value)
         if (_icon) {
             _icon->setTexture(CocosUtils::getResourcePath(property->getIcon()));
         }
-        setName(LocalHelper::getString(property->getName()));
+        if (_name) {
+            _name->setString(LocalHelper::getString(property->getName()));
+        }
         if (_data) {
             string msg("");
             switch (property->getType()) {
@@ -120,9 +122,12 @@ void CardAttributeNode::setAttribute(int attribute, float value)
     } while (false);
 }
 
-void CardAttributeNode::setName(const string& name)
+void CardAttributeNode::setName(int attribute)
 {
-    if (_name) {
-        _name->setString(name);
-    }
+    do {
+        CC_BREAK_IF(!_name);
+        auto property(DataManager::getInstance()->getAttributeProperty(attribute));
+        CC_BREAK_IF(!property);
+        _name->setString(LocalHelper::getString(property->getName()));
+    } while (false);
 }

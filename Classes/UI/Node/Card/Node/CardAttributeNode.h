@@ -21,7 +21,7 @@ public:
     virtual ~CardAttributeNode();
     void setColor(const Color4B& color);
     void setAttribute(int attribute, float value);
-    void setName(const std::string& name);
+    void setName(int attribute);
     
 private:
     CardAttributeNode();

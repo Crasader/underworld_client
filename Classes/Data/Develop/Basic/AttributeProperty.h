@@ -24,6 +24,7 @@ public:
     int getId() const;
     Type getType() const;
     int getPriority() const;
+    const std::pair<int, int>& getRelative() const;
     const std::string& getEnmuPrefix() const;
     const std::string& getName() const;
     const std::string& getIcon() const;
@@ -32,6 +33,7 @@ private:
     int _id;
     Type _type;
     int _priority;
+    std::pair<int, int> _relative;
     std::string _enmuPrefix;
     std::string _name;
     std::string _icon;

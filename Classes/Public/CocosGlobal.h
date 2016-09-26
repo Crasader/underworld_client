@@ -36,8 +36,6 @@
 
 #define TOUCH_CANCEL_BY_MOVING_DISTANCE (40.0f)
 
-#define DEFAULT_MAP_ID              (2)
-#define BATTLE_RESOURCE_MAX_COUNT   (10)
 #define MAP_OFFSET_Y                (0)
 #define DEFAULT_FRAME_DELAY         (1.0f/12.0f)
 
@@ -54,20 +52,12 @@ TypeName(const TypeName &) = delete; \
 TypeName &operator =(const TypeName &) = delete;
 #endif // DISALLOW_COPY_AND_ASSIGN
 
-#define LOW_PIXELFORMAT (cocos2d::Texture2D::PixelFormat::RGB5A1)
-
 typedef std::function<void()> httpRequestCallback;
 typedef std::function<void(long errorCode)> httpErrorCallback;
 
 // TODO: remove temp code
 #define RES_NAME_GOLD       ("金子")
 #define RES_NAME_WOOD       ("木头")
-
-// Attributes
-#define ATTR_TARGET_TYPE    (1004)
-#define ATTR_GROUND_DAMAGE  (1002)
-#define ATTR_AIR_DAMAGE     (1003)
-enum class TargetType { BOTH = 2 };
 
 #define JSON_KEY ("code")
 

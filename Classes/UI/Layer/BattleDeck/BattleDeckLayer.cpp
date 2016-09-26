@@ -132,7 +132,7 @@ void BattleDeckLayer::onTouchEnded(Touch *touch, Event *unused_event)
 }
 
 #pragma mark - BaseCardObserver
-void BattleDeckLayer::onBaseCardTouched(BaseCard* touchedCard, ui::Widget::TouchEventType type)
+void BattleDeckLayer::onCardTouched(BaseCard* touchedCard, ui::Widget::TouchEventType type)
 {
     if (touchedCard && _isEditing) {
         if (ui::Widget::TouchEventType::BEGAN == type) {
@@ -347,6 +347,13 @@ BaseCard* BattleDeckLayer::createCard(int card)
     auto node = BaseCard::create();
     node->registerObserver(this);
     node->update(card, DeckManager::getInstance()->getCardData(card));
+    node->setTouchEnabled(true);
+    node->addTouchEventListener([this](Ref* pSender, ui::Widget::TouchEventType type) {
+        auto node(dynamic_cast<BaseCard*>(pSender));
+        if (node) {
+            onCardTouched(node, type);
+        }
+    });
     return node;
 }
 
@@ -654,7 +661,7 @@ Rect BattleDeckLayer::getWorldBoundingBox(const Node* node) const
 #pragma mark - Functions
 void BattleDeckLayer::loadDeck(int idx)
 {
-    if (true) {
+    do {
         // tab buttons
         for (auto iter = begin(_deckTabButtons); iter != end(_deckTabButtons); ++iter) {
             iter->second->setEnabled(idx != iter->first);
@@ -702,7 +709,7 @@ void BattleDeckLayer::loadDeck(int idx)
         }
         
         updateAverageElixir();
-    }
+    } while (false);
 }
 
 void BattleDeckLayer::resetParams()

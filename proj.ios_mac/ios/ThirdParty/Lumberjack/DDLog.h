@@ -28,6 +28,11 @@
     #define DISPATCH_QUEUE_REFERENCE_TYPE assign
 #endif
 
+#if defined(__apple_build_version__) && __apple_build_version__ < 703029
+    #undef NS_SWIFT_NAME
+    #define NS_SWIFT_NAME(_)
+#endif
+
 @class DDLogMessage;
 @class DDLoggerInformation;
 @protocol DDLogger;

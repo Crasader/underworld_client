@@ -9,12 +9,11 @@
 #include "AttributeProperty.h"
 #include "XMLUtils.h"
 
-using namespace std;
-
 AttributeProperty::AttributeProperty(tinyxml2::XMLElement *xmlElement)
 :_id(0)
 ,_type(Type::ABSOLUTE)
 ,_priority(INT_MAX)
+,_relative(0, 0)
 {
     if (xmlElement) {
         XMLUtils::parse(xmlElement, "id", _id);
@@ -22,6 +21,14 @@ AttributeProperty::AttributeProperty(tinyxml2::XMLElement *xmlElement)
         XMLUtils::parse(xmlElement, "enum_value", _enmuPrefix);
         XMLUtils::parse(xmlElement, "name", _name);
         XMLUtils::parse(xmlElement, "icon", _icon);
+        
+        XMLUtils::parseString(xmlElement, "relative", ":", [this](int idx, const std::string& split) {
+            if (0 == idx) {
+                _relative.first = std::stoi(split);
+            } else if (1 == idx) {
+                _relative.second = std::stoi(split);
+            }
+        });
     }
 }
 
@@ -42,17 +49,22 @@ int AttributeProperty::getPriority() const
     return _priority;
 }
 
-const string& AttributeProperty::getEnmuPrefix() const
+const std::pair<int, int>& AttributeProperty::getRelative() const
+{
+    return _relative;
+}
+
+const std::string& AttributeProperty::getEnmuPrefix() const
 {
     return _enmuPrefix;
 }
 
-const string& AttributeProperty::getName() const
+const std::string& AttributeProperty::getName() const
 {
     return _name;
 }
 
-const string& AttributeProperty::getIcon() const
+const std::string& AttributeProperty::getIcon() const
 {
     return _icon;
 }

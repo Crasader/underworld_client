@@ -15,6 +15,7 @@
 #include "LocalHelper.h"
 #include "DataManager.h"
 #include "AbstractData.h"
+#include "AttributeProperty.h"
 #include "CardProperty.h"
 #include "AbstractUpgradeProperty.h"
 
@@ -105,12 +106,15 @@ void AbstractInfoLayer::updateProperty(const DevelopProperty* property)
                 auto node(_attributes.at(idx));
                 node->setAttribute(type, iter->second);
                 
-                if ((ATTR_GROUND_DAMAGE == type || ATTR_AIR_DAMAGE == type) && cardAttributes.find(ATTR_TARGET_TYPE) != end(cardAttributes)) {
-                    auto targetType(static_cast<TargetType>(cardAttributes.at(ATTR_TARGET_TYPE)));
-                    if (TargetType::BOTH != targetType || cardAttributes.find(ATTR_AIR_DAMAGE) == end(cardAttributes)) {
-                        node->setName(LocalHelper::getString("ui_cardAttr_damage"));
-                    }
-                }
+                do {
+                    auto property(DataManager::getInstance()->getAttributeProperty(type));
+                    CC_BREAK_IF(!property);
+                    const auto& relative(property->getRelative());
+                    auto attribute(relative.first);
+                    CC_BREAK_IF(attribute == 0);
+                    CC_BREAK_IF(cardAttributes.find(attribute) != end(cardAttributes));
+                    node->setName(relative.second);
+                } while (false);
                 ++ idx;
             }
         }

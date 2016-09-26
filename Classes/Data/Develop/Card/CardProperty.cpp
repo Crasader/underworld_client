@@ -33,18 +33,18 @@ CardProperty::CardProperty(tinyxml2::XMLElement *xmlElement)
     XMLUtils::parse(xmlElement, "donate", _maxDonateCount);
     XMLUtils::parseString(xmlElement, "reward", "_", [this](int idx, const std::string& split) {
         if (0 == idx) {
-            _donateReward.first = static_cast<ResourceType>(atoi(split.c_str()));
+            _donateReward.first = static_cast<ResourceType>(std::stoi(split));
         } else if (1 == idx) {
-            _donateReward.second = atoi(split.c_str());
+            _donateReward.second = std::stoi(split);
         }
     });
     XMLUtils::parse(xmlElement, "experience", _donateExp);
     XMLUtils::parse(xmlElement, "point", _donatePoint);
     XMLUtils::parseString(xmlElement, "skills", ";", [this](int idx, const std::string& split) {
-        _skills.push_back(atoi(split.c_str()));
+        _skills.push_back(std::stoi(split));
     });
     XMLUtils::parseString(xmlElement, "runes", ";", [this](int idx, const std::string& split) {
-        auto type = static_cast<ObjectUtils::RuneType>(atoi(split.c_str()));
+        auto type = static_cast<ObjectUtils::RuneType>(std::stoi(split));
         if (ObjectUtils::RuneType::NONE != type) {
             _runeTypes.insert(std::make_pair(idx, type));
         }

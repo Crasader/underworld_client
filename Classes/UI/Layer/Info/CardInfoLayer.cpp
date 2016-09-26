@@ -328,7 +328,7 @@ void CardInfoLayer::createRightNode(Node* node)
             bg->setPosition(size.width - (secondaryEdge.x + bgSize.width / 2), line->getPositionY() - (lineHeight / 2 + (spaceY + bgSize.height) * (i + 1) - bgSize.height / 2));
             node->addChild(bg);
             
-            if (true) {
+            do {
                 auto label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
                 label->setTextColor(Color4B::BLACK);
                 label->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
@@ -336,7 +336,7 @@ void CardInfoLayer::createRightNode(Node* node)
                 label->setPosition(10, bgSize.height / 2);
                 bg->addChild(label);
                 _runeProperties.push_back(label);
-            }
+            } while (false);
         }
     }
     
