@@ -21,6 +21,7 @@
 #include "WorldRender.h"
 #include "CocosUtils.h"
 #include "Spell.h"
+#include "HMMGui.h"
 
 namespace UnderWorld{ namespace Core{
     
@@ -254,6 +255,7 @@ bool HMMDeckRender::init(const HMMDeck* deck, Commander* commander,
     }
     _activeHeroIndex = CARD_INDEX_INVALID;
     _lockHeroDeck = false;
+    _lockDeck = false;
     
     /**5. init render */
     render(deck, game);
@@ -426,12 +428,30 @@ void HMMDeckRender::markObjectReleased() {
     _deck = nullptr;
     _game = nullptr;
 }
+    
+void HMMDeckRender::runStartUpAnim() {
+    static const float deck_start_up_offset = -150.f;
+    
+    if (!_cardRegion) return;
+    
+    _lockDeck = true;
+    cocos2d::Action* action = cocos2d::Sequence::create(
+        cocos2d::DelayTime::create(HMMGui::START_UP_DELAY + HMMGui::COUNT_BACKWARDS_DURATION * HMMGui::COUNT_BACKWARDS_NUMBER),
+        cocos2d::EaseSineIn::create(cocos2d::MoveTo::create(HMMGui::START_UP_FADE_IN_DURATION, _cardRegion->getPosition())),
+        cocos2d::CallFunc::create([this]() { _lockDeck = false;}) ,
+        NULL);
+    _cardRegion->setPosition(_cardRegion->getPosition() + cocos2d::Vec2(0.f, deck_start_up_offset));
+    _cardRegion->runAction(action);
+}
 
 bool HMMDeckRender::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
     bool ret = false;
     
     //object released
     if (!_deck) return ret;
+    
+    //lock deck
+    if (_lockDeck) return ret;
     
     resetTouchEventStatus();
     
@@ -514,6 +534,7 @@ HMMDeckRender::HMMDeckRender()
 , _selectedCardIndex(CARD_INDEX_INVALID)
 , _activeHeroIndex(CARD_INDEX_INVALID)
 , _lockHeroDeck(false)
+, _lockDeck(false)
 , _commander(nullptr)
 , _worldRender(nullptr)
 , _deck(nullptr)

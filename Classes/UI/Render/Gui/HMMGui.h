@@ -39,6 +39,11 @@ public:
     static const int ALERT_REMAIN_TIME_IN_SECOND;
     static const cocos2d::Color4B ALERT_REMAIN_TIME_COLOR;
     static const cocos2d::Color4B NORMAL_REMAIN_TIME_COLOR;
+    static const float START_UP_FADE_IN_DURATION;
+    static const float COUNT_BACKWARDS_DURATION;
+    static const int COUNT_BACKWARDS_NUMBER;
+    static const float START_UP_DELAY;
+    
 private:
     /** data */
     int _thisFactionIndex;
@@ -56,10 +61,14 @@ private:
     /** cocos */
     cocos2d::Node* _guiView;
     cocos2d::Label* _timeLabel;
+    cocos2d::Node* _timeLabelBg;
     cocos2d::ProgressTimer* _thisHpProgressView;
     cocos2d::Label* _thisHpLabel;
+    cocos2d::Node* _thisHpLabelBg;
     cocos2d::ProgressTimer* _enemyHpProgressView;
     cocos2d::Label* _enemyHpLabel;
+    cocos2d::Node* _enemyHpLabelBg;
+    cocos2d::Menu* _exitButton;
     HMMDeckRender* _deckRender;
     
     /** refs */
@@ -87,6 +96,7 @@ public:
     
 private:
     void initFactionInfo(const Faction* faction);
+    void runStartUpAnim();
     
 };
     

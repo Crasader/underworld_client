@@ -101,6 +101,7 @@ private:
     std::vector<cocos2d::Vec2> _cardSelectedPos;
     int _activeHeroIndex;
     bool _lockHeroDeck;
+    bool _lockDeck;
     
     /** refs */
     Commander* _commander;
@@ -125,6 +126,9 @@ public:
     void updateBattleResource(microres_t amount, microres_t max);
     void updateActiveHero(int index);
     void markObjectReleased();
+    
+    /** interface */
+    void runStartUpAnim();
     
     /** touch event */
     bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) override;

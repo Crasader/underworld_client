@@ -895,7 +895,6 @@ void UnitRender::getHpBarFiles(const UnitRender* ur, std::string& background, st
         background.assign(isAlly ? "GameImages/battle_ui/ui_normal_ally_hp_bg.png" : "GameImages/battle_ui/ui_normal_enemy_hp_bg.png");
         foreground.assign(isAlly ? "GameImages/battle_ui/ui_normal_ally_hp_fg.png" : "GameImages/battle_ui/ui_normal_enemy_hp_fg.png");
     }
-
 }
 
 

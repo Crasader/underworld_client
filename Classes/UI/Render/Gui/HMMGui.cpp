@@ -43,6 +43,10 @@ const int HMMGui::INVALID_FACTION_INDEX = -1;
 const int HMMGui::ALERT_REMAIN_TIME_IN_SECOND = 180;
 const cocos2d::Color4B HMMGui::ALERT_REMAIN_TIME_COLOR = cocos2d::Color4B::RED;
 const cocos2d::Color4B HMMGui::NORMAL_REMAIN_TIME_COLOR = cocos2d::Color4B::WHITE;
+const float HMMGui::START_UP_FADE_IN_DURATION = 0.6f;
+const float HMMGui::COUNT_BACKWARDS_DURATION = 1.f;
+const int HMMGui::COUNT_BACKWARDS_NUMBER = 1;
+const float HMMGui::START_UP_DELAY = 2.5f;
     
 HMMGui::HMMGui()
 : _thisFactionIndex(INVALID_FACTION_INDEX)
@@ -54,10 +58,14 @@ HMMGui::HMMGui()
 , _gameOver(false)
 , _guiView(nullptr)
 , _timeLabel(nullptr)
+, _timeLabelBg(nullptr)
+, _thisHpLabelBg(nullptr)
 , _thisHpProgressView(nullptr)
 , _thisHpLabel(nullptr)
 , _enemyHpProgressView(nullptr)
 , _enemyHpLabel(nullptr)
+, _enemyHpLabelBg(nullptr)
+, _exitButton(nullptr)
 , _game(nullptr)
 , _commander(nullptr)
 , _worldRender(nullptr) {
@@ -120,9 +128,13 @@ void HMMGui::init(const Game *game, Commander *commander, WorldRender *worldRend
     _guiView->removeAllChildren();
     _thisHpLabel = nullptr;
     _thisHpProgressView = nullptr;
+    _thisHpLabelBg = nullptr;
     _enemyHpLabel = nullptr;
     _enemyHpProgressView = nullptr;
+    _enemyHpLabelBg = nullptr;
     _timeLabel = nullptr;
+    _timeLabelBg = nullptr;
+
     
     //4b. faction info
     initFactionInfo(_game->getWorld()->getFaction(_thisFactionIndex));
@@ -146,6 +158,7 @@ void HMMGui::init(const Game *game, Commander *commander, WorldRender *worldRend
         cocos2d::Node* hint_icon = cocos2d::Sprite::create("GameImages/battle_ui/ui_clock_hint_icon.png");
         hint_icon->setPosition(cocos2d::Vec2(size.width * 0.5f, size.height));
         sprite->addChild(hint_icon);
+        _timeLabelBg = sprite;
     }
     
     
@@ -171,10 +184,13 @@ void HMMGui::init(const Game *game, Commander *commander, WorldRender *worldRend
         });
         exitItem->setAnchorPoint(Point::ANCHOR_TOP_RIGHT);
         exitItem->setPosition(Point(winSize.width - 5.0f, winSize.height - 5.0f));
-        Menu *menu = Menu::create(exitItem, nullptr);
-        menu->setPosition(Point::ZERO);
-        _guiView->addChild(menu, COVER_UI_ZORDER);
+        _exitButton = Menu::create(exitItem, nullptr);
+        _exitButton->setPosition(Point::ZERO);
+        _guiView->addChild(_exitButton, COVER_UI_ZORDER);
     }
+    
+    //5. anim
+    runStartUpAnim();
 }
     
 void HMMGui::render(const Game *game) {
@@ -285,9 +301,11 @@ void HMMGui::initFactionInfo(const Faction *faction) {
         if (left) {
             _thisHpProgressView = pt;
             _thisHpLabel = ptLabel;
+            _thisHpLabelBg = nameBg;
         } else {
             _enemyHpProgressView = pt;
             _enemyHpLabel = ptLabel;
+            _enemyHpLabelBg = nameBg;
         }
     }
     
@@ -305,6 +323,82 @@ void HMMGui::initFactionInfo(const Faction *faction) {
         sprite->getContentSize();
     }
 }
+    
+void HMMGui::runStartUpAnim() {
+    
+    static const float upper_ui_move_offest = 100.f;
+    static const float count_backwards_scale = 2.f;
+    static const float count_backwards_opacity = 50;
+    
+    cocos2d::Sprite* CountBack3 = cocos2d::Sprite::create("GameImages/battle_ui/battle_start_count_backwards_3.png");
+    cocos2d::Sprite* CountBack2 = cocos2d::Sprite::create("GameImages/battle_ui/battle_start_count_backwards_2.png");
+    cocos2d::Sprite* CountBack1 = cocos2d::Sprite::create("GameImages/battle_ui/battle_start_count_backwards_1.png");
+    
+    std::function<void (cocos2d::Node*)> setbackCount = [this](cocos2d::Node* target) {
+        if (target) {
+            target->setScale(count_backwards_scale);
+            target->setOpacity(count_backwards_opacity);
+            target->setVisible(false);
+            const cocos2d::Size& wSize = cocos2d::Director::getInstance()->getWinSize();
+            target->setPosition(cocos2d::Vec2(wSize.width / 2, wSize.height / 2));
+            _guiView->addChild(target, COVER_UI_ZORDER);
+        }
+    };
+    setbackCount(CountBack3);
+    setbackCount(CountBack2);
+    setbackCount(CountBack1);
+    
+    std::function<void (cocos2d::Node*, int)> startBackCountAnim =
+        [this](cocos2d::Node* target, int count) {
+            if (target) {
+                cocos2d::Action* scaleDown1 = cocos2d::Spawn::create(
+                    cocos2d::EaseSineIn::create(cocos2d::FadeTo::create(COUNT_BACKWARDS_DURATION / 4, 255)),
+                    cocos2d::EaseSineIn::create(cocos2d::ScaleTo::create(COUNT_BACKWARDS_DURATION / 4, 0.8f)),
+                    NULL);
+                cocos2d::Action* scaleUp = cocos2d::EaseSineIn::create(cocos2d::ScaleTo::create(COUNT_BACKWARDS_DURATION / 4, 1.2f));
+                cocos2d::Action* scaleDown2 = cocos2d::EaseSineIn::create(cocos2d::ScaleTo::create(COUNT_BACKWARDS_DURATION / 4, 1));
+                cocos2d::Action* fadeup = cocos2d::EaseSineIn::create(cocos2d::FadeOut::create(COUNT_BACKWARDS_DURATION / 4));
+                
+                cocos2d::Action* seq = cocos2d::Sequence::create(
+                    cocos2d::DelayTime::create(START_UP_DELAY + (COUNT_BACKWARDS_NUMBER - count) * COUNT_BACKWARDS_DURATION),
+                    cocos2d::CallFunc::create([target]() { target->setVisible(true);}),
+                    scaleDown1,
+                    scaleUp,
+                    scaleDown2,
+                    fadeup,
+                    cocos2d::RemoveSelf::create(),
+                    NULL);
+                target->runAction(seq);
+                                                                          
+            }
+    };
+    startBackCountAnim(CountBack3, 3);
+    startBackCountAnim(CountBack2, 2);
+    startBackCountAnim(CountBack1, 1);
+    
+
+    std::function<void (cocos2d::Node*)> uiMoveIn = [](cocos2d::Node* target) {
+        if (target) {
+            cocos2d::Sequence* sq = cocos2d::Sequence::create(
+                cocos2d::DelayTime::create(COUNT_BACKWARDS_DURATION * COUNT_BACKWARDS_NUMBER + START_UP_DELAY),
+                    cocos2d::EaseSineIn::create(cocos2d::MoveTo::create(START_UP_FADE_IN_DURATION, target->getPosition())),
+                nullptr);
+            ;
+            target->setPosition(target->getPosition() + cocos2d::Vec2(0.f, upper_ui_move_offest));
+            target->runAction(sq);
+        }
+    };
+    
+    uiMoveIn(_timeLabelBg);
+    uiMoveIn(_thisHpLabelBg);
+    uiMoveIn(_enemyHpLabelBg);
+    uiMoveIn(_exitButton);
+    
+    if (_deckRender) {
+        _deckRender->runStartUpAnim();
+    }
+}
+
     
     
 }}
