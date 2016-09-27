@@ -25,12 +25,6 @@
     #endif
 #endif
 
-#if !defined(UTILS_REQUIRES_CPP11)
-    #if defined(__cplusplus) && __cplusplus >= 201103L
-        #define UTILS_REQUIRES_CPP11 (1)
-    #endif
-#endif
-
 #if !defined(UTILS_REQUIRES_GCC5)
     #if defined(__clang__) || (defined(__GNUC__) && (__GNUC__ >= 5))
         #define UTILS_REQUIRES_GCC5 (1)

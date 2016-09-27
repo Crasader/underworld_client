@@ -115,7 +115,7 @@ void Utils::trim(string &s)
 
 int Utils::stoi(const string& str)
 {
-#if UTILS_REQUIRES_CPP11
+#if defined(__cplusplus) && __cplusplus >= 201103L
     return std::stoi(str);
 #else
     return std::atoi(str.c_str());
@@ -124,7 +124,7 @@ int Utils::stoi(const string& str)
 
 float Utils::stof(const string& str)
 {
-#if UTILS_REQUIRES_CPP11
+#if defined(__cplusplus) && __cplusplus >= 201103L
     return std::stof(str);
 #else
     return std::atof(str.c_str());
