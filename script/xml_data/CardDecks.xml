@@ -30,7 +30,8 @@
 	<item id="22014" hint="红龙"/>
 	<item id="22015" hint="火枪手"/>
 	<item id="22016" hint="精灵弓箭手"/>
-	<item id="22023"  hint="火炮兵"/>
+	<item id="22021" hint="精灵守卫"/>
+	<item id="22023" hint="火炮兵"/>
 	
 <!-- 第一版单位：英雄部分 -->	
 	<item id="21100" hint="盾牌队长"/>
@@ -59,7 +60,6 @@
 	<item id="21121" hint="熊猫人"/>
 	<item id="21122" hint="凤凰"/>
 	<item id="22020"  hint="精灵祭祀"/>
-	<item id="22021"  hint="精灵守卫"/>
 	<item id="22022"  hint="攻城小队"/>
 	<item id="22023"  hint="火炮兵"/>
 	<item id="22024"  hint="野猪骑兵"/>

@@ -113,6 +113,9 @@
 	<card name="攻城单位" card_class="summon" cost="木头:20" recover_span="0" id="22019">
 		<unit_setting unit_setting_id="12019"/>
 	</card>
+	<card name="精灵守卫" card_class="summon" cost="木头:40" recover_span="0" id="22021">
+		<unit_setting unit_setting_id="12024"/>
+	</card>
 	<card name="火炮兵" card_class="summon" cost="木头:40" recover_span="0" id="22023">
 		<unit_setting unit_setting_id="12020"/>
 	</card>
@@ -127,9 +130,6 @@
 	</card>
 	<!--注释：额外的card
 	<card name="精灵祭祀" card_class="summon" cost="木头:20" recover_span="0" id="22020">
-		<unit_setting unit_setting_id="12019"/>
-	</card>
-	<card name="精灵守卫" card_class="summon" cost="木头:20" recover_span="0" id="22021">
 		<unit_setting unit_setting_id="12019"/>
 	</card>
 	<card name="攻城小队" card_class="summon" cost="木头:20" recover_span="0" id="22022">

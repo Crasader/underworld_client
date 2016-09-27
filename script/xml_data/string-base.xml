@@ -400,7 +400,7 @@
 	<Sheet1 key="object_desc_71019" value="攻城单位2"/>
 	<Sheet1 key="object_desc_70020" value="待定1"/>
 	<Sheet1 key="object_desc_71020" value="待定2"/>
-	<Sheet1 key="object_desc_70021" value="待定1"/>
+	<Sheet1 key="object_desc_70021" value="攻击对目标造成与生命相关的额外伤害。"/>
 	<Sheet1 key="object_desc_71021" value="待定2"/>
 	<Sheet1 key="object_desc_70022" value="待定1"/>
 	<Sheet1 key="object_desc_71022" value="待定2"/>
@@ -490,7 +490,7 @@
 	<Sheet1 key="object_name_22018" value="月之骑士"/>
 	<Sheet1 key="object_name_22019" value="攻城单位"/>
 	<Sheet1 key="object_name_22020" value="待定"/>
-	<Sheet1 key="object_name_22021" value="待定"/>
+	<Sheet1 key="object_name_22021" value="精灵守卫"/>
 	<Sheet1 key="object_name_22022" value="待定"/>
 	<Sheet1 key="object_name_22023" value="火炮兵"/>
 	<Sheet1 key="object_name_22024" value="待定"/>
@@ -558,7 +558,7 @@
 	<Sheet1 key="object_name_71019" value="攻城单位2"/>
 	<Sheet1 key="object_name_70020" value="待定1"/>
 	<Sheet1 key="object_name_71020" value="待定2"/>
-	<Sheet1 key="object_name_70021" value="待定1"/>
+	<Sheet1 key="object_name_70021" value="精灵强化反馈"/>
 	<Sheet1 key="object_name_71021" value="待定2"/>
 	<Sheet1 key="object_name_70022" value="待定1"/>
 	<Sheet1 key="object_name_71022" value="待定2"/>
