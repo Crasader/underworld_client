@@ -49,6 +49,9 @@
 	<card name="无敌药水lv1" card_class="spell" cost="木头:30" spell_name="无敌药水lv1" recover_span="1200" id="23115">
 		<unit_setting/>
 	</card>
+	<card name="守护卷轴lv1" card_class="spell" cost="木头:40" spell_name="守护卷轴lv1" recover_span="1200" id="23116">
+		<unit_setting/>
+	</card>
 <!-- 第一版单位：小兵部分 -->
 	<card name="人族盾牌兵" card_class="summon" cost="木头:40" summon_count="1" recover_span="0" id="22000">
 		<unit_setting unit_setting_id="12005"/>

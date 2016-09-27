@@ -17,6 +17,7 @@
 	<item id="23113" icon="oo"/><!--震荡法术  -->
 	<item id="23114" icon="ZZZZ"/><!--秒杀法术  -->
 	<item id="23115" icon="icon_v_jiaxuefashu" tips="Card-Snow-circle;0.86"/><!--无敌药水  -->
+	<item id="23116" icon="icon_v_jiasufashu" tips="Card-Snow-circle;1.5"/><!--守护卷轴  -->
 <!-- 第一版单位：小兵部分 -->	
 	<item id="22000" icon="icon_w_renzudunbing"/><!--人族盾兵  -->
 	<item id="22001" icon="icon_renleizhanshi"/><!--人族剑士  -->

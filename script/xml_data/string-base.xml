@@ -211,7 +211,7 @@
 	<item key="ui_skillAttr_24" value="攻击速度降低："/>
 	<item key="ui_skillAttr_25" value="每层提供护甲："/>
 	<item key="ui_skillAttr_26" value="降低护甲比例："/>
-    
+    <item key="ui_skillAttr_27" value="魔法抗性提升："/>
     <!-- 符文 -->
     <item key="ui_rune_title" value="符文背包"/>
     <item key="ui_rune_pick" value="选取"/>
@@ -248,7 +248,8 @@
 	<Sheet1 key="object_desc_23112" value="在一定时间内增加我方单位的闪避。"/>
 	<Sheet1 key="object_desc_23113" value="移除范围内敌人一定生命，并在短时间内大幅度降低攻击和移动速度。"/>
 	<Sheet1 key="object_desc_23114" value="放置一个死亡守卫，守卫每隔一段时间会秒杀一个敌方单位，不会对英雄或高级单位生效。"/>
-	<Sheet1 key="object_desc_23115" value="使范围内我方英雄短暂无敌持续5秒。"/>
+	<Sheet1 key="object_desc_23115" value="使范围内我方英雄短暂无敌持续7秒。"/>
+	<Sheet1 key="object_desc_23116" value="大幅度增加作用范围内友军的防御和魔抗，持续7秒。"/>
 	<Sheet1 key="object_desc_22000" value="“我们的血肉就是暴风城的城墙。凡是威胁到暴风城存在的生物和非生物——都将被毁灭！”
 
 特点：廉价肉盾 荆棘伤害"/>
@@ -467,6 +468,7 @@
 	<Sheet1 key="object_name_23113" value="震荡法术lv1"/>
 	<Sheet1 key="object_name_23114" value="秒杀法术lv1"/>
 	<Sheet1 key="object_name_23115" value="无敌药水lv1"/>
+	<Sheet1 key="object_name_23116" value="守护卷轴lv1"/>
 	<Sheet1 key="object_name_22000" value="人族盾牌兵"/>
 	<Sheet1 key="object_name_22001" value="人族剑士"/>
 	<Sheet1 key="object_name_22002" value="人族弓手"/>

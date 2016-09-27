@@ -16,6 +16,7 @@
 	<item card="2.0" gold="200.0" hint="震荡法术lv1" id="23113.0" level="1.0" name="object_name_23113"/>
 	<item card="2.0" gold="200.0" hint="秒杀法术lv1" id="23114.0" level="1.0" name="object_name_23114"/>
 	<item card="2.0" gold="200.0" hint="无敌药水lv1" id="23115.0" level="1.0" name="object_name_23115"/>
+	<item card="2.0" gold="200.0" hint="守护卷轴lv1" id="23116.0" level="1.0" name="object_name_23116"/>
 	<item card="3.0" gold="150.0" hint="人族盾牌兵" id="22000.0" level="1.0" name="object_name_22000"/>
 	<item card="3.0" gold="150.0" hint="人族剑士" id="22001.0" level="1.0" name="object_name_22001"/>
 	<item card="3.0" gold="150.0" hint="人族弓手" id="22002.0" level="1.0" name="object_name_22002"/>
@@ -68,6 +69,7 @@
 	<item card="3.0" gold="300.0" hint="震荡法术lv1" id="23113.0" level="2.0" name="object_name_23113"/>
 	<item card="3.0" gold="300.0" hint="秒杀法术lv1" id="23114.0" level="2.0" name="object_name_23114"/>
 	<item card="3.0" gold="300.0" hint="无敌药水lv1" id="23115.0" level="2.0" name="object_name_23115"/>
+	<item card="3.0" gold="300.0" hint="守护卷轴lv1" id="23116.0" level="2.0" name="object_name_23116"/>
 	<item card="5.0" gold="250.0" hint="人族盾牌兵" id="22000.0" level="2.0" name="object_name_22000"/>
 	<item card="5.0" gold="250.0" hint="人族剑士" id="22001.0" level="2.0" name="object_name_22001"/>
 	<item card="5.0" gold="250.0" hint="人族弓手" id="22002.0" level="2.0" name="object_name_22002"/>
