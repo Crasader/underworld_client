@@ -1015,7 +1015,7 @@
 	<attack_armor_rule armor_type="英雄" attack_type="穿刺" name="穿刺to英雄" value="p:100"/>
 	<attack_armor_rule armor_type="英雄" attack_type="魔法" name="魔法to英雄" value="p:100"/>
 	<attack_armor_rule armor_type="英雄" attack_type="攻城" name="攻城to英雄" value="p:50"/>
-	<attack_armor_rule armor_type="英雄" attack_type="英雄" name="英雄to英雄" value="p:200"/>
+	<attack_armor_rule armor_type="英雄" attack_type="英雄" name="英雄to英雄" value="p:100"/>
 	<attack_armor_rule armor_type="英雄" attack_type="混乱" name="混乱to英雄" value="p:100"/>
 	<attack_armor_rule armor_type="英雄" attack_type="null" name="nullto英雄" value="p:70"/>
 	<attack_armor_rule armor_type="轻甲" attack_type="普通" name="普通to轻甲" value="p:100"/>
