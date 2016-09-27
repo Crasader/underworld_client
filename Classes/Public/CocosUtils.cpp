@@ -22,6 +22,16 @@ string CocosUtils::getResourcePath(const string &file)
     return "GameImages/public/" + file;
 }
 
+ResourceType CocosUtils::core_resource_type_key_2_ui_resource_type(const std::string& key) {
+    if (key == RES_NAME_GOLD) {
+        return ResourceType::Gold;
+    } else if (key == RES_NAME_WOOD) {
+        return ResourceType::Wood;
+    } else {
+        return ResourceType::MAX;
+    }
+}
+
 #pragma mark - labels
 Label *CocosUtils::createLabel(const string& text, float fontSize, const string& fontName, const Size& dimensions, TextHAlignment hAlignment, TextVAlignment vAlignment)
 {

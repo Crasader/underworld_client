@@ -29,11 +29,37 @@ unsigned int Utils::bkdrHash(const char *str)
 }
 
 #pragma mark - string
-string Utils::formatWithParams(const string& raw, ...)
+void Utils::stringReplace(string& src, const string& raw, const string& replaced)
+{
+    string::size_type pos(0);
+    const auto rawSize(raw.size());
+    const auto replacedSize(replaced.size());
+    
+    while (string::npos != (pos = src.find(raw, pos))) {
+        src.replace(pos, rawSize, replaced);
+        pos += replacedSize;
+    }
+}
+
+string Utils::formatWithParams(const char *format, ...)
 {
     string ret;
+    string raw(format);
     
     va_list ap;
+    va_start(ap, format);
+    
+    int idx(1);
+    auto arg = va_arg(ap, const char*);
+    while (arg) {
+        ostringstream os;
+        os << "{" << idx << "}";
+        stringReplace(raw, os.str(), arg);
+        
+        ++ idx;
+        arg = va_arg(ap, const char*);
+    }
+    
     va_end(ap);
     
     return ret;
@@ -89,7 +115,7 @@ void Utils::trim(string &s)
 
 int Utils::stoi(const string& str)
 {
-#if defined(__clang__)
+#if UTILS_REQUIRES_CPP11
     return std::stoi(str);
 #else
     return std::atoi(str.c_str());
@@ -98,7 +124,7 @@ int Utils::stoi(const string& str)
 
 float Utils::stof(const string& str)
 {
-#if defined(__clang__)
+#if UTILS_REQUIRES_CPP11
     return std::stof(str);
 #else
     return std::atof(str.c_str());
@@ -172,7 +198,7 @@ string Utils::formatTime(long duration, const char* format)
     const time_t timeT = duration;
     struct tm tm = *localtime(&timeT);
     
-#if defined(__clang__) || (defined(__GNUC__) && (__GNUC__ >= 5))
+#if UTILS_REQUIRES_GCC5
     return Utils::toString(put_time(&tm, format));
 #else
     static const unsigned int maxSize(255);

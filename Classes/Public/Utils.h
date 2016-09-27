@@ -15,13 +15,36 @@
 #include <unordered_map>
 #include <sstream>
 
+#if !defined(UTILS_REQUIRES_NULL_TERMINATION)
+    #if defined(__APPLE_CC__) && (__APPLE_CC__ >= 5549)
+        #define UTILS_REQUIRES_NULL_TERMINATION __attribute__((sentinel(0,1)))
+    #elif defined(__GNUC__)
+        #define UTILS_REQUIRES_NULL_TERMINATION __attribute__((sentinel))
+    #else
+        #define UTILS_REQUIRES_NULL_TERMINATION
+    #endif
+#endif
+
+#if !defined(UTILS_REQUIRES_CPP11)
+    #if defined(__cplusplus) && __cplusplus >= 201103L
+        #define UTILS_REQUIRES_CPP11 (1)
+    #endif
+#endif
+
+#if !defined(UTILS_REQUIRES_GCC5)
+    #if defined(__clang__) || (defined(__GNUC__) && (__GNUC__ >= 5))
+        #define UTILS_REQUIRES_GCC5 (1)
+    #endif
+#endif
+
 namespace Utils
 {
     unsigned int bkdrHash(const char *str);
     
 #pragma mark - string
     template <typename T> std::string toString(const T& n);
-    std::string formatWithParams(const std::string& raw, ...);
+    void stringReplace(std::string& src, const std::string& raw, const std::string& replaced);
+    std::string formatWithParams(const char *format, ...) UTILS_REQUIRES_NULL_TERMINATION;
     std::string format(const char *format, ...);
     void split(std::vector<std::string> &v, const std::string& src, const std::string& delimit, const std::string& null_subst = "", int max = 0);
     

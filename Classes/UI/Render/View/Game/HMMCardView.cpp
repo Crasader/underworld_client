@@ -85,7 +85,7 @@ bool HMMCardView::init(const HMMCardType* cardType) {
     }
     
     // resource
-    _resourceNode = BattleSmallResourceNode::create(core_resource_type_key_2_ui_resource_type(DISPLAY_RESOURCE_KEY), 0);
+    _resourceNode = BattleSmallResourceNode::create(CocosUtils::core_resource_type_key_2_ui_resource_type(DISPLAY_RESOURCE_KEY), 0);
     if (_resourceNode) {
         _resourceNode->setPosition(cocos2d::Vec2(card_width / 2, card_height));
         this->addChild(_resourceNode, resource_zorder);
