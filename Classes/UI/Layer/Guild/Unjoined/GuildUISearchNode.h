@@ -9,13 +9,9 @@
 #ifndef GuildUISearchNode_h
 #define GuildUISearchNode_h
 
-#include "cocos2d.h"
-#include "cocos-ext.h"
+#include "TableTemplate.h"
 #include "ui/CocosGUI.h"
 #include "GuildCell.h"
-
-USING_NS_CC;
-USING_NS_CC_EXT;
 
 class GuildData;
 
@@ -27,7 +23,7 @@ public:
 
 class GuildUISearchNode
 : public Node
-, public TableViewDataSource
+, public TableTemplateObserver
 , public ui::EditBoxDelegate
 , public GuildCellObserver
 {
@@ -40,10 +36,10 @@ protected:
     GuildUISearchNode();
     bool init(const Size& size);
     
-    // TableViewDataSource
-    virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx) override;
-    virtual TableViewCell* tableCellAtIndex(TableView *table, ssize_t idx) override;
-    virtual ssize_t numberOfCellsInTableView(TableView *table) override;
+    // TableTemplateObserver
+    virtual Node* onTableTemplateCreateNodeModel(TableTemplate* tt) override;
+    virtual void onTableTemplateUpdateNode(TableTemplate* tt, ssize_t idx, Node* node) override;
+    virtual ssize_t numberOfNodesForTableTemplate(const TableTemplate* tt) override;
     
     // EditBoxDelegate
     virtual void editBoxReturn(ui::EditBox* editBox) override;
@@ -51,17 +47,9 @@ protected:
     // GuildCellObserver
     virtual void onGuildCellTouched(const GuildData* data) override;
     
-    // table
-    void createTable();
-    void refreshTable(bool reload);
-    ssize_t getCellsCount() const;
-    
 private:
     GuildUISearchNodeObserver* _observer;
-    TableView* _table;
-    Size _nodeSize;
-    Size _tableMaxSize;
-    Point _tableBasePosition;
+    TableTemplate* _tableTemplate;
     std::vector<GuildData*> _guilds;
 };
 

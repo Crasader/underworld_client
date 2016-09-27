@@ -19,20 +19,23 @@ class QuestData;
 class QuestManager
 {
 public:
-    QuestManager();
-    virtual ~QuestManager();
+    static QuestManager* getInstance();
+    static void purge();
     
-    void initQuest(QuestType type, const rapidjson::Value& jsonDict);
-    void updateQuestProgress(QuestType type, int questId, int progress);
+    void init(QuestType type, const rapidjson::Value& jsonDict);
+    void updateProgress(QuestType type, int questId, int progress);
     void getReward(QuestType type, int questId);
     
     // getters
-    const std::vector<QuestData*>& getQuestData(QuestType type);
-    int getQuestProgress(QuestType type, int questId) const;
+    const std::vector<QuestData*>& getData(QuestType type);
+    int getProgress(QuestType type, int questId) const;
     
 protected:
-    M_DISALLOW_COPY_AND_ASSIGN(QuestManager);
-    void finishQuest(QuestType type, int questId);
+    QuestManager();
+    virtual ~QuestManager();
+    QuestManager(const QuestManager &) = delete;
+    QuestManager &operator =(const QuestManager &) = delete;
+    void finish(QuestType type, int questId);
     
 private:
     std::map<QuestType, std::vector<QuestData*>> _quests;

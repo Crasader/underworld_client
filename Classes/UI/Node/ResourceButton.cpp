@@ -29,10 +29,10 @@ ResourceButton::~ResourceButton()
     removeAllChildren();
 }
 
-ResourceButton* ResourceButton::create(bool isBigSize, bool animated, ResourceType type, int count, const Color4B& color, const Widget::ccWidgetClickCallback& callback)
+ResourceButton* ResourceButton::create(bool isBigSize, bool animated, ResourceType type, int count, const Color4B& color)
 {
     auto p = new (std::nothrow) ResourceButton();
-    if(p && p->init(isBigSize, animated, type, count, color, callback)) {
+    if(p && p->init(isBigSize, animated, type, count, color)) {
         p->autorelease();
         return p;
     }
@@ -41,13 +41,12 @@ ResourceButton* ResourceButton::create(bool isBigSize, bool animated, ResourceTy
     return nullptr;
 }
 
-bool ResourceButton::init(bool isBigSize, bool animated, ResourceType type, int count, const Color4B& color, const Widget::ccWidgetClickCallback& callback)
+bool ResourceButton::init(bool isBigSize, bool animated, ResourceType type, int count, const Color4B& color)
 {
     if(XButton::init(isBigSize ? XButton::BSize::Big : XButton::BSize::Small, XButton::BType::Blue)) {
         _isBigSize = isBigSize;
         _animated = animated;
         _color = color;
-        addClickEventListener(callback);
         
         addIconNode(type);
         const string& message = StringUtils::format("%d", count);

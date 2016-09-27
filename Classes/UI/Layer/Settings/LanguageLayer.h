@@ -9,13 +9,9 @@
 #ifndef LanguageLayer_h
 #define LanguageLayer_h
 
-#include "cocos2d.h"
-#include "cocos-ext.h"
+#include "TableTemplate.h"
 #include "LanguageNode.h"
 #include "LanguageConfirmationLayer.h"
-
-USING_NS_CC;
-USING_NS_CC_EXT;
 
 class LanguageLayerObserver
 {
@@ -26,7 +22,7 @@ public:
 
 class LanguageLayer
 : public LayerColor
-, public TableViewDataSource
+, public TableTemplateObserver
 , public LanguageNodeObserver
 , public LanguageConfirmationLayerObserver
 {
@@ -43,10 +39,10 @@ protected:
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
-    // TableViewDataSource
-    virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx) override;
-    virtual TableViewCell* tableCellAtIndex(TableView *table, ssize_t idx) override;
-    virtual ssize_t numberOfCellsInTableView(TableView *table) override;
+    // TableTemplateObserver
+    virtual Node* onTableTemplateCreateNodeModel(TableTemplate* tt) override;
+    virtual void onTableTemplateUpdateNode(TableTemplate* tt, ssize_t idx, Node* node) override;
+    virtual ssize_t numberOfNodesForTableTemplate(const TableTemplate* tt) override;
     
     // LanguageNodeObserver
     virtual void onLanguageNodeSelected(ssize_t idx) override;
@@ -54,17 +50,9 @@ protected:
     // LanguageConfirmationLayerObserver
     virtual void onLanguageConfirmationLayerConfirm(Node* pSender, ssize_t idx) override;
     
-    // table
-    void createTable();
-    void refreshTable(bool reload);
-    ssize_t getCellsCount() const;
-    
 private:
     LanguageLayerObserver *_observer;
-    TableView* _table;
-    Size _nodeSize;
-    Size _tableMaxSize;
-    Point _tableBasePosition;
+    TableTemplate* _tableTemplate;
     ssize_t _selectedIdx;
 };
 

@@ -46,7 +46,11 @@ bool SeniorCard::init()
         addChild(label);
         _name = label;
         
-        auto button = ResourceButton::create(true, false, ResourceType::Gold, 0, Color4B::BLACK, [this](Ref* pSender) {
+        auto button = ResourceButton::create(true, false, ResourceType::Gold, 0, Color4B::BLACK);
+        addChild(button);
+        _button = button;
+        
+        CocosUtils::fixWidgetTouchEvent(button, _touchInvalid, [this](Ref* pSender) {
             auto button(dynamic_cast<ResourceButton*>(pSender));
             if (button) {
                 if (button->isResourceEnough()) {
@@ -58,8 +62,6 @@ bool SeniorCard::init()
                 }
             }
         });
-        addChild(button);
-        _button = button;
         
         const Size originalSize(getContentSize());
         const auto& nsize(_name->getContentSize());

@@ -9,19 +9,32 @@
 #include "AchievementManager.h"
 #include "JSonUtils.h"
 #include "Utils.h"
-#include "DataManager.h"
 #include "AchievementData.h"
 
 using namespace std;
 
-AchievementManager::AchievementManager()
+static AchievementManager* s_pInstance(nullptr);
+AchievementManager* AchievementManager::getInstance()
 {
+    if (!s_pInstance) {
+        s_pInstance = new (nothrow) AchievementManager();
+    }
     
+    return s_pInstance;
 }
+
+void AchievementManager::purge()
+{
+    if (s_pInstance) {
+        CC_SAFE_DELETE(s_pInstance);
+    }
+}
+
+AchievementManager::AchievementManager() {}
 
 AchievementManager::~AchievementManager()
 {
-    Utils::clearVector(_achievementData);
+    Utils::clearVector(_achievements);
 }
 
 void AchievementManager::init(const rapidjson::Value& jsonDict)
@@ -34,7 +47,7 @@ void AchievementManager::init(const rapidjson::Value& jsonDict)
         {
             const rapidjson::Value& info = DICTOOL->getSubDictionary_json(quests, i);
             AchievementData* data = new (nothrow) AchievementData(info);
-            _achievementData.push_back(data);
+            _achievements.push_back(data);
         }
     }
 }
@@ -51,13 +64,13 @@ void AchievementManager::getReward(int achievementId)
 
 const vector<AchievementData*>& AchievementManager::getData() const
 {
-    return _achievementData;
+    return _achievements;
 }
 
 int AchievementManager::getProgress(int achievementId) const
 {
-    for (int i = 0; i < _achievementData.size(); ++i) {
-        AchievementData* data = _achievementData.at(i);
+    for (int i = 0; i < _achievements.size(); ++i) {
+        AchievementData* data = _achievements.at(i);
         if (achievementId == data->getId()) {
             return data->getProgress();
         }
@@ -66,7 +79,7 @@ int AchievementManager::getProgress(int achievementId) const
     return 0;
 }
 
-void AchievementManager::finishAchievement(int achievementId)
+void AchievementManager::finish(int achievementId)
 {
     
 }

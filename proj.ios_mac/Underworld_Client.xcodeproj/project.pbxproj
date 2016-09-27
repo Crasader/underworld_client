@@ -180,6 +180,7 @@
 		A1720EBA1BCD2D2E00217E98 /* RMStore.m in Sources */ = {isa = PBXBuildFile; fileRef = A1720EB71BCD2D2E00217E98 /* RMStore.m */; };
 		A1720EBD1BCD309A00217E98 /* NetworkController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1720EBB1BCD309A00217E98 /* NetworkController.cpp */; };
 		A173A6BE1D2CDA4A00F9485B /* AnimationParameter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A173A6BC1D2CDA4A00F9485B /* AnimationParameter.cpp */; };
+		A17A2F0B1D9926A6002311D5 /* TableTemplate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A17A2F091D9926A6002311D5 /* TableTemplate.cpp */; };
 		A18524CC1C1AE3E800BE261D /* QuestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A18524CA1C1AE3E800BE261D /* QuestLayer.cpp */; };
 		A18524D31C1AE46400BE261D /* QuestNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A18524D11C1AE46400BE261D /* QuestNode.cpp */; };
 		A188856A1C438F1800C9586F /* ResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A18885681C438F1800C9586F /* ResourceManager.cpp */; };
@@ -730,6 +731,8 @@
 		A173A6BC1D2CDA4A00F9485B /* AnimationParameter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimationParameter.cpp; sourceTree = "<group>"; };
 		A173A6BD1D2CDA4A00F9485B /* AnimationParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationParameter.h; sourceTree = "<group>"; };
 		A178A5031C9BBB63006FD4B0 /* uthash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uthash.h; sourceTree = "<group>"; };
+		A17A2F091D9926A6002311D5 /* TableTemplate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TableTemplate.cpp; sourceTree = "<group>"; };
+		A17A2F0A1D9926A6002311D5 /* TableTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableTemplate.h; sourceTree = "<group>"; };
 		A18524CA1C1AE3E800BE261D /* QuestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuestLayer.cpp; sourceTree = "<group>"; };
 		A18524CB1C1AE3E800BE261D /* QuestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestLayer.h; sourceTree = "<group>"; };
 		A18524D11C1AE46400BE261D /* QuestNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuestNode.cpp; sourceTree = "<group>"; };
@@ -1828,6 +1831,8 @@
 				A1D45C491BEB3B1400D1E921 /* ResourceButton.h */,
 				A1F5BFA61C1FDFBE007C08CB /* ResourceNode.cpp */,
 				A1F5BFA71C1FDFBE007C08CB /* ResourceNode.h */,
+				A17A2F091D9926A6002311D5 /* TableTemplate.cpp */,
+				A17A2F0A1D9926A6002311D5 /* TableTemplate.h */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -2937,6 +2942,7 @@
 				A1FF0E731D7D469D00C32040 /* AbstractInfoLayer.cpp in Sources */,
 				307534691BF1B2F20057DCED /* Commander.cpp in Sources */,
 				A1ED7FC41D8143D40017B960 /* GuildLayer.cpp in Sources */,
+				A17A2F0B1D9926A6002311D5 /* TableTemplate.cpp in Sources */,
 				3019BABC1C99668E003258DB /* Aura.cpp in Sources */,
 				A1ED7F961D811E440017B960 /* XEditBox.cpp in Sources */,
 				A11009501D7D5A0A00376283 /* GuildData.cpp in Sources */,

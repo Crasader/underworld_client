@@ -234,7 +234,8 @@ void CardInfoLayer::createLeftNode(Node* node)
         label->setPosition(edgeX, barSize.height / 2);
         bar->addChild(label);
         
-        auto button = ResourceButton::create(true, false, ResourceType::Gold, 0, Color4B::BLACK, [this](Ref* pSender) {
+        auto button = ResourceButton::create(true, false, ResourceType::Gold, 0, Color4B::BLACK);
+        button->addClickEventListener([this](Ref* pSender) {
             auto button(dynamic_cast<ResourceButton*>(pSender));
             if (button) {
                 if (button->isResourceEnough()) {

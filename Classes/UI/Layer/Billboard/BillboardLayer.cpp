@@ -7,7 +7,6 @@
 //
 
 #include "BillboardLayer.h"
-#include "XTableViewCell.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
@@ -16,11 +15,9 @@
 
 using namespace std;
 
-static const float tableNodeGapY(14);
-
 BillboardLayer* BillboardLayer::create()
 {
-    BillboardLayer *ret = new (nothrow) BillboardLayer();
+    auto ret = new (nothrow) BillboardLayer();
     if (ret && ret->init()) {
         ret->autorelease();
         return ret;
@@ -32,16 +29,13 @@ BillboardLayer* BillboardLayer::create()
 
 BillboardLayer::BillboardLayer()
 :_observer(nullptr)
-,_table(nullptr)
-,_nodeSize(Size::ZERO)
-,_tableMaxSize(Size::ZERO)
-,_tableBasePosition(Point::ZERO)
-,_selectedIdx(CC_INVALID_INDEX)
+,_tableTemplate(nullptr)
 ,_rank(nullptr)
 ,_trophy(nullptr) {}
 
 BillboardLayer::~BillboardLayer()
 {
+    CC_SAFE_DELETE(_tableTemplate);
     removeAllChildren();
 }
 
@@ -105,8 +99,16 @@ bool BillboardLayer::init()
             board->addChild(hint);
         }
         
-        auto subNode(board->getSubNode(0));
-        createTable(subNode);
+        do {
+            auto subNode(board->getSubNode(0));
+            CC_BREAK_IF(!subNode);
+            static const float edgeY(5.0f);
+            const auto& subNodeSize(subNode->getContentSize());
+            Size size(subNodeSize.width, subNodeSize.height - edgeY * 2);
+            Point position(0, subNodeSize.height - edgeY);
+            _tableTemplate = new (nothrow) TableTemplate(subNode, position, false, size, 1, TableTemplate::DefaultGap, this);
+            _tableTemplate->setContentOffsetType(TableTemplate::ContentOffsetType::BEGIN);
+        } while (false);
         
         updateRank(30);
         updateTrophy(1000);
@@ -130,105 +132,35 @@ bool BillboardLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 
 void BillboardLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 
-#pragma mark - TableViewDataSource
-Size BillboardLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
+#pragma mark - TableTemplateObserver
+Node* BillboardLayer::onTableTemplateCreateNodeModel(TableTemplate* tt)
 {
-    const Size size(_tableMaxSize.width, _nodeSize.height + tableNodeGapY);
-    auto cnt = getCellsCount();
-    if (0 == idx || (cnt - 1) == idx) {
-        return size + Size(0, tableNodeGapY / 2);
-    }
-    
-    return size;
+    auto node(BillboardCell::create());
+    node->registerObserver(this);
+    return node;
 }
 
-TableViewCell* BillboardLayer::tableCellAtIndex(TableView *table, ssize_t idx)
+void BillboardLayer::onTableTemplateUpdateNode(TableTemplate* tt, ssize_t idx, Node* node)
 {
-    auto cell = static_cast<XTableViewCell*>(table->dequeueCell());
-    
-    if (!cell) {
-        cell = XTableViewCell::create();
-    }
-    
-    auto cnt = getCellsCount();
-    static const float nodeIdx(0);
-    auto node = dynamic_cast<BillboardCell*>(cell->getNode(nodeIdx));
-    if (idx < cnt) {
-        if (!node) {
-            node = BillboardCell::create();
-            node->registerObserver(this);
-            cell->addChild(node);
-            cell->setNode(node, nodeIdx);
-        }
-        
-        if (idx < cnt) {
-            auto data(BillboardManager::getInstance()->getBillboard().at(idx));
-            node->update(data);
-        }
-        
-        // we must update the position when the table was reloaded
-        const Point point(_tableMaxSize.width / 2, (_nodeSize.height + tableNodeGapY) / 2);
-        node->setPosition(point + Point(0, (idx == cnt - 1) ? tableNodeGapY / 2 : 0));
-    } else if (node) {
-        node->removeFromParent();
-        cell->resetNode(nodeIdx);
-    }
-    
-    return cell;
+    do {
+        CC_BREAK_IF(idx < 0 || !node);
+        const auto& lists(BillboardManager::getInstance()->getBillboard());
+        CC_BREAK_IF(idx >= lists.size());
+        auto card(dynamic_cast<BillboardCell*>(node));
+        CC_BREAK_IF(!card);
+        card->update(lists.at(idx));
+    } while (false);
 }
 
-ssize_t BillboardLayer::numberOfCellsInTableView(TableView *table)
+ssize_t BillboardLayer::numberOfNodesForTableTemplate(const TableTemplate* tt)
 {
-    return getCellsCount();
+    return BillboardManager::getInstance()->getBillboard().size();
 }
 
 #pragma mark - BillboardCellObserver
 void BillboardLayer::onBillboardCellClicked(const BillboardData* data)
 {
     
-}
-
-#pragma mark - table
-void BillboardLayer::createTable(Node* parent)
-{
-    if (parent) {
-        static const float edgeY(5.0f);
-        const auto& size(parent->getContentSize());
-        _nodeSize = BillboardCell::create()->getContentSize();
-        _tableMaxSize = Size(size.width, size.height - edgeY * 2);
-        _tableBasePosition = Point(0, size.height - edgeY);
-        
-        auto tableView = TableView::create(this, _tableMaxSize);
-        tableView->setDirection(extension::ScrollView::Direction::VERTICAL);
-        tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
-        tableView->setBounceable(false);
-        parent->addChild(tableView);
-        
-        _table = tableView;
-        refreshTable(false);
-        tableView->setContentOffset(Point(0, -tableView->getContentSize().height));
-    }
-}
-
-void BillboardLayer::refreshTable(bool reload)
-{
-    if (_table) {
-        auto totalHeight = _nodeSize.height * getCellsCount() + tableNodeGapY;
-        auto size = Size(_tableMaxSize.width, MIN(totalHeight, _tableMaxSize.height));
-        _table->setViewSize(size);
-        _table->setPosition(_tableBasePosition - Point(0, size.height));
-        
-        if (reload) {
-            const auto& offset = _table->getContentOffset();
-            _table->reloadData();
-            _table->setContentOffset(offset);
-        }
-    }
-}
-
-ssize_t BillboardLayer::getCellsCount() const
-{
-    return BillboardManager::getInstance()->getBillboard().size();
 }
 
 void BillboardLayer::updateRank(int rank)

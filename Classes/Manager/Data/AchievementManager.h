@@ -10,7 +10,6 @@
 #define AchievementManager_h
 
 #include "json/document.h"
-#include "CocosGlobal.h"
 #include <vector>
 
 class AchievementData;
@@ -18,8 +17,8 @@ class AchievementData;
 class AchievementManager
 {
 public:
-    AchievementManager();
-    virtual ~AchievementManager();
+    static AchievementManager* getInstance();
+    static void purge();
     
     void init(const rapidjson::Value& jsonDict);
     void updateProgress(int achievementId, int progress);
@@ -30,11 +29,14 @@ public:
     int getProgress(int achievementId) const;
     
 protected:
-    M_DISALLOW_COPY_AND_ASSIGN(AchievementManager);
-    void finishAchievement(int achievementId);
+    AchievementManager();
+    virtual ~AchievementManager();
+    AchievementManager(const AchievementManager &) = delete;
+    AchievementManager &operator =(const AchievementManager &) = delete;
+    void finish(int achievementId);
     
 private:
-    std::vector<AchievementData*> _achievementData;
+    std::vector<AchievementData*> _achievements;
 };
 
 #endif /* AchievementManager_h */

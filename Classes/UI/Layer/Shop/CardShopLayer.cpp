@@ -7,7 +7,6 @@
 //
 
 #include "CardShopLayer.h"
-#include "XTableViewCell.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
@@ -22,7 +21,6 @@
 using namespace std;
 
 static const unsigned int column(6);
-static const float tableNodeGapY(14);
 
 CardShopLayer* CardShopLayer::create()
 {
@@ -38,15 +36,11 @@ CardShopLayer* CardShopLayer::create()
 
 CardShopLayer::CardShopLayer()
 :_observer(nullptr)
-,_table(nullptr)
-,_nodeSize(Size::ZERO)
-,_cellSize(Size::ZERO)
-,_tableMaxSize(Size::ZERO)
-,_tableBasePosition(Point::ZERO)
-,_tableNodeGapX(0) {}
+,_tableTemplate(nullptr) {}
 
 CardShopLayer::~CardShopLayer()
 {
+    CC_SAFE_DELETE(_tableTemplate);
     removeAllChildren();
 }
 
@@ -67,8 +61,16 @@ bool CardShopLayer::init()
         board->setPosition(Point(winSize.width / 2, winSize.height / 2));
         addChild(board);
         
-        auto subNode(board->getSubNode(0));
-        createTable(subNode);
+        do {
+            auto subNode(board->getSubNode(0));
+            CC_BREAK_IF(!subNode);
+            static const float edgeY(5.0f);
+            const auto& subNodeSize(subNode->getContentSize());
+            Size size(subNodeSize.width, subNodeSize.height - edgeY * 2);
+            Point position(0, subNodeSize.height - edgeY);
+            _tableTemplate = new (nothrow) TableTemplate(subNode, position, false, size, column, TableTemplate::DefaultGap, this);
+            _tableTemplate->setContentOffsetType(TableTemplate::ContentOffsetType::BEGIN);
+        } while (false);
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -89,55 +91,30 @@ bool CardShopLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 
 void CardShopLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 
-#pragma mark - TableViewDataSource
-Size CardShopLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
+#pragma mark - TableTemplateObserver
+Node* CardShopLayer::onTableTemplateCreateNodeModel(TableTemplate* tt)
 {
-    auto cnt = getCellsCount();
-    if (0 == idx || (cnt - 1) == idx) {
-        return _cellSize + Size(0, tableNodeGapY / 2);
-    }
-    
-    return _cellSize;
+    auto node(TradeableCard::create());
+    node->registerObserver(this);
+    return node;
 }
 
-TableViewCell* CardShopLayer::tableCellAtIndex(TableView *table, ssize_t idx)
+void CardShopLayer::onTableTemplateUpdateNode(TableTemplate* tt, ssize_t idx, Node* node)
 {
-    auto cell = static_cast<XTableViewCell*>(table->dequeueCell());
-    
-    if (!cell) {
-        cell = XTableViewCell::create();
-    }
-    
-    auto maxCnt(getCellsCount());
-    const auto& cards(ShopManager::getInstance()->getCardList());
-    auto cnt(cards.size());
-    for (int i = 0; i < column; ++i) {
-        auto index(idx * column + i);
-        auto node(dynamic_cast<TradeableCard*>(cell->getNode(i)));
-        if (index < cnt) {
-            if (!node) {
-                node = TradeableCard::create();
-                node->registerObserver(this);
-                cell->addChild(node);
-                cell->setNode(node, i);
-            }
-            
-            auto data(cards.at(index));
-            node->update(data->getId(), data);
-            const Point point((_nodeSize.width + _tableNodeGapX) * (i + 1) - _nodeSize.width / 2, (_nodeSize.height + tableNodeGapY) / 2);
-            node->setPosition(point + Point(0, (idx == maxCnt - 1) ? tableNodeGapY / 2 : 0));
-        } else if (node) {
-            node->removeFromParent();
-            cell->resetNode(i);
-        }
-    }
-    
-    return cell;
+    do {
+        CC_BREAK_IF(idx < 0 || !node);
+        const auto& cards(ShopManager::getInstance()->getCardList());
+        CC_BREAK_IF(idx >= cards.size());
+        auto card(dynamic_cast<TradeableCard*>(node));
+        CC_BREAK_IF(!card);
+        auto data(cards.at(idx));
+        card->update(data->getId(), data);
+    } while (false);
 }
 
-ssize_t CardShopLayer::numberOfCellsInTableView(TableView *table)
+ssize_t CardShopLayer::numberOfNodesForTableTemplate(const TableTemplate* tt)
 {
-    return getCellsCount();
+    return ShopManager::getInstance()->getCardList().size();
 }
 
 #pragma mark - BillboardCellObserver
@@ -156,57 +133,10 @@ void CardShopLayer::onBaseCardClickedResourceButton(BaseCard* pSender)
             if (property && !property->getName().empty()) {
                 UniversalUIHelper::getInstance()->showMessage(LocalHelper::getString("ui_cardShop_hasPurchased") + LocalHelper::getString(property->getName()));
             }
-            refreshTable(true);
+            
+            if (_tableTemplate) {
+                _tableTemplate->refreshTable(true);
+            }
         });
     }
-}
-
-#pragma mark - table
-void CardShopLayer::createTable(Node* parent)
-{
-    if (parent) {
-        static const float edgeY(5.0f);
-        const auto& size(parent->getContentSize());
-        _tableMaxSize = Size(size.width, size.height - edgeY * 2);
-        _tableBasePosition = Point(0, size.height - edgeY);
-        _nodeSize = TradeableCard::create()->getContentSize();
-        _cellSize = Size(_tableMaxSize.width, _nodeSize.height + tableNodeGapY);
-        _tableNodeGapX = (_tableMaxSize.width - _nodeSize.width * column) / (column + 1);
-        
-        auto tableView = TableView::create(this, _tableMaxSize);
-        tableView->setDirection(extension::ScrollView::Direction::VERTICAL);
-        tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
-        tableView->setBounceable(false);
-        parent->addChild(tableView);
-        
-        _table = tableView;
-        refreshTable(false);
-        tableView->setContentOffset(Point(0, -tableView->getContentSize().height));
-    }
-}
-
-void CardShopLayer::refreshTable(bool reload)
-{
-    if (_table) {
-        auto totalHeight = _cellSize.height * getCellsCount() + tableNodeGapY;
-        auto size = Size(_tableMaxSize.width, MIN(totalHeight, _tableMaxSize.height));
-        _table->setViewSize(size);
-        _table->setPosition(_tableBasePosition - Point(0, size.height));
-        
-        if (reload) {
-            const auto& offset = _table->getContentOffset();
-            _table->reloadData();
-            _table->setContentOffset(offset);
-        }
-    }
-}
-
-ssize_t CardShopLayer::getCellsCount() const
-{
-    auto cnt(ShopManager::getInstance()->getCardList().size());
-    if (cnt > 0) {
-        return (cnt - 1) / column + 1;
-    }
-    
-    return 0;
 }

@@ -7,22 +7,19 @@
 //
 
 #include "QuestLayer.h"
+#include "CocosGlobal.h"
+#include "Utils.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "SoundManager.h"
-#include "PureNode.h"
-#include "XTableViewCell.h"
-#include "TabButton.h"
-#include "DataManager.h"
+#include "QuestManager.h"
 #include "QuestData.h"
-#include "QuestProperty.h"
-#include "LocalHelper.h"
+#include "TabButton.h"
+#include "PureNode.h"
 
 using namespace std;
 using namespace ui;
 
-static const unsigned int tableColumnCount(1);
-static const Vec2 nodeOffsetOnTable(5, 14);
 static const QuestType tableTypes[] = {
     QuestType::Main,
     QuestType::Branch,
@@ -31,13 +28,10 @@ static const QuestType tableTypes[] = {
 };
 static const unsigned int tablesCount = sizeof(tableTypes) / sizeof(QuestType);
 
-static inline const Size& getWinSize() { return Director::getInstance()->getWinSize(); }
-
 QuestLayer* QuestLayer::create(QuestType type)
 {
-    QuestLayer *ret = new (nothrow) QuestLayer();
-    if (ret && ret->init(type))
-    {
+    auto ret = new (nothrow) QuestLayer();
+    if (ret && ret->init(type)) {
         ret->autorelease();
         return ret;
     }
@@ -49,29 +43,11 @@ QuestLayer* QuestLayer::create(QuestType type)
 QuestLayer::QuestLayer()
 :_observer(nullptr)
 ,_thisTableType(QuestType::None)
-,_thisTable(nullptr)
-,_nodeSize(Size::ZERO)
-,_tableMaxSize(Size::ZERO)
-,_tableBasePosition(Point::ZERO)
-{
-    auto size = QuestNode::create(nullptr, 0)->getContentSize();
-    _nodeSize = size + Size(nodeOffsetOnTable.x, nodeOffsetOnTable.y);
-    
-    // table parameters
-    const auto& winSize = getWinSize();
-    {
-        static const Vec2 edge(50, 100);
-        _tableMaxSize.width = _nodeSize.width * tableColumnCount + nodeOffsetOnTable.x;
-        _tableMaxSize.height = winSize.height - edge.y;
-        _tableBasePosition.x = winSize.width - edge.x - getCellSize().width;
-        _tableBasePosition.y = winSize.height - edge.y;
-    }
-    
-    reloadAllCandidates();
-}
+,_thisTableTemplat(nullptr) {}
 
 QuestLayer::~QuestLayer()
 {
+    Utils::clearMap(_tableTemplats);
     removeAllChildren();
 }
 
@@ -86,18 +62,19 @@ bool QuestLayer::init(QuestType type)
         // tables
         for (int i = 0; i < tablesCount; ++i) {
             auto type = tableTypes[i];
-            createTable(type);
+            createTableTemplate(type);
         }
         
         // buttons
         CocosUtils::createGrayExitButton(this, [this]() { removeFromParent(); });
-        {
-            const auto& winSize = getWinSize();
+        
+        do {
+            const auto& winSize(Director::getInstance()->getWinSize());
             static const Vec2 edge(180, 50);
             createTabButtons(Point(edge.x, winSize.height - edge.y));
-        }
+        } while (false);
         
-        setTableType(QuestType::Main);
+        setQuestType(QuestType::Main);
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -111,127 +88,59 @@ bool QuestLayer::init(QuestType type)
     return false;
 }
 
-#pragma mark - TableViewDelegate
-Size QuestLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
+#pragma mark - TableTemplateObserver
+Node* QuestLayer::onTableTemplateCreateNodeModel(TableTemplate* tt)
 {
-    const Size size = getCellSize();
-    const ssize_t cnt = getCellsCount(table);
-    if (idx == cnt - 1) {
-        return size + Size(0, nodeOffsetOnTable.y);
-    }
-    
-    return size;
+    auto node(QuestNode::create());
+    node->registerObserver(this);
+    return node;
 }
 
-TableViewCell* QuestLayer::tableCellAtIndex(TableView *table, ssize_t idx)
+void QuestLayer::onTableTemplateUpdateNode(TableTemplate* tt, ssize_t idx, Node* node)
 {
-    auto cell = static_cast<XTableViewCell*>(table->dequeueCell());
-    
-    if (!cell) {
-        cell = XTableViewCell::create();
-    }
-    
-    const ssize_t maxCnt = getCellsCount(table);
-    const auto& quests = _candidates.at(getTableType(table));
-    const size_t cnt = quests.size();
-    for (int i = 0; i < tableColumnCount; ++i) {
-        const ssize_t index = idx * tableColumnCount + i;
-        auto node = dynamic_cast<QuestNode*>(cell->getNode(i));
-        if (index < cnt) {
-            if (!node) {
-                node = QuestNode::create(nullptr, i);
-                cell->addChild(node);
-                cell->setNode(node, i);
-            }
-            
-            // we must update the position when the table was reloaded
-            const Point point(_nodeSize.width * (i + 0.5f) - nodeOffsetOnTable.x / 2, node->getContentSize().height * 0.5f);
-            node->setPosition(point + Point(0, (idx == maxCnt - 1) ? nodeOffsetOnTable.y : 0));
-        } else if (node) {
-            node->removeFromParent();
-            cell->resetNode(i);
-        }
-    }
-    
-    return cell;
+    do {
+        CC_BREAK_IF(idx < 0 || !node);
+        auto type(getQuestType(tt));
+        CC_BREAK_IF(QuestType::None == type);
+        const auto& lists(QuestManager::getInstance()->getData(type));
+        CC_BREAK_IF(idx >= lists.size());
+        auto questNode(dynamic_cast<QuestNode*>(node));
+        CC_BREAK_IF(!questNode);
+        questNode->update(lists.at(idx));
+    } while (false);
 }
 
-ssize_t QuestLayer::numberOfCellsInTableView(TableView *table)
+ssize_t QuestLayer::numberOfNodesForTableTemplate(const TableTemplate* tt)
 {
-    return getCellsCount(table);
-}
-
-#pragma mark table
-void QuestLayer::createTable(QuestType type)
-{
-    auto tableView = TableView::create(this, _tableMaxSize);
-    tableView->setDirection(extension::ScrollView::Direction::VERTICAL);
-    tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
-    tableView->setBounceable(false);
-    tableView->setVisible(false);
-    tableView->setTag(static_cast<int>(type));
-    addChild(tableView);
-    
-    // 1. insert table
-    if (0 == _tables.count(type)) {
-        _tables.insert(make_pair(type, tableView));
-    } else {
-        assert(false);
-    }
-    
-    // 2. refresh table
-    refreshTable(tableView, false);
-    tableView->setContentOffset(Point::ZERO);
-}
-
-void QuestLayer::refreshTable(TableView* table, bool reload)
-{
-    if (table) {
-        auto totalHeight = _nodeSize.height * getCellsCount(table) + nodeOffsetOnTable.y;
-        auto size = Size(_tableMaxSize.width, MIN(totalHeight, _tableMaxSize.height));
-        table->setViewSize(size);
-        table->setPosition(_tableBasePosition - Point(0, size.height));
-        
-        if (reload) {
-            const auto& offset = table->getContentOffset();
-            table->reloadData();
-            table->setContentOffset(offset);
-        }
-    }
-}
-
-ssize_t QuestLayer::getCellsCount(TableView* table) const
-{
-    auto type = getTableType(table);
-    if (_candidates.find(type) != end(_candidates)) {
-        const auto& quests = _candidates.at(type);
-        const size_t cnt(quests.size());
-        if (cnt > 0) {
-            return (cnt - 1) / tableColumnCount + 1;
-        }
-    }
+    do {
+        auto type(getQuestType(tt));
+        CC_BREAK_IF(QuestType::None == type);
+        return QuestManager::getInstance()->getData(type).size();
+    } while (false);
     
     return 0;
 }
 
-Size QuestLayer::getCellSize() const
+#pragma mark UI
+void QuestLayer::createTableTemplate(QuestType type)
 {
-    return Size(_tableMaxSize.width, _nodeSize.height);
+    do {
+        static const float edgeY(5.0f);
+        const auto& winSize(Director::getInstance()->getWinSize());
+        Size size(winSize.width, winSize.height - edgeY * 2);
+        Point position(0, winSize.height - edgeY);
+        auto tt(new (nothrow) TableTemplate(this, position, false, size, 1, TableTemplate::DefaultGap, this));
+        tt->setContentOffsetType(TableTemplate::ContentOffsetType::BEGIN);
+        tt->setTag(static_cast<int>(type));
+        
+        if (0 == _tableTemplats.count(type)) {
+            _tableTemplats.insert(make_pair(type, tt));
+        } else {
+            assert(false);
+        }
+    } while (false);
 }
 
-Rect QuestLayer::getBoundingBox(Node* node) const
-{
-    if (node) {
-        Rect rect = node->getBoundingBox();
-        Point origin = rect.origin;
-        rect.origin = convertToNodeSpace(node->getParent()->convertToWorldSpace(origin));
-        return rect;
-    }
-    
-    return Rect::ZERO;
-}
-
-#pragma mark buttons
 void QuestLayer::createTabButtons(const Point& position)
 {
     float width(0);
@@ -241,7 +150,7 @@ void QuestLayer::createTabButtons(const Point& position)
         const auto type = tableTypes[i];
         const string title = getTableName(type);
         auto button = TabButton::create(title, [this, i](Ref*) {
-            setTableType(tableTypes[i]);
+            setQuestType(tableTypes[i]);
         });
         addChild(button);
         
@@ -277,75 +186,41 @@ void QuestLayer::createTabButtons(const Point& position)
 }
 
 #pragma mark - functions
-void QuestLayer::reloadAllCandidates()
+QuestType QuestLayer::getQuestType(const TableTemplate* tt) const
 {
-    _candidates.clear();
-}
-
-void QuestLayer::reloadCandidates(QuestType type)
-{
-    auto iter(_candidates.find(type));
-    if (iter != end(_candidates)) {
-        iter->second.clear();
-    }
-}
-
-void QuestLayer::insertCandidate(QuestType type, const string& name)
-{
-    if (0 == _candidates.count(type)) {
-        _candidates.insert(make_pair(type, vector<string>()));
-    }
-    
-    auto& quests = _candidates.at(type);
-    quests.push_back(name);
-}
-
-void QuestLayer::removeCandidate(QuestType type, const string& name)
-{
-    auto iter(_candidates.find(type));
-    if (iter != end(_candidates)) {
-        auto& quests(iter->second);
-        for (auto iter = begin(quests); iter != end(quests); ++iter) {
-            if (name == *iter) {
-                quests.erase(iter);
-                break;
-            }
-        }
-    }
-}
-
-QuestType QuestLayer::getTableType(TableView* table) const
-{
-    if (table) {
-        const size_t cnt = _tables.size();
+    if (tt) {
+        const size_t cnt = _tableTemplats.size();
         if (cnt < tablesCount) {
             return tableTypes[cnt];
         }
         
-        return static_cast<QuestType>(table->getTag());
+        return static_cast<QuestType>(tt->getTag());
     }
     
     return static_cast<QuestType>(-1);
 }
 
-void QuestLayer::setTableType(QuestType type)
+void QuestLayer::setQuestType(QuestType type)
 {
     if (_thisTableType != type) {
         _thisTableType = type;
         
-        for (auto iter = begin(_tables); iter != end(_tables); ++iter) {
-            const bool isThisTable(iter->first == type);
-            auto table = iter->second;
-            table->setVisible(isThisTable);
+        for (auto iter = begin(_tableTemplats); iter != end(_tableTemplats); ++iter) {
+            const bool isSelected(iter->first == type);
+            auto tt = iter->second;
+            auto table(tt->getTableView());
+            if (table) {
+                table->setVisible(isSelected);
+            }
             
-            if (isThisTable) {
-                _thisTable = table;
+            if (isSelected) {
+                _thisTableTemplat = tt;
             }
         }
         
         for (auto iter = begin(_tabButtons); iter != end(_tabButtons); ++iter) {
-            const bool isThisTable(iter->first == type);
-            iter->second->setEnabled(!isThisTable);
+            const bool isSelected(iter->first == type);
+            iter->second->setEnabled(!isSelected);
         }
     }
 }

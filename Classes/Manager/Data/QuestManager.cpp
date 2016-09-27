@@ -9,15 +9,28 @@
 #include "QuestManager.h"
 #include "JSonUtils.h"
 #include "Utils.h"
-#include "DataManager.h"
 #include "QuestData.h"
 
 using namespace std;
 
-QuestManager::QuestManager()
+static QuestManager* s_pInstance(nullptr);
+QuestManager* QuestManager::getInstance()
 {
+    if (!s_pInstance) {
+        s_pInstance = new (nothrow) QuestManager();
+    }
     
+    return s_pInstance;
 }
+
+void QuestManager::purge()
+{
+    if (s_pInstance) {
+        CC_SAFE_DELETE(s_pInstance);
+    }
+}
+
+QuestManager::QuestManager() {}
 
 QuestManager::~QuestManager()
 {
@@ -26,7 +39,7 @@ QuestManager::~QuestManager()
     }
 }
 
-void QuestManager::initQuest(QuestType type, const rapidjson::Value& jsonDict)
+void QuestManager::init(QuestType type, const rapidjson::Value& jsonDict)
 {
     auto iter(_quests.find(type));
     if (iter != _quests.end()) {
@@ -49,7 +62,7 @@ void QuestManager::initQuest(QuestType type, const rapidjson::Value& jsonDict)
     }
 }
 
-void QuestManager::updateQuestProgress(QuestType type, int questId, int progress)
+void QuestManager::updateProgress(QuestType type, int questId, int progress)
 {
     
 }
@@ -59,7 +72,7 @@ void QuestManager::getReward(QuestType type, int questId)
     
 }
 
-const vector<QuestData*>& QuestManager::getQuestData(QuestType type)
+const vector<QuestData*>& QuestManager::getData(QuestType type)
 {
     if (0 == _quests.count(type)) {
         _quests.insert(make_pair(type, vector<QuestData*>()));
@@ -68,7 +81,7 @@ const vector<QuestData*>& QuestManager::getQuestData(QuestType type)
     return _quests.at(type);
 }
 
-int QuestManager::getQuestProgress(QuestType type, int questId) const
+int QuestManager::getProgress(QuestType type, int questId) const
 {
     auto iter(_quests.find(type));
     if (iter != _quests.end()) {
@@ -84,7 +97,7 @@ int QuestManager::getQuestProgress(QuestType type, int questId) const
     return 0;
 }
 
-void QuestManager::finishQuest(QuestType type, int questId)
+void QuestManager::finish(QuestType type, int questId)
 {
     
 }

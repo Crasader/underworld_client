@@ -129,7 +129,8 @@ void SpellInfoLayer::initUI()
     addChild(board);
     _board = board;
     
-    auto button = ResourceButton::create(true, false, ResourceType::Gold, 0, Color4B::BLACK, [this](Ref* pSender) {
+    auto button = ResourceButton::create(true, false, ResourceType::Gold, 0, Color4B::BLACK);
+    button->addClickEventListener([this](Ref* pSender) {
         auto button(dynamic_cast<ResourceButton*>(pSender));
         if (button) {
             if (button->isResourceEnough()) {

@@ -9,15 +9,11 @@
 #ifndef QuestLayer_h
 #define QuestLayer_h
 
-#include "cocos2d.h"
-#include "extensions/cocos-ext.h"
+#include "TableTemplate.h"
 #include "QuestNode.h"
-
-USING_NS_CC;
-USING_NS_CC_EXT;
+#include "CocosGlobal.h"
 
 class TabButton;
-class ScrollBar;
 
 class QuestLayerObserver
 {
@@ -26,7 +22,10 @@ public:
     virtual void onQuestLayerClosed() = 0;
 };
 
-class QuestLayer : public LayerColor, public TableViewDataSource, public QuestNodeObserver
+class QuestLayer
+: public LayerColor
+, public TableTemplateObserver
+, public QuestNodeObserver
 {
 public:
     static QuestLayer* create(QuestType type);
@@ -37,45 +36,29 @@ protected:
     QuestLayer();
     bool init(QuestType type);
     
-    // TableViewDataSource
-    virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx) override;
-    virtual TableViewCell* tableCellAtIndex(TableView *table, ssize_t idx) override;
-    virtual ssize_t numberOfCellsInTableView(TableView *table) override;
+    // TableTemplateObserver
+    virtual Node* onTableTemplateCreateNodeModel(TableTemplate* tt) override;
+    virtual void onTableTemplateUpdateNode(TableTemplate* tt, ssize_t idx, Node* node) override;
+    virtual ssize_t numberOfNodesForTableTemplate(const TableTemplate* tt) override;
     
-    // table
-    void createTable(QuestType type);
-    void refreshTable(TableView* table, bool reload);
-    ssize_t getCellsCount(TableView *table) const;
-    Size getCellSize() const;
-    Rect getBoundingBox(Node* node) const;
-    
-    // buttons
+    // UI
+    void createTableTemplate(QuestType type);
     void createTabButtons(const Point& position);
     
     // functions
-    void reloadAllCandidates();
-    void reloadCandidates(QuestType type);
-    void insertCandidate(QuestType type, const std::string& name);
-    void removeCandidate(QuestType type, const std::string& name);
-    QuestType getTableType(TableView* table) const;
-    void setTableType(QuestType type);
+    QuestType getQuestType(const TableTemplate* tt) const;
+    void setQuestType(QuestType type);
     std::string getTableName(QuestType type) const;
     
 private:
     QuestLayerObserver *_observer;
     
     // table
-    std::map<QuestType, TableView*> _tables;
+    std::map<QuestType, TableTemplate*> _tableTemplats;
     QuestType _thisTableType;
-    TableView* _thisTable;
-    Size _nodeSize;
-    Size _tableMaxSize;
-    Point _tableBasePosition;
+    TableTemplate* _thisTableTemplat;
     
     std::map<QuestType, TabButton*> _tabButtons;
-    
-    // data
-    std::map<QuestType, std::vector<std::string>> _candidates;
 };
 
 #endif /* QuestLayer_h */

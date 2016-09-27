@@ -15,7 +15,7 @@
 class ResourceButton : public XButton
 {
 public:
-    static ResourceButton* create(bool isBigSize, bool animated, ResourceType type, int count, const Color4B& color, const ui::Widget::ccWidgetClickCallback& callback);
+    static ResourceButton* create(bool isBigSize, bool animated, ResourceType type, int count, const Color4B& color);
     virtual ~ResourceButton();
     
     ResourceType getType() const;
@@ -30,7 +30,7 @@ public:
     
 protected:
     ResourceButton();
-    bool init(bool isBigSize, bool animated, ResourceType type, int count, const Color4B& color, const ui::Widget::ccWidgetClickCallback& callback);
+    bool init(bool isBigSize, bool animated, ResourceType type, int count, const Color4B& color);
     void addIconNode(ResourceType type);
     const Color4B& getEnabledColor() const;
     void resize();

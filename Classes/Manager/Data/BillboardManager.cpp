@@ -8,6 +8,7 @@
 
 #include "BillboardManager.h"
 #include "JSonUtils.h"
+#include "Utils.h"
 #include "BillboardData.h"
 
 using namespace std;
@@ -33,9 +34,7 @@ BillboardManager::BillboardManager() {}
 
 BillboardManager::~BillboardManager()
 {
-    for (auto data : _list) {
-        CC_SAFE_DELETE(data);
-    }
+    Utils::clearVector(_list);
 }
 
 #pragma mark - public

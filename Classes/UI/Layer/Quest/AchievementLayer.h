@@ -9,14 +9,8 @@
 #ifndef AchievementLayer_h
 #define AchievementLayer_h
 
-#include "cocos2d.h"
-#include "extensions/cocos-ext.h"
+#include "TableTemplate.h"
 #include "AchievementNode.h"
-
-USING_NS_CC;
-USING_NS_CC_EXT;
-
-class ScrollBar;
 
 class AchievementLayerObserver
 {
@@ -25,7 +19,10 @@ public:
     virtual void onAchievementLayerClosed() = 0;
 };
 
-class AchievementLayer : public LayerColor, public TableViewDataSource, public AchievementNodeObserver
+class AchievementLayer
+: public LayerColor
+, public TableTemplateObserver
+, public AchievementNodeObserver
 {
 public:
     static AchievementLayer* create();
@@ -36,35 +33,14 @@ protected:
     AchievementLayer();
     virtual bool init() override;
     
-    // TableViewDataSource
-    virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx) override;
-    virtual TableViewCell* tableCellAtIndex(TableView *table, ssize_t idx) override;
-    virtual ssize_t numberOfCellsInTableView(TableView *table) override;
-    
-    // table
-    void createTable();
-    void refreshTable(TableView* table, bool reload);
-    ssize_t getCellsCount(TableView *table) const;
-    Size getCellSize() const;
-    Rect getBoundingBox(Node* node) const;
-    
-    // functions
-    void reloadAllCandidates();
-    void insertCandidate(const std::string& name);
-    void removeCandidate(const std::string& name);
+    // TableTemplateObserver
+    virtual Node* onTableTemplateCreateNodeModel(TableTemplate* tt) override;
+    virtual void onTableTemplateUpdateNode(TableTemplate* tt, ssize_t idx, Node* node) override;
+    virtual ssize_t numberOfNodesForTableTemplate(const TableTemplate* tt) override;
     
 private:
     AchievementLayerObserver *_observer;
-    
-    // table
-    TableView* _table;
-    TableView* _thisTable;
-    Size _nodeSize;
-    Size _tableMaxSize;
-    Point _tableBasePosition;
-    
-    // data
-    std::vector<std::string> _candidates;
+    TableTemplate* _tableTemplate;
 };
 
 #endif /* AchievementLayer_h */

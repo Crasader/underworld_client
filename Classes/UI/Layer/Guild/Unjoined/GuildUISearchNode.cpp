@@ -8,13 +8,10 @@
 
 #include "GuildUISearchNode.h"
 #include "CocosUtils.h"
-#include "XTableViewCell.h"
 #include "XEditBox.h"
 #include "XButton.h"
 
 using namespace std;
-
-static const float tableNodeGapY(14);
 
 GuildUISearchNode* GuildUISearchNode::create(const Size& size)
 {
@@ -30,13 +27,11 @@ GuildUISearchNode* GuildUISearchNode::create(const Size& size)
 
 GuildUISearchNode::GuildUISearchNode()
 :_observer(nullptr)
-,_table(nullptr)
-,_nodeSize(Size::ZERO)
-,_tableMaxSize(Size::ZERO)
-,_tableBasePosition(Point::ZERO) {}
+,_tableTemplate(nullptr) {}
 
 GuildUISearchNode::~GuildUISearchNode()
 {
+    CC_SAFE_DELETE(_tableTemplate);
     removeAllChildren();
 }
 
@@ -72,11 +67,13 @@ bool GuildUISearchNode::init(const Size& size)
         button->setPosition(Point(size.width / 2 + (ebsize.width + button->getContentSize().width) / 2 + spaceX, editBox->getPositionY()));
         addChild(button);
         
-        static const float edgeBottom(8);
-        _nodeSize = GuildCell::create()->getContentSize();
-        _tableMaxSize = Size(size.width, size.height - (ebsize.height + edgeY * 2 + edgeBottom));
-        _tableBasePosition = Point(0, edgeBottom + _tableMaxSize.height);
-        createTable();
+        do {
+            static const float edgeBottom(8.0f);
+            Size tableSize(size.width, size.height - (ebsize.height + edgeY * 2 + edgeBottom));
+            Point position(0, edgeBottom + tableSize.height);
+            _tableTemplate = new (nothrow) TableTemplate(this, position, false, tableSize, 1, TableTemplate::DefaultGap, this);
+            _tableTemplate->setContentOffsetType(TableTemplate::ContentOffsetType::BEGIN);
+        } while (false);
         
         return true;
     }
@@ -84,55 +81,28 @@ bool GuildUISearchNode::init(const Size& size)
     return false;
 }
 
-#pragma mark - TableViewDataSource
-Size GuildUISearchNode::tableCellSizeForIndex(TableView *table, ssize_t idx)
+#pragma mark - TableTemplateObserver
+Node* GuildUISearchNode::onTableTemplateCreateNodeModel(TableTemplate* tt)
 {
-    const Size size(_tableMaxSize.width, _nodeSize.height + tableNodeGapY);
-    auto cnt = getCellsCount();
-    if (0 == idx || (cnt - 1) == idx) {
-        return size + Size(0, tableNodeGapY / 2);
-    }
-    
-    return size;
+    auto node(GuildCell::create());
+    node->registerObserver(this);
+    return node;
 }
 
-TableViewCell* GuildUISearchNode::tableCellAtIndex(TableView *table, ssize_t idx)
+void GuildUISearchNode::onTableTemplateUpdateNode(TableTemplate* tt, ssize_t idx, Node* node)
 {
-    auto cell = static_cast<XTableViewCell*>(table->dequeueCell());
-    
-    if (!cell) {
-        cell = XTableViewCell::create();
-    }
-    
-    auto cnt = getCellsCount();
-    static const float nodeIdx(0);
-    auto node = dynamic_cast<GuildCell*>(cell->getNode(nodeIdx));
-    if (idx < cnt) {
-        if (!node) {
-            node = GuildCell::create();
-            node->registerObserver(this);
-            cell->addChild(node);
-            cell->setNode(node, nodeIdx);
-        }
-        
-        if (idx < cnt) {
-            node->update(_guilds.at(idx));
-        }
-        
-        // we must update the position when the table was reloaded
-        const Point point(_tableMaxSize.width / 2, (_nodeSize.height + tableNodeGapY) / 2);
-        node->setPosition(point + Point(0, (idx == cnt - 1) ? tableNodeGapY / 2 : 0));
-    } else if (node) {
-        node->removeFromParent();
-        cell->resetNode(nodeIdx);
-    }
-    
-    return cell;
+    do {
+        CC_BREAK_IF(idx < 0 || !node);
+        CC_BREAK_IF(idx >= _guilds.size());
+        auto guildCell(dynamic_cast<GuildCell*>(node));
+        CC_BREAK_IF(!guildCell);
+        guildCell->update(_guilds.at(idx));
+    } while (false);
 }
 
-ssize_t GuildUISearchNode::numberOfCellsInTableView(TableView *table)
+ssize_t GuildUISearchNode::numberOfNodesForTableTemplate(const TableTemplate* tt)
 {
-    return getCellsCount();
+    return _guilds.size();
 }
 
 #pragma mark - EditBoxDelegate
@@ -145,39 +115,4 @@ void GuildUISearchNode::editBoxReturn(ui::EditBox* editBox)
 void GuildUISearchNode::onGuildCellTouched(const GuildData* data)
 {
     
-}
-
-#pragma mark - table
-void GuildUISearchNode::createTable()
-{
-    auto tableView = TableView::create(this, _tableMaxSize);
-    tableView->setDirection(extension::ScrollView::Direction::VERTICAL);
-    tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
-    tableView->setBounceable(false);
-    addChild(tableView);
-    
-    _table = tableView;
-    refreshTable(false);
-    tableView->setContentOffset(Point::ZERO);
-}
-
-void GuildUISearchNode::refreshTable(bool reload)
-{
-    if (_table) {
-        auto totalHeight = _nodeSize.height * getCellsCount() + tableNodeGapY;
-        auto size = Size(_tableMaxSize.width, MIN(totalHeight, _tableMaxSize.height));
-        _table->setViewSize(size);
-        _table->setPosition(_tableBasePosition - Point(0, size.height));
-        
-        if (reload) {
-            const auto& offset = _table->getContentOffset();
-            _table->reloadData();
-            _table->setContentOffset(offset);
-        }
-    }
-}
-
-ssize_t GuildUISearchNode::getCellsCount() const
-{
-    return _guilds.size();
 }

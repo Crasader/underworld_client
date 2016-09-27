@@ -9,10 +9,8 @@
 #ifndef CardShopLayer_h
 #define CardShopLayer_h
 
-#include "cocos-ext.h"
+#include "TableTemplate.h"
 #include "BaseCard.h"
-
-USING_NS_CC_EXT;
 
 class CardShopLayerObserver
 {
@@ -22,7 +20,7 @@ public:
 
 class CardShopLayer
 : public LayerColor
-, public TableViewDataSource
+, public TableTemplateObserver
 , public BaseCardObserver
 {
 public:
@@ -38,28 +36,18 @@ protected:
     virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     
-    // TableViewDataSource
-    virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx) override;
-    virtual TableViewCell* tableCellAtIndex(TableView *table, ssize_t idx) override;
-    virtual ssize_t numberOfCellsInTableView(TableView *table) override;
+    // TableTemplateObserver
+    virtual Node* onTableTemplateCreateNodeModel(TableTemplate* tt) override;
+    virtual void onTableTemplateUpdateNode(TableTemplate* tt, ssize_t idx, Node* node) override;
+    virtual ssize_t numberOfNodesForTableTemplate(const TableTemplate* tt) override;
     
     // BaseCardObserver
     virtual void onBaseCardClicked(BaseCard* pSender) override;
     virtual void onBaseCardClickedResourceButton(BaseCard* pSender) override;
     
-    // table
-    void createTable(Node* parent);
-    void refreshTable(bool reload);
-    ssize_t getCellsCount() const;
-    
 private:
     CardShopLayerObserver *_observer;
-    TableView* _table;
-    Size _nodeSize;
-    Size _cellSize;
-    Size _tableMaxSize;
-    Point _tableBasePosition;
-    float _tableNodeGapX;
+    TableTemplate* _tableTemplate;
 };
 
 #endif /* CardShopLayer_h */

@@ -11,7 +11,6 @@
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-#include "CocosGlobal.h"
 
 USING_NS_CC;
 
@@ -26,22 +25,20 @@ public:
 class QuestNode: public Node
 {
 public:
-    static QuestNode* create(const QuestData* data, ssize_t idx);
+    static QuestNode* create();
     virtual ~QuestNode();
     void registerObserver(QuestNodeObserver *observer);
     
-    ssize_t getIdx() const;
-    void update(const QuestData* data, ssize_t idx);
+    void update(const QuestData* data);
     void updateProgress();
     
 protected:
     QuestNode();
-    bool init(const QuestData* data, ssize_t idx);
+    virtual bool init() override;
     
 private:
     QuestNodeObserver* _observer;
     const QuestData* _data;
-    ssize_t _idx;
     Label* _nameLabel;
     Label* _descriptionLabel;
     Label* _progressLabel;

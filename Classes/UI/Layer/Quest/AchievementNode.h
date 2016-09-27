@@ -25,22 +25,20 @@ public:
 class AchievementNode: public Node
 {
 public:
-    static AchievementNode* create(const AchievementData* data, ssize_t idx);
+    static AchievementNode* create();
     virtual ~AchievementNode();
     void registerObserver(AchievementNodeObserver *observer);
     
-    ssize_t getIdx() const;
-    void update(const AchievementData* data, ssize_t idx);
+    void update(const AchievementData* data);
     void updateProgress();
     
 protected:
     AchievementNode();
-    bool init(const AchievementData* data, ssize_t idx);
+    virtual bool init() override;
     
 private:
     AchievementNodeObserver* _observer;
     const AchievementData* _data;
-    ssize_t _idx;
     Label* _nameLabel;
     Label* _descriptionLabel;
     Label* _progressLabel;

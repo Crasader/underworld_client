@@ -7,18 +7,16 @@
 //
 
 #include "LanguageLayer.h"
-#include "XTableViewCell.h"
 #include "CocosGlobal.h"
 #include "LocalHelper.h"
 
 using namespace std;
 
-static const float tableNodeGapY(14);
 static const vector<LocalType>& languages(LocalHelper::getSupportedLocalTypes());
 
 LanguageLayer* LanguageLayer::create(const Size& size)
 {
-    LanguageLayer *ret = new (nothrow) LanguageLayer();
+    auto ret = new (nothrow) LanguageLayer();
     if (ret && ret->init(size)) {
         ret->autorelease();
         return ret;
@@ -30,14 +28,9 @@ LanguageLayer* LanguageLayer::create(const Size& size)
 
 LanguageLayer::LanguageLayer()
 :_observer(nullptr)
-,_table(nullptr)
-,_nodeSize(Size::ZERO)
-,_tableMaxSize(Size::ZERO)
-,_tableBasePosition(Point::ZERO)
+,_tableTemplate(nullptr)
 ,_selectedIdx(CC_INVALID_INDEX)
 {
-    _nodeSize = LanguageNode::create()->getContentSize();
-    
     for (auto i = 0; i < languages.size(); ++i) {
         if (LocalHelper::getLocalType() == languages.at(i)) {
             _selectedIdx = i;
@@ -48,6 +41,7 @@ LanguageLayer::LanguageLayer()
 
 LanguageLayer::~LanguageLayer()
 {
+    CC_SAFE_DELETE(_tableTemplate);
     removeAllChildren();
 }
 
@@ -60,10 +54,12 @@ bool LanguageLayer::init(const Size& size)
 {
     if (LayerColor::initWithColor(LAYER_DEFAULT_COLOR)) {
         setContentSize(size);
-        _tableMaxSize = size;
-        _tableBasePosition = Point(0, size.height);
         
-        createTable();
+        do {
+            Point position(0, size.height);
+            _tableTemplate = new (nothrow) TableTemplate(this, position, false, size, 1, TableTemplate::DefaultGap, this);
+            _tableTemplate->setContentOffsetType(TableTemplate::ContentOffsetType::BEGIN);
+        } while (false);
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -84,56 +80,31 @@ bool LanguageLayer::onTouchBegan(Touch *pTouch, Event *pEvent)
 
 void LanguageLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 
-#pragma mark - TableViewDataSource
-Size LanguageLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
+#pragma mark - TableTemplateObserver
+Node* LanguageLayer::onTableTemplateCreateNodeModel(TableTemplate* tt)
 {
-    const Size size(_tableMaxSize.width, _nodeSize.height + tableNodeGapY);
-    auto cnt = getCellsCount();
-    if (0 == idx || (cnt - 1) == idx) {
-        return size + Size(0, tableNodeGapY / 2);
-    }
-    
-    return size;
+    auto node(LanguageNode::create());
+    node->registerObserver(this);
+    return node;
 }
 
-TableViewCell* LanguageLayer::tableCellAtIndex(TableView *table, ssize_t idx)
+void LanguageLayer::onTableTemplateUpdateNode(TableTemplate* tt, ssize_t idx, Node* node)
 {
-    auto cell = static_cast<XTableViewCell*>(table->dequeueCell());
-    
-    if (!cell) {
-        cell = XTableViewCell::create();
-    }
-    
-    auto cnt = getCellsCount();
-    static const float nodeIdx(0);
-    auto node = dynamic_cast<LanguageNode*>(cell->getNode(nodeIdx));
-    if (idx < cnt) {
-        const auto& name(LocalHelper::getLanguageName(languages.at(idx)));
-        if (!node) {
-            node = LanguageNode::create();
-            node->registerObserver(this);
-            cell->addChild(node);
-            cell->setNode(node, nodeIdx);
-        }
-        
-        node->update(name);
-        node->setIdx(idx);
-        node->tick(idx == _selectedIdx);
-        
-        // we must update the position when the table was reloaded
-        const Point point(_tableMaxSize.width / 2, (_nodeSize.height + tableNodeGapY) / 2);
-        node->setPosition(point + Point(0, (idx == cnt - 1) ? tableNodeGapY / 2 : 0));
-    } else if (node) {
-        node->removeFromParent();
-        cell->resetNode(nodeIdx);
-    }
-    
-    return cell;
+    do {
+        CC_BREAK_IF(idx < 0 || !node);
+        CC_BREAK_IF(idx >= languages.size());
+        auto languageNode(dynamic_cast<LanguageNode*>(node));
+        CC_BREAK_IF(!languageNode);
+        auto name(LocalHelper::getLanguageName(languages.at(idx)));
+        languageNode->update(name);
+        languageNode->setIdx(idx);
+        languageNode->tick(idx == _selectedIdx);
+    } while (false);
 }
 
-ssize_t LanguageLayer::numberOfCellsInTableView(TableView *table)
+ssize_t LanguageLayer::numberOfNodesForTableTemplate(const TableTemplate* tt)
 {
-    return getCellsCount();
+    return languages.size();
 }
 
 #pragma mark - LanguageNodeObserver
@@ -151,56 +122,24 @@ void LanguageLayer::onLanguageConfirmationLayerConfirm(Node* pSender, ssize_t id
         pSender->removeFromParent();
     }
     
-    auto prior(_selectedIdx);
-    
-    if (idx != _selectedIdx) {
+    do {
+        CC_BREAK_IF(idx == _selectedIdx);
+        CC_BREAK_IF(!_tableTemplate);
+        auto table(_tableTemplate->getTableView());
+        CC_BREAK_IF(!table);
+        auto prior(_selectedIdx);
         _selectedIdx = idx;
         
         if (CC_INVALID_INDEX != prior) {
-            _table->updateCellAtIndex(prior);
+            table->updateCellAtIndex(prior);
         }
         
         if (CC_INVALID_INDEX != idx) {
-            _table->updateCellAtIndex(idx);
+            table->updateCellAtIndex(idx);
         }
         
         if (_observer) {
             _observer->onLanguageLayerSelected(idx);
         }
-    }
-}
-
-#pragma mark - table
-void LanguageLayer::createTable()
-{
-    auto tableView = TableView::create(this, _tableMaxSize);
-    tableView->setDirection(extension::ScrollView::Direction::VERTICAL);
-    tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
-    tableView->setBounceable(false);
-    addChild(tableView);
-    
-    _table = tableView;
-    refreshTable(false);
-    tableView->setContentOffset(Point::ZERO);
-}
-
-void LanguageLayer::refreshTable(bool reload)
-{
-    if (_table) {
-        auto totalHeight = _nodeSize.height * getCellsCount() + tableNodeGapY;
-        auto size = Size(_tableMaxSize.width, MIN(totalHeight, _tableMaxSize.height));
-        _table->setViewSize(size);
-        _table->setPosition(_tableBasePosition - Point(0, size.height));
-        
-        if (reload) {
-            const auto& offset = _table->getContentOffset();
-            _table->reloadData();
-            _table->setContentOffset(offset);
-        }
-    }
-}
-
-ssize_t LanguageLayer::getCellsCount() const
-{
-    return languages.size();
+    } while (false);
 }

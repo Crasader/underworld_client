@@ -18,10 +18,10 @@
 using namespace std;
 using namespace ui;
 
-AchievementNode* AchievementNode::create(const AchievementData* data, ssize_t idx)
+AchievementNode* AchievementNode::create()
 {
-    AchievementNode *ret = new (nothrow) AchievementNode();
-    if (ret && ret->init(data, idx))
+    auto ret = new (nothrow) AchievementNode();
+    if (ret && ret->init())
     {
         ret->autorelease();
         return ret;
@@ -34,7 +34,6 @@ AchievementNode* AchievementNode::create(const AchievementData* data, ssize_t id
 AchievementNode::AchievementNode()
 :_observer(nullptr)
 ,_data(nullptr)
-,_idx(CC_INVALID_INDEX)
 ,_nameLabel(nullptr)
 ,_descriptionLabel(nullptr)
 ,_progressLabel(nullptr)
@@ -51,29 +50,21 @@ void AchievementNode::registerObserver(AchievementNodeObserver *observer)
     _observer = observer;
 }
 
-bool AchievementNode::init(const AchievementData* data, ssize_t idx)
+bool AchievementNode::init()
 {
     if (Node::init()) {
-        
-        update(data, idx);
         return true;
     }
     
     return false;
 }
 
-ssize_t AchievementNode::getIdx() const
-{
-    return _idx;
-}
-
-void AchievementNode::update(const AchievementData* data, ssize_t idx)
+void AchievementNode::update(const AchievementData* data)
 {
     if (data) {
         _data = data;
-        _idx = idx;
         
-        const AchievementProperty* property = _data->getProperty();
+        auto property = _data->getProperty();
         if (_nameLabel) {
             _nameLabel->setString(property ? LocalHelper::getString(property->getName()) : "");
         }
@@ -89,13 +80,13 @@ void AchievementNode::update(const AchievementData* data, ssize_t idx)
 void AchievementNode::updateProgress()
 {
     if (_data) {
-        const AchievementProperty* property = _data->getProperty();
-        const vector<ContentData*>& contents = property->getContents();
+        auto property = _data->getProperty();
+        const auto& contents = property->getContents();
         if (contents.size() > 0) {
-            const int progress = _data->getProgress();
-            const int total = contents.at(0)->getCount(0);
-            const string s = StringUtils::format("[%d/%d]", progress, total);
-            const Point& ap = _descriptionLabel->getAnchorPoint();
+            auto progress = _data->getProgress();
+            auto total = contents.at(0)->getCount(0);
+            auto s = StringUtils::format("[%d/%d]", progress, total);
+            const auto& ap = _descriptionLabel->getAnchorPoint();
             if (nullptr == _progressLabel) {
                 _progressLabel = CocosUtils::createLabel(s, DEFAULT_FONT_SIZE);
                 _progressLabel->setTextColor(_descriptionLabel->getTextColor());

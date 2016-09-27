@@ -37,7 +37,11 @@ TradeableCard::~TradeableCard()
 bool TradeableCard::init()
 {
     if (BaseCard::init()) {
-        auto button = ResourceButton::create(true, false, ResourceType::Gold, 0, Color4B::BLACK, [this](Ref* pSender) {
+        auto button = ResourceButton::create(true, false, ResourceType::Gold, 0, Color4B::BLACK);
+        addChild(button);
+        _button = button;
+        
+        CocosUtils::fixWidgetTouchEvent(button, _touchInvalid, [this](Ref* pSender) {
             auto button(dynamic_cast<ResourceButton*>(pSender));
             if (button) {
                 if (button->isResourceEnough()) {
@@ -49,8 +53,6 @@ bool TradeableCard::init()
                 }
             }
         });
-        addChild(button);
-        _button = button;
         
         const Size originalSize(getContentSize());
         const auto& bsize(_button->getContentSize());
