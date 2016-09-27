@@ -23,12 +23,16 @@
 #include "CoreUtils.h"
 #include "UWJsonHelper.h"
 
-#define MESSAGE_CODE_LAUNCH_2_S      (2)
-#define MESSAGE_CODE_LAUNCH_2_C      (3)
+#define MESSAGE_CODE_MATCH_2_S      (2)
+#define MESSAGE_CODE_MATCHED_2_C      (3)
 #define MESSAGE_CODE_SYNC_2_S        (4)
 #define MESSAGE_CODE_SYNC_2_C        (5)
 #define MESSAGE_CODE_RECONNECT_2_S   (6)
+#define MESSAGE_CODE_START_2_C      (7)
 #define MESSAGE_CODE_FINISH_2_S      (8)
+#define MESSAGE_CODE_CANCEL_2_S      (10)
+#define MESSAGE_CODE_CANCEL_2_C      (11)
+#define MESSAGE_CODE_START_2_S      (12)
 
 #define MESSAGE_KEY_CODE         ("code")
 #define MESSAGE_KEY_CARDS        ("cards")
@@ -62,8 +66,8 @@ static bool syncMessageCompare(NetworkMessageSync* a, NetworkMessageSync* b) {
     return a->getFrame() < b->getFrame();
 }
 
-static std::string parseLaunch2SMsg(
-    const NetworkMessageLaunch2S* msg, std::string name, int uid) {
+static std::string parseMatch2SMsg(
+    const NetworkMessageMatch2S* msg, std::string name, int uid) {
     rapidjson::Document document;
     rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
     rapidjson::Value root(rapidjson::kObjectType);
@@ -75,7 +79,7 @@ static std::string parseLaunch2SMsg(
     uidJson.SetInt(uid);
     
     rapidjson::Value reqCode(rapidjson::kNumberType);
-    reqCode.SetInt(MESSAGE_CODE_LAUNCH_2_S);
+    reqCode.SetInt(MESSAGE_CODE_MATCH_2_S);
     
     rapidjson::Value cards(rapidjson::kStringType);
     std::string cardString = "";
@@ -119,6 +123,28 @@ static std::string parseLaunch2SMsg(
 //    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
 //    root.Accept(writer);
 //    return buffer.GetString();
+    return DataManager::getInstance()->getBinaryJsonTool()->encode(root);
+}
+
+static std::string parseStart2SMsg(
+                                   const NetworkMessageStart2S* msg, int uid) {
+    rapidjson::Document document;
+    rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+    rapidjson::Value root(rapidjson::kObjectType);
+    
+    rapidjson::Value uidJson(rapidjson::kNumberType);
+    uidJson.SetInt(uid);
+    
+    rapidjson::Value reqCode(rapidjson::kNumberType);
+    reqCode.SetInt(MESSAGE_CODE_START_2_S);
+    
+    root.AddMember(MESSAGE_KEY_CODE, reqCode, allocator);
+    root.AddMember(MESSAGE_KEY_UID, uidJson, allocator);
+    
+    //    rapidjson::StringBuffer buffer;
+    //    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+    //    root.Accept(writer);
+    //    return buffer.GetString();
     return DataManager::getInstance()->getBinaryJsonTool()->encode(root);
 }
 
@@ -232,9 +258,9 @@ static std::string parseReconnect2SMsg(int uid, int battleid) {
 }
 
 
-static void parseLaunch2CMsg(const rapidjson::Value& root,
+static void parseMatched2CMsg(const rapidjson::Value& root,
         std::vector<NetworkMessage *> &output, int& battleid) {
-    NetworkMessageLaunch2C* msg = new NetworkMessageLaunch2C();
+    NetworkMessageMatched2C* msg = new NetworkMessageMatched2C();
     
     /** 0. battle Id */
     battleid = UWJsonHelper::getIntValue_json(root, MESSAGE_KEY_BATTLE_ID, INVALID_VALUE);
@@ -380,6 +406,12 @@ static void parseLaunch2CMsg(const rapidjson::Value& root,
     output.push_back(msg);
 }
 
+static void parseStart2CMsg(const rapidjson::Value& root,
+                              std::vector<NetworkMessage *> &output, int& battleid) {
+    NetworkMessageStart2C* msg = new NetworkMessageStart2C();
+    output.push_back(msg);
+}
+
 static void parseSync2CMsg(const rapidjson::Value& root,
     std::vector<NetworkMessage *> &output, int& battleid) {
     if (!UWJsonHelper::checkObjectExist_json(root, MESSAGE_KEY_START_FRAME)
@@ -440,7 +472,7 @@ static void parseSync2CMsg(const rapidjson::Value& root,
 ClientTCPNetwork::~ClientTCPNetwork() {
     destroyTCPClient();
     cleanSyncInstance();
-    M_SAFE_DELETE(_launchMsg);
+    M_SAFE_DELETE(_matchMsg);
 }
 
 void ClientTCPNetwork::destroyTCPClient() {
@@ -461,22 +493,30 @@ void ClientTCPNetwork::connect() {
     _tcpClient->setReconnectCallback(std::bind(&ClientTCPNetwork::onReconncected, this, std::placeholders::_1));
 }
 
-void ClientTCPNetwork::launchGame(LaunchListener* launchListener,
+void ClientTCPNetwork::matchGame(LaunchListener* launchListener,
     const UnderWorld::Core::GameContentSetting& contentSetting,
     const std::vector<int>& cards,
     const UnderWorld::Core::GameModeHMMSetting::InitUnitList& initList,
     const vector<UnderWorld::Core::HMMCardSetting>& unitPool) {
     if (_status != ClientStatus::Idle || !_tcpClient) return;
     
-    _status = ClientStatus::Launching;
+    _status = ClientStatus::Matching;
     _launchListener = launchListener;
-    NetworkMessageLaunch2S* msg = new NetworkMessageLaunch2S();
+    NetworkMessageMatch2S* msg = new NetworkMessageMatch2S();
     msg->setGameContentSetting(contentSetting);
     msg->setCards(cards);
     msg->setInitUnits(initList);
     msg->setUnitPool(unitPool);
-    if (_launchMsg) M_SAFE_DELETE(_launchMsg);
-    _launchMsg = dynamic_cast<NetworkMessageLaunch2S*>(msg->clone());
+    if (_matchMsg) M_SAFE_DELETE(_matchMsg);
+    _matchMsg = dynamic_cast<NetworkMessageMatch2S*>(msg->clone());
+    send(msg);
+}
+
+void ClientTCPNetwork::startGame() {
+    if (_status != ClientStatus::Matching || !_tcpClient) return;
+    
+    _status = ClientStatus::Launching;
+    NetworkMessageStart2S* msg = new NetworkMessageStart2S();
     send(msg);
 }
 
@@ -528,9 +568,14 @@ void ClientTCPNetwork::onReceiveTCPResponse(TCPClient* client, TCPResponse* resp
         parseResponse2Msg(response, msgs);
         response->release();
         for (int i = 0; i < msgs.size(); ++i) {
-            if (M_INSTANCE_OF(msgs[i], NetworkMessageLaunch2C*) && _status == ClientStatus::Launching) {
+            if (M_INSTANCE_OF(msgs[i], NetworkMessageMatched2C*) && _status == ClientStatus::Matching) {
                 if (_launchListener) {
-                    _launchListener->onLaunched(*(dynamic_cast<NetworkMessageLaunch2C*>(msgs[i])));
+                    _launchListener->onMatched(*(dynamic_cast<NetworkMessageMatched2C*>(msgs[i])));
+                }
+                _status = ClientStatus::Launching;
+            } else if (M_INSTANCE_OF(msgs[i], NetworkMessageStart2C*) && _status == ClientStatus::Launching) {
+                if (_launchListener) {
+                    _launchListener->onLaunched(*(dynamic_cast<NetworkMessageStart2C*>(msgs[i])));
                 }
                 _status = ClientStatus::Fighting;
             } else if (M_INSTANCE_OF(msgs[i], NetworkMessageSync*) && _status == ClientStatus::Fighting) {
@@ -561,8 +606,8 @@ void ClientTCPNetwork::onReconncected(TCPClient* client) {
             //TODO need to resend battle user info
         } else if (_status == ClientStatus::Fighting) {
             send(new NetworkMessageReconnect2S());
-        } else if (_status == ClientStatus::Launching) {
-            if (_launchMsg) send(_launchMsg->clone());
+        } else if (_status == ClientStatus::Matching) {
+            if (_matchMsg) send(_matchMsg->clone());
         }
     });
 }
@@ -570,10 +615,14 @@ void ClientTCPNetwork::onReconncected(TCPClient* client) {
 TCPRequest* ClientTCPNetwork::parseMsg2Request(
     const NetworkMessage* msg) {
     std::string reqContent = "";
-    if (dynamic_cast<const NetworkMessageLaunch2S*>(msg)) {
-        const NetworkMessageLaunch2S* l2s =
-            dynamic_cast<const NetworkMessageLaunch2S*>(msg);
-        reqContent = parseLaunch2SMsg(l2s, _name, _uid);
+    if (dynamic_cast<const NetworkMessageMatch2S*>(msg)) {
+        const NetworkMessageMatch2S* l2s =
+            dynamic_cast<const NetworkMessageMatch2S*>(msg);
+        reqContent = parseMatch2SMsg(l2s, _name, _uid);
+    } else if (dynamic_cast<const NetworkMessageStart2S*>(msg)) {
+        const NetworkMessageStart2S* l2s =
+        dynamic_cast<const NetworkMessageStart2S*>(msg);
+        reqContent = parseStart2SMsg(l2s, _uid);
     } else if (dynamic_cast<const NetworkMessageSync*>(msg)) {
         const NetworkMessageSync* sync =
             dynamic_cast<const NetworkMessageSync*>(msg);
@@ -613,8 +662,10 @@ void ClientTCPNetwork::parseResponse2Msg(
     
     int respCode = UWJsonHelper::getIntValue_json(document, MESSAGE_KEY_CODE);
     
-    if (respCode == MESSAGE_CODE_LAUNCH_2_C) {
-        parseLaunch2CMsg(document, output, _battleid);
+    if (respCode == MESSAGE_CODE_MATCHED_2_C) {
+        parseMatched2CMsg(document, output, _battleid);
+    } else if (respCode == MESSAGE_CODE_START_2_C) {
+        parseStart2CMsg(document, output, _battleid);
     } else if (respCode == MESSAGE_CODE_SYNC_2_C) {
         parseSync2CMsg(document, output, _battleid);
     }

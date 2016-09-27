@@ -32,6 +32,7 @@ enum GameState {
     kIdle,
     kLaunchingPVR,
     kLaunchingNetwork,
+    kLoading,
     kPlaying,
     GAME_STATE_COUNT
 };
@@ -69,7 +70,8 @@ private:
     void loadMap2Settings(int mapId);
     
     // override ClientTCPNetwork::LaunchListener
-    virtual void onLaunched(const NetworkMessageLaunch2C& l2c) override;
+    virtual void onLaunched(const NetworkMessageStart2C& l2c) override;
+    virtual void onMatched(const NetworkMessageMatched2C& l2c) override;
     
     // override AbstractRender::RenderListener
     virtual void onExitRequest() override;

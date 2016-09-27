@@ -377,7 +377,7 @@ void GameClient::onPVRLoaded()
             
             if (_network) {
                 _network->connect();
-                _network->launchGame(this,
+                _network->matchGame(this,
                     _battleContent->contentSetting,
                     _battleContent->cards,
                     _battleContent->unitList,
@@ -423,7 +423,13 @@ void GameClient::loadMap2Settings(int mapId) {
     }
 }
 
-void GameClient::onLaunched(const NetworkMessageLaunch2C& l2c) {
+void GameClient::onLaunched(const NetworkMessageStart2C& l2c) {
+    if (_state != kLoading) return;
+    _looper->start();
+    _state = kPlaying;
+}
+
+void GameClient::onMatched(const NetworkMessageMatched2C& l2c) {
     if (_state != kLaunchingNetwork) return;
     
     loadMap2Settings(l2c.getMapId());
@@ -438,10 +444,12 @@ void GameClient::onLaunched(const NetworkMessageLaunch2C& l2c) {
         _hmmSettings->_unitPools[i] = l2c.getUnitPools()[i];
     }
     
-    _looper->init("mofish", *_settings, new GameModeHMM(),
-        _hmmSettings, _gameScheduler, _render, _network);
-    _looper->start();
-    _state = kPlaying;
+    _looper->init("mofish", *_settings, new GameModeHMM(), _hmmSettings, _gameScheduler, _render, _network);
+    _state = kLoading;
+    
+    if(_network) {
+        _network->startGame();
+    }
 }
 
 void GameClient::onExitRequest() {

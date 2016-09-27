@@ -21,3 +21,5 @@ for _f in `ls *.xml`;do
 	echo $_f
 	$dir/CTREncryptor $_f $project_root/Resources/configs/TechTreeData/$_f
 done
+
+sleep 2

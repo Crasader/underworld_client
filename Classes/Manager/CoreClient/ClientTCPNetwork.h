@@ -23,23 +23,26 @@ namespace UnderWorld { namespace Core {
 }}
 
 class NetworkMessage;
-class NetworkMessageLaunch2C;
-class NetworkMessageLaunch2S;
+class NetworkMessageMatched2C;
+class NetworkMessageStart2C;
+class NetworkMessageMatch2S;
 
 class ClientTCPNetwork : public UnderWorld::Core::AbstractNetwork {
 public:
     class LaunchListener {
     public:
-        virtual void onLaunched(const NetworkMessageLaunch2C& l2c) = 0;
+        virtual void onLaunched(const NetworkMessageStart2C& l2c) = 0;
+        virtual void onMatched(const NetworkMessageMatched2C& l2c) = 0;
     };
 
 private:
     
     enum ClientStatus {
         Idle = 0,
-        Launching = 1,
-        Fighting = 2,
-        Finished = 3
+        Matching = 1,
+        Launching = 2,
+        Fighting = 3,
+        Finished = 4
     };
     
 private:
@@ -54,7 +57,7 @@ private:
     
     // launch
     LaunchListener* _launchListener;
-    NetworkMessageLaunch2S* _launchMsg;
+    NetworkMessageMatch2S* _matchMsg;
     
     // sync
     std::vector<NetworkMessage*> _incomeNetworkMessages;
@@ -73,18 +76,19 @@ public:
     , _battleid(INVALID_VALUE)
     , _status(ClientStatus::Idle)
     , _launchListener(nullptr)
-    , _launchMsg(nullptr)
+    , _matchMsg(nullptr)
     , _safeFrame(0)
     , _lastSafeFrame(0) {}
     virtual ~ClientTCPNetwork();
     
     /** interface */
     void connect();
-    void launchGame(LaunchListener* launchListener,
+    void matchGame(LaunchListener* launchListener,
         const UnderWorld::Core::GameContentSetting& contentSetting,
         const std::vector<int>& cards,
         const UnderWorld::Core::GameModeHMMSetting::InitUnitList& initList,
         const vector<UnderWorld::Core::HMMCardSetting>& unitPool);
+    void startGame();
     void closeGame();
 
     /** override AbstractNetwork */
@@ -125,7 +129,7 @@ public:
     virtual NetworkMessage* clone() const = 0;
 };
 
-class NetworkMessageLaunch2S : public NetworkMessage {
+class NetworkMessageMatch2S : public NetworkMessage {
 private:
     typedef UnderWorld::Core::GameContentSetting ContentSetting;
     typedef UnderWorld::Core::GameModeHMMSetting::InitUnitList InitUnits;
@@ -138,7 +142,7 @@ private:
     UnitPool _unitPool;
     
 public:
-    NetworkMessage* clone() const override                     {return new NetworkMessageLaunch2S(*this);}
+    NetworkMessage* clone() const override                     {return new NetworkMessageMatch2S(*this);}
     
     /** getters */
     const ContentSetting& getGameContentSetting() const        {return _setting;}
@@ -153,7 +157,7 @@ public:
     void setUnitPool(const UnitPool& unitPool)                 {_unitPool = unitPool;}
 };
 
-class NetworkMessageLaunch2C : public NetworkMessage {
+class NetworkMessageMatched2C : public NetworkMessage {
 private:
     typedef UnderWorld::Core::FactionSetting FactionSetting;
     typedef std::vector<std::vector<int> > Cards;
@@ -168,7 +172,7 @@ private:
     int _mapId;
     
 public:
-    NetworkMessage* clone() const override                 {return new NetworkMessageLaunch2C(*this);}
+    NetworkMessage* clone() const override                 {return new NetworkMessageMatched2C(*this);}
     const FactionSetting& getFactionSetting() const        {return _factionSetting;}
     const Cards& getCards() const                          {return _cards;}
     const InitUnitLists& getInitUnitLists() const          {return _initUnitLists;}
@@ -190,6 +194,16 @@ public:
 class NetworkMessageCancel2C : public NetworkMessage {
 public:
     NetworkMessage* clone() const override    {return new NetworkMessageCancel2C(*this);}
+};
+
+class NetworkMessageStart2S : public NetworkMessage {
+public:
+    NetworkMessage* clone() const override    {return new NetworkMessageStart2S(*this);}
+};
+
+class NetworkMessageStart2C : public NetworkMessage {
+public:
+    NetworkMessage* clone() const override    {return new NetworkMessageStart2C(*this);}
 };
 
 class NetworkMessageSync : public NetworkMessage {
