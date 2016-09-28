@@ -498,7 +498,7 @@
 	<buff alias="震荡法术减速效果" buff_effect_names="震荡法术降低攻速效果;震荡法术降低移动效果" deliver_class="magical" deliver_nature="enemy" dispelable="0" id="1913" is_on_building="0" level="1" max_overlay="1" name="震荡法术减速效果" span="420" span_type="limited" unique_on_unit="1"/>
 	<buff alias="磁场法术增加闪避效果" buff_effect_names="磁场法术增加闪避效果" deliver_class="physical" deliver_nature="ally" dispelable="0" id="1914" is_on_building="0" level="1" max_overlay="1" name="磁场法术增加闪避效果" span_type="eternal" unique_on_unit="1"/>
 	<buff alias="无敌药水buff" buff_effect_names="无敌药水buff" deliver_class="physical" deliver_nature="ally" dispelable="0" id="1915" is_on_building="0" level="1" max_overlay="1" name="无敌药水buff" render_key="无敌" span="420" span_type="limited" unique_on_unit="1"/>
-	<buff alias="守护卷轴buff" buff_effect_names="守护卷轴护甲buff;守护卷轴魔抗buff" deliver_class="physical" deliver_nature="ally" dispelable="0" id="1916" is_on_building="0" level="1" max_overlay="1" name="守护卷轴buff" render_key="心灵之火" span="420" span_type="limited" unique_on_unit="1"/>
+	<buff alias="守护卷轴buff" buff_effect_names="守护卷轴护甲buff;守护卷轴魔抗buff" deliver_class="physical" deliver_nature="ally" dispelable="1" id="1916" is_on_building="0" level="1" max_overlay="1" name="守护卷轴buff" render_key="心灵之火" span="720" span_type="limited" unique_on_unit="1"/>
 	<buff alias="人族盾牌队长坚守状态" buff_effect_names="人族盾牌队长坚守增加护甲" deliver_class="physical" deliver_nature="ally" dispelable="1" id="1001" is_on_building="0" level="1" max_overlay="1" name="人族盾牌队长坚守状态" render_key="坚守" span="480" span_type="limited" unique_on_unit="1"/>
 	<buff alias="人族盾牌队长坚韧守护buff" buff_effect_names="人族盾牌队长坚韧守护buff" deliver_class="physical" deliver_nature="ally" dispelable="0" id="1002" is_on_building="0" level="1" max_overlay="1" name="人族盾牌队长坚韧守护buff" span_type="eternal" unique_on_unit="1"/>
 	<buff alias="人族剑士队长杀戮冲锋加速" buff_effect_names="人族剑士队长杀戮冲锋加速buff" deliver_class="magical" deliver_nature="ally" dispelable="0" id="1003" level="1" max_overlay="1" name="人族剑士队长杀戮冲锋加速buff" span="300" span_type="limited" unique_on_unit="1"/>
@@ -692,8 +692,8 @@
 	<effect alias_name="降低移动效果" attr_name="move_speed" class="alter_attr" effect_name="震荡法术降低移动效果" value="p:-70"/>
 	<effect alias_name="增加闪避效果" class="add_feature" effect_name="磁场法术增加闪避效果" feature_name="磁场法术增加闪避特性"/>
 	<effect class="set_state" effect_name="无敌药水buff" state_name="holly"/>
-	<effect alias_name="增加护甲效果" attr_name="armor" class="alter_attr" effect_name="守护卷轴护甲buff" value="90"/>
-	<effect alias_name="增加单位魔抗" attr_name="magical_defense" class="alter_attr" effect_name="守护卷轴魔抗buff" value="150"/>
+	<effect alias_name="增加护甲效果" attr_name="armor" class="alter_attr" effect_name="守护卷轴护甲buff" value="80"/>
+	<effect alias_name="增加单位魔抗" attr_name="magical_defense" class="alter_attr" effect_name="守护卷轴魔抗buff" value="80"/>
 	<effect alias_name="增加护甲效果" attr_name="armor" class="alter_attr" effect_name="人族盾牌队长坚守增加护甲" value="60"/>
 	<effect alias_name="减免伤害效果" class="add_feature" effect_name="人族盾牌队长坚韧守护buff" feature_name="人族盾牌队长坚韧守护特性"/>
 	<effect alias_name="提高移动效果" attr_name="move_speed" class="alter_attr" effect_name="人族剑士队长杀戮冲锋加速buff" value="60"/>
