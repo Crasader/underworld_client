@@ -39,6 +39,7 @@
 	<item card="3" gold="150" hint="攻城单位" id="22019" level="1" name="object_name_22019"/>
 	<item card="3" gold="150" hint="精灵守卫" id="22021" level="1" name="object_name_22021"/>
 	<item card="3" gold="150" hint="火炮兵" id="22023" level="1" name="object_name_22023"/>
+	<item card="3" gold="150" hint="野猪骑兵" id="22024" level="1" name="object_name_22024"/>
 	<item card="3" gold="150" hint="地雷工兵" id="22025" level="1" name="object_name_22025"/>
 	<item card="3" gold="150" hint="娜迦战士" id="22026" level="1" name="object_name_22026"/>
 	<item card="3" gold="150" hint="狼人刺客" id="22028" level="1" name="object_name_22028"/>
@@ -93,6 +94,7 @@
 	<item card="5" gold="250" hint="攻城单位" id="22019" level="2" name="object_name_22019"/>
 	<item card="5" gold="250" hint="精灵守卫" id="22021" level="2" name="object_name_22021"/>
 	<item card="5" gold="250" hint="火炮兵" id="22023" level="2" name="object_name_22023"/>
+	<item card="5" gold="250" hint="野猪骑兵" id="22024" level="2" name="object_name_22024"/>
 	<item card="5" gold="250" hint="地雷工兵" id="22025" level="2" name="object_name_22025"/>
 	<item card="5" gold="250" hint="娜迦战士" id="22026" level="2" name="object_name_22026"/>
 	<item card="5" gold="250" hint="狼人刺客" id="22028" level="2" name="object_name_22028"/>

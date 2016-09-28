@@ -42,6 +42,7 @@
 	<item id="22019" icon="icon_v_gongchengche"/><!--攻城单位  -->
 	<item id="22021" icon="SSS"/><!--精灵守卫  -->
 	<item id="22023" icon="UUU"/><!--火炮兵  -->
+	<item id="22024" icon="VVV"/><!--野猪骑兵  -->
 	<item id="22025" icon="WWW"/><!--地雷工兵  -->
 	<item id="22026" icon="XXX"/><!--娜迦战士  -->
 	<item id="22028" icon="ZZZ"/><!--狼人刺客  -->
@@ -49,7 +50,6 @@
 	<!--<item id="22020" icon="RRR"/>--><!--精灵祭祀  -->
     <!--<item id="22022" icon="TTT"/>--><!--攻城小队  -->
     <!--<item id="22023" icon="UUU"/>--><!--火炮兵  -->
-    <!--<item id="22024" icon="VVV"/>--><!--野猪骑兵  -->
     <!--<item id="22025" icon="WWW"/>--><!--地雷工兵  -->
     <!--<item id="22026" icon="XXX"/>--><!--娜迦战士  -->
     <!--<item id="22027" icon="YYY"/>--><!--牛头术士  -->

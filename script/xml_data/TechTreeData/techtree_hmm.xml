@@ -119,8 +119,11 @@
 	<card name="火炮兵" card_class="summon" cost="木头:40" recover_span="0" id="22023">
 		<unit_setting unit_setting_id="12020"/>
 	</card>
+	<card name="野猪骑兵" card_class="summon" cost="木头:40" recover_span="0" id="22024">
+		<unit_setting unit_setting_id="12025"/>
+	</card>
 	<card name="地雷工兵" card_class="summon" cost="木头:30" recover_span="0" id="22025">
-		<unit_setting unit_setting_id="12021"/>
+		<unit_setting unit_setting_id="12026"/>
 	</card>
 	<card name="娜迦战士" card_class="summon" cost="木头:80" recover_span="0" id="22026">
 		<unit_setting unit_setting_id="12022"/>
