@@ -7,8 +7,8 @@
 //
 
 #include "AnnouncementNode.h"
-#include "cocos2d.h"
 #include "Utils.h"
+#include "CocosUtils.h"
 
 using namespace std;
 

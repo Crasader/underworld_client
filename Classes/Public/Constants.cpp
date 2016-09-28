@@ -8,7 +8,6 @@
 
 #include "Constants.h"
 #include "tinyxml2/tinyxml2.h"
-#include "Global.h"
 #include "Utils.h"
 #include "LocalHelper.h"
 #include "platform/CCFileUtils.h"
@@ -43,7 +42,7 @@ void Constants::init()
             CCLOG("%d", STAGE_COUNT_PER_ISLAND);
 #endif
             
-            M_SAFE_DELETE(xmlDoc);
+            delete (xmlDoc);
         }
     }
 }

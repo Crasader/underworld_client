@@ -10,6 +10,7 @@
 #include "ResourceButton.h"
 #include "CocosUtils.h"
 #include "LocalHelper.h"
+#include "ResourceManager.h"
 #include "AbstractData.h"
 #include "AbstractProperty.h"
 #include "AbstractUpgradeProperty.h"
@@ -100,20 +101,17 @@ void SeniorCard::updateData(const AbstractData* data)
         _button->setVisible(show);
     }
     
-    if (show) {
+    do {
+        CC_BREAK_IF(!show);
         auto up(data->getUpgradeProperty());
-        if (up) {
-            const auto& pair(up->getResourceCost());
-            if (pair.first != ResourceType::MAX) {
-                _button->setType(pair.first);
-                _button->setCount(pair.second);
-                _button->setEnabled(canUpgrade());
-                // TODO: if has enough resource
-                static const bool enoughResource(true);
-                _button->setResourceEnough(enoughResource);
-            } else {
-                CC_ASSERT(false);
-            }
-        }
-    }
+        CC_BREAK_IF(!up);
+        const auto& pair(up->getResourceCost());
+        const auto type(pair.first);
+        CC_ASSERT(pair.first != ResourceType::MAX);
+        const auto count(pair.second);
+        _button->setType(type);
+        _button->setCount(count);
+        _button->setEnabled(canUpgrade());
+        _button->setResourceEnough(ResourceManager::getInstance()->getResourceCount(type) >= count);
+    } while (false);
 }

@@ -11,6 +11,7 @@
 #include "UserDefaultHelper.h"
 #include "ResourceManager.h"
 #include "NetworkApi.h"
+#include "UserSimpleData.h"
 
 using namespace std;
 
@@ -24,16 +25,13 @@ static const char* kNEW("new_user");
 User::User(const rapidjson::Value& jsonDict)
 :_isNewUser(false)
 ,_isGuest(false)
-,_uid(0)
-,_icon(0)
-,_level(0)
 ,_isInBattle(false)
 ,_isFirstLogin(true)
 ,_finishedTutorialsMaxIdx(-1)
+,_userData(nullptr)
 {
     // parse with the data from network
     JSonUtils::parse(_isGuest, jsonDict, kGUEST);
-    JSonUtils::parse(_uid, jsonDict, kUID);
     JSonUtils::parse(_token, jsonDict, kAuth);
     JSonUtils::parse(_isNewUser, jsonDict, kNEW);
     
@@ -42,7 +40,7 @@ User::User(const rapidjson::Value& jsonDict)
 
 User::~User()
 {
-    
+    CC_SAFE_DELETE(_userData);
 }
 
 #pragma mark - public
@@ -58,27 +56,21 @@ bool User::isGuest() const
 
 int User::getUid() const
 {
-    return _uid;
-}
-
-int User::getIcon() const
-{
-    return _icon;
-}
-
-int User::getLevel() const
-{
-    return _level;
-}
-
-const string& User::getName() const
-{
-    return _name;
+    if (_userData) {
+        return _userData->getUid();
+    }
+    
+    return 0;
 }
 
 const string& User::getToken() const
 {
     return _token;
+}
+
+UserSimpleData* User::getUserData() const
+{
+    return _userData;
 }
 
 #pragma mark - tags
@@ -147,10 +139,11 @@ void User::parseUserInfo(const rapidjson::Value& jsonDict)
         static const char* key("user");
         CC_BREAK_IF(!JSonUtils::isExist(jsonDict, key));
         const auto& value = DICTOOL->getSubDictionary_json(jsonDict, key);
-        JSonUtils::parse(_uid, value, kUID);
-        JSonUtils::parse(_name, value, kNAME);
-        JSonUtils::parse(_icon, value, kUID);
-        JSonUtils::parse(_level, value, kUID);
         JSonUtils::parse(_isGuest, value, kGUEST);
+        if (_userData) {
+            _userData->update(value);
+        } else {
+            _userData = new (std::nothrow) UserSimpleData(value);
+        }
     } while (false);
 }

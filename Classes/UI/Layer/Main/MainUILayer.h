@@ -10,8 +10,7 @@
 #define MainUILayer_h
 
 #include "ChatLayer.h"
-
-USING_NS_CC;
+#include <unordered_set>
 
 class ResourceNode;
 class UserSimpleNode;
@@ -46,8 +45,7 @@ protected:
     // ChatLayerObserver
     virtual void onChatLayerTouchedButton(ui::Button* button, ui::Widget::TouchEventType type) override;
     
-    void updateAvatar(int idx);
-    void updateExp();
+    void updateUserInfo();
     void updateResources();
     Point getChatLayerDefaultPosition(bool folded) const;
     void moveChatLayer(bool folded, bool animated);
@@ -67,9 +65,7 @@ private:
     // UI
     ChatLayer* _chatLayer;
     UserSimpleNode* _userNode;
-    ResourceNode* _staminaResourceNode;
-    ResourceNode* _goldResourceNode;
-    ResourceNode* _gemResourceNode;
+    std::unordered_set<ResourceNode*> _resourceNodes;
 };
 
 #endif /* MainUILayer_h */

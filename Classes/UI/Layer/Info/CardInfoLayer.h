@@ -17,6 +17,7 @@
 
 class SeniorCard;
 class XButton;
+class PureScale9Sprite;
 
 class CardInfoLayerObserver
 {
@@ -68,6 +69,7 @@ private:
     
 private:
     CardInfoLayerObserver* _observer;
+    PureScale9Sprite* _rarityBar;
     Label* _level;
     Label* _profession;
     RuneCircle* _runeCircle;

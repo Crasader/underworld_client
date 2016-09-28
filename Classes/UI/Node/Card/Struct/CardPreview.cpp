@@ -26,9 +26,6 @@ static const float foundSpaceTop(10);
 static const float foundSpaceBottom(30);
 static const float unfoundSpaceTop(20);
 
-static int column(0);
-static float unfoundSpaceBottom(0);
-
 static const vector<DeckManager::SortType> sortTypes = {
     DeckManager::SortType::Default,
     DeckManager::SortType::Rarity,
@@ -47,7 +44,7 @@ static int getSortTypeIdx(DeckManager::SortType type)
     return -1;
 }
 
-CardPreview::CardPreview(DeckManager::FeatureType type, Node* parent, CardPreviewObserver* observer)
+CardPreview::CardPreview(DeckManager::FeatureType type, Node* parent, int column, float unfoundSpaceBottom, CardPreviewObserver* observer)
 :_observer(observer)
 ,_cardsCountLabel(nullptr)
 ,_sortTypeButton(nullptr)
@@ -57,6 +54,8 @@ CardPreview::CardPreview(DeckManager::FeatureType type, Node* parent, CardPrevie
 ,_unfoundCards(nullptr)
 ,_opNode(nullptr)
 ,_featureType(type)
+,_column(column)
+,_unfoundSpaceBottom(unfoundSpaceBottom)
 ,_cardSize(Size::ZERO)
 ,_sortIdx(-1)
 ,_cardSpaceX(0)
@@ -64,15 +63,6 @@ CardPreview::CardPreview(DeckManager::FeatureType type, Node* parent, CardPrevie
 {
     if (!parent || !observer) {
         return;
-    }
-    
-    // set some constants
-    if (DeckManager::FeatureType::Deck == type) {
-        column = 6;
-        unfoundSpaceBottom = 115.0f;
-    } else {
-        column = 9;
-        unfoundSpaceBottom = 50.0f;
     }
     
     const auto& size(parent->getContentSize());
@@ -268,7 +258,7 @@ void CardPreview::initCards()
     const float h1 = getHeight(foundCards.size(), cardSpaceY);
     const float h2 = getHeight(unfoundCards.size(), cardSpaceY);
     const float fb(h2 > 0 ? foundSpaceBottom + _unfoundLine->getContentSize().height + unfoundSpaceTop : 0);
-    const float height = MAX(_scrollViewMinSize.height, (foundSpaceTop + h1 + h2) + fb + unfoundSpaceBottom);
+    const float height = MAX(_scrollViewMinSize.height, (foundSpaceTop + h1 + h2) + fb + _unfoundSpaceBottom);
     _scrollView->setInnerContainerSize(Size(width, height));
     
     // the found cards
@@ -286,7 +276,7 @@ void CardPreview::initCards()
         _scrollView->addChild(card);
         _foundCards->insertCard(cardId, card);
         
-        auto point = getPosition(i / column, i % column) + Point(0, foundSpaceTop);
+        auto point = getPosition(i / _column, i % _column) + Point(0, foundSpaceTop);
         card->setPosition(Point(point.x, height - point.y));
         _foundCards->pushPosition(card->getPosition());
     }
@@ -311,7 +301,7 @@ void CardPreview::initCards()
             _scrollView->addChild(card);
             _unfoundCards->insertCard(cardId, card);
             
-            const auto& point = getPosition(i / column, i % column);
+            const auto& point = getPosition(i / _column, i % _column);
             card->setPosition(Point(point.x, _unfoundLine->getPositionY() - (halfHeight + unfoundSpaceTop + point.y)));
             _unfoundCards->pushPosition(card->getPosition());
         }
@@ -416,7 +406,7 @@ void CardPreview::realignCards(const vector<int>& cards, CardSet* cardSet)
 float CardPreview::getHeight(size_t count, float spaceY) const
 {
     if (count > 0) {
-        const size_t row = (count - 1) / column + 1;
+        const size_t row = (count - 1) / _column + 1;
         return row * (_cardSize.height + spaceY) - spaceY;
     }
     
@@ -453,7 +443,7 @@ void CardPreview::fullyDisplayCard(BaseCard* card)
             
             static const float duration(0.5f);
             const float sb(_scrollView->getParent()->convertToWorldSpace(_scrollView->getPosition()).y);
-            const float ob(unfoundSpaceBottom - (cwpY - cheight / 2 - sb));
+            const float ob(_unfoundSpaceBottom - (cwpY - cheight / 2 - sb));
             if (ob > 0) {
                 // innerPositionY is < 0
                 const float percentage(MAX(MIN(-1.0f * (innerPositionY + ob) / offsetY * 100.0f, 100), 0));

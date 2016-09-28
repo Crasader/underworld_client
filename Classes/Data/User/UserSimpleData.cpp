@@ -7,7 +7,6 @@
 //
 
 #include "UserSimpleData.h"
-#include "Utils.h"
 #include "JSonUtils.h"
 #include "UserArenaData.h"
 #include "UserGuildData.h"
@@ -35,10 +34,10 @@ UserSimpleData::~UserSimpleData()
 
 void UserSimpleData::update(const rapidjson::Value& jsonDict)
 {
-    JSonUtils::parse(_uid, jsonDict, "id");
-    JSonUtils::parse(_name, jsonDict, "jointype");
+    JSonUtils::parse(_uid, jsonDict, "uid");
+    JSonUtils::parse(_name, jsonDict, "name");
     JSonUtils::parse(_icon, jsonDict, "icon");
-    JSonUtils::parse(_level, jsonDict, "name");
+    JSonUtils::parse(_level, jsonDict, "level");
     JSonUtils::parse(_exp, jsonDict, "notice");
     
     if (JSonUtils::isExist(jsonDict, "guildinfo")) {

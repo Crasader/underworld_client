@@ -7,7 +7,6 @@
 //
 
 #include "MediumBoard.h"
-#include "CocosUtils.h"
 #include "PureScale9Sprite.h"
 #include "XButton.h"
 

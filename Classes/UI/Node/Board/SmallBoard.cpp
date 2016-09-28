@@ -7,7 +7,6 @@
 //
 
 #include "SmallBoard.h"
-#include "CocosUtils.h"
 #include "PureScale9Sprite.h"
 
 using namespace std;

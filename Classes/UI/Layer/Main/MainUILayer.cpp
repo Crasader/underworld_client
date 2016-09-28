@@ -10,7 +10,9 @@
 #include "ui/CocosGUI.h"
 #include "CocosGlobal.h"
 #include "CocosUtils.h"
+#include "GameData.h"
 #include "GameManager.h"
+#include "ResourceManager.h"
 #include "PvpManager.h"
 #include "BillboardManager.h"
 #include "ShopManager.h"
@@ -142,15 +144,14 @@ MainUILayer::MainUILayer()
 ,_isChatLayerMoving(false)
 ,_chatLayer(nullptr)
 ,_userNode(nullptr)
-,_staminaResourceNode(nullptr)
-,_goldResourceNode(nullptr)
-,_gemResourceNode(nullptr)
 {
     
 }
 
 MainUILayer::~MainUILayer()
 {
+    _eventDispatcher->removeCustomEventListeners(ResourceChangedNotification);
+    _eventDispatcher->removeCustomEventListeners(UserInfoChangedNotification);
     removeAllChildren();
 }
 
@@ -189,25 +190,28 @@ bool MainUILayer::init()
         
         // 4. right top
         {
-            _gemResourceNode = ResourceNode::create(::ResourceType::Gem, 100, CC_CALLBACK_1(MainUILayer::onResourceButtonClicked, this));
+            auto gemNode = ResourceNode::create(::ResourceType::Gem, 100, CC_CALLBACK_1(MainUILayer::onResourceButtonClicked, this));
             static float offsetX(20);
             static float offsetY(20);
-            const auto& gemSize(_gemResourceNode->getContentSize());
+            const auto& gemSize(gemNode->getContentSize());
             const float x = winSize.width - offsetX - gemSize.width / 2;
             const float y = winSize.height - offsetY - gemSize.height / 2;
             
-            _gemResourceNode->setPosition(Point(x, y));
-            addChild(_gemResourceNode);
+            gemNode->setPosition(Point(x, y));
+            addChild(gemNode);
+            _resourceNodes.insert(gemNode);
             
-            _goldResourceNode = ResourceNode::create(::ResourceType::Gold, 100, CC_CALLBACK_1(MainUILayer::onResourceButtonClicked, this));
-            const auto& goldSize(_goldResourceNode->getContentSize());
-            _goldResourceNode->setPosition(Point(x - (offsetX + (gemSize.width + goldSize.width) / 2), y));
-            addChild(_goldResourceNode);
+            auto goldNode = ResourceNode::create(::ResourceType::Gold, 100, CC_CALLBACK_1(MainUILayer::onResourceButtonClicked, this));
+            const auto& goldSize(goldNode->getContentSize());
+            goldNode->setPosition(Point(x - (offsetX + (gemSize.width + goldSize.width) / 2), y));
+            addChild(goldNode);
+            _resourceNodes.insert(goldNode);
             
-            _staminaResourceNode = ResourceNode::create(::ResourceType::Stamina, 100, CC_CALLBACK_1(MainUILayer::onResourceButtonClicked, this));
-            const auto& jadeSize(_staminaResourceNode->getContentSize());
-            _staminaResourceNode->setPosition(Point(x - (offsetX * 2 + (gemSize.width + jadeSize.width) / 2 + goldSize.width), y));
-            addChild(_staminaResourceNode);
+            auto staminaNode = ResourceNode::create(::ResourceType::Stamina, 100, CC_CALLBACK_1(MainUILayer::onResourceButtonClicked, this));
+            const auto& jadeSize(staminaNode->getContentSize());
+            staminaNode->setPosition(Point(x - (offsetX * 2 + (gemSize.width + jadeSize.width) / 2 + goldSize.width), y));
+            addChild(staminaNode);
+            _resourceNodes.insert(staminaNode);
         }
         
         // 5. right bottom
@@ -232,7 +236,7 @@ bool MainUILayer::init()
             createButtonUpward(ButtonType::Achievement, original.x, y, space);
         }
         
-        updateAvatar(0);
+        updateUserInfo();
         updateResources();
         
         auto eventListener = EventListenerTouchOneByOne::create();
@@ -240,6 +244,12 @@ bool MainUILayer::init()
         eventListener->onTouchBegan = CC_CALLBACK_2(MainUILayer::onTouchBegan, this);
         eventListener->onTouchEnded = CC_CALLBACK_2(MainUILayer::onTouchEnded, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
+        _eventDispatcher->addCustomEventListener(ResourceChangedNotification, [this](EventCustom *) {
+            updateResources();
+        });
+        _eventDispatcher->addCustomEventListener(UserInfoChangedNotification, [this](EventCustom *) {
+            updateUserInfo();
+        });
         
         return true;
     }
@@ -290,21 +300,22 @@ void MainUILayer::onChatLayerTouchedButton(Button* button, Widget::TouchEventTyp
 }
 
 #pragma mark - private
-void MainUILayer::updateAvatar(int idx)
+void MainUILayer::updateUserInfo()
 {
-    if (_userNode) {
-        _userNode->setAvatar(idx);
+    auto user(GameData::getInstance()->currentUser());
+    if (user && _userNode) {
+        _userNode->setData(user->getUserData());
     }
-}
-
-void MainUILayer::updateExp()
-{
-    
 }
 
 void MainUILayer::updateResources()
 {
-    
+    auto rm(ResourceManager::getInstance());
+    for (auto node : _resourceNodes) {
+        if (node) {
+            node->setCount(rm->getResourceCount(node->getType()), true);
+        }
+    }
 }
 
 Point MainUILayer::getChatLayerDefaultPosition(bool folded) const

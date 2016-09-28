@@ -14,8 +14,9 @@
 
 // from login response
 #define kUID    ("uid")
-#define kNAME   ("name")
 #define kAuth   ("auth")
+
+class UserSimpleData;
 
 class User
 {
@@ -27,10 +28,8 @@ public:
     bool isNewUser() const;
     bool isGuest() const;
     int getUid() const;
-    int getIcon() const;
-    int getLevel() const;
-    const std::string& getName() const;
     const std::string& getToken() const;
+    UserSimpleData* getUserData() const;
     
     bool isFirstLogin() const;
     void saveFirstLoginTag();
@@ -52,15 +51,13 @@ private:
 private:
     bool _isNewUser;
     bool _isGuest;
-    int _uid;
-    int _icon;
-    int _level;
-    std::string _name;
     bool _isInBattle;
     std::string _token;
     
     bool _isFirstLogin;
     int _finishedTutorialsMaxIdx;
+    
+    UserSimpleData* _userData;
 };
 
 #endif /* User_h */

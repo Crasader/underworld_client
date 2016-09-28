@@ -14,6 +14,7 @@
 #include "CardAttributeNode.h"
 #include "LocalHelper.h"
 #include "DataManager.h"
+#include "ResourceManager.h"
 #include "AbstractData.h"
 #include "AttributeProperty.h"
 #include "CardProperty.h"
@@ -134,10 +135,11 @@ void AbstractInfoLayer::updateData(const AbstractData* data)
         const auto& pair(up->getResourceCost());
         auto type(pair.first);
         CC_BREAK_IF(type == ResourceType::MAX);
+        const auto count(pair.second);
         _resourceButton->setType(type);
-        _resourceButton->setCount(pair.second);
+        _resourceButton->setCount(count);
         _resourceButton->setEnabled(_icon ? _icon->canUpgrade() : false);
-        static const bool enoughResource(true);
+        const bool enoughResource(ResourceManager::getInstance()->getResourceCount(type) >= count);
         _resourceButton->setResourceEnough(enoughResource);
     } while (false);
 }

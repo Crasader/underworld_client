@@ -23,10 +23,6 @@ CardProperty::CardProperty(tinyxml2::XMLElement *xmlElement)
 ,_donatePoint(0)
 {
     _cardType = DataManager::getInstance()->getGameModeHMM()->findCardTypeById(getId());
-    if (_cardType) {
-        _name = _cardType->getName();
-    }
-    
     XMLUtils::parse(xmlElement, "grade", _rarity);
     XMLUtils::parse(xmlElement, "unlock", _beUnlockedLevel);
     XMLUtils::parse(xmlElement, "require", _beRequiredCount);

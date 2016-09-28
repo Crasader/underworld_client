@@ -9,8 +9,7 @@
 #ifndef AnnouncementNode_h
 #define AnnouncementNode_h
 
-#include <stdio.h>
-#include "CocosUtils.h"
+#include "cocos2d.h"
 
 USING_NS_CC;
 

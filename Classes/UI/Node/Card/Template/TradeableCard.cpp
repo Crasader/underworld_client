@@ -11,6 +11,7 @@
 #include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "CommodityData.h"
+#include "ResourceManager.h"
 
 using namespace std;
 
@@ -95,12 +96,13 @@ void TradeableCard::updateData(const AbstractData* data)
         _button->setVisible(show);
         CC_BREAK_IF(!show);
         
+        const auto count(iter->second);
         _button->setType(type);
-        _button->setCount(iter->second);
+        _button->setCount(count);
         
-        // TODO: if has enough resource
-        static const bool enoughResource(true);
+        static const bool enoughResource(ResourceManager::getInstance()->getResourceCount(type) >= count);
         _button->setResourceEnough(enoughResource);
+        // TODO: check if the books is enough
         _button->setEnabled(enoughResource);
     } while (false);
 }

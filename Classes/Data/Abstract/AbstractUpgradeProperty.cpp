@@ -7,7 +7,6 @@
 //
 
 #include "AbstractUpgradeProperty.h"
-#include "Utils.h"
 #include "XMLUtils.h"
 
 using namespace std;

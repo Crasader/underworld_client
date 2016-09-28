@@ -13,10 +13,11 @@
 #include "UserSimpleNode.h"
 #include "BattleRewardNode.h"
 #include "XButton.h"
+#include "BattleResultData.h"
+#include "ObjectBriefData.h"
 
 using namespace std;
 
-static const int zorder_bottom(-1);
 static const int zorder_top(1);
 
 BattleResultLayer* BattleResultLayer::create()
@@ -34,7 +35,9 @@ BattleResultLayer* BattleResultLayer::create()
 BattleResultLayer::BattleResultLayer()
 :_observer(nullptr)
 ,_result(nullptr)
-,_userNode(nullptr) {}
+,_userNode(nullptr)
+,_trophy(nullptr)
+,_data(nullptr) {}
 
 BattleResultLayer::~BattleResultLayer()
 {
@@ -49,12 +52,12 @@ bool BattleResultLayer::init()
         auto result = Sprite::create(CocosUtils::getResourcePath("zi_shengli.png"));
         const auto& rsize(result->getContentSize());
         result->setPosition(winSize.width / 2, winSize.height - (edge + rsize.height / 2));
-        addChild(result);
+        addChild(result, zorder_top);
         _result = result;
         
         auto flash = Sprite::create(CocosUtils::getResourcePath("texiao_guang.png"));
         flash->setPosition(result->getPosition() - Point(0, 75));
-        addChild(flash, zorder_bottom);
+        addChild(flash);
         
         auto fireworks = Sprite::create(CocosUtils::getResourcePath("texiao_caidan.png"));
         const auto& fsize(fireworks->getContentSize());
@@ -67,31 +70,34 @@ bool BattleResultLayer::init()
         user->setIsMe(false);
         const auto& usize(user->getContentSize());
         user->setPosition(winSize.width / 2, result->getPositionY() - (rsize.height + usize.height) / 2 - ruspace);
-        addChild(user);
+        addChild(user, zorder_top);
         _userNode = user;
         
-        static const int rewardsCount(3);
+        auto trophy(BattleRewardNode::create());
+        trophy->setTrophy();
+        addChild(trophy, zorder_top);
+        _trophy = trophy;
+        
+        static const int rewardsCount(2);
         for (int i = 0; i < rewardsCount; ++i) {
             auto node = BattleRewardNode::create();
             if (0 == i) {
-                node->setTrophy();
-            } else if (1 == i) {
                 node->setResource(ResourceType::Gem);
-            } else if (2 == i) {
+            } else if (1 == i) {
                 node->setResource(ResourceType::Gold);
             }
-            addChild(node);
+            addChild(node, zorder_top);
             _rewards.push_back(node);
         }
         
         static const float urspace(20);
-        _rewards.at(0)->setPosition(winSize.width / 2, user->getPositionY() - (usize.height / 2 + urspace + _rewards.at(0)->getContentSize().height / 2));
+        trophy->setPosition(winSize.width / 2, user->getPositionY() - (usize.height / 2 + urspace + trophy->getContentSize().height / 2));
         static const Vec2 rspace(80, 80);
-        _rewards.at(1)->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
-        _rewards.at(1)->setPosition(winSize.width / 2 - rspace.x / 2, _rewards.at(0)->getPositionY() - rspace.y);
+        _rewards.at(0)->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
+        _rewards.at(0)->setPosition(winSize.width / 2 - rspace.x / 2, trophy->getPositionY() - rspace.y);
         
-        _rewards.at(2)->setPosition(Point::ANCHOR_MIDDLE_LEFT);
-        _rewards.at(2)->setPosition(winSize.width / 2 + rspace.x / 2, _rewards.at(1)->getPositionY());
+        _rewards.at(1)->setPosition(Point::ANCHOR_MIDDLE_LEFT);
+        _rewards.at(1)->setPosition(winSize.width / 2 + rspace.x / 2, _rewards.at(0)->getPositionY());
         
         static const float bedge(110);
         auto button = XButton::create(XButton::BSize::Big, XButton::BType::Blue);
@@ -103,7 +109,7 @@ bool BattleResultLayer::init()
                 _observer->onBattleResultLayerConfirm(this);
             }
         });
-        addChild(button);
+        addChild(button, zorder_top);
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->setSwallowTouches(true);
@@ -127,4 +133,36 @@ void BattleResultLayer::onTouchEnded(Touch *touch, Event *unused_event) {}
 void BattleResultLayer::registerObserver(BattleResultLayerObserver *observer)
 {
     _observer = observer;
+}
+
+void BattleResultLayer::update(const BattleResultData* data)
+{
+    if (_data != data) {
+        _data = data;
+        
+        // TODO:
+        if (/* DISABLES CODE */ (false) && _result) {
+            _result->setTexture("");
+        }
+        
+        if (_trophy) {
+            _trophy->setCount(data->getTrophy());
+        }
+        
+        auto rewards(data->getRewards());
+        const auto cnt(_rewards.size());
+        for (int i = 0; i < rewards.size(); ++i) {
+            if (i < cnt) {
+                auto data(rewards.at(i));
+                auto node(_rewards.at(i));
+                node->setVisible(true);
+                node->setResource(static_cast<ResourceType>(data->getId()));
+                node->setCount(data->getCount());
+            }
+        }
+        
+        for (auto i = rewards.size(); i < cnt; ++i) {
+            _rewards.at(i)->setVisible(false);
+        }
+    }
 }

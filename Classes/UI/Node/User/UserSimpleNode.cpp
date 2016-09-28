@@ -8,6 +8,9 @@
 
 #include "UserSimpleNode.h"
 #include "UserSimpleData.h"
+#include "UserArenaData.h"
+#include "UserGuildData.h"
+#include "GuildData.h"
 #include "CocosUtils.h"
 #include "SoundManager.h"
 #include "AvatarNode.h"
@@ -107,25 +110,63 @@ void UserSimpleNode::setIsHome(bool isHome)
 
 void UserSimpleNode::setData(const UserSimpleData* data)
 {
-    _data = data;
+    if (_data != data) {
+        _data = data;
+    }
     
-    // update info
-    if (data) {
-        
-    }
-}
-
-void UserSimpleNode::setAvatar(int idx)
-{
-    if (_avatar) {
-        _avatar->setAvatar(idx);
-    }
+    updateThisData();
 }
 
 void UserSimpleNode::setAvatarCallback(const function<void()>& callback)
 {
     if (_avatar) {
         _avatar->setCallback(callback);
+    }
+}
+
+#pragma mark - private
+Node* UserSimpleNode::createNodeWithoutAvatar(const Size& size)
+{
+    auto node = Node::create();
+    node->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    node->setContentSize(size);
+    
+    // name
+    auto name = CocosUtils::createLabel("User Name", SMALL_FONT_SIZE);
+    name->setHorizontalAlignment(TextHAlignment::LEFT);
+    name->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+    node->addChild(name);
+    _name = name;
+    
+    // trophy
+    _trophy = TrophyNode::create();
+    node->addChild(_trophy);
+    const auto& nsize(name->getContentSize());
+    const auto& tsize(_trophy->getContentSize());
+    const float posY(size.height - MAX(nsize.height / 2, tsize.height / 2));
+    name->setPosition(0, posY);
+    _trophy->setPosition(size.width - tsize.width / 2, posY);
+    
+    // exp
+    _exp = ExpNode::create();
+    node->addChild(_exp);
+    const auto& esize(_exp->getContentSize());
+    _exp->setPosition(size.width / 2, esize.height / 2);
+    
+    // guild
+    _guild = GuildSimpleNode::create();
+    node->addChild(_guild);
+    const auto& gsize(_guild->getContentSize());
+    _guild->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+    _guild->setPosition(0, gsize.height / 2);
+    
+    return node;
+}
+
+void UserSimpleNode::setAvatar(int idx)
+{
+    if (_avatar) {
+        _avatar->setAvatar(idx);
     }
 }
 
@@ -171,41 +212,39 @@ void UserSimpleNode::setExp(int progress, int maxProgress)
     }
 }
 
-#pragma mark - private
-Node* UserSimpleNode::createNodeWithoutAvatar(const Size& size)
+void UserSimpleNode::reset()
 {
-    auto node = Node::create();
-    node->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    node->setContentSize(size);
+    setAvatar(0);
+    setUserName("");
+    setTrophy(0);
+    setGuildIcon(0);
+    setGuildName("");
+    setLevel(0);
+    setExp(0, 1);
+}
+
+void UserSimpleNode::updateThisData()
+{
+    reset();
     
-    // name
-    auto name = CocosUtils::createLabel("User Name", SMALL_FONT_SIZE);
-    name->setHorizontalAlignment(TextHAlignment::LEFT);
-    name->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
-    node->addChild(name);
-    _name = name;
-    
-    // trophy
-    _trophy = TrophyNode::create();
-    node->addChild(_trophy);
-    const auto& nsize(name->getContentSize());
-    const auto& tsize(_trophy->getContentSize());
-    const float posY(size.height - MAX(nsize.height / 2, tsize.height / 2));
-    name->setPosition(0, posY);
-    _trophy->setPosition(size.width - tsize.width / 2, posY);
-    
-    // exp
-    _exp = ExpNode::create();
-    node->addChild(_exp);
-    const auto& esize(_exp->getContentSize());
-    _exp->setPosition(size.width / 2, esize.height / 2);
-    
-    // guild
-    _guild = GuildSimpleNode::create();
-    node->addChild(_guild);
-    const auto& gsize(_guild->getContentSize());
-    _guild->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
-    _guild->setPosition(0, gsize.height / 2);
-    
-    return node;
+    if (_data) {
+        setAvatar(_data->getIcon());
+        setUserName(_data->getName());
+        setLevel(_data->getLevel());
+        
+        do {
+            auto arenaData(_data->getArenaData());
+            CC_BREAK_IF(!arenaData);
+            setTrophy(arenaData->getTrophy());
+        } while (false);
+        
+        do {
+            auto userGuildData(_data->getGuildData());
+            CC_BREAK_IF(!userGuildData);
+            auto guildData(userGuildData->getGuildData());
+            CC_BREAK_IF(!guildData);
+            setGuildIcon(guildData->getBadge());
+            setGuildName(guildData->getName());
+        } while (false);
+    }
 }

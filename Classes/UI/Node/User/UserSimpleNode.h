@@ -29,19 +29,21 @@ public:
     void setIsMe(bool isMe);
     void setIsHome(bool isHome);
     void setData(const UserSimpleData* data);
-    void setAvatar(int idx);
     void setAvatarCallback(const std::function<void()>& callback);
+    
+private:
+    UserSimpleNode();
+    virtual bool init() override;
+    Node* createNodeWithoutAvatar(const Size& size);
+    void setAvatar(int idx);
     void setUserName(const std::string& name);
     void setTrophy(int count);
     void setGuildIcon(int idx);
     void setGuildName(const std::string& name);
     void setLevel(int count);
     void setExp(int progress, int maxProgress);
-    
-private:
-    UserSimpleNode();
-    virtual bool init() override;
-    Node* createNodeWithoutAvatar(const Size& size);
+    void reset();
+    void updateThisData();
     
 private:
     const UserSimpleData* _data;

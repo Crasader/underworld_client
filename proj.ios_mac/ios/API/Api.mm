@@ -8,7 +8,6 @@
 //
 
 #include "ApiBridge.h"
-#include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "User.h"
 #include "ShopManager.h"

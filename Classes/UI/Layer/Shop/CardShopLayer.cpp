@@ -8,7 +8,6 @@
 
 #include "CardShopLayer.h"
 #include "CocosGlobal.h"
-#include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "TradeableCard.h"
 #include "Board.h"

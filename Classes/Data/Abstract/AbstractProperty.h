@@ -25,9 +25,6 @@ public:
     
 private:
     int _id;
-    
-    // TODO: change "protected" to "private"
-protected:
     std::string _name;
     std::string _description;
 };

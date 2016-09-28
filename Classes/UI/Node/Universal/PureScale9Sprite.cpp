@@ -45,7 +45,9 @@ void PureScale9Sprite::setType(Type type)
     auto file(getResourceFile(type));
     if (!file.empty() && type != _type) {
         _type = type;
+        auto size(getContentSize());
         setSpriteFrame(Sprite::create(file)->getSpriteFrame());
+        setContentSize(size);
     }
 }
 

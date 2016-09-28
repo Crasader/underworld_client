@@ -66,6 +66,8 @@ typedef std::function<void(long errorCode)> httpErrorCallback;
 // Global Notifications
 #define AppDidEnterBackgroundNotification   ("UWDidEnterBackgroundNotification")
 #define AppWillEnterForegroundNotification  ("UWWillEnterForegroundNotification")
+#define UserInfoChangedNotification         ("UserInfoChangedNotification")
+#define ResourceChangedNotification         ("ResourceChangedNotification")
 
 enum class ResourceType {
     Gem = 100,

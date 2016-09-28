@@ -8,7 +8,6 @@
 
 #include "AbstractCard.h"
 #include "DataManager.h"
-#include "CocosUtils.h"
 #include "CardConfigData.h"
 #include "AbstractData.h"
 #include "AbstractProperty.h"

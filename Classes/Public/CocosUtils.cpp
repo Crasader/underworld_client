@@ -8,7 +8,6 @@
 
 #include "CocosUtils.h"
 #include "cocostudio/CocoStudio.h"
-#include "Global.h"
 #include "Utils.h"
 #include "FixedLabelAtlas.h"
 #include "NumberJump.h"

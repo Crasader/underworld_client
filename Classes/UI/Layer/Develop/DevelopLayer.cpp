@@ -8,7 +8,6 @@
 
 #include "DevelopLayer.h"
 #include "CocosGlobal.h"
-#include "CocosUtils.h"
 #include "LocalHelper.h"
 #include "Board.h"
 #include "JuniorCard.h"
@@ -58,7 +57,7 @@ bool DevelopLayer::init()
         addChild(board);
         
         if (!_cardPreview && board) {
-            _cardPreview = new (nothrow) CardPreview(_featureType, board->getSubNode(0), this);
+            _cardPreview = new (nothrow) CardPreview(_featureType, board->getSubNode(0), 9, 50, this);
         }
         
         auto eventListener = EventListenerTouchOneByOne::create();

@@ -8,7 +8,7 @@
 
 #include "ResourceManager.h"
 #include "JSonUtils.h"
-#include "Utils.h"
+#include "CocosUtils.h"
 #include "SkillBookData.h"
 
 using namespace std;
@@ -91,4 +91,6 @@ void ResourceManager::updateResources(const rapidjson::Value& jsonDict)
             _books.insert(make_pair(bookId, new (nothrow) SkillBookData(value)));
         }
     } while (false);
+    
+    CocosUtils::postNotification(ResourceChangedNotification);
 }

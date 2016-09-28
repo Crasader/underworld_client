@@ -138,7 +138,6 @@ void MainLayer::addLevelButtons()
         _mainNode->addChild(button, 0, i);
         
         CocosUtils::fixWidgetTouchEvent(button, _touchInvalid, [this](Ref* pSender) {
-            // TODO:
             SoundManager::getInstance()->playButtonSound();
             
             auto widget = dynamic_cast<ui::Widget*>(pSender);

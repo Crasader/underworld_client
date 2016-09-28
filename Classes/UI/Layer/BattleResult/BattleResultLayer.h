@@ -16,6 +16,7 @@ USING_NS_CC;
 class UserSimpleNode;
 class BattleRewardNode;
 class BattleResultLayer;
+class BattleResultData;
 
 class BattleResultLayerObserver
 {
@@ -30,6 +31,7 @@ public:
     static BattleResultLayer* create();
     virtual ~BattleResultLayer();
     void registerObserver(BattleResultLayerObserver *observer);
+    void update(const BattleResultData* data);
     
 private:
     BattleResultLayer();
@@ -41,7 +43,9 @@ private:
     BattleResultLayerObserver* _observer;
     Sprite* _result;
     UserSimpleNode* _userNode;
+    BattleRewardNode* _trophy;
     std::vector<BattleRewardNode*> _rewards;
+    const BattleResultData* _data;
 };
 
 #endif /* BattleResultLayer_h */

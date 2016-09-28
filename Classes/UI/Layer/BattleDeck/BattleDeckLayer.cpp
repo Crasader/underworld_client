@@ -338,7 +338,7 @@ void BattleDeckLayer::createLeftNode(Node* node)
 void BattleDeckLayer::createRightNode(Node* node)
 {
     if (_background && node && !_cardPreview) {
-        _cardPreview = new (nothrow) CardPreview(_featureType, node, this);
+        _cardPreview = new (nothrow) CardPreview(_featureType, node, 6, 115, this);
     }
 }
 

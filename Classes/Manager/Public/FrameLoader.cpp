@@ -8,7 +8,6 @@
 
 #include "FrameLoader.h"
 #include "cocos2d.h"
-#include "CocosUtils.h"
 #include "DataManager.h"
 
 using namespace std;

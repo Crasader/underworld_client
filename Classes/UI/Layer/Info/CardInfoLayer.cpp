@@ -43,6 +43,7 @@ CardInfoLayer* CardInfoLayer::create(int cardId, const AbstractData* data)
 CardInfoLayer::CardInfoLayer()
 :_observer(nullptr)
 ,_level(nullptr)
+,_rarityBar(nullptr)
 ,_profession(nullptr)
 ,_runeCircle(nullptr)
 ,_selectedRune(nullptr) {}
@@ -121,13 +122,12 @@ void CardInfoLayer::createLeftNode(Node* node)
     
     // top bar
     {
-        PureScale9Sprite::Type type;
-        // TODO:
-        type = PureScale9Sprite::Type::Purple;
+        PureScale9Sprite::Type type(PureScale9Sprite::Type::Purple);
         auto bar = PureScale9Sprite::create(type);
         bar->setContentSize(barSize);
         bar->setPosition(size.width / 2, size.height - (secondaryEdge.y + barSize.height / 2));
         node->addChild(bar);
+        _rarityBar = bar;
         
         static const float edgeX(5);
         auto label = CocosUtils::createLabel("", DEFAULT_FONT_SIZE);
@@ -422,7 +422,18 @@ void CardInfoLayer::updateProperty(const DevelopProperty* property)
     }
     
     auto cp(dynamic_cast<const CardProperty*>(property));
-    if (cp) {        
+    if (cp) {
+        if (_rarityBar) {
+            auto rarity(cp->getRarity());
+            auto type(PureScale9Sprite::Type::Blue);
+            if (1 == rarity) {
+                type = PureScale9Sprite::Type::Orange;
+            } else if (2 == rarity) {
+                type = PureScale9Sprite::Type::Purple;
+            }
+            _rarityBar->setType(type);
+        }
+        
         do {
             const auto& skills(cp->getSkills());
             int cnt((int)skills.size());

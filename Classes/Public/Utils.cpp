@@ -7,7 +7,6 @@
 //
 
 #include "Utils.h"
-#include "Global.h"
 #include <cstdlib>
 #include <iomanip>
 #include <algorithm>
@@ -115,7 +114,7 @@ void Utils::trim(string &s)
 
 int Utils::stoi(const string& str)
 {
-#if defined(__cplusplus) && __cplusplus >= 201103L
+#if UTILS_REQUIRES_GCC5
     return std::stoi(str);
 #else
     return std::atoi(str.c_str());
@@ -124,7 +123,7 @@ int Utils::stoi(const string& str)
 
 float Utils::stof(const string& str)
 {
-#if defined(__cplusplus) && __cplusplus >= 201103L
+#if UTILS_REQUIRES_GCC5
     return std::stof(str);
 #else
     return std::atof(str.c_str());

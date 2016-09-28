@@ -29,7 +29,7 @@ public:
 class CardPreview : public CardOpNodeObserver
 {
 public:
-    CardPreview(DeckManager::FeatureType type, Node* parent, CardPreviewObserver* observer);
+    CardPreview(DeckManager::FeatureType type, Node* parent, int column, float unfoundSpaceBottom, CardPreviewObserver* observer);
     virtual ~CardPreview();
     
     void sortAndRealign();
@@ -76,6 +76,8 @@ private:
     
     // Data
     DeckManager::FeatureType _featureType;
+    int _column;
+    float _unfoundSpaceBottom;
     Size _cardSize;
     int _sortIdx;
     float _cardSpaceX;
