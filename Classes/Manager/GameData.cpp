@@ -19,6 +19,7 @@
 #include "Constants.h"
 #include "DataManager.h"
 #include "NetworkApi.h"
+#include "NetworkController.h"
 
 using namespace std;
 
@@ -31,8 +32,8 @@ GameData::GameData()
 {
     generateUUID();
     
-    // TODO: remove test code
-    {
+#if !ENABLE_LOGIN
+    do {
         rapidjson::Document document;
         document.SetObject();
         rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
@@ -43,7 +44,8 @@ GameData::GameData()
         document.AddMember(kAuth, rapidjson::Value(kAuthString.c_str(), allocator), allocator);
         
         _user = new User(document);
-    }
+    } while (false);
+#endif
 }
 
 GameData::~GameData()
@@ -187,6 +189,7 @@ void GameData::reloadGame()
 {
     // 1. reset memory
     Director::getInstance()->getScheduler()->unschedule(heartbeatScheduleKey, this);
+    NetworkController::purge();
     CC_SAFE_DELETE(_user);
     
     // 2. reload

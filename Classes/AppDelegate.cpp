@@ -1,5 +1,4 @@
 #include "AppDelegate.h"
-#include "MainScene.h"
 #include "CocosGlobal.h"
 #include "GameData.h"
 #include "LocalHelper.h"
@@ -8,6 +7,12 @@
 #include "WorldTest.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "ApiBridge.h"
+#endif
+
+#if ENABLE_LOGIN
+#include "LaunchScene.h"
+#else
+#include "MainScene.h"
 #endif
 
 #include "Network/base/TCPClient.h"
@@ -117,7 +122,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
 #endif
     
     // create a scene. it's an autorelease object
+#if ENABLE_LOGIN
+    auto scene = LaunchScene::create();
+#else
     auto scene = MainScene::create();
+#endif
 
     // run
     director->runWithScene(scene);

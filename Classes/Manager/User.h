@@ -27,6 +27,7 @@ public:
     // getters
     bool isNewUser() const;
     bool isGuest() const;
+    bool isInBattle() const;
     int getUid() const;
     const std::string& getToken() const;
     UserSimpleData* getUserData() const;

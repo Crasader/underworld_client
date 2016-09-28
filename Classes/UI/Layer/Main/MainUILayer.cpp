@@ -190,7 +190,7 @@ bool MainUILayer::init()
         
         // 4. right top
         {
-            auto gemNode = ResourceNode::create(::ResourceType::Gem, 100, CC_CALLBACK_1(MainUILayer::onResourceButtonClicked, this));
+            auto gemNode = ResourceNode::create(::ResourceType::Gem, 0, CC_CALLBACK_1(MainUILayer::onResourceButtonClicked, this));
             static float offsetX(20);
             static float offsetY(20);
             const auto& gemSize(gemNode->getContentSize());
@@ -201,13 +201,13 @@ bool MainUILayer::init()
             addChild(gemNode);
             _resourceNodes.insert(gemNode);
             
-            auto goldNode = ResourceNode::create(::ResourceType::Gold, 100, CC_CALLBACK_1(MainUILayer::onResourceButtonClicked, this));
+            auto goldNode = ResourceNode::create(::ResourceType::Gold, 0, CC_CALLBACK_1(MainUILayer::onResourceButtonClicked, this));
             const auto& goldSize(goldNode->getContentSize());
             goldNode->setPosition(Point(x - (offsetX + (gemSize.width + goldSize.width) / 2), y));
             addChild(goldNode);
             _resourceNodes.insert(goldNode);
             
-            auto staminaNode = ResourceNode::create(::ResourceType::Stamina, 100, CC_CALLBACK_1(MainUILayer::onResourceButtonClicked, this));
+            auto staminaNode = ResourceNode::create(::ResourceType::Stamina, 0, CC_CALLBACK_1(MainUILayer::onResourceButtonClicked, this));
             const auto& jadeSize(staminaNode->getContentSize());
             staminaNode->setPosition(Point(x - (offsetX * 2 + (gemSize.width + jadeSize.width) / 2 + goldSize.width), y));
             addChild(staminaNode);

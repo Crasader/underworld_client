@@ -12,8 +12,9 @@
 #include <string>
 #include <functional>
 
-#define INVALID_VALUE   (-1)
+#define INVALID_VALUE       (-1)
 
+#define ENABLE_LOGIN        (0)
 #define USER_TOKEN_LENGTH   (64)
 
 #define RESOLUTION_WIDTH    (1136)

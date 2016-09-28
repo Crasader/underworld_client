@@ -155,6 +155,8 @@
 		A12CFF871D77D43D007E25CB /* SkillBookProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12CFF851D77D43D007E25CB /* SkillBookProperty.cpp */; };
 		A12CFF8E1D77FBB6007E25CB /* AbstractData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12CFF8C1D77FBB6007E25CB /* AbstractData.cpp */; };
 		A13108A51C046BF900EAAD90 /* particle in Resources */ = {isa = PBXBuildFile; fileRef = A13108A41C046BF900EAAD90 /* particle */; };
+		A1416FE71D9BBAB60088DAFF /* LaunchScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1416FE51D9BBAB60088DAFF /* LaunchScene.cpp */; };
+		A1416FEA1D9BBACD0088DAFF /* LaunchLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1416FE81D9BBACD0088DAFF /* LaunchLayer.cpp */; };
 		A14AA4211D8FCD2E006800F1 /* ObjectUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14AA4201D8FCD2E006800F1 /* ObjectUtils.cpp */; };
 		A14B5EFB1C311908006FB0DB /* Addon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14B5EF91C311908006FB0DB /* Addon.cpp */; };
 		A15698E11C3A96E500B94345 /* DamageType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A15698DF1C3A96E500B94345 /* DamageType.cpp */; };
@@ -678,6 +680,10 @@
 		A12CFF8D1D77FBB6007E25CB /* AbstractData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractData.h; sourceTree = "<group>"; };
 		A13108A41C046BF900EAAD90 /* particle */ = {isa = PBXFileReference; lastKnownFileType = folder; path = particle; sourceTree = "<group>"; };
 		A13E39371D793364007D907A /* ObjectUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectUtils.h; sourceTree = "<group>"; };
+		A1416FE51D9BBAB60088DAFF /* LaunchScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LaunchScene.cpp; sourceTree = "<group>"; };
+		A1416FE61D9BBAB60088DAFF /* LaunchScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchScene.h; sourceTree = "<group>"; };
+		A1416FE81D9BBACD0088DAFF /* LaunchLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LaunchLayer.cpp; sourceTree = "<group>"; };
+		A1416FE91D9BBACD0088DAFF /* LaunchLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchLayer.h; sourceTree = "<group>"; };
 		A14580991D890E2100792251 /* XMLUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLUtils.h; sourceTree = "<group>"; };
 		A14AA4201D8FCD2E006800F1 /* ObjectUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectUtils.cpp; sourceTree = "<group>"; };
 		A14B5EF91C311908006FB0DB /* Addon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Addon.cpp; path = Core/Unit/Type/Addon.cpp; sourceTree = "<group>"; };
@@ -1768,6 +1774,17 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
+		A1416FE41D9BBA900088DAFF /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				A1416FE81D9BBACD0088DAFF /* LaunchLayer.cpp */,
+				A1416FE91D9BBACD0088DAFF /* LaunchLayer.h */,
+				A1416FE51D9BBAB60088DAFF /* LaunchScene.cpp */,
+				A1416FE61D9BBAB60088DAFF /* LaunchScene.h */,
+			);
+			path = Launch;
+			sourceTree = "<group>";
+		};
 		A15A13571D86535600F24469 /* Test */ = {
 			isa = PBXGroup;
 			children = (
@@ -1953,6 +1970,7 @@
 				A19B1AB11D6C18200010D129 /* Develop */,
 				A1BB44571D7ECA1300213275 /* Guild */,
 				A1FF0E6C1D7D469D00C32040 /* Info */,
+				A1416FE41D9BBA900088DAFF /* Launch */,
 				A1E8EE851D82C2C0008F7237 /* Loading */,
 				A11648FD1D5AFB0100D03985 /* Main */,
 				A1F3D22C1D1D05CD00EB5C17 /* Public */,
@@ -2881,6 +2899,7 @@
 				3070302E1CD3253B0077D357 /* Produce.cpp in Sources */,
 				300098D61BD5E81700B6E284 /* InstanceFactory.cpp in Sources */,
 				30F8405D1D50B3370050C976 /* UWRender.cpp in Sources */,
+				A1416FEA1D9BBACD0088DAFF /* LaunchLayer.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				A1CE89DE1C44AB2900B60704 /* SpellConfigData.cpp in Sources */,
 				A1A7A2631D76ED8A00D7B3B1 /* CardProperty.cpp in Sources */,
@@ -3022,6 +3041,7 @@
 				A1A7A2681D76ED8A00D7B3B1 /* RuneGroupData.cpp in Sources */,
 				A12C60B41D507FB6003FCF0D /* TrophyNode.cpp in Sources */,
 				0451170A1BCFBA53002AA721 /* Skill.cpp in Sources */,
+				A1416FE71D9BBAB60088DAFF /* LaunchScene.cpp in Sources */,
 				A1ED7F951D811E440017B960 /* XButton.cpp in Sources */,
 				0487A6671CC897F9005FE8D0 /* GameMode.cpp in Sources */,
 				A1CA35E91D45BDE200584C9D /* NoticeNode.cpp in Sources */,

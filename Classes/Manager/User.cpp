@@ -54,6 +54,11 @@ bool User::isGuest() const
     return _isGuest;
 }
 
+bool User::isInBattle() const
+{
+    return _isInBattle;
+}
+
 int User::getUid() const
 {
     if (_userData) {
