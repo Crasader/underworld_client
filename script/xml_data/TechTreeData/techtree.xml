@@ -245,7 +245,7 @@
 	<spell_pattern class="target" conditions=" " content_name="内容中立兽族巫医恢复术" deliver_natures="ally" name="中立兽族巫医恢复术"/>
 	<spell_pattern class="target" conditions="type:field_type;target:opposite;condition:not:air" content_name="内容中立龙族黑龙火海" deliver_natures="enemy" name="中立龙族黑龙火海"/>
 	<spell_pattern class="target_position_circle" conditions="type:field_type;target:opposite;condition:not:air" content_name="黑龙火海持续伤害" deliver_natures="enemy" name="黑龙火海持续伤害" radius="80"/>
-	<spell_pattern class="target" conditions=" " content_name="内容人族剑士致命打击" deliver_natures="enemy" name="人族剑士致命打击" render_key="人族剑士致命打击_法术元素特效"/>
+	<spell_pattern class="target" conditions=" " content_name="内容人族剑士致命打击" deliver_natures="enemy" name="人族剑士致命打击"/>
 	<spell_pattern class="target" conditions="type:unit_enemy_buff_number;target:opposite;condition:&gt;0" content_name="人族男巫驱散友军" deliver_natures="ally" name="人族男巫驱散友军" render_key="人族男巫驱散_法术元素效果"/>
 	<spell_pattern class="target" conditions="type:unit_ally_buff_number;target:opposite;condition:&gt;0" content_name="人族男巫驱散敌军" deliver_natures="enemy" name="人族男巫驱散敌军" render_key="人族男巫驱散_法术元素效果"/>
 	<spell_pattern class="target" conditions="type:unit_class;target:opposite;condition:is:summoned" content_name="人族男巫驱散召唤" deliver_natures="enemy" name="人族男巫驱散召唤" render_key="人族男巫驱散_法术元素效果"/>
