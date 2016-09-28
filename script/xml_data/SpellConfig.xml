@@ -24,7 +24,7 @@
 	<item render_key="人族盾牌队长坚守_法术释放特效" spell_direction="0" spell_position="1" spell_render_layer="0" spell_height="0" loop="0" foreground_resource="Mo-skills-front" background_resource="Mo-skills-behind" scale="0.7"/>
 	<item render_key="人族盾牌队长坚守_法术元素特效" spell_direction="0" spell_position="0" spell_render_layer="0" spell_height="0" loop="0" foreground_resource="Mo-skills-groundEffect" background_resource="" scale="0.7"/>
 	<item render_key="人族男巫驱散_法术元素效果" spell_direction="0" spell_position="1" spell_render_layer="0" spell_height="0" loop="0" foreground_resource="Dispel-hitEffect" background_resource="" scale="0.7"/>
-	<item render_key="人族剑士致命打击_法术元素特效" spell_direction="0" spell_position="1" spell_render_layer="0" spell_height="0" loop="0" foreground_resource="blink" background_resource="" scale="0.7"/>
+	<item render_key="人族剑士致命打击_法术元素特效" spell_direction="0" spell_position="1" spell_render_layer="0" spell_height="0" loop="0" foreground_resource="humanwarrior-blink" background_resource="" scale="0.7"/>
 
 
 	<item render_key="食人鬼王光环持有者特效" spell_direction="0" spell_position="0" spell_render_layer="0" spell_height="0" loop="1" foreground_resource="offer-groundEffect" background_resource=""/>
