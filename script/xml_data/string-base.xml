@@ -150,7 +150,7 @@
     <item key="ui_cardAttr_armorType" value="护甲类型"/>
     <item key="ui_cardAttr_armor" value="护甲"/>
     <item key="ui_cardAttr_speed" value="移动速度"/>
-    
+    <item key="suffix_cardAttr_hitSpeed" value="秒"/>
     <!-- 攻击类型 -->
     <item key="ui_cardAttackType_0" value="普通"/>
     <item key="ui_cardAttackType_1" value="穿刺"/>
@@ -212,6 +212,7 @@
 	<item key="ui_skillAttr_25" value="每层提供护甲："/>
 	<item key="ui_skillAttr_26" value="降低护甲比例："/>
     <item key="ui_skillAttr_27" value="魔法抗性提升："/>
+	<item key="ui_skillAttr_28" value="移除魔法抗性："/>
     <!-- 符文 -->
     <item key="ui_rune_title" value="符文背包"/>
     <item key="ui_rune_pick" value="选取"/>
@@ -223,6 +224,8 @@
 	<item key="hint_confirm" value="确定"/>
     <item key="hint_cancel" value="取消"/>
     <item key="hint_level" value="%d级"/>
+    <item key="hint_versionId" value="版本号："/>
+    <item key="hint_onlineUpdateFailed" value="更新失败，请检查网络，稍后再试"/>
     
     <!-- 网络提示 -->
     <item key="networkResponse_errorTitle" value="网络错误！"/>
@@ -231,6 +234,7 @@
     <item key="networkResponse_error" value="网络异常，请稍后再试！"/>
     <item key="networkResponse_oldVersion" value="当前版本太旧，请更新至最新版本并重新登录"/>
     <item key="networkResponse_isOffline" value="您已下线，请重新登录"/>
+    <item key="networkResponse_loadUserInfoFailed" value="用户数据载入失败！"/>
 	 
 	 <!-- 卡牌单位符文技能名字及相关描述 -->
 	<Sheet1 key="object_desc_23100" value="一波暴风雪，对范围内敌人造成初始伤害和后续伤害。"/>
@@ -248,8 +252,8 @@
 	<Sheet1 key="object_desc_23112" value="在一定时间内增加我方单位的闪避。"/>
 	<Sheet1 key="object_desc_23113" value="移除范围内敌人一定生命，并在短时间内大幅度降低攻击和移动速度。"/>
 	<Sheet1 key="object_desc_23114" value="放置一个死亡守卫，守卫每隔一段时间会秒杀一个敌方单位，不会对英雄或高级单位生效。"/>
-	<Sheet1 key="object_desc_23115" value="使范围内我方英雄短暂无敌持续7秒。"/>
-	<Sheet1 key="object_desc_23116" value="大幅度增加作用范围内友军的防御和魔抗，持续12秒。"/>
+	<Sheet1 key="object_desc_23115" value="使范围内我方英雄短暂无敌持续12秒。"/>
+	<Sheet1 key="object_desc_23116" value="大幅度增加作用范围内友军的防御和魔抗，持续7秒。"/>
 	<Sheet1 key="object_desc_22000" value="“我们的血肉就是暴风城的城墙。凡是威胁到暴风城存在的生物和非生物——都将被毁灭！”
 
 特点：廉价肉盾 荆棘伤害"/>
@@ -379,7 +383,7 @@
 	<Sheet1 key="object_desc_70009" value="主动：传教士可以召唤数个随从参与战斗。"/>
 	<Sheet1 key="object_desc_71009" value="魔族传教士2"/>
 	<Sheet1 key="object_desc_70010" value="主动：释放霜冻新星对目标及附近敌人造成魔法伤害，并短暂减速。"/>
-	<Sheet1 key="object_desc_71010" value="被动：梦魇普通攻击会冰冻处于减速状态的敌人。"/>
+	<Sheet1 key="object_desc_71010" value="被动：梦魇的霜冻新星会冰冻处于减速状态的敌人。（处于人族法师减速状态的单位同样会触发冰冻）"/>
 	<Sheet1 key="object_desc_70011" value="被动：石像鬼的攻击会降低目标单位的护甲。"/>
 	<Sheet1 key="object_desc_71011" value="石像鬼2"/>
 	<Sheet1 key="object_desc_70012" value="主动：震晕周围的敌人，并造成与攻击力相关的物理伤害。"/>

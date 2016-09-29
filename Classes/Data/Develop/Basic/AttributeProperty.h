@@ -28,6 +28,7 @@ public:
     const std::string& getEnmuPrefix() const;
     const std::string& getName() const;
     const std::string& getIcon() const;
+    const std::string& getSuffix() const;
     
 private:
     int _id;
@@ -37,6 +38,7 @@ private:
     std::string _enmuPrefix;
     std::string _name;
     std::string _icon;
+    std::string _suffix;
 };
 
 #endif /* AttributeProperty_h */

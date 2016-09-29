@@ -50,6 +50,7 @@ public:
     static void purge();
     
     void init();
+    void clear();
     std::string getMapData(int mapId) const;
     std::string getMapDataHMM(int mapId) const;
     std::string getTechTreeData() const;

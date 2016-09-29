@@ -89,7 +89,39 @@ DataManager::DataManager()
 
 DataManager::~DataManager()
 {
+    clear();
+}
+
+void DataManager::init()
+{
+    parsePvrFiles();
+    parseLevelProperty();
+    parseCardDecks();
+    parseAttributeProperty();
+    parseCardProperty();
+    parseCardUpgradeProperty();
+    parseRuneProperty();
+    parseRuneUpgradeProperty();
+    parseSkillProperty();
+    parseSkillUpgradeProperty();
+    parseSkillBookProperty();
+    parseQuestProperty();
+    parseAchievementProperty();
+    parseObjectProperty();
+    parseAnimationConfigData();
+    parseCardConfigData();
+    parseURConfigData();
+    parseBRConfigData();
+    parseMapParticleConfigData();
+    parseSpellConfigData();
+    parseBinaryjsonTemplates();
+}
+
+void DataManager::clear()
+{
+    _pvrFiles.clear();
     Utils::clearMap(_levels);
+    _cardDecks.clear();
     Utils::clearMap(_attributes);
     Utils::clearMap(_cards);
     Utils::clearMap(_cardUpgradeProperties);
@@ -116,36 +148,10 @@ DataManager::~DataManager()
     }
     _mapParticleConfigData.clear();
     Utils::clearMap(_spellConfigData);
-    Utils::clearMap(_skills);
     
     CC_SAFE_DELETE(_binaryJsonTool);
     CC_SAFE_DELETE(_techTree);
     CC_SAFE_DELETE(_gameModeHMM);
-}
-
-void DataManager::init()
-{
-    parsePvrFiles();
-    parseLevelProperty();
-    parseCardDecks();
-    parseAttributeProperty();
-    parseCardProperty();
-    parseCardUpgradeProperty();
-    parseRuneProperty();
-    parseRuneUpgradeProperty();
-    parseSkillProperty();
-    parseSkillUpgradeProperty();
-    parseSkillBookProperty();
-    parseQuestProperty();
-    parseAchievementProperty();
-    parseObjectProperty();
-    parseAnimationConfigData();
-    parseCardConfigData();
-    parseURConfigData();
-    parseBRConfigData();
-    parseMapParticleConfigData();
-    parseSpellConfigData();
-    parseBinaryjsonTemplates();
 }
 
 string DataManager::getMapData(int mapId) const

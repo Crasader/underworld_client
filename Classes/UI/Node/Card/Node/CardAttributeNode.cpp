@@ -106,6 +106,10 @@ void CardAttributeNode::setAttribute(int attribute, float value)
         }
         if (_data) {
             string msg("");
+            string suffix(property->getSuffix());
+            if (!suffix.empty()) {
+                suffix = LocalHelper::getString(suffix);
+            }
             switch (property->getType()) {
                 case AttributeProperty::Type::ABSOLUTE:
                     msg = Utils::toString(value);
@@ -117,7 +121,7 @@ void CardAttributeNode::setAttribute(int attribute, float value)
                     msg = LocalHelper::getString(property->getEnmuPrefix() + Utils::toString(static_cast<int>(value)));
                     break;
             }
-            _data->setString(msg);
+            _data->setString(msg + suffix);
         }
     } while (false);
 }

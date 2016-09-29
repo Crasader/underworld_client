@@ -76,7 +76,7 @@ void GameData::purge()
 #pragma mark - public
 void GameData::init() const
 {
-    parseFiles();
+    // TODO: set some global parameters
 }
 
 void GameData::parseFiles() const
@@ -193,6 +193,7 @@ void GameData::reloadGame()
     CC_SAFE_DELETE(_user);
     
     // 2. reload
+    init();
     
     // 3. update UI
     auto director = Director::getInstance();
