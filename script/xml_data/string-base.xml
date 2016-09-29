@@ -456,45 +456,45 @@
 	<Sheet1 key="object_desc_70111" value="被动：击杀单位后提升自身护甲。"/>
 	<Sheet1 key="object_desc_71111" value="被动：灼烧周围敌人，造成持续魔法伤害。"/>
 	<Sheet1 key="object_desc_72111" value="中立兽族食人鬼王3"/>
-	<Sheet1 key="object_name_23100" value="暴风雪lv1"/>
-	<Sheet1 key="object_name_23101" value="火球术lv1"/>
-	<Sheet1 key="object_name_23102" value="医疗术lv1"/>
-	<Sheet1 key="object_name_23103" value="沉默术lv1"/>
-	<Sheet1 key="object_name_23104" value="小型驱散术lv1"/>
-	<Sheet1 key="object_name_23105" value="大型驱散术lv1"/>
-	<Sheet1 key="object_name_23106" value="震晕法术lv1"/>
-	<Sheet1 key="object_name_23107" value="禁足术lv1"/>
-	<Sheet1 key="object_name_23108" value="酸雾术lv1"/>
-	<Sheet1 key="object_name_23109" value="狂暴术lv1"/>
-	<Sheet1 key="object_name_23110" value="缴械法术lv1"/>
-	<Sheet1 key="object_name_23111" value="恐惧法术lv1"/>
-	<Sheet1 key="object_name_23112" value="磁场法术lv1"/>
-	<Sheet1 key="object_name_23113" value="震荡法术lv1"/>
-	<Sheet1 key="object_name_23114" value="秒杀法术lv1"/>
-	<Sheet1 key="object_name_23115" value="无敌药水lv1"/>
-	<Sheet1 key="object_name_23116" value="守护卷轴lv1"/>
-	<Sheet1 key="object_name_22000" value="人族盾牌兵"/>
+	<Sheet1 key="object_name_23100" value="暴风雪"/>
+	<Sheet1 key="object_name_23101" value="火球术"/>
+	<Sheet1 key="object_name_23102" value="医疗术"/>
+	<Sheet1 key="object_name_23103" value="沉默术"/>
+	<Sheet1 key="object_name_23104" value="小型驱散术"/>
+	<Sheet1 key="object_name_23105" value="大型驱散术"/>
+	<Sheet1 key="object_name_23106" value="震晕法术"/>
+	<Sheet1 key="object_name_23107" value="禁足术"/>
+	<Sheet1 key="object_name_23108" value="酸雾术"/>
+	<Sheet1 key="object_name_23109" value="狂暴术"/>
+	<Sheet1 key="object_name_23110" value="缴械法术"/>
+	<Sheet1 key="object_name_23111" value="恐惧法术"/>
+	<Sheet1 key="object_name_23112" value="磁场法术"/>
+	<Sheet1 key="object_name_23113" value="震荡法术"/>
+	<Sheet1 key="object_name_23114" value="秒杀法术"/>
+	<Sheet1 key="object_name_23115" value="无敌药水"/>
+	<Sheet1 key="object_name_23116" value="守护卷轴"/>
+	<Sheet1 key="object_name_22000" value="人族盾兵"/>
 	<Sheet1 key="object_name_22001" value="人族剑士"/>
-	<Sheet1 key="object_name_22002" value="人族弓手"/>
-	<Sheet1 key="object_name_22003" value="人族男巫"/>
-	<Sheet1 key="object_name_22004" value="人族女巫"/>
+	<Sheet1 key="object_name_22002" value="人族弓箭手"/>
+	<Sheet1 key="object_name_22003" value="人族牧师"/>
+	<Sheet1 key="object_name_22004" value="人族法师"/>
 	<Sheet1 key="object_name_22005" value="人族狮鹫"/>
-	<Sheet1 key="object_name_22006" value="骷髅盾牌兵"/>
+	<Sheet1 key="object_name_22006" value="骷髅战士"/>
 	<Sheet1 key="object_name_22007" value="食尸鬼"/>
-	<Sheet1 key="object_name_22008" value="骷髅弓箭手"/>
+	<Sheet1 key="object_name_22008" value="骷髅弓手"/>
 	<Sheet1 key="object_name_22009" value="魔族传教士"/>
 	<Sheet1 key="object_name_22010" value="梦魇"/>
 	<Sheet1 key="object_name_22011" value="石像鬼"/>
-	<Sheet1 key="object_name_22012" value="中立兽族牛头人"/>
-	<Sheet1 key="object_name_22013" value="中立兽族巨魔巫医"/>
-	<Sheet1 key="object_name_22014" value="中立龙族黑龙"/>
-	<Sheet1 key="object_name_22015" value="中立矮人族火枪手"/>
-	<Sheet1 key="object_name_22016" value="中立精灵族弓箭手"/>
+	<Sheet1 key="object_name_22012" value="牛头战士"/>
+	<Sheet1 key="object_name_22013" value="巨魔巫医"/>
+	<Sheet1 key="object_name_22014" value="龙族黑龙"/>
+	<Sheet1 key="object_name_22015" value="火枪手"/>
+	<Sheet1 key="object_name_22016" value="精灵弓箭手"/>
 	<Sheet1 key="object_name_22017" value="兽族攻城车"/>
 	<Sheet1 key="object_name_22018" value="月之骑士"/>
 	<Sheet1 key="object_name_22019" value="攻城单位"/>
 	<Sheet1 key="object_name_22020" value="待定"/>
-	<Sheet1 key="object_name_22021" value="精灵守卫"/>
+	<Sheet1 key="object_name_22021" value="精灵守卫者"/>
 	<Sheet1 key="object_name_22022" value="待定"/>
 	<Sheet1 key="object_name_22023" value="火炮兵"/>
 	<Sheet1 key="object_name_22024" value="野猪骑兵"/>
