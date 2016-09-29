@@ -52,16 +52,15 @@ void OnlineUpdater::startUpdate(OnlineUpdaterListener * listener)
             switch (code)
             {
                 case EventAssetsManagerEx::EventCode::ERROR_DOWNLOAD_MANIFEST:
-                case EventAssetsManagerEx::EventCode::ERROR_PARSE_MANIFEST:
                 case EventAssetsManagerEx::EventCode::ERROR_NO_LOCAL_MANIFEST:
                 case EventAssetsManagerEx::EventCode::ERROR_UPDATING:
                 case EventAssetsManagerEx::EventCode::ERROR_DECOMPRESS:
                 {
-                    failCount ++;
-                    if (_listener)
-                    {
-                        _listener->onUpdateFailed(code);
-                    }
+//                    failCount ++;
+//                    if (_listener)
+//                    {
+//                        _listener->onUpdateFailed(code);
+//                    }
                 }
                     break;
                 case EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION:
@@ -75,30 +74,32 @@ void OnlineUpdater::startUpdate(OnlineUpdaterListener * listener)
                 case EventAssetsManagerEx::EventCode::ALREADY_UP_TO_DATE:
                 case EventAssetsManagerEx::EventCode::UPDATE_FINISHED:
                 {
+                    CCLOG("Update done. %s", _am->getLocalManifest()->getVersion().c_str());
+                    GameData::getInstance()->onUpdateVersionID(_am->getLocalManifest()->getVersion());
+                    
                     if (_listener)
                     {
                         _listener->onUpdateFinished();
                     }
-                    CCLOG("Update done. %s", _am->getLocalManifest()->getVersion().c_str());
-                    GameData::getInstance()->onUpdateVersionID(_am->getLocalManifest()->getVersion());
                 }
                     break;
+                case EventAssetsManagerEx::EventCode::ERROR_PARSE_MANIFEST:
                 case EventAssetsManagerEx::EventCode::UPDATE_FAILED:
                 {
                     CCLOG("Update failed. %s", event->getMessage().c_str());
                     
-                    failCount ++;
-                    if (failCount < maxFailCount)
-                    {
-                        _am->downloadFailedAssets();
-                    }
-                    else
-                    {
+//                    failCount ++;
+//                    if (failCount < maxFailCount)
+//                    {
+//                        _am->downloadFailedAssets();
+//                    }
+//                    else
+//                    {
                         if (_listener)
                         {
                             _listener->onUpdateFailed(code);
                         }
-                    }
+//                    }
                 }
                     break;
                 default:

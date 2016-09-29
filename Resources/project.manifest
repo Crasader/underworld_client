@@ -1,0 +1,14 @@
+{
+	"packageUrl" : "http://123.57.221.242/update/",
+	"remoteManifestUrl" : "http://123.57.221.242/update/project.manifest?version=1.0.1",
+	"remoteVersionUrl" : "http://123.57.221.242/update/version.manifest?version=1.0.1",
+	"version" : "1.0.1",
+	"engineVersion" : "3.8",
+
+	"assets" : {
+	},
+    
+    "searchPaths" : [
+        "res"
+    ]
+}
