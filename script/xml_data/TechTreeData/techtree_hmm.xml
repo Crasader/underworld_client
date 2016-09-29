@@ -53,31 +53,31 @@
 		<unit_setting/>
 	</card>
 <!-- 第一版单位：小兵部分 -->
-	<card name="人族盾牌兵" card_class="summon" cost="木头:40" summon_count="1" recover_span="0" id="22000">
+	<card name="人族盾兵" card_class="summon" cost="木头:40" summon_count="1" recover_span="0" id="22000">
 		<unit_setting unit_setting_id="12005"/>
 	</card>
 	<card name="人族剑士" card_class="summon" cost="木头:30" summon_count="1" recover_span="0" id="22001">
 		<unit_setting unit_setting_id="12006"/>
 	</card>
-	<card name="人族弓手" card_class="summon" cost="木头:40" summon_count="1" recover_span="0" id="22002">
+	<card name="人族弓箭手" card_class="summon" cost="木头:40" summon_count="1" recover_span="0" id="22002">
 		<unit_setting unit_setting_id="12007"/>
 	</card>
-	<card name="人族男巫" card_class="summon" cost="木头:20" summon_count="1" recover_span="0" id="22003">
+	<card name="人族牧师" card_class="summon" cost="木头:20" summon_count="1" recover_span="0" id="22003">
 		<unit_setting unit_setting_id="12008"/>
 	</card>
-	<card name="人族女巫" card_class="summon" cost="木头:30" summon_count="1" recover_span="0" id="22004">
+	<card name="人族法师" card_class="summon" cost="木头:30" summon_count="1" recover_span="0" id="22004">
 		<unit_setting unit_setting_id="12009"/>
 	</card>
 	<card name="人族狮鹫" card_class="summon" cost="木头:30" summon_count="1" recover_span="0" id="22005">
 		<unit_setting unit_setting_id="12010"/>
 	</card>
-	<card name="骷髅盾牌兵" card_class="summon" cost="木头:40" summon_count="1" recover_span="0" id="22006">
+	<card name="骷髅战士" card_class="summon" cost="木头:40" summon_count="1" recover_span="0" id="22006">
 		<unit_setting unit_setting_id="12011"/>
 	</card>
 	<card name="食尸鬼" card_class="summon" cost="木头:10" summon_count="1" recover_span="0" id="22007">
 		<unit_setting unit_setting_id="12012"/>
 	</card>
-	<card name="骷髅弓箭手" card_class="summon" cost="木头:20" summon_count="1" recover_span="0" id="22008">
+	<card name="骷髅弓手" card_class="summon" cost="木头:20" summon_count="1" recover_span="0" id="22008">
 		<unit_setting unit_setting_id="12013"/>
 	</card>
 	<card name="魔族传教士" card_class="summon" cost="木头:40" summon_count="1" recover_span="0" id="22009">

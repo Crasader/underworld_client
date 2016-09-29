@@ -83,7 +83,7 @@
 	<item desc="object_desc_71107" hint="魔族地狱战舰2" id="71107" name="object_name_71107" unlock="20"/>
 	<item desc="object_desc_72107" hint="魔族地狱战舰3" id="72107" name="object_name_72107" unlock="30"/>
 	<item desc="object_desc_70108" hint="魔族黑传教士1" id="70108" name="object_name_70108" param_0="2006_8" param_1="2005_150" unlock="10"/>
-	<item desc="object_desc_71108" hint="魔族黑传教士2" id="71108" name="object_name_71108" param_0="2002_500" param_1="2112_20" unlock="20"/>
+	<item desc="object_desc_71108" hint="魔族黑传教士2" id="71108" name="object_name_71108" param_0="2002_500" param_1="2127_20" unlock="20"/>
 	<item desc="object_desc_72108" hint="魔族黑传教士3" id="72108" name="object_name_72108" unlock="30"/>
 	<item desc="object_desc_70109" hint="魔族梦魇精华1" id="70109" name="object_name_70109" param_0="2002_128" param_1="2123_30" param_2="2001_8" param_3="2000_10" unlock="10"/>
 	<item desc="object_desc_71109" hint="魔族梦魇精华2" id="71109" name="object_name_71109" param_0="2002_300" param_1="2120_100" param_2="2001_8" param_3="2000_10" unlock="20"/>
