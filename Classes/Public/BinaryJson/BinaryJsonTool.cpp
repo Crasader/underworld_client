@@ -251,6 +251,9 @@ void BinaryJsonTool::decode(const std::string &src, rapidjson::Document& documen
     document.SetObject();
     stream out(src);
     int code = decodeInt(out);
+    if (templates.find(code) == templates.end()) {
+        return;
+    }
     const rapidjson::Value *sample = templates.at(code);
     out.reset();
     ::decode(out, *sample, document, allocator, nullptr, true);

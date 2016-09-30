@@ -9,6 +9,7 @@
 {"code":10,"uid":123}
 {"code":11}
 {"code":12,"uid":123}
+{"code":13,"error":3}
 {"code":100,"uid":123}
 {"code":101,"uid":123,"channel":1,"to":231,"content":"how are you?"}
 {"code":102,"from":{"id":123,"name":"player1"},"channel":1,"content":"how are you?","time":"1473411679216"}
