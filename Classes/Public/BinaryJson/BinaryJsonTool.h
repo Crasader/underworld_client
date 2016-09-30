@@ -20,7 +20,7 @@ public:
     virtual ~BinaryJsonTool();
     void initTemplates(const std::string& data, const std::string& keyField);
     std::string encode(const rapidjson::Value &root) const;
-    void decode(const std::string &src, rapidjson::Document& document) const;
+    bool decode(const std::string &src, rapidjson::Document& document) const;
 private:
     std::map<int, const rapidjson::Value*> templates;
 private:

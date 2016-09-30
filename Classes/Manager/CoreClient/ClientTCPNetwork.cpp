@@ -650,11 +650,21 @@ void ClientTCPNetwork::parseResponse2Msg(
     string data;
     response->getResponseDataString(data);
     
-    CCLOG("[server]%s", data.c_str());
+//    CCLOG("[server]%s", data.c_str());
     
     rapidjson::Document document;
 //    document.Parse<rapidjson::kParseNoFlags>(data.c_str());
-    DataManager::getInstance()->getBinaryJsonTool()->decode(data, document);
+    bool success = DataManager::getInstance()->getBinaryJsonTool()->decode(data, document);
+    if (!success) {
+        return;
+    }
+    
+#if COCOS2D_DEBUG
+    rapidjson::StringBuffer buffer;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+    document.Accept(writer);
+    CCLOG("[server]%s", buffer.GetString());
+#endif
     
     if (!UWJsonHelper::checkObjectExist_json(document, MESSAGE_KEY_CODE)) {
         return;
